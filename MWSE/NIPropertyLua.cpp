@@ -110,7 +110,7 @@ namespace mwse {
 				usertypeDefinition["texCoordSet"] = &NI::TexturingProperty::Map::texCoordSet;
 
 				// Properties that need extra work before returning.
-				usertypeDefinition["texture"] = &NI::TexturingProperty::Map::texture;
+				usertypeDefinition["texture"] = sol::property(&NI::TexturingProperty::Map::getTexture_lua, &NI::TexturingProperty::Map::setTexture_lua);
 			}
 
 			// Binding for NI::TexturingProperty.

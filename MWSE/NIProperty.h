@@ -182,6 +182,9 @@ namespace NI {
 			Map(Texture* texture, ClampMode clampMode = ClampMode::WRAP_S_WRAP_T, FilterMode filterMode = FilterMode::TRILERP, unsigned int textureCoords = 0);
 			~Map();
 
+			Pointer<Texture> getTexture_lua() const;
+			void setTexture_lua(Texture* texture);
+
 		};
 		struct BumpMap : Map {
 			float lumaScale;

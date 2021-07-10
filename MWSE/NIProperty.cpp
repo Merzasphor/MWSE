@@ -148,6 +148,14 @@ namespace NI {
 		vTable->destructor(this, false);
 	}
 
+	Pointer<Texture> TexturingProperty::Map::getTexture_lua() const {
+		return texture;
+	}
+
+	void TexturingProperty::Map::setTexture_lua(Texture* t) {
+		texture = t;
+	}
+
 	TexturingProperty::BumpMap::BumpMap() : Map() {
 		vTable = (VirtualTable*)0x7507B0;
 		lumaScale = 1.0f;
