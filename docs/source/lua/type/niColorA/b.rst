@@ -1,6 +1,6 @@
-colors
+b
 ====================================================================================================
 
-`niColorA`_. The color for the object.
+`number`_. The blue value of the color.
 
-.. _`niColorA`: ../../../lua/type/niColorA.html
+.. _`number`: ../../../lua/type/number.html
