@@ -62,7 +62,7 @@ function dofile(path)
 	end
 
 	-- First pass: Direct load. Have to manually add the .lua extension.
-	if (lfs.fileexists(standardizedPath .. ".lua", true)) then
+	if (lfs.fileexists(tes3.installDirectory .. "\\" .. standardizedPath .. ".lua")) then
 		fileLocationCache[standardizedPath] = standardizedPath .. ".lua"
 		return originalDoFile(standardizedPath .. ".lua")
 	end
@@ -70,7 +70,7 @@ function dofile(path)
 	-- Check all package paths.
 	for ppath in package.path:gmatch("[^;]+") do
 		local adjustedPath = ppath:gsub("?", standardizedPath)
-		if (lfs.fileexists(adjustedPath, true)) then
+		if (lfs.fileexists(tes3.installDirectory .. "\\" .. adjustedPath)) then
 			fileLocationCache[standardizedPath] = adjustedPath
 			return originalDoFile(adjustedPath)
 		end
@@ -419,35 +419,13 @@ end
 lfs.rmdir = deleteDirectoryRecursive
 
 -- Basic "file exists" check.
-function lfs.fileexists(filepath, relativeToInstallDirectory)
-	local currentDir = lfs.currentdir()
-	if (relativeToInstallDirectory) then
-		lfs.chdir(tes3.installDirectory)
-	end
-
-	if (lfs.attributes(filepath, "mode") == "file") then
-		lfs.chdir(currentDir)
-		return true
-	end
-
-	lfs.chdir(currentDir)
-	return false
+function lfs.fileexists(filepath)
+	return lfs.attributes(filepath, "mode") == "file"
 end
 
 -- Basic "folder exists" check.
 function lfs.directoryexists(filepath)
-	local currentDir = lfs.currentdir()
-	if (relativeToInstallDirectory) then
-		lfs.chdir(tes3.installDirectory)
-	end
-
-	if (lfs.attributes(filepath, "mode") == "directory") then
-		lfs.chdir(currentDir)
-		return true
-	end
-
-	lfs.chdir(currentDir)
-	return false
+	return lfs.attributes(filepath, "mode") == "directory"
 end
 
 -------------------------------------------------
