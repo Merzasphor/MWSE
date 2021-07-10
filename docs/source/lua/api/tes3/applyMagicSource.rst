@@ -41,11 +41,11 @@ bypassResistances (`boolean`_)
     Default: ``false``. Is this effect going to bypass magic resistance?
 
 .. _`boolean`: ../../../lua/type/boolean.html
+.. _`number`: ../../../lua/type/number.html
 .. _`string`: ../../../lua/type/string.html
 .. _`table`: ../../../lua/type/table.html
-.. _`tes3object`: ../../../lua/type/tes3object.html
-.. _`number`: ../../../lua/type/number.html
+.. _`tes3equipmentStack`: ../../../lua/type/tes3equipmentStack.html
 .. _`tes3magicSourceInstance`: ../../../lua/type/tes3magicSourceInstance.html
 .. _`tes3mobileActor`: ../../../lua/type/tes3mobileActor.html
+.. _`tes3object`: ../../../lua/type/tes3object.html
 .. _`tes3reference`: ../../../lua/type/tes3reference.html
-.. _`tes3equipmentStack`: ../../../lua/type/tes3equipmentStack.html

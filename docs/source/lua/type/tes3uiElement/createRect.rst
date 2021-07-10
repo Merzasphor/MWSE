@@ -17,6 +17,6 @@ id (`number`_)
 color (`table`_)
     Optional. The fill colour for the element.
 
-.. _`tes3uiElement`: ../../../lua/type/tes3uiElement.html
-.. _`table`: ../../../lua/type/table.html
 .. _`number`: ../../../lua/type/number.html
+.. _`table`: ../../../lua/type/table.html
+.. _`tes3uiElement`: ../../../lua/type/tes3uiElement.html

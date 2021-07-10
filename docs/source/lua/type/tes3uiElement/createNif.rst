@@ -17,6 +17,6 @@ id (`number`_)
 text (`string`_)
     A model path. This path is relative to ``Data Files``.
 
-.. _`tes3uiElement`: ../../../lua/type/tes3uiElement.html
-.. _`string`: ../../../lua/type/string.html
 .. _`number`: ../../../lua/type/number.html
+.. _`string`: ../../../lua/type/string.html
+.. _`tes3uiElement`: ../../../lua/type/tes3uiElement.html

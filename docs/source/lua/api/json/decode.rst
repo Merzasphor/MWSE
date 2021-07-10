@@ -20,6 +20,6 @@ position (`number`_)
 nullValue (`unknown`_)
     Default: ``nil``. No description available.
 
+.. _`number`: ../../../lua/type/number.html
 .. _`string`: ../../../lua/type/string.html
 .. _`table`: ../../../lua/type/table.html
-.. _`number`: ../../../lua/type/number.html

@@ -22,7 +22,7 @@ request (`string`_)
 result table (`table`_)
     Optional. If provided, this table will be reused as the result table. If not provided, a new table is created.
 
-.. _`string`: ../../../lua/type/string.html
-.. _`number`: ../../../lua/type/number.html
-.. _`table`: ../../../lua/type/table.html
 .. _`nil`: ../../../lua/type/nil.html
+.. _`number`: ../../../lua/type/number.html
+.. _`string`: ../../../lua/type/string.html
+.. _`table`: ../../../lua/type/table.html

@@ -71,9 +71,9 @@ Properties
 .. _`timeActive`: tes3magicEffectInstance/timeActive.html
 .. _`visual`: tes3magicEffectInstance/visual.html
 
-.. _`tes3itemStack`: ../../lua/type/tes3itemStack.html
-.. _`tes3armor`: ../../lua/type/tes3armor.html
 .. _`number`: ../../lua/type/number.html
-.. _`tes3weapon`: ../../lua/type/tes3weapon.html
-.. _`tes3reference`: ../../lua/type/tes3reference.html
+.. _`tes3armor`: ../../lua/type/tes3armor.html
 .. _`tes3item`: ../../lua/type/tes3item.html
+.. _`tes3itemStack`: ../../lua/type/tes3itemStack.html
+.. _`tes3reference`: ../../lua/type/tes3reference.html
+.. _`tes3weapon`: ../../lua/type/tes3weapon.html

@@ -15,5 +15,5 @@ text (`string`_, `nil`_)
     Optional. The text to put in the clipboard. If nil is provided instead, then the clipboard will be cleared.
 
 .. _`boolean`: ../../../lua/type/boolean.html
-.. _`string`: ../../../lua/type/string.html
 .. _`nil`: ../../../lua/type/nil.html
+.. _`string`: ../../../lua/type/string.html

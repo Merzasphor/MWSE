@@ -17,6 +17,6 @@ callback (`function`_)
 type (`number`_)
     Default: ``timer.simulate``. Type of the timer. This value can be timer.simulate, timer.game or timer.real.
 
-.. _`number`: ../../../lua/type/number.html
 .. _`function`: ../../../lua/type/function.html
 .. _`mwseTimer`: ../../../lua/type/mwseTimer.html
+.. _`number`: ../../../lua/type/number.html

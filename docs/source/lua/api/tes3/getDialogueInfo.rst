@@ -17,6 +17,6 @@ dialogue (`tes3dialogue`_, `string`_)
 id (`string`_)
     The numerical, unique id for the info object.
 
-.. _`tes3dialogueInfo`: ../../../lua/type/tes3dialogueInfo.html
-.. _`tes3dialogue`: ../../../lua/type/tes3dialogue.html
 .. _`string`: ../../../lua/type/string.html
+.. _`tes3dialogue`: ../../../lua/type/tes3dialogue.html
+.. _`tes3dialogueInfo`: ../../../lua/type/tes3dialogueInfo.html

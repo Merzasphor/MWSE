@@ -14,5 +14,5 @@ Parameters
 index (`number`_)
     No description available.
 
-.. _`number`: ../../../lua/type/number.html
 .. _`niAVObject`: ../../../lua/type/niAVObject.html
+.. _`number`: ../../../lua/type/number.html

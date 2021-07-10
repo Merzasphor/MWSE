@@ -187,6 +187,6 @@ Properties
 .. _`supportsLuaData`: tes3class/supportsLuaData.html
 
 .. _`boolean`: ../../lua/type/boolean.html
+.. _`number`: ../../lua/type/number.html
 .. _`string`: ../../lua/type/string.html
 .. _`table`: ../../lua/type/table.html
-.. _`number`: ../../lua/type/number.html

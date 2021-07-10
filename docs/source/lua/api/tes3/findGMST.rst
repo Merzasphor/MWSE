@@ -32,6 +32,6 @@ This example shows how to read a value of a GMST and how to change it.
     tes3.findGMST("sServiceTrainingTitle").value = "Cheat"
 
 
-.. _`string`: ../../../lua/type/string.html
 .. _`number`: ../../../lua/type/number.html
+.. _`string`: ../../../lua/type/string.html
 .. _`tes3gameSetting`: ../../../lua/type/tes3gameSetting.html

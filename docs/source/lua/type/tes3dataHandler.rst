@@ -106,10 +106,10 @@ Properties
 .. _`worldObjectRoot`: tes3dataHandler/worldObjectRoot.html
 .. _`worldPickObjectRoot`: tes3dataHandler/worldPickObjectRoot.html
 
-.. _`tes3sound`: ../../lua/type/tes3sound.html
 .. _`boolean`: ../../lua/type/boolean.html
-.. _`tes3nonDynamicData`: ../../lua/type/tes3nonDynamicData.html
-.. _`table`: ../../lua/type/table.html
-.. _`number`: ../../lua/type/number.html
 .. _`niNode`: ../../lua/type/niNode.html
+.. _`number`: ../../lua/type/number.html
+.. _`table`: ../../lua/type/table.html
 .. _`tes3cell`: ../../lua/type/tes3cell.html
+.. _`tes3nonDynamicData`: ../../lua/type/tes3nonDynamicData.html
+.. _`tes3sound`: ../../lua/type/tes3sound.html

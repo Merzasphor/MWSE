@@ -14,5 +14,5 @@ Parameters
 id (`number`_)
     No description available.
 
-.. _`tes3uiElement`: ../../../lua/type/tes3uiElement.html
 .. _`number`: ../../../lua/type/number.html
+.. _`tes3uiElement`: ../../../lua/type/tes3uiElement.html

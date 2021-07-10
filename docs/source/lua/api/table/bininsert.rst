@@ -22,5 +22,5 @@ value (`unknown`_)
 comp (`unknown`_)
     Optional. No description available.
 
-.. _`table`: ../../../lua/type/table.html
 .. _`number`: ../../../lua/type/number.html
+.. _`table`: ../../../lua/type/table.html

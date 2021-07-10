@@ -14,5 +14,5 @@ Parameters
 startTime (`number`_)
     Optional. No description available.
 
-.. _`number`: ../../../lua/type/number.html
 .. _`mwseTimerController`: ../../../lua/type/mwseTimerController.html
+.. _`number`: ../../../lua/type/number.html

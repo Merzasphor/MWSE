@@ -85,6 +85,6 @@ Methods
 .. _`keybindTest`: tes3inputController/keybindTest.html
 
 .. _`boolean`: ../../lua/type/boolean.html
-.. _`table`: ../../lua/type/table.html
 .. _`number`: ../../lua/type/number.html
+.. _`table`: ../../lua/type/table.html
 .. _`tes3directInputMouseState`: ../../lua/type/tes3directInputMouseState.html

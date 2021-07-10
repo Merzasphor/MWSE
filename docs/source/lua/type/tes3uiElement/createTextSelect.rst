@@ -32,6 +32,6 @@ text (`string`_)
 state (`number`_)
     Optional. The initial interaction state. Defaults to normal.
 
-.. _`tes3uiElement`: ../../../lua/type/tes3uiElement.html
-.. _`string`: ../../../lua/type/string.html
 .. _`number`: ../../../lua/type/number.html
+.. _`string`: ../../../lua/type/string.html
+.. _`tes3uiElement`: ../../../lua/type/tes3uiElement.html

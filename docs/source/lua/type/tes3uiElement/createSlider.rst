@@ -35,5 +35,5 @@ step (`number`_)
 jump (`number`_)
     Optional. Amount changed by clicking inside the slider area.
 
-.. _`tes3uiElement`: ../../../lua/type/tes3uiElement.html
 .. _`number`: ../../../lua/type/number.html
+.. _`tes3uiElement`: ../../../lua/type/tes3uiElement.html

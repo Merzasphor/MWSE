@@ -61,5 +61,5 @@ Properties
 .. _`rangeType`: tes3effect/rangeType.html
 .. _`skill`: tes3effect/skill.html
 
-.. _`tes3magicEffect`: ../../lua/type/tes3magicEffect.html
 .. _`number`: ../../lua/type/number.html
+.. _`tes3magicEffect`: ../../lua/type/tes3magicEffect.html

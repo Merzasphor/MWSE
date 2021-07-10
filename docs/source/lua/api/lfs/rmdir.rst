@@ -20,5 +20,5 @@ recursive (`boolean`_)
     Default: ``false``. If true, all contents of the directory will be removed as well.
 
 .. _`boolean`: ../../../lua/type/boolean.html
-.. _`string`: ../../../lua/type/string.html
 .. _`nil`: ../../../lua/type/nil.html
+.. _`string`: ../../../lua/type/string.html

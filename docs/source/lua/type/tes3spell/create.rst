@@ -23,5 +23,5 @@ id (`string`_)
 name (`string`_)
     The new object's name.
 
-.. _`tes3spell`: ../../../lua/type/tes3spell.html
 .. _`string`: ../../../lua/type/string.html
+.. _`tes3spell`: ../../../lua/type/tes3spell.html

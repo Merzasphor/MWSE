@@ -17,6 +17,6 @@ creatureId (`string`_)
 soundType (`number`_)
     Maps to tes3.soundGenType constants.
 
-.. _`string`: ../../../lua/type/string.html
 .. _`number`: ../../../lua/type/number.html
+.. _`string`: ../../../lua/type/string.html
 .. _`tes3soundGenerator`: ../../../lua/type/tes3soundGenerator.html

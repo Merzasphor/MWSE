@@ -24,11 +24,11 @@ effect (`tes3.effect`_)
 object (`tes3alchemy`_, `tes3enchantment`_, `tes3spell`_, `tes3magicEffect`_, `string`_)
     Optional. An object to check for.
 
-.. _`tes3spell`: ../../../lua/type/tes3spell.html
 .. _`boolean`: ../../../lua/type/boolean.html
-.. _`tes3magicEffect`: ../../../lua/type/tes3magicEffect.html
 .. _`string`: ../../../lua/type/string.html
-.. _`tes3enchantment`: ../../../lua/type/tes3enchantment.html
-.. _`tes3mobileActor`: ../../../lua/type/tes3mobileActor.html
 .. _`tes3alchemy`: ../../../lua/type/tes3alchemy.html
+.. _`tes3enchantment`: ../../../lua/type/tes3enchantment.html
+.. _`tes3magicEffect`: ../../../lua/type/tes3magicEffect.html
+.. _`tes3mobileActor`: ../../../lua/type/tes3mobileActor.html
 .. _`tes3reference`: ../../../lua/type/tes3reference.html
+.. _`tes3spell`: ../../../lua/type/tes3spell.html

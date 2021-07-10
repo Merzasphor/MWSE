@@ -166,9 +166,9 @@ Properties
 .. _`underwaterSoundState`: tes3weatherClear/underwaterSoundState.html
 .. _`windSpeed`: tes3weatherClear/windSpeed.html
 
-.. _`tes3sound`: ../../lua/type/tes3sound.html
-.. _`string`: ../../lua/type/string.html
-.. _`number`: ../../lua/type/number.html
 .. _`bool`: ../../lua/type/boolean.html
-.. _`tes3weatherController`: ../../lua/type/tes3weatherController.html
+.. _`number`: ../../lua/type/number.html
+.. _`string`: ../../lua/type/string.html
+.. _`tes3sound`: ../../lua/type/tes3sound.html
 .. _`tes3vector3`: ../../lua/type/tes3vector3.html
+.. _`tes3weatherController`: ../../lua/type/tes3weatherController.html

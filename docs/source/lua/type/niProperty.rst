@@ -69,7 +69,7 @@ Methods
 .. _`removeAllControllers`: niProperty/removeAllControllers.html
 .. _`removeController`: niProperty/removeController.html
 
-.. _`niObject`: ../../lua/type/niObject.html
 .. _`boolean`: ../../lua/type/boolean.html
-.. _`string`: ../../lua/type/string.html
+.. _`niObject`: ../../lua/type/niObject.html
 .. _`niRTTI`: ../../lua/type/niRTTI.html
+.. _`string`: ../../lua/type/string.html

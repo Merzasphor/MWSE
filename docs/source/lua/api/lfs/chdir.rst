@@ -17,5 +17,5 @@ path (`string`_)
     The path to change to.
 
 .. _`boolean`: ../../../lua/type/boolean.html
-.. _`string`: ../../../lua/type/string.html
 .. _`nil`: ../../../lua/type/nil.html
+.. _`string`: ../../../lua/type/string.html

@@ -14,5 +14,5 @@ Parameters
 id (`number`_)
     No description available.
 
-.. _`tes3magicEffect`: ../../../lua/type/tes3magicEffect.html
 .. _`number`: ../../../lua/type/number.html
+.. _`tes3magicEffect`: ../../../lua/type/tes3magicEffect.html

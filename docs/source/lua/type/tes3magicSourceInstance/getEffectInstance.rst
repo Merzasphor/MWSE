@@ -18,5 +18,5 @@ target (`tes3reference`_)
     The target actor for the effect.
 
 .. _`number`: ../../../lua/type/number.html
-.. _`tes3reference`: ../../../lua/type/tes3reference.html
 .. _`tes3magicEffectInstance`: ../../../lua/type/tes3magicEffectInstance.html
+.. _`tes3reference`: ../../../lua/type/tes3reference.html

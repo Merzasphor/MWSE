@@ -26,5 +26,5 @@ scalar (`number`_)
     Default: ``0.1``. A multiplier with range 0.0-1.0 that controls how much of an item's armor value applies to a character's overall armor rating. For comparison, standard chest armor uses 0.3, helmets, greaves and pauldrons use 0.1, and gauntlets use 0.05.
 
 .. _`boolean`: ../../../lua/type/boolean.html
-.. _`string`: ../../../lua/type/string.html
 .. _`number`: ../../../lua/type/number.html
+.. _`string`: ../../../lua/type/string.html

@@ -654,8 +654,8 @@ The standard type signature for events.
 .. _`unregister`: tes3uiElement/unregister.html
 .. _`updateLayout`: tes3uiElement/updateLayout.html
 
-.. _`tes3uiElement`: ../../lua/type/tes3uiElement.html
 .. _`boolean`: ../../lua/type/boolean.html
+.. _`number`: ../../lua/type/number.html
 .. _`string`: ../../lua/type/string.html
 .. _`table`: ../../lua/type/table.html
-.. _`number`: ../../lua/type/number.html
+.. _`tes3uiElement`: ../../lua/type/tes3uiElement.html

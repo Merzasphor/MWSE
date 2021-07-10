@@ -33,5 +33,5 @@ teleportCompanions (`boolean`_)
 
 .. _`boolean`: ../../../lua/type/boolean.html
 .. _`table`: ../../../lua/type/table.html
-.. _`tes3vector3`: ../../../lua/type/tes3vector3.html
 .. _`tes3cell`: ../../../lua/type/tes3cell.html
+.. _`tes3vector3`: ../../../lua/type/tes3vector3.html

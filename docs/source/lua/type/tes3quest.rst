@@ -61,7 +61,7 @@ Properties
 .. _`sourceMod`: tes3quest/sourceMod.html
 .. _`supportsLuaData`: tes3quest/supportsLuaData.html
 
-.. _`tes3iterator`: ../../lua/type/tes3iterator.html
 .. _`boolean`: ../../lua/type/boolean.html
-.. _`string`: ../../lua/type/string.html
 .. _`number`: ../../lua/type/number.html
+.. _`string`: ../../lua/type/string.html
+.. _`tes3iterator`: ../../lua/type/tes3iterator.html

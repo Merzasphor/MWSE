@@ -51,6 +51,6 @@ In this example, whenever the player activates an item they will be shown a 10 s
     event.register("activate", onActivate)
 
 
-.. _`number`: ../../../lua/type/number.html
 .. _`function`: ../../../lua/type/function.html
 .. _`mwseTimer`: ../../../lua/type/mwseTimer.html
+.. _`number`: ../../../lua/type/number.html

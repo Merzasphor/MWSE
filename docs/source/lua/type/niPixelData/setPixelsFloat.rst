@@ -12,5 +12,5 @@ data (`table`_)
 mipMapLevel (`number`_)
     Optional. Default value: 1
 
-.. _`table`: ../../../lua/type/table.html
 .. _`number`: ../../../lua/type/number.html
+.. _`table`: ../../../lua/type/table.html

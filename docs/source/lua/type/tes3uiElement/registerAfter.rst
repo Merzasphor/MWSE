@@ -12,5 +12,5 @@ eventID (`string`_)
 callback (`function`_)
     The callback function.
 
-.. _`string`: ../../../lua/type/string.html
 .. _`function`: ../../../lua/type/function.html
+.. _`string`: ../../../lua/type/string.html

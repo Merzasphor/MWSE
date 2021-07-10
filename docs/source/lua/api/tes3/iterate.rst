@@ -14,5 +14,5 @@ Parameters
 iterator (`tes3iterator`_)
     No description available.
 
-.. _`tes3iterator`: ../../../lua/type/tes3iterator.html
 .. _`function`: ../../../lua/type/function.html
+.. _`tes3iterator`: ../../../lua/type/tes3iterator.html

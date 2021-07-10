@@ -66,10 +66,10 @@ Properties
 .. _`tempData`: tes3itemData/tempData.html
 .. _`timeLeft`: tes3itemData/timeLeft.html
 
-.. _`tes3globalVariable`: ../../lua/type/tes3globalVariable.html
-.. _`table`: ../../lua/type/table.html
+.. _`nil`: ../../lua/type/nil.html
 .. _`number`: ../../lua/type/number.html
-.. _`tes3npc`: ../../lua/type/tes3npc.html
+.. _`table`: ../../lua/type/table.html
 .. _`tes3actor`: ../../lua/type/tes3actor.html
 .. _`tes3faction`: ../../lua/type/tes3faction.html
-.. _`nil`: ../../lua/type/nil.html
+.. _`tes3globalVariable`: ../../lua/type/tes3globalVariable.html
+.. _`tes3npc`: ../../lua/type/tes3npc.html

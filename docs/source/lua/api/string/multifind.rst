@@ -21,6 +21,6 @@ plain (`boolean`_)
     Default: ``false``. If true, a normal search instead of a pattern search will be performed.
 
 .. _`boolean`: ../../../lua/type/boolean.html
+.. _`number`: ../../../lua/type/number.html
 .. _`string`: ../../../lua/type/string.html
 .. _`table`: ../../../lua/type/table.html
-.. _`number`: ../../../lua/type/number.html

@@ -149,11 +149,11 @@ Methods
 .. _`resolveObject`: tes3nonDynamicData/resolveObject.html
 .. _`showLocationOnMap`: tes3nonDynamicData/showLocationOnMap.html
 
-.. _`tes3globalVariable`: ../../lua/type/tes3globalVariable.html
-.. _`tes3iterator`: ../../lua/type/tes3iterator.html
-.. _`tes3sound`: ../../lua/type/tes3sound.html
-.. _`tes3dialogue`: ../../lua/type/tes3dialogue.html
 .. _`boolean`: ../../lua/type/boolean.html
 .. _`table`: ../../lua/type/table.html
 .. _`tes3baseObject`: ../../lua/type/tes3baseObject.html
+.. _`tes3dialogue`: ../../lua/type/tes3dialogue.html
+.. _`tes3globalVariable`: ../../lua/type/tes3globalVariable.html
+.. _`tes3iterator`: ../../lua/type/tes3iterator.html
 .. _`tes3reference`: ../../lua/type/tes3reference.html
+.. _`tes3sound`: ../../lua/type/tes3sound.html

@@ -259,12 +259,12 @@ Methods
 .. _`getMaterialFlag`: tes3weapon/getMaterialFlag.html
 .. _`setMaterialFlag`: tes3weapon/setMaterialFlag.html
 
-.. _`tes3iterator`: ../../lua/type/tes3iterator.html
 .. _`boolean`: ../../lua/type/boolean.html
+.. _`niNode`: ../../lua/type/niNode.html
+.. _`number`: ../../lua/type/number.html
 .. _`string`: ../../lua/type/string.html
 .. _`tes3boundingBox`: ../../lua/type/tes3boundingBox.html
-.. _`tes3object`: ../../lua/type/tes3object.html
-.. _`number`: ../../lua/type/number.html
-.. _`niNode`: ../../lua/type/niNode.html
 .. _`tes3enchantment`: ../../lua/type/tes3enchantment.html
+.. _`tes3iterator`: ../../lua/type/tes3iterator.html
+.. _`tes3object`: ../../lua/type/tes3object.html
 .. _`tes3referenceList`: ../../lua/type/tes3referenceList.html

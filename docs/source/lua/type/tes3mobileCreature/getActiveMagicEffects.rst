@@ -19,5 +19,5 @@ effect (`number`_)
 serial (`number`_)
     Optional. The magic instance serial to search for.
 
-.. _`table`: ../../../lua/type/table.html
 .. _`number`: ../../../lua/type/number.html
+.. _`table`: ../../../lua/type/table.html

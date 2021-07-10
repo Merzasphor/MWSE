@@ -12,5 +12,5 @@ propName (`string`_)
 value (`number`_)
     The value to set.
 
-.. _`string`: ../../../lua/type/string.html
 .. _`number`: ../../../lua/type/number.html
+.. _`string`: ../../../lua/type/string.html

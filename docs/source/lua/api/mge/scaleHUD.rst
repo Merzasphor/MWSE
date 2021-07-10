@@ -15,5 +15,5 @@ x (`number`_)
 y (`number`_)
     No description available.
 
-.. _`string`: ../../../lua/type/string.html
 .. _`number`: ../../../lua/type/number.html
+.. _`string`: ../../../lua/type/string.html

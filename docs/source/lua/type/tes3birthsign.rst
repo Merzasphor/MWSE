@@ -72,6 +72,6 @@ Properties
 .. _`texturePath`: tes3birthsign/texturePath.html
 
 .. _`boolean`: ../../lua/type/boolean.html
-.. _`string`: ../../lua/type/string.html
 .. _`number`: ../../lua/type/number.html
+.. _`string`: ../../lua/type/string.html
 .. _`tes3spellList`: ../../lua/type/tes3spellList.html

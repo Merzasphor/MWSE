@@ -84,8 +84,8 @@ Change fall damage
     event.register("damage", onDamage)
 
 
-.. _`tes3magicEffect`: ../../lua/type/tes3magicEffect.html
 .. _`number`: ../../lua/type/number.html
+.. _`tes3magicEffect`: ../../lua/type/tes3magicEffect.html
 .. _`tes3magicSourceInstance`: ../../lua/type/tes3magicSourceInstance.html
 .. _`tes3mobileActor`: ../../lua/type/tes3mobileActor.html
 .. _`tes3mobileProjectile`: ../../lua/type/tes3mobileProjectile.html

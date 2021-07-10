@@ -23,5 +23,5 @@ symlink (`boolean`_)
     Optional. If true, the link will be symbolic instead.
 
 .. _`boolean`: ../../../lua/type/boolean.html
-.. _`string`: ../../../lua/type/string.html
 .. _`nil`: ../../../lua/type/nil.html
+.. _`string`: ../../../lua/type/string.html

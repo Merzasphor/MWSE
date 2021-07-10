@@ -14,5 +14,5 @@ Parameters
 type (`number`_)
     No description available.
 
-.. _`number`: ../../../lua/type/number.html
 .. _`niDynamicEffect`: ../../../lua/type/niDynamicEffect.html
+.. _`number`: ../../../lua/type/number.html

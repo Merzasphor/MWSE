@@ -17,5 +17,5 @@ dirname (`string`_)
     The name of the new directory.
 
 .. _`boolean`: ../../../lua/type/boolean.html
-.. _`string`: ../../../lua/type/string.html
 .. _`nil`: ../../../lua/type/nil.html
+.. _`string`: ../../../lua/type/string.html

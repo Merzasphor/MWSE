@@ -23,6 +23,6 @@ modifiedTime (`number`_)
     Optional. The new last modified time to set
 
 .. _`boolean`: ../../../lua/type/boolean.html
-.. _`string`: ../../../lua/type/string.html
-.. _`number`: ../../../lua/type/number.html
 .. _`nil`: ../../../lua/type/nil.html
+.. _`number`: ../../../lua/type/number.html
+.. _`string`: ../../../lua/type/string.html

@@ -72,5 +72,5 @@ Properties
 .. _`value`: tes3gameSetting/value.html
 
 .. _`boolean`: ../../lua/type/boolean.html
-.. _`string`: ../../lua/type/string.html
 .. _`number`: ../../lua/type/number.html
+.. _`string`: ../../lua/type/string.html

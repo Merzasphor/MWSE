@@ -19,5 +19,5 @@ type (`number`_)
 page (`number`_)
     The page of dialogue to fetch.
 
-.. _`tes3dialogue`: ../../../lua/type/tes3dialogue.html
 .. _`number`: ../../../lua/type/number.html
+.. _`tes3dialogue`: ../../../lua/type/tes3dialogue.html

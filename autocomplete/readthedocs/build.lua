@@ -38,6 +38,15 @@ local function isTableEmpty(t)
 	return true
 end
 
+local function getSortedKeys(t, sortFn)
+	local keys = {}
+	for k, _ in pairs(t) do
+		table.insert(keys, k)
+	end
+	table.sort(keys, sortFn)
+	return keys
+end
+
 function table.copy(t, d)
 	if (d == nil) then
 		d = {}
@@ -274,16 +283,16 @@ local function buildEvent(folder, key)
 
 	-- Write out any link information.
 	package.links = package.links or {}
-	for k, v in pairs(package.links) do
+	for _, k in ipairs(getSortedKeys(package.links)) do
 		if isLinkCached(file, k) then
-			file:write(".. _`" .. k .. "`: ../../" .. v .. ".html\n")
+			file:write(".. _`" .. k .. "`: ../../" .. package.links[k] .. ".html\n")
 		end
 	end
 
 	-- Also write out all our type links.
-	for k, v in pairs(typeLinks) do
+	for _, k in pairs(getSortedKeys(typeLinks)) do
 		if (not package.links[k] and isLinkCached(file, k)) then
-			file:write(".. _`" .. k .. "`: ../../" .. v .. ".html\n")
+			file:write(".. _`" .. k .. "`: ../../" .. typeLinks[k] .. ".html\n")
 		end
 	end
 
@@ -438,16 +447,16 @@ local function buildAPIEntryForFunction(package)
 
 	-- Write out any link information.
 	package.links = package.links or {}
-	for k, v in pairs(package.links) do
+	for _, k in ipairs(getSortedKeys(package.links)) do
 		if isLinkCached(file, k) then
-			file:write(".. _`" .. k .. "`: ../../../" .. v .. ".html\n")
+			file:write(".. _`" .. k .. "`: ../../../" .. package.links[k] .. ".html\n")
 		end
 	end
 
 	-- Also write out all our type links.
-	for k, v in pairs(typeLinks) do
+	for _, k in ipairs(getSortedKeys(typeLinks)) do
 		if (not package.links[k] and isLinkCached(file, k)) then
-			file:write(".. _`" .. k .. "`: ../../../" .. v .. ".html\n")
+			file:write(".. _`" .. k .. "`: ../../../" .. typeLinks[k] .. ".html\n")
 		end
 	end
 
@@ -518,16 +527,16 @@ local function buildAPIEntryForValue(package)
 
 	-- Write out any link information.
 	package.links = package.links or {}
-	for k, v in pairs(package.links) do
+	for _, k in ipairs(getSortedKeys(package.links)) do
 		if isLinkCached(file, k) then
-			file:write(".. _`" .. k .. "`: ../../" .. v .. ".html\n")
+			file:write(".. _`" .. k .. "`: ../../" .. package.links[k] .. ".html\n")
 		end
 	end
 
 	-- Also write out all our type links.
-	for k, v in pairs(typeLinks) do
+	for _, k in pairs(getSortedKeys(typeLinks)) do
 		if (not package.links[k] and isLinkCached(file, k)) then
-			file:write(".. _`" .. k .. "`: ../../" .. v .. ".html\n")
+			file:write(".. _`" .. k .. "`: ../../" .. typeLinks[k] .. ".html\n")
 		end
 	end
 
@@ -686,16 +695,16 @@ local function buildNamedTypeEntryForValue(package)
 
 	-- Write out any link information.
 	package.links = package.links or {}
-	for k, v in pairs(package.links) do
+	for _, k in ipairs(getSortedKeys(package.links)) do
 		if isLinkCached(file, k) then
-			file:write(".. _`" .. k .. "`: ../../../" .. v .. ".html\n")
+			file:write(".. _`" .. k .. "`: ../../../" .. package.links[k] .. ".html\n")
 		end
 	end
 
 	-- Also write out all our type links.
-	for k, v in pairs(typeLinks) do
+	for _, k in pairs(getSortedKeys(typeLinks)) do
 		if (not package.links[k] and isLinkCached(file, k)) then
-			file:write(".. _`" .. k .. "`: ../../../" .. v .. ".html\n")
+			file:write(".. _`" .. k .. "`: ../../../" .. typeLinks[k] .. ".html\n")
 		end
 	end
 
@@ -827,16 +836,16 @@ local function buildNamedTypeEntryForFunction(package)
 
 	-- Write out any link information.
 	package.links = package.links or {}
-	for k, v in pairs(package.links) do
+	for _, k in ipairs(getSortedKeys(package.links)) do
 		if isLinkCached(file, k) then
-			file:write(".. _`" .. k .. "`: ../../../" .. v .. ".html\n")
+			file:write(".. _`" .. k .. "`: ../../../" .. package.links[k] .. ".html\n")
 		end
 	end
 
 	-- Also write out all our type links.
-	for k, v in pairs(typeLinks) do
+	for _, k in pairs(getSortedKeys(typeLinks)) do
 		if (not package.links[k] and isLinkCached(file, k)) then
-			file:write(".. _`" .. k .. "`: ../../../" .. v .. ".html\n")
+			file:write(".. _`" .. k .. "`: ../../../" .. typeLinks[k] .. ".html\n")
 		end
 	end
 
@@ -1036,16 +1045,16 @@ local function buildNamedType(folder, key)
 
 	-- Write out any link information.
 	package.links = package.links or {}
-	for k, v in pairs(package.links) do
+	for _, k in ipairs(getSortedKeys(package.links)) do
 		if isLinkCached(file, k) then
-			file:write(".. _`" .. k .. "`: ../../" .. v .. ".html\n")
+			file:write(".. _`" .. k .. "`: ../../" .. package.links[k] .. ".html\n")
 		end
 	end
 
 	-- Also write out all our type links.
-	for k, v in pairs(typeLinks) do
+	for _, k in pairs(getSortedKeys(typeLinks)) do
 		if (not package.links[k] and isLinkCached(file, k)) then
-			file:write(".. _`" .. k .. "`: ../../" .. v .. ".html\n")
+			file:write(".. _`" .. k .. "`: ../../" .. typeLinks[k] .. ".html\n")
 		end
 	end
 

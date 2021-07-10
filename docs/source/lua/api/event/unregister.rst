@@ -15,6 +15,6 @@ callback (`function`_)
 options (`table`_)
     Optional. No description available.
 
+.. _`function`: ../../../lua/type/function.html
 .. _`string`: ../../../lua/type/string.html
 .. _`table`: ../../../lua/type/table.html
-.. _`function`: ../../../lua/type/function.html

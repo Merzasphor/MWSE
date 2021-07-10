@@ -145,8 +145,8 @@ Methods
 .. _`randomizeWeather`: tes3region/randomizeWeather.html
 
 .. _`boolean`: ../../lua/type/boolean.html
+.. _`number`: ../../lua/type/number.html
 .. _`string`: ../../lua/type/string.html
 .. _`table`: ../../lua/type/table.html
-.. _`tes3weather`: ../../lua/type/tes3weather.html
-.. _`number`: ../../lua/type/number.html
 .. _`tes3leveledCreature`: ../../lua/type/tes3leveledCreature.html
+.. _`tes3weather`: ../../lua/type/tes3weather.html

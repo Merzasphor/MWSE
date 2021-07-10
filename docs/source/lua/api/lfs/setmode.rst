@@ -20,6 +20,6 @@ mode (`string`_)
     The file's new mode. Can be either "binary" or "text".
 
 .. _`boolean`: ../../../lua/type/boolean.html
-.. _`string`: ../../../lua/type/string.html
-.. _`nil`: ../../../lua/type/nil.html
 .. _`ioFile`: ../../../lua/type/ioFile.html
+.. _`nil`: ../../../lua/type/nil.html
+.. _`string`: ../../../lua/type/string.html

@@ -16,6 +16,6 @@ Parameters
 path (`string`_)
     The path to lock.
 
-.. _`string`: ../../../lua/type/string.html
 .. _`lfsLock`: ../../../lua/type/lfsLock.html
 .. _`nil`: ../../../lua/type/nil.html
+.. _`string`: ../../../lua/type/string.html

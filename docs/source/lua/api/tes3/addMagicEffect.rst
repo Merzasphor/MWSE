@@ -128,9 +128,9 @@ onCollision (`function`_)
     Optional. A function which will be called when a spell containing this spell effect collides with something.
 
 .. _`boolean`: ../../../lua/type/boolean.html
+.. _`function`: ../../../lua/type/function.html
+.. _`number`: ../../../lua/type/number.html
 .. _`string`: ../../../lua/type/string.html
 .. _`table`: ../../../lua/type/table.html
 .. _`tes3effect`: ../../../lua/type/tes3effect.html
-.. _`number`: ../../../lua/type/number.html
-.. _`function`: ../../../lua/type/function.html
 .. _`tes3physicalObject`: ../../../lua/type/tes3physicalObject.html

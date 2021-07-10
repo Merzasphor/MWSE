@@ -14,5 +14,5 @@ Parameters
 id (`number`_)
     The ID of the menu to locate.
 
-.. _`tes3uiElement`: ../../../lua/type/tes3uiElement.html
 .. _`number`: ../../../lua/type/number.html
+.. _`tes3uiElement`: ../../../lua/type/tes3uiElement.html

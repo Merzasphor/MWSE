@@ -84,5 +84,5 @@ Properties
 .. _`boolean`: ../../lua/type/boolean.html
 .. _`number`: ../../lua/type/number.html
 .. _`tes3activeMagicEffect`: ../../lua/type/tes3activeMagicEffect.html
-.. _`tes3magicSourceInstance`: ../../lua/type/tes3magicSourceInstance.html
 .. _`tes3magicEffectInstance`: ../../lua/type/tes3magicEffectInstance.html
+.. _`tes3magicSourceInstance`: ../../lua/type/tes3magicSourceInstance.html

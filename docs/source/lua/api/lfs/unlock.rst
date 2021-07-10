@@ -26,7 +26,7 @@ length (`number`_)
     Optional. The length of the file, relative to start, to unlock.
 
 .. _`boolean`: ../../../lua/type/boolean.html
-.. _`string`: ../../../lua/type/string.html
-.. _`number`: ../../../lua/type/number.html
-.. _`nil`: ../../../lua/type/nil.html
 .. _`ioFile`: ../../../lua/type/ioFile.html
+.. _`nil`: ../../../lua/type/nil.html
+.. _`number`: ../../../lua/type/number.html
+.. _`string`: ../../../lua/type/string.html
