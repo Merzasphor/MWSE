@@ -31,10 +31,26 @@ namespace mwse {
 			// Binding for TES3::WorldControllerRenderCamera.
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.new_usertype<TES3::WorldControllerRenderCamera::CameraData>("tes3worldControllerRenderCameraData");
+				usertypeDefinition["new"] = sol::no_constructor;
+
+				// Basic property binding.
+				usertypeDefinition["camera"] = &TES3::WorldControllerRenderCamera::CameraData::camera;
+				usertypeDefinition["farPlaneDistance"] = &TES3::WorldControllerRenderCamera::CameraData::farPlaneDistance;
+				usertypeDefinition["fov"] = sol::property(&TES3::WorldControllerRenderCamera::CameraData::getFOV, &TES3::WorldControllerRenderCamera::CameraData::setFOV);
+				usertypeDefinition["nearPlaneDistance"] = &TES3::WorldControllerRenderCamera::CameraData::nearPlaneDistance;
+				usertypeDefinition["viewportHeight"] = &TES3::WorldControllerRenderCamera::CameraData::viewportHeight;
+				usertypeDefinition["viewportWidth"] = &TES3::WorldControllerRenderCamera::CameraData::viewportWidth;
+			}
+
+			// Binding for TES3::WorldControllerRenderCamera.
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::WorldControllerRenderCamera>("tes3worldControllerRenderCamera");
 				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Basic property binding.
+				usertypeDefinition["cameraData"] = sol::readonly_property(&TES3::WorldControllerRenderCamera::cameraData);
 				usertypeDefinition["cameraRoot"] = sol::readonly_property(&TES3::WorldControllerRenderCamera::cameraRoot);
 				usertypeDefinition["renderer"] = sol::readonly_property(&TES3::WorldControllerRenderCamera::renderer);
 				usertypeDefinition["root"] = sol::readonly_property(&TES3::WorldControllerRenderCamera::root);

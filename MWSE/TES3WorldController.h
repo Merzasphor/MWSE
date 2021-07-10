@@ -42,6 +42,7 @@ namespace TES3 {
 			// Other related this-call functions.
 			//
 
+			float getFOV() const;
 			void setFOV(float degrees);
 
 		};
