@@ -42,6 +42,10 @@ namespace NI {
 	struct ColorA : Color {
 		float a;
 
+		ColorA() : Color(), a(0.0f) {}
+		ColorA(float _r, float _g, float _b) : Color(_r, _g, _b), a(0.0f) {}
+		ColorA(float _r, float _g, float _b, float _a) : Color(_r, _g, _b), a(_a) {}
+
 		//
 		// Custom functions.
 		//
