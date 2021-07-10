@@ -17,7 +17,7 @@ namespace NI {
 		Bound bounds; // 0xC
 		TES3::Vector3* vertex; // 0x1C
 		TES3::Vector3* normal; // 0x20
-		ColorA* color; // 0x24
+		PackedColor* color; // 0x24
 		TES3::Vector2* textureCoords; // 0x28
 		unsigned int uniqueID; // 0x2C
 		unsigned short revisionID; // 0x30
@@ -36,7 +36,7 @@ namespace NI {
 		void markAsChanged();
 		void updateModelBound();
 
-		nonstd::span<ColorA> getColors();
+		nonstd::span<PackedColor> getColors();
 		nonstd::span<TES3::Vector3> getVertices();
 		nonstd::span<TES3::Vector3> getNormals();
 		nonstd::span<TES3::Vector2> getTextureCoordinates();

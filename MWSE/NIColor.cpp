@@ -1,6 +1,12 @@
 #include "NIColor.h"
 
 namespace NI {
+	std::string PackedColor::toString() {
+		std::ostringstream ss;
+		ss << std::fixed << std::setprecision(2) << "<" << int(r) << ", " << int(g) << ", " << int(b) << ", " << int(a) << ">";
+		return std::move(ss.str());
+	}
+
 	Color::Color(TES3::Vector3& vector) {
 		r = vector.x;
 		g = vector.y;

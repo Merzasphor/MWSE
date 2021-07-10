@@ -18,7 +18,7 @@ namespace NI {
 		NI_Bound_ComputeFromData(&bounds, vertexCount, vertex, sizeof(TES3::Vector3));
 	}
 
-	nonstd::span<ColorA> GeometryData::getColors() {
+	nonstd::span<PackedColor> GeometryData::getColors() {
 		if (color) {
 			return nonstd::span(color, vertexCount);
 		}

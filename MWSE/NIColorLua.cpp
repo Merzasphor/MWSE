@@ -12,6 +12,28 @@ namespace mwse {
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
 
+			// NiPackedColor
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.new_usertype<NI::PackedColor>("niPackedColor");
+				usertypeDefinition["new"] = sol::constructors<NI::PackedColor(), NI::PackedColor(unsigned char, unsigned char, unsigned char)>();
+
+				// Operator overloading.
+				usertypeDefinition[sol::meta_function::to_string] = &NI::PackedColor::toString;
+
+				// Basic property binding.
+				usertypeDefinition["r"] = &NI::PackedColor::r;
+				usertypeDefinition["g"] = &NI::PackedColor::g;
+				usertypeDefinition["b"] = &NI::PackedColor::b;
+				usertypeDefinition["a"] = &NI::PackedColor::a;
+
+				// Long aliases for color access.
+				usertypeDefinition["red"] = &NI::PackedColor::r;
+				usertypeDefinition["green"] = &NI::PackedColor::g;
+				usertypeDefinition["blue"] = &NI::PackedColor::b;
+				usertypeDefinition["alpha"] = &NI::PackedColor::a;
+			}
+
 			// NiColor
 			{
 				// Start our usertype. We must finish this with state.set_usertype.

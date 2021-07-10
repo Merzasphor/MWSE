@@ -3,6 +3,19 @@
 #include "TES3Vectors.h"
 
 namespace NI {
+	struct PackedColor {
+		unsigned char b; // 0x0
+		unsigned char g; // 0x1
+		unsigned char r; // 0x2
+		unsigned char a; // 0x3
+
+		PackedColor() : r(0), g(0), b(0), a(0) {};
+		PackedColor(unsigned char _r, unsigned char _g, unsigned char _b, unsigned char _a = 0) : r(_r), g(_g), b(_b), a(_a) {};
+
+		std::string toString();
+	};
+	static_assert(sizeof(PackedColor) == 0x4, "NI::PackedColor failed size validation");
+
 	struct Color {
 		float r; // 0x0
 		float g; // 0x4
