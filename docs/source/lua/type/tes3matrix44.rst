@@ -7,16 +7,16 @@ Properties
 ----------------------------------------------------------------------------------------------------
 
 `w`_ (`tes3vector4`_)
-    A copy of the 1st row of the matrix.
+    The 1st row of the matrix.
 
 `x`_ (`tes3vector4`_)
-    A copy of the 2nd row of the matrix.
+    The 2nd row of the matrix.
 
 `y`_ (`tes3vector4`_)
-    A copy of the 3rd row of the matrix.
+    The 3rd row of the matrix.
 
 `z`_ (`tes3vector4`_)
-    A copy of the 4th row of the matrix.
+    The 4th row of the matrix.
 
 .. toctree::
     :hidden:
