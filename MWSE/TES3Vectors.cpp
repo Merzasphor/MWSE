@@ -637,7 +637,7 @@ namespace TES3 {
 	}
 
 	std::ostream& operator<<(std::ostream& str, const Matrix44& matrix) {
-		str << "[" << matrix.m0 << "," << matrix.m1 << "," << matrix.m2 << "]";
+		str << "[" << matrix.m0 << "," << matrix.m1 << "," << matrix.m2 << "," << matrix.m3 << "]";
 		return str;
 	}
 
