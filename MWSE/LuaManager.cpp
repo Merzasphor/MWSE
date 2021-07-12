@@ -965,10 +965,10 @@ namespace mwse {
 			inputController->readKeyState();
 
 			// We only need to check the modifier key values once.
-			bool controlDown = (inputController->keyboardState[DIK_LCONTROL] & 0x80) || (inputController->keyboardState[DIK_RCONTROL] & 0x80);
-			bool shiftDown = (inputController->keyboardState[DIK_LSHIFT] & 0x80) || (inputController->keyboardState[DIK_RSHIFT] & 0x80);
-			bool altDown = (inputController->keyboardState[DIK_LALT] & 0x80) || (inputController->keyboardState[DIK_RALT] & 0x80);
-			bool superDown = (inputController->keyboardState[DIK_LWIN] & 0x80) || (inputController->keyboardState[DIK_RWIN] & 0x80);
+			bool controlDown = inputController->isControlDown();
+			bool shiftDown = inputController->isShiftDown();
+			bool altDown = inputController->isAltDown();
+			bool superDown = inputController->isSuperDown();
 
 			// Go through the keys to see if any of the states have changed, and launch an event based on that.
 			LuaManager& luaManager = LuaManager::getInstance();
