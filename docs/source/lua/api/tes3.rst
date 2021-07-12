@@ -187,6 +187,7 @@ Functions
     tes3/undoTransform
     tes3/unhammerKey
     tes3/unlock
+    tes3/updateInventoryGUI
     tes3/updateJournal
     tes3/wakeUp
 

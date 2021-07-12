@@ -2660,6 +2660,46 @@ namespace mwse {
 			TES3_UI_showRepairServiceMenu(TES3::WorldController::get()->getMobilePlayer());
 		}
 
+		void updateInventoryGUI_internal(TES3::Reference* reference, std::optional<float> containerWeight = {}) {
+			auto worldController = TES3::WorldController::get();
+			auto macp = worldController->getMobilePlayer();
+
+			// Update inventory menu if necessary.
+			if (macp && reference == macp->reference) {
+				worldController->inventoryData->clearIcons(2);
+				worldController->inventoryData->addInventoryItems(&macp->npcInstance->inventory, 2);
+				mwse::tes3::ui::inventoryUpdateIcons();
+			}
+
+			// Update contents menu if necessary.
+			auto contentsMenu = TES3::UI::findMenu(*reinterpret_cast<TES3::UI::UI_ID*>(0x7D3098));
+			if (contentsMenu) {
+				TES3::Reference* contentsReference = static_cast<TES3::Reference*>(contentsMenu->getProperty(TES3::UI::PropertyType::Pointer, *reinterpret_cast<TES3::UI::Property*>(0x7D3048)).ptrValue);
+				if (reference == contentsReference) {
+					float isCompanion = *reinterpret_cast<float*>(0x7D3184);
+					if (isCompanion != 0.0f) {
+						TES3::UI::updateContentsCompanionElements();
+					}
+
+					TES3::UI::updateContentsMenuTiles();
+
+					// Update container weight variable.
+					auto MenuContents_totalweight = *reinterpret_cast<TES3::UI::Property*>(0x7D30B8);
+					if (!containerWeight.has_value()) {
+						containerWeight = static_cast<TES3::Actor*>(contentsReference->baseObject)->inventory.calculateContainedWeight();
+					}
+					contentsMenu->setProperty(MenuContents_totalweight, containerWeight.value());
+				}
+			}
+		}
+
+		void updateInventoryGUI(sol::table params) {
+			TES3::Reference* reference = getOptionalParamReference(params, "reference");
+			if (reference) {
+				updateInventoryGUI_internal(reference);
+			}
+		}
+
 		int addItem(sol::table params) {
 			// Get the reference we are manipulating.
 			TES3::Reference* reference = getOptionalParamReference(params, "reference");
@@ -2779,26 +2819,21 @@ namespace mwse {
 
 			// If either of them are the player, we need to update the GUI.
 			if (playerMobile && getOptionalParam<bool>(params, "updateGUI", true)) {
-				// Update inventory menu if necessary.
-				if (mobile == playerMobile) {
-					worldController->inventoryData->clearIcons(2);
-					worldController->inventoryData->addInventoryItems(&playerMobile->npcInstance->inventory, 2);
-					mwse::tes3::ui::inventoryUpdateIcons();
-				}
-
 				// Update contents menu if necessary.
+				std::optional<float> newContainerWeight;
 				auto contentsMenu = TES3::UI::findMenu(*reinterpret_cast<TES3::UI::UI_ID*>(0x7D3098));
 				if (contentsMenu) {
 					TES3::Reference* contentsReference = static_cast<TES3::Reference*>(contentsMenu->getProperty(TES3::UI::PropertyType::Pointer, *reinterpret_cast<TES3::UI::Property*>(0x7D3048)).ptrValue);
 					if (reference == contentsReference) {
 						TES3::UI::updateContentsMenuTiles();
-					}
 
-					// Update container weight variable.
-					auto MenuContents_totalweight = *reinterpret_cast<TES3::UI::Property*>(0x7D30B8);
-					auto currentWeight = contentsMenu->getProperty(TES3::UI::PropertyType::Float, MenuContents_totalweight).floatValue;
-					contentsMenu->setProperty(MenuContents_totalweight, currentWeight + item->getWeight() * fulfilledCount);
+						// Update container weight variable.
+						auto MenuContents_totalweight = *reinterpret_cast<TES3::UI::Property*>(0x7D30B8);
+						auto currentWeight = contentsMenu->getProperty(TES3::UI::PropertyType::Float, MenuContents_totalweight).floatValue;
+						newContainerWeight = currentWeight + item->getWeight() * fulfilledCount;
+					}
 				}
+				updateInventoryGUI_internal(reference, newContainerWeight);
 			}
 
 			reference->setObjectModified(true);
@@ -2888,14 +2923,8 @@ namespace mwse {
 
 			// If either of them are the player, we need to update the GUI.
 			if (playerMobile && getOptionalParam<bool>(params, "updateGUI", true)) {
-				// Update inventory menu if necessary.
-				if (mobile == playerMobile) {
-					worldController->inventoryData->clearIcons(2);
-					worldController->inventoryData->addInventoryItems(&playerMobile->npcInstance->inventory, 2);
-					mwse::tes3::ui::inventoryUpdateIcons();
-				}
-
 				// Update contents menu if necessary.
+				std::optional<float> newContainerWeight;
 				auto contentsMenu = TES3::UI::findMenu(*reinterpret_cast<TES3::UI::UI_ID*>(0x7D3098));
 				if (contentsMenu) {
 					TES3::Reference* contentsReference = static_cast<TES3::Reference*>(contentsMenu->getProperty(TES3::UI::PropertyType::Pointer, *reinterpret_cast<TES3::UI::Property*>(0x7D3048)).ptrValue);
@@ -2906,8 +2935,9 @@ namespace mwse {
 					// Update container weight variable.
 					auto MenuContents_totalweight = *reinterpret_cast<TES3::UI::Property*>(0x7D30B8);
 					auto currentWeight = contentsMenu->getProperty(TES3::UI::PropertyType::Float, MenuContents_totalweight).floatValue;
-					contentsMenu->setProperty(MenuContents_totalweight, currentWeight - item->getWeight() * fulfilledCount);
+					newContainerWeight = currentWeight - item->getWeight() * fulfilledCount;
 				}
+				updateInventoryGUI_internal(reference, newContainerWeight);
 			}
 
 			reference->setObjectModified(true);
@@ -3112,6 +3142,22 @@ namespace mwse {
 				fromMobile->updateOpacity();
 			}
 
+			// If we're looking at a companion, we need to update the profit value and trigger the GUI updates.
+			float isCompanion = *reinterpret_cast<float*>(0x7D3184);
+			if (isCompanion != 0.0f) {
+				auto contentsMenu = TES3::UI::findMenu(*reinterpret_cast<TES3::UI::UI_ID*>(0x7D3098));
+				if (contentsMenu) {
+					TES3::Reference* contentsReference = static_cast<TES3::Reference*>(contentsMenu->getProperty(TES3::UI::PropertyType::Pointer, *reinterpret_cast<TES3::UI::Property*>(0x7D3048)).ptrValue);
+					float& companionProfit = *reinterpret_cast<float*>(0x7D3188);
+					if (toReference == contentsReference) {
+						companionProfit += fulfilledCount * item->getValue();
+					}
+					else {
+						companionProfit -= fulfilledCount * item->getValue();
+					}
+				}
+			}
+
 			// If either of them are the player, we need to update the GUI.
 			if (playerMobile && getOptionalParam<bool>(params, "updateGUI", true)) {
 				// Update inventory menu if necessary.
@@ -3122,38 +3168,25 @@ namespace mwse {
 				}
 
 				// Update contents menu if necessary.
+				std::optional<float> newContainerWeight;
 				auto contentsMenu = TES3::UI::findMenu(*reinterpret_cast<TES3::UI::UI_ID*>(0x7D3098));
 				if (contentsMenu) {
 					// Make sure that the contents reference is one of the ones we care about.
 					TES3::Reference* contentsReference = static_cast<TES3::Reference*>(contentsMenu->getProperty(TES3::UI::PropertyType::Pointer, *reinterpret_cast<TES3::UI::Property*>(0x7D3048)).ptrValue);
-					if (fromReference == contentsReference || toReference == contentsReference) {
-						// If we're looking at a companion, we need to update the profit value and trigger the GUI updates.
-						float isCompanion = *reinterpret_cast<float*>(0x7D3184);
-						if (isCompanion != 0.0f) {
-							float& companionProfit = *reinterpret_cast<float*>(0x7D3188);
-							if (toReference == contentsReference) {
-								companionProfit += fulfilledCount * item->getValue();
-							}
-							else {
-								companionProfit -= fulfilledCount * item->getValue();
-							}
-							TES3::UI::updateContentsCompanionElements();
-						}
-
-						// We also need to update the menu tiles.
-						TES3::UI::updateContentsMenuTiles();
-					}
 
 					// Update container weight variable.
 					auto MenuContents_totalweight = *reinterpret_cast<TES3::UI::Property*>(0x7D30B8);
 					auto currentWeight = contentsMenu->getProperty(TES3::UI::PropertyType::Float, MenuContents_totalweight).floatValue;
 					if (toReference == contentsReference) {
-						contentsMenu->setProperty(MenuContents_totalweight, currentWeight + item->getWeight() * fulfilledCount);
+						newContainerWeight = currentWeight + item->getWeight() * fulfilledCount;
 					}
 					else {
-						contentsMenu->setProperty(MenuContents_totalweight, currentWeight - item->getWeight() * fulfilledCount);
+						newContainerWeight = currentWeight - item->getWeight() * fulfilledCount;
 					}
 				}
+
+				updateInventoryGUI_internal(fromReference, newContainerWeight);
+				updateInventoryGUI_internal(toReference, newContainerWeight);
 			}
 
 			fromReference->setObjectModified(true);
@@ -3215,22 +3248,7 @@ namespace mwse {
 			auto playerMobile = worldController->getMobilePlayer();
 
 			if (getOptionalParam<bool>(params, "updateGUI", true)) {
-				// Update inventory menu if necessary.
-				if (toMobile == playerMobile) {
-					worldController->inventoryData->clearIcons(2);
-					worldController->inventoryData->addInventoryItems(&playerMobile->npcInstance->inventory, 2);
-					mwse::tes3::ui::inventoryUpdateIcons();
-				}
-
-				// Update contents menu if necessary.
-				auto contentsMenu = TES3::UI::findMenu(*reinterpret_cast<TES3::UI::UI_ID*>(0x7D3098));
-				if (contentsMenu) {
-					// Make sure that the contents reference is one of the ones we care about.
-					TES3::Reference* contentsReference = static_cast<TES3::Reference*>(contentsMenu->getProperty(TES3::UI::PropertyType::Pointer, *reinterpret_cast<TES3::UI::Property*>(0x7D3048)).ptrValue);
-					if (toReference == contentsReference) {
-						TES3::UI::updateContentsMenuTiles();
-					}
-				}
+				updateInventoryGUI_internal(toReference);
 			}
 
 			toReference->setObjectModified(true);
@@ -3523,13 +3541,7 @@ namespace mwse {
 
 			// Update inventory tiles if needed.
 			if (getOptionalParam<bool>(params, "updateGUI", true)) {
-				auto worldController = TES3::WorldController::get();
-				auto macp = worldController->getMobilePlayer();
-				if (mobile == macp) {
-					worldController->inventoryData->clearIcons(2);
-					worldController->inventoryData->addInventoryItems(&macp->npcInstance->inventory, 2);
-					mwse::tes3::ui::inventoryUpdateIcons();
-				}
+				updateInventoryGUI_internal(mobile->reference);
 			}
 
 			return droppedReference;
@@ -4863,6 +4875,7 @@ namespace mwse {
 			tes3["undoTransform"] = undoTransform;
 			tes3["unhammerKey"] = unhammerKey;
 			tes3["unlock"] = unlock;
+			tes3["updateInventoryGUI"] = updateInventoryGUI;
 			tes3["updateJournal"] = updateJournal;
 			tes3["wakeUp"] = wakeUp;
 		}
