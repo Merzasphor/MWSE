@@ -76,6 +76,7 @@ namespace TES3 {
 		bool isClone() const;
 
 		bool tradesItemType(ObjectType::ObjectType type);
+		bool offersService(unsigned int service);
 
 		int getBloodType() const;
 		void setBloodType(int value);

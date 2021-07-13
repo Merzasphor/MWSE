@@ -169,6 +169,11 @@ namespace TES3 {
 		return false;
 	}
 
+	bool Actor::offersService(unsigned int service) {
+		auto config = getAIConfig();
+		return (config->merchantFlags & service);
+	}
+
 	int Actor::getBloodType() const {
 		return (actorFlags >> 0xA) & 0x7;
 	}
