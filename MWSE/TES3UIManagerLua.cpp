@@ -152,7 +152,7 @@ namespace mwse {
 
 			// Run our original event if no legacy was used.
 			if (!legacyUsed && eventID != Property::event_destroy) {
-				auto original = originalCallbackMap[source][eventID];
+				auto original = originalCallbackMap[owningWidget][eventID];
 				if (original) {
 					original(owningWidget, eventID, data0, data1, source);
 				}
