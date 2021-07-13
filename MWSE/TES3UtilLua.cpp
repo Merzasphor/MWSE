@@ -1589,6 +1589,31 @@ namespace mwse {
 			return actor->tradesItemType(item->objectType);
 		}
 
+		std::pair<bool, TES3::DialogueInfo*> checkMerchantOffersService(sol::table params) {
+			auto reference = getOptionalParamExecutionReference(params);
+			if (reference == nullptr) {
+				throw std::invalid_argument("Invalid reference parameter provided: Can't be nil.");
+			}
+
+			auto actor = reinterpret_cast<TES3::Actor*>(reference->baseObject);
+			if (!actor->isActor()) {
+				throw std::invalid_argument("Invalid reference parameter provided: Base object must be an actor.");
+			}
+
+			// Check if the actor is offering the specific service.
+			sol::optional<int> service = params["service"];
+			if (service && !actor->offersService(service.value())) {
+				return { false, nullptr };
+			}
+
+			// Check for service refusal response.
+			const int serviceRefusalPage = 7;
+			auto dialogue = TES3::Dialogue::getDialogue((int)TES3::DialogueType::Persuasion, serviceRefusalPage);
+			auto serviceRefusal = dialogue->getFilteredInfo(actor, reference, true);
+
+			return { serviceRefusal == nullptr, serviceRefusal };
+		}
+
 		sol::optional<int> getJournalIndex(sol::table params) {
 			TES3::Dialogue* journal = getOptionalParamDialogue(params, "id");
 			if (journal == nullptr || journal->type != TES3::DialogueType::Journal) {
@@ -4728,6 +4753,7 @@ namespace mwse {
 			tes3["cancelAnimationLoop"] = cancelAnimationLoop;
 			tes3["canRest"] = canRest;
 			tes3["cast"] = cast;
+			tes3["checkMerchantOffersService"] = checkMerchantOffersService;
 			tes3["checkMerchantTradesItem"] = checkMerchantTradesItem;
 			tes3["clearMarkLocation"] = clearMarkLocation;
 			tes3["createCell"] = createCell;

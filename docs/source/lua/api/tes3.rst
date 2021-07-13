@@ -37,6 +37,7 @@ Functions
     tes3/cancelAnimationLoop
     tes3/canRest
     tes3/cast
+    tes3/checkMerchantOffersService
     tes3/checkMerchantTradesItem
     tes3/claimSpellEffectId
     tes3/clearMarkLocation

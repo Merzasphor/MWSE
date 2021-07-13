@@ -116,15 +116,25 @@ Properties
 Methods
 ----------------------------------------------------------------------------------------------------
 
+`offersService`_ (`boolean`_)
+    Checks if the actor will offer a service in dialogue. This an offer and may still be refused by dialogue checks. To also get the result of dialogue checks, use tes3.checkMerchantOffersService.
+
 `onInventoryClose`_
     A callback function invoked when an inventory is closed. Typically not used outside of specific purposes. You may find tes3.reference's onCloseInventory() to be more convenient to use.
+
+`tradesItemType`_ (`boolean`_)
+    Checks if the actor will buy and sell items of a given object type. e.g. actor:tradesItemType(tes3.objectType.repairItem)
 
 .. toctree::
     :hidden:
 
+    tes3actor/offersService
     tes3actor/onInventoryClose
+    tes3actor/tradesItemType
 
+.. _`offersService`: tes3actor/offersService.html
 .. _`onInventoryClose`: tes3actor/onInventoryClose.html
+.. _`tradesItemType`: tes3actor/tradesItemType.html
 
 .. _`boolean`: ../../lua/type/boolean.html
 .. _`niNode`: ../../lua/type/niNode.html

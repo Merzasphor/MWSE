@@ -37,7 +37,7 @@ Properties
     The disabled state of the object.
 
 `disposition`_ (`number`_)
-    The actor's base disposition.
+    Read-only. The actor's effective disposition, with all modifiers applied.
 
 `equipment`_ (`tes3iterator`_)
     Read-only. The items currently equipped to the actor.
@@ -219,15 +219,25 @@ Properties
 Methods
 ----------------------------------------------------------------------------------------------------
 
+`offersService`_ (`boolean`_)
+    Checks if the actor will offer a service in dialogue. This an offer and may still be refused by dialogue checks. To also get the result of dialogue checks, use tes3.checkMerchantOffersService.
+
 `onInventoryClose`_
     A callback function invoked when an inventory is closed. Typically not used outside of specific purposes. You may find tes3.reference's onCloseInventory() to be more convenient to use.
+
+`tradesItemType`_ (`boolean`_)
+    Checks if the actor will buy and sell items of a given object type. e.g. actor:tradesItemType(tes3.objectType.repairItem)
 
 .. toctree::
     :hidden:
 
+    tes3npcInstance/offersService
     tes3npcInstance/onInventoryClose
+    tes3npcInstance/tradesItemType
 
+.. _`offersService`: tes3npcInstance/offersService.html
 .. _`onInventoryClose`: tes3npcInstance/onInventoryClose.html
+.. _`tradesItemType`: tes3npcInstance/tradesItemType.html
 
 .. _`boolean`: ../../lua/type/boolean.html
 .. _`niNode`: ../../lua/type/niNode.html

@@ -21,6 +21,9 @@ Properties
 `barterGold`_ (`number`_)
     Read-only. The actor's max health.
 
+`baseDisposition`_ (`number`_)
+    The actor's base disposition.
+
 `boundingBox`_ (`tes3boundingBox`_)
     The bounding box for the object.
 
@@ -35,9 +38,6 @@ Properties
 
 `disabled`_ (`boolean`_)
     The disabled state of the object.
-
-`disposition`_ (`number`_)
-    The actor's base disposition.
 
 `equipment`_ (`tes3iterator`_)
     Read-only. The items currently equipped to the actor.
@@ -155,12 +155,12 @@ Properties
     tes3npc/attributes
     tes3npc/autoCalc
     tes3npc/barterGold
+    tes3npc/baseDisposition
     tes3npc/boundingBox
     tes3npc/class
     tes3npc/cloneCount
     tes3npc/deleted
     tes3npc/disabled
-    tes3npc/disposition
     tes3npc/equipment
     tes3npc/faction
     tes3npc/factionIndex
@@ -203,12 +203,12 @@ Properties
 .. _`attributes`: tes3npc/attributes.html
 .. _`autoCalc`: tes3npc/autoCalc.html
 .. _`barterGold`: tes3npc/barterGold.html
+.. _`baseDisposition`: tes3npc/baseDisposition.html
 .. _`boundingBox`: tes3npc/boundingBox.html
 .. _`class`: tes3npc/class.html
 .. _`cloneCount`: tes3npc/cloneCount.html
 .. _`deleted`: tes3npc/deleted.html
 .. _`disabled`: tes3npc/disabled.html
-.. _`disposition`: tes3npc/disposition.html
 .. _`equipment`: tes3npc/equipment.html
 .. _`faction`: tes3npc/faction.html
 .. _`factionIndex`: tes3npc/factionIndex.html
@@ -249,15 +249,25 @@ Properties
 Methods
 ----------------------------------------------------------------------------------------------------
 
+`offersService`_ (`boolean`_)
+    Checks if the actor will offer a service in dialogue. This an offer and may still be refused by dialogue checks. To also get the result of dialogue checks, use tes3.checkMerchantOffersService.
+
 `onInventoryClose`_
     A callback function invoked when an inventory is closed. Typically not used outside of specific purposes. You may find tes3.reference's onCloseInventory() to be more convenient to use.
+
+`tradesItemType`_ (`boolean`_)
+    Checks if the actor will buy and sell items of a given object type. e.g. actor:tradesItemType(tes3.objectType.repairItem)
 
 .. toctree::
     :hidden:
 
+    tes3npc/offersService
     tes3npc/onInventoryClose
+    tes3npc/tradesItemType
 
+.. _`offersService`: tes3npc/offersService.html
 .. _`onInventoryClose`: tes3npc/onInventoryClose.html
+.. _`tradesItemType`: tes3npc/tradesItemType.html
 
 .. _`boolean`: ../../lua/type/boolean.html
 .. _`niNode`: ../../lua/type/niNode.html
