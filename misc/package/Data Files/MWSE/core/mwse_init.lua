@@ -367,14 +367,14 @@ local function getNthLine(fileName, n)
 	f:close()
 end
 
-local logTextCache = {}
+debug.logCache = {}
 
 function debug.log(value)
 	local info = debug.getinfo(2, "Sl")
 
 	if not info.source:find("^@") then
 		error("'debug.log' called from invalid source")
-		return
+		return value
 	end
 
 	-- strip the '@' tag
@@ -383,12 +383,12 @@ function debug.log(value)
 	-- include line info
 	local location = fileName:lower():gsub("data files\\mwse\\", "") .. ":" .. info.currentline
 
-	local text = logTextCache[location]
+	local text = debug.logCache[location]
 	if text == nil then
 		text = getNthLine(fileName, info.currentline)
 		if text ~= nil then
 			text = text:match("debug%.log%((.*)%)")
-			logTextCache[location] = text
+			debug.logCache[location] = text
 		end
 	end
 
