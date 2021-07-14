@@ -19,6 +19,14 @@ function mcm.register(template)
 	mwse.registerModConfig(template.name, modConfig)
 end
 
+function mcm.testKeyBind(keybind)
+	local inputController = tes3.worldController.inputController
+	return inputController:isKeyDown(keybind.keyCode)
+		and keybind.isShiftDown == inputController:isShiftDown()
+		and keybind.isAltDown == inputController:isAltDown()
+		and keybind.isControlDown == inputController:isControlDown()
+end
+
 --Depreciated
 function mcm.registerModData(mcmData)
 	--object returned to be used in modConfigMenu
