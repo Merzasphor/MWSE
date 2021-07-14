@@ -231,12 +231,13 @@ namespace mwse::lua {
 				throw std::invalid_argument{ "tes3weapon.create: 'id' parameter must be less than 32 character long." };
 			}
 
+			auto objectType = getOptionalParam<unsigned int>(params, "objectType", TES3::ObjectType::Invalid);
 			if (auto existingObject = TES3::DataHandler::get()->nonDynamicData->resolveObject(id.c_str()); existingObject != nullptr) {
-				if (getIfExists && existingObject->objectType == TES3::ObjectType::Weapon) {
+				if (getIfExists && existingObject->objectType == objectType) {
 					return existingObject;
 				}
 
-				throw std::invalid_argument{ "tes3weapon.create: 'id' parameter already assigned to an existing object that is not a weapon item." };
+				throw std::invalid_argument{ "tes3weapon.create: 'id' parameter already assigned to an existing object of a different type." };
 			}
 
 			std::string name = getOptionalParam<std::string>(params, "name", "Miscellaneous item");
@@ -251,7 +252,6 @@ namespace mwse::lua {
 
 			auto weapon = new TES3::Weapon();
 
-			auto objectType = getOptionalParam<unsigned int>(params, "objectType", {});
 			if (objectType == TES3::ObjectType::Ammo) {
 				weapon->objectType = TES3::ObjectType::Ammo;
 			}
