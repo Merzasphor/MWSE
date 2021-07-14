@@ -251,6 +251,10 @@ namespace mwse::lua {
 
 			auto weapon = new TES3::Weapon();
 
+			if (getOptionalParamScript(params, "isAmmo")) {
+				weapon->objectType = TES3::ObjectType::Ammo;
+			}
+
 			weapon->setID(id.c_str());
 			weapon->setName(name.c_str());
 			weapon->setModelPath(mesh.c_str());
