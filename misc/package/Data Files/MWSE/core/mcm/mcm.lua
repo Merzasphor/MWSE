@@ -53,13 +53,13 @@ end
 	create the element on the parent. 
 
 ]]--
+local strLengthCreate = string.len("create")
 function mcm.__index(tbl, key)
 
 	local meta = getmetatable(tbl)
-	local prefixLen = string.len("create")
-	if string.sub( key, 1, prefixLen ) == "create" then
+	if string.sub( key, 1, strLengthCreate ) == "create" then
 
-		local class = string.sub(key, prefixLen + 1)
+		local class = string.sub(key, strLengthCreate + 1)
 		local component
 
 		local classPaths = require("mcm.classPaths")
