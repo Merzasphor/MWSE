@@ -251,7 +251,8 @@ namespace mwse::lua {
 
 			auto weapon = new TES3::Weapon();
 
-			if (getOptionalParamScript(params, "isAmmo")) {
+			auto objectType = getOptionalParam<unsigned int>(params, "objectType", {});
+			if (objectType == TES3::ObjectType::Ammo) {
 				weapon->objectType = TES3::ObjectType::Ammo;
 			}
 

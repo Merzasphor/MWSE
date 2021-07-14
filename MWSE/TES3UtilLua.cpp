@@ -2456,9 +2456,6 @@ namespace mwse {
 		TES3::BaseObject* createObject(sol::table params) {
 			auto objectType = getOptionalParam(params, "objectType", TES3::ObjectType::Invalid);
 			auto getIfExists = getOptionalParam(params, "getIfExists", true);
-			if (objectType == TES3::ObjectType::Ammo) {
-				params["isAmmo"] = true;
-			}
 			return makeObjectCreator(objectType)->create(params, getIfExists);
 		}
 
