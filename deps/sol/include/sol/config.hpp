@@ -35,6 +35,7 @@
 // Ensure that userdata and functions have their param types checked.
 #define SOL_SAFE_FUNCTION_CALLS 1
 #define SOL_SAFE_USERTYPE 1
+#define SOL_STRINGS_ARE_NUMBERS 1
 
 // It's _not_ wanted to propagate exceptions through Lua
 #define SOL_EXCEPTIONS_SAFE_PROPAGATION 0
