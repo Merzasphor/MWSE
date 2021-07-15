@@ -76,6 +76,7 @@
 #include "TES3WorldController.h"
 
 #include "BitUtil.h"
+#include <sstream>
 
 namespace mwse {
 	namespace lua {
@@ -1796,8 +1797,7 @@ namespace mwse {
 
 			// Make sure our object is of the right type.
 			if (!maybeMobile.is<TES3::MobileActor>()) {
-				logStackTrace("tes3.setStatistic: Could not resolve parameter 'reference'.");
-				return;
+				throw std::invalid_argument("tes3.setStatistic: Could not resolve parameter 'reference'.");
 			}
 
 			// Try to get our statistic.
@@ -1812,9 +1812,9 @@ namespace mwse {
 						statistic = &static_cast<TES3::MobileCreature*>(mobile)->skills[statisticSkill.value()];
 					}
 					else {
-						mwse::log::getLog() << "tes3.setStatistic: Invalid skill index " << std::dec << statisticSkill.value() << " for creature." << std::endl;
-						logStackTrace();
-						return;
+						std::stringstream ss;
+						ss << "tes3.setStatistic: Invalid skill index " << std::dec << statisticSkill.value() << " for creature.";
+						throw std::invalid_argument(ss.str());
 					}
 				}
 				else {
@@ -1822,9 +1822,9 @@ namespace mwse {
 						statistic = &static_cast<TES3::MobileNPC*>(mobile)->skills[statisticSkill.value()];
 					}
 					else {
-						mwse::log::getLog() << "tes3.setStatistic: Invalid skill index " << std::dec << statisticSkill.value() << " for NPC." << std::endl;
-						logStackTrace();
-						return;
+						std::stringstream ss;
+						ss << "tes3.setStatistic: Invalid skill index " << std::dec << statisticSkill.value() << " for NPC.";
+						throw std::invalid_argument(ss.str());
 					}
 				}
 			}
@@ -1833,26 +1833,27 @@ namespace mwse {
 					statistic = &mobile->attributes[statisticAttribute.value()];
 				}
 				else {
-					mwse::log::getLog() << "tes3.setStatistic: Invalid attribute index " << std::dec << statisticSkill.value() << "." << std::endl;
-					logStackTrace();
-					return;
+					std::stringstream ss;
+					ss << "tes3.setStatistic: Invalid attribute index " << std::dec << statisticSkill.value() << ".";
+					throw std::invalid_argument(ss.str());
 				}
 			}
 			else if (statisticName) {
 				sol::optional<TES3::Statistic*> maybeStatistic = maybeMobile[statisticName.value()];
 				if (maybeStatistic) {
+					// Further check is required as sol may convert nil to nullptr.
 					statistic = maybeStatistic.value();
 				}
-				else {
-					logStackTrace("tes3.setStatistic: No statistic with the given criteria could be found.");
-					return;
+				if (statistic == nullptr) {
+					std::stringstream ss;
+					ss << "tes3.setStatistic: No statistic named \"" << statisticName.value() << "\" could be found.";
+					throw std::invalid_argument(ss.str());
 				}
 			}
 
 			// This case shouldn't be hit.
 			if (statistic == nullptr) {
-				logStackTrace("tes3.setStatistic: No statistic resolved.");
-				return;
+				throw std::invalid_argument("tes3.setStatistic: No statistic resolved.");
 			}
 
 			// Retype our variables to something more friendly, and get additional params.
@@ -1875,8 +1876,7 @@ namespace mwse {
 				statistic->setBase(base.value());
 			}
 			else {
-				logStackTrace("tes3.setStatistic: No edit mode provided, missing parameter 'current' or 'base' or 'value'.");
-				return;
+				throw std::invalid_argument("tes3.setStatistic: No edit mode provided, missing parameter 'current' or 'base' or 'value'.");
 			}
 
 			// Update any derived statistics.
@@ -1927,8 +1927,7 @@ namespace mwse {
 
 			// Make sure our object is of the right type.
 			if (!maybeMobile.is<TES3::MobileActor>()) {
-				logStackTrace("tes3.modStatistic: Could not resolve parameter 'reference'.");
-				return;
+				throw std::invalid_argument("tes3.modStatistic: Could not resolve parameter 'reference'.");
 			}
 
 			// Try to get our statistic.
@@ -1943,9 +1942,9 @@ namespace mwse {
 						statistic = &static_cast<TES3::MobileCreature*>(mobile)->skills[statisticSkill.value()];
 					}
 					else {
-						mwse::log::getLog() << "tes3.modStatistic: Invalid skill index " << std::dec << statisticSkill.value() << " for creature." << std::endl;
-						logStackTrace();
-						return;
+						std::stringstream ss;
+						ss << "tes3.modStatistic: Invalid skill index " << std::dec << statisticSkill.value() << " for creature.";
+						throw std::invalid_argument(ss.str());
 					}
 				}
 				else {
@@ -1953,9 +1952,9 @@ namespace mwse {
 						statistic = &static_cast<TES3::MobileNPC*>(mobile)->skills[statisticSkill.value()];
 					}
 					else {
-						mwse::log::getLog() << "tes3.modStatistic: Invalid skill index " << std::dec << statisticSkill.value() << " for NPC." << std::endl;
-						logStackTrace();
-						return;
+						std::stringstream ss;
+						ss << "tes3.modStatistic: Invalid skill index " << std::dec << statisticSkill.value() << " for NPC.";
+						throw std::invalid_argument(ss.str());
 					}
 				}
 			}
@@ -1964,26 +1963,27 @@ namespace mwse {
 					statistic = &mobile->attributes[statisticAttribute.value()];
 				}
 				else {
-					mwse::log::getLog() << "tes3.modStatistic: Invalid attribute index " << std::dec << statisticSkill.value() << "." << std::endl;
-					logStackTrace();
-					return;
+					std::stringstream ss;
+					ss << "tes3.modStatistic: Invalid attribute index " << std::dec << statisticSkill.value() << ".";
+					throw std::invalid_argument(ss.str());
 				}
 			}
 			else if (statisticName) {
 				sol::optional<TES3::Statistic*> maybeStatistic = maybeMobile[statisticName.value()];
 				if (maybeStatistic) {
+					// Further check is required as sol may convert nil to nullptr.
 					statistic = maybeStatistic.value();
 				}
-				else {
-					logStackTrace("tes3.modStatistic: No statistic with the given criteria could be found.");
-					return;
+				if (statistic == nullptr) {
+					std::stringstream ss;
+					ss << "tes3.modStatistic: No statistic named \"" << statisticName.value() << "\" could be found.";
+					throw std::invalid_argument(ss.str());
 				}
 			}
 
 			// This case shouldn't be hit.
 			if (statistic == nullptr) {
-				logStackTrace("tes3.modStatistic: No statistic resolved.");
-				return;
+				throw std::invalid_argument("tes3.modStatistic: No statistic resolved.");
 			}
 
 			// Retype our variables to something more friendly, and get additional params.
@@ -2007,7 +2007,7 @@ namespace mwse {
 				statistic->modBaseCapped(base.value(), limit.value_or(false), limit.value_or(false));
 			}
 			else {
-				logStackTrace("tes3.modStatistic: No edit mode provided, missing parameter 'current' or 'base' or 'value'.");
+				throw std::invalid_argument("tes3.modStatistic: No edit mode provided, missing parameter 'current' or 'base' or 'value'.");
 				return;
 			}
 
