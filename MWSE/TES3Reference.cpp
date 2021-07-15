@@ -183,11 +183,11 @@ namespace TES3 {
 		// If the light is not part of the scene graph yet, automatically attach the light.
 		// It can be placed under the attachLight subnode, as in light entities, or the scene node otherwise.
 		if (light->parentNode == nullptr && sceneNode != nullptr) {
-			auto attachPoint = sceneNode->getObjectByNameAndType<NI::Node>("attachLight");
+			auto attachPoint = sceneNode->getObjectByNameAndType<NI::Node>("AttachLight");
 			if (attachPoint == nullptr) {
 				attachPoint = sceneNode;
 			}
-			attachPoint->attachChild(light);
+			attachPoint->attachChild(light, true);
 			attachPoint->update();
 		}
 
@@ -198,7 +198,7 @@ namespace TES3 {
 		attachmentNode = mwse::tes3::_new<TES3::LightAttachmentNode>();
 		memset(attachmentNode, 0, sizeof(TES3::LightAttachmentNode));
 		attachmentNode->light = light;
-		attachmentNode->flickerPhase = phase_arg.value_or(0);
+		attachmentNode->flickerPhase = phase_arg.value_or(0.0f);
 		attachment->data = attachmentNode;
 		
 		insertAttachment(attachment);
