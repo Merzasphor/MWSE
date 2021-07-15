@@ -70,6 +70,7 @@ namespace TES3 {
 		bool isMelee() const;
 		bool isRanged() const;
 		bool isAmmo() const;
+		bool isProjectile() const;
 		bool hasDurability() const;
 		void setDurability(int value);
 

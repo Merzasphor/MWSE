@@ -54,6 +54,10 @@ namespace TES3 {
 		return weaponType == WeaponType::Arrow || weaponType == WeaponType::Bolt;
 	}
 
+	bool Weapon::isProjectile() const {
+		return weaponType > TES3::WeaponType::Crossbow;
+	}
+
 	bool Weapon::hasDurability() const {
 		return weaponType <= TES3::WeaponType::Crossbow;
 	}

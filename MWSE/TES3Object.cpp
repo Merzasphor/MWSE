@@ -151,7 +151,7 @@ namespace TES3 {
 		}
 		// Projectiles cannot have custom data, it breaks the equip interface.
 		if (objectType == ObjectType::Weapon || objectType == ObjectType::Ammo) {
-			return static_cast<const Weapon*>(this)->hasDurability();
+			return !static_cast<const Weapon*>(this)->isProjectile();
 		}
 		return true;
 	}

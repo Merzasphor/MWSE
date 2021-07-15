@@ -34,6 +34,7 @@ namespace mwse {
 			usertypeDefinition["isAmmo"] = sol::readonly_property(&TES3::Weapon::isAmmo);
 			usertypeDefinition["isMelee"] = sol::readonly_property(&TES3::Weapon::isMelee);
 			usertypeDefinition["isOneHanded"] = sol::readonly_property(&TES3::Weapon::isOneHanded);
+			usertypeDefinition["isProjectile"] = sol::readonly_property(&TES3::Weapon::isProjectile);
 			usertypeDefinition["isRanged"] = sol::readonly_property(&TES3::Weapon::isRanged);
 			usertypeDefinition["isSilver"] = sol::property(&TES3::Weapon::getIsSilver, &TES3::Weapon::setIsSilver);
 			usertypeDefinition["isTwoHanded"] = sol::readonly_property(&TES3::Weapon::isTwoHanded);
