@@ -149,7 +149,10 @@ namespace TES3 {
 		if (objectType == ObjectType::Misc && static_cast<const Misc*>(this)->isGold()) {
 			return false;
 		}
-
+		// Projectiles cannot have custom data, it breaks the equip interface.
+		if (objectType == ObjectType::Weapon || objectType == ObjectType::Ammo) {
+			return static_cast<const Weapon*>(this)->hasDurability();
+		}
 		return true;
 	}
 
