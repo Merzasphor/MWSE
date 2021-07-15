@@ -63,7 +63,7 @@ namespace TES3 {
 		void ensureScriptDataIsInstanced();
 
 		void detachDynamicLightFromAffectedNodes();
-		void deleteDynamicLightAttachment();
+		void deleteDynamicLightAttachment(sol::optional<bool> removeLightFromParent = false);
 
 		void setModelPath(const char* path, bool temporary = false);
 		void reloadAnimation(const char* path);

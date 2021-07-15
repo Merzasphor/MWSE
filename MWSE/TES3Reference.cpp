@@ -157,7 +157,14 @@ namespace TES3 {
 	}
 
 	const auto TES3_Reference_deleteDynamicLightAttachment = reinterpret_cast<void(__thiscall*)(Reference*)>(0x4E50F0);
-	void Reference::deleteDynamicLightAttachment() {
+	void Reference::deleteDynamicLightAttachment(sol::optional<bool> removeLightFromParent) {
+		if (removeLightFromParent.value_or(false)) {
+			auto attachedLight = getAttachedDynamicLight();
+			if (attachedLight) {
+				auto light = attachedLight->light;
+				light->parentNode->detachChildHandled(light);
+			}
+		}
 		detachDynamicLightFromAffectedNodes();
 		TES3_Reference_deleteDynamicLightAttachment(this);
 	}
