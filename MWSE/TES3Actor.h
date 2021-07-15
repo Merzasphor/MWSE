@@ -83,6 +83,7 @@ namespace TES3 {
 
 		void onCloseInventory_lua(TES3::Reference* reference, sol::optional<int> unknown);
 
+		bool hasItemEquipped_lua(sol::object itemOrItemId, sol::optional<TES3::ItemData*> itemData);
 	};
 	static_assert(sizeof(Actor) == 0x6C, "TES3::Actor failed size validation");
 }

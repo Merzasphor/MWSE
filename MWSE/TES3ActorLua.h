@@ -26,6 +26,7 @@ namespace mwse {
 
 			// Function exposing.
 			usertypeDefinition["onInventoryClose"] = &TES3::Actor::onCloseInventory_lua;
+			usertypeDefinition["hasItemEquipped"] = &TES3::Actor::hasItemEquipped_lua;
 		}
 	}
 }
