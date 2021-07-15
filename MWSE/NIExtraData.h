@@ -6,7 +6,7 @@
 
 namespace NI {
 	struct ExtraData : Object {
-		int unknown_0x8;
+		size_t nameDataSize; // 0x8 // Includes the length allocated by trailing \0.
 		char* name; // 0xC
 		Pointer<ExtraData> next; // 0x10
 
