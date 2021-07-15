@@ -24,6 +24,7 @@ namespace TES3 {
 		case WeaponType::LongBlade1H:
 		case WeaponType::Blunt1H:
 		case WeaponType::Axe1H:
+		case WeaponType::Thrown:
 			return true;
 		}
 		return false;
