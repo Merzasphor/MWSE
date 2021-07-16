@@ -49,7 +49,10 @@ Properties
     Read-only. If true, the weapon has a melee weapon type.
 
 `isOneHanded`_ (`boolean`_)
-    Read-only. If true, the weapon is a one-handed melee weapon.
+    Read-only. If true, the weapon is a one-handed weapon.
+
+`isProjectile`_ (`boolean`_)
+    Read-only. If true, the weapon is a projectile.
 
 `isRanged`_ (`boolean`_)
     Read-only. If true, the weapon is a ranged weapon.
@@ -162,6 +165,7 @@ Properties
     tes3weapon/isAmmo
     tes3weapon/isMelee
     tes3weapon/isOneHanded
+    tes3weapon/isProjectile
     tes3weapon/isRanged
     tes3weapon/isSilver
     tes3weapon/isTwoHanded
@@ -209,6 +213,7 @@ Properties
 .. _`isAmmo`: tes3weapon/isAmmo.html
 .. _`isMelee`: tes3weapon/isMelee.html
 .. _`isOneHanded`: tes3weapon/isOneHanded.html
+.. _`isProjectile`: tes3weapon/isProjectile.html
 .. _`isRanged`: tes3weapon/isRanged.html
 .. _`isSilver`: tes3weapon/isSilver.html
 .. _`isTwoHanded`: tes3weapon/isTwoHanded.html
