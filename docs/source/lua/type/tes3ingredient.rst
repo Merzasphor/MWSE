@@ -15,13 +15,13 @@ Properties
 `disabled`_ (`boolean`_)
     The disabled state of the object.
 
-`effectAttributeIds`_ (`string`_)
+`effectAttributeIds`_ (`table`_)
     Read-only. An array-style table access the attributes associated with the effects.
 
-`effects`_ (`string`_)
+`effects`_ (`table`_)
     Read-only. An array-style table access to the four ingredient effects. Unlike alchemy or enchanting objects, these are simple numbers representing the effect ID.
 
-`effectsSkillIds`_ (`string`_)
+`effectsSkillIds`_ (`table`_)
     Read-only. An array-style table access the skills associated with the effects.
 
 `icon`_ (`string`_)
@@ -140,6 +140,7 @@ Properties
 .. _`niNode`: ../../lua/type/niNode.html
 .. _`number`: ../../lua/type/number.html
 .. _`string`: ../../lua/type/string.html
+.. _`table`: ../../lua/type/table.html
 .. _`tes3boundingBox`: ../../lua/type/tes3boundingBox.html
 .. _`tes3iterator`: ../../lua/type/tes3iterator.html
 .. _`tes3object`: ../../lua/type/tes3object.html
