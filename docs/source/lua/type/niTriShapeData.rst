@@ -82,6 +82,9 @@ Methods
 `clone`_ (`niObject`_)
     Creates a copy of this object.
 
+`copy`_
+    Creates a copy of the data. An optional table of filters can be passed to remove information from the copy.
+
 `isInstanceOfType`_ (`boolean`_)
     Determines if the object is of a given type, or of a type derived from the given type. Types can be found in the tes3.niType table.
 
@@ -102,12 +105,14 @@ If you already know the effective radius of the vertex data, you could more effi
     :hidden:
 
     niTriShapeData/clone
+    niTriShapeData/copy
     niTriShapeData/isInstanceOfType
     niTriShapeData/isOfType
     niTriShapeData/markAsChanged
     niTriShapeData/updateModelBound
 
 .. _`clone`: niTriShapeData/clone.html
+.. _`copy`: niTriShapeData/copy.html
 .. _`isInstanceOfType`: niTriShapeData/isInstanceOfType.html
 .. _`isOfType`: niTriShapeData/isOfType.html
 .. _`markAsChanged`: niTriShapeData/markAsChanged.html

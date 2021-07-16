@@ -1287,7 +1287,7 @@
     <ClInclude Include="NIGeometryData.h">
       <Filter>Header Files\DataAdapters\NI</Filter>
     </ClInclude>
-    <ClInclude Include="NiTriShapeData.h">
+    <ClInclude Include="NITriShapeData.h">
       <Filter>Header Files\DataAdapters\NI</Filter>
     </ClInclude>
     <ClInclude Include="LuaObjectInvalidatedEvent.h">
@@ -3044,7 +3044,7 @@
     <ClCompile Include="NIGeometryData.cpp">
       <Filter>Source Files\DataAdapters\NI</Filter>
     </ClCompile>
-    <ClCompile Include="NiTriBasedGeometryData.cpp">
+    <ClCompile Include="NITriBasedGeometryData.cpp">
       <Filter>Source Files\DataAdapters\NI</Filter>
     </ClCompile>
     <ClCompile Include="NIGeometry.cpp">
@@ -3343,6 +3343,9 @@
     </ClCompile>
     <ClCompile Include="LuaEnchantedItemCreateFailedEvent.cpp">
       <Filter>Source Files\Lua\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="NITriShapeData.cpp">
+      <Filter>Source Files\DataAdapters\NI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -10,7 +10,7 @@ Properties
     A flag indicating if this object is culled. When culled, it will not render, and raycasts ignore it.
 
 `data`_ (`niTriShapeData`_)
-    The NiTriShapeData of the object.
+    The NiTriShapeData of the object. Manipulation should not be done directly. Instead, consider copying the data and assigning it to this shape.
 
 `flags`_ (`number`_)
     Flags, dependent on the specific object type.
