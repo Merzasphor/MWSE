@@ -61,6 +61,7 @@ namespace mwse {
 
 				// Basic function binding.
 				usertypeDefinition["copy"] = &NI::Color::copy;
+				usertypeDefinition["lerp"] = &NI::Color::lerp;
 				usertypeDefinition["clamp"] = &NI::Color::clamp;
 
 				// Conversion to TES3::Vector3.
@@ -87,6 +88,10 @@ namespace mwse {
 				usertypeDefinition["green"] = &NI::ColorA::g;
 				usertypeDefinition["blue"] = &NI::ColorA::b;
 				usertypeDefinition["alpha"] = &NI::ColorA::a;
+
+				// Basic function binding.
+				usertypeDefinition["copy"] = &NI::ColorA::copy;
+				usertypeDefinition["lerp"] = &NI::ColorA::lerp;
 			}
 		}
 	}

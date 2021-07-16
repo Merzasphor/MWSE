@@ -51,4 +51,23 @@ Properties
 .. _`r`: niColorA/r.html
 .. _`red`: niColorA/red.html
 
+Methods
+----------------------------------------------------------------------------------------------------
+
+`copy`_ (`niColorA`_)
+    Creates a copy of the color object.
+
+`lerp`_
+    Calculates the interpolated color between this color and another, given a transition.
+
+.. toctree::
+    :hidden:
+
+    niColorA/copy
+    niColorA/lerp
+
+.. _`copy`: niColorA/copy.html
+.. _`lerp`: niColorA/lerp.html
+
+.. _`niColorA`: ../../lua/type/niColorA.html
 .. _`number`: ../../lua/type/number.html

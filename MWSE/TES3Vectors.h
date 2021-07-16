@@ -75,7 +75,8 @@ namespace TES3 {
 		Vector3 crossProduct(const Vector3*) const;
 		float dotProduct(const Vector3*) const;
 		Matrix33 outerProduct(const Vector3*) const;
-			
+		
+		Vector3 lerp(const Vector3& to, float transition) const;
 		float heightDifference(const Vector3*) const;
 		float distance(const Vector3*) const;
 		float angle(const Vector3*) const;

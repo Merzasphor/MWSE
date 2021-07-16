@@ -42,12 +42,13 @@ namespace NI {
 		// Custom functions.
 		//
 
-		Color copy();
-		TES3::Vector3 toVector3();
+		Color copy() const;
+		Color lerp(const Color& to, float transition) const;
+		TES3::Vector3 toVector3() const;
 
 		void clamp();
 
-		std::string toString();
+		std::string toString() const;
 
 	};
 	static_assert(sizeof(Color) == 0xC, "NI::Color failed size validation");
@@ -63,7 +64,10 @@ namespace NI {
 		// Custom functions.
 		//
 
-		std::string toString();
+		ColorA copy() const;
+		ColorA lerp(const ColorA& to, float transition) const;
+
+		std::string toString() const;
 
 	};
 	static_assert(sizeof(ColorA) == 0x10, "NI::ColorA failed size validation");

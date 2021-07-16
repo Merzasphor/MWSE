@@ -90,6 +90,7 @@ namespace mwse {
 				usertypeDefinition["outerProduct"] = &TES3::Vector3::outerProduct;
 				usertypeDefinition["heightDifference"] = &TES3::Vector3::heightDifference;
 				usertypeDefinition["length"] = &TES3::Vector3::length;
+				usertypeDefinition["lerp"] = &TES3::Vector3::lerp;
 				usertypeDefinition["negate"] = &TES3::Vector3::negate;
 				usertypeDefinition["normalize"] = &TES3::Vector3::normalize;
 				usertypeDefinition["normalized"] = &TES3::Vector3::normalized;

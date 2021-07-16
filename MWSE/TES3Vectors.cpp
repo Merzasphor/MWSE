@@ -218,6 +218,11 @@ namespace TES3 {
 		);
 	}
 
+	Vector3 Vector3::lerp(const Vector3& to, float transition) const {
+		auto transA = 1.0f - transition;
+		return Vector3(x * transA + to.x * transition, y * transA + to.y * transition, z * transA + to.z * transition);
+	}
+
 	float Vector3::heightDifference(const Vector3* vec3) const {
 		return fabs(z - vec3->z);
 	}
