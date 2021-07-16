@@ -227,13 +227,36 @@ function table.traverse(t, k)
 	return coroutine.wrap(iter)
 end
 
-function table.keys(t, sortFn)
+function table.keys(t, sort)
 	local keys = {}
 	for k, _ in pairs(t) do
 		table.insert(keys, k)
 	end
-	table.sort(keys, sortFn)
+
+	if (sort) then
+		if (sort == true) then
+			sort = nil
+		end
+		table.sort(keys, sort)
+	end
+
 	return keys
+end
+
+function table.values(t, sort)
+	local values = {}
+	for _, v in pairs(t) do
+		table.insert(values, v)
+	end
+
+	if (sort) then
+		if (sort == true) then
+			sort = nil
+		end
+		table.sort(values, sort)
+	end
+
+	return values
 end
 
 -------------------------------------------------
