@@ -140,11 +140,8 @@ function table.empty(t, deepCheck)
 end
 
 function table.choice(t)
-	-- We need to get a list of all of our keys first.
-	local keys = {}
-	for k in pairs(t) do
-		table.insert(keys, k)
-	end
+	-- We need to get a list of all of our values first.
+	local keys = table.keys(t)
 
 	-- Now we want to get a random key, and return the value for that key.
 	local key = keys[math.random(#keys)]
