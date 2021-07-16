@@ -57,6 +57,7 @@ namespace NI {
 
 		void attachProperty(Property* property);
 		Pointer<Property> detachPropertyByType(PropertyType type);
+		sol::table detachAllProperties_lua(sol::this_state ts);
 
 		//
 		// Custom functions.
@@ -65,7 +66,14 @@ namespace NI {
 		std::shared_ptr<TES3::BoundingBox> createBoundingBox_lua() const;
 
 		void clearTransforms();
-		Pointer<Property> getProperty(PropertyType type);
+		Pointer<Property> getProperty(PropertyType type) const;
+		Pointer<AlphaProperty> getAlphaProperty() const;
+		Pointer<FogProperty> getFogProperty() const;
+		Pointer<MaterialProperty> getMaterialProperty() const;
+		Pointer<StencilProperty> getStencilProperty() const;
+		Pointer<TexturingProperty> getTexturingProperty() const;
+		Pointer<VertexColorProperty> getVertexColorProperty() const;
+		Pointer<ZBufferProperty> getZBufferProperty() const;
 
 		void update_lua(sol::optional<sol::table> args);
 

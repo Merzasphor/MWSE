@@ -22,7 +22,7 @@ namespace NI {
 		NI_Property_dtor(this);
 	}
 
-	PropertyType Property::getType() {
+	PropertyType Property::getType() const {
 		return static_cast<PropertyType>(vTable.asProperty->getType(this));
 	}
 

@@ -86,12 +86,23 @@ namespace mwse {
 
 			// Make remove property a bit more friendly.
 			usertypeDefinition["detachProperty"] = &NI::AVObject::detachPropertyByType;
+			usertypeDefinition["detachAllProperties"] = &NI::AVObject::detachAllProperties_lua;
 
 			// Update function with table arguments.
 			usertypeDefinition["update"] = &NI::AVObject::update_lua;
 
 			// Friendly access to flags.
 			usertypeDefinition["appCulled"] = sol::property(&NI::AVObject::getAppCulled, &NI::AVObject::setAppCulled);
+
+			// Friendly access to properties.
+			usertypeDefinition["alphaProperty"] = sol::readonly_property(&NI::AVObject::getAlphaProperty);
+			usertypeDefinition["fogProperty"] = sol::readonly_property(&NI::AVObject::getFogProperty);
+			usertypeDefinition["materialProperty"] = sol::readonly_property(&NI::AVObject::getMaterialProperty);
+			usertypeDefinition["stencilProperty"] = sol::readonly_property(&NI::AVObject::getStencilProperty);
+			usertypeDefinition["texturingProperty"] = sol::readonly_property(&NI::AVObject::getTexturingProperty);
+			usertypeDefinition["vertexColorProperty"] = sol::readonly_property(&NI::AVObject::getVertexColorProperty);
+			usertypeDefinition["stencilProperty"] = sol::readonly_property(&NI::AVObject::getStencilProperty);
+			usertypeDefinition["zBufferProperty"] = sol::readonly_property(&NI::AVObject::getZBufferProperty);
 
 			// Legacy access. TODO: Remove.
 			usertypeDefinition["propegatePositionChange"] = &NI::AVObject::update_lua;

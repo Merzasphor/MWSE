@@ -19,10 +19,13 @@ namespace NI {
 		Specular = 0x9,
 		Shade = 0xA,
 		RendererSpecific = 0xB,
+
+		FirstPropertyType = Alpha,
+		LastPropertyType = RendererSpecific,
 	};
 
 	struct Property_vTable : Object_vTable {
-		PropertyType (__thiscall * getType)(Property*); // 0x2C
+		PropertyType (__thiscall * getType)(const Property*); // 0x2C
 		void (__thiscall * update)(Property*, float); // 0x30
 	};
 	static_assert(sizeof(Property_vTable) == 0x34, "NI::Property's vtable failed size validation");
@@ -37,7 +40,7 @@ namespace NI {
 		// vTable wrappers.
 		//
 
-		PropertyType getType();
+		PropertyType getType() const;
 		void update(float dt);
 
 		//
