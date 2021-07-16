@@ -36,6 +36,11 @@ function Variable:get()
 end
 
 function Variable:set(newValue)
+	local converter = self.converter
+	if (converter) then
+		newValue = converter(newValue)
+	end
+	
 	rawset(self, "value", newValue)
 end
  
