@@ -21,4 +21,5 @@ Functions
     table/removevalue
     table/size
     table/traverse
+    table/values
 

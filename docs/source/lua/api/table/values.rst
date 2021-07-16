@@ -1,12 +1,12 @@
-table.keys
+table.values
 ====================================================================================================
 
-Returns an array-style table of all keys in the given table, t. Optionally, it will sort the returned table.
+Returns an array-style table of all values in the given table, t. Optionally, it will sort the returned table.
 
 Returns
 ----------------------------------------------------------------------------------------------------
 
-`table`_. An array of all table keys.
+`table`_. An array of all table values.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -14,7 +14,7 @@ Parameters
 Accepts parameters in the following order:
 
 t (`table`_)
-    The table to get keys for.
+    The table to get values for.
 
 sort (`boolean`_, `function`_, `nil`_)
     Optional. If true, the returned table will be sorted. If a function is passed, the table will be sorted using the given function.
