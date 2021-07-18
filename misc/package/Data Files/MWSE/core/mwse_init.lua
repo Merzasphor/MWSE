@@ -115,6 +115,10 @@ end
 -- Extend base API: table
 -------------------------------------------------
 
+-- Add LuaJIT extensions.
+require("table.clear")
+require("table.new")
+
 -- The # operator only really makes sense for continuous arrays. Get the real value.
 function table.size(t)
 	local count = 0
