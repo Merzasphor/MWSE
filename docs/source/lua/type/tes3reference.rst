@@ -32,7 +32,7 @@ Properties
 `deleted`_ (`boolean`_)
     The deleted state of the object.
 
-`destination`_ (`tes3travelDestination`_, `nil`_)
+`destination`_ (`tes3travelDestinationNode`_, `nil`_)
     Read-only. Returns the travel destination node for this reference, or nil. This can be used to determine where a given door links to.
 
 `disabled`_ (`boolean`_)
@@ -340,4 +340,5 @@ Methods
 .. _`tes3physicalObject`: ../../lua/type/tes3physicalObject.html
 .. _`tes3reference`: ../../lua/type/tes3reference.html
 .. _`tes3referenceList`: ../../lua/type/tes3referenceList.html
+.. _`tes3travelDestinationNode`: ../../lua/type/tes3travelDestinationNode.html
 .. _`tes3vector3`: ../../lua/type/tes3vector3.html

@@ -1,7 +1,7 @@
 tes3travelDestinationNode
 ====================================================================================================
 
-An attachment-capable structure that manages travel destinations.
+An attachment-capable structure to manage a travel destination. This is either exposed as a destination attachment for a door or as part of a list of possible travel services in an actor's AI configuration.
 
 Properties
 ----------------------------------------------------------------------------------------------------
