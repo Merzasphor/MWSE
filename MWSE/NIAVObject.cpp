@@ -74,8 +74,8 @@ namespace NI {
 		sol::state_view state = ts;
 		auto removedProperties = state.create_table();
 
-		for (auto i = int(PropertyType::FirstPropertyType); i <= int(PropertyType::LastPropertyType); i++) {
-			auto removed = detachPropertyByType(PropertyType(i));
+		while (propertyNode.data) {
+			auto removed = detachPropertyByType(propertyNode.data->getType());
 			if (removed) {
 				removedProperties.add(removed);
 			}
@@ -102,17 +102,12 @@ namespace NI {
 
 	Pointer<Property> AVObject::getProperty(PropertyType type) const {
 		auto propNode = &propertyNode;
-		if (propNode->data == nullptr) {
-			return nullptr;
-		}
-
-		while (propNode) {
+		while (propNode && propNode->data) {
 			if (propNode->data->getType() == type) {
 				return propNode->data;
 			}
 			propNode = propNode->next;
 		}
-
 		return nullptr;
 	}
 
