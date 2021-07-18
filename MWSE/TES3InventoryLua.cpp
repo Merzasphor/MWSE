@@ -151,6 +151,8 @@ namespace mwse {
 				// Basic property binding.
 				usertypeDefinition["itemData"] = &TES3::EquipmentStack::variables;
 				usertypeDefinition["object"] = sol::readonly_property(&TES3::EquipmentStack::object);
+
+				// Legacy bindings.
 				usertypeDefinition["variables"] = &TES3::EquipmentStack::variables;
 			}
 

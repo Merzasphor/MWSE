@@ -15,6 +15,9 @@ Properties
 `context`_ (`tes3scriptContext`_)
     Returns an ease of use script context for variable access.
 
+`count`_ (`number`_)
+    The total number of identical items represented by this data. Reserved for use by in-world references. It should always be 1 for items in inventories. Inventories utilize the stack count in tes3itemStack.
+
 `data`_ (`table`_)
     A generic lua table that data can be written to, and synced to/from the save. All information stored must be valid for serialization to json. For data that doesn't persist, use tempData.
 
@@ -45,6 +48,7 @@ Properties
     tes3itemData/charge
     tes3itemData/condition
     tes3itemData/context
+    tes3itemData/count
     tes3itemData/data
     tes3itemData/owner
     tes3itemData/requirement
@@ -57,6 +61,7 @@ Properties
 .. _`charge`: tes3itemData/charge.html
 .. _`condition`: tes3itemData/condition.html
 .. _`context`: tes3itemData/context.html
+.. _`count`: tes3itemData/count.html
 .. _`data`: tes3itemData/data.html
 .. _`owner`: tes3itemData/owner.html
 .. _`requirement`: tes3itemData/requirement.html

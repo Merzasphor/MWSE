@@ -6,8 +6,11 @@ A spell game object.
 Properties
 ----------------------------------------------------------------------------------------------------
 
+`alwaysSucceeds`_ (`boolean`_)
+    A flag that determines if casting the spell will always succeed.
+
 `autoCalc`_ (`boolean`_)
-    Determines if the Magicka Cost for the spell is autocalculated.
+    Determines if the magicka cost for the spell is autocalculated, and if the spell may be automatically assigned to NPCs if they are skillful enough to cast it.
 
 `basePurchaseCost`_ (`number`_)
     Calculates the base cost to purchase the spell. This value is not adjusted by mercantile skills.
@@ -51,6 +54,9 @@ Properties
 `owningCollection`_ (`tes3referenceList`_)
     The collection responsible for holding this object.
 
+`playerStart`_ (`boolean`_)
+    A flag that determines if the spell may be assigned to the player at character generation if the player has enough skill to cast it.
+
 `previousInCollection`_ (`tes3object`_)
     The previous object in parent collection's list.
 
@@ -72,6 +78,7 @@ Properties
 .. toctree::
     :hidden:
 
+    tes3spell/alwaysSucceeds
     tes3spell/autoCalc
     tes3spell/basePurchaseCost
     tes3spell/castType
@@ -87,6 +94,7 @@ Properties
     tes3spell/objectFlags
     tes3spell/objectType
     tes3spell/owningCollection
+    tes3spell/playerStart
     tes3spell/previousInCollection
     tes3spell/scale
     tes3spell/sceneNode
@@ -94,6 +102,7 @@ Properties
     tes3spell/sourceMod
     tes3spell/supportsLuaData
 
+.. _`alwaysSucceeds`: tes3spell/alwaysSucceeds.html
 .. _`autoCalc`: tes3spell/autoCalc.html
 .. _`basePurchaseCost`: tes3spell/basePurchaseCost.html
 .. _`castType`: tes3spell/castType.html
@@ -109,6 +118,7 @@ Properties
 .. _`objectFlags`: tes3spell/objectFlags.html
 .. _`objectType`: tes3spell/objectType.html
 .. _`owningCollection`: tes3spell/owningCollection.html
+.. _`playerStart`: tes3spell/playerStart.html
 .. _`previousInCollection`: tes3spell/previousInCollection.html
 .. _`scale`: tes3spell/scale.html
 .. _`sceneNode`: tes3spell/sceneNode.html

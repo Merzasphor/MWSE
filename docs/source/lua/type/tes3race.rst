@@ -33,6 +33,12 @@ Properties
 `id`_ (`string`_)
     The unique identifier for the object.
 
+`isBeast`_ (`boolean`_)
+    Access to the beast race flag.
+
+`isPlayable`_ (`boolean`_)
+    Access to the playable race flag.
+
 `maleBody`_ (`tes3raceBodyParts`_)
     Read-only. Access to all the body parts that will be used for male actors of this race.
 
@@ -72,6 +78,8 @@ Properties
     tes3race/flags
     tes3race/height
     tes3race/id
+    tes3race/isBeast
+    tes3race/isPlayable
     tes3race/maleBody
     tes3race/modified
     tes3race/name
@@ -91,6 +99,8 @@ Properties
 .. _`flags`: tes3race/flags.html
 .. _`height`: tes3race/height.html
 .. _`id`: tes3race/id.html
+.. _`isBeast`: tes3race/isBeast.html
+.. _`isPlayable`: tes3race/isPlayable.html
 .. _`maleBody`: tes3race/maleBody.html
 .. _`modified`: tes3race/modified.html
 .. _`name`: tes3race/name.html

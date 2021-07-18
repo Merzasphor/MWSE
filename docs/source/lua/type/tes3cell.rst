@@ -27,6 +27,12 @@ Properties
 `disabled`_ (`boolean`_)
     The disabled state of the object.
 
+`displayName`_ (`string`_)
+    The name of the cell as displayed on the in-game UI. For exterior cells without an assigned name, this is the region name.
+
+`editorName`_ (`string`_)
+    The name of the cell as displayed in the Construction Set. For exterior cells, this includes the cell coordinates.
+
 `fogColor`_ (`tes3packedColor`_)
     The cell's fog color. Only available on interior cells.
 
@@ -52,13 +58,16 @@ Properties
     The modification state of the object since the last save.
 
 `name`_ (`string`_)
-    The name and id of the cell.
+    The name and id of the cell. See also displayName and editorName.
 
 `objectFlags`_ (`number`_)
     The raw flags of the object.
 
 `objectType`_ (`number`_)
     The type of object. Maps to values in tes3.objectType.
+
+`pickObjectsRoot`_ (`niNode`_)
+    The scenegraph node containing player-interactable objects from this cell.
 
 `region`_ (`tes3region`_)
     The region associated with the cell. Only available on exterior cells, or interior cells that behave as exterior cells.
@@ -68,6 +77,9 @@ Properties
 
 `sourceMod`_ (`string`_)
     The filename of the mod that owns this object.
+
+`staticObjectsRoot`_ (`tes3region`_)
+    The scenegraph node containing static non-player-interactable objects from this cell.
 
 `statics`_ (`tes3referenceList`_)
     Read-only. One of the three reference collections for a cell.
@@ -91,6 +103,8 @@ Properties
     tes3cell/cellFlags
     tes3cell/deleted
     tes3cell/disabled
+    tes3cell/displayName
+    tes3cell/editorName
     tes3cell/fogColor
     tes3cell/fogDensity
     tes3cell/gridX
@@ -102,9 +116,11 @@ Properties
     tes3cell/name
     tes3cell/objectFlags
     tes3cell/objectType
+    tes3cell/pickObjectsRoot
     tes3cell/region
     tes3cell/restingIsIllegal
     tes3cell/sourceMod
+    tes3cell/staticObjectsRoot
     tes3cell/statics
     tes3cell/sunColor
     tes3cell/supportsLuaData
@@ -117,6 +133,8 @@ Properties
 .. _`cellFlags`: tes3cell/cellFlags.html
 .. _`deleted`: tes3cell/deleted.html
 .. _`disabled`: tes3cell/disabled.html
+.. _`displayName`: tes3cell/displayName.html
+.. _`editorName`: tes3cell/editorName.html
 .. _`fogColor`: tes3cell/fogColor.html
 .. _`fogDensity`: tes3cell/fogDensity.html
 .. _`gridX`: tes3cell/gridX.html
@@ -128,9 +146,11 @@ Properties
 .. _`name`: tes3cell/name.html
 .. _`objectFlags`: tes3cell/objectFlags.html
 .. _`objectType`: tes3cell/objectType.html
+.. _`pickObjectsRoot`: tes3cell/pickObjectsRoot.html
 .. _`region`: tes3cell/region.html
 .. _`restingIsIllegal`: tes3cell/restingIsIllegal.html
 .. _`sourceMod`: tes3cell/sourceMod.html
+.. _`staticObjectsRoot`: tes3cell/staticObjectsRoot.html
 .. _`statics`: tes3cell/statics.html
 .. _`sunColor`: tes3cell/sunColor.html
 .. _`supportsLuaData`: tes3cell/supportsLuaData.html
@@ -150,6 +170,7 @@ Methods
 .. _`iterateReferences`: tes3cell/iterateReferences.html
 
 .. _`boolean`: ../../lua/type/boolean.html
+.. _`niNode`: ../../lua/type/niNode.html
 .. _`number`: ../../lua/type/number.html
 .. _`string`: ../../lua/type/string.html
 .. _`tes3packedColor`: ../../lua/type/tes3packedColor.html

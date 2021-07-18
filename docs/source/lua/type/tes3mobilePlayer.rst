@@ -80,6 +80,9 @@ if damage < 1 then damage = 1 end
 `barterGold`_ (`number`_)
     The current amount of gold that the actor has access to for bartering.
 
+`birthsign`_ (`tes3birthsign`_)
+    Read-only. The player's birthsign.
+
 `blind`_ (`number`_)
     Direct access to the actor's blind effect attribute.
 
@@ -609,6 +612,7 @@ May be useful when free movement is required in crowded situations, or to tempor
     tes3mobilePlayer/autoRun
     tes3mobilePlayer/axe
     tes3mobilePlayer/barterGold
+    tes3mobilePlayer/birthsign
     tes3mobilePlayer/blind
     tes3mobilePlayer/block
     tes3mobilePlayer/bluntWeapon
@@ -800,6 +804,7 @@ May be useful when free movement is required in crowded situations, or to tempor
 .. _`autoRun`: tes3mobilePlayer/autoRun.html
 .. _`axe`: tes3mobilePlayer/axe.html
 .. _`barterGold`: tes3mobilePlayer/barterGold.html
+.. _`birthsign`: tes3mobilePlayer/birthsign.html
 .. _`blind`: tes3mobilePlayer/blind.html
 .. _`block`: tes3mobilePlayer/block.html
 .. _`bluntWeapon`: tes3mobilePlayer/bluntWeapon.html
@@ -1124,6 +1129,7 @@ Damages the actor.
 .. _`tes3actionData`: ../../lua/type/tes3actionData.html
 .. _`tes3actorAnimationController`: ../../lua/type/tes3actorAnimationController.html
 .. _`tes3apparatus`: ../../lua/type/tes3apparatus.html
+.. _`tes3birthsign`: ../../lua/type/tes3birthsign.html
 .. _`tes3cell`: ../../lua/type/tes3cell.html
 .. _`tes3combatSession`: ../../lua/type/tes3combatSession.html
 .. _`tes3equipmentStack`: ../../lua/type/tes3equipmentStack.html
