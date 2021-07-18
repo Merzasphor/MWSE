@@ -39,7 +39,7 @@ Properties
     The disabled state of the object.
 
 `facing`_ (`number`_)
-    Convenient access to the z-component of the reference's orientation.
+    Convenient access to the z-component of the reference's orientation. Setting the facing sets the reference as modified.
 
 `hasNoCollision`_ (`boolean`_)
     Sets the no-collision flag on this reference, and recalculates collision groups. Use the setNoCollisionFlag function to manage collision group recalculation instead.
@@ -93,13 +93,13 @@ Properties
     The type of object. Maps to values in tes3.objectType.
 
 `orientation`_ (`tes3vector3`_)
-    Access to the reference's orientation.
+    Access to the reference's orientation. Setting the orientation sets the reference as modified.
 
 `owningCollection`_ (`tes3referenceList`_)
     The collection responsible for holding this object.
 
 `position`_ (`tes3vector3`_)
-    Access to the reference's position.
+    Access to the reference's position. Setting the position sets the reference as modified.
 
 `previousInCollection`_ (`tes3object`_)
     The previous object in parent collection's list.
@@ -242,10 +242,10 @@ Methods
     Removes the dynamic light from any affected scene graph nodes, but will not delete the associated attachment.
 
 `disable`_
-    Hides the reference, stops all scripts for it, detaches all dynamic lights and sounds, and closes any mobile simulation.
+    Hides the reference, stops all scripts for it, detaches all dynamic lights and sounds, and closes any mobile simulation. Sets the reference as modified implicitly.
 
 `enable`_
-    Shows the reference, restarts all scripts for it, reattaches all dynamic lights and sounds, and restarts any mobile simulation if the player is close enough.
+    Shows the reference, restarts all scripts for it, reattaches all dynamic lights and sounds, and restarts any mobile simulation if the player is close enough. Sets the reference as modified implicitly.
 
 `getAngleTo`_
     Calculates the angle from this reference's current facing to the target reference.

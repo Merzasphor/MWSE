@@ -1,7 +1,7 @@
 disable
 ====================================================================================================
 
-Hides the reference, stops all scripts for it, detaches all dynamic lights and sounds, and closes any mobile simulation.
+Hides the reference, stops all scripts for it, detaches all dynamic lights and sounds, and closes any mobile simulation. Sets the reference as modified implicitly.
 
 Returns
 ----------------------------------------------------------------------------------------------------

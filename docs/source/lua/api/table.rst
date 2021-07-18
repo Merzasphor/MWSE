@@ -12,14 +12,12 @@ Functions
     table/bininsert
     table/binsearch
     table/choice
-    table/clear
     table/copy
     table/copymissing
     table/deepcopy
     table/empty
     table/find
     table/keys
-    table/new
     table/removevalue
     table/size
     table/traverse
