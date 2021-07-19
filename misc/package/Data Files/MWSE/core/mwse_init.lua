@@ -374,6 +374,11 @@ function string.multifind(s, patterns, index, plain)
 end
 getmetatable("").multifind = string.multifind
 
+function string.insert(s1, s2, pos)
+	return s1:sub(1, pos) .. s2 .. s1:sub(pos + 1)
+end
+getmetatable("").insert = string.insert
+
 -------------------------------------------------
 -- Extend base API: debug
 -------------------------------------------------
