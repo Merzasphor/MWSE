@@ -141,6 +141,12 @@ Functions
 `getFirstIndexOfEffect`_ (`number`_)
     Gets the first index of an effect ID in the spell effect table.
 
+`getLeastProficientEffect`_
+    Returns the effect of the spell that a given actor is least proficient with.
+
+`getLeastProficientSchool`_
+    Returns the school of the least proficient effect on the spell, for a given actor.
+
 .. toctree::
     :hidden:
 
@@ -148,11 +154,15 @@ Functions
     tes3spell/create
     tes3spell/getActiveEffectCount
     tes3spell/getFirstIndexOfEffect
+    tes3spell/getLeastProficientEffect
+    tes3spell/getLeastProficientSchool
 
 .. _`calculateCastChance`: tes3spell/calculateCastChance.html
 .. _`create`: tes3spell/create.html
 .. _`getActiveEffectCount`: tes3spell/getActiveEffectCount.html
 .. _`getFirstIndexOfEffect`: tes3spell/getFirstIndexOfEffect.html
+.. _`getLeastProficientEffect`: tes3spell/getLeastProficientEffect.html
+.. _`getLeastProficientSchool`: tes3spell/getLeastProficientSchool.html
 
 .. _`boolean`: ../../lua/type/boolean.html
 .. _`niNode`: ../../lua/type/niNode.html

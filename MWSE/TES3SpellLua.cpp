@@ -87,8 +87,8 @@ namespace mwse {
 			usertypeDefinition["calculateCastChance"] = &TES3::Spell::calculateCastChance_lua;
 			usertypeDefinition["getActiveEffectCount"] = &TES3::Spell::getActiveEffectCount;
 			usertypeDefinition["getFirstIndexOfEffect"] = &TES3::Spell::getFirstIndexOfEffect;
-			usertypeDefinition["getLeastProficientEffect"] = &TES3::Spell::getLeastProficientEffect;
-			usertypeDefinition["getLeastProficientSchool"] = &TES3::Spell::getLeastProficientSchool;
+			usertypeDefinition["getLeastProficientEffect"] = &TES3::Spell::getLeastProficientEffect_lua;
+			usertypeDefinition["getLeastProficientSchool"] = &TES3::Spell::getLeastProficientSchool_lua;
 
 			// Convenient flag access.
 			usertypeDefinition["alwaysSucceeds"] = sol::property(&TES3::Spell::getAlwaysSucceeds, &TES3::Spell::setAlwaysSucceeds);
