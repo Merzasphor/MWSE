@@ -136,6 +136,9 @@ Properties
 `positionY`_ (`number`_)
     Integer number. Element Y position relative to its parent's top-left content area. For top-level menus there is a difference: (0, 0) is the centre of the screen.
 
+`rawText`_ (`string`_)
+    The raw value of the element's text. This, unlike the normal text property, will not directly read widget information or handle the removal of the positional cursor.
+
 `repeatKeys`_ (`boolean`_)
     Controls if there is repeating text input when keys are held down. ``true`` by default.
 
@@ -206,6 +209,7 @@ Properties
     tes3uiElement/parent
     tes3uiElement/positionX
     tes3uiElement/positionY
+    tes3uiElement/rawText
     tes3uiElement/repeatKeys
     tes3uiElement/scaleMode
     tes3uiElement/text
@@ -254,6 +258,7 @@ Properties
 .. _`parent`: tes3uiElement/parent.html
 .. _`positionX`: tes3uiElement/positionX.html
 .. _`positionY`: tes3uiElement/positionY.html
+.. _`rawText`: tes3uiElement/rawText.html
 .. _`repeatKeys`: tes3uiElement/repeatKeys.html
 .. _`scaleMode`: tes3uiElement/scaleMode.html
 .. _`text`: tes3uiElement/text.html
