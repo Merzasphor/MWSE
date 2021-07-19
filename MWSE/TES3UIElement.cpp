@@ -468,10 +468,10 @@ namespace TES3 {
 				return WidgetButton::fromElement(this)->getText();
 			}
 			else if (part == propParagraphInput) {
-				return WidgetParagraphInput::fromElement(this)->getText();
+				return std::move(WidgetParagraphInput::fromElement(this)->getText());
 			}
 			else if (part == propTextInput) {
-				return WidgetTextInput::fromElement(this)->getText();
+				return std::move(WidgetTextInput::fromElement(this)->getText());
 			}
 
 			return getText();
