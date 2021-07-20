@@ -3473,11 +3473,18 @@ namespace mwse {
 			if (reference == nullptr) {
 				reference = playerReference;
 			}
+			auto referenceBaseObject = reference->getBaseObject();
 
 			// What are we checking ownership of?
 			TES3::Reference* target = getOptionalParamReference(params, "target");
 			if (target == nullptr) {
 				throw std::invalid_argument("Invalid target parameter provided.");
+			}
+
+			// You never have access to NPCs.
+			auto targetBaseObject = target->getBaseObject();
+			if (targetBaseObject->objectType == TES3::ObjectType::NPC) {
+				return false;
 			}
 
 			// Do we have an owner?
@@ -3489,7 +3496,12 @@ namespace mwse {
 			// Are we looking at an NPC owner?
 			if (targetData->owner->objectType == TES3::ObjectType::NPC) {
 				// We own our own things.
-				if (target->getBaseObject() == targetData->owner) {
+				if (referenceBaseObject == targetData->owner) {
+					return true;
+				}
+
+				// Is the target dead?
+				else if (reference == playerReference && TES3::WorldController::get()->playerKills->getKillCount(static_cast<TES3::NPC*>(targetData->owner)) > 0) {
 					return true;
 				}
 
@@ -3503,7 +3515,7 @@ namespace mwse {
 					return targetData->requiredVariable->value > 0.0f;
 				}
 			}
-
+			// How about a faction?
 			else if (targetData->owner->objectType == TES3::ObjectType::Faction) {
 				auto ownerAsFaction = reinterpret_cast<TES3::Faction*>(targetData->owner);
 
