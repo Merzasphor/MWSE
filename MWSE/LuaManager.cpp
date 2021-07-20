@@ -3856,7 +3856,8 @@ namespace mwse {
 			genCallEnforced(0x4B2A77, 0x4B0190, *reinterpret_cast<DWORD*>(&dialogueInfoFilter));
 
 			// Event: Execute lua from dialogue response.
-			genCallEnforced(0x4B1FB2, 0x50E5A0, reinterpret_cast<DWORD>(OnRunDialogueCommand));
+			genCallEnforced(0x4B1FB2, 0x50E5A0, reinterpret_cast<DWORD>(OnRunDialogueCommand)); // Vanilla function.
+			genJumpEnforced(0x50E594, 0x50E5A0, reinterpret_cast<DWORD>(OnRunDialogueCommand)); // MCP-added function.
 
 			// Event: Dialogue link resolve.
 			genCallEnforced(0x40B89E, 0x4BA8D0, reinterpret_cast<DWORD>(OnInfoLinkResolve));
