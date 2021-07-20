@@ -102,7 +102,7 @@ namespace mwse {
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
 				auto usertypeDefinition = state.new_usertype<NI::TexturingProperty::Map>("niTexturingPropertyMap");
-				usertypeDefinition["new"] = sol::no_constructor;
+				usertypeDefinition["new"] = &NI::TexturingProperty::Map::create;
 
 				// Basic property binding.
 				usertypeDefinition["clampMode"] = &NI::TexturingProperty::Map::clampMode;
@@ -128,6 +128,14 @@ namespace mwse {
 				usertypeDefinition["canAddDecal"] = sol::readonly_property(&NI::TexturingProperty::canAddDecalMap);
 				usertypeDefinition["decalCount"] = sol::readonly_property(&NI::TexturingProperty::getDecalCount);
 				usertypeDefinition["maps"] = sol::readonly_property(&NI::TexturingProperty::maps);
+
+				// Convenient access to (non-decal) maps.
+				usertypeDefinition["baseMap"] = sol::property(&NI::TexturingProperty::getBaseMap, &NI::TexturingProperty::setBaseMap);
+				usertypeDefinition["bumpMap"] = sol::property(&NI::TexturingProperty::getBumpMap, &NI::TexturingProperty::setBumpMap);
+				usertypeDefinition["darkMap"] = sol::property(&NI::TexturingProperty::getDarkMap, &NI::TexturingProperty::setDarkMap);
+				usertypeDefinition["detailMap"] = sol::property(&NI::TexturingProperty::getDetailMap, &NI::TexturingProperty::setDetailMap);
+				usertypeDefinition["glossMap"] = sol::property(&NI::TexturingProperty::getGlossMap, &NI::TexturingProperty::setGlossMap);
+				usertypeDefinition["glowMap"] = sol::property(&NI::TexturingProperty::getGlowMap, &NI::TexturingProperty::setGlowMap);
 
 				// Basic function binding.
 				usertypeDefinition["addDecalMap"] = &NI::TexturingProperty::addDecalMap_lua;

@@ -195,6 +195,8 @@ namespace NI {
 			Pointer<Texture> getTexture_lua() const;
 			void setTexture_lua(Texture* texture);
 
+			static Map* create(sol::optional<sol::table> params);
+
 		};
 		struct BumpMap : Map {
 			float lumaScale;
@@ -208,6 +210,19 @@ namespace NI {
 		ApplyMode applyMode; // 0x18
 		TArray<Map*> maps; // 0x1C
 		int unknown_34; // 0x34
+
+		Map* getBaseMap();
+		void setBaseMap(sol::optional<Map*> map);
+		Map* getDarkMap();
+		void setDarkMap(sol::optional<Map*> map);
+		Map* getDetailMap();
+		void setDetailMap(sol::optional<Map*> map);
+		Map* getGlossMap();
+		void setGlossMap(sol::optional<Map*> map);
+		Map* getGlowMap();
+		void setGlowMap(sol::optional<Map*> map);
+		BumpMap* getBumpMap();
+		void setBumpMap(sol::optional<BumpMap*> map);
 
 		unsigned int getDecalCount() const;
 		bool canAddDecalMap() const;
