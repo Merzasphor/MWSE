@@ -95,14 +95,13 @@ namespace mwse {
 			usertypeDefinition["appCulled"] = sol::property(&NI::AVObject::getAppCulled, &NI::AVObject::setAppCulled);
 
 			// Friendly access to properties.
-			usertypeDefinition["alphaProperty"] = sol::readonly_property(&NI::AVObject::getAlphaProperty);
-			usertypeDefinition["fogProperty"] = sol::readonly_property(&NI::AVObject::getFogProperty);
-			usertypeDefinition["materialProperty"] = sol::readonly_property(&NI::AVObject::getMaterialProperty);
-			usertypeDefinition["stencilProperty"] = sol::readonly_property(&NI::AVObject::getStencilProperty);
-			usertypeDefinition["texturingProperty"] = sol::readonly_property(&NI::AVObject::getTexturingProperty);
-			usertypeDefinition["vertexColorProperty"] = sol::readonly_property(&NI::AVObject::getVertexColorProperty);
-			usertypeDefinition["stencilProperty"] = sol::readonly_property(&NI::AVObject::getStencilProperty);
-			usertypeDefinition["zBufferProperty"] = sol::readonly_property(&NI::AVObject::getZBufferProperty);
+			usertypeDefinition["alphaProperty"] = sol::property(&NI::AVObject::getAlphaProperty, &NI::AVObject::setAlphaProperty);
+			usertypeDefinition["fogProperty"] = sol::property(&NI::AVObject::getFogProperty, &NI::AVObject::setFogProperty);
+			usertypeDefinition["materialProperty"] = sol::property(&NI::AVObject::getMaterialProperty, &NI::AVObject::setMaterialProperty);
+			usertypeDefinition["stencilProperty"] = sol::property(&NI::AVObject::getStencilProperty, &NI::AVObject::setStencilProperty);
+			usertypeDefinition["texturingProperty"] = sol::property(&NI::AVObject::getTexturingProperty, &NI::AVObject::setTexturingProperty);
+			usertypeDefinition["vertexColorProperty"] = sol::property(&NI::AVObject::getVertexColorProperty, &NI::AVObject::setVertexColorProperty);
+			usertypeDefinition["zBufferProperty"] = sol::property(&NI::AVObject::getZBufferProperty, &NI::AVObject::setZBufferProperty);
 
 			// Legacy access. TODO: Remove.
 			usertypeDefinition["propegatePositionChange"] = &NI::AVObject::update_lua;

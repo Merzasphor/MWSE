@@ -115,28 +115,77 @@ namespace NI {
 		return static_cast<AlphaProperty*>(getProperty(PropertyType::Alpha).get());
 	}
 
+	void AVObject::setAlphaProperty(sol::optional<AlphaProperty*> prop) {
+		detachPropertyByType(PropertyType::Alpha);
+		if (prop) {
+			attachProperty(prop.value());
+		}
+	}
+
 	Pointer<FogProperty> AVObject::getFogProperty() const {
 		return static_cast<FogProperty*>(getProperty(PropertyType::Fog).get());
+	}
+
+	void AVObject::setFogProperty(sol::optional<FogProperty*> prop) {
+		detachPropertyByType(PropertyType::Fog);
+		if (prop) {
+			attachProperty(prop.value());
+		}
 	}
 
 	Pointer<MaterialProperty> AVObject::getMaterialProperty() const {
 		return static_cast<MaterialProperty*>(getProperty(PropertyType::Material).get());
 	}
 
+	void AVObject::setMaterialProperty(sol::optional<MaterialProperty*> prop) {
+		detachPropertyByType(PropertyType::Material);
+		if (prop) {
+			attachProperty(prop.value());
+		}
+	}
+
 	Pointer<StencilProperty> AVObject::getStencilProperty() const {
 		return static_cast<StencilProperty*>(getProperty(PropertyType::Stencil).get());
+	}
+
+	void AVObject::setStencilProperty(sol::optional<StencilProperty*> prop) {
+		detachPropertyByType(PropertyType::Stencil);
+		if (prop) {
+			attachProperty(prop.value());
+		}
 	}
 
 	Pointer<TexturingProperty> AVObject::getTexturingProperty() const {
 		return static_cast<TexturingProperty*>(getProperty(PropertyType::Texturing).get());
 	}
 
+	void AVObject::setTexturingProperty(sol::optional<TexturingProperty*> prop) {
+		detachPropertyByType(PropertyType::Texturing);
+		if (prop) {
+			attachProperty(prop.value());
+		}
+	}
+
 	Pointer<VertexColorProperty> AVObject::getVertexColorProperty() const {
 		return static_cast<VertexColorProperty*>(getProperty(PropertyType::VertexColor).get());
 	}
 
+	void AVObject::setVertexColorProperty(sol::optional<VertexColorProperty*> prop) {
+		detachPropertyByType(PropertyType::VertexColor);
+		if (prop) {
+			attachProperty(prop.value());
+		}
+	}
+
 	Pointer<ZBufferProperty> AVObject::getZBufferProperty() const {
 		return static_cast<ZBufferProperty*>(getProperty(PropertyType::ZBuffer).get());
+	}
+
+	void AVObject::setZBufferProperty(sol::optional<ZBufferProperty*> prop) {
+		detachPropertyByType(PropertyType::ZBuffer);
+		if (prop) {
+			attachProperty(prop.value());
+		}
 	}
 
 	void AVObject::update_lua(sol::optional<sol::table> args) {

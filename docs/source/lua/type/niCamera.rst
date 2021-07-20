@@ -6,14 +6,23 @@ Object that represent a camera. Position and orientation is determined by parent
 Properties
 ----------------------------------------------------------------------------------------------------
 
+`alphaProperty`_ (`niAlphaProperty`_, `nil`_)
+    Convenient access to this object's alpha property. Setting this value to be nil will erase the property, while setting it to a valid alpha property will set (or replace) it.
+
 `appCulled`_ (`boolean`_)
     A flag indicating if this object is culled. When culled, it will not render, and raycasts ignore it.
 
 `flags`_ (`number`_)
     Flags, dependent on the specific object type.
 
+`fogProperty`_ (`niFogProperty`_, `nil`_)
+    Convenient access to this object's fog property. Setting this value to be nil will erase the property, while setting it to a valid fog property will set (or replace) it.
+
 `lodAdjust`_ (`number`_)
     The level-of-detail adjustment value for the camera. A higher value will lower the LOD of the objects drawn by the camera.
+
+`materialProperty`_ (`niMaterialProperty`_, `nil`_)
+    Convenient access to this object's material property. Setting this value to be nil will erase the property, while setting it to a valid material property will set (or replace) it.
 
 `name`_ (`string`_)
     The human-facing name of the given object.
@@ -45,8 +54,17 @@ Properties
 `scene`_ (`niObject`_)
     Read-only. The scene of the camera.
 
+`stencilProperty`_ (`niStencilProperty`_, `nil`_)
+    Convenient access to this object's stencil property. Setting this value to be nil will erase the property, while setting it to a valid stencil property will set (or replace) it.
+
+`texturingProperty`_ (`niTexturingProperty`_, `nil`_)
+    Convenient access to this object's texturing property. Setting this value to be nil will erase the property, while setting it to a valid texturing property will set (or replace) it.
+
 `translation`_ (`tes3vector3`_)
     The object's local translation vector.
+
+`vertexColorProperty`_ (`niVertexColorProperty`_, `nil`_)
+    Convenient access to this object's vertex coloring property. Setting this value to be nil will erase the property, while setting it to a valid vertex coloring property will set (or replace) it.
 
 `viewDistance`_ (`number`_)
     The view distance of the camera.
@@ -63,12 +81,18 @@ Properties
 `worldUp`_ (`tes3vector3`_)
     Defines the Y-axis of the camera.
 
+`zBufferProperty`_ (`niZBufferProperty`_, `nil`_)
+    Convenient access to this object's z-buffer property. Setting this value to be nil will erase the property, while setting it to a valid z-buffer property will set (or replace) it.
+
 .. toctree::
     :hidden:
 
+    niCamera/alphaProperty
     niCamera/appCulled
     niCamera/flags
+    niCamera/fogProperty
     niCamera/lodAdjust
+    niCamera/materialProperty
     niCamera/name
     niCamera/parent
     niCamera/port
@@ -79,16 +103,23 @@ Properties
     niCamera/runTimeTypeInformation
     niCamera/scale
     niCamera/scene
+    niCamera/stencilProperty
+    niCamera/texturingProperty
     niCamera/translation
+    niCamera/vertexColorProperty
     niCamera/viewDistance
     niCamera/worldDirection
     niCamera/worldRight
     niCamera/worldToCamera
     niCamera/worldUp
+    niCamera/zBufferProperty
 
+.. _`alphaProperty`: niCamera/alphaProperty.html
 .. _`appCulled`: niCamera/appCulled.html
 .. _`flags`: niCamera/flags.html
+.. _`fogProperty`: niCamera/fogProperty.html
 .. _`lodAdjust`: niCamera/lodAdjust.html
+.. _`materialProperty`: niCamera/materialProperty.html
 .. _`name`: niCamera/name.html
 .. _`parent`: niCamera/parent.html
 .. _`port`: niCamera/port.html
@@ -99,12 +130,16 @@ Properties
 .. _`runTimeTypeInformation`: niCamera/runTimeTypeInformation.html
 .. _`scale`: niCamera/scale.html
 .. _`scene`: niCamera/scene.html
+.. _`stencilProperty`: niCamera/stencilProperty.html
+.. _`texturingProperty`: niCamera/texturingProperty.html
 .. _`translation`: niCamera/translation.html
+.. _`vertexColorProperty`: niCamera/vertexColorProperty.html
 .. _`viewDistance`: niCamera/viewDistance.html
 .. _`worldDirection`: niCamera/worldDirection.html
 .. _`worldRight`: niCamera/worldRight.html
 .. _`worldToCamera`: niCamera/worldToCamera.html
 .. _`worldUp`: niCamera/worldUp.html
+.. _`zBufferProperty`: niCamera/zBufferProperty.html
 
 Methods
 ----------------------------------------------------------------------------------------------------
@@ -196,11 +231,18 @@ Methods
 
 .. _`boolean`: ../../lua/type/boolean.html
 .. _`niAVObject`: ../../lua/type/niAVObject.html
+.. _`niAlphaProperty`: ../../lua/type/niAlphaProperty.html
+.. _`niFogProperty`: ../../lua/type/niFogProperty.html
+.. _`niMaterialProperty`: ../../lua/type/niMaterialProperty.html
 .. _`niNode`: ../../lua/type/niNode.html
 .. _`niObject`: ../../lua/type/niObject.html
 .. _`niProperty`: ../../lua/type/niProperty.html
 .. _`niPropertyLinkedList`: ../../lua/type/niPropertyLinkedList.html
 .. _`niRTTI`: ../../lua/type/niRTTI.html
+.. _`niStencilProperty`: ../../lua/type/niStencilProperty.html
+.. _`niTexturingProperty`: ../../lua/type/niTexturingProperty.html
+.. _`niVertexColorProperty`: ../../lua/type/niVertexColorProperty.html
+.. _`nil`: ../../lua/type/nil.html
 .. _`number`: ../../lua/type/number.html
 .. _`string`: ../../lua/type/string.html
 .. _`tes3matrix33`: ../../lua/type/tes3matrix33.html
