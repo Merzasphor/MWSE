@@ -9,6 +9,7 @@ return {
 			{ name = "clampMode", type = "number", default = "WRAP_S_WRAP_T", description = "The clamp mode to set the map to use." },
 			{ name = "filterMode", type = "number", default = "TRILERP", description = "The filter mode to set the map to use." },
 			{ name = "textCoords", type = "number", default = "0", description = "The texture coordinates to set the map to use." },
+			{ name = "isBumpMap", type = "boolean", default = "false", description = "If true, a bump map will be created instead." },
 		},
 	}},
 	returns = {

@@ -25,5 +25,9 @@ filterMode (`number`_)
 textCoords (`number`_)
     Default: ``0``. The texture coordinates to set the map to use.
 
+isBumpMap (`boolean`_)
+    Default: ``false``. If true, a bump map will be created instead.
+
+.. _`boolean`: ../../../lua/type/boolean.html
 .. _`niTexturingPropertyMap`: ../../../lua/type/niTexturingPropertyMap.html
 .. _`number`: ../../../lua/type/number.html
