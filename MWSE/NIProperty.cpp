@@ -30,6 +30,34 @@ namespace NI {
 		vTable.asProperty->update(this, dt);
 	}
 
+	const auto NI_Property_setFlagBitField = reinterpret_cast<void(__thiscall*)(Property*, unsigned short, unsigned short, unsigned int)>(0x408A10);
+	void  Property::setFlagBitField(unsigned short value, unsigned short mask, unsigned int index) {
+		NI_Property_setFlagBitField(this, value, mask, index);
+	}
+
+	//
+	// NiAlphaProperty
+	//
+
+	AlphaProperty::AlphaProperty() {
+		Property::Property();
+		vTable.asProperty = (Property_vTable*)0x7465A8;
+		setFlag(false, 0);
+		setFlagBitField(6, 0xF, 1);
+		setFlagBitField(7, 0xF, 5);
+		setFlag(false, 9);
+		setFlagBitField(0, 0x7, 10);
+		alphaTestRef = 0;
+	}
+
+	AlphaProperty::~AlphaProperty() {
+
+	}
+
+	Pointer<AlphaProperty> AlphaProperty::create() {
+		return new AlphaProperty();
+	}
+
 	//
 	// NiFogProperty
 	//

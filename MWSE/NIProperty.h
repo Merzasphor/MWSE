@@ -47,6 +47,8 @@ namespace NI {
 		// Other function addresses.
 		//
 
+		void setFlagBitField(unsigned short value, unsigned short mask, unsigned int index);
+
 		static constexpr auto _loadBinary = reinterpret_cast<void(__thiscall*)(Property*, Stream*)>(0x6E9610);
 		static constexpr auto _saveBinary = reinterpret_cast<void(__thiscall*)(const Property*, Stream*)>(0x6E9660);
 
@@ -55,6 +57,11 @@ namespace NI {
 
 	struct AlphaProperty : Property {
 		unsigned char alphaTestRef;
+
+		AlphaProperty();
+		~AlphaProperty();
+
+		static Pointer<AlphaProperty> create();
 	};
 	static_assert(sizeof(AlphaProperty) == 0x1C, "NI::AlphaProperty failed size validation");
 
