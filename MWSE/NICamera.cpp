@@ -32,7 +32,7 @@ namespace NI {
 
 		std::tuple<TES3::Vector3, TES3::Vector3> result = {};
 		auto worldController = TES3::WorldController::get();
-		if (windowPointToRay(point.x + worldController->viewWidth/2, worldController->viewHeight/2 - point.y, std::get<0>(result), std::get<1>(result))) {
+		if (windowPointToRay(int(point.x + worldController->viewWidth/2), int(worldController->viewHeight/2 - point.y), std::get<0>(result), std::get<1>(result))) {
 			return result;
 		}
 		return {};

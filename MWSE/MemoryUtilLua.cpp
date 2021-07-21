@@ -129,10 +129,10 @@ namespace mwse {
 			else {
 				if (returnValue.is<double>()) {
 					// Fix this! Need some way of defining the return type.
-					return returnValue.as<double>();
+					return (DWORD)returnValue.as<double>();
 				}
 				else if (returnValue.is<bool>()) {
-					return returnValue.as<bool>();
+					return (DWORD)returnValue.as<bool>();
 				}
 				else if (returnValue.is<void*>()) {
 					return (DWORD)returnValue.as<void*>();
@@ -278,7 +278,7 @@ namespace mwse {
 				throw std::invalid_argument("Invalid 'address' parameter provided.");
 			}
 
-			sol::optional<DWORD> byte = params["byte"];
+			sol::optional<BYTE> byte = params["byte"];
 			if (!byte) {
 				throw std::invalid_argument("Invalid 'byte' parameter provided.");
 			}
@@ -302,8 +302,8 @@ namespace mwse {
 			BYTE* data = new BYTE[byteCount];
 			for (size_t i = 0; i < byteCount; i++) {
 				sol::object byte = bytes.value()[i + 1];
-				if (byte.is<double>()) {
-					data[i] = byte.as<double>();
+				if (byte.is<BYTE>()) {
+					data[i] = byte.as<BYTE>();
 				}
 				else {
 					data[i] = 0x90;
@@ -330,12 +330,12 @@ namespace mwse {
 			DWORD length = params["length"].get_or(5U);
 
 			sol::object newCall = params["call"];
-			if (newCall.is<double>()) {
+			if (newCall.is<DWORD>()) {
 				if (previousCall) {
-					return genCallEnforced(address.value(), previousCall.value(), newCall.as<double>(), length);
+					return genCallEnforced(address.value(), previousCall.value(), newCall.as<DWORD>(), length);
 				}
 				else {
-					genCallUnprotected(address.value(), newCall.as<double>(), length);
+					genCallUnprotected(address.value(), newCall.as<DWORD>(), length);
 					return true;
 				}
 			}

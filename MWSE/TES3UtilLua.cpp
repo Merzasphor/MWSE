@@ -3258,7 +3258,7 @@ namespace mwse {
 				// Create array required to hold ItemData.
 				stack->variables = new NI::TArray<TES3::ItemData*>();
 			}
-			else if (stack->count <= stack->variables->getFilledCount()) {
+			else if (stack->count <= int(stack->variables->getFilledCount())) {
 				// All items already have ItemData.
 				return nullptr;
 			}
@@ -3451,7 +3451,7 @@ namespace mwse {
 			float pitch = getOptionalParam(params, "pitch", 1.0f);
 
 			// Apply volume, using mix channel and rescale to 0-250.
-			double volume = std::min(std::max(0.0, getOptionalParam(params, "volume", 1.0)), 1.0);
+			double volume = std::clamp(getOptionalParam(params, "volume", 1.0), 0.0, 1.0);
 			volume *= 250.0 * worldController->audioController->getMixVolume(TES3::AudioMixType::Voice);
 
 			// Show a messagebox.
@@ -3962,7 +3962,7 @@ namespace mwse {
 			}
 
 			if (effectController->getEffectFlag(effectId, TES3::EffectFlag::NoMagnitudeBit)) {
-				return std::make_pair(0, 0);
+				return std::make_pair(0.0f, 0);
 			}
 
 			// Get our attribute or skill, if appropriate.
@@ -3970,13 +3970,13 @@ namespace mwse {
 			if (effectController->getEffectFlag(effectId, TES3::EffectFlag::TargetAttributeBit)) {
 				skillOrAttributeID = getOptionalParam<int>(params, "attribute");
 				if (!skillOrAttributeID) {
-					return std::make_pair(0, 0);
+					return std::make_pair(0.0f, 0);
 				}
 			}
 			else if (effectController->getEffectFlag(effectId, TES3::EffectFlag::TargetSkillBit)) {
 				skillOrAttributeID = getOptionalParam<int>(params, "skill");
 				if (!skillOrAttributeID) {
-					return std::make_pair(0, 0);
+					return std::make_pair(0.0f, 0);
 				}
 			}
 
@@ -4032,9 +4032,9 @@ namespace mwse {
 			// Set color.
 			auto lighting = getOptionalParamVector3(params, "lighting");
 			if (lighting) {
-				effect->lightingRed = std::min(std::max(lighting.value().x, 0.0f), 1.0f) * 255;
-				effect->lightingGreen = std::min(std::max(lighting.value().y, 0.0f), 1.0f) * 255;
-				effect->lightingBlue = std::min(std::max(lighting.value().z, 0.0f), 1.0f) * 255;
+				effect->lightingRed = int(std::clamp(lighting.value().x, 0.0f, 1.0f) * 255);
+				effect->lightingGreen = int(std::clamp(lighting.value().y, 0.0f, 1.0f) * 255);
+				effect->lightingBlue = int(std::clamp(lighting.value().z, 0.0f, 1.0f) * 255);
 			}
 			else {
 				effect->lightingRed = 255;
@@ -4167,12 +4167,12 @@ namespace mwse {
 		}
 
 		double advanceTime(sol::table params) {
-			double rawHours = getOptionalParam<double>(params, "hours", 0.0);
-			double hoursPassed = 0.0;
+			float rawHours = getOptionalParam(params, "hours", 0.0f);
+			float hoursPassed = 0.0f;
 
 			// Leverage the resting/waiting system if we're advancing by an hour or more.
 			if (rawHours >= 1.0) {
-				int hoursToAdvance = std::floor(rawHours);
+				int hoursToAdvance = int(std::floor(rawHours));
 
 				auto worldController = TES3::WorldController::get();
 				worldController->gvarGameHour->value += rawHours - hoursToAdvance;
@@ -4232,8 +4232,8 @@ namespace mwse {
 				auto worldController = TES3::WorldController::get();
 
 				// Change FOV.
-				worldController->shadowCamera.cameraData.setFOV(worldController->werewolfFOV);
-				worldController->worldCamera.cameraData.setFOV(worldController->werewolfFOV);
+				worldController->shadowCamera.cameraData.setFOV(float(worldController->werewolfFOV));
+				worldController->worldCamera.cameraData.setFOV(float(worldController->werewolfFOV));
 
 				// Update faders.
 				worldController->werewolfFader->updateMaterialProperty(1.0f);
@@ -4717,7 +4717,7 @@ namespace mwse {
 				// Use centre of body location to match how the findActorsInProximity treats mobiles.
 				auto mobile = reference->getAttachedMobileActor();
 				if (mobile) {
-					position.value().z += 0.5 * mobile->height;
+					position.value().z += 0.5f * mobile->height;
 				}
 			}
 

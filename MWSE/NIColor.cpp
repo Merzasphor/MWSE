@@ -99,9 +99,9 @@ namespace NI {
 	}
 
 	void Color::clamp() {
-		r = std::fmax(0.0f, std::fmin(r, 1.0f));
-		g = std::fmax(0.0f, std::fmin(g, 1.0f));
-		b = std::fmax(0.0f, std::fmin(b, 1.0f));
+		r = std::clamp(r, 0.0f, 1.0f);
+		g = std::clamp(g, 0.0f, 1.0f);
+		b = std::clamp(b, 0.0f, 1.0f);
 	}
 
 	std::string Color::toString() const {
