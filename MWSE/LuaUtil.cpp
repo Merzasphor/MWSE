@@ -93,6 +93,21 @@
 
 namespace mwse {
 	namespace lua {
+		template <>
+		std::string getOptionalParam(sol::optional<sol::table> maybeParams, const char* key, std::string defaultValue) {
+			auto value = std::move(defaultValue);
+
+			if (maybeParams) {
+				sol::table params = maybeParams.value();
+				sol::object maybeValue = params[key];
+				if (maybeValue.valid() && maybeValue.is<std::string>()) {
+					value = std::move(maybeValue.as<std::string>());
+				}
+			}
+
+			return std::move(value);
+		}
+
 		TES3::BaseObject* getOptionalParamBaseObject(sol::optional<sol::table> maybeParams, const char* key) {
 			if (maybeParams) {
 				sol::table params = maybeParams.value();

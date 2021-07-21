@@ -25,6 +25,9 @@ namespace mwse {
 			return value;
 		}
 
+		template <>
+		std::string getOptionalParam(sol::optional<sol::table> maybeParams, const char* key, std::string defaultValue);
+
 		template <typename T>
 		sol::optional<T> getOptionalParam(sol::optional<sol::table> maybeParams, const char* key) {
 			if (maybeParams) {
