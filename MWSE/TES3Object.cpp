@@ -113,7 +113,7 @@ namespace TES3 {
 		}
 	}
 
-	const char* BaseObject::getSourceFilename() {
+	const char* BaseObject::getSourceFilename() const {
 		if (sourceMod) {
 			return sourceMod->filename;
 		}
@@ -158,7 +158,7 @@ namespace TES3 {
 		return true;
 	}
 
-	std::string BaseObject::toJson() {
+	std::string BaseObject::toJson() const {
 		std::ostringstream ss;
 		ss << "\"tes3baseObject:" << getObjectID() << "\"";
 		return std::move(ss.str());

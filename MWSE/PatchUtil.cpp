@@ -740,7 +740,7 @@ namespace mwse {
 			return bRet;
 		}
 
-		const char* SafeGetObjectId(TES3::BaseObject* object) {
+		const char* SafeGetObjectId(const TES3::BaseObject* object) {
 			__try {
 				return object->getObjectID();
 			}
@@ -749,7 +749,7 @@ namespace mwse {
 			}
 		}
 
-		const char* SafeGetSourceFile(TES3::BaseObject* object) {
+		const char* SafeGetSourceFile(const TES3::BaseObject* object) {
 			__try {
 				return object->getSourceFilename();
 			}
@@ -760,11 +760,16 @@ namespace mwse {
 
 		template <typename T>
 		void safePrintObjectToLog(const char* title, const T* object) {
-			auto id = SafeGetObjectId(TES3::Script::currentlyExecutingScript);
-			auto source = SafeGetSourceFile(TES3::Script::currentlyExecutingScript);
-			log::getLog() << "  " << title << ": " << (id ? id : "<memory corrupted>") << " (" << (source ? source : "<memory corrupted>") << ")" << std::endl;
-			if (id) {
-				log::prettyDump(object);
+			if (object) {
+				auto id = SafeGetObjectId(object);
+				auto source = SafeGetSourceFile(object);
+				log::getLog() << "  " << title << ": " << (id ? id : "<memory corrupted>") << " (" << (source ? source : "<memory corrupted>") << ")" << std::endl;
+				if (id) {
+					log::prettyDump(object);
+				}
+			}
+			else {
+				log::getLog() << "  " << title << ": nullptr" << std::endl;
 			}
 		}
 

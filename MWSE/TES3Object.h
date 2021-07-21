@@ -250,7 +250,7 @@ namespace TES3 {
 		BaseObject * getBaseObject() const;
 
 		bool isActor() const;
-		const char* getSourceFilename();
+		const char* getSourceFilename() const;
 
 		bool getDisabled() const;
 		bool getDeleted() const;
@@ -263,7 +263,7 @@ namespace TES3 {
 
 		bool getSupportsLuaData() const;
 
-		std::string toJson();
+		std::string toJson() const;
 
 		bool getSourceless() const;
 		void setSourceless(bool sourceless) const;
