@@ -189,6 +189,24 @@ Methods
 .. _`updateEffects`: niDynamicEffect/updateEffects.html
 .. _`updateProperties`: niDynamicEffect/updateProperties.html
 
+Functions
+----------------------------------------------------------------------------------------------------
+
+`attachAffectedNode`_
+    Adds a node to the dynamic effect's affected nodes list. The node's ``:updateEffects()`` function should be called afterwards to recognize the change.
+
+`detachAffectedNode`_
+    Removes a node from the dynamic effect's affected nodes list. The node's ``:updateEffects()`` function should be called afterwards to recognize the change.
+
+.. toctree::
+    :hidden:
+
+    niDynamicEffect/attachAffectedNode
+    niDynamicEffect/detachAffectedNode
+
+.. _`attachAffectedNode`: niDynamicEffect/attachAffectedNode.html
+.. _`detachAffectedNode`: niDynamicEffect/detachAffectedNode.html
+
 .. _`boolean`: ../../lua/type/boolean.html
 .. _`niAVObject`: ../../lua/type/niAVObject.html
 .. _`niAlphaProperty`: ../../lua/type/niAlphaProperty.html
