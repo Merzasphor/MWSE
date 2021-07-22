@@ -4,7 +4,7 @@ return {
 	arguments = {
 		{ name = "path", type = "string", description = "The path, relative to the current directory, to get attributes for." },
 		{ name = "request", type = "string", optional = true, description = "The specific attribute to look for. If provided, the return value becomes the requested value (or nil) instead of a table." },
-		{ name = "result table", type = "table", optional = true, description = "If provided, this table will be reused as the result table. If not provided, a new table is created." },
+		{ name = "resultTable", type = "table", optional = true, description = "If provided, this table will be reused as the result table. If not provided, a new table is created." },
 	},
 	returns = {
 		{ name = "attributes", type = "table|string|number|nil", description = "All attributes in a table, the value of a specific attribute if one was requested, or nil on an error." },

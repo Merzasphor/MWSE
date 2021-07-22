@@ -1,7 +1,7 @@
 return {
 	["voice"] = {
 		["hello"] = 0,
-		["hit"] = 1,
+		["idle"] = 1,
 		["intruder"] = 2,
 		["thief"] = 3,
 		["hit"] = 4,
