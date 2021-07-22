@@ -109,8 +109,7 @@ function Slider:createLabel(parentBlock)
 end
 
 function Slider:makeComponent(parentBlock)
-	local sliderBlock 
-	sliderBlock = parentBlock:createBlock()
+	local sliderBlock = parentBlock:createBlock()
 	sliderBlock.flowDirection = "left_to_right"
 	sliderBlock.autoHeight = true
 	sliderBlock.widthProportional = 1.0
