@@ -81,6 +81,15 @@ function dofile(path)
 end
 
 -------------------------------------------------
+-- Global includes
+-------------------------------------------------
+
+_G.tes3 = require("tes3.init")
+_G.event = require("event")
+_G.json = require("dkjson")
+
+
+-------------------------------------------------
 -- Extend base API: math
 -------------------------------------------------
 
@@ -110,6 +119,7 @@ function math.round(value, digits)
 	local mult = 10 ^ (digits or 0)
 	return math.floor(value * mult + 0.5) / mult
 end
+
 
 -------------------------------------------------
 -- Extend base API: table
@@ -260,6 +270,7 @@ function table.values(t, sort)
 	return values
 end
 
+
 -------------------------------------------------
 -- Extend base table: Add binary search/insert
 -------------------------------------------------
@@ -350,6 +361,7 @@ function table.bininsert(t, value, comp)
 	return (iMid+iState)
 end
 
+
 -------------------------------------------------
 -- Extend base API: string
 -------------------------------------------------
@@ -378,6 +390,7 @@ function string.insert(s1, s2, pos)
 	return s1:sub(1, pos) .. s2 .. s1:sub(pos + 1)
 end
 getmetatable("").insert = string.insert
+
 
 -------------------------------------------------
 -- Extend base API: debug
@@ -466,14 +479,6 @@ function lfs.directoryexists(filepath)
 	return lfs.attributes(filepath, "mode") == "directory"
 end
 
--------------------------------------------------
--- Global includes
--------------------------------------------------
-
-_G.tes3 = require("tes3.init")
-_G.event = require("event")
-_G.json = require("dkjson")
-
 
 -------------------------------------------------
 -- Extend our base API: json
@@ -518,6 +523,7 @@ function json.encode(object, state)
 
 	return originalEncode(object, state)
 end
+
 
 -------------------------------------------------
 -- Extend our base API: mge
@@ -571,6 +577,7 @@ function mwse.encodeForSave(object)
 	return json.encode(object, { exception = exceptionWhenSaving })
 end
 
+
 -------------------------------------------------
 -- Setup and load MWSE config.
 -------------------------------------------------
@@ -597,6 +604,7 @@ end
 
 -- Refresh the file so that it shows users what other values can be tweaked.
 mwse.saveConfig("MWSE", userConfig)
+
 
 -------------------------------------------------
 -- Extend our base API: tes3
