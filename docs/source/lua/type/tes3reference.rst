@@ -71,7 +71,7 @@ Properties
 `lockNode`_ (`tes3lockNode`_)
     Read-only. Quick access to the reference's lock node, if any.
 
-`mobile`_ (`tes3mobileObject`_)
+`mobile`_ (`tes3mobileCreature`_, `tes3mobileNPC`_, `tes3mobilePlayer`_, `tes3mobileProjectile`_, `tes3mobileSpell`_, `nil`_)
     Read-only. Access to the attached mobile object, if applicable.
 
 `modified`_ (`boolean`_)
@@ -340,7 +340,10 @@ Methods
 .. _`tes3cell`: ../../lua/type/tes3cell.html
 .. _`tes3itemData`: ../../lua/type/tes3itemData.html
 .. _`tes3lockNode`: ../../lua/type/tes3lockNode.html
-.. _`tes3mobileObject`: ../../lua/type/tes3mobileObject.html
+.. _`tes3mobileCreature`: ../../lua/type/tes3mobileCreature.html
+.. _`tes3mobileNPC`: ../../lua/type/tes3mobileNPC.html
+.. _`tes3mobilePlayer`: ../../lua/type/tes3mobilePlayer.html
+.. _`tes3mobileProjectile`: ../../lua/type/tes3mobileProjectile.html
 .. _`tes3object`: ../../lua/type/tes3object.html
 .. _`tes3physicalObject`: ../../lua/type/tes3physicalObject.html
 .. _`tes3reference`: ../../lua/type/tes3reference.html

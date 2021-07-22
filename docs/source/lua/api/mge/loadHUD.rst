@@ -6,7 +6,7 @@ Loads a HUD element. This is a warpper for MGELoadHUD.
 Parameters
 ----------------------------------------------------------------------------------------------------
 
-Accepts parameters in the following order:
+Accepts parameters through a table with the given keys:
 
 hud (`string`_)
     No description available.
