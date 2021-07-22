@@ -36,21 +36,21 @@ return {
 				type = "number",
 				optional = true,
 				default = 1.0,
-				description = ""
+				-- description = ""
 			},
 			{
 				name = "sizeCap",
 				type = "number",
 				optional = true,
 				default = 1.0,
-				description = ""
+				-- description = ""
 			},
 			{
 				name = "speed",
 				type = "number",
 				optional = true,
 				default = 1.0,
-				description = ""
+				-- description = ""
 			},
 			{
 				name = "description",
@@ -124,25 +124,25 @@ return {
 				name = "castVFX",
 				type = "tes3physicalObject",
 				optional = true,
-				description = ""
+				-- description = ""
 			},
 			{
 				name = "boltVFX",
 				type = "tes3physicalObject",
 				optional = true,
-				description = ""
+				-- description = ""
 			},
 			{
 				name = "hitVFX",
 				type = "tes3physicalObject",
 				optional = true,
-				description = ""
+				-- description = ""
 			},
 			{
 				name = "areaVFX",
 				type = "tes3physicalObject",
 				optional = true,
-				description = ""
+				-- description = ""
 			},
 			{
 				name = "allowEnchanting",
@@ -163,7 +163,7 @@ return {
 				type = "boolean",
 				optional = true,
 				default = true,
-				description = ""
+				-- description = ""
 			},
 			{
 				name = "canCastSelf",
@@ -191,7 +191,7 @@ return {
 				type = "boolean",
 				optional = true,
 				default = true,
-				description = ""
+				-- description = ""
 			},
 			{
 				name = "hasContinuousVFX",
@@ -205,14 +205,14 @@ return {
 				type = "boolean",
 				optional = true,
 				default = true,
-				description = ""
+				-- description = ""
 			},
 			{
 				name = "hasNoMagnitude",
 				type = "boolean",
 				optional = true,
 				default = true,
-				description = ""
+				-- description = ""
 			},
 			{
 				name = "illegalDaedra",
@@ -240,14 +240,14 @@ return {
 				type = "boolean",
 				optional = true,
 				default = true,
-				description = ""
+				-- description = ""
 			},
 			{
 				name = "targetsSkills",
 				type = "boolean",
 				optional = true,
 				default = true,
-				description = ""
+				-- description = ""
 			},
 			{
 				name = "unreflectable",
@@ -261,7 +261,7 @@ return {
 				type = "boolean",
 				optional = true,
 				default = true,
-				description = ""
+				-- description = ""
 			},
 			{
 				name = "onTick",
