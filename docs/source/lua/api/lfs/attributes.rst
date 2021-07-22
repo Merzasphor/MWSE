@@ -21,7 +21,7 @@ path (`string`_)
 request (`string`_)
     Optional. The specific attribute to look for. If provided, the return value becomes the requested value (or nil) instead of a table.
 
-result table (`table`_)
+resultTable (`table`_)
     Optional. If provided, this table will be reused as the result table. If not provided, a new table is created.
 
 .. _`nil`: ../../../lua/type/nil.html

@@ -210,7 +210,7 @@ function mwscript.getButtonPressed() end
 --- ``reference``: tes3reference|tes3mobileActor|string — The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
 --- ``target``: tes3reference|tes3mobileActor|string — Actor to check detection for.
---- @return any boolean No description yet available.
+--- @return boolean result No description yet available.
 function mwscript.getDetected(params) end
 
 ---Table parameter definitions for ``mwscript.getDetected``.
@@ -222,7 +222,7 @@ function mwscript.getDetected(params) end
 --- @param params mwscript.getDisabled.params This table accepts the following values:
 --- 
 --- ``reference``: tes3reference|tes3mobileActor|string — The target reference for this command to be executed on. Defaults to the normal script execution reference.
---- @return any boolean No description yet available.
+--- @return boolean result No description yet available.
 function mwscript.getDisabled(params) end
 
 ---Table parameter definitions for ``mwscript.getDisabled``.
@@ -235,7 +235,7 @@ function mwscript.getDisabled(params) end
 --- ``reference``: tes3reference|tes3mobileActor|string — The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
 --- ``target``: tes3reference|tes3mobileActor|string — Actor to check distance to.
---- @return any boolean No description yet available.
+--- @return boolean result No description yet available.
 function mwscript.getDistance(params) end
 
 ---Table parameter definitions for ``mwscript.getDistance``.
@@ -249,7 +249,7 @@ function mwscript.getDistance(params) end
 --- ``reference``: tes3reference|tes3mobileActor|string — The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
 --- ``item``: tes3item|string — No description yet available.
---- @return any number No description yet available.
+--- @return number result No description yet available.
 function mwscript.getItemCount(params) end
 
 ---Table parameter definitions for ``mwscript.getItemCount``.
@@ -258,15 +258,15 @@ function mwscript.getItemCount(params) end
 --- @field item tes3item|string No description yet available.
 
 --- Wrapper for the GetPCJumping mwscript function.
---- @return any boolean No description yet available.
+--- @return boolean result No description yet available.
 function mwscript.getPCJumping() end
 
 --- Wrapper for the GetPCRunning mwscript function.
---- @return any boolean No description yet available.
+--- @return boolean result No description yet available.
 function mwscript.getPCRunning() end
 
 --- Wrapper for the GetPCSneaking mwscript function.
---- @return any boolean No description yet available.
+--- @return boolean result No description yet available.
 function mwscript.getPCSneaking() end
 
 --- Returns the script target for the currently running Morrowind script, if any.
@@ -283,7 +283,7 @@ function mwscript.getScript() end
 --- ``reference``: tes3reference|tes3mobileActor|string — The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
 --- ``spell``: tes3spell|string — No description yet available.
---- @return any boolean No description yet available.
+--- @return boolean result No description yet available.
 function mwscript.getSpellEffects(params) end
 
 ---Table parameter definitions for ``mwscript.getSpellEffects``.
@@ -297,7 +297,7 @@ function mwscript.getSpellEffects(params) end
 --- ``reference``: tes3reference|tes3mobileActor|string — The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
 --- ``item``: tes3item|string — The item to be added.
---- @return any boolean No description yet available.
+--- @return boolean result No description yet available.
 function mwscript.hasItemEquipped(params) end
 
 ---Table parameter definitions for ``mwscript.hasItemEquipped``.
@@ -334,7 +334,7 @@ function mwscript.placeAtPC(params) end
 --- ``reference``: tes3reference|tes3mobileActor|string — The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
 --- ``sound``: tes3sound|string — No description yet available.
---- @return any boolean No description yet available.
+--- @return boolean result No description yet available.
 function mwscript.playSound(params) end
 
 ---Table parameter definitions for ``mwscript.playSound``.
@@ -429,7 +429,7 @@ function mwscript.removeSpell(params) end
 --- @param params mwscript.scriptRunning.params This table accepts the following values:
 --- 
 --- ``script``: tes3script|string — No description yet available.
---- @return any boolean No description yet available.
+--- @return boolean result No description yet available.
 function mwscript.scriptRunning(params) end
 
 ---Table parameter definitions for ``mwscript.scriptRunning``.
@@ -512,7 +512,7 @@ function mwscript.stopScript(params) end
 --- ``reference``: tes3reference|tes3mobileActor|string — The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
 --- ``sound``: tes3sound|string — No description yet available.
---- @return any boolean No description yet available.
+--- @return boolean result No description yet available.
 function mwscript.stopSound(params) end
 
 ---Table parameter definitions for ``mwscript.stopSound``.

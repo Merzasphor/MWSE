@@ -134,20 +134,13 @@ local function getFullPackageNamespace(package)
 	return package.key
 end
 
-local function getConsistentArguments(package)
-	if (type(package.returns) == "string" or package.valuetype) then
-		return { { name = package.returns, type = package.valuetype } }
-	elseif (type(package.returns) == "table") then
-		if (#package.returns == 1) then
-			return { package.returns }
-		end
-		return package.returns
-	end
-end
-
 local function getConsistentReturnValues(package)
-	if (type(package.returns) == "string" or package.valuetype) then
+	if (type(package.returns) == "string" and package.valuetype == nil) then
+		return { { name = "result", type = package.returns } }
+	elseif (type(package.returns) == "string" and package.valuetype ~= nil) then
 		return { { name = package.returns, type = package.valuetype } }
+	elseif (package.valuetype) then
+		return { { name = "result", type = package.valuetype } }
 	elseif (type(package.returns) == "table") then
 		if (#package.returns == 1) then
 			return { package.returns }

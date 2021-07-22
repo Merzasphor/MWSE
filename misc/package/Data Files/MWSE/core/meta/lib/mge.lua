@@ -46,15 +46,15 @@ function mge.freeHUD(hud) end
 function mge.fullscreenHUD(hud) end
 
 --- Gets the window's vertical resolution. Wrapper for mwscript's MGEGetHeight.
---- @return any number No description yet available.
+--- @return number result No description yet available.
 function mge.getScreenHeight() end
 
 --- Wrapper for MGEGetScreenRotation.
---- @return any number No description yet available.
+--- @return number result No description yet available.
 function mge.getScreenRotation() end
 
 --- Gets the window's horizontal resolution. Wrapper for mwscript's MGEGetWidth.
---- @return any number No description yet available.
+--- @return number result No description yet available.
 function mge.getScreenWidth() end
 
 --- Returns the UI scaling used.
@@ -62,11 +62,11 @@ function mge.getScreenWidth() end
 function mge.getUIScale() end
 
 --- Gets the MGE version. Wrapper for MGEGetVersion.
---- @return any number No description yet available.
+--- @return number result No description yet available.
 function mge.getVersion() end
 
 --- Wrapper for MGEGetZoom.
---- @return any number No description yet available.
+--- @return number result No description yet available.
 function mge.getZoom() end
 
 --- Loads a HUD element. This is a warpper for MGELoadHUD.
