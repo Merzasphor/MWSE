@@ -16,16 +16,20 @@
         "lua/?/init.lua"
     ],
 
+    // We are too powerful for default settings.
+    "Lua.workspace.maxPreload": 10000,
+    "Lua.workspace.preloadFileSize": 1000,
+
     // Make sure we only look at our main folders.
-    "Lua.workspace.library": [
-        "./core/meta",
-        "./lib",
-        "./mods",
-        "./lua"
-    ],
-    "Lua.workspace.ignoreDir": [
-        "*"
-    ],
+    // "Lua.workspace.library": [
+    //     "./core/meta",
+    //     "./lib",
+    //     "./mods",
+    //     "./lua"
+    // ],
+    // "Lua.workspace.ignoreDir": [
+    //     "*"
+    // ],
 
     // Ignore any potential 3rd party checks. We provide our definitions in core/meta
     "Lua.workspace.checkThirdParty": false,
