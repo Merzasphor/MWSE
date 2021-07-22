@@ -47,6 +47,9 @@ Properties
 `id`_ (`string`_)
     The unique identifier for the object.
 
+`isDead`_ (`boolean`_, `nil`_)
+    Read-only. Returns true if the object is dead, false if they are alive, or nil if that couldn't be determined.
+
 `isEmpty`_ (`boolean`_)
     Friendly access onto the reference's empty inventory flag.
 
@@ -150,6 +153,7 @@ Properties
     tes3reference/facing
     tes3reference/hasNoCollision
     tes3reference/id
+    tes3reference/isDead
     tes3reference/isEmpty
     tes3reference/isLeveledSpawn
     tes3reference/isRespawn
@@ -193,6 +197,7 @@ Properties
 .. _`facing`: tes3reference/facing.html
 .. _`hasNoCollision`: tes3reference/hasNoCollision.html
 .. _`id`: tes3reference/id.html
+.. _`isDead`: tes3reference/isDead.html
 .. _`isEmpty`: tes3reference/isEmpty.html
 .. _`isLeveledSpawn`: tes3reference/isLeveledSpawn.html
 .. _`isRespawn`: tes3reference/isRespawn.html

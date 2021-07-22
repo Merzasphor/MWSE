@@ -65,6 +65,7 @@ namespace mwse {
 			usertypeDefinition["data"] = sol::readonly_property(&TES3::Reference::getLuaTable);
 			usertypeDefinition["facing"] = sol::property(&TES3::Reference::getFacing, &TES3::Reference::setFacing);
 			usertypeDefinition["hasNoCollision"] = sol::property(&TES3::Reference::getNoCollision, &TES3::Reference::setNoCollision_lua);
+			usertypeDefinition["isDead"] = sol::readonly_property(&TES3::Reference::isDead);
 			usertypeDefinition["isEmpty"] = sol::property(&TES3::Reference::getEmptyInventoryFlag, &TES3::Reference::setEmptyInventoryFlag);
 			usertypeDefinition["isLeveledSpawn"] = sol::readonly_property(&TES3::Reference::isLeveledSpawn);
 			usertypeDefinition["isRespawn"] = sol::readonly_property(&TES3::Reference::isRespawn);

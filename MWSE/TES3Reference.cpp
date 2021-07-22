@@ -865,6 +865,22 @@ namespace TES3 {
 		return targetID & FormMask;
 	}
 
+	sol::optional<bool> Reference::isDead() const {
+		auto mobile = getAttachedMobileActor();
+		if (mobile) {
+			return mobile->isDead();
+		}
+
+		switch (baseObject->objectType) {
+		case ObjectType::Creature:
+			return static_cast<Creature*>(getBaseObject())->health <= 1;
+		case ObjectType::NPC:
+			return static_cast<NPC*>(getBaseObject())->health <= 1;
+		}
+
+		return {};
+	}
+
 	Inventory * Reference::getInventory() {
 		// Only actors have equipment.
 		if (baseObject->objectType != ObjectType::Container &&
@@ -976,7 +992,7 @@ namespace TES3 {
 		return attachment;
 	}
 
-	MobileObject* Reference::getAttachedMobileObject() {
+	MobileObject* Reference::getAttachedMobileObject() const {
 		auto attachment = getAttachment(AttachmentType::ActorData);
 		if (attachment) {
 			return static_cast<MobileActorAttachment*>(attachment)->data;
@@ -984,11 +1000,11 @@ namespace TES3 {
 		return nullptr;
 	}
 
-	MobileActor* Reference::getAttachedMobileActor() {
+	MobileActor* Reference::getAttachedMobileActor() const {
 		return static_cast<MobileActor*>(getAttachedMobileObject());
 	}
 
-	MobileCreature* Reference::getAttachedMobileCreature() {
+	MobileCreature* Reference::getAttachedMobileCreature() const {
 		auto mobile = getAttachedMobileActor();
 		if (mobile == nullptr || mobile->actorType != MobileActorType::Creature) {
 			return nullptr;
@@ -996,7 +1012,7 @@ namespace TES3 {
 		return static_cast<MobileCreature*>(mobile);
 	}
 
-	MobileNPC* Reference::getAttachedMobileNPC() {
+	MobileNPC* Reference::getAttachedMobileNPC() const {
 		auto mobile = getAttachedMobileActor();
 		if (mobile == nullptr || (mobile->actorType != MobileActorType::NPC && mobile->actorType != MobileActorType::Player)) {
 			return nullptr;
@@ -1004,7 +1020,7 @@ namespace TES3 {
 		return static_cast<MobileNPC*>(mobile);
 	}
 
-	MobileProjectile* Reference::getAttachedMobileProjectile() {
+	MobileProjectile* Reference::getAttachedMobileProjectile() const {
 		return static_cast<MobileProjectile*>(getAttachedMobileObject());
 	}
 
@@ -1048,7 +1064,7 @@ namespace TES3 {
 		return nullptr;
 	}
 	
-	AnimationData* Reference::getAttachedAnimationData() {
+	AnimationData* Reference::getAttachedAnimationData() const {
 		auto attachment = static_cast<TES3::AnimationAttachment*>(getAttachment(TES3::AttachmentType::Animation));
 		if (attachment) {
 			return attachment->data;
@@ -1064,7 +1080,7 @@ namespace TES3 {
 		return nullptr;
 	}
 
-	TravelDestination* Reference::getAttachedTravelDestination() {
+	TravelDestination* Reference::getAttachedTravelDestination() const {
 		auto attachment = static_cast<TES3::TravelDestinationAttachment*>(getAttachment(TES3::AttachmentType::TravelDestination));
 		if (attachment) {
 			return attachment->data;

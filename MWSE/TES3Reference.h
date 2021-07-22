@@ -112,18 +112,18 @@ namespace TES3 {
 
 		bool insertAttachment(Attachment* attachment);
 		Attachment* getAttachment(AttachmentType::AttachmentType type) const;
-		MobileObject* getAttachedMobileObject();
-		MobileActor* getAttachedMobileActor();
-		MobileCreature* getAttachedMobileCreature();
-		MobileNPC* getAttachedMobileNPC();
-		MobileProjectile* getAttachedMobileProjectile();
+		MobileObject* getAttachedMobileObject() const;
+		MobileActor* getAttachedMobileActor() const;
+		MobileCreature* getAttachedMobileCreature() const;
+		MobileNPC* getAttachedMobileNPC() const;
+		MobileProjectile* getAttachedMobileProjectile() const;
 		ItemData* getAttachedItemData() const;
 		void setAttachedItemData(ItemData * itemData);
 		ItemData* getOrCreateAttachedItemData();
 		LockAttachmentNode* getAttachedLockNode();
-		AnimationData* getAttachedAnimationData();
-		BodyPartManager* getAttachedBodyPartManager();
-		TravelDestination* getAttachedTravelDestination();
+		AnimationData* getAttachedAnimationData() const;
+		BodyPartManager* getAttachedBodyPartManager() ;
+		TravelDestination* getAttachedTravelDestination() const;
 
 		LightAttachmentNode* getAttachedDynamicLight();
 		LightAttachmentNode* getOrCreateAttachedDynamicLight_lua(sol::optional<NI::PointLight*> light, sol::optional<float> value);
@@ -151,6 +151,8 @@ namespace TES3 {
 		unsigned int getSourceFormId() const;
 		unsigned int getTargetModId() const;
 		unsigned int getTargetFormId() const;
+
+		sol::optional<bool> isDead() const;
 
 		//
 		// Lua interface functions.
