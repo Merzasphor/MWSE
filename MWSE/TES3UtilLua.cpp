@@ -3481,9 +3481,14 @@ namespace mwse {
 				throw std::invalid_argument("Invalid target parameter provided.");
 			}
 
-			// You never have access to NPCs.
+			// You always have access to yourself.
+			if (reference == target) {
+				return true;
+			}
+
+			// The player never has access to living actors.
 			auto targetBaseObject = target->getBaseObject();
-			if (targetBaseObject->objectType == TES3::ObjectType::NPC) {
+			if (target->isActor() && !target->isDead().value_or(true)) {
 				return false;
 			}
 
@@ -3500,7 +3505,7 @@ namespace mwse {
 					return true;
 				}
 
-				// Is the target dead?
+				// Is the target dead? We have to check the kill counter here.
 				else if (reference == playerReference && TES3::WorldController::get()->playerKills->getKillCount(static_cast<TES3::NPC*>(targetData->owner)) > 0) {
 					return true;
 				}
