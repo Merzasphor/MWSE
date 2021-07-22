@@ -130,7 +130,6 @@ function Slider:makeComponent(parentBlock)
 	
 	--add mouseovers
 	table.insert(self.mouseOvers, sliderBlock)
-	table.insert(self.mouseOvers, sliderValueLabel)
 	--Add every piece of the slider to the mouseOvers
 	for _, sliderElement in ipairs(slider.children) do
 		table.insert(self.mouseOvers, sliderElement)
