@@ -27,10 +27,6 @@
         "*"
     ],
 
-    // We are too powerful for default settings.
-    "Lua.workspace.maxPreload": 10000,
-    "Lua.workspace.preloadFileSize": 1000,
-
     // Ignore any potential 3rd party checks. We provide our definitions in core/meta
     "Lua.workspace.checkThirdParty": false,
 
