@@ -120,11 +120,11 @@ local function copyFile(src, dst)
 end
 
 local function formatLineBreaks(str)
-	return string.gsub(str, "\n", "\n---")
+	return string.gsub(str, "\n", "\n--- ")
 end
 
 local function formatDescription(description)
-	return "---" .. formatLineBreaks(description)
+	return "--- " .. formatLineBreaks(description)
 end
 
 local function getFullPackageNamespace(package)
@@ -184,20 +184,20 @@ local function writeFunction(package, file, namespaceOverride)
 				description = description .. string.format("\n\n``%s``: %s — %s", tableArgument.name or "unknown", tableArgument.type or "any", formatLineBreaks(tableArgument.description or defaultNoDescriptionText))
 			end
 		end
-		file:write(string.format("---@param %s %s %s\n", argument.name or "unknown", type, formatLineBreaks(description)))
+		file:write(string.format("--- @param %s %s %s\n", argument.name or "unknown", type, formatLineBreaks(description)))
 	end
 
 	for _, returnPackage in ipairs(getConsistentReturnValues(package) or {}) do
-		file:write(string.format("---@return %s %s %s\n", returnPackage.type or "any", returnPackage.name or "result", returnPackage.description or defaultNoDescriptionText))
+		file:write(string.format("--- @return %s %s %s\n", returnPackage.type or "any", returnPackage.name or "result", returnPackage.description or defaultNoDescriptionText))
 	end
 
 	file:write(string.format("function %s(%s) end\n\n", namespaceOverride or package.namespace, table.concat(getParamNames(package), ", ")))
 
 	if (package.arguments and #package.arguments == 1 and package.arguments[1].tableParams) then
 		file:write(string.format("---Table parameter definitions for ``%s``.\n", package.namespace))
-		file:write(string.format("---@class %s.params\n", package.namespace))
+		file:write(string.format("--- @class %s.params\n", package.namespace))
 		for _, param in ipairs(package.arguments[1].tableParams) do
-			file:write(string.format("---@field %s %s %s\n", param.name, param.type, param.description or defaultNoDescriptionText))
+			file:write(string.format("--- @field %s %s %s\n", param.name, param.type, param.description or defaultNoDescriptionText))
 		end
 		file:write("\n")
 	end
@@ -288,15 +288,15 @@ local function buildLibrary(key)
 	local file = assert(io.open(outPath, "w"))
 
 	-- Mark the file as a meta file.
-	file:write("---@meta\n\n")
+	file:write("--- @meta\n\n")
 
 	-- Write description.
 	file:write(formatDescription(package.description or defaultNoDescriptionText) .. "\n")
-	file:write(string.format("---@class %slib\n", key))
+	file:write(string.format("--- @class %slib\n", key))
 
 	-- Write out fields.
 	for _, value in ipairs(package.values or {}) do
-		file:write(string.format("---@field %s %s %s\n", value.key, value.valuetype or "any", formatLineBreaks(value.description or defaultNoDescriptionText)))
+		file:write(string.format("--- @field %s %s %s\n", value.key, value.valuetype or "any", formatLineBreaks(value.description or defaultNoDescriptionText)))
 	end
 	
 	-- Finalize the main class definition.
@@ -347,15 +347,15 @@ local function buildClass(key)
 	local file = assert(io.open(outPath, "w"))
 
 	-- Mark the file as a meta file.
-	file:write("---@meta\n\n")
+	file:write("--- @meta\n\n")
 
 	-- Write description.
 	file:write(formatDescription(package.description or defaultNoDescriptionText) .. "\n")
-	file:write(string.format("---@class %s%s\n", key, package.inherits and (" : " .. buildParentChain(package.inherits)) or ""))
+	file:write(string.format("--- @class %s%s\n", key, package.inherits and (" : " .. buildParentChain(package.inherits)) or ""))
 
 	-- Write out fields.
 	for _, value in ipairs(package.values or {}) do
-		file:write(string.format("---@field %s %s %s\n", value.key, value.valuetype or "any", formatLineBreaks(value.description or defaultNoDescriptionText)))
+		file:write(string.format("--- @field %s %s %s\n", value.key, value.valuetype or "any", formatLineBreaks(value.description or defaultNoDescriptionText)))
 	end
 	
 	-- Finalize the main class definition.
