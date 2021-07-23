@@ -3,7 +3,7 @@ loaded
 
 The loaded event fires after the game has been successfully loaded. This event is preceded by the load event.
 
-Related events: `load`_, `loaded`_
+Related events: `load`_
 
 Event Data
 ----------------------------------------------------------------------------------------------------
@@ -24,6 +24,5 @@ newGame
 `boolean`_. Read-only. If true, a new game was started.
 
 .. _`load`: ../../lua/event/load.html
-.. _`loaded`: ../../lua/event/loaded.html
 .. _`boolean`: ../../lua/type/boolean.html
 .. _`string`: ../../lua/type/string.html
