@@ -84,7 +84,7 @@ function tes3ui.getMenuOnTop() end
 function tes3ui.getPalette(name) end
 
 --- Returns the mobile actor currently providing services to the player.
---- @return tes3mobileActor result No description yet available.
+--- @return tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer result No description yet available.
 function tes3ui.getServiceActor() end
 
 --- Requests menu mode be deactivated on a menu with a given id.

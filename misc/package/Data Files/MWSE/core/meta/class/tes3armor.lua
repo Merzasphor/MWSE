@@ -20,6 +20,6 @@
 tes3armor = {}
 
 --- Calculates what armor rating is provided for a given mobile actor.
---- @param mobile tes3mobileActor No description yet available.
+--- @param mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer No description yet available.
 function tes3armor:calculateArmorRating(mobile) end
 

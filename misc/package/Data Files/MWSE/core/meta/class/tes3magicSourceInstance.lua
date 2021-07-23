@@ -8,7 +8,7 @@
 --- @field itemData tes3itemData No description yet available.
 --- @field itemID string No description yet available.
 --- @field magicID string No description yet available.
---- @field projectile tes3mobileProjectile No description yet available.
+--- @field projectile tes3mobileProjectile|tes3mobileSpellProjectile No description yet available.
 --- @field source tes3alchemy|tes3enchantment|tes3spell No description yet available.
 --- @field sourceType number Shows if the source is a spell, enchantment, or alchemy.
 --- @field state number Shows if the state is pre-cast, cast, beginning, working, ending, retired, etc.

@@ -6,7 +6,7 @@
 --- @field data any No description yet available.
 --- @field distance number No description yet available.
 --- @field lastUseTimestamp number No description yet available.
---- @field mobile tes3mobileActor No description yet available.
+--- @field mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer No description yet available.
 --- @field potionUseFlag number No description yet available.
 --- @field selectedAction number No description yet available.
 --- @field selectedAlchemy tes3alchemy No description yet available.

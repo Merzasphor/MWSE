@@ -76,6 +76,6 @@ function tes3inventory:removeItem(params) end
 --- @field deleteItemData boolean If set, the itemData will be deleted after being removed.
 
 --- Resolves all contained leveled lists and adds the randomized items to the inventory. This should generally not be called directly.
---- @param mobile tes3mobileActor The mobile actor whose stats will be updated.
+--- @param mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer The mobile actor whose stats will be updated.
 function tes3inventory:resolveLeveledItems(mobile) end
 

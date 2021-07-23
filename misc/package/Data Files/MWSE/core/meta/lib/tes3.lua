@@ -127,13 +127,13 @@ function tes3.addJournalEntry(params) end
 --- 
 --- ``areaSound``: string — Must be a string no longer than 31 characters long.
 --- 
---- ``castVFX``: tes3physicalObject — No description yet available.
+--- ``castVFX``: tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3static|tes3weapon — No description yet available.
 --- 
---- ``boltVFX``: tes3physicalObject — No description yet available.
+--- ``boltVFX``: tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3static|tes3weapon — No description yet available.
 --- 
---- ``hitVFX``: tes3physicalObject — No description yet available.
+--- ``hitVFX``: tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3static|tes3weapon — No description yet available.
 --- 
---- ``areaVFX``: tes3physicalObject — No description yet available.
+--- ``areaVFX``: tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3static|tes3weapon — No description yet available.
 --- 
 --- ``allowEnchanting``: boolean — Can this effect be used in a custom enchantment?
 --- 
@@ -192,10 +192,10 @@ function tes3.addMagicEffect(params) end
 --- @field boltSound string Path to the sound which will be played when a spell with this effect is in flight. Must be a string no longer than 31 characters long.
 --- @field hitSound string Path to the sound which will be played when a spell with this effect hits something. Must be a string no longer than 31 characters long.
 --- @field areaSound string Must be a string no longer than 31 characters long.
---- @field castVFX tes3physicalObject No description yet available.
---- @field boltVFX tes3physicalObject No description yet available.
---- @field hitVFX tes3physicalObject No description yet available.
---- @field areaVFX tes3physicalObject No description yet available.
+--- @field castVFX tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3static|tes3weapon No description yet available.
+--- @field boltVFX tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3static|tes3weapon No description yet available.
+--- @field hitVFX tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3static|tes3weapon No description yet available.
+--- @field areaVFX tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3static|tes3weapon No description yet available.
 --- @field allowEnchanting boolean Can this effect be used in a custom enchantment?
 --- @field allowSpellmaking boolean Can this effect be used in a custom spell?
 --- @field appliesOnce boolean No description yet available.
@@ -268,7 +268,7 @@ function tes3.advanceTime(params) end
 --- 
 --- ``reference``: tes3reference|tes3mobileActor|string — No description yet available.
 --- 
---- ``source``: tes3object — A magic source to apply.
+--- ``source``: tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3enchantment|tes3ingredient|tes3item|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3reference|tes3spell|tes3static|tes3weapon — A magic source to apply.
 --- 
 --- ``name``: string — If applying alchemy as a source, you can specifiy a name for the magic source.
 --- 
@@ -289,7 +289,7 @@ function tes3.applyMagicSource(params) end
 ---Table parameter definitions for ``tes3.applyMagicSource``.
 --- @class tes3.applyMagicSource.params
 --- @field reference tes3reference|tes3mobileActor|string No description yet available.
---- @field source tes3object A magic source to apply.
+--- @field source tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3enchantment|tes3ingredient|tes3item|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3reference|tes3spell|tes3static|tes3weapon A magic source to apply.
 --- @field name string If applying alchemy as a source, you can specifiy a name for the magic source.
 --- @field effects table A table of custom effects to apply as a potion. Maximal number of effects is 8.
 --- @field createCopy boolean This parameter controls whether the function will return the original magic source or a copy of the magic source. This parameter is only used if source is alchemy.
@@ -426,7 +426,7 @@ function tes3.decrementKillCount(params) end
 --- @field actor tes3actor|string The actor (or their ID).
 
 --- Deletes a game object from the system. This can be dangerous, use with caution.
---- @param object tes3object The object to delete.
+--- @param object tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3enchantment|tes3ingredient|tes3item|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3reference|tes3spell|tes3static|tes3weapon The object to delete.
 function tes3.deleteObject(object) end
 
 --- Disables the use of a keyboard key.
@@ -685,7 +685,7 @@ function tes3.getCumulativeDaysForMonth(month) end
 function tes3.getCurrentAIPackageId(reference) end
 
 --- Gets the currently active weather, from the player's current region.
---- @return tes3weather weather No description yet available.
+--- @return tes3weatherAsh|tes3weatherBlight|tes3weatherBlizzard|tes3weatherClear|tes3weatherCloudy|tes3weatherFoggy|tes3weatherOvercast|tes3weatherRain|tes3weatherSnow|tes3weatherThunder weather No description yet available.
 function tes3.getCurrentWeather() end
 
 --- Returns a table with values x and y that contain the current cursor position.
@@ -777,7 +777,7 @@ function tes3.getInputBinding(keybind) end
 
 --- This function checks item's stolen flag.
 --- @param item tes3item The item to check.
---- @param from tes3baseObject Where the item was stolen from.
+--- @param from tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3birthsign|tes3bodyPart|tes3book|tes3cell|tes3class|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3dialogue|tes3dialogueInfo|tes3door|tes3enchantment|tes3faction|tes3gameSetting|tes3globalVariable|tes3ingredient|tes3item|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3magicSourceInstance|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3quest|tes3race|tes3reference|tes3region|tes3sound|tes3soundGenerator|tes3spell|tes3static|tes3weapon Where the item was stolen from.
 --- @return boolean isStolen No description yet available.
 function tes3.getItemIsStolen(item, from) end
 
@@ -863,12 +863,12 @@ function tes3.getModList() end
 
 --- Fetches the core game object for a given object ID.
 --- @param id string No description yet available.
---- @return tes3object object No description yet available.
+--- @return tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3enchantment|tes3ingredient|tes3item|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3reference|tes3spell|tes3static|tes3weapon object No description yet available.
 function tes3.getObject(id) end
 
 --- Returns the object's owner, or nil if the object is unowned.
 --- @param reference tes3reference No description yet available.
---- @return tes3object object No description yet available.
+--- @return tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3enchantment|tes3ingredient|tes3item|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3reference|tes3spell|tes3static|tes3weapon object No description yet available.
 function tes3.getOwner(reference) end
 
 --- Fetches the cell that the player is currently in.
@@ -1034,7 +1034,7 @@ function tes3.iterate(iterator) end
 
 --- Iteration function used for looping over game options.
 --- @param filter number Maps to tes3.objectType constants.
---- @return tes3object object No description yet available.
+--- @return tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3enchantment|tes3ingredient|tes3item|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3reference|tes3spell|tes3static|tes3weapon object No description yet available.
 function tes3.iterateObjects(filter) end
 
 --- Loads an animation and uses it to override existing animations on an actor. Animation groups present in the file will replace the actor's animation groups. The actor's model must be already loaded into memory to have its animations modified. The overridden animations only persist until the actor is unloaded.
@@ -1061,7 +1061,7 @@ function tes3.loadGame(filename) end
 --- Loads a mesh file and provides a scene graph object.
 --- @param path string Path, relative to Data Files/Meshes.
 --- @param useCache boolean If false, a new object will be created even if it had been previously loaded.
---- @return niNode model No description yet available.
+--- @return niCollisionSwitch|niNode|niSwitchNode model No description yet available.
 function tes3.loadMesh(path, useCache) end
 
 --- Loads a source texture file and provides the niSourceTexture object.
@@ -1090,7 +1090,7 @@ function tes3.lock(params) end
 function tes3.loopTArray(tarray) end
 
 --- Returns a safe handle for the object. To use the object use :getObject(). To check if it still exists use :valid().
---- @return tes3object object No description yet available.
+--- @return tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3enchantment|tes3ingredient|tes3item|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3reference|tes3spell|tes3static|tes3weapon object No description yet available.
 function tes3.makeSafeObjectHandle() end
 
 --- Returns true if the player is currently in menu mode.
@@ -1654,7 +1654,7 @@ function tes3.setGlobal(id, value) end
 
 --- This function changes an item's stolen flag. Morrowind handles stealing by marking the base item (not the inventory stack) with with NPCs that you have stolen that item from. The NPC will recognize an item is stolen if they are marked as stolen on the base item.
 --- @param item tes3item The item whose stolen flag to modify.
---- @param from tes3baseObject The location the item is stolen from.
+--- @param from tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3birthsign|tes3bodyPart|tes3book|tes3cell|tes3class|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3dialogue|tes3dialogueInfo|tes3door|tes3enchantment|tes3faction|tes3gameSetting|tes3globalVariable|tes3ingredient|tes3item|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3magicSourceInstance|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3quest|tes3race|tes3reference|tes3region|tes3sound|tes3soundGenerator|tes3spell|tes3static|tes3weapon The location the item is stolen from.
 --- @param stolen boolean If this parameter is set to true, the item will be flagged as stolen. Otherwise, the item's stolen flag will be removed.
 function tes3.setItemIsStolen(item, from, stolen) end
 
@@ -1772,14 +1772,14 @@ function tes3.setPlayerControlState(params) end
 --- Sets an object (of any kind) to be sourceless, which are objects the game does not store in savegames. This can be useful for mod-created temporary objects which are not necessary to save.
 --- @param params tes3.setSourceless.params This table accepts the following values:
 --- 
---- ``object``: tes3baseObject — 
+--- ``object``: tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3birthsign|tes3bodyPart|tes3book|tes3cell|tes3class|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3dialogue|tes3dialogueInfo|tes3door|tes3enchantment|tes3faction|tes3gameSetting|tes3globalVariable|tes3ingredient|tes3item|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3magicSourceInstance|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3quest|tes3race|tes3reference|tes3region|tes3sound|tes3soundGenerator|tes3spell|tes3static|tes3weapon — 
 --- 
 --- ``sourceless``: boolean — 
 function tes3.setSourceless(params) end
 
 ---Table parameter definitions for ``tes3.setSourceless``.
 --- @class tes3.setSourceless.params
---- @field object tes3baseObject 
+--- @field object tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3birthsign|tes3bodyPart|tes3book|tes3cell|tes3class|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3dialogue|tes3dialogueInfo|tes3door|tes3enchantment|tes3faction|tes3gameSetting|tes3globalVariable|tes3ingredient|tes3item|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3magicSourceInstance|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3quest|tes3race|tes3reference|tes3region|tes3sound|tes3soundGenerator|tes3spell|tes3static|tes3weapon 
 --- @field sourceless boolean 
 
 --- Sets a statistic on a given actor. This should be used instead of manually setting values on the game structures, to ensure that events and GUI elements are properly handled. Either skill, attribute, or name must be provided.
