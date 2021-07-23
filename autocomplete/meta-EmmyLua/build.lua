@@ -287,62 +287,13 @@ for entry in lfs.dir(definitionsFolder .. "\\namedTypes") do
 end
 
 -- 
--- Libraries
+-- Building
 -- 
 
-local libFolder = metaFolder .. "lib\\"
-
-local function buildLibrary(key)
-	-- Load our base package.
-	log("Building library: " .. key .. " ...")
-	local package = libraries[key]
-
-	-- We only care about libraries for now.
-	if (not package or package.type ~= "lib") then
-		return
-	end
-
-	-- Get the package.
-	local outPath = libFolder .. key .. ".lua"
-	local file = assert(io.open(outPath, "w"))
-
-	-- Mark the file as a meta file.
-	file:write("--- @meta\n\n")
-
-	-- Write description.
-	file:write(formatDescription(package.description or defaultNoDescriptionText) .. "\n")
-	writeExamples(package, file)
-	file:write(string.format("--- @class %slib\n", key))
-
-	-- Write out fields.
-	for _, value in ipairs(package.values or {}) do
-		file:write(string.format("--- @field %s %s %s\n", value.key, value.valuetype or "any", formatLineBreaks(value.description or defaultNoDescriptionText)))
-	end
-	
-	-- Finalize the main class definition.
-	file:write(string.format("%s = {}\n\n", key))
-
-	-- Write out functions.
-	for _, value in ipairs(package.functions or {}) do
-		writeFunction(value, file)
-	end
-
-	-- Close up shop.
-	file:close()
-end
-
-for entry in lfs.dir(definitionsFolder .. "\\global") do
-	local extension = entry:match("[^.]+$")
-	if (extension == "lua") then
-		buildLibrary(entry:match("[^/]+$"):sub(1, -1 * (#extension + 2)))
-	end
-end
-
--- 
--- Classes
--- 
-
-local classFolder = metaFolder .. "class\\"
+local outFolders = {
+	lib = metaFolder .. "lib\\",
+	class = metaFolder .. "class\\",
+}
 
 local function buildParentChain(className)
 	local package = assert(classes[className])
@@ -352,18 +303,18 @@ local function buildParentChain(className)
 	return className
 end
 
-local function buildClass(key)
+local function build(key, collection, type)
 	-- Load our base package.
-	log("Building class: " .. key .. " ...")
-	local package = classes[key]
+	log("Building " .. type .. ": " .. key .. " ...")
+	local package = collection[key]
 
-	-- We only care about libraries for now.
-	if (package.type ~= "class") then
+	-- We only care about the given type for now.
+	if (not package or package.type ~= type) then
 		return
 	end
 
 	-- Get the package.
-	local outPath = classFolder .. key .. ".lua"
+	local outPath = assert(outFolders[type]) .. key .. ".lua"
 	local file = assert(io.open(outPath, "w"))
 
 	-- Mark the file as a meta file.
@@ -372,13 +323,17 @@ local function buildClass(key)
 	-- Write description.
 	file:write(formatDescription(package.description or defaultNoDescriptionText) .. "\n")
 	writeExamples(package, file)
-	file:write(string.format("--- @class %s%s\n", key, package.inherits and (" : " .. buildParentChain(package.inherits)) or ""))
+	if (type == "lib") then
+		file:write(string.format("--- @class %slib\n", key))
+	elseif (type == "class") then
+		file:write(string.format("--- @class %s%s\n", key, package.inherits and (" : " .. buildParentChain(package.inherits)) or ""))
+	end
 
 	-- Write out fields.
 	for _, value in ipairs(package.values or {}) do
 		file:write(string.format("--- @field %s %s %s\n", value.key, value.valuetype or "any", formatLineBreaks(value.description or defaultNoDescriptionText)))
 	end
-	
+
 	-- Finalize the main class definition.
 	file:write(string.format("%s = {}\n\n", key))
 
@@ -388,17 +343,30 @@ local function buildClass(key)
 	end
 
 	-- Write out methods.
-	for _, value in ipairs(package.methods or {}) do
-		writeFunction(value, file, package.key .. ":" .. value.key)
+	if (package.type == "class") then
+		for _, value in ipairs(package.methods or {}) do
+			writeFunction(value, file, package.key .. ":" .. value.key)
+		end
 	end
 
 	-- Close up shop.
 	file:close()
 end
 
+for entry in lfs.dir(definitionsFolder .. "\\global") do
+	local extension = entry:match("[^.]+$")
+	if (extension == "lua") then
+		build(entry:match("[^/]+$"):sub(1, -1 * (#extension + 2)), libraries, "lib")
+	end
+end
+
+--
+-- Classes
+--
+
 for entry in lfs.dir(definitionsFolder .. "\\namedTypes") do
 	local extension = entry:match("[^.]+$")
 	if (extension == "lua") then
-		buildClass(entry:match("[^/]+$"):sub(1, -1 * (#extension + 2)))
+		build(entry:match("[^/]+$"):sub(1, -1 * (#extension + 2)), classes, "class")
 	end
 end
