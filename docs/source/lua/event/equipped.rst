@@ -3,7 +3,7 @@ equipped
 
 The **equipped** event fires after an actor has successfully equipped an item. This event is preceded by the `equip`_ event.
 
-Related events: `equip`_, `equipped`_, `unequipped`_
+Related events: `equip`_, `unequipped`_
 
 Event Data
 ----------------------------------------------------------------------------------------------------
@@ -34,7 +34,6 @@ mobile
 `tes3mobileActor`_. Read-only. The mobile actor that has equipped the item.
 
 .. _`equip`: ../../lua/event/equip.html
-.. _`equipped`: ../../lua/event/equipped.html
 .. _`unequipped`: ../../lua/event/unequipped.html
 .. _`tes3actor`: ../../lua/type/tes3actor.html
 .. _`tes3baseObject`: ../../lua/type/tes3baseObject.html

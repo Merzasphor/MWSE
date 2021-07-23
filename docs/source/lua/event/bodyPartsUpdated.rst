@@ -3,7 +3,7 @@ bodyPartsUpdated
 
 This event is triggered when an actor's body parts have finished updating. This typically triggers when an actor is first rendered, or when their equipment changes.
 
-Related events: `bodyPartAssigned`_, `bodyPartsUpdated`_
+Related events: `bodyPartAssigned`_
 
 Event Data
 ----------------------------------------------------------------------------------------------------
@@ -19,6 +19,5 @@ mobile
 `tes3mobileActor`_. Read-only. The mobile actor whose body parts were updated.
 
 .. _`bodyPartAssigned`: ../../lua/event/bodyPartAssigned.html
-.. _`bodyPartsUpdated`: ../../lua/event/bodyPartsUpdated.html
 .. _`tes3mobileActor`: ../../lua/type/tes3mobileActor.html
 .. _`tes3reference`: ../../lua/type/tes3reference.html

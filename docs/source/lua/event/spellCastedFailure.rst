@@ -3,7 +3,7 @@ spellCastedFailure
 
 This event is triggered when any spell fails to cast due to failing the cast chance check. It does not trigger when there is insufficient magicka.
 
-Related events: `spellCast`_, `spellCasted`_, `spellCastedFailure`_
+Related events: `spellCast`_, `spellCasted`_
 
 Event Data
 ----------------------------------------------------------------------------------------------------
@@ -35,7 +35,6 @@ sourceInstance
 
 .. _`spellCast`: ../../lua/event/spellCast.html
 .. _`spellCasted`: ../../lua/event/spellCasted.html
-.. _`spellCastedFailure`: ../../lua/event/spellCastedFailure.html
 .. _`number`: ../../lua/type/number.html
 .. _`tes3magicSourceInstance`: ../../lua/type/tes3magicSourceInstance.html
 .. _`tes3reference`: ../../lua/type/tes3reference.html

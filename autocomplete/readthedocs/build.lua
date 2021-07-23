@@ -237,14 +237,14 @@ local function buildEvent(folder, key)
 	-- Print and link related events.
 	package.links = package.links or {}
 	if (package.related) then
-		-- Avoid self-reference link, so that link groups can be copy-pasted.
-		package.related[key] = nil
-		
 		local prefix = "Related events: "
 		for _, k in ipairs(package.related) do
-			package.links[k] = string.format("lua/event/%s", k)
-			file:write(string.format("%s`%s`_", prefix, k))
-			prefix = ", "
+			-- Avoid self-reference link, so that link groups can be copy-pasted.
+			if (k ~= key) then
+				package.links[k] = string.format("lua/event/%s", k)
+				file:write(string.format("%s`%s`_", prefix, k))
+				prefix = ", "
+			end
 		end
 		file:write("\n\n")
 	end

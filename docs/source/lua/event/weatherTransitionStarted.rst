@@ -5,7 +5,7 @@ The **weatherTransitionStarted** event occurs when the currently simulated weath
 
 Weather will not start transitioning in interiors, but will continue transitioning, and may finish while in an interior. The transition may be interrupted at any time by the weatherChangedImmediate event, and the weatherTransitionFinished event will not occur.
 
-Related events: `weatherCycled`_, `weatherTransitionFinished`_, `weatherChangedImmediate`_, `weatherTransitionStarted`_, `weatherChangedImmediate`_
+Related events: `weatherCycled`_, `weatherTransitionFinished`_, `weatherChangedImmediate`_, `weatherChangedImmediate`_
 
 Event Data
 ----------------------------------------------------------------------------------------------------
@@ -23,5 +23,4 @@ from
 .. _`weatherChangedImmediate`: ../../lua/event/weatherChangedImmediate.html
 .. _`weatherCycled`: ../../lua/event/weatherCycled.html
 .. _`weatherTransitionFinished`: ../../lua/event/weatherTransitionFinished.html
-.. _`weatherTransitionStarted`: ../../lua/event/weatherTransitionStarted.html
 .. _`tes3weather`: ../../lua/type/tes3weather.html

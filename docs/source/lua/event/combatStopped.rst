@@ -3,7 +3,7 @@ combatStopped
 
 The **combatStopped** event occurs after an actor has left combat. This event is preceded by the `combatStop`_ event.
 
-Related events: `combatStart`_, `combatStarted`_, `combatStop`_, `combatStopped`_
+Related events: `combatStart`_, `combatStarted`_, `combatStop`_
 
 Event Data
 ----------------------------------------------------------------------------------------------------
@@ -16,5 +16,4 @@ actor
 .. _`combatStart`: ../../lua/event/combatStart.html
 .. _`combatStarted`: ../../lua/event/combatStarted.html
 .. _`combatStop`: ../../lua/event/combatStop.html
-.. _`combatStopped`: ../../lua/event/combatStopped.html
 .. _`tes3mobileActor`: ../../lua/type/tes3mobileActor.html

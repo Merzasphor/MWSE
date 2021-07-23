@@ -10,7 +10,7 @@ The movement event flow is described below:
 - Swimming: **calcWalkSpeed** -> `calcSwimSpeed`_ -> `calcMoveSpeed`_
 - Swimming (while running): **calcWalkSpeed** -> `calcSwimSpeed`_ -> `calcSwimRunSpeed`_ -> `calcMoveSpeed`_
 
-Related events: `calcMoveSpeed`_, `calcWalkSpeed`_, `calcRunSpeed`_, `calcFlySpeed`_, `calcSwimSpeed`_, `calcSwimRunSpeed`_
+Related events: `calcMoveSpeed`_, `calcRunSpeed`_, `calcFlySpeed`_, `calcSwimSpeed`_, `calcSwimRunSpeed`_
 
 Event Data
 ----------------------------------------------------------------------------------------------------
@@ -40,7 +40,6 @@ type
 .. _`calcRunSpeed`: ../../lua/event/calcRunSpeed.html
 .. _`calcSwimRunSpeed`: ../../lua/event/calcSwimRunSpeed.html
 .. _`calcSwimSpeed`: ../../lua/event/calcSwimSpeed.html
-.. _`calcWalkSpeed`: ../../lua/event/calcWalkSpeed.html
 .. _`number`: ../../lua/type/number.html
 .. _`tes3mobileActor`: ../../lua/type/tes3mobileActor.html
 .. _`tes3reference`: ../../lua/type/tes3reference.html

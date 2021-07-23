@@ -3,7 +3,7 @@ saved
 
 The saved event fires after the game has successfully been saved. This event is preceded by the save event.
 
-Related events: `save`_, `saved`_
+Related events: `save`_
 
 Event Data
 ----------------------------------------------------------------------------------------------------
@@ -19,5 +19,4 @@ filename
 `string`_. The filename of the save, not including file extension.
 
 .. _`save`: ../../lua/event/save.html
-.. _`saved`: ../../lua/event/saved.html
 .. _`string`: ../../lua/type/string.html

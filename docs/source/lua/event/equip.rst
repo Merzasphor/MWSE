@@ -5,7 +5,7 @@ The equip event fires when an actor is about to equip an item, i.e. just before 
 
 The item must not be removed from the inventory during this event, as the item and item data is still being referenced by the initiator of the equip action. If you want to consume the item, block the equip and remove it at a later time. Removing the item during this event can cause inventory desync bugs.
 
-Related events: `equip`_, `equipped`_, `unequipped`_
+Related events: `equipped`_, `unequipped`_
 
 Event Data
 ----------------------------------------------------------------------------------------------------
@@ -25,7 +25,6 @@ itemData
 
 `tes3itemData`_. Read-only. The item data of item.
 
-.. _`equip`: ../../lua/event/equip.html
 .. _`equipped`: ../../lua/event/equipped.html
 .. _`unequipped`: ../../lua/event/unequipped.html
 .. _`tes3baseObject`: ../../lua/type/tes3baseObject.html

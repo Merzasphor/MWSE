@@ -3,7 +3,7 @@ infoGetText
 
 This event fires when a dialogue info object text is retrieved.
 
-Related events: `infoGetText`_, `infoLinkResolve`_, `infoResponse`_, `infoFilter`_, `postInfoResponse`_
+Related events: `infoLinkResolve`_, `infoResponse`_, `infoFilter`_, `postInfoResponse`_
 
 Event Data
 ----------------------------------------------------------------------------------------------------
@@ -19,7 +19,6 @@ loadOriginalText
 method. Loads the original text for the info from the game files, bypassing this event.
 
 .. _`infoFilter`: ../../lua/event/infoFilter.html
-.. _`infoGetText`: ../../lua/event/infoGetText.html
 .. _`infoLinkResolve`: ../../lua/event/infoLinkResolve.html
 .. _`infoResponse`: ../../lua/event/infoResponse.html
 .. _`postInfoResponse`: ../../lua/event/postInfoResponse.html
