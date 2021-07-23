@@ -119,6 +119,31 @@ local function copyFile(src, dst)
 	destination:close()
 end
 
+local urlBase = "https://mwse.readthedocs.io/en/latest/lua"
+
+local function getPackageLink(package)
+	local tokens = { urlBase, package.key .. ".html" }
+	local up = package.parent
+	while (up) do
+		table.insert(tokens, 2, up.key)
+		if (up.parent == nil) then
+			if (up.type == "lib") then
+				table.insert(tokens, 2, "api")
+			elseif (up.type == "class") then
+				table.insert(tokens, 2, "type")
+			end
+		end
+		up = up.parent
+	end
+	return table.concat(tokens, "/")
+end
+
+local function writeExamples(package, file)
+	if (package.examples) then
+		file:write(string.format("---\n--- [Examples available in online documentation](%s).\n", getPackageLink(package)))
+	end
+end
+
 local function formatLineBreaks(str)
 	return string.gsub(str, "\n", "\n--- ")
 end
@@ -166,6 +191,7 @@ end
 
 local function writeFunction(package, file, namespaceOverride)
 	file:write(formatDescription(package.description or defaultNoDescriptionText) .. "\n")
+	writeExamples(package, file)
 
 	for i, argument in ipairs(package.arguments or {}) do
 		local type = argument.type
@@ -285,6 +311,7 @@ local function buildLibrary(key)
 
 	-- Write description.
 	file:write(formatDescription(package.description or defaultNoDescriptionText) .. "\n")
+	writeExamples(package, file)
 	file:write(string.format("--- @class %slib\n", key))
 
 	-- Write out fields.
@@ -344,6 +371,7 @@ local function buildClass(key)
 
 	-- Write description.
 	file:write(formatDescription(package.description or defaultNoDescriptionText) .. "\n")
+	writeExamples(package, file)
 	file:write(string.format("--- @class %s%s\n", key, package.inherits and (" : " .. buildParentChain(package.inherits)) or ""))
 
 	-- Write out fields.

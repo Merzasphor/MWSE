@@ -158,6 +158,8 @@ function lpeg.locale(t) end
 --- arbitrary substring of the subject. So, if we want to find a pattern anywhere in a string, we must
 --- either write a loop in Lua or write a pattern that matches anywhere. This second approach is easy 
 --- and quite efficient; see examples in the full documentation for details.
+---
+--- [Examples available in online documentation](https://mwse.readthedocs.io/en/latest/lua/api/lpeg/match.html).
 --- @param p pattern The pattern to match.
 --- @param subject string The string to match against.
 --- @param init number Start the match at this position in subject.
@@ -194,6 +196,8 @@ function lpeg.P(value) end
 --- Each range is a string xy of length 2, representing all characters with code between the codes of x and y (both inclusive).
 --- 
 --- As an example, the pattern lpeg.R("09") matches any digit, and lpeg.R("az", "AZ") matches any ASCII letter.
+---
+--- [Examples available in online documentation](https://mwse.readthedocs.io/en/latest/lua/api/lpeg/R.html).
 --- @param p pattern The input pattern.
 --- @return pattern result No description yet available.
 function lpeg.R(p) end

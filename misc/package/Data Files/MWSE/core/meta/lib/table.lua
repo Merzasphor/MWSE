@@ -93,6 +93,8 @@ function table.size(t) end
 --- This function is used to iterate over values and its subtables in the table.
 --- 
 --- Each "node" is an object with a children table of other "nodes", each of which might have their own children. For example, a sceneNode is made up of niNodes, and each niNodes can have a list of niNode children. This is best used for recursive data structures like UI elements and sceneNodes etc.
+---
+--- [Examples available in online documentation](https://mwse.readthedocs.io/en/latest/lua/api/table/traverse.html).
 --- @param t table A table to transverse.
 --- @param k unknown The key of a table inside t object.
 --- @return iterator result No description yet available.

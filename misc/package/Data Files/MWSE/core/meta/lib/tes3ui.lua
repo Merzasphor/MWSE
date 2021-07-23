@@ -11,6 +11,8 @@ tes3ui = {}
 function tes3ui.acquireTextInput(element) end
 
 --- When used in a mouse event, causes the element to capture further mouse events even when the cursor goes outside the element.
+---
+--- [Examples available in online documentation](https://mwse.readthedocs.io/en/latest/lua/api/tes3ui/captureMouseDrag.html).
 --- @param capture boolean Turns on mouse capture for the element currently processing a mouse event if true, sending all further mouse events to that element. Turns off capture if false.
 function tes3ui.captureMouseDrag(capture) end
 
