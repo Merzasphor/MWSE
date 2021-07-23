@@ -1110,7 +1110,7 @@ function tes3.menuMode() end
 --- 
 --- ``duration``: float — Overrides how long the toast-style message remains visible.
 --- @vararg any Only used if messageOrParams is a string.
---- @return boolean soundIsPlaying No description yet available.
+--- @return tes3uiElement|nil element The UI menu created for the notification, if any.
 function tes3.messageBox(messageOrParams, ...) end
 
 --- Modifies a statistic on a given actor. This should be used instead of manually setting values on the game structures, to ensure that events and GUI elements are properly handled. Either skill, attribute, or name must be provided.
