@@ -3,6 +3,8 @@ menuEnter
 
 The menuEnter event fires when the player enters menu mode.
 
+Related events: `menuEnter`_, `menuExit`_
+
 Event Data
 ----------------------------------------------------------------------------------------------------
 
@@ -16,5 +18,7 @@ menuMode
 
 `boolean`_. Read-only. Always true for this event. This parameter is only useful when registering the same callback for menuEnter and menuExit events.
 
+.. _`menuEnter`: ../../lua/event/menuEnter.html
+.. _`menuExit`: ../../lua/event/menuExit.html
 .. _`boolean`: ../../lua/type/boolean.html
 .. _`tes3uiElement`: ../../lua/type/tes3uiElement.html

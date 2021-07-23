@@ -3,6 +3,8 @@ leveledCreaturePicked
 
 This event is called after any leveled creature list is resolved. The event may be filtered by its list, and its pick can be overwritten. While this event allows for customization, the leveled list may be altered directly as well.
 
+Related events: `leveledCreaturePicked`_, `leveledItemPicked`_
+
 Event Data
 ----------------------------------------------------------------------------------------------------
 
@@ -16,5 +18,7 @@ list
 
 `tes3leveledCreature`_. Read-only. The list responsible for creating a pick.
 
+.. _`leveledCreaturePicked`: ../../lua/event/leveledCreaturePicked.html
+.. _`leveledItemPicked`: ../../lua/event/leveledItemPicked.html
 .. _`tes3creature`: ../../lua/type/tes3creature.html
 .. _`tes3leveledCreature`: ../../lua/type/tes3leveledCreature.html
