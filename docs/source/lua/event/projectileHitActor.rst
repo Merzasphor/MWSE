@@ -3,6 +3,8 @@ projectileHitActor
 
 The projectileHitActor event fires when a projectile collides with an actor.
 
+Related events: `projectileHitActor`_, `projectileHitObject`_, `projectileHitTerrain`_, `projectileExpire`_
+
 Event Data
 ----------------------------------------------------------------------------------------------------
 
@@ -26,6 +28,10 @@ firingReference
 
 `tes3reference`_. Read-only. Reference to the actor that fired the projectile.
 
+.. _`projectileExpire`: ../../lua/event/projectileExpire.html
+.. _`projectileHitActor`: ../../lua/event/projectileHitActor.html
+.. _`projectileHitObject`: ../../lua/event/projectileHitObject.html
+.. _`projectileHitTerrain`: ../../lua/event/projectileHitTerrain.html
 .. _`tes3mobileProjectile`: ../../lua/type/tes3mobileProjectile.html
 .. _`tes3reference`: ../../lua/type/tes3reference.html
 .. _`tes3weapon`: ../../lua/type/tes3weapon.html
