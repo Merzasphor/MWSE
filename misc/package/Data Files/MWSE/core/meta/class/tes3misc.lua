@@ -8,6 +8,7 @@
 --- @field mesh string The path to the object's mesh.
 --- @field name string The player-facing name for the object.
 --- @field script tes3script The script that runs on the object.
+--- @field soulGemCapacity number Fetches capacity of the soul gem, if this item is a soul gem.
 --- @field soulGemData tes3soulGemData Fetches related soul gem data, if this item is a soul gem.
 --- @field value number The value of the object.
 --- @field weight number The weight of the object.
@@ -43,4 +44,8 @@ function tes3misc.create(params) end
 --- @field weight  tes3script The weight of the object.
 --- @field value  string The value of the object.
 --- @field flags  number The object flags initially set.
+
+--- Returns true if the misc item is gold.
+--- @return boolean isGold No description yet available.
+function tes3misc:isGold() end
 

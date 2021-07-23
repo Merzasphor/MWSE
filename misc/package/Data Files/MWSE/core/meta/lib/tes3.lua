@@ -50,7 +50,7 @@ function tes3.addArmorSlot(params) end
 --- ``limit``: boolean — If false, items can be placed into containers that shouldn't normally be allowed. This includes organic containers, and containers that are full.
 --- 
 --- ``updateGUI``: boolean — If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though `tes3ui.forcePlayerInventoryUpdate()` must manually be called after all inventory updates are finished.
---- @return any result No description yet available.
+--- @return number addedCount No description yet available.
 function tes3.addItem(params) end
 
 ---Table parameter definitions for ``tes3.addItem``.
@@ -72,7 +72,7 @@ function tes3.addItem(params) end
 --- ``item``: tes3item|string — The item to create item data for.
 --- 
 --- ``updateGUI``: boolean — If false, the player or contents menu won't be updated.
---- @return any result No description yet available.
+--- @return tes3itemData createdData No description yet available.
 function tes3.addItemData(params) end
 
 ---Table parameter definitions for ``tes3.addItemData``.
@@ -339,7 +339,7 @@ function tes3.canRest() end
 --- ``alwaysSucceeds``: boolean — When true, the spell cannot fail and does not consume magicka. When false, it is cast using the actor's spell skill, and requires and takes enough magicka to cast. Only applies when 'instant' is true.
 --- 
 --- ``bypassResistances``: boolean — The spell will bypass the target's resistances. Only applies when 'instant' is true.
---- @return any result No description yet available.
+--- @return boolean executed No description yet available.
 function tes3.cast(params) end
 
 ---Table parameter definitions for ``tes3.cast``.
@@ -404,7 +404,7 @@ function tes3.createObject(params) end
 --- ``cell``: tes3cell|string|table — The cell to create the reference in. This is only needed for interior cells.
 --- 
 --- ``scale``: number — A scale for the reference.
---- @return any result No description yet available.
+--- @return tes3reference newReference No description yet available.
 function tes3.createReference(params) end
 
 ---Table parameter definitions for ``tes3.createReference``.
@@ -447,7 +447,7 @@ function tes3.disableKey(keyCode) end
 --- ``count``: number — The number of items to drop.
 --- 
 --- ``updateGUI``: boolean — If false, the player or contents menu won't be updated.
---- @return any result No description yet available.
+--- @return tes3reference createdReference No description yet available.
 function tes3.dropItem(params) end
 
 ---Table parameter definitions for ``tes3.dropItem``.
@@ -513,7 +513,7 @@ function tes3.fadeTo(params) end
 --- ``position``: tes3vector3 — The position to search from.
 --- 
 --- ``range``: number — The distance around the position to search. An actor is included if the centre of their body is in range.
---- @return any result No description yet available.
+--- @return table mobileList No description yet available.
 function tes3.findActorsInProximity(params) end
 
 ---Table parameter definitions for ``tes3.findActorsInProximity``.
@@ -550,7 +550,7 @@ function tes3.findClass(params) end
 --- ``object``: tes3physicalObject|string — The object to search for.
 --- 
 --- ``position``: tes3vector3 — The position to search from. Must be an exterior position. Defaults to the last exterior position of the player if no position is provided.
---- @return any result No description yet available.
+--- @return tes3reference reference No description yet available.
 function tes3.findClosestExteriorReferenceOfObject(params) end
 
 ---Table parameter definitions for ``tes3.findClosestExteriorReferenceOfObject``.
@@ -564,7 +564,7 @@ function tes3.findClosestExteriorReferenceOfObject(params) end
 --- ``type``: number — The type of dialogue to look for. Uses tes3.dialogueType.* constants.
 --- 
 --- ``page``: number — The page of dialogue to fetch. Uses tes3.dialoguePage.* constants.
---- @return any result No description yet available.
+--- @return tes3dialogue dialogue No description yet available.
 function tes3.findDialogue(params) end
 
 ---Table parameter definitions for ``tes3.findDialogue``.
@@ -676,7 +676,7 @@ function tes3.getCell(params) end
 
 --- Gets the number of days that have passed leading up to the start of a given month.
 --- @param month number The 0-based month index.
---- @return any result No description yet available.
+--- @return number days No description yet available.
 function tes3.getCumulativeDaysForMonth(month) end
 
 --- Returns an actor's current AI package ID, just as the mwscript function `GetCurrentAIPackage` would.
@@ -808,11 +808,11 @@ function tes3.getKillCount(params) end
 function tes3.getKillCounts() end
 
 --- Gets the language as an ISO string (e.g. "eng"), determined by the language entry in Morrowind.ini.
---- @return any result No description yet available.
+--- @return string code No description yet available.
 function tes3.getLanguage() end
 
 --- Gets the language code, determined by the language entry in Morrowind.ini.
---- @return any result No description yet available.
+--- @return number code No description yet available.
 function tes3.getLanguageCode() end
 
 --- Returns the last exterior position of the player.
@@ -876,11 +876,11 @@ function tes3.getOwner(reference) end
 function tes3.getPlayerCell() end
 
 --- Returns the position of the player's eyes.
---- @return any result No description yet available.
+--- @return tes3vector3 position No description yet available.
 function tes3.getPlayerEyePosition() end
 
 --- Returns the look direction of the player's eyes.
---- @return any result No description yet available.
+--- @return tes3vector3 position No description yet available.
 function tes3.getPlayerEyeVector() end
 
 --- Gets the gold count carried by the player.
@@ -1109,9 +1109,9 @@ function tes3.menuMode() end
 --- ``showInDialog``: boolean — Specifying showInDialog = false forces the toast-style message, which is not shown in the dialog menu. Defaults to true.
 --- 
 --- ``duration``: float — Overrides how long the toast-style message remains visible.
---- @param formatAdditions variadic Only used if messageOrParams is a string.
+--- @vararg any Only used if messageOrParams is a string.
 --- @return boolean soundIsPlaying No description yet available.
-function tes3.messageBox(messageOrParams, formatAdditions) end
+function tes3.messageBox(messageOrParams, ...) end
 
 --- Modifies a statistic on a given actor. This should be used instead of manually setting values on the game structures, to ensure that events and GUI elements are properly handled. Either skill, attribute, or name must be provided.
 ---
@@ -1213,7 +1213,7 @@ function tes3.playAnimation(params) end
 --- ``item``: tes3item — No description yet available.
 --- 
 --- ``pickup``: boolean — If false, the place down item will be used.
---- @return any result No description yet available.
+--- @return boolean executed No description yet available.
 function tes3.playItemPickupSound(params) end
 
 ---Table parameter definitions for ``tes3.playItemPickupSound``.
@@ -1238,7 +1238,7 @@ function tes3.playItemPickupSound(params) end
 --- ``pitch``: number — The pitch-shift multiplier. For 22kHz audio (most typical) it can have the range [0.005, 4.5]; for 44kHz audio it can have the range [0.0025, 2.25].
 --- 
 --- ``soundPath``: string — The path to a custom soundfile (useful for playing sounds that are not registered in the Construction Set). Starts in Data Files\Sound.
---- @return any result No description yet available.
+--- @return boolean executed No description yet available.
 function tes3.playSound(params) end
 
 ---Table parameter definitions for ``tes3.playSound``.
@@ -1281,7 +1281,7 @@ function tes3.playVoiceover(params) end
 --- ``suppressFader``: boolean — When moving the player, can be used to prevent the fade in and out visual effect.
 --- 
 --- ``teleportCompanions``: boolean — If used on the player, determines if companions should also be teleported.
---- @return any result No description yet available.
+--- @return boolean executed No description yet available.
 function tes3.positionCell(params) end
 
 ---Table parameter definitions for ``tes3.positionCell``.
@@ -1388,7 +1388,7 @@ function tes3.removeEffects(reference, effect, castType, chance, removeSpell) en
 --- ``playSound``: boolean — If false, the up/down sound for the item won't be played.
 --- 
 --- ``updateGUI``: boolean — If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though `tes3ui.forcePlayerInventoryUpdate()` must manually be called after all inventory updates are finished.
---- @return any result No description yet available.
+--- @return number removedCount No description yet available.
 function tes3.removeItem(params) end
 
 ---Table parameter definitions for ``tes3.removeItem``.
@@ -1430,7 +1430,7 @@ function tes3.removeSound(params) end
 --- ``dialogue``: tes3dialogue|string — If compiling for dialogue context, the dialogue associated with the script.
 --- 
 --- ``info``: tes3dialogueInfo — The info associated with the dialogue.
---- @return any result No description yet available.
+--- @return boolean executed No description yet available.
 function tes3.runLegacyScript(params) end
 
 ---Table parameter definitions for ``tes3.runLegacyScript``.
@@ -1911,7 +1911,7 @@ function tes3.skipAnimationFrame(params) end
 --- ``situation``: number — Determines what kind of gameplay situation the music should stay active for. Explore music plays during non-combat, and ends when combat starts. Combat music starts during combat, and ends when combat ends. Uninterruptible music always plays, ending only when the track does.
 --- 
 --- ``crossfade``: number — The duration in seconds of the crossfade from the old to the new track. The default is 1.0.
---- @return any result No description yet available.
+--- @return boolean executed No description yet available.
 function tes3.streamMusic(params) end
 
 ---Table parameter definitions for ``tes3.streamMusic``.
@@ -1977,7 +1977,7 @@ function tes3.togglePOV() end
 --- ``limitCapacity``: boolean — If false, items can be placed into containers that shouldn't normally be allowed. This includes organic containers, and containers that are full.
 --- 
 --- ``updateGUI``: boolean — If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though `tes3ui.forcePlayerInventoryUpdate()` must manually be called after all inventory updates are finished.
---- @return any result No description yet available.
+--- @return number transferredCount No description yet available.
 function tes3.transferItem(params) end
 
 ---Table parameter definitions for ``tes3.transferItem``.
@@ -2003,7 +2003,7 @@ function tes3.transferItem(params) end
 --- ``value``: number — Penalty for the crime. Defaults to 25 for pickpocketing.
 --- 
 --- ``victim``: tes3mobileActor|tes3reference|string — No description yet available.
---- @return any result No description yet available.
+--- @return boolean executed No description yet available.
 function tes3.triggerCrime(params) end
 
 ---Table parameter definitions for ``tes3.triggerCrime``.

@@ -22,7 +22,7 @@ function mwscript.activate(params) end
 --- ``item``: tes3item|string — The item to be added.
 --- 
 --- ``count``: number — The number of items to be added.
---- @return any result No description yet available.
+--- @return boolean executed No description yet available.
 function mwscript.addItem(params) end
 
 ---Table parameter definitions for ``mwscript.addItem``.
@@ -39,7 +39,7 @@ function mwscript.addItem(params) end
 --- ``creature``: tes3creature|string — The creature to be stored in the soul gem.
 --- 
 --- ``soulgem``: tes3misc|string — The soul gem to store the soul in.
---- @return any result No description yet available.
+--- @return boolean executed No description yet available.
 function mwscript.addSoulGem(params) end
 
 ---Table parameter definitions for ``mwscript.addSoulGem``.
@@ -54,7 +54,7 @@ function mwscript.addSoulGem(params) end
 --- ``reference``: tes3reference|tes3mobileActor|string — The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
 --- ``spell``: tes3spell|string — No description yet available.
---- @return any result No description yet available.
+--- @return boolean executed No description yet available.
 function mwscript.addSpell(params) end
 
 ---Table parameter definitions for ``mwscript.addSpell``.
@@ -70,7 +70,7 @@ function mwscript.addSpell(params) end
 --- ``creature``: tes3actor|string — Creature to add to the list.
 --- 
 --- ``level``: number — Minimum level for the creature to spawn.
---- @return any result No description yet available.
+--- @return boolean executed No description yet available.
 function mwscript.addToLevCreature(params) end
 
 ---Table parameter definitions for ``mwscript.addToLevCreature``.
@@ -87,7 +87,7 @@ function mwscript.addToLevCreature(params) end
 --- ``item``: tes3item|string — Item to add to the list.
 --- 
 --- ``level``: number — Minimum level for the item to spawn.
---- @return any result No description yet available.
+--- @return boolean executed No description yet available.
 function mwscript.addToLevItem(params) end
 
 ---Table parameter definitions for ``mwscript.addToLevItem``.
@@ -100,7 +100,7 @@ function mwscript.addToLevItem(params) end
 --- @param params mwscript.addTopic.params This table accepts the following values:
 --- 
 --- ``topic``: tes3dialogue|string — No description yet available.
---- @return any result No description yet available.
+--- @return boolean executed No description yet available.
 function mwscript.addTopic(params) end
 
 ---Table parameter definitions for ``mwscript.addTopic``.
@@ -117,7 +117,7 @@ function mwscript.addTopic(params) end
 --- ``y``: number — No description yet available.
 --- 
 --- ``z``: number — No description yet available.
---- @return any result No description yet available.
+--- @return boolean executed No description yet available.
 function mwscript.aiTravel(params) end
 
 ---Table parameter definitions for ``mwscript.aiTravel``.
@@ -133,7 +133,7 @@ function mwscript.aiTravel(params) end
 --- ``reference``: tes3reference|tes3mobileActor|string — The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
 --- ``modify``: boolean — Set the object as modified.
---- @return any result No description yet available.
+--- @return boolean executed No description yet available.
 function mwscript.disable(params) end
 
 ---Table parameter definitions for ``mwscript.disable``.
@@ -149,7 +149,7 @@ function mwscript.disable(params) end
 --- ``item``: tes3item|string — The item to be dropped.
 --- 
 --- ``count``: number — The number of items to drop.
---- @return any result No description yet available.
+--- @return boolean executed No description yet available.
 function mwscript.drop(params) end
 
 ---Table parameter definitions for ``mwscript.drop``.
@@ -164,7 +164,7 @@ function mwscript.drop(params) end
 --- ``reference``: tes3reference|tes3mobileActor|string — The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
 --- ``modify``: boolean — Set the object as modified.
---- @return any result No description yet available.
+--- @return boolean executed No description yet available.
 function mwscript.enable(params) end
 
 ---Table parameter definitions for ``mwscript.enable``.
@@ -178,7 +178,7 @@ function mwscript.enable(params) end
 --- ``reference``: tes3reference|tes3mobileActor|string — The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
 --- ``item``: tes3item|string — The item to be equipped.
---- @return any result No description yet available.
+--- @return boolean executed No description yet available.
 function mwscript.equip(params) end
 
 ---Table parameter definitions for ``mwscript.equip``.
@@ -192,7 +192,7 @@ function mwscript.equip(params) end
 --- ``reference``: tes3reference|tes3mobileActor|string — The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
 --- ``spell``: tes3spell|string — No description yet available.
---- @return any result No description yet available.
+--- @return boolean executed No description yet available.
 function mwscript.explodeSpell(params) end
 
 ---Table parameter definitions for ``mwscript.explodeSpell``.
@@ -201,7 +201,7 @@ function mwscript.explodeSpell(params) end
 --- @field spell tes3spell|string No description yet available.
 
 --- Wrapper for the GetButtonPressed mwscript function.
---- @return any result No description yet available.
+--- @return number buttonIndex No description yet available.
 function mwscript.getButtonPressed() end
 
 --- Wrapper for the GetDetected mwscript function.
@@ -317,7 +317,7 @@ function mwscript.hasItemEquipped(params) end
 --- ``distance``: number — No description yet available.
 --- 
 --- ``direction``: number — No description yet available.
---- @return any result No description yet available.
+--- @return tes3reference lastPlacedReference No description yet available.
 function mwscript.placeAtPC(params) end
 
 ---Table parameter definitions for ``mwscript.placeAtPC``.
@@ -356,7 +356,7 @@ function mwscript.playSound(params) end
 --- ``z``: number — No description yet available.
 --- 
 --- ``rotation``: number — No description yet available.
---- @return any result No description yet available.
+--- @return boolean executed No description yet available.
 function mwscript.position(params) end
 
 ---Table parameter definitions for ``mwscript.position``.
@@ -382,7 +382,7 @@ function mwscript.position(params) end
 --- ``z``: number — No description yet available.
 --- 
 --- ``rotation``: number — No description yet available.
---- @return any result No description yet available.
+--- @return boolean executed No description yet available.
 function mwscript.positionCell(params) end
 
 ---Table parameter definitions for ``mwscript.positionCell``.
@@ -402,7 +402,7 @@ function mwscript.positionCell(params) end
 --- ``item``: tes3item|string — The item to be added.
 --- 
 --- ``count``: number — The number of items to be added.
---- @return any result No description yet available.
+--- @return boolean executed No description yet available.
 function mwscript.removeItem(params) end
 
 ---Table parameter definitions for ``mwscript.removeItem``.
@@ -417,7 +417,7 @@ function mwscript.removeItem(params) end
 --- ``reference``: tes3reference|tes3mobileActor|string — The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
 --- ``spell``: tes3spell|string — No description yet available.
---- @return any result No description yet available.
+--- @return boolean executed No description yet available.
 function mwscript.removeSpell(params) end
 
 ---Table parameter definitions for ``mwscript.removeSpell``.
@@ -442,7 +442,7 @@ function mwscript.scriptRunning(params) end
 --- ``reference``: tes3reference|tes3mobileActor|string — The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
 --- ``level``: number — No description yet available.
---- @return any result No description yet available.
+--- @return boolean executed No description yet available.
 function mwscript.setLevel(params) end
 
 ---Table parameter definitions for ``mwscript.setLevel``.
@@ -456,7 +456,7 @@ function mwscript.setLevel(params) end
 --- ``reference``: tes3reference|tes3mobileActor|string — The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
 --- ``target``: tes3reference|tes3mobileActor|string — Actor to start combat with.
---- @return any result No description yet available.
+--- @return boolean executed No description yet available.
 function mwscript.startCombat(params) end
 
 ---Table parameter definitions for ``mwscript.startCombat``.
@@ -470,7 +470,7 @@ function mwscript.startCombat(params) end
 --- ``reference``: tes3reference|tes3mobileActor|string — The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
 --- ``script``: tes3script|string — No description yet available.
---- @return any result No description yet available.
+--- @return boolean executed No description yet available.
 function mwscript.startScript(params) end
 
 ---Table parameter definitions for ``mwscript.startScript``.
@@ -484,7 +484,7 @@ function mwscript.startScript(params) end
 --- ``reference``: tes3reference|tes3mobileActor|string — The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
 --- ``target``: tes3reference|tes3mobileActor|string — Actor to stop combat with.
---- @return any result No description yet available.
+--- @return boolean executed No description yet available.
 function mwscript.stopCombat(params) end
 
 ---Table parameter definitions for ``mwscript.stopCombat``.
@@ -498,7 +498,7 @@ function mwscript.stopCombat(params) end
 --- ``reference``: tes3reference|tes3mobileActor|string — The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
 --- ``script``: tes3script|string — No description yet available.
---- @return any result No description yet available.
+--- @return boolean executed No description yet available.
 function mwscript.stopScript(params) end
 
 ---Table parameter definitions for ``mwscript.stopScript``.

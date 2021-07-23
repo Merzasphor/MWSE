@@ -21,6 +21,6 @@ function niCamera:windowPointToRay(point) end
 
 --- Given a world coordinate position, calculates where that point relates to the screen space.
 --- @param point tes3vector3 The world position to calculate screen position for.
---- @return any result No description yet available.
+--- @return tes3vector2 screenPosition The screen space position. Screen space is measured as ([-screenWidth/2, screenWidth/2], [-screenHeight/2, screenHeight/2]) with up-right being positive and an origin at the center of the screen.
 function niCamera:worldPointToScreenPoint(point) end
 

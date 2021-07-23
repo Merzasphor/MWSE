@@ -55,16 +55,16 @@ function tes3reference:deleteDynamicLightAttachment(removeLightFromParent) end
 function tes3reference:detachDynamicLightFromAffectedNodes() end
 
 --- Hides the reference, stops all scripts for it, detaches all dynamic lights and sounds, and closes any mobile simulation. Sets the reference as modified implicitly.
---- @return any result No description yet available.
+--- @return boolean success If true, the reference was successfully disabled.
 function tes3reference:disable() end
 
 --- Shows the reference, restarts all scripts for it, reattaches all dynamic lights and sounds, and restarts any mobile simulation if the player is close enough. Sets the reference as modified implicitly.
---- @return any result No description yet available.
+--- @return boolean success If true, the reference was successfully enabled.
 function tes3reference:enable() end
 
 --- Calculates the angle from this reference's current facing to the target reference.
 --- @param reference tes3reference The reference to calculate the angle to.
---- @return any result No description yet available.
+--- @return number angle The angle to the given reference.
 function tes3reference:getAngleTo(reference) end
 
 --- Fetches the dynamic light attachment.

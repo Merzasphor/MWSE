@@ -3,6 +3,7 @@
 --- An inventory composes of an iterator, and flags caching the state of the inventory.
 --- @class tes3inventory
 --- @field flags number Raw bit-based flags.
+--- @field items tes3iterator Direct acces to the container that holds the inventory's items.
 --- @field iterator tes3iterator Deprecated. Use ``for index, stack in pairs(inventory)`` to iterate over inventory stacks.
 --- 	
 --- Direct access to the container that holds the inventory's items.
