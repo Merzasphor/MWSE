@@ -1113,6 +1113,14 @@ function tes3.menuMode() end
 --- @return tes3uiElement|nil element The UI menu created for the notification, if any.
 function tes3.messageBox(messageOrParams, ...) end
 
+---Table parameter definitions for ``tes3.messageBox``.
+--- @class tes3.messageBox.params
+--- @field message string No description yet available.
+--- @field buttons table An array of strings to use for buttons.
+--- @field callback function No description yet available.
+--- @field showInDialog boolean Specifying showInDialog = false forces the toast-style message, which is not shown in the dialog menu. Defaults to true.
+--- @field duration float Overrides how long the toast-style message remains visible.
+
 --- Modifies a statistic on a given actor. This should be used instead of manually setting values on the game structures, to ensure that events and GUI elements are properly handled. Either skill, attribute, or name must be provided.
 ---
 --- [Examples available in online documentation](https://mwse.readthedocs.io/en/latest/lua/api/tes3/modStatistic.html).

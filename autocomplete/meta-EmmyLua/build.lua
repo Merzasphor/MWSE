@@ -224,7 +224,7 @@ local function writeFunction(package, file, namespaceOverride)
 	for i, argument in ipairs(package.arguments or {}) do
 		local type = argument.type
 		local description = argument.description or defaultNoDescriptionText
-		if (i == 1 and argument.tableParams) then
+		if (argument.tableParams) then
 			type = package.namespace .. ".params"
 			description = "This table accepts the following values:"
 			for _, tableArgument in ipairs(argument.tableParams) do
@@ -244,7 +244,7 @@ local function writeFunction(package, file, namespaceOverride)
 
 	file:write(string.format("function %s(%s) end\n\n", namespaceOverride or package.namespace, table.concat(getParamNames(package), ", ")))
 
-	if (package.arguments and #package.arguments == 1 and package.arguments[1].tableParams) then
+	if (package.arguments and #package.arguments > 0 and package.arguments[1].tableParams) then
 		file:write(string.format("---Table parameter definitions for ``%s``.\n", package.namespace))
 		file:write(string.format("--- @class %s.params\n", package.namespace))
 		for _, param in ipairs(package.arguments[1].tableParams) do
