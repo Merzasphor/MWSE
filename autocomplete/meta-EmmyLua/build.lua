@@ -167,10 +167,12 @@ local function getConsistentReturnValues(package)
 	elseif (package.valuetype) then
 		return { { name = "result", type = package.valuetype } }
 	elseif (type(package.returns) == "table") then
-		if (#package.returns == 1) then
+		if (package.returns.name or package.returns.type) then
 			return { package.returns }
+		elseif (#package.returns > 0) then
+			return package.returns
 		end
-		return package.returns
+		error("Invalid parameters table.")
 	end
 end
 
@@ -184,7 +186,11 @@ end
 local function getParamNames(package)
 	local params = {}
 	for _, param in ipairs(package.arguments or {}) do
-		table.insert(params, param.name or "unknown")
+		if (param.type == "variadic") then
+			table.insert(params, "...")
+		else
+			table.insert(params, param.name or "unknown")
+		end
 	end
 	return params
 end
@@ -203,7 +209,11 @@ local function writeFunction(package, file, namespaceOverride)
 				description = description .. string.format("\n\n``%s``: %s — %s", tableArgument.name or "unknown", tableArgument.type or "any", formatLineBreaks(tableArgument.description or defaultNoDescriptionText))
 			end
 		end
-		file:write(string.format("--- @param %s %s %s\n", argument.name or "unknown", type, formatLineBreaks(description)))
+		if (argument.type == "variadic") then
+			file:write(string.format("--- @vararg %s %s\n", argument.variadicType or "any", formatLineBreaks(description)))
+		else
+			file:write(string.format("--- @param %s %s %s\n", argument.name or "unknown", type, formatLineBreaks(description)))
+		end
 	end
 
 	for _, returnPackage in ipairs(getConsistentReturnValues(package) or {}) do
