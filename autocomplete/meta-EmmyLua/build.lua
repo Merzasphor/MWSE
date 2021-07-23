@@ -192,12 +192,17 @@ local function getAllPossibleVariationsOfType(type)
 		return nil
 	end
 
-	local class = classes[type]
-	if (class) then
-		return class.allDescendentKeys or type
+	local types = {}
+	for _, t in ipairs(splitString(type, "|")) do
+		local class = classes[t]
+		if (class) then
+			table.insert(types, class.allDescendentKeys or t)
+		else
+			table.insert(types, t)
+		end
 	end
 
-	return type
+	return table.concat(types, "|")
 end
 
 local function getParamNames(package)

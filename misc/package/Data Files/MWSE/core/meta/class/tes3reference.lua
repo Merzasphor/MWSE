@@ -22,7 +22,7 @@
 --- @field leveledBaseReference tes3reference|nil If this reference is a leveled spawn, this is the leveled creature spawn reference. If this reference wasn't the result of a leveled spawn, the value is nil.
 --- @field light niPointLight|niSpotLight Direct access to the scene graph light, if a dynamic light is set.
 --- @field lockNode tes3lockNode Quick access to the reference's lock node, if any.
---- @field mobile tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3mobileProjectile|tes3mobileSpell|nil Access to the attached mobile object, if applicable.
+--- @field mobile tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3mobilePlayer|tes3mobileProjectile|tes3mobileSpellProjectile|tes3mobileSpell|nil Access to the attached mobile object, if applicable.
 --- @field nextNode tes3reference The next reference in the parent reference list.
 --- @field nodeData tes3reference Redundant access to this object, for iterating over a tes3referenceList.
 --- @field object tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3static|tes3weapon The object that the reference is for, such as a weapon, armor, or actor.

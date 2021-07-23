@@ -12,7 +12,7 @@ tes3inventory = {}
 --- Adds an item into the inventory directly. This should not be used, in favor of the tes3.addItem function.
 --- @param params tes3inventory.addItem.params This table accepts the following values:
 --- 
---- ``mobile``: tes3mobileActor|tes3reference|string — The mobile actor whose stats will be updated.
+--- ``mobile``: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string — The mobile actor whose stats will be updated.
 --- 
 --- ``item``: tes3item — The item to add.
 --- 
@@ -23,7 +23,7 @@ function tes3inventory:addItem(params) end
 
 ---Table parameter definitions for ``tes3inventory.addItem``.
 --- @class tes3inventory.addItem.params
---- @field mobile tes3mobileActor|tes3reference|string The mobile actor whose stats will be updated.
+--- @field mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string The mobile actor whose stats will be updated.
 --- @field item tes3item The item to add.
 --- @field itemData tes3itemData Any associated item data to add.
 --- @field count number The number of items to add.
@@ -39,7 +39,7 @@ function tes3inventory:calculateWeight() end
 function tes3inventory:contains(item, itemData) end
 
 --- Checks to see if the inventory contains an item. This should not be used, instead use the tes3.dropItem function.
---- @param mobile tes3mobileActor|tes3reference|string The mobile actor whose stats will be updated.
+--- @param mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string The mobile actor whose stats will be updated.
 --- @param item tes3item|string The item to drop.
 --- @param itemData tes3itemData If provided, it will check for the specific data to drop it.
 --- @param count number The number of items to drop.
@@ -56,7 +56,7 @@ function tes3inventory:findItemStack(item) end
 --- Removes an item from the inventory directly. This should not be used, in favor of the tes3.removeItem function.
 --- @param params tes3inventory.removeItem.params This table accepts the following values:
 --- 
---- ``mobile``: tes3mobileActor|tes3reference|string — The mobile actor whose stats will be updated.
+--- ``mobile``: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string — The mobile actor whose stats will be updated.
 --- 
 --- ``item``: tes3item — The item to add.
 --- 
@@ -69,7 +69,7 @@ function tes3inventory:removeItem(params) end
 
 ---Table parameter definitions for ``tes3inventory.removeItem``.
 --- @class tes3inventory.removeItem.params
---- @field mobile tes3mobileActor|tes3reference|string The mobile actor whose stats will be updated.
+--- @field mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string The mobile actor whose stats will be updated.
 --- @field item tes3item The item to add.
 --- @field itemData tes3itemData Any associated item data to add.
 --- @field count number The number of items to add.
