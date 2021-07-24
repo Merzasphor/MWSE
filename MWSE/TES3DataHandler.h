@@ -359,6 +359,12 @@ namespace TES3 {
 
 		std::reference_wrapper<ExteriorCellData* [9]> getExteriorCellData_lua();
 
+		//
+		// Debug values.
+		//
+
+		static const char* currentlyLoadingMesh;
+
 	};
 	static_assert(sizeof(DataHandler) == 0xB558, "TES3::DataHandler failed size validation");
 	static_assert(offsetof(DataHandler, worldObjectRoot) == 0x8C, "TES3::DataHandler failed offset validation");

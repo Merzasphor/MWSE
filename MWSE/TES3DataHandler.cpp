@@ -46,6 +46,7 @@ namespace TES3 {
 	Cell* DataHandler::previousVisitedCell = nullptr;
 	bool DataHandler::dontThreadLoad = false;
 	bool DataHandler::suppressThreadLoad = false;
+	const char* DataHandler::currentlyLoadingMesh = nullptr;
 
 	//
 	// MeshData
@@ -53,11 +54,13 @@ namespace TES3 {
 
 	const auto TES3_MeshData_loadMesh = reinterpret_cast<NI::AVObject *(__thiscall*)(MeshData*, const char *)>(0x4EE0A0);
 	NI::AVObject * MeshData::loadMesh(const char* path) {
+		DataHandler::currentlyLoadingMesh = path;
 		auto countBefore = NIFs->count;
 		auto mesh = TES3_MeshData_loadMesh(this, path);
 		if (mesh && NIFs->count > countBefore && mwse::lua::event::MeshLoadedEvent::getEventEnabled()) {
 			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MeshLoadedEvent(path, mesh));
 		}
+		DataHandler::currentlyLoadingMesh = nullptr;
 		return mesh;
 	}
 

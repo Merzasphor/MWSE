@@ -817,6 +817,11 @@ namespace mwse {
 				log::getLog() << "  Cursor Offset: 0x" << std::hex << *reinterpret_cast<DWORD*>(0x7CEBB0) << std::endl;
 			}
 
+			// Show if we failed to load a mesh.
+			if (TES3::DataHandler::currentlyLoadingMesh) {
+				log::getLog() << "Currently loading mesh: " << TES3::DataHandler::currentlyLoadingMesh << std::endl;
+			}
+
 			// Open the file.
 			HANDLE hFile = CreateFile("MWSE_MiniDump.dmp", GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
