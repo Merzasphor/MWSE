@@ -14,7 +14,7 @@ Parameters
 Accepts parameters in the following order:
 
 id (`number`_)
-    Can be found in '\Morrowind\mcpatch\describe.json'.
+    No description available.
 
 .. _`boolean`: ../../../lua/type/boolean.html
 .. _`nil`: ../../../lua/type/nil.html
