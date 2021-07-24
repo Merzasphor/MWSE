@@ -1,7 +1,7 @@
 --- @meta
 
 --- An alchemy game object.
---- @class tes3alchemy : tes3physicalObject, tes3object, tes3baseObject
+--- @class tes3alchemy : tes3item, tes3physicalObject, tes3object, tes3baseObject
 --- @field autoCalc boolean If set, the value of the object is automatically calculated.
 --- @field effects table An array-style table of the tes3effect data on the object.
 --- @field flags number The alchemy item's flags.

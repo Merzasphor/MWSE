@@ -1,7 +1,7 @@
 --- @meta
 
 --- An armor game object.
---- @class tes3armor : tes3physicalObject, tes3object, tes3baseObject
+--- @class tes3armor : tes3item, tes3physicalObject, tes3object, tes3baseObject
 --- @field armorRating number The armor's defensive rating.
 --- @field enchantCapacity number The object's enchantment capacity.
 --- @field enchantment tes3enchantment The enchantment used by the object.

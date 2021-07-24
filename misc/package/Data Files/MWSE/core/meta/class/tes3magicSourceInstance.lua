@@ -4,7 +4,7 @@
 --- @class tes3magicSourceInstance : tes3baseObject
 --- @field castChanceOverride number No description yet available.
 --- @field caster tes3reference No description yet available.
---- @field item tes3item No description yet available.
+--- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3weapon No description yet available.
 --- @field itemData tes3itemData No description yet available.
 --- @field itemID string No description yet available.
 --- @field magicID string No description yet available.

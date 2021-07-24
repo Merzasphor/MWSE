@@ -1,7 +1,7 @@
 --- @meta
 
 --- A core miscellaneous object.
---- @class tes3misc : tes3physicalObject, tes3object, tes3baseObject
+--- @class tes3misc : tes3item, tes3physicalObject, tes3object, tes3baseObject
 --- @field icon string The path to the object's icon.
 --- @field isKey boolean Access to the flag determining if this item is recognized as a key.
 --- @field isSoulGem boolean Determines if this item is a soul gem.

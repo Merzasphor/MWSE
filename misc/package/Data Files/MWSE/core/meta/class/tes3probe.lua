@@ -1,7 +1,7 @@
 --- @meta
 
 --- A core lockpick object.
---- @class tes3probe : tes3physicalObject, tes3object, tes3baseObject
+--- @class tes3probe : tes3item, tes3physicalObject, tes3object, tes3baseObject
 --- @field condition number Depracted. Use tes3probe.maxCondition.
 --- 
 --- The maximum condition/health of the object.

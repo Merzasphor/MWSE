@@ -19,7 +19,7 @@ function mwscript.activate(params) end
 --- 
 --- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``item``: tes3item|string — The item to be added.
+--- ``item``: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3weapon|string — The item to be added.
 --- 
 --- ``count``: number — The number of items to be added.
 --- @return boolean executed No description yet available.
@@ -28,7 +28,7 @@ function mwscript.addItem(params) end
 ---Table parameter definitions for ``mwscript.addItem``.
 --- @class mwscript.addItem.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string The target reference for this command to be executed on. Defaults to the normal script execution reference.
---- @field item tes3item|string The item to be added.
+--- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3weapon|string The item to be added.
 --- @field count number The number of items to be added.
 
 --- Wrapper for the AddSoulGem mwscript function.
@@ -84,7 +84,7 @@ function mwscript.addToLevCreature(params) end
 --- 
 --- ``list``: tes3leveledItem|string — Leveled item list to add a creature to.
 --- 
---- ``item``: tes3item|string — Item to add to the list.
+--- ``item``: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3weapon|string — Item to add to the list.
 --- 
 --- ``level``: number — Minimum level for the item to spawn.
 --- @return boolean executed No description yet available.
@@ -93,7 +93,7 @@ function mwscript.addToLevItem(params) end
 ---Table parameter definitions for ``mwscript.addToLevItem``.
 --- @class mwscript.addToLevItem.params
 --- @field list tes3leveledItem|string Leveled item list to add a creature to.
---- @field item tes3item|string Item to add to the list.
+--- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3weapon|string Item to add to the list.
 --- @field level number Minimum level for the item to spawn.
 
 --- Wrapper for the AddItem mwscript function.
@@ -146,7 +146,7 @@ function mwscript.disable(params) end
 --- 
 --- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``item``: tes3item|string — The item to be dropped.
+--- ``item``: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3weapon|string — The item to be dropped.
 --- 
 --- ``count``: number — The number of items to drop.
 --- @return boolean executed No description yet available.
@@ -155,7 +155,7 @@ function mwscript.drop(params) end
 ---Table parameter definitions for ``mwscript.drop``.
 --- @class mwscript.drop.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string The target reference for this command to be executed on. Defaults to the normal script execution reference.
---- @field item tes3item|string The item to be dropped.
+--- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3weapon|string The item to be dropped.
 --- @field count number The number of items to drop.
 
 --- Wrapper for the Enable mwscript function.
@@ -177,14 +177,14 @@ function mwscript.enable(params) end
 --- 
 --- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``item``: tes3item|string — The item to be equipped.
+--- ``item``: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3weapon|string — The item to be equipped.
 --- @return boolean executed No description yet available.
 function mwscript.equip(params) end
 
 ---Table parameter definitions for ``mwscript.equip``.
 --- @class mwscript.equip.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string The target reference for this command to be executed on. Defaults to the normal script execution reference.
---- @field item tes3item|string The item to be equipped.
+--- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3weapon|string The item to be equipped.
 
 --- Wrapper for the ExplodeSpell mwscript function.
 --- @param params mwscript.explodeSpell.params This table accepts the following values:
@@ -248,14 +248,14 @@ function mwscript.getDistance(params) end
 --- 
 --- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``item``: tes3item|string — No description yet available.
+--- ``item``: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3weapon|string — No description yet available.
 --- @return number result No description yet available.
 function mwscript.getItemCount(params) end
 
 ---Table parameter definitions for ``mwscript.getItemCount``.
 --- @class mwscript.getItemCount.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string The target reference for this command to be executed on. Defaults to the normal script execution reference.
---- @field item tes3item|string No description yet available.
+--- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3weapon|string No description yet available.
 
 --- Wrapper for the GetPCJumping mwscript function.
 --- @return boolean result No description yet available.
@@ -296,21 +296,21 @@ function mwscript.getSpellEffects(params) end
 --- 
 --- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``item``: tes3item|string — The item to be added.
+--- ``item``: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3weapon|string — The item to be added.
 --- @return boolean result No description yet available.
 function mwscript.hasItemEquipped(params) end
 
 ---Table parameter definitions for ``mwscript.hasItemEquipped``.
 --- @class mwscript.hasItemEquipped.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string The target reference for this command to be executed on. Defaults to the normal script execution reference.
---- @field item tes3item|string The item to be added.
+--- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3weapon|string The item to be added.
 
 --- Wrapper for the PlaceAtPC mwscript function.
 --- @param params mwscript.placeAtPC.params This table accepts the following values:
 --- 
 --- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``object``: tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3enchantment|tes3ingredient|tes3item|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3reference|tes3spell|tes3static|tes3weapon|string — The object to place.
+--- ``object``: tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3enchantment|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3reference|tes3spell|tes3static|tes3weapon|string — The object to place.
 --- 
 --- ``count``: number — No description yet available.
 --- 
@@ -323,7 +323,7 @@ function mwscript.placeAtPC(params) end
 ---Table parameter definitions for ``mwscript.placeAtPC``.
 --- @class mwscript.placeAtPC.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string The target reference for this command to be executed on. Defaults to the normal script execution reference.
---- @field object tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3enchantment|tes3ingredient|tes3item|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3reference|tes3spell|tes3static|tes3weapon|string The object to place.
+--- @field object tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3enchantment|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3reference|tes3spell|tes3static|tes3weapon|string The object to place.
 --- @field count number No description yet available.
 --- @field distance number No description yet available.
 --- @field direction number No description yet available.
@@ -399,7 +399,7 @@ function mwscript.positionCell(params) end
 --- 
 --- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``item``: tes3item|string — The item to be added.
+--- ``item``: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3weapon|string — The item to be added.
 --- 
 --- ``count``: number — The number of items to be added.
 --- @return boolean executed No description yet available.
@@ -408,7 +408,7 @@ function mwscript.removeItem(params) end
 ---Table parameter definitions for ``mwscript.removeItem``.
 --- @class mwscript.removeItem.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string The target reference for this command to be executed on. Defaults to the normal script execution reference.
---- @field item tes3item|string The item to be added.
+--- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3weapon|string The item to be added.
 --- @field count number The number of items to be added.
 
 --- Wrapper for the RemoveSpell mwscript function.

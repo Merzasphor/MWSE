@@ -9,6 +9,9 @@ Properties
 `blocked`_ (`boolean`_)
     The blocked state of the object.
 
+`boundingBox`_ (`tes3boundingBox`_)
+    The bounding box for the object.
+
 `deleted`_ (`boolean`_)
     Read-only. The deleted state of the object.
 
@@ -54,6 +57,9 @@ Properties
 `sourceless`_ (`boolean`_)
     The soruceless flag of the object.
 
+`stolenList`_ (`tes3iterator`_)
+    A list of actors that the object has been stolen from.
+
 `supportsLuaData`_ (`boolean`_)
     If true, references of this object can store temporary or persistent lua data.
 
@@ -61,6 +67,7 @@ Properties
     :hidden:
 
     tes3item/blocked
+    tes3item/boundingBox
     tes3item/deleted
     tes3item/disabled
     tes3item/id
@@ -76,9 +83,11 @@ Properties
     tes3item/sceneReference
     tes3item/sourceMod
     tes3item/sourceless
+    tes3item/stolenList
     tes3item/supportsLuaData
 
 .. _`blocked`: tes3item/blocked.html
+.. _`boundingBox`: tes3item/boundingBox.html
 .. _`deleted`: tes3item/deleted.html
 .. _`disabled`: tes3item/disabled.html
 .. _`id`: tes3item/id.html
@@ -94,6 +103,7 @@ Properties
 .. _`sceneReference`: tes3item/sceneReference.html
 .. _`sourceMod`: tes3item/sourceMod.html
 .. _`sourceless`: tes3item/sourceless.html
+.. _`stolenList`: tes3item/stolenList.html
 .. _`supportsLuaData`: tes3item/supportsLuaData.html
 
 Methods
@@ -113,5 +123,7 @@ Methods
 .. _`niNode`: ../../lua/type/niNode.html
 .. _`number`: ../../lua/type/number.html
 .. _`string`: ../../lua/type/string.html
+.. _`tes3boundingBox`: ../../lua/type/tes3boundingBox.html
+.. _`tes3iterator`: ../../lua/type/tes3iterator.html
 .. _`tes3object`: ../../lua/type/tes3object.html
 .. _`tes3referenceList`: ../../lua/type/tes3referenceList.html
