@@ -39,6 +39,8 @@ function tes3ui.createHelpLayerMenu(params) end
 --- ``dragFrame``: boolean — Constructs a draggable and resizeable frame and background for the menu. It is similar to the stats, inventory, magic and map menus in the standard UI. After construction, position and minimum dimensions should be set.
 --- 
 --- ``fixedFrame``: boolean — Constructs a fixed (non-draggable) frame and background for the menu. The layout system should automatically centre and size it to fit whatever is added to the menu.
+--- 
+--- ``loadable``: boolean — If set to false, calls to loadMenuPosition will fail.
 --- @return tes3uiElement result No description yet available.
 function tes3ui.createMenu(params) end
 
@@ -47,6 +49,7 @@ function tes3ui.createMenu(params) end
 --- @field id number The menu’s ID. The menu can be later accessed by tes3ui.findMenu(id).
 --- @field dragFrame boolean Constructs a draggable and resizeable frame and background for the menu. It is similar to the stats, inventory, magic and map menus in the standard UI. After construction, position and minimum dimensions should be set.
 --- @field fixedFrame boolean Constructs a fixed (non-draggable) frame and background for the menu. The layout system should automatically centre and size it to fit whatever is added to the menu.
+--- @field loadable boolean If set to false, calls to loadMenuPosition will fail.
 
 --- Creates a tooltip menu. This should be called from within a tooltip event callback. These automatically follow the mouse cursor, and are also destroyed automatically when the mouse leaves the originating element.
 --- @return tes3uiElement result No description yet available.

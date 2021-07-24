@@ -16,7 +16,7 @@ Properties
     If true, the leveled list is picked from the entire level range, instead of just the highest.
 
 `chanceForNothing`_ (`number`_)
-    Read-only. The percent chance, from 0 to 100, for no object to be chosen.
+    The percent chance, from 0 to 100, for no object to be chosen.
 
 `count`_ (`number`_)
     Read-only. The number of possible options in the leveled object container.
@@ -28,7 +28,7 @@ Properties
     Read-only. The disabled state of the object.
 
 `flags`_ (`number`_)
-    Read-only. A numerical representation of bit flags for the object.
+    A numerical representation of bit flags for the object.
 
 `id`_ (`string`_)
     Read-only. The unique identifier for the object.
