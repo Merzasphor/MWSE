@@ -1,5 +1,5 @@
 return {
 	type = "class",
 	description = [[A core repair tool object.]],
-	inherits = "tes3physicalObject",
+	inherits = "tes3item",
 }
