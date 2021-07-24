@@ -10,11 +10,12 @@
 namespace mwse {
 	namespace lua {
 		namespace event {
-			EnchantChargeUseEvent::EnchantChargeUseEvent(TES3::Enchantment* enchant, TES3::MobileActor* caster, float chargeRequired) :
+			EnchantChargeUseEvent::EnchantChargeUseEvent(TES3::Enchantment* enchant, TES3::MobileActor* caster, float chargeRequired, bool isCast) :
 				GenericEvent("enchantChargeUse"),
 				m_Enchant(enchant),
 				m_Caster(caster),
-				m_ChargeRequired(chargeRequired)
+				m_ChargeRequired(chargeRequired),
+				m_IsCast(isCast)
 			{
 
 			}
@@ -27,6 +28,7 @@ namespace mwse {
 				eventData["caster"] = m_Caster->reference;
 				eventData["source"] = m_Enchant;
 				eventData["charge"] = m_ChargeRequired;
+				eventData["isCast"] = m_IsCast;
 
 				return eventData;
 			}

@@ -3008,19 +3008,24 @@ namespace mwse {
 
 		static TES3::Enchantment* lastExaminedEnchantment = nullptr;
 
-		float __stdcall onEnchantItemChargeRequired(TES3::MobileActor* mobile, TES3::Enchantment* source, float charge) {
+		float __stdcall onEnchantItemChargeRequired(TES3::MobileActor* mobile, TES3::Enchantment* enchant, float charge, TES3::MagicSourceInstance* magicSource) {
 			// Restore overwritten code.
 			charge = std::max(1.0f, charge);
 
-			// Fire off the event.
-			if (event::EnchantChargeUseEvent::getEventEnabled()) {
-				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-				sol::object eventResult = stateHandle.triggerEvent(new event::EnchantChargeUseEvent(source, mobile, charge));
-				if (eventResult.valid()) {
-					sol::table eventData = eventResult;
-					sol::optional<float> newCharge = eventData["charge"];
-					if (newCharge) {
-						charge = newCharge.value();
+			// Ignore cast once items, the charge calculated is later ignored.
+			if (enchant->castType != TES3::EnchantmentCastType::Once) {
+				// Fire off the event.
+				if (event::EnchantChargeUseEvent::getEventEnabled()) {
+					auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+					bool isCast = magicSource != nullptr;
+
+					sol::object eventResult = stateHandle.triggerEvent(new event::EnchantChargeUseEvent(enchant, mobile, charge, isCast));
+					if (eventResult.valid()) {
+						sol::table eventData = eventResult;
+						sol::optional<float> newCharge = eventData["charge"];
+						if (newCharge) {
+							charge = newCharge.value();
+						}
 					}
 				}
 			}
@@ -3040,10 +3045,8 @@ namespace mwse {
 			__asm { fstp [charge] }
 
 			auto castType = lastExaminedEnchantment->castType;
-			if (castType == TES3::EnchantmentCastType::OnStrike || castType == TES3::EnchantmentCastType::OnUse) {
-				auto macp = TES3::WorldController::get()->getMobilePlayer();
-				charge = onEnchantItemChargeRequired(macp, lastExaminedEnchantment, charge);
-			}
+			auto macp = TES3::WorldController::get()->getMobilePlayer();
+			charge = onEnchantItemChargeRequired(macp, lastExaminedEnchantment, charge, nullptr);
 
 			lastExaminedEnchantment = nullptr;
 			return int(charge);
@@ -3051,13 +3054,13 @@ namespace mwse {
 
 		__declspec(naked) void patchEnchantItemChargeRequired_onCast() {
 			__asm {
+				push esi					// magicSourceInstance
 				push ecx
 				fstp [esp]					// Charge required
 				push [esi+0xA0]				// Casting enchantment
 				push edi					// Casting mobileActor
 				call onEnchantItemChargeRequired	// Replace with call generation
 				fstp [ebp-0x18]				// Store updated charge required
-				nop
 			}
 		}
 		const size_t patchEnchantItemChargeRequired_onCast_size = 0x14;
@@ -4439,7 +4442,7 @@ namespace mwse {
 
 			// Event: Enchanted item charge needed to cast.
 			writePatchCodeUnprotected(0x514F1E, (BYTE*)&patchEnchantItemChargeRequired_onCast, patchEnchantItemChargeRequired_onCast_size);
-			genCallUnprotected(0x514F29, reinterpret_cast<DWORD>(onEnchantItemChargeRequired));
+			genCallUnprotected(0x514F2A, reinterpret_cast<DWORD>(onEnchantItemChargeRequired));
 			genCallUnprotected(0x5E014A, reinterpret_cast<DWORD>(onEnchantItemChargeRequired_getEnchantment), 6);
 			genCallUnprotected(0x5E04EF, reinterpret_cast<DWORD>(onEnchantItemChargeRequired_getEnchantment), 6);
 			genCallUnprotected(0x5E1FE3, reinterpret_cast<DWORD>(onEnchantItemChargeRequired_getEnchantment), 6);

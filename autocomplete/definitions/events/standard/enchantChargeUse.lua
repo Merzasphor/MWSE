@@ -15,6 +15,10 @@ return {
 			type = "number",
 			description = "The charge required to cast the enchantment. May be modified.",
 		},
+		["isCast"] = {
+			type = "boolean",
+			description = "True if the calculation is for a on-strike or on-use action, false if for UI enchant charge display. The type of action is found at e.source.castType.",
+		},
 	},
 	filter = "caster",
 }

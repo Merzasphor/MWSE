@@ -6,6 +6,11 @@ This event is triggered just before an on-strike or on-use enchantment is used b
 Event Data
 ----------------------------------------------------------------------------------------------------
 
+isCast
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+`boolean`_. True if the calculation is for a casting action, false if for UI enchant charge display.
+
 charge
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -21,6 +26,7 @@ caster
 
 `tes3reference`_. Read-only. The caster of the enchantment.
 
+.. _`boolean`: ../../lua/type/boolean.html
 .. _`number`: ../../lua/type/number.html
 .. _`tes3enchantment`: ../../lua/type/tes3enchantment.html
 .. _`tes3reference`: ../../lua/type/tes3reference.html
