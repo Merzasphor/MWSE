@@ -1,5 +1,8 @@
 return {
 	type = "value",
-	description = [[The maximum condition/health of the object.]],
+	description = [[Use tes3lockpick.maxCondition instead.
+
+The maximum condition/health of the object.]],
+	deprecated = true,
 	valuetype = "number",
 }

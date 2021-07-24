@@ -1,6 +1,6 @@
 return {
 	type = "value",
-	description = [[The name of the slot used by the armor.]],
+	description = [[The unique identifier for the dialogue object.]],
 	valuetype = "string",
 	readOnly = true,
 }

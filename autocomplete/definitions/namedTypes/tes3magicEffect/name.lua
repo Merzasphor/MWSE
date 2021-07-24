@@ -1,6 +1,6 @@
 return {
 	type = "value",
-	description = [[The name of the slot used by the armor.]],
+	description = "Player-facing name of the effect.",
 	valuetype = "string",
 	readOnly = true,
 }
