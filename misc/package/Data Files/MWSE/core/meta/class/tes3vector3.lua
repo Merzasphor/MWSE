@@ -2,6 +2,7 @@
 
 --- A simple trio of floating-point numbers.
 --- @class tes3vector3
+--- @field angle number The angle between the vector and the water plane.
 --- @field b number The third value in the vector. An alias for z.
 --- @field g number The second value in the vector. An alias for y.
 --- @field r number The first value in the vector. An alias for x.
@@ -65,4 +66,8 @@ function tes3vector3:normalized() end
 --- @param vec tes3vector3 No description yet available.
 --- @return tes3matrix33 result No description yet available.
 function tes3vector3:outerProduct(vec) end
+
+--- Converts the vector to niColor.
+--- @return niColor result No description yet available.
+function tes3vector3:toColor() end
 

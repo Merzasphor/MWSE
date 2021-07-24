@@ -6,6 +6,9 @@ A structure that holds (sometimes redundant) information on a soul gem.
 Properties
 ----------------------------------------------------------------------------------------------------
 
+`capacity`_ (`number`_)
+    Read-only. The capacity of the soul gem.
+
 `id`_ (`string`_)
     Read-only. The unique object ID.
 
@@ -22,14 +25,15 @@ Properties
     Read-only. The path to the object's texture.
 
 `value`_ (`number`_)
-    The value of the object.
+    Read-only. The value of the object.
 
 `weight`_ (`number`_)
-    The weight of the object.
+    Read-only. The weight of the object.
 
 .. toctree::
     :hidden:
 
+    tes3soulGemData/capacity
     tes3soulGemData/id
     tes3soulGemData/item
     tes3soulGemData/mesh
@@ -38,6 +42,7 @@ Properties
     tes3soulGemData/value
     tes3soulGemData/weight
 
+.. _`capacity`: tes3soulGemData/capacity.html
 .. _`id`: tes3soulGemData/id.html
 .. _`item`: tes3soulGemData/item.html
 .. _`mesh`: tes3soulGemData/mesh.html

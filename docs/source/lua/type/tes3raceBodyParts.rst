@@ -31,10 +31,10 @@ Properties
     The hands that an actor of this race and sex will use.
 
 `head1`_ (`tes3bodyPart`_)
-    No description available.
+    The head that an actor of this race and sex will use.
 
 `head2`_ (`tes3bodyPart`_)
-    No description available.
+    The head that an actor of this race and sex will use, when he/she is a vampire.
 
 `knee`_ (`tes3bodyPart`_)
     The knee that an actor of this race and sex will use.

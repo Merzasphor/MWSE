@@ -17,3 +17,4 @@ id (`number`_)
     Maps to tes3.skill constants.
 
 .. _`number`: ../../../lua/type/number.html
+.. _`tes3skill`: ../../../lua/type/tes3skill.html

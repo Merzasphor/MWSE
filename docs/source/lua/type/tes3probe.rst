@@ -13,7 +13,7 @@ Properties
     The bounding box for the object.
 
 `condition`_ (`number`_)
-    Depracted. Use tes3probe.maxCondition.
+    Use tes3probe.maxCondition.
 
 The maximum condition/health of the object.
 

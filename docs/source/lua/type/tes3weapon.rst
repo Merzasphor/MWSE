@@ -293,3 +293,4 @@ Methods
 .. _`tes3iterator`: ../../lua/type/tes3iterator.html
 .. _`tes3object`: ../../lua/type/tes3object.html
 .. _`tes3referenceList`: ../../lua/type/tes3referenceList.html
+.. _`tes3skill`: ../../lua/type/tes3skill.html

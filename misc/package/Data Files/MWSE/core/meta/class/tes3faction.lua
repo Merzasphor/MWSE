@@ -13,3 +13,13 @@
 --- @field skills table An array-style table holding the seven skills that govern advancement.
 tes3faction = {}
 
+--- This function fetches the player-facing name of a rank in the faction.
+--- @param rank number A rank number in range [0, 9] inclusive.
+--- @return string result No description yet available.
+function tes3faction:getRankName(rank) end
+
+--- This function changes the player-facing name of a given rank in the faction.
+--- @param rank number A rank number in range [0, 9] inclusive.
+--- @param name string A new name to set.
+function tes3faction:setRankName(rank, name) end
+

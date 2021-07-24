@@ -9,6 +9,9 @@ Properties
 `armorRating`_ (`number`_)
     The armor's defensive rating.
 
+`armorScalar`_ (`number`_)
+    Read-only. No description available.
+
 `blocked`_ (`boolean`_)
     The blocked state of the object.
 
@@ -61,7 +64,7 @@ Properties
     The collection responsible for holding this object.
 
 `parts`_ (`table`_)
-    An array-style table of the tes3wearablePart data on the object.
+    Read-only. An array-style table of the tes3wearablePart data on the object.
 
 `persistent`_ (`boolean`_)
     The persistent flag of the object.
@@ -85,7 +88,7 @@ Properties
     The slot used by the armor.
 
 `slotName`_ (`string`_)
-    The name of the slot used by the armor.
+    Read-only. The name of the slot used by the armor.
 
 `sourceMod`_ (`string`_)
     Read-only. The filename of the mod that owns this object.
@@ -106,12 +109,13 @@ Properties
     The weight of the object.
 
 `weightClass`_ (`number`_)
-    The weight class of the armor.
+    Read-only. The weight class of the armor. This value maps to tes3.armorWeightClass.* constants.
 
 .. toctree::
     :hidden:
 
     tes3armor/armorRating
+    tes3armor/armorScalar
     tes3armor/blocked
     tes3armor/boundingBox
     tes3armor/deleted
@@ -147,6 +151,7 @@ Properties
     tes3armor/weightClass
 
 .. _`armorRating`: tes3armor/armorRating.html
+.. _`armorScalar`: tes3armor/armorScalar.html
 .. _`blocked`: tes3armor/blocked.html
 .. _`boundingBox`: tes3armor/boundingBox.html
 .. _`deleted`: tes3armor/deleted.html

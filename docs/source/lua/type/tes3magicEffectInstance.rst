@@ -18,6 +18,9 @@ Properties
 `lastUsedEnchItem`_ (`tes3item`_)
     Read-only. No description available.
 
+`lastUsedLight`_ (`tes3light`_)
+    Read-only. No description available.
+
 `lastUsedShield`_ (`tes3armor`_)
     Read-only. No description available.
 
@@ -49,6 +52,7 @@ Properties
     tes3magicEffectInstance/cumulativeMagnitude
     tes3magicEffectInstance/lastUsedArmor
     tes3magicEffectInstance/lastUsedEnchItem
+    tes3magicEffectInstance/lastUsedLight
     tes3magicEffectInstance/lastUsedShield
     tes3magicEffectInstance/lastUsedWeapon
     tes3magicEffectInstance/magnitude
@@ -62,6 +66,7 @@ Properties
 .. _`cumulativeMagnitude`: tes3magicEffectInstance/cumulativeMagnitude.html
 .. _`lastUsedArmor`: tes3magicEffectInstance/lastUsedArmor.html
 .. _`lastUsedEnchItem`: tes3magicEffectInstance/lastUsedEnchItem.html
+.. _`lastUsedLight`: tes3magicEffectInstance/lastUsedLight.html
 .. _`lastUsedShield`: tes3magicEffectInstance/lastUsedShield.html
 .. _`lastUsedWeapon`: tes3magicEffectInstance/lastUsedWeapon.html
 .. _`magnitude`: tes3magicEffectInstance/magnitude.html
@@ -75,5 +80,6 @@ Properties
 .. _`tes3armor`: ../../lua/type/tes3armor.html
 .. _`tes3item`: ../../lua/type/tes3item.html
 .. _`tes3itemStack`: ../../lua/type/tes3itemStack.html
+.. _`tes3light`: ../../lua/type/tes3light.html
 .. _`tes3reference`: ../../lua/type/tes3reference.html
 .. _`tes3weapon`: ../../lua/type/tes3weapon.html

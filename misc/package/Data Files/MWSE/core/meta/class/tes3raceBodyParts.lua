@@ -10,8 +10,8 @@
 --- @field groin tes3bodyPart The groin that an actor of this race and sex will use.
 --- @field hair tes3bodyPart The base hair that an actor of this race and sex will use.
 --- @field hands tes3bodyPart The hands that an actor of this race and sex will use.
---- @field head1 tes3bodyPart No description yet available.
---- @field head2 tes3bodyPart No description yet available.
+--- @field head1 tes3bodyPart The head that an actor of this race and sex will use.
+--- @field head2 tes3bodyPart The head that an actor of this race and sex will use, when he/she is a vampire.
 --- @field knee tes3bodyPart The knee that an actor of this race and sex will use.
 --- @field neck tes3bodyPart The neck that an actor of this race and sex will use.
 --- @field tail tes3bodyPart The tail that an actor of this race and sex will use.

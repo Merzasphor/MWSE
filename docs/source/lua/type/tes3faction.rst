@@ -117,12 +117,22 @@ Methods
 `__tojson`_ (`string`_)
     Serializes the object to json.
 
+`getRankName`_ (`string`_)
+    This function fetches the player-facing name of a rank in the faction.
+
+`setRankName`_
+    This function changes the player-facing name of a given rank in the faction.
+
 .. toctree::
     :hidden:
 
     tes3faction/__tojson
+    tes3faction/getRankName
+    tes3faction/setRankName
 
 .. _`__tojson`: tes3faction/__tojson.html
+.. _`getRankName`: tes3faction/getRankName.html
+.. _`setRankName`: tes3faction/setRankName.html
 
 .. _`boolean`: ../../lua/type/boolean.html
 .. _`number`: ../../lua/type/number.html

@@ -142,17 +142,27 @@ Methods
 `__tojson`_ (`string`_)
     Serializes the object to json.
 
+`insert`_ (`boolean`_)
+    This function inserts given item in the leveled list. True is returned if the operation was successful.
+
 `pickFrom`_ (`tes3item`_)
     Chooses a random item from the list, based on the player's level.
+
+`remove`_ (`boolean`_)
+    This function removes an item from the leveled list. True is returned if the operation was successful.
 
 .. toctree::
     :hidden:
 
     tes3leveledItem/__tojson
+    tes3leveledItem/insert
     tes3leveledItem/pickFrom
+    tes3leveledItem/remove
 
 .. _`__tojson`: tes3leveledItem/__tojson.html
+.. _`insert`: tes3leveledItem/insert.html
 .. _`pickFrom`: tes3leveledItem/pickFrom.html
+.. _`remove`: tes3leveledItem/remove.html
 
 .. _`boolean`: ../../lua/type/boolean.html
 .. _`niNode`: ../../lua/type/niNode.html

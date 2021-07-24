@@ -11,6 +11,7 @@
 --- @field filename string The simple filename.
 --- @field fileSize number The size of the file.
 --- @field gameHour number The current game hour, from a save game.
+--- @field highestFormID number No description yet available.
 --- @field masters table An array-style table of the tes3gameFiles that this is dependent upon.
 --- @field maxHealth number The player's maximum health, from a save game.
 --- @field modifiedTime string The timestamp that the file was modified.

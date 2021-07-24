@@ -24,7 +24,7 @@ price
 skill
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-tes3statisticSkill. Read-only. The ID of the skill to be trained.
+`tes3statisticSkill`_. Read-only. The ID of the skill to be trained.
 
 reference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -39,3 +39,4 @@ skillId
 .. _`number`: ../../lua/type/number.html
 .. _`tes3mobileActor`: ../../lua/type/tes3mobileActor.html
 .. _`tes3reference`: ../../lua/type/tes3reference.html
+.. _`tes3statisticSkill`: ../../lua/type/tes3statisticSkill.html

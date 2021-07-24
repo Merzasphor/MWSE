@@ -5,26 +5,32 @@
 --- @field allowEnchanting boolean Access to the flag that determines if this effect can be used in enchanting.
 --- @field allowSpellmaking boolean Access to the flag that determines if this effect can be used with spellmaking.
 --- @field appliesOnce boolean Access to the base flag that determines if this effect can be used in enchanting.
---- @field areaSoundEffect string The sound path to the sound effect to use for area of effect impacts.
+--- @field areaSoundEffect string The path to the sound to play for area of effect impacts.
+--- @field areaVisualEffect tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon No description yet available.
 --- @field baseFlags number No description yet available.
 --- @field baseMagickaCost number The base magicka cost to use in calculations.
---- @field boltSoundEffects string The sound path to the sound effect to use for target projectiles.
+--- @field boltSoundEffects string The path to the sound effect to play for target projectiles.
+--- @field boltVisualEffect tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon No description yet available.
 --- @field canCastSelf boolean Access to the base flag that determines if this effect can be used with a range of self.
 --- @field canCastTarget boolean Access to the base flag that determines if this effect can be used with a range of target.
 --- @field canCastTouch boolean Access to the base flag that determines if this effect can be used with a range of touch.
 --- @field casterLinked boolean Access to the base flag.
---- @field castSoundEffect string The sound path to the sound effect to use when casting.
+--- @field castSoundEffect string The path to the sound effect to play when casting.
+--- @field castVisualEffect tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon No description yet available.
+--- @field description string Player-facing description of the effect.
 --- @field flags number Raw access to the numerical representation of flags. Typically shouldn't be used.
 --- @field hasContinuousVFX boolean Access to the base flag that determines if this effect's VFX continuously plays.
 --- @field hasNoDuration boolean Access to the base flag that determines if this effect doesn't use a duration.
 --- @field hasNoMagnitude boolean Access to the base flag that determines if this effect doesn't make use of its magnitude.
---- @field hitSoundEffect string The sound path to the sound effect to use when the effect hits a target.
+--- @field hitSoundEffect string The path to the sound effect to play when the effect hits a target.
+--- @field hitVisualEffect tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon No description yet available.
 --- @field icon string The sound path to the icon to use for the effect.
 --- @field illegalDaedra boolean Access to the base flag that determines if this effect summons an illegal daedra. This flag isn't used.
 --- @field isHarmful boolean Access to the base flag that determines if this effect is counted as a hostile action.
 --- @field lightingBlue number The amount of blue lighting to use when lighting projectiles.
 --- @field lightingGreen number The amount of green lighting to use when lighting projectiles.
 --- @field lightingRed number The amount of red lighting to use when lighting projectiles.
+--- @field name string Player-facing name of the effect.
 --- @field nonRecastable boolean Access to the base flag that determines if this effect can be refreshed by recasting.
 --- @field particleTexture boolean The path to use for the particle effect texture.
 --- @field school number The school that the effect is associated with.

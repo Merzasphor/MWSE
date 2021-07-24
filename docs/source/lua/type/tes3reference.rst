@@ -74,6 +74,9 @@ Properties
 `lockNode`_ (`tes3lockNode`_)
     Read-only. Quick access to the reference's lock node, if any.
 
+`mesh`_ (`string`_)
+    The path to the object's mesh.
+
 `mobile`_ (`tes3mobileCreature`_, `tes3mobileNPC`_, `tes3mobilePlayer`_, `tes3mobileProjectile`_, `tes3mobileSpell`_, `nil`_)
     Read-only. Access to the attached mobile object, if applicable.
 
@@ -120,10 +123,10 @@ Properties
     The object's scale.
 
 `sceneNode`_ (`niNode`_)
-    The scene graph node for this object.
+    Read-only. The scene graph node that the reference uses for rendering.
 
 `sceneNode`_ (`niNode`_)
-    Read-only. The scene graph node that the reference uses for rendering.
+    The scene graph node for this object.
 
 `sceneReference`_ (`niNode`_)
     The scene graph reference node for this object.
@@ -171,6 +174,7 @@ Properties
     tes3reference/leveledBaseReference
     tes3reference/light
     tes3reference/lockNode
+    tes3reference/mesh
     tes3reference/mobile
     tes3reference/modified
     tes3reference/nextInCollection
@@ -218,6 +222,7 @@ Properties
 .. _`leveledBaseReference`: tes3reference/leveledBaseReference.html
 .. _`light`: tes3reference/light.html
 .. _`lockNode`: tes3reference/lockNode.html
+.. _`mesh`: tes3reference/mesh.html
 .. _`mobile`: tes3reference/mobile.html
 .. _`modified`: tes3reference/modified.html
 .. _`nextInCollection`: tes3reference/nextInCollection.html

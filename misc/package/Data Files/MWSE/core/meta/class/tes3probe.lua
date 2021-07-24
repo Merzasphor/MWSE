@@ -2,7 +2,7 @@
 
 --- A core lockpick object.
 --- @class tes3probe : tes3item, tes3physicalObject, tes3object, tes3baseObject
---- @field condition number Depracted. Use tes3probe.maxCondition.
+--- @field condition number Use tes3probe.maxCondition.
 --- 
 --- The maximum condition/health of the object.
 --- @field icon string The path to the object's icon.

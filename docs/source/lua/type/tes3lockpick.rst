@@ -13,7 +13,9 @@ Properties
     The bounding box for the object.
 
 `condition`_ (`number`_)
-    The maximum condition/health of the object.
+    Use tes3lockpick.maxCondition instead.
+
+The maximum condition/health of the object.
 
 `deleted`_ (`boolean`_)
     Read-only. The deleted state of the object.
@@ -26,6 +28,9 @@ Properties
 
 `id`_ (`string`_)
     Read-only. The unique identifier for the object.
+
+`maxCondition`_ (`number`_)
+    The maximum condition/health of the lockpick object.
 
 `mesh`_ (`string`_)
     The path to the object's mesh.
@@ -97,6 +102,7 @@ Properties
     tes3lockpick/disabled
     tes3lockpick/icon
     tes3lockpick/id
+    tes3lockpick/maxCondition
     tes3lockpick/mesh
     tes3lockpick/modified
     tes3lockpick/name
@@ -125,6 +131,7 @@ Properties
 .. _`disabled`: tes3lockpick/disabled.html
 .. _`icon`: tes3lockpick/icon.html
 .. _`id`: tes3lockpick/id.html
+.. _`maxCondition`: tes3lockpick/maxCondition.html
 .. _`mesh`: tes3lockpick/mesh.html
 .. _`modified`: tes3lockpick/modified.html
 .. _`name`: tes3lockpick/name.html

@@ -36,6 +36,9 @@ Properties
 `persistent`_ (`boolean`_)
     The persistent flag of the object.
 
+`rawValue`_ (`number`_)
+    The base value of the game setting, as stored in memory. Prefer to use .value unless you know what you're doing.
+
 `sourceMod`_ (`string`_)
     Read-only. The filename of the mod that owns this object.
 
@@ -64,6 +67,7 @@ Properties
     tes3gameSetting/objectFlags
     tes3gameSetting/objectType
     tes3gameSetting/persistent
+    tes3gameSetting/rawValue
     tes3gameSetting/sourceMod
     tes3gameSetting/sourceless
     tes3gameSetting/supportsLuaData
@@ -80,6 +84,7 @@ Properties
 .. _`objectFlags`: tes3gameSetting/objectFlags.html
 .. _`objectType`: tes3gameSetting/objectType.html
 .. _`persistent`: tes3gameSetting/persistent.html
+.. _`rawValue`: tes3gameSetting/rawValue.html
 .. _`sourceMod`: tes3gameSetting/sourceMod.html
 .. _`sourceless`: tes3gameSetting/sourceless.html
 .. _`supportsLuaData`: tes3gameSetting/supportsLuaData.html

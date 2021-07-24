@@ -7,7 +7,7 @@
 --- @field activeAI boolean Friendly access to the actor's flag that controls if AI is active.
 --- @field activeMagicEffectList table The active magic effects on the actor, from which all others can be accessed. A table with tes3activeMagicEffect items.
 --- @field actorType number The type of the mobile actor. 0 is a creature, 1 is an NPC, 2 is the player.
---- @field agility tes3statistic Direct access to the actor's agility attribute statistic.
+--- @field agility tes3statistic|tes3statisticSkill Direct access to the actor's agility attribute statistic.
 --- @field aiPlanner tes3aiPlanner Access to the mobile's AI planner and AI package information.
 --- @field alarm number The actor's alarm AI value.
 --- @field animationController tes3actorAnimationController|tes3playerAnimationController No description yet available.
@@ -30,22 +30,22 @@
 --- @field currentEnchantedItem tes3equipmentStack The currently equipped enchanted item that the actor will use.
 --- @field currentSpell tes3spell The currently equipped spell that the actor will use.
 --- @field effectAttributes table Access to a table of 24 numbers for the actor's effect attributes.
---- @field encumbrance tes3statistic Access to the actor's encumbrance statistic.
---- @field endurance tes3statistic Direct access to the actor's endurance attribute statistic.
+--- @field encumbrance tes3statistic|tes3statisticSkill Access to the actor's encumbrance statistic.
+--- @field endurance tes3statistic|tes3statisticSkill Direct access to the actor's endurance attribute statistic.
 --- @field facing number The facing of the actor, in radians.
---- @field fatigue tes3statistic Access to the actor's fatigue statistic.
+--- @field fatigue tes3statistic|tes3statisticSkill Access to the actor's fatigue statistic.
 --- @field fight number The actor's fight AI value.
 --- @field flee number The actor's flee AI value.
 --- @field friendlyActors tes3iterator A collection of other tes3mobileActors that this actor considers friendly.
 --- @field greetDuration number No description yet available.
 --- @field greetTimer number No description yet available.
---- @field health tes3statistic Access to the actor's health statistic.
+--- @field health tes3statistic|tes3statisticSkill Access to the actor's health statistic.
 --- @field hello number The actor's hello AI value.
 --- @field holdBreathTime number No description yet available.
 --- @field hostileActors tes3iterator A collection of other tes3mobileActors that this actor considers hostile.
 --- @field idleAnim boolean Friendly access to the actor's flag that controls if the actor is using their idle animation.
 --- @field inCombat boolean Friendly access to the actor's flag that controls if the actor is in combat.
---- @field intelligence tes3statistic Direct access to the actor's intelligence attribute statistic.
+--- @field intelligence tes3statistic|tes3statisticSkill Direct access to the actor's intelligence attribute statistic.
 --- @field invisibility number Direct access to the actor's invisibility effect attribute.
 --- @field isCrittable boolean Friendly access to the actor's flag that controls if the actor can be critically hit.
 --- @field isDead boolean True if the actor is dead.
@@ -67,15 +67,15 @@
 --- @field jump number Direct access to the actor's jump effect attribute.
 --- @field lastGroundZ number No description yet available.
 --- @field levitate number Direct access to the actor's levitate effect attribute.
---- @field luck tes3statistic Direct access to the actor's luck attribute statistic.
---- @field magicka tes3statistic Access to the actor's magicka statistic.
---- @field magickaMultiplier tes3statistic Access to the actor's magicka multiplier statistic.
+--- @field luck tes3statistic|tes3statisticSkill Direct access to the actor's luck attribute statistic.
+--- @field magicka tes3statistic|tes3statisticSkill Access to the actor's magicka statistic.
+--- @field magickaMultiplier tes3statistic|tes3statisticSkill Access to the actor's magicka multiplier statistic.
 --- @field mobToMobCollision boolean Allows modifying if this actor will collide with other actors. When true (default), the actor cannot move through other actors. When false, the actor is allowed to move through other actors, and other actors can move through it.
 --- 
 --- May be useful when free movement is required in crowded situations, or to temporarily let the player move past an actor.
 --- @field nextActionWeight number No description yet available.
 --- @field paralyze number Direct access to the actor's paralyze effect attribute.
---- @field personality tes3statistic Direct access to the actor's personality attribute statistic.
+--- @field personality tes3statistic|tes3statisticSkill Direct access to the actor's personality attribute statistic.
 --- @field readiedAmmo tes3equipmentStack The currently equipped ammo.
 --- @field readiedAmmoCount number The number of ammo equipped for the readied ammo.
 --- @field readiedShield tes3equipmentStack The currently equipped shield.
@@ -96,9 +96,9 @@
 --- @field shield number Direct access to the actor's shield effect attribute.
 --- @field silence number Direct access to the actor's silence effect attribute.
 --- @field sound number Direct access to the actor's sound effect attribute.
---- @field speed tes3statistic Direct access to the actor's speed attribute statistic.
+--- @field speed tes3statistic|tes3statisticSkill Direct access to the actor's speed attribute statistic.
 --- @field spellReadied boolean Friendly access to the actor's flag that controls if the actor has a spell readied.
---- @field strength tes3statistic Direct access to the actor's strength attribute statistic.
+--- @field strength tes3statistic|tes3statisticSkill Direct access to the actor's strength attribute statistic.
 --- @field swiftSwim number Direct access to the actor's swift swim effect attribute.
 --- @field talkedTo boolean Direct access to the actor's flag that shows it was recently talked to.
 --- @field torchSlot tes3equipmentStack The currently equipped light.
@@ -108,7 +108,7 @@
 --- @field weaponDrawn boolean Friendly access to the actor's flag that shows if the weapon model is visible. When readying a weapon, there is a short period of time at the start of the animation, where the weapon is not visible yet. This flag will only be set after this initial stage is done. This flag is still set with hand-to-hand even though it doesn't use a model. Setting this to false while a weapon is drawn will normally cause the actor to play its weapon draw animation again.
 --- @field werewolf boolean Friendly access to the actor's flag that controls if the actor in werewolf form.
 --- @field width number No description yet available.
---- @field willpower tes3statistic Direct access to the actor's willpower attribute statistic.
+--- @field willpower tes3statistic|tes3statisticSkill Direct access to the actor's willpower attribute statistic.
 tes3mobileActor = {}
 
 --- Damages the actor, with options to control mitigation and difficulty scaling. Invokes the 'damage' and 'damaged' events, with 'script' source. Returns the actual damage done after armor mitigation and resistance, but before difficulty scaling.
@@ -260,7 +260,7 @@ function tes3mobileActor:startDialogue() end
 function tes3mobileActor:stopCombat(force) end
 
 --- Updates statistics derived from attributes, which are magicka, fatigue, and encumbrance. Will also update the UI if used on the player. Normally handled automatically when you use tes3.modStatistic.
---- @param attribute tes3statistic Limits the update to statistics derived from this attribute.  e.g. ``mobile:updateDerivedStatistics(mobile.strength)``. If not present, all derived statistics will be updated.
+--- @param attribute tes3statistic|tes3statisticSkill Limits the update to statistics derived from this attribute.  e.g. ``mobile:updateDerivedStatistics(mobile.strength)``. If not present, all derived statistics will be updated.
 function tes3mobileActor:updateDerivedStatistics(attribute) end
 
 --- Updates the actor's visual opacity. Used after modifying applied chameleon or invisiblity effects.

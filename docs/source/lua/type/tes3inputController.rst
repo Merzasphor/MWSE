@@ -21,7 +21,7 @@ Properties
 `previousKeyboardState`_ (`table`_)
     Read-only. The array-style access to the previous frame's raw key states.
 
-`previousMouseStatement`_ (`tes3directInputMouseState`_)
+`previousMouseState`_ (`tes3directInputMouseState`_)
     Read-only. The raw DirectInput mouse state for the previous state.
 
 .. toctree::
@@ -32,14 +32,14 @@ Properties
     tes3inputController/keyboardState
     tes3inputController/mouseState
     tes3inputController/previousKeyboardState
-    tes3inputController/previousMouseStatement
+    tes3inputController/previousMouseState
 
 .. _`creationFlags`: tes3inputController/creationFlags.html
 .. _`inputMaps`: tes3inputController/inputMaps.html
 .. _`keyboardState`: tes3inputController/keyboardState.html
 .. _`mouseState`: tes3inputController/mouseState.html
 .. _`previousKeyboardState`: tes3inputController/previousKeyboardState.html
-.. _`previousMouseStatement`: tes3inputController/previousMouseStatement.html
+.. _`previousMouseState`: tes3inputController/previousMouseState.html
 
 Methods
 ----------------------------------------------------------------------------------------------------

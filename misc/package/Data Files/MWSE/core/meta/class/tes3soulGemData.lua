@@ -2,6 +2,7 @@
 
 --- A structure that holds (sometimes redundant) information on a soul gem.
 --- @class tes3soulGemData
+--- @field capacity number The capacity of the soul gem.
 --- @field id string The unique object ID.
 --- @field item tes3misc A reference back to the misc item that the soul gem represents.
 --- @field mesh string The path to the object's mesh.

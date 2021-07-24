@@ -1,6 +1,6 @@
 boltSoundEffects
 ====================================================================================================
 
-`string`_. The sound path to the sound effect to use for target projectiles.
+`string`_. The path to the sound effect to play for target projectiles.
 
 .. _`string`: ../../../lua/type/string.html

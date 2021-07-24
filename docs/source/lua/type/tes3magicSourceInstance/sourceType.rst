@@ -1,6 +1,6 @@
 sourceType
 ====================================================================================================
 
-`number`_. Shows if the source is a spell, enchantment, or alchemy.
+`number`_. The type of this magic source. Maps to tes3.magicSourceType.* constants.
 
 .. _`number`: ../../../lua/type/number.html

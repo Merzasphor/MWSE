@@ -6,6 +6,9 @@ A simple trio of floating-point numbers.
 Properties
 ----------------------------------------------------------------------------------------------------
 
+`angle`_ (`number`_)
+    The angle between the vector and the water plane.
+
 `b`_ (`number`_)
     The third value in the vector. An alias for z.
 
@@ -27,6 +30,7 @@ Properties
 .. toctree::
     :hidden:
 
+    tes3vector3/angle
     tes3vector3/b
     tes3vector3/g
     tes3vector3/r
@@ -34,6 +38,7 @@ Properties
     tes3vector3/y
     tes3vector3/z
 
+.. _`angle`: tes3vector3/angle.html
 .. _`b`: tes3vector3/b.html
 .. _`g`: tes3vector3/g.html
 .. _`r`: tes3vector3/r.html
@@ -80,6 +85,9 @@ Methods
 `outerProduct`_ (`tes3matrix33`_)
     Calculates the outer product with another vector.
 
+`toColor`_ (`niColor`_)
+    Converts the vector to niColor.
+
 .. toctree::
     :hidden:
 
@@ -95,6 +103,7 @@ Methods
     tes3vector3/normalize
     tes3vector3/normalized
     tes3vector3/outerProduct
+    tes3vector3/toColor
 
 .. _`copy`: tes3vector3/copy.html
 .. _`cross`: tes3vector3/cross.html
@@ -108,8 +117,10 @@ Methods
 .. _`normalize`: tes3vector3/normalize.html
 .. _`normalized`: tes3vector3/normalized.html
 .. _`outerProduct`: tes3vector3/outerProduct.html
+.. _`toColor`: tes3vector3/toColor.html
 
 .. _`bool`: ../../lua/type/boolean.html
+.. _`niColor`: ../../lua/type/niColor.html
 .. _`number`: ../../lua/type/number.html
 .. _`tes3matrix33`: ../../lua/type/tes3matrix33.html
 .. _`tes3vector3`: ../../lua/type/tes3vector3.html

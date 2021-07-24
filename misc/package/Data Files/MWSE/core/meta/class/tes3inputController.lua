@@ -7,7 +7,7 @@
 --- @field keyboardState table The array-style access to raw key states.
 --- @field mouseState tes3directInputMouseState The raw DirectInput mouse state.
 --- @field previousKeyboardState table The array-style access to the previous frame's raw key states.
---- @field previousMouseStatement tes3directInputMouseState The raw DirectInput mouse state for the previous state.
+--- @field previousMouseState tes3directInputMouseState The raw DirectInput mouse state for the previous state.
 tes3inputController = {}
 
 --- Returns true if either alt modifier key is pressed.

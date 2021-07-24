@@ -51,14 +51,20 @@ Properties
 `projectile`_ (`tes3mobileProjectile`_)
     Read-only. No description available.
 
+`serialNumber`_ (`number`_)
+    Read-only. Unique indentifier for just this magic source.
+
 `source`_ (`tes3alchemy`_, `tes3enchantment`_, `tes3spell`_)
     Read-only. No description available.
+
+`sourceEffects`_ (`table`_)
+    Read-only. An array-style table holding spell effects this magic source has.
 
 `sourceMod`_ (`string`_)
     Read-only. The filename of the mod that owns this object.
 
 `sourceType`_ (`number`_)
-    Read-only. Shows if the source is a spell, enchantment, or alchemy.
+    Read-only. The type of this magic source. Maps to tes3.magicSourceType.* constants.
 
 `sourceless`_ (`boolean`_)
     The soruceless flag of the object.
@@ -93,7 +99,9 @@ Properties
     tes3magicSourceInstance/objectType
     tes3magicSourceInstance/persistent
     tes3magicSourceInstance/projectile
+    tes3magicSourceInstance/serialNumber
     tes3magicSourceInstance/source
+    tes3magicSourceInstance/sourceEffects
     tes3magicSourceInstance/sourceMod
     tes3magicSourceInstance/sourceType
     tes3magicSourceInstance/sourceless
@@ -117,7 +125,9 @@ Properties
 .. _`objectType`: tes3magicSourceInstance/objectType.html
 .. _`persistent`: tes3magicSourceInstance/persistent.html
 .. _`projectile`: tes3magicSourceInstance/projectile.html
+.. _`serialNumber`: tes3magicSourceInstance/serialNumber.html
 .. _`source`: tes3magicSourceInstance/source.html
+.. _`sourceEffects`: tes3magicSourceInstance/sourceEffects.html
 .. _`sourceMod`: tes3magicSourceInstance/sourceMod.html
 .. _`sourceType`: tes3magicSourceInstance/sourceType.html
 .. _`sourceless`: tes3magicSourceInstance/sourceless.html
@@ -138,20 +148,26 @@ Methods
 `getMagnitudeForIndex`_ (`number`_)
     Gets the magnitude from the casting source for a given effect index.
 
+`playVisualEffect`_
+    This function plays an effect from tes3magicSourceInstance of a given index.
+
 .. toctree::
     :hidden:
 
     tes3magicSourceInstance/__tojson
     tes3magicSourceInstance/getEffectInstance
     tes3magicSourceInstance/getMagnitudeForIndex
+    tes3magicSourceInstance/playVisualEffect
 
 .. _`__tojson`: tes3magicSourceInstance/__tojson.html
 .. _`getEffectInstance`: tes3magicSourceInstance/getEffectInstance.html
 .. _`getMagnitudeForIndex`: tes3magicSourceInstance/getMagnitudeForIndex.html
+.. _`playVisualEffect`: tes3magicSourceInstance/playVisualEffect.html
 
 .. _`boolean`: ../../lua/type/boolean.html
 .. _`number`: ../../lua/type/number.html
 .. _`string`: ../../lua/type/string.html
+.. _`table`: ../../lua/type/table.html
 .. _`tes3alchemy`: ../../lua/type/tes3alchemy.html
 .. _`tes3enchantment`: ../../lua/type/tes3enchantment.html
 .. _`tes3item`: ../../lua/type/tes3item.html

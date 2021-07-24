@@ -33,6 +33,9 @@ Properties
 `gameHour`_ (`number`_)
     Read-only. The current game hour, from a save game.
 
+`highestFormID`_ (`number`_)
+    Read-only. No description available.
+
 `masters`_ (`table`_)
     Read-only. An array-style table of the tes3gameFiles that this is dependent upon.
 
@@ -66,6 +69,7 @@ Properties
     tes3gameFile/fileSize
     tes3gameFile/filename
     tes3gameFile/gameHour
+    tes3gameFile/highestFormID
     tes3gameFile/masters
     tes3gameFile/maxHealth
     tes3gameFile/modifiedTime
@@ -83,6 +87,7 @@ Properties
 .. _`fileSize`: tes3gameFile/fileSize.html
 .. _`filename`: tes3gameFile/filename.html
 .. _`gameHour`: tes3gameFile/gameHour.html
+.. _`highestFormID`: tes3gameFile/highestFormID.html
 .. _`masters`: tes3gameFile/masters.html
 .. _`maxHealth`: tes3gameFile/maxHealth.html
 .. _`modifiedTime`: tes3gameFile/modifiedTime.html
