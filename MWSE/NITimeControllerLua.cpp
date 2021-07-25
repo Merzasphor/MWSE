@@ -37,6 +37,7 @@ namespace mwse {
 			// Basic function binding.
 			usertypeDefinition["setTarget"] = &NI::TimeController::setTarget;
 			usertypeDefinition["start"] = &NI::TimeController::start;
+			usertypeDefinition["stop"] = &NI::TimeController::stop;
 		}
 	}
 }

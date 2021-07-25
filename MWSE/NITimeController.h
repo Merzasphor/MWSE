@@ -72,3 +72,5 @@ namespace NI {
 	};
 	static_assert(sizeof(TimeController) == 0x34, "NI::TimeController failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_NI(NI::TimeController)

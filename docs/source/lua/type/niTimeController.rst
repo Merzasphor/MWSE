@@ -73,16 +73,26 @@ Methods
 `isOfType`_ (`boolean`_)
     Determines if the object is of a given type. Types can be found in the tes3.niType table.
 
+`start`_
+    Starts the controller at the specified time.
+
+`stop`_
+    Stops the controller.
+
 .. toctree::
     :hidden:
 
     niTimeController/clone
     niTimeController/isInstanceOfType
     niTimeController/isOfType
+    niTimeController/start
+    niTimeController/stop
 
 .. _`clone`: niTimeController/clone.html
 .. _`isInstanceOfType`: niTimeController/isInstanceOfType.html
 .. _`isOfType`: niTimeController/isOfType.html
+.. _`start`: niTimeController/start.html
+.. _`stop`: niTimeController/stop.html
 
 .. _`boolean`: ../../lua/type/boolean.html
 .. _`niObject`: ../../lua/type/niObject.html

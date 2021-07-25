@@ -22,6 +22,7 @@
 #include "NISourceTexture.h"
 #include "NISpotLight.h"
 #include "NISwitchNode.h"
+#include "NITimeController.h"
 #include "NITriShape.h"
 
 #include "LuaObjectInvalidatedEvent.h"
@@ -180,6 +181,9 @@ namespace NI {
 				break;
 			case RTTIStaticPtr::NiTextKeyExtraData:
 				ref = sol::make_object_userdata(L, Pointer(static_cast<TextKeyExtraData*>(this)));
+				break;
+			case RTTIStaticPtr::NiTimeController:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<TimeController*>(this)));
 				break;
 			case RTTIStaticPtr::NiTriShape:
 				ref = sol::make_object_userdata(L, Pointer(static_cast<TriShape*>(this)));
