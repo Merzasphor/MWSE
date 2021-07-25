@@ -12,3 +12,10 @@
 --- @field target niAlphaProperty|niAmbientLight|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niFogProperty|niGeometry|niLight|niMaterialProperty|niNode|niPointLight|niSourceTexture|niSpotLight|niStencilProperty|niSwitchNode|niTexturingProperty|niTriBasedGeometry|niTriShape|niVertexColorProperty The scene graph object that this animation controller is to animate.
 niTimeController = {}
 
+--- Starts the controller at the specified time.
+--- @param time number No description yet available.
+function niTimeController:start(time) end
+
+--- Stops the controller.
+function niTimeController:stop() end
+
