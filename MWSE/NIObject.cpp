@@ -15,6 +15,8 @@
 #include "NIExtraData.h"
 #include "NINode.h"
 #include "NIObjectNET.h"
+#include "NIParticleModifier.h"
+#include "NIParticleSystemController.h"
 #include "NIPixelData.h"
 #include "NIPointLight.h"
 #include "NIProperty.h"
@@ -131,6 +133,9 @@ namespace NI {
 			case RTTIStaticPtr::NiFogProperty:
 				ref = sol::make_object_userdata(L, Pointer(static_cast<FogProperty*>(this)));
 				break;
+			case RTTIStaticPtr::NiGravity:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<Gravity*>(this)));
+				break;
 			case RTTIStaticPtr::NiMaterialProperty:
 				ref = sol::make_object_userdata(L, Pointer(static_cast<MaterialProperty*>(this)));
 				break;
@@ -142,6 +147,30 @@ namespace NI {
 				break;
 			case RTTIStaticPtr::NiObjectNET:
 				ref = sol::make_object_userdata(L, Pointer(static_cast<ObjectNET*>(this)));
+				break;
+			case RTTIStaticPtr::NiParticleBomb:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<ParticleBomb*>(this)));
+				break;
+			case RTTIStaticPtr::NiParticleCollider:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<ParticleCollider*>(this)));
+				break;
+			case RTTIStaticPtr::NiParticleColorModifier:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<ParticleColorModifier*>(this)));
+				break;
+			case RTTIStaticPtr::NiParticleGrowFade:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<ParticleGrowFade*>(this)));
+				break;
+			case RTTIStaticPtr::NiParticleModifier:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<ParticleModifier*>(this)));
+				break;
+			case RTTIStaticPtr::NiParticleRotation:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<ParticleRotation*>(this)));
+				break;
+			case RTTIStaticPtr::NiParticleSystemController:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<ParticleSystemController*>(this)));
+				break;
+			case RTTIStaticPtr::NiPlanarCollider:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<PlanarCollider*>(this)));
 				break;
 			case RTTIStaticPtr::NiPixelData:
 				ref = sol::make_object_userdata(L, Pointer(static_cast<PixelData*>(this)));
@@ -160,6 +189,9 @@ namespace NI {
 				break;
 			case RTTIStaticPtr::NiSourceTexture:
 				ref = sol::make_object_userdata(L, Pointer(static_cast<SourceTexture*>(this)));
+				break;
+			case RTTIStaticPtr::NiSphericalCollider:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<SphericalCollider*>(this)));
 				break;
 			case RTTIStaticPtr::NiSpotLight:
 				ref = sol::make_object_userdata(L, Pointer(static_cast<SpotLight*>(this)));

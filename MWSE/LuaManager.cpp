@@ -153,6 +153,7 @@
 #include "NINodeLua.h"
 #include "NIObjectLua.h"
 #include "NILightLua.h"
+#include "NIParticlesLua.h"
 #include "NIPickLua.h"
 #include "NIPixelDataLua.h"
 #include "NIPropertyLua.h"
@@ -484,6 +485,7 @@ namespace mwse {
 			bindNINode();
 			bindNIObject();
 			bindNILight();
+			bindNIParticles();
 			bindNIPick();
 			bindNIPixelData();
 			bindNIProperties();
