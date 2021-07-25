@@ -1524,6 +1524,9 @@
     <ClInclude Include="LuaEnchantChargeUseEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
+    <ClInclude Include="LuaPotionBrewSkillCheckEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -3352,6 +3355,9 @@
     </ClCompile>
     <ClCompile Include="LuaEnchantChargeUseEvent.cpp">
       <Filter>Source Files\Lua\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaPotionBrewSkillCheckEvent.cpp">
+      <Filter>Source Files\Lua</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -216,6 +216,7 @@
 #include "LuaPostInfoResponseEvent.h"
 #include "LuaPotionBrewedEvent.h"
 #include "LuaPotionBrewFailedEvent.h"
+#include "LuaPotionBrewSkillCheckEvent.h"
 #include "LuaPowerRechargedEvent.h"
 #include "LuaPreLevelUpEvent.h"
 #include "LuaPreventRestEvent.h"
@@ -1189,6 +1190,30 @@ namespace mwse {
 			if (event::LevelUpEvent::getEventEnabled()) {
 				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::LevelUpEvent());
 			}
+		}
+
+		//
+		// Alchemy brewing potion strength and skill check event.
+		// 
+
+		const auto TES3_alchemySkillRoll = reinterpret_cast<float(__cdecl*)()>(0x59D610);
+		float __cdecl OnAlchemySkillRoll() {
+			float potionStrength = TES3_alchemySkillRoll();
+
+			if (event::PotionBrewSkillCheckEvent::getEventEnabled()) {
+				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+				sol::table eventData = stateHandle.triggerEvent(new event::PotionBrewSkillCheckEvent(potionStrength));
+
+				if (eventData.valid()) {
+					if (eventData.get_or("success", true)) {
+						potionStrength = eventData.get_or("potionStrength", potionStrength);
+					}
+					else {
+						potionStrength = -1.0f;
+					}
+				}
+			}
+			return potionStrength;
 		}
 
 		//
@@ -3527,6 +3552,9 @@ namespace mwse {
 			genCallEnforced(0x6004CD, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
 			genCallEnforced(0x60E81C, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
 			genCallEnforced(0x60ECB2, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
+
+			// Event: Potion strength and skill check.
+			genCallEnforced(0x59CB62, 0x59D610, reinterpret_cast<DWORD>(OnAlchemySkillRoll));
 
 			// Event: Brew potion (failed).
 			genCallEnforced(0x59C010, 0x59C030, reinterpret_cast<DWORD>(OnBrewPotionAttempt));
