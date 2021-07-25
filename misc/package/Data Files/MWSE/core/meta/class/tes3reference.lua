@@ -48,6 +48,9 @@ function tes3reference:clearActionFlag(flagIndex) end
 --- @return boolean result No description yet available.
 function tes3reference:clone() end
 
+--- Disables the reference, removes all its attachments, resets its scale, and sets the reference to be deleted.
+function tes3reference:delete() end
+
 --- Deletes the dynamic light attachment, if it exists. This will automatically detach the dynamic light from affected nodes.
 --- @param removeLightFromParent boolean If true, the dynamic light is removed from its parent node as well.
 function tes3reference:deleteDynamicLightAttachment(removeLightFromParent) end

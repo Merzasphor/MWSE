@@ -263,6 +263,9 @@ Methods
 `clone`_ (`boolean`_)
     Clones a reference for a base actor into a reference to an instance of that actor. For example, this will force a container to resolve its leveled items and have its own unique inventory.
 
+`delete`_
+    Disables the reference, removes all its attachments, resets its scale, and sets the reference to be deleted.
+
 `deleteDynamicLightAttachment`_
     Deletes the dynamic light attachment, if it exists. This will automatically detach the dynamic light from affected nodes.
 
@@ -319,6 +322,7 @@ Methods
     tes3reference/activate
     tes3reference/clearActionFlag
     tes3reference/clone
+    tes3reference/delete
     tes3reference/deleteDynamicLightAttachment
     tes3reference/detachDynamicLightFromAffectedNodes
     tes3reference/disable
@@ -339,6 +343,7 @@ Methods
 .. _`activate`: tes3reference/activate.html
 .. _`clearActionFlag`: tes3reference/clearActionFlag.html
 .. _`clone`: tes3reference/clone.html
+.. _`delete`: tes3reference/delete.html
 .. _`deleteDynamicLightAttachment`: tes3reference/deleteDynamicLightAttachment.html
 .. _`detachDynamicLightFromAffectedNodes`: tes3reference/detachDynamicLightFromAffectedNodes.html
 .. _`disable`: tes3reference/disable.html
