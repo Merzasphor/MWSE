@@ -76,12 +76,12 @@ namespace NI {
 	static_assert(sizeof(ParticleCollider) == 0x28, "NI::ParticleCollider failed size validation");
 
 	struct PlanarCollider : ParticleCollider {
-		float width; // 0x28
-		float length; // 0x2C
+		float height; // 0x28
+		float width; // 0x2C
 		TES3::Vector4 planeEquation; // 0x30
-		TES3::Vector3 center; // 0x40
-		TES3::Vector3 lengthAxis; // 0x4C
-		TES3::Vector3 widthAxis; // 0x58
+		TES3::Vector3 position; // 0x40
+		TES3::Vector3 xVec; // 0x4C
+		TES3::Vector3 yVec; // 0x58
 	};
 	static_assert(sizeof(PlanarCollider) == 0x64, "NI::PlanarCollider failed size validation");
 

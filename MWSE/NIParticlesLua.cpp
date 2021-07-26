@@ -179,12 +179,12 @@ namespace mwse {
 				usertypeDefinition[sol::base_classes] = sol::bases<NI::ParticleCollider, NI::ParticleModifier, NI::Object>();
 
 				// Basic property binding.
-				usertypeDefinition["center"] = &NI::PlanarCollider::center;
-				usertypeDefinition["length"] = &NI::PlanarCollider::length;
-				usertypeDefinition["lengthAxis"] = &NI::PlanarCollider::lengthAxis;
-				usertypeDefinition["planeEquation"] = &NI::PlanarCollider::planeEquation;
+				usertypeDefinition["height"] = &NI::PlanarCollider::height;
 				usertypeDefinition["width"] = &NI::PlanarCollider::width;
-				usertypeDefinition["widthAxis"] = &NI::PlanarCollider::widthAxis;
+				usertypeDefinition["planeEquation"] = &NI::PlanarCollider::planeEquation;
+				usertypeDefinition["position"] = &NI::PlanarCollider::position;
+				usertypeDefinition["xVec"] = &NI::PlanarCollider::xVec;
+				usertypeDefinition["yVec"] = &NI::PlanarCollider::yVec;
 			}
 
 			// Binding for NI::SphericalCollider.
