@@ -62,8 +62,8 @@ This example allows you to rename the object you are targetting. When the '/' ke
         button_block.autoHeight = true
         button_block.childAlignX = 1.0  -- right content alignment
 
-        local button_cancel = button_block:createButton{ id = this.id_cancel, text = tes3.getGMST("sCancel").value }
-        local button_ok = button_block:createButton{ id = this.id_ok, text = tes3.getGMST("sOK").value }
+        local button_cancel = button_block:createButton{ id = this.id_cancel, text = tes3.findGMST("sCancel").value }
+        local button_ok = button_block:createButton{ id = this.id_ok, text = tes3.findGMST("sOK").value }
 
         -- Events
         button_cancel:register("mouseClick", this.onCancel)
