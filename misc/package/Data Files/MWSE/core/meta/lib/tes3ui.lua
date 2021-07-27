@@ -90,6 +90,11 @@ function tes3ui.getPalette(name) end
 --- @return tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer result No description yet available.
 function tes3ui.getServiceActor() end
 
+--- Returns both the viewport width and the viewport height.
+--- @return number width The width of the viewport.
+--- @return number height The height of the viewport.
+function tes3ui.getViewportSize() end
+
 --- Requests menu mode be deactivated on a menu with a given id.
 --- @param id number No description yet available.
 --- @return boolean result No description yet available.

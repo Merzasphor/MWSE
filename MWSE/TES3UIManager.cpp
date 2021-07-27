@@ -222,6 +222,11 @@ namespace TES3 {
 			TES3_ui_updateDialogDisposition();
 		}
 
+		std::tuple<unsigned int, unsigned int> getViewportSize_lua() {
+			auto& viewportCameraData = TES3::WorldController::get()->menuCamera.cameraData;
+			return { viewportCameraData.viewportWidth, viewportCameraData.viewportHeight };
+		}
+
 		const char* getInventorySelectType() {
 			const char* callbackType = "unknown";
 			auto callbackAddress = *reinterpret_cast<DWORD*>(0x7D3CA0);
