@@ -35,6 +35,7 @@ namespace TES3 {
 		void updateDialogDisposition();
 
 		std::tuple<unsigned int, unsigned int> getViewportSize_lua();
+		float getViewportScale();
 
 		const char* getInventorySelectType();
 		void stealHelpMenu();

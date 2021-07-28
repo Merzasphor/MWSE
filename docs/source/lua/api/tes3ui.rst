@@ -22,6 +22,7 @@ Functions
     tes3ui/getMenuOnTop
     tes3ui/getPalette
     tes3ui/getServiceActor
+    tes3ui/getViewportScale
     tes3ui/getViewportSize
     tes3ui/leaveMenuMode
     tes3ui/logToConsole

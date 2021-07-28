@@ -10,6 +10,7 @@
 #include "TES3UIManager.h"
 #include "TES3UIMenuController.h"
 
+#include "TES3Game.h"
 #include "TES3GameSetting.h"
 #include "TES3ItemData.h"
 #include "TES3NPC.h"
@@ -225,6 +226,10 @@ namespace TES3 {
 		std::tuple<unsigned int, unsigned int> getViewportSize_lua() {
 			auto& viewportCameraData = TES3::WorldController::get()->menuCamera.cameraData;
 			return { viewportCameraData.viewportWidth, viewportCameraData.viewportHeight };
+		}
+
+		float getViewportScale() {
+			return float(TES3::Game::get()->windowWidth) / float(TES3::WorldController::get()->worldCamera.cameraData.viewportWidth);
 		}
 
 		const char* getInventorySelectType() {
