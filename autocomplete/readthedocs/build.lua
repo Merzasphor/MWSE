@@ -252,7 +252,8 @@ local function buildEvent(folder, key)
 	-- Write out event data.
 	if (package.eventData) then
 		file:write("Event Data\n" .. rstHeaders[2] .. "\n\n")
-		for k, v in pairs(package.eventData) do
+		for _, k in ipairs(getSortedKeys(package.eventData)) do
+			local v = package.eventData[k]
 			file:write(k .. "\n" .. rstHeaders[3] .. "\n\n")
 
 			if (typeLinks[v.type]) then
@@ -272,7 +273,8 @@ local function buildEvent(folder, key)
 	-- Write out examples.
 	if (package.examples) then
 		file:write("Examples\n" .. rstHeaders[2] .. "\n\n")
-		for k, v in pairs(package.examples) do
+		for _, k in ipairs(getSortedKeys(package.examples)) do
+			local v = package.examples[k]
 			file:write((v.title or k) .. "\n" .. rstHeaders[3] .. "\n\n")
 
 			if (v.description) then
@@ -384,7 +386,7 @@ local function buildAPIEntryForFunction(package)
 		rstFile:close()
 	elseif (returns) then
 		file:write("Returns\n" .. rstHeaders[2] .. "\n\n")
-		for _, r in pairs(returns) do
+		for _, r in ipairs(returns) do
 			if (r.description) then
 				file:write(breakoutMultipleTypes(r.type) .. ". " .. r.description .. "\n\n")
 			else
@@ -399,7 +401,9 @@ local function buildAPIEntryForFunction(package)
 		if (type(package.arguments) == "table" and #package.arguments == 1 and package.arguments[1].tableParams) then
 			-- Add it to the description.
 			file:write("Accepts parameters through a table with the given keys:\n\n")
-			for _, param in pairs(package.arguments[1].tableParams) do
+			local tableParams = package.arguments[1].tableParams
+			for _, k in ipairs(getSortedKeys(tableParams)) do
+				local param = tableParams[k]
 				file:write((param.name or "...") .. " (" .. breakoutMultipleTypes(param.type) .. ")\n")
 				file:write("    ")
 				if (param.default ~= nil) then
@@ -437,7 +441,8 @@ local function buildAPIEntryForFunction(package)
 	-- Write out examples.
 	if (package.examples) then
 		file:write("Examples\n" .. rstHeaders[2] .. "\n\n")
-		for k, v in pairs(package.examples) do
+		for _, k in ipairs(getSortedKeys(package.examples)) do
+			local v = package.examples[k]
 			file:write((v.title or k) .. "\n" .. rstHeaders[3] .. "\n\n")
 
 			if (v.description) then
@@ -517,7 +522,8 @@ local function buildAPIEntryForValue(package)
 	-- Write out examples.
 	if (package.examples) then
 		file:write("Examples\n" .. rstHeaders[2] .. "\n\n")
-		for k, v in pairs(package.examples) do
+		for _, k in ipairs(getSortedKeys(package.examples)) do
+			local v = package.examples[k]
 			file:write((v.title or k) .. "\n" .. rstHeaders[3] .. "\n\n")
 
 			if (v.description) then
@@ -685,7 +691,8 @@ local function buildNamedTypeEntryForValue(package)
 	-- Write out examples.
 	if (package.examples) then
 		file:write("Examples\n" .. rstHeaders[2] .. "\n\n")
-		for k, v in pairs(package.examples) do
+		for _, k in ipairs(getSortedKeys(package.examples)) do
+			local v = package.examples[k]
 			file:write((v.title or k) .. "\n" .. rstHeaders[3] .. "\n\n")
 
 			if (v.description) then
@@ -774,7 +781,7 @@ local function buildNamedTypeEntryForFunction(package)
 		rstFile:close()
 	elseif (returns) then
 		file:write("Returns\n" .. rstHeaders[2] .. "\n\n")
-		for _, r in pairs(returns) do
+		for _, r in ipairs(returns) do
 			if (r.description) then
 				file:write(breakoutMultipleTypes(r.type) .. ". " .. r.description .. "\n\n")
 			else
@@ -789,7 +796,9 @@ local function buildNamedTypeEntryForFunction(package)
 		if (type(package.arguments) == "table" and #package.arguments == 1 and package.arguments[1].tableParams) then
 			-- Add it to the description.
 			file:write("Accepts parameters through a table with the given keys:\n\n")
-			for _, param in pairs(package.arguments[1].tableParams) do
+			local tableParams = package.arguments[1].tableParams
+			for _, k in ipairs(getSortedKeys(tableParams)) do
+				local param = tableParams[k]
 				file:write((param.name or "...") .. " (" .. breakoutMultipleTypes(param.type) .. ")\n")
 				file:write("    ")
 				if (param.default ~= nil) then
@@ -827,7 +836,8 @@ local function buildNamedTypeEntryForFunction(package)
 	-- Write out examples.
 	if (package.examples) then
 		file:write("Examples\n" .. rstHeaders[2] .. "\n\n")
-		for k, v in pairs(package.examples) do
+		for _, k in ipairs(getSortedKeys(package.examples)) do
+			local v = package.examples[k]
 			file:write((v.title or k) .. "\n" .. rstHeaders[3] .. "\n\n")
 
 			if (v.description) then
@@ -1036,7 +1046,8 @@ local function buildNamedType(folder, key)
 	local packagePath = folder .. "\\" .. key .. "\\"
 	if (package.examples) then
 		file:write("Examples\n" .. rstHeaders[2] .. "\n\n")
-		for k, v in pairs(package.examples) do
+		for _, k in ipairs(getSortedKeys(package.examples)) do
+			local v = package.examples[k]
 			file:write((v.title or k) .. "\n" .. rstHeaders[3] .. "\n\n")
 
 			if (v.description) then
