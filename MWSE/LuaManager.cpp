@@ -166,6 +166,7 @@
 
 #include "LuaDisableableEventManager.h"
 
+#include "LuaAbsorbMagicEvent.h"
 #include "LuaActivationTargetChangedEvent.h"
 #include "LuaAddTopicEvent.h"
 #include "LuaAttackEvent.h"
@@ -3530,6 +3531,14 @@ namespace mwse {
 
 			// Event: Spell Resist
 			genCallEnforced(0x518616, 0x517E40, reinterpret_cast<DWORD>(OnSpellResist));
+
+			// Event: Absorb magic
+			auto onAbsorbMagic = &TES3::MagicSourceInstance::onAbsorb;
+			genCallEnforced(0x51783E, 0x519900, *reinterpret_cast<DWORD*>(&onAbsorbMagic));
+			genCallEnforced(0x5178E9, 0x519900, *reinterpret_cast<DWORD*>(&onAbsorbMagic));
+			genCallEnforced(0x517A50, 0x519900, *reinterpret_cast<DWORD*>(&onAbsorbMagic));
+			genCallEnforced(0x517CA7, 0x519900, *reinterpret_cast<DWORD*>(&onAbsorbMagic));
+			genCallEnforced(0x517D90, 0x519900, *reinterpret_cast<DWORD*>(&onAbsorbMagic));
 
 			// Event: Player exercise skill.
 			genCallEnforced(0x4EB387, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
