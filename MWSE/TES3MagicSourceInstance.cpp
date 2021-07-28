@@ -3,7 +3,7 @@
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
-#include "LuaAbsorbMagicEvent.h"
+#include "LuaAbsorbedMagicEvent.h"
 
 #include "TES3Enchantment.h"
 #include "TES3MagicEffectInstance.h"
@@ -73,7 +73,7 @@ namespace TES3 {
 	}
 
 	const auto TES3_MagicSourceInstance_onAbsorb = reinterpret_cast<void(__thiscall*)(MagicSourceInstance*, MobileActor*)>(0x519900);
-	void MagicSourceInstance::onAbsorb(MobileActor *actor) {
+	void MagicSourceInstance::onAbsorbedMagic(MobileActor *actor) {
 		float absorb = 0;
 		if (sourceCombo.sourceType == MagicSourceType::Spell) {
 			absorb = sourceCombo.source.asSpell->magickaCost;
@@ -83,16 +83,13 @@ namespace TES3 {
 		}
 
 		// Fire off our event.
-		if (mwse::lua::event::AbsorbMagicEvent::getEventEnabled()) {
+		if (mwse::lua::event::AbsorbedMagicEvent::getEventEnabled()) {
 			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
-			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::AbsorbMagicEvent(actor, this, absorb));
+			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::AbsorbedMagicEvent(actor, this, absorb));
 			if (eventData.valid()) {
 				sol::optional<float> newAbsorb = eventData["absorb"];
 				if (newAbsorb) {
 					absorb = newAbsorb.value();
-				}
-				if (eventData.get_or("block", false)) {
-					return;
 				}
 			}
 		}

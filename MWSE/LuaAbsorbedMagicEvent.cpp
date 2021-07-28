@@ -1,4 +1,4 @@
-#include "LuaAbsorbMagicEvent.h"
+#include "LuaAbsorbedMagicEvent.h"
 
 #include "LuaManager.h"
 #include "LuaUtil.h"
@@ -10,8 +10,8 @@
 namespace mwse {
 	namespace lua {
 		namespace event {
-			AbsorbMagicEvent::AbsorbMagicEvent(TES3::MobileActor* actor, TES3::MagicSourceInstance* instance, float absorb) :
-				ObjectFilteredEvent("absorbMagic", actor->reference),
+			AbsorbedMagicEvent::AbsorbedMagicEvent(TES3::MobileActor* actor, TES3::MagicSourceInstance* instance, float absorb) :
+				ObjectFilteredEvent("absorbedMagic", actor->reference),
 				m_MobileActor(actor),
 				m_MagicSourceInstance(instance),
 				m_Absorb(absorb)
@@ -19,7 +19,7 @@ namespace mwse {
 
 			}
 
-			sol::table AbsorbMagicEvent::createEventTable() {
+			sol::table AbsorbedMagicEvent::createEventTable() {
 				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 				sol::state& state = stateHandle.state;
 				sol::table eventData = state.create_table();
@@ -33,7 +33,7 @@ namespace mwse {
 				return eventData;
 			}
 
-			bool AbsorbMagicEvent::m_EventEnabled = false;
+			bool AbsorbedMagicEvent::m_EventEnabled = false;
 		}
 	}
 }

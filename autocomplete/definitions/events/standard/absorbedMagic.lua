@@ -1,17 +1,17 @@
 return {
-	description = [[This event is triggered just before magic absorption gives magicka to the target, and after the absorb chance test. It can control the amount of magicka restored. It can also be blocked, though the absorb visual effect will remain.
+	description = [[This event is triggered after magic absorption absorbs and cancels a magic effect, and just before magic absorption gives magicka to the target. It can control the amount of magicka restored.
 
 This event occurs once per effect restored, so a multi-effect spell may trigger this multiple times. The default amount restored is equal to the casting cost of the entire spell, which is the vanilla behaviour.]],
 	eventData = {
 		["target"] = {
 			type = "tes3reference",
 			readOnly = true,
-			description = "The actor absorbing the spell.",
+			description = "The actor that absorbed the spell.",
 		},
 		["mobile"] = {
 			type = "tes3mobileActor",
 			readOnly = true,
-			description = "The mobile actor absorbing the spell.",
+			description = "The mobile actor that absorbed the spell.",
 		},
 		["absorb"] = {
 			type = "number",

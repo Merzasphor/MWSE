@@ -6,9 +6,9 @@
 namespace mwse {
 	namespace lua {
 		namespace event {
-			class AbsorbMagicEvent : public ObjectFilteredEvent, public DisableableEvent<AbsorbMagicEvent> {
+			class AbsorbedMagicEvent : public ObjectFilteredEvent, public DisableableEvent<AbsorbedMagicEvent> {
 			public:
-				AbsorbMagicEvent(TES3::MobileActor * actor, TES3::MagicSourceInstance * instance, float absorb);
+				AbsorbedMagicEvent(TES3::MobileActor * actor, TES3::MagicSourceInstance * instance, float absorb);
 				sol::table createEventTable();
 
 			protected:

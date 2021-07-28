@@ -1533,7 +1533,7 @@
     <ClInclude Include="NIParticles.h">
       <Filter>Header Files\DataAdapters\NI</Filter>
     </ClInclude>
-    <ClInclude Include="LuaAbsorbMagicEvent.h">
+    <ClInclude Include="LuaAbsorbedMagicEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
   </ItemGroup>
@@ -3380,7 +3380,7 @@
     <ClCompile Include="NIParticles.cpp">
       <Filter>Source Files\DataAdapters\NI</Filter>
     </ClCompile>
-    <ClCompile Include="LuaAbsorbMagicEvent.cpp">
+    <ClCompile Include="LuaAbsorbedMagicEvent.cpp">
       <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
   </ItemGroup>

@@ -2,7 +2,7 @@
 
 #include "LuaManager.h"
 
-#include "LuaAbsorbMagicEvent.h"
+#include "LuaAbsorbedMagicEvent.h"
 #include "LuaActivateEvent.h"
 #include "LuaActivationTargetChangedEvent.h"
 #include "LuaAddSoundEvent.h"
@@ -143,7 +143,7 @@ namespace mwse {
 				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Give access to the enabled state.
-				usertypeDefinition["absorbMagic"] = sol::property(&AbsorbMagicEvent::getEventEnabled, &AbsorbMagicEvent::setEventEnabled);
+				usertypeDefinition["absorbedMagic"] = sol::property(&AbsorbedMagicEvent::getEventEnabled, &AbsorbedMagicEvent::setEventEnabled);
 				usertypeDefinition["activate"] = sol::property(&ActivateEvent::getEventEnabled, &ActivateEvent::setEventEnabled);
 				usertypeDefinition["activationTargetChanged"] = sol::property(&ActivationTargetChangedEvent::getEventEnabled, &ActivationTargetChangedEvent::setEventEnabled);
 				usertypeDefinition["addSound"] = sol::property(&AddSoundEvent::getEventEnabled, &AddSoundEvent::setEventEnabled);

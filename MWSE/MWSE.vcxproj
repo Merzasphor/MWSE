@@ -14,7 +14,7 @@
     <ClInclude Include="ArrayUtil.h" />
     <ClInclude Include="BitUtil.h" />
     <ClInclude Include="BSAnimationManager.h" />
-    <ClInclude Include="LuaAbsorbMagicEvent.h" />
+    <ClInclude Include="LuaAbsorbedMagicEvent.h" />
     <ClInclude Include="LuaAttackStartEvent.h" />
     <ClInclude Include="LuaDamagedHandToHandEvent.h" />
     <ClInclude Include="LuaDamageHandToHandEvent.h" />
@@ -468,7 +468,7 @@
     <ClCompile Include="CodePatchUtil.cpp" />
     <ClCompile Include="DynamicLuaObject.cpp" />
     <ClCompile Include="FileUtil.cpp" />
-    <ClCompile Include="LuaAbsorbMagicEvent.cpp" />
+    <ClCompile Include="LuaAbsorbedMagicEvent.cpp" />
     <ClCompile Include="LuaActivateEvent.cpp" />
     <ClCompile Include="LuaActivationTargetChangedEvent.cpp" />
     <ClCompile Include="LuaAddTopicEvent.cpp" />
