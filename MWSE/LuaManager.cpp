@@ -3076,7 +3076,6 @@ namespace mwse {
 			auto macp = TES3::WorldController::get()->getMobilePlayer();
 			charge = onEnchantItemChargeRequired(macp, lastExaminedEnchantment, charge, nullptr);
 
-			lastExaminedEnchantment = nullptr;
 			return int(charge);
 		}
 
