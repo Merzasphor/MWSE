@@ -344,7 +344,7 @@ namespace mwse {
 				log << "Object: " << self->baseObject->getObjectID() << std::endl;
 				prettyDump(static_cast<TES3::Actor*>(self->baseObject));
 
-				auto script = self->baseObject->getScript();
+				auto script = TES3::Script::currentlyExecutingScript;
 				if (script) {
 					log << "Script: " << script->getObjectID() << std::endl;
 					prettyDump(script);
