@@ -1,5 +1,6 @@
-stop
+lastScaledTime
 ====================================================================================================
 
-Stops the controller. If you only want to pause the controller, use the ``update`` property.
+`number`_. No description.
 
+.. _`number`: ../../../lua/type/number.html

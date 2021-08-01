@@ -30,9 +30,13 @@ namespace mwse {
 			usertypeDefinition["lowKeyFrame"] = &NI::TimeController::lowKeyFrame;
 			usertypeDefinition["highKeyFrame"] = &NI::TimeController::highKeyFrame;
 			usertypeDefinition["startTime"] = &NI::TimeController::startTime;
+			usertypeDefinition["lastScaledTime"] = &NI::TimeController::lastScaledTime;
 			usertypeDefinition["lastTime"] = &NI::TimeController::lastTime;
 			usertypeDefinition["target"] = sol::readonly_property(&NI::TimeController::target);
 			usertypeDefinition["nextController"] = &NI::TimeController::nextController;
+			usertypeDefinition["active"] = sol::property(&NI::TimeController::getActive, &NI::TimeController::setActive);
+			usertypeDefinition["animTimingType"] = sol::property(&NI::TimeController::getAnimTimingType, &NI::TimeController::setAnimTimingType);
+			usertypeDefinition["cycleType"] = sol::property(&NI::TimeController::getCycleType, &NI::TimeController::setCycleType);
 
 			// Basic function binding.
 			usertypeDefinition["setTarget"] = &NI::TimeController::setTarget;
