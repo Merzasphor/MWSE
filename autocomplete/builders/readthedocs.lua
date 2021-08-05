@@ -48,6 +48,8 @@ function file:uncachedwrite(str, ...)
 end
 
 file = nil
+tempFile:close()
+tempFile = nil
 
 
 --
