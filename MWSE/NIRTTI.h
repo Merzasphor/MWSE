@@ -19,6 +19,7 @@ namespace NI {
 		//
 
 		RTTI* ctor(const char* name, RTTI* parent = nullptr);
+		const char* toString() const;
 	};
 	static_assert(sizeof(RTTI) == 0x8, "NI::RTTI failed size validation");
 }

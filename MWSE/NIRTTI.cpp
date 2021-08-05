@@ -13,4 +13,8 @@ namespace NI {
 	RTTI* RTTI::ctor(const char* name, RTTI* parent) {
 		return NI_RTTI_ctor(this, name, parent);
 	}
+
+	const char* RTTI::toString() const {
+		return name;
+	}
 }
