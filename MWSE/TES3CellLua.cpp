@@ -140,6 +140,7 @@ namespace mwse {
 				usertypeDefinition["waterLevel"] = sol::property(&TES3::Cell::getWaterLevel, &TES3::Cell::setWaterLevel);
 
 				// Basic function binding.
+				usertypeDefinition["isPointInCell"] = &TES3::Cell::isPointInCell;
 				usertypeDefinition["iterateReferences"] = iterateReferences;
 			}
 		}

@@ -25,6 +25,12 @@
 --- @field waterLevel number The water level in the cell. Only available on interior cells.
 tes3cell = {}
 
+--- Determines if a given X/Y coordinate falls in the given cell. This will always be true for interior cells.
+--- @param x number The X position to test.
+--- @param y number The Y position to test.
+--- @return boolean inCell true, if the point is found in the cell.
+function tes3cell:isPointInCell(x, y) end
+
 --- Used in a for loop, iterates over objects in the cell.
 --- @param filter number The TES3 object type to filter results by.
 function tes3cell:iterateReferences(filter) end

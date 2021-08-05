@@ -138,6 +138,9 @@ Methods
 `__tojson <tes3baseObject/__tojson.html>`_ (`method`_)
     Serializes the object to json.
 
+`isPointInCell <tes3cell/isPointInCell.html>`_ (`method`_)
+    Determines if a given X/Y coordinate falls in the given cell. This will always be true for interior cells.
+
 `iterateReferences <tes3cell/iterateReferences.html>`_ (`method`_)
     Used in a for loop, iterates over objects in the cell.
 
@@ -147,6 +150,7 @@ Methods
     :hidden:
     :maxdepth: 1
 
+    tes3cell/isPointInCell
     tes3cell/iterateReferences
 
 .. _`boolean`: ../../lua/type/boolean.html
