@@ -7,7 +7,7 @@
 --- @field flags number Flags, dependent on the specific object type.
 --- @field fogProperty niFogProperty|nil Convenient access to this object's fog property. Setting this value to be nil will erase the property, while setting it to a valid fog property will set (or replace) it.
 --- @field materialProperty niMaterialProperty|nil Convenient access to this object's material property. Setting this value to be nil will erase the property, while setting it to a valid material property will set (or replace) it.
---- @field parent niCollisionSwitch|niNode|niSwitchNode The object's parent. It may not have one if it is not attached to the scene.
+--- @field parent niBillboardNode|niCollisionSwitch|niNode|niSwitchNode The object's parent. It may not have one if it is not attached to the scene.
 --- @field properties niPropertyLinkedList The list of properties attached to this niAVObject.
 --- @field rotation tes3matrix33 The object's local rotation matrix.
 --- @field scale number The object's local uniform scaling factor.
@@ -32,7 +32,7 @@ function niAVObject:detachProperty(type) end
 
 --- Searches this node and all child nodes recursively for a node with a name that matches the argument.
 --- @param name string No description yet available.
---- @return niAmbientLight|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niGeometry|niLight|niNode|niPointLight|niSpotLight|niSwitchNode|niTriBasedGeometry|niTriShape result No description yet available.
+--- @return niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niGeometry|niLight|niNode|niPointLight|niSpotLight|niSwitchNode|niTriBasedGeometry|niTriShape result No description yet available.
 function niAVObject:getObjectByName(name) end
 
 --- Gets an attached property by property type.
