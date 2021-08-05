@@ -12,7 +12,7 @@
 --- @field script tes3script The script that runs on the object.
 --- @field slot number The slot used by the armor.
 --- @field slotName string The name of the slot used by the armor.
---- @field value number The value of the object.
+--- @field value number The value of the object. For this object type, its maximum value is 65535. Larger numbers will overflow.
 --- @field weight number The weight of the object.
 tes3clothing = {}
 

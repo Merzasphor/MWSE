@@ -1131,33 +1131,36 @@ function tes3.messageBox(messageOrParams, ...) end
 --- [Examples available in online documentation](https://mwse.readthedocs.io/en/latest/lua/api/tes3/modStatistic.html).
 --- @param params tes3.modStatistic.params This table accepts the following values:
 --- 
+--- ``reference``: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string — No description yet available.
+--- 
+--- ``name``: string — A generic name of an attribute to set.
+--- 
 --- ``attribute``: number — The attribute to set.
+--- 
+--- ``skill``: number — The skill to set.
 --- 
 --- ``base``: number — If set, the base value will be modified.
 --- 
 --- ``current``: number — If set, the current value will be modified.
 --- 
+--- ``value``: number — If set, both the base and current value will be modified.
+--- 
 --- ``limit``: boolean — If set, the attribute won't rise above 100 or fall below 0.
 --- 
---- ``name``: string — A generic name of an attribute to set.
---- 
---- ``reference``: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string — No description yet available.
---- 
---- ``skill``: number — The skill to set.
---- 
---- ``value``: number — If set, both the base and current value will be modified.
+--- ``limitToBase``: boolean — If set, the attribute's current value won't rise above its base value. Useful for health, magicka, and fatigue.
 function tes3.modStatistic(params) end
 
 ---Table parameter definitions for ``tes3.modStatistic``.
 --- @class tes3.modStatistic.params
+--- @field reference tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string No description yet available.
+--- @field name string A generic name of an attribute to set.
 --- @field attribute number The attribute to set.
+--- @field skill number The skill to set.
 --- @field base number If set, the base value will be modified.
 --- @field current number If set, the current value will be modified.
---- @field limit boolean If set, the attribute won't rise above 100 or fall below 0.
---- @field name string A generic name of an attribute to set.
---- @field reference tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string No description yet available.
---- @field skill number The skill to set.
 --- @field value number If set, both the base and current value will be modified.
+--- @field limit boolean If set, the attribute won't rise above 100 or fall below 0.
+--- @field limitToBase boolean If set, the attribute's current value won't rise above its base value. Useful for health, magicka, and fatigue.
 
 --- Starts a new game.
 function tes3.newGame() end

@@ -5,3 +5,7 @@
 --- @field switchIndex number The value of the active child index. This index represents the index of the active child in the array of the NiSwitchNode. If this index is –1, then no child is active.
 niSwitchNode = {}
 
+--- Gets the active child node, or returns nil if the switch index is -1.
+--- @return niAmbientLight|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niGeometry|niLight|niNode|niPointLight|niSpotLight|niSwitchNode|niTriBasedGeometry|niTriShape result No description yet available.
+function niSwitchNode:getActiveChild() end
+

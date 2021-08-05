@@ -20,10 +20,7 @@
 			"args": [
 				".\\builders\\readthedocs.lua"
 			],
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			},
+			"group": "build",
 			"problemMatcher": []
 		},
 		{
@@ -33,7 +30,10 @@
 				"Build complete!"
 			],
 			"type": "shell",
-			"group": "build",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
 			"dependsOn": [
 				"Build Autocomplete",
 				"Build Autodocs"

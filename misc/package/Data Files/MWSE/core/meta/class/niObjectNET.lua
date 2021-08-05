@@ -6,13 +6,13 @@
 niObjectNET = {}
 
 --- Add a controller to the object as the first controller.
---- @param type niTimeController No description yet available.
+--- @param type niLookAtController|niTimeController No description yet available.
 function niObjectNET:prependController(type) end
 
 --- Removes all controllers.
 function niObjectNET:removeAllControllers() end
 
 --- Removes a controller from the object.
---- @param type niTimeController No description yet available.
+--- @param type niLookAtController|niTimeController No description yet available.
 function niObjectNET:removeController(type) end
 

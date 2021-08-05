@@ -9,7 +9,7 @@
 --- @field mesh string The path to the object's mesh.
 --- @field name string The player-facing name for the object.
 --- @field script tes3script The script that runs on the object.
---- @field value number The value of the object.
+--- @field value number The value of the object. For this object type, its maximum value is 65535. Larger numbers will overflow.
 --- @field weight number The weight of the object.
 tes3alchemy = {}
 
