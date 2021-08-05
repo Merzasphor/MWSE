@@ -850,7 +850,7 @@ namespace TES3 {
 #endif
 
 	unsigned int Reference::getSourceModId() const {
-		return sourceID >> ModBits;
+		return sourceID >> FormBits;
 	}
 
 	unsigned int Reference::getSourceFormId() const {
@@ -858,7 +858,7 @@ namespace TES3 {
 	}
 
 	unsigned int Reference::getTargetModId() const {
-		return targetID >> ModBits;
+		return targetID >> FormBits;
 	}
 
 	unsigned int Reference::getTargetFormId() const {
