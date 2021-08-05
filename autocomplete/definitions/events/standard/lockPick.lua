@@ -1,4 +1,5 @@
 return {
+	type = "event",
 	description = "This event fires when a lock is being picked.",
 	eventData = {
 		["reference"] = {
@@ -32,7 +33,7 @@ return {
 			description = "The chance the lockpick will be successful.",
 		},
 		["lockPresent"] = {
-			type = "bool",
+			type = "boolean",
 			readOnly = true,
 			description = "Indicates if a lock is present on the reference.",
 		},

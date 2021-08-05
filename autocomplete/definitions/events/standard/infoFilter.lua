@@ -1,4 +1,5 @@
 return {
+	type = "event",
 	description = "This event fires when a dialogue info object is filtered.",
 	related = { "infoGetText", "infoLinkResolve", "infoResponse", "infoFilter", "postInfoResponse" },
 	eventData = {
@@ -28,7 +29,7 @@ return {
 			description = "The dialogue object.",
 		},
 		["passes"] = {
-			type = "bool",
+			type = "boolean",
 			readOnly = true,
 			description = "Indicates if the filter passes.",
 		},
