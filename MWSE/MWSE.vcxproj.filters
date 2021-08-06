@@ -3371,9 +3371,6 @@
     <ClCompile Include="LuaEnchantChargeUseEvent.cpp">
       <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
-    <ClCompile Include="LuaPotionBrewSkillCheckEvent.cpp">
-      <Filter>Source Files\Lua</Filter>
-    </ClCompile>
     <ClCompile Include="NIParticleSystemController.cpp">
       <Filter>Source Files\Lua\Bindings\NI</Filter>
     </ClCompile>
@@ -3394,6 +3391,9 @@
     </ClCompile>
     <ClCompile Include="NIBillboardNode.cpp">
       <Filter>Source Files\Lua\Bindings\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaPotionBrewSkillCheckEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

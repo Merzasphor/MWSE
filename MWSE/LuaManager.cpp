@@ -37,6 +37,7 @@
 #include "TES3Game.h"
 #include "TES3GameFile.h"
 #include "TES3GameSetting.h"
+#include "TES3Ingredient.h"
 #include "TES3InputController.h"
 #include "TES3ItemData.h"
 #include "TES3LeveledList.h"
@@ -1199,13 +1200,41 @@ namespace mwse {
 		// Alchemy brewing potion strength and skill check event.
 		// 
 
+		TES3::Item* getAlchemyMenuObject(DWORD parentIdAddress) {
+			using namespace TES3::UI;
+
+			auto menuAlchemy = findMenu(*reinterpret_cast<UI_ID*>(0x7D225C));
+			if (!menuAlchemy) {
+				return nullptr;
+			}
+
+			auto child = menuAlchemy->findChild(*reinterpret_cast<UI_ID*>(parentIdAddress));
+			if (!child) {
+				return nullptr;
+			}
+
+			Property MenuAlchemy_object = *reinterpret_cast<Property*>(0x7D2344);
+			return reinterpret_cast<TES3::Item*>(child->getProperty(PropertyType::Pointer, MenuAlchemy_object).ptrValue);
+		}
+
 		const auto TES3_alchemySkillRoll = reinterpret_cast<float(__cdecl*)()>(0x59D610);
 		float __cdecl OnAlchemySkillRoll() {
 			float potionStrength = TES3_alchemySkillRoll();
 
+			TES3::AlchemyBrewingItems items = {
+				static_cast<TES3::Apparatus*>(getAlchemyMenuObject(0x7D221C)),
+				static_cast<TES3::Apparatus*>(getAlchemyMenuObject(0x7D2270)),
+				static_cast<TES3::Apparatus*>(getAlchemyMenuObject(0x7D2298)),
+				static_cast<TES3::Apparatus*>(getAlchemyMenuObject(0x7D2314)),
+				static_cast<TES3::Ingredient*>(getAlchemyMenuObject(0x7D22F0)),
+				static_cast<TES3::Ingredient*>(getAlchemyMenuObject(0x7D22F2)),
+				static_cast<TES3::Ingredient*>(getAlchemyMenuObject(0x7D22C0)),
+				static_cast<TES3::Ingredient*>(getAlchemyMenuObject(0x7D2292)),
+			};
+
 			if (event::PotionBrewSkillCheckEvent::getEventEnabled()) {
 				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-				sol::table eventData = stateHandle.triggerEvent(new event::PotionBrewSkillCheckEvent(potionStrength));
+				sol::table eventData = stateHandle.triggerEvent(new event::PotionBrewSkillCheckEvent(potionStrength, items));
 
 				if (eventData.valid()) {
 					if (eventData.get_or("success", true)) {
@@ -1231,30 +1260,23 @@ namespace mwse {
 			return reinterpret_cast<DWORD(__thiscall*)(TES3::UI::InventoryTile*, TES3::Object*, TES3::ItemData*, DWORD, DWORD, DWORD, DWORD)>(0x6313E0)(inventoryTile, object, itemData, unk1, unk2, unk3, unk4);
 		}
 
-		TES3::Ingredient* getBrewingIngredient(DWORD parentIdAddress) {
-			auto menuAlchemy = TES3::UI::findMenu(*reinterpret_cast<TES3::UI::UI_ID*>(0x7D225C));
-			if (!menuAlchemy) {
-				return nullptr;
-			}
-
-			auto child = menuAlchemy->findChild(*reinterpret_cast<TES3::UI::UI_ID*>(parentIdAddress));
-			if (!child) {
-				return nullptr;
-			}
-
-			return reinterpret_cast<TES3::Ingredient*>(child->getProperty(TES3::UI::PropertyType::Pointer, *reinterpret_cast<TES3::UI::Property*>(0x7D2344)).ptrValue);
-		}
-
 		const auto TES3_AttemptPotionBrew = reinterpret_cast<bool(__cdecl*)()>(0x59C030);
 		bool __cdecl OnBrewPotionAttempt() {
 			// Reset success state.
 			lastBrewedPotion = nullptr;
 
+			// Store apparatus used. MobilePlayer::lastUsed* members do not reflect what is currently equipped by the game.
 			// Store the last used ingredients, since they get nuked.
-			auto ingredient1 = getBrewingIngredient(0x7D22F0);
-			auto ingredient2 = getBrewingIngredient(0x7D22F2);
-			auto ingredient3 = getBrewingIngredient(0x7D22C0);
-			auto ingredient4 = getBrewingIngredient(0x7D2292);
+			TES3::AlchemyBrewingItems items = {
+				static_cast<TES3::Apparatus*>(getAlchemyMenuObject(0x7D221C)),
+				static_cast<TES3::Apparatus*>(getAlchemyMenuObject(0x7D2270)),
+				static_cast<TES3::Apparatus*>(getAlchemyMenuObject(0x7D2298)),
+				static_cast<TES3::Apparatus*>(getAlchemyMenuObject(0x7D2314)),
+				static_cast<TES3::Ingredient*>(getAlchemyMenuObject(0x7D22F0)),
+				static_cast<TES3::Ingredient*>(getAlchemyMenuObject(0x7D22F2)),
+				static_cast<TES3::Ingredient*>(getAlchemyMenuObject(0x7D22C0)),
+				static_cast<TES3::Ingredient*>(getAlchemyMenuObject(0x7D2292)),
+			};
 
 			// Call original function.
 			if (!TES3_AttemptPotionBrew()) {
@@ -1268,12 +1290,12 @@ namespace mwse {
 
 				// Pass a lua event.
 				if (event::PotionBrewedEvent::getEventEnabled()) {
-					LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::PotionBrewedEvent(lastBrewedPotion, ingredient1, ingredient2, ingredient3, ingredient4));
+					LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::PotionBrewedEvent(lastBrewedPotion, items));
 				}
 			}
 			else {
 				if (event::PotionBrewFailedEvent::getEventEnabled()) {
-					LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::PotionBrewFailedEvent(ingredient1, ingredient2, ingredient3, ingredient4));
+					LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::PotionBrewFailedEvent(items));
 				}
 			}
 
