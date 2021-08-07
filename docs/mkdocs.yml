@@ -3,7 +3,11 @@ site_name: Morrowind Script Extender
 docs_dir: source
 
 repo_url: https://github.com/MWSE/MWSE
-edit_uri: "" # Hide the edit button, these are auto-generated
+edit_uri: "" # Hide the edit button, most files are auto-generated
+
+plugins:
+  - search
+  - awesome-pages
 
 extra_css:
   - assets/mwse.css

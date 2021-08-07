@@ -20,7 +20,7 @@ Documentation can also be built locally for testing or personal use. To do this 
 The following modules need to be installed:
 
 ```bat
-pip install mkdocs mkdocs-material
+pip install mkdocs mkdocs-material mkdocs-awesome-pages-plugin
 ```
 
 ## Developing Tips

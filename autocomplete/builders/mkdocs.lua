@@ -87,7 +87,7 @@ local function getArgumentCode(argument)
 		end
 		return string.format("{ %s }", table.concat(tableArgs, ", "))
 	end
-	return argument.name
+	return argument.name or "unknown"
 end
 
 local function writeSubPackage(file, package, from)
@@ -214,4 +214,15 @@ end
 
 for _, package in pairs(classes) do
 	-- build(package)
+end
+
+--
+-- Custom file setup.
+--
+
+-- Add our .pages files for sorting directories.
+do
+	local file = io.open(lfs.join(docsSourceFolder, "apis", ".pages"), "w")
+	file:write("title: APIs")
+	file:close()
 end
