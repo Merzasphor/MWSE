@@ -2,10 +2,12 @@
 
 #include "NiTriBasedGeometryData.h"
 
+#include "NITriangle.h"
+
 namespace NI {
 	struct TriShapeData : TriBasedGeometryData {
 		unsigned int triangleListLength; // 0x38
-		unsigned short* triangleList; // 0x3C
+		Triangle* triangleList; // 0x3C
 		void* sharedNormals; // 0x40
 		unsigned short sharedNormalsArraySize; // 0x44
 
@@ -20,7 +22,8 @@ namespace NI {
 		//
 
 		Pointer<TriShapeData> copyData(sol::optional<sol::table> filters) const;
-		nonstd::span<unsigned short> getTriangles();
+		nonstd::span<Triangle> getTriangles();
+
 	};
 	static_assert(sizeof(TriShapeData) == 0x48, "NI::TriShapeData failed size validation");
 }
