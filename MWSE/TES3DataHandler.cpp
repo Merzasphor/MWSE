@@ -326,60 +326,6 @@ namespace TES3 {
 		return TES3_NonDynamicData_getBaseAnimationFile(this, isFemale, firstPerson);
 	}
 
-	Alchemy* NonDynamicData::getMatchingAlchemyItem(const Alchemy* testAgainst) const {
-		if (testAgainst->objectType != ObjectType::Alchemy) {
-			return nullptr;
-		}
-
-		for (auto item : *list) {
-			auto alch = static_cast<Alchemy*>(item);
-
-			// We only care about alchemy objects.
-			if (alch->objectType != ObjectType::Alchemy) {
-				continue;
-			}
-
-			// Check object flags.
-			if (alch->objectFlags != testAgainst->objectFlags) {
-				continue;
-			}
-
-			// Check basic values.
-			if (alch->weight != testAgainst->weight || alch->value != testAgainst->value || alch->flags != alch->flags) {
-				continue;
-			}
-
-			// Check effects.
-			if (!alch->effectsMatchWith(testAgainst)) {
-				continue;
-			}
-
-			// Check script.
-			if (alch->script != testAgainst->script) {
-				continue;
-			}
-
-			// Check name.
-			if (_strnicmp(alch->name, testAgainst->name, 32) != 0) {
-				continue;
-			}
-
-			// Check model.
-			if (_strnicmp(alch->model, testAgainst->model, 32) != 0) {
-				continue;
-			}
-
-			// Check icon.
-			if (_strnicmp(alch->icon, testAgainst->icon, 32) != 0) {
-				continue;
-			}
-
-			// Good enough. It's a match.
-			return alch;
-		}
-		return nullptr;
-	}
-
 	std::reference_wrapper<Skill[27]> NonDynamicData::getSkills() {
 		return std::ref(skills);
 	}

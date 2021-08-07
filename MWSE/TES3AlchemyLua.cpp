@@ -9,8 +9,6 @@
 
 #include "MemoryUtil.h"
 
-#define TES3_Alchemy_ctor 0x4ABA40
-
 namespace mwse {
 	namespace lua {
 		TES3::Alchemy* createAlchemy(sol::table params) {
@@ -19,14 +17,13 @@ namespace mwse {
 
 			// Do we already have an object of this ID?
 			auto ndd = TES3::DataHandler::get()->nonDynamicData;
-			std::string id = getOptionalParam<std::string>(params, "id", "");
-			if (!id.empty() && ndd->resolveObject(id.c_str()) != NULL) {
-				return NULL;
+			std::string id = getOptionalParam<std::string>(params, "id", std::string());
+			if (!id.empty() && ndd->resolveObject(id.c_str()) != nullptr) {
+				return nullptr;
 			}
 
 			// Create new alchemy object.
-			TES3::Alchemy* alchemy = tes3::malloc<TES3::Alchemy>();
-			reinterpret_cast<void(__thiscall *)(TES3::Alchemy*)>(TES3_Alchemy_ctor)(alchemy);
+			TES3::Alchemy* alchemy = new TES3::Alchemy();
 
 			// Set ID. It isn't required.
 			if (!id.empty()) {
@@ -39,7 +36,7 @@ namespace mwse {
 
 			// Set script.
 			TES3::Script* script = getOptionalParamScript(params, "script");
-			if (script != NULL) {
+			if (script != nullptr) {
 				alchemy->script = script;
 			}
 
@@ -52,10 +49,10 @@ namespace mwse {
 			tes3::setDataString(&alchemy->icon, icon.c_str());
 
 			// Get other simple values.
-			alchemy->objectFlags = getOptionalParam<double>(params, "objectFlags", 0.0);
-			alchemy->weight = getOptionalParam<double>(params, "weight", 0.0);
-			alchemy->value = getOptionalParam<double>(params, "value", 0.0);
-			alchemy->flags = getOptionalParam<double>(params, "flags", 0.0);
+			alchemy->objectFlags = getOptionalParam<unsigned int>(params, "objectFlags", alchemy->objectFlags);
+			alchemy->weight = getOptionalParam<double>(params, "weight", alchemy->weight);
+			alchemy->value = getOptionalParam<double>(params, "value", alchemy->value);
+			alchemy->flags = getOptionalParam<unsigned short>(params, "flags", alchemy->flags);
 
 			// Flag the object as modified.
 			alchemy->objectFlags |= TES3::ObjectFlag::Modified;
@@ -87,7 +84,7 @@ namespace mwse {
 			}
 
 			// We have our alchemy object. But is it unique?
-			auto matches = ndd->getMatchingAlchemyItem(alchemy);
+			auto matches = alchemy->findMatchingAlchemyItem();
 			if (matches) {
 				delete alchemy;
 				return matches;
@@ -95,7 +92,7 @@ namespace mwse {
 
 			// All good? Add and return the object.
 			if (!ndd->addNewObject(alchemy)) {
-				return NULL;
+				return nullptr;
 			}
 			return alchemy;
 		}

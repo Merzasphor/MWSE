@@ -33,4 +33,9 @@ return {
 			description = "An array of up to 4 tes3ingredient objects, which were used to create the potion.",
 		},
 	},
+	examples = {
+		["replace"] = {
+			title = "Replace a brewed potion with a modified version",
+		},
+	},
 }

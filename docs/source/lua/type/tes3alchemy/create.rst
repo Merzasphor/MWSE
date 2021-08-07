@@ -1,7 +1,7 @@
 create
 ====================================================================================================
 
-Creates a new alchemy item, which will be stored as part of the current saved game.
+Creates a new alchemy item, which will be stored as part of the current saved game. If there is already an alchemy item with matching effects, name, weight, value, and script, that will be returned instead of creating a new item.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -24,7 +24,7 @@ icon (`string`_)
     Default: ``"m\Tx_potion_bargain_01.nif"``. The icon to use for the object.
 
 objectFlags (`number`_)
-    Default: ``0``. The object flags initially set. Force set as modified.
+    Default: ``8``. The object flags initially set. Force set as modified.
 
 weight (`number`_)
     Default: ``0``. The new item's weight.

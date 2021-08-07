@@ -50,6 +50,7 @@ namespace TES3 {
 		size_t getActiveEffectCount();
 		int getFirstIndexOfEffect(int effectId);
 		bool effectsMatchWith(const Alchemy * other) const;
+		Alchemy* findMatchingAlchemyItem() const;
 		void setIconPath(const char* path);
 		void cleanUnusedAttributeSkillIds();
 

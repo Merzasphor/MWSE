@@ -54,11 +54,48 @@ namespace TES3 {
 
 	bool Alchemy::effectsMatchWith(const Alchemy * other) const {
 		for (size_t i = 0; i < 8; i++) {
-			if (effects[i].matchesEffectsWith(&other->effects[i])) {
+			if (!effects[i].matchesEffectsWith(&other->effects[i])) {
 				return false;
 			}
 		}
 		return true;
+	}
+
+	Alchemy* Alchemy::findMatchingAlchemyItem() const {
+		const auto records = DataHandler::get()->nonDynamicData;
+
+		for (auto item : *records->list) {
+			// We only care about alchemy objects.
+			if (item->objectType != ObjectType::Alchemy) {
+				continue;
+			}
+
+			// Check basic values.
+			auto alch = static_cast<Alchemy*>(item);
+
+			if (alch->weight != weight || alch->value != value || alch->flags != flags) {
+				continue;
+			}
+
+			// Check effects.
+			if (!effectsMatchWith(alch)) {
+				continue;
+			}
+
+			// Check script.
+			if (alch->script != script) {
+				continue;
+			}
+
+			// Check name.
+			if (_strnicmp(alch->name, name, 32) != 0) {
+				continue;
+			}
+
+			// Good enough. It's a match.
+			return alch;
+		}
+		return nullptr;
 	}
 
 	void Alchemy::setIconPath(const char* path) {
