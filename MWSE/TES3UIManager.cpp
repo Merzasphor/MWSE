@@ -275,20 +275,20 @@ namespace TES3 {
 			Element *help = TES3_ui_findHelpLayerMenu(static_cast<UI_ID>(Property::HelpMenu));
 			if (help) {
 				// Remove menu from help layer child vector.
-				Element **p = help->parent->vectorChildren.begin;
+				Element **p = help->parent->vectorChildren.begin, **end = help->parent->vectorChildren.end;
 				while (*p != help) {
 					++p;
 				}
-				for (size_t n = (help->parent->vectorChildren.end - p) + 1; n; --n) {
+				for (; p < end - 1; ++p) {
 					*p = *(p + 1);
 				}
-				help->parent->vectorChildren.end--;
 				*p = 0;
+				help->parent->vectorChildren.end--;
 
 				// Place menu in main layer.
 				help->reattachToParent(*TES3_uiMainRoot);
 
-				// Add an empty dummy menu to staisfy game code that expects the help menu.
+				// Add an empty dummy menu to satisfy game code that expects the help menu.
 				createTooltipMenu(static_cast<UI_ID>(Property::HelpMenu));
 			}
 		}
