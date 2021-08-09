@@ -6,8 +6,8 @@ Represents an individual instance of a magic effect being applied to a reference
 Properties
 ----------------------------------------------------------------------------------------------------
 
-`createdData <tes3magicEffectInstance/createdData.html>`_ (`tes3itemStack`_)
-    The bound or summoned data associated with the instance. The stack's object will be a reference in the case of summoned creatures.
+`createdData <tes3magicEffectInstance/createdData.html>`_ (`tes3equipmentStack`_)
+    The bound or summoned data associated with the instance, for summoned creatures or items. The stack's object will be a reference in the case of summoned creatures.
 
 `cumulativeMagnitude <tes3magicEffectInstance/cumulativeMagnitude.html>`_ (`number`_)
     No description available.
@@ -67,8 +67,8 @@ Properties
 
 .. _`number`: ../../lua/type/number.html
 .. _`tes3armor`: ../../lua/type/tes3armor.html
+.. _`tes3equipmentStack`: ../../lua/type/tes3equipmentStack.html
 .. _`tes3item`: ../../lua/type/tes3item.html
-.. _`tes3itemStack`: ../../lua/type/tes3itemStack.html
 .. _`tes3light`: ../../lua/type/tes3light.html
 .. _`tes3reference`: ../../lua/type/tes3reference.html
 .. _`tes3weapon`: ../../lua/type/tes3weapon.html
