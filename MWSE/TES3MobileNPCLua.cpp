@@ -57,7 +57,7 @@ namespace mwse {
 			if (s) {
 				// Warning: Unequipping lights during menumode with updateGUI=true triggers a Morrowind crash.
 				// UI update has been moved to a separate function.
-				actor->unequipItem(s->object, 1, &self, 0, s->variables);
+				actor->unequipItem(s->object, 1, &self, 0, s->itemData);
 				actor->postUnequipUIRefresh(&self);
 				return true;
 			}
@@ -74,7 +74,7 @@ namespace mwse {
 				// UI update has been moved to a separate function.
 				for (auto it : matches) {
 					s = it;
-					actor->unequipItem(s->object, 1, &self, 0, s->variables);
+					actor->unequipItem(s->object, 1, &self, 0, s->itemData);
 				}
 				actor->postUnequipUIRefresh(&self);
 			}

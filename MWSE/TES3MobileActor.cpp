@@ -634,7 +634,7 @@ namespace TES3 {
 		// Select item based on best/worst condition.
 		if (selectBestCondition) {
 			// Use already equipped item if it has full condition.
-			if (equipped && ItemData::isFullyRepaired(equipped->variables, static_cast<TES3::Item*>(equipped->object))) {
+			if (equipped && ItemData::isFullyRepaired(equipped->itemData, static_cast<TES3::Item*>(equipped->object))) {
 				return true;
 			}
 

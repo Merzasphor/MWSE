@@ -18,7 +18,7 @@ namespace TES3 {
 
 	struct EquipmentStack {
 		Object * object; // 0x0
-		ItemData * variables; // 0x4
+		ItemData * itemData; // 0x4
 
 		//
 		// Other related helper functions.
@@ -31,7 +31,7 @@ namespace TES3 {
 	struct Inventory {
 		unsigned int flags; // 0x0
 		IteratedList<ItemStack*> itemStacks; // 0x4
-		int unknown_0x18;
+		Light * internalLight; // 0x18
 
 		//
 		// Other related this-call functions.

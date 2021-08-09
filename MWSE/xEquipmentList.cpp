@@ -141,9 +141,9 @@ namespace mwse {
 			// because types are zero-indexed.
 			subtype = getItemSubType(object) + 1;
 
-			// Get count. Right now we hardcode this to 1, but ammo might actually have a count.
-			if (node->data->variables) {
-				count = node->data->variables->count;
+			// Get count.
+			if (node->data->itemData) {
+				count = node->data->itemData->count;
 			}
 			else {
 				count = 1;

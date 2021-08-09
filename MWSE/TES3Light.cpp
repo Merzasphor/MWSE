@@ -139,7 +139,7 @@ namespace TES3 {
 		if (object.is<EquipmentStack>()) {
 			auto stack = object.as<EquipmentStack*>();
 			if (stack->object == this) {
-				return (stack->variables) ? stack->variables->timeLeft : float(time);
+				return (stack->itemData) ? stack->itemData->timeLeft : float(time);
 			}
 		}
 		else if (object.is<Reference>()) {

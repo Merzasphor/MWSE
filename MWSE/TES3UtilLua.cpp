@@ -2666,7 +2666,7 @@ namespace mwse {
 				else if (sourceCombo.sourceType == TES3::MagicSourceType::Enchantment) {
 					// Add enchantment source item to recharger.
 					auto stack = from.value();
-					TES3::WorldController::get()->rechargerAddItem(stack->object, stack->variables, sourceCombo.source.asEnchantment);
+					TES3::WorldController::get()->rechargerAddItem(stack->object, stack->itemData, sourceCombo.source.asEnchantment);
 				}
 			}
 
@@ -3125,13 +3125,13 @@ namespace mwse {
 							}
 							else {
 								// Item was unequipped, but remains the first item? Preserve the item data.
-								if (fromStack->variables && fromStack->variables->at(0) == removedEquipStack->variables) {
+								if (fromStack->variables && fromStack->variables->at(0) == removedEquipStack->itemData) {
 									itemDataRef = &fromStack->variables->at(0);
 								}
 
 								// Clean up after our check and manually delete.
 								removedEquipStack->object = nullptr;
-								removedEquipStack->variables = nullptr;
+								removedEquipStack->itemData = nullptr;
 								mwse::tes3::_delete(removedEquipStack);
 								removedEquipStack = nullptr;
 							}

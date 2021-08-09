@@ -107,7 +107,7 @@ namespace TES3 {
 		if (hitArmorStack) {
 			hitArmorClass = reinterpret_cast<Armor*>(hitArmorStack->object)->getWeightClass();
 			if (damageEquipment) {
-				auto stackVars = hitArmorStack->variables;
+				auto stackVars = hitArmorStack->itemData;
 				stackVars->condition -= armorDamage;
 				if (stackVars->condition <= 0) {
 					stackVars->condition = 0;

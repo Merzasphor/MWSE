@@ -34,7 +34,7 @@ namespace mwse {
 
 				if (m_Stack) {
 					eventData["item"] = m_Stack->object;
-					eventData["itemData"] = m_Stack->variables;
+					eventData["itemData"] = m_Stack->itemData;
 				}
 
 				eventData["basePrice"] = m_BasePrice;
