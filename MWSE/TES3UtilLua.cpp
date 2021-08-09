@@ -1899,6 +1899,9 @@ namespace mwse {
 				else if (statistic == &mobile->fatigue) {
 					TES3::UI::updateFatigueFillBar(statistic->current, statistic->base);
 				}
+				else if (statistic == &mobile->encumbrance) {
+					TES3::UI::updateEncumbranceBar();
+				}
 				else {
 					// Check to see if an attribute was edited.
 					for (size_t i = TES3::Attribute::FirstAttribute; i <= TES3::Attribute::LastAttribute; i++) {
@@ -2031,6 +2034,9 @@ namespace mwse {
 				}
 				else if (statistic == &mobile->fatigue) {
 					TES3::UI::updateFatigueFillBar(statistic->current, statistic->base);
+				}
+				else if (statistic == &mobile->encumbrance) {
+					TES3::UI::updateEncumbranceBar();
 				}
 				else {
 					// Check to see if an attribute was edited.
