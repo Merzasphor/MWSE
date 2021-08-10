@@ -150,6 +150,21 @@ end
 
 
 --
+-- io library extensions
+--
+
+--- Creates a file with the given contents.
+--- @param path string
+--- @param content string
+function io.createwith(path, content)
+	local file = assert(io.open(path, "w"))
+	file:write(content)
+	file:close()
+end
+
+
+
+--
 -- lfs library extensions
 --
 

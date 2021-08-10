@@ -10,8 +10,8 @@ common.log("Starting build of mkdocs source files...")
 -- Recreate meta folder.
 local docsSourceFolder = lfs.join(common.pathAutocomplete, "..\\docs\\source")
 lfs.remakedir(lfs.join(docsSourceFolder, "apis"))
+lfs.remakedir(lfs.join(docsSourceFolder, "types"))
 -- lfs.remakedir(lfs.join(docsSourceFolder, "events"))
--- lfs.remakedir(lfs.join(docsSourceFolder, "types"))
 
 -- Base containers to hold our compiled data.
 local libraries = {}
@@ -30,7 +30,7 @@ common.log("Definitions folder: %s", common.pathDefinitions)
 --
 
 common.compilePath(lfs.join(common.pathDefinitions, "global"), libraries, "lib")
--- common.compilePath(lfs.join(common.pathDefinitions, "namedTypes"), classes, "class")
+common.compilePath(lfs.join(common.pathDefinitions, "namedTypes"), classes, "class")
 
 
 --
@@ -39,10 +39,16 @@ common.compilePath(lfs.join(common.pathDefinitions, "global"), libraries, "lib")
 
 local function buildParentChain(className)
 	local package = assert(classes[className])
-	if (package.inherits) then
-		return className .. ", " .. buildParentChain(package.inherits)
+	local ret = ""
+	if (classes[className]) then
+		ret = string.format("[%s](../../types/%s)", className, className)
+	else
+		ret = className
 	end
-	return className
+	if (package.inherits) then
+		ret = ret .. ", " .. buildParentChain(package.inherits)
+	end
+	return ret
 end
 
 local function breakoutTypeLinks(type)
@@ -55,6 +61,58 @@ local function breakoutTypeLinks(type)
 		end
 	end
 	return table.concat(types, ", ")
+end
+
+--- comment
+--- @param package table
+--- @param field any
+--- @param results any
+--- @return table
+local function getPackageComponentsDictionary(package, field, results)
+	results = results or {}
+
+	local onThis = package[field]
+	if (onThis) then
+		for k, v in pairs(onThis) do
+			if (results[k] == nil) then
+				results[k] = v
+			end
+		end
+	end
+
+	if (package.inherits and classes[package.inherits]) then
+		return getPackageComponentsDictionary(classes[package.inherits], field, results)
+	end
+
+	return results
+end
+
+--- comment
+--- @param package table
+--- @param field any
+--- @param results any
+--- @return table
+local function getPackageComponentsArray(package, field, results)
+	results = results or {}
+
+	local onThis = package[field]
+	if (onThis) then
+		for _, v in ipairs(table.values(onThis)) do
+			if (results[v.key] == nil) then
+				results[v.key] = v
+			end
+		end
+	end
+
+	if (package.inherits and classes[package.inherits]) then
+		return getPackageComponentsArray(classes[package.inherits], field, results)
+	end
+
+	return results
+end
+
+local function sortPackagesByKey(A, B)
+	return A.key:lower() < B.key:lower()
 end
 
 local function writeArgument(file, argument, indent)
@@ -109,7 +167,7 @@ local function writeSubPackage(file, package, from)
 			end
 			file:write(string.format("local %s = ", table.concat(returnNames, ", ")))
 		end
-		file:write(string.format("%s(", package.namespace))
+		file:write(string.format("%s%s%s(", package.parent.namespace, package.type == "method" and ":" or ".", package.key))
 		if (package.arguments) then
 			local args = {}
 			for _, arg in pairs(package.arguments) do
@@ -171,27 +229,30 @@ local function build(package)
 	end
 
 	-- Write out fields.
-	if (package.values) then
+	local values = table.values(getPackageComponentsArray(package, "values"), sortPackagesByKey)
+	if (#values > 0) then
 		file:write("## Properties\n\n")
-		for _, value in ipairs(package.values) do
+		for _, value in ipairs(values) do
 			writeSubPackage(file, value, package)
 			file:write("***\n\n")
 		end
 	end
 
 	-- Write out methods.
-	if (package.type == "class" and package.methods) then
+	local methods = table.values(getPackageComponentsArray(package, "methods"), sortPackagesByKey)
+	if (#methods > 0) then
 		file:write("## Methods\n\n")
-		for _, method in ipairs(package.methods) do
+		for _, method in ipairs(methods) do
 			writeSubPackage(file, method, package)
 			file:write("***\n\n")
 		end
 	end
 
 	-- Write out functions.
-	if (package.functions) then
+	local functions = table.values(getPackageComponentsArray(package, "functions"), sortPackagesByKey)
+	if (#functions > 0) then
 		file:write("## Functions\n\n")
-		for _, fn in ipairs(package.functions) do
+		for _, fn in ipairs(functions) do
 			writeSubPackage(file, fn, package)
 			file:write("***\n\n")
 		end
@@ -213,16 +274,12 @@ for _, package in pairs(libraries) do
 end
 
 for _, package in pairs(classes) do
-	-- build(package)
+	build(package)
 end
 
 --
 -- Custom file setup.
 --
 
--- Add our .pages files for sorting directories.
-do
-	local file = io.open(lfs.join(docsSourceFolder, "apis", ".pages"), "w")
-	file:write("title: APIs")
-	file:close()
-end
+-- Add our .pages files for retitling directories.
+io.createwith(lfs.join(docsSourceFolder, "apis", ".pages"), "title: APIs")
