@@ -5,8 +5,7 @@ The Morrowind Script Extender makes additional functions available for use in Mo
 These extra functions allow modders to add features and behavior to scripts that would otherwise be impractical or impossible.
 
 !!! info "Morrowind Modding Community Discord"
-
-    If you're looking for MWSE scripting advice or discussions, try the [Morrowind Modding Community Discord](https://discord.gg/QDEBbaP).
+	 you're looking for MWSE scripting advice or discussions, try the [Morrowind Modding Community Discord](https://discord.gg/QDEBbaP).
 
 ## Installation
 
@@ -27,14 +26,10 @@ The Morrowind Script Extender is open source software that welcomes contribution
 Contributing to MWSE requires a copy of [Visual Studio 2019](https://www.visualstudio.com/downloads/), with the following features enabled:
 
 - Workloads:
-
-  - Desktop development with C++
-
-- Individual components:
-
-  - VC++ 2019 v142 toolset (x86,x64)
-  
-  - Windows 10 SDK for Desktop C++ [x86 and x64] (any version will do)
+	- Desktop development with C++
+	- Individual components:
+	- VC++ 2019 v142 toolset (x86,x64)
+	- Windows 10 SDK for Desktop C++ [x86 and x64] (any version will do)
 
 #### LuaJIT
 
