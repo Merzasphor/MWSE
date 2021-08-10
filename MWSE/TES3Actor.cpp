@@ -95,7 +95,7 @@ namespace TES3 {
 		const auto TES3_ui_updateCharacterImage = reinterpret_cast<void (__cdecl*)(bool)>(0x5CD2A0);
 		const auto TES3_ui_updateMagicMenu = reinterpret_cast<void (__cdecl*)()>(0x5E2E80);
 
-		if (mobileActor->actorType == MobileActorType::Player) {
+		if (mobileActor && mobileActor->actorType == MobileActorType::Player) {
 			auto player = static_cast<MobilePlayer*>(mobileActor);
 
 			if (player->actorFlags & MobileActorFlag::BodypartsChanged) {

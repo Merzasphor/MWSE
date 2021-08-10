@@ -2924,14 +2924,54 @@ namespace mwse {
 				return 0;
 			}
 
-			// Try to unequip the item if it's equipped.
+			// Were we given an ItemData? If so, we only need to remove one item.
 			auto mobile = reference->getAttachedMobileActor();
-			if (itemData != nullptr) {
+			if (itemData) {
+				actor->inventory.removeItemWithData(mobile, item, itemData, 1, false);
 				actor->unequipItem(item, true, mobile, false, itemData);
+				actor->postUnequipUIRefresh(mobile);
 			}
+			// No ItemData? We have to go through and remove items over one by one.
+			else {
+				auto equipStack = actor->getEquippedItem(item);
+				int itemsLeftToRemove = fulfilledCount;
 
-			// Add the item and return the added count, since we do no inventory checking.
-			actor->inventory.removeItemWithData(mobile, item, itemData, fulfilledCount, deleteItemData);
+				// Remove items without data first. Stack may be deleted after this point.
+				int countWithoutVariables = stack->count - (stack->variables ? stack->variables->endIndex : 0);
+				if (countWithoutVariables > 0) {
+					int amountToRemove = std::min(countWithoutVariables, itemsLeftToRemove);
+					actor->inventory.removeItemWithData(mobile, item, nullptr, amountToRemove, false);
+					itemsLeftToRemove -= amountToRemove;
+
+					// Update ammunition count and unequip ammunition when exhausted.
+					// Located here because ammunition does not generate itemData when equipped.
+					if (equipStack && mobile && mobile->readiedAmmo == equipStack) {
+						mobile->readiedAmmoCount = std::max(0, int(mobile->readiedAmmoCount) - amountToRemove);
+						if (mobile->readiedAmmoCount == 0) {
+							actor->unequipItem(item, true, mobile, false, itemData);
+							actor->postUnequipUIRefresh(mobile);
+						}
+					}
+				}
+
+				// Then remove items with data, one at a time.
+				for (; itemsLeftToRemove > 0; itemsLeftToRemove--) {
+					TES3::ItemData* firstAvailableItemData = nullptr;
+
+					if (stack->variables) {
+						firstAvailableItemData = stack->variables->at(0);
+
+						// Unequip if itemData matches.
+						if (equipStack && firstAvailableItemData == equipStack->itemData) {
+							actor->unequipItem(item, true, mobile, false, itemData);
+							actor->postUnequipUIRefresh(mobile);
+							equipStack = nullptr;
+						}
+					}
+
+					actor->inventory.removeItemWithData(mobile, item, firstAvailableItemData, 1, false);
+				}
+			}
 
 			// Play the relevant sound.
 			auto worldController = TES3::WorldController::get();
@@ -2940,17 +2980,6 @@ namespace mwse {
 				if (mobile == playerMobile) {
 					worldController->playItemUpDownSound(item, TES3::ItemSoundState::Up);
 				}
-			}
-
-			// Update body parts for creatures/NPCs that may have items unequipped.
-			if (mobile) {
-				reference->updateBipedParts();
-
-				if (mobile == playerMobile) {
-					playerMobile->firstPersonReference->updateBipedParts();
-				}
-
-				mobile->updateOpacity();
 			}
 
 			// If either of them are the player, we need to update the GUI.

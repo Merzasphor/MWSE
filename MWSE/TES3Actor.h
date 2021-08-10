@@ -59,10 +59,10 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
-		Object* equipItem(Object* item, ItemData* itemData, EquipmentStack** out_equipmentStack, MobileActor* mobileActor);
-		EquipmentStack* unequipItem(Object* item, bool deleteStack, MobileActor* mobileActor, bool updateGUI, ItemData* itemData);
-		void unequipAllItems(MobileActor * mobileActor);
-		void postUnequipUIRefresh(MobileActor* mobileActor);
+		Object* equipItem(Object* item, ItemData* itemData, EquipmentStack** out_equipmentStack, MobileActor* mobileActor); // mobileActor is optional
+		EquipmentStack* unequipItem(Object* item, bool deleteStack, MobileActor* mobileActor, bool updateGUI, ItemData* itemData); // mobileActor is optional
+		void unequipAllItems(MobileActor* mobileActor); // mobileActor is optional
+		void postUnequipUIRefresh(MobileActor* mobileActor); // mobileActor is optional
 		EquipmentStack* getEquippedItem(Object* item);
 		EquipmentStack* getEquippedItemExact(Object* item, ItemData* itemData);
 		EquipmentStack* getEquippedArmorBySlot(ArmorSlot::value_type slot);
