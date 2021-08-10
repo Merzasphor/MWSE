@@ -11,11 +11,12 @@ common.log("Starting build of mkdocs source files...")
 local docsSourceFolder = lfs.join(common.pathAutocomplete, "..\\docs\\source")
 lfs.remakedir(lfs.join(docsSourceFolder, "apis"))
 lfs.remakedir(lfs.join(docsSourceFolder, "types"))
--- lfs.remakedir(lfs.join(docsSourceFolder, "events"))
+lfs.remakedir(lfs.join(docsSourceFolder, "events"))
 
 -- Base containers to hold our compiled data.
 local libraries = {}
 local classes = {}
+local events = {}
 
 
 --
@@ -31,6 +32,7 @@ common.log("Definitions folder: %s", common.pathDefinitions)
 
 common.compilePath(lfs.join(common.pathDefinitions, "global"), libraries, "lib")
 common.compilePath(lfs.join(common.pathDefinitions, "namedTypes"), classes, "class")
+common.compilePath(lfs.join(common.pathDefinitions, "events", "standard"), events, "event")
 
 
 --
@@ -226,6 +228,11 @@ local function build(package)
 	file:write(string.format("%s\n\n", package.description or common.defaultNoDescriptionText))
 	if (package.type == "class" and package.inherits) then
 		file:write(string.format("This type inherits the following: %s\n", buildParentChain(package.inherits)))
+	elseif (package.type == "event") then
+		file:write(string.format("```lua\n--- @type e event.%s\nlocal function %sCallback(e)\nend\nevent.register(\"%s\", %sCallback)\n```\n\n", package.key, package.key, package.key, package.key))
+		if (package.filter) then
+			file:write(string.format("This event can be filtered based on the **`%s`** event data.\n\n", package.filter))
+		end
 	end
 
 	-- Write out fields.
@@ -258,6 +265,32 @@ local function build(package)
 		end
 	end
 
+	-- Events are more top-level, need to do special handling...
+	if (package.type == "event") then
+		-- Write out event data.
+		if (package.eventData) then
+			file:write("## Event Data\n\n")
+			for name, data in pairs(package.eventData) do
+				data.name = name
+				writeArgument(file, data)
+			end
+			file:write("\n")
+		end
+
+		-- Write out examples.
+		if (package.examples) then
+			file:write("## Examples\n\n")
+			for filename, example in pairs(package.examples) do
+				file:write(string.format("!!! example \"Example: %s\"\n\n", example.title or filename))
+				file:write(string.format("\t```lua\n"))
+				for line in io.lines(lfs.join(package.folder, package.key, filename .. ".lua")) do
+					file:write(string.format("\t%s\n", line))
+				end
+				file:write(string.format("\n\t```\n\n"))
+			end
+		end
+	end
+
 	-- Ensure that sub-libraries are built.
 	if (package.libs) then
 		for _, lib in ipairs(package.libs) do
@@ -274,6 +307,10 @@ for _, package in pairs(libraries) do
 end
 
 for _, package in pairs(classes) do
+	build(package)
+end
+
+for _, package in pairs(events) do
 	build(package)
 end
 
