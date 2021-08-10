@@ -50,7 +50,9 @@ markdown_extensions:
   - meta
   - pymdownx.details
   - pymdownx.keys
-  - pymdownx.snippets
+  - pymdownx.snippets:
+      base_path: includes
+      check_paths: true
   - pymdownx.superfences
   - toc:
       permalink: ⚓︎
