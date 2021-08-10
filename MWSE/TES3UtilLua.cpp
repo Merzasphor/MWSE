@@ -2781,7 +2781,7 @@ namespace mwse {
 				desiredCount = 1;
 			}
 
-			if (getOptionalParam<bool>(params, "limit", false)) {
+			if (actor->objectType == TES3::ObjectType::Container && getOptionalParam<bool>(params, "limit", false)) {
 				// Prevent placing items into organic containers.
 				if (BIT_TEST(actor->actorFlags, TES3::ActorFlagContainer::OrganicBit)) {
 					if (createdItemData) {
@@ -2794,7 +2794,7 @@ namespace mwse {
 				// Figure out how many more of the item can fit in the container.
 				auto maxCapacity = static_cast<TES3::Container*>(reference->getBaseObject())->capacity;
 				auto currentWeight = actor->inventory.calculateContainedWeight();
-				int fulfilledCount = std::min((int)((maxCapacity - currentWeight) / item->getWeight()), desiredCount);
+				fulfilledCount = std::min((int)((maxCapacity - currentWeight) / item->getWeight()), desiredCount);
 			}
 			else {
 				fulfilledCount = desiredCount;
@@ -2823,10 +2823,10 @@ namespace mwse {
 			// Add the item and return the added count, since we do no inventory checking.
 			auto mobile = reference->getAttachedMobileActor();
 			if (itemData) {
-				fulfilledCount = actor->inventory.addItem(mobile, item, fulfilledCount, false, &itemData);
+				actor->inventory.addItem(mobile, item, fulfilledCount, false, &itemData);
 			}
 			else {
-				fulfilledCount = actor->inventory.addItemWithoutData(mobile, item, fulfilledCount, false);
+				actor->inventory.addItemWithoutData(mobile, item, fulfilledCount, false);
 			}
 
 			// Play the relevant sound.
