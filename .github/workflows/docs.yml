@@ -35,5 +35,6 @@ jobs:
 
       - name: Deploy
         run: |
+          cd $GITHUB_WORKSPACE
           git pull
           mkdocs gh-deploy
