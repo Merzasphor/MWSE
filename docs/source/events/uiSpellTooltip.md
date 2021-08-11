@@ -3,7 +3,7 @@
 The uiSpellTooltip event triggers when a new tooltip is displayed for a spell. The tooltip will be already be built.
 
 ```lua
---- @type e event.uiSpellTooltip
+--- @param e uiSpellTooltipEventData
 local function uiSpellTooltipCallback(e)
 end
 event.register("uiSpellTooltip", uiSpellTooltipCallback)

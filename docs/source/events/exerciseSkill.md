@@ -3,7 +3,7 @@
 This event is invoked whenever the player gains experience in a skill. The event can be blocked to prevent progress. Additionally, both the skill gaining experience and the progress gained can be changed.
 
 ```lua
---- @type e event.exerciseSkill
+--- @param e exerciseSkillEventData
 local function exerciseSkillCallback(e)
 end
 event.register("exerciseSkill", exerciseSkillCallback)

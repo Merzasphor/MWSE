@@ -3,7 +3,7 @@
 
 
 ```lua
---- @type e event.playGroup
+--- @param e playGroupEventData
 local function playGroupCallback(e)
 end
 event.register("playGroup", playGroupCallback)

@@ -3,7 +3,7 @@
 This event is raised when a container is closed.
 
 ```lua
---- @type e event.containerClosed
+--- @param e containerClosedEventData
 local function containerClosedCallback(e)
 end
 event.register("containerClosed", containerClosedCallback)

@@ -3,7 +3,7 @@
 The combatStopped event occurs after an actor has left combat.
 
 ```lua
---- @type e event.combatStopped
+--- @param e combatStoppedEventData
 local function combatStoppedCallback(e)
 end
 event.register("combatStopped", combatStoppedCallback)

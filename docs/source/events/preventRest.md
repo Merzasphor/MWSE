@@ -3,7 +3,7 @@
 This event can be used to prevent player from resting by returning false.
 
 ```lua
---- @type e event.preventRest
+--- @param e preventRestEventData
 local function preventRestCallback(e)
 end
 event.register("preventRest", preventRestCallback)

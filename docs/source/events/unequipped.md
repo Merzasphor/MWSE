@@ -3,7 +3,7 @@
 The unequipped event fires after an actor has successfully equipped an item.
 
 ```lua
---- @type e event.unequipped
+--- @param e unequippedEventData
 local function unequippedCallback(e)
 end
 event.register("unequipped", unequippedCallback)

@@ -3,7 +3,7 @@
 One of the movement events, calcRunSpeed is used when calculating when the player is running, but not swimming or flying.
 
 ```lua
---- @type e event.calcRunSpeed
+--- @param e calcRunSpeedEventData
 local function calcRunSpeedCallback(e)
 end
 event.register("calcRunSpeed", calcRunSpeedCallback)

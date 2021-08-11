@@ -3,7 +3,7 @@
 This event is triggered when any spell or enchant is cast successfully, or when any alchemy item is used. This includes spells cast via scripts. For spells, this occurs at the end of the casting animation. For spells and enchants, it is just after the magic projectile has been constructed.
 
 ```lua
---- @type e event.magicCasted
+--- @param e magicCastedEventData
 local function magicCastedCallback(e)
 end
 event.register("magicCasted", magicCastedCallback)

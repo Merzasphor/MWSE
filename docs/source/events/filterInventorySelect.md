@@ -3,7 +3,7 @@
 This event fires when an inventory filter has been selected for an item.
 
 ```lua
---- @type e event.filterInventorySelect
+--- @param e filterInventorySelectEventData
 local function filterInventorySelectCallback(e)
 end
 event.register("filterInventorySelect", filterInventorySelectCallback)

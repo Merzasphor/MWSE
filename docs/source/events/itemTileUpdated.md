@@ -3,7 +3,7 @@
 This event fires when a dialogue response is triggered.
 
 ```lua
---- @type e event.itemTileUpdated
+--- @param e itemTileUpdatedEventData
 local function itemTileUpdatedCallback(e)
 end
 event.register("itemTileUpdated", itemTileUpdatedCallback)

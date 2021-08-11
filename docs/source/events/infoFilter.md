@@ -3,7 +3,7 @@
 This event fires when a dialogue info object is filtered.
 
 ```lua
---- @type e event.infoFilter
+--- @param e infoFilterEventData
 local function infoFilterCallback(e)
 end
 event.register("infoFilter", infoFilterCallback)

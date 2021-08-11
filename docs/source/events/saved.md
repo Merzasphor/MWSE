@@ -3,7 +3,7 @@
 The saved event fires after the game has successfully been saved. This event is preceded by the save event.
 
 ```lua
---- @type e event.saved
+--- @param e savedEventData
 local function savedCallback(e)
 end
 event.register("saved", savedCallback)

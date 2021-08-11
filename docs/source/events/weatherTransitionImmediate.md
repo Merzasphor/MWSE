@@ -3,7 +3,7 @@
 The weatherChangedImmediate event occurs when the currently simulated weather is changed without transition.
 
 ```lua
---- @type e event.weatherTransitionImmediate
+--- @param e weatherTransitionImmediateEventData
 local function weatherTransitionImmediateCallback(e)
 end
 event.register("weatherTransitionImmediate", weatherTransitionImmediateCallback)

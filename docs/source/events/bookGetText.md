@@ -3,7 +3,7 @@
 This event is raised when a book's text is about to be displayed. By providing your own text, you can overwrite what is going to be displayed.
 
 ```lua
---- @type e event.bookGetText
+--- @param e bookGetTextEventData
 local function bookGetTextCallback(e)
 end
 event.register("bookGetText", bookGetTextCallback)

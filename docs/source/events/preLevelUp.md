@@ -3,7 +3,7 @@
 This event is triggered just before the player levels up.
 
 ```lua
---- @type e event.preLevelUp
+--- @param e preLevelUpEventData
 local function preLevelUpCallback(e)
 end
 event.register("preLevelUp", preLevelUpCallback)

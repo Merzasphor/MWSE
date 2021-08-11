@@ -3,7 +3,7 @@
 This event is triggered when a reference is activated.
 
 ```lua
---- @type e event.referenceActivated
+--- @param e referenceActivatedEventData
 local function referenceActivatedCallback(e)
 end
 event.register("referenceActivated", referenceActivatedCallback)

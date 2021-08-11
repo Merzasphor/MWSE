@@ -3,7 +3,7 @@
 The damage event triggers before an actor is damaged. The damage value can be modified, or the damage can be prevented completely by blocking the event.
 
 ```lua
---- @type e event.damage
+--- @param e damageEventData
 local function damageCallback(e)
 end
 event.register("damage", damageCallback)

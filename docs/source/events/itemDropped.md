@@ -3,7 +3,7 @@
 This event fires when an item is dropped.
 
 ```lua
---- @type e event.itemDropped
+--- @param e itemDroppedEventData
 local function itemDroppedCallback(e)
 end
 event.register("itemDropped", itemDroppedCallback)

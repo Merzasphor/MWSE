@@ -3,7 +3,7 @@
 
 
 ```lua
---- @type e event.playItemSound
+--- @param e playItemSoundEventData
 local function playItemSoundCallback(e)
 end
 event.register("playItemSound", playItemSoundCallback)

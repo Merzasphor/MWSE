@@ -5,7 +5,7 @@ The equip event fires when an actor is about to equip an item, i.e. just before 
 The item must not be removed from the inventory during this event, as the item and item data is still being referenced by the initiator of the equip action. If you want to consume the item, block the equip and remove it at a later time. Removing the item during this event can cause inventory desync bugs.
 
 ```lua
---- @type e event.equip
+--- @param e equipEventData
 local function equipCallback(e)
 end
 event.register("equip", equipCallback)

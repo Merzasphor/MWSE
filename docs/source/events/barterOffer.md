@@ -3,7 +3,7 @@
 This event is called when a potentially successful barter offer is made by the player. Potentially successful means both parties have the required funds to make the trade.
 
 ```lua
---- @type e event.barterOffer
+--- @param e barterOfferEventData
 local function barterOfferCallback(e)
 end
 event.register("barterOffer", barterOfferCallback)

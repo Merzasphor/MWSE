@@ -3,7 +3,7 @@
 The key event fires when a key is pressed.
 
 ```lua
---- @type e event.keyDown
+--- @param e keyDownEventData
 local function keyDownCallback(e)
 end
 event.register("keyDown", keyDownCallback)

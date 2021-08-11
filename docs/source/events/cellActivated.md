@@ -3,7 +3,7 @@
 This event is triggered when a cell is activated.
 
 ```lua
---- @type e event.cellActivated
+--- @param e cellActivatedEventData
 local function cellActivatedCallback(e)
 end
 event.register("cellActivated", cellActivatedCallback)

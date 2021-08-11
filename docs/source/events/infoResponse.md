@@ -3,7 +3,7 @@
 This event fires when a dialogue response is triggered.
 
 ```lua
---- @type e event.infoResponse
+--- @param e infoResponseEventData
 local function infoResponseCallback(e)
 end
 event.register("infoResponse", infoResponseCallback)

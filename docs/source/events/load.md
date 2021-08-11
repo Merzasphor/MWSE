@@ -3,7 +3,7 @@
 The load event fires when the game is about to load. This event allows scripts to block loading.
 
 ```lua
---- @type e event.load
+--- @param e loadEventData
 local function loadCallback(e)
 end
 event.register("load", loadCallback)

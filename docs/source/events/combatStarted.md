@@ -3,7 +3,7 @@
 The combatStarted event occurs after combat has begun between two actors.
 
 ```lua
---- @type e event.combatStarted
+--- @param e combatStartedEventData
 local function combatStartedCallback(e)
 end
 event.register("combatStarted", combatStartedCallback)

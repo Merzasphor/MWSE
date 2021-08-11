@@ -3,7 +3,7 @@
 The menuEnter event fires when the player enters menu mode.
 
 ```lua
---- @type e event.menuEnter
+--- @param e menuEnterEventData
 local function menuEnterCallback(e)
 end
 event.register("menuEnter", menuEnterCallback)

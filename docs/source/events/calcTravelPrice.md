@@ -3,7 +3,7 @@
 This event is called when determining the price of traveling, and can be used to modify the given price.
 
 ```lua
---- @type e event.calcTravelPrice
+--- @param e calcTravelPriceEventData
 local function calcTravelPriceCallback(e)
 end
 event.register("calcTravelPrice", calcTravelPriceCallback)

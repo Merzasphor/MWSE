@@ -3,7 +3,7 @@
 This event is triggered just before a spell cast is resolved, at the end of the casting animation. It can control the success chance of the spell cast.
 
 ```lua
---- @type e event.spellCast
+--- @param e spellCastEventData
 local function spellCastCallback(e)
 end
 event.register("spellCast", spellCastCallback)

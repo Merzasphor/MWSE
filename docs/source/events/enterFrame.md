@@ -3,7 +3,7 @@
 The enterFrame event occurs at the start of every frame, including when the game is paused or in menu mode.
 
 ```lua
---- @type e event.enterFrame
+--- @param e enterFrameEventData
 local function enterFrameCallback(e)
 end
 event.register("enterFrame", enterFrameCallback)

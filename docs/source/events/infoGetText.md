@@ -3,7 +3,7 @@
 This event fires when a dialogue info object text is retrieved.
 
 ```lua
---- @type e event.infoGetText
+--- @param e infoGetTextEventData
 local function infoGetTextCallback(e)
 end
 event.register("infoGetText", infoGetTextCallback)

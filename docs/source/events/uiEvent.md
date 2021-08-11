@@ -3,7 +3,7 @@
 uiEvent is triggered through various UI events. This includes scrolling through panes, clicking buttons, selecting icons, or a host of other UI-related activities.
 
 ```lua
---- @type e event.uiEvent
+--- @param e uiEventEventData
 local function uiEventCallback(e)
 end
 event.register("uiEvent", uiEventCallback)

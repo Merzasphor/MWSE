@@ -3,7 +3,7 @@
 The simulate event occurs at the start of every frame, excluding when the game is paused or in menu mode.
 
 ```lua
---- @type e event.simulate
+--- @param e simulateEventData
 local function simulateCallback(e)
 end
 event.register("simulate", simulateCallback)

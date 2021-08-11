@@ -3,7 +3,7 @@
 The damaged event triggers after an actor has been damaged.
 
 ```lua
---- @type e event.damaged
+--- @param e damagedEventData
 local function damagedCallback(e)
 end
 event.register("damaged", damagedCallback)

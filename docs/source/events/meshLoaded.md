@@ -3,7 +3,7 @@
 
 
 ```lua
---- @type e event.meshLoaded
+--- @param e meshLoadedEventData
 local function meshLoadedCallback(e)
 end
 event.register("meshLoaded", meshLoadedCallback)

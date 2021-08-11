@@ -3,7 +3,7 @@
 This event fires when an item in the inventory is filtered.
 
 ```lua
---- @type e event.filterInventory
+--- @param e filterInventoryEventData
 local function filterInventoryCallback(e)
 end
 event.register("filterInventory", filterInventoryCallback)

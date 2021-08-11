@@ -3,7 +3,7 @@
 The journal event is invoked when a journal state progresses.
 
 ```lua
---- @type e event.journal
+--- @param e journalEventData
 local function journalCallback(e)
 end
 event.register("journal", journalCallback)

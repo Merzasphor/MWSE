@@ -3,7 +3,7 @@
 This event is invoked whenever the player naturally gains a new level a skill. This is typically through exercise, training, or reading books.
 
 ```lua
---- @type e event.skillRaised
+--- @param e skillRaisedEventData
 local function skillRaisedCallback(e)
 end
 event.register("skillRaised", skillRaisedCallback)

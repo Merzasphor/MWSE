@@ -3,7 +3,7 @@
 This event is raised when determining the hit chance for an actor.
 
 ```lua
---- @type e event.calcHitChance
+--- @param e calcHitChanceEventData
 local function calcHitChanceCallback(e)
 end
 event.register("calcHitChance", calcHitChanceCallback)

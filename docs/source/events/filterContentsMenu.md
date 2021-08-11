@@ -3,7 +3,7 @@
 This event fires when an item in the contents menu is filtered.
 
 ```lua
---- @type e event.filterContentsMenu
+--- @param e filterContentsMenuEventData
 local function filterContentsMenuCallback(e)
 end
 event.register("filterContentsMenu", filterContentsMenuCallback)

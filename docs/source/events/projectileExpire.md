@@ -3,7 +3,7 @@
 The projectileExpire event fires just prior to a fired projectile expiring.
 
 ```lua
---- @type e event.projectileExpire
+--- @param e projectileExpireEventData
 local function projectileExpireCallback(e)
 end
 event.register("projectileExpire", projectileExpireCallback)

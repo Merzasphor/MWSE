@@ -3,7 +3,7 @@
 The combatStart event occurs when combat is about to begin between two actors. This event allows scripts to prevent combat from starting.
 
 ```lua
---- @type e event.combatStart
+--- @param e combatStartEventData
 local function combatStartCallback(e)
 end
 event.register("combatStart", combatStartCallback)

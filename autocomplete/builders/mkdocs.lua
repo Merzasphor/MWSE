@@ -229,7 +229,7 @@ local function build(package)
 	if (package.type == "class" and package.inherits) then
 		file:write(string.format("This type inherits the following: %s\n", buildParentChain(package.inherits)))
 	elseif (package.type == "event") then
-		file:write(string.format("```lua\n--- @type e event.%s\nlocal function %sCallback(e)\nend\nevent.register(\"%s\", %sCallback)\n```\n\n", package.key, package.key, package.key, package.key))
+		file:write(string.format("```lua\n--- @param e %sEventData\nlocal function %sCallback(e)\nend\nevent.register(\"%s\", %sCallback)\n```\n\n", package.key, package.key, package.key, package.key))
 		if (package.filter) then
 			file:write(string.format("This event can be filtered based on the **`%s`** event data.\n\n", package.filter))
 		end

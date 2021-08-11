@@ -3,7 +3,7 @@
 This event fires when a soul gem target is filtered
 
 ```lua
---- @type e event.filterSoulGemTarget
+--- @param e filterSoulGemTargetEventData
 local function filterSoulGemTargetCallback(e)
 end
 event.register("filterSoulGemTarget", filterSoulGemTargetCallback)

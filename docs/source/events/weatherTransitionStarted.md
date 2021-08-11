@@ -3,7 +3,7 @@
 The weatherTransitionStarted event occurs when the currently simulated weather has started to gradually transition to a new weather.
 
 ```lua
---- @type e event.weatherTransitionStarted
+--- @param e weatherTransitionStartedEventData
 local function weatherTransitionStartedCallback(e)
 end
 event.register("weatherTransitionStarted", weatherTransitionStartedCallback)

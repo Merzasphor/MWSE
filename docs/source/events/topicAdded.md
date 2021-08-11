@@ -3,7 +3,7 @@
 This event is raised when the player gains access to a new dialogue topic.
 
 ```lua
---- @type e event.topicAdded
+--- @param e topicAddedEventData
 local function topicAddedCallback(e)
 end
 event.register("topicAdded", topicAddedCallback)

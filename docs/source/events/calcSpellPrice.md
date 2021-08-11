@@ -3,7 +3,7 @@
 This event is called when determining the cost of purchasing a spell. The price can be modified.
 
 ```lua
---- @type e event.calcSpellPrice
+--- @param e calcSpellPriceEventData
 local function calcSpellPriceCallback(e)
 end
 event.register("calcSpellPrice", calcSpellPriceCallback)

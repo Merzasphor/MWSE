@@ -3,7 +3,7 @@
 
 
 ```lua
---- @type e event.bodyPartAssigned
+--- @param e bodyPartAssignedEventData
 local function bodyPartAssignedCallback(e)
 end
 event.register("bodyPartAssigned", bodyPartAssignedCallback)

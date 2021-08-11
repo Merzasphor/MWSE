@@ -3,7 +3,7 @@
 
 
 ```lua
---- @type e event.spellCreated
+--- @param e spellCreatedEventData
 local function spellCreatedCallback(e)
 end
 event.register("spellCreated", spellCreatedCallback)

@@ -3,7 +3,7 @@
 This event is invoked after a UI menu has been built or made visible, at the point that all menu elements contain updated data.
 
 ```lua
---- @type e event.uiActivated
+--- @param e uiActivatedEventData
 local function uiActivatedCallback(e)
 end
 event.register("uiActivated", uiActivatedCallback)

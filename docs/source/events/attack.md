@@ -3,7 +3,7 @@
 This event is invoked whenever an actor makes an attack with their fists or a weapon, or a creature makes any attack. It occurs at the release time of the attack, such as the downstroke of a melee weapon or when an arrow is shot. Lockpicks and probes do not invoke this event.
 
 ```lua
---- @type e event.attack
+--- @param e attackEventData
 local function attackCallback(e)
 end
 event.register("attack", attackCallback)

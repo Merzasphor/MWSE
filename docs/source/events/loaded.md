@@ -3,7 +3,7 @@
 The loaded event fires after the game has been successfully loaded. This event is preceded by the load event.
 
 ```lua
---- @type e event.loaded
+--- @param e loadedEventData
 local function loadedCallback(e)
 end
 event.register("loaded", loadedCallback)

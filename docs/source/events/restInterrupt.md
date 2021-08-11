@@ -3,7 +3,7 @@
 This event is invoked when a rest is about to be interrupted. The ambushing spawn can be overridden by changing the creature parameter.
 
 ```lua
---- @type e event.restInterrupt
+--- @param e restInterruptEventData
 local function restInterruptCallback(e)
 end
 event.register("restInterrupt", restInterruptCallback)

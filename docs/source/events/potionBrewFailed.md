@@ -3,7 +3,7 @@
 The potionBrewFailed event is raised when the player fails a potion brew attempt.
 
 ```lua
---- @type e event.potionBrewFailed
+--- @param e potionBrewFailedEventData
 local function potionBrewFailedCallback(e)
 end
 event.register("potionBrewFailed", potionBrewFailedCallback)

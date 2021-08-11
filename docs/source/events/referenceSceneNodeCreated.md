@@ -3,7 +3,7 @@
 This event fires when a SceneNode is created for a reference.
 
 ```lua
---- @type e event.referenceSceneNodeCreated
+--- @param e referenceSceneNodeCreatedEventData
 local function referenceSceneNodeCreatedCallback(e)
 end
 event.register("referenceSceneNodeCreated", referenceSceneNodeCreatedCallback)

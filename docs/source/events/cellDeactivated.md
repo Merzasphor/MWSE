@@ -3,7 +3,7 @@
 This event is triggered when a cell is deactivated.
 
 ```lua
---- @type e event.cellDeactivated
+--- @param e cellDeactivatedEventData
 local function cellDeactivatedCallback(e)
 end
 event.register("cellDeactivated", cellDeactivatedCallback)

@@ -3,7 +3,7 @@
 
 
 ```lua
---- @type e event.powerRecharged
+--- @param e powerRechargedEventData
 local function powerRechargedCallback(e)
 end
 event.register("powerRecharged", powerRechargedCallback)

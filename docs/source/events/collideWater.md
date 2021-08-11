@@ -3,7 +3,7 @@
 This event is triggered when a mobile object collides with water.
 
 ```lua
---- @type e event.collideWater
+--- @param e collideWaterEventData
 local function collideWaterCallback(e)
 end
 event.register("collideWater", collideWaterCallback)

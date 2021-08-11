@@ -3,7 +3,7 @@
 The menuExit event fires when the player leaves menu mode.
 
 ```lua
---- @type e event.menuExit
+--- @param e menuExitEventData
 local function menuExitCallback(e)
 end
 event.register("menuExit", menuExitCallback)

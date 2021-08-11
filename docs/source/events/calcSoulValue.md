@@ -3,7 +3,7 @@
 This event is raised when determining the value of a soul, unmodified by GMSTs. The value can be modified, or used to provide a soul value to NPCs who would normally not be allowed one.
 
 ```lua
---- @type e event.calcSoulValue
+--- @param e calcSoulValueEventData
 local function calcSoulValueCallback(e)
 end
 event.register("calcSoulValue", calcSoulValueCallback)

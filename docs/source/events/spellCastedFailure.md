@@ -3,7 +3,7 @@
 This event is triggered when any spell fails to cast due to failing the cast chance check. It does not trigger when there is insufficient magicka.
 
 ```lua
---- @type e event.spellCastedFailure
+--- @param e spellCastedFailureEventData
 local function spellCastedFailureCallback(e)
 end
 event.register("spellCastedFailure", spellCastedFailureCallback)

@@ -11,10 +11,12 @@ common.log("Starting build of EmmyLua meta files...")
 local metaFolder = lfs.join(common.pathAutocomplete, "..\\misc\\package\\Data Files\\MWSE\\core\\meta")
 lfs.remakedir(lfs.join(metaFolder, "lib"))
 lfs.remakedir(lfs.join(metaFolder, "class"))
+lfs.remakedir(lfs.join(metaFolder, "event"))
 
 -- Base containers to hold our compiled data.
 local libraries = {}
 local classes = {}
+local events = {}
 
 
 --
@@ -30,6 +32,8 @@ local function getPackageLink(package)
 		tokens = { common.urlBase, "types", package.key }
 	elseif (package.type == "class") then
 		tokens = { common.urlBase, "apis", package.namespace }
+	elseif (package.type == "event") then
+		tokens = { common.urlBase, "events", package.key }
 	elseif (package.parent) then
 		local parentType = package.parent.type
 		if (parentType == "lib") then
@@ -131,6 +135,7 @@ end
 
 common.compilePath(lfs.join(common.pathDefinitions, "global"), libraries, "lib")
 common.compilePath(lfs.join(common.pathDefinitions, "namedTypes"), classes, "class")
+common.compilePath(lfs.join(common.pathDefinitions, "events", "standard"), classes, "event")
 
 
 --
@@ -163,11 +168,27 @@ local function build(package)
 		file:write(string.format("--- @class %slib\n", package.key))
 	elseif (package.type == "class") then
 		file:write(string.format("--- @class %s%s\n", package.key, package.inherits and (" : " .. buildParentChain(package.inherits)) or ""))
+	elseif (package.type == "event") then
+		file:write(string.format("--- @class %sEventData\n", package.key))
 	end
 
 	-- Write out fields.
 	for _, value in ipairs(package.values or {}) do
 		file:write(string.format("--- @field %s %s %s\n", value.key, getAllPossibleVariationsOfType(value.valuetype) or "any", formatLineBreaks(value.description or common.defaultNoDescriptionText)))
+	end
+
+	-- Write out event data.
+	if (package.type == "event") then
+		local eventData = package.eventData or {}
+		if ((package.blockable == nil and true or false) and not eventData.blockable) then
+			file:write("--- @field block boolean If set to `true`, vanilla logic will be suppressed. Returning `false` will set this to `true`.\n")
+		end
+		if ((package.claimable == nil and true or false) and not eventData.claimable) then
+			file:write("--- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.\n")
+		end
+		for key, data in pairs(eventData) do
+			file:write(string.format("--- @field %s %s %s\n", key, getAllPossibleVariationsOfType(data.type) or "any", formatLineBreaks(data.description or common.defaultNoDescriptionText)))
+		end
 	end
 
 	-- Finalize the main class definition.
@@ -194,5 +215,9 @@ for _, package in pairs(libraries) do
 end
 
 for _, package in pairs(classes) do
+	build(package)
+end
+
+for _, package in pairs(events) do
 	build(package)
 end

@@ -3,7 +3,7 @@
 This event fires when a lock is being picked.
 
 ```lua
---- @type e event.lockPick
+--- @param e lockPickEventData
 local function lockPickCallback(e)
 end
 event.register("lockPick", lockPickCallback)

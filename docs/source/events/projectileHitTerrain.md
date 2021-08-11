@@ -3,7 +3,7 @@
 The projectileHitTerrain event fires when a projectile collides with terrain.
 
 ```lua
---- @type e event.projectileHitTerrain
+--- @param e projectileHitTerrainEventData
 local function projectileHitTerrainCallback(e)
 end
 event.register("projectileHitTerrain", projectileHitTerrainCallback)

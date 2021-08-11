@@ -3,7 +3,7 @@
 This event fires when a trap is being disarmed.
 
 ```lua
---- @type e event.trapDisarm
+--- @param e trapDisarmEventData
 local function trapDisarmCallback(e)
 end
 event.register("trapDisarm", trapDisarmCallback)

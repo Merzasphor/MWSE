@@ -3,7 +3,7 @@
 This event is invoked after a UI menu has been created or recreated. This can be useful for when important game subcomponents are destroyed and remade, without the entire UI being activated.
 
 ```lua
---- @type e event.uiRefreshed
+--- @param e uiRefreshedEventData
 local function uiRefreshedCallback(e)
 end
 event.register("uiRefreshed", uiRefreshedCallback)

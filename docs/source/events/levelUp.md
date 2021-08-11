@@ -3,7 +3,7 @@
 This even is called whenever the player successfully finishes leveling up.
 
 ```lua
---- @type e event.levelUp
+--- @param e levelUpEventData
 local function levelUpCallback(e)
 end
 event.register("levelUp", levelUpCallback)

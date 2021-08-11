@@ -5,7 +5,7 @@ This event is triggered after magic absorption absorbs and cancels a magic effec
 This event occurs once per effect restored, so a multi-effect spell may trigger this multiple times. The default amount restored is equal to the casting cost of the entire spell, which is the vanilla behaviour.
 
 ```lua
---- @type e event.absorbedMagic
+--- @param e absorbedMagicEventData
 local function absorbedMagicCallback(e)
 end
 event.register("absorbedMagic", absorbedMagicCallback)

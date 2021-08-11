@@ -3,7 +3,7 @@
 This event fires when a crime is witnessed by an actor.
 
 ```lua
---- @type e event.crimeWitnessed
+--- @param e crimeWitnessedEventData
 local function crimeWitnessedCallback(e)
 end
 event.register("crimeWitnessed", crimeWitnessedCallback)

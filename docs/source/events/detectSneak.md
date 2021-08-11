@@ -3,7 +3,7 @@
 This event is invoked whenever an actor is checking if they can detect another actor sneaking.
 
 ```lua
---- @type e event.detectSneak
+--- @param e detectSneakEventData
 local function detectSneakCallback(e)
 end
 event.register("detectSneak", detectSneakCallback)

@@ -3,7 +3,7 @@
 This event is raised when an item price is being determined when bartering.
 
 ```lua
---- @type e event.calcBarterPrice
+--- @param e calcBarterPriceEventData
 local function calcBarterPriceCallback(e)
 end
 event.register("calcBarterPrice", calcBarterPriceCallback)

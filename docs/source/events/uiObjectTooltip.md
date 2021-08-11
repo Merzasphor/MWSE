@@ -3,7 +3,7 @@
 The uiObjectTooltip event triggers when a new tooltip is displayed for all in-world objects and items, and inventory tiles in all dialogues. The tooltip will be already be built. Tooltips for inventory tiles are built on mouseover, while tooltips for in-world objects are rebuilt every frame.
 
 ```lua
---- @type e event.uiObjectTooltip
+--- @param e uiObjectTooltipEventData
 local function uiObjectTooltipCallback(e)
 end
 event.register("uiObjectTooltip", uiObjectTooltipCallback)

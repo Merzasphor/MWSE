@@ -3,7 +3,7 @@
 One of the movement events, calcSwimRunSpeed is used when calculating the movement speed while in water when running.
 
 ```lua
---- @type e event.calcSwimRunSpeed
+--- @param e calcSwimRunSpeedEventData
 local function calcSwimRunSpeedCallback(e)
 end
 event.register("calcSwimRunSpeed", calcSwimRunSpeedCallback)

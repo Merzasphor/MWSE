@@ -3,7 +3,7 @@
 The potionBrewed event is raised when the player brews a new potion.
 
 ```lua
---- @type e event.potionBrewed
+--- @param e potionBrewedEventData
 local function potionBrewedCallback(e)
 end
 event.register("potionBrewed", potionBrewedCallback)

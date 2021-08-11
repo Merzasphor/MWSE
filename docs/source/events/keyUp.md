@@ -3,7 +3,7 @@
 The key event fires when a key is released.
 
 ```lua
---- @type e event.keyUp
+--- @param e keyUpEventData
 local function keyUpCallback(e)
 end
 event.register("keyUp", keyUpCallback)

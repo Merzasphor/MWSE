@@ -3,7 +3,7 @@
 The mouseAxis event fires when the mouse is moved, providing deltaX and deltaY values.
 
 ```lua
---- @type e event.mouseAxis
+--- @param e mouseAxisEventData
 local function mouseAxisCallback(e)
 end
 event.register("mouseAxis", mouseAxisCallback)

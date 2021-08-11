@@ -3,7 +3,7 @@
 This event fires when an actor determines an action in a combat session.
 
 ```lua
---- @type e event.determineAction
+--- @param e determineActionEventData
 local function determineActionCallback(e)
 end
 event.register("determineAction", determineActionCallback)

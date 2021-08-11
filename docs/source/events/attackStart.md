@@ -3,7 +3,7 @@
 This event is invoked whenever an actor starts an attack with their fists or a weapon, or a creature makes any attack. More precisely, it is when the actor raises a melee weapon or draws an arrow. There is not necessarily a target in range, or any target at all for the player.
 
 ```lua
---- @type e event.attackStart
+--- @param e attackStartEventData
 local function attackStartCallback(e)
 end
 event.register("attackStart", attackStartCallback)

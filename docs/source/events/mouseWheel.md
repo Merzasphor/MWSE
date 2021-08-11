@@ -3,7 +3,7 @@
 The mouseWheel event fires when the mouse wheel is used, providing a delta value.
 
 ```lua
---- @type e event.mouseWheel
+--- @param e mouseWheelEventData
 local function mouseWheelCallback(e)
 end
 event.register("mouseWheel", mouseWheelCallback)

@@ -3,7 +3,7 @@
 This event is triggered when a reference is deactivated.
 
 ```lua
---- @type e event.referenceDeactivated
+--- @param e referenceDeactivatedEventData
 local function referenceDeactivatedCallback(e)
 end
 event.register("referenceDeactivated", referenceDeactivatedCallback)

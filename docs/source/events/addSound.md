@@ -3,7 +3,7 @@
 This event is triggered when a sound is player by the game or when tes3.playSound is called. This event can be blocked.
 
 ```lua
---- @type e event.addSound
+--- @param e addSoundEventData
 local function addSoundCallback(e)
 end
 event.register("addSound", addSoundCallback)

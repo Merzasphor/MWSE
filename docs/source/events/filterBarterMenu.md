@@ -3,7 +3,7 @@
 This event fires when an item in the barter menu is filtered.
 
 ```lua
---- @type e event.filterBarterMenu
+--- @param e filterBarterMenuEventData
 local function filterBarterMenuCallback(e)
 end
 event.register("filterBarterMenu", filterBarterMenuCallback)

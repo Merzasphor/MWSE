@@ -3,7 +3,7 @@
 One of the movement events, calcWalkSpeed is used when calculating the base walk speed.
 
 ```lua
---- @type e event.calcWalkSpeed
+--- @param e calcWalkSpeedEventData
 local function calcWalkSpeedCallback(e)
 end
 event.register("calcWalkSpeed", calcWalkSpeedCallback)

@@ -3,7 +3,7 @@
 This event fires immediately after a dialogue response is processed.
 
 ```lua
---- @type e event.postInfoResponse
+--- @param e postInfoResponseEventData
 local function postInfoResponseCallback(e)
 end
 event.register("postInfoResponse", postInfoResponseCallback)

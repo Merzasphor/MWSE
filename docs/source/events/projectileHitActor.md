@@ -3,7 +3,7 @@
 The projectileHitActor event fires when a projectile collides with an actor.
 
 ```lua
---- @type e event.projectileHitActor
+--- @param e projectileHitActorEventData
 local function projectileHitActorCallback(e)
 end
 event.register("projectileHitActor", projectileHitActorCallback)

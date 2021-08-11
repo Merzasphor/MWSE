@@ -3,7 +3,7 @@
 The combatStop event occurs when an actor is about to leave combat. This event allows scripts to prevent combat from stopping.
 
 ```lua
---- @type e event.combatStop
+--- @param e combatStopEventData
 local function combatStopCallback(e)
 end
 event.register("combatStop", combatStopCallback)

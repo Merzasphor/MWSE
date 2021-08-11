@@ -3,7 +3,7 @@
 The mouseButtonDown event fires when a button on the mouse is pressed.
 
 ```lua
---- @type e event.mouseButtonDown
+--- @param e mouseButtonDownEventData
 local function mouseButtonDownCallback(e)
 end
 event.register("mouseButtonDown", mouseButtonDownCallback)

@@ -3,7 +3,7 @@
 The equipped event fires after an actor has successfully equipped an item.
 
 ```lua
---- @type e event.equipped
+--- @param e equippedEventData
 local function equippedCallback(e)
 end
 event.register("equipped", equippedCallback)

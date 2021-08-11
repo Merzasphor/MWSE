@@ -3,7 +3,7 @@
 The projectileHitObject event fires when a projectile collides with an object.
 
 ```lua
---- @type e event.projectileHitObject
+--- @param e projectileHitObjectEventData
 local function projectileHitObjectCallback(e)
 end
 event.register("projectileHitObject", projectileHitObjectCallback)

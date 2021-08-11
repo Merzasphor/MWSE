@@ -3,7 +3,7 @@
 This event is triggered on a collision.
 
 ```lua
---- @type e event.collision
+--- @param e collisionEventData
 local function collisionCallback(e)
 end
 event.register("collision", collisionCallback)

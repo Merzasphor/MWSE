@@ -3,7 +3,7 @@
 This event is called after any leveled item list is resolved.
 
 ```lua
---- @type e event.leveledItemPicked
+--- @param e leveledItemPickedEventData
 local function leveledItemPickedCallback(e)
 end
 event.register("leveledItemPicked", leveledItemPickedCallback)

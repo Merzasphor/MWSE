@@ -3,7 +3,7 @@
 The save event fires when the game is about to save. This event allows scripts to block saving.
 
 ```lua
---- @type e event.save
+--- @param e saveEventData
 local function saveCallback(e)
 end
 event.register("save", saveCallback)

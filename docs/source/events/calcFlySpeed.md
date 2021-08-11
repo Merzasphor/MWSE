@@ -3,7 +3,7 @@
 One of the movement events, calcFlySpeed is used when calculating movement speeds when levitating or otherwise flying.
 
 ```lua
---- @type e event.calcFlySpeed
+--- @param e calcFlySpeedEventData
 local function calcFlySpeedCallback(e)
 end
 event.register("calcFlySpeed", calcFlySpeedCallback)

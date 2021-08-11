@@ -3,7 +3,7 @@
 This event is triggered when any spell is cast successfully; this includes spells cast via scripts. This occurs at the end of the casting animation, just after the magic projectile has been constructed.
 
 ```lua
---- @type e event.spellCasted
+--- @param e spellCastedEventData
 local function spellCastedCallback(e)
 end
 event.register("spellCasted", spellCastedCallback)

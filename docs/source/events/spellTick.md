@@ -3,7 +3,7 @@
 The spellTick event happens every frame that an effect is active on a target. This can be used to aid in scripted spells, cancel active spells, or otherwise monitor spell activity on actors.
 
 ```lua
---- @type e event.spellTick
+--- @param e spellTickEventData
 local function spellTickCallback(e)
 end
 event.register("spellTick", spellTickCallback)

@@ -3,7 +3,7 @@
 This event is called when determining the cost of training, and can be used to modify the given price.
 
 ```lua
---- @type e event.calcTrainingPrice
+--- @param e calcTrainingPriceEventData
 local function calcTrainingPriceCallback(e)
 end
 event.register("calcTrainingPrice", calcTrainingPriceCallback)

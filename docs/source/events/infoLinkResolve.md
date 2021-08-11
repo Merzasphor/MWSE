@@ -3,7 +3,7 @@
 This event fires when a dialogue hyperlink is being resolved to a topic, during UI layout (not on link activation).
 
 ```lua
---- @type e event.infoLinkResolve
+--- @param e infoLinkResolveEventData
 local function infoLinkResolveCallback(e)
 end
 event.register("infoLinkResolve", infoLinkResolveCallback)

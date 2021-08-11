@@ -3,7 +3,7 @@
 This event triggers when an actor dies.
 
 ```lua
---- @type e event.death
+--- @param e deathEventData
 local function deathCallback(e)
 end
 event.register("death", deathCallback)

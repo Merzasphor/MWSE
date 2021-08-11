@@ -3,7 +3,7 @@
 This event is raised when the potential activation target for the player changes.
 
 ```lua
---- @type e event.activationTargetChanged
+--- @param e activationTargetChangedEventData
 local function activationTargetChangedCallback(e)
 end
 event.register("activationTargetChanged", activationTargetChangedCallback)

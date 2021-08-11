@@ -3,7 +3,7 @@
 
 
 ```lua
---- @type e event.addTempSound
+--- @param e addTempSoundEventData
 local function addTempSoundCallback(e)
 end
 event.register("addTempSound", addTempSoundCallback)

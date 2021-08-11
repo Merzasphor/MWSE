@@ -3,7 +3,7 @@
 The weatherTransitionFinished event occurs when the currently simulated weather finished transitioning to a new weather.
 
 ```lua
---- @type e event.weatherTransitionFinished
+--- @param e weatherTransitionFinishedEventData
 local function weatherTransitionFinishedCallback(e)
 end
 event.register("weatherTransitionFinished", weatherTransitionFinishedCallback)
