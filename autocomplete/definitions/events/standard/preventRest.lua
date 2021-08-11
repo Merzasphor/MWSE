@@ -14,4 +14,5 @@ return {
         },
     },
     filter = "mobile",
+	blockable = true,
 }

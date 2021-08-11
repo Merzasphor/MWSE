@@ -9,4 +9,5 @@ return {
 			description = "The combat session the action is being determined for.",
 		},
 	},
+	blockable = true,
 }

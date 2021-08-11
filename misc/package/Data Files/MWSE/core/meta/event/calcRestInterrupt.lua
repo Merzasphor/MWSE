@@ -8,5 +8,3 @@
 --- @field count number The number of creatures interrupting rest. Set to 0 to prevent a spawn.
 --- @field resting boolean If true, the player is attempting to rest, as opposed to wait.
 --- @field hour number The hour of rest remaining that the rest will be interrupted on.
-calcRestInterrupt = {}
-

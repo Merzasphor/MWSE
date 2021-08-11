@@ -9,5 +9,3 @@
 --- @field dialogue tes3dialogue The dialogue object.
 --- @field reference tes3reference The reference.
 --- @field variables tes3scriptVariables The script variables.
-infoResponse = {}
-

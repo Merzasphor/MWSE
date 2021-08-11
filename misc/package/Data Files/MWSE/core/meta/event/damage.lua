@@ -15,5 +15,3 @@
 --- @field mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer The mobile actor that is taking damage.
 --- @field reference tes3reference mobile’s associated reference.
 --- @field attacker tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer The mobile actor dealing the damage. Can be nil.
-damage = {}
-

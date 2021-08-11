@@ -37,5 +37,6 @@ return {
 			readOnly = true,
 			description = "Indicates if a trap is present on the reference.",
 		},
-	}
+	},
+	blockable = true,
 }

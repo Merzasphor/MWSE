@@ -9,5 +9,3 @@
 --- @field armorRating number If set, the given armor rating will be used instead of the one calculated.
 --- @field armor tes3armor The armor piece whose AR is being calculated.
 --- @field mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer The mobile whose AR is being calculated. May not always be available.
-calcArmorRating = {}
-

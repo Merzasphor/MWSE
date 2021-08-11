@@ -37,5 +37,6 @@ return {
 			readOnly = true,
 			description = "Indicates if a lock is present on the reference.",
 		},
-	}
+	},
+	blockable = true,
 }

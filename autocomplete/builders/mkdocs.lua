@@ -231,8 +231,12 @@ local function build(package)
 	elseif (package.type == "event") then
 		file:write(string.format("```lua\n--- @param e %sEventData\nlocal function %sCallback(e)\nend\nevent.register(\"%s\", %sCallback)\n```\n\n", package.key, package.key, package.key, package.key))
 		if (package.filter) then
-			file:write(string.format("This event can be filtered based on the **`%s`** event data.\n\n", package.filter))
+			file:write(string.format("!!! tip\n\tThis event can be filtered based on the **`%s`** event data.\n\n", package.filter))
 		end
+		if (package.blockable) then
+			file:write("!!! tip\n\tThis event supports blocking by setting `e.block` to `true` or returning `false`. Blocking the event prevents vanilla behavior from happening. For example, blocking an `equip` event prevents the item from being equipped.\n\n")
+		end
+		file:write("!!! tip\n\tAn event can be claimed by setting `e.claim` to `true`, or by returning `false` from the callback. Claiming the event prevents any lower priority callbacks from being called.\n\n")
 	end
 
 	-- Write out fields.

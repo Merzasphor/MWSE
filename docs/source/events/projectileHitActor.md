@@ -9,6 +9,9 @@ end
 event.register("projectileHitActor", projectileHitActorCallback)
 ```
 
+!!! tip
+	An event can be claimed by setting `e.claim` to `true`, or by returning `false` from the callback. Claiming the event prevents any lower priority callbacks from being called.
+
 ## Event Data
 
 * `firingWeapon` ([tes3weapon](../../types/tes3weapon)): The weapon that fired the projectile.

@@ -28,4 +28,5 @@ return {
 			description = "One of two undefined variables related to the event.",
 		},
 	},
+	blockable = true,
 }

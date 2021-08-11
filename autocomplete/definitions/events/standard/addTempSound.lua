@@ -36,4 +36,5 @@ return {
         },
     },
     filter = "sound",
+	blockable = true,
 }

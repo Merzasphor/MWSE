@@ -28,4 +28,5 @@ return {
 		},
 	},
 	filter = "armor",
+	blockable = true,
 }

@@ -33,4 +33,5 @@ return {
             description = "",
         },
     },
+	blockable = true,
 }

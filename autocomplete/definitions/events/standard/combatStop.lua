@@ -9,4 +9,5 @@ return {
 			description = "The mobile actor who is exiting combat.",
 		},
 	},
+	blockable = true,
 }

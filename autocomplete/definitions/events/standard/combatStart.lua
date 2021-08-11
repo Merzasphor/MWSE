@@ -14,4 +14,5 @@ return {
 			description = "The mobile actor who combat is being triggered against.",
 		},
 	},
+	blockable = true,
 }

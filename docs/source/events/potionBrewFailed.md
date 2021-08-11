@@ -9,6 +9,9 @@ end
 event.register("potionBrewFailed", potionBrewFailedCallback)
 ```
 
+!!! tip
+	An event can be claimed by setting `e.claim` to `true`, or by returning `false` from the callback. Claiming the event prevents any lower priority callbacks from being called.
+
 ## Event Data
 
 * `calcinator` ([tes3apparatus](../../types/tes3apparatus)): The calcinator apparatus used to create the potion.

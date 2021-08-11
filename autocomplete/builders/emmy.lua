@@ -180,10 +180,10 @@ local function build(package)
 	-- Write out event data.
 	if (package.type == "event") then
 		local eventData = package.eventData or {}
-		if ((package.blockable == nil and true or false) and not eventData.blockable) then
+		if (package.blockable and not eventData.blockable) then
 			file:write("--- @field block boolean If set to `true`, vanilla logic will be suppressed. Returning `false` will set this to `true`.\n")
 		end
-		if ((package.claimable == nil and true or false) and not eventData.claimable) then
+		if (not eventData.claimable) then
 			file:write("--- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.\n")
 		end
 		for key, data in pairs(eventData) do
@@ -192,7 +192,9 @@ local function build(package)
 	end
 
 	-- Finalize the main class definition.
-	file:write(string.format("%s = {}\n\n", package.key))
+	if (package.type ~= "event") then
+		file:write(string.format("%s = {}\n\n", package.key))
+	end
 
 	-- Write out functions.
 	for _, value in ipairs(package.functions or {}) do

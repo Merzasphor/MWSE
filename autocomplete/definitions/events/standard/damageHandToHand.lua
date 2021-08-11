@@ -28,4 +28,5 @@ return {
 			description = "The attacker mobile's associated reference. Can be nil.",
 		},
 	},
+	blockable = true,
 }

@@ -13,5 +13,3 @@
 --- @field source tes3alchemy|tes3enchantment|tes3spell The magic source.
 --- @field effect tes3magicEffect The individual effect structure on source.
 --- @field sourceInstance tes3magicSourceInstance The unique instance of the magic source.
-spellTick = {}
-

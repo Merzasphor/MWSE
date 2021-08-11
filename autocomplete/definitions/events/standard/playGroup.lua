@@ -34,4 +34,5 @@ return {
         },
     },
     filter = "reference",
+	blockable = true,
 }

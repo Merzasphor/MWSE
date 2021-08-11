@@ -14,6 +14,7 @@ return {
 		},
 	},
 	filter = "target",
+	blockable = true,
 	examples = {
 		["ShowActivationTarget"] = {
 			title = "Show a message for what the player is activating",

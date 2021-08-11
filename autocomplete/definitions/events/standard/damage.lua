@@ -48,6 +48,7 @@ return {
 			description = "The origin of damage. Values of this variable can be: \"script\", \"fall\", \"suffocation\", \"attack\", \"magic\", \"shield\" or nil.",
 		},
 	},
+	blockable = true,
 	examples = {
 		["changeFallDamage"] = {
 			title = "Change fall damage"

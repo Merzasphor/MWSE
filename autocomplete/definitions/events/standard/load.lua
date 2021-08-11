@@ -19,4 +19,5 @@ return {
 		},
 	},
 	filter = "filename",
+	blockable = true,
 }

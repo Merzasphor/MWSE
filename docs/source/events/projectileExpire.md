@@ -9,6 +9,9 @@ end
 event.register("projectileExpire", projectileExpireCallback)
 ```
 
+!!! tip
+	An event can be claimed by setting `e.claim` to `true`, or by returning `false` from the callback. Claiming the event prevents any lower priority callbacks from being called.
+
 ## Event Data
 
 * `mobile` ([tes3mobileProjectile](../../types/tes3mobileProjectile)): The mobile projectile that is expiring.

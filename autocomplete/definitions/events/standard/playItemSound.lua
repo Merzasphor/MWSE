@@ -19,4 +19,5 @@ return {
         },
     },
     filter = "item",
+	blockable = true,
 }

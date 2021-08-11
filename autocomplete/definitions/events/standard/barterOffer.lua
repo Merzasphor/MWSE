@@ -33,4 +33,5 @@ return {
             description = "Table of tes3what being bought. These items will be transfered to player's inventory on a successful bartering event.",
         },
     },
+	blockable = true,
 }

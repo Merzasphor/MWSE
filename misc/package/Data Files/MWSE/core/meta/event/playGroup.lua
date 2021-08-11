@@ -10,5 +10,3 @@
 --- @field group number 
 --- @field flags number 
 --- @field loopCount number 
-playGroup = {}
-

@@ -9,6 +9,9 @@ end
 event.register("musicSelectTrack", musicSelectTrackCallback)
 ```
 
+!!! tip
+	An event can be claimed by setting `e.claim` to `true`, or by returning `false` from the callback. Claiming the event prevents any lower priority callbacks from being called.
+
 ## Event Data
 
 * `situation` (number): Maps to tes3.musicSituation.*, indicating combat or non-combat music.

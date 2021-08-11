@@ -11,5 +11,3 @@
 --- @field disarmer tes3mobileNpc The Mobile NPC doing the disarming.
 --- @field trapPresent boolean Indicates if a trap is present on the reference.
 --- @field lockData tes3lockAttachmentNode The lock data of the reference.
-trapDisarm = {}
-

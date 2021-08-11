@@ -15,4 +15,5 @@ return {
         },
     },
     filter = "list",
+	blockable = true,
 }

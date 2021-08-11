@@ -9,6 +9,9 @@ end
 event.register("saved", savedCallback)
 ```
 
+!!! tip
+	An event can be claimed by setting `e.claim` to `true`, or by returning `false` from the callback. Claiming the event prevents any lower priority callbacks from being called.
+
 ## Event Data
 
 * `name` (string): The user facing name of the save, shown in the load/save game menu.

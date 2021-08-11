@@ -17,4 +17,5 @@ return {
 			description = "If true, the player is attempting to wait, as opposed to rest.",
 		},
 	},
+	blockable = true,
 }

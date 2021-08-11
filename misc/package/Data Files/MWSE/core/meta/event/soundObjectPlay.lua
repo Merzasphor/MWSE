@@ -9,5 +9,3 @@
 --- @field sound tes3sound 
 --- @field volume number 
 --- @field isNot3D boolean 
-soundObjectPlay = {}
-

@@ -9,6 +9,9 @@ end
 event.register("uiSpellTooltip", uiSpellTooltipCallback)
 ```
 
+!!! tip
+	An event can be claimed by setting `e.claim` to `true`, or by returning `false` from the callback. Claiming the event prevents any lower priority callbacks from being called.
+
 ## Event Data
 
 * `tooltip` ([tes3uiElement](../../types/tes3uiElement)): The newly created tooltip element. Due to timeouts and target changes, it may be destroyed at any time.

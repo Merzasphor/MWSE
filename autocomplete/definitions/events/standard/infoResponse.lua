@@ -29,4 +29,5 @@ return {
 			description = "The dialogue info object.",
 		},
 	},
+	blockable = true,
 }

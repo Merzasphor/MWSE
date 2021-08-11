@@ -9,5 +9,3 @@
 --- @field var2 number One of two undefined variables related to the event.
 --- @field parent tes3uiElement The calling element's parent.
 --- @field var1 number One of two undefined variables related to the event.
-uiPreEvent = {}
-

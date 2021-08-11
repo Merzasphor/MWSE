@@ -9,5 +9,3 @@
 --- @field mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer The mobile actor that is taking fatigue damage.
 --- @field attackerReference tes3reference The attacker mobile's associated reference. Can be nil.
 --- @field attacker tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer The mobile actor dealing the damage. Can be nil.
-damageHandToHand = {}
-

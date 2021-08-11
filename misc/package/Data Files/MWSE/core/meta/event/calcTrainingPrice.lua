@@ -2,7 +2,6 @@
 
 --- This event is called when determining the cost of training, and can be used to modify the given price.
 --- @class calcTrainingPriceEventData
---- @field block boolean If set to `true`, vanilla logic will be suppressed. Returning `false` will set this to `true`.
 --- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.
 --- @field price number The adjusted price of the training.
 --- @field skillId number The ID of the skill to be trained.
@@ -10,5 +9,3 @@
 --- @field mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer The mobile actor of the trainer the player is interacting with.
 --- @field basePrice number The price before adjustment.
 --- @field skill tes3statisticSkill The ID of the skill to be trained.
-calcTrainingPrice = {}
-

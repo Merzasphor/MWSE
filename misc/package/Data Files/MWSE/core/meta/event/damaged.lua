@@ -4,7 +4,6 @@
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/events/damaged).
 --- @class damagedEventData
---- @field block boolean If set to `true`, vanilla logic will be suppressed. Returning `false` will set this to `true`.
 --- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.
 --- @field activeMagicEffect tes3magicEffect tes3magicEffect which caused damage. Can be nil.
 --- @field reference tes3reference mobile’s associated reference.
@@ -16,5 +15,3 @@
 --- @field mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer The mobile actor that took damage.
 --- @field killingBlow boolean If true, the damage killed the target.
 --- @field attacker tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer The mobile actor dealing the damage. Can be nil.
-damaged = {}
-

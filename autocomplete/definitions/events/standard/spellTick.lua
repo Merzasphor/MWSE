@@ -49,4 +49,5 @@ return {
 		},
 	},
 	filter = "source",
+	blockable = true,
 }

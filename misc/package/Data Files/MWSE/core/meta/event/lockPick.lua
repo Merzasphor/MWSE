@@ -11,5 +11,3 @@
 --- @field lockPresent boolean Indicates if a lock is present on the reference.
 --- @field toolItemData tes3itemData The item data for the tool.
 --- @field lockData tes3lockAttachmentNode The lock data of the reference.
-lockPick = {}
-

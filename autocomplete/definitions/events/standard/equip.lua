@@ -22,6 +22,7 @@ The item must not be removed from the inventory during this event, as the item a
 		},
 	},
 	filter = "item",
+	blockable = true,
 	links = {
 		["equipped"] = "lua/event/equipped",
 	},

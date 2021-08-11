@@ -10,5 +10,3 @@
 --- @field volume number The volume of the sound. Volume = 1 means 100 % loudness. Values lower than 1 the sound quiter.
 --- @field isVoiceover boolean 
 --- @field reference tes3reference The reference which is emiting the sound.
-addSound = {}
-

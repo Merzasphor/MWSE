@@ -7,5 +7,3 @@
 --- @field creature tes3creature|tes3npc|tes3leveledCreature The creature that is interrupting rest. Can be set to a creature, NPC, or leveled creature.
 --- @field resting boolean If true, the player is attempting to rest, as opposed to wait.
 --- @field waiting boolean If true, the player is attempting to wait, as opposed to rest.
-restInterrupt = {}
-

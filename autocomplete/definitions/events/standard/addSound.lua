@@ -31,5 +31,6 @@ return {
             description = "",
         },
     },
+	blockable = true,
     -- TODO - Add an example: return false, e.block = true, or e.volume = 0
 }

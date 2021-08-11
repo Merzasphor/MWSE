@@ -11,5 +11,3 @@
 --- @field volume number The volume of the sound. Volume = 1 means 100 % loudness. Values lower than 1 the sound quiter.
 --- @field sound tes3sound 
 --- @field isVoiceover boolean 
-addTempSound = {}
-

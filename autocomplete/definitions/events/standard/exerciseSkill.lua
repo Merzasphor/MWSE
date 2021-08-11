@@ -13,4 +13,5 @@ return {
 		},
 	},
 	filter = "skill",
+	blockable = true,
 }

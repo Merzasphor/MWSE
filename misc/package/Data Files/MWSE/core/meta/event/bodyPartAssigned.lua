@@ -10,5 +10,3 @@
 --- @field reference tes3reference 
 --- @field isFirstPerson boolean 
 --- @field object tes3bodyPart 
-bodyPartAssigned = {}
-

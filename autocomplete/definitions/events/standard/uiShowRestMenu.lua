@@ -12,4 +12,5 @@ return {
 			description = "This value is true when the menu is shown from using the ShowRestMenu or equivalent function.",
 		},
 	},
+	blockable = true,
 }
