@@ -5,7 +5,7 @@ The Morrowind Script Extender makes additional functions available for use in Mo
 These extra functions allow modders to add features and behavior to scripts that would otherwise be impractical or impossible.
 
 !!! info "Morrowind Modding Community Discord"
-	 you're looking for MWSE scripting advice or discussions, try the [Morrowind Modding Community Discord](https://discord.gg/QDEBbaP).
+	If you are looking for MWSE scripting advice or discussions, try the [Morrowind Modding Community Discord](https://discord.gg/QDEBbaP).
 
 ## Installation
 
