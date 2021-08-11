@@ -24,19 +24,22 @@ local classes = {}
 common.log("Definitions folder: %s", common.pathDefinitions)
 
 local function getPackageLink(package)
-	local tokens = { common.urlBase, package.key .. ".html" }
-	local up = package.parent
-	while (up) do
-		table.insert(tokens, 2, up.key)
-		if (up.parent == nil) then
-			if (up.type == "lib") then
-				table.insert(tokens, 2, "api")
-			elseif (up.type == "class") then
-				table.insert(tokens, 2, "type")
-			end
+	local tokens = { common.urlBase, package.key }
+
+	if (package.type == "class") then
+		tokens = { common.urlBase, "types", package.key }
+	elseif (package.type == "class") then
+		tokens = { common.urlBase, "apis", package.namespace }
+	elseif (package.parent) then
+		local parentType = package.parent.type
+		if (parentType == "lib") then
+			local token = string.gsub("#" .. package.namespace, "%.", "")
+			tokens = { common.urlBase, "types", package.parent.namespace, token:lower() }
+		elseif (parentType == "class") then
+			tokens = { common.urlBase, "types", package.parent.key, "#" .. package.key }
 		end
-		up = up.parent
 	end
+
 	return table.concat(tokens, "/")
 end
 

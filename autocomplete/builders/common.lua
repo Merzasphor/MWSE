@@ -250,7 +250,7 @@ function common.urlJoin(...)
 	return table.concat(paths, "/")
 end
 
-common.urlBase = "https://mwse.readthedocs.io/en/latest/lua"
+common.urlBase = "https://mwse.github.io/MWSE"
 
 
 --

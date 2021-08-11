@@ -18,7 +18,7 @@ function timer.delayOneFrame(callback, type) end
 
 --- Creates a timer.
 ---
---- [Examples available in online documentation](https://mwse.readthedocs.io/en/latest/lua/api/timer/start.html).
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/types/timer/#timerstart).
 --- @param params timer.start.params This table accepts the following values:
 --- 
 --- ``type``: number — Type of the timer. This value can be timer.simulate, timer.game or timer.real.

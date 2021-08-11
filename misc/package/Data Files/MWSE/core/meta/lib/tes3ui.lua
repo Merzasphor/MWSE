@@ -12,7 +12,7 @@ function tes3ui.acquireTextInput(element) end
 
 --- When used in a mouse event, causes the element to capture further mouse events even when the cursor goes outside the element.
 ---
---- [Examples available in online documentation](https://mwse.readthedocs.io/en/latest/lua/api/tes3ui/captureMouseDrag.html).
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3ui/#tes3uicapturemousedrag).
 --- @param capture boolean Turns on mouse capture for the element currently processing a mouse event if true, sending all further mouse events to that element. Turns off capture if false.
 function tes3ui.captureMouseDrag(capture) end
 
@@ -53,7 +53,7 @@ function tes3ui.createMenu(params) end
 
 --- Creates a tooltip menu, which can be an empty menu or an item tooltip. This should be called from within a tooltip event callback. These automatically follow the mouse cursor, and are also destroyed automatically when the mouse leaves the originating element. Creating an item tooltip will invoke the uiObjectTooltip event.
 ---
---- [Examples available in online documentation](https://mwse.readthedocs.io/en/latest/lua/api/tes3ui/createTooltipMenu.html).
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3ui/#tes3uicreatetooltipmenu).
 --- @param params tes3ui.createTooltipMenu.params This table accepts the following values:
 --- 
 --- ``item``: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — The item to create a tooltip for. If not specified, the tooltip will be empty.

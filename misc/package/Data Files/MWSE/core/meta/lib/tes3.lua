@@ -382,7 +382,7 @@ function tes3.clearMarkLocation() end
 
 --- Create an object and returns it. The created object will be part of the saved game. Supported object types are those that have their own create function, such as tes3activator for example.
 ---
---- [Examples available in online documentation](https://mwse.readthedocs.io/en/latest/lua/api/tes3/createObject.html).
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3/#tes3createobject).
 --- @param params tes3.createObject.params This table accepts the following values:
 --- 
 --- ``objectType``: number — Maps to tes3.objectType constants. Used to filter object type to create.
@@ -580,7 +580,7 @@ function tes3.findGlobal(id) end
 
 --- Fetches the core game object that represents a game setting. While this function accepts a name, it is recommended to use the tes3.GMST constants.
 ---
---- [Examples available in online documentation](https://mwse.readthedocs.io/en/latest/lua/api/tes3/findGMST.html).
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3/#tes3findgmst).
 --- @param id number|string No description yet available.
 --- @return tes3gameSetting gameSetting No description yet available.
 function tes3.findGMST(id) end
@@ -706,7 +706,7 @@ function tes3.getDialogueInfo(dialogue, id) end
 
 --- This function returns the total magnitude and total unresisted magnitude of a certain spell effect affecting a reference. It returns a pair of numbers, the first being the post-resistance magnitude (see examples). The unresisted magnitude is the magnitude before the actor's resistances are applied; it is always an integer, so it is used in some UI elements.
 ---
---- [Examples available in online documentation](https://mwse.readthedocs.io/en/latest/lua/api/tes3/getEffectMagnitude.html).
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3/#tes3geteffectmagnitude).
 --- @param params tes3.getEffectMagnitude.params This table accepts the following values:
 --- 
 --- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — An associated mobile should exist for this function to be able to work.
@@ -728,7 +728,7 @@ function tes3.getEffectMagnitude(params) end
 
 --- Returns an actor's equipped item stack, provided a given filter
 ---
---- [Examples available in online documentation](https://mwse.readthedocs.io/en/latest/lua/api/tes3/getEquippedItem.html).
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3/#tes3getequippeditem).
 --- @param params tes3.getEquippedItem.params This table accepts the following values:
 --- 
 --- ``actor``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance — No description yet available.
@@ -1129,7 +1129,7 @@ function tes3.messageBox(messageOrParams, ...) end
 
 --- Modifies a statistic on a given actor. This should be used instead of manually setting values on the game structures, to ensure that events and GUI elements are properly handled. Either skill, attribute, or name must be provided.
 ---
---- [Examples available in online documentation](https://mwse.readthedocs.io/en/latest/lua/api/tes3/modStatistic.html).
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3/#tes3modstatistic).
 --- @param params tes3.modStatistic.params This table accepts the following values:
 --- 
 --- ``reference``: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string — No description yet available.
@@ -1321,7 +1321,7 @@ function tes3.random(seed) end
 
 --- Performs a ray test and returns various information related to the result(s). If findAll is set, the result will be a table of results, otherwise only the first result is returned.
 ---
---- [Examples available in online documentation](https://mwse.readthedocs.io/en/latest/lua/api/tes3/rayTest.html).
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3/#tes3raytest).
 --- @param params tes3.rayTest.params This table accepts the following values:
 --- 
 --- ``position``: tes3vector3|table — Position of the ray origin.
