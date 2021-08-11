@@ -23,7 +23,7 @@ function mwse.getVersion() end
 --- @return number result No description yet available.
 function mwse.getVirtualMemoryUsage() end
 
---- Loads a config table from Data Files\MWSE\config\{fileName}.json.
+--- Loads a config table from Data Files\\MWSE\\config\\{fileName}.json.
 --- 	
 --- If the default values table is passed, empty keys in the config will be filled in using its values. Additionally, if no file exists, the function will return the default table.
 --- @param fileName string The non-extensioned name of the config file.
@@ -49,7 +49,7 @@ function mwse.longToString(type) end
 --- @return boolean result No description yet available.
 function mwse.overrideScript(scriptId, callback) end
 
---- Saves a config table to Data Files\MWSE\config\{fileName}.json.
+--- Saves a config table to Data Files\\MWSE\\config\\{fileName}.json.
 --- @param fileName string No description yet available.
 --- @param object unknown No description yet available.
 --- @param config table No description yet available.

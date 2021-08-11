@@ -19,7 +19,7 @@ function json.decode(s, position, nullValue) end
 --- @return string result No description yet available.
 function json.encode(object, state) end
 
---- Loads the contents of a file through json.decode. Files loaded from Data Files\MWSE\{fileName}.json.
+--- Loads the contents of a file through json.decode. Files loaded from Data Files\\MWSE\\{fileName}.json.
 --- @param fileName string No description yet available.
 --- @return table result No description yet available.
 function json.loadfile(fileName) end
@@ -29,7 +29,7 @@ function json.loadfile(fileName) end
 --- @return string result No description yet available.
 function json.quotestring(s) end
 
---- Saves a serializable table to Data Files\MWSE\{fileName}.json, using json.encode.
+--- Saves a serializable table to Data Files\\MWSE\\{fileName}.json, using json.encode.
 --- @param fileName string No description yet available.
 --- @param object table No description yet available.
 --- @param config table No description yet available.

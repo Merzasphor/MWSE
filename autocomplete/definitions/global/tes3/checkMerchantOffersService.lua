@@ -5,6 +5,8 @@ return {
 		{ name = "reference", type = "tes3reference|tes3mobileActor|string" },
 		{ name = "service", type = "number", optional = true, description = "The specific service to check for availability. Uses the tes3.merchantService.* constants." },
 	},
-	returns = "offersService, refusalReply",
-	valuetype = "boolean, tes3DialogueInfo",
+	returns = {
+		{ name = "offersService", type = "boolean" },
+		{ name = "refusalReply", type = "tes3DialogueInfo" },
+	},
 }

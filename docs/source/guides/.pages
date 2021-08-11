@@ -1,0 +1,7 @@
+nav:
+  - introduction.md
+  - introduction-to-lua.md
+  - introduction-to-event-based-programming.md
+  - development-workflows.md
+  - creating-a-mod.md
+  - ...

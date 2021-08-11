@@ -11,5 +11,9 @@ return {
 			title = "Retrieve value of a GMST",
 			description = "This example shows how to read a value of a GMST and how to change it.",
 		},
+		["markdown"] = {
+			title = "Document all GMST Default Values",
+			description = "This example reads the default values of all GMSTs, and writes them to a markdown file for users to read.",
+		},
 	},
 }

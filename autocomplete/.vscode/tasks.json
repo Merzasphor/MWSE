@@ -14,7 +14,17 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "Build Autodocs",
+			"label": "Build mkdocs",
+			"type": "shell",
+			"command": "lua",
+			"args": [
+				".\\builders\\mkdocs.lua"
+			],
+			"group": "build",
+			"problemMatcher": []
+		},
+		{
+			"label": "Build ReadTheDocs",
 			"type": "shell",
 			"command": "lua",
 			"args": [
@@ -36,7 +46,7 @@
 			},
 			"dependsOn": [
 				"Build Autocomplete",
-				"Build Autodocs"
+				"Build mkdocs"
 			],
 			"problemMatcher": []
 		}

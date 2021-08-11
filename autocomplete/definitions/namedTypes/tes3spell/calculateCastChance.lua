@@ -1,5 +1,5 @@
 return {
-	type = "function",
+	type = "method",
 	description = [[Calculates the chance that a caster can cast a given spell.]],
 	arguments = {{
 		name = "params",

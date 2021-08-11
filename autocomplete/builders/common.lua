@@ -150,6 +150,21 @@ end
 
 
 --
+-- io library extensions
+--
+
+--- Creates a file with the given contents.
+--- @param path string
+--- @param content string
+function io.createwith(path, content)
+	local file = assert(io.open(path, "w"))
+	file:write(content)
+	file:close()
+end
+
+
+
+--
 -- lfs library extensions
 --
 
@@ -331,6 +346,16 @@ function common.compileEntry(folder, key, parent)
 	local collection = package.type .. "s"
 	parent[collection] = parent[collection] or {}
 	table.insert(parent[collection], package)
+
+	-- Write out sub-libraries.
+	if (package.type == "lib") then
+		for entry in lfs.dir(lfs.join(folder, key)) do
+			local extension = entry:match("[^.]+$")
+			if (extension == "lua") then
+				common.compileEntry(lfs.join(folder, key), entry:match("[^/]+$"):sub(1, -1 * (#extension + 2)), package)
+			end
+		end
+	end
 end
 
 --- comment
@@ -345,13 +370,14 @@ function common.compile(folder, key, owningCollection, acceptedType)
 	local package = dofile(path)
 	package.key = key
 	package.namespace = getFullPackageNamespace(package)
+	package.folder = folder
 
 	-- We only care about libraries for now.
 	if (acceptedType and package.type ~= acceptedType) then
 		return
 	end
 
-	-- Write out children.
+	-- Write out sub-libraries.
 	if (acceptedType ~= "event") then
 		for entry in lfs.dir(lfs.join(folder, key)) do
 			local extension = entry:match("[^.]+$")
@@ -382,8 +408,9 @@ function common.compilePath(path, owningCollection, acceptedType)
 	end
 end
 
+--- Figure out inheritances.
 --- @param classes table<string, packageClass>
-function common.compileInheritances(classes)-- Figure out inheritances.
+function common.compileInheritances(classes)
 	for _, class in pairs(classes) do
 		if (class.inherits) then
 			local parent = classes[class.inherits]

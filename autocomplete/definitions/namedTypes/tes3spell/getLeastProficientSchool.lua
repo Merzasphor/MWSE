@@ -1,5 +1,5 @@
 return {
-	type = "function",
+	type = "method",
 	description = [[Returns the school of the least proficient effect on the spell, for a given actor.]],
 	arguments = {	
 		{ name = "actor", type = "tes3mobileActor|tes3reference|tes3npc|tes3npcInstance", optional = false, description = "The actor to calculate for. A mobile actor is preferred, as passing only a tes3npc will not use up to date skill information." },

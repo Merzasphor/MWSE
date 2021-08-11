@@ -354,7 +354,8 @@ function tes3.cast(params) end
 --- Checks if a merchant will offer a service to you, including dialogue checks like disposition and faction membership. A specific service can be checked, or if no service is given, a generic dialogue check is made. If the service if refused, the dialogue reply for the refusal may also returned (it may be nil, as there may not always be a reply available).
 --- @param reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string No description yet available.
 --- @param service number The specific service to check for availability. Uses the tes3.merchantService.* constants.
---- @return boolean, tes3DialogueInfo offersService, refusalReply No description yet available.
+--- @return boolean offersService No description yet available.
+--- @return tes3DialogueInfo refusalReply No description yet available.
 function tes3.checkMerchantOffersService(reference, service) end
 
 --- Determines if a merchant trades in a given item.

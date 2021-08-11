@@ -28,5 +28,5 @@ return {
             description = "",
         },
     },
-    filter = { "sound", "flags", "volume", "pitch", "isNot3D" }, -- Is this line ok?,
+    filter = "sound",
 }
