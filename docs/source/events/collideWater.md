@@ -9,10 +9,11 @@ end
 event.register("collideWater", collideWaterCallback)
 ```
 
-This event can be filtered based on the **`table: 0x00fdf2a8`** event data.
+This event can be filtered based on the **`reference`** event data.
 
 ## Event Data
 
-* `inWater` (boolean): 
+* `reference` ([tes3mobileObject](../../types/tes3mobileObject)): `mobile`'s reference.
 * `mobile` ([tes3mobileObject](../../types/tes3mobileObject)): Mobile object which collided.
+* `inWater` (boolean): 
 

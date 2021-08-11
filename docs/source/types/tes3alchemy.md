@@ -337,7 +337,7 @@ local index = tes3alchemy:getFirstIndexOfEffect(effectId)
 
 ### `create`
 
-Creates a new alchemy item, which will be stored as part of the current saved game.
+Creates a new alchemy item, which will be stored as part of the current saved game. If there is already an alchemy item with matching effects, name, weight, value, and script, that will be returned instead of creating a new item.
 
 ```lua
 tes3alchemy.create({ id = ..., name = ..., script = ..., mesh = ..., icon = ..., objectFlags = ..., weight = ..., value = ..., flags = ..., effects = ... })

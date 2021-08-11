@@ -9,7 +9,7 @@ end
 event.register("collision", collisionCallback)
 ```
 
-This event can be filtered based on the **`table: 0x00fe0348`** event data.
+This event can be filtered based on the **`reference`** event data.
 
 ## Event Data
 

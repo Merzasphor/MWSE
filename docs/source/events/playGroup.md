@@ -9,7 +9,7 @@ end
 event.register("playGroup", playGroupCallback)
 ```
 
-This event can be filtered based on the **`table: 0x00e1f2c0`** event data.
+This event can be filtered based on the **`reference`** event data.
 
 ## Event Data
 

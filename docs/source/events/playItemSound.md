@@ -9,7 +9,7 @@ end
 event.register("playItemSound", playItemSoundCallback)
 ```
 
-This event can be filtered based on the **`table: 0x00e60a20`** event data.
+This event can be filtered based on the **`item`** event data.
 
 ## Event Data
 
