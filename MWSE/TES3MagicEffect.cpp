@@ -258,7 +258,7 @@ namespace TES3 {
 		return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectObject(effectID);
 	}
 
-	bool Effect::matchesEffectsWith(const Effect * other ) const {
+	bool Effect::matchesEffectsWith(const Effect * other) const {
 		return effectID == other->effectID &&
 			skillID == other->skillID &&
 			attributeID == other->attributeID &&

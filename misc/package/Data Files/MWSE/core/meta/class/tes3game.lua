@@ -16,6 +16,6 @@
 --- @field volumeMedia number Mix volumes for music.
 --- @field windowHandle number The Windows HWND for the window.
 --- @field wireframeProperty niAlphaProperty|niFogProperty|niMaterialProperty|niStencilProperty|niTexturingProperty|niVertexColorProperty The reused wireframe property, appled when toggling wireframe rendering.
---- @field worldSceneGraphRoot niCollisionSwitch|niNode|niSwitchNode Access to the root of the scene graph.
+--- @field worldSceneGraphRoot niBillboardNode|niCollisionSwitch|niNode|niSwitchNode Access to the root of the scene graph.
 tes3game = {}
 

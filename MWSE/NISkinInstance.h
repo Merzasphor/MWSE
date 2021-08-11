@@ -3,6 +3,7 @@
 #include "NIObject.h"
 
 #include "NIBound.h"
+#include "NITriangle.h"
 
 #include "TES3Vectors.h"
 
@@ -14,7 +15,7 @@ namespace NI {
 			float* weights; // 0x8
 			unsigned short* vertices; // 0xC
 			unsigned char* bonePalette; // 0x10
-			unsigned short* triangles; // 0x14
+			Triangle* triangles; // 0x14
 			unsigned short* stripLengths; // 0x18
 			unsigned short numVertices; // 0x1C
 			unsigned short numTriangles; // 0x1E
@@ -25,7 +26,7 @@ namespace NI {
 
 			nonstd::span<unsigned short> getBones();
 			nonstd::span<unsigned short> getStripLengths();
-			nonstd::span<unsigned short> getTriangles();
+			nonstd::span<Triangle> getTriangles();
 			nonstd::span<unsigned short> getVertices();
 		};
 		unsigned int partitionCount; // 0x8

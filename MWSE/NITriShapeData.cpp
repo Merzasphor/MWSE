@@ -43,9 +43,9 @@ namespace NI {
 		return create(vertexCount, _vertices, _normals, _colors, _textureCoords, triangleCount, _triangleList);
 	}
 
-	nonstd::span<unsigned short> TriShapeData::getTriangles() {
+	nonstd::span<Triangle> TriShapeData::getTriangles() {
 		if (triangleList) {
-			return { triangleList, int(triangleListLength) };
+			return { triangleList, getActiveTriangleCount() };
 		}
 		return {};
 	}

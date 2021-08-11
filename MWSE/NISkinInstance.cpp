@@ -15,9 +15,9 @@ namespace NI {
 		return {};
 	}
 
-	nonstd::span<unsigned short> SkinPartition::Partition::getTriangles() {
+	nonstd::span<Triangle> SkinPartition::Partition::getTriangles() {
 		if (triangles) {
-			return nonstd::span<unsigned short>(triangles, 3 * numTriangles);
+			return nonstd::span<Triangle>(triangles, numTriangles);
 		}
 		return {};
 	}

@@ -173,8 +173,6 @@ namespace TES3 {
 		// Custom functions.
 		//
 
-		Alchemy* getMatchingAlchemyItem(const Alchemy*) const;
-
 		std::reference_wrapper<Skill[27]> getSkills();
 
 		sol::table getMagicEffects_lua(sol::this_state ts);

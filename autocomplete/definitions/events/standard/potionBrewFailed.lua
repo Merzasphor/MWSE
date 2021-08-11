@@ -1,12 +1,7 @@
 return {
 	type = "event",
-	description = "The potionBrewed event is raised when the player brews a new potion.",
+	description = "The potionBrewFailed event is raised when the player fails a potion brew attempt.",
 	eventData = {
-		["object"] = {
-			type = "tes3alchemy",
-			readOnly = true,
-			description = "The potion created by the player.",
-		},
 		["alembic"] = {
 			type = "tes3apparatus",
 			readOnly = true,
@@ -31,11 +26,6 @@ return {
 			type = "table",
 			readOnly = true,
 			description = "An array of up to 4 tes3ingredient objects, which were used to create the potion.",
-		},
-	},
-	examples = {
-		["replace"] = {
-			title = "Replace a brewed potion with a modified version",
 		},
 	},
 }

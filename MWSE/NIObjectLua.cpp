@@ -23,6 +23,7 @@ namespace mwse {
 				// Start our usertype. We must finish this with state.set_usertype.
 				auto usertypeDefinition = state.new_usertype<NI::RTTI>("niRTTI");
 				usertypeDefinition["new"] = sol::no_constructor;
+				usertypeDefinition[sol::meta_function::to_string] = &NI::RTTI::toString;
 
 				// Basic property binding.
 				usertypeDefinition["name"] = &NI::RTTI::name;

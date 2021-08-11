@@ -58,5 +58,15 @@ namespace mwse::lua {
 			// Basic function binding.
 			usertypeDefinition["copy"] = &NI::TriShapeData::copyData;
 		}
+
+		// Binding for NI::Triangle.
+		{
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.new_usertype<NI::Triangle>("niTriangle");
+			usertypeDefinition["new"] = sol::no_constructor;
+
+			// Basic bindings.
+			usertypeDefinition["vertices"] = sol::readonly_property(&NI::Triangle::getVertices);
+		}
 	}
 }

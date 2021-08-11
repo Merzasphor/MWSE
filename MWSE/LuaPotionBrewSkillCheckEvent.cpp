@@ -12,9 +12,10 @@
 namespace mwse {
 	namespace lua {
 		namespace event {
-			PotionBrewSkillCheckEvent::PotionBrewSkillCheckEvent(float potionStrength) :
+			PotionBrewSkillCheckEvent::PotionBrewSkillCheckEvent(float potionStrength, const TES3::AlchemyBrewingItems& items) :
 				GenericEvent("potionBrewSkillCheck"),
-				m_PotionStrength(potionStrength)
+				m_PotionStrength(potionStrength),
+				m_Items(items)
 			{
 
 			}
@@ -27,11 +28,19 @@ namespace mwse {
 				eventData["potionStrength"] = m_PotionStrength;
 				eventData["success"] = m_PotionStrength >= 0;
 
-				auto macp = TES3::WorldController::get()->getMobilePlayer();
-				eventData["alembic"] = macp->lastUsedAlembic;
-				eventData["calcinator"] = macp->lastUsedCalcinator;
-				eventData["mortar"] = macp->lastUsedMortar;
-				eventData["retort"] = macp->lastUsedRetort;
+				// Add the apparatus used.
+				eventData["alembic"] = m_Items.alembic;
+				eventData["calcinator"] = m_Items.calcinator;
+				eventData["mortar"] = m_Items.mortar;
+				eventData["retort"] = m_Items.retort;
+
+				// Add the ingredients used.
+				sol::table ingredients = state.create_table();
+				if (m_Items.ingredient1) ingredients.add(m_Items.ingredient1);
+				if (m_Items.ingredient2) ingredients.add(m_Items.ingredient2);
+				if (m_Items.ingredient3) ingredients.add(m_Items.ingredient3);
+				if (m_Items.ingredient4) ingredients.add(m_Items.ingredient4);
+				eventData["ingredients"] = ingredients;
 
 				return eventData;
 			}

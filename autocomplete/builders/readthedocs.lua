@@ -25,28 +25,39 @@ local rstHeaders = {
 -- We have to do some silly things to get the lua plugin to know we extend the file api.
 --
 
-local tempFile = io.tmpfile()
-local fileMetaTable = getmetatable(tempFile)
-
 local writtenLinks = {}
+
+local _io_open = io.open
+
+local updatedMetatable = false
+function io.open(filename, mode)
+	local handle = _io_open(filename, mode)
+	if (handle and not updatedMetatable) then
+		local metatable	= getmetatable(handle)
+
+		function metatable:cachedwrite(str, ...)
+			local output = str:format(...)
+			writtenLinks[self] = writtenLinks[self] or {}
+			for capture in string.gmatch(output, "`.-`_") do
+				writtenLinks[self][string.sub(capture, 2, -3)] = true
+			end
+			return self:write(output)
+		end
+
+		function metatable:uncachedwrite(str, ...)
+			return self:write(str:format(...))
+		end
+
+		updatedMetatable = true
+	end
+	return handle
+end
 
 --- @diagnostic disable-next-line
 --- @class file*
-local file = fileMetaTable
-
-function file:cachedwrite(str, ...)
-	local output = str:format(...)
-	writtenLinks[self] = writtenLinks[self] or {}
-	for capture in string.gmatch(output, "`.-`_") do
-		writtenLinks[self][string.sub(capture, 2, -3)] = true
-	end
-	return self:write(output)
-end
-
-function file:uncachedwrite(str, ...)
-	return self:write(str:format(...))
-end
-
+local file = {}
+function file:cachedwrite(str, ...) end
+function file:uncachedwrite(str, ...) end
 file = nil
 
 

@@ -1067,7 +1067,7 @@ function tes3.loadGame(filename) end
 --- Loads a mesh file and provides a scene graph object.
 --- @param path string Path, relative to Data Files/Meshes.
 --- @param useCache boolean If false, a new object will be created even if it had been previously loaded.
---- @return niCollisionSwitch|niNode|niSwitchNode model No description yet available.
+--- @return niBillboardNode|niCollisionSwitch|niNode|niSwitchNode model No description yet available.
 function tes3.loadMesh(path, useCache) end
 
 --- Loads a source texture file and provides the niSourceTexture object.

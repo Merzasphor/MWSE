@@ -50,6 +50,7 @@ namespace TES3 {
 		size_t getActiveEffectCount();
 		int getFirstIndexOfEffect(int effectId);
 		bool effectsMatchWith(const Alchemy * other) const;
+		Alchemy* findMatchingAlchemyItem() const;
 		void setIconPath(const char* path);
 		void cleanUnusedAttributeSkillIds();
 
@@ -57,6 +58,17 @@ namespace TES3 {
 
 	};
 	static_assert(sizeof(Alchemy) == 0x120, "TES3::Alchemy failed size validation");
+
+	struct AlchemyBrewingItems {
+		Apparatus* mortar;
+		Apparatus* alembic;
+		Apparatus* calcinator;
+		Apparatus* retort;
+		Ingredient* ingredient1;
+		Ingredient* ingredient2;
+		Ingredient* ingredient3;
+		Ingredient* ingredient4;
+	};
 }
 
 MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::Alchemy)

@@ -30,6 +30,11 @@ return {
 			readOnly = true,
 			description = "The retort apparatus used to create the potion.",
 		},
+		["ingredients"] = {
+			type = "table",
+			readOnly = true,
+			description = "An array of up to 4 tes3ingredient objects, which were used to create the potion.",
+		},
 	},
 	examples = {
 		["Template"] = {
