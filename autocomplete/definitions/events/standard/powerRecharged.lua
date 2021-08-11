@@ -18,5 +18,5 @@ return {
             description = "Mobile’s associated reference.",
         },
     },
-    filter = { "power", "mobile" }, -- Is this line ok?
+    filter = "power",
 }

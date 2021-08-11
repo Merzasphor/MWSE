@@ -18,7 +18,7 @@ return {
             description = "Reference which mobile object has collided with.",
         },
     },
-    filter = { "mobile", "target" },
+    filter = "reference",
 }
 
 --[[

@@ -33,5 +33,5 @@ return {
             description = "",
         },
     },
-    filter = { "animationData", "group", "index", "flags", "loopCount" }, -- Is this ok?
+    filter = "reference",
 }

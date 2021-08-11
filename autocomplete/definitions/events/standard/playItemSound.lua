@@ -18,5 +18,5 @@ return {
             description = "",
         },
     },
-    filter = { "item", "state", "reference" }, -- Is this line ok?
+    filter = "item",
 }
