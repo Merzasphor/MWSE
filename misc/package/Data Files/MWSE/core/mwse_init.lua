@@ -391,6 +391,23 @@ function string.insert(s1, s2, pos)
 end
 getmetatable("").insert = string.insert
 
+function string.split(str, sep)
+	if sep == nil then
+		sep = "%s"
+	end
+	local t = {}
+	for str in string.gmatch(str, "([^" .. sep .. "]+)") do
+		table.insert(t, str)
+	end
+	return t
+end
+getmetatable("").split = string.split
+
+function string.trim(s)
+	return string.match(s, '^()%s*$') and '' or string.match(s, '^%s*(.*%S)')
+end
+getmetatable("").trim = string.trim
+
 
 -------------------------------------------------
 -- Extend base API: debug

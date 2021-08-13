@@ -81,6 +81,25 @@ string.multifind(s, pattern, index, plain)
 
 ***
 
+### `string.split`
+
+Returns an array-style table with `str` split by `sep`. The `sep`erator is not part of the results.
+
+```lua
+local split = string.split(str, sep)
+```
+
+**Parameters**:
+
+* `str` (string): The string to split.
+* `sep` (string): The token to split the string by.
+
+**Returns**:
+
+* `split` (table)
+
+***
+
 ### `string.startswith`
 
 Returns true if a string begins with a given pattern.
@@ -97,6 +116,24 @@ local result = string.startswith(s, pattern)
 **Returns**:
 
 * `result` (boolean)
+
+***
+
+### `string.trim`
+
+Returns a copy of the string, with whitespace removed from the start and end.
+
+```lua
+local trimmed = string.trim(s)
+```
+
+**Parameters**:
+
+* `s` (string)
+
+**Returns**:
+
+* `trimmed` (string)
 
 ***
 

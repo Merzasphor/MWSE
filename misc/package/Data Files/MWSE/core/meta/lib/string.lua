@@ -32,9 +32,20 @@ function string.insert(s1, s2, position) end
 --- @param plain boolean If true, a normal search instead of a pattern search will be performed.
 function string.multifind(s, pattern, index, plain) end
 
+--- Returns an array-style table with `str` split by `sep`. The `sep`erator is not part of the results.
+--- @param str string The string to split.
+--- @param sep string The token to split the string by.
+--- @return table split No description yet available.
+function string.split(str, sep) end
+
 --- Returns true if a string begins with a given pattern.
 --- @param s string No description yet available.
 --- @param pattern string No description yet available.
 --- @return boolean result No description yet available.
 function string.startswith(s, pattern) end
+
+--- Returns a copy of the string, with whitespace removed from the start and end.
+--- @param s string No description yet available.
+--- @return string trimmed No description yet available.
+function string.trim(s) end
 
