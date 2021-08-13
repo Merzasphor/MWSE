@@ -559,8 +559,12 @@ function tes3.findClosestExteriorReferenceOfObject(params) end
 --- @field object tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon|string The object to search for.
 --- @field position tes3vector3 The position to search from. Must be an exterior position. Defaults to the last exterior position of the player if no position is provided.
 
---- Locates a root dialogue topic that can then be filtered down for a specific actor to return a specific dialogue info. For example, a type of ``tes3.dialogueType.greeting`` and a page of ``tes3.dialoguePage.greeting.greeting0`` will return the "Greeting 0" topic.
+--- Locates a root dialogue topic that can then be filtered down for a specific actor to return a specific dialogue info. Specify either ``topic``, or both ``type`` and ``page`` for other types of dialogue.
+--- 
+--- For example, ``tes3.findDialogue({type = tes3.dialogueType.greeting, page = tes3.dialoguePage.greeting.greeting0})`` will return the "Greeting 0" topic, which is not available using a topic ID.
 --- @param params tes3.findDialogue.params This table accepts the following values:
+--- 
+--- ``topic``: string — The dialogue topic to look for.
 --- 
 --- ``type``: number — The type of dialogue to look for. Uses tes3.dialogueType.* constants.
 --- 
@@ -570,6 +574,7 @@ function tes3.findDialogue(params) end
 
 ---Table parameter definitions for ``tes3.findDialogue``.
 --- @class tes3.findDialogue.params
+--- @field topic string The dialogue topic to look for.
 --- @field type number The type of dialogue to look for. Uses tes3.dialogueType.* constants.
 --- @field page number The page of dialogue to fetch. Uses tes3.dialoguePage.* constants.
 

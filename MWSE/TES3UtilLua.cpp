@@ -3675,6 +3675,11 @@ namespace mwse {
 		}
 
 		TES3::Dialogue* findDialogue(sol::table params) {
+			auto topic = getOptionalParam<const char*>(params, "topic", nullptr);
+			if (topic) {
+				return TES3::DataHandler::get()->nonDynamicData->findDialogue(topic);
+			}
+
 			int type = getOptionalParam<int>(params, "type", -1);
 			int page = getOptionalParam<int>(params, "page", -1);
 			return TES3::Dialogue::getDialogue(type, page);

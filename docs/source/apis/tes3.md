@@ -489,42 +489,6 @@ local table = tes3.createObject({ objectType = ... })
 
 * `table` (tes3BaseObject)
 
-??? example "Example: Creates a tes3static object"
-
-	```lua
-	local staticId = "create_static_id"
-	
-	mwse.log( "creating a static of id %s", staticId )
-	
-	-- local static = tes3static.create( {
-	--   id = staticId,
-	--   mesh = "d\\door_dwrv_main00.nif"
-	-- } )
-	
-	local static = tes3.createObject( {
-	  objectType = tes3.objectType.static,
-	  id = staticId,
-	  mesh = [[d\door_dwrv_main00.nif]]
-	} )
-	
-	if( static ~= nil ) then
-	  mwse.log( "static created : id is %s", staticId )
-	else
-	  mwse.log( "failed to create a static of id %s", staticId )
-	  return
-	end
-	
-	tes3.createReference( {
-	  object = static,
-	  position = tes3.getPlayerEyePosition(),
-	  orientation = 0,
-	  cell = tes3.getPlayerCell()
-	} )
-	
-	mwse.log( "created a reference of static of id %s", static.id )
-
-	```
-
 ??? example "Example: Creates a tes3misc object"
 
 	```lua
@@ -559,6 +523,42 @@ local table = tes3.createObject({ objectType = ... })
 	} )
 	
 	mwse.log( "created a reference of a misc item of id %s", miscItem.id )
+
+	```
+
+??? example "Example: Creates a tes3static object"
+
+	```lua
+	local staticId = "create_static_id"
+	
+	mwse.log( "creating a static of id %s", staticId )
+	
+	-- local static = tes3static.create( {
+	--   id = staticId,
+	--   mesh = "d\\door_dwrv_main00.nif"
+	-- } )
+	
+	local static = tes3.createObject( {
+	  objectType = tes3.objectType.static,
+	  id = staticId,
+	  mesh = [[d\door_dwrv_main00.nif]]
+	} )
+	
+	if( static ~= nil ) then
+	  mwse.log( "static created : id is %s", staticId )
+	else
+	  mwse.log( "failed to create a static of id %s", staticId )
+	  return
+	end
+	
+	tes3.createReference( {
+	  object = static,
+	  position = tes3.getPlayerEyePosition(),
+	  orientation = 0,
+	  cell = tes3.getPlayerCell()
+	} )
+	
+	mwse.log( "created a reference of static of id %s", static.id )
 
 	```
 
@@ -798,15 +798,18 @@ local reference = tes3.findClosestExteriorReferenceOfObject({ object = ..., posi
 
 ### `tes3.findDialogue`
 
-Locates a root dialogue topic that can then be filtered down for a specific actor to return a specific dialogue info. For example, a type of ``tes3.dialogueType.greeting`` and a page of ``tes3.dialoguePage.greeting.greeting0`` will return the "Greeting 0" topic.
+Locates a root dialogue topic that can then be filtered down for a specific actor to return a specific dialogue info. Specify either ``topic``, or both ``type`` and ``page`` for other types of dialogue.
+
+For example, ``tes3.findDialogue({type = tes3.dialogueType.greeting, page = tes3.dialoguePage.greeting.greeting0})`` will return the "Greeting 0" topic, which is not available using a topic ID.
 
 ```lua
-local dialogue = tes3.findDialogue({ type = ..., page = ... })
+local dialogue = tes3.findDialogue({ topic = ..., type = ..., page = ... })
 ```
 
 **Parameters**:
 
 * `params` (table)
+	* `topic` (string): The dialogue topic to look for.
 	* `type` (number): The type of dialogue to look for. Uses tes3.dialogueType.* constants.
 	* `page` (number): The page of dialogue to fetch. Uses tes3.dialoguePage.* constants.
 
@@ -850,6 +853,18 @@ local gameSetting = tes3.findGMST(id)
 
 * `gameSetting` ([tes3gameSetting](../../types/tes3gameSetting))
 
+??? example "Example: Retrieve value of a GMST"
+
+	```lua
+	local oldGMST = tes3.findGMST("sServiceTrainingTitle").value
+	
+	-- oldGMST is now "Training"
+	
+	-- Now let's change the message to something more appropriate.
+	tes3.findGMST("sServiceTrainingTitle").value = "Cheat"
+
+	```
+
 ??? example "Example: Document all GMST Default Values"
 
 	```lua
@@ -890,18 +905,6 @@ local gameSetting = tes3.findGMST(id)
 	
 	-- Close up our file.
 	f:close()
-
-	```
-
-??? example "Example: Retrieve value of a GMST"
-
-	```lua
-	local oldGMST = tes3.findGMST("sServiceTrainingTitle").value
-	
-	-- oldGMST is now "Training"
-	
-	-- Now let's change the message to something more appropriate.
-	tes3.findGMST("sServiceTrainingTitle").value = "Cheat"
 
 	```
 
@@ -1239,19 +1242,19 @@ local magnitude, unresistedMagnitude = tes3.getEffectMagnitude({ reference = ...
 
 * `magnitude, unresistedMagnitude` (number, number)
 
-??? example "Example: Get magnitude after resistances are applied."
-
-	```lua
-	local magnitude = tes3.getEffectMagnitude{reference = tes3.player, effect = tes3.effect.fortifyAttribute, attribute = tes3.attribute.speed}
-	tes3.messageBox(string.format("fortify speed: %f", magnitude))
-
-	```
-
 ??? example "Example: Get both magnitudes."
 
 	```lua
 	local magnitude, unresistedMagnitude = tes3.getEffectMagnitude{reference = tes3.player, effect = tes3.effect.fireDamage}
 	tes3.messageBox(string.format("fortify speed: %f (%f)", magnitude, unresistedMagnitude))
+
+	```
+
+??? example "Example: Get magnitude after resistances are applied."
+
+	```lua
+	local magnitude = tes3.getEffectMagnitude{reference = tes3.player, effect = tes3.effect.fortifyAttribute, attribute = tes3.attribute.speed}
+	tes3.messageBox(string.format("fortify speed: %f", magnitude))
 
 	```
 
@@ -2275,17 +2278,6 @@ tes3.modStatistic({ reference = ..., name = ..., attribute = ..., skill = ..., b
 	* `limit` (boolean): If set, the attribute won't rise above 100 or fall below 0.
 	* `limitToBase` (boolean): If set, the attribute's current value won't rise above its base value. Useful for health, magicka, and fatigue.
 
-??? example "Example: Decrease Health of an Actor"
-
-	```lua
-	tes3.modStatistic({
-	    reference = tes3.mobilePlayer,
-	    name = "health",
-	    current = -10
-	})
-
-	```
-
 ??? example "Example: Restore Magicka without Overflowing"
 
 	```lua
@@ -2294,6 +2286,17 @@ tes3.modStatistic({ reference = ..., name = ..., attribute = ..., skill = ..., b
 	    name = "magicka",
 	    current = 20,
 		limitToBase = true
+	})
+
+	```
+
+??? example "Example: Decrease Health of an Actor"
+
+	```lua
+	tes3.modStatistic({
+	    reference = tes3.mobilePlayer,
+	    name = "health",
+	    current = -10
 	})
 
 	```
@@ -2522,6 +2525,44 @@ local result = tes3.rayTest({ position = ..., direction = ..., findAll = ..., ma
 
 * `result` ([niPickRecord](../../types/niPickRecord), table)
 
+??? example "Example: Multiple Results"
+
+	```lua
+	local results = tes3.rayTest{ tes3.getCameraPosition(), direction = tes3.getCameraVector(), findAll = true }
+	if results then
+		for i, hit in pairs(results) do
+			mwse.log("Ray hit #%d: %s", i, hit.reference or "<non-reference>");
+		end
+	end
+
+	```
+
+??? example "Example: Get Camera Target"
+
+	```lua
+	local hitResult = tes3.rayTest({ position = tes3.getCameraPosition(), direction = tes3.getCameraVector() })
+	local hitReference = hitResult and hitResult.reference
+	if (hitReference == nil) then
+		return
+	end
+	
+	tes3.messageBox("The camera is looking at a '%s'", hitReference.object.name or hitReference.object.id)
+
+	```
+
+??? example "Example: Get Activation Target"
+
+	```lua
+	local hitResult = tes3.rayTest({ position = tes3.getPlayerEyePosition(), direction = tes3.getPlayerEyeVector() })
+	local hitReference = hitResult and hitResult.reference
+	if (hitReference == nil) then
+		return
+	end
+	
+	tes3.messageBox("The player is looking at a '%s'", hitReference.object.name or hitReference.object.id)
+
+	```
+
 ??? example "Example: Save rayTest result for use at a later point"
 
 	```lua
@@ -2540,44 +2581,6 @@ local result = tes3.rayTest({ position = ..., direction = ..., findAll = ..., ma
 	    -- Now we can safely do something with ref
 	
 	end
-
-	```
-
-??? example "Example: Multiple Results"
-
-	```lua
-	local results = tes3.rayTest{ tes3.getCameraPosition(), direction = tes3.getCameraVector(), findAll = true }
-	if results then
-		for i, hit in pairs(results) do
-			mwse.log("Ray hit #%d: %s", i, hit.reference or "<non-reference>");
-		end
-	end
-
-	```
-
-??? example "Example: Get Activation Target"
-
-	```lua
-	local hitResult = tes3.rayTest({ position = tes3.getPlayerEyePosition(), direction = tes3.getPlayerEyeVector() })
-	local hitReference = hitResult and hitResult.reference
-	if (hitReference == nil) then
-		return
-	end
-	
-	tes3.messageBox("The player is looking at a '%s'", hitReference.object.name or hitReference.object.id)
-
-	```
-
-??? example "Example: Get Camera Target"
-
-	```lua
-	local hitResult = tes3.rayTest({ position = tes3.getCameraPosition(), direction = tes3.getCameraVector() })
-	local hitReference = hitResult and hitResult.reference
-	if (hitReference == nil) then
-		return
-	end
-	
-	tes3.messageBox("The camera is looking at a '%s'", hitReference.object.name or hitReference.object.id)
 
 	```
 
