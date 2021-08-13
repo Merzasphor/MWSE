@@ -853,18 +853,6 @@ local gameSetting = tes3.findGMST(id)
 
 * `gameSetting` ([tes3gameSetting](../../types/tes3gameSetting))
 
-??? example "Example: Retrieve value of a GMST"
-
-	```lua
-	local oldGMST = tes3.findGMST("sServiceTrainingTitle").value
-	
-	-- oldGMST is now "Training"
-	
-	-- Now let's change the message to something more appropriate.
-	tes3.findGMST("sServiceTrainingTitle").value = "Cheat"
-
-	```
-
 ??? example "Example: Document all GMST Default Values"
 
 	```lua
@@ -905,6 +893,18 @@ local gameSetting = tes3.findGMST(id)
 	
 	-- Close up our file.
 	f:close()
+
+	```
+
+??? example "Example: Retrieve value of a GMST"
+
+	```lua
+	local oldGMST = tes3.findGMST("sServiceTrainingTitle").value
+	
+	-- oldGMST is now "Training"
+	
+	-- Now let's change the message to something more appropriate.
+	tes3.findGMST("sServiceTrainingTitle").value = "Cheat"
 
 	```
 
@@ -1281,18 +1281,6 @@ local stack = tes3.getEquippedItem({ actor = ..., enchanted = ..., objectType = 
 
 * `stack` ([tes3equipmentStack](../../types/tes3equipmentStack))
 
-??? example "Example: Get Player’s Shield"
-
-	```lua
-	local equippedShieldStack = tes3.getEquippedItem({ actor = tes3.player, objectType = tes3.objectType.armor, slot = tes3.armorSlot.shield })
-	if (equippedShieldStack) then
-	    mwse.log("Equipped shield: %s", equippedShieldStack.object.id)
-	else
-	    mwse.log("No shield equipped.")
-	end
-
-	```
-
 ??? example "Example: Get Player’s Equipped Light"
 
 	```lua
@@ -1301,6 +1289,18 @@ local stack = tes3.getEquippedItem({ actor = ..., enchanted = ..., objectType = 
 	    mwse.log("Equipped light: %s", equippedLightStack.object.id)
 	else
 	    mwse.log("No light equipped.")
+	end
+
+	```
+
+??? example "Example: Get Player’s Shield"
+
+	```lua
+	local equippedShieldStack = tes3.getEquippedItem({ actor = tes3.player, objectType = tes3.objectType.armor, slot = tes3.armorSlot.shield })
+	if (equippedShieldStack) then
+	    mwse.log("Equipped shield: %s", equippedShieldStack.object.id)
+	else
+	    mwse.log("No shield equipped.")
 	end
 
 	```
@@ -2278,6 +2278,17 @@ tes3.modStatistic({ reference = ..., name = ..., attribute = ..., skill = ..., b
 	* `limit` (boolean): If set, the attribute won't rise above 100 or fall below 0.
 	* `limitToBase` (boolean): If set, the attribute's current value won't rise above its base value. Useful for health, magicka, and fatigue.
 
+??? example "Example: Decrease Health of an Actor"
+
+	```lua
+	tes3.modStatistic({
+	    reference = tes3.mobilePlayer,
+	    name = "health",
+	    current = -10
+	})
+
+	```
+
 ??? example "Example: Restore Magicka without Overflowing"
 
 	```lua
@@ -2286,17 +2297,6 @@ tes3.modStatistic({ reference = ..., name = ..., attribute = ..., skill = ..., b
 	    name = "magicka",
 	    current = 20,
 		limitToBase = true
-	})
-
-	```
-
-??? example "Example: Decrease Health of an Actor"
-
-	```lua
-	tes3.modStatistic({
-	    reference = tes3.mobilePlayer,
-	    name = "health",
-	    current = -10
 	})
 
 	```
@@ -2525,15 +2525,16 @@ local result = tes3.rayTest({ position = ..., direction = ..., findAll = ..., ma
 
 * `result` ([niPickRecord](../../types/niPickRecord), table)
 
-??? example "Example: Multiple Results"
+??? example "Example: Get Activation Target"
 
 	```lua
-	local results = tes3.rayTest{ tes3.getCameraPosition(), direction = tes3.getCameraVector(), findAll = true }
-	if results then
-		for i, hit in pairs(results) do
-			mwse.log("Ray hit #%d: %s", i, hit.reference or "<non-reference>");
-		end
+	local hitResult = tes3.rayTest({ position = tes3.getPlayerEyePosition(), direction = tes3.getPlayerEyeVector() })
+	local hitReference = hitResult and hitResult.reference
+	if (hitReference == nil) then
+		return
 	end
+	
+	tes3.messageBox("The player is looking at a '%s'", hitReference.object.name or hitReference.object.id)
 
 	```
 
@@ -2550,16 +2551,15 @@ local result = tes3.rayTest({ position = ..., direction = ..., findAll = ..., ma
 
 	```
 
-??? example "Example: Get Activation Target"
+??? example "Example: Multiple Results"
 
 	```lua
-	local hitResult = tes3.rayTest({ position = tes3.getPlayerEyePosition(), direction = tes3.getPlayerEyeVector() })
-	local hitReference = hitResult and hitResult.reference
-	if (hitReference == nil) then
-		return
+	local results = tes3.rayTest{ tes3.getCameraPosition(), direction = tes3.getCameraVector(), findAll = true }
+	if results then
+		for i, hit in pairs(results) do
+			mwse.log("Ray hit #%d: %s", i, hit.reference or "<non-reference>");
+		end
 	end
-	
-	tes3.messageBox("The player is looking at a '%s'", hitReference.object.name or hitReference.object.id)
 
 	```
 

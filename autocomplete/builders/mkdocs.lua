@@ -197,7 +197,9 @@ local function writeSubPackage(file, package, from)
 	end
 
 	if (package.examples) then
-		for name, example in pairs(package.examples) do
+		local exampleKeys = table.keys(package.examples, true)
+		for _, name in ipairs(exampleKeys) do
+			local example = package.examples[name]
 			file:write(string.format("??? example \"Example: %s\"\n\n", example.title or name))
 			file:write(string.format("\t```lua\n"))
 			for line in io.lines(lfs.join(package.folder, package.key, name .. ".lua")) do
