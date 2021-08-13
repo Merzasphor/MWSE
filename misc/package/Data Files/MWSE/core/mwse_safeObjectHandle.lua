@@ -3,7 +3,8 @@ local this = {}
 -- A map of tes3objects to their unsafe handle.
 local handles = {}
 
--- Remove handles on object invalidated.
+--- Remove handles on object invalidated.
+--- @param e objectInvalidatedEventData
 local function onObjectInvalidated(e)
 	local handle = handles[e.object]
 	if (handle) then

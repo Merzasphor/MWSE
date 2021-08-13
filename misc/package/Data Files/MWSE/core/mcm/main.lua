@@ -50,7 +50,8 @@ local function onClickModName(e)
 	menu:updateLayout()
 end
 
--- Callback for when the close button has been clicked.
+--- Callback for when the close button has been clicked.
+--- @param e keyDownEventData
 local function onClickCloseButton(e)
 	
 	event.unregister("keyDown", onClickCloseButton, { filter = tes3.scanCode.escape })
@@ -213,7 +214,8 @@ local function getActiveModConfigCount()
 	return count
 end
 
--- Callback for when the MenuOptions element is created. We'll extend it with our new button.
+--- Callback for when the MenuOptions element is created. We'll extend it with our new button.
+--- @param e uiActivatedEventData
 local function onCreatedMenuOptions(e)
 	-- Only interested in menu creation, not updates
 	if (not e.newlyCreated) then
@@ -264,8 +266,9 @@ function mwse.registerModConfig(name, package)
 	configMods[name] = package
 end
 
--- When we've initialized, set up our UI IDs and let other mods know that we are ready to boogie.
--- Set this up to run before most other initialized callbacks.
+--- When we've initialized, set up our UI IDs and let other mods know that we are ready to boogie.
+---
+--- Set this up to run before most other initialized callbacks.
 local function onInitialized()
 	UIID_mwse_modConfigMenu = tes3ui.registerID("MWSE:ModConfigMenu")
 
