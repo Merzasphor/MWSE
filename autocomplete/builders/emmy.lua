@@ -186,7 +186,10 @@ local function build(package)
 		if (not eventData.claimable) then
 			file:write("--- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.\n")
 		end
-		for key, data in pairs(eventData) do
+
+		local eventDataKeys = table.keys(eventData)
+		for _, key in ipairs(eventDataKeys) do
+			local data = eventData[key]
 			file:write(string.format("--- @field %s %s %s\n", key, getAllPossibleVariationsOfType(data.type) or "any", formatLineBreaks(data.description or common.defaultNoDescriptionText)))
 		end
 	end

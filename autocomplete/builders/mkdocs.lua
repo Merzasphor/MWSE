@@ -274,8 +274,10 @@ local function build(package)
 		-- Write out event data.
 		if (package.eventData) then
 			file:write("## Event Data\n\n")
-			for name, data in pairs(package.eventData) do
-				data.name = name
+			local eventDataKeys = table.keys(package.eventData)
+			for _, key in ipairs(eventDataKeys) do
+				local data = package.eventData[key]
+				data.name = key
 				writeArgument(file, data)
 			end
 			file:write("\n")
@@ -284,7 +286,9 @@ local function build(package)
 		-- Write out examples.
 		if (package.examples) then
 			file:write("## Examples\n\n")
-			for filename, example in pairs(package.examples) do
+			local exampleKeys = table.keys(package.examples)
+			for _, filename in ipairs(exampleKeys) do
+				local example = package.examples[filename]
 				file:write(string.format("!!! example \"Example: %s\"\n\n", example.title or filename))
 				file:write(string.format("\t```lua\n"))
 				for line in io.lines(lfs.join(package.folder, package.key, filename .. ".lua")) do
