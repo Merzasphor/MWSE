@@ -83,7 +83,7 @@ string.multifind(s, pattern, index, plain)
 
 ### `string.split`
 
-Returns an array-style table with `str` split by `sep`. The `sep`erator is not part of the results.
+Returns an array-style table with `str` split by `sep`. The `sep`erator is not part of the results. By default the `sep`erator is `%s`, splitting the given `str`ing by spaces.
 
 ```lua
 local split = string.split(str, sep)
