@@ -21,9 +21,9 @@ event.register("playGroup", playGroupCallback)
 ## Event Data
 
 * `animationData` (tes3animationData): 
-* `index` (number): 
-* `reference` ([tes3reference](../../types/tes3reference)): 
-* `group` (number): 
 * `flags` (number): 
+* `group` (number): 
+* `index` (number): 
 * `loopCount` (number): 
+* `reference` ([tes3reference](../../types/tes3reference)): 
 

@@ -14,6 +14,6 @@ event.register("isGuard", isGuardCallback)
 
 ## Event Data
 
-* `npc` ([tes3npc](../../types/tes3npc)): The NPC that the guard status is being checked for.
 * `isGuard` (boolean): The previously calculated guard status.
+* `npc` ([tes3npc](../../types/tes3npc)): The NPC that the guard status is being checked for.
 

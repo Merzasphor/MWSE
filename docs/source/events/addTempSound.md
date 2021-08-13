@@ -20,11 +20,11 @@ event.register("addTempSound", addTempSoundCallback)
 
 ## Event Data
 
+* `flags` (number): 
+* `isVoiceover` (boolean): 
 * `path` (string): The path to the sound to play, relative to Data Files\Sounds
 * `pitch` (number): Pitch of the sound.
-* `flags` (number): 
 * `reference` ([tes3reference](../../types/tes3reference)): The reference which is emiting the sound.
-* `volume` (number): The volume of the sound. Volume = 1 means 100 % loudness. Values lower than 1 the sound quiter.
 * `sound` ([tes3sound](../../types/tes3sound)): 
-* `isVoiceover` (boolean): 
+* `volume` (number): The volume of the sound. Volume = 1 means 100 % loudness. Values lower than 1 the sound quiter.
 

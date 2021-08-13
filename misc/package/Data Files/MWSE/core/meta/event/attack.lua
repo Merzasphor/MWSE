@@ -5,7 +5,7 @@
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/events/attack).
 --- @class attackEventData
 --- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.
---- @field reference tes3reference A shortcut to the reference that is attacking.
 --- @field mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer The mobile actor making the attack.
+--- @field reference tes3reference A shortcut to the reference that is attacking.
 --- @field targetMobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer The mobile actor being attacked.
 --- @field targetReference tes3reference A shortcut to the reference being attacked.

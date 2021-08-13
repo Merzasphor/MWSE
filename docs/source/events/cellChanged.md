@@ -17,6 +17,6 @@ event.register("cellChanged", cellChangedCallback)
 
 ## Event Data
 
-* `previousCell` ([tes3cell](../../types/tes3cell)): The previous cell that the player came from. This will be nil when loading a game.
 * `cell` ([tes3cell](../../types/tes3cell)): The new cell that the player has entered.
+* `previousCell` ([tes3cell](../../types/tes3cell)): The previous cell that the player came from. This will be nil when loading a game.
 

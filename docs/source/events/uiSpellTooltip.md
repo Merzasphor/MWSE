@@ -14,6 +14,6 @@ event.register("uiSpellTooltip", uiSpellTooltipCallback)
 
 ## Event Data
 
-* `tooltip` ([tes3uiElement](../../types/tes3uiElement)): The newly created tooltip element. Due to timeouts and target changes, it may be destroyed at any time.
 * `spell` ([tes3spell](../../types/tes3spell)): The spell being examined.
+* `tooltip` ([tes3uiElement](../../types/tes3uiElement)): The newly created tooltip element. Due to timeouts and target changes, it may be destroyed at any time.
 

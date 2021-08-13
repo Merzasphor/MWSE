@@ -17,6 +17,6 @@ event.register("activationTargetChanged", activationTargetChangedCallback)
 
 ## Event Data
 
-* `previous` ([tes3reference](../../types/tes3reference)): The previous activation target.
 * `current` ([tes3reference](../../types/tes3reference)): The activation target for the player, should they press the activation key.
+* `previous` ([tes3reference](../../types/tes3reference)): The previous activation target.
 

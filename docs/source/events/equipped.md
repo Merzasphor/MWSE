@@ -17,9 +17,9 @@ event.register("equipped", equippedCallback)
 
 ## Event Data
 
-* `itemData` ([tes3itemData](../../types/tes3itemData)): The item data of item.
-* `reference` ([tes3reference](../../types/tes3reference)): The reference to the mobile actor that has equipped the item.
-* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): The mobile actor that has equipped the item.
-* `item` ([tes3baseObject](../../types/tes3baseObject)): The object that has been equipped.
 * `actor` ([tes3actor](../../types/tes3actor)): The actor that has equipped the item.
+* `item` ([tes3baseObject](../../types/tes3baseObject)): The object that has been equipped.
+* `itemData` ([tes3itemData](../../types/tes3itemData)): The item data of item.
+* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): The mobile actor that has equipped the item.
+* `reference` ([tes3reference](../../types/tes3reference)): The reference to the mobile actor that has equipped the item.
 

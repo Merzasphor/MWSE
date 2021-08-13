@@ -14,8 +14,8 @@ event.register("mouseWheel", mouseWheelCallback)
 
 ## Event Data
 
-* `isSuperDown` (number): True if super (Windows key) is held.
+* `delta` (number): The direction and strength of the mouse wheel movement. This value is hardware dependent.
 * `isAltDown` (number): True if alt is held.
 * `isControlDown` (number): True if control is held.
-* `delta` (number): The direction and strength of the mouse wheel movement. This value is hardware dependent.
+* `isSuperDown` (number): True if super (Windows key) is held.
 

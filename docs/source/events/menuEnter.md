@@ -17,6 +17,6 @@ event.register("menuEnter", menuEnterCallback)
 
 ## Event Data
 
-* `menuMode` (boolean): Always true for this event. This parameter is only useful when registering the same callback for menuEnter and menuExit events.
 * `menu` ([tes3uiElement](../../types/tes3uiElement)): The new top-level menu.
+* `menuMode` (boolean): Always true for this event. This parameter is only useful when registering the same callback for menuEnter and menuExit events.
 

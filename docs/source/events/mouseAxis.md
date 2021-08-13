@@ -14,9 +14,9 @@ event.register("mouseAxis", mouseAxisCallback)
 
 ## Event Data
 
-* `isSuperDown` (number): True if super (Windows key) is held.
-* `deltaY` (number): The difference in vertical mouse position from the previous frame.
-* `isControlDown` (number): True if control is held.
-* `isAltDown` (number): True if alt  is held.
 * `deltaX` (number): The difference in horizontal mouse position from the previous frame.
+* `deltaY` (number): The difference in vertical mouse position from the previous frame.
+* `isAltDown` (number): True if alt  is held.
+* `isControlDown` (number): True if control is held.
+* `isSuperDown` (number): True if super (Windows key) is held.
 

@@ -14,12 +14,12 @@ event.register("calcBarterPrice", calcBarterPriceCallback)
 
 ## Event Data
 
+* `basePrice` (number): The base price of the item, before any event modifications.
 * `buying` (boolean): If true, the player is buying, otherwise the player is selling.
-* `price` (number): The price of the item. This can be modified, but ensure that the buy/sell price is matched or there will be odd behavior.
 * `count` (number): The number of items being bartered.
 * `item` ([tes3item](../../types/tes3item)): The item, if any, that is being bartered.
-* `reference` ([tes3reference](../../types/tes3reference)): A shortcut to the mobile's reference. May not always be available.
 * `itemData` ([tes3itemData](../../types/tes3itemData)): The item data for the bartered item.
-* `basePrice` (number): The base price of the item, before any event modifications.
 * `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): The mobile actor for who is selling or buying. May not always be available.
+* `price` (number): The price of the item. This can be modified, but ensure that the buy/sell price is matched or there will be odd behavior.
+* `reference` ([tes3reference](../../types/tes3reference)): A shortcut to the mobile's reference. May not always be available.
 

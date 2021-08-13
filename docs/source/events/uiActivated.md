@@ -17,6 +17,6 @@ event.register("uiActivated", uiActivatedCallback)
 
 ## Event Data
 
-* `newlyCreated` (boolean): true if the menu was created for the first time or destroyed and re-created; false if it was made visible after being hidden. This can be used when adding custom elements to a menu, as elements previously added will still exist if the menu was hidden. If the menu was re-created, the elements will need to be added again.
 * `element` ([tes3uiElement](../../types/tes3uiElement)): The menu element that was created. The event is filtered on element.name.
+* `newlyCreated` (boolean): true if the menu was created for the first time or destroyed and re-created; false if it was made visible after being hidden. This can be used when adding custom elements to a menu, as elements previously added will still exist if the menu was hidden. If the menu was re-created, the elements will need to be added again.
 

@@ -14,9 +14,9 @@ event.register("itemTileUpdated", itemTileUpdatedCallback)
 
 ## Event Data
 
-* `tile` (tes3uiInventoryTile): The dialogue info object.
-* `menu` (tesuiElement): The dialogue object.
-* `item` ([tes3item](../../types/tes3item)): The reference.
 * `element` (tesuiElement): The command.
+* `item` ([tes3item](../../types/tes3item)): The reference.
 * `itemData` (tesitemData): The script variables.
+* `menu` (tesuiElement): The dialogue object.
+* `tile` (tes3uiInventoryTile): The dialogue info object.
 

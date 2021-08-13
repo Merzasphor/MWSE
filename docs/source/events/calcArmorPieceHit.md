@@ -17,8 +17,8 @@ event.register("calcArmorPieceHit", calcArmorPieceHitCallback)
 
 ## Event Data
 
-* `reference` ([tes3reference](../../types/tes3reference)): A shortcut to the mobile's reference.
-* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): The mobile who is being hit.
-* `slot` (number): The primary slot that is targeted.
 * `fallback` (number): A secondary slot to check for equipment on, if no armor is found using the primary slot.
+* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): The mobile who is being hit.
+* `reference` ([tes3reference](../../types/tes3reference)): A shortcut to the mobile's reference.
+* `slot` (number): The primary slot that is targeted.
 

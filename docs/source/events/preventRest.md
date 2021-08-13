@@ -20,6 +20,6 @@ event.register("preventRest", preventRestCallback)
 
 ## Event Data
 
-* `reference` ([tes3reference](../../types/tes3reference)): Mobile’s associated reference.
 * `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): Mobile actor which is preventing the player from resting
+* `reference` ([tes3reference](../../types/tes3reference)): Mobile’s associated reference.
 

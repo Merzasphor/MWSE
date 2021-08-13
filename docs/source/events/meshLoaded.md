@@ -17,6 +17,6 @@ event.register("meshLoaded", meshLoadedCallback)
 
 ## Event Data
 
-* `path` (string): The path to the mesh, relative to Data Files\Meshes
 * `node` ([niAVObject](../../types/niAVObject)): 
+* `path` (string): The path to the mesh, relative to Data Files\Meshes
 

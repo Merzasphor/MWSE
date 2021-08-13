@@ -14,12 +14,12 @@ event.register("potionBrewSkillCheck", potionBrewSkillCheckCallback)
 
 ## Event Data
 
+* `alembic` ([tes3apparatus](../../types/tes3apparatus)): The alembic apparatus used to create the potion.
 * `calcinator` ([tes3apparatus](../../types/tes3apparatus)): The calcinator apparatus used to create the potion.
 * `ingredients` (table): An array of up to 4 tes3ingredient objects, which were used to create the potion.
-* `alembic` ([tes3apparatus](../../types/tes3apparatus)): The alembic apparatus used to create the potion.
+* `mortar` ([tes3apparatus](../../types/tes3apparatus)): The mortar apparatus used to create the potion.
 * `potionStrength` (number): Can be modified. The strength multiplier used to scale the potion effects. For each different effect, it can modify magnitude, duration, or both. This is initially equal to -1 if the potion failed to brew.
 * `retort` ([tes3apparatus](../../types/tes3apparatus)): The retort apparatus used to create the potion.
-* `mortar` ([tes3apparatus](../../types/tes3apparatus)): The mortar apparatus used to create the potion.
 * `success` (boolean): Can be modified. Whether the brewing is successful.
 
 ## Examples

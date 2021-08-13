@@ -14,6 +14,6 @@ event.register("saved", savedCallback)
 
 ## Event Data
 
-* `name` (string): The user facing name of the save, shown in the load/save game menu.
 * `filename` (string): The filename of the save, not including file extension.
+* `name` (string): The user facing name of the save, shown in the load/save game menu.
 

@@ -14,7 +14,7 @@ event.register("enterFrame", enterFrameCallback)
 
 ## Event Data
 
-* `timestamp` (number): The number of hours since the beginning of the 3rd Era (similar to the Unix Epoch).
-* `menuMode` (boolean): If the game is paused- in the inventory or a menu, etc.
 * `delta` (number): The number of seconds since the last frame.
+* `menuMode` (boolean): If the game is paused- in the inventory or a menu, etc.
+* `timestamp` (number): The number of hours since the beginning of the 3rd Era (similar to the Unix Epoch).
 

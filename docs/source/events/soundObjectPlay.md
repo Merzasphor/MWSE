@@ -20,9 +20,9 @@ event.register("soundObjectPlay", soundObjectPlayCallback)
 
 ## Event Data
 
-* `pitch` (number): 
 * `flags` (number): 
+* `isNot3D` (boolean): 
+* `pitch` (number): 
 * `sound` ([tes3sound](../../types/tes3sound)): 
 * `volume` (number): 
-* `isNot3D` (boolean): 
 

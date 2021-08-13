@@ -14,6 +14,6 @@ event.register("calcSoulValue", calcSoulValueCallback)
 
 ## Event Data
 
-* `value` (number): The value of the actor's soul.
 * `actor` ([tes3creature](../../types/tes3creature), [tes3npc](../../types/tes3npc)): The actor whose soul is being evaluated.
+* `value` (number): The value of the actor's soul.
 

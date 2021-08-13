@@ -14,6 +14,6 @@ event.register("musicSelectTrack", musicSelectTrackCallback)
 
 ## Event Data
 
-* `situation` (number): Maps to tes3.musicSituation.*, indicating combat or non-combat music.
 * `music` (string): If set to the path of a given track (relative to Data Files/music), it will play the given path instead of a random one.
+* `situation` (number): Maps to tes3.musicSituation.*, indicating combat or non-combat music.
 

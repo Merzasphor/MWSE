@@ -17,8 +17,8 @@ event.register("mouseButtonUp", mouseButtonUpCallback)
 
 ## Event Data
 
-* `isSuperDown` (number): True if super (Windows key) is held.
 * `button` (number): The button index that was released.
-* `isControlDown` (number): True if control is held.
 * `isAltDown` (number): True if alt  is held.
+* `isControlDown` (number): True if control is held.
+* `isSuperDown` (number): True if super (Windows key) is held.
 

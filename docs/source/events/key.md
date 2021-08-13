@@ -17,11 +17,11 @@ event.register("key", keyCallback)
 
 ## Event Data
 
-* `keyCode` (number): The scan code of the key that raised the event.
-* `pressed` (boolean): True if this is a key down event, false for a key up event.
-* `isSuperDown` (number): True if super (Windows key) is held.
 * `isAltDown` (number): True if alt  is held.
 * `isControlDown` (number): True if control is held.
+* `isSuperDown` (number): True if super (Windows key) is held.
+* `keyCode` (number): The scan code of the key that raised the event.
+* `pressed` (boolean): True if this is a key down event, false for a key up event.
 
 ## Examples
 

@@ -17,7 +17,7 @@ event.register("collideWater", collideWaterCallback)
 
 ## Event Data
 
-* `reference` ([tes3mobileObject](../../types/tes3mobileObject)): `mobile`'s reference.
-* `mobile` ([tes3mobileObject](../../types/tes3mobileObject)): Mobile object which collided.
 * `inWater` (boolean): 
+* `mobile` ([tes3mobileObject](../../types/tes3mobileObject)): Mobile object which collided.
+* `reference` ([tes3mobileObject](../../types/tes3mobileObject)): `mobile`'s reference.
 

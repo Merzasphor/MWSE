@@ -20,7 +20,7 @@ event.register("playItemSound", playItemSoundCallback)
 
 ## Event Data
 
-* `state` (number): 
 * `item` ([tes3baseObject](../../types/tes3baseObject)): 
 * `reference` ([tes3reference](../../types/tes3reference)): 
+* `state` (number): 
 

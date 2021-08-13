@@ -14,10 +14,10 @@ event.register("calcRepairPrice", calcRepairPriceCallback)
 
 ## Event Data
 
-* `price` (number): The adjusted price of repairing item.
-* `itemData` ([tes3item](../../types/tes3item)): Variable node. The data associated with item. This may be nil.
-* `reference` ([tes3reference](../../types/tes3reference)): mobile’s related reference.
-* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): The mobile actor of the merchant the player is interacting with.
 * `basePrice` (number): The price before adjustment.
 * `item` ([tes3item](../../types/tes3item)): The item to be repaired.
+* `itemData` ([tes3item](../../types/tes3item)): Variable node. The data associated with item. This may be nil.
+* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): The mobile actor of the merchant the player is interacting with.
+* `price` (number): The adjusted price of repairing item.
+* `reference` ([tes3reference](../../types/tes3reference)): mobile’s related reference.
 
