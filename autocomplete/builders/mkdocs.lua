@@ -14,7 +14,7 @@ lfs.remakedir(lfs.join(docsSourceFolder, "types"))
 lfs.remakedir(lfs.join(docsSourceFolder, "events"))
 
 -- Base containers to hold our compiled data.
-local libraries = {}
+local globals = {}
 local classes = {}
 local events = {}
 
@@ -30,7 +30,7 @@ common.log("Definitions folder: %s", common.pathDefinitions)
 -- Compile data
 --
 
-common.compilePath(lfs.join(common.pathDefinitions, "global"), libraries, "lib")
+common.compilePath(lfs.join(common.pathDefinitions, "global"), globals)
 common.compilePath(lfs.join(common.pathDefinitions, "namedTypes"), classes, "class")
 common.compilePath(lfs.join(common.pathDefinitions, "events", "standard"), events, "event")
 
@@ -151,92 +151,9 @@ local function getArgumentCode(argument)
 	return argument.name or "unknown"
 end
 
-local function writeSubPackage(file, package, from)
-	-- Don't document deprecated APIs on the website.
-	if (package.deprecated) then
-		return
-	end
+local writeSubPackage = nil
 
-	local key = package.key
-	if (from.type == "lib") then
-		key = string.format("%s.%s", from.namespace, package.key)
-	end
-	file:write(string.format("### `%s`\n\n", key))
-
-	file:write(string.format("%s\n\n", common.getDescriptionString(package)))
-
-	local returns = common.getConsistentReturnValues(package)
-	if (package.type == "method" or package.type == "function") then
-		file:write(string.format("```lua\n",  package.namespace))
-		if (returns) then
-			local returnNames = {}
-			for i, ret in ipairs(returns) do
-				table.insert(returnNames, ret.name or string.format("unnamed%d", i))
-			end
-			file:write(string.format("local %s = ", table.concat(returnNames, ", ")))
-		end
-		file:write(string.format("%s%s%s(", package.parent.namespace, package.type == "method" and ":" or ".", package.key))
-		if (package.arguments) then
-			local args = {}
-			for _, arg in pairs(package.arguments) do
-				table.insert(args, getArgumentCode(arg))
-			end
-			file:write(table.concat(args, ", "))
-		end
-		file:write(string.format(")\n```\n\n", package.namespace))
-	end
-
-	if (package.arguments) then
-		file:write(string.format("**Parameters**:\n\n"))
-		for _, argument in ipairs(package.arguments) do
-			writeArgument(file, argument, "")
-		end
-		file:write("\n")
-	end
-
-	if (returns) then
-		file:write(string.format("**Returns**:\n\n"))
-		for _, ret in ipairs(returns) do
-			writeArgument(file, ret, "")
-		end
-		file:write("\n")
-	end
-
-	if (package.examples) then
-		local exampleKeys = table.keys(package.examples, true)
-		for _, name in ipairs(exampleKeys) do
-			local example = package.examples[name]
-			file:write(string.format("??? example \"Example: %s\"\n\n", example.title or name))
-			file:write(string.format("\t```lua\n"))
-			for line in io.lines(lfs.join(package.folder, package.key, name .. ".lua")) do
-				file:write(string.format("\t%s\n", line))
-			end
-			file:write(string.format("\n\t```\n\n"))
-		end
-	end
-end
-
-local typeToDirectory = {
-	class = "types",
-	event = "events",
-	lib = "apis",
-}
-
-local function build(package)
-	-- Load our base package.
-	common.log("Building " .. package.type .. ": " .. package.namespace .. " ...")
-
-	-- Get the package.
-	local outPath = lfs.join(docsSourceFolder, typeToDirectory[package.type], package.namespace .. ".md")
-	local file = assert(io.open(outPath, "w"))
-
-	file:write(string.format("# %s\n\n", package.namespace))
-
-	-- Warn of deprecated packages.
-	if (package.deprecated) then
-		file:write("!!! warning\n\tThis API is deprecated. See below for more information about what to use instead.\n\n")
-	end
-
+local function writePackageDetails(file, package)
 	-- Write description.
 	file:write(string.format("%s\n\n", common.getDescriptionString(package)))
 	if (package.type == "class" and package.inherits) then
@@ -282,6 +199,47 @@ local function build(package)
 		end
 	end
 
+	local returns = common.getConsistentReturnValues(package)
+	if (package.type == "method" or package.type == "function") then
+		file:write(string.format("```lua\n",  package.namespace))
+		if (returns) then
+			local returnNames = {}
+			for i, ret in ipairs(returns) do
+				table.insert(returnNames, ret.name or string.format("unnamed%d", i))
+			end
+			file:write(string.format("local %s = ", table.concat(returnNames, ", ")))
+		end
+		if (package.parent) then
+			file:write(string.format("%s%s%s(", package.parent.namespace, package.type == "method" and ":" or ".", package.key))
+		else
+			file:write(string.format("%s(", package.key))
+		end
+		if (package.arguments) then
+			local args = {}
+			for _, arg in pairs(package.arguments) do
+				table.insert(args, getArgumentCode(arg))
+			end
+			file:write(table.concat(args, ", "))
+		end
+		file:write(string.format(")\n```\n\n", package.namespace))
+	end
+
+	if (package.arguments) then
+		file:write(string.format("**Parameters**:\n\n"))
+		for _, argument in ipairs(package.arguments) do
+			writeArgument(file, argument, "")
+		end
+		file:write("\n")
+	end
+
+	if (returns) then
+		file:write(string.format("**Returns**:\n\n"))
+		for _, ret in ipairs(returns) do
+			writeArgument(file, ret, "")
+		end
+		file:write("\n")
+	end
+
 	-- Events are more top-level, need to do special handling...
 	if (package.type == "event") then
 		-- Write out event data.
@@ -312,10 +270,63 @@ local function build(package)
 		end
 	end
 
-	-- Ensure that sub-libraries are built.
+	if (package.examples) then
+		local exampleKeys = table.keys(package.examples, true)
+		for _, name in ipairs(exampleKeys) do
+			local example = package.examples[name]
+			file:write(string.format("??? example \"Example: %s\"\n\n", example.title or name))
+			file:write(string.format("\t```lua\n"))
+
+			local path = nil
+			if (package.type == "class") then
+				path = lfs.join(package.folder, package.key, package.key, name .. ".lua")
+			else
+				path = lfs.join(package.folder, package.key, name .. ".lua")
+			end
+			for line in io.lines(path) do
+				file:write(string.format("\t%s\n", line))
+			end
+			file:write(string.format("\n\t```\n\n"))
+		end
+	end
+end
+
+writeSubPackage = function(file, package, from)
+	-- Don't document deprecated APIs on the website.
+	if (package.deprecated) then
+		return
+	end
+
+	local key = package.key
+	if (from.type == "lib") then
+		key = string.format("%s.%s", from.namespace, package.key)
+	end
+	file:write(string.format("### `%s`\n\n", key))
+
+	writePackageDetails(file, package)
+end
+
+local function build(package, outDir)
+	-- Load our base package.
+	common.log("Building " .. package.type .. ": " .. package.namespace .. " ...")
+
+	-- Get the package.
+	local outPath = lfs.join(docsSourceFolder, outDir, package.namespace .. ".md")
+	local file = assert(io.open(outPath, "w"))
+
+	file:write(string.format("# %s\n\n", package.namespace))
+
+	-- Warn of deprecated packages.
+	if (package.deprecated) then
+		file:write("!!! warning\n\tThis API is deprecated. See below for more information about what to use instead.\n\n")
+	end
+
+	writePackageDetails(file, package)
+
+	-- Ensure that sub-globals are built.
 	if (package.libs) then
 		for _, lib in ipairs(package.libs) do
-			build(lib)
+			build(lib, outDir)
 		end
 	end
 
@@ -323,16 +334,16 @@ local function build(package)
 	file:close()
 end
 
-for _, package in pairs(libraries) do
-	build(package)
+for _, package in pairs(globals) do
+	build(package, "apis")
 end
 
 for _, package in pairs(classes) do
-	build(package)
+	build(package, "types")
 end
 
 for _, package in pairs(events) do
-	build(package)
+	build(package, "events")
 end
 
 --
