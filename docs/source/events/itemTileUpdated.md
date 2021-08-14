@@ -18,5 +18,5 @@ event.register("itemTileUpdated", itemTileUpdatedCallback)
 * `item` ([tes3item](../../types/tes3item)): *Read-only*. The reference.
 * `itemData` (tesitemData): *Read-only*. The script variables.
 * `menu` ([tes3uiElement](../../types/tes3uiElement)): *Read-only*. The dialogue object.
-* `tile` ([tes3uiInventoryTile](../../types/tes3uiInventoryTile)): *Read-only*. The dialogue info object.
+* `tile` ([tes3inventoryTile](../../types/tes3inventoryTile)): *Read-only*. The dialogue info object.
 

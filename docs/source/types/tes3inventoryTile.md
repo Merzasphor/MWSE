@@ -1,4 +1,4 @@
-# tes3uiInventoryTile
+# tes3inventoryTile
 
 An inventory tile, connecting an item, its data, and various related UI elements.
 

@@ -23,7 +23,7 @@ return {
 			description = "The dialogue object.",
 		},
 		["tile"] = {
-			type = "tes3uiInventoryTile",
+			type = "tes3inventoryTile",
 			readOnly = true,
 			description = "The dialogue info object.",
 		},
