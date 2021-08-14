@@ -252,7 +252,7 @@ namespace TES3 {
 		int viewHeight; // 0x7C
 		int bitDepth; // 0x80
 		int bShadows; // 0x84
-		int helpDelay; // 0x88
+		float helpDelay; // 0x88
 		unsigned char hudStyle; // 0x8C
 		float menuAlpha; // 0x90
 		bool cursorOff; // 0x94
@@ -326,7 +326,7 @@ namespace TES3 {
 		float deadFloatScale; // 0x330
 		int unknown_0x334;
 		IteratedList<GlobalScript*> * globalScripts; // 0x338
-		IteratedList<MobileActor*> * allActors; // 0x33C
+		IteratedList<MobileActor*> * allMobileActors; // 0x33C
 		IteratedList<void*> * chargableItems; // 0x340
 		bool showSubtitles; // 0x344
 		int countMusicTracksBattle; // 0x348

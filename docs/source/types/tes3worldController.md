@@ -4,16 +4,6 @@ A core game object used for storing world simulation data.
 
 ## Properties
 
-### `activeQuests`
-
-*Read-only*. A list of all available ``tes3quest``s.
-
-**Returns**:
-
-* `result` ([tes3iterator](../../types/tes3iterator))
-
-***
-
 ### `aiDistanceScale`
 
 A value in the range [0, 1]. The (relative) maximum distance setting for AI simulation. Corresponds to the AI distance option in the Options menu.
@@ -21,6 +11,16 @@ A value in the range [0, 1]. The (relative) maximum distance setting for AI simu
 **Returns**:
 
 * `result` (number)
+
+***
+
+### `allMobileActors`
+
+*Read-only*. The list of all active mobile actors (``tes3mobileActor``). Mobile actors expire after 72 hours if they have not been in a loaded cell.
+
+**Returns**:
+
+* `result` ([tes3iterator](../../types/tes3iterator))
 
 ***
 
@@ -564,6 +564,16 @@ The kind of music being played. Only updates when music is not muted.
 **Returns**:
 
 * `result` (number)
+
+***
+
+### `quests`
+
+*Read-only*. A list of all available ``tes3quest``s.
+
+**Returns**:
+
+* `result` ([tes3iterator](../../types/tes3iterator))
 
 ***
 

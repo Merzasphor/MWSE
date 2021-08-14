@@ -2,8 +2,8 @@
 
 --- A core game object used for storing world simulation data.
 --- @class tes3worldController
---- @field activeQuests tes3iterator *Read-only*. A list of all available ``tes3quest``s.
 --- @field aiDistanceScale number A value in the range [0, 1]. The (relative) maximum distance setting for AI simulation. Corresponds to the AI distance option in the Options menu.
+--- @field allMobileActors tes3iterator *Read-only*. The list of all active mobile actors (``tes3mobileActor``). Mobile actors expire after 72 hours if they have not been in a loaded cell.
 --- @field armCamera tes3worldControllerRenderCamera *Read-only*. 
 --- @field audioController tes3audioController *Read-only*. The audio controller.
 --- @field blindnessFader tes3fader *Read-only*. Screen overlay fader for the blind effect.
@@ -61,6 +61,7 @@
 --- ``2`` Main menu music
 --- @field nodeCursor niBillboardNode|niCollisionSwitch|niNode|niSwitchNode *Read-only*. The scenegraph node for the target crosshair.
 --- @field projectionDistance number 
+--- @field quests tes3iterator *Read-only*. A list of all available ``tes3quest``s.
 --- @field quickSaveWhenResting object Controls if auto-save on resting or waiting is enabled. Corresponds to the "Auto-save when rest" option in the Options menu.
 --- @field shaderWaterReflectTerrain boolean If pixel shader water reflection includes terrain. Not functional with MGE enabled.
 --- @field shaderWaterReflectUpdate number Period between reflection updates for pixel shader water. Not functional with MGE enabled.
