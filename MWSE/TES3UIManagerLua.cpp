@@ -86,7 +86,8 @@ namespace mwse {
 						eventData["relativeY"] = target->cached_screenY - data1;
 					}
 
-					for (const auto& eventLua : iterCallback->second) {
+					auto callbacks = iterCallback->second;
+					for (const auto& eventLua : callbacks) {
 						// Note: sol::protected_function needs to be a local, as Lua functions can destroy it when modifying events.
 						sol::protected_function callback = eventLua.callback;
 						sol::protected_function_result result = callback(eventData);
@@ -177,7 +178,8 @@ namespace mwse {
 						eventData["relativeY"] = target->cached_screenY - data1;
 					}
 
-					for (const auto& eventLua : iterCallback->second) {
+					auto callbacks = iterCallback->second;
+					for (const auto& eventLua : callbacks) {
 						// Note: sol::protected_function needs to be a local, as Lua functions can destroy it when modifying events.
 						sol::protected_function callback = eventLua.callback;
 						sol::protected_function_result result = callback(eventData);
