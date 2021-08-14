@@ -1050,7 +1050,7 @@ local result = tes3uiElement:getPropertyObject(propName, expectedUsertype)
 
 **Returns**:
 
-* `result` (object)
+* `result` ([tes3baseObject](../../types/tes3baseObject), [tes3mobileObject](../../types/tes3mobileObject), any)
 
 ***
 

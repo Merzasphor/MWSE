@@ -14,5 +14,5 @@ return {
 		{ name = "propName", type = "string", description = "The property name." },
 		{ name = "expectedUsertype", type = "string", description = "A Lua usertype name, if expecting a non-standard object type.", optional = true },
 	},
-    valuetype = "object",
+    valuetype = "tes3baseObject|tes3mobileObject|any",
 }
