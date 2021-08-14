@@ -292,6 +292,7 @@ function tes3uiElement:getPropertyObject(propName, expectedUsertype) end
 function tes3uiElement:getTopLevelMenu() end
 
 --- Alias for `:getTopLevelParent()`.
+--- @deprecated
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:getTopLevelParent() end
 

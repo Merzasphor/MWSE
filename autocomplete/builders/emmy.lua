@@ -95,6 +95,10 @@ local function writeFunction(package, file, namespaceOverride)
 	file:write(formatDescription(common.getDescriptionString(package)) .. "\n")
 	writeExamples(package, file)
 
+	if (package.deprecated or package.parent.deprecated) then
+		file:write("--- @deprecated\n")
+	end
+
 	for _, argument in ipairs(package.arguments or {}) do
 		local type = argument.type
 		local description = common.getDescriptionString(argument)
@@ -174,7 +178,9 @@ local function build(package)
 
 	-- Write out fields.
 	for _, value in ipairs(package.values or {}) do
-		file:write(string.format("--- @field %s %s %s\n", value.key, getAllPossibleVariationsOfType(value.valuetype) or "any", formatLineBreaks(common.getDescriptionString(value))))
+		if (not value.deprecated) then
+			file:write(string.format("--- @field %s %s %s\n", value.key, getAllPossibleVariationsOfType(value.valuetype) or "any", formatLineBreaks(common.getDescriptionString(value))))
+		end
 	end
 
 	-- Write out event data.
@@ -190,7 +196,9 @@ local function build(package)
 		local eventDataKeys = table.keys(eventData, true)
 		for _, key in ipairs(eventDataKeys) do
 			local data = eventData[key]
-			file:write(string.format("--- @field %s %s %s\n", key, getAllPossibleVariationsOfType(data.type) or "any", formatLineBreaks(common.getDescriptionString(data))))
+			if (not data.deprecated) then
+				file:write(string.format("--- @field %s %s %s\n", key, getAllPossibleVariationsOfType(data.type) or "any", formatLineBreaks(common.getDescriptionString(data))))
+			end
 		end
 	end
 

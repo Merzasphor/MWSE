@@ -2,9 +2,6 @@
 
 --- A core lockpick object.
 --- @class tes3lockpick : tes3item, tes3physicalObject, tes3object, tes3baseObject
---- @field condition number Use tes3lockpick.maxCondition instead.
---- 
---- The maximum condition/health of the object.
 --- @field icon string The path to the object's icon.
 --- @field maxCondition number The maximum condition/health of the lockpick object.
 --- @field mesh string The path to the object's mesh.

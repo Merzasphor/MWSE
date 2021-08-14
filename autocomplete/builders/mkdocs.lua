@@ -152,6 +152,11 @@ local function getArgumentCode(argument)
 end
 
 local function writeSubPackage(file, package, from)
+	-- Don't document deprecated APIs on the website.
+	if (package.deprecated) then
+		return
+	end
+
 	local key = package.key
 	if (from.type == "lib") then
 		key = string.format("%s.%s", from.namespace, package.key)
@@ -226,6 +231,11 @@ local function build(package)
 	local file = assert(io.open(outPath, "w"))
 
 	file:write(string.format("# %s\n\n", package.namespace))
+
+	-- Warn of deprecated packages.
+	if (package.deprecated) then
+		file:write("!!! warning\n\tThis API is deprecated. See below for more information about what to use instead.\n\n")
+	end
 
 	-- Write description.
 	file:write(string.format("%s\n\n", common.getDescriptionString(package)))

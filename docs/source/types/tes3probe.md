@@ -25,16 +25,6 @@ The bounding box for the object.
 
 ***
 
-### `condition`
-
-Use tes3probe.maxCondition.
-
-The maximum condition/health of the object.
-
-**Returns**:
-
-* `result` (number)
-
 ***
 
 ### `deleted`

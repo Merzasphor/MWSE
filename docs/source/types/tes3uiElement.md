@@ -1068,18 +1068,6 @@ local result = tes3uiElement:getTopLevelMenu()
 
 ***
 
-### `getTopLevelParent`
-
-Alias for `:getTopLevelParent()`.
-
-```lua
-local result = tes3uiElement:getTopLevelParent()
-```
-
-**Returns**:
-
-* `result` ([tes3uiElement](../../types/tes3uiElement))
-
 ***
 
 ### `loadMenuPosition`
