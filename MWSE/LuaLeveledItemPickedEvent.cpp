@@ -12,7 +12,7 @@
 namespace mwse {
 	namespace lua {
 		namespace event {
-			LeveledItemPickedEvent::LeveledItemPickedEvent(TES3::LeveledItem * list, TES3::Object * vanillaResult) :
+			LeveledItemPickedEvent::LeveledItemPickedEvent(TES3::LeveledItem * list, TES3::PhysicalObject* vanillaResult) :
 				ObjectFilteredEvent("leveledItemPicked", list),
 				m_List(list),
 				m_Result(vanillaResult)

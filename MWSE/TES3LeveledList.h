@@ -65,7 +65,7 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
-		Item* resolve();
+		PhysicalObject* resolve();
 		bool insert(BaseObject* entry, short level);
 		bool remove(BaseObject* entry, short level = -1);
 

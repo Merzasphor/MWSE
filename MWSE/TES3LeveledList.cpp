@@ -61,8 +61,8 @@ namespace TES3 {
 		setLeveledFlag(LeveledCreatureFlags::CalculateFromAllLevels, value);
 	}
 
-	const auto TES3_LeveledItem_resolve = reinterpret_cast<Item* (__thiscall*)(LeveledItem*)>(0x4D0BD0);
-	Item* LeveledItem::resolve() {
+	const auto TES3_LeveledItem_resolve = reinterpret_cast<PhysicalObject* (__thiscall*)(LeveledItem*)>(0x4D0BD0);
+	PhysicalObject* LeveledItem::resolve() {
 		// Call the original function.
 		auto result = TES3_LeveledItem_resolve(this);
 

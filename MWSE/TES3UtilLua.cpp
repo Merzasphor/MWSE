@@ -2746,9 +2746,12 @@ namespace mwse {
 				throw std::invalid_argument("Invalid 'item' parameter provided.");
 			}
 			else if (itemBase->objectType == TES3::ObjectType::LeveledItem) {
-				item = static_cast<TES3::LeveledItem*>(itemBase)->resolve();
+				item = static_cast<TES3::Item*>(static_cast<TES3::LeveledItem*>(itemBase)->resolve());
 				if (!item) {
 					return 0;
+				}
+				else if (!item->isItem()) {
+					throw std::invalid_argument("Unexpected item case. Report this issue.");
 				}
 			}
 			else if (itemBase->isItem()) {
