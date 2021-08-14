@@ -1218,9 +1218,9 @@ namespace TES3 {
 		}
 	}
 
-	sol::table MobileActor::getActiveMagicEffectsList_lua(sol::table params) {
-		sol::optional<int> effectID = params["effect"];
-		sol::optional<unsigned int> serial = params["serial"];
+	sol::table MobileActor::getActiveMagicEffectsList_lua(sol::optional<sol::table> params) {
+		auto effectID = mwse::lua::getOptionalParam<int>(params, "effect");
+		auto serial = mwse::lua::getOptionalParam<unsigned int>(params, "serial");
 
 		auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
 		sol::table effectsList = stateHandle.state.create_table();

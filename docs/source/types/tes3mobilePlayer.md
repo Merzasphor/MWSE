@@ -2079,7 +2079,7 @@ local result = tes3mobileActor:getActiveMagicEffects({ effect = ..., serial = ..
 
 **Parameters**:
 
-* `params` (table)
+* `params` (table): *Optional*.
 	* `effect` (number): *Optional*. The magic effect ID to search for.
 	* `serial` (number): *Optional*. The magic instance serial to search for.
 

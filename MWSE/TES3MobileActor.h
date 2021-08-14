@@ -427,7 +427,7 @@ namespace TES3 {
 		bool getMobToMobCollision() const;
 		void setMobToMobCollision(bool collide);
 
-		sol::table getActiveMagicEffectsList_lua(sol::table params);
+		sol::table getActiveMagicEffectsList_lua(sol::optional<sol::table> params);
 		ActiveMagicEffect* getActiveMagicEffects_legacy() const;
 		int getActiveMagicEffectCount_legacy() const;
 	};

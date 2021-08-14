@@ -4,6 +4,7 @@ return {
 	arguments = {{
 		name = "params",
 		type = "table",
+		optional = true,
 		tableParams = {
 			{ name = "effect", type = "number", optional = true, description = "The magic effect ID to search for." },
 			{ name = "serial", type = "number", optional = true, description = "The magic instance serial to search for." },
