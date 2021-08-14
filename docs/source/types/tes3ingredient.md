@@ -65,7 +65,7 @@ The bounding box for the object.
 
 ***
 
-### `effectsSkillIds`
+### `effectSkillIds`
 
 *Read-only*. An array-style table access the skills associated with the effects.
 
