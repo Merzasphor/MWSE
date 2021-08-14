@@ -1068,6 +1068,20 @@ local result = tes3uiElement:getTopLevelMenu()
 
 ***
 
+### `getTopLevelParent`
+
+Alias for `:getTopLevelParent()`.
+
+```lua
+local result = tes3uiElement:getTopLevelParent()
+```
+
+**Returns**:
+
+* `result` ([tes3uiElement](../../types/tes3uiElement))
+
+***
+
 ### `loadMenuPosition`
 
 Restores the menu's position and size information from the Morrowind.ini file. This may only be called on top-level parents.
@@ -1317,6 +1331,20 @@ tes3uiElement:setPropertyObject(propName, value)
 
 * `propName` (string): The property name.
 * `value` (object): The value to set.
+
+***
+
+### `sortChildren`
+
+Reorders the element's children given a sorting function.
+
+```lua
+tes3uiElement:sortChildren(sortFunction)
+```
+
+**Parameters**:
+
+* `sortFunction` (function): The function to sort with. Like most sorting functions, this is given two arguments to compare.
 
 ***
 

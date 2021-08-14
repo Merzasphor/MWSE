@@ -291,6 +291,10 @@ function tes3uiElement:getPropertyObject(propName, expectedUsertype) end
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:getTopLevelMenu() end
 
+--- Alias for `:getTopLevelParent()`.
+--- @return tes3uiElement result No description yet available.
+function tes3uiElement:getTopLevelParent() end
+
 --- Restores the menu's position and size information from the Morrowind.ini file. This may only be called on top-level parents.
 function tes3uiElement:loadMenuPosition() end
 
@@ -445,6 +449,10 @@ function tes3uiElement:setPropertyInt(propName, value) end
 --- @param propName string The property name.
 --- @param value object The value to set.
 function tes3uiElement:setPropertyObject(propName, value) end
+
+--- Reorders the element's children given a sorting function.
+--- @param sortFunction function The function to sort with. Like most sorting functions, this is given two arguments to compare.
+function tes3uiElement:sortChildren(sortFunction) end
 
 --- Triggers a UI event on an element, either using supplied event data, or by constructing new event data using ``eventName``. ``eventName`` is the same as used in ``register``.
 --- @param eventID tes3uiEvent|string The event, or event ID.
