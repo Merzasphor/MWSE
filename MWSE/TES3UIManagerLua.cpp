@@ -228,6 +228,11 @@ namespace mwse {
 			auto& properties = eventCallbacksBefore[target];
 			auto& callbacks = properties[eventID];
 
+			auto existing = std::find_if(callbacks.begin(), callbacks.end(), [&](auto& s) { return s.callback == callback && s.priority == priority; });
+			if (existing != callbacks.end()) {
+				return;
+			}
+
 			auto pos = std::find_if(callbacks.begin(), callbacks.end(), [priority](auto& s) { return s.priority < priority; });
 			callbacks.insert(pos, { callback, priority });
 
@@ -252,6 +257,11 @@ namespace mwse {
 		void registerAfterUIEvent(TES3::UI::Element* target, TES3::UI::Property eventID, sol::protected_function callback, double priority) {
 			auto& properties = eventCallbacksAfter[target];
 			auto& callbacks = properties[eventID];
+
+			auto existing = std::find_if(callbacks.begin(), callbacks.end(), [&](auto& s) { return s.callback == callback && s.priority == priority; });
+			if (existing != callbacks.end()) {
+				return;
+			}
 
 			auto pos = std::find_if(callbacks.begin(), callbacks.end(), [priority](auto& s) { return s.priority < priority; });
 			callbacks.insert(pos, { callback, priority });
