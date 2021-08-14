@@ -9,12 +9,13 @@ common.log("Starting build of EmmyLua meta files...")
 
 -- Recreate meta folder.
 local metaFolder = lfs.join(common.pathAutocomplete, "..\\misc\\package\\Data Files\\MWSE\\core\\meta")
+lfs.remakedir(lfs.join(metaFolder, "function"))
 lfs.remakedir(lfs.join(metaFolder, "lib"))
 lfs.remakedir(lfs.join(metaFolder, "class"))
 lfs.remakedir(lfs.join(metaFolder, "event"))
 
 -- Base containers to hold our compiled data.
-local libraries = {}
+local globals = {}
 local classes = {}
 local events = {}
 
@@ -95,7 +96,7 @@ local function writeFunction(package, file, namespaceOverride)
 	file:write(formatDescription(common.getDescriptionString(package)) .. "\n")
 	writeExamples(package, file)
 
-	if (package.deprecated or package.parent.deprecated) then
+	if (package.deprecated or (package.parent and package.parent.deprecated)) then
 		file:write("--- @deprecated\n")
 	end
 
@@ -137,7 +138,7 @@ end
 -- Compile data
 --
 
-common.compilePath(lfs.join(common.pathDefinitions, "global"), libraries, "lib")
+common.compilePath(lfs.join(common.pathDefinitions, "global"), globals)
 common.compilePath(lfs.join(common.pathDefinitions, "namedTypes"), classes, "class")
 common.compilePath(lfs.join(common.pathDefinitions, "events", "standard"), classes, "event")
 
@@ -166,14 +167,20 @@ local function build(package)
 	file:write("--- @meta\n\n")
 
 	-- Write description.
-	file:write(formatDescription(common.getDescriptionString(package)) .. "\n")
-	writeExamples(package, file)
 	if (package.type == "lib") then
+		file:write(formatDescription(common.getDescriptionString(package)) .. "\n")
+		writeExamples(package, file)
 		file:write(string.format("--- @class %slib\n", package.key))
 	elseif (package.type == "class") then
+		file:write(formatDescription(common.getDescriptionString(package)) .. "\n")
+		writeExamples(package, file)
 		file:write(string.format("--- @class %s%s\n", package.key, package.inherits and (" : " .. buildParentChain(package.inherits)) or ""))
 	elseif (package.type == "event") then
+		file:write(formatDescription(common.getDescriptionString(package)) .. "\n")
+		writeExamples(package, file)
 		file:write(string.format("--- @class %sEventData\n", package.key))
+	elseif (package.type == "function") then
+		writeFunction(package, file)
 	end
 
 	-- Write out fields.
@@ -203,7 +210,7 @@ local function build(package)
 	end
 
 	-- Finalize the main class definition.
-	if (package.type ~= "event") then
+	if (package.type == "lib" or package.type == "class") then
 		file:write(string.format("%s = {}\n\n", package.key))
 	end
 
@@ -223,7 +230,7 @@ local function build(package)
 	file:close()
 end
 
-for _, package in pairs(libraries) do
+for _, package in pairs(globals) do
 	build(package)
 end
 
