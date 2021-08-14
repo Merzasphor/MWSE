@@ -7,7 +7,7 @@
 #include "TES3Reference.h"
 
 namespace TES3 {
-	bool Light::getIsDynamic() {
+	bool Light::getIsDynamic() const {
 		return (flags & LightFlags::Dynamic);
 	}
 
@@ -20,7 +20,7 @@ namespace TES3 {
 		}
 	}
 
-	bool Light::getCanCarry() {
+	bool Light::getCanCarry() const {
 		return (flags & LightFlags::CanCarry);
 	}
 
@@ -33,7 +33,7 @@ namespace TES3 {
 		}
 	}
 
-	bool Light::getIsNegative() {
+	bool Light::getIsNegative() const {
 		return (flags & LightFlags::Negative);
 	}
 
@@ -46,7 +46,7 @@ namespace TES3 {
 		}
 	}
 
-	bool Light::getFlickers() {
+	bool Light::getFlickers() const {
 		return (flags & LightFlags::Flicker);
 	}
 
@@ -59,7 +59,7 @@ namespace TES3 {
 		}
 	}
 
-	bool Light::getIsFire() {
+	bool Light::getIsFire() const {
 		return (flags & LightFlags::Fire);
 	}
 
@@ -72,7 +72,7 @@ namespace TES3 {
 		}
 	}
 
-	bool Light::getIsOffByDefault() {
+	bool Light::getIsOffByDefault() const {
 		return (flags & LightFlags::OffByDefault);
 	}
 
@@ -85,7 +85,7 @@ namespace TES3 {
 		}
 	}
 
-	bool Light::getFlickersSlowly() {
+	bool Light::getFlickersSlowly() const {
 		return (flags & LightFlags::FlickerSlow);
 	}
 
@@ -98,7 +98,7 @@ namespace TES3 {
 		}
 	}
 
-	bool Light::getPulses() {
+	bool Light::getPulses() const {
 		return (flags & LightFlags::Pulse);
 	}
 
@@ -111,7 +111,7 @@ namespace TES3 {
 		}
 	}
 
-	bool Light::getPulsesSlowly() {
+	bool Light::getPulsesSlowly() const {
 		return (flags & LightFlags::PulseSlow);
 	}
 

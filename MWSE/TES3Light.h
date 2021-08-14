@@ -41,31 +41,31 @@ namespace TES3 {
 		// Custom functions.
 		//
 
-		bool getIsDynamic();
+		bool getIsDynamic() const;
 		void setIsDynamic(bool);
 
-		bool getCanCarry();
+		bool getCanCarry() const;
 		void setCanCarry(bool);
 
-		bool getIsNegative();
+		bool getIsNegative() const;
 		void setIsNegative(bool);
 
-		bool getFlickers();
+		bool getFlickers() const;
 		void setFlickers(bool);
 
-		bool getIsFire();
+		bool getIsFire() const;
 		void setIsFire(bool);
 
-		bool getIsOffByDefault();
+		bool getIsOffByDefault() const;
 		void setIsOffByDefault(bool);
 
-		bool getFlickersSlowly();
+		bool getFlickersSlowly() const;
 		void setFlickersSlowly(bool);
 
-		bool getPulses();
+		bool getPulses() const;
 		void setPulses(bool);
 
-		bool getPulsesSlowly();
+		bool getPulsesSlowly() const;
 		void setPulsesSlowly(bool);
 
 		void setIconPath(const char* path);

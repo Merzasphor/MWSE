@@ -61,10 +61,10 @@ namespace TES3 {
 		setLeveledFlag(LeveledCreatureFlags::CalculateFromAllLevels, value);
 	}
 
-	const auto TES3_LeveledItem_resolve = reinterpret_cast<Object * (__thiscall*)(LeveledItem*)>(0x4D0BD0);
-	Object * LeveledItem::resolve() {
+	const auto TES3_LeveledItem_resolve = reinterpret_cast<Item* (__thiscall*)(LeveledItem*)>(0x4D0BD0);
+	Item* LeveledItem::resolve() {
 		// Call the original function.
-		Object * result = TES3_LeveledItem_resolve(this);
+		auto result = TES3_LeveledItem_resolve(this);
 
 		// Allow the event to override the pick.
 		if (mwse::lua::event::LeveledItemPickedEvent::getEventEnabled()) {
