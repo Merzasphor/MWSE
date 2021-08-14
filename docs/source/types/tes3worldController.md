@@ -64,16 +64,6 @@ A value in the range [0, 1]. The (relative) maximum distance setting for AI simu
 
 ***
 
-### `chargableItems`
-
-*Read-only*. A list of enchanted items that are recharging. Items in the list may not all belong to the player.
-
-**Returns**:
-
-* `result` ([tes3iterator](../../types/tes3iterator))
-
-***
-
 ### `charGenState`
 
 *Read-only*. The `charGenState` global variable. Indicates progress through character generation. Has a value of `-1` when chargen is complete.
@@ -584,6 +574,16 @@ Controls if auto-save on resting or waiting is enabled. Corresponds to the "Auto
 **Returns**:
 
 * `result` (object)
+
+***
+
+### `rechargingItems`
+
+*Read-only*. A list of enchanted items that are recharging (type ``tes3rechargingItem``). Items in the list may not all belong to the player.
+
+**Returns**:
+
+* `result` ([tes3iterator](../../types/tes3iterator))
 
 ***
 

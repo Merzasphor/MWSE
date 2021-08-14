@@ -8,10 +8,12 @@
 #include "NIRenderer.h"
 
 #include "TES3AudioController.h"
+#include "TES3Enchantment.h"
 #include "TES3Fader.h"
 #include "TES3GameSetting.h"
 #include "TES3GlobalVariable.h"
 #include "TES3InputController.h"
+#include "TES3ItemData.h"
 #include "TES3MobileActor.h"
 #include "TES3MobController.h"
 #include "TES3Quest.h"
@@ -59,6 +61,18 @@ namespace mwse {
 				usertypeDefinition["camera"] = sol::readonly_property(&TES3::WorldControllerRenderCamera::getCamera);
 			}
 
+			// Binding for TES3::RechargingItem.
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.new_usertype<TES3::RechargingItem>("tes3rechargingItem");
+				usertypeDefinition["new"] = sol::no_constructor;
+
+				// Basic property binding.
+				usertypeDefinition["object"] = sol::readonly_property(&TES3::RechargingItem::item);
+				usertypeDefinition["itemData"] = sol::readonly_property(&TES3::RechargingItem::itemData);
+				usertypeDefinition["enchantment"] = sol::readonly_property(&TES3::RechargingItem::enchantment);
+			}
+
 			// Binding for TES3::WorldController.
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
@@ -72,7 +86,6 @@ namespace mwse {
 				usertypeDefinition["audioController"] = sol::readonly_property(&TES3::WorldController::audioController);
 				usertypeDefinition["blindnessFader"] = sol::readonly_property(&TES3::WorldController::blindnessFader);
 				usertypeDefinition["characterRenderTarget"] = sol::readonly_property(&TES3::WorldController::characterRenderTarget);
-				usertypeDefinition["chargableItems"] = sol::readonly_property(&TES3::WorldController::chargableItems);
 				usertypeDefinition["charGenState"] = sol::readonly_property(&TES3::WorldController::gvarCharGenState);
 				usertypeDefinition["countMusicTracksBattle"] = sol::readonly_property(&TES3::WorldController::countMusicTracksBattle);
 				usertypeDefinition["countMusicTracksExplore"] = sol::readonly_property(&TES3::WorldController::countMusicTracksExplore);
@@ -126,6 +139,7 @@ namespace mwse {
 				usertypeDefinition["projectionDistance"] = &TES3::WorldController::projectionDistance;
 				usertypeDefinition["quests"] = &TES3::WorldController::journalController;
 				usertypeDefinition["quickSaveWhenResting"] = &TES3::WorldController::quickSaveWhenResting;
+				usertypeDefinition["rechargingItems"] = sol::readonly_property(&TES3::WorldController::rechargingItems);
 				usertypeDefinition["shaderWaterReflectTerrain"] = &TES3::WorldController::shaderWaterReflectsTerrain;
 				usertypeDefinition["shaderWaterReflectUpdate"] = &TES3::WorldController::shaderWaterReflectUpdate;
 				usertypeDefinition["shadowCamera"] = sol::readonly_property(&TES3::WorldController::shadowCamera);
@@ -153,6 +167,7 @@ namespace mwse {
 
 				// Legacy bindings.
 				usertypeDefinition["aiDistance"] = sol::property(&TES3::WorldController::getAIDistanceScale, &TES3::WorldController::setAIDistanceScale);
+				usertypeDefinition["chargableItems"] = sol::readonly_property(&TES3::WorldController::rechargingItems);
 				usertypeDefinition["flagEventMenuModeOff"] = &TES3::WorldController::flagEventMenuModeOff;
 				usertypeDefinition["flagEventMenuModeOn"] = &TES3::WorldController::flagEventMenuModeOn;
 				usertypeDefinition["flagMenuMode"] = &TES3::WorldController::flagMenuMode;

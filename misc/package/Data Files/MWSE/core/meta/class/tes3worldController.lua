@@ -8,7 +8,6 @@
 --- @field audioController tes3audioController *Read-only*. The audio controller.
 --- @field blindnessFader tes3fader *Read-only*. Screen overlay fader for the blind effect.
 --- @field characterRenderTarget tes3worldControllerRenderTarget *Read-only*. 
---- @field chargableItems tes3iterator *Read-only*. A list of enchanted items that are recharging. Items in the list may not all belong to the player.
 --- @field charGenState tes3global *Read-only*. The `charGenState` global variable. Indicates progress through character generation. Has a value of `-1` when chargen is complete.
 --- @field countMusicTracksBattle number *Read-only*. The number of available battle music tracks.
 --- @field countMusicTracksExplore number *Read-only*. The number of available explore music tracks.
@@ -63,6 +62,7 @@
 --- @field projectionDistance number 
 --- @field quests tes3iterator *Read-only*. A list of all available ``tes3quest``s.
 --- @field quickSaveWhenResting object Controls if auto-save on resting or waiting is enabled. Corresponds to the "Auto-save when rest" option in the Options menu.
+--- @field rechargingItems tes3iterator *Read-only*. A list of enchanted items that are recharging (type ``tes3rechargingItem``). Items in the list may not all belong to the player.
 --- @field shaderWaterReflectTerrain boolean If pixel shader water reflection includes terrain. Not functional with MGE enabled.
 --- @field shaderWaterReflectUpdate number Period between reflection updates for pixel shader water. Not functional with MGE enabled.
 --- @field shadowCamera tes3worldControllerRenderCamera *Read-only*. 

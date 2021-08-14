@@ -219,6 +219,13 @@ namespace TES3 {
 	static_assert(sizeof(SplashController) == 0x74, "TES3::SplashController failed size validation");
 	static_assert(sizeof(SplashController::ActiveSplash) == 0xC, "TES3::SplashController::ActiveSplash failed size validation");
 
+	struct RechargingItem {
+		Object* item; // 0x0
+		Enchantment* enchantment; // 0x4
+		ItemData* itemData; // 0x8
+	};
+	static_assert(sizeof(RechargingItem) == 0xC, "TES3::RechargingItem failed size validation");
+
 	struct WorldController {
 		int framesSinceLastFPSMeasure; // 0x0
 		int framesPerFPSMeasure; // 0x4, defaults to 3
@@ -327,7 +334,7 @@ namespace TES3 {
 		int unknown_0x334;
 		IteratedList<GlobalScript*> * globalScripts; // 0x338
 		IteratedList<MobileActor*> * allMobileActors; // 0x33C
-		IteratedList<void*> * chargableItems; // 0x340
+		IteratedList<RechargingItem*> * rechargingItems; // 0x340
 		bool showSubtitles; // 0x344
 		int countMusicTracksBattle; // 0x348
 		int countMusicTracksExplore; // 0x34C
