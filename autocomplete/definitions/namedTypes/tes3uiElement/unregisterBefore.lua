@@ -1,8 +1,9 @@
 return {
 	type = "method",
-	description = [[Unregisters an `event` handler.]],
+	description = [[Unregisters a function previously registered using `:registerBefore`.]],
 	arguments = {
 		{ name = "eventID", type = "string", description = "The event id." },
+		{ name = "callback", type = "function", description = "The callback function." },
 	},
 	returns = {
 		{ name = "wasUnregistered", type = "boolean" },

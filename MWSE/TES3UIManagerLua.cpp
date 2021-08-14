@@ -334,7 +334,7 @@ namespace mwse {
 			return false;
 		}
 
-		void unregisterUIEvent(Element* target, Property eventID) {
+		bool unregisterUIEvent(Element* target, Property eventID) {
 			auto& elementEvents = legacyEventMap[target];
 
 			// Check for existing event
@@ -342,9 +342,11 @@ namespace mwse {
 				if (it->id == eventID) {
 					// Remove event
 					elementEvents.erase(it);
-					return;
+					return true;
 				}
 			}
+
+			return false;
 		}
 
 		bool eventForwarder(sol::table eventData) {

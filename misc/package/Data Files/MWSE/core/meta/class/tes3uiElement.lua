@@ -450,9 +450,22 @@ function tes3uiElement:setPropertyObject(propName, value) end
 --- @param eventID tes3uiEvent|string The event, or event ID.
 function tes3uiElement:triggerEvent(eventID) end
 
---- Unregisters an `event`_ handler.
+--- Unregisters an `event` handler.
 --- @param eventID string The event id.
+--- @return boolean wasUnregistered No description yet available.
 function tes3uiElement:unregister(eventID) end
+
+--- Unregisters a function previously registered using `:registerAfter`.
+--- @param eventID string The event id.
+--- @param callback function The callback function.
+--- @return boolean wasUnregistered No description yet available.
+function tes3uiElement:unregisterAfter(eventID, callback) end
+
+--- Unregisters a function previously registered using `:registerBefore`.
+--- @param eventID string The event id.
+--- @param callback function The callback function.
+--- @return boolean wasUnregistered No description yet available.
+function tes3uiElement:unregisterBefore(eventID, callback) end
 
 --- Updates a menu's element layout and all child elements. Needs to be called on a top level menu when any elements contained in it are added, moved or resized.
 function tes3uiElement:updateLayout() end

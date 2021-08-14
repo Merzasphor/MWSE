@@ -1336,15 +1336,57 @@ tes3uiElement:triggerEvent(eventID)
 
 ### `unregister`
 
-Unregisters an `event`_ handler.
+Unregisters an `event` handler.
 
 ```lua
-tes3uiElement:unregister(eventID)
+local wasUnregistered = tes3uiElement:unregister(eventID)
 ```
 
 **Parameters**:
 
 * `eventID` (string): The event id.
+
+**Returns**:
+
+* `wasUnregistered` (boolean)
+
+***
+
+### `unregisterAfter`
+
+Unregisters a function previously registered using `:registerAfter`.
+
+```lua
+local wasUnregistered = tes3uiElement:unregisterAfter(eventID, callback)
+```
+
+**Parameters**:
+
+* `eventID` (string): The event id.
+* `callback` (function): The callback function.
+
+**Returns**:
+
+* `wasUnregistered` (boolean)
+
+***
+
+### `unregisterBefore`
+
+Unregisters a function previously registered using `:registerBefore`.
+
+```lua
+local wasUnregistered = tes3uiElement:unregisterBefore(eventID, callback)
+```
+
+**Parameters**:
+
+* `eventID` (string): The event id.
+* `callback` (function): The callback function.
+
+**Returns**:
+
+* `wasUnregistered` (boolean)
 
 ***
 

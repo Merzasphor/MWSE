@@ -1060,28 +1060,28 @@ namespace TES3 {
 			}
 		}
 
-		void Element::unregisterBefore_lua(const std::string& eventID, sol::protected_function callback) {
+		bool Element::unregisterBefore_lua(const std::string& eventID, sol::protected_function callback) {
 			auto prop = getStandardEventFromName(eventID);
 			if (!prop) {
 				prop = TES3::UI::registerProperty(eventID.c_str());
 			}
-			mwse::lua::unregisterBeforeUIEvent(this, prop.value(), callback);
+			return mwse::lua::unregisterBeforeUIEvent(this, prop.value(), callback);
 		}
 
-		void Element::unregisterAfter_lua(const std::string& eventID, sol::protected_function callback) {
+		bool Element::unregisterAfter_lua(const std::string& eventID, sol::protected_function callback) {
 			auto prop = getStandardEventFromName(eventID);
 			if (!prop) {
 				prop = TES3::UI::registerProperty(eventID.c_str());
 			}
-			mwse::lua::unregisterAfterUIEvent(this, prop.value(), callback);
+			return mwse::lua::unregisterAfterUIEvent(this, prop.value(), callback);
 		}
 
-		void Element::unregister_lua(const std::string& eventID) {
+		bool Element::unregister_lua(const std::string& eventID) {
 			auto prop = getStandardEventFromName(eventID);
 			if (!prop) {
 				prop = TES3::UI::registerProperty(eventID.c_str());
 			}
-			mwse::lua::unregisterUIEvent(this, prop.value());
+			return mwse::lua::unregisterUIEvent(this, prop.value());
 		}
 
 		void Element::forwardEvent_lua(sol::table eventData) const {
