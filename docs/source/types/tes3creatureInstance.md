@@ -47,7 +47,7 @@ Simplified access to the base creature's attributes. A table of eight numbers, r
 
 ### `barterGold`
 
-The amount of gold that the creature has to barter with.
+Friendly access to actor's barter gold amount.
 
 **Returns**:
 

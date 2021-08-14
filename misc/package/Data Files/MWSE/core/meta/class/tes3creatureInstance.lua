@@ -5,7 +5,6 @@
 --- @field aiConfig tes3aiConfig *Read-only*. Simplified access to the base creature's AI configuration.
 --- @field attacks table Simplified access to the base creature's attacks. A table of three attacks, represented by a trio of tes3rangeInt.
 --- @field attributes table Simplified access to the base creature's attributes. A table of eight numbers, representing the base values for the creature's attributes.
---- @field barterGold number The amount of gold that the creature has to barter with.
 --- @field baseObject tes3creature Access to creature that this one is instanced from.
 --- @field biped boolean Access to the creature's biped flag.
 --- @field equipment tes3iterator *Read-only*. A collection that contains the currently equipped items.

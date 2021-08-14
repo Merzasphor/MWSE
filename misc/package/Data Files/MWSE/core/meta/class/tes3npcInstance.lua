@@ -4,7 +4,6 @@
 --- @class tes3npcInstance : tes3actor, tes3physicalObject, tes3object, tes3baseObject
 --- @field aiConfig tes3aiConfig *Read-only*. A substructure off of actors that contains information on the current AI configuration.
 --- @field attributes table Quick access to the base NPC's attributes.
---- @field barterGold number Quick access to the base NPC's base amount of barter gold.
 --- @field baseObject tes3npc *Read-only*. Access to the base NPC object.
 --- @field class tes3class *Read-only*. Quick access to the base NPC's class.
 --- @field disposition number *Read-only*. The actor's effective disposition, with all modifiers applied.

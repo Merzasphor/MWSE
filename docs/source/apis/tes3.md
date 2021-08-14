@@ -130,7 +130,7 @@ local addedCount = tes3.addItem({ reference = ..., item = ..., itemData = ..., s
 
 * `params` (table)
 	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): Who to give items to.
-	* `item` ([tes3item](../../types/tes3item), string): The item to add.
+	* `item` ([tes3item](../../types/tes3item), [tes3leveledItem](../../types/tes3leveledItem), string): The item to add. If a leveled item is passed, it will be resolved and added.
 	* `itemData` ([tes3itemData](../../types/tes3itemData)): *Optional*. The item data for the item.
 	* `soul` ([tes3creature](../../types/tes3creature)): *Optional*. For creating filled soul gems.
 	* `count` (number): *Default*: `1`. The maximum number of items to add.

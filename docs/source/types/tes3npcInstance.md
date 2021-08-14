@@ -37,7 +37,7 @@ Quick access to the base NPC's attributes.
 
 ### `barterGold`
 
-Quick access to the base NPC's base amount of barter gold.
+Friendly access to actor's barter gold amount.
 
 **Returns**:
 

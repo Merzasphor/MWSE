@@ -47,7 +47,7 @@ Direct access to the actor autocalc flag.
 
 ### `barterGold`
 
-*Read-only*. The actor's max health.
+Friendly access to actor's barter gold amount.
 
 **Returns**:
 

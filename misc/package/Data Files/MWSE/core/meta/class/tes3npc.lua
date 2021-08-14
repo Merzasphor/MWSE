@@ -5,7 +5,6 @@
 --- @field aiConfig tes3aiConfig *Read-only*. A substructure off of actors that contains information on the current AI configuration.
 --- @field attributes table A table of eight numbers, representing the base values for the actor's attributes.
 --- @field autoCalc boolean Direct access to the actor autocalc flag.
---- @field barterGold number *Read-only*. The actor's max health.
 --- @field baseDisposition number The actor's base disposition.
 --- @field class tes3class *Read-only*. The class that the NPC uses.
 --- @field faction tes3faction *Read-only*. The class that the NPC is joined to.
