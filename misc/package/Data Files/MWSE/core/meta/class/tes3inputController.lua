@@ -2,12 +2,12 @@
 
 --- A data structure, off of the world controller, that handles input.
 --- @class tes3inputController
---- @field creationFlags number A bit field representing device capabilities and settings.
---- @field inputMaps table The array-style access to input bindings.
---- @field keyboardState table The array-style access to raw key states.
---- @field mouseState tes3directInputMouseState The raw DirectInput mouse state.
---- @field previousKeyboardState table The array-style access to the previous frame's raw key states.
---- @field previousMouseState tes3directInputMouseState The raw DirectInput mouse state for the previous state.
+--- @field creationFlags number *Read-only*. A bit field representing device capabilities and settings.
+--- @field inputMaps table *Read-only*. The array-style access to input bindings.
+--- @field keyboardState table *Read-only*. The array-style access to raw key states.
+--- @field mouseState tes3directInputMouseState *Read-only*. The raw DirectInput mouse state.
+--- @field previousKeyboardState table *Read-only*. The array-style access to the previous frame's raw key states.
+--- @field previousMouseState tes3directInputMouseState *Read-only*. The raw DirectInput mouse state for the previous state.
 tes3inputController = {}
 
 --- Returns true if either alt modifier key is pressed.
@@ -62,7 +62,7 @@ function tes3inputController:isSuperDown() end
 
 --- Performs a test for a given keybind, and optionally a transition state.
 --- @param key number The keybind to test. Constants available through ``tes3.keybind``.
---- @param transition number Transition state, e.g. down, or up. Constants available through ``tes3.keyTransition``.
+--- @param transition number *Optional*. Transition state, e.g. down, or up. Constants available through ``tes3.keyTransition``.
 --- @return boolean result No description yet available.
 function tes3inputController:keybindTest(key, transition) end
 

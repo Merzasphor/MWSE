@@ -14,10 +14,10 @@ event.register("calcTrainingPrice", calcTrainingPriceCallback)
 
 ## Event Data
 
-* `basePrice` (number): The price before adjustment.
-* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): The mobile actor of the trainer the player is interacting with.
+* `basePrice` (number): *Read-only*. The price before adjustment.
+* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile actor of the trainer the player is interacting with.
 * `price` (number): The adjusted price of the training.
-* `reference` ([tes3reference](../../types/tes3reference)): mobile’s related reference.
-* `skill` ([tes3statisticSkill](../../types/tes3statisticSkill)): The ID of the skill to be trained.
-* `skillId` (number): The ID of the skill to be trained.
+* `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. mobile’s related reference.
+* `skill` ([tes3statisticSkill](../../types/tes3statisticSkill)): *Read-only*. The ID of the skill to be trained.
+* `skillId` (number): *Read-only*. The ID of the skill to be trained.
 

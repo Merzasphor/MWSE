@@ -17,11 +17,12 @@ event.register("key", keyCallback)
 
 ## Event Data
 
-* `isAltDown` (number): True if alt  is held.
-* `isControlDown` (number): True if control is held.
-* `isSuperDown` (number): True if super (Windows key) is held.
-* `keyCode` (number): The scan code of the key that raised the event.
-* `pressed` (boolean): True if this is a key down event, false for a key up event.
+* `isAltDown` (number): *Read-only*. True if either alt key is held.
+* `isControlDown` (number): *Read-only*. True if either control key is held.
+* `isShiftDown` (number): *Read-only*. True if either shift key is held.
+* `isSuperDown` (number): *Read-only*. True if super (Windows key) is held.
+* `keyCode` (number): *Read-only*. The scan code of the key that raised the event.
+* `pressed` (boolean): *Read-only*. True if this is a key down event, false for a key up event.
 
 ## Examples
 

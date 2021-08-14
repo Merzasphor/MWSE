@@ -14,7 +14,7 @@ event.register("projectileExpire", projectileExpireCallback)
 
 ## Event Data
 
-* `firingReference` ([tes3reference](../../types/tes3reference)): Reference to the actor that fired the projectile.
-* `firingWeapon` ([tes3weapon](../../types/tes3weapon)): The weapon that fired the projectile.
-* `mobile` ([tes3mobileProjectile](../../types/tes3mobileProjectile)): The mobile projectile that is expiring.
+* `firingReference` ([tes3reference](../../types/tes3reference)): *Read-only*. Reference to the actor that fired the projectile.
+* `firingWeapon` ([tes3weapon](../../types/tes3weapon)): *Read-only*. The weapon that fired the projectile.
+* `mobile` ([tes3mobileProjectile](../../types/tes3mobileProjectile)): *Read-only*. The mobile projectile that is expiring.
 

@@ -34,7 +34,7 @@ mge.disableHUD(hud)
 
 **Parameters**:
 
-* `hud` (string)
+* `hud` (string): *Optional*.
 
 ***
 
@@ -72,8 +72,8 @@ mge.enableCameraShake(magnitude, acceleration)
 
 **Parameters**:
 
-* `magnitude` (number)
-* `acceleration` (number)
+* `magnitude` (number): *Optional*.
+* `acceleration` (number): *Optional*.
 
 ***
 
@@ -87,7 +87,7 @@ mge.enableHUD(hud)
 
 **Parameters**:
 
-* `hud` (string)
+* `hud` (string): *Optional*.
 
 ***
 
@@ -125,7 +125,7 @@ mge.freeHUD(hud)
 
 **Parameters**:
 
-* `hud` (string)
+* `hud` (string): *Optional*.
 
 ***
 
@@ -139,7 +139,7 @@ mge.fullscreenHUD(hud)
 
 **Parameters**:
 
-* `hud` (string)
+* `hud` (string): *Optional*.
 
 ***
 
@@ -240,7 +240,7 @@ mge.loadHUD({ hud = ..., texture = ..., enable = ... })
 * `params` (table)
 	* `hud` (string)
 	* `texture` (string)
-	* `enable` (boolean)
+	* `enable` (boolean): *Optional*.
 
 ***
 
@@ -282,7 +282,7 @@ mge.positionHUD(hud, x, y)
 
 **Parameters**:
 
-* `hud` (string)
+* `hud` (string): *Optional*.
 * `x` (number)
 * `y` (number)
 
@@ -298,7 +298,7 @@ mge.scaleHUD(hud, x, y)
 
 **Parameters**:
 
-* `hud` (string)
+* `hud` (string): *Optional*.
 * `x` (number)
 * `y` (number)
 
@@ -356,7 +356,7 @@ mge.setHUDEffect(hud, effect)
 
 **Parameters**:
 
-* `hud` (string)
+* `hud` (string): *Optional*.
 * `effect` (string)
 
 ***
@@ -371,7 +371,7 @@ mge.setHUDEffectFloat(hud, variable, value)
 
 **Parameters**:
 
-* `hud` (string)
+* `hud` (string): *Optional*.
 * `variable` (string)
 * `value` (number)
 
@@ -387,7 +387,7 @@ mge.setHUDEffectLong(hud, variable, value)
 
 **Parameters**:
 
-* `hud` (string)
+* `hud` (string): *Optional*.
 * `variable` (string)
 * `value` (number)
 
@@ -403,7 +403,7 @@ mge.setHUDEffectVector4(hud, variable, value)
 
 **Parameters**:
 
-* `hud` (string)
+* `hud` (string): *Optional*.
 * `variable` (string)
 * `value` (table): A table of 4 values.
 
@@ -497,7 +497,7 @@ mge.setZoom(amount, animate)
 **Parameters**:
 
 * `amount` (number)
-* `animate` (boolean)
+* `animate` (boolean): *Optional*.
 
 ***
 
@@ -565,7 +565,7 @@ mge.zoomIn(amount)
 
 **Parameters**:
 
-* `amount` (number)
+* `amount` (number): *Optional*.
 
 ***
 
@@ -579,7 +579,7 @@ mge.zoomOut(amount)
 
 **Parameters**:
 
-* `amount` (number)
+* `amount` (number): *Optional*.
 
 ***
 

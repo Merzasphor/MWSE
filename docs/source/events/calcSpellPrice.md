@@ -14,9 +14,9 @@ event.register("calcSpellPrice", calcSpellPriceCallback)
 
 ## Event Data
 
-* `basePrice` (number): The price before adjustment.
-* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): The mobile actor of the merchant the player is interacting with.
+* `basePrice` (number): *Read-only*. The price before adjustment.
+* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile actor of the merchant the player is interacting with.
 * `price` (number): The adjusted price of spell.
-* `reference` ([tes3reference](../../types/tes3reference)): mobile’s related reference.
-* `spell` ([tes3spell](../../types/tes3spell)): The spell currently being purchased.
+* `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. mobile’s related reference.
+* `spell` ([tes3spell](../../types/tes3spell)): *Read-only*. The spell currently being purchased.
 

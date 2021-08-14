@@ -34,7 +34,7 @@ local result = string.format(format, unknown)
 **Parameters**:
 
 * `format` (string): The format string to use for the output.
-* `unnamed` (values): Values to format into the given string.
+* `unnamed` (values): *Optional*. Values to format into the given string.
 
 **Returns**:
 
@@ -76,7 +76,7 @@ string.multifind(s, pattern, index, plain)
 
 * `s` (string): The string to perform finds on.
 * `pattern` (table): An array-style table that contains pattern strings.
-* `index` (number): Start index of the find.
+* `index` (number): *Default*: `1`. Start index of the find.
 * `plain` (boolean): If true, a normal search instead of a pattern search will be performed.
 
 ***
@@ -92,7 +92,7 @@ local split = string.split(str, sep)
 **Parameters**:
 
 * `str` (string): The string to split.
-* `sep` (string): The token to split the string by.
+* `sep` (string): *Default*: `"%s"`. The token to split the string by.
 
 **Returns**:
 

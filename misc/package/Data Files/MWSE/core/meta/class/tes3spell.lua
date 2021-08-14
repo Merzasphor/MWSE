@@ -6,7 +6,7 @@
 --- @field autoCalc boolean Determines if the magicka cost for the spell is autocalculated, and if the spell may be automatically assigned to NPCs if they are skillful enough to cast it.
 --- @field basePurchaseCost number Calculates the base cost to purchase the spell. This value is not adjusted by mercantile skills.
 --- @field castType number The spell's cast type.
---- @field effects table An array-style table of the tes3effect data on the object.
+--- @field effects table *Read-only*. An array-style table of the tes3effect data on the object.
 --- @field flags number A bit field for the spell's flags.
 --- @field magickaCost number No description yet available.
 --- @field name string The name of the spell.
@@ -15,13 +15,13 @@ tes3spell = {}
 
 --- Creates a new spell object, which will be stored as part of the current saved game.
 --- @param id string The new object's ID. Must be unique.
---- @param name string The new object's name.
+--- @param name string *Optional*. The new object's name.
 function tes3spell.create(id, name) end
 
 --- Calculates the chance that a caster can cast a given spell.
 --- @param params tes3spell.calculateCastChance.params This table accepts the following values:
 --- 
---- ``checkMagicka``: boolean — Determines if the caster's magicka should be taken into account during the calculation.
+--- ``checkMagicka``: boolean — *Optional*. Determines if the caster's magicka should be taken into account during the calculation.
 --- 
 --- ``caster``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer — The caster to perform the calculation against.
 --- @return number result No description yet available.
@@ -29,7 +29,7 @@ function tes3spell:calculateCastChance(params) end
 
 ---Table parameter definitions for ``tes3spell.calculateCastChance``.
 --- @class tes3spell.calculateCastChance.params
---- @field checkMagicka boolean Determines if the caster's magicka should be taken into account during the calculation.
+--- @field checkMagicka boolean *Optional*. Determines if the caster's magicka should be taken into account during the calculation.
 --- @field caster tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer The caster to perform the calculation against.
 
 --- Gets the number of active effects in the spell effect table.

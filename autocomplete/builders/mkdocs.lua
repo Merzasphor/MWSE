@@ -126,8 +126,9 @@ local function writeArgument(file, argument, indent)
 		file:write(string.format(" (%s)", breakoutTypeLinks(argument.type)))
 	end
 
-	if (argument.description) then
-		file:write(string.format(": %s", argument.description))
+	local description = common.getDescriptionString(argument, false)
+	if (description) then
+		file:write(string.format(": %s", description))
 	end
 
 	file:write("\n")
@@ -157,7 +158,7 @@ local function writeSubPackage(file, package, from)
 	end
 	file:write(string.format("### `%s`\n\n", key))
 
-	file:write(string.format("%s\n\n", package.description or common.defaultNoDescriptionText))
+	file:write(string.format("%s\n\n", common.getDescriptionString(package)))
 
 	local returns = common.getConsistentReturnValues(package)
 	if (package.type == "method" or package.type == "function") then
@@ -227,7 +228,7 @@ local function build(package)
 	file:write(string.format("# %s\n\n", package.namespace))
 
 	-- Write description.
-	file:write(string.format("%s\n\n", package.description or common.defaultNoDescriptionText))
+	file:write(string.format("%s\n\n", common.getDescriptionString(package)))
 	if (package.type == "class" and package.inherits) then
 		file:write(string.format("This type inherits the following: %s\n", buildParentChain(package.inherits)))
 	elseif (package.type == "event") then

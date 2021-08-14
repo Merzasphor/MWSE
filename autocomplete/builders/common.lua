@@ -260,6 +260,34 @@ common.urlBase = "https://mwse.github.io/MWSE"
 --- @type string
 common.defaultNoDescriptionText = "No description yet available."
 
+function common.getDescriptionString(package, useDefault)
+	if (useDefault == nil) then
+		useDefault = true
+	end
+
+	local descriptionBits = {}
+
+	if (package.readOnly) then
+		table.insert(descriptionBits, "*Read-only*.")
+	end
+
+	if (package.default) then
+		table.insert(descriptionBits, string.format("*Default*: `%s`.", tostring(package.default)))
+	elseif (package.optional) then
+		table.insert(descriptionBits, "*Optional*.")
+	end
+
+	if (package.description) then
+		table.insert(descriptionBits, package.description)
+	elseif (useDefault) then
+		table.insert(descriptionBits, common.defaultNoDescriptionText)
+	end
+
+	if (#descriptionBits > 0) then
+		return table.concat(descriptionBits, " ")
+	end
+end
+
 
 --
 -- Package compilation

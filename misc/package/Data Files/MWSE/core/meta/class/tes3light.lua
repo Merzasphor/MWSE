@@ -3,7 +3,7 @@
 --- A core light object. This isn't actually a light in the rendering engine, but something like a lamp or torch.
 --- @class tes3light : tes3item, tes3physicalObject, tes3object, tes3baseObject
 --- @field canCarry boolean Access to the light's flags, determining if the light can be carried.
---- @field color table Access to the light's base colors, in an array-style table of four values. The values can range from 0 to 255.
+--- @field color table *Read-only*. Access to the light's base colors, in an array-style table of four values. The values can range from 0 to 255.
 --- @field flickers boolean Access to the light's flags, determining if the light attenuation flickers.
 --- @field flickersSlowly boolean Access to the light's flags, determining if the light attenuation flickers slowly.
 --- @field icon string The path to the object's icon.
@@ -16,8 +16,8 @@
 --- @field pulses boolean Access to the light's flags, determining if the light attenuation pulses.
 --- @field pulsesSlowly boolean Access to the light's flags, determining if the light attenuation pulses slowly.
 --- @field radius number The base radius of the light.
---- @field script tes3script The script that runs on the object.
---- @field sound tes3sound The sound that runs on the object.
+--- @field script tes3script *Read-only*. The script that runs on the object.
+--- @field sound tes3sound *Read-only*. The sound that runs on the object.
 --- @field time number The amount of time that the light will last.
 --- @field value number The value of the object.
 --- @field weight number The weight of the object.

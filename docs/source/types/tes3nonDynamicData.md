@@ -6,7 +6,7 @@ A child container from tes3dataHandler, where game data is stored.
 
 ### `birthsigns`
 
-A collection of all birthsign objects.
+*Read-only*. A collection of all birthsign objects.
 
 **Returns**:
 
@@ -16,7 +16,7 @@ A collection of all birthsign objects.
 
 ### `cells`
 
-A collection of all cell objects.
+*Read-only*. A collection of all cell objects.
 
 **Returns**:
 
@@ -26,7 +26,7 @@ A collection of all cell objects.
 
 ### `classes`
 
-A collection of all class objects.
+*Read-only*. A collection of all class objects.
 
 **Returns**:
 
@@ -36,7 +36,7 @@ A collection of all class objects.
 
 ### `dialogues`
 
-A collection of all dialogue objects.
+*Read-only*. A collection of all dialogue objects.
 
 **Returns**:
 
@@ -46,7 +46,7 @@ A collection of all dialogue objects.
 
 ### `factions`
 
-A collection of all faction objects.
+*Read-only*. A collection of all faction objects.
 
 **Returns**:
 
@@ -56,7 +56,7 @@ A collection of all faction objects.
 
 ### `globals`
 
-A collection of all global variable objects.
+*Read-only*. A collection of all global variable objects.
 
 **Returns**:
 
@@ -66,7 +66,7 @@ A collection of all global variable objects.
 
 ### `magicEffects`
 
-A table of references to all 143 magic effects.
+*Read-only*. A table of references to all 143 magic effects.
 
 **Returns**:
 
@@ -76,7 +76,7 @@ A table of references to all 143 magic effects.
 
 ### `objects`
 
-A collection of all other game objects.
+*Read-only*. A collection of all other game objects.
 
 **Returns**:
 
@@ -86,7 +86,7 @@ A collection of all other game objects.
 
 ### `races`
 
-A collection of all race objects.
+*Read-only*. A collection of all race objects.
 
 **Returns**:
 
@@ -96,7 +96,7 @@ A collection of all race objects.
 
 ### `regions`
 
-A collection of all region objects.
+*Read-only*. A collection of all region objects.
 
 **Returns**:
 
@@ -106,7 +106,7 @@ A collection of all region objects.
 
 ### `scripts`
 
-A collection of all script objects.
+*Read-only*. A collection of all script objects.
 
 **Returns**:
 
@@ -116,7 +116,7 @@ A collection of all script objects.
 
 ### `skills`
 
-A table of references to all 27 skills.
+*Read-only*. A table of references to all 27 skills.
 
 **Returns**:
 
@@ -126,7 +126,7 @@ A table of references to all 27 skills.
 
 ### `soundGenerators`
 
-A collection of all sound generator objects.
+*Read-only*. A collection of all sound generator objects.
 
 **Returns**:
 
@@ -136,7 +136,7 @@ A collection of all sound generator objects.
 
 ### `sounds`
 
-A collection of all sound objects.
+*Read-only*. A collection of all sound objects.
 
 **Returns**:
 
@@ -146,7 +146,7 @@ A collection of all sound objects.
 
 ### `spells`
 
-A collection of all spell objects.
+*Read-only*. A collection of all spell objects.
 
 **Returns**:
 
@@ -156,7 +156,7 @@ A collection of all spell objects.
 
 ### `startScripts`
 
-A collection of all tes3startScript objects.
+*Read-only*. A collection of all tes3startScript objects.
 
 **Returns**:
 

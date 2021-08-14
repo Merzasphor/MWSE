@@ -26,7 +26,7 @@ The current sky color.
 
 ### `currentWeather`
 
-The current weather.
+*Read-only*. The current weather.
 
 **Returns**:
 
@@ -66,7 +66,7 @@ The hours remaining.
 
 ### `lastActiveRegion`
 
-Provides read-only access to last active region object.
+*Read-only*. Provides read-only access to last active region object.
 
 **Returns**:
 
@@ -76,7 +76,7 @@ Provides read-only access to last active region object.
 
 ### `masser`
 
-Provides read-only access to the Masser moon object.
+*Read-only*. Provides read-only access to the Masser moon object.
 
 **Returns**:
 
@@ -86,7 +86,7 @@ Provides read-only access to the Masser moon object.
 
 ### `nextWeather`
 
-The next weather.
+*Read-only*. The next weather.
 
 **Returns**:
 
@@ -96,7 +96,7 @@ The next weather.
 
 ### `sceneRainRoot`
 
-Provides read-only access to the scene rain root NiNode.
+*Read-only*. Provides read-only access to the scene rain root NiNode.
 
 **Returns**:
 
@@ -106,7 +106,7 @@ Provides read-only access to the scene rain root NiNode.
 
 ### `sceneSkyLight`
 
-Provides read-only access to the scene sky light directional light.
+*Read-only*. Provides read-only access to the scene sky light directional light.
 
 **Returns**:
 
@@ -116,7 +116,7 @@ Provides read-only access to the scene sky light directional light.
 
 ### `sceneSkyRoot`
 
-Provides read-only access to the scene sky root NiNode.
+*Read-only*. Provides read-only access to the scene sky root NiNode.
 
 **Returns**:
 
@@ -126,7 +126,7 @@ Provides read-only access to the scene sky root NiNode.
 
 ### `sceneSnowRoot`
 
-Provides read-only access to the scene snow root NiNode.
+*Read-only*. Provides read-only access to the scene snow root NiNode.
 
 **Returns**:
 
@@ -136,7 +136,7 @@ Provides read-only access to the scene snow root NiNode.
 
 ### `sceneStormRoot`
 
-Provides read-only access to the scene storm root NiNode.
+*Read-only*. Provides read-only access to the scene storm root NiNode.
 
 **Returns**:
 
@@ -146,7 +146,7 @@ Provides read-only access to the scene storm root NiNode.
 
 ### `sceneSunBase`
 
-Provides read-only access to the scenesun base NiNode.
+*Read-only*. Provides read-only access to the scenesun base NiNode.
 
 **Returns**:
 
@@ -156,7 +156,7 @@ Provides read-only access to the scenesun base NiNode.
 
 ### `sceneSunGlare`
 
-Provides read-only access to the scene sun glare NiNode.
+*Read-only*. Provides read-only access to the scene sun glare NiNode.
 
 **Returns**:
 
@@ -166,7 +166,7 @@ Provides read-only access to the scene sun glare NiNode.
 
 ### `sceneSunVis`
 
-Provides read-only access to the scene sun vis NiNode.
+*Read-only*. Provides read-only access to the scene sun vis NiNode.
 
 **Returns**:
 
@@ -176,7 +176,7 @@ Provides read-only access to the scene sun vis NiNode.
 
 ### `secunda`
 
-Provides read-only access to the Secunda moon object.
+*Read-only*. Provides read-only access to the Secunda moon object.
 
 **Returns**:
 
@@ -346,7 +346,7 @@ The underwater sunset fog value.
 
 ### `weathers`
 
-Array-style table for the different weather types. Each object in the table is a tes3weather.
+*Read-only*. Array-style table for the different weather types. Each object in the table is a tes3weather.
 
 **Returns**:
 

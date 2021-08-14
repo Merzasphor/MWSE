@@ -7,7 +7,7 @@ tes3ui = {}
 --- Sends all text input to the specified element.  Calling this function with a nil argument will release text input and allow keybinds to work. Suppresses most keybinds while active, except the Journal open/close keybind (it's up to the individual menu implementation).
 --- 
 --- Only one element can have control of input, and there is no automatic restoration of control if one element takes control from another. Be careful of conflicts with other users of this function.
---- @param element tes3uiElement No description yet available.
+--- @param element tes3uiElement *Optional*. No description yet available.
 function tes3ui.acquireTextInput(element) end
 
 --- When used in a mouse event, causes the element to capture further mouse events even when the cursor goes outside the element.
@@ -40,7 +40,7 @@ function tes3ui.createHelpLayerMenu(params) end
 --- 
 --- ``fixedFrame``: boolean — Constructs a fixed (non-draggable) frame and background for the menu. The layout system should automatically centre and size it to fit whatever is added to the menu.
 --- 
---- ``loadable``: boolean — If set to false, calls to loadMenuPosition will fail.
+--- ``loadable``: boolean — *Default*: `true`. If set to false, calls to loadMenuPosition will fail.
 --- @return tes3uiElement result No description yet available.
 function tes3ui.createMenu(params) end
 
@@ -49,23 +49,23 @@ function tes3ui.createMenu(params) end
 --- @field id number The menu’s ID. The menu can be later accessed by tes3ui.findMenu(id).
 --- @field dragFrame boolean Constructs a draggable and resizeable frame and background for the menu. It is similar to the stats, inventory, magic and map menus in the standard UI. After construction, position and minimum dimensions should be set.
 --- @field fixedFrame boolean Constructs a fixed (non-draggable) frame and background for the menu. The layout system should automatically centre and size it to fit whatever is added to the menu.
---- @field loadable boolean If set to false, calls to loadMenuPosition will fail.
+--- @field loadable boolean *Default*: `true`. If set to false, calls to loadMenuPosition will fail.
 
 --- Creates a tooltip menu, which can be an empty menu or an item tooltip. This should be called from within a tooltip event callback. These automatically follow the mouse cursor, and are also destroyed automatically when the mouse leaves the originating element. Creating an item tooltip will invoke the uiObjectTooltip event.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3ui/#tes3uicreatetooltipmenu).
 --- @param params tes3ui.createTooltipMenu.params This table accepts the following values:
 --- 
---- ``item``: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — The item to create a tooltip for. If not specified, the tooltip will be empty.
+--- ``item``: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — *Optional*. The item to create a tooltip for. If not specified, the tooltip will be empty.
 --- 
---- ``itemData``: tes3itemData — The item data for the item.
+--- ``itemData``: tes3itemData — *Optional*. The item data for the item.
 --- @return tes3uiElement result No description yet available.
 function tes3ui.createTooltipMenu(params) end
 
 ---Table parameter definitions for ``tes3ui.createTooltipMenu``.
 --- @class tes3ui.createTooltipMenu.params
---- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string The item to create a tooltip for. If not specified, the tooltip will be empty.
---- @field itemData tes3itemData The item data for the item.
+--- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string *Optional*. The item to create a tooltip for. If not specified, the tooltip will be empty.
+--- @field itemData tes3itemData *Optional*. The item data for the item.
 
 --- Requests menu mode be activated on a menu with a given id.
 --- @param id number No description yet available.

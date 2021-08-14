@@ -17,7 +17,7 @@ event.register("addSound", addSoundCallback)
 
 ## Event Data
 
-* `flags` (number): 
+* `flags` (number): *Read-only*. 
 * `isVoiceover` (boolean): 
 * `pitch` (number): Pitch of the sound.
 * `reference` ([tes3reference](../../types/tes3reference)): The reference which is emiting the sound.

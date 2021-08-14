@@ -17,7 +17,7 @@ The armor's defensive rating.
 
 ### `armorScalar`
 
-No description yet available.
+*Read-only*. No description yet available.
 
 **Returns**:
 
@@ -47,7 +47,7 @@ The bounding box for the object.
 
 ### `deleted`
 
-The deleted state of the object.
+*Read-only*. The deleted state of the object.
 
 **Returns**:
 
@@ -57,7 +57,7 @@ The deleted state of the object.
 
 ### `disabled`
 
-The disabled state of the object.
+*Read-only*. The disabled state of the object.
 
 **Returns**:
 
@@ -97,7 +97,7 @@ The path to the object's icon.
 
 ### `id`
 
-The unique identifier for the object.
+*Read-only*. The unique identifier for the object.
 
 **Returns**:
 
@@ -167,7 +167,7 @@ The next object in parent collection's list.
 
 ### `objectFlags`
 
-The raw flags of the object.
+*Read-only*. The raw flags of the object.
 
 **Returns**:
 
@@ -177,7 +177,7 @@ The raw flags of the object.
 
 ### `objectType`
 
-The type of object. Maps to values in tes3.objectType.
+*Read-only*. The type of object. Maps to values in tes3.objectType.
 
 **Returns**:
 
@@ -197,7 +197,7 @@ The collection responsible for holding this object.
 
 ### `parts`
 
-An array-style table of the tes3wearablePart data on the object.
+*Read-only*. An array-style table of the tes3wearablePart data on the object.
 
 **Returns**:
 
@@ -277,7 +277,7 @@ The slot used by the armor.
 
 ### `slotName`
 
-The name of the slot used by the armor.
+*Read-only*. The name of the slot used by the armor.
 
 **Returns**:
 
@@ -297,7 +297,7 @@ The soruceless flag of the object.
 
 ### `sourceMod`
 
-The filename of the mod that owns this object.
+*Read-only*. The filename of the mod that owns this object.
 
 **Returns**:
 
@@ -347,7 +347,7 @@ The weight of the object.
 
 ### `weightClass`
 
-The weight class of the armor. This value maps to tes3.armorWeightClass.* constants.
+*Read-only*. The weight class of the armor. This value maps to tes3.armorWeightClass.* constants.
 
 **Returns**:
 

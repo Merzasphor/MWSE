@@ -52,7 +52,7 @@ function lpeg.Cb(name) end
 --- Create a constant capture.
 --- 	
 --- This pattern matches the empty string and produces all given values as its captured values.
---- @param unknown values The values to produce.
+--- @param unknown values *Optional*. The values to produce.
 --- @return pattern result No description yet available.
 function lpeg.Cc(unknown) end
 
@@ -82,7 +82,7 @@ function lpeg.Cf(p, f) end
 --- group has a different behavior. In most situations, a named group returns no values at all. Its 
 --- values are only relevant for a following back capture or when used inside a table capture.
 --- @param p pattern The pattern to capture with.
---- @param name value The name of the group.
+--- @param name value *Optional*. The name of the group.
 --- @return pattern result No description yet available.
 function lpeg.Cg(p, name) end
 
@@ -141,7 +141,7 @@ function lpeg.Ct(p) end
 --- 
 --- If called with an argument table, then it creates those fields inside the given table and returns 
 --- that table. 
---- @param t table The table to update.
+--- @param t table *Optional*. The table to update.
 --- @return table result No description yet available.
 function lpeg.locale(t) end
 
@@ -162,7 +162,7 @@ function lpeg.locale(t) end
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/types/lpeg/#lpegmatch).
 --- @param p pattern The pattern to match.
 --- @param subject string The string to match against.
---- @param init number Start the match at this position in subject.
+--- @param init number *Optional*. Start the match at this position in subject.
 --- @return values result No description yet available.
 function lpeg.match(p, subject, init) end
 

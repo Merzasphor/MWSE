@@ -7,7 +7,7 @@ This type inherits the following: [niObjectNET](../../types/niObjectNET), [niObj
 
 ### `fileName`
 
-The platform-independent version of the filename from which the image was created, or NULL if the image was created from pixel data.
+*Read-only*. The platform-independent version of the filename from which the image was created, or NULL if the image was created from pixel data.
 
 **Returns**:
 
@@ -27,7 +27,7 @@ The `NiFormatPrefs` of the texture.
 
 ### `height`
 
-The height of the texture.
+*Read-only*. The height of the texture.
 
 **Returns**:
 
@@ -67,7 +67,7 @@ The app-level pixel data.
 
 ### `platformFilename`
 
-The platform-specific version of the filename.
+*Read-only*. The platform-specific version of the filename.
 
 **Returns**:
 
@@ -77,7 +77,7 @@ The platform-specific version of the filename.
 
 ### `references`
 
-The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
+*Read-only*. The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
 
 **Returns**:
 
@@ -97,7 +97,7 @@ The runtime type information for this object.
 
 ### `width`
 
-The width of the texture.
+*Read-only*. The width of the texture.
 
 **Returns**:
 

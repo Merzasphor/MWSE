@@ -12,7 +12,7 @@ function string.endswith(s, pattern) end
 
 --- This function creates a string, given various values. The format follows the printf format, with the additional option of %q to automatically quote a string.
 --- @param format string The format string to use for the output.
---- @param unknown values Values to format into the given string.
+--- @param unknown values *Optional*. Values to format into the given string.
 --- @return string result No description yet available.
 function string.format(format, unknown) end
 
@@ -28,13 +28,13 @@ function string.insert(s1, s2, position) end
 --- If any of the available patterns match, the matching pattern is returned followed by the normal results of the find.
 --- @param s string The string to perform finds on.
 --- @param pattern table An array-style table that contains pattern strings.
---- @param index number Start index of the find.
+--- @param index number *Default*: `1`. Start index of the find.
 --- @param plain boolean If true, a normal search instead of a pattern search will be performed.
 function string.multifind(s, pattern, index, plain) end
 
 --- Returns an array-style table with `str` split by `sep`. The `sep`erator is not part of the results. By default the `sep`erator is `%s`, splitting the given `str`ing by spaces.
 --- @param str string The string to split.
---- @param sep string The token to split the string by.
+--- @param sep string *Default*: `"%s"`. The token to split the string by.
 --- @return table split No description yet available.
 function string.split(str, sep) end
 

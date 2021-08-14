@@ -11,7 +11,7 @@ function mge.clearHUD() end
 function mge.disableCameraShake() end
 
 --- Disables a HUD element. If a HUD ID is provided, this is a warpper for MGEDisableHUD, otherwise it is a wrapper for MGENIDDisableHUD.
---- @param hud string No description yet available.
+--- @param hud string *Optional*. No description yet available.
 function mge.disableHUD(hud) end
 
 --- Disables a shader. Wrapper for mwscript's MGEDisableShader.
@@ -22,12 +22,12 @@ function mge.disableShader(shader) end
 function mge.disableZoom() end
 
 --- Enables MGE XE's camera shake effect. Wrapper for mwscript's MGEEnableCameraShake.
---- @param magnitude number No description yet available.
---- @param acceleration number No description yet available.
+--- @param magnitude number *Optional*. No description yet available.
+--- @param acceleration number *Optional*. No description yet available.
 function mge.enableCameraShake(magnitude, acceleration) end
 
 --- Enables a HUD element. If a HUD ID is provided, this is a warpper for MGEEnableHUD, otherwise it is a wrapper for MGENIDEnableHUD.
---- @param hud string No description yet available.
+--- @param hud string *Optional*. No description yet available.
 function mge.enableHUD(hud) end
 
 --- Enables a shader. Wrapper for mwscript's MGEEnableShader.
@@ -38,11 +38,11 @@ function mge.enableShader(shader) end
 function mge.enableZoom() end
 
 --- Frees a HUD element. If a HUD ID is provided, this is a warpper for MGEFreeHUD, otherwise it is a wrapper for MGENIDFreeHUD.
---- @param hud string No description yet available.
+--- @param hud string *Optional*. No description yet available.
 function mge.freeHUD(hud) end
 
 --- Makes a HUD element fullscreen. If a HUD ID is provided, this is a warpper for MGEFullscreenHUD, otherwise it is a wrapper for MGENIDFullscreenHUD.
---- @param hud string No description yet available.
+--- @param hud string *Optional*. No description yet available.
 function mge.fullscreenHUD(hud) end
 
 --- Gets the window's vertical resolution. Wrapper for mwscript's MGEGetHeight.
@@ -76,14 +76,14 @@ function mge.getZoom() end
 --- 
 --- ``texture``: string — No description yet available.
 --- 
---- ``enable``: boolean — No description yet available.
+--- ``enable``: boolean — *Optional*. No description yet available.
 function mge.loadHUD(params) end
 
 ---Table parameter definitions for ``mge.loadHUD``.
 --- @class mge.loadHUD.params
 --- @field hud string No description yet available.
 --- @field texture string No description yet available.
---- @field enable boolean No description yet available.
+--- @field enable boolean *Optional*. No description yet available.
 
 --- This function writes information to the mgeXE.log file in the user's installation directory. Wrapper for mwscript's MGELog function.
 --- @param message string No description yet available.
@@ -94,13 +94,13 @@ function mge.log(message) end
 function mge.modScreenRotation(rotation) end
 
 --- Positions a HUD element. If a HUD ID is provided, this is a warpper for MGEPositionHUD, otherwise it is a wrapper for MGENIDPositionHUD.
---- @param hud string No description yet available.
+--- @param hud string *Optional*. No description yet available.
 --- @param x number No description yet available.
 --- @param y number No description yet available.
 function mge.positionHUD(hud, x, y) end
 
 --- Scales a HUD element. If a HUD ID is provided, this is a warpper for MGEScaleHUD, otherwise it is a wrapper for MGENIDScaleHUD.
---- @param hud string No description yet available.
+--- @param hud string *Optional*. No description yet available.
 --- @param x number No description yet available.
 --- @param y number No description yet available.
 function mge.scaleHUD(hud, x, y) end
@@ -118,24 +118,24 @@ function mge.setCameraShakeAcceleration(acceleration) end
 function mge.setCameraShakeMagnitude(magnitude) end
 
 --- Sets the effect for a HUD element. If a HUD ID is provided, this is a warpper for MGEChangeHUDEffect, otherwise it is a wrapper for MGENIDChangeHUDEffect.
---- @param hud string No description yet available.
+--- @param hud string *Optional*. No description yet available.
 --- @param effect string No description yet available.
 function mge.setHUDEffect(hud, effect) end
 
 --- Sets the effect float variable for a HUD element. This is a wrapper for MGENIDSetHUDEffectFloat.
---- @param hud string No description yet available.
+--- @param hud string *Optional*. No description yet available.
 --- @param variable string No description yet available.
 --- @param value number No description yet available.
 function mge.setHUDEffectFloat(hud, variable, value) end
 
 --- Sets the effect long variable for a HUD element. This is a wrapper for MGENIDSetHUDEffectLong.
---- @param hud string No description yet available.
+--- @param hud string *Optional*. No description yet available.
 --- @param variable string No description yet available.
 --- @param value number No description yet available.
 function mge.setHUDEffectLong(hud, variable, value) end
 
 --- Sets the effect vector variable for a HUD element. This is a wrapper for MGENIDSetHUDEffectVec.
---- @param hud string No description yet available.
+--- @param hud string *Optional*. No description yet available.
 --- @param variable string No description yet available.
 --- @param value table A table of 4 values.
 function mge.setHUDEffectVector4(hud, variable, value) end
@@ -169,7 +169,7 @@ function mge.setShaderVector4(shader, variable, value) end
 
 --- Wrapper for MGEZoom, or MGESetZoom if set to animate.
 --- @param amount number No description yet available.
---- @param animate boolean No description yet available.
+--- @param animate boolean *Optional*. No description yet available.
 function mge.setZoom(amount, animate) end
 
 --- Enables MGE XE's screen spin effect. Wrapper for mwscript's MGEScreenSpin.
@@ -189,10 +189,10 @@ function mge.toggleZoom() end
 function mge.unselectHUD(hud) end
 
 --- Wrapper for MGEZoomIn, or MGEZoomInBy if an amount is provided.
---- @param amount number No description yet available.
+--- @param amount number *Optional*. No description yet available.
 function mge.zoomIn(amount) end
 
 --- Wrapper for MGEZoomOut, or MGEZoomOutBy if an amount is provided.
---- @param amount number No description yet available.
+--- @param amount number *Optional*. No description yet available.
 function mge.zoomOut(amount) end
 

@@ -7,7 +7,7 @@ This type inherits the following: [tes3baseObject](../../types/tes3baseObject)
 
 ### `actor`
 
-The speaker's actor that the info is filtered for.
+*Read-only*. The speaker's actor that the info is filtered for.
 
 **Returns**:
 
@@ -27,7 +27,7 @@ The blocked state of the object.
 
 ### `cell`
 
-The speaker's current cell that the info is filtered for.
+*Read-only*. The speaker's current cell that the info is filtered for.
 
 **Returns**:
 
@@ -37,7 +37,7 @@ The speaker's current cell that the info is filtered for.
 
 ### `deleted`
 
-The deleted state of the object.
+*Read-only*. The deleted state of the object.
 
 **Returns**:
 
@@ -47,7 +47,7 @@ The deleted state of the object.
 
 ### `disabled`
 
-The disabled state of the object.
+*Read-only*. The disabled state of the object.
 
 **Returns**:
 
@@ -57,7 +57,7 @@ The disabled state of the object.
 
 ### `disposition`
 
-The minimum disposition that the info is filtered for.
+*Read-only*. The minimum disposition that the info is filtered for.
 
 **Returns**:
 
@@ -77,7 +77,7 @@ The actor that the player first heard the info from.
 
 ### `id`
 
-The unique identifier for the object.
+*Read-only*. The unique identifier for the object.
 
 **Returns**:
 
@@ -97,7 +97,7 @@ The modification state of the object since the last save.
 
 ### `npcClass`
 
-The speaker's class that the info is filtered for.
+*Read-only*. The speaker's class that the info is filtered for.
 
 **Returns**:
 
@@ -107,7 +107,7 @@ The speaker's class that the info is filtered for.
 
 ### `npcFaction`
 
-The speaker's faction that the info is filtered for.
+*Read-only*. The speaker's faction that the info is filtered for.
 
 **Returns**:
 
@@ -117,7 +117,7 @@ The speaker's faction that the info is filtered for.
 
 ### `npcRace`
 
-The speaker's race that the info is filtered for.
+*Read-only*. The speaker's race that the info is filtered for.
 
 **Returns**:
 
@@ -127,7 +127,7 @@ The speaker's race that the info is filtered for.
 
 ### `npcRank`
 
-The speaker's faction rank that the info is filtered for.
+*Read-only*. The speaker's faction rank that the info is filtered for.
 
 **Returns**:
 
@@ -137,7 +137,7 @@ The speaker's faction rank that the info is filtered for.
 
 ### `npcSex`
 
-The speaker's sex that the info is filtered for.
+*Read-only*. The speaker's sex that the info is filtered for.
 
 **Returns**:
 
@@ -147,7 +147,7 @@ The speaker's sex that the info is filtered for.
 
 ### `objectFlags`
 
-The raw flags of the object.
+*Read-only*. The raw flags of the object.
 
 **Returns**:
 
@@ -157,7 +157,7 @@ The raw flags of the object.
 
 ### `objectType`
 
-The type of object. Maps to values in tes3.objectType.
+*Read-only*. The type of object. Maps to values in tes3.objectType.
 
 **Returns**:
 
@@ -167,7 +167,7 @@ The type of object. Maps to values in tes3.objectType.
 
 ### `pcFaction`
 
-The player's joined faction that the info is filtered for.
+*Read-only*. The player's joined faction that the info is filtered for.
 
 **Returns**:
 
@@ -177,7 +177,7 @@ The player's joined faction that the info is filtered for.
 
 ### `pcRank`
 
-The player's rank required rank in the speaker's faction.
+*Read-only*. The player's rank required rank in the speaker's faction.
 
 **Returns**:
 
@@ -207,7 +207,7 @@ The soruceless flag of the object.
 
 ### `sourceMod`
 
-The filename of the mod that owns this object.
+*Read-only*. The filename of the mod that owns this object.
 
 **Returns**:
 
@@ -227,7 +227,7 @@ If true, references of this object can store temporary or persistent lua data.
 
 ### `text`
 
-String contents for the info. This is not kept in memory, and must be loaded from files for each call.
+*Read-only*. String contents for the info. This is not kept in memory, and must be loaded from files for each call.
 
 **Returns**:
 
@@ -237,7 +237,7 @@ String contents for the info. This is not kept in memory, and must be loaded fro
 
 ### `type`
 
-The type of the info.
+*Read-only*. The type of the info.
 
 **Returns**:
 

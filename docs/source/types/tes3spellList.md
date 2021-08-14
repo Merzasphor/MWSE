@@ -6,7 +6,7 @@ A list of spells. Used by actors, birthsigns, and races.
 
 ### `iterator`
 
-A collection of spells. Can be iterated over using *pairs*.
+*Read-only*. A collection of spells. Can be iterated over using *pairs*.
 
 **Returns**:
 

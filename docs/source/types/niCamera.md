@@ -107,7 +107,7 @@ The list of properties attached to this niAVObject.
 
 ### `references`
 
-The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
+*Read-only*. The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
 
 **Returns**:
 
@@ -117,7 +117,7 @@ The number of references that exist for the given object. When this value hits z
 
 ### `renderer`
 
-The renderer of the camera.
+*Read-only*. The renderer of the camera.
 
 **Returns**:
 
@@ -157,7 +157,7 @@ The object's local uniform scaling factor.
 
 ### `scene`
 
-The scene of the camera.
+*Read-only*. The scene of the camera.
 
 **Returns**:
 

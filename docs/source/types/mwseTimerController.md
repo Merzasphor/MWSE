@@ -30,7 +30,7 @@ local timer = mwseTimerController:create({ type = ..., duration = ..., callback 
 	* `type` (number)
 	* `duration` (number)
 	* `callback` (function)
-	* `iterations` (number)
+	* `iterations` (number): *Optional*.
 
 **Returns**:
 
@@ -50,7 +50,7 @@ local result = mwseTimerController.new(startTime)
 
 **Parameters**:
 
-* `startTime` (number)
+* `startTime` (number): *Optional*.
 
 **Returns**:
 

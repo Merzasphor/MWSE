@@ -2,8 +2,8 @@
 
 --- An exterior or interior game area.
 --- @class tes3cell : tes3baseObject
---- @field activators tes3referenceList One of the three reference collections for a cell.
---- @field actors tes3referenceList One of the three reference collections for a cell.
+--- @field activators tes3referenceList *Read-only*. One of the three reference collections for a cell.
+--- @field actors tes3referenceList *Read-only*. One of the three reference collections for a cell.
 --- @field ambientColor tes3packedColor The cell's ambient color. Only available on interior cells.
 --- @field behavesAsExterior boolean If true, the cell behaves as an exterior instead of an interior for certain properties. Only available on interior cells.
 --- @field cellFlags number A numeric representation of the packed bit flags for the cell, typically accessed from other properties.
@@ -20,7 +20,7 @@
 --- @field region tes3region The region associated with the cell. Only available on exterior cells, or interior cells that behave as exterior cells.
 --- @field restingIsIllegal boolean If true, the player may not rest in the cell.
 --- @field staticObjectsRoot tes3region The scenegraph node containing static non-player-interactable objects from this cell.
---- @field statics tes3referenceList One of the three reference collections for a cell.
+--- @field statics tes3referenceList *Read-only*. One of the three reference collections for a cell.
 --- @field sunColor tes3packedColor The cell's sun color. Only available on interior cells.
 --- @field waterLevel number The water level in the cell. Only available on interior cells.
 tes3cell = {}
@@ -32,6 +32,6 @@ tes3cell = {}
 function tes3cell:isPointInCell(x, y) end
 
 --- Used in a for loop, iterates over objects in the cell.
---- @param filter number The TES3 object type to filter results by.
+--- @param filter number *Optional*. The TES3 object type to filter results by.
 function tes3cell:iterateReferences(filter) end
 

@@ -17,9 +17,9 @@ event.register("calcHitChance", calcHitChanceCallback)
 
 ## Event Data
 
-* `attacker` ([tes3reference](../../types/tes3reference)): A shortcut to the mobile's reference.
-* `attackerMobile` ([tes3mobileActor](../../types/tes3mobileActor)): The mobile who is making the attack.
+* `attacker` ([tes3reference](../../types/tes3reference)): *Read-only*. A shortcut to the mobile's reference.
+* `attackerMobile` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile who is making the attack.
 * `hitChance` (number): The hit chance for the actor. This may be adjusted.
-* `target` ([tes3reference](../../types/tes3reference)): A shortcut to the target mobile's reference. May not always be available.
-* `targetMobile` ([tes3mobileActor](../../types/tes3mobileActor)): The mobile who is being attacked. May not always be available.
+* `target` ([tes3reference](../../types/tes3reference)): *Read-only*. A shortcut to the target mobile's reference. May not always be available.
+* `targetMobile` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile who is being attacked. May not always be available.
 

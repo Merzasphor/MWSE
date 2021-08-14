@@ -7,7 +7,7 @@ This type inherits the following: [tes3actor](../../types/tes3actor), [tes3physi
 
 ### `actorFlags`
 
-A number representing the actor flags. Truly a bit field.
+*Read-only*. A number representing the actor flags. Truly a bit field.
 
 **Returns**:
 
@@ -67,7 +67,7 @@ The amount of weight that the container can hold.
 
 ### `cloneCount`
 
-The number of clones that exist of this actor.
+*Read-only*. The number of clones that exist of this actor.
 
 **Returns**:
 
@@ -77,7 +77,7 @@ The number of clones that exist of this actor.
 
 ### `deleted`
 
-The deleted state of the object.
+*Read-only*. The deleted state of the object.
 
 **Returns**:
 
@@ -87,7 +87,7 @@ The deleted state of the object.
 
 ### `disabled`
 
-The disabled state of the object.
+*Read-only*. The disabled state of the object.
 
 **Returns**:
 
@@ -97,7 +97,7 @@ The disabled state of the object.
 
 ### `equipment`
 
-The items currently equipped to the actor.
+*Read-only*. The items currently equipped to the actor.
 
 **Returns**:
 
@@ -107,7 +107,7 @@ The items currently equipped to the actor.
 
 ### `id`
 
-The unique identifier for the object.
+*Read-only*. The unique identifier for the object.
 
 **Returns**:
 
@@ -117,7 +117,7 @@ The unique identifier for the object.
 
 ### `inventory`
 
-The items currently carried by the actor.
+*Read-only*. The items currently carried by the actor.
 
 **Returns**:
 
@@ -177,7 +177,7 @@ The next object in parent collection's list.
 
 ### `objectFlags`
 
-The raw flags of the object.
+*Read-only*. The raw flags of the object.
 
 **Returns**:
 
@@ -187,7 +187,7 @@ The raw flags of the object.
 
 ### `objectType`
 
-The type of object. Maps to values in tes3.objectType.
+*Read-only*. The type of object. Maps to values in tes3.objectType.
 
 **Returns**:
 
@@ -297,7 +297,7 @@ The soruceless flag of the object.
 
 ### `sourceMod`
 
-The filename of the mod that owns this object.
+*Read-only*. The filename of the mod that owns this object.
 
 **Returns**:
 

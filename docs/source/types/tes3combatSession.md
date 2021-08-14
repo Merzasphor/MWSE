@@ -42,7 +42,7 @@ No description yet available.
 
 ### `mobile`
 
-No description yet available.
+*Read-only*. No description yet available.
 
 **Returns**:
 
@@ -92,7 +92,7 @@ No description yet available.
 
 ### `selectedShield`
 
-No description yet available.
+*Read-only*. No description yet available.
 
 **Returns**:
 
@@ -112,7 +112,7 @@ No description yet available.
 
 ### `selectedWeapon`
 
-No description yet available.
+*Read-only*. No description yet available.
 
 **Returns**:
 

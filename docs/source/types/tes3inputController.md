@@ -6,7 +6,7 @@ A data structure, off of the world controller, that handles input.
 
 ### `creationFlags`
 
-A bit field representing device capabilities and settings.
+*Read-only*. A bit field representing device capabilities and settings.
 
 **Returns**:
 
@@ -16,7 +16,7 @@ A bit field representing device capabilities and settings.
 
 ### `inputMaps`
 
-The array-style access to input bindings.
+*Read-only*. The array-style access to input bindings.
 
 **Returns**:
 
@@ -26,7 +26,7 @@ The array-style access to input bindings.
 
 ### `keyboardState`
 
-The array-style access to raw key states.
+*Read-only*. The array-style access to raw key states.
 
 **Returns**:
 
@@ -36,7 +36,7 @@ The array-style access to raw key states.
 
 ### `mouseState`
 
-The raw DirectInput mouse state.
+*Read-only*. The raw DirectInput mouse state.
 
 **Returns**:
 
@@ -46,7 +46,7 @@ The raw DirectInput mouse state.
 
 ### `previousKeyboardState`
 
-The array-style access to the previous frame's raw key states.
+*Read-only*. The array-style access to the previous frame's raw key states.
 
 **Returns**:
 
@@ -56,7 +56,7 @@ The array-style access to the previous frame's raw key states.
 
 ### `previousMouseState`
 
-The raw DirectInput mouse state for the previous state.
+*Read-only*. The raw DirectInput mouse state for the previous state.
 
 **Returns**:
 
@@ -255,7 +255,7 @@ local result = tes3inputController:keybindTest(key, transition)
 **Parameters**:
 
 * `key` (number): The keybind to test. Constants available through ``tes3.keybind``.
-* `transition` (number): Transition state, e.g. down, or up. Constants available through ``tes3.keyTransition``.
+* `transition` (number): *Optional*. Transition state, e.g. down, or up. Constants available through ``tes3.keyTransition``.
 
 **Returns**:
 

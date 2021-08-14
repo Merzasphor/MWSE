@@ -7,8 +7,8 @@
 --- @field particleHeightMax number The weather's particle maximum height.
 --- @field particleHeightMin number The weather's particle minimum height.
 --- @field particleRadius number The weather's particle radius.
---- @field rainActive boolean The weather's active rain flag.
---- @field rainLoopSound tes3sound The weather's rain loop sound object.
+--- @field rainActive boolean *Read-only*. The weather's active rain flag.
+--- @field rainLoopSound tes3sound *Read-only*. The weather's rain loop sound object.
 --- @field rainLoopSoundId string The weather's rain loop sound ID.
 --- @field threshold number The weather's threshold value.
 tes3weatherRain = {}

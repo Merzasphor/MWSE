@@ -16,7 +16,7 @@ tes3ui.acquireTextInput(element)
 
 **Parameters**:
 
-* `element` ([tes3uiElement](../../types/tes3uiElement))
+* `element` ([tes3uiElement](../../types/tes3uiElement)): *Optional*.
 
 ***
 
@@ -86,7 +86,7 @@ local result = tes3ui.createMenu({ id = ..., dragFrame = ..., fixedFrame = ..., 
 	* `id` (number): The menu’s ID. The menu can be later accessed by tes3ui.findMenu(id).
 	* `dragFrame` (boolean): Constructs a draggable and resizeable frame and background for the menu. It is similar to the stats, inventory, magic and map menus in the standard UI. After construction, position and minimum dimensions should be set.
 	* `fixedFrame` (boolean): Constructs a fixed (non-draggable) frame and background for the menu. The layout system should automatically centre and size it to fit whatever is added to the menu.
-	* `loadable` (boolean): If set to false, calls to loadMenuPosition will fail.
+	* `loadable` (boolean): *Default*: `true`. If set to false, calls to loadMenuPosition will fail.
 
 **Returns**:
 
@@ -105,8 +105,8 @@ local result = tes3ui.createTooltipMenu({ item = ..., itemData = ... })
 **Parameters**:
 
 * `params` (table)
-	* `item` ([tes3item](../../types/tes3item), string): The item to create a tooltip for. If not specified, the tooltip will be empty.
-	* `itemData` ([tes3itemData](../../types/tes3itemData)): The item data for the item.
+	* `item` ([tes3item](../../types/tes3item), string): *Optional*. The item to create a tooltip for. If not specified, the tooltip will be empty.
+	* `itemData` ([tes3itemData](../../types/tes3itemData)): *Optional*. The item data for the item.
 
 **Returns**:
 

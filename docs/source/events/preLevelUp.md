@@ -17,5 +17,5 @@ event.register("preLevelUp", preLevelUpCallback)
 
 ## Event Data
 
-* `level` (number): The new level about to be obtained.
+* `level` (number): *Read-only*. The new level about to be obtained.
 

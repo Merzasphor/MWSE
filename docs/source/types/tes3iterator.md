@@ -6,7 +6,7 @@ A collection that can be iterated over Contains items in a simple linked list, a
 
 ### `current`
 
-A reference for the currently iterated node. This is used by the core game engine, but should not be accessed from lua.
+*Read-only*. A reference for the currently iterated node. This is used by the core game engine, but should not be accessed from lua.
 
 **Returns**:
 
@@ -16,7 +16,7 @@ A reference for the currently iterated node. This is used by the core game engin
 
 ### `head`
 
-The first node in the collection.
+*Read-only*. The first node in the collection.
 
 **Returns**:
 
@@ -26,7 +26,7 @@ The first node in the collection.
 
 ### `size`
 
-The amount of items in the iterator.
+*Read-only*. The amount of items in the iterator.
 
 **Returns**:
 
@@ -36,7 +36,7 @@ The amount of items in the iterator.
 
 ### `tail`
 
-The last node in the collection.
+*Read-only*. The last node in the collection.
 
 **Returns**:
 

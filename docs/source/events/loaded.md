@@ -14,7 +14,7 @@ event.register("loaded", loadedCallback)
 
 ## Event Data
 
-* `filename` (string): The filename of the save that was loaded, not including file extension.
-* `newGame` (boolean): If true, a new game was started.
-* `quickload` (boolean): If true, the load came from the quickload system.
+* `filename` (string): *Read-only*. The filename of the save that was loaded, not including file extension.
+* `newGame` (boolean): *Read-only*. If true, a new game was started.
+* `quickload` (boolean): *Read-only*. If true, the load came from the quickload system.
 

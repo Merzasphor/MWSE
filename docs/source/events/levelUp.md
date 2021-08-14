@@ -17,5 +17,5 @@ event.register("levelUp", levelUpCallback)
 
 ## Event Data
 
-* `level` (number): The new level obtained.
+* `level` (number): *Read-only*. The new level obtained.
 

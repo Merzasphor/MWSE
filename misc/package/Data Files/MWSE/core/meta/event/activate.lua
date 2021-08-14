@@ -6,5 +6,5 @@
 --- @class activateEventData
 --- @field block boolean If set to `true`, vanilla logic will be suppressed. Returning `false` will set this to `true`.
 --- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.
---- @field activator tes3reference The actor attempting to trigger the event.
---- @field target tes3reference The reference that is being activated.
+--- @field activator tes3reference *Read-only*. The actor attempting to trigger the event.
+--- @field target tes3reference *Read-only*. The reference that is being activated.

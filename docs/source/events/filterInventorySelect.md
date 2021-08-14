@@ -14,7 +14,7 @@ event.register("filterInventorySelect", filterInventorySelectCallback)
 
 ## Event Data
 
-* `item` ([tes3item](../../types/tes3item)): The item being filtered.
-* `itemData` ([tes3itemData](../../types/tes3itemData)): The item data for the item being filtered.
-* `type` (string): The inventory filter type.
+* `item` ([tes3item](../../types/tes3item)): *Read-only*. The item being filtered.
+* `itemData` ([tes3itemData](../../types/tes3itemData)): *Read-only*. The item data for the item being filtered.
+* `type` (string): *Read-only*. The inventory filter type.
 

@@ -14,12 +14,12 @@ event.register("calcBarterPrice", calcBarterPriceCallback)
 
 ## Event Data
 
-* `basePrice` (number): The base price of the item, before any event modifications.
-* `buying` (boolean): If true, the player is buying, otherwise the player is selling.
-* `count` (number): The number of items being bartered.
-* `item` ([tes3item](../../types/tes3item)): The item, if any, that is being bartered.
-* `itemData` ([tes3itemData](../../types/tes3itemData)): The item data for the bartered item.
-* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): The mobile actor for who is selling or buying. May not always be available.
+* `basePrice` (number): *Read-only*. The base price of the item, before any event modifications.
+* `buying` (boolean): *Read-only*. If true, the player is buying, otherwise the player is selling.
+* `count` (number): *Read-only*. The number of items being bartered.
+* `item` ([tes3item](../../types/tes3item)): *Read-only*. The item, if any, that is being bartered.
+* `itemData` ([tes3itemData](../../types/tes3itemData)): *Read-only*. The item data for the bartered item.
+* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile actor for who is selling or buying. May not always be available.
 * `price` (number): The price of the item. This can be modified, but ensure that the buy/sell price is matched or there will be odd behavior.
-* `reference` ([tes3reference](../../types/tes3reference)): A shortcut to the mobile's reference. May not always be available.
+* `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. A shortcut to the mobile's reference. May not always be available.
 

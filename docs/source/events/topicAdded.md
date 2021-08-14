@@ -14,5 +14,5 @@ event.register("topicAdded", topicAddedCallback)
 
 ## Event Data
 
-* `topic` ([tes3dialogue](../../types/tes3dialogue)): The topic that was newly added to the player's list of topics.
+* `topic` ([tes3dialogue](../../types/tes3dialogue)): *Read-only*. The topic that was newly added to the player's list of topics.
 

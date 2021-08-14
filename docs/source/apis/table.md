@@ -18,7 +18,7 @@ local result = table.bininsert(t, value, comp)
 
 * `t` (table)
 * `value` (unknown)
-* `comp` (unknown)
+* `comp` (unknown): *Optional*.
 
 **Returns**:
 
@@ -46,8 +46,8 @@ local result = table.binsearch(t, value, compval, reversed)
 
 * `t` (table)
 * `value` (unknown)
-* `compval` (unknown)
-* `reversed` (unknown)
+* `compval` (unknown): *Optional*.
+* `reversed` (unknown): *Optional*.
 
 **Returns**:
 
@@ -100,7 +100,7 @@ local result = table.copy(from, to)
 **Parameters**:
 
 * `from` (table)
-* `to` (table)
+* `to` (table): *Optional*.
 
 **Returns**:
 
@@ -189,7 +189,7 @@ local keys = table.keys(t, sort)
 **Parameters**:
 
 * `t` (table): The table to get keys for.
-* `sort` (boolean, function, nil): If true, the returned table will be sorted. If a function is passed, the table will be sorted using the given function.
+* `sort` (boolean, function, nil): *Optional*. If true, the returned table will be sorted. If a function is passed, the table will be sorted using the given function.
 
 **Returns**:
 
@@ -266,7 +266,7 @@ local result = table.traverse(t, k)
 **Parameters**:
 
 * `t` (table): A table to transverse.
-* `k` (unknown): The key of a table inside t object.
+* `k` (unknown): *Default*: `children`. The key of a table inside t object.
 
 **Returns**:
 
@@ -299,7 +299,7 @@ local values = table.values(t, sort)
 **Parameters**:
 
 * `t` (table): The table to get values for.
-* `sort` (boolean, function, nil): If true, the returned table will be sorted. If a function is passed, the table will be sorted using the given function.
+* `sort` (boolean, function, nil): *Optional*. If true, the returned table will be sorted. If a function is passed, the table will be sorted using the given function.
 
 **Returns**:
 

@@ -76,7 +76,7 @@ A requirement, typically associated with ownership and when the player may freel
 
 ### `script`
 
-The script associated with the scriptVariables.
+*Read-only*. The script associated with the scriptVariables.
 
 **Returns**:
 

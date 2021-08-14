@@ -113,7 +113,7 @@ local result = lpeg.Cc(unknown)
 
 **Parameters**:
 
-* `unnamed` (values): The values to produce.
+* `unnamed` (values): *Optional*. The values to produce.
 
 **Returns**:
 
@@ -169,7 +169,7 @@ local result = lpeg.Cg(p, name)
 **Parameters**:
 
 * `p` (pattern): The pattern to capture with.
-* `name` (value): The name of the group.
+* `name` (value): *Optional*. The name of the group.
 
 **Returns**:
 
@@ -290,7 +290,7 @@ local result = lpeg.locale(t)
 
 **Parameters**:
 
-* `t` (table): The table to update.
+* `t` (table): *Optional*. The table to update.
 
 **Returns**:
 
@@ -322,7 +322,7 @@ local result = lpeg.match(p, subject, init)
 
 * `p` (pattern): The pattern to match.
 * `subject` (string): The string to match against.
-* `init` (number): Start the match at this position in subject.
+* `init` (number): *Optional*. Start the match at this position in subject.
 
 **Returns**:
 

@@ -6,7 +6,7 @@ A container mapping a reputation for an associated faction.
 
 ### `faction`
 
-The faction whose reaction will be adjusted.
+*Read-only*. The faction whose reaction will be adjusted.
 
 **Returns**:
 

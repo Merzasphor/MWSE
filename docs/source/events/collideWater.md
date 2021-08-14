@@ -17,7 +17,7 @@ event.register("collideWater", collideWaterCallback)
 
 ## Event Data
 
-* `inWater` (boolean): 
-* `mobile` ([tes3mobileObject](../../types/tes3mobileObject)): Mobile object which collided.
-* `reference` ([tes3mobileObject](../../types/tes3mobileObject)): `mobile`'s reference.
+* `inWater` (boolean): *Read-only*. 
+* `mobile` ([tes3mobileObject](../../types/tes3mobileObject)): *Read-only*. Mobile object which collided.
+* `reference` ([tes3mobileObject](../../types/tes3mobileObject)): *Read-only*. `mobile`'s reference.
 

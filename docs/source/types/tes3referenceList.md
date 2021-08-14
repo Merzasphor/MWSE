@@ -6,7 +6,7 @@ A collection for references, holding a cell and a linked list of references cont
 
 ### `cell`
 
-The cell for the collection.
+*Read-only*. The cell for the collection.
 
 **Returns**:
 
@@ -16,7 +16,7 @@ The cell for the collection.
 
 ### `head`
 
-The first reference in the collection.
+*Read-only*. The first reference in the collection.
 
 **Returns**:
 
@@ -26,7 +26,7 @@ The first reference in the collection.
 
 ### `size`
 
-The number of references in the collection.
+*Read-only*. The number of references in the collection.
 
 **Returns**:
 
@@ -36,7 +36,7 @@ The number of references in the collection.
 
 ### `tail`
 
-The last reference in the collection.
+*Read-only*. The last reference in the collection.
 
 **Returns**:
 

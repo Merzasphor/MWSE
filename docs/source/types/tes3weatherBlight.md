@@ -7,7 +7,7 @@ This type inherits the following: [tes3weather](../../types/tes3weather)
 
 ### `ambientDayColor`
 
-The weather's ambient day color.
+*Read-only*. The weather's ambient day color.
 
 **Returns**:
 
@@ -17,7 +17,7 @@ The weather's ambient day color.
 
 ### `ambientLoopSound`
 
-The weather's ambient looping sound.
+*Read-only*. The weather's ambient looping sound.
 
 **Returns**:
 
@@ -37,7 +37,7 @@ The weather's ambient looping sound ID.
 
 ### `ambientNightColor`
 
-The weather's ambient night color.
+*Read-only*. The weather's ambient night color.
 
 **Returns**:
 
@@ -47,7 +47,7 @@ The weather's ambient night color.
 
 ### `ambientPlaying`
 
-The weather's ambient playing flag.
+*Read-only*. The weather's ambient playing flag.
 
 **Returns**:
 
@@ -57,7 +57,7 @@ The weather's ambient playing flag.
 
 ### `ambientSunriseColor`
 
-The weather's ambient sunrise color.
+*Read-only*. The weather's ambient sunrise color.
 
 **Returns**:
 
@@ -67,7 +67,7 @@ The weather's ambient sunrise color.
 
 ### `ambientSunsetColor`
 
-The weather's ambient sunset color.
+*Read-only*. The weather's ambient sunset color.
 
 **Returns**:
 
@@ -87,7 +87,7 @@ The weather's blight chance value.
 
 ### `blightDiseases`
 
-The weather's blight diseases, provided as a table of TES3Spell.
+*Read-only*. The weather's blight diseases, provided as a table of TES3Spell.
 
 **Returns**:
 
@@ -127,7 +127,7 @@ The weather's cloud texture path.
 
 ### `controller`
 
-The weather's weather controller.
+*Read-only*. The weather's weather controller.
 
 **Returns**:
 
@@ -137,7 +137,7 @@ The weather's weather controller.
 
 ### `fogDayColor`
 
-The weather's fog day color.
+*Read-only*. The weather's fog day color.
 
 **Returns**:
 
@@ -147,7 +147,7 @@ The weather's fog day color.
 
 ### `fogNightColor`
 
-The weather's fog night color.
+*Read-only*. The weather's fog night color.
 
 **Returns**:
 
@@ -157,7 +157,7 @@ The weather's fog night color.
 
 ### `fogSunriseColor`
 
-The weather's fog sunrise color.
+*Read-only*. The weather's fog sunrise color.
 
 **Returns**:
 
@@ -167,7 +167,7 @@ The weather's fog sunrise color.
 
 ### `fogSunsetColor`
 
-The weather's fog sunset color.
+*Read-only*. The weather's fog sunset color.
 
 **Returns**:
 
@@ -187,7 +187,7 @@ The weather's glare view.
 
 ### `index`
 
-The weather's index ID.
+*Read-only*. The weather's index ID.
 
 **Returns**:
 
@@ -217,7 +217,7 @@ The weather's land fog night depth value.
 
 ### `skyDayColor`
 
-The weather's sky day color.
+*Read-only*. The weather's sky day color.
 
 **Returns**:
 
@@ -227,7 +227,7 @@ The weather's sky day color.
 
 ### `skyNightColor`
 
-The weather's sky night color.
+*Read-only*. The weather's sky night color.
 
 **Returns**:
 
@@ -237,7 +237,7 @@ The weather's sky night color.
 
 ### `skySunriseColor`
 
-The weather's sky sunrise color.
+*Read-only*. The weather's sky sunrise color.
 
 **Returns**:
 
@@ -247,7 +247,7 @@ The weather's sky sunrise color.
 
 ### `skySunsetColor`
 
-The weather's sky sunset color.
+*Read-only*. The weather's sky sunset color.
 
 **Returns**:
 
@@ -257,7 +257,7 @@ The weather's sky sunset color.
 
 ### `sunDayColor`
 
-The weather's sun day color.
+*Read-only*. The weather's sun day color.
 
 **Returns**:
 
@@ -267,7 +267,7 @@ The weather's sun day color.
 
 ### `sundiscSunsetColor`
 
-The weather's sundisc sunset color.
+*Read-only*. The weather's sundisc sunset color.
 
 **Returns**:
 
@@ -277,7 +277,7 @@ The weather's sundisc sunset color.
 
 ### `sunNightColor`
 
-The weather's sun night color.
+*Read-only*. The weather's sun night color.
 
 **Returns**:
 
@@ -287,7 +287,7 @@ The weather's sun night color.
 
 ### `sunSunriseColor`
 
-The weather's sun sunrise color.
+*Read-only*. The weather's sun sunrise color.
 
 **Returns**:
 
@@ -297,7 +297,7 @@ The weather's sun sunrise color.
 
 ### `sunSunsetColor`
 
-The weather's sun sunset color.
+*Read-only*. The weather's sun sunset color.
 
 **Returns**:
 
@@ -327,7 +327,7 @@ The weather's transition delta.
 
 ### `underwaterSoundState`
 
-The weather's underwater sound state flag.
+*Read-only*. The weather's underwater sound state flag.
 
 **Returns**:
 

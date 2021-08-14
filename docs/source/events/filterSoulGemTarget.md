@@ -14,7 +14,7 @@ event.register("filterSoulGemTarget", filterSoulGemTargetCallback)
 
 ## Event Data
 
-* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): The mobile actor.
-* `reference` ([tes3reference](../../types/tes3reference)): The reference.
-* `soulGem` ([tes3misc](../../types/tes3misc)): The soul gem object.
+* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile actor.
+* `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. The reference.
+* `soulGem` ([tes3misc](../../types/tes3misc)): *Read-only*. The soul gem object.
 

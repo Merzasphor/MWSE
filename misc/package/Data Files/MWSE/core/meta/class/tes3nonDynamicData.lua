@@ -2,22 +2,22 @@
 
 --- A child container from tes3dataHandler, where game data is stored.
 --- @class tes3nonDynamicData
---- @field birthsigns tes3iterator A collection of all birthsign objects.
---- @field cells tes3stlList A collection of all cell objects.
---- @field classes tes3iterator A collection of all class objects.
---- @field dialogues tes3iterator A collection of all dialogue objects.
---- @field factions tes3iterator A collection of all faction objects.
---- @field globals tes3iterator A collection of all global variable objects.
---- @field magicEffects table A table of references to all 143 magic effects.
---- @field objects tes3linkedList A collection of all other game objects.
---- @field races tes3iterator A collection of all race objects.
---- @field regions tes3iterator A collection of all region objects.
---- @field scripts tes3iterator A collection of all script objects.
---- @field skills table A table of references to all 27 skills.
---- @field soundGenerators tes3iterator A collection of all sound generator objects.
---- @field sounds tes3iterator A collection of all sound objects.
---- @field spells tes3linkedList A collection of all spell objects.
---- @field startScripts tes3iterator A collection of all tes3startScript objects.
+--- @field birthsigns tes3iterator *Read-only*. A collection of all birthsign objects.
+--- @field cells tes3stlList *Read-only*. A collection of all cell objects.
+--- @field classes tes3iterator *Read-only*. A collection of all class objects.
+--- @field dialogues tes3iterator *Read-only*. A collection of all dialogue objects.
+--- @field factions tes3iterator *Read-only*. A collection of all faction objects.
+--- @field globals tes3iterator *Read-only*. A collection of all global variable objects.
+--- @field magicEffects table *Read-only*. A table of references to all 143 magic effects.
+--- @field objects tes3linkedList *Read-only*. A collection of all other game objects.
+--- @field races tes3iterator *Read-only*. A collection of all race objects.
+--- @field regions tes3iterator *Read-only*. A collection of all region objects.
+--- @field scripts tes3iterator *Read-only*. A collection of all script objects.
+--- @field skills table *Read-only*. A table of references to all 27 skills.
+--- @field soundGenerators tes3iterator *Read-only*. A collection of all sound generator objects.
+--- @field sounds tes3iterator *Read-only*. A collection of all sound objects.
+--- @field spells tes3linkedList *Read-only*. A collection of all spell objects.
+--- @field startScripts tes3iterator *Read-only*. A collection of all tes3startScript objects.
 tes3nonDynamicData = {}
 
 --- Inserts a newly created object into the proper collections.

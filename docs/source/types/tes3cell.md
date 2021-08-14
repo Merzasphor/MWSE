@@ -7,7 +7,7 @@ This type inherits the following: [tes3baseObject](../../types/tes3baseObject)
 
 ### `activators`
 
-One of the three reference collections for a cell.
+*Read-only*. One of the three reference collections for a cell.
 
 **Returns**:
 
@@ -17,7 +17,7 @@ One of the three reference collections for a cell.
 
 ### `actors`
 
-One of the three reference collections for a cell.
+*Read-only*. One of the three reference collections for a cell.
 
 **Returns**:
 
@@ -67,7 +67,7 @@ A numeric representation of the packed bit flags for the cell, typically accesse
 
 ### `deleted`
 
-The deleted state of the object.
+*Read-only*. The deleted state of the object.
 
 **Returns**:
 
@@ -77,7 +77,7 @@ The deleted state of the object.
 
 ### `disabled`
 
-The disabled state of the object.
+*Read-only*. The disabled state of the object.
 
 **Returns**:
 
@@ -157,7 +157,7 @@ If true, the cell has water. Only applies to interior cells.
 
 ### `id`
 
-The unique identifier for the object.
+*Read-only*. The unique identifier for the object.
 
 **Returns**:
 
@@ -197,7 +197,7 @@ The name and id of the cell. See also displayName and editorName.
 
 ### `objectFlags`
 
-The raw flags of the object.
+*Read-only*. The raw flags of the object.
 
 **Returns**:
 
@@ -207,7 +207,7 @@ The raw flags of the object.
 
 ### `objectType`
 
-The type of object. Maps to values in tes3.objectType.
+*Read-only*. The type of object. Maps to values in tes3.objectType.
 
 **Returns**:
 
@@ -267,7 +267,7 @@ The soruceless flag of the object.
 
 ### `sourceMod`
 
-The filename of the mod that owns this object.
+*Read-only*. The filename of the mod that owns this object.
 
 **Returns**:
 
@@ -287,7 +287,7 @@ The scenegraph node containing static non-player-interactable objects from this 
 
 ### `statics`
 
-One of the three reference collections for a cell.
+*Read-only*. One of the three reference collections for a cell.
 
 **Returns**:
 
@@ -370,7 +370,7 @@ tes3cell:iterateReferences(filter)
 
 **Parameters**:
 
-* `filter` (number): The TES3 object type to filter results by.
+* `filter` (number): *Optional*. The TES3 object type to filter results by.
 
 ***
 

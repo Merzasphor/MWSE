@@ -27,7 +27,7 @@ No description yet available.
 
 ### `caster`
 
-No description yet available.
+*Read-only*. No description yet available.
 
 **Returns**:
 
@@ -37,7 +37,7 @@ No description yet available.
 
 ### `deleted`
 
-The deleted state of the object.
+*Read-only*. The deleted state of the object.
 
 **Returns**:
 
@@ -47,7 +47,7 @@ The deleted state of the object.
 
 ### `disabled`
 
-The disabled state of the object.
+*Read-only*. The disabled state of the object.
 
 **Returns**:
 
@@ -57,7 +57,7 @@ The disabled state of the object.
 
 ### `id`
 
-The unique identifier for the object.
+*Read-only*. The unique identifier for the object.
 
 **Returns**:
 
@@ -67,7 +67,7 @@ The unique identifier for the object.
 
 ### `item`
 
-No description yet available.
+*Read-only*. No description yet available.
 
 **Returns**:
 
@@ -77,7 +77,7 @@ No description yet available.
 
 ### `itemData`
 
-No description yet available.
+*Read-only*. No description yet available.
 
 **Returns**:
 
@@ -87,7 +87,7 @@ No description yet available.
 
 ### `itemID`
 
-No description yet available.
+*Read-only*. No description yet available.
 
 **Returns**:
 
@@ -97,7 +97,7 @@ No description yet available.
 
 ### `magicID`
 
-No description yet available.
+*Read-only*. No description yet available.
 
 **Returns**:
 
@@ -117,7 +117,7 @@ The modification state of the object since the last save.
 
 ### `objectFlags`
 
-The raw flags of the object.
+*Read-only*. The raw flags of the object.
 
 **Returns**:
 
@@ -127,7 +127,7 @@ The raw flags of the object.
 
 ### `objectType`
 
-The type of object. Maps to values in tes3.objectType.
+*Read-only*. The type of object. Maps to values in tes3.objectType.
 
 **Returns**:
 
@@ -147,7 +147,7 @@ The persistent flag of the object.
 
 ### `projectile`
 
-No description yet available.
+*Read-only*. No description yet available.
 
 **Returns**:
 
@@ -157,7 +157,7 @@ No description yet available.
 
 ### `serialNumber`
 
-Unique indentifier for just this magic source.
+*Read-only*. Unique indentifier for just this magic source.
 
 **Returns**:
 
@@ -167,7 +167,7 @@ Unique indentifier for just this magic source.
 
 ### `source`
 
-No description yet available.
+*Read-only*. No description yet available.
 
 **Returns**:
 
@@ -177,7 +177,7 @@ No description yet available.
 
 ### `sourceEffects`
 
-An array-style table holding spell effects this magic source has.
+*Read-only*. An array-style table holding spell effects this magic source has.
 
 **Returns**:
 
@@ -197,7 +197,7 @@ The soruceless flag of the object.
 
 ### `sourceMod`
 
-The filename of the mod that owns this object.
+*Read-only*. The filename of the mod that owns this object.
 
 **Returns**:
 
@@ -207,7 +207,7 @@ The filename of the mod that owns this object.
 
 ### `sourceType`
 
-The type of this magic source. Maps to tes3.magicSourceType.* constants.
+*Read-only*. The type of this magic source. Maps to tes3.magicSourceType.* constants.
 
 **Returns**:
 
@@ -237,7 +237,7 @@ If true, references of this object can store temporary or persistent lua data.
 
 ### `target`
 
-No description yet available.
+*Read-only*. No description yet available.
 
 **Returns**:
 

@@ -14,5 +14,5 @@ event.register("buttonPressed", buttonPressedCallback)
 
 ## Event Data
 
-* `button` (number): The button index, 0-based, that was pressed.
+* `button` (number): *Read-only*. The button index, 0-based, that was pressed.
 

@@ -3,14 +3,14 @@
 --- NiGeometryData objects contain the geometry data necessary to render an NiGeometry object. When an NiGeometry-based object is created, the actual geometry data is stored in an attached NiGeometryData object.
 --- @class niGeometryData : niObject
 --- @field bounds niBound The bounds of the object.
---- @field colors niColorA The color for the object.
---- @field normals tes3vector3 The normals list for the object.
---- @field texCoords tes3vector2 The array of texture coordinates.
---- @field textures tes3vector2 The array of texture coordinates.
+--- @field colors niColorA *Read-only*. The color for the object.
+--- @field normals tes3vector3 *Read-only*. The normals list for the object.
+--- @field texCoords tes3vector2 *Read-only*. The array of texture coordinates.
+--- @field textures tes3vector2 *Read-only*. The array of texture coordinates.
 --- @field textureSets number The number of texture coordinate sets in the data.
 --- @field uniqueID number A unique ID for this model, assigned at model creation.
---- @field vertexCount number The vertex count for the object.
---- @field vertices tes3vector3 The array of vertex position data.
+--- @field vertexCount number *Read-only*. The vertex count for the object.
+--- @field vertices tes3vector3 *Read-only*. The array of vertex position data.
 niGeometryData = {}
 
 --- Tells the renderer that the object has changed. Should be called after you have finished changing any vertex data.

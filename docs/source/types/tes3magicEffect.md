@@ -36,7 +36,7 @@ Access to the base flag that determines if this effect can be used in enchanting
 
 ### `areaSoundEffect`
 
-The path to the sound to play for area of effect impacts.
+*Read-only*. The path to the sound to play for area of effect impacts.
 
 **Returns**:
 
@@ -76,7 +76,7 @@ The base magicka cost to use in calculations.
 
 ### `boltSoundEffects`
 
-The path to the sound effect to play for target projectiles.
+*Read-only*. The path to the sound effect to play for target projectiles.
 
 **Returns**:
 
@@ -136,7 +136,7 @@ Access to the base flag.
 
 ### `castSoundEffect`
 
-The path to the sound effect to play when casting.
+*Read-only*. The path to the sound effect to play when casting.
 
 **Returns**:
 
@@ -206,7 +206,7 @@ Access to the base flag that determines if this effect doesn't make use of its m
 
 ### `hitSoundEffect`
 
-The path to the sound effect to play when the effect hits a target.
+*Read-only*. The path to the sound effect to play when the effect hits a target.
 
 **Returns**:
 
@@ -286,7 +286,7 @@ The amount of red lighting to use when lighting projectiles.
 
 ### `name`
 
-Player-facing name of the effect.
+*Read-only*. Player-facing name of the effect.
 
 **Returns**:
 
@@ -306,7 +306,7 @@ Access to the base flag that determines if this effect can be refreshed by recas
 
 ### `particleTexture`
 
-The path to use for the particle effect texture.
+*Read-only*. The path to use for the particle effect texture.
 
 **Returns**:
 
@@ -346,7 +346,7 @@ No description yet available.
 
 ### `skill`
 
-The skill for the associated school that the effect is associated with.
+*Read-only*. The skill for the associated school that the effect is associated with.
 
 **Returns**:
 

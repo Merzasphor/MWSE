@@ -86,7 +86,7 @@ No description yet available.
 
 ### `index`
 
-The index of the moon, 0 for Masser, 1 for Secunda
+*Read-only*. The index of the moon, 0 for Masser, 1 for Secunda
 
 **Returns**:
 
@@ -136,7 +136,7 @@ No description yet available.
 
 ### `texture`
 
-The texture to use for the moon.
+*Read-only*. The texture to use for the moon.
 
 **Returns**:
 
@@ -146,7 +146,7 @@ The texture to use for the moon.
 
 ### `weatherController`
 
-Quick access back to the weather controller structure.
+*Read-only*. Quick access back to the weather controller structure.
 
 **Returns**:
 

@@ -6,7 +6,7 @@ The base-most object from which almost all NetImmerse structures are derived fro
 
 ### `references`
 
-The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
+*Read-only*. The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
 
 **Returns**:
 

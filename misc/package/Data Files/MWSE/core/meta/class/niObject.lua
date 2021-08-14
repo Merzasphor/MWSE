@@ -2,7 +2,7 @@
 
 --- The base-most object from which almost all NetImmerse structures are derived from.
 --- @class niObject
---- @field references string The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
+--- @field references string *Read-only*. The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
 --- @field runTimeTypeInformation niRTTI The runtime type information for this object.
 niObject = {}
 

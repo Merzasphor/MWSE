@@ -8,7 +8,7 @@
 --- @field id number The base tes3magicEffect ID that the effect uses.
 --- @field max number The maximum magnitude of the effect.
 --- @field min number The minimum magnitude of the effect.
---- @field object tes3magicEffect Fetches the tes3magicEffect for the given id used.
+--- @field object tes3magicEffect *Read-only*. Fetches the tes3magicEffect for the given id used.
 --- @field radius number The radius of the effect.
 --- @field rangeType number Determines if the effect is self, touch, or target ranged.
 --- @field skill number The skill associated with this effect, or -1 if no skill is used.

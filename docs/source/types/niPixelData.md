@@ -7,7 +7,7 @@ This type inherits the following: [niObject](../../types/niObject)
 
 ### `bytesPerPixel`
 
-The number of bytes per pixel.
+*Read-only*. The number of bytes per pixel.
 
 **Returns**:
 
@@ -17,7 +17,7 @@ The number of bytes per pixel.
 
 ### `mipMapLevels`
 
-The number of MipMap levels.
+*Read-only*. The number of MipMap levels.
 
 **Returns**:
 
@@ -27,7 +27,7 @@ The number of MipMap levels.
 
 ### `references`
 
-The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
+*Read-only*. The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
 
 **Returns**:
 
@@ -85,7 +85,7 @@ local result = niPixelData:getHeight(mipMapLevel)
 
 **Parameters**:
 
-* `mipMapLevel` (number): Default value: 1
+* `mipMapLevel` (number): *Optional*. Default value: 1
 
 **Returns**:
 
@@ -103,7 +103,7 @@ local result = niPixelData:getWidth(mipMapLevel)
 
 **Parameters**:
 
-* `mipMapLevel` (number): Default value: 1
+* `mipMapLevel` (number): *Optional*. Default value: 1
 
 **Returns**:
 
@@ -158,7 +158,7 @@ niPixelData:setPixelsByte(data, mipMapLevel)
 **Parameters**:
 
 * `data` (table): The byte data to be set to.
-* `mipMapLevel` (number): Default value: 1
+* `mipMapLevel` (number): *Optional*. Default value: 1
 
 ***
 
@@ -173,7 +173,7 @@ niPixelData:setPixelsFloat(data, mipMapLevel)
 **Parameters**:
 
 * `data` (table): The float data to be set to.
-* `mipMapLevel` (number): Default value: 1
+* `mipMapLevel` (number): *Optional*. Default value: 1
 
 ***
 

@@ -17,8 +17,8 @@ event.register("enchantChargeUse", enchantChargeUseCallback)
 
 ## Event Data
 
-* `caster` ([tes3reference](../../types/tes3reference)): The caster of the enchantment.
+* `caster` ([tes3reference](../../types/tes3reference)): *Read-only*. The caster of the enchantment.
 * `charge` (number): The charge required to cast the enchantment. May be modified.
 * `isCast` (boolean): True if the calculation is for a on-strike or on-use action, false if for UI enchant charge display. The type of action is found at e.source.castType.
-* `source` ([tes3enchantment](../../types/tes3enchantment)): The enchantment being used or examined by the UI.
+* `source` ([tes3enchantment](../../types/tes3enchantment)): *Read-only*. The enchantment being used or examined by the UI.
 

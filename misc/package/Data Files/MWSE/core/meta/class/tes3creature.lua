@@ -2,19 +2,19 @@
 
 --- A creature object that has not been cloned. Typically represents the raw information edited in the construction set.
 --- @class tes3creature : tes3actor, tes3physicalObject, tes3object, tes3baseObject
---- @field aiConfig tes3aiConfig A substructure off of actors that contains information on the current AI configuration.
+--- @field aiConfig tes3aiConfig *Read-only*. A substructure off of actors that contains information on the current AI configuration.
 --- @field attacks table A table of three attacks, represented by a trio of tes3rangeInt.
 --- @field attributes table A table of eight numbers, representing the base values for the actor's attributes.
 --- @field biped boolean Access to the creature's biped flag.
---- @field fatigue number The actor's max fatigue.
+--- @field fatigue number *Read-only*. The actor's max fatigue.
 --- @field flies boolean Access to the creature's flies flag.
---- @field health number The actor's max health.
---- @field isAttacked boolean If true, the actor's attacked flag is set.
---- @field isEssential boolean If true, the actor's essential flag is set.
+--- @field health number *Read-only*. The actor's max health.
+--- @field isAttacked boolean *Read-only*. If true, the actor's attacked flag is set.
+--- @field isEssential boolean *Read-only*. If true, the actor's essential flag is set.
 --- @field isInstance boolean Always returns false.
---- @field isRespawn boolean If true, the actor's respawn flag is set.
---- @field level number The base level of the creature.
---- @field magicka number The actor's max magicka.
+--- @field isRespawn boolean *Read-only*. If true, the actor's respawn flag is set.
+--- @field level number *Read-only*. The base level of the creature.
+--- @field magicka number *Read-only*. The actor's max magicka.
 --- @field mesh string The path to the object's mesh.
 --- @field name string The player-facing name for the object.
 --- @field respawns boolean Access to the creature's respawns flag.
@@ -22,7 +22,7 @@
 --- @field skills table A table of three numbers, representing the base values for the creature's combat, magic, and stealth skills.
 --- @field soul number The amount of soul value that the creature provides.
 --- @field soundCreature tes3creature A creature to use instead of this one for sound generation.
---- @field spells tes3spellList A list of spells that the actor has access to. It is a tes3spellList, which is a list wrapper with helper functions. The actual list is accessed with .iterator. e.g. for _, spell in pairs(creature.spells.iterator) do print(spell.name) end
+--- @field spells tes3spellList *Read-only*. A list of spells that the actor has access to. It is a tes3spellList, which is a list wrapper with helper functions. The actual list is accessed with .iterator. e.g. for _, spell in pairs(creature.spells.iterator) do print(spell.name) end
 --- @field swims boolean Access to the creature's swims flag.
 --- @field type number The type of the creature, represented by a number for normal, daedra, undead, or humanoid.
 --- @field usesEquipment boolean Access to the creature's usesEquipment flag.

@@ -17,5 +17,5 @@ event.register("cellActivated", cellActivatedCallback)
 
 ## Event Data
 
-* `cell` ([tes3cell](../../types/tes3cell)): The cell which was activated.
+* `cell` ([tes3cell](../../types/tes3cell)): *Read-only*. The cell which was activated.
 

@@ -6,7 +6,7 @@ A core game object used for storing game settings.
 
 ### `parentWindowHandle`
 
-The Windows HWND for the parent window.
+*Read-only*. The Windows HWND for the parent window.
 
 **Returns**:
 
@@ -16,7 +16,7 @@ The Windows HWND for the parent window.
 
 ### `playerTarget`
 
-The current activation target.
+*Read-only*. The current activation target.
 
 **Returns**:
 
@@ -46,7 +46,7 @@ State on if screenshots are enabled.
 
 ### `screenX`
 
-The screen's horizontal position.
+*Read-only*. The screen's horizontal position.
 
 **Returns**:
 
@@ -56,7 +56,7 @@ The screen's horizontal position.
 
 ### `screenY`
 
-The screen's vertical position.
+*Read-only*. The screen's vertical position.
 
 **Returns**:
 
@@ -126,7 +126,7 @@ Mix volumes for music.
 
 ### `windowHandle`
 
-The Windows HWND for the window.
+*Read-only*. The Windows HWND for the window.
 
 **Returns**:
 
@@ -136,7 +136,7 @@ The Windows HWND for the window.
 
 ### `wireframeProperty`
 
-The reused wireframe property, appled when toggling wireframe rendering.
+*Read-only*. The reused wireframe property, appled when toggling wireframe rendering.
 
 **Returns**:
 
@@ -146,7 +146,7 @@ The reused wireframe property, appled when toggling wireframe rendering.
 
 ### `worldSceneGraphRoot`
 
-Access to the root of the scene graph.
+*Read-only*. Access to the root of the scene graph.
 
 **Returns**:
 

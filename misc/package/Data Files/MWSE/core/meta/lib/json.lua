@@ -8,8 +8,8 @@ json = {}
 
 --- Decode string into a table.
 --- @param s string No description yet available.
---- @param position number No description yet available.
---- @param nullValue string|nil No description yet available.
+--- @param position number *Default*: `1`. No description yet available.
+--- @param nullValue string|nil *Default*: `nil`. No description yet available.
 --- @return table result No description yet available.
 function json.decode(s, position, nullValue) end
 
@@ -32,6 +32,6 @@ function json.quotestring(s) end
 --- Saves a serializable table to Data Files\\MWSE\\{fileName}.json, using json.encode.
 --- @param fileName string No description yet available.
 --- @param object table No description yet available.
---- @param config table No description yet available.
+--- @param config table *Optional*. No description yet available.
 function json.savefile(fileName, object, config) end
 

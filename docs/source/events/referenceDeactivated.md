@@ -17,5 +17,5 @@ event.register("referenceDeactivated", referenceDeactivatedCallback)
 
 ## Event Data
 
-* `reference` ([tes3reference](../../types/tes3reference)): The reference which was deactivated.
+* `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. The reference which was deactivated.
 

@@ -2,7 +2,7 @@
 
 --- A list of spells. Used by actors, birthsigns, and races.
 --- @class tes3spellList
---- @field iterator tes3iterator A collection of spells. Can be iterated over using *pairs*.
+--- @field iterator tes3iterator *Read-only*. A collection of spells. Can be iterated over using *pairs*.
 tes3spellList = {}
 
 --- Adds a spell to the list.

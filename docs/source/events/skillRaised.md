@@ -17,7 +17,7 @@ event.register("skillRaised", skillRaisedCallback)
 
 ## Event Data
 
-* `level` (number): The new level of the skill.
-* `skill` (number): The skill that gained a new level experience.
+* `level` (number): *Read-only*. The new level of the skill.
+* `skill` (number): *Read-only*. The skill that gained a new level experience.
 * `source` (): 
 

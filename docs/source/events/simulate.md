@@ -14,7 +14,7 @@ event.register("simulate", simulateCallback)
 
 ## Event Data
 
-* `delta` (number): The number of seconds since the last frame.
-* `menuMode` (boolean): Always false, maintained only for consistency with the enterFrame event.
-* `timestamp` (number): The number of hours since the beginning of the 3rd Era (similar to the Unix Epoch).
+* `delta` (number): *Read-only*. The number of seconds since the last frame.
+* `menuMode` (boolean): *Read-only*. Always false, maintained only for consistency with the enterFrame event.
+* `timestamp` (number): *Read-only*. The number of hours since the beginning of the 3rd Era (similar to the Unix Epoch).
 

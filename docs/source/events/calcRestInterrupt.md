@@ -19,6 +19,6 @@ event.register("calcRestInterrupt", calcRestInterruptCallback)
 
 * `count` (number): The number of creatures interrupting rest. Set to 0 to prevent a spawn.
 * `hour` (number): The hour of rest remaining that the rest will be interrupted on.
-* `resting` (boolean): If true, the player is attempting to rest, as opposed to wait.
-* `waiting` (boolean): If true, the player is attempting to wait, as opposed to rest.
+* `resting` (boolean): *Read-only*. If true, the player is attempting to rest, as opposed to wait.
+* `waiting` (boolean): *Read-only*. If true, the player is attempting to wait, as opposed to rest.
 

@@ -15,7 +15,7 @@ event.clear(eventId, options)
 **Parameters**:
 
 * `eventId` (string)
-* `options` (table)
+* `options` (table): *Optional*.
 
 ***
 
@@ -31,7 +31,7 @@ event.register(eventId, callback, options)
 
 * `eventId` (string)
 * `callback` (function)
-* `options` (table)
+* `options` (table): *Optional*.
 
 ***
 
@@ -46,8 +46,8 @@ event.trigger(eventId, payload, options)
 **Parameters**:
 
 * `eventId` (string)
-* `payload` (table)
-* `options` (table)
+* `payload` (table): *Optional*.
+* `options` (table): *Optional*.
 
 ***
 
@@ -63,7 +63,7 @@ event.unregister(eventId, callback, options)
 
 * `eventId` (string)
 * `callback` (function)
-* `options` (table)
+* `options` (table): *Optional*.
 
 ***
 

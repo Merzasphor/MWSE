@@ -160,8 +160,8 @@ niPick:pickObjects(origin, distance, append, maxDistance)
 
 * `origin` ([tes3vector3](../../types/tes3vector3))
 * `distance` ([tes3vector3](../../types/tes3vector3))
-* `append` (boolean): Default value: false
-* `maxDistance` (number): Default value: 0.0F
+* `append` (boolean): *Optional*. Default value: false
+* `maxDistance` (number): *Optional*. Default value: 0.0F
 
 ***
 

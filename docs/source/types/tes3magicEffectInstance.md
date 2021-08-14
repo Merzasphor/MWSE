@@ -6,7 +6,7 @@ Represents an individual instance of a magic effect being applied to a reference
 
 ### `createdData`
 
-The bound or summoned data associated with the instance, for summoned creatures or items. The stack's object will be a reference in the case of summoned creatures.
+*Read-only*. The bound or summoned data associated with the instance, for summoned creatures or items. The stack's object will be a reference in the case of summoned creatures.
 
 **Returns**:
 
@@ -26,7 +26,7 @@ No description yet available.
 
 ### `lastUsedArmor`
 
-No description yet available.
+*Read-only*. No description yet available.
 
 **Returns**:
 
@@ -36,7 +36,7 @@ No description yet available.
 
 ### `lastUsedEnchItem`
 
-No description yet available.
+*Read-only*. No description yet available.
 
 **Returns**:
 
@@ -46,7 +46,7 @@ No description yet available.
 
 ### `lastUsedLight`
 
-No description yet available.
+*Read-only*. No description yet available.
 
 **Returns**:
 
@@ -56,7 +56,7 @@ No description yet available.
 
 ### `lastUsedShield`
 
-No description yet available.
+*Read-only*. No description yet available.
 
 **Returns**:
 
@@ -66,7 +66,7 @@ No description yet available.
 
 ### `lastUsedWeapon`
 
-No description yet available.
+*Read-only*. No description yet available.
 
 **Returns**:
 

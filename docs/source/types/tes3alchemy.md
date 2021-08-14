@@ -37,7 +37,7 @@ The bounding box for the object.
 
 ### `deleted`
 
-The deleted state of the object.
+*Read-only*. The deleted state of the object.
 
 **Returns**:
 
@@ -47,7 +47,7 @@ The deleted state of the object.
 
 ### `disabled`
 
-The disabled state of the object.
+*Read-only*. The disabled state of the object.
 
 **Returns**:
 
@@ -57,7 +57,7 @@ The disabled state of the object.
 
 ### `effects`
 
-An array-style table of the tes3effect data on the object.
+*Read-only*. An array-style table of the tes3effect data on the object.
 
 **Returns**:
 
@@ -87,7 +87,7 @@ The path to the object's icon.
 
 ### `id`
 
-The unique identifier for the object.
+*Read-only*. The unique identifier for the object.
 
 **Returns**:
 
@@ -137,7 +137,7 @@ The next object in parent collection's list.
 
 ### `objectFlags`
 
-The raw flags of the object.
+*Read-only*. The raw flags of the object.
 
 **Returns**:
 
@@ -147,7 +147,7 @@ The raw flags of the object.
 
 ### `objectType`
 
-The type of object. Maps to values in tes3.objectType.
+*Read-only*. The type of object. Maps to values in tes3.objectType.
 
 **Returns**:
 
@@ -237,7 +237,7 @@ The soruceless flag of the object.
 
 ### `sourceMod`
 
-The filename of the mod that owns this object.
+*Read-only*. The filename of the mod that owns this object.
 
 **Returns**:
 
@@ -347,14 +347,14 @@ tes3alchemy.create({ id = ..., name = ..., script = ..., mesh = ..., icon = ...,
 
 * `params` (table)
 	* `id` (string): The new object's ID. Must be unique.
-	* `name` (string): The new item's name.
-	* `script` (tes3script): A script to attach to the object.
-	* `mesh` (string): The mesh to use for the object.
-	* `icon` (string): The icon to use for the object.
-	* `objectFlags` (number): The object flags initially set. Force set as modified.
-	* `weight` (number): The new item's weight.
-	* `value` (number): The new item's value.
-	* `flags` (number): The new alchemy item's flags.
+	* `name` (string): *Default*: `"Potion"`. The new item's name.
+	* `script` (tes3script): *Optional*. A script to attach to the object.
+	* `mesh` (string): *Default*: `"m\Misc_Potion_Bargain_01.nif"`. The mesh to use for the object.
+	* `icon` (string): *Default*: `"m\Tx_potion_bargain_01.nif"`. The icon to use for the object.
+	* `objectFlags` (number): *Default*: `8`. The object flags initially set. Force set as modified.
+	* `weight` (number): *Default*: `0`. The new item's weight.
+	* `value` (number): *Default*: `0`. The new item's value.
+	* `flags` (number): *Default*: `0`. The new alchemy item's flags.
 	* `effects` (table): A table of effects described, providing values for id, skill, attribute, range, radius, duration, min, and/or max.
 
 ***

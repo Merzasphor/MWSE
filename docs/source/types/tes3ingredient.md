@@ -27,7 +27,7 @@ The bounding box for the object.
 
 ### `deleted`
 
-The deleted state of the object.
+*Read-only*. The deleted state of the object.
 
 **Returns**:
 
@@ -37,7 +37,7 @@ The deleted state of the object.
 
 ### `disabled`
 
-The disabled state of the object.
+*Read-only*. The disabled state of the object.
 
 **Returns**:
 
@@ -47,7 +47,7 @@ The disabled state of the object.
 
 ### `effectAttributeIds`
 
-An array-style table access the attributes associated with the effects.
+*Read-only*. An array-style table access the attributes associated with the effects.
 
 **Returns**:
 
@@ -57,7 +57,7 @@ An array-style table access the attributes associated with the effects.
 
 ### `effects`
 
-An array-style table access to the four ingredient effects. Unlike alchemy or enchanting objects, these are simple numbers representing the effect ID.
+*Read-only*. An array-style table access to the four ingredient effects. Unlike alchemy or enchanting objects, these are simple numbers representing the effect ID.
 
 **Returns**:
 
@@ -67,7 +67,7 @@ An array-style table access to the four ingredient effects. Unlike alchemy or en
 
 ### `effectsSkillIds`
 
-An array-style table access the skills associated with the effects.
+*Read-only*. An array-style table access the skills associated with the effects.
 
 **Returns**:
 
@@ -87,7 +87,7 @@ The path to the object's icon.
 
 ### `id`
 
-The unique identifier for the object.
+*Read-only*. The unique identifier for the object.
 
 **Returns**:
 
@@ -137,7 +137,7 @@ The next object in parent collection's list.
 
 ### `objectFlags`
 
-The raw flags of the object.
+*Read-only*. The raw flags of the object.
 
 **Returns**:
 
@@ -147,7 +147,7 @@ The raw flags of the object.
 
 ### `objectType`
 
-The type of object. Maps to values in tes3.objectType.
+*Read-only*. The type of object. Maps to values in tes3.objectType.
 
 **Returns**:
 
@@ -237,7 +237,7 @@ The soruceless flag of the object.
 
 ### `sourceMod`
 
-The filename of the mod that owns this object.
+*Read-only*. The filename of the mod that owns this object.
 
 **Returns**:
 

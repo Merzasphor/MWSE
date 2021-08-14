@@ -14,6 +14,6 @@ event.register("bodyPartsUpdated", bodyPartsUpdatedCallback)
 
 ## Event Data
 
-* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): The mobile actor whose body parts were updated.
-* `reference` ([tes3reference](../../types/tes3reference)): The reference for the actor whose body parts were updated.
+* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile actor whose body parts were updated.
+* `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. The reference for the actor whose body parts were updated.
 

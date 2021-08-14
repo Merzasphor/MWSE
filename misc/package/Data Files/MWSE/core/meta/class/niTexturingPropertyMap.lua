@@ -11,23 +11,23 @@ niTexturingPropertyMap = {}
 --- Creates a new basic or bump map.
 --- @param params niTexturingPropertyMap.new.params This table accepts the following values:
 --- 
---- ``texture``: niTexture — If provided, sets the map texture to the given value.
+--- ``texture``: niTexture — *Optional*. If provided, sets the map texture to the given value.
 --- 
---- ``clampMode``: number — The clamp mode to set the map to use.
+--- ``clampMode``: number — *Default*: `WRAP_S_WRAP_T`. The clamp mode to set the map to use.
 --- 
---- ``filterMode``: number — The filter mode to set the map to use.
+--- ``filterMode``: number — *Default*: `TRILERP`. The filter mode to set the map to use.
 --- 
---- ``textCoords``: number — The texture coordinates to set the map to use.
+--- ``textCoords``: number — *Default*: `0`. The texture coordinates to set the map to use.
 --- 
---- ``isBumpMap``: boolean — If true, a bump map will be created instead.
+--- ``isBumpMap``: boolean — *Default*: `false`. If true, a bump map will be created instead.
 --- @return niTexturingPropertyMap map The created basic or bump map.
 function niTexturingPropertyMap.new(params) end
 
 ---Table parameter definitions for ``niTexturingPropertyMap.new``.
 --- @class niTexturingPropertyMap.new.params
---- @field texture niTexture If provided, sets the map texture to the given value.
---- @field clampMode number The clamp mode to set the map to use.
---- @field filterMode number The filter mode to set the map to use.
---- @field textCoords number The texture coordinates to set the map to use.
---- @field isBumpMap boolean If true, a bump map will be created instead.
+--- @field texture niTexture *Optional*. If provided, sets the map texture to the given value.
+--- @field clampMode number *Default*: `WRAP_S_WRAP_T`. The clamp mode to set the map to use.
+--- @field filterMode number *Default*: `TRILERP`. The filter mode to set the map to use.
+--- @field textCoords number *Default*: `0`. The texture coordinates to set the map to use.
+--- @field isBumpMap boolean *Default*: `false`. If true, a bump map will be created instead.
 

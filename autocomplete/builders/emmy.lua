@@ -92,17 +92,17 @@ local function getParamNames(package)
 end
 
 local function writeFunction(package, file, namespaceOverride)
-	file:write(formatDescription(package.description or common.defaultNoDescriptionText) .. "\n")
+	file:write(formatDescription(common.getDescriptionString(package)) .. "\n")
 	writeExamples(package, file)
 
 	for _, argument in ipairs(package.arguments or {}) do
 		local type = argument.type
-		local description = argument.description or common.defaultNoDescriptionText
+		local description = common.getDescriptionString(argument)
 		if (argument.tableParams) then
 			type = package.namespace .. ".params"
 			description = "This table accepts the following values:"
 			for _, tableArgument in ipairs(argument.tableParams) do
-				description = description .. string.format("\n\n``%s``: %s — %s", tableArgument.name or "unknown", getAllPossibleVariationsOfType(tableArgument.type) or "any", formatLineBreaks(tableArgument.description or common.defaultNoDescriptionText))
+				description = description .. string.format("\n\n``%s``: %s — %s", tableArgument.name or "unknown", getAllPossibleVariationsOfType(tableArgument.type) or "any", formatLineBreaks(common.getDescriptionString(tableArgument)))
 			end
 		end
 		if (argument.type == "variadic") then
@@ -113,7 +113,7 @@ local function writeFunction(package, file, namespaceOverride)
 	end
 
 	for _, returnPackage in ipairs(common.getConsistentReturnValues(package) or {}) do
-		file:write(string.format("--- @return %s %s %s\n", getAllPossibleVariationsOfType(returnPackage.type) or "any", returnPackage.name or "result", returnPackage.description or common.defaultNoDescriptionText))
+		file:write(string.format("--- @return %s %s %s\n", getAllPossibleVariationsOfType(returnPackage.type) or "any", returnPackage.name or "result", common.getDescriptionString(returnPackage)))
 	end
 
 	file:write(string.format("function %s(%s) end\n\n", namespaceOverride or package.namespace, table.concat(getParamNames(package), ", ")))
@@ -122,7 +122,7 @@ local function writeFunction(package, file, namespaceOverride)
 		file:write(string.format("---Table parameter definitions for ``%s``.\n", package.namespace))
 		file:write(string.format("--- @class %s.params\n", package.namespace))
 		for _, param in ipairs(package.arguments[1].tableParams) do
-			file:write(string.format("--- @field %s %s %s\n", param.name, getAllPossibleVariationsOfType(param.type), param.description or common.defaultNoDescriptionText))
+			file:write(string.format("--- @field %s %s %s\n", param.name, getAllPossibleVariationsOfType(param.type), common.getDescriptionString(param)))
 		end
 		file:write("\n")
 	end
@@ -162,7 +162,7 @@ local function build(package)
 	file:write("--- @meta\n\n")
 
 	-- Write description.
-	file:write(formatDescription(package.description or common.defaultNoDescriptionText) .. "\n")
+	file:write(formatDescription(common.getDescriptionString(package)) .. "\n")
 	writeExamples(package, file)
 	if (package.type == "lib") then
 		file:write(string.format("--- @class %slib\n", package.key))
@@ -174,7 +174,7 @@ local function build(package)
 
 	-- Write out fields.
 	for _, value in ipairs(package.values or {}) do
-		file:write(string.format("--- @field %s %s %s\n", value.key, getAllPossibleVariationsOfType(value.valuetype) or "any", formatLineBreaks(value.description or common.defaultNoDescriptionText)))
+		file:write(string.format("--- @field %s %s %s\n", value.key, getAllPossibleVariationsOfType(value.valuetype) or "any", formatLineBreaks(common.getDescriptionString(value))))
 	end
 
 	-- Write out event data.
@@ -190,7 +190,7 @@ local function build(package)
 		local eventDataKeys = table.keys(eventData, true)
 		for _, key in ipairs(eventDataKeys) do
 			local data = eventData[key]
-			file:write(string.format("--- @field %s %s %s\n", key, getAllPossibleVariationsOfType(data.type) or "any", formatLineBreaks(data.description or common.defaultNoDescriptionText)))
+			file:write(string.format("--- @field %s %s %s\n", key, getAllPossibleVariationsOfType(data.type) or "any", formatLineBreaks(common.getDescriptionString(data))))
 		end
 	end
 

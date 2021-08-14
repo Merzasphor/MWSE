@@ -27,7 +27,7 @@ function mwse.getVirtualMemoryUsage() end
 --- 	
 --- If the default values table is passed, empty keys in the config will be filled in using its values. Additionally, if no file exists, the function will return the default table.
 --- @param fileName string The non-extensioned name of the config file.
---- @param defaults table A table of default values.
+--- @param defaults table *Optional*. A table of default values.
 --- @return table result No description yet available.
 function mwse.loadConfig(fileName, defaults) end
 
@@ -35,7 +35,7 @@ function mwse.loadConfig(fileName, defaults) end
 --- 
 --- The message accepts formatting and additional parameters matching string.format's usage.
 --- @param message string No description yet available.
---- @vararg any No description yet available.
+--- @vararg any *Optional*. No description yet available.
 function mwse.log(message, ...) end
 
 --- Converts a TES3 object type (e.g. from tes3.objectType) into an uppercase, 4-character string.
@@ -52,7 +52,7 @@ function mwse.overrideScript(scriptId, callback) end
 --- Saves a config table to Data Files\\MWSE\\config\\{fileName}.json.
 --- @param fileName string No description yet available.
 --- @param object unknown No description yet available.
---- @param config table No description yet available.
+--- @param config table *Optional*. No description yet available.
 --- @return table result No description yet available.
 function mwse.saveConfig(fileName, object, config) end
 

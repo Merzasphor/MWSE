@@ -17,7 +17,7 @@ The bounds of the object.
 
 ### `colors`
 
-The color for the object.
+*Read-only*. The color for the object.
 
 **Returns**:
 
@@ -27,7 +27,7 @@ The color for the object.
 
 ### `normals`
 
-The normals list for the object.
+*Read-only*. The normals list for the object.
 
 **Returns**:
 
@@ -37,7 +37,7 @@ The normals list for the object.
 
 ### `references`
 
-The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
+*Read-only*. The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
 
 **Returns**:
 
@@ -57,7 +57,7 @@ The runtime type information for this object.
 
 ### `texCoords`
 
-The array of texture coordinates.
+*Read-only*. The array of texture coordinates.
 
 **Returns**:
 
@@ -67,7 +67,7 @@ The array of texture coordinates.
 
 ### `textures`
 
-The array of texture coordinates.
+*Read-only*. The array of texture coordinates.
 
 **Returns**:
 
@@ -107,7 +107,7 @@ A unique ID for this model, assigned at model creation.
 
 ### `vertexCount`
 
-The vertex count for the object.
+*Read-only*. The vertex count for the object.
 
 **Returns**:
 
@@ -117,7 +117,7 @@ The vertex count for the object.
 
 ### `vertices`
 
-The array of vertex position data.
+*Read-only*. The array of vertex position data.
 
 **Returns**:
 

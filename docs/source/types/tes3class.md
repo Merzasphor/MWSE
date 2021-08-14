@@ -7,7 +7,7 @@ This type inherits the following: [tes3baseObject](../../types/tes3baseObject)
 
 ### `attributes`
 
-An array-style table of the two attribute IDs associated with the class.
+*Read-only*. An array-style table of the two attribute IDs associated with the class.
 
 **Returns**:
 
@@ -157,7 +157,7 @@ The blocked state of the object.
 
 ### `deleted`
 
-The deleted state of the object.
+*Read-only*. The deleted state of the object.
 
 **Returns**:
 
@@ -177,7 +177,7 @@ Loads from disk and returns the description of the class.
 
 ### `disabled`
 
-The disabled state of the object.
+*Read-only*. The disabled state of the object.
 
 **Returns**:
 
@@ -187,7 +187,7 @@ The disabled state of the object.
 
 ### `id`
 
-The unique identifier for the object.
+*Read-only*. The unique identifier for the object.
 
 **Returns**:
 
@@ -197,7 +197,7 @@ The unique identifier for the object.
 
 ### `majorSkills`
 
-An array-style table of the 5 skills IDs associated with the class' major skills.
+*Read-only*. An array-style table of the 5 skills IDs associated with the class' major skills.
 
 **Returns**:
 
@@ -207,7 +207,7 @@ An array-style table of the 5 skills IDs associated with the class' major skills
 
 ### `minorSkills`
 
-An array-style table of the 5 skills IDs associated with the class' major skills.
+*Read-only*. An array-style table of the 5 skills IDs associated with the class' major skills.
 
 **Returns**:
 
@@ -237,7 +237,7 @@ The player-facing name for the object.
 
 ### `objectFlags`
 
-The raw flags of the object.
+*Read-only*. The raw flags of the object.
 
 **Returns**:
 
@@ -247,7 +247,7 @@ The raw flags of the object.
 
 ### `objectType`
 
-The type of object. Maps to values in tes3.objectType.
+*Read-only*. The type of object. Maps to values in tes3.objectType.
 
 **Returns**:
 
@@ -337,7 +337,7 @@ The services offered by the class. This is a bit field, and its values should ty
 
 ### `skills`
 
-An array-style table of the 10 skills IDs associated with the class. For major or minor skills specifically, use the majorSkills and MinorSkills properties.
+*Read-only*. An array-style table of the 10 skills IDs associated with the class. For major or minor skills specifically, use the majorSkills and MinorSkills properties.
 
 **Returns**:
 
@@ -357,7 +357,7 @@ The soruceless flag of the object.
 
 ### `sourceMod`
 
-The filename of the mod that owns this object.
+*Read-only*. The filename of the mod that owns this object.
 
 **Returns**:
 

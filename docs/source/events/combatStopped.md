@@ -14,5 +14,5 @@ event.register("combatStopped", combatStoppedCallback)
 
 ## Event Data
 
-* `actor` ([tes3mobileActor](../../types/tes3mobileActor)): The mobile actor who has left combat.
+* `actor` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile actor who has left combat.
 

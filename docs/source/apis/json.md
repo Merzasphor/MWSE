@@ -37,8 +37,8 @@ local result = json.decode(s, position, nullValue)
 **Parameters**:
 
 * `s` (string)
-* `position` (number)
-* `nullValue` (string, nil)
+* `position` (number): *Default*: `1`.
+* `nullValue` (string, nil): *Default*: `nil`.
 
 **Returns**:
 
@@ -113,7 +113,7 @@ json.savefile(fileName, object, config)
 
 * `fileName` (string)
 * `object` (table)
-* `config` (table)
+* `config` (table): *Optional*.
 
 ***
 

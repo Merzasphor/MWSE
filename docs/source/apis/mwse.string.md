@@ -38,7 +38,7 @@ local unnamed1 = mwse.string.get(unknown)
 
 **Returns**:
 
-* `unnamed` (number)
+* `unnamed` (number): *Optional*.
 
 ***
 

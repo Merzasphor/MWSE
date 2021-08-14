@@ -14,5 +14,5 @@ event.register("mobileDeactivated", mobileDeactivatedCallback)
 
 ## Event Data
 
-* `reference` ([tes3reference](../../types/tes3reference)): The reference that the mobile has been deactivated for.
+* `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. The reference that the mobile has been deactivated for.
 

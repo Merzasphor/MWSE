@@ -14,7 +14,7 @@ event.register("detectSneak", detectSneakCallback)
 
 ## Event Data
 
-* `detector` ([tes3mobileActor](../../types/tes3mobileActor)): The mobile actor that is doing the detecting.
+* `detector` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile actor that is doing the detecting.
 * `isDetected` (boolean): The previous detection calculated, starting with the base engine result.
-* `target` ([tes3mobileActor](../../types/tes3mobileActor)): The mobile actor that is possibly being detected.
+* `target` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile actor that is possibly being detected.
 

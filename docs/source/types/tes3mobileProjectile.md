@@ -27,7 +27,7 @@ The attack swing value of the attacker at the time of releasing the projectile.
 
 ### `boundSize`
 
-A vector that shows the size of the bounding box in each direction.
+*Read-only*. A vector that shows the size of the bounding box in each direction.
 
 **Returns**:
 
@@ -37,7 +37,7 @@ A vector that shows the size of the bounding box in each direction.
 
 ### `cellX`
 
-The X grid coordinate of the cell the mobile is in.
+*Read-only*. The X grid coordinate of the cell the mobile is in.
 
 **Returns**:
 
@@ -47,7 +47,7 @@ The X grid coordinate of the cell the mobile is in.
 
 ### `cellY`
 
-The Y grid coordinate of the cell the mobile is in.
+*Read-only*. The Y grid coordinate of the cell the mobile is in.
 
 **Returns**:
 
@@ -77,7 +77,7 @@ A flag that causes the projectile to expire when set to 1.
 
 ### `firingMobile`
 
-The mobile that fired this projectile.
+*Read-only*. The mobile that fired this projectile.
 
 **Returns**:
 
@@ -87,7 +87,7 @@ The mobile that fired this projectile.
 
 ### `firingWeapon`
 
-The weapon that fired this projectile.
+*Read-only*. The weapon that fired this projectile.
 
 **Returns**:
 
@@ -97,7 +97,7 @@ The weapon that fired this projectile.
 
 ### `flags`
 
-Access to the root mobile object flags, represented as an integer. Should not be accessed directly.
+*Read-only*. Access to the root mobile object flags, represented as an integer. Should not be accessed directly.
 
 **Returns**:
 
@@ -107,7 +107,7 @@ Access to the root mobile object flags, represented as an integer. Should not be
 
 ### `height`
 
-The height of the mobile above the ground.
+*Read-only*. The height of the mobile above the ground.
 
 **Returns**:
 
@@ -127,7 +127,7 @@ A vector that represents the 3D acceleration of the object.
 
 ### `initialSpeed`
 
-The initial speed that the projectile was launched at.
+*Read-only*. The initial speed that the projectile was launched at.
 
 **Returns**:
 
@@ -147,7 +147,7 @@ Controls if the mobile has movement collision active. When false, the mobile can
 
 ### `movementFlags`
 
-Access to the root mobile object movement flags, represented as an integer. Should not be accessed directly.
+*Read-only*. Access to the root mobile object movement flags, represented as an integer. Should not be accessed directly.
 
 **Returns**:
 
@@ -157,7 +157,7 @@ Access to the root mobile object movement flags, represented as an integer. Shou
 
 ### `objectType`
 
-The type of mobile object. Maps to values in tes3.objectType.
+*Read-only*. The type of mobile object. Maps to values in tes3.objectType.
 
 **Returns**:
 
@@ -187,7 +187,7 @@ A vector that represents the 3D position of the object.
 
 ### `prevMovementFlags`
 
-Access to the root mobile object movement flags from the previous frame, represented as an integer. Should not be accessed directly.
+*Read-only*. Access to the root mobile object movement flags from the previous frame, represented as an integer. Should not be accessed directly.
 
 **Returns**:
 
@@ -197,7 +197,7 @@ Access to the root mobile object movement flags from the previous frame, represe
 
 ### `reference`
 
-Access to the reference object for the mobile, if any.
+*Read-only*. Access to the reference object for the mobile, if any.
 
 **Returns**:
 

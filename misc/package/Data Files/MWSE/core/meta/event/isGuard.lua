@@ -4,4 +4,4 @@
 --- @class isGuardEventData
 --- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.
 --- @field isGuard boolean The previously calculated guard status.
---- @field npc tes3npc The NPC that the guard status is being checked for.
+--- @field npc tes3npc *Read-only*. The NPC that the guard status is being checked for.

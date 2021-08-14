@@ -152,7 +152,7 @@ See childOffsetX.
 
 ### `children`
 
-A table containing references to child elements. This is a copy that does not track changes.
+*Read-only*. A table containing references to child elements. This is a copy that does not track changes.
 
 **Returns**:
 
@@ -239,7 +239,7 @@ Sets element dimensions using a proportional sizer. The sizer starts with the pa
 
 ### `id`
 
-The element's ID.  The element can be later accessed by ``ancestor:findChild(id)``. Note that multiple elements may have the same ID, such as subparts of a widget, or list items. Therefore, you may think of ids as an element class identifier.
+*Read-only*. The element's ID.  The element can be later accessed by ``ancestor:findChild(id)``. Note that multiple elements may have the same ID, such as subparts of a widget, or list items. Therefore, you may think of ids as an element class identifier.
 
 **Returns**:
 
@@ -319,7 +319,7 @@ Minimum dimensions for auto-size layout and resizable frames. Integer number.
 
 ### `name`
 
-The element's name, taken from the name registered for the ID.
+*Read-only*. The element's name, taken from the name registered for the ID.
 
 **Returns**:
 
@@ -379,7 +379,7 @@ Integer number. Top padding size in pixels. When this is set to -1, the paddingA
 
 ### `parent`
 
-A reference to the parent element.
+*Read-only*. A reference to the parent element.
 
 **Returns**:
 
@@ -513,7 +513,7 @@ local result = tes3uiElement:createBlock(id)
 
 **Parameters**:
 
-* `id` (number): A registered identifier to help find this element later.
+* `id` (number): *Optional*. A registered identifier to help find this element later.
 
 **Returns**:
 
@@ -543,7 +543,7 @@ local result = tes3uiElement:createButton(id)
 
 **Parameters**:
 
-* `id` (number): A registered identifier to help find this element later.
+* `id` (number): *Optional*. A registered identifier to help find this element later.
 
 **Returns**:
 
@@ -561,7 +561,7 @@ local result = tes3uiElement:createDivider(id)
 
 **Parameters**:
 
-* `id` (number): A registered identifier to help find this element later.
+* `id` (number): *Optional*. A registered identifier to help find this element later.
 
 **Returns**:
 
@@ -586,9 +586,9 @@ local result = tes3uiElement:createFillBar(id, current, max)
 
 **Parameters**:
 
-* `id` (number): A registered identifier to help find this element later.
-* `current` (number): The initial current value.
-* `max` (number): The initial maximum value.
+* `id` (number): *Optional*. A registered identifier to help find this element later.
+* `current` (number): *Optional*. The initial current value.
+* `max` (number): *Optional*. The initial maximum value.
 
 **Returns**:
 
@@ -613,7 +613,7 @@ local result = tes3uiElement:createHorizontalScrollPane(id)
 
 **Parameters**:
 
-* `id` (number): A registered identifier to help find this element later.
+* `id` (number): *Optional*. A registered identifier to help find this element later.
 
 **Returns**:
 
@@ -631,7 +631,7 @@ local result = tes3uiElement:createHypertext(id)
 
 **Parameters**:
 
-* `id` (number): A registered identifier to help find this element later.
+* `id` (number): *Optional*. A registered identifier to help find this element later.
 
 **Returns**:
 
@@ -649,7 +649,7 @@ local result = tes3uiElement:createImage(id, path)
 
 **Parameters**:
 
-* `id` (number): A registered identifier to help find this element later.
+* `id` (number): *Optional*. A registered identifier to help find this element later.
 * `path` (string): An image path. This path is relative to ``Data Files``.
 
 **Returns**:
@@ -668,7 +668,7 @@ local result = tes3uiElement:createImageButton(id, idle, over, path)
 
 **Parameters**:
 
-* `id` (number): A registered identifier to help find this element later.
+* `id` (number): *Optional*. A registered identifier to help find this element later.
 * `idle` (string): The path to the idle image. This path is relative to ``Data Files``.
 * `over` (string): The path to the mouse hover image. This path is relative to ``Data Files``.
 * `path` (string): The path to the mouse pressed image. This path is relative to ``Data Files``.
@@ -689,7 +689,7 @@ local result = tes3uiElement:createLabel(id, text)
 
 **Parameters**:
 
-* `id` (number): A registered identifier to help find this element later.
+* `id` (number): *Optional*. A registered identifier to help find this element later.
 * `text` (string): The text to display.
 
 **Returns**:
@@ -708,7 +708,7 @@ local result = tes3uiElement:createNif(id, text)
 
 **Parameters**:
 
-* `id` (number): A registered identifier to help find this element later.
+* `id` (number): *Optional*. A registered identifier to help find this element later.
 * `text` (string): A model path. This path is relative to ``Data Files``.
 
 **Returns**:
@@ -730,7 +730,7 @@ local result = tes3uiElement:createParagraphInput(id)
 
 **Parameters**:
 
-* `id` (number): A registered identifier to help find this element later.
+* `id` (number): *Optional*. A registered identifier to help find this element later.
 
 **Returns**:
 
@@ -748,8 +748,8 @@ local result = tes3uiElement:createRect(id, color)
 
 **Parameters**:
 
-* `id` (number): A registered identifier to help find this element later.
-* `color` (table): The fill colour for the element.
+* `id` (number): *Optional*. A registered identifier to help find this element later.
+* `color` (table): *Optional*. The fill colour for the element.
 
 **Returns**:
 
@@ -776,11 +776,11 @@ local result = tes3uiElement:createSlider(id, current, max, step, jump)
 
 **Parameters**:
 
-* `id` (number): A registered identifier to help find this element later.
+* `id` (number): *Optional*. A registered identifier to help find this element later.
 * `current` (number): The initial value for the slider.
 * `max` (number): The maximum value for the slider.
-* `step` (number): Amount changed by left and right arrow buttons.
-* `jump` (number): Amount changed by clicking inside the slider area.
+* `step` (number): *Optional*. Amount changed by left and right arrow buttons.
+* `jump` (number): *Optional*. Amount changed by clicking inside the slider area.
 
 **Returns**:
 
@@ -807,11 +807,11 @@ local result = tes3uiElement:createSliderVertical(id, current, max, step, jump)
 
 **Parameters**:
 
-* `id` (number): A registered identifier to help find this element later.
+* `id` (number): *Optional*. A registered identifier to help find this element later.
 * `current` (number): The initial value for the slider.
 * `max` (number): The maximum value for the slider.
-* `step` (number): Amount changed by left and right arrow buttons. The default is 1.
-* `jump` (number): Amount changed by clicking inside the slider area. The default is 5.
+* `step` (number): *Optional*. Amount changed by left and right arrow buttons. The default is 1.
+* `jump` (number): *Optional*. Amount changed by clicking inside the slider area. The default is 5.
 
 **Returns**:
 
@@ -833,7 +833,7 @@ local result = tes3uiElement:createTextInput(id)
 
 **Parameters**:
 
-* `id` (number): A registered identifier to help find this element later.
+* `id` (number): *Optional*. A registered identifier to help find this element later.
 
 **Returns**:
 
@@ -851,9 +851,9 @@ local result = tes3uiElement:createTextSelect(id, text, state)
 
 **Parameters**:
 
-* `id` (number): A registered identifier to help find this element later.
-* `text` (string): The text to display.
-* `state` (number): The initial interaction state. Defaults to normal.
+* `id` (number): *Optional*. A registered identifier to help find this element later.
+* `text` (string): *Optional*. The text to display.
+* `state` (number): *Optional*. The initial interaction state. Defaults to normal.
 
 **Returns**:
 
@@ -871,7 +871,7 @@ local result = tes3uiElement:createThinBorder(id)
 
 **Parameters**:
 
-* `id` (number): A registered identifier to help find this element later.
+* `id` (number): *Optional*. A registered identifier to help find this element later.
 
 **Returns**:
 
@@ -896,7 +896,7 @@ local result = tes3uiElement:createVerticalScrollPane(id)
 
 **Parameters**:
 
-* `id` (number): A registered identifier to help find this element later.
+* `id` (number): *Optional*. A registered identifier to help find this element later.
 
 **Returns**:
 
@@ -1046,7 +1046,7 @@ local result = tes3uiElement:getPropertyObject(propName, expectedUsertype)
 **Parameters**:
 
 * `propName` (string): The property name.
-* `expectedUsertype` (string): A Lua usertype name, if expecting a non-standard object type.
+* `expectedUsertype` (string): *Optional*. A Lua usertype name, if expecting a non-standard object type.
 
 **Returns**:
 

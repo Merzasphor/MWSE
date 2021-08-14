@@ -17,6 +17,6 @@ event.register("bookGetText", bookGetTextCallback)
 
 ## Event Data
 
-* `book` ([tes3book](../../types/tes3book)): The book whose text is being retrieved.
+* `book` ([tes3book](../../types/tes3book)): *Read-only*. The book whose text is being retrieved.
 * `text` (string): If set, the book's text will be overwritten with this value.
 

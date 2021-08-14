@@ -4,12 +4,12 @@
 --- 
 --- It is standard for creatures and NPCs to be composed of an actor and a mobile actor, linked together with a reference.
 --- @class tes3actor : tes3physicalObject, tes3object, tes3baseObject
---- @field actorFlags number A number representing the actor flags. Truly a bit field.
+--- @field actorFlags number *Read-only*. A number representing the actor flags. Truly a bit field.
 --- @field barterGold number Friendly access to actor's barter gold amount.
 --- @field blood number Friendly access to actor's blood type.
---- @field cloneCount number The number of clones that exist of this actor.
---- @field equipment tes3iterator The items currently equipped to the actor.
---- @field inventory tes3iterator The items currently carried by the actor.
+--- @field cloneCount number *Read-only*. The number of clones that exist of this actor.
+--- @field equipment tes3iterator *Read-only*. The items currently equipped to the actor.
+--- @field inventory tes3iterator *Read-only*. The items currently carried by the actor.
 tes3actor = {}
 
 --- Checks if the actor will offer a service in dialogue. This an offer and may still be refused by dialogue checks. To also get the result of dialogue checks, use tes3.checkMerchantOffersService.

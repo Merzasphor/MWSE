@@ -6,7 +6,7 @@ An active magic effect.
 
 ### `attributeId`
 
-The attribute ID (note that this may be the skill ID if the effect affects skills).
+*Read-only*. The attribute ID (note that this may be the skill ID if the effect affects skills).
 
 **Returns**:
 
@@ -16,7 +16,7 @@ The attribute ID (note that this may be the skill ID if the effect affects skill
 
 ### `duration`
 
-The total duration of this specific effect.
+*Read-only*. The total duration of this specific effect.
 
 **Returns**:
 
@@ -26,7 +26,7 @@ The total duration of this specific effect.
 
 ### `effectId`
 
-The magic effect ID.
+*Read-only*. The magic effect ID.
 
 **Returns**:
 
@@ -36,7 +36,7 @@ The magic effect ID.
 
 ### `effectIndex`
 
-The index of the effect inside the magic source instance.
+*Read-only*. The index of the effect inside the magic source instance.
 
 **Returns**:
 
@@ -46,7 +46,7 @@ The index of the effect inside the magic source instance.
 
 ### `effectInstance`
 
-The magic effect instance for this effect.
+*Read-only*. The magic effect instance for this effect.
 
 **Returns**:
 
@@ -56,7 +56,7 @@ The magic effect instance for this effect.
 
 ### `harmful`
 
-This flag that determines if this effect is counted as a hostile action.
+*Read-only*. This flag that determines if this effect is counted as a hostile action.
 
 **Returns**:
 
@@ -66,7 +66,7 @@ This flag that determines if this effect is counted as a hostile action.
 
 ### `instance`
 
-The magic source instance for this effect.
+*Read-only*. The magic source instance for this effect.
 
 **Returns**:
 
@@ -76,7 +76,7 @@ The magic source instance for this effect.
 
 ### `isSummon`
 
-No description yet available.
+*Read-only*. No description yet available.
 
 **Returns**:
 
@@ -86,7 +86,7 @@ No description yet available.
 
 ### `magnitude`
 
-The unresisted magnitude of the magic effect, that is the magnitude before resistance attributes are applied. This is always an integer number. To find the actual applied magnitude, you must check the magic effect instance.
+*Read-only*. The unresisted magnitude of the magic effect, that is the magnitude before resistance attributes are applied. This is always an integer number. To find the actual applied magnitude, you must check the magic effect instance.
 
 **Returns**:
 
@@ -96,7 +96,7 @@ The unresisted magnitude of the magic effect, that is the magnitude before resis
 
 ### `magnitudeMin`
 
-Deprecated.
+*Read-only*. Deprecated.
 
 **Returns**:
 
@@ -106,7 +106,7 @@ Deprecated.
 
 ### `mobile`
 
-The mobile affected by the magic effect.
+*Read-only*. The mobile affected by the magic effect.
 
 **Returns**:
 
@@ -116,7 +116,7 @@ The mobile affected by the magic effect.
 
 ### `next`
 
-Deprecated.
+*Read-only*. Deprecated.
 
 **Returns**:
 
@@ -126,7 +126,7 @@ Deprecated.
 
 ### `previous`
 
-Deprecated.
+*Read-only*. Deprecated.
 
 **Returns**:
 
@@ -136,7 +136,7 @@ Deprecated.
 
 ### `serial`
 
-The magic source instance serial number. See the ``instance`` and ``effectInstance`` properties to easily access the magic and effect instances.
+*Read-only*. The magic source instance serial number. See the ``instance`` and ``effectInstance`` properties to easily access the magic and effect instances.
 
 **Returns**:
 
@@ -146,7 +146,7 @@ The magic source instance serial number. See the ``instance`` and ``effectInstan
 
 ### `skillId`
 
-The skill ID (note that this may be the attribute ID if the effect affects attributes).
+*Read-only*. The skill ID (note that this may be the attribute ID if the effect affects attributes).
 
 **Returns**:
 

@@ -17,7 +17,7 @@ event.register("collision", collisionCallback)
 
 ## Event Data
 
-* `mobile` ([tes3mobileObject](../../types/tes3mobileObject)): Mobile object which collided with its target reference.
-* `reference` ([tes3reference](../../types/tes3reference)): Mobile object's associated reference.
-* `target` ([tes3reference](../../types/tes3reference)): Reference which mobile object has collided with.
+* `mobile` ([tes3mobileObject](../../types/tes3mobileObject)): *Read-only*. Mobile object which collided with its target reference.
+* `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. Mobile object's associated reference.
+* `target` ([tes3reference](../../types/tes3reference)): *Read-only*. Reference which mobile object has collided with.
 

@@ -14,5 +14,5 @@ event.register("convertReferenceToItem", convertReferenceToItemCallback)
 
 ## Event Data
 
-* `reference` ([tes3reference](../../types/tes3reference)): The reference about to be converted.
+* `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. The reference about to be converted.
 

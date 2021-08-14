@@ -17,7 +17,7 @@ The blocked state of the object.
 
 ### `deleted`
 
-The deleted state of the object.
+*Read-only*. The deleted state of the object.
 
 **Returns**:
 
@@ -27,7 +27,7 @@ The deleted state of the object.
 
 ### `description`
 
-Loads from disk and returns the description of the birthsign.
+*Read-only*. Loads from disk and returns the description of the birthsign.
 
 **Returns**:
 
@@ -37,7 +37,7 @@ Loads from disk and returns the description of the birthsign.
 
 ### `disabled`
 
-The disabled state of the object.
+*Read-only*. The disabled state of the object.
 
 **Returns**:
 
@@ -47,7 +47,7 @@ The disabled state of the object.
 
 ### `id`
 
-The unique identifier for the object.
+*Read-only*. The unique identifier for the object.
 
 **Returns**:
 
@@ -77,7 +77,7 @@ The player-facing name for the object.
 
 ### `objectFlags`
 
-The raw flags of the object.
+*Read-only*. The raw flags of the object.
 
 **Returns**:
 
@@ -87,7 +87,7 @@ The raw flags of the object.
 
 ### `objectType`
 
-The type of object. Maps to values in tes3.objectType.
+*Read-only*. The type of object. Maps to values in tes3.objectType.
 
 **Returns**:
 
@@ -117,7 +117,7 @@ The soruceless flag of the object.
 
 ### `sourceMod`
 
-The filename of the mod that owns this object.
+*Read-only*. The filename of the mod that owns this object.
 
 **Returns**:
 
@@ -127,7 +127,7 @@ The filename of the mod that owns this object.
 
 ### `spells`
 
-A list of spells granted by the birthsign.
+*Read-only*. A list of spells granted by the birthsign.
 
 **Returns**:
 

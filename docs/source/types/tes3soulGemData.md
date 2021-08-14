@@ -6,7 +6,7 @@ A structure that holds (sometimes redundant) information on a soul gem.
 
 ### `capacity`
 
-The capacity of the soul gem.
+*Read-only*. The capacity of the soul gem.
 
 **Returns**:
 
@@ -16,7 +16,7 @@ The capacity of the soul gem.
 
 ### `id`
 
-The unique object ID.
+*Read-only*. The unique object ID.
 
 **Returns**:
 
@@ -26,7 +26,7 @@ The unique object ID.
 
 ### `item`
 
-A reference back to the misc item that the soul gem represents.
+*Read-only*. A reference back to the misc item that the soul gem represents.
 
 **Returns**:
 
@@ -36,7 +36,7 @@ A reference back to the misc item that the soul gem represents.
 
 ### `mesh`
 
-The path to the object's mesh.
+*Read-only*. The path to the object's mesh.
 
 **Returns**:
 
@@ -46,7 +46,7 @@ The path to the object's mesh.
 
 ### `name`
 
-The player-facing name for the object.
+*Read-only*. The player-facing name for the object.
 
 **Returns**:
 
@@ -56,7 +56,7 @@ The player-facing name for the object.
 
 ### `texture`
 
-The path to the object's texture.
+*Read-only*. The path to the object's texture.
 
 **Returns**:
 
@@ -66,7 +66,7 @@ The path to the object's texture.
 
 ### `value`
 
-The value of the object.
+*Read-only*. The value of the object.
 
 **Returns**:
 
@@ -76,7 +76,7 @@ The value of the object.
 
 ### `weight`
 
-The weight of the object.
+*Read-only*. The weight of the object.
 
 **Returns**:
 

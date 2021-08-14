@@ -27,7 +27,7 @@ The bounding box for the object.
 
 ### `deleted`
 
-The deleted state of the object.
+*Read-only*. The deleted state of the object.
 
 **Returns**:
 
@@ -37,7 +37,7 @@ The deleted state of the object.
 
 ### `disabled`
 
-The disabled state of the object.
+*Read-only*. The disabled state of the object.
 
 **Returns**:
 
@@ -57,7 +57,7 @@ The path to the object's icon.
 
 ### `id`
 
-The unique identifier for the object.
+*Read-only*. The unique identifier for the object.
 
 **Returns**:
 
@@ -77,7 +77,7 @@ Access to the flag determining if this item is recognized as a key.
 
 ### `isSoulGem`
 
-Determines if this item is a soul gem.
+*Read-only*. Determines if this item is a soul gem.
 
 **Returns**:
 
@@ -127,7 +127,7 @@ The next object in parent collection's list.
 
 ### `objectFlags`
 
-The raw flags of the object.
+*Read-only*. The raw flags of the object.
 
 **Returns**:
 
@@ -137,7 +137,7 @@ The raw flags of the object.
 
 ### `objectType`
 
-The type of object. Maps to values in tes3.objectType.
+*Read-only*. The type of object. Maps to values in tes3.objectType.
 
 **Returns**:
 
@@ -207,7 +207,7 @@ The scene graph reference node for this object.
 
 ### `script`
 
-The script that runs on the object.
+*Read-only*. The script that runs on the object.
 
 **Returns**:
 
@@ -217,7 +217,7 @@ The script that runs on the object.
 
 ### `soulGemCapacity`
 
-Fetches capacity of the soul gem, if this item is a soul gem.
+*Read-only*. Fetches capacity of the soul gem, if this item is a soul gem.
 
 **Returns**:
 
@@ -227,7 +227,7 @@ Fetches capacity of the soul gem, if this item is a soul gem.
 
 ### `soulGemData`
 
-Fetches related soul gem data, if this item is a soul gem.
+*Read-only*. Fetches related soul gem data, if this item is a soul gem.
 
 **Returns**:
 
@@ -247,7 +247,7 @@ The soruceless flag of the object.
 
 ### `sourceMod`
 
-The filename of the mod that owns this object.
+*Read-only*. The filename of the mod that owns this object.
 
 **Returns**:
 
@@ -338,14 +338,14 @@ tes3misc.create({ id = ..., name = ..., script = ..., mesh = ..., objectFlags = 
 **Parameters**:
 
 * `params` (table)
-	* `id` (string): The new object's ID. Must be unique if provided.
-	* `name` (string): The new object's name.
-	* `script` (tes3script): A script to attach to the object.
-	* `mesh` (string): The mesh to use for the object.
-	* `objectFlags` (number): The object flags initially set. Force set as modified.
-	* `weight ` (tes3script): The weight of the object.
-	* `value ` (string): The value of the object.
-	* `flags ` (number): The object flags initially set.
+	* `id` (string): *Optional*. The new object's ID. Must be unique if provided.
+	* `name` (string): *Default*: `Miscellaneous item`. The new object's name.
+	* `script` (tes3script): *Optional*. A script to attach to the object.
+	* `mesh` (string): *Default*: ``. The mesh to use for the object.
+	* `objectFlags` (number): *Default*: `0`. The object flags initially set. Force set as modified.
+	* `weight ` (tes3script): *Default*: `0`. The weight of the object.
+	* `value ` (string): *Default*: `0`. The value of the object.
+	* `flags ` (number): *Default*: `0`. The object flags initially set.
 
 ***
 

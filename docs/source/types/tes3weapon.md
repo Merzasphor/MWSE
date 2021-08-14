@@ -47,7 +47,7 @@ Chop damage inflicted at minimum weapon swing.
 
 ### `deleted`
 
-The deleted state of the object.
+*Read-only*. The deleted state of the object.
 
 **Returns**:
 
@@ -57,7 +57,7 @@ The deleted state of the object.
 
 ### `disabled`
 
-The disabled state of the object.
+*Read-only*. The disabled state of the object.
 
 **Returns**:
 
@@ -97,7 +97,7 @@ Access to the weapon flag bitfield. Known flags can be accessed via other weapon
 
 ### `hasDurability`
 
-Whether the weapon type has durability. Thrown weapons and ammunition are used once fired, and therefore do not use durability.
+*Read-only*. Whether the weapon type has durability. Thrown weapons and ammunition are used once fired, and therefore do not use durability.
 
 **Returns**:
 
@@ -117,7 +117,7 @@ The path to the object's icon.
 
 ### `id`
 
-The unique identifier for the object.
+*Read-only*. The unique identifier for the object.
 
 **Returns**:
 
@@ -137,7 +137,7 @@ Access to the flag that controls if this weapon bypasses the "Resist normal weap
 
 ### `isAmmo`
 
-If true, the weapon is a type of ammunition.
+*Read-only*. If true, the weapon is a type of ammunition.
 
 **Returns**:
 
@@ -147,7 +147,7 @@ If true, the weapon is a type of ammunition.
 
 ### `isMelee`
 
-If true, the weapon has a melee weapon type.
+*Read-only*. If true, the weapon has a melee weapon type.
 
 **Returns**:
 
@@ -157,7 +157,7 @@ If true, the weapon has a melee weapon type.
 
 ### `isOneHanded`
 
-If true, the weapon is a one-handed weapon.
+*Read-only*. If true, the weapon is a one-handed weapon.
 
 **Returns**:
 
@@ -167,7 +167,7 @@ If true, the weapon is a one-handed weapon.
 
 ### `isProjectile`
 
-If true, the weapon is a projectile.
+*Read-only*. If true, the weapon is a projectile.
 
 **Returns**:
 
@@ -177,7 +177,7 @@ If true, the weapon is a projectile.
 
 ### `isRanged`
 
-If true, the weapon is a ranged weapon.
+*Read-only*. If true, the weapon is a ranged weapon.
 
 **Returns**:
 
@@ -197,7 +197,7 @@ If true, the weapon has a silver material flag.
 
 ### `isTwoHanded`
 
-If true, the weapon is a two-handed melee weapon.
+*Read-only*. If true, the weapon is a two-handed melee weapon.
 
 **Returns**:
 
@@ -257,7 +257,7 @@ The next object in parent collection's list.
 
 ### `objectFlags`
 
-The raw flags of the object.
+*Read-only*. The raw flags of the object.
 
 **Returns**:
 
@@ -267,7 +267,7 @@ The raw flags of the object.
 
 ### `objectType`
 
-The type of object. Maps to values in tes3.objectType.
+*Read-only*. The type of object. Maps to values in tes3.objectType.
 
 **Returns**:
 
@@ -347,7 +347,7 @@ The scene graph reference node for this object.
 
 ### `script`
 
-The script that runs on the object.
+*Read-only*. The script that runs on the object.
 
 **Returns**:
 
@@ -407,7 +407,7 @@ The soruceless flag of the object.
 
 ### `sourceMod`
 
-The filename of the mod that owns this object.
+*Read-only*. The filename of the mod that owns this object.
 
 **Returns**:
 
@@ -467,7 +467,7 @@ Thrust damage inflicted at minimum weapon swing.
 
 ### `type`
 
-A number representing the weapon type. Matches values from the tes3.weaponType table.
+*Read-only*. A number representing the weapon type. Matches values from the tes3.weaponType table.
 
 **Returns**:
 
@@ -477,7 +477,7 @@ A number representing the weapon type. Matches values from the tes3.weaponType t
 
 ### `typeName`
 
-The player-facing name for the weapon type.
+*Read-only*. The player-facing name for the weapon type.
 
 **Returns**:
 

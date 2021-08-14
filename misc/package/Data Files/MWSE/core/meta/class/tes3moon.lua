@@ -10,12 +10,12 @@
 --- @field fadeOutFinish number No description yet available.
 --- @field fadeOutStart number No description yet available.
 --- @field fadeStartAngle number No description yet available.
---- @field index number The index of the moon, 0 for Masser, 1 for Secunda
+--- @field index number *Read-only*. The index of the moon, 0 for Masser, 1 for Secunda
 --- @field isRed boolean Determines if the moon is red, typically during the events of Bloodmoon.
 --- @field phase number No description yet available.
 --- @field shadowEarlyFadeAngle number No description yet available.
 --- @field speed number No description yet available.
---- @field texture string The texture to use for the moon.
---- @field weatherController tes3weatherController Quick access back to the weather controller structure.
+--- @field texture string *Read-only*. The texture to use for the moon.
+--- @field weatherController tes3weatherController *Read-only*. Quick access back to the weather controller structure.
 tes3moon = {}
 

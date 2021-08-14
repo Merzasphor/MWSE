@@ -20,9 +20,9 @@ event.register("calcArmorRating", calcArmorRatingCallback)
 
 ## Event Data
 
-* `armor` ([tes3armor](../../types/tes3armor)): The armor piece whose AR is being calculated.
+* `armor` ([tes3armor](../../types/tes3armor)): *Read-only*. The armor piece whose AR is being calculated.
 * `armorRating` (number): If set, the given armor rating will be used instead of the one calculated.
-* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): The mobile whose AR is being calculated. May not always be available.
-* `npc` ([tes3npc](../../types/tes3npc)): The NPC object whose AR is being calculated. May not always be available.
-* `reference` ([tes3reference](../../types/tes3reference)): A shortcut to the mobile's reference. May not always be available.
+* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile whose AR is being calculated. May not always be available.
+* `npc` ([tes3npc](../../types/tes3npc)): *Read-only*. The NPC object whose AR is being calculated. May not always be available.
+* `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. A shortcut to the mobile's reference. May not always be available.
 

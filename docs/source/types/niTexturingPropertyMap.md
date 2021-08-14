@@ -57,11 +57,11 @@ local map = niTexturingPropertyMap.new({ texture = ..., clampMode = ..., filterM
 **Parameters**:
 
 * `params` (table)
-	* `texture` (niTexture): If provided, sets the map texture to the given value.
-	* `clampMode` (number): The clamp mode to set the map to use.
-	* `filterMode` (number): The filter mode to set the map to use.
-	* `textCoords` (number): The texture coordinates to set the map to use.
-	* `isBumpMap` (boolean): If true, a bump map will be created instead.
+	* `texture` (niTexture): *Optional*. If provided, sets the map texture to the given value.
+	* `clampMode` (number): *Default*: `WRAP_S_WRAP_T`. The clamp mode to set the map to use.
+	* `filterMode` (number): *Default*: `TRILERP`. The filter mode to set the map to use.
+	* `textCoords` (number): *Default*: `0`. The texture coordinates to set the map to use.
+	* `isBumpMap` (boolean): *Default*: `false`. If true, a bump map will be created instead.
 
 **Returns**:
 

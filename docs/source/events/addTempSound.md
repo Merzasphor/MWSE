@@ -20,7 +20,7 @@ event.register("addTempSound", addTempSoundCallback)
 
 ## Event Data
 
-* `flags` (number): 
+* `flags` (number): *Read-only*. 
 * `isVoiceover` (boolean): 
 * `path` (string): The path to the sound to play, relative to Data Files\Sounds
 * `pitch` (number): Pitch of the sound.

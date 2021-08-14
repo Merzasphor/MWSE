@@ -7,7 +7,7 @@ This type inherits the following: [tes3actor](../../types/tes3actor), [tes3physi
 
 ### `actorFlags`
 
-A number representing the actor flags. Truly a bit field.
+*Read-only*. A number representing the actor flags. Truly a bit field.
 
 **Returns**:
 
@@ -17,7 +17,7 @@ A number representing the actor flags. Truly a bit field.
 
 ### `aiConfig`
 
-Simplified access to the base creature's AI configuration.
+*Read-only*. Simplified access to the base creature's AI configuration.
 
 **Returns**:
 
@@ -107,7 +107,7 @@ The bounding box for the object.
 
 ### `cloneCount`
 
-The number of clones that exist of this actor.
+*Read-only*. The number of clones that exist of this actor.
 
 **Returns**:
 
@@ -117,7 +117,7 @@ The number of clones that exist of this actor.
 
 ### `deleted`
 
-The deleted state of the object.
+*Read-only*. The deleted state of the object.
 
 **Returns**:
 
@@ -127,7 +127,7 @@ The deleted state of the object.
 
 ### `disabled`
 
-The disabled state of the object.
+*Read-only*. The disabled state of the object.
 
 **Returns**:
 
@@ -137,7 +137,7 @@ The disabled state of the object.
 
 ### `equipment`
 
-A collection that contains the currently equipped items.
+*Read-only*. A collection that contains the currently equipped items.
 
 **Returns**:
 
@@ -147,7 +147,7 @@ A collection that contains the currently equipped items.
 
 ### `fatigue`
 
-The creature's current fatigue.
+*Read-only*. The creature's current fatigue.
 
 **Returns**:
 
@@ -167,7 +167,7 @@ Access to the creature's flies flag.
 
 ### `health`
 
-The creature's current health.
+*Read-only*. The creature's current health.
 
 **Returns**:
 
@@ -177,7 +177,7 @@ The creature's current health.
 
 ### `id`
 
-The unique identifier for the object.
+*Read-only*. The unique identifier for the object.
 
 **Returns**:
 
@@ -187,7 +187,7 @@ The unique identifier for the object.
 
 ### `inventory`
 
-A collection that contains the items in the actor's inventory.
+*Read-only*. A collection that contains the items in the actor's inventory.
 
 **Returns**:
 
@@ -197,7 +197,7 @@ A collection that contains the items in the actor's inventory.
 
 ### `isAttacked`
 
-If true, the creature attacked flag is set.
+*Read-only*. If true, the creature attacked flag is set.
 
 **Returns**:
 
@@ -207,7 +207,7 @@ If true, the creature attacked flag is set.
 
 ### `isEssential`
 
-If true, the creature essential flag is set.
+*Read-only*. If true, the creature essential flag is set.
 
 **Returns**:
 
@@ -227,7 +227,7 @@ Always returns true.
 
 ### `isRespawn`
 
-If true, the creature respawn flag is set.
+*Read-only*. If true, the creature respawn flag is set.
 
 **Returns**:
 
@@ -237,7 +237,7 @@ If true, the creature respawn flag is set.
 
 ### `level`
 
-The base level of the creature.
+*Read-only*. The base level of the creature.
 
 **Returns**:
 
@@ -247,7 +247,7 @@ The base level of the creature.
 
 ### `magicka`
 
-The creature's current magicka.
+*Read-only*. The creature's current magicka.
 
 **Returns**:
 
@@ -297,7 +297,7 @@ The next object in parent collection's list.
 
 ### `objectFlags`
 
-The raw flags of the object.
+*Read-only*. The raw flags of the object.
 
 **Returns**:
 
@@ -307,7 +307,7 @@ The raw flags of the object.
 
 ### `objectType`
 
-The type of object. Maps to values in tes3.objectType.
+*Read-only*. The type of object. Maps to values in tes3.objectType.
 
 **Returns**:
 
@@ -437,7 +437,7 @@ The soruceless flag of the object.
 
 ### `sourceMod`
 
-The filename of the mod that owns this object.
+*Read-only*. The filename of the mod that owns this object.
 
 **Returns**:
 
@@ -447,7 +447,7 @@ The filename of the mod that owns this object.
 
 ### `spells`
 
-Quick access to the base creature's spell list. It is a tes3spellList, which is a list wrapper with helper functions. The actual list is accessed with .iterator. e.g. for _, spell in pairs(creature.spells.iterator) do print(spell.name) end
+*Read-only*. Quick access to the base creature's spell list. It is a tes3spellList, which is a list wrapper with helper functions. The actual list is accessed with .iterator. e.g. for _, spell in pairs(creature.spells.iterator) do print(spell.name) end
 
 **Returns**:
 
@@ -517,7 +517,7 @@ Access to the creature's walks flag.
 
 ### `weapon`
 
-The creature's currently equipped weapon.
+*Read-only*. The creature's currently equipped weapon.
 
 **Returns**:
 

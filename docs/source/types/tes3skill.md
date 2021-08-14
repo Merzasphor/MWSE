@@ -7,7 +7,7 @@ This type inherits the following: [tes3baseObject](../../types/tes3baseObject)
 
 ### `actions`
 
-A table with 4 values. The amount of experience an action (use of skill) awards.
+*Read-only*. A table with 4 values. The amount of experience an action (use of skill) awards.
 
 **Returns**:
 
@@ -17,7 +17,7 @@ A table with 4 values. The amount of experience an action (use of skill) awards.
 
 ### `attribute`
 
-Skill's governing attribute. Maps to tes3.attribute.* constants.
+*Read-only*. Skill's governing attribute. Maps to tes3.attribute.* constants.
 
 **Returns**:
 
@@ -37,7 +37,7 @@ The blocked state of the object.
 
 ### `deleted`
 
-The deleted state of the object.
+*Read-only*. The deleted state of the object.
 
 **Returns**:
 
@@ -47,7 +47,7 @@ The deleted state of the object.
 
 ### `disabled`
 
-The disabled state of the object.
+*Read-only*. The disabled state of the object.
 
 **Returns**:
 
@@ -57,7 +57,7 @@ The disabled state of the object.
 
 ### `iconPath`
 
-The path to the icon for the skill.
+*Read-only*. The path to the icon for the skill.
 
 **Returns**:
 
@@ -67,7 +67,7 @@ The path to the icon for the skill.
 
 ### `id`
 
-The unique identifier for the object.
+*Read-only*. The unique identifier for the object.
 
 **Returns**:
 
@@ -87,7 +87,7 @@ The modification state of the object since the last save.
 
 ### `name`
 
-The player-facing name of the skill.
+*Read-only*. The player-facing name of the skill.
 
 **Returns**:
 
@@ -97,7 +97,7 @@ The player-facing name of the skill.
 
 ### `objectFlags`
 
-The raw flags of the object.
+*Read-only*. The raw flags of the object.
 
 **Returns**:
 
@@ -107,7 +107,7 @@ The raw flags of the object.
 
 ### `objectType`
 
-The type of object. Maps to values in tes3.objectType.
+*Read-only*. The type of object. Maps to values in tes3.objectType.
 
 **Returns**:
 
@@ -137,7 +137,7 @@ The soruceless flag of the object.
 
 ### `sourceMod`
 
-The filename of the mod that owns this object.
+*Read-only*. The filename of the mod that owns this object.
 
 **Returns**:
 

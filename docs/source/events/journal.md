@@ -14,8 +14,8 @@ event.register("journal", journalCallback)
 
 ## Event Data
 
-* `index` (number): The new index of the journal state.
-* `new` (boolean): If true, the journal is newly added to the player. This effectively means that index has increased past 0.
-* `previousIndex` (number): The previous index of the journal state.
-* `topic` ([tes3dialogue](../../types/tes3dialogue)): The topic that dictates the journal entry.
+* `index` (number): *Read-only*. The new index of the journal state.
+* `new` (boolean): *Read-only*. If true, the journal is newly added to the player. This effectively means that index has increased past 0.
+* `previousIndex` (number): *Read-only*. The previous index of the journal state.
+* `topic` ([tes3dialogue](../../types/tes3dialogue)): *Read-only*. The topic that dictates the journal entry.
 

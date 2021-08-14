@@ -17,8 +17,8 @@ event.register("mouseButtonDown", mouseButtonDownCallback)
 
 ## Event Data
 
-* `button` (number): The button index that was pressed.
-* `isAltDown` (number): True if alt  is held.
-* `isControlDown` (number): True if control is held.
-* `isSuperDown` (number): True if super (Windows key) is held.
+* `button` (number): *Read-only*. The button index that was pressed.
+* `isAltDown` (number): *Read-only*. True if alt  is held.
+* `isControlDown` (number): *Read-only*. True if control is held.
+* `isSuperDown` (number): *Read-only*. True if super (Windows key) is held.
 

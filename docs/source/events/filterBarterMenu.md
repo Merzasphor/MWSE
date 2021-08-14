@@ -14,7 +14,7 @@ event.register("filterBarterMenu", filterBarterMenuCallback)
 
 ## Event Data
 
-* `item` ([tes3item](../../types/tes3item)): The item being filtered.
-* `itemData` ([tes3itemData](../../types/tes3itemData)): The item data for the item being filtered.
-* `tile` (tes3uiInventoryTile): The inventory tile being filtered.
+* `item` ([tes3item](../../types/tes3item)): *Read-only*. The item being filtered.
+* `itemData` ([tes3itemData](../../types/tes3itemData)): *Read-only*. The item data for the item being filtered.
+* `tile` (tes3uiInventoryTile): *Read-only*. The inventory tile being filtered.
 

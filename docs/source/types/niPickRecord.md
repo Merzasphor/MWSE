@@ -46,7 +46,7 @@ The normal vector at the point of intersection. The normal is valid only when `r
 
 ### `object`
 
-The object of the record.
+*Read-only*. The object of the record.
 
 **Returns**:
 
@@ -56,7 +56,7 @@ The object of the record.
 
 ### `parent`
 
-The parent of the record.
+*Read-only*. The parent of the record.
 
 **Returns**:
 

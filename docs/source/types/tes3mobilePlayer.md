@@ -7,7 +7,7 @@ This type inherits the following: [tes3mobileNPC](../../types/tes3mobileNPC), [t
 
 ### `acrobatics`
 
-Direct access to the NPC's acrobatics skill statistic.
+*Read-only*. Direct access to the NPC's acrobatics skill statistic.
 
 **Returns**:
 
@@ -17,7 +17,7 @@ Direct access to the NPC's acrobatics skill statistic.
 
 ### `actionBeforeCombat`
 
-Action data stored before the actor entered combat.
+*Read-only*. Action data stored before the actor entered combat.
 
 **Returns**:
 
@@ -27,7 +27,7 @@ Action data stored before the actor entered combat.
 
 ### `actionData`
 
-Current action data. Pre-combat action data is stored in the actionBeforeCombat property.
+*Read-only*. Current action data. Pre-combat action data is stored in the actionBeforeCombat property.
 
 **Returns**:
 
@@ -47,7 +47,7 @@ Friendly access to the actor's flag that controls if AI is active.
 
 ### `activeMagicEffectList`
 
-The active magic effects on the actor, from which all others can be accessed. A table with tes3activeMagicEffect items.
+*Read-only*. The active magic effects on the actor, from which all others can be accessed. A table with tes3activeMagicEffect items.
 
 **Returns**:
 
@@ -57,7 +57,7 @@ The active magic effects on the actor, from which all others can be accessed. A 
 
 ### `actorType`
 
-The type of the mobile actor. 0 is a creature, 1 is an NPC, 2 is the player.
+*Read-only*. The type of the mobile actor. 0 is a creature, 1 is an NPC, 2 is the player.
 
 **Returns**:
 
@@ -67,7 +67,7 @@ The type of the mobile actor. 0 is a creature, 1 is an NPC, 2 is the player.
 
 ### `agility`
 
-Direct access to the actor's agility attribute statistic.
+*Read-only*. Direct access to the actor's agility attribute statistic.
 
 **Returns**:
 
@@ -77,7 +77,7 @@ Direct access to the actor's agility attribute statistic.
 
 ### `aiPlanner`
 
-Access to the mobile's AI planner and AI package information.
+*Read-only*. Access to the mobile's AI planner and AI package information.
 
 **Returns**:
 
@@ -97,7 +97,7 @@ The actor's alarm AI value.
 
 ### `alchemy`
 
-Direct access to the NPC's alchemy skill statistic.
+*Read-only*. Direct access to the NPC's alchemy skill statistic.
 
 **Returns**:
 
@@ -107,7 +107,7 @@ Direct access to the NPC's alchemy skill statistic.
 
 ### `alteration`
 
-Direct access to the NPC's alteration skill statistic.
+*Read-only*. Direct access to the NPC's alteration skill statistic.
 
 **Returns**:
 
@@ -127,7 +127,7 @@ Toggle flag for if the player should always run.
 
 ### `animationController`
 
-No description yet available.
+*Read-only*. No description yet available.
 
 **Returns**:
 
@@ -137,7 +137,7 @@ No description yet available.
 
 ### `armorer`
 
-Direct access to the NPC's armorer skill statistic.
+*Read-only*. Direct access to the NPC's armorer skill statistic.
 
 **Returns**:
 
@@ -147,7 +147,7 @@ Direct access to the NPC's armorer skill statistic.
 
 ### `armorRating`
 
-The actor's current armour rating, taking equipment condition into account. Armour mitigation can be automatically applied to damage by using the applyDamage function.
+*Read-only*. The actor's current armour rating, taking equipment condition into account. Armour mitigation can be automatically applied to damage by using the applyDamage function.
 
 Armour mitigation calculation:
 x = damage / (damage + target.armorRating)
@@ -162,7 +162,7 @@ if damage < 1 then damage = 1 end
 
 ### `athletics`
 
-Direct access to the NPC's athletics skill statistic.
+*Read-only*. Direct access to the NPC's athletics skill statistic.
 
 **Returns**:
 
@@ -192,7 +192,7 @@ Toggle flag for if the player can attack.
 
 ### `attacked`
 
-Friendly access to the actor's flag that controls if the actor has been attacked.
+*Read-only*. Friendly access to the actor's flag that controls if the actor has been attacked.
 
 **Returns**:
 
@@ -202,7 +202,7 @@ Friendly access to the actor's flag that controls if the actor has been attacked
 
 ### `attributes`
 
-Access to a table of 8 tes3statistic objects for the actor's attributes.
+*Read-only*. Access to a table of 8 tes3statistic objects for the actor's attributes.
 
 **Returns**:
 
@@ -222,7 +222,7 @@ Toggle flag for if the player should constantly run forward.
 
 ### `axe`
 
-Direct access to the NPC's axe skill statistic.
+*Read-only*. Direct access to the NPC's axe skill statistic.
 
 **Returns**:
 
@@ -242,7 +242,7 @@ The current amount of gold that the actor has access to for bartering.
 
 ### `birthsign`
 
-The player's birthsign.
+*Read-only*. The player's birthsign.
 
 **Returns**:
 
@@ -262,7 +262,7 @@ Direct access to the actor's blind effect attribute.
 
 ### `block`
 
-Direct access to the NPC's block skill statistic.
+*Read-only*. Direct access to the NPC's block skill statistic.
 
 **Returns**:
 
@@ -272,7 +272,7 @@ Direct access to the NPC's block skill statistic.
 
 ### `bluntWeapon`
 
-Direct access to the NPC's blunt weapon skill statistic.
+*Read-only*. Direct access to the NPC's blunt weapon skill statistic.
 
 **Returns**:
 
@@ -282,7 +282,7 @@ Direct access to the NPC's blunt weapon skill statistic.
 
 ### `boundSize`
 
-A vector that shows the size of the bounding box in each direction.
+*Read-only*. A vector that shows the size of the bounding box in each direction.
 
 **Returns**:
 
@@ -341,7 +341,7 @@ Toggle flag for if the player has casting ready.
 
 ### `cell`
 
-Fetches the cell that the actor is in.
+*Read-only*. Fetches the cell that the actor is in.
 
 **Returns**:
 
@@ -351,7 +351,7 @@ Fetches the cell that the actor is in.
 
 ### `cellX`
 
-The X grid coordinate of the cell the mobile is in.
+*Read-only*. The X grid coordinate of the cell the mobile is in.
 
 **Returns**:
 
@@ -361,7 +361,7 @@ The X grid coordinate of the cell the mobile is in.
 
 ### `cellY`
 
-The Y grid coordinate of the cell the mobile is in.
+*Read-only*. The Y grid coordinate of the cell the mobile is in.
 
 **Returns**:
 
@@ -381,7 +381,7 @@ Direct access to the actor's chameleon effect attribute.
 
 ### `clawMultiplier`
 
-Quick access to the ClawMultiplier global variable.
+*Read-only*. Quick access to the ClawMultiplier global variable.
 
 **Returns**:
 
@@ -391,7 +391,7 @@ Quick access to the ClawMultiplier global variable.
 
 ### `collidingReference`
 
-The reference that the mobile has collided with this frame.
+*Read-only*. The reference that the mobile has collided with this frame.
 
 **Returns**:
 
@@ -401,7 +401,7 @@ The reference that the mobile has collided with this frame.
 
 ### `combatSession`
 
-Combat session data. This exists while the actor is in combat to provide memory for AI combat decisions.
+*Read-only*. Combat session data. This exists while the actor is in combat to provide memory for AI combat decisions.
 
 **Returns**:
 
@@ -411,7 +411,7 @@ Combat session data. This exists while the actor is in combat to provide memory 
 
 ### `conjuration`
 
-Direct access to the NPC's conjuration skill statistic.
+*Read-only*. Direct access to the NPC's conjuration skill statistic.
 
 **Returns**:
 
@@ -441,7 +441,7 @@ No description yet available.
 
 ### `currentEnchantedItem`
 
-The currently equipped enchanted item that the actor will use.
+*Read-only*. The currently equipped enchanted item that the actor will use.
 
 **Returns**:
 
@@ -451,7 +451,7 @@ The currently equipped enchanted item that the actor will use.
 
 ### `currentSpell`
 
-The currently equipped spell that the actor will use.
+*Read-only*. The currently equipped spell that the actor will use.
 
 **Returns**:
 
@@ -461,7 +461,7 @@ The currently equipped spell that the actor will use.
 
 ### `destruction`
 
-Direct access to the NPC's destruction skill statistic.
+*Read-only*. Direct access to the NPC's destruction skill statistic.
 
 **Returns**:
 
@@ -471,7 +471,7 @@ Direct access to the NPC's destruction skill statistic.
 
 ### `dialogueList`
 
-Access to the collection that holds what dialogue topics the player has access to.
+*Read-only*. Access to the collection that holds what dialogue topics the player has access to.
 
 **Returns**:
 
@@ -481,7 +481,7 @@ Access to the collection that holds what dialogue topics the player has access t
 
 ### `effectAttributes`
 
-Access to a table of 24 numbers for the actor's effect attributes.
+*Read-only*. Access to a table of 24 numbers for the actor's effect attributes.
 
 **Returns**:
 
@@ -491,7 +491,7 @@ Access to a table of 24 numbers for the actor's effect attributes.
 
 ### `enchant`
 
-Direct access to the NPC's enchant skill statistic.
+*Read-only*. Direct access to the NPC's enchant skill statistic.
 
 **Returns**:
 
@@ -501,7 +501,7 @@ Direct access to the NPC's enchant skill statistic.
 
 ### `encumbrance`
 
-Access to the actor's encumbrance statistic.
+*Read-only*. Access to the actor's encumbrance statistic.
 
 **Returns**:
 
@@ -511,7 +511,7 @@ Access to the actor's encumbrance statistic.
 
 ### `endurance`
 
-Direct access to the actor's endurance attribute statistic.
+*Read-only*. Direct access to the actor's endurance attribute statistic.
 
 **Returns**:
 
@@ -521,7 +521,7 @@ Direct access to the actor's endurance attribute statistic.
 
 ### `facing`
 
-The facing of the actor, in radians.
+*Read-only*. The facing of the actor, in radians.
 
 **Returns**:
 
@@ -531,7 +531,7 @@ The facing of the actor, in radians.
 
 ### `fatigue`
 
-Access to the actor's fatigue statistic.
+*Read-only*. Access to the actor's fatigue statistic.
 
 **Returns**:
 
@@ -551,7 +551,7 @@ The actor's fight AI value.
 
 ### `firstPerson`
 
-Quick access to the first person NPC.
+*Read-only*. Quick access to the first person NPC.
 
 **Returns**:
 
@@ -561,7 +561,7 @@ Quick access to the first person NPC.
 
 ### `firstPersonReference`
 
-Quick access to the first person NPC's reference.
+*Read-only*. Quick access to the first person NPC's reference.
 
 **Returns**:
 
@@ -571,7 +571,7 @@ Quick access to the first person NPC's reference.
 
 ### `flags`
 
-Access to the root mobile object flags, represented as an integer. Should not be accessed directly.
+*Read-only*. Access to the root mobile object flags, represented as an integer. Should not be accessed directly.
 
 **Returns**:
 
@@ -591,7 +591,7 @@ The actor's flee AI value.
 
 ### `flySpeed`
 
-The calculated fly movement speed.
+*Read-only*. The calculated fly movement speed.
 
 **Returns**:
 
@@ -641,7 +641,7 @@ Toggle flag for if the NPC sneaks.
 
 ### `friendlyActors`
 
-A collection of other tes3mobileActors that this actor considers friendly.
+*Read-only*. A collection of other tes3mobileActors that this actor considers friendly.
 
 **Returns**:
 
@@ -661,7 +661,7 @@ No description yet available.
 
 ### `greetTimer`
 
-No description yet available.
+*Read-only*. No description yet available.
 
 **Returns**:
 
@@ -671,7 +671,7 @@ No description yet available.
 
 ### `handToHand`
 
-Direct access to the NPC's hand to hand skill statistic.
+*Read-only*. Direct access to the NPC's hand to hand skill statistic.
 
 **Returns**:
 
@@ -681,7 +681,7 @@ Direct access to the NPC's hand to hand skill statistic.
 
 ### `health`
 
-Access to the actor's health statistic.
+*Read-only*. Access to the actor's health statistic.
 
 **Returns**:
 
@@ -691,7 +691,7 @@ Access to the actor's health statistic.
 
 ### `heavyArmor`
 
-Direct access to the NPC's heavy armor skill statistic.
+*Read-only*. Direct access to the NPC's heavy armor skill statistic.
 
 **Returns**:
 
@@ -701,7 +701,7 @@ Direct access to the NPC's heavy armor skill statistic.
 
 ### `height`
 
-The height of the mobile above the ground.
+*Read-only*. The height of the mobile above the ground.
 
 **Returns**:
 
@@ -731,7 +731,7 @@ No description yet available.
 
 ### `hostileActors`
 
-A collection of other tes3mobileActors that this actor considers hostile.
+*Read-only*. A collection of other tes3mobileActors that this actor considers hostile.
 
 **Returns**:
 
@@ -741,7 +741,7 @@ A collection of other tes3mobileActors that this actor considers hostile.
 
 ### `idleAnim`
 
-Friendly access to the actor's flag that controls if the actor is using their idle animation.
+*Read-only*. Friendly access to the actor's flag that controls if the actor is using their idle animation.
 
 **Returns**:
 
@@ -751,7 +751,7 @@ Friendly access to the actor's flag that controls if the actor is using their id
 
 ### `illusion`
 
-Direct access to the NPC's illusion skill statistic.
+*Read-only*. Direct access to the NPC's illusion skill statistic.
 
 **Returns**:
 
@@ -781,7 +781,7 @@ The time that the player has spent inactive.
 
 ### `inCombat`
 
-Friendly access to the actor's flag that controls if the actor is in combat.
+*Read-only*. Friendly access to the actor's flag that controls if the actor is in combat.
 
 **Returns**:
 
@@ -801,7 +801,7 @@ Toggle flag for if the player is currently in jail.
 
 ### `intelligence`
 
-Direct access to the actor's intelligence attribute statistic.
+*Read-only*. Direct access to the actor's intelligence attribute statistic.
 
 **Returns**:
 
@@ -821,7 +821,7 @@ Direct access to the actor's invisibility effect attribute.
 
 ### `is3rdPerson`
 
-Shows if the player's camera is currently in 3rd person view.
+*Read-only*. Shows if the player's camera is currently in 3rd person view.
 
 **Returns**:
 
@@ -831,7 +831,7 @@ Shows if the player's camera is currently in 3rd person view.
 
 ### `isCrittable`
 
-Friendly access to the actor's flag that controls if the actor can be critically hit.
+*Read-only*. Friendly access to the actor's flag that controls if the actor can be critically hit.
 
 **Returns**:
 
@@ -841,7 +841,7 @@ Friendly access to the actor's flag that controls if the actor can be critically
 
 ### `isDead`
 
-True if the actor is dead.
+*Read-only*. True if the actor is dead.
 
 **Returns**:
 
@@ -1021,7 +1021,7 @@ Toggle flag for if the player can jump.
 
 ### `knownWerewolf`
 
-Quick access to the KnownWerewolf global variable.
+*Read-only*. Quick access to the KnownWerewolf global variable.
 
 **Returns**:
 
@@ -1041,7 +1041,7 @@ No description yet available.
 
 ### `lastUsedAlembic`
 
-The last used alchemy alembic.
+*Read-only*. The last used alchemy alembic.
 
 **Returns**:
 
@@ -1061,7 +1061,7 @@ The amount of ammo for the ranged weapon that that was last equipped.
 
 ### `lastUsedCalcinator`
 
-The last used alchemy calcinator.
+*Read-only*. The last used alchemy calcinator.
 
 **Returns**:
 
@@ -1071,7 +1071,7 @@ The last used alchemy calcinator.
 
 ### `lastUsedMortar`
 
-The last used alchemy mortar.
+*Read-only*. The last used alchemy mortar.
 
 **Returns**:
 
@@ -1081,7 +1081,7 @@ The last used alchemy mortar.
 
 ### `lastUsedRetort`
 
-The last used alchemy retort.
+*Read-only*. The last used alchemy retort.
 
 **Returns**:
 
@@ -1091,7 +1091,7 @@ The last used alchemy retort.
 
 ### `levelupPerSpecialization`
 
-Array-style table access to how many skill levels there have been for each of the 3 specializations.
+*Read-only*. Array-style table access to how many skill levels there have been for each of the 3 specializations.
 
 **Returns**:
 
@@ -1111,7 +1111,7 @@ The progress the player has made towards leveling up.
 
 ### `levelupsPerAttribute`
 
-Array-style table access to how many skill levels there have been for each of the 8 attributes.
+*Read-only*. Array-style table access to how many skill levels there have been for each of the 8 attributes.
 
 **Returns**:
 
@@ -1131,7 +1131,7 @@ Direct access to the actor's levitate effect attribute.
 
 ### `lightArmor`
 
-Direct access to the NPC's light armor skill statistic.
+*Read-only*. Direct access to the NPC's light armor skill statistic.
 
 **Returns**:
 
@@ -1141,7 +1141,7 @@ Direct access to the NPC's light armor skill statistic.
 
 ### `longBlade`
 
-Direct access to the NPC's long blade skill statistic.
+*Read-only*. Direct access to the NPC's long blade skill statistic.
 
 **Returns**:
 
@@ -1151,7 +1151,7 @@ Direct access to the NPC's long blade skill statistic.
 
 ### `luck`
 
-Direct access to the actor's luck attribute statistic.
+*Read-only*. Direct access to the actor's luck attribute statistic.
 
 **Returns**:
 
@@ -1171,7 +1171,7 @@ Toggle flag for if the player can use magic.
 
 ### `magicka`
 
-Access to the actor's magicka statistic.
+*Read-only*. Access to the actor's magicka statistic.
 
 **Returns**:
 
@@ -1181,7 +1181,7 @@ Access to the actor's magicka statistic.
 
 ### `magickaMultiplier`
 
-Access to the actor's magicka multiplier statistic.
+*Read-only*. Access to the actor's magicka multiplier statistic.
 
 **Returns**:
 
@@ -1191,7 +1191,7 @@ Access to the actor's magicka multiplier statistic.
 
 ### `markLocation`
 
-Access to the structure that holds the player's current mark/recall location.
+*Read-only*. Access to the structure that holds the player's current mark/recall location.
 
 **Returns**:
 
@@ -1201,7 +1201,7 @@ Access to the structure that holds the player's current mark/recall location.
 
 ### `marksman`
 
-Direct access to the NPC's marksman skill statistic.
+*Read-only*. Direct access to the NPC's marksman skill statistic.
 
 **Returns**:
 
@@ -1211,7 +1211,7 @@ Direct access to the NPC's marksman skill statistic.
 
 ### `mediumArmor`
 
-Direct access to the NPC's medium armor skill statistic.
+*Read-only*. Direct access to the NPC's medium armor skill statistic.
 
 **Returns**:
 
@@ -1221,7 +1221,7 @@ Direct access to the NPC's medium armor skill statistic.
 
 ### `mercantile`
 
-Direct access to the NPC's mercantile skill statistic.
+*Read-only*. Direct access to the NPC's mercantile skill statistic.
 
 **Returns**:
 
@@ -1263,7 +1263,7 @@ Controls if the mobile has movement collision active. When false, the mobile can
 
 ### `movementFlags`
 
-Access to the root mobile object movement flags, represented as an integer. Should not be accessed directly.
+*Read-only*. Access to the root mobile object movement flags, represented as an integer. Should not be accessed directly.
 
 **Returns**:
 
@@ -1273,7 +1273,7 @@ Access to the root mobile object movement flags, represented as an integer. Shou
 
 ### `moveSpeed`
 
-The calculated base movement speed.
+*Read-only*. The calculated base movement speed.
 
 **Returns**:
 
@@ -1283,7 +1283,7 @@ The calculated base movement speed.
 
 ### `mysticism`
 
-Direct access to the NPC's mysticism skill statistic.
+*Read-only*. Direct access to the NPC's mysticism skill statistic.
 
 **Returns**:
 
@@ -1293,7 +1293,7 @@ Direct access to the NPC's mysticism skill statistic.
 
 ### `nextActionWeight`
 
-No description yet available.
+*Read-only*. No description yet available.
 
 **Returns**:
 
@@ -1303,7 +1303,7 @@ No description yet available.
 
 ### `object`
 
-The actor object that maps to this mobile.
+*Read-only*. The actor object that maps to this mobile.
 
 **Returns**:
 
@@ -1313,7 +1313,7 @@ The actor object that maps to this mobile.
 
 ### `objectType`
 
-The type of mobile object. Maps to values in tes3.objectType.
+*Read-only*. The type of mobile object. Maps to values in tes3.objectType.
 
 **Returns**:
 
@@ -1333,7 +1333,7 @@ Direct access to the actor's paralyze effect attribute.
 
 ### `personality`
 
-Direct access to the actor's personality attribute statistic.
+*Read-only*. Direct access to the actor's personality attribute statistic.
 
 **Returns**:
 
@@ -1363,7 +1363,7 @@ A vector that represents the 3D position of the object.
 
 ### `prevMovementFlags`
 
-Access to the root mobile object movement flags from the previous frame, represented as an integer. Should not be accessed directly.
+*Read-only*. Access to the root mobile object movement flags from the previous frame, represented as an integer. Should not be accessed directly.
 
 **Returns**:
 
@@ -1413,7 +1413,7 @@ The currently equipped weapon.
 
 ### `reference`
 
-Access to the reference object for the mobile, if any.
+*Read-only*. Access to the reference object for the mobile, if any.
 
 **Returns**:
 
@@ -1533,7 +1533,7 @@ How many hours are left while resting.
 
 ### `restoration`
 
-Direct access to the NPC's restoration skill statistic.
+*Read-only*. Direct access to the NPC's restoration skill statistic.
 
 **Returns**:
 
@@ -1543,7 +1543,7 @@ Direct access to the NPC's restoration skill statistic.
 
 ### `runSpeed`
 
-The calculated run movement speed.
+*Read-only*. The calculated run movement speed.
 
 **Returns**:
 
@@ -1563,7 +1563,7 @@ Direct access to the actor's sanctuary effect attribute.
 
 ### `scanInterval`
 
-No description yet available.
+*Read-only*. No description yet available.
 
 **Returns**:
 
@@ -1573,7 +1573,7 @@ No description yet available.
 
 ### `scanTimer`
 
-No description yet available.
+*Read-only*. No description yet available.
 
 **Returns**:
 
@@ -1583,7 +1583,7 @@ No description yet available.
 
 ### `security`
 
-Direct access to the NPC's security skill statistic.
+*Read-only*. Direct access to the NPC's security skill statistic.
 
 **Returns**:
 
@@ -1603,7 +1603,7 @@ Direct access to the actor's shield effect attribute.
 
 ### `shortBlade`
 
-Direct access to the NPC's short blade skill statistic.
+*Read-only*. Direct access to the NPC's short blade skill statistic.
 
 **Returns**:
 
@@ -1623,7 +1623,7 @@ Direct access to the actor's silence effect attribute.
 
 ### `skillProgress`
 
-Array-style table access to skill progress for each of the 27 skills.
+*Read-only*. Array-style table access to skill progress for each of the 27 skills.
 
 **Returns**:
 
@@ -1633,7 +1633,7 @@ Array-style table access to skill progress for each of the 27 skills.
 
 ### `skills`
 
-An array-style table with access to the twenty seven NPC skill statistics.
+*Read-only*. An array-style table with access to the twenty seven NPC skill statistics.
 
 **Returns**:
 
@@ -1653,7 +1653,7 @@ Toggle flag for if the player is currently sleeping.
 
 ### `sneak`
 
-Direct access to the NPC's sneak skill statistic.
+*Read-only*. Direct access to the NPC's sneak skill statistic.
 
 **Returns**:
 
@@ -1673,7 +1673,7 @@ Direct access to the actor's sound effect attribute.
 
 ### `spear`
 
-Direct access to the NPC's spear skill statistic.
+*Read-only*. Direct access to the NPC's spear skill statistic.
 
 **Returns**:
 
@@ -1683,7 +1683,7 @@ Direct access to the NPC's spear skill statistic.
 
 ### `speechcraft`
 
-Direct access to the NPC's speechcraft skill statistic.
+*Read-only*. Direct access to the NPC's speechcraft skill statistic.
 
 **Returns**:
 
@@ -1693,7 +1693,7 @@ Direct access to the NPC's speechcraft skill statistic.
 
 ### `speed`
 
-Direct access to the actor's speed attribute statistic.
+*Read-only*. Direct access to the actor's speed attribute statistic.
 
 **Returns**:
 
@@ -1703,7 +1703,7 @@ Direct access to the actor's speed attribute statistic.
 
 ### `spellReadied`
 
-Friendly access to the actor's flag that controls if the actor has a spell readied.
+*Read-only*. Friendly access to the actor's flag that controls if the actor has a spell readied.
 
 **Returns**:
 
@@ -1713,7 +1713,7 @@ Friendly access to the actor's flag that controls if the actor has a spell readi
 
 ### `strength`
 
-Direct access to the actor's strength attribute statistic.
+*Read-only*. Direct access to the actor's strength attribute statistic.
 
 **Returns**:
 
@@ -1733,7 +1733,7 @@ Direct access to the actor's swift swim effect attribute.
 
 ### `swimRunSpeed`
 
-The calculated swim movement speed while running.
+*Read-only*. The calculated swim movement speed while running.
 
 **Returns**:
 
@@ -1743,7 +1743,7 @@ The calculated swim movement speed while running.
 
 ### `swimSpeed`
 
-The calculated swim movement speed.
+*Read-only*. The calculated swim movement speed.
 
 **Returns**:
 
@@ -1793,7 +1793,7 @@ Toggle flag for if the player is currently travelling.
 
 ### `unarmored`
 
-Direct access to the NPC's unarmored skill statistic.
+*Read-only*. Direct access to the NPC's unarmored skill statistic.
 
 **Returns**:
 
@@ -1803,7 +1803,7 @@ Direct access to the NPC's unarmored skill statistic.
 
 ### `underwater`
 
-Friendly access to the actor's flag that controls if the actor is under water.
+*Read-only*. Friendly access to the actor's flag that controls if the actor is under water.
 
 **Returns**:
 
@@ -1863,7 +1863,7 @@ Toggle flag for if the player is currently waiting.
 
 ### `walkSpeed`
 
-The calculated walk movement speed.
+*Read-only*. The calculated walk movement speed.
 
 **Returns**:
 
@@ -1893,7 +1893,7 @@ Direct access to the actor's water walking effect attribute.
 
 ### `weaponDrawn`
 
-Friendly access to the actor's flag that shows if the weapon model is visible. When readying a weapon, there is a short period of time at the start of the animation, where the weapon is not visible yet. This flag will only be set after this initial stage is done. This flag is still set with hand-to-hand even though it doesn't use a model. Setting this to false while a weapon is drawn will normally cause the actor to play its weapon draw animation again.
+*Read-only*. Friendly access to the actor's flag that shows if the weapon model is visible. When readying a weapon, there is a short period of time at the start of the animation, where the weapon is not visible yet. This flag will only be set after this initial stage is done. This flag is still set with hand-to-hand even though it doesn't use a model. Setting this to false while a weapon is drawn will normally cause the actor to play its weapon draw animation again.
 
 **Returns**:
 
@@ -1913,7 +1913,7 @@ Toggle flag for if the player has a weapon ready. Setting it to true will cause 
 
 ### `werewolf`
 
-Friendly access to the actor's flag that controls if the actor in werewolf form.
+*Read-only*. Friendly access to the actor's flag that controls if the actor in werewolf form.
 
 **Returns**:
 
@@ -1923,7 +1923,7 @@ Friendly access to the actor's flag that controls if the actor in werewolf form.
 
 ### `width`
 
-No description yet available.
+*Read-only*. No description yet available.
 
 **Returns**:
 
@@ -1933,7 +1933,7 @@ No description yet available.
 
 ### `willpower`
 
-Direct access to the actor's willpower attribute statistic.
+*Read-only*. Direct access to the actor's willpower attribute statistic.
 
 **Returns**:
 
@@ -1955,11 +1955,11 @@ local result = tes3mobileActor:applyDamage({ damage = ..., applyArmor = ..., res
 
 * `params` (table)
 	* `damage` (number): The amount of damage to apply.
-	* `applyArmor` (boolean): If armor should mitigate the incoming damage. If the player is the target, armor experience will be gained.
-	* `resistAttribute` (number): The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from tes3.effectAttributes.
-	* `applyDifficulty` (boolean): If the game difficulty modifier should be applied. Must be used with the 'playerAttack' argument to apply the correct modifier.
-	* `playerAttack` (boolean): If the attack came from the player. Used for difficulty calculation.
-	* `doNotChangeHealth` (boolean): If all armor effects except the health change should be applied. These include hit sounds, armor condition damage, and player experience gain from being hit.
+	* `applyArmor` (boolean): *Optional*. If armor should mitigate the incoming damage. If the player is the target, armor experience will be gained.
+	* `resistAttribute` (number): *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from tes3.effectAttributes.
+	* `applyDifficulty` (boolean): *Optional*. If the game difficulty modifier should be applied. Must be used with the 'playerAttack' argument to apply the correct modifier.
+	* `playerAttack` (boolean): *Optional*. If the attack came from the player. Used for difficulty calculation.
+	* `doNotChangeHealth` (boolean): *Optional*. If all armor effects except the health change should be applied. These include hit sounds, armor condition damage, and player experience gain from being hit.
 
 **Returns**:
 
@@ -1978,8 +1978,8 @@ local result = tes3mobileActor:applyFatigueDamage(fatigueDamage, swing, alwaysPl
 **Parameters**:
 
 * `fatigueDamage` (number): The amount of fatigue damage to apply.
-* `swing` (number): The attack swing magnitude, range 0-1. Only modifies hit volume.
-* `alwaysPlayHitVoice` (boolean): Always play the hit reaction voiceover.
+* `swing` (number): *Optional*. The attack swing magnitude, range 0-1. Only modifies hit volume.
+* `alwaysPlayHitVoice` (boolean): *Optional*. Always play the hit reaction voiceover.
 
 **Returns**:
 
@@ -2022,8 +2022,8 @@ local result = tes3mobileActor:calcEffectiveDamage({ damage = ..., applyArmor = 
 
 * `params` (table)
 	* `damage` (number): The amount of damage to apply.
-	* `applyArmor` (boolean): If armor should mitigate the incoming damage.
-	* `resistAttribute` (number): The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from tes3.effectAttributes.
+	* `applyArmor` (boolean): *Optional*. If armor should mitigate the incoming damage.
+	* `resistAttribute` (number): *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from tes3.effectAttributes.
 
 **Returns**:
 
@@ -2043,7 +2043,7 @@ local itemEquipped = tes3mobileNPC:equip({ item = ..., itemData = ..., addItem =
 
 * `params` (table)
 	* `item` ([tes3item](../../types/tes3item), string): The item to equip.
-	* `itemData` ([tes3itemData](../../types/tes3itemData)): The item data of the specific item to equip.
+	* `itemData` ([tes3itemData](../../types/tes3itemData)): *Optional*. The item data of the specific item to equip.
 	* `addItem` (boolean): If true, the item will be added to the actor's inventory if needed.
 	* `selectBestCondition` (boolean): If true, the item in the inventory with the best condition and best charge will be selected.
 	* `selectWorstCondition` (boolean): If true, the item in the inventory with the worst condition and worst charge will be selected. Can be useful for selecting tools.
@@ -2080,8 +2080,8 @@ local result = tes3mobileActor:getActiveMagicEffects({ effect = ..., serial = ..
 **Parameters**:
 
 * `params` (table)
-	* `effect` (number): The magic effect ID to search for.
-	* `serial` (number): The magic instance serial to search for.
+	* `effect` (number): *Optional*. The magic effect ID to search for.
+	* `serial` (number): *Optional*. The magic instance serial to search for.
 
 **Returns**:
 
@@ -2091,7 +2091,7 @@ local result = tes3mobileActor:getActiveMagicEffects({ effect = ..., serial = ..
 
 ### `getBootsWeight`
 
-Gets the weight of the boots equipped on the actor, or 0 if no boots are equipped.
+*Read-only*. Gets the weight of the boots equipped on the actor, or 0 if no boots are equipped.
 
 ```lua
 local result = tes3mobileActor:getBootsWeight()
@@ -2373,10 +2373,10 @@ local result = tes3mobileNPC:unequip({ item = ..., type = ..., armorSlot = ..., 
 **Parameters**:
 
 * `params` (table)
-	* `item` ([tes3item](../../types/tes3item), string): The item to unequip.
-	* `type` (number): The item type to unequip. Only used if no other parameter is provided.
-	* `armorSlot` (number): The armor slot to unequip.
-	* `clothingSlot` (number): The clothing slot to unequip.
+	* `item` ([tes3item](../../types/tes3item), string): *Optional*. The item to unequip.
+	* `type` (number): *Optional*. The item type to unequip. Only used if no other parameter is provided.
+	* `armorSlot` (number): *Optional*. The armor slot to unequip.
+	* `clothingSlot` (number): *Optional*. The clothing slot to unequip.
 
 **Returns**:
 
@@ -2394,7 +2394,7 @@ tes3mobileActor:updateDerivedStatistics(attribute)
 
 **Parameters**:
 
-* `attribute` ([tes3statistic](../../types/tes3statistic)): Limits the update to statistics derived from this attribute.  e.g. ``mobile:updateDerivedStatistics(mobile.strength)``. If not present, all derived statistics will be updated.
+* `attribute` ([tes3statistic](../../types/tes3statistic)): *Optional*. Limits the update to statistics derived from this attribute.  e.g. ``mobile:updateDerivedStatistics(mobile.strength)``. If not present, all derived statistics will be updated.
 
 ***
 

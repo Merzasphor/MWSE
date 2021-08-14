@@ -9,7 +9,7 @@ table = {}
 --- If 'comp' is given, then it must be a function that receives two table elements, and returns true when the first is less than the second, e.g. comp = function(a, b) return a > b end, will give a sorted table, with the biggest value on position 1. [, comp] behaves as in table.sort(table, value [, comp]) returns the index where 'value' was inserted
 --- @param t table No description yet available.
 --- @param value unknown No description yet available.
---- @param comp unknown No description yet available.
+--- @param comp unknown *Optional*. No description yet available.
 --- @return number result No description yet available.
 function table.bininsert(t, value, comp) end
 
@@ -24,8 +24,8 @@ function table.bininsert(t, value, comp) end
 --- Return value: on success: a table holding matching indices (e.g. { startindice,endindice } ) on failure: nil
 --- @param t table No description yet available.
 --- @param value unknown No description yet available.
---- @param compval unknown No description yet available.
---- @param reversed unknown No description yet available.
+--- @param compval unknown *Optional*. No description yet available.
+--- @param reversed unknown *Optional*. No description yet available.
 --- @return table result No description yet available.
 function table.binsearch(t, value, compval, reversed) end
 
@@ -42,7 +42,7 @@ function table.clear(table) end
 
 --- Shallowly copies a table's contents to a destination table. If no destination table is provided, a new table will be created. Note that sub tables will not be copied, and will still refer to the same data.
 --- @param from table No description yet available.
---- @param to table No description yet available.
+--- @param to table *Optional*. No description yet available.
 --- @return table result No description yet available.
 function table.copy(from, to) end
 
@@ -69,7 +69,7 @@ function table.find(t, value) end
 
 --- Returns an array-style table of all keys in the given table, t. Optionally, it will sort the returned table.
 --- @param t table The table to get keys for.
---- @param sort boolean|function|nil If true, the returned table will be sorted. If a function is passed, the table will be sorted using the given function.
+--- @param sort boolean|function|nil *Optional*. If true, the returned table will be sorted. If a function is passed, the table will be sorted using the given function.
 --- @return table keys An array of all table keys.
 function table.keys(t, sort) end
 
@@ -96,13 +96,13 @@ function table.size(t) end
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/types/table/#tabletraverse).
 --- @param t table A table to transverse.
---- @param k unknown The key of a table inside t object.
+--- @param k unknown *Default*: `children`. The key of a table inside t object.
 --- @return iterator result No description yet available.
 function table.traverse(t, k) end
 
 --- Returns an array-style table of all values in the given table, t. Optionally, it will sort the returned table.
 --- @param t table The table to get values for.
---- @param sort boolean|function|nil If true, the returned table will be sorted. If a function is passed, the table will be sorted using the given function.
+--- @param sort boolean|function|nil *Optional*. If true, the returned table will be sorted. If a function is passed, the table will be sorted using the given function.
 --- @return table values An array of all table values.
 function table.values(t, sort) end
 

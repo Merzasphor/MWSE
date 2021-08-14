@@ -14,6 +14,6 @@ event.register("weaponReadied", weaponReadiedCallback)
 
 ## Event Data
 
-* `reference` ([tes3reference](../../types/tes3reference)): The reference associated with the change in readied weapon.
-* `weaponStack` ([tes3baseObject](../../types/tes3baseObject)): The bundle that contains the newly readied weapon and its associated data.
+* `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. The reference associated with the change in readied weapon.
+* `weaponStack` ([tes3baseObject](../../types/tes3baseObject)): *Read-only*. The bundle that contains the newly readied weapon and its associated data.
 

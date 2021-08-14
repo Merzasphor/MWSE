@@ -27,7 +27,7 @@ The bounding box for the object.
 
 ### `deleted`
 
-The deleted state of the object.
+*Read-only*. The deleted state of the object.
 
 **Returns**:
 
@@ -37,7 +37,7 @@ The deleted state of the object.
 
 ### `disabled`
 
-The disabled state of the object.
+*Read-only*. The disabled state of the object.
 
 **Returns**:
 
@@ -47,7 +47,7 @@ The disabled state of the object.
 
 ### `id`
 
-The unique identifier for the object.
+*Read-only*. The unique identifier for the object.
 
 **Returns**:
 
@@ -97,7 +97,7 @@ The next object in parent collection's list.
 
 ### `objectFlags`
 
-The raw flags of the object.
+*Read-only*. The raw flags of the object.
 
 **Returns**:
 
@@ -107,7 +107,7 @@ The raw flags of the object.
 
 ### `objectType`
 
-The type of object. Maps to values in tes3.objectType.
+*Read-only*. The type of object. Maps to values in tes3.objectType.
 
 **Returns**:
 
@@ -197,7 +197,7 @@ The soruceless flag of the object.
 
 ### `sourceMod`
 
-The filename of the mod that owns this object.
+*Read-only*. The filename of the mod that owns this object.
 
 **Returns**:
 
@@ -254,11 +254,11 @@ tes3activator.create({ id = ..., name = ..., script = ..., mesh = ..., objectFla
 **Parameters**:
 
 * `params` (table)
-	* `id` (string): The new object's ID. Must be unique if provided.
-	* `name` (string): The new object's name.
-	* `script` (tes3script): A script to attach to the object.
-	* `mesh` (string): The mesh to use for the object.
-	* `objectFlags` (number): The object flags initially set. Force set as modified.
+	* `id` (string): *Optional*. The new object's ID. Must be unique if provided.
+	* `name` (string): *Default*: `Activator`. The new object's name.
+	* `script` (tes3script): *Optional*. A script to attach to the object.
+	* `mesh` (string): *Default*: ``. The mesh to use for the object.
+	* `objectFlags` (number): *Default*: `0`. The object flags initially set. Force set as modified.
 
 ***
 

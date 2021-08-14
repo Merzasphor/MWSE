@@ -6,7 +6,7 @@ A container describing an individual rank inside a faction.
 
 ### `attributes`
 
-An array-style table holding the two attribute requirements.
+*Read-only*. An array-style table holding the two attribute requirements.
 
 **Returns**:
 
@@ -26,7 +26,7 @@ The reputation requirement to advance to this rank.
 
 ### `skills`
 
-An array-style table holding the two skill requirements.
+*Read-only*. An array-style table holding the two skill requirements.
 
 **Returns**:
 

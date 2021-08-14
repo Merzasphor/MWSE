@@ -18,5 +18,5 @@ event.register("uiShowRestMenu", uiShowRestMenuCallback)
 ## Event Data
 
 * `allowRest` (boolean): true if the player is allowed to sleep (determined primarily from the cell flags), or false if they must wait instead. This value can be modified.
-* `scripted` (boolean): This value is true when the menu is shown from using the ShowRestMenu or equivalent function.
+* `scripted` (boolean): *Read-only*. This value is true when the menu is shown from using the ShowRestMenu or equivalent function.
 

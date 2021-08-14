@@ -6,13 +6,13 @@ A node from a collection, which has a link to the previous and next node, as wel
 
 ### `data`
 
-The data stored in the node. Its type depends on the specific collection.
+*Read-only*. The data stored in the node. Its type depends on the specific collection.
 
 ***
 
 ### `head`
 
-The previous node in the collection.
+*Read-only*. The previous node in the collection.
 
 **Returns**:
 
@@ -22,7 +22,7 @@ The previous node in the collection.
 
 ### `tail`
 
-The next node in the collection.
+*Read-only*. The next node in the collection.
 
 **Returns**:
 

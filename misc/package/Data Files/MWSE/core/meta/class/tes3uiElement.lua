@@ -22,7 +22,7 @@
 --- @field childAlignY number See childAlignX.
 --- @field childOffsetX number Integer number. View offset in pixels, applied to the position of child nodes. Used in scroll panes.
 --- @field childOffsetY number See childOffsetX.
---- @field children table A table containing references to child elements. This is a copy that does not track changes.
+--- @field children table *Read-only*. A table containing references to child elements. This is a copy that does not track changes.
 --- @field color table Element RGB colour, an array of 3 floats with value range [0.0, 1.0]. For menus and rects, it sets the background colour. For text, it sets the text colour. For images, it multiplies the image by the colour.
 --- @field consumeMouseEvents boolean When ``true``, mouse events over this element are sent to event handlers, or discarded if there is no handler. When ``false``, mouse events go upwards to the first ancestor that can consume mouse events. Useful to set on widget sub-elements. ``true`` by default.
 --- @field disabled boolean Disables user actions on this element. Widgets may stop accepting mouse and keyboard input while disabled.
@@ -37,7 +37,7 @@
 ---     Bug note: If widthProportional is used without heightProportional, an element may not respond to changes in parent size. It is recommended to set heightProportional, or have a fixed size sibling element if dynamic reflow is required.
 ---     
 ---     Overrides fixed, minimum and maximum sizes unless this value is ``nil`` (default).
---- @field id number The element's ID.  The element can be later accessed by ``ancestor:findChild(id)``. Note that multiple elements may have the same ID, such as subparts of a widget, or list items. Therefore, you may think of ids as an element class identifier.
+--- @field id number *Read-only*. The element's ID.  The element can be later accessed by ``ancestor:findChild(id)``. Note that multiple elements may have the same ID, such as subparts of a widget, or list items. Therefore, you may think of ids as an element class identifier.
 --- @field imageScaleX number Image scaling multipliers. Only applies to image elements.
 --- @field imageScaleY number Image scaling multipliers. Only applies to image elements.
 --- @field justifyText string Can have values ``"left"``, ``"center"``, or ``"right"``. Controls text justification. To work correctly for center/right justification,  ``wrapText`` must be ``true``.
@@ -45,13 +45,13 @@
 --- @field maxWidth number Maximum dimensions for auto-size layout and resizable frames. Integer number.
 --- @field minHeight number Minimum dimensions for auto-size layout and resizable frames. Integer number.
 --- @field minWidth number Minimum dimensions for auto-size layout and resizable frames. Integer number.
---- @field name string The element's name, taken from the name registered for the ID.
+--- @field name string *Read-only*. The element's name, taken from the name registered for the ID.
 --- @field paddingAllSides number Integer number. Padding size in pixels. Padding is the blank space between the edge of an element and its contents. Individual padding sizes default to -1, making it use the paddingAllSides setting.
 --- @field paddingBottom number Integer number. Bottom padding size in pixels. When this is set to -1, the paddingAllSides setting is used for this side instead.
 --- @field paddingLeft number Integer number. Left padding size in pixels. When this is set to -1, the paddingAllSides setting is used for this side instead.
 --- @field paddingRight number Integer number. Right padding size in pixels. When this is set to -1, the paddingAllSides setting is used for this side instead.
 --- @field paddingTop number Integer number. Top padding size in pixels. When this is set to -1, the paddingAllSides setting is used for this side instead.
---- @field parent tes3uiElement A reference to the parent element.
+--- @field parent tes3uiElement *Read-only*. A reference to the parent element.
 --- @field positionX number Integer number. Element X position relative to its parent's top-left content area. For top-level menus there is a difference: (0, 0) is the centre of the screen.
 --- @field positionY number Integer number. Element Y position relative to its parent's top-left content area. For top-level menus there is a difference: (0, 0) is the centre of the screen.
 --- @field rawText string The raw value of the element's text. This, unlike the normal text property, will not directly read widget information or handle the removal of the positional cursor.
@@ -70,7 +70,7 @@
 tes3uiElement = {}
 
 --- Creates an empty block container inside the element. Used to group and layout elements.
---- @param id number A registered identifier to help find this element later.
+--- @param id number *Optional*. A registered identifier to help find this element later.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createBlock(id) end
 
@@ -87,12 +87,12 @@ function tes3uiElement:createBlock(id) end
 ---         | `table`_ (float[3]) ``element.widget.idleActive``: Text colour for active state, no mouse interaction.
 ---         | `table`_ (float[3]) ``element.widget.overActive``: Text colour for active state, on mouseOver.
 ---         | `table`_ (float[3]) ``element.widget.pressedActive``: Text colour for active state, on mouseDown.
---- @param id number A registered identifier to help find this element later.
+--- @param id number *Optional*. A registered identifier to help find this element later.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createButton(id) end
 
 --- Creates a textured horizontal divider line, as used in the magic and stat menus. Scales automatically to the container width.
---- @param id number A registered identifier to help find this element later.
+--- @param id number *Optional*. A registered identifier to help find this element later.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createDivider(id) end
 
@@ -104,9 +104,9 @@ function tes3uiElement:createDivider(id) end
 ---         | `boolean`_ ``element.widget.showText``: If text of the format "current/max" is shown. Default is ``true``.
 ---         | `table`_ (float[3]) ``element.widget.fillColor``: Colour of filled area.
 ---         | `number`_ (float) ``element.widget.fillAlpha``: Alpha transparency of filled area.
---- @param id number A registered identifier to help find this element later.
---- @param current number The initial current value.
---- @param max number The initial maximum value.
+--- @param id number *Optional*. A registered identifier to help find this element later.
+--- @param current number *Optional*. The initial current value.
+--- @param max number *Optional*. The initial maximum value.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createFillBar(id, current, max) end
 
@@ -118,23 +118,23 @@ function tes3uiElement:createFillBar(id, current, max) end
 --- 
 ---     Custom widget methods:
 ---         | ``element.widget:contentsChanged()``: Call to update scroll bar slider and limits after adding or removing elements to the content container. Because content size depends on layout, this must be run after a menu:updateLayout(). Only required if the content size changes.
---- @param id number A registered identifier to help find this element later.
+--- @param id number *Optional*. A registered identifier to help find this element later.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createHorizontalScrollPane(id) end
 
 --- Creates a text area with clickable words as links. Usage is still under research.
---- @param id number A registered identifier to help find this element later.
+--- @param id number *Optional*. A registered identifier to help find this element later.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createHypertext(id) end
 
 --- Creates an image element from a texture file. The texture must have power-of-2 dimensions (i.e. 16, 32, 64, 128, 256, 512, 1024); the final display size can be trimmed by setting width and height.
---- @param id number A registered identifier to help find this element later.
+--- @param id number *Optional*. A registered identifier to help find this element later.
 --- @param path string An image path. This path is relative to ``Data Files``.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createImage(id, path) end
 
 --- Creates an interactive button composed of images for the **idle**, **over**, and **pressed** states. The texture must have power-of-2 dimensions (i.e. 16, 32, 64, 128, 256, 512, 1024); the final display size can be trimmed by setting width and height.
---- @param id number A registered identifier to help find this element later.
+--- @param id number *Optional*. A registered identifier to help find this element later.
 --- @param idle string The path to the idle image. This path is relative to ``Data Files``.
 --- @param over string The path to the mouse hover image. This path is relative to ``Data Files``.
 --- @param path string The path to the mouse pressed image. This path is relative to ``Data Files``.
@@ -142,13 +142,13 @@ function tes3uiElement:createImage(id, path) end
 function tes3uiElement:createImageButton(id, idle, over, path) end
 
 --- Creates a text label. It defaults to displaying all text on a single line. To get a multi-line label, set ``wrap_text`` to ``true``. The element is created with ``autoWidth`` and ``autoHeight`` turned on.
---- @param id number A registered identifier to help find this element later.
+--- @param id number *Optional*. A registered identifier to help find this element later.
 --- @param text string The text to display.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createLabel(id, text) end
 
 --- Creates a NIF model from a file. Still under research.
---- @param id number A registered identifier to help find this element later.
+--- @param id number *Optional*. A registered identifier to help find this element later.
 --- @param text string A model path. This path is relative to ``Data Files``.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createNif(id, text) end
@@ -157,13 +157,13 @@ function tes3uiElement:createNif(id, text) end
 --- 
 ---     Custom widget properties:
 ---         | `number`_ (integer) ``element.widget.lengthLimit``: Maximum input length. Default is ``1023``.
---- @param id number A registered identifier to help find this element later.
+--- @param id number *Optional*. A registered identifier to help find this element later.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createParagraphInput(id) end
 
 --- Creates a filled rectangle. The rectangle is displayed as filled with the element's colour. It supports alpha compositing.
---- @param id number A registered identifier to help find this element later.
---- @param color table The fill colour for the element.
+--- @param id number *Optional*. A registered identifier to help find this element later.
+--- @param color table *Optional*. The fill colour for the element.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createRect(id, color) end
 
@@ -177,11 +177,11 @@ function tes3uiElement:createRect(id, color) end
 --- 
 ---     Custom events used with register:
 ---         | ``"PartScrollBar_changed"``: Triggers on value change; moving the slider is not enough if the value is the same.
---- @param id number A registered identifier to help find this element later.
+--- @param id number *Optional*. A registered identifier to help find this element later.
 --- @param current number The initial value for the slider.
 --- @param max number The maximum value for the slider.
---- @param step number Amount changed by left and right arrow buttons.
---- @param jump number Amount changed by clicking inside the slider area.
+--- @param step number *Optional*. Amount changed by left and right arrow buttons.
+--- @param jump number *Optional*. Amount changed by clicking inside the slider area.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createSlider(id, current, max, step, jump) end
 
@@ -195,11 +195,11 @@ function tes3uiElement:createSlider(id, current, max, step, jump) end
 --- 
 ---     Custom events used with register:
 ---         | ``"PartScrollBar_changed"``: Triggers on value change; moving the slider is not enough if the value is the same.
---- @param id number A registered identifier to help find this element later.
+--- @param id number *Optional*. A registered identifier to help find this element later.
 --- @param current number The initial value for the slider.
 --- @param max number The maximum value for the slider.
---- @param step number Amount changed by left and right arrow buttons. The default is 1.
---- @param jump number Amount changed by clicking inside the slider area. The default is 5.
+--- @param step number *Optional*. Amount changed by left and right arrow buttons. The default is 1.
+--- @param jump number *Optional*. Amount changed by clicking inside the slider area. The default is 5.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createSliderVertical(id, current, max, step, jump) end
 
@@ -208,19 +208,19 @@ function tes3uiElement:createSliderVertical(id, current, max, step, jump) end
 ---     Custom widget properties:
 ---         | `boolean`_ ``element.widget.eraseOnFirstKey``: Clears the initial value if the first keypress is not an edit action. Default is ``true``.
 ---         | `number`_ (integer) ``element.widget.lengthLimit"``: Maximum input length, or ``nil`` for no limit. If you are setting names, the engine limits most identifiers to 31 characters. Default is ``nil``.
---- @param id number A registered identifier to help find this element later.
+--- @param id number *Optional*. A registered identifier to help find this element later.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createTextInput(id) end
 
 --- Creates a selectable line of text, with configurable hover, click, and disabled colours. Can be used to create a list box by placing them in a ScrollPane. ``state`` sets the initial interaction state.
---- @param id number A registered identifier to help find this element later.
---- @param text string The text to display.
---- @param state number The initial interaction state. Defaults to normal.
+--- @param id number *Optional*. A registered identifier to help find this element later.
+--- @param text string *Optional*. The text to display.
+--- @param state number *Optional*. The initial interaction state. Defaults to normal.
 --- @return tes3uiWidgetTextSelect result No description yet available.
 function tes3uiElement:createTextSelect(id, text, state) end
 
 --- Creates a styled thin border element. Any content should be created as children of this border.
---- @param id number A registered identifier to help find this element later.
+--- @param id number *Optional*. A registered identifier to help find this element later.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createThinBorder(id) end
 
@@ -232,7 +232,7 @@ function tes3uiElement:createThinBorder(id) end
 --- 
 ---     Custom widget methods:
 ---         | ``element.widget:contentsChanged()``: Call to update scroll bar slider and limits after adding or removing elements to the content container. Because content size depends on layout, this must be run after a menu:updateLayout(). Only required if the content size changes.
---- @param id number A registered identifier to help find this element later.
+--- @param id number *Optional*. A registered identifier to help find this element later.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createVerticalScrollPane(id) end
 
@@ -283,7 +283,7 @@ function tes3uiElement:getPropertyInt(propName) end
 --- 	
 --- 	This is required because there is no identifying type information stored with the pointer. If the usertype is incorrect, there are no safety checks keeping the game from crashing.
 --- @param propName string The property name.
---- @param expectedUsertype string A Lua usertype name, if expecting a non-standard object type.
+--- @param expectedUsertype string *Optional*. A Lua usertype name, if expecting a non-standard object type.
 --- @return object result No description yet available.
 function tes3uiElement:getPropertyObject(propName, expectedUsertype) end
 

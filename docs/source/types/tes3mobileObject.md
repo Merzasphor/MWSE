@@ -6,7 +6,7 @@ The base object from which all other mobiles (AI/movement using) structures deri
 
 ### `boundSize`
 
-A vector that shows the size of the bounding box in each direction.
+*Read-only*. A vector that shows the size of the bounding box in each direction.
 
 **Returns**:
 
@@ -16,7 +16,7 @@ A vector that shows the size of the bounding box in each direction.
 
 ### `cellX`
 
-The X grid coordinate of the cell the mobile is in.
+*Read-only*. The X grid coordinate of the cell the mobile is in.
 
 **Returns**:
 
@@ -26,7 +26,7 @@ The X grid coordinate of the cell the mobile is in.
 
 ### `cellY`
 
-The Y grid coordinate of the cell the mobile is in.
+*Read-only*. The Y grid coordinate of the cell the mobile is in.
 
 **Returns**:
 
@@ -36,7 +36,7 @@ The Y grid coordinate of the cell the mobile is in.
 
 ### `flags`
 
-Access to the root mobile object flags, represented as an integer. Should not be accessed directly.
+*Read-only*. Access to the root mobile object flags, represented as an integer. Should not be accessed directly.
 
 **Returns**:
 
@@ -46,7 +46,7 @@ Access to the root mobile object flags, represented as an integer. Should not be
 
 ### `height`
 
-The height of the mobile above the ground.
+*Read-only*. The height of the mobile above the ground.
 
 **Returns**:
 
@@ -76,7 +76,7 @@ Controls if the mobile has movement collision active. When false, the mobile can
 
 ### `movementFlags`
 
-Access to the root mobile object movement flags, represented as an integer. Should not be accessed directly.
+*Read-only*. Access to the root mobile object movement flags, represented as an integer. Should not be accessed directly.
 
 **Returns**:
 
@@ -86,7 +86,7 @@ Access to the root mobile object movement flags, represented as an integer. Shou
 
 ### `objectType`
 
-The type of mobile object. Maps to values in tes3.objectType.
+*Read-only*. The type of mobile object. Maps to values in tes3.objectType.
 
 **Returns**:
 
@@ -116,7 +116,7 @@ A vector that represents the 3D position of the object.
 
 ### `prevMovementFlags`
 
-Access to the root mobile object movement flags from the previous frame, represented as an integer. Should not be accessed directly.
+*Read-only*. Access to the root mobile object movement flags from the previous frame, represented as an integer. Should not be accessed directly.
 
 **Returns**:
 
@@ -126,7 +126,7 @@ Access to the root mobile object movement flags from the previous frame, represe
 
 ### `reference`
 
-Access to the reference object for the mobile, if any.
+*Read-only*. Access to the reference object for the mobile, if any.
 
 **Returns**:
 

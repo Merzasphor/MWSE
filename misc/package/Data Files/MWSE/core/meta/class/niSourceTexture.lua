@@ -2,13 +2,13 @@
 
 --- Represents all texture objects that are created from a file or a block of in-memory pixel data. NiSourceTexture objects represent both static and dynamic content, as NiSourceTexture data objects can have their pixel data modified on the fly to implement dynamic texture behavior.
 --- @class niSourceTexture : niObjectNET, niObject
---- @field fileName string The platform-independent version of the filename from which the image was created, or NULL if the image was created from pixel data.
+--- @field fileName string *Read-only*. The platform-independent version of the filename from which the image was created, or NULL if the image was created from pixel data.
 --- @field formatPrefs niFormatPrefs The `NiFormatPrefs` of the texture.
---- @field height number The height of the texture.
+--- @field height number *Read-only*. The height of the texture.
 --- @field isStatic boolean The static flag.
 --- @field pixelData niPixelData The app-level pixel data.
---- @field platformFilename string The platform-specific version of the filename.
---- @field width number The width of the texture.
+--- @field platformFilename string *Read-only*. The platform-specific version of the filename.
+--- @field width number *Read-only*. The width of the texture.
 niSourceTexture = {}
 
 --- Creates an NiSourceTexture from the given filepath.

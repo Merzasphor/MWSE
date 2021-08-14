@@ -19,7 +19,7 @@ The current reference, if any, that this reference will activate.
 
 ### `attachments`
 
-A table with friendly named access to all supported attachments.
+*Read-only*. A table with friendly named access to all supported attachments.
 
 **Returns**:
 
@@ -29,7 +29,7 @@ A table with friendly named access to all supported attachments.
 
 ### `baseObject`
 
-This is similar to the object field, but is guaranteed to provide the base-most object. If object is an actor clone, the base actor will be given instead.
+*Read-only*. This is similar to the object field, but is guaranteed to provide the base-most object. If object is an actor clone, the base actor will be given instead.
 
 **Returns**:
 
@@ -49,7 +49,7 @@ The blocked state of the object.
 
 ### `bodyPartManager`
 
-Access to the reference's body part manager, if available. Typically this is only available on NPC references.
+*Read-only*. Access to the reference's body part manager, if available. Typically this is only available on NPC references.
 
 **Returns**:
 
@@ -59,7 +59,7 @@ Access to the reference's body part manager, if available. Typically this is onl
 
 ### `cell`
 
-The cell that the reference is currently in.
+*Read-only*. The cell that the reference is currently in.
 
 **Returns**:
 
@@ -69,7 +69,7 @@ The cell that the reference is currently in.
 
 ### `context`
 
-Access to the script context for this reference and its associated script.
+*Read-only*. Access to the script context for this reference and its associated script.
 
 **Returns**:
 
@@ -89,7 +89,7 @@ A generic lua table that data can be written to, and synced to/from the save. Al
 
 ### `deleted`
 
-The deleted state of the object.
+*Read-only*. The deleted state of the object.
 
 **Returns**:
 
@@ -99,7 +99,7 @@ The deleted state of the object.
 
 ### `destination`
 
-Returns the travel destination node for this reference, or nil. This can be used to determine where a given door links to.
+*Read-only*. Returns the travel destination node for this reference, or nil. This can be used to determine where a given door links to.
 
 **Returns**:
 
@@ -109,7 +109,7 @@ Returns the travel destination node for this reference, or nil. This can be used
 
 ### `disabled`
 
-The disabled state of the object.
+*Read-only*. The disabled state of the object.
 
 **Returns**:
 
@@ -139,7 +139,7 @@ Sets the no-collision flag on this reference, and recalculates collision groups.
 
 ### `id`
 
-The unique identifier for the object.
+*Read-only*. The unique identifier for the object.
 
 **Returns**:
 
@@ -149,7 +149,7 @@ The unique identifier for the object.
 
 ### `isDead`
 
-Returns true if the object is dead, false if they are alive, or nil if that couldn't be determined.
+*Read-only*. Returns true if the object is dead, false if they are alive, or nil if that couldn't be determined.
 
 **Returns**:
 
@@ -169,7 +169,7 @@ Friendly access onto the reference's empty inventory flag.
 
 ### `isLeveledSpawn`
 
-If true, this reference was created as a result of a leveled spawn.
+*Read-only*. If true, this reference was created as a result of a leveled spawn.
 
 **Returns**:
 
@@ -179,7 +179,7 @@ If true, this reference was created as a result of a leveled spawn.
 
 ### `isRespawn`
 
-If true, the references respawn flag is set.
+*Read-only*. If true, the references respawn flag is set.
 
 **Returns**:
 
@@ -199,7 +199,7 @@ Gets or sets the attached itemData for this reference. If set to nil, the item d
 
 ### `leveledBaseReference`
 
-If this reference is a leveled spawn, this is the leveled creature spawn reference. If this reference wasn't the result of a leveled spawn, the value is nil.
+*Read-only*. If this reference is a leveled spawn, this is the leveled creature spawn reference. If this reference wasn't the result of a leveled spawn, the value is nil.
 
 **Returns**:
 
@@ -209,7 +209,7 @@ If this reference is a leveled spawn, this is the leveled creature spawn referen
 
 ### `light`
 
-Direct access to the scene graph light, if a dynamic light is set.
+*Read-only*. Direct access to the scene graph light, if a dynamic light is set.
 
 **Returns**:
 
@@ -219,7 +219,7 @@ Direct access to the scene graph light, if a dynamic light is set.
 
 ### `lockNode`
 
-Quick access to the reference's lock node, if any.
+*Read-only*. Quick access to the reference's lock node, if any.
 
 **Returns**:
 
@@ -239,7 +239,7 @@ The path to the object's mesh.
 
 ### `mobile`
 
-Access to the attached mobile object, if applicable.
+*Read-only*. Access to the attached mobile object, if applicable.
 
 **Returns**:
 
@@ -269,7 +269,7 @@ The next object in parent collection's list.
 
 ### `nextNode`
 
-The next reference in the parent reference list.
+*Read-only*. The next reference in the parent reference list.
 
 **Returns**:
 
@@ -279,7 +279,7 @@ The next reference in the parent reference list.
 
 ### `nodeData`
 
-Redundant access to this object, for iterating over a tes3referenceList.
+*Read-only*. Redundant access to this object, for iterating over a tes3referenceList.
 
 **Returns**:
 
@@ -289,7 +289,7 @@ Redundant access to this object, for iterating over a tes3referenceList.
 
 ### `object`
 
-The object that the reference is for, such as a weapon, armor, or actor.
+*Read-only*. The object that the reference is for, such as a weapon, armor, or actor.
 
 **Returns**:
 
@@ -299,7 +299,7 @@ The object that the reference is for, such as a weapon, armor, or actor.
 
 ### `objectFlags`
 
-The raw flags of the object.
+*Read-only*. The raw flags of the object.
 
 **Returns**:
 
@@ -309,7 +309,7 @@ The raw flags of the object.
 
 ### `objectType`
 
-The type of object. Maps to values in tes3.objectType.
+*Read-only*. The type of object. Maps to values in tes3.objectType.
 
 **Returns**:
 
@@ -369,7 +369,7 @@ The previous object in parent collection's list.
 
 ### `previousNode`
 
-The previous reference in the parent reference list.
+*Read-only*. The previous reference in the parent reference list.
 
 **Returns**:
 
@@ -389,7 +389,7 @@ The object's scale.
 
 ### `sceneNode`
 
-The scene graph node that the reference uses for rendering.
+*Read-only*. The scene graph node that the reference uses for rendering.
 
 **Returns**:
 
@@ -419,7 +419,7 @@ The soruceless flag of the object.
 
 ### `sourceMod`
 
-The filename of the mod that owns this object.
+*Read-only*. The filename of the mod that owns this object.
 
 **Returns**:
 
@@ -535,7 +535,7 @@ tes3reference:deleteDynamicLightAttachment(removeLightFromParent)
 
 **Parameters**:
 
-* `removeLightFromParent` (boolean): If true, the dynamic light is removed from its parent node as well.
+* `removeLightFromParent` (boolean): *Default*: `false`. If true, the dynamic light is removed from its parent node as well.
 
 ***
 
@@ -623,8 +623,8 @@ local result = tes3reference:getOrCreateAttachedDynamicLight(light, phase)
 
 **Parameters**:
 
-* `light` ([niPointLight](../../types/niPointLight))
-* `phase` (number)
+* `light` ([niPointLight](../../types/niPointLight)): *Optional*.
+* `phase` (number): *Optional*.
 
 **Returns**:
 

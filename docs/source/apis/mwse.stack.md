@@ -48,7 +48,7 @@ local unnamed1 = mwse.stack.popFloat()
 
 **Returns**:
 
-* `unnamed` (number)
+* `unnamed` (number): *Optional*.
 
 ***
 
@@ -62,7 +62,7 @@ local unnamed1 = mwse.stack.popLong()
 
 **Returns**:
 
-* `unnamed` (number)
+* `unnamed` (number): *Optional*.
 
 ***
 
@@ -76,7 +76,7 @@ local unnamed1 = mwse.stack.popObject()
 
 **Returns**:
 
-* `unnamed` ([tes3baseObject](../../types/tes3baseObject))
+* `unnamed` ([tes3baseObject](../../types/tes3baseObject)): *Optional*.
 
 ***
 
@@ -90,7 +90,7 @@ local unnamed1 = mwse.stack.popShort()
 
 **Returns**:
 
-* `unnamed` (number)
+* `unnamed` (number): *Optional*.
 
 ***
 
@@ -104,7 +104,7 @@ local unnamed1 = mwse.stack.popString()
 
 **Returns**:
 
-* `unnamed` (string)
+* `unnamed` (string): *Optional*.
 
 ***
 

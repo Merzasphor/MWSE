@@ -14,5 +14,5 @@ event.register("weaponUnreadied", weaponUnreadiedCallback)
 
 ## Event Data
 
-* `reference` ([tes3reference](../../types/tes3reference)): The reference associated with the change in readied weapon.
+* `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. The reference associated with the change in readied weapon.
 

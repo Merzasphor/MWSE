@@ -6,7 +6,7 @@ A core game object used for storing both active and non-dynamic gameplay data.
 
 ### `backgroundThread`
 
-A Windows handle to the background processing thread.
+*Read-only*. A Windows handle to the background processing thread.
 
 **Returns**:
 
@@ -16,7 +16,7 @@ A Windows handle to the background processing thread.
 
 ### `backgroundThreadId`
 
-The thread ID for the background processing thread.
+*Read-only*. The thread ID for the background processing thread.
 
 **Returns**:
 
@@ -26,7 +26,7 @@ The thread ID for the background processing thread.
 
 ### `backgroundThreadRunning`
 
-Access to the running state for the background processing thread.
+*Read-only*. Access to the running state for the background processing thread.
 
 **Returns**:
 
@@ -36,7 +36,7 @@ Access to the running state for the background processing thread.
 
 ### `cellChanged`
 
-A flag set for the frame that the player has changed cells.
+*Read-only*. A flag set for the frame that the player has changed cells.
 
 **Returns**:
 
@@ -46,7 +46,7 @@ A flag set for the frame that the player has changed cells.
 
 ### `centralGridX`
 
-The position of the origin horizontal grid coordinate.
+*Read-only*. The position of the origin horizontal grid coordinate.
 
 **Returns**:
 
@@ -56,7 +56,7 @@ The position of the origin horizontal grid coordinate.
 
 ### `centralGridY`
 
-The position of the origin longitudinal grid coordinate.
+*Read-only*. The position of the origin longitudinal grid coordinate.
 
 **Returns**:
 
@@ -76,7 +76,7 @@ Access to the current ambient water sound.
 
 ### `currentCell`
 
-Access to the cell that the player is currently in.
+*Read-only*. Access to the cell that the player is currently in.
 
 **Returns**:
 
@@ -86,7 +86,7 @@ Access to the cell that the player is currently in.
 
 ### `currentInteriorCell`
 
-Access to the current interior cell, if the player is in an interior.
+*Read-only*. Access to the current interior cell, if the player is in an interior.
 
 **Returns**:
 
@@ -96,7 +96,7 @@ Access to the current interior cell, if the player is in an interior.
 
 ### `exteriorCells`
 
-A table of nine tes3cellExteriorData objects for any loaded exterior cells.
+*Read-only*. A table of nine tes3cellExteriorData objects for any loaded exterior cells.
 
 **Returns**:
 
@@ -106,7 +106,7 @@ A table of nine tes3cellExteriorData objects for any loaded exterior cells.
 
 ### `lastExteriorCell`
 
-Access to the last visited exterior cell.
+*Read-only*. Access to the last visited exterior cell.
 
 **Returns**:
 
@@ -116,7 +116,7 @@ Access to the last visited exterior cell.
 
 ### `mainThread`
 
-A Windows handle to the main execution thread.
+*Read-only*. A Windows handle to the main execution thread.
 
 **Returns**:
 
@@ -126,7 +126,7 @@ A Windows handle to the main execution thread.
 
 ### `mainThreadId`
 
-The thread ID for the main execution thread.
+*Read-only*. The thread ID for the main execution thread.
 
 **Returns**:
 
@@ -136,7 +136,7 @@ The thread ID for the main execution thread.
 
 ### `nonDynamicData`
 
-A child structure where core game objects are held.
+*Read-only*. A child structure where core game objects are held.
 
 **Returns**:
 
@@ -146,7 +146,7 @@ A child structure where core game objects are held.
 
 ### `threadSleepTime`
 
-No description yet available.
+*Read-only*. No description yet available.
 
 **Returns**:
 
@@ -166,7 +166,7 @@ An engine flag that controls if there is a fade in/out between cells.
 
 ### `worldLandscapeRoot`
 
-One of the core parent scene graph nodes.
+*Read-only*. One of the core parent scene graph nodes.
 
 **Returns**:
 
@@ -176,7 +176,7 @@ One of the core parent scene graph nodes.
 
 ### `worldObjectRoot`
 
-One of the core parent scene graph nodes.
+*Read-only*. One of the core parent scene graph nodes.
 
 **Returns**:
 
@@ -186,7 +186,7 @@ One of the core parent scene graph nodes.
 
 ### `worldPickObjectRoot`
 
-One of the core parent scene graph nodes.
+*Read-only*. One of the core parent scene graph nodes.
 
 **Returns**:
 

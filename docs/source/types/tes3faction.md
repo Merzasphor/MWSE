@@ -7,7 +7,7 @@ This type inherits the following: [tes3baseObject](../../types/tes3baseObject)
 
 ### `attributes`
 
-An array-style table holding the two attributes that govern advancement.
+*Read-only*. An array-style table holding the two attributes that govern advancement.
 
 **Returns**:
 
@@ -27,7 +27,7 @@ The blocked state of the object.
 
 ### `deleted`
 
-The deleted state of the object.
+*Read-only*. The deleted state of the object.
 
 **Returns**:
 
@@ -37,7 +37,7 @@ The deleted state of the object.
 
 ### `disabled`
 
-The disabled state of the object.
+*Read-only*. The disabled state of the object.
 
 **Returns**:
 
@@ -47,7 +47,7 @@ The disabled state of the object.
 
 ### `id`
 
-The unique identifier for the object.
+*Read-only*. The unique identifier for the object.
 
 **Returns**:
 
@@ -77,7 +77,7 @@ The faction's player-facing name.
 
 ### `objectFlags`
 
-The raw flags of the object.
+*Read-only*. The raw flags of the object.
 
 **Returns**:
 
@@ -87,7 +87,7 @@ The raw flags of the object.
 
 ### `objectType`
 
-The type of object. Maps to values in tes3.objectType.
+*Read-only*. The type of object. Maps to values in tes3.objectType.
 
 **Returns**:
 
@@ -147,7 +147,7 @@ The player's current reputation in the faction.
 
 ### `ranks`
 
-An array-style table holding the ten related tes3factionRanks.
+*Read-only*. An array-style table holding the ten related tes3factionRanks.
 
 **Returns**:
 
@@ -157,7 +157,7 @@ An array-style table holding the ten related tes3factionRanks.
 
 ### `reactions`
 
-A collection of tes3factionReactions.
+*Read-only*. A collection of tes3factionReactions.
 
 **Returns**:
 
@@ -167,7 +167,7 @@ A collection of tes3factionReactions.
 
 ### `skills`
 
-An array-style table holding the seven skills that govern advancement.
+*Read-only*. An array-style table holding the seven skills that govern advancement.
 
 **Returns**:
 
@@ -187,7 +187,7 @@ The soruceless flag of the object.
 
 ### `sourceMod`
 
-The filename of the mod that owns this object.
+*Read-only*. The filename of the mod that owns this object.
 
 **Returns**:
 

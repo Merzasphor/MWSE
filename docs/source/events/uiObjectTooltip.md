@@ -14,9 +14,9 @@ event.register("uiObjectTooltip", uiObjectTooltipCallback)
 
 ## Event Data
 
-* `count` (number): The number of items in the stack.
-* `itemData` ([tes3itemData](../../types/tes3itemData)): The item data of object, if any.
-* `object` ([tes3physicalObject](../../types/tes3physicalObject)): The object being examined.
-* `reference` ([tes3reference](../../types/tes3reference)): The reference being examined. Only valid for in-world objects. For inventory tiles it will always be nil.
-* `tooltip` ([tes3uiElement](../../types/tes3uiElement)): The newly created tooltip element. Due to timeouts and target changes, it may be destroyed at any time.
+* `count` (number): *Read-only*. The number of items in the stack.
+* `itemData` ([tes3itemData](../../types/tes3itemData)): *Read-only*. The item data of object, if any.
+* `object` ([tes3physicalObject](../../types/tes3physicalObject)): *Read-only*. The object being examined.
+* `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. The reference being examined. Only valid for in-world objects. For inventory tiles it will always be nil.
+* `tooltip` ([tes3uiElement](../../types/tes3uiElement)): *Read-only*. The newly created tooltip element. Due to timeouts and target changes, it may be destroyed at any time.
 

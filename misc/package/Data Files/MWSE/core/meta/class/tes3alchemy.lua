@@ -3,7 +3,7 @@
 --- An alchemy game object.
 --- @class tes3alchemy : tes3item, tes3physicalObject, tes3object, tes3baseObject
 --- @field autoCalc boolean If set, the value of the object is automatically calculated.
---- @field effects table An array-style table of the tes3effect data on the object.
+--- @field effects table *Read-only*. An array-style table of the tes3effect data on the object.
 --- @field flags number The alchemy item's flags.
 --- @field icon string The path to the object's icon.
 --- @field mesh string The path to the object's mesh.
@@ -18,21 +18,21 @@ tes3alchemy = {}
 --- 
 --- ``id``: string — The new object's ID. Must be unique.
 --- 
---- ``name``: string — The new item's name.
+--- ``name``: string — *Default*: `"Potion"`. The new item's name.
 --- 
---- ``script``: tes3script — A script to attach to the object.
+--- ``script``: tes3script — *Optional*. A script to attach to the object.
 --- 
---- ``mesh``: string — The mesh to use for the object.
+--- ``mesh``: string — *Default*: `"m\Misc_Potion_Bargain_01.nif"`. The mesh to use for the object.
 --- 
---- ``icon``: string — The icon to use for the object.
+--- ``icon``: string — *Default*: `"m\Tx_potion_bargain_01.nif"`. The icon to use for the object.
 --- 
---- ``objectFlags``: number — The object flags initially set. Force set as modified.
+--- ``objectFlags``: number — *Default*: `8`. The object flags initially set. Force set as modified.
 --- 
---- ``weight``: number — The new item's weight.
+--- ``weight``: number — *Default*: `0`. The new item's weight.
 --- 
---- ``value``: number — The new item's value.
+--- ``value``: number — *Default*: `0`. The new item's value.
 --- 
---- ``flags``: number — The new alchemy item's flags.
+--- ``flags``: number — *Default*: `0`. The new alchemy item's flags.
 --- 
 --- ``effects``: table — A table of effects described, providing values for id, skill, attribute, range, radius, duration, min, and/or max.
 function tes3alchemy.create(params) end
@@ -40,14 +40,14 @@ function tes3alchemy.create(params) end
 ---Table parameter definitions for ``tes3alchemy.create``.
 --- @class tes3alchemy.create.params
 --- @field id string The new object's ID. Must be unique.
---- @field name string The new item's name.
---- @field script tes3script A script to attach to the object.
---- @field mesh string The mesh to use for the object.
---- @field icon string The icon to use for the object.
---- @field objectFlags number The object flags initially set. Force set as modified.
---- @field weight number The new item's weight.
---- @field value number The new item's value.
---- @field flags number The new alchemy item's flags.
+--- @field name string *Default*: `"Potion"`. The new item's name.
+--- @field script tes3script *Optional*. A script to attach to the object.
+--- @field mesh string *Default*: `"m\Misc_Potion_Bargain_01.nif"`. The mesh to use for the object.
+--- @field icon string *Default*: `"m\Tx_potion_bargain_01.nif"`. The icon to use for the object.
+--- @field objectFlags number *Default*: `8`. The object flags initially set. Force set as modified.
+--- @field weight number *Default*: `0`. The new item's weight.
+--- @field value number *Default*: `0`. The new item's value.
+--- @field flags number *Default*: `0`. The new alchemy item's flags.
 --- @field effects table A table of effects described, providing values for id, skill, attribute, range, radius, duration, min, and/or max.
 
 --- Returns the amount of effects the tes3alchemy object has.

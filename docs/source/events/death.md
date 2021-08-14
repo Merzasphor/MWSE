@@ -14,6 +14,6 @@ event.register("death", deathCallback)
 
 ## Event Data
 
-* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): The mobile actor that has died.
-* `reference` ([tes3reference](../../types/tes3reference)): mobile’s associated reference.
+* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile actor that has died.
+* `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. mobile’s associated reference.
 

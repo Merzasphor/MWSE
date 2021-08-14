@@ -14,5 +14,5 @@ event.register("menuExit", menuExitCallback)
 
 ## Event Data
 
-* `menuMode` (boolean): Always true for this event. This parameter is only useful when registering the same callback for menuEnter and menuExit events.
+* `menuMode` (boolean): *Read-only*. Always true for this event. This parameter is only useful when registering the same callback for menuEnter and menuExit events.
 

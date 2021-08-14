@@ -6,7 +6,7 @@ Represents a loaded ESM, ESP, or ESS file.
 
 ### `author`
 
-The file's author.
+*Read-only*. The file's author.
 
 **Returns**:
 
@@ -16,7 +16,7 @@ The file's author.
 
 ### `cellName`
 
-The current cell, from a save game.
+*Read-only*. The current cell, from a save game.
 
 **Returns**:
 
@@ -26,7 +26,7 @@ The current cell, from a save game.
 
 ### `currentHealth`
 
-The player's health, from a save game.
+*Read-only*. The player's health, from a save game.
 
 **Returns**:
 
@@ -36,7 +36,7 @@ The player's health, from a save game.
 
 ### `day`
 
-The current day, from a save game.
+*Read-only*. The current day, from a save game.
 
 **Returns**:
 
@@ -46,7 +46,7 @@ The current day, from a save game.
 
 ### `daysPassed`
 
-The number of days passed, from a save game.
+*Read-only*. The number of days passed, from a save game.
 
 **Returns**:
 
@@ -56,7 +56,7 @@ The number of days passed, from a save game.
 
 ### `description`
 
-The description of the file.
+*Read-only*. The description of the file.
 
 **Returns**:
 
@@ -66,7 +66,7 @@ The description of the file.
 
 ### `filename`
 
-The simple filename.
+*Read-only*. The simple filename.
 
 **Returns**:
 
@@ -76,7 +76,7 @@ The simple filename.
 
 ### `fileSize`
 
-The size of the file.
+*Read-only*. The size of the file.
 
 **Returns**:
 
@@ -86,7 +86,7 @@ The size of the file.
 
 ### `gameHour`
 
-The current game hour, from a save game.
+*Read-only*. The current game hour, from a save game.
 
 **Returns**:
 
@@ -96,7 +96,7 @@ The current game hour, from a save game.
 
 ### `highestFormID`
 
-No description yet available.
+*Read-only*. No description yet available.
 
 **Returns**:
 
@@ -106,7 +106,7 @@ No description yet available.
 
 ### `masters`
 
-An array-style table of the tes3gameFiles that this is dependent upon.
+*Read-only*. An array-style table of the tes3gameFiles that this is dependent upon.
 
 **Returns**:
 
@@ -116,7 +116,7 @@ An array-style table of the tes3gameFiles that this is dependent upon.
 
 ### `maxHealth`
 
-The player's maximum health, from a save game.
+*Read-only*. The player's maximum health, from a save game.
 
 **Returns**:
 
@@ -126,7 +126,7 @@ The player's maximum health, from a save game.
 
 ### `modifiedTime`
 
-The timestamp that the file was modified.
+*Read-only*. The timestamp that the file was modified.
 
 **Returns**:
 
@@ -136,7 +136,7 @@ The timestamp that the file was modified.
 
 ### `month`
 
-The current month, from a save game.
+*Read-only*. The current month, from a save game.
 
 **Returns**:
 
@@ -146,7 +146,7 @@ The current month, from a save game.
 
 ### `path`
 
-The path to the file.
+*Read-only*. The path to the file.
 
 **Returns**:
 
@@ -156,7 +156,7 @@ The path to the file.
 
 ### `playerName`
 
-The player's name, from a save game.
+*Read-only*. The player's name, from a save game.
 
 **Returns**:
 
@@ -166,7 +166,7 @@ The player's name, from a save game.
 
 ### `year`
 
-The current year, from a save game.
+*Read-only*. The current year, from a save game.
 
 **Returns**:
 

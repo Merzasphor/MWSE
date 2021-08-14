@@ -6,9 +6,9 @@
 --- @field attackSwing number The attack swing value of the attacker at the time of releasing the projectile.
 --- @field damage number Access to the raw damage that this projectile will inflict.
 --- @field expire number A flag that causes the projectile to expire when set to 1.
---- @field firingMobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer The mobile that fired this projectile.
---- @field firingWeapon tes3weapon The weapon that fired this projectile.
---- @field initialSpeed number The initial speed that the projectile was launched at.
+--- @field firingMobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer *Read-only*. The mobile that fired this projectile.
+--- @field firingWeapon tes3weapon *Read-only*. The weapon that fired this projectile.
+--- @field initialSpeed number *Read-only*. The initial speed that the projectile was launched at.
 --- @field velocity tes3vector3 Access to the current velocity of the projectile.
 tes3mobileProjectile = {}
 

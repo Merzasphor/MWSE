@@ -17,5 +17,5 @@ event.register("determineAction", determineActionCallback)
 
 ## Event Data
 
-* `session` ([tes3combatSession](../../types/tes3combatSession)): The combat session the action is being determined for.
+* `session` ([tes3combatSession](../../types/tes3combatSession)): *Read-only*. The combat session the action is being determined for.
 

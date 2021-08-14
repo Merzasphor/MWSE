@@ -14,6 +14,6 @@ event.register("combatStarted", combatStartedCallback)
 
 ## Event Data
 
-* `actor` ([tes3mobileActor](../../types/tes3mobileActor)): The mobile actor who has entered combat.
-* `target` ([tes3mobileActor](../../types/tes3mobileActor)): The mobile actor who combat has been triggered against.
+* `actor` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile actor who has entered combat.
+* `target` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile actor who combat has been triggered against.
 

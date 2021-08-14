@@ -14,6 +14,6 @@ event.register("weatherTransitionStarted", weatherTransitionStartedCallback)
 
 ## Event Data
 
-* `from` ([tes3weather](../../types/tes3weather)): The weather object that is the current weather.
+* `from` ([tes3weather](../../types/tes3weather)): *Read-only*. The weather object that is the current weather.
 * `to` ([tes3weather](../../types/tes3weather)): The weather object that will be transitioned to.
 

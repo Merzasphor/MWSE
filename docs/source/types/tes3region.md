@@ -17,7 +17,7 @@ The blocked state of the object.
 
 ### `deleted`
 
-The deleted state of the object.
+*Read-only*. The deleted state of the object.
 
 **Returns**:
 
@@ -27,7 +27,7 @@ The deleted state of the object.
 
 ### `disabled`
 
-The disabled state of the object.
+*Read-only*. The disabled state of the object.
 
 **Returns**:
 
@@ -37,7 +37,7 @@ The disabled state of the object.
 
 ### `id`
 
-The unique identifier for the object.
+*Read-only*. The unique identifier for the object.
 
 **Returns**:
 
@@ -67,7 +67,7 @@ The region's name. Must be a string less than 32 characters.
 
 ### `objectFlags`
 
-The raw flags of the object.
+*Read-only*. The raw flags of the object.
 
 **Returns**:
 
@@ -77,7 +77,7 @@ The raw flags of the object.
 
 ### `objectType`
 
-The type of object. Maps to values in tes3.objectType.
+*Read-only*. The type of object. Maps to values in tes3.objectType.
 
 **Returns**:
 
@@ -97,7 +97,7 @@ The persistent flag of the object.
 
 ### `sleepCreature`
 
-The region's leveled creature that can be spawned while the player is sleeping.
+*Read-only*. The region's leveled creature that can be spawned while the player is sleeping.
 
 **Returns**:
 
@@ -107,7 +107,7 @@ The region's leveled creature that can be spawned while the player is sleeping.
 
 ### `sounds`
 
-Array-style table for the different region sounds. Each object in the table is a tes3regionSound.
+*Read-only*. Array-style table for the different region sounds. Each object in the table is a tes3regionSound.
 
 **Returns**:
 
@@ -127,7 +127,7 @@ The soruceless flag of the object.
 
 ### `sourceMod`
 
-The filename of the mod that owns this object.
+*Read-only*. The filename of the mod that owns this object.
 
 **Returns**:
 
@@ -237,7 +237,7 @@ The chance the Rain weather-type will be used. Must be an integer between 0 - 10
 
 ### `weatherChances`
 
-Array-style table for the different weather chances. Each object in the table is a number, between 1 - 100. The index of the table is the weather type.
+*Read-only*. Array-style table for the different weather chances. Each object in the table is a number, between 1 - 100. The index of the table is the weather type.
 
 **Returns**:
 

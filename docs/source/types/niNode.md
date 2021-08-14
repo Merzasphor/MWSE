@@ -27,7 +27,7 @@ A flag indicating if this object is culled. When culled, it will not render, and
 
 ### `children`
 
-The children of the node.
+*Read-only*. The children of the node.
 
 **Returns**:
 
@@ -37,7 +37,7 @@ The children of the node.
 
 ### `effectList`
 
-The effect list of the node.
+*Read-only*. The effect list of the node.
 
 **Returns**:
 
@@ -107,7 +107,7 @@ The list of properties attached to this niAVObject.
 
 ### `references`
 
-The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
+*Read-only*. The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
 
 **Returns**:
 
@@ -208,7 +208,7 @@ niNode:attachChild(child, useFirstAvailable)
 **Parameters**:
 
 * `child` ([niAVObject](../../types/niAVObject))
-* `useFirstAvailable` (boolean): Use the first available space in the list. Default value is False.
+* `useFirstAvailable` (boolean): *Optional*. Use the first available space in the list. Default value is False.
 
 ***
 

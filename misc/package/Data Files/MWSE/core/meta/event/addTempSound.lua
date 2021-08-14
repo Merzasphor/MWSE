@@ -4,7 +4,7 @@
 --- @class addTempSoundEventData
 --- @field block boolean If set to `true`, vanilla logic will be suppressed. Returning `false` will set this to `true`.
 --- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.
---- @field flags number 
+--- @field flags number *Read-only*. 
 --- @field isVoiceover boolean 
 --- @field path string The path to the sound to play, relative to Data Files\Sounds
 --- @field pitch number Pitch of the sound.

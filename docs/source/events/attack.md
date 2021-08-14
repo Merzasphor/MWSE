@@ -17,10 +17,10 @@ event.register("attack", attackCallback)
 
 ## Event Data
 
-* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): The mobile actor making the attack.
-* `reference` ([tes3reference](../../types/tes3reference)): A shortcut to the reference that is attacking.
-* `targetMobile` ([tes3mobileActor](../../types/tes3mobileActor)): The mobile actor being attacked.
-* `targetReference` ([tes3reference](../../types/tes3reference)): A shortcut to the reference being attacked.
+* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile actor making the attack.
+* `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. A shortcut to the reference that is attacking.
+* `targetMobile` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile actor being attacked.
+* `targetReference` ([tes3reference](../../types/tes3reference)): *Read-only*. A shortcut to the reference being attacked.
 
 ## Examples
 

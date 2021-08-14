@@ -4,7 +4,7 @@
 --- @class addSoundEventData
 --- @field block boolean If set to `true`, vanilla logic will be suppressed. Returning `false` will set this to `true`.
 --- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.
---- @field flags number 
+--- @field flags number *Read-only*. 
 --- @field isVoiceover boolean 
 --- @field pitch number Pitch of the sound.
 --- @field reference tes3reference The reference which is emiting the sound.

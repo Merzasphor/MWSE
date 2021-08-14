@@ -8,18 +8,18 @@
 --- @field particleHeightMax number The weather's particle maximum height.
 --- @field particleHeightMin number The weather's particle minimum height.
 --- @field particleRadius number The weather's particle radius.
---- @field rainActive boolean The weather's active rain flag.
---- @field rainLoopSound tes3sound The weather's rain loop sound object.
+--- @field rainActive boolean *Read-only*. The weather's active rain flag.
+--- @field rainLoopSound tes3sound *Read-only*. The weather's rain loop sound object.
 --- @field rainLoopSoundId string The weather's rain loop sound ID.
 --- @field threshold number The weather's threshold value.
 --- @field thunderFrequency number The weather's thunder frequency.
---- @field thunderSound1 tes3sound The weather's thunder sound 1 object.
+--- @field thunderSound1 tes3sound *Read-only*. The weather's thunder sound 1 object.
 --- @field thunderSound1Id string The weather's thunder sound 1 ID.
---- @field thunderSound2 tes3sound The weather's thunder sound 2 object.
+--- @field thunderSound2 tes3sound *Read-only*. The weather's thunder sound 2 object.
 --- @field thunderSound2Id string The weather's thunder sound 2 ID.
---- @field thunderSound3 tes3sound The weather's thunder sound 3 object.
+--- @field thunderSound3 tes3sound *Read-only*. The weather's thunder sound 3 object.
 --- @field thunderSound3Id string The weather's thunder sound 3 ID.
---- @field thunderSound4 tes3sound The weather's thunder sound 4 object.
+--- @field thunderSound4 tes3sound *Read-only*. The weather's thunder sound 4 object.
 --- @field thunderSound4Id string The weather's thunder sound 4 ID.
 --- @field thunderSoundCount number The weather's thunder sound count.
 --- @field thunderThreshold number The weather's thunder threshold.

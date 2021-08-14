@@ -15,8 +15,8 @@ local attributes, error = lfs.attributes(path, request, resultTable)
 **Parameters**:
 
 * `path` (string): The path, relative to the current directory, to get attributes for.
-* `request` (string): The specific attribute to look for. If provided, the return value becomes the requested value (or nil) instead of a table.
-* `resultTable` (table): If provided, this table will be reused as the result table. If not provided, a new table is created.
+* `request` (string): *Optional*. The specific attribute to look for. If provided, the return value becomes the requested value (or nil) instead of a table.
+* `resultTable` (table): *Optional*. If provided, this table will be reused as the result table. If not provided, a new table is created.
 
 **Returns**:
 
@@ -121,7 +121,7 @@ local success, error = lfs.link(old, new, symlink)
 
 * `old` (string): The object to link to.
 * `new` (string): The name of the link.
-* `symlink` (boolean): If true, the link will be symbolic instead.
+* `symlink` (boolean): *Optional*. If true, the link will be symbolic instead.
 
 **Returns**:
 
@@ -142,8 +142,8 @@ local success, error = lfs.lock(filehandle, mode, start, length)
 
 * `filehandle` ([ioFile](../../types/ioFile)): The file handle to lock.
 * `mode` (string): "r" for a read/shared lock, or "w" for a write/exclusive lock.
-* `start` (number): The starting point of the file to lock.
-* `length` (number): The length of the file, relative to start, to lock.
+* `start` (number): *Optional*. The starting point of the file to lock.
+* `length` (number): *Optional*. The length of the file, relative to start, to lock.
 
 **Returns**:
 
@@ -201,7 +201,7 @@ local success, error = lfs.rmdir(dirname, recursive)
 **Parameters**:
 
 * `dirname` (string): The name of the directory to remove.
-* `recursive` (boolean): If true, all contents of the directory will be removed as well.
+* `recursive` (boolean): *Default*: `false`. If true, all contents of the directory will be removed as well.
 
 **Returns**:
 
@@ -241,8 +241,8 @@ local success, error = lfs.touch(path, accessTime, modifiedTime)
 **Parameters**:
 
 * `path` (string): The path to touch.
-* `accessTime` (number): The new access time to set.
-* `modifiedTime` (number): The new last modified time to set
+* `accessTime` (number): *Optional*. The new access time to set.
+* `modifiedTime` (number): *Optional*. The new last modified time to set
 
 **Returns**:
 
@@ -263,8 +263,8 @@ local success, error = lfs.unlock(filehandle, mode, start, length)
 
 * `filehandle` ([ioFile](../../types/ioFile)): The file handle to unlock.
 * `mode` (string): "r" for a read/shared lock, or "w" for a write/exclusive unlock.
-* `start` (number): The starting point of the file to unlock.
-* `length` (number): The length of the file, relative to start, to unlock.
+* `start` (number): *Optional*. The starting point of the file to unlock.
+* `length` (number): *Optional*. The length of the file, relative to start, to unlock.
 
 **Returns**:
 

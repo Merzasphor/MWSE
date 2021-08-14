@@ -14,9 +14,9 @@ event.register("potionBrewFailed", potionBrewFailedCallback)
 
 ## Event Data
 
-* `alembic` ([tes3apparatus](../../types/tes3apparatus)): The alembic apparatus used to create the potion.
-* `calcinator` ([tes3apparatus](../../types/tes3apparatus)): The calcinator apparatus used to create the potion.
-* `ingredients` (table): An array of up to 4 tes3ingredient objects, which were used to create the potion.
-* `mortar` ([tes3apparatus](../../types/tes3apparatus)): The mortar apparatus used to create the potion.
-* `retort` ([tes3apparatus](../../types/tes3apparatus)): The retort apparatus used to create the potion.
+* `alembic` ([tes3apparatus](../../types/tes3apparatus)): *Read-only*. The alembic apparatus used to create the potion.
+* `calcinator` ([tes3apparatus](../../types/tes3apparatus)): *Read-only*. The calcinator apparatus used to create the potion.
+* `ingredients` (table): *Read-only*. An array of up to 4 tes3ingredient objects, which were used to create the potion.
+* `mortar` ([tes3apparatus](../../types/tes3apparatus)): *Read-only*. The mortar apparatus used to create the potion.
+* `retort` ([tes3apparatus](../../types/tes3apparatus)): *Read-only*. The retort apparatus used to create the potion.
 

@@ -7,7 +7,7 @@ This type inherits the following: [tes3actor](../../types/tes3actor), [tes3physi
 
 ### `actorFlags`
 
-A number representing the actor flags. Truly a bit field.
+*Read-only*. A number representing the actor flags. Truly a bit field.
 
 **Returns**:
 
@@ -17,7 +17,7 @@ A number representing the actor flags. Truly a bit field.
 
 ### `aiConfig`
 
-A substructure off of actors that contains information on the current AI configuration.
+*Read-only*. A substructure off of actors that contains information on the current AI configuration.
 
 **Returns**:
 
@@ -47,7 +47,7 @@ Quick access to the base NPC's base amount of barter gold.
 
 ### `baseObject`
 
-Access to the base NPC object.
+*Read-only*. Access to the base NPC object.
 
 **Returns**:
 
@@ -87,7 +87,7 @@ The bounding box for the object.
 
 ### `class`
 
-Quick access to the base NPC's class.
+*Read-only*. Quick access to the base NPC's class.
 
 **Returns**:
 
@@ -97,7 +97,7 @@ Quick access to the base NPC's class.
 
 ### `cloneCount`
 
-The number of clones that exist of this actor.
+*Read-only*. The number of clones that exist of this actor.
 
 **Returns**:
 
@@ -107,7 +107,7 @@ The number of clones that exist of this actor.
 
 ### `deleted`
 
-The deleted state of the object.
+*Read-only*. The deleted state of the object.
 
 **Returns**:
 
@@ -117,7 +117,7 @@ The deleted state of the object.
 
 ### `disabled`
 
-The disabled state of the object.
+*Read-only*. The disabled state of the object.
 
 **Returns**:
 
@@ -127,7 +127,7 @@ The disabled state of the object.
 
 ### `disposition`
 
-The actor's effective disposition, with all modifiers applied.
+*Read-only*. The actor's effective disposition, with all modifiers applied.
 
 **Returns**:
 
@@ -137,7 +137,7 @@ The actor's effective disposition, with all modifiers applied.
 
 ### `equipment`
 
-The items currently equipped to the actor.
+*Read-only*. The items currently equipped to the actor.
 
 **Returns**:
 
@@ -147,7 +147,7 @@ The items currently equipped to the actor.
 
 ### `faction`
 
-Quick access to the base NPC's faction.
+*Read-only*. Quick access to the base NPC's faction.
 
 **Returns**:
 
@@ -167,7 +167,7 @@ No description yet available.
 
 ### `fatigue`
 
-Quick access to the base NPC's fatigue.
+*Read-only*. Quick access to the base NPC's fatigue.
 
 **Returns**:
 
@@ -177,7 +177,7 @@ Quick access to the base NPC's fatigue.
 
 ### `health`
 
-Quick access to the base NPC's health.
+*Read-only*. Quick access to the base NPC's health.
 
 **Returns**:
 
@@ -187,7 +187,7 @@ Quick access to the base NPC's health.
 
 ### `id`
 
-The unique identifier for the object.
+*Read-only*. The unique identifier for the object.
 
 **Returns**:
 
@@ -197,7 +197,7 @@ The unique identifier for the object.
 
 ### `inventory`
 
-The items currently carried by the actor.
+*Read-only*. The items currently carried by the actor.
 
 **Returns**:
 
@@ -207,7 +207,7 @@ The items currently carried by the actor.
 
 ### `isAttacked`
 
-If true, the actor's attacked flag is set.
+*Read-only*. If true, the actor's attacked flag is set.
 
 **Returns**:
 
@@ -217,7 +217,7 @@ If true, the actor's attacked flag is set.
 
 ### `isEssential`
 
-If true, the actor's essential flag is set.
+*Read-only*. If true, the actor's essential flag is set.
 
 **Returns**:
 
@@ -237,7 +237,7 @@ Always returns true.
 
 ### `isRespawn`
 
-If true, the actor's respawn flag is set.
+*Read-only*. If true, the actor's respawn flag is set.
 
 **Returns**:
 
@@ -247,7 +247,7 @@ If true, the actor's respawn flag is set.
 
 ### `level`
 
-Quick access to the base NPC's level.
+*Read-only*. Quick access to the base NPC's level.
 
 **Returns**:
 
@@ -257,7 +257,7 @@ Quick access to the base NPC's level.
 
 ### `magicka`
 
-Quick access to the base NPC's magicka.
+*Read-only*. Quick access to the base NPC's magicka.
 
 **Returns**:
 
@@ -297,7 +297,7 @@ The next object in parent collection's list.
 
 ### `objectFlags`
 
-The raw flags of the object.
+*Read-only*. The raw flags of the object.
 
 **Returns**:
 
@@ -307,7 +307,7 @@ The raw flags of the object.
 
 ### `objectType`
 
-The type of object. Maps to values in tes3.objectType.
+*Read-only*. The type of object. Maps to values in tes3.objectType.
 
 **Returns**:
 
@@ -347,7 +347,7 @@ The previous object in parent collection's list.
 
 ### `race`
 
-Quick access to the base NPC's race.
+*Read-only*. Quick access to the base NPC's race.
 
 **Returns**:
 
@@ -387,7 +387,7 @@ The scene graph reference node for this object.
 
 ### `script`
 
-Quick access to the base NPC's script.
+*Read-only*. Quick access to the base NPC's script.
 
 **Returns**:
 
@@ -417,7 +417,7 @@ The soruceless flag of the object.
 
 ### `sourceMod`
 
-The filename of the mod that owns this object.
+*Read-only*. The filename of the mod that owns this object.
 
 **Returns**:
 
@@ -427,7 +427,7 @@ The filename of the mod that owns this object.
 
 ### `spells`
 
-Quick access to the base NPC's spell list. It is a tes3spellList, which is a list wrapper with helper functions. The actual list is accessed with .iterator. e.g. for _, spell in pairs(npc.spells.iterator) do print(spell.name) end
+*Read-only*. Quick access to the base NPC's spell list. It is a tes3spellList, which is a list wrapper with helper functions. The actual list is accessed with .iterator. e.g. for _, spell in pairs(npc.spells.iterator) do print(spell.name) end
 
 **Returns**:
 

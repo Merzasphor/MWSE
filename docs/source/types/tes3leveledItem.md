@@ -57,7 +57,7 @@ The percent chance, from 0 to 100, for no object to be chosen.
 
 ### `count`
 
-The number of possible options in the leveled object container.
+*Read-only*. The number of possible options in the leveled object container.
 
 **Returns**:
 
@@ -67,7 +67,7 @@ The number of possible options in the leveled object container.
 
 ### `deleted`
 
-The deleted state of the object.
+*Read-only*. The deleted state of the object.
 
 **Returns**:
 
@@ -77,7 +77,7 @@ The deleted state of the object.
 
 ### `disabled`
 
-The disabled state of the object.
+*Read-only*. The disabled state of the object.
 
 **Returns**:
 
@@ -97,7 +97,7 @@ A numerical representation of bit flags for the object.
 
 ### `id`
 
-The unique identifier for the object.
+*Read-only*. The unique identifier for the object.
 
 **Returns**:
 
@@ -107,7 +107,7 @@ The unique identifier for the object.
 
 ### `list`
 
-The collection that itself, containing tes3leveledListNodes.
+*Read-only*. The collection that itself, containing tes3leveledListNodes.
 
 **Returns**:
 
@@ -137,7 +137,7 @@ The next object in parent collection's list.
 
 ### `objectFlags`
 
-The raw flags of the object.
+*Read-only*. The raw flags of the object.
 
 **Returns**:
 
@@ -147,7 +147,7 @@ The raw flags of the object.
 
 ### `objectType`
 
-The type of object. Maps to values in tes3.objectType.
+*Read-only*. The type of object. Maps to values in tes3.objectType.
 
 **Returns**:
 
@@ -227,7 +227,7 @@ The soruceless flag of the object.
 
 ### `sourceMod`
 
-The filename of the mod that owns this object.
+*Read-only*. The filename of the mod that owns this object.
 
 **Returns**:
 

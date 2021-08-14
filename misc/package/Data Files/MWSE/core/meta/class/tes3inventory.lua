@@ -2,9 +2,9 @@
 
 --- An inventory composes of an iterator, and flags caching the state of the inventory.
 --- @class tes3inventory
---- @field flags number Raw bit-based flags.
---- @field items tes3iterator Direct acces to the container that holds the inventory's items.
---- @field iterator tes3iterator Deprecated. Use ``for index, stack in pairs(inventory)`` to iterate over inventory stacks.
+--- @field flags number *Read-only*. Raw bit-based flags.
+--- @field items tes3iterator *Read-only*. Direct acces to the container that holds the inventory's items.
+--- @field iterator tes3iterator *Read-only*. Deprecated. Use ``for index, stack in pairs(inventory)`` to iterate over inventory stacks.
 --- 	
 --- Direct access to the container that holds the inventory's items.
 tes3inventory = {}
@@ -12,21 +12,21 @@ tes3inventory = {}
 --- Adds an item into the inventory directly. This should not be used, in favor of the tes3.addItem function.
 --- @param params tes3inventory.addItem.params This table accepts the following values:
 --- 
---- ``mobile``: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string — The mobile actor whose stats will be updated.
+--- ``mobile``: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string — *Optional*. The mobile actor whose stats will be updated.
 --- 
 --- ``item``: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon — The item to add.
 --- 
---- ``itemData``: tes3itemData — Any associated item data to add.
+--- ``itemData``: tes3itemData — *Optional*. Any associated item data to add.
 --- 
---- ``count``: number — The number of items to add.
+--- ``count``: number — *Default*: `1`. The number of items to add.
 function tes3inventory:addItem(params) end
 
 ---Table parameter definitions for ``tes3inventory.addItem``.
 --- @class tes3inventory.addItem.params
---- @field mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string The mobile actor whose stats will be updated.
+--- @field mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string *Optional*. The mobile actor whose stats will be updated.
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon The item to add.
---- @field itemData tes3itemData Any associated item data to add.
---- @field count number The number of items to add.
+--- @field itemData tes3itemData *Optional*. Any associated item data to add.
+--- @field count number *Default*: `1`. The number of items to add.
 
 --- Calculates the weight of all items in the container.
 --- @return number result No description yet available.
@@ -34,7 +34,7 @@ function tes3inventory:calculateWeight() end
 
 --- Checks to see if the inventory contains an item.
 --- @param item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string The item to check for.
---- @param itemData tes3itemData If provided, it will check for the specific data as well.
+--- @param itemData tes3itemData *Optional*. If provided, it will check for the specific data as well.
 --- @return boolean result No description yet available.
 function tes3inventory:contains(item, itemData) end
 
@@ -56,26 +56,26 @@ function tes3inventory:findItemStack(item) end
 --- Removes an item from the inventory directly. This should not be used, in favor of the tes3.removeItem function.
 --- @param params tes3inventory.removeItem.params This table accepts the following values:
 --- 
---- ``mobile``: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string — The mobile actor whose stats will be updated.
+--- ``mobile``: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string — *Optional*. The mobile actor whose stats will be updated.
 --- 
 --- ``item``: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon — The item to add.
 --- 
---- ``itemData``: tes3itemData — Any associated item data to add.
+--- ``itemData``: tes3itemData — *Optional*. Any associated item data to add.
 --- 
---- ``count``: number — The number of items to add.
+--- ``count``: number — *Default*: `1`. The number of items to add.
 --- 
 --- ``deleteItemData``: boolean — If set, the itemData will be deleted after being removed.
 function tes3inventory:removeItem(params) end
 
 ---Table parameter definitions for ``tes3inventory.removeItem``.
 --- @class tes3inventory.removeItem.params
---- @field mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string The mobile actor whose stats will be updated.
+--- @field mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string *Optional*. The mobile actor whose stats will be updated.
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon The item to add.
---- @field itemData tes3itemData Any associated item data to add.
---- @field count number The number of items to add.
+--- @field itemData tes3itemData *Optional*. Any associated item data to add.
+--- @field count number *Default*: `1`. The number of items to add.
 --- @field deleteItemData boolean If set, the itemData will be deleted after being removed.
 
 --- Resolves all contained leveled lists and adds the randomized items to the inventory. This should generally not be called directly.
---- @param mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer The mobile actor whose stats will be updated.
+--- @param mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer *Optional*. The mobile actor whose stats will be updated.
 function tes3inventory:resolveLeveledItems(mobile) end
 

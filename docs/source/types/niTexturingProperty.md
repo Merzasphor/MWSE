@@ -37,7 +37,7 @@ Gets or set the bump map. Can be set to nil to delete it. Note that doing so wil
 
 ### `canAddDecal`
 
-If true, the texturing property supports additional decal maps.
+*Read-only*. If true, the texturing property supports additional decal maps.
 
 **Returns**:
 
@@ -57,7 +57,7 @@ Gets or set the dark map. Can be set to nil to delete it. Note that doing so wil
 
 ### `decalCount`
 
-The number of decals currently on the texturing property.
+*Read-only*. The number of decals currently on the texturing property.
 
 **Returns**:
 
@@ -117,7 +117,7 @@ The human-facing name of the given object.
 
 ### `references`
 
-The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
+*Read-only*. The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
 
 **Returns**:
 
@@ -157,7 +157,7 @@ local map, index = niTexturingProperty:addDecalMap(texture)
 
 **Parameters**:
 
-* `texture` (niTexture): The texture to assign to the new decal.
+* `texture` (niTexture): *Optional*. The texture to assign to the new decal.
 
 **Returns**:
 

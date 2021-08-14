@@ -24,7 +24,7 @@ local result = re.compile(s, defs)
 **Parameters**:
 
 * `s` (string): The string to compile.
-* `defs` (table): Extra lua values to be used by the pattern.
+* `defs` (table): *Optional*. Extra lua values to be used by the pattern.
 
 **Returns**:
 
@@ -50,7 +50,7 @@ local result = re.find(subject, pattern, init)
 
 * `subject` (string): The string to search.
 * `pattern` (string): The pattern to search with.
-* `init` (number): Start at this position in the subject string.
+* `init` (number): *Optional*. Start at this position in the subject string.
 
 **Returns**:
 

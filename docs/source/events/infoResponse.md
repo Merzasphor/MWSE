@@ -17,9 +17,9 @@ event.register("infoResponse", infoResponseCallback)
 
 ## Event Data
 
-* `command` (string): The command.
-* `dialogue` ([tes3dialogue](../../types/tes3dialogue)): The dialogue object.
-* `info` ([tes3dialogueInfo](../../types/tes3dialogueInfo)): The dialogue info object.
-* `reference` ([tes3reference](../../types/tes3reference)): The reference.
-* `variables` (tes3scriptVariables): The script variables.
+* `command` (string): *Read-only*. The command.
+* `dialogue` ([tes3dialogue](../../types/tes3dialogue)): *Read-only*. The dialogue object.
+* `info` ([tes3dialogueInfo](../../types/tes3dialogueInfo)): *Read-only*. The dialogue info object.
+* `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. The reference.
+* `variables` (tes3scriptVariables): *Read-only*. The script variables.
 

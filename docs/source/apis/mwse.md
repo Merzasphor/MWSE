@@ -103,7 +103,7 @@ local result = mwse.loadConfig(fileName, defaults)
 **Parameters**:
 
 * `fileName` (string): The non-extensioned name of the config file.
-* `defaults` (table): A table of default values.
+* `defaults` (table): *Optional*. A table of default values.
 
 **Returns**:
 
@@ -124,7 +124,7 @@ mwse.log(message, formatValues)
 **Parameters**:
 
 * `message` (string)
-* `formatValues` (variadic)
+* `formatValues` (variadic): *Optional*.
 
 ***
 
@@ -177,7 +177,7 @@ local result = mwse.saveConfig(fileName, object, config)
 
 * `fileName` (string)
 * `object` (unknown)
-* `config` (table)
+* `config` (table): *Optional*.
 
 **Returns**:
 

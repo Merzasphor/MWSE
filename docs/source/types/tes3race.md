@@ -7,7 +7,7 @@ This type inherits the following: [tes3baseObject](../../types/tes3baseObject)
 
 ### `abilities`
 
-A list of abilities that NPCs of that race have access to. It is a tes3spellList, which is a list wrapper with helper functions. The actual list is accessed with .iterator. e.g. for _, ability in pairs(race.abilities.iterator) do print(ability.name) end
+*Read-only*. A list of abilities that NPCs of that race have access to. It is a tes3spellList, which is a list wrapper with helper functions. The actual list is accessed with .iterator. e.g. for _, ability in pairs(race.abilities.iterator) do print(ability.name) end
 
 **Returns**:
 
@@ -17,7 +17,7 @@ A list of abilities that NPCs of that race have access to. It is a tes3spellList
 
 ### `baseAttributes`
 
-Array-style table access to base 8 attributes for the race. Each element in the array is a tes3raceBaseAttribute.
+*Read-only*. Array-style table access to base 8 attributes for the race. Each element in the array is a tes3raceBaseAttribute.
 
 **Returns**:
 
@@ -37,7 +37,7 @@ The blocked state of the object.
 
 ### `deleted`
 
-The deleted state of the object.
+*Read-only*. The deleted state of the object.
 
 **Returns**:
 
@@ -47,7 +47,7 @@ The deleted state of the object.
 
 ### `description`
 
-Loads from disk and returns the description of the race.
+*Read-only*. Loads from disk and returns the description of the race.
 
 **Returns**:
 
@@ -57,7 +57,7 @@ Loads from disk and returns the description of the race.
 
 ### `disabled`
 
-The disabled state of the object.
+*Read-only*. The disabled state of the object.
 
 **Returns**:
 
@@ -67,7 +67,7 @@ The disabled state of the object.
 
 ### `femaleBody`
 
-Access to all the body parts that will be used for female actors of this race.
+*Read-only*. Access to all the body parts that will be used for female actors of this race.
 
 **Returns**:
 
@@ -87,7 +87,7 @@ Raw bit-based flags.
 
 ### `height`
 
-Access to the the height pair for males/females of the race.
+*Read-only*. Access to the the height pair for males/females of the race.
 
 **Returns**:
 
@@ -97,7 +97,7 @@ Access to the the height pair for males/females of the race.
 
 ### `id`
 
-The unique identifier for the object.
+*Read-only*. The unique identifier for the object.
 
 **Returns**:
 
@@ -127,7 +127,7 @@ Access to the playable race flag.
 
 ### `maleBody`
 
-Access to all the body parts that will be used for male actors of this race.
+*Read-only*. Access to all the body parts that will be used for male actors of this race.
 
 **Returns**:
 
@@ -147,7 +147,7 @@ The modification state of the object since the last save.
 
 ### `name`
 
-The player-facing name for the object.
+*Read-only*. The player-facing name for the object.
 
 **Returns**:
 
@@ -157,7 +157,7 @@ The player-facing name for the object.
 
 ### `objectFlags`
 
-The raw flags of the object.
+*Read-only*. The raw flags of the object.
 
 **Returns**:
 
@@ -167,7 +167,7 @@ The raw flags of the object.
 
 ### `objectType`
 
-The type of object. Maps to values in tes3.objectType.
+*Read-only*. The type of object. Maps to values in tes3.objectType.
 
 **Returns**:
 
@@ -187,7 +187,7 @@ The persistent flag of the object.
 
 ### `skillBonuses`
 
-Array-style table access for 7 skill bonuses for the race. Each element in the array is a tes3raceSkillBonus.
+*Read-only*. Array-style table access for 7 skill bonuses for the race. Each element in the array is a tes3raceSkillBonus.
 
 **Returns**:
 
@@ -207,7 +207,7 @@ The soruceless flag of the object.
 
 ### `sourceMod`
 
-The filename of the mod that owns this object.
+*Read-only*. The filename of the mod that owns this object.
 
 **Returns**:
 
@@ -227,7 +227,7 @@ If true, references of this object can store temporary or persistent lua data.
 
 ### `weight`
 
-Access to the the height pair for males/females of the race.
+*Read-only*. Access to the the height pair for males/females of the race.
 
 **Returns**:
 

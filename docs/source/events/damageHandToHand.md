@@ -17,9 +17,9 @@ event.register("damageHandToHand", damageHandToHandCallback)
 
 ## Event Data
 
-* `attacker` ([tes3mobileActor](../../types/tes3mobileActor)): The mobile actor dealing the damage. Can be nil.
-* `attackerReference` ([tes3reference](../../types/tes3reference)): The attacker mobile's associated reference. Can be nil.
+* `attacker` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile actor dealing the damage. Can be nil.
+* `attackerReference` ([tes3reference](../../types/tes3reference)): *Read-only*. The attacker mobile's associated reference. Can be nil.
 * `fatigueDamage` (number): The amount of fatigue damage done.
-* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): The mobile actor that is taking fatigue damage.
-* `reference` ([tes3reference](../../types/tes3reference)): The mobile’s associated reference.
+* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile actor that is taking fatigue damage.
+* `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. The mobile’s associated reference.
 

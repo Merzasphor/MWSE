@@ -20,8 +20,8 @@ event.register("activate", activateCallback)
 
 ## Event Data
 
-* `activator` ([tes3reference](../../types/tes3reference)): The actor attempting to trigger the event.
-* `target` ([tes3reference](../../types/tes3reference)): The reference that is being activated.
+* `activator` ([tes3reference](../../types/tes3reference)): *Read-only*. The actor attempting to trigger the event.
+* `target` ([tes3reference](../../types/tes3reference)): *Read-only*. The reference that is being activated.
 
 ## Examples
 

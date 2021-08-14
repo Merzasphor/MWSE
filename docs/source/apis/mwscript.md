@@ -15,7 +15,7 @@ mwscript.activate({ reference = ... })
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The target reference for this command to be executed on. Defaults to the normal script execution reference.
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 
 ***
 
@@ -30,9 +30,9 @@ local executed = mwscript.addItem({ reference = ..., item = ..., count = ... })
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The target reference for this command to be executed on. Defaults to the normal script execution reference.
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 	* `item` ([tes3item](../../types/tes3item), string): The item to be added.
-	* `count` (number): The number of items to be added.
+	* `count` (number): *Default*: `1`. The number of items to be added.
 
 **Returns**:
 
@@ -51,7 +51,7 @@ local executed = mwscript.addSoulGem({ reference = ..., creature = ..., soulgem 
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The target reference for this command to be executed on. Defaults to the normal script execution reference.
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 	* `creature` ([tes3creature](../../types/tes3creature), string): The creature to be stored in the soul gem.
 	* `soulgem` ([tes3misc](../../types/tes3misc), string): The soul gem to store the soul in.
 
@@ -72,7 +72,7 @@ local executed = mwscript.addSpell({ reference = ..., spell = ... })
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The target reference for this command to be executed on. Defaults to the normal script execution reference.
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 	* `spell` ([tes3spell](../../types/tes3spell), string)
 
 **Returns**:
@@ -94,7 +94,7 @@ local executed = mwscript.addToLevCreature({ list = ..., creature = ..., level =
 * `params` (table)
 	* `list` ([tes3leveledCreature](../../types/tes3leveledCreature), string): Leveled creature list to add a creature to.
 	* `creature` ([tes3actor](../../types/tes3actor), string): Creature to add to the list.
-	* `level` (number): Minimum level for the creature to spawn.
+	* `level` (number): *Default*: `0`. Minimum level for the creature to spawn.
 
 **Returns**:
 
@@ -115,7 +115,7 @@ local executed = mwscript.addToLevItem({ list = ..., item = ..., level = ... })
 * `params` (table)
 	* `list` ([tes3leveledItem](../../types/tes3leveledItem), string): Leveled item list to add a creature to.
 	* `item` ([tes3item](../../types/tes3item), string): Item to add to the list.
-	* `level` (number): Minimum level for the item to spawn.
+	* `level` (number): *Default*: `0`. Minimum level for the item to spawn.
 
 **Returns**:
 
@@ -153,7 +153,7 @@ local executed = mwscript.aiTravel({ reference = ..., x = ..., y = ..., z = ... 
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The target reference for this command to be executed on. Defaults to the normal script execution reference.
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 	* `x` (number)
 	* `y` (number)
 	* `z` (number)
@@ -175,8 +175,8 @@ local executed = mwscript.disable({ reference = ..., modify = ... })
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The target reference for this command to be executed on. Defaults to the normal script execution reference.
-	* `modify` (boolean): Set the object as modified.
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
+	* `modify` (boolean): *Default*: `true`. Set the object as modified.
 
 **Returns**:
 
@@ -195,9 +195,9 @@ local executed = mwscript.drop({ reference = ..., item = ..., count = ... })
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The target reference for this command to be executed on. Defaults to the normal script execution reference.
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 	* `item` ([tes3item](../../types/tes3item), string): The item to be dropped.
-	* `count` (number): The number of items to drop.
+	* `count` (number): *Default*: `1`. The number of items to drop.
 
 **Returns**:
 
@@ -216,8 +216,8 @@ local executed = mwscript.enable({ reference = ..., modify = ... })
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The target reference for this command to be executed on. Defaults to the normal script execution reference.
-	* `modify` (boolean): Set the object as modified.
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
+	* `modify` (boolean): *Default*: `true`. Set the object as modified.
 
 **Returns**:
 
@@ -236,7 +236,7 @@ local executed = mwscript.equip({ reference = ..., item = ... })
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The target reference for this command to be executed on. Defaults to the normal script execution reference.
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 	* `item` ([tes3item](../../types/tes3item), string): The item to be equipped.
 
 **Returns**:
@@ -256,7 +256,7 @@ local executed = mwscript.explodeSpell({ reference = ..., spell = ... })
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The target reference for this command to be executed on. Defaults to the normal script execution reference.
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 	* `spell` ([tes3spell](../../types/tes3spell), string)
 
 **Returns**:
@@ -290,7 +290,7 @@ local result = mwscript.getDetected({ reference = ..., target = ... })
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The target reference for this command to be executed on. Defaults to the normal script execution reference.
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 	* `target` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): Actor to check detection for.
 
 **Returns**:
@@ -310,7 +310,7 @@ local result = mwscript.getDisabled({ reference = ... })
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The target reference for this command to be executed on. Defaults to the normal script execution reference.
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 
 **Returns**:
 
@@ -329,7 +329,7 @@ local result = mwscript.getDistance({ reference = ..., target = ... })
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The target reference for this command to be executed on. Defaults to the normal script execution reference.
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 	* `target` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): Actor to check distance to.
 
 **Returns**:
@@ -349,7 +349,7 @@ local result = mwscript.getItemCount({ reference = ..., item = ... })
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The target reference for this command to be executed on. Defaults to the normal script execution reference.
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 	* `item` ([tes3item](../../types/tes3item), string)
 
 **Returns**:
@@ -439,7 +439,7 @@ local result = mwscript.getSpellEffects({ reference = ..., spell = ... })
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The target reference for this command to be executed on. Defaults to the normal script execution reference.
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 	* `spell` ([tes3spell](../../types/tes3spell), string)
 
 **Returns**:
@@ -459,7 +459,7 @@ local result = mwscript.hasItemEquipped({ reference = ..., item = ... })
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The target reference for this command to be executed on. Defaults to the normal script execution reference.
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 	* `item` ([tes3item](../../types/tes3item), string): The item to be added.
 
 **Returns**:
@@ -479,11 +479,11 @@ local lastPlacedReference = mwscript.placeAtPC({ reference = ..., object = ..., 
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The target reference for this command to be executed on. Defaults to the normal script execution reference.
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 	* `object` ([tes3object](../../types/tes3object), string): The object to place.
-	* `count` (number)
-	* `distance` (number)
-	* `direction` (number)
+	* `count` (number): *Default*: `1`.
+	* `distance` (number): *Default*: `256`.
+	* `direction` (number): *Default*: `1`.
 
 **Returns**:
 
@@ -502,7 +502,7 @@ local result = mwscript.playSound({ reference = ..., sound = ... })
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The target reference for this command to be executed on. Defaults to the normal script execution reference.
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 	* `sound` ([tes3sound](../../types/tes3sound), string)
 
 **Returns**:
@@ -522,12 +522,12 @@ local executed = mwscript.position({ reference = ..., cell = ..., x = ..., y = .
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The target reference for this command to be executed on. Defaults to the normal script execution reference.
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 	* `cell` (string)
-	* `x` (number)
-	* `y` (number)
-	* `z` (number)
-	* `rotation` (number)
+	* `x` (number): *Default*: `0`.
+	* `y` (number): *Default*: `0`.
+	* `z` (number): *Default*: `0`.
+	* `rotation` (number): *Default*: `0`.
 
 **Returns**:
 
@@ -546,12 +546,12 @@ local executed = mwscript.positionCell({ reference = ..., cell = ..., x = ..., y
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The target reference for this command to be executed on. Defaults to the normal script execution reference.
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 	* `cell` (string)
-	* `x` (number)
-	* `y` (number)
-	* `z` (number)
-	* `rotation` (number)
+	* `x` (number): *Default*: `0`.
+	* `y` (number): *Default*: `0`.
+	* `z` (number): *Default*: `0`.
+	* `rotation` (number): *Default*: `0`.
 
 **Returns**:
 
@@ -570,9 +570,9 @@ local executed = mwscript.removeItem({ reference = ..., item = ..., count = ... 
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The target reference for this command to be executed on. Defaults to the normal script execution reference.
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 	* `item` ([tes3item](../../types/tes3item), string): The item to be added.
-	* `count` (number): The number of items to be added.
+	* `count` (number): *Default*: `1`. The number of items to be added.
 
 **Returns**:
 
@@ -591,7 +591,7 @@ local executed = mwscript.removeSpell({ reference = ..., spell = ... })
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The target reference for this command to be executed on. Defaults to the normal script execution reference.
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 	* `spell` ([tes3spell](../../types/tes3spell), string)
 
 **Returns**:
@@ -630,7 +630,7 @@ local executed = mwscript.setLevel({ reference = ..., level = ... })
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The target reference for this command to be executed on. Defaults to the normal script execution reference.
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 	* `level` (number)
 
 **Returns**:
@@ -650,7 +650,7 @@ local executed = mwscript.startCombat({ reference = ..., target = ... })
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The target reference for this command to be executed on. Defaults to the normal script execution reference.
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 	* `target` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): Actor to start combat with.
 
 **Returns**:
@@ -670,7 +670,7 @@ local executed = mwscript.startScript({ reference = ..., script = ... })
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The target reference for this command to be executed on. Defaults to the normal script execution reference.
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 	* `script` (tes3script, string)
 
 **Returns**:
@@ -690,7 +690,7 @@ local executed = mwscript.stopCombat({ reference = ..., target = ... })
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The target reference for this command to be executed on. Defaults to the normal script execution reference.
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 	* `target` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): Actor to stop combat with.
 
 **Returns**:
@@ -710,7 +710,7 @@ local executed = mwscript.stopScript({ reference = ..., script = ... })
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The target reference for this command to be executed on. Defaults to the normal script execution reference.
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 	* `script` (tes3script, string)
 
 **Returns**:
@@ -730,7 +730,7 @@ local result = mwscript.stopSound({ reference = ..., sound = ... })
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The target reference for this command to be executed on. Defaults to the normal script execution reference.
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 	* `sound` ([tes3sound](../../types/tes3sound), string)
 
 **Returns**:

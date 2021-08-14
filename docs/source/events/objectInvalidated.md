@@ -17,5 +17,5 @@ event.register("objectInvalidated", objectInvalidatedCallback)
 
 ## Event Data
 
-* `object` ([tes3baseObject](../../types/tes3baseObject)): The object being invalidated. Can be a tes3reference.
+* `object` ([tes3baseObject](../../types/tes3baseObject)): *Read-only*. The object being invalidated. Can be a tes3reference.
 

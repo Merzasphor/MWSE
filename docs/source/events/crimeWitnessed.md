@@ -17,10 +17,10 @@ event.register("crimeWitnessed", crimeWitnessedCallback)
 
 ## Event Data
 
-* `position` (tes3vector): The position that the crime ocurred at.
-* `realTimestamp` (number): The timestamp that the crime ocurred at.
-* `type` (string): The type of crime that was committed.
-* `value` (number): The bounty value of the crime.
-* `witness` ([tes3reference](../../types/tes3reference)): The reference that witnessed the crime.
-* `witnessMobile` ([tes3mobileActor](../../types/tes3mobileActor)): The mobile actor of the reference that witnessed the crime.
+* `position` (tes3vector): *Read-only*. The position that the crime ocurred at.
+* `realTimestamp` (number): *Read-only*. The timestamp that the crime ocurred at.
+* `type` (string): *Read-only*. The type of crime that was committed.
+* `value` (number): *Read-only*. The bounty value of the crime.
+* `witness` ([tes3reference](../../types/tes3reference)): *Read-only*. The reference that witnessed the crime.
+* `witnessMobile` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile actor of the reference that witnessed the crime.
 

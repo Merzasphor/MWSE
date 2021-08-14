@@ -37,7 +37,7 @@ The cost of using the enchantment.
 
 ### `deleted`
 
-The deleted state of the object.
+*Read-only*. The deleted state of the object.
 
 **Returns**:
 
@@ -47,7 +47,7 @@ The deleted state of the object.
 
 ### `disabled`
 
-The disabled state of the object.
+*Read-only*. The disabled state of the object.
 
 **Returns**:
 
@@ -57,7 +57,7 @@ The disabled state of the object.
 
 ### `effects`
 
-An array-style table of the tes3effect data on the object.
+*Read-only*. An array-style table of the tes3effect data on the object.
 
 **Returns**:
 
@@ -77,7 +77,7 @@ A bit field for the enchantment's flags.
 
 ### `id`
 
-The unique identifier for the object.
+*Read-only*. The unique identifier for the object.
 
 **Returns**:
 
@@ -117,7 +117,7 @@ The next object in parent collection's list.
 
 ### `objectFlags`
 
-The raw flags of the object.
+*Read-only*. The raw flags of the object.
 
 **Returns**:
 
@@ -127,7 +127,7 @@ The raw flags of the object.
 
 ### `objectType`
 
-The type of object. Maps to values in tes3.objectType.
+*Read-only*. The type of object. Maps to values in tes3.objectType.
 
 **Returns**:
 
@@ -207,7 +207,7 @@ The soruceless flag of the object.
 
 ### `sourceMod`
 
-The filename of the mod that owns this object.
+*Read-only*. The filename of the mod that owns this object.
 
 **Returns**:
 
@@ -286,12 +286,12 @@ tes3enchantment.create({ id = ..., castType = ..., chargeCost = ..., maxCharge =
 **Parameters**:
 
 * `params` (table)
-	* `id` (string): The new object's ID. Must be unique if provided.
+	* `id` (string): *Optional*. The new object's ID. Must be unique if provided.
 	* `castType` (number): The enchantment castType. See tes3.enchantmentType.
 	* `chargeCost` (number): The new enchantment charge cost. Must be greater than 0.
 	* `maxCharge` (number): The new enchantment maximum charge. Must be greater than 0
-	* `flags` (number): The new enchantment flags.
-	* `objectFlags` (number): The object flags initially set. Force set as modified.
+	* `flags` (number): *Optional*. The new enchantment flags.
+	* `objectFlags` (number): *Default*: `0`. The object flags initially set. Force set as modified.
 
 ***
 

@@ -20,6 +20,6 @@ event.register("leveledCreaturePicked", leveledCreaturePickedCallback)
 
 ## Event Data
 
-* `list` ([tes3leveledCreature](../../types/tes3leveledCreature)): The list responsible for creating a pick.
+* `list` ([tes3leveledCreature](../../types/tes3leveledCreature)): *Read-only*. The list responsible for creating a pick.
 * `pick` ([tes3creature](../../types/tes3creature)): The result of the pick by vanilla mechanism. This can be modified to change the result to something else.
 

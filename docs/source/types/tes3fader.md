@@ -47,7 +47,7 @@ tes3fader:fadeIn({ duration = ... })
 **Parameters**:
 
 * `params` (table)
-	* `duration` (number): The time it takes to fade, in seconds.
+	* `duration` (number): *Default*: `1`. The time it takes to fade, in seconds.
 
 ***
 
@@ -62,7 +62,7 @@ tes3fader:fadeOut({ duration = ... })
 **Parameters**:
 
 * `params` (table)
-	* `duration` (number): The time it takes to fade, in seconds.
+	* `duration` (number): *Default*: `1`. The time it takes to fade, in seconds.
 
 ***
 
@@ -77,8 +77,8 @@ tes3fader:fadeTo({ value = ..., duration = ... })
 **Parameters**:
 
 * `params` (table)
-	* `value` (number): The value to fade to.
-	* `duration` (number): The time it takes to fade, in seconds.
+	* `value` (number): *Default*: `1`. The value to fade to.
+	* `duration` (number): *Default*: `1`. The time it takes to fade, in seconds.
 
 ***
 

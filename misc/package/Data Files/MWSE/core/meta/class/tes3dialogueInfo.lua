@@ -2,19 +2,19 @@
 
 --- A child for a given dialogue. Whereas a dialogue may be a conversation topic, a tes3dialogueInfo would be an individual response.
 --- @class tes3dialogueInfo : tes3baseObject
---- @field actor tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance The speaker's actor that the info is filtered for.
---- @field cell tes3cell The speaker's current cell that the info is filtered for.
---- @field disposition number The minimum disposition that the info is filtered for.
+--- @field actor tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance *Read-only*. The speaker's actor that the info is filtered for.
+--- @field cell tes3cell *Read-only*. The speaker's current cell that the info is filtered for.
+--- @field disposition number *Read-only*. The minimum disposition that the info is filtered for.
 --- @field firstHeardFrom tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance The actor that the player first heard the info from.
---- @field npcClass tes3class The speaker's class that the info is filtered for.
---- @field npcFaction tes3faction The speaker's faction that the info is filtered for.
---- @field npcRace tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance The speaker's race that the info is filtered for.
---- @field npcRank number The speaker's faction rank that the info is filtered for.
---- @field npcSex number The speaker's sex that the info is filtered for.
---- @field pcFaction number The player's joined faction that the info is filtered for.
---- @field pcRank number The player's rank required rank in the speaker's faction.
---- @field text string String contents for the info. This is not kept in memory, and must be loaded from files for each call.
---- @field type number The type of the info.
+--- @field npcClass tes3class *Read-only*. The speaker's class that the info is filtered for.
+--- @field npcFaction tes3faction *Read-only*. The speaker's faction that the info is filtered for.
+--- @field npcRace tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance *Read-only*. The speaker's race that the info is filtered for.
+--- @field npcRank number *Read-only*. The speaker's faction rank that the info is filtered for.
+--- @field npcSex number *Read-only*. The speaker's sex that the info is filtered for.
+--- @field pcFaction number *Read-only*. The player's joined faction that the info is filtered for.
+--- @field pcRank number *Read-only*. The player's rank required rank in the speaker's faction.
+--- @field text string *Read-only*. String contents for the info. This is not kept in memory, and must be loaded from files for each call.
+--- @field type number *Read-only*. The type of the info.
 tes3dialogueInfo = {}
 
 --- This method filters the associated dialogue info for given arguments and returns true if the dialogue info filtering passes. This method rises infoFilter event.

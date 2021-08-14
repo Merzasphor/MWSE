@@ -6,7 +6,7 @@ A simple structure to hold mark/recall data.
 
 ### `cell`
 
-The cell to recall to.
+*Read-only*. The cell to recall to.
 
 **Returns**:
 

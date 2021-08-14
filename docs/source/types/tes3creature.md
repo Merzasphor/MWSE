@@ -7,7 +7,7 @@ This type inherits the following: [tes3actor](../../types/tes3actor), [tes3physi
 
 ### `actorFlags`
 
-A number representing the actor flags. Truly a bit field.
+*Read-only*. A number representing the actor flags. Truly a bit field.
 
 **Returns**:
 
@@ -17,7 +17,7 @@ A number representing the actor flags. Truly a bit field.
 
 ### `aiConfig`
 
-A substructure off of actors that contains information on the current AI configuration.
+*Read-only*. A substructure off of actors that contains information on the current AI configuration.
 
 **Returns**:
 
@@ -97,7 +97,7 @@ The bounding box for the object.
 
 ### `cloneCount`
 
-The number of clones that exist of this actor.
+*Read-only*. The number of clones that exist of this actor.
 
 **Returns**:
 
@@ -107,7 +107,7 @@ The number of clones that exist of this actor.
 
 ### `deleted`
 
-The deleted state of the object.
+*Read-only*. The deleted state of the object.
 
 **Returns**:
 
@@ -117,7 +117,7 @@ The deleted state of the object.
 
 ### `disabled`
 
-The disabled state of the object.
+*Read-only*. The disabled state of the object.
 
 **Returns**:
 
@@ -127,7 +127,7 @@ The disabled state of the object.
 
 ### `equipment`
 
-The items currently equipped to the actor.
+*Read-only*. The items currently equipped to the actor.
 
 **Returns**:
 
@@ -137,7 +137,7 @@ The items currently equipped to the actor.
 
 ### `fatigue`
 
-The actor's max fatigue.
+*Read-only*. The actor's max fatigue.
 
 **Returns**:
 
@@ -157,7 +157,7 @@ Access to the creature's flies flag.
 
 ### `health`
 
-The actor's max health.
+*Read-only*. The actor's max health.
 
 **Returns**:
 
@@ -167,7 +167,7 @@ The actor's max health.
 
 ### `id`
 
-The unique identifier for the object.
+*Read-only*. The unique identifier for the object.
 
 **Returns**:
 
@@ -177,7 +177,7 @@ The unique identifier for the object.
 
 ### `inventory`
 
-The items currently carried by the actor.
+*Read-only*. The items currently carried by the actor.
 
 **Returns**:
 
@@ -187,7 +187,7 @@ The items currently carried by the actor.
 
 ### `isAttacked`
 
-If true, the actor's attacked flag is set.
+*Read-only*. If true, the actor's attacked flag is set.
 
 **Returns**:
 
@@ -197,7 +197,7 @@ If true, the actor's attacked flag is set.
 
 ### `isEssential`
 
-If true, the actor's essential flag is set.
+*Read-only*. If true, the actor's essential flag is set.
 
 **Returns**:
 
@@ -217,7 +217,7 @@ Always returns false.
 
 ### `isRespawn`
 
-If true, the actor's respawn flag is set.
+*Read-only*. If true, the actor's respawn flag is set.
 
 **Returns**:
 
@@ -227,7 +227,7 @@ If true, the actor's respawn flag is set.
 
 ### `level`
 
-The base level of the creature.
+*Read-only*. The base level of the creature.
 
 **Returns**:
 
@@ -237,7 +237,7 @@ The base level of the creature.
 
 ### `magicka`
 
-The actor's max magicka.
+*Read-only*. The actor's max magicka.
 
 **Returns**:
 
@@ -287,7 +287,7 @@ The next object in parent collection's list.
 
 ### `objectFlags`
 
-The raw flags of the object.
+*Read-only*. The raw flags of the object.
 
 **Returns**:
 
@@ -297,7 +297,7 @@ The raw flags of the object.
 
 ### `objectType`
 
-The type of object. Maps to values in tes3.objectType.
+*Read-only*. The type of object. Maps to values in tes3.objectType.
 
 **Returns**:
 
@@ -427,7 +427,7 @@ The soruceless flag of the object.
 
 ### `sourceMod`
 
-The filename of the mod that owns this object.
+*Read-only*. The filename of the mod that owns this object.
 
 **Returns**:
 
@@ -437,7 +437,7 @@ The filename of the mod that owns this object.
 
 ### `spells`
 
-A list of spells that the actor has access to. It is a tes3spellList, which is a list wrapper with helper functions. The actual list is accessed with .iterator. e.g. for _, spell in pairs(creature.spells.iterator) do print(spell.name) end
+*Read-only*. A list of spells that the actor has access to. It is a tes3spellList, which is a list wrapper with helper functions. The actual list is accessed with .iterator. e.g. for _, spell in pairs(creature.spells.iterator) do print(spell.name) end
 
 **Returns**:
 

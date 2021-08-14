@@ -2,53 +2,53 @@
 
 --- A mobile object for a creature, NPC, or the player.
 --- @class tes3mobileActor : tes3mobileObject
---- @field actionBeforeCombat tes3actionData Action data stored before the actor entered combat.
---- @field actionData tes3actionData Current action data. Pre-combat action data is stored in the actionBeforeCombat property.
+--- @field actionBeforeCombat tes3actionData *Read-only*. Action data stored before the actor entered combat.
+--- @field actionData tes3actionData *Read-only*. Current action data. Pre-combat action data is stored in the actionBeforeCombat property.
 --- @field activeAI boolean Friendly access to the actor's flag that controls if AI is active.
---- @field activeMagicEffectList table The active magic effects on the actor, from which all others can be accessed. A table with tes3activeMagicEffect items.
---- @field actorType number The type of the mobile actor. 0 is a creature, 1 is an NPC, 2 is the player.
---- @field agility tes3statistic|tes3statisticSkill Direct access to the actor's agility attribute statistic.
---- @field aiPlanner tes3aiPlanner Access to the mobile's AI planner and AI package information.
+--- @field activeMagicEffectList table *Read-only*. The active magic effects on the actor, from which all others can be accessed. A table with tes3activeMagicEffect items.
+--- @field actorType number *Read-only*. The type of the mobile actor. 0 is a creature, 1 is an NPC, 2 is the player.
+--- @field agility tes3statistic|tes3statisticSkill *Read-only*. Direct access to the actor's agility attribute statistic.
+--- @field aiPlanner tes3aiPlanner *Read-only*. Access to the mobile's AI planner and AI package information.
 --- @field alarm number The actor's alarm AI value.
---- @field animationController tes3actorAnimationController|tes3playerAnimationController No description yet available.
---- @field armorRating number The actor's current armour rating, taking equipment condition into account. Armour mitigation can be automatically applied to damage by using the applyDamage function.
+--- @field animationController tes3actorAnimationController|tes3playerAnimationController *Read-only*. No description yet available.
+--- @field armorRating number *Read-only*. The actor's current armour rating, taking equipment condition into account. Armour mitigation can be automatically applied to damage by using the applyDamage function.
 --- 
 --- Armour mitigation calculation:
 --- x = damage / (damage + target.armorRating)
 --- damage *= max(fCombatArmorMinMult, x)
 --- if damage < 1 then damage = 1 end
 --- @field attackBonus number Direct access to the actor's attack bonus effect attribute.
---- @field attacked boolean Friendly access to the actor's flag that controls if the actor has been attacked.
---- @field attributes table Access to a table of 8 tes3statistic objects for the actor's attributes.
+--- @field attacked boolean *Read-only*. Friendly access to the actor's flag that controls if the actor has been attacked.
+--- @field attributes table *Read-only*. Access to a table of 8 tes3statistic objects for the actor's attributes.
 --- @field barterGold number The current amount of gold that the actor has access to for bartering.
 --- @field blind number Direct access to the actor's blind effect attribute.
---- @field cell tes3cell Fetches the cell that the actor is in.
+--- @field cell tes3cell *Read-only*. Fetches the cell that the actor is in.
 --- @field chameleon number Direct access to the actor's chameleon effect attribute.
---- @field collidingReference tes3reference The reference that the mobile has collided with this frame.
---- @field combatSession tes3combatSession Combat session data. This exists while the actor is in combat to provide memory for AI combat decisions.
+--- @field collidingReference tes3reference *Read-only*. The reference that the mobile has collided with this frame.
+--- @field combatSession tes3combatSession *Read-only*. Combat session data. This exists while the actor is in combat to provide memory for AI combat decisions.
 --- @field corpseHourstamp number No description yet available.
---- @field currentEnchantedItem tes3equipmentStack The currently equipped enchanted item that the actor will use.
---- @field currentSpell tes3spell The currently equipped spell that the actor will use.
---- @field effectAttributes table Access to a table of 24 numbers for the actor's effect attributes.
---- @field encumbrance tes3statistic|tes3statisticSkill Access to the actor's encumbrance statistic.
---- @field endurance tes3statistic|tes3statisticSkill Direct access to the actor's endurance attribute statistic.
---- @field facing number The facing of the actor, in radians.
---- @field fatigue tes3statistic|tes3statisticSkill Access to the actor's fatigue statistic.
+--- @field currentEnchantedItem tes3equipmentStack *Read-only*. The currently equipped enchanted item that the actor will use.
+--- @field currentSpell tes3spell *Read-only*. The currently equipped spell that the actor will use.
+--- @field effectAttributes table *Read-only*. Access to a table of 24 numbers for the actor's effect attributes.
+--- @field encumbrance tes3statistic|tes3statisticSkill *Read-only*. Access to the actor's encumbrance statistic.
+--- @field endurance tes3statistic|tes3statisticSkill *Read-only*. Direct access to the actor's endurance attribute statistic.
+--- @field facing number *Read-only*. The facing of the actor, in radians.
+--- @field fatigue tes3statistic|tes3statisticSkill *Read-only*. Access to the actor's fatigue statistic.
 --- @field fight number The actor's fight AI value.
 --- @field flee number The actor's flee AI value.
---- @field friendlyActors tes3iterator A collection of other tes3mobileActors that this actor considers friendly.
+--- @field friendlyActors tes3iterator *Read-only*. A collection of other tes3mobileActors that this actor considers friendly.
 --- @field greetDuration number No description yet available.
---- @field greetTimer number No description yet available.
---- @field health tes3statistic|tes3statisticSkill Access to the actor's health statistic.
+--- @field greetTimer number *Read-only*. No description yet available.
+--- @field health tes3statistic|tes3statisticSkill *Read-only*. Access to the actor's health statistic.
 --- @field hello number The actor's hello AI value.
 --- @field holdBreathTime number No description yet available.
---- @field hostileActors tes3iterator A collection of other tes3mobileActors that this actor considers hostile.
---- @field idleAnim boolean Friendly access to the actor's flag that controls if the actor is using their idle animation.
---- @field inCombat boolean Friendly access to the actor's flag that controls if the actor is in combat.
---- @field intelligence tes3statistic|tes3statisticSkill Direct access to the actor's intelligence attribute statistic.
+--- @field hostileActors tes3iterator *Read-only*. A collection of other tes3mobileActors that this actor considers hostile.
+--- @field idleAnim boolean *Read-only*. Friendly access to the actor's flag that controls if the actor is using their idle animation.
+--- @field inCombat boolean *Read-only*. Friendly access to the actor's flag that controls if the actor is in combat.
+--- @field intelligence tes3statistic|tes3statisticSkill *Read-only*. Direct access to the actor's intelligence attribute statistic.
 --- @field invisibility number Direct access to the actor's invisibility effect attribute.
---- @field isCrittable boolean Friendly access to the actor's flag that controls if the actor can be critically hit.
---- @field isDead boolean True if the actor is dead.
+--- @field isCrittable boolean *Read-only*. Friendly access to the actor's flag that controls if the actor can be critically hit.
+--- @field isDead boolean *Read-only*. True if the actor is dead.
 --- @field isFalling boolean Direct access to the actor's current movement flags, showing if the actor is falling. This is when the actor is falling without having jumped, e.g. if they walked off a ledge.
 --- @field isFlying boolean Direct access to the actor's current movement flags, showing if the actor is flying.
 --- @field isJumping boolean Direct access to the actor's current movement flags, showing if the actor is jumping.
@@ -67,15 +67,15 @@
 --- @field jump number Direct access to the actor's jump effect attribute.
 --- @field lastGroundZ number No description yet available.
 --- @field levitate number Direct access to the actor's levitate effect attribute.
---- @field luck tes3statistic|tes3statisticSkill Direct access to the actor's luck attribute statistic.
---- @field magicka tes3statistic|tes3statisticSkill Access to the actor's magicka statistic.
---- @field magickaMultiplier tes3statistic|tes3statisticSkill Access to the actor's magicka multiplier statistic.
+--- @field luck tes3statistic|tes3statisticSkill *Read-only*. Direct access to the actor's luck attribute statistic.
+--- @field magicka tes3statistic|tes3statisticSkill *Read-only*. Access to the actor's magicka statistic.
+--- @field magickaMultiplier tes3statistic|tes3statisticSkill *Read-only*. Access to the actor's magicka multiplier statistic.
 --- @field mobToMobCollision boolean Allows modifying if this actor will collide with other actors. When true (default), the actor cannot move through other actors. When false, the actor is allowed to move through other actors, and other actors can move through it.
 --- 
 --- May be useful when free movement is required in crowded situations, or to temporarily let the player move past an actor.
---- @field nextActionWeight number No description yet available.
+--- @field nextActionWeight number *Read-only*. No description yet available.
 --- @field paralyze number Direct access to the actor's paralyze effect attribute.
---- @field personality tes3statistic|tes3statisticSkill Direct access to the actor's personality attribute statistic.
+--- @field personality tes3statistic|tes3statisticSkill *Read-only*. Direct access to the actor's personality attribute statistic.
 --- @field readiedAmmo tes3equipmentStack The currently equipped ammo.
 --- @field readiedAmmoCount number The number of ammo equipped for the readied ammo.
 --- @field readiedShield tes3equipmentStack The currently equipped shield.
@@ -91,24 +91,24 @@
 --- @field resistPoison number Direct access to the actor's poison resistance effect attribute.
 --- @field resistShock number Direct access to the actor's shock resistance effect attribute.
 --- @field sanctuary number Direct access to the actor's sanctuary effect attribute.
---- @field scanInterval number No description yet available.
---- @field scanTimer number No description yet available.
+--- @field scanInterval number *Read-only*. No description yet available.
+--- @field scanTimer number *Read-only*. No description yet available.
 --- @field shield number Direct access to the actor's shield effect attribute.
 --- @field silence number Direct access to the actor's silence effect attribute.
 --- @field sound number Direct access to the actor's sound effect attribute.
---- @field speed tes3statistic|tes3statisticSkill Direct access to the actor's speed attribute statistic.
---- @field spellReadied boolean Friendly access to the actor's flag that controls if the actor has a spell readied.
---- @field strength tes3statistic|tes3statisticSkill Direct access to the actor's strength attribute statistic.
+--- @field speed tes3statistic|tes3statisticSkill *Read-only*. Direct access to the actor's speed attribute statistic.
+--- @field spellReadied boolean *Read-only*. Friendly access to the actor's flag that controls if the actor has a spell readied.
+--- @field strength tes3statistic|tes3statisticSkill *Read-only*. Direct access to the actor's strength attribute statistic.
 --- @field swiftSwim number Direct access to the actor's swift swim effect attribute.
 --- @field talkedTo boolean Direct access to the actor's flag that shows it was recently talked to.
 --- @field torchSlot tes3equipmentStack The currently equipped light.
---- @field underwater boolean Friendly access to the actor's flag that controls if the actor is under water.
+--- @field underwater boolean *Read-only*. Friendly access to the actor's flag that controls if the actor is under water.
 --- @field waterBreathing number Direct access to the actor's water breathing effect attribute.
 --- @field waterWalking number Direct access to the actor's water walking effect attribute.
---- @field weaponDrawn boolean Friendly access to the actor's flag that shows if the weapon model is visible. When readying a weapon, there is a short period of time at the start of the animation, where the weapon is not visible yet. This flag will only be set after this initial stage is done. This flag is still set with hand-to-hand even though it doesn't use a model. Setting this to false while a weapon is drawn will normally cause the actor to play its weapon draw animation again.
---- @field werewolf boolean Friendly access to the actor's flag that controls if the actor in werewolf form.
---- @field width number No description yet available.
---- @field willpower tes3statistic|tes3statisticSkill Direct access to the actor's willpower attribute statistic.
+--- @field weaponDrawn boolean *Read-only*. Friendly access to the actor's flag that shows if the weapon model is visible. When readying a weapon, there is a short period of time at the start of the animation, where the weapon is not visible yet. This flag will only be set after this initial stage is done. This flag is still set with hand-to-hand even though it doesn't use a model. Setting this to false while a weapon is drawn will normally cause the actor to play its weapon draw animation again.
+--- @field werewolf boolean *Read-only*. Friendly access to the actor's flag that controls if the actor in werewolf form.
+--- @field width number *Read-only*. No description yet available.
+--- @field willpower tes3statistic|tes3statisticSkill *Read-only*. Direct access to the actor's willpower attribute statistic.
 tes3mobileActor = {}
 
 --- Damages the actor, with options to control mitigation and difficulty scaling. Invokes the 'damage' and 'damaged' events, with 'script' source. Returns the actual damage done after armor mitigation and resistance, but before difficulty scaling.
@@ -116,31 +116,31 @@ tes3mobileActor = {}
 --- 
 --- ``damage``: number — The amount of damage to apply.
 --- 
---- ``applyArmor``: boolean — If armor should mitigate the incoming damage. If the player is the target, armor experience will be gained.
+--- ``applyArmor``: boolean — *Optional*. If armor should mitigate the incoming damage. If the player is the target, armor experience will be gained.
 --- 
---- ``resistAttribute``: number — The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from tes3.effectAttributes.
+--- ``resistAttribute``: number — *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from tes3.effectAttributes.
 --- 
---- ``applyDifficulty``: boolean — If the game difficulty modifier should be applied. Must be used with the 'playerAttack' argument to apply the correct modifier.
+--- ``applyDifficulty``: boolean — *Optional*. If the game difficulty modifier should be applied. Must be used with the 'playerAttack' argument to apply the correct modifier.
 --- 
---- ``playerAttack``: boolean — If the attack came from the player. Used for difficulty calculation.
+--- ``playerAttack``: boolean — *Optional*. If the attack came from the player. Used for difficulty calculation.
 --- 
---- ``doNotChangeHealth``: boolean — If all armor effects except the health change should be applied. These include hit sounds, armor condition damage, and player experience gain from being hit.
+--- ``doNotChangeHealth``: boolean — *Optional*. If all armor effects except the health change should be applied. These include hit sounds, armor condition damage, and player experience gain from being hit.
 --- @return number result No description yet available.
 function tes3mobileActor:applyDamage(params) end
 
 ---Table parameter definitions for ``tes3mobileActor.applyDamage``.
 --- @class tes3mobileActor.applyDamage.params
 --- @field damage number The amount of damage to apply.
---- @field applyArmor boolean If armor should mitigate the incoming damage. If the player is the target, armor experience will be gained.
---- @field resistAttribute number The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from tes3.effectAttributes.
---- @field applyDifficulty boolean If the game difficulty modifier should be applied. Must be used with the 'playerAttack' argument to apply the correct modifier.
---- @field playerAttack boolean If the attack came from the player. Used for difficulty calculation.
---- @field doNotChangeHealth boolean If all armor effects except the health change should be applied. These include hit sounds, armor condition damage, and player experience gain from being hit.
+--- @field applyArmor boolean *Optional*. If armor should mitigate the incoming damage. If the player is the target, armor experience will be gained.
+--- @field resistAttribute number *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from tes3.effectAttributes.
+--- @field applyDifficulty boolean *Optional*. If the game difficulty modifier should be applied. Must be used with the 'playerAttack' argument to apply the correct modifier.
+--- @field playerAttack boolean *Optional*. If the attack came from the player. Used for difficulty calculation.
+--- @field doNotChangeHealth boolean *Optional*. If all armor effects except the health change should be applied. These include hit sounds, armor condition damage, and player experience gain from being hit.
 
 --- Damages the actor's fatigue, with accompanying reaction from the reciever. Invokes the 'damageHandToHand' and 'damagedHandToHand' events, with 'script' source. Returns the actual fatigue damage done.
 --- @param fatigueDamage number The amount of fatigue damage to apply.
---- @param swing number The attack swing magnitude, range 0-1. Only modifies hit volume.
---- @param alwaysPlayHitVoice boolean Always play the hit reaction voiceover.
+--- @param swing number *Optional*. The attack swing magnitude, range 0-1. Only modifies hit volume.
+--- @param alwaysPlayHitVoice boolean *Optional*. Always play the hit reaction voiceover.
 --- @return number result No description yet available.
 function tes3mobileActor:applyFatigueDamage(fatigueDamage, swing, alwaysPlayHitVoice) end
 
@@ -159,33 +159,33 @@ function tes3mobileActor:applyHealthDamage(damage, isPlayerAttack, scaleWithDiff
 --- 
 --- ``damage``: number — The amount of damage to apply.
 --- 
---- ``applyArmor``: boolean — If armor should mitigate the incoming damage.
+--- ``applyArmor``: boolean — *Optional*. If armor should mitigate the incoming damage.
 --- 
---- ``resistAttribute``: number — The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from tes3.effectAttributes.
+--- ``resistAttribute``: number — *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from tes3.effectAttributes.
 --- @return number result No description yet available.
 function tes3mobileActor:calcEffectiveDamage(params) end
 
 ---Table parameter definitions for ``tes3mobileActor.calcEffectiveDamage``.
 --- @class tes3mobileActor.calcEffectiveDamage.params
 --- @field damage number The amount of damage to apply.
---- @field applyArmor boolean If armor should mitigate the incoming damage.
---- @field resistAttribute number The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from tes3.effectAttributes.
+--- @field applyArmor boolean *Optional*. If armor should mitigate the incoming damage.
+--- @field resistAttribute number *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from tes3.effectAttributes.
 
 --- Fetches a filtered list of the active magic effects on the actor. Returns a table with tes3activeMagicEffect items.
 --- @param params tes3mobileActor.getActiveMagicEffects.params This table accepts the following values:
 --- 
---- ``effect``: number — The magic effect ID to search for.
+--- ``effect``: number — *Optional*. The magic effect ID to search for.
 --- 
---- ``serial``: number — The magic instance serial to search for.
+--- ``serial``: number — *Optional*. The magic instance serial to search for.
 --- @return table result No description yet available.
 function tes3mobileActor:getActiveMagicEffects(params) end
 
 ---Table parameter definitions for ``tes3mobileActor.getActiveMagicEffects``.
 --- @class tes3mobileActor.getActiveMagicEffects.params
---- @field effect number The magic effect ID to search for.
---- @field serial number The magic instance serial to search for.
+--- @field effect number *Optional*. The magic effect ID to search for.
+--- @field serial number *Optional*. The magic instance serial to search for.
 
---- Gets the weight of the boots equipped on the actor, or 0 if no boots are equipped.
+--- *Read-only*. Gets the weight of the boots equipped on the actor, or 0 if no boots are equipped.
 --- @return number result No description yet available.
 function tes3mobileActor:getBootsWeight() end
 
@@ -260,7 +260,7 @@ function tes3mobileActor:startDialogue() end
 function tes3mobileActor:stopCombat(force) end
 
 --- Updates statistics derived from attributes, which are magicka, fatigue, and encumbrance. Will also update the UI if used on the player. Normally handled automatically when you use tes3.modStatistic.
---- @param attribute tes3statistic|tes3statisticSkill Limits the update to statistics derived from this attribute.  e.g. ``mobile:updateDerivedStatistics(mobile.strength)``. If not present, all derived statistics will be updated.
+--- @param attribute tes3statistic|tes3statisticSkill *Optional*. Limits the update to statistics derived from this attribute.  e.g. ``mobile:updateDerivedStatistics(mobile.strength)``. If not present, all derived statistics will be updated.
 function tes3mobileActor:updateDerivedStatistics(attribute) end
 
 --- Updates the actor's visual opacity. Used after modifying applied chameleon or invisiblity effects.
