@@ -90,7 +90,7 @@ One of the core game objects.
 
 **Returns**:
 
-* `result` (tes3worldController)
+* `result` ([tes3worldController](../../types/tes3worldController))
 
 ***
 
