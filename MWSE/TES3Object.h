@@ -250,6 +250,7 @@ namespace TES3 {
 		BaseObject * getBaseObject() const;
 
 		bool isActor() const;
+		bool isItem() const;
 		const char* getSourceFilename() const;
 
 		bool getDisabled() const;
