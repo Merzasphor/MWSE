@@ -411,10 +411,20 @@ tes3ui.suppressTooltip(suppress)
 
 ### `tes3ui.updateBarterMenuTiles`
 
-Forces the game to update the barter tile GUI elements.
+Forces the game to update the barter menu's tile GUI elements.
 
 ```lua
 tes3ui.updateBarterMenuTiles()
+```
+
+***
+
+### `tes3ui.updateContentsMenuTiles`
+
+Forces the game to update the contents menu's tile GUI elements.
+
+```lua
+tes3ui.updateContentsMenuTiles()
 ```
 
 ***

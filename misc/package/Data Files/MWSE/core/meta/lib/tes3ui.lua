@@ -151,8 +151,11 @@ function tes3ui.showScrollMenu(text) end
 --- @param suppress boolean Turns on suppression if true, immediately hiding any active tooltip and further world object tooltips. Turns off suppression if false.
 function tes3ui.suppressTooltip(suppress) end
 
---- Forces the game to update the barter tile GUI elements.
+--- Forces the game to update the barter menu's tile GUI elements.
 function tes3ui.updateBarterMenuTiles() end
+
+--- Forces the game to update the contents menu's tile GUI elements.
+function tes3ui.updateContentsMenuTiles() end
 
 --- Tells the game to update the character image in the player's inventory. It will update immediately if the inventory is open, or the next time the inventory is opened otherwise.
 function tes3ui.updateInventoryCharacterImage() end

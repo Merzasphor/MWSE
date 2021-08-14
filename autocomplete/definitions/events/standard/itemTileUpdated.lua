@@ -3,7 +3,7 @@ return {
 	description = "This event fires when a dialogue response is triggered.",
 	eventData = {
 		["element"] = {
-			type = "tesuiElement",
+			type = "tes3uiElement",
 			readOnly = true,
 			description = "The command.",
 		},
@@ -18,7 +18,7 @@ return {
 			description = "The script variables.",
 		},
 		["menu"] = {
-			type = "tesuiElement",
+			type = "tes3uiElement",
 			readOnly = true,
 			description = "The dialogue object.",
 		},
