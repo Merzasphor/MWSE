@@ -6,7 +6,7 @@ return {
 		type = "table",
 		tableParams = {
 			{ name = "reference", type = "tes3reference|tes3mobileActor|string", description = "Who to give items to." },
-			{ name = "item", type = "tes3item|string", description = "The item to add." },
+			{ name = "item", type = "tes3item|tes3leveledItem|string", description = "The item to add. If a leveled item is passed, it will be resolved and added." },
 			{ name = "itemData", type = "tes3itemData", optional = true, description = "The item data for the item." },
 			{ name = "soul", type = "tes3creature", optional = true, description = "For creating filled soul gems." },
 			{ name = "count", type = "number", default = "1", description = "The maximum number of items to add." },

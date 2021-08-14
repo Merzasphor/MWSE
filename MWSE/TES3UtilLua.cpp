@@ -2740,8 +2740,21 @@ namespace mwse {
 			}
 
 			// Get the item we are going to add.
-			TES3::Item* item = getOptionalParamObject<TES3::Item>(params, "item");
-			if (item == nullptr) {
+			TES3::Item* item = nullptr;
+			TES3::PhysicalObject* itemBase = getOptionalParamObject<TES3::PhysicalObject>(params, "item");
+			if (itemBase == nullptr) {
+				throw std::invalid_argument("Invalid 'item' parameter provided.");
+			}
+			else if (itemBase->objectType == TES3::ObjectType::LeveledItem) {
+				item = static_cast<TES3::LeveledItem*>(itemBase)->resolve();
+				if (!item) {
+					return 0;
+				}
+			}
+			else if (itemBase->isItem()) {
+				item = static_cast<TES3::Item*>(itemBase);
+			}
+			else {
 				throw std::invalid_argument("Invalid 'item' parameter provided.");
 			}
 
