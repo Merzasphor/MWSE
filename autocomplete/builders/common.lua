@@ -260,6 +260,9 @@ common.urlBase = "https://mwse.github.io/MWSE"
 --- @type string
 common.defaultNoDescriptionText = "No description yet available."
 
+--- @param package table
+--- @param useDefault boolean|nil
+--- @return string
 function common.getDescriptionString(package, useDefault)
 	if (useDefault == nil) then
 		useDefault = true
