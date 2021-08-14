@@ -121,7 +121,7 @@ The amount of weight that the container can hold.
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([tes3inventory](../../types/tes3inventory))
 
 ***
 

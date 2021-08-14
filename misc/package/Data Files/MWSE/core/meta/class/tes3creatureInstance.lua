@@ -12,7 +12,6 @@
 --- @field fatigue number *Read-only*. The creature's current fatigue.
 --- @field flies boolean Access to the creature's flies flag.
 --- @field health number *Read-only*. The creature's current health.
---- @field inventory tes3iterator *Read-only*. A collection that contains the items in the actor's inventory.
 --- @field isAttacked boolean *Read-only*. If true, the creature attacked flag is set.
 --- @field isEssential boolean *Read-only*. If true, the creature essential flag is set.
 --- @field isInstance boolean Always returns true.

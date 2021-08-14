@@ -9,7 +9,7 @@
 --- @field blood number Friendly access to actor's blood type.
 --- @field cloneCount number *Read-only*. The number of clones that exist of this actor.
 --- @field equipment tes3iterator *Read-only*. The items currently equipped to the actor.
---- @field inventory tes3iterator *Read-only*. The items currently carried by the actor.
+--- @field inventory tes3inventory *Read-only*. The items currently carried by the actor.
 tes3actor = {}
 
 --- Checks if the actor will offer a service in dialogue. This an offer and may still be refused by dialogue checks. To also get the result of dialogue checks, use tes3.checkMerchantOffersService.

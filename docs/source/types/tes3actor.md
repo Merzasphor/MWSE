@@ -113,7 +113,7 @@ The bounding box for the object.
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([tes3inventory](../../types/tes3inventory))
 
 ***
 

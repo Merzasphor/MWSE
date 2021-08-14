@@ -187,11 +187,11 @@ Access to the creature's flies flag.
 
 ### `inventory`
 
-*Read-only*. A collection that contains the items in the actor's inventory.
+*Read-only*. The items currently carried by the actor.
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([tes3inventory](../../types/tes3inventory))
 
 ***
 
