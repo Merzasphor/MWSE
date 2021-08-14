@@ -14,6 +14,10 @@ namespace NI {
 		click(something.value_or(false));
 	}
 
+	std::reference_wrapper<TES3::Vector4[6]> Camera::getCullingPlanes_lua() {
+		return std::ref(cullingPlanes);
+	}
+
 	const auto NI_Camera_windowPointToRay = reinterpret_cast<bool(__thiscall*)(Camera*, int, int, TES3::Vector3&, TES3::Vector3&)>(0x6CDA70);
 	bool Camera::windowPointToRay(int screenX, int screenY, TES3::Vector3& out_origin, TES3::Vector3& out_direction) {
 		return NI_Camera_windowPointToRay(this, screenX, screenY, out_origin, out_direction);

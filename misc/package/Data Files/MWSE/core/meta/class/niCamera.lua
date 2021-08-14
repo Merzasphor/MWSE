@@ -2,6 +2,7 @@
 
 --- Object that represent a camera. Position and orientation is determined by parent properties.
 --- @class niCamera : niAVObject, niObjectNET, niObject
+--- @field cullingPlanes table The culling planes of the camera.
 --- @field lodAdjust number The level-of-detail adjustment value for the camera. A higher value will lower the LOD of the objects drawn by the camera.
 --- @field port tes3vector4 The port on the backbuffer of the camera.
 --- @field renderer niAlphaProperty|niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niFogProperty|niGeometry|niGeometryData|niLight|niLookAtController|niMaterialProperty|niNode|niPixelData|niPointLight|niSourceTexture|niSpotLight|niStencilProperty|niSwitchNode|niTexturingProperty|niTimeController|niTriBasedGeometry|niTriBasedGeometryData|niTriShape|niTriShapeData|niVertexColorProperty *Read-only*. The renderer of the camera.

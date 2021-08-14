@@ -30,6 +30,7 @@ namespace mwse {
 			usertypeDefinition["worldRight"] = &NI::Camera::worldRight;
 			usertypeDefinition["worldToCamera"] = &NI::Camera::worldToCamera;
 			usertypeDefinition["worldUp"] = &NI::Camera::worldUp;
+			usertypeDefinition["cullingPlanes"] = sol::readonly_property(&NI::Camera::getCullingPlanes_lua);
 
 			// Basic function binding.
 			usertypeDefinition["click"] = &NI::Camera::click_lua;
