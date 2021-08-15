@@ -203,7 +203,9 @@ namespace TES3 {
 	enum class EffectRange : unsigned char {
 		Self,
 		Touch,
-		Target
+		Target,
+
+		Invalid = 0xFF,
 	};
 
 	namespace MagicSchool {
@@ -332,6 +334,17 @@ namespace TES3 {
 		int duration; // 0xC
 		int magnitudeMin; // 0x10
 		int magnitudeMax; // 0x14
+
+		Effect();
+		Effect(const Effect& from);
+		Effect(const sol::table& from);
+
+		Effect& operator=(const Effect& vector);
+		Effect& operator=(const sol::table table);
+		Effect& operator=(const sol::object object);
+
+		bool operator==(const Effect& vector) const;
+		bool operator!=(const Effect& vector) const;
 
 		//
 		// Other related this-call functions.

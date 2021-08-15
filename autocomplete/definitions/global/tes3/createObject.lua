@@ -10,7 +10,7 @@ return {
 		},
 	}},
 	returns = {
-		{ name = "createdObject", type = "tes3activator|tes3container|tes3enchantment|tes3misc|tes3sound|tes3static|tes3weapon" },
+		{ name = "createdObject", type = "tes3activator|tes3alchemy|tes3container|tes3enchantment|tes3misc|tes3sound|tes3spell|tes3static|tes3weapon" },
 	},
 	examples = {
 		["createMisc"] = {

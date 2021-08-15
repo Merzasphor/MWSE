@@ -488,7 +488,7 @@ local createdObject = tes3.createObject({ objectType = ..., getIfExists = ... })
 
 **Returns**:
 
-* `createdObject` ([tes3activator](../../types/tes3activator), [tes3container](../../types/tes3container), [tes3enchantment](../../types/tes3enchantment), [tes3misc](../../types/tes3misc), [tes3sound](../../types/tes3sound), [tes3static](../../types/tes3static), [tes3weapon](../../types/tes3weapon))
+* `createdObject` ([tes3activator](../../types/tes3activator), [tes3alchemy](../../types/tes3alchemy), [tes3container](../../types/tes3container), [tes3enchantment](../../types/tes3enchantment), [tes3misc](../../types/tes3misc), [tes3sound](../../types/tes3sound), [tes3spell](../../types/tes3spell), [tes3static](../../types/tes3static), [tes3weapon](../../types/tes3weapon))
 
 ??? example "Example: Creates a tes3misc object"
 

@@ -13,7 +13,8 @@
 --- @field playerStart boolean A flag that determines if the spell may be assigned to the player at character generation if the player has enough skill to cast it.
 tes3spell = {}
 
---- Creates a new spell object, which will be stored as part of the current saved game.
+--- Use `tes3.createObject` instead. This function created a new spell object, which will be stored as part of the current saved game.
+--- @deprecated
 --- @param id string The new object's ID. Must be unique.
 --- @param name string *Optional*. The new object's name.
 function tes3spell.create(id, name) end

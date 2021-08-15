@@ -371,18 +371,5 @@ local schoolID = tes3spell:getLeastProficientSchool(actor)
 
 ## Functions
 
-### `create`
-
-Creates a new spell object, which will be stored as part of the current saved game.
-
-```lua
-tes3spell.create(id, name)
-```
-
-**Parameters**:
-
-* `id` (string): The new object's ID. Must be unique.
-* `name` (string): *Optional*. The new object's name.
-
 ***
 

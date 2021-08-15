@@ -3,6 +3,7 @@
 #include "BitUtil.h"
 #include "TES3Util.h"
 
+#include "TES3MobileActor.h"
 #include "TES3DataHandler.h"
 #include "TES3GameSetting.h"
 #include "TES3MagicEffectController.h"
@@ -247,6 +248,98 @@ namespace TES3 {
 
 	int MagicEffect::getSkillForSchool() const {
 		return reinterpret_cast<int*>(0x7926B8)[school];
+	}
+
+	Effect::Effect() {
+		effectID = EffectID::None;
+		skillID = SkillID::Invalid;
+		attributeID = Attribute::Invalid;
+		rangeType = EffectRange::Invalid;
+		radius = 0;
+		duration = 0;
+		magnitudeMin = 0;
+		magnitudeMax = 0;
+	}
+
+	Effect::Effect(const Effect& from) {
+		effectID = from.effectID;
+		skillID = from.skillID;
+		attributeID = from.attributeID;
+		rangeType = from.rangeType;
+		radius = from.radius;
+		duration = from.duration;
+		magnitudeMin = from.magnitudeMin;
+		magnitudeMax = from.magnitudeMax;
+	}
+
+	Effect::Effect(const sol::table& from) {
+		effectID = from.get_or("id", EffectID::None);
+		skillID = from.get_or("skill", SkillID::Invalid);
+		attributeID = from.get_or("attribute", Attribute::Invalid);
+		rangeType = from.get_or("rangeType", EffectRange::Self);
+		radius = from.get_or("radius", 0);
+		duration = from.get_or("duration", 0);
+		magnitudeMin = from.get_or("min", 0);
+		magnitudeMax = from.get_or("max", 0);
+	}
+
+	Effect& Effect::operator=(const Effect& effect) {
+		effectID = effect.effectID;
+		skillID = effect.skillID;
+		attributeID = effect.attributeID;
+		rangeType = effect.rangeType;
+		radius = effect.radius;
+		duration = effect.duration;
+		magnitudeMin = effect.magnitudeMin;
+		magnitudeMax = effect.magnitudeMax;
+		return *this;
+	}
+
+	Effect& Effect::operator=(const sol::table table) {
+		effectID = table.get_or("id", EffectID::None);
+		skillID = table.get_or("skill", SkillID::Invalid);
+		attributeID = table.get_or("attribute", Attribute::Invalid);
+		rangeType = table.get_or("rangeType", EffectRange::Self);
+		radius = table.get_or("radius", 0);
+		duration = table.get_or("duration", 0);
+		magnitudeMin = table.get_or("min", 0);
+		magnitudeMax = table.get_or("max", 0);
+		return *this;
+	}
+
+	Effect& Effect::operator=(const sol::object object) {
+		if (object.is<Effect>()) {
+			*this = object.as<Effect>();
+		}
+		else if (object.is<sol::table>()) {
+			*this = object.as<sol::table>();
+		}
+		else {
+			throw std::invalid_argument("Could not convert lua object to tes3effect.");
+		}
+		return *this;
+	}
+
+	bool Effect::operator==(const Effect& other) const {
+		return effectID == other.effectID &&
+			skillID == other.skillID &&
+			attributeID == other.attributeID &&
+			rangeType == other.rangeType &&
+			radius == other.radius &&
+			duration == other.duration &&
+			magnitudeMin == other.magnitudeMin &&
+			magnitudeMax == other.magnitudeMax;
+	}
+
+	bool Effect::operator!=(const Effect& other) const {
+		return effectID != other.effectID ||
+			skillID != other.skillID ||
+			attributeID != other.attributeID ||
+			rangeType != other.rangeType ||
+			radius != other.radius ||
+			duration != other.duration ||
+			magnitudeMin != other.magnitudeMin ||
+			magnitudeMax != other.magnitudeMax;
 	}
 
 	const auto TES3_Effect_calculateCost = reinterpret_cast<double(__cdecl*)(const Effect*)>(0x4AA700);

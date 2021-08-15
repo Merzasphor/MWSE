@@ -388,7 +388,7 @@ function tes3.clearMarkLocation() end
 --- `objectType`: number — Maps to `tes3.objectType` constants. Used to filter object type to create.
 --- 
 --- `getIfExists`: boolean — *Default*: `true`. If `true`, an existing object of the same type and ID will be returned instead of creating a new one.
---- @return tes3activator|tes3container|tes3enchantment|tes3misc|tes3sound|tes3static|tes3weapon createdObject No description yet available.
+--- @return tes3activator|tes3alchemy|tes3container|tes3enchantment|tes3misc|tes3sound|tes3spell|tes3static|tes3weapon createdObject No description yet available.
 function tes3.createObject(params) end
 
 ---Table parameter definitions for `tes3.createObject`.
