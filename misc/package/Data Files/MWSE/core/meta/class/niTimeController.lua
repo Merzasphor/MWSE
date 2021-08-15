@@ -20,6 +20,6 @@ niTimeController = {}
 --- @param time number No description yet available.
 function niTimeController:start(time) end
 
---- Stops the controller. If you only want to pause the controller, use the ``update`` property.
+--- Stops the controller. If you only want to pause the controller, use the `update` property.
 function niTimeController:stop() end
 

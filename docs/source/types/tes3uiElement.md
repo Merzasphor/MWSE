@@ -1,8 +1,8 @@
 # tes3uiElement
 
-A UI element, the main building block of the UI system. All elements are created with methods on a parent Element.  Elements are very configurable, and have many HTML-like layout features. All layout properties can be set to ``nil`` to reset them to the default value, which will deactivate any related layout mode.
+A UI element, the main building block of the UI system. All elements are created with methods on a parent Element.  Elements are very configurable, and have many HTML-like layout features. All layout properties can be set to `nil` to reset them to the default value, which will deactivate any related layout mode.
 
-Elements can have custom data attached using their `Property`_ key-value store, and specific Elements have specific ``element.widget`` accessors to control behaviour.
+Elements can have custom data attached using their `Property`_ key-value store, and specific Elements have specific `element.widget` accessors to control behaviour.
 
 ## Properties
 
@@ -30,7 +30,7 @@ See absolutePosAlignY.
 
 ### `alpha`
 
-Element alpha colour, using range [0.0, 1.0]. Used to composite elements. If you wish to hide an element completely, use ``disable`` instead.
+Element alpha colour, using range [0.0, 1.0]. Used to composite elements. If you wish to hide an element completely, use `disable` instead.
 
 **Returns**:
 
@@ -40,7 +40,7 @@ Element alpha colour, using range [0.0, 1.0]. Used to composite elements. If you
 
 ### `autoHeight`
 
-When ``true``, automatically expands element dimensions to fit child elements. Dimensions are restricted by minWidth, minHeight, maxWidth and maxHeight properties.
+When `true`, automatically expands element dimensions to fit child elements. Dimensions are restricted by minWidth, minHeight, maxWidth and maxHeight properties.
 
 **Returns**:
 
@@ -50,7 +50,7 @@ When ``true``, automatically expands element dimensions to fit child elements. D
 
 ### `autoWidth`
 
-When ``true``, automatically expands element dimensions to fit child elements. Dimensions are restricted by minWidth, minHeight, maxWidth and maxHeight properties.
+When `true`, automatically expands element dimensions to fit child elements. Dimensions are restricted by minWidth, minHeight, maxWidth and maxHeight properties.
 
 **Returns**:
 
@@ -172,7 +172,7 @@ Element RGB colour, an array of 3 floats with value range [0.0, 1.0]. For menus 
 
 ### `consumeMouseEvents`
 
-When ``true``, mouse events over this element are sent to event handlers, or discarded if there is no handler. When ``false``, mouse events go upwards to the first ancestor that can consume mouse events. Useful to set on widget sub-elements. ``true`` by default.
+When `true`, mouse events over this element are sent to event handlers, or discarded if there is no handler. When `false`, mouse events go upwards to the first ancestor that can consume mouse events. Useful to set on widget sub-elements. `true` by default.
 
 **Returns**:
 
@@ -192,7 +192,7 @@ Disables user actions on this element. Widgets may stop accepting mouse and keyb
 
 ### `flowDirection`
 
-Can have values ``"left_to_right"`` or ``"top_to_bottom"``. Indicates which direction child elements are laid out.
+Can have values `"left_to_right"` or `"top_to_bottom"`. Indicates which direction child elements are laid out.
 
 **Returns**:
 
@@ -229,7 +229,7 @@ Sets element dimensions using a proportional sizer. The sizer starts with the pa
     
     Bug note: If widthProportional is used without heightProportional, an element may not respond to changes in parent size. It is recommended to set heightProportional, or have a fixed size sibling element if dynamic reflow is required.
     
-    Overrides fixed, minimum and maximum sizes unless this value is ``nil`` (default).
+    Overrides fixed, minimum and maximum sizes unless this value is `nil` (default).
 
 **Returns**:
 
@@ -239,7 +239,7 @@ Sets element dimensions using a proportional sizer. The sizer starts with the pa
 
 ### `id`
 
-*Read-only*. The element's ID.  The element can be later accessed by ``ancestor:findChild(id)``. Note that multiple elements may have the same ID, such as subparts of a widget, or list items. Therefore, you may think of ids as an element class identifier.
+*Read-only*. The element's ID.  The element can be later accessed by `ancestor:findChild(id)`. Note that multiple elements may have the same ID, such as subparts of a widget, or list items. Therefore, you may think of ids as an element class identifier.
 
 **Returns**:
 
@@ -269,7 +269,7 @@ Image scaling multipliers. Only applies to image elements.
 
 ### `justifyText`
 
-Can have values ``"left"``, ``"center"``, or ``"right"``. Controls text justification. To work correctly for center/right justification,  ``wrapText`` must be ``true``.
+Can have values `"left"`, `"center"`, or `"right"`. Controls text justification. To work correctly for center/right justification,  `wrapText` must be `true`.
 
 **Returns**:
 
@@ -419,7 +419,7 @@ The raw value of the element's text. This, unlike the normal text property, will
 
 ### `repeatKeys`
 
-Controls if there is repeating text input when keys are held down. ``true`` by default.
+Controls if there is repeating text input when keys are held down. `true` by default.
 
 **Returns**:
 
@@ -429,7 +429,7 @@ Controls if there is repeating text input when keys are held down. ``true`` by d
 
 ### `scaleMode`
 
-When set to ``true`` on image and NIF elements, they are scaled to fit ``width`` and ``height``.
+When set to `true` on image and NIF elements, they are scaled to fit `width` and `height`.
 
 **Returns**:
 
@@ -483,7 +483,7 @@ Sets element dimensions using a proportional sizer. The sizer starts with the pa
     
     Bug note: If widthProportional is used without heightProportional, an element may not respond to changes in parent size. It is recommended to set heightProportional, or have a fixed size sibling element if dynamic reflow is required.
     
-    Overrides fixed, minimum and maximum sizes unless this value is ``nil`` (default).
+    Overrides fixed, minimum and maximum sizes unless this value is `nil` (default).
 
 **Returns**:
 
@@ -493,7 +493,7 @@ Sets element dimensions using a proportional sizer. The sizer starts with the pa
 
 ### `wrapText`
 
-Controls text wrapping. Setting this to ``true`` will also set ``layoutHeightFraction`` to ``1.0``, which is required for wrapping text to adjust to its container size.
+Controls text wrapping. Setting this to `true` will also set `layoutHeightFraction` to `1.0`, which is required for wrapping text to adjust to its container size.
 
 **Returns**:
 
@@ -526,16 +526,16 @@ local result = tes3uiElement:createBlock(id)
 Creates a clickable button. Register the "mouseClick" event to capture a button press.
     
     Custom widget properties:
-        | `number`_ ``element.widget.state``: Interaction state. 1 = normal, 2 = disabled, 4 = active. Controls which colour set to use for text.
-        | `table`_ (float[3]) ``element.widget.idle``: Text colour for normal state, no mouse interaction.
-        | `table`_ (float[3]) ``element.widget.over``: Text colour for normal state, on mouseOver.
-        | `table`_ (float[3]) ``element.widget.pressed``: Text colour for normal state, on mouseDown.
-        | `table`_ (float[3]) ``element.widget.idleDisabled``: Text colour for disabled state, no mouse interaction.
-        | `table`_ (float[3]) ``element.widget.overDisabled``: Text colour for disabled state, on mouseOver.
-        | `table`_ (float[3]) ``element.widget.pressedDisabled``: Text colour for disabled state, on mouseDown.
-        | `table`_ (float[3]) ``element.widget.idleActive``: Text colour for active state, no mouse interaction.
-        | `table`_ (float[3]) ``element.widget.overActive``: Text colour for active state, on mouseOver.
-        | `table`_ (float[3]) ``element.widget.pressedActive``: Text colour for active state, on mouseDown.
+        | `number`_ `element.widget.state`: Interaction state. 1 = normal, 2 = disabled, 4 = active. Controls which colour set to use for text.
+        | `table`_ (float[3]) `element.widget.idle`: Text colour for normal state, no mouse interaction.
+        | `table`_ (float[3]) `element.widget.over`: Text colour for normal state, on mouseOver.
+        | `table`_ (float[3]) `element.widget.pressed`: Text colour for normal state, on mouseDown.
+        | `table`_ (float[3]) `element.widget.idleDisabled`: Text colour for disabled state, no mouse interaction.
+        | `table`_ (float[3]) `element.widget.overDisabled`: Text colour for disabled state, on mouseOver.
+        | `table`_ (float[3]) `element.widget.pressedDisabled`: Text colour for disabled state, on mouseDown.
+        | `table`_ (float[3]) `element.widget.idleActive`: Text colour for active state, no mouse interaction.
+        | `table`_ (float[3]) `element.widget.overActive`: Text colour for active state, on mouseOver.
+        | `table`_ (float[3]) `element.widget.pressedActive`: Text colour for active state, on mouseDown.
 
 ```lua
 local result = tes3uiElement:createButton(id)
@@ -574,11 +574,11 @@ local result = tes3uiElement:createDivider(id)
 Creates a horizontal quantity indicator bar.
 
     Custom widget properties:
-        | `number`_ (integer) ``element.widget.current``: Current (filled) value.
-        | `number`_ (integer) ``element.widget.max``: Maximum value.
-        | `boolean`_ ``element.widget.showText``: If text of the format "current/max" is shown. Default is ``true``.
-        | `table`_ (float[3]) ``element.widget.fillColor``: Colour of filled area.
-        | `number`_ (float) ``element.widget.fillAlpha``: Alpha transparency of filled area.
+        | `number`_ (integer) `element.widget.current`: Current (filled) value.
+        | `number`_ (integer) `element.widget.max`: Maximum value.
+        | `boolean`_ `element.widget.showText`: If text of the format "current/max" is shown. Default is `true`.
+        | `table`_ (float[3]) `element.widget.fillColor`: Colour of filled area.
+        | `number`_ (float) `element.widget.fillAlpha`: Alpha transparency of filled area.
 
 ```lua
 local result = tes3uiElement:createFillBar(id, current, max)
@@ -601,11 +601,11 @@ local result = tes3uiElement:createFillBar(id, current, max)
 Creates a horizontally scrolling pane.
 
     Custom widget properties:
-        | `number`_ ``element.widget.positionX``: Horizontal scroll offset in pixels.
-        | `boolean`_ ``element.widget.scrollbarVisible``: Set if the scrollbar is displayed.
+        | `number`_ `element.widget.positionX`: Horizontal scroll offset in pixels.
+        | `boolean`_ `element.widget.scrollbarVisible`: Set if the scrollbar is displayed.
 
     Custom widget methods:
-        | ``element.widget:contentsChanged()``: Call to update scroll bar slider and limits after adding or removing elements to the content container. Because content size depends on layout, this must be run after a menu:updateLayout(). Only required if the content size changes.
+        | `element.widget:contentsChanged()`: Call to update scroll bar slider and limits after adding or removing elements to the content container. Because content size depends on layout, this must be run after a menu:updateLayout(). Only required if the content size changes.
 
 ```lua
 local result = tes3uiElement:createHorizontalScrollPane(id)
@@ -650,7 +650,7 @@ local result = tes3uiElement:createImage(id, path)
 **Parameters**:
 
 * `id` (number): *Optional*. A registered identifier to help find this element later.
-* `path` (string): An image path. This path is relative to ``Data Files``.
+* `path` (string): An image path. This path is relative to `Data Files`.
 
 **Returns**:
 
@@ -669,9 +669,9 @@ local result = tes3uiElement:createImageButton(id, idle, over, path)
 **Parameters**:
 
 * `id` (number): *Optional*. A registered identifier to help find this element later.
-* `idle` (string): The path to the idle image. This path is relative to ``Data Files``.
-* `over` (string): The path to the mouse hover image. This path is relative to ``Data Files``.
-* `path` (string): The path to the mouse pressed image. This path is relative to ``Data Files``.
+* `idle` (string): The path to the idle image. This path is relative to `Data Files`.
+* `over` (string): The path to the mouse hover image. This path is relative to `Data Files`.
+* `path` (string): The path to the mouse pressed image. This path is relative to `Data Files`.
 
 **Returns**:
 
@@ -681,7 +681,7 @@ local result = tes3uiElement:createImageButton(id, idle, over, path)
 
 ### `createLabel`
 
-Creates a text label. It defaults to displaying all text on a single line. To get a multi-line label, set ``wrap_text`` to ``true``. The element is created with ``autoWidth`` and ``autoHeight`` turned on.
+Creates a text label. It defaults to displaying all text on a single line. To get a multi-line label, set `wrap_text` to `true`. The element is created with `autoWidth` and `autoHeight` turned on.
 
 ```lua
 local result = tes3uiElement:createLabel(id, text)
@@ -709,7 +709,7 @@ local result = tes3uiElement:createNif(id, text)
 **Parameters**:
 
 * `id` (number): *Optional*. A registered identifier to help find this element later.
-* `text` (string): A model path. This path is relative to ``Data Files``.
+* `text` (string): A model path. This path is relative to `Data Files`.
 
 **Returns**:
 
@@ -719,10 +719,10 @@ local result = tes3uiElement:createNif(id, text)
 
 ### `createParagraphInput`
 
-Creates a multi-line text input element, with line wrapping on. To receive input the keyboard must be captured with ``tes3ui.acquireTextInput(element)``. Read the input with the ``text`` property. Write an initial value to edit by setting the ``text`` property.
+Creates a multi-line text input element, with line wrapping on. To receive input the keyboard must be captured with `tes3ui.acquireTextInput(element)`. Read the input with the `text` property. Write an initial value to edit by setting the `text` property.
 
     Custom widget properties:
-        | `number`_ (integer) ``element.widget.lengthLimit``: Maximum input length. Default is ``1023``.
+        | `number`_ (integer) `element.widget.lengthLimit`: Maximum input length. Default is `1023`.
 
 ```lua
 local result = tes3uiElement:createParagraphInput(id)
@@ -762,13 +762,13 @@ local result = tes3uiElement:createRect(id, color)
 Creates a horizontal slider.
 
     Custom widget properties:
-        | `number`_ (integer) ``element.widget.current``: Current value.
-        | `number`_ (integer) ``element.widget.max``: Maximum value.
-        | `number`_ (integer) ``element.widget.step``: Amount changed by left and right arrow buttons.
-        | `number`_ (integer) ``element.widget.jump``: Amount changed by clicking inside the slider area.
+        | `number`_ (integer) `element.widget.current`: Current value.
+        | `number`_ (integer) `element.widget.max`: Maximum value.
+        | `number`_ (integer) `element.widget.step`: Amount changed by left and right arrow buttons.
+        | `number`_ (integer) `element.widget.jump`: Amount changed by clicking inside the slider area.
 
     Custom events used with register:
-        | ``"PartScrollBar_changed"``: Triggers on value change; moving the slider is not enough if the value is the same.
+        | `"PartScrollBar_changed"`: Triggers on value change; moving the slider is not enough if the value is the same.
 
 ```lua
 local result = tes3uiElement:createSlider(id, current, max, step, jump)
@@ -793,13 +793,13 @@ local result = tes3uiElement:createSlider(id, current, max, step, jump)
 Creates a vertical slider.
 
     Custom widget properties:
-        | `number`_ (integer) ``element.widget.current``: Current value.
-        | `number`_ (integer) ``element.widget.max``: Maximum value.
-        | `number`_ (integer) ``element.widget.step``: Amount changed by up and down arrow buttons.
-        | `number`_ (integer) ``element.widget.jump``: Amount changed by clicking inside the slider area.
+        | `number`_ (integer) `element.widget.current`: Current value.
+        | `number`_ (integer) `element.widget.max`: Maximum value.
+        | `number`_ (integer) `element.widget.step`: Amount changed by up and down arrow buttons.
+        | `number`_ (integer) `element.widget.jump`: Amount changed by clicking inside the slider area.
 
     Custom events used with register:
-        | ``"PartScrollBar_changed"``: Triggers on value change; moving the slider is not enough if the value is the same.
+        | `"PartScrollBar_changed"`: Triggers on value change; moving the slider is not enough if the value is the same.
 
 ```lua
 local result = tes3uiElement:createSliderVertical(id, current, max, step, jump)
@@ -821,11 +821,11 @@ local result = tes3uiElement:createSliderVertical(id, current, max, step, jump)
 
 ### `createTextInput`
 
-Creates a single line text input element. To receive input the keyboard must be captured with ``tes3ui.acquireTextInput(element)``. Read the input with the ``text`` property. Write an initial value to display by setting the ``text`` property; that value will be cleared on the first keypress.
+Creates a single line text input element. To receive input the keyboard must be captured with `tes3ui.acquireTextInput(element)`. Read the input with the `text` property. Write an initial value to display by setting the `text` property; that value will be cleared on the first keypress.
 
     Custom widget properties:
-        | `boolean`_ ``element.widget.eraseOnFirstKey``: Clears the initial value if the first keypress is not an edit action. Default is ``true``.
-        | `number`_ (integer) ``element.widget.lengthLimit"``: Maximum input length, or ``nil`` for no limit. If you are setting names, the engine limits most identifiers to 31 characters. Default is ``nil``.
+        | `boolean`_ `element.widget.eraseOnFirstKey`: Clears the initial value if the first keypress is not an edit action. Default is `true`.
+        | `number`_ (integer) `element.widget.lengthLimit"`: Maximum input length, or `nil` for no limit. If you are setting names, the engine limits most identifiers to 31 characters. Default is `nil`.
 
 ```lua
 local result = tes3uiElement:createTextInput(id)
@@ -843,7 +843,7 @@ local result = tes3uiElement:createTextInput(id)
 
 ### `createTextSelect`
 
-Creates a selectable line of text, with configurable hover, click, and disabled colours. Can be used to create a list box by placing them in a ScrollPane. ``state`` sets the initial interaction state.
+Creates a selectable line of text, with configurable hover, click, and disabled colours. Can be used to create a list box by placing them in a ScrollPane. `state` sets the initial interaction state.
 
 ```lua
 local result = tes3uiElement:createTextSelect(id, text, state)
@@ -884,11 +884,11 @@ local result = tes3uiElement:createThinBorder(id)
 Creates a vertically scrolling pane. Useful as a list box.
 
     Custom widget properties:
-        | `number`_ ``element.widget.positionY``: Vertical scroll offset in pixels.
-        | `boolean`_ ``element.widget.scrollbarVisible``: Set if the scrollbar is displayed.
+        | `number`_ `element.widget.positionY`: Vertical scroll offset in pixels.
+        | `boolean`_ `element.widget.scrollbarVisible`: Set if the scrollbar is displayed.
 
     Custom widget methods:
-        | ``element.widget:contentsChanged()``: Call to update scroll bar slider and limits after adding or removing elements to the content container. Because content size depends on layout, this must be run after a menu:updateLayout(). Only required if the content size changes.
+        | `element.widget:contentsChanged()`: Call to update scroll bar slider and limits after adding or removing elements to the content container. Because content size depends on layout, this must be run after a menu:updateLayout(). Only required if the content size changes.
 
 ```lua
 local result = tes3uiElement:createVerticalScrollPane(id)
@@ -926,7 +926,7 @@ tes3uiElement:destroyChildren()
 
 ### `findChild`
 
-Finds a child element matching the ``id`` argument. Searches children recursively. Returns the first child element with a matching id, or ``nil`` if no match found.
+Finds a child element matching the `id` argument. Searches children recursively. Returns the first child element with a matching id, or `nil` if no match found.
 
 ```lua
 local result = tes3uiElement:findChild(id)
@@ -974,7 +974,7 @@ local result = tes3uiElement:getContentElement()
 
 ### `getPropertyBool`
 
-Properties are named variables attached to an element. Gets a property value with ``propName`` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. Returns ``false`` if the property key did not have data.
+Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. Returns `false` if the property key did not have data.
 
 ```lua
 local result = tes3uiElement:getPropertyBool(propName)
@@ -992,7 +992,7 @@ local result = tes3uiElement:getPropertyBool(propName)
 
 ### `getPropertyFloat`
 
-Properties are named variables attached to an element. Gets a property value with ``propName`` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. Returns 0 if the property key did not have data.
+Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. Returns 0 if the property key did not have data.
 
 ```lua
 local result = tes3uiElement:getPropertyFloat(propName)
@@ -1010,7 +1010,7 @@ local result = tes3uiElement:getPropertyFloat(propName)
 
 ### `getPropertyInt`
 
-Properties are named variables attached to an element. Gets a property value with ``propName`` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. Returns 0 if the property key did not have data.
+Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. Returns 0 if the property key did not have data.
 
 ```lua
 local result = tes3uiElement:getPropertyInt(propName)
@@ -1028,14 +1028,14 @@ local result = tes3uiElement:getPropertyInt(propName)
 
 ### `getPropertyObject`
 
-Properties are named variables attached to an element. Gets a property value with ``propName`` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. Returns ``nil`` if the property key did not have data, or if it could not guess the type of the property value.
+Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. Returns `nil` if the property key did not have data, or if it could not guess the type of the property value.
     
-    For ``getPropertyObject``, an expected return value not derived from ``tes3baseObject`` requires the usertype to be provided as well. Currently accepted usertypes are:
-	``tes3itemData``
-	``tes3itemStack``
-	``tes3gameFile``
-	``tes3inventoryTile``
-	``tes3uiElement``
+    For `getPropertyObject`, an expected return value not derived from `tes3baseObject` requires the usertype to be provided as well. Currently accepted usertypes are:
+	`tes3itemData`
+	`tes3itemStack`
+	`tes3gameFile`
+	`tes3inventoryTile`
+	`tes3uiElement`
 	
 	This is required because there is no identifying type information stored with the pointer. If the usertype is incorrect, there are no safety checks keeping the game from crashing.
 
@@ -1082,15 +1082,15 @@ tes3uiElement:loadMenuPosition()
 
 ### `register`
 
-Sets an ``event`` handler, which can add or override an existing event handler. The use of ``registerBefore`` or ``registerAfter`` is recommended if you do not want to replace the existing event handler. The eventID can be a standard ``event`` name, or an event specific to an element class. The callback receives an argument with the event data. See below for details.
+Sets an `event` handler, which can add or override an existing event handler. The use of `registerBefore` or `registerAfter` is recommended if you do not want to replace the existing event handler. The eventID can be a standard `event` name, or an event specific to an element class. The callback receives an argument with the event data. See below for details.
     
-The original Morrowind callback is captured and can be invoked with the ``forwardEvent`` method on the event argument. If there is an existing Lua callback, it is replaced.
+The original Morrowind callback is captured and can be invoked with the `forwardEvent` method on the event argument. If there is an existing Lua callback, it is replaced.
 
 
 
 Lua UI event specification:
 
-Events can be bound to elements via the `Element`_ ``register`` method, which takes an event name. Event names can be one of the standard events listed here, or a widget-specific event.
+Events can be bound to elements via the `Element`_ `register` method, which takes an event name. Event names can be one of the standard events listed here, or a widget-specific event.
 
 Standard events:
     **mouseLeave**
@@ -1142,7 +1142,7 @@ Standard events:
 Event forwarding
 -------------------------------------------------------------------------------
 
-The original Morrowind event handler is saved when you first register an event. It may be optionally invoked with the ``forwardEvent`` method.  Note that handler may or may not destroy the event widget or the menu, so you should know how it behaves before accessing any elements after a callback. 
+The original Morrowind event handler is saved when you first register an event. It may be optionally invoked with the `forwardEvent` method.  Note that handler may or may not destroy the event widget or the menu, so you should know how it behaves before accessing any elements after a callback. 
 
 **Example**
 
@@ -1164,8 +1164,8 @@ Event handler
 The standard type signature for events.
 
 `boolean`_ eventHandler(**EventData** e)
-    Returns: ``optional``
-        Returning ``false`` may cancel an interaction for certain events. e.g. unfocus
+    Returns: `optional`
+        Returning `false` may cancel an interaction for certain events. e.g. unfocus
    
     EventData:
         **source** (`Element`_)
@@ -1202,7 +1202,7 @@ tes3uiElement:register(eventID, callback)
 
 ### `registerAfter`
 
-Sets an ``event`` handler to run after any existing event handler on the element. Can be any event usable with ``register``. The callback receives an argument with the event data. See ``register`` for details.
+Sets an `event` handler to run after any existing event handler on the element. Can be any event usable with `register`. The callback receives an argument with the event data. See `register` for details.
 
 ```lua
 tes3uiElement:registerAfter(eventID, callback)
@@ -1217,7 +1217,7 @@ tes3uiElement:registerAfter(eventID, callback)
 
 ### `registerBefore`
 
-Sets an ``event`` handler to run before any existing event handler on the element. Can be any event usable with ``register``. The callback receives an argument with the event data. See ``register`` for details.
+Sets an `event` handler to run before any existing event handler on the element. Can be any event usable with `register`. The callback receives an argument with the event data. See `register` for details.
 
 ```lua
 tes3uiElement:registerBefore(eventID, callback)
@@ -1232,9 +1232,9 @@ tes3uiElement:registerBefore(eventID, callback)
 
 ### `reorderChildren`
 
-    Moves the layout order of the children of this element. ``count`` elements are taken from starting child `Element`_ or index (0-based) ``moveFrom``, and moved before the child `Element`_ or index (0-based) ``insertBefore``. If ``count`` is -1, all children after ``moveFrom`` are moved. If any index is a negative number, then the index represents a distance from the end of the child list.
+    Moves the layout order of the children of this element. `count` elements are taken from starting child `Element`_ or index (0-based) `moveFrom`, and moved before the child `Element`_ or index (0-based) `insertBefore`. If `count` is -1, all children after `moveFrom` are moved. If any index is a negative number, then the index represents a distance from the end of the child list.
     
-    Returns ``true`` if the operation succeeded, or ``false`` if at least one argument was invalid.
+    Returns `true` if the operation succeeded, or `false` if at least one argument was invalid.
 
 ```lua
 local result = tes3uiElement:reorderChildren(insertBefore, moveFrom, count)
@@ -1264,7 +1264,7 @@ tes3uiElement:saveMenuPosition()
 
 ### `setPropertyBool`
 
-Sets a property value with ``prop`` as the property key. Properties are named variables attached to an element. Gets a property value with ``propName`` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties.
+Sets a property value with `prop` as the property key. Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties.
 
 ```lua
 tes3uiElement:setPropertyBool(propName, value)
@@ -1279,7 +1279,7 @@ tes3uiElement:setPropertyBool(propName, value)
 
 ### `setPropertyFloat`
 
-Sets a property value with ``prop`` as the property key. Properties are named variables attached to an element. Gets a property value with ``propName`` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties.
+Sets a property value with `prop` as the property key. Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties.
 
 ```lua
 tes3uiElement:setPropertyFloat(propName, value)
@@ -1294,7 +1294,7 @@ tes3uiElement:setPropertyFloat(propName, value)
 
 ### `setPropertyInt`
 
-Sets a property value with ``prop`` as the property key. Properties are named variables attached to an element. Gets a property value with ``propName`` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties.
+Sets a property value with `prop` as the property key. Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties.
 
 ```lua
 tes3uiElement:setPropertyInt(propName, value)
@@ -1309,7 +1309,7 @@ tes3uiElement:setPropertyInt(propName, value)
 
 ### `setPropertyObject`
 
-Sets a property value with ``prop`` as the property key. Properties are named variables attached to an element. Gets a property value with ``propName`` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties.
+Sets a property value with `prop` as the property key. Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties.
 
 ```lua
 tes3uiElement:setPropertyObject(propName, value)
@@ -1338,7 +1338,7 @@ tes3uiElement:sortChildren(sortFunction)
 
 ### `triggerEvent`
 
-Triggers a UI event on an element, either using supplied event data, or by constructing new event data using ``eventName``. ``eventName`` is the same as used in ``register``.
+Triggers a UI event on an element, either using supplied event data, or by constructing new event data using `eventName`. `eventName` is the same as used in `register`.
 
 ```lua
 tes3uiElement:triggerEvent(eventID)

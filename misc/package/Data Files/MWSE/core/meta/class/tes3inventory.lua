@@ -4,7 +4,7 @@
 --- @class tes3inventory
 --- @field flags number *Read-only*. Raw bit-based flags.
 --- @field items tes3iterator *Read-only*. Direct acces to the container that holds the inventory's items.
---- @field iterator tes3iterator *Read-only*. Deprecated. Use ``for index, stack in pairs(inventory)`` to iterate over inventory stacks.
+--- @field iterator tes3iterator *Read-only*. Deprecated. Use `for index, stack in pairs(inventory)` to iterate over inventory stacks.
 --- 	
 --- Direct access to the container that holds the inventory's items.
 tes3inventory = {}
@@ -12,16 +12,16 @@ tes3inventory = {}
 --- Adds an item into the inventory directly. This should not be used, in favor of the tes3.addItem function.
 --- @param params tes3inventory.addItem.params This table accepts the following values:
 --- 
---- ``mobile``: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string — *Optional*. The mobile actor whose stats will be updated.
+--- `mobile`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string — *Optional*. The mobile actor whose stats will be updated.
 --- 
---- ``item``: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon — The item to add.
+--- `item`: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon — The item to add.
 --- 
---- ``itemData``: tes3itemData — *Optional*. Any associated item data to add.
+--- `itemData`: tes3itemData — *Optional*. Any associated item data to add.
 --- 
---- ``count``: number — *Default*: `1`. The number of items to add.
+--- `count`: number — *Default*: `1`. The number of items to add.
 function tes3inventory:addItem(params) end
 
----Table parameter definitions for ``tes3inventory.addItem``.
+---Table parameter definitions for `tes3inventory.addItem`.
 --- @class tes3inventory.addItem.params
 --- @field mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string *Optional*. The mobile actor whose stats will be updated.
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon The item to add.
@@ -56,18 +56,18 @@ function tes3inventory:findItemStack(item) end
 --- Removes an item from the inventory directly. This should not be used, in favor of the tes3.removeItem function.
 --- @param params tes3inventory.removeItem.params This table accepts the following values:
 --- 
---- ``mobile``: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string — *Optional*. The mobile actor whose stats will be updated.
+--- `mobile`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string — *Optional*. The mobile actor whose stats will be updated.
 --- 
---- ``item``: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon — The item to add.
+--- `item`: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon — The item to add.
 --- 
---- ``itemData``: tes3itemData — *Optional*. Any associated item data to add.
+--- `itemData`: tes3itemData — *Optional*. Any associated item data to add.
 --- 
---- ``count``: number — *Default*: `1`. The number of items to add.
+--- `count`: number — *Default*: `1`. The number of items to add.
 --- 
---- ``deleteItemData``: boolean — If set, the itemData will be deleted after being removed.
+--- `deleteItemData`: boolean — If set, the itemData will be deleted after being removed.
 function tes3inventory:removeItem(params) end
 
----Table parameter definitions for ``tes3inventory.removeItem``.
+---Table parameter definitions for `tes3inventory.removeItem`.
 --- @class tes3inventory.removeItem.params
 --- @field mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string *Optional*. The mobile actor whose stats will be updated.
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon The item to add.

@@ -21,13 +21,13 @@ function tes3spell.create(id, name) end
 --- Calculates the chance that a caster can cast a given spell.
 --- @param params tes3spell.calculateCastChance.params This table accepts the following values:
 --- 
---- ``checkMagicka``: boolean — *Optional*. Determines if the caster's magicka should be taken into account during the calculation.
+--- `checkMagicka`: boolean — *Optional*. Determines if the caster's magicka should be taken into account during the calculation.
 --- 
---- ``caster``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer — The caster to perform the calculation against.
+--- `caster`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer — The caster to perform the calculation against.
 --- @return number result No description yet available.
 function tes3spell:calculateCastChance(params) end
 
----Table parameter definitions for ``tes3spell.calculateCastChance``.
+---Table parameter definitions for `tes3spell.calculateCastChance`.
 --- @class tes3spell.calculateCastChance.params
 --- @field checkMagicka boolean *Optional*. Determines if the caster's magicka should be taken into account during the calculation.
 --- @field caster tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer The caster to perform the calculation against.

@@ -1,6 +1,11 @@
 # calcSwimSpeed
 
-One of the movement events, calcSwimSpeed is used when calculating the movement speed while in water.
+One of the movement events, **calcSwimSpeed** is used when calculating the movement speed while in water when running.
+
+The movement event flow is described below:
+
+- Swimming: [calcWalkSpeed](https://mwse.github.io/MWSE/events/calcWalkSpeed) -> **calcSwimSpeed** -> [calcMoveSpeed](https://mwse.github.io/MWSE/events/calcMoveSpeed)
+- Swimming (while running): [calcWalkSpeed](https://mwse.github.io/MWSE/events/calcWalkSpeed) -> **calcSwimSpeed** -> [calcSwimRunSpeed](https://mwse.github.io/MWSE/events/calcSwimRunSpeed) -> [calcMoveSpeed](https://mwse.github.io/MWSE/events/calcMoveSpeed)
 
 ```lua
 --- @param e calcSwimSpeedEventData

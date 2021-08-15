@@ -13,17 +13,17 @@ function mwseTimerController.new(startTime) end
 --- Creates a timer for the given Timer Controller.
 --- @param params mwseTimerController.create.params This table accepts the following values:
 --- 
---- ``type``: number — No description yet available.
+--- `type`: number — No description yet available.
 --- 
---- ``duration``: number — No description yet available.
+--- `duration`: number — No description yet available.
 --- 
---- ``callback``: function — No description yet available.
+--- `callback`: function — No description yet available.
 --- 
---- ``iterations``: number — *Optional*. No description yet available.
+--- `iterations`: number — *Optional*. No description yet available.
 --- @return mwseTimer timer No description yet available.
 function mwseTimerController:create(params) end
 
----Table parameter definitions for ``mwseTimerController.create``.
+---Table parameter definitions for `mwseTimerController.create`.
 --- @class mwseTimerController.create.params
 --- @field type number No description yet available.
 --- @field duration number No description yet available.

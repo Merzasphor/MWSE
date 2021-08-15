@@ -2105,7 +2105,7 @@ local result = tes3mobileActor:getBootsWeight()
 
 ### `getFatigueTerm`
 
-Gets the fatigue-based skill scaling term used by many game mechanics, based on the actor's current and maximum fatigue. It is equal to ``max(0, fFatigueBase - fFatigueMult * max(0, 1 - fatigue.current/fatigue.base))``
+Gets the fatigue-based skill scaling term used by many game mechanics, based on the actor's current and maximum fatigue. It is equal to `max(0, fFatigueBase - fFatigueMult * max(0, 1 - fatigue.current/fatigue.base))`
 
 ```lua
 local result = tes3mobileActor:getFatigueTerm()
@@ -2394,7 +2394,7 @@ tes3mobileActor:updateDerivedStatistics(attribute)
 
 **Parameters**:
 
-* `attribute` ([tes3statistic](../../types/tes3statistic)): *Optional*. Limits the update to statistics derived from this attribute.  e.g. ``mobile:updateDerivedStatistics(mobile.strength)``. If not present, all derived statistics will be updated.
+* `attribute` ([tes3statistic](../../types/tes3statistic)): *Optional*. Limits the update to statistics derived from this attribute.  e.g. `mobile:updateDerivedStatistics(mobile.strength)`. If not present, all derived statistics will be updated.
 
 ***
 

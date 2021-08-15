@@ -2,6 +2,14 @@
 
 This event is called when an actor’s movement speed is calculated. The event allows modification of this value, to dehardcode actor movement speeds. Invoked after all other movement speed events are finished.
 
+The movement event flow is described below:
+
+- Walking: [calcWalkSpeed](https://mwse.github.io/MWSE/events/calcWalkSpeed) -> **calcMoveSpeed**
+- Running: [calcWalkSpeed](https://mwse.github.io/MWSE/events/calcWalkSpeed) -> [calcRunSpeed](https://mwse.github.io/MWSE/events/calcRunSpeed) -> **calcMoveSpeed**
+- Swimming: [calcWalkSpeed](https://mwse.github.io/MWSE/events/calcWalkSpeed) -> [calcSwimSpeed](https://mwse.github.io/MWSE/events/calcSwimSpeed) -> **calcMoveSpeed**
+- Swimming (while running): [calcWalkSpeed](https://mwse.github.io/MWSE/events/calcWalkSpeed) -> [calcSwimSpeed](https://mwse.github.io/MWSE/events/calcSwimSpeed) -> [calcSwimRunSpeed](https://mwse.github.io/MWSE/events/calcSwimRunSpeed) -> **calcMoveSpeed**
+- Flying: [calcFlySpeed](https://mwse.github.io/MWSE/events/calcFlySpeed) -> **calcMoveSpeed**
+
 ```lua
 --- @param e calcMoveSpeedEventData
 local function calcMoveSpeedCallback(e)
@@ -22,18 +30,6 @@ event.register("calcMoveSpeed", calcMoveSpeedCallback)
 ## Examples
 
 !!! example "Example: 20% Faster Player Movement"
-
-	```lua
-	local function onCalcMoveSpeed(e)
-	    if (e.reference == tes3.player) then
-	        e.speed = e.speed * 1.2
-	    end
-	end
-	event.register(tes3.event.calcMoveSpeed, onCalcMoveSpeed)
-
-	```
-
-??? example "Example: 20% Faster Player Movement"
 
 	```lua
 	local function onCalcMoveSpeed(e)

@@ -1,6 +1,6 @@
 # combatStarted
 
-The combatStarted event occurs after combat has begun between two actors.
+The **combatStarted** event occurs after combat has began between two actors. This event is preceded by the [combatStart](https://mwse.github.io/MWSE/events/combatStart) event.
 
 ```lua
 --- @param e combatStartedEventData

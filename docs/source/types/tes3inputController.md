@@ -118,7 +118,7 @@ local result = tes3inputController:isKeyDown(key)
 
 **Parameters**:
 
-* `key` (number): The scan code to test. Constants available through ``tes3.scanCode``.
+* `key` (number): The scan code to test. Constants available through `tes3.scanCode`.
 
 **Returns**:
 
@@ -136,7 +136,7 @@ local result = tes3inputController:isKeyPressedThisFrame(key)
 
 **Parameters**:
 
-* `key` (number): The scan code to test. Constants available through ``tes3.scanCode``.
+* `key` (number): The scan code to test. Constants available through `tes3.scanCode`.
 
 **Returns**:
 
@@ -154,7 +154,7 @@ local result = tes3inputController:isKeyReleasedThisFrame(key)
 
 **Parameters**:
 
-* `key` (number): The scan code to test. Constants available through ``tes3.scanCode``.
+* `key` (number): The scan code to test. Constants available through `tes3.scanCode`.
 
 **Returns**:
 
@@ -254,8 +254,8 @@ local result = tes3inputController:keybindTest(key, transition)
 
 **Parameters**:
 
-* `key` (number): The keybind to test. Constants available through ``tes3.keybind``.
-* `transition` (number): *Optional*. Transition state, e.g. down, or up. Constants available through ``tes3.keyTransition``.
+* `key` (number): The keybind to test. Constants available through `tes3.keybind`.
+* `transition` (number): *Optional*. Transition state, e.g. down, or up. Constants available through `tes3.keyTransition`.
 
 **Returns**:
 

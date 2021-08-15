@@ -1,6 +1,10 @@
 --- @meta
 
---- One of the movement events, calcFlySpeed is used when calculating movement speeds when levitating or otherwise flying.
+--- One of the movement events, **calcFlySpeed** is used when calculating movement speeds when levitating or otherwise flying.
+--- 
+--- The movement event flow is described below:
+--- 
+--- - Flying: **calcFlySpeed** -> [calcMoveSpeed](https://mwse.github.io/MWSE/events/calcMoveSpeed)
 --- @class calcFlySpeedEventData
 --- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.
 --- @field mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer *Read-only*. The mobile actor whose speed is being calculated.

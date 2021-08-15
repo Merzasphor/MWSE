@@ -17,24 +17,24 @@ tes3misc = {}
 --- Creates a new misc item object, which will be stored as part of the current saved game.
 --- @param params tes3misc.create.params This table accepts the following values:
 --- 
---- ``id``: string — *Optional*. The new object's ID. Must be unique if provided.
+--- `id`: string — *Optional*. The new object's ID. Must be unique if provided.
 --- 
---- ``name``: string — *Default*: `Miscellaneous item`. The new object's name.
+--- `name`: string — *Default*: `Miscellaneous item`. The new object's name.
 --- 
---- ``script``: tes3script — *Optional*. A script to attach to the object.
+--- `script`: tes3script — *Optional*. A script to attach to the object.
 --- 
---- ``mesh``: string — *Default*: ``. The mesh to use for the object.
+--- `mesh`: string — *Default*: ``. The mesh to use for the object.
 --- 
---- ``objectFlags``: number — *Default*: `0`. The object flags initially set. Force set as modified.
+--- `objectFlags`: number — *Default*: `0`. The object flags initially set. Force set as modified.
 --- 
---- ``weight ``: tes3script — *Default*: `0`. The weight of the object.
+--- `weight `: tes3script — *Default*: `0`. The weight of the object.
 --- 
---- ``value ``: string — *Default*: `0`. The value of the object.
+--- `value `: string — *Default*: `0`. The value of the object.
 --- 
---- ``flags ``: number — *Default*: `0`. The object flags initially set.
+--- `flags `: number — *Default*: `0`. The object flags initially set.
 function tes3misc.create(params) end
 
----Table parameter definitions for ``tes3misc.create``.
+---Table parameter definitions for `tes3misc.create`.
 --- @class tes3misc.create.params
 --- @field id string *Optional*. The new object's ID. Must be unique if provided.
 --- @field name string *Default*: `Miscellaneous item`. The new object's name.

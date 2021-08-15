@@ -1,6 +1,10 @@
 # calcRunSpeed
 
-One of the movement events, calcRunSpeed is used when calculating when the player is running, but not swimming or flying.
+One of the movement events, **calcRunSpeed** is used when calculating when the player is running, but not swimming or flying.
+
+The movement event flow is described below:
+
+- Running: [calcWalkSpeed](https://mwse.github.io/MWSE/events/calcWalkSpeed) -> **calcRunSpeed** -> [calcMoveSpeed](https://mwse.github.io/MWSE/events/calcMoveSpeed)
 
 ```lua
 --- @param e calcRunSpeedEventData

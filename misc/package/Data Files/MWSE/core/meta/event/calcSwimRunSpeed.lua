@@ -1,6 +1,10 @@
 --- @meta
 
---- One of the movement events, calcSwimRunSpeed is used when calculating the movement speed while in water when running.
+--- One of the movement events, **calcSwimRunSpeed** is used when calculating the movement speed while in water when running.
+--- 
+--- The movement event flow is described below:
+--- 
+--- - Swimming (while running): [calcWalkSpeed](https://mwse.github.io/MWSE/events/calcWalkSpeed) -> [calcSwimSpeed](https://mwse.github.io/MWSE/events/calcSwimSpeed) -> **calcSwimRunSpeed** -> [calcMoveSpeed](https://mwse.github.io/MWSE/events/calcMoveSpeed)
 --- @class calcSwimRunSpeedEventData
 --- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.
 --- @field mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer *Read-only*. The mobile actor whose speed is being calculated.

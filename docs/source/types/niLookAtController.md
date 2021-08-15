@@ -29,10 +29,10 @@ How the time parameter passed to the update function is treated. Type 0 is the d
 
 ### `axis`
 
-A number representing the axis that points at the lookAt object. ``flip`` determines which end of this axis points at the target.
-``0`` X axis
-``1`` Y axis
-``2`` Z axis
+A number representing the axis that points at the lookAt object. `flip` determines which end of this axis points at the target.
+`0` X axis
+`1` Y axis
+`2` Z axis
 
 **Returns**:
 
@@ -248,7 +248,7 @@ niTimeController:start(time)
 
 ### `stop`
 
-Stops the controller. If you only want to pause the controller, use the ``update`` property.
+Stops the controller. If you only want to pause the controller, use the `update` property.
 
 ```lua
 niTimeController:stop()

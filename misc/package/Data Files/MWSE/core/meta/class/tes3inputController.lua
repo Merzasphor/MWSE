@@ -23,17 +23,17 @@ function tes3inputController:isCapsLockActive() end
 function tes3inputController:isControlDown() end
 
 --- Performs a key down test for a given scan key code.
---- @param key number The scan code to test. Constants available through ``tes3.scanCode``.
+--- @param key number The scan code to test. Constants available through `tes3.scanCode`.
 --- @return boolean result No description yet available.
 function tes3inputController:isKeyDown(key) end
 
 --- Checks to see if a given scan code is pressed, and wasn't pressed last frame.
---- @param key number The scan code to test. Constants available through ``tes3.scanCode``.
+--- @param key number The scan code to test. Constants available through `tes3.scanCode`.
 --- @return boolean result No description yet available.
 function tes3inputController:isKeyPressedThisFrame(key) end
 
 --- Checks to see if a given scan code is released, and was pressed last frame.
---- @param key number The scan code to test. Constants available through ``tes3.scanCode``.
+--- @param key number The scan code to test. Constants available through `tes3.scanCode`.
 --- @return boolean result No description yet available.
 function tes3inputController:isKeyReleasedThisFrame(key) end
 
@@ -61,8 +61,8 @@ function tes3inputController:isShiftDown() end
 function tes3inputController:isSuperDown() end
 
 --- Performs a test for a given keybind, and optionally a transition state.
---- @param key number The keybind to test. Constants available through ``tes3.keybind``.
---- @param transition number *Optional*. Transition state, e.g. down, or up. Constants available through ``tes3.keyTransition``.
+--- @param key number The keybind to test. Constants available through `tes3.keybind`.
+--- @param transition number *Optional*. Transition state, e.g. down, or up. Constants available through `tes3.keyTransition`.
 --- @return boolean result No description yet available.
 function tes3inputController:keybindTest(key, transition) end
 

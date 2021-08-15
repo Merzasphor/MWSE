@@ -3,7 +3,7 @@
 --- A core game object used for storing world simulation data.
 --- @class tes3worldController
 --- @field aiDistanceScale number A value in the range [0, 1]. The (relative) maximum distance setting for AI simulation. Corresponds to the AI distance option in the Options menu.
---- @field allMobileActors tes3iterator *Read-only*. The list of all active mobile actors (``tes3mobileActor``). Mobile actors expire after 72 hours if they have not been in a loaded cell.
+--- @field allMobileActors tes3iterator *Read-only*. The list of all active mobile actors (`tes3mobileActor`). Mobile actors expire after 72 hours if they have not been in a loaded cell.
 --- @field armCamera tes3worldControllerRenderCamera *Read-only*. 
 --- @field audioController tes3audioController *Read-only*. The audio controller.
 --- @field blindnessFader tes3fader *Read-only*. Screen overlay fader for the blind effect.
@@ -55,14 +55,14 @@
 --- @field mouseSensitivityX number The horizontal camera rotation sensitivity. Corresponds to the "Horizontal sensitivity" option in the Options menu.
 --- @field mouseSensitivityY number The vertical camera rotation sensitivity. Corresponds to the "Vertical sensitivity" option in the Options menu.
 --- @field musicSituation number The kind of music being played. Only updates when music is not muted.
---- ``0`` Explore music
---- ``1`` Combat music
---- ``2`` Main menu music
+--- `0` Explore music
+--- `1` Combat music
+--- `2` Main menu music
 --- @field nodeCursor niBillboardNode|niCollisionSwitch|niNode|niSwitchNode *Read-only*. The scenegraph node for the target crosshair.
 --- @field projectionDistance number 
---- @field quests tes3iterator *Read-only*. A list of all available ``tes3quest``s.
+--- @field quests tes3iterator *Read-only*. A list of all available `tes3quest`s.
 --- @field quickSaveWhenResting object Controls if auto-save on resting or waiting is enabled. Corresponds to the "Auto-save when rest" option in the Options menu.
---- @field rechargingItems tes3iterator *Read-only*. A list of enchanted items that are recharging (type ``tes3rechargingItem``). Items in the list may not all belong to the player.
+--- @field rechargingItems tes3iterator *Read-only*. A list of enchanted items that are recharging (type `tes3rechargingItem`). Items in the list may not all belong to the player.
 --- @field shaderWaterReflectTerrain boolean If pixel shader water reflection includes terrain. Not functional with MGE enabled.
 --- @field shaderWaterReflectUpdate number Period between reflection updates for pixel shader water. Not functional with MGE enabled.
 --- @field shadowCamera tes3worldControllerRenderCamera *Read-only*. 
@@ -75,8 +75,8 @@
 --- @field timescale tes3global *Read-only*. The `timescale` global variable. Used to convert real time to in-game time.
 --- @field transitionFader object *Read-only*. Screen overlay fader for cell transitions.
 --- @field useBestAttack boolean Automatically choose the best attack direction for attacks. Corresponds to the "Always use best attack" option in the Options menu.
---- @field viewHeight number *Read-only*. The height of the UI viewport in pixels. Affected by UI scaling. For screen resolution, use ``tes3.getViewportSize``.
---- @field viewWidth number *Read-only*. The width of the UI viewport in pixels. Affected by UI scaling. For screen resolution, use ``tes3.getViewportSize``.
+--- @field viewHeight number *Read-only*. The height of the UI viewport in pixels. Affected by UI scaling. For screen resolution, use `tes3.getViewportSize`.
+--- @field viewWidth number *Read-only*. The width of the UI viewport in pixels. Affected by UI scaling. For screen resolution, use `tes3.getViewportSize`.
 --- @field weaponSwishSound tes3sound The sound played when an attack with a melee weapon is performed. It always plays when a melee attack is released, irrespective of hit or miss.
 --- @field weatherController tes3weatherController *Read-only*. The weather controller.
 --- @field werewolfFader tes3fader *Read-only*. Screen overlay fader for werewolf vision.

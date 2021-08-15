@@ -75,7 +75,7 @@ local timer = timer.start({ type = ..., duration = ..., callback = ..., iteratio
 	* `type` (number): *Default*: `timer.simulate`. Type of the timer. This value can be timer.simulate, timer.game or timer.real.
 	* `duration` (number): Duration of the timer. The method of time passing depends on the timer type.
 	* `callback` (function): The callback function that will execute when the timer expires.
-	* `iterations` (number): *Default*: `1`. The number of iterations to run. Use ``-1`` for infinite looping.
+	* `iterations` (number): *Default*: `1`. The number of iterations to run. Use `-1` for infinite looping.
 
 **Returns**:
 

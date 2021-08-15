@@ -8,10 +8,10 @@ mwscript = {}
 --- @deprecated
 --- @param params mwscript.activate.params This table accepts the following values:
 --- 
---- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 function mwscript.activate(params) end
 
----Table parameter definitions for ``mwscript.activate``.
+---Table parameter definitions for `mwscript.activate`.
 --- @class mwscript.activate.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 
@@ -19,15 +19,15 @@ function mwscript.activate(params) end
 --- @deprecated
 --- @param params mwscript.addItem.params This table accepts the following values:
 --- 
---- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``item``: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — The item to be added.
+--- `item`: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — The item to be added.
 --- 
---- ``count``: number — *Default*: `1`. The number of items to be added.
+--- `count`: number — *Default*: `1`. The number of items to be added.
 --- @return boolean executed No description yet available.
 function mwscript.addItem(params) end
 
----Table parameter definitions for ``mwscript.addItem``.
+---Table parameter definitions for `mwscript.addItem`.
 --- @class mwscript.addItem.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string The item to be added.
@@ -37,15 +37,15 @@ function mwscript.addItem(params) end
 --- @deprecated
 --- @param params mwscript.addSoulGem.params This table accepts the following values:
 --- 
---- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``creature``: tes3creature|string — The creature to be stored in the soul gem.
+--- `creature`: tes3creature|string — The creature to be stored in the soul gem.
 --- 
---- ``soulgem``: tes3misc|string — The soul gem to store the soul in.
+--- `soulgem`: tes3misc|string — The soul gem to store the soul in.
 --- @return boolean executed No description yet available.
 function mwscript.addSoulGem(params) end
 
----Table parameter definitions for ``mwscript.addSoulGem``.
+---Table parameter definitions for `mwscript.addSoulGem`.
 --- @class mwscript.addSoulGem.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field creature tes3creature|string The creature to be stored in the soul gem.
@@ -55,13 +55,13 @@ function mwscript.addSoulGem(params) end
 --- @deprecated
 --- @param params mwscript.addSpell.params This table accepts the following values:
 --- 
---- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``spell``: tes3spell|string — No description yet available.
+--- `spell`: tes3spell|string — No description yet available.
 --- @return boolean executed No description yet available.
 function mwscript.addSpell(params) end
 
----Table parameter definitions for ``mwscript.addSpell``.
+---Table parameter definitions for `mwscript.addSpell`.
 --- @class mwscript.addSpell.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field spell tes3spell|string No description yet available.
@@ -70,15 +70,15 @@ function mwscript.addSpell(params) end
 --- @deprecated
 --- @param params mwscript.addToLevCreature.params This table accepts the following values:
 --- 
---- ``list``: tes3leveledCreature|string — Leveled creature list to add a creature to.
+--- `list`: tes3leveledCreature|string — Leveled creature list to add a creature to.
 --- 
---- ``creature``: tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance|string — Creature to add to the list.
+--- `creature`: tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance|string — Creature to add to the list.
 --- 
---- ``level``: number — *Default*: `0`. Minimum level for the creature to spawn.
+--- `level`: number — *Default*: `0`. Minimum level for the creature to spawn.
 --- @return boolean executed No description yet available.
 function mwscript.addToLevCreature(params) end
 
----Table parameter definitions for ``mwscript.addToLevCreature``.
+---Table parameter definitions for `mwscript.addToLevCreature`.
 --- @class mwscript.addToLevCreature.params
 --- @field list tes3leveledCreature|string Leveled creature list to add a creature to.
 --- @field creature tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance|string Creature to add to the list.
@@ -88,15 +88,15 @@ function mwscript.addToLevCreature(params) end
 --- @deprecated
 --- @param params mwscript.addToLevItem.params This table accepts the following values:
 --- 
---- ``list``: tes3leveledItem|string — Leveled item list to add a creature to.
+--- `list`: tes3leveledItem|string — Leveled item list to add a creature to.
 --- 
---- ``item``: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — Item to add to the list.
+--- `item`: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — Item to add to the list.
 --- 
---- ``level``: number — *Default*: `0`. Minimum level for the item to spawn.
+--- `level`: number — *Default*: `0`. Minimum level for the item to spawn.
 --- @return boolean executed No description yet available.
 function mwscript.addToLevItem(params) end
 
----Table parameter definitions for ``mwscript.addToLevItem``.
+---Table parameter definitions for `mwscript.addToLevItem`.
 --- @class mwscript.addToLevItem.params
 --- @field list tes3leveledItem|string Leveled item list to add a creature to.
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string Item to add to the list.
@@ -106,11 +106,11 @@ function mwscript.addToLevItem(params) end
 --- @deprecated
 --- @param params mwscript.addTopic.params This table accepts the following values:
 --- 
---- ``topic``: tes3dialogue|string — No description yet available.
+--- `topic`: tes3dialogue|string — No description yet available.
 --- @return boolean executed No description yet available.
 function mwscript.addTopic(params) end
 
----Table parameter definitions for ``mwscript.addTopic``.
+---Table parameter definitions for `mwscript.addTopic`.
 --- @class mwscript.addTopic.params
 --- @field topic tes3dialogue|string No description yet available.
 
@@ -118,17 +118,17 @@ function mwscript.addTopic(params) end
 --- @deprecated
 --- @param params mwscript.aiTravel.params This table accepts the following values:
 --- 
---- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``x``: number — No description yet available.
+--- `x`: number — No description yet available.
 --- 
---- ``y``: number — No description yet available.
+--- `y`: number — No description yet available.
 --- 
---- ``z``: number — No description yet available.
+--- `z`: number — No description yet available.
 --- @return boolean executed No description yet available.
 function mwscript.aiTravel(params) end
 
----Table parameter definitions for ``mwscript.aiTravel``.
+---Table parameter definitions for `mwscript.aiTravel`.
 --- @class mwscript.aiTravel.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field x number No description yet available.
@@ -139,13 +139,13 @@ function mwscript.aiTravel(params) end
 --- @deprecated
 --- @param params mwscript.disable.params This table accepts the following values:
 --- 
---- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``modify``: boolean — *Default*: `true`. Set the object as modified.
+--- `modify`: boolean — *Default*: `true`. Set the object as modified.
 --- @return boolean executed No description yet available.
 function mwscript.disable(params) end
 
----Table parameter definitions for ``mwscript.disable``.
+---Table parameter definitions for `mwscript.disable`.
 --- @class mwscript.disable.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field modify boolean *Default*: `true`. Set the object as modified.
@@ -154,15 +154,15 @@ function mwscript.disable(params) end
 --- @deprecated
 --- @param params mwscript.drop.params This table accepts the following values:
 --- 
---- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``item``: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — The item to be dropped.
+--- `item`: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — The item to be dropped.
 --- 
---- ``count``: number — *Default*: `1`. The number of items to drop.
+--- `count`: number — *Default*: `1`. The number of items to drop.
 --- @return boolean executed No description yet available.
 function mwscript.drop(params) end
 
----Table parameter definitions for ``mwscript.drop``.
+---Table parameter definitions for `mwscript.drop`.
 --- @class mwscript.drop.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string The item to be dropped.
@@ -172,13 +172,13 @@ function mwscript.drop(params) end
 --- @deprecated
 --- @param params mwscript.enable.params This table accepts the following values:
 --- 
---- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``modify``: boolean — *Default*: `true`. Set the object as modified.
+--- `modify`: boolean — *Default*: `true`. Set the object as modified.
 --- @return boolean executed No description yet available.
 function mwscript.enable(params) end
 
----Table parameter definitions for ``mwscript.enable``.
+---Table parameter definitions for `mwscript.enable`.
 --- @class mwscript.enable.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field modify boolean *Default*: `true`. Set the object as modified.
@@ -187,13 +187,13 @@ function mwscript.enable(params) end
 --- @deprecated
 --- @param params mwscript.equip.params This table accepts the following values:
 --- 
---- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``item``: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — The item to be equipped.
+--- `item`: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — The item to be equipped.
 --- @return boolean executed No description yet available.
 function mwscript.equip(params) end
 
----Table parameter definitions for ``mwscript.equip``.
+---Table parameter definitions for `mwscript.equip`.
 --- @class mwscript.equip.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string The item to be equipped.
@@ -202,13 +202,13 @@ function mwscript.equip(params) end
 --- @deprecated
 --- @param params mwscript.explodeSpell.params This table accepts the following values:
 --- 
---- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``spell``: tes3spell|string — No description yet available.
+--- `spell`: tes3spell|string — No description yet available.
 --- @return boolean executed No description yet available.
 function mwscript.explodeSpell(params) end
 
----Table parameter definitions for ``mwscript.explodeSpell``.
+---Table parameter definitions for `mwscript.explodeSpell`.
 --- @class mwscript.explodeSpell.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field spell tes3spell|string No description yet available.
@@ -222,13 +222,13 @@ function mwscript.getButtonPressed() end
 --- @deprecated
 --- @param params mwscript.getDetected.params This table accepts the following values:
 --- 
---- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``target``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — Actor to check detection for.
+--- `target`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — Actor to check detection for.
 --- @return boolean result No description yet available.
 function mwscript.getDetected(params) end
 
----Table parameter definitions for ``mwscript.getDetected``.
+---Table parameter definitions for `mwscript.getDetected`.
 --- @class mwscript.getDetected.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field target tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string Actor to check detection for.
@@ -237,11 +237,11 @@ function mwscript.getDetected(params) end
 --- @deprecated
 --- @param params mwscript.getDisabled.params This table accepts the following values:
 --- 
---- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @return boolean result No description yet available.
 function mwscript.getDisabled(params) end
 
----Table parameter definitions for ``mwscript.getDisabled``.
+---Table parameter definitions for `mwscript.getDisabled`.
 --- @class mwscript.getDisabled.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 
@@ -249,13 +249,13 @@ function mwscript.getDisabled(params) end
 --- @deprecated
 --- @param params mwscript.getDistance.params This table accepts the following values:
 --- 
---- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``target``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — Actor to check distance to.
+--- `target`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — Actor to check distance to.
 --- @return boolean result No description yet available.
 function mwscript.getDistance(params) end
 
----Table parameter definitions for ``mwscript.getDistance``.
+---Table parameter definitions for `mwscript.getDistance`.
 --- @class mwscript.getDistance.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field target tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string Actor to check distance to.
@@ -264,13 +264,13 @@ function mwscript.getDistance(params) end
 --- @deprecated
 --- @param params mwscript.getItemCount.params This table accepts the following values:
 --- 
---- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``item``: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — No description yet available.
+--- `item`: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — No description yet available.
 --- @return number result No description yet available.
 function mwscript.getItemCount(params) end
 
----Table parameter definitions for ``mwscript.getItemCount``.
+---Table parameter definitions for `mwscript.getItemCount`.
 --- @class mwscript.getItemCount.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string No description yet available.
@@ -304,13 +304,13 @@ function mwscript.getScript() end
 --- @deprecated
 --- @param params mwscript.getSpellEffects.params This table accepts the following values:
 --- 
---- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``spell``: tes3spell|string — No description yet available.
+--- `spell`: tes3spell|string — No description yet available.
 --- @return boolean result No description yet available.
 function mwscript.getSpellEffects(params) end
 
----Table parameter definitions for ``mwscript.getSpellEffects``.
+---Table parameter definitions for `mwscript.getSpellEffects`.
 --- @class mwscript.getSpellEffects.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field spell tes3spell|string No description yet available.
@@ -319,13 +319,13 @@ function mwscript.getSpellEffects(params) end
 --- @deprecated
 --- @param params mwscript.hasItemEquipped.params This table accepts the following values:
 --- 
---- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``item``: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — The item to be added.
+--- `item`: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — The item to be added.
 --- @return boolean result No description yet available.
 function mwscript.hasItemEquipped(params) end
 
----Table parameter definitions for ``mwscript.hasItemEquipped``.
+---Table parameter definitions for `mwscript.hasItemEquipped`.
 --- @class mwscript.hasItemEquipped.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string The item to be added.
@@ -334,19 +334,19 @@ function mwscript.hasItemEquipped(params) end
 --- @deprecated
 --- @param params mwscript.placeAtPC.params This table accepts the following values:
 --- 
---- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``object``: tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3enchantment|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3reference|tes3repairTool|tes3spell|tes3static|tes3weapon|string — The object to place.
+--- `object`: tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3enchantment|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3reference|tes3repairTool|tes3spell|tes3static|tes3weapon|string — The object to place.
 --- 
---- ``count``: number — *Default*: `1`. No description yet available.
+--- `count`: number — *Default*: `1`. No description yet available.
 --- 
---- ``distance``: number — *Default*: `256`. No description yet available.
+--- `distance`: number — *Default*: `256`. No description yet available.
 --- 
---- ``direction``: number — *Default*: `1`. No description yet available.
+--- `direction`: number — *Default*: `1`. No description yet available.
 --- @return tes3reference lastPlacedReference No description yet available.
 function mwscript.placeAtPC(params) end
 
----Table parameter definitions for ``mwscript.placeAtPC``.
+---Table parameter definitions for `mwscript.placeAtPC`.
 --- @class mwscript.placeAtPC.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field object tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3enchantment|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3reference|tes3repairTool|tes3spell|tes3static|tes3weapon|string The object to place.
@@ -358,13 +358,13 @@ function mwscript.placeAtPC(params) end
 --- @deprecated
 --- @param params mwscript.playSound.params This table accepts the following values:
 --- 
---- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``sound``: tes3sound|string — No description yet available.
+--- `sound`: tes3sound|string — No description yet available.
 --- @return boolean result No description yet available.
 function mwscript.playSound(params) end
 
----Table parameter definitions for ``mwscript.playSound``.
+---Table parameter definitions for `mwscript.playSound`.
 --- @class mwscript.playSound.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field sound tes3sound|string No description yet available.
@@ -373,21 +373,21 @@ function mwscript.playSound(params) end
 --- @deprecated
 --- @param params mwscript.position.params This table accepts the following values:
 --- 
---- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``cell``: string — No description yet available.
+--- `cell`: string — No description yet available.
 --- 
---- ``x``: number — *Default*: `0`. No description yet available.
+--- `x`: number — *Default*: `0`. No description yet available.
 --- 
---- ``y``: number — *Default*: `0`. No description yet available.
+--- `y`: number — *Default*: `0`. No description yet available.
 --- 
---- ``z``: number — *Default*: `0`. No description yet available.
+--- `z`: number — *Default*: `0`. No description yet available.
 --- 
---- ``rotation``: number — *Default*: `0`. No description yet available.
+--- `rotation`: number — *Default*: `0`. No description yet available.
 --- @return boolean executed No description yet available.
 function mwscript.position(params) end
 
----Table parameter definitions for ``mwscript.position``.
+---Table parameter definitions for `mwscript.position`.
 --- @class mwscript.position.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field cell string No description yet available.
@@ -400,21 +400,21 @@ function mwscript.position(params) end
 --- @deprecated
 --- @param params mwscript.positionCell.params This table accepts the following values:
 --- 
---- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``cell``: string — No description yet available.
+--- `cell`: string — No description yet available.
 --- 
---- ``x``: number — *Default*: `0`. No description yet available.
+--- `x`: number — *Default*: `0`. No description yet available.
 --- 
---- ``y``: number — *Default*: `0`. No description yet available.
+--- `y`: number — *Default*: `0`. No description yet available.
 --- 
---- ``z``: number — *Default*: `0`. No description yet available.
+--- `z`: number — *Default*: `0`. No description yet available.
 --- 
---- ``rotation``: number — *Default*: `0`. No description yet available.
+--- `rotation`: number — *Default*: `0`. No description yet available.
 --- @return boolean executed No description yet available.
 function mwscript.positionCell(params) end
 
----Table parameter definitions for ``mwscript.positionCell``.
+---Table parameter definitions for `mwscript.positionCell`.
 --- @class mwscript.positionCell.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field cell string No description yet available.
@@ -427,15 +427,15 @@ function mwscript.positionCell(params) end
 --- @deprecated
 --- @param params mwscript.removeItem.params This table accepts the following values:
 --- 
---- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``item``: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — The item to be added.
+--- `item`: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — The item to be added.
 --- 
---- ``count``: number — *Default*: `1`. The number of items to be added.
+--- `count`: number — *Default*: `1`. The number of items to be added.
 --- @return boolean executed No description yet available.
 function mwscript.removeItem(params) end
 
----Table parameter definitions for ``mwscript.removeItem``.
+---Table parameter definitions for `mwscript.removeItem`.
 --- @class mwscript.removeItem.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string The item to be added.
@@ -445,13 +445,13 @@ function mwscript.removeItem(params) end
 --- @deprecated
 --- @param params mwscript.removeSpell.params This table accepts the following values:
 --- 
---- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``spell``: tes3spell|string — No description yet available.
+--- `spell`: tes3spell|string — No description yet available.
 --- @return boolean executed No description yet available.
 function mwscript.removeSpell(params) end
 
----Table parameter definitions for ``mwscript.removeSpell``.
+---Table parameter definitions for `mwscript.removeSpell`.
 --- @class mwscript.removeSpell.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field spell tes3spell|string No description yet available.
@@ -460,11 +460,11 @@ function mwscript.removeSpell(params) end
 --- @deprecated
 --- @param params mwscript.scriptRunning.params This table accepts the following values:
 --- 
---- ``script``: tes3script|string — No description yet available.
+--- `script`: tes3script|string — No description yet available.
 --- @return boolean result No description yet available.
 function mwscript.scriptRunning(params) end
 
----Table parameter definitions for ``mwscript.scriptRunning``.
+---Table parameter definitions for `mwscript.scriptRunning`.
 --- @class mwscript.scriptRunning.params
 --- @field script tes3script|string No description yet available.
 
@@ -472,13 +472,13 @@ function mwscript.scriptRunning(params) end
 --- @deprecated
 --- @param params mwscript.setLevel.params This table accepts the following values:
 --- 
---- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``level``: number — No description yet available.
+--- `level`: number — No description yet available.
 --- @return boolean executed No description yet available.
 function mwscript.setLevel(params) end
 
----Table parameter definitions for ``mwscript.setLevel``.
+---Table parameter definitions for `mwscript.setLevel`.
 --- @class mwscript.setLevel.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field level number No description yet available.
@@ -487,13 +487,13 @@ function mwscript.setLevel(params) end
 --- @deprecated
 --- @param params mwscript.startCombat.params This table accepts the following values:
 --- 
---- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``target``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — Actor to start combat with.
+--- `target`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — Actor to start combat with.
 --- @return boolean executed No description yet available.
 function mwscript.startCombat(params) end
 
----Table parameter definitions for ``mwscript.startCombat``.
+---Table parameter definitions for `mwscript.startCombat`.
 --- @class mwscript.startCombat.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field target tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string Actor to start combat with.
@@ -502,13 +502,13 @@ function mwscript.startCombat(params) end
 --- @deprecated
 --- @param params mwscript.startScript.params This table accepts the following values:
 --- 
---- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``script``: tes3script|string — No description yet available.
+--- `script`: tes3script|string — No description yet available.
 --- @return boolean executed No description yet available.
 function mwscript.startScript(params) end
 
----Table parameter definitions for ``mwscript.startScript``.
+---Table parameter definitions for `mwscript.startScript`.
 --- @class mwscript.startScript.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field script tes3script|string No description yet available.
@@ -517,13 +517,13 @@ function mwscript.startScript(params) end
 --- @deprecated
 --- @param params mwscript.stopCombat.params This table accepts the following values:
 --- 
---- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``target``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — Actor to stop combat with.
+--- `target`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — Actor to stop combat with.
 --- @return boolean executed No description yet available.
 function mwscript.stopCombat(params) end
 
----Table parameter definitions for ``mwscript.stopCombat``.
+---Table parameter definitions for `mwscript.stopCombat`.
 --- @class mwscript.stopCombat.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field target tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string Actor to stop combat with.
@@ -532,13 +532,13 @@ function mwscript.stopCombat(params) end
 --- @deprecated
 --- @param params mwscript.stopScript.params This table accepts the following values:
 --- 
---- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``script``: tes3script|string — No description yet available.
+--- `script`: tes3script|string — No description yet available.
 --- @return boolean executed No description yet available.
 function mwscript.stopScript(params) end
 
----Table parameter definitions for ``mwscript.stopScript``.
+---Table parameter definitions for `mwscript.stopScript`.
 --- @class mwscript.stopScript.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field script tes3script|string No description yet available.
@@ -547,13 +547,13 @@ function mwscript.stopScript(params) end
 --- @deprecated
 --- @param params mwscript.stopSound.params This table accepts the following values:
 --- 
---- ``reference``: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- ``sound``: tes3sound|string — No description yet available.
+--- `sound`: tes3sound|string — No description yet available.
 --- @return boolean result No description yet available.
 function mwscript.stopSound(params) end
 
----Table parameter definitions for ``mwscript.stopSound``.
+---Table parameter definitions for `mwscript.stopSound`.
 --- @class mwscript.stopSound.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field sound tes3sound|string No description yet available.

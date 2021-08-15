@@ -447,7 +447,7 @@ niAVObject:updateProperties()
 
 ### `attachAffectedNode`
 
-Adds a node to the dynamic effect's affected nodes list. The node's ``:updateEffects()`` function should be called afterwards to recognize the change.
+Adds a node to the dynamic effect's affected nodes list. The node's `:updateEffects()` function should be called afterwards to recognize the change.
 
 ```lua
 niDynamicEffect.attachAffectedNode(node)
@@ -461,7 +461,7 @@ niDynamicEffect.attachAffectedNode(node)
 
 ### `detachAffectedNode`
 
-Removes a node from the dynamic effect's affected nodes list. The node's ``:updateEffects()`` function should be called afterwards to recognize the change.
+Removes a node from the dynamic effect's affected nodes list. The node's `:updateEffects()` function should be called afterwards to recognize the change.
 
 ```lua
 niDynamicEffect.detachAffectedNode(node)

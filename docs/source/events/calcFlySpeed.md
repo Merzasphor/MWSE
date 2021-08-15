@@ -1,6 +1,10 @@
 # calcFlySpeed
 
-One of the movement events, calcFlySpeed is used when calculating movement speeds when levitating or otherwise flying.
+One of the movement events, **calcFlySpeed** is used when calculating movement speeds when levitating or otherwise flying.
+
+The movement event flow is described below:
+
+- Flying: **calcFlySpeed** -> [calcMoveSpeed](https://mwse.github.io/MWSE/events/calcMoveSpeed)
 
 ```lua
 --- @param e calcFlySpeedEventData

@@ -2,7 +2,18 @@
 
 --- A substructure of mobile actors that provides information about the current or previous action.
 --- @class tes3actionData
---- @field aiBehaviorState number The behavior state of the tes3actionData.
+--- @field aiBehaviorState number The behavior state of the [tes3actionData](https://mwse.github.io/MWSE/types/tes3actionData).
+--- 
+--- Value | Behavior
+--- ----- | ---------
+--- -1    | Undecided
+--- 0     | Hello
+--- 2     | Idle
+--- 3     | Attack
+--- 4     | Avoid
+--- 6     | Flee
+--- 8     | Walk
+--- 12    | Greet
 --- @field animationAttackState number No description yet available.
 --- @field attackDirection number **Deprecated. Use tes3actionData.physicalAttackType instead.** When attacking, the direction swung with the weapon. This shows if the actor was thrusting, swinging, or chopping.
 --- @field attackSwing number When attacking, this value represents how much the weapon has been pulled back. The value ranges from [0.0 - 1.0].

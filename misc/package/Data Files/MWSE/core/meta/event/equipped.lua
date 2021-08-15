@@ -1,6 +1,6 @@
 --- @meta
 
---- The equipped event fires after an actor has successfully equipped an item.
+--- The **equipped** event fires after an actor has successfully equipped an item. This event is preceded by the [equip](https://mwse.github.io/MWSE/events/equip) event.
 --- @class equippedEventData
 --- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.
 --- @field actor tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance *Read-only*. The actor that has equipped the item.

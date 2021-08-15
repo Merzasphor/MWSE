@@ -1,6 +1,8 @@
 # weatherTransitionImmediate
 
-The weatherChangedImmediate event occurs when the currently simulated weather is changed without transition.
+The **weatherChangedImmediate** event occurs when the currently simulated weather is changed without transition. This can occur when going from an interior to an exterior in a new region, or while resting.
+
+This can interrupt weather transitions, which means the [weatherTransitionFinished](https://mwse.github.io/MWSE/events/weatherTransitionFinished) event will not be triggered.
 
 ```lua
 --- @param e weatherTransitionImmediateEventData

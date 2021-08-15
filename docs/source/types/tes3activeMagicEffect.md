@@ -136,7 +136,7 @@ An active magic effect.
 
 ### `serial`
 
-*Read-only*. The magic source instance serial number. See the ``instance`` and ``effectInstance`` properties to easily access the magic and effect instances.
+*Read-only*. The magic source instance serial number. See the `instance` and `effectInstance` properties to easily access the magic and effect instances.
 
 **Returns**:
 

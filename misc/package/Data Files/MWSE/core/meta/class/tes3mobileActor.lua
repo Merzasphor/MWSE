@@ -114,21 +114,21 @@ tes3mobileActor = {}
 --- Damages the actor, with options to control mitigation and difficulty scaling. Invokes the 'damage' and 'damaged' events, with 'script' source. Returns the actual damage done after armor mitigation and resistance, but before difficulty scaling.
 --- @param params tes3mobileActor.applyDamage.params This table accepts the following values:
 --- 
---- ``damage``: number — The amount of damage to apply.
+--- `damage`: number — The amount of damage to apply.
 --- 
---- ``applyArmor``: boolean — *Optional*. If armor should mitigate the incoming damage. If the player is the target, armor experience will be gained.
+--- `applyArmor`: boolean — *Optional*. If armor should mitigate the incoming damage. If the player is the target, armor experience will be gained.
 --- 
---- ``resistAttribute``: number — *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from tes3.effectAttributes.
+--- `resistAttribute`: number — *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from tes3.effectAttributes.
 --- 
---- ``applyDifficulty``: boolean — *Optional*. If the game difficulty modifier should be applied. Must be used with the 'playerAttack' argument to apply the correct modifier.
+--- `applyDifficulty`: boolean — *Optional*. If the game difficulty modifier should be applied. Must be used with the 'playerAttack' argument to apply the correct modifier.
 --- 
---- ``playerAttack``: boolean — *Optional*. If the attack came from the player. Used for difficulty calculation.
+--- `playerAttack`: boolean — *Optional*. If the attack came from the player. Used for difficulty calculation.
 --- 
---- ``doNotChangeHealth``: boolean — *Optional*. If all armor effects except the health change should be applied. These include hit sounds, armor condition damage, and player experience gain from being hit.
+--- `doNotChangeHealth`: boolean — *Optional*. If all armor effects except the health change should be applied. These include hit sounds, armor condition damage, and player experience gain from being hit.
 --- @return number result No description yet available.
 function tes3mobileActor:applyDamage(params) end
 
----Table parameter definitions for ``tes3mobileActor.applyDamage``.
+---Table parameter definitions for `tes3mobileActor.applyDamage`.
 --- @class tes3mobileActor.applyDamage.params
 --- @field damage number The amount of damage to apply.
 --- @field applyArmor boolean *Optional*. If armor should mitigate the incoming damage. If the player is the target, armor experience will be gained.
@@ -157,15 +157,15 @@ function tes3mobileActor:applyHealthDamage(damage, isPlayerAttack, scaleWithDiff
 --- Calculates the damage that would be inflicted to an actor after armor and/or resistance. Returns the actual damage done after armor mitigation and resistance, but before difficulty scaling.
 --- @param params tes3mobileActor.calcEffectiveDamage.params This table accepts the following values:
 --- 
---- ``damage``: number — The amount of damage to apply.
+--- `damage`: number — The amount of damage to apply.
 --- 
---- ``applyArmor``: boolean — *Optional*. If armor should mitigate the incoming damage.
+--- `applyArmor`: boolean — *Optional*. If armor should mitigate the incoming damage.
 --- 
---- ``resistAttribute``: number — *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from tes3.effectAttributes.
+--- `resistAttribute`: number — *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from tes3.effectAttributes.
 --- @return number result No description yet available.
 function tes3mobileActor:calcEffectiveDamage(params) end
 
----Table parameter definitions for ``tes3mobileActor.calcEffectiveDamage``.
+---Table parameter definitions for `tes3mobileActor.calcEffectiveDamage`.
 --- @class tes3mobileActor.calcEffectiveDamage.params
 --- @field damage number The amount of damage to apply.
 --- @field applyArmor boolean *Optional*. If armor should mitigate the incoming damage.
@@ -174,13 +174,13 @@ function tes3mobileActor:calcEffectiveDamage(params) end
 --- Fetches a filtered list of the active magic effects on the actor. Returns a table with tes3activeMagicEffect items.
 --- @param params tes3mobileActor.getActiveMagicEffects.params This table accepts the following values:
 --- 
---- ``effect``: number — *Optional*. The magic effect ID to search for.
+--- `effect`: number — *Optional*. The magic effect ID to search for.
 --- 
---- ``serial``: number — *Optional*. The magic instance serial to search for.
+--- `serial`: number — *Optional*. The magic instance serial to search for.
 --- @return table result No description yet available.
 function tes3mobileActor:getActiveMagicEffects(params) end
 
----Table parameter definitions for ``tes3mobileActor.getActiveMagicEffects``.
+---Table parameter definitions for `tes3mobileActor.getActiveMagicEffects`.
 --- @class tes3mobileActor.getActiveMagicEffects.params
 --- @field effect number *Optional*. The magic effect ID to search for.
 --- @field serial number *Optional*. The magic instance serial to search for.
@@ -189,7 +189,7 @@ function tes3mobileActor:getActiveMagicEffects(params) end
 --- @return number result No description yet available.
 function tes3mobileActor:getBootsWeight() end
 
---- Gets the fatigue-based skill scaling term used by many game mechanics, based on the actor's current and maximum fatigue. It is equal to ``max(0, fFatigueBase - fFatigueMult * max(0, 1 - fatigue.current/fatigue.base))``
+--- Gets the fatigue-based skill scaling term used by many game mechanics, based on the actor's current and maximum fatigue. It is equal to `max(0, fFatigueBase - fFatigueMult * max(0, 1 - fatigue.current/fatigue.base))`
 --- @return number result No description yet available.
 function tes3mobileActor:getFatigueTerm() end
 
@@ -260,7 +260,7 @@ function tes3mobileActor:startDialogue() end
 function tes3mobileActor:stopCombat(force) end
 
 --- Updates statistics derived from attributes, which are magicka, fatigue, and encumbrance. Will also update the UI if used on the player. Normally handled automatically when you use tes3.modStatistic.
---- @param attribute tes3statistic|tes3statisticSkill *Optional*. Limits the update to statistics derived from this attribute.  e.g. ``mobile:updateDerivedStatistics(mobile.strength)``. If not present, all derived statistics will be updated.
+--- @param attribute tes3statistic|tes3statisticSkill *Optional*. Limits the update to statistics derived from this attribute.  e.g. `mobile:updateDerivedStatistics(mobile.strength)`. If not present, all derived statistics will be updated.
 function tes3mobileActor:updateDerivedStatistics(attribute) end
 
 --- Updates the actor's visual opacity. Used after modifying applied chameleon or invisiblity effects.

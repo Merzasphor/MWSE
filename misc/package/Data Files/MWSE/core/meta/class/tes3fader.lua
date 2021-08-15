@@ -18,32 +18,32 @@ function tes3fader:deactivate() end
 --- Transitions the fader to a value of 1 over a given duration.
 --- @param params tes3fader.fadeIn.params This table accepts the following values:
 --- 
---- ``duration``: number — *Default*: `1`. The time it takes to fade, in seconds.
+--- `duration`: number — *Default*: `1`. The time it takes to fade, in seconds.
 function tes3fader:fadeIn(params) end
 
----Table parameter definitions for ``tes3fader.fadeIn``.
+---Table parameter definitions for `tes3fader.fadeIn`.
 --- @class tes3fader.fadeIn.params
 --- @field duration number *Default*: `1`. The time it takes to fade, in seconds.
 
 --- Transitions the fader to a value of 0 over a given duration.
 --- @param params tes3fader.fadeOut.params This table accepts the following values:
 --- 
---- ``duration``: number — *Default*: `1`. The time it takes to fade, in seconds.
+--- `duration`: number — *Default*: `1`. The time it takes to fade, in seconds.
 function tes3fader:fadeOut(params) end
 
----Table parameter definitions for ``tes3fader.fadeOut``.
+---Table parameter definitions for `tes3fader.fadeOut`.
 --- @class tes3fader.fadeOut.params
 --- @field duration number *Default*: `1`. The time it takes to fade, in seconds.
 
 --- Transitions the fader to a value over a given duration.
 --- @param params tes3fader.fadeTo.params This table accepts the following values:
 --- 
---- ``value``: number — *Default*: `1`. The value to fade to.
+--- `value`: number — *Default*: `1`. The value to fade to.
 --- 
---- ``duration``: number — *Default*: `1`. The time it takes to fade, in seconds.
+--- `duration`: number — *Default*: `1`. The time it takes to fade, in seconds.
 function tes3fader:fadeTo(params) end
 
----Table parameter definitions for ``tes3fader.fadeTo``.
+---Table parameter definitions for `tes3fader.fadeTo`.
 --- @class tes3fader.fadeTo.params
 --- @field value number *Default*: `1`. The value to fade to.
 --- @field duration number *Default*: `1`. The time it takes to fade, in seconds.
@@ -51,13 +51,13 @@ function tes3fader:fadeTo(params) end
 --- Applies a coloring effect to the fader.
 --- @param params tes3fader.setColor.params This table accepts the following values:
 --- 
---- ``color``: tes3vector3|table — The RGB values to set.
+--- `color`: tes3vector3|table — The RGB values to set.
 --- 
---- ``flag``: boolean — No description yet available.
+--- `flag`: boolean — No description yet available.
 --- @return boolean result No description yet available.
 function tes3fader:setColor(params) end
 
----Table parameter definitions for ``tes3fader.setColor``.
+---Table parameter definitions for `tes3fader.setColor`.
 --- @class tes3fader.setColor.params
 --- @field color tes3vector3|table The RGB values to set.
 --- @field flag boolean No description yet available.

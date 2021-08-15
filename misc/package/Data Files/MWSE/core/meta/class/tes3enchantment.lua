@@ -12,20 +12,20 @@ tes3enchantment = {}
 --- Creates a new enchantment object, which will be stored as part of the current saved game.
 --- @param params tes3enchantment.create.params This table accepts the following values:
 --- 
---- ``id``: string — *Optional*. The new object's ID. Must be unique if provided.
+--- `id`: string — *Optional*. The new object's ID. Must be unique if provided.
 --- 
---- ``castType``: number — The enchantment castType. See tes3.enchantmentType.
+--- `castType`: number — The enchantment castType. See tes3.enchantmentType.
 --- 
---- ``chargeCost``: number — The new enchantment charge cost. Must be greater than 0.
+--- `chargeCost`: number — The new enchantment charge cost. Must be greater than 0.
 --- 
---- ``maxCharge``: number — The new enchantment maximum charge. Must be greater than 0
+--- `maxCharge`: number — The new enchantment maximum charge. Must be greater than 0
 --- 
---- ``flags``: number — *Optional*. The new enchantment flags.
+--- `flags`: number — *Optional*. The new enchantment flags.
 --- 
---- ``objectFlags``: number — *Default*: `0`. The object flags initially set. Force set as modified.
+--- `objectFlags`: number — *Default*: `0`. The object flags initially set. Force set as modified.
 function tes3enchantment.create(params) end
 
----Table parameter definitions for ``tes3enchantment.create``.
+---Table parameter definitions for `tes3enchantment.create`.
 --- @class tes3enchantment.create.params
 --- @field id string *Optional*. The new object's ID. Must be unique if provided.
 --- @field castType number The enchantment castType. See tes3.enchantmentType.

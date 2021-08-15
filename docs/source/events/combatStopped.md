@@ -1,6 +1,6 @@
 # combatStopped
 
-The combatStopped event occurs after an actor has left combat.
+The **combatStopped** event occurs after an actor has left combat. This event is preceded by the [combatStop](https://mwse.github.io/MWSE/events/combatStop) event.
 
 ```lua
 --- @param e combatStoppedEventData

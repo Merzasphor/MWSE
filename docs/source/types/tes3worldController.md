@@ -16,7 +16,7 @@ A value in the range [0, 1]. The (relative) maximum distance setting for AI simu
 
 ### `allMobileActors`
 
-*Read-only*. The list of all active mobile actors (``tes3mobileActor``). Mobile actors expire after 72 hours if they have not been in a loaded cell.
+*Read-only*. The list of all active mobile actors (`tes3mobileActor`). Mobile actors expire after 72 hours if they have not been in a loaded cell.
 
 **Returns**:
 
@@ -527,9 +527,9 @@ The vertical camera rotation sensitivity. Corresponds to the "Vertical sensitivi
 ### `musicSituation`
 
 The kind of music being played. Only updates when music is not muted.
-``0`` Explore music
-``1`` Combat music
-``2`` Main menu music
+`0` Explore music
+`1` Combat music
+`2` Main menu music
 
 **Returns**:
 
@@ -559,7 +559,7 @@ The kind of music being played. Only updates when music is not muted.
 
 ### `quests`
 
-*Read-only*. A list of all available ``tes3quest``s.
+*Read-only*. A list of all available `tes3quest`s.
 
 **Returns**:
 
@@ -579,7 +579,7 @@ Controls if auto-save on resting or waiting is enabled. Corresponds to the "Auto
 
 ### `rechargingItems`
 
-*Read-only*. A list of enchanted items that are recharging (type ``tes3rechargingItem``). Items in the list may not all belong to the player.
+*Read-only*. A list of enchanted items that are recharging (type `tes3rechargingItem`). Items in the list may not all belong to the player.
 
 **Returns**:
 
@@ -709,7 +709,7 @@ Automatically choose the best attack direction for attacks. Corresponds to the "
 
 ### `viewHeight`
 
-*Read-only*. The height of the UI viewport in pixels. Affected by UI scaling. For screen resolution, use ``tes3.getViewportSize``.
+*Read-only*. The height of the UI viewport in pixels. Affected by UI scaling. For screen resolution, use `tes3.getViewportSize`.
 
 **Returns**:
 
@@ -719,7 +719,7 @@ Automatically choose the best attack direction for attacks. Corresponds to the "
 
 ### `viewWidth`
 
-*Read-only*. The width of the UI viewport in pixels. Affected by UI scaling. For screen resolution, use ``tes3.getViewportSize``.
+*Read-only*. The width of the UI viewport in pixels. Affected by UI scaling. For screen resolution, use `tes3.getViewportSize`.
 
 **Returns**:
 

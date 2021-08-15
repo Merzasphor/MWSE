@@ -10,7 +10,9 @@ tes3ui = {}
 --- @param element tes3uiElement *Optional*. No description yet available.
 function tes3ui.acquireTextInput(element) end
 
---- When used in a mouse event, causes the element to capture further mouse events even when the cursor goes outside the element.
+--- When used in a mouse event, causes the element to capture further mouse events even when the cursor goes outside the element. Setting mouse capture should always be accompanied by releasing it on a complementary event. This is commonly used for dragging, so that it can continue even if the mouse moves slightly outside the element.
+--- 
+--- The capture is always removed when the element is destroyed. The capture may also be removed when the mouse is released, but this is not reliable, as the engine forgets what to do if there is input from any other controller while the mouse is held down.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3ui/#tes3uicapturemousedrag).
 --- @param capture boolean Turns on mouse capture for the element currently processing a mouse event if true, sending all further mouse events to that element. Turns off capture if false.
@@ -23,28 +25,28 @@ function tes3ui.captureMouseDrag(capture) end
 --- Unlike standard menus, help layer menus are always created with a fixed frame.
 --- @param params tes3ui.createHelpLayerMenu.params This table accepts the following values:
 --- 
---- ``id``: number — The menu’s ID. The menu can be later accessed by tes3ui.findHelpLayerMenu(id).
+--- `id`: number — The menu’s ID. The menu can be later accessed by tes3ui.findHelpLayerMenu(id).
 --- @return tes3uiElement result No description yet available.
 function tes3ui.createHelpLayerMenu(params) end
 
----Table parameter definitions for ``tes3ui.createHelpLayerMenu``.
+---Table parameter definitions for `tes3ui.createHelpLayerMenu`.
 --- @class tes3ui.createHelpLayerMenu.params
 --- @field id number The menu’s ID. The menu can be later accessed by tes3ui.findHelpLayerMenu(id).
 
 --- Creates a top-level menu.
 --- @param params tes3ui.createMenu.params This table accepts the following values:
 --- 
---- ``id``: number — The menu’s ID. The menu can be later accessed by tes3ui.findMenu(id).
+--- `id`: number — The menu’s ID. The menu can be later accessed by tes3ui.findMenu(id).
 --- 
---- ``dragFrame``: boolean — Constructs a draggable and resizeable frame and background for the menu. It is similar to the stats, inventory, magic and map menus in the standard UI. After construction, position and minimum dimensions should be set.
+--- `dragFrame`: boolean — Constructs a draggable and resizeable frame and background for the menu. It is similar to the stats, inventory, magic and map menus in the standard UI. After construction, position and minimum dimensions should be set.
 --- 
---- ``fixedFrame``: boolean — Constructs a fixed (non-draggable) frame and background for the menu. The layout system should automatically centre and size it to fit whatever is added to the menu.
+--- `fixedFrame`: boolean — Constructs a fixed (non-draggable) frame and background for the menu. The layout system should automatically centre and size it to fit whatever is added to the menu.
 --- 
---- ``loadable``: boolean — *Default*: `true`. If set to false, calls to loadMenuPosition will fail.
+--- `loadable`: boolean — *Default*: `true`. If set to false, calls to loadMenuPosition will fail.
 --- @return tes3uiElement result No description yet available.
 function tes3ui.createMenu(params) end
 
----Table parameter definitions for ``tes3ui.createMenu``.
+---Table parameter definitions for `tes3ui.createMenu`.
 --- @class tes3ui.createMenu.params
 --- @field id number The menu’s ID. The menu can be later accessed by tes3ui.findMenu(id).
 --- @field dragFrame boolean Constructs a draggable and resizeable frame and background for the menu. It is similar to the stats, inventory, magic and map menus in the standard UI. After construction, position and minimum dimensions should be set.
@@ -56,13 +58,13 @@ function tes3ui.createMenu(params) end
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3ui/#tes3uicreatetooltipmenu).
 --- @param params tes3ui.createTooltipMenu.params This table accepts the following values:
 --- 
---- ``item``: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — *Optional*. The item to create a tooltip for. If not specified, the tooltip will be empty.
+--- `item`: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — *Optional*. The item to create a tooltip for. If not specified, the tooltip will be empty.
 --- 
---- ``itemData``: tes3itemData — *Optional*. The item data for the item.
+--- `itemData`: tes3itemData — *Optional*. The item data for the item.
 --- @return tes3uiElement result No description yet available.
 function tes3ui.createTooltipMenu(params) end
 
----Table parameter definitions for ``tes3ui.createTooltipMenu``.
+---Table parameter definitions for `tes3ui.createTooltipMenu`.
 --- @class tes3ui.createTooltipMenu.params
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string *Optional*. The item to create a tooltip for. If not specified, the tooltip will be empty.
 --- @field itemData tes3itemData *Optional*. The item data for the item.
@@ -94,6 +96,8 @@ function tes3ui.getInventorySelectType() end
 function tes3ui.getMenuOnTop() end
 
 --- Gets a standard palette color. Returns an array containing the RGB color values, in the range [0.0, 1.0].
+--- 
+--- **Standard Color Names**: `active_color`, `active_over_color`, `active_pressed_color`, `answer_color`, `answer_over_color`, `answer_pressed_color`, `background_color`, `big_answer_color`, `big_answer_over_color`, `big_answer_pressed_color`, `big_header_color`, `big_link_color`, `big_link_over_color`, `big_link_pressed_color`, `big_normal_color`, `big_normal_over_color`, `big_normal_pressed_color`, `big_notify_color`, `black_color`, `count_color`, `disabled_color`, `disabled_over_color`, `disabled_pressed_color`, `fatigue_color`, `focus_color`, `header_color`, `health_color`, `health_npc_color`, `journal_finished_quest_color`, `journal_finished_quest_over_color`, `journal_finished_quest_pressed_color`, `journal_link_color`, `journal_link_over_color`, `journal_link_pressed_color`, `journal_topic_color`, `journal_topic_over_color`, `journal_topic_pressed_color`, `link_color`, `link_over_color`, `link_pressed_color`, `magic_color`, `magic_fill_color`, `misc_color`, `negative_color`, `normal_color`, `normal_over_color`, `normal_pressed_color`, `notify_color`, `positive_color`, `weapon_fill_color`, `white_color`
 --- @param name string The name of the palette color.
 --- @return table result No description yet available.
 function tes3ui.getPalette(name) end

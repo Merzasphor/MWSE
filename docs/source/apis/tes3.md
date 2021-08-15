@@ -719,7 +719,7 @@ tes3.fadeTo({ fader = ..., duration = ..., value = ... })
 
 ### `tes3.findActorsInProximity`
 
-Searches for active mobile actors which are within ``range`` distance from the ``reference`` or ``position`` argument. It only finds mobiles which have active AI, and can include the player. This function is used by the game for area-of-effect hits. It has a small amount of overhead, so try not to use it too much.
+Searches for active mobile actors which are within `range` distance from the `reference` or `position` argument. It only finds mobiles which have active AI, and can include the player. This function is used by the game for area-of-effect hits. It has a small amount of overhead, so try not to use it too much.
 
 ```lua
 local mobileList = tes3.findActorsInProximity({ reference = ..., position = ..., range = ... })
@@ -798,9 +798,9 @@ local reference = tes3.findClosestExteriorReferenceOfObject({ object = ..., posi
 
 ### `tes3.findDialogue`
 
-Locates a root dialogue topic that can then be filtered down for a specific actor to return a specific dialogue info. Specify either ``topic``, or both ``type`` and ``page`` for other types of dialogue.
+Locates a root dialogue topic that can then be filtered down for a specific actor to return a specific dialogue info. Specify either `topic`, or both `type` and `page` for other types of dialogue.
 
-For example, ``tes3.findDialogue({type = tes3.dialogueType.greeting, page = tes3.dialoguePage.greeting.greeting0})`` will return the "Greeting 0" topic, which is not available using a topic ID.
+For example, `tes3.findDialogue({type = tes3.dialogueType.greeting, page = tes3.dialoguePage.greeting.greeting0})` will return the "Greeting 0" topic, which is not available using a topic ID.
 
 ```lua
 local dialogue = tes3.findDialogue({ topic = ..., type = ..., page = ... })

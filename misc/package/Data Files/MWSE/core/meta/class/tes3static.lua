@@ -8,14 +8,14 @@ tes3static = {}
 --- Creates a new static object, which will be stored as part of the current saved game.
 --- @param params tes3static.create.params This table accepts the following values:
 --- 
---- ``id``: string — *Optional*. The new object's ID. Must be unique if provided.
+--- `id`: string — *Optional*. The new object's ID. Must be unique if provided.
 --- 
---- ``mesh``: string — *Default*: ``. The mesh to use for the object.
+--- `mesh`: string — *Default*: ``. The mesh to use for the object.
 --- 
---- ``objectFlags``: number — *Default*: `0`. The object flags initially set. Force set as modified.
+--- `objectFlags`: number — *Default*: `0`. The object flags initially set. Force set as modified.
 function tes3static.create(params) end
 
----Table parameter definitions for ``tes3static.create``.
+---Table parameter definitions for `tes3static.create`.
 --- @class tes3static.create.params
 --- @field id string *Optional*. The new object's ID. Must be unique if provided.
 --- @field mesh string *Default*: ``. The mesh to use for the object.

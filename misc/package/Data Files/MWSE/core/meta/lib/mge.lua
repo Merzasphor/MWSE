@@ -72,14 +72,14 @@ function mge.getZoom() end
 --- Loads a HUD element. This is a warpper for MGELoadHUD.
 --- @param params mge.loadHUD.params This table accepts the following values:
 --- 
---- ``hud``: string — No description yet available.
+--- `hud`: string — No description yet available.
 --- 
---- ``texture``: string — No description yet available.
+--- `texture`: string — No description yet available.
 --- 
---- ``enable``: boolean — *Optional*. No description yet available.
+--- `enable`: boolean — *Optional*. No description yet available.
 function mge.loadHUD(params) end
 
----Table parameter definitions for ``mge.loadHUD``.
+---Table parameter definitions for `mge.loadHUD`.
 --- @class mge.loadHUD.params
 --- @field hud string No description yet available.
 --- @field texture string No description yet available.

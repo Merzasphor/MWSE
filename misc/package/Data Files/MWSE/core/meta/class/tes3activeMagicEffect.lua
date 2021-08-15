@@ -15,7 +15,7 @@
 --- @field mobile tes3magicSourceInstance *Read-only*. The mobile affected by the magic effect.
 --- @field next tes3activeMagicEffect *Read-only*. Deprecated.
 --- @field previous tes3activeMagicEffect *Read-only*. Deprecated.
---- @field serial number *Read-only*. The magic source instance serial number. See the ``instance`` and ``effectInstance`` properties to easily access the magic and effect instances.
+--- @field serial number *Read-only*. The magic source instance serial number. See the `instance` and `effectInstance` properties to easily access the magic and effect instances.
 --- @field skillId number *Read-only*. The skill ID (note that this may be the attribute ID if the effect affects attributes).
 tes3activeMagicEffect = {}
 
