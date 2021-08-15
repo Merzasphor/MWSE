@@ -346,6 +346,8 @@ namespace TES3 {
 
 		bool getIsLocationMarker() const;
 
+		bool getSupportsLuaData() const;
+
 		NI::Node * getSceneGraphNode();
 
 		//

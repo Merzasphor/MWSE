@@ -610,6 +610,20 @@ namespace TES3 {
 		return vTable.object->isLocationMarker(this);
 	}
 
+	bool Object::getSupportsLuaData() const {
+		// Do our base object checks.
+		if (!BaseObject::getSupportsLuaData()) {
+			return false;
+		}
+
+		// Prevent markers from supporting lua data.
+		if (getIsLocationMarker()) {
+			return false;
+		}
+
+		return true;
+	}
+
 	NI::Node * Object::getSceneGraphNode() {
 		return vTable.object->getSceneGraphNode(this);
 	}
