@@ -253,28 +253,19 @@ local function writePackageDetails(file, package)
 			end
 			file:write("\n")
 		end
-
-		-- Write out examples.
-		if (package.examples) then
-			file:write("## Examples\n\n")
-			local exampleKeys = table.keys(package.examples, true)
-			for _, filename in ipairs(exampleKeys) do
-				local example = package.examples[filename]
-				file:write(string.format("!!! example \"Example: %s\"\n\n", example.title or filename))
-				file:write(string.format("\t```lua\n"))
-				for line in io.lines(lfs.join(package.folder, package.key, filename .. ".lua")) do
-					file:write(string.format("\t%s\n", line))
-				end
-				file:write(string.format("\n\t```\n\n"))
-			end
-		end
 	end
 
 	if (package.examples) then
+		local exampleType = "???"
+		if (package.type == "event") then
+			file:write("## Examples\n\n")
+			exampleType = "!!!"
+		end
+
 		local exampleKeys = table.keys(package.examples, true)
 		for _, name in ipairs(exampleKeys) do
 			local example = package.examples[name]
-			file:write(string.format("??? example \"Example: %s\"\n\n", example.title or name))
+			file:write(string.format("%s example \"Example: %s\"\n\n", exampleType, example.title or name))
 			file:write(string.format("\t```lua\n"))
 
 			local path = nil
