@@ -96,7 +96,7 @@ namespace mwse {
 				usertypeDefinition["deadFloatScale"] = &TES3::WorldController::deadFloatScale;
 				usertypeDefinition["defaultLandSound"] = &TES3::WorldController::soundDefaultLand;
 				usertypeDefinition["defaultLandWaterSound"] = &TES3::WorldController::soundDefaultLandWater;
-				usertypeDefinition["deltaTime"] = sol::readonly_property(&TES3::WorldController::deltaTime);
+				usertypeDefinition["deltaTime"] = &TES3::WorldController::deltaTime;
 				usertypeDefinition["difficulty"] = &TES3::WorldController::difficulty;
 				usertypeDefinition["drowningDamageSound"] = &TES3::WorldController::soundDrowningDamage;
 				usertypeDefinition["drownSound"] = &TES3::WorldController::soundDrown;
