@@ -5,11 +5,13 @@ return {
 		name = "params",
 		type = "table",
 		tableParams = {
-			{ name = "objectType", type = "number", optional = false, description = "Maps to tes3.objectType constants. Used to filter object type to create." }
+			{ name = "objectType", type = "number", optional = false, description = "Maps to `tes3.objectType` constants. Used to filter object type to create." },
+			{ name = "getIfExists", type = "boolean", default = true, description = "If `true`, an existing object of the same type and ID will be returned instead of creating a new one." },
 		},
 	}},
-	returns = "table",
-	valuetype = "tes3BaseObject",
+	returns = {
+		{ name = "createdObject", type = "tes3activator|tes3container|tes3enchantment|tes3misc|tes3sound|tes3static|tes3weapon" },
+	},
 	examples = {
 		["createMisc"] = {
 			title = "Creates a tes3misc object",

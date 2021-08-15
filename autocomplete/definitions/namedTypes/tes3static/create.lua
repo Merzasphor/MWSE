@@ -1,6 +1,7 @@
 return {
 	type = "function",
-	description = [[Creates a new static object, which will be stored as part of the current saved game.]],
+	deprecated = true,
+	description = [[Use `tes3.createObject` instead. This function created a new static object, which will be stored as part of the current saved game.]],
 	arguments = {{
 		name = "params",
 		type = "table",

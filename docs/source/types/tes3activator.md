@@ -243,22 +243,5 @@ local string = tes3baseObject:__tojson()
 
 ## Functions
 
-### `create`
-
-Creates a new activator object, which will be stored as part of the current saved game.
-
-```lua
-tes3activator.create({ id = ..., name = ..., script = ..., mesh = ..., objectFlags = ... })
-```
-
-**Parameters**:
-
-* `params` (table)
-	* `id` (string): *Optional*. The new object's ID. Must be unique if provided.
-	* `name` (string): *Default*: `Activator`. The new object's name.
-	* `script` (tes3script): *Optional*. A script to attach to the object.
-	* `mesh` (string): *Default*: ``. The mesh to use for the object.
-	* `objectFlags` (number): *Default*: `0`. The object flags initially set. Force set as modified.
-
 ***
 

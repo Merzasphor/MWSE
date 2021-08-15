@@ -223,20 +223,5 @@ local string = tes3baseObject:__tojson()
 
 ## Functions
 
-### `create`
-
-Creates a new static object, which will be stored as part of the current saved game.
-
-```lua
-tes3static.create({ id = ..., mesh = ..., objectFlags = ... })
-```
-
-**Parameters**:
-
-* `params` (table)
-	* `id` (string): *Optional*. The new object's ID. Must be unique if provided.
-	* `mesh` (string): *Default*: ``. The mesh to use for the object.
-	* `objectFlags` (number): *Default*: `0`. The object flags initially set. Force set as modified.
-
 ***
 

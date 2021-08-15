@@ -14,7 +14,8 @@
 --- @field weight number The weight of the object.
 tes3misc = {}
 
---- Creates a new misc item object, which will be stored as part of the current saved game.
+--- Use `tes3.createObject` instead. This function created a new misc item object, which will be stored as part of the current saved game.
+--- @deprecated
 --- @param params tes3misc.create.params This table accepts the following values:
 --- 
 --- `id`: string — *Optional*. The new object's ID. Must be unique if provided.

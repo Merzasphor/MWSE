@@ -477,17 +477,18 @@ tes3.clearMarkLocation()
 Create an object and returns it. The created object will be part of the saved game. Supported object types are those that have their own create function, such as tes3activator for example.
 
 ```lua
-local table = tes3.createObject({ objectType = ... })
+local createdObject = tes3.createObject({ objectType = ..., getIfExists = ... })
 ```
 
 **Parameters**:
 
 * `params` (table)
-	* `objectType` (number): Maps to tes3.objectType constants. Used to filter object type to create.
+	* `objectType` (number): Maps to `tes3.objectType` constants. Used to filter object type to create.
+	* `getIfExists` (boolean): *Default*: `true`. If `true`, an existing object of the same type and ID will be returned instead of creating a new one.
 
 **Returns**:
 
-* `table` (tes3BaseObject)
+* `createdObject` ([tes3activator](../../types/tes3activator), [tes3container](../../types/tes3container), [tes3enchantment](../../types/tes3enchantment), [tes3misc](../../types/tes3misc), [tes3sound](../../types/tes3sound), [tes3static](../../types/tes3static), [tes3weapon](../../types/tes3weapon))
 
 ??? example "Example: Creates a tes3misc object"
 

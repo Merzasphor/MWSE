@@ -385,13 +385,16 @@ function tes3.clearMarkLocation() end
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3/#tes3createobject).
 --- @param params tes3.createObject.params This table accepts the following values:
 --- 
---- `objectType`: number — Maps to tes3.objectType constants. Used to filter object type to create.
---- @return tes3BaseObject table No description yet available.
+--- `objectType`: number — Maps to `tes3.objectType` constants. Used to filter object type to create.
+--- 
+--- `getIfExists`: boolean — *Default*: `true`. If `true`, an existing object of the same type and ID will be returned instead of creating a new one.
+--- @return tes3activator|tes3container|tes3enchantment|tes3misc|tes3sound|tes3static|tes3weapon createdObject No description yet available.
 function tes3.createObject(params) end
 
 ---Table parameter definitions for `tes3.createObject`.
 --- @class tes3.createObject.params
---- @field objectType number Maps to tes3.objectType constants. Used to filter object type to create.
+--- @field objectType number Maps to `tes3.objectType` constants. Used to filter object type to create.
+--- @field getIfExists boolean *Default*: `true`. If `true`, an existing object of the same type and ID will be returned instead of creating a new one.
 
 --- Similar to mwscript's PlaceAtPC or PlaceAtMe, this creates a new reference in the game world.
 --- @param params tes3.createReference.params This table accepts the following values:
