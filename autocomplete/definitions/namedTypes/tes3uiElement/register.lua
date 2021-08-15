@@ -1,14 +1,14 @@
 return {
 	type = "method",
-	description = [[Sets an ``event`` handler, which can add or override an existing event handler. The use of ``registerBefore`` or ``registerAfter`` is recommended if you do not want to replace the existing event handler. The eventID can be a standard ``event`` name, or an event specific to an element class. The callback receives an argument with the event data. See below for details.
+	description = [[Sets an `event` handler, which can add or override an existing event handler. The use of `registerBefore` or `registerAfter` is recommended if you do not want to replace the existing event handler. The eventID can be a standard `event` name, or an event specific to an element class. The callback receives an argument with the event data. See below for details.
     
-The original Morrowind callback is captured and can be invoked with the ``forwardEvent`` method on the event argument. If there is an existing Lua callback, it is replaced.
+The original Morrowind callback is captured and can be invoked with the `forwardEvent` method on the event argument. If there is an existing Lua callback, it is replaced.
 
 
 
 Lua UI event specification:
 
-Events can be bound to elements via the `Element`_ ``register`` method, which takes an event name. Event names can be one of the standard events listed here, or a widget-specific event.
+Events can be bound to elements via the `Element`_ `register` method, which takes an event name. Event names can be one of the standard events listed here, or a widget-specific event.
 
 Standard events:
     **mouseLeave**
@@ -60,7 +60,7 @@ Standard events:
 Event forwarding
 -------------------------------------------------------------------------------
 
-The original Morrowind event handler is saved when you first register an event. It may be optionally invoked with the ``forwardEvent`` method.  Note that handler may or may not destroy the event widget or the menu, so you should know how it behaves before accessing any elements after a callback. 
+The original Morrowind event handler is saved when you first register an event. It may be optionally invoked with the `forwardEvent` method.  Note that handler may or may not destroy the event widget or the menu, so you should know how it behaves before accessing any elements after a callback. 
 
 **Example**
 
@@ -82,8 +82,8 @@ Event handler
 The standard type signature for events.
 
 `boolean`_ eventHandler(**EventData** e)
-    Returns: ``optional``
-        Returning ``false`` may cancel an interaction for certain events. e.g. unfocus
+    Returns: `optional`
+        Returning `false` may cancel an interaction for certain events. e.g. unfocus
    
     EventData:
         **source** (`Element`_)

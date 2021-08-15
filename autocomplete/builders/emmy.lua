@@ -107,7 +107,7 @@ local function writeFunction(package, file, namespaceOverride)
 			type = package.namespace .. ".params"
 			description = "This table accepts the following values:"
 			for _, tableArgument in ipairs(argument.tableParams) do
-				description = description .. string.format("\n\n``%s``: %s — %s", tableArgument.name or "unknown", getAllPossibleVariationsOfType(tableArgument.type) or "any", formatLineBreaks(common.getDescriptionString(tableArgument)))
+				description = description .. string.format("\n\n`%s`: %s — %s", tableArgument.name or "unknown", getAllPossibleVariationsOfType(tableArgument.type) or "any", formatLineBreaks(common.getDescriptionString(tableArgument)))
 			end
 		end
 		if (argument.type == "variadic") then
@@ -124,7 +124,7 @@ local function writeFunction(package, file, namespaceOverride)
 	file:write(string.format("function %s(%s) end\n\n", namespaceOverride or package.namespace, table.concat(getParamNames(package), ", ")))
 
 	if (package.arguments and #package.arguments > 0 and package.arguments[1].tableParams) then
-		file:write(string.format("---Table parameter definitions for ``%s``.\n", package.namespace))
+		file:write(string.format("---Table parameter definitions for `%s`.\n", package.namespace))
 		file:write(string.format("--- @class %s.params\n", package.namespace))
 		for _, param in ipairs(package.arguments[1].tableParams) do
 			file:write(string.format("--- @field %s %s %s\n", param.name, getAllPossibleVariationsOfType(param.type), common.getDescriptionString(param)))

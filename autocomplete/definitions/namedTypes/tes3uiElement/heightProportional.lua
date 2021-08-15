@@ -4,6 +4,6 @@ return {
     
     Bug note: If widthProportional is used without heightProportional, an element may not respond to changes in parent size. It is recommended to set heightProportional, or have a fixed size sibling element if dynamic reflow is required.
     
-    Overrides fixed, minimum and maximum sizes unless this value is ``nil`` (default).]],
+    Overrides fixed, minimum and maximum sizes unless this value is `nil` (default).]],
 	valuetype = "boolean",
 }

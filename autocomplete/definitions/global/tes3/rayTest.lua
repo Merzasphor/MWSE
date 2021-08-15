@@ -26,7 +26,7 @@ return {
 	examples = {
 		["GetActivationTarget"] = {
 			title = "Get Activation Target",
-			description = "This example performs a ray test to match the normal activation target test. Unlike ``tes3.getPlayerTarget()`` this will return objects not normally available for activation.",
+			description = "This example performs a ray test to match the normal activation target test. Unlike `tes3.getPlayerTarget()` this will return objects not normally available for activation.",
 		},
 		["GetCameraTarget"] = {
 			title = "Get Camera Target",

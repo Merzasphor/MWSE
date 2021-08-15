@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[Searches for active mobile actors which are within ``range`` distance from the ``reference`` or ``position`` argument. It only finds mobiles which have active AI, and can include the player. This function is used by the game for area-of-effect hits. It has a small amount of overhead, so try not to use it too much.]],
+	description = [[Searches for active mobile actors which are within `range` distance from the `reference` or `position` argument. It only finds mobiles which have active AI, and can include the player. This function is used by the game for area-of-effect hits. It has a small amount of overhead, so try not to use it too much.]],
 	arguments = {{
 		name = "params",
 		type = "table",
