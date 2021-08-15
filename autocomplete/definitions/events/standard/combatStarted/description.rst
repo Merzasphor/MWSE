@@ -1,1 +1,0 @@
-The **combatStarted** event occurs after combat has began between two actors. This event is preceded by the `combatStart`_ event.

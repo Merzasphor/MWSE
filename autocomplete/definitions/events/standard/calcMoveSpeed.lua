@@ -1,6 +1,14 @@
 return {
 	type = "event",
-	description = "This event is called when an actor’s movement speed is calculated. The event allows modification of this value, to dehardcode actor movement speeds. Invoked after all other movement speed events are finished.",
+	description = [[This event is called when an actor’s movement speed is calculated. The event allows modification of this value, to dehardcode actor movement speeds. Invoked after all other movement speed events are finished.
+
+The movement event flow is described below:
+
+- Walking: [calcWalkSpeed](https://mwse.github.io/MWSE/events/calcWalkSpeed) -> **calcMoveSpeed**
+- Running: [calcWalkSpeed](https://mwse.github.io/MWSE/events/calcWalkSpeed) -> [calcRunSpeed](https://mwse.github.io/MWSE/events/calcRunSpeed) -> **calcMoveSpeed**
+- Swimming: [calcWalkSpeed](https://mwse.github.io/MWSE/events/calcWalkSpeed) -> [calcSwimSpeed](https://mwse.github.io/MWSE/events/calcSwimSpeed) -> **calcMoveSpeed**
+- Swimming (while running): [calcWalkSpeed](https://mwse.github.io/MWSE/events/calcWalkSpeed) -> [calcSwimSpeed](https://mwse.github.io/MWSE/events/calcSwimSpeed) -> [calcSwimRunSpeed](https://mwse.github.io/MWSE/events/calcSwimRunSpeed) -> **calcMoveSpeed**
+- Flying: [calcFlySpeed](https://mwse.github.io/MWSE/events/calcFlySpeed) -> **calcMoveSpeed**]],
 	related = { "calcMoveSpeed", "calcWalkSpeed", "calcRunSpeed", "calcFlySpeed", "calcSwimSpeed", "calcSwimRunSpeed" },
 	eventData = {
 		["mobile"] = {

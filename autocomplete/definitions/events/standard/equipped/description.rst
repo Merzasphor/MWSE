@@ -1,1 +1,0 @@
-The **equipped** event fires after an actor has successfully equipped an item. This event is preceded by the `equip`_ event.

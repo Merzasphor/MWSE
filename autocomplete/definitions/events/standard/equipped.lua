@@ -1,6 +1,6 @@
 return {
 	type = "event",
-	description = "The equipped event fires after an actor has successfully equipped an item.",
+	description = [[The **equipped** event fires after an actor has successfully equipped an item. This event is preceded by the [equip](https://mwse.github.io/MWSE/events/equip) event.]],
 	related = { "equip", "equipped", "unequipped" },
 	eventData = {
 		reference = {
@@ -30,7 +30,4 @@ return {
 		},
 	},
 	filter = "item",
-	links = {
-		["equip"] = "lua/event/equip",
-	},
 }

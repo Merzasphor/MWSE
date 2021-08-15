@@ -1,6 +1,10 @@
 return {
 	type = "event",
-	description = "One of the movement events, calcRunSpeed is used when calculating when the player is running, but not swimming or flying.",
+	description = [[One of the movement events, **calcRunSpeed** is used when calculating when the player is running, but not swimming or flying.
+
+The movement event flow is described below:
+
+- Running: [calcWalkSpeed](https://mwse.github.io/MWSE/events/calcWalkSpeed) -> **calcRunSpeed** -> [calcMoveSpeed](https://mwse.github.io/MWSE/events/calcMoveSpeed)]],
 	related = { "calcMoveSpeed", "calcWalkSpeed", "calcRunSpeed", "calcFlySpeed", "calcSwimSpeed", "calcSwimRunSpeed" },
 	eventData = {
 		mobile = {
@@ -23,8 +27,4 @@ return {
 			description = "The type of movement that was calculated. This is always 2 for this event.",
 		},
 	},
-	links = {
-        ["calcMoveSpeed"] = "lua/event/calcMoveSpeed",
-        ["calcWalkSpeed"] = "lua/event/calcWalkSpeed",
-    },
 }
