@@ -4123,38 +4123,38 @@ namespace mwse {
 			}
 
 			sol::optional<std::string> castSound = params["castSound"];
-			if (!castSound || castSound.value().length() >= 31) {
-				delete effect;
-				throw std::invalid_argument("Invalid 'castSound' parameter provided. Must be a string no longer than 31 characters long.");
-			}
-			else {
+			if (castSound) {
+				if (castSound.value().length() >= 31) {
+					delete effect;
+					throw std::invalid_argument("Invalid 'castSound' parameter provided. Must be a string no longer than 31 characters long.");
+				}
 				strcpy_s(effect->castSoundEffectID, 32, castSound.value().c_str());
 			}
 
 			sol::optional<std::string> boltSound = params["boltSound"];
-			if (!boltSound || boltSound.value().length() >= 31) {
-				delete effect;
-				throw std::invalid_argument("Invalid 'boltSound' parameter provided. Must be a string no longer than 31 characters long.");
-			}
-			else {
+			if (boltSound) {
+				if (boltSound.value().length() >= 31) {
+					delete effect;
+					throw std::invalid_argument("Invalid 'boltSound' parameter provided. Must be a string no longer than 31 characters long.");
+				}
 				strcpy_s(effect->boltSoundEffectID, 32, boltSound.value().c_str());
 			}
 
 			sol::optional<std::string> hitSound = params["hitSound"];
-			if (!hitSound || hitSound.value().length() >= 31) {
-				delete effect;
-				throw std::invalid_argument("Invalid 'hitSound' parameter provided. Must be a string no longer than 31 characters long.");
-			}
-			else {
+			if (hitSound) {
+				if (hitSound.value().length() >= 31) {
+					delete effect;
+					throw std::invalid_argument("Invalid 'hitSound' parameter provided. Must be a string no longer than 31 characters long.");
+				}
 				strcpy_s(effect->hitSoundEffectID, 32, hitSound.value().c_str());
 			}
 
 			sol::optional<std::string> areaSound = params["areaSound"];
-			if (!areaSound || areaSound.value().length() >= 31) {
-				delete effect;
-				throw std::invalid_argument("Invalid 'areaSound' parameter provided. Must be a string no longer than 31 characters long.");
-			}
-			else {
+			if (areaSound) {
+				if (areaSound.value().length() >= 31) {
+					delete effect;
+					throw std::invalid_argument("Invalid 'areaSound' parameter provided. Must be a string no longer than 31 characters long.");
+				}
 				strcpy_s(effect->areaSoundEffectID, 32, areaSound.value().c_str());
 			}
 

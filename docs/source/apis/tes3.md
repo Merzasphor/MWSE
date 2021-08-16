@@ -206,10 +206,10 @@ local effect = tes3.addMagicEffect({ id = ..., name = ..., baseCost = ..., schoo
 		* `z` (number): *Default*: `1`. Value of blue color channel. In range of 0 - 1.
 	* `icon` (string): *Optional*. Path to the effect icon. Must be a string no longer than 31 characters long.
 	* `particleTexture` (string): *Optional*. Path to the particle texture to use for the effect. Must be a string no longer than 31 characters long.
-	* `castSound` (string): *Optional*. The sound ID which will be played on casting a spell with this effect. Must be a string no longer than 31 characters long.
-	* `boltSound` (string): *Optional*. The sound ID which will be played when a spell with this effect is in flight. Must be a string no longer than 31 characters long.
-	* `hitSound` (string): *Optional*. The sound ID which will be played when a spell with this effect hits something. Must be a string no longer than 31 characters long.
-	* `areaSound` (string): *Optional*. The sound ID which will be played on area of effect impact. Must be a string no longer than 31 characters long.
+	* `castSound` (string): *Optional*. The sound ID which will be played on casting a spell with this effect. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
+	* `boltSound` (string): *Optional*. The sound ID which will be played when a spell with this effect is in flight. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
+	* `hitSound` (string): *Optional*. The sound ID which will be played when a spell with this effect hits something. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
+	* `areaSound` (string): *Optional*. The sound ID which will be played on area of effect impact. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
 	* `castVFX` ([tes3physicalObject](../../types/tes3physicalObject)): *Optional*.
 	* `boltVFX` ([tes3physicalObject](../../types/tes3physicalObject)): *Optional*.
 	* `hitVFX` ([tes3physicalObject](../../types/tes3physicalObject)): *Optional*.

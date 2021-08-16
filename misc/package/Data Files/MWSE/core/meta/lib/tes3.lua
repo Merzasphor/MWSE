@@ -119,13 +119,13 @@ function tes3.addJournalEntry(params) end
 --- 
 --- `particleTexture`: string — *Optional*. Path to the particle texture to use for the effect. Must be a string no longer than 31 characters long.
 --- 
---- `castSound`: string — *Optional*. The sound ID which will be played on casting a spell with this effect. Must be a string no longer than 31 characters long.
+--- `castSound`: string — *Optional*. The sound ID which will be played on casting a spell with this effect. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
 --- 
---- `boltSound`: string — *Optional*. The sound ID which will be played when a spell with this effect is in flight. Must be a string no longer than 31 characters long.
+--- `boltSound`: string — *Optional*. The sound ID which will be played when a spell with this effect is in flight. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
 --- 
---- `hitSound`: string — *Optional*. The sound ID which will be played when a spell with this effect hits something. Must be a string no longer than 31 characters long.
+--- `hitSound`: string — *Optional*. The sound ID which will be played when a spell with this effect hits something. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
 --- 
---- `areaSound`: string — *Optional*. The sound ID which will be played on area of effect impact. Must be a string no longer than 31 characters long.
+--- `areaSound`: string — *Optional*. The sound ID which will be played on area of effect impact. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
 --- 
 --- `castVFX`: tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon — *Optional*. No description yet available.
 --- 
@@ -188,10 +188,10 @@ function tes3.addMagicEffect(params) end
 --- @field lighting table *Optional*. No description yet available.
 --- @field icon string *Optional*. Path to the effect icon. Must be a string no longer than 31 characters long.
 --- @field particleTexture string *Optional*. Path to the particle texture to use for the effect. Must be a string no longer than 31 characters long.
---- @field castSound string *Optional*. The sound ID which will be played on casting a spell with this effect. Must be a string no longer than 31 characters long.
---- @field boltSound string *Optional*. The sound ID which will be played when a spell with this effect is in flight. Must be a string no longer than 31 characters long.
---- @field hitSound string *Optional*. The sound ID which will be played when a spell with this effect hits something. Must be a string no longer than 31 characters long.
---- @field areaSound string *Optional*. The sound ID which will be played on area of effect impact. Must be a string no longer than 31 characters long.
+--- @field castSound string *Optional*. The sound ID which will be played on casting a spell with this effect. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
+--- @field boltSound string *Optional*. The sound ID which will be played when a spell with this effect is in flight. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
+--- @field hitSound string *Optional*. The sound ID which will be played when a spell with this effect hits something. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
+--- @field areaSound string *Optional*. The sound ID which will be played on area of effect impact. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
 --- @field castVFX tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon *Optional*. No description yet available.
 --- @field boltVFX tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon *Optional*. No description yet available.
 --- @field hitVFX tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon *Optional*. No description yet available.
