@@ -100,25 +100,25 @@ return {
 				name = "castSound",
 				type = "string",
 				optional = true,
-				description = "Path to the sound which will be played on casting a spell with this effect. Must be a string no longer than 31 characters long."
+				description = "The sound ID which will be played on casting a spell with this effect. Must be a string no longer than 31 characters long."
 			},
 			{
 				name = "boltSound",
 				type = "string",
 				optional = true,
-				description = "Path to the sound which will be played when a spell with this effect is in flight. Must be a string no longer than 31 characters long."
+				description = "The sound ID which will be played when a spell with this effect is in flight. Must be a string no longer than 31 characters long."
 			},
 			{
 				name = "hitSound",
 				type = "string",
 				optional = true,
-				description = "Path to the sound which will be played when a spell with this effect hits something. Must be a string no longer than 31 characters long."
+				description = "The sound ID which will be played when a spell with this effect hits something. Must be a string no longer than 31 characters long."
 			},
 			{
 				name = "areaSound",
 				type = "string",
 				optional = true,
-				description = "Must be a string no longer than 31 characters long."
+				description = "The sound ID which will be played on area of effect impact. Must be a string no longer than 31 characters long."
 			},
 			{
 				name = "castVFX",

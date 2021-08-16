@@ -124,10 +124,10 @@ namespace TES3 {
 		InvalidMagicEffect->flags = 0;
 		strcpy_s(InvalidMagicEffect->particleTexture, "vfx_default.tga");
 		strcpy_s(InvalidMagicEffect->icon, "s\\Tx_S_sEfft_Unusd02.tga");
-		strcpy_s(InvalidMagicEffect->castSoundEffect, "Conjuration Cast");
-		strcpy_s(InvalidMagicEffect->boltSoundEffect, "Conjuration Bolt");
-		strcpy_s(InvalidMagicEffect->hitSoundEffect, "Conjuration Hit");
-		strcpy_s(InvalidMagicEffect->areaSoundEffect, "Conjuration Area");
+		strcpy_s(InvalidMagicEffect->castSoundEffectID, "Conjuration Cast");
+		strcpy_s(InvalidMagicEffect->boltSoundEffectID, "Conjuration Bolt");
+		strcpy_s(InvalidMagicEffect->hitSoundEffectID, "Conjuration Hit");
+		strcpy_s(InvalidMagicEffect->areaSoundEffectID, "Conjuration Area");
 		InvalidMagicEffect->speed = 1.0f;
 		InvalidMagicEffect->size = 1.0f;
 		InvalidMagicEffect->sizeCap = 50.0f;

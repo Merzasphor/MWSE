@@ -230,10 +230,10 @@ namespace TES3 {
 		char particleTexture[32]; // 0x3C
 								  // Only a few effects have data in their sound effect strings.
 								  // Maybe it's inferred from school if missing?
-		char castSoundEffect[32]; // 0x5C
-		char boltSoundEffect[32]; // 0x7C
-		char hitSoundEffect[32]; // 0x9C
-		char areaSoundEffect[32]; // 0xBC
+		char castSoundEffectID[32]; // 0x5C
+		char boltSoundEffectID[32]; // 0x7C
+		char hitSoundEffectID[32]; // 0x9C
+		char areaSoundEffectID[32]; // 0xBC
 		PhysicalObject * castEffect; // 0xDC
 		PhysicalObject * boltEffect; // 0xE0
 		PhysicalObject * hitEffect; // 0xE4
@@ -269,17 +269,17 @@ namespace TES3 {
 
 		const char* getIcon() const;
 		void setIcon(const char* path);
-
 		const char* getParticleTexture() const;
 		void setParticleTexture(const char* path);
-		const char* getCastSoundEffect() const;
-		void setCastSoundEffect(const char* path);
-		const char* getBoltSoundEffect() const;
-		void setBoltSoundEffect(const char* path);
-		const char* getHitSoundEffect() const;
-		void setHitSoundEffect(const char* path);
-		const char* getAreaSoundEffect() const;
-		void setAreaSoundEffect(const char* path);
+
+		Sound* getCastSoundEffect() const;
+		void setCastSoundEffect(Sound* sound);
+		Sound* getBoltSoundEffect() const;
+		void setBoltSoundEffect(Sound* sound);
+		Sound* getHitSoundEffect() const;
+		void setHitSoundEffect(Sound* sound);
+		Sound* getAreaSoundEffect() const;
+		void setAreaSoundEffect(Sound* sound);
 
 		unsigned int getEffectFlags() const;
 		void setEffectFlags(unsigned int flags) const;

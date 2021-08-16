@@ -3,10 +3,11 @@
 #include "BitUtil.h"
 #include "TES3Util.h"
 
-#include "TES3MobileActor.h"
 #include "TES3DataHandler.h"
 #include "TES3GameSetting.h"
 #include "TES3MagicEffectController.h"
+#include "TES3MobileActor.h"
+#include "TES3Sound.h"
 
 namespace TES3 {
 	const auto TES3_MagicEffect_ctor = reinterpret_cast<void(__thiscall*)(MagicEffect*)>(0x4A8C90);
@@ -70,36 +71,48 @@ namespace TES3 {
 		strcpy_s(particleTexture, sizeof(particleTexture), path);
 	}
 
-	const char* MagicEffect::getCastSoundEffect() const {
-		return castSoundEffect;
+	const auto TES3_MagicEffect_getCastSoundID = reinterpret_cast<const char*(__thiscall*)(const MagicEffect*)>(0x4A9E40);
+	Sound* MagicEffect::getCastSoundEffect() const {
+		auto id = TES3_MagicEffect_getCastSoundID(this);
+		return static_cast<Sound*>(DataHandler::get()->nonDynamicData->findSound(id));
 	}
 
-	void MagicEffect::setCastSoundEffect(const char* path) {
-		strcpy_s(castSoundEffect, sizeof(castSoundEffect), path);
+	void MagicEffect::setCastSoundEffect(Sound *sound) {
+		auto id = sound ? sound->id : "";
+		strcpy_s(castSoundEffectID, sizeof(castSoundEffectID), id);
 	}
 
-	const char* MagicEffect::getBoltSoundEffect() const {
-		return boltSoundEffect;
+	const auto TES3_MagicEffect_getBoltSoundID = reinterpret_cast<const char* (__thiscall*)(const MagicEffect*)>(0x4A9E60);
+	Sound* MagicEffect::getBoltSoundEffect() const {
+		auto id = TES3_MagicEffect_getBoltSoundID(this);
+		return static_cast<Sound*>(DataHandler::get()->nonDynamicData->findSound(id));
 	}
 
-	void MagicEffect::setBoltSoundEffect(const char* path) {
-		strcpy_s(boltSoundEffect, sizeof(boltSoundEffect), path);
+	void MagicEffect::setBoltSoundEffect(Sound* sound) {
+		auto id = sound ? sound->id : "";
+		strcpy_s(boltSoundEffectID, sizeof(boltSoundEffectID), id);
 	}
 
-	const char* MagicEffect::getHitSoundEffect() const {
-		return hitSoundEffect;
+	const auto TES3_MagicEffect_getHitSoundID = reinterpret_cast<const char* (__thiscall*)(const MagicEffect*)>(0x4A9E80);
+	Sound* MagicEffect::getHitSoundEffect() const {
+		auto id = TES3_MagicEffect_getHitSoundID(this);
+		return static_cast<Sound*>(DataHandler::get()->nonDynamicData->findSound(id));
 	}
 
-	void MagicEffect::setHitSoundEffect(const char* path) {
-		strcpy_s(hitSoundEffect, sizeof(hitSoundEffect), path);
+	void MagicEffect::setHitSoundEffect(Sound* sound) {
+		auto id = sound ? sound->id : "";
+		strcpy_s(hitSoundEffectID, sizeof(hitSoundEffectID), id);
 	}
 
-	const char* MagicEffect::getAreaSoundEffect() const {
-		return areaSoundEffect;
+	const auto TES3_MagicEffect_getAreaSoundID = reinterpret_cast<const char* (__thiscall*)(const MagicEffect*)>(0x4A9EA0);
+	Sound* MagicEffect::getAreaSoundEffect() const {
+		auto id = TES3_MagicEffect_getAreaSoundID(this);
+		return static_cast<Sound*>(DataHandler::get()->nonDynamicData->findSound(id));
 	}
 
-	void MagicEffect::setAreaSoundEffect(const char* path) {
-		strcpy_s(areaSoundEffect, sizeof(areaSoundEffect), path);
+	void MagicEffect::setAreaSoundEffect(Sound* sound) {
+		auto id = sound ? sound->id : "";
+		strcpy_s(areaSoundEffectID, sizeof(areaSoundEffectID), id);
 	}
 
 	unsigned int MagicEffect::getEffectFlags() const {

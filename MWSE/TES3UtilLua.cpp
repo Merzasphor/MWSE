@@ -4128,7 +4128,7 @@ namespace mwse {
 				throw std::invalid_argument("Invalid 'castSound' parameter provided. Must be a string no longer than 31 characters long.");
 			}
 			else {
-				strcpy_s(effect->castSoundEffect, 32, castSound.value().c_str());
+				strcpy_s(effect->castSoundEffectID, 32, castSound.value().c_str());
 			}
 
 			sol::optional<std::string> boltSound = params["boltSound"];
@@ -4137,7 +4137,7 @@ namespace mwse {
 				throw std::invalid_argument("Invalid 'boltSound' parameter provided. Must be a string no longer than 31 characters long.");
 			}
 			else {
-				strcpy_s(effect->boltSoundEffect, 32, boltSound.value().c_str());
+				strcpy_s(effect->boltSoundEffectID, 32, boltSound.value().c_str());
 			}
 
 			sol::optional<std::string> hitSound = params["hitSound"];
@@ -4146,7 +4146,7 @@ namespace mwse {
 				throw std::invalid_argument("Invalid 'hitSound' parameter provided. Must be a string no longer than 31 characters long.");
 			}
 			else {
-				strcpy_s(effect->hitSoundEffect, 32, hitSound.value().c_str());
+				strcpy_s(effect->hitSoundEffectID, 32, hitSound.value().c_str());
 			}
 
 			sol::optional<std::string> areaSound = params["areaSound"];
@@ -4155,7 +4155,7 @@ namespace mwse {
 				throw std::invalid_argument("Invalid 'areaSound' parameter provided. Must be a string no longer than 31 characters long.");
 			}
 			else {
-				strcpy_s(effect->areaSoundEffect, 32, areaSound.value().c_str());
+				strcpy_s(effect->areaSoundEffectID, 32, areaSound.value().c_str());
 			}
 
 			effect->castEffect = getOptionalParamObject<TES3::PhysicalObject>(params, "castVFX");

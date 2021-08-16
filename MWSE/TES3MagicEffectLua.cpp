@@ -4,6 +4,7 @@
 #include "TES3ObjectLua.h"
 
 #include "TES3MagicEffect.h"
+#include "TES3Sound.h"
 
 namespace mwse {
 	namespace lua {

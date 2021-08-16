@@ -36,11 +36,11 @@ Access to the base flag that determines if this effect can be used in enchanting
 
 ### `areaSoundEffect`
 
-*Read-only*. The path to the sound to play for area of effect impacts.
+The sound effect that plays on area of effect impacts. Can be set to ``nil`` to use the default sound effect for the magic school.
 
 **Returns**:
 
-* `result` (string)
+* `result` ([tes3sound](../../types/tes3sound))
 
 ***
 
@@ -74,13 +74,13 @@ The base magicka cost to use in calculations.
 
 ***
 
-### `boltSoundEffects`
+### `boltSoundEffect`
 
-*Read-only*. The path to the sound effect to play for target projectiles.
+The sound effect that plays for magic projectiles. Can be set to ``nil`` to use the default sound effect for the magic school.
 
 **Returns**:
 
-* `result` (string)
+* `result` ([tes3sound](../../types/tes3sound))
 
 ***
 
@@ -136,11 +136,11 @@ Access to the base flag.
 
 ### `castSoundEffect`
 
-*Read-only*. The path to the sound effect to play when casting.
+The sound effect that plays when casting. Can be set to ``nil`` to use the default sound effect for the magic school.
 
 **Returns**:
 
-* `result` (string)
+* `result` ([tes3sound](../../types/tes3sound))
 
 ***
 
@@ -206,11 +206,11 @@ Access to the base flag that determines if this effect doesn't make use of its m
 
 ### `hitSoundEffect`
 
-*Read-only*. The path to the sound effect to play when the effect hits a target.
+The sound effect that plays when the effect hits a target. Can be set to ``nil`` to use the default sound effect for the magic school.
 
 **Returns**:
 
-* `result` (string)
+* `result` ([tes3sound](../../types/tes3sound))
 
 ***
 
