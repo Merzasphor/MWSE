@@ -280,6 +280,7 @@ namespace TES3 {
 		void setHitSoundEffect(Sound* sound);
 		Sound* getAreaSoundEffect() const;
 		void setAreaSoundEffect(Sound* sound);
+		Sound* getSpellFailureSoundEffect() const;
 
 		unsigned int getEffectFlags() const;
 		void setEffectFlags(unsigned int flags) const;

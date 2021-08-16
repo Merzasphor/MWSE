@@ -47,6 +47,7 @@ namespace mwse {
 				usertypeDefinition["sizeCap"] = &TES3::MagicEffect::sizeCap;
 				usertypeDefinition["skill"] = sol::readonly_property(&TES3::MagicEffect::getSkillForSchool);
 				usertypeDefinition["speed"] = &TES3::MagicEffect::speed;
+				usertypeDefinition["spellFailureSoundEffect"] = sol::readonly_property(&TES3::MagicEffect::getSpellFailureSoundEffect);
 
 				// Allow access to base effect flags.
 				usertypeDefinition["allowEnchanting"] = sol::property(&TES3::MagicEffect::getAllowEnchanting, &TES3::MagicEffect::setAllowEnchanting);

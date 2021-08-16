@@ -115,6 +115,11 @@ namespace TES3 {
 		strcpy_s(areaSoundEffectID, sizeof(areaSoundEffectID), id);
 	}
 
+	const auto TES3_MagicEffect_getSpellFailureSound = reinterpret_cast<Sound* (__thiscall*)(const MagicEffect*)>(0x4A9F00);
+	Sound* MagicEffect::getSpellFailureSoundEffect() const {
+		return TES3_MagicEffect_getSpellFailureSound(this);
+	}
+
 	unsigned int MagicEffect::getEffectFlags() const {
 		return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlags(id);
 	}
