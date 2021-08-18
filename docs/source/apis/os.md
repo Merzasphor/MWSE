@@ -18,23 +18,41 @@ local result = os.clock()
 
 ***
 
-### `os.execute`
+### `os.createProcess`
 
-Passes command to be executed by an operating system shell. This will not display a console prompt that interrupts the game.
+Passes command to be executed by an operating system. Unlike `os.execute`, this will not display a console prompt that interrupts the game and cannot run direct shell commands.
 
 ```lua
-local exitCode, executor = os.execute(command, async)
+local executor = os.createProcess({ command = ..., async = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `command` (string): The command to run.
+	* `async` (boolean): *Default*: `true`. If set to false, Morrowind will halt execution until the program finishes.
+
+**Returns**:
+
+* `executor` ([mwseLuaExecutor](../../types/mwseLuaExecutor), nil): If running with `async`, and if successful, this is a handle to the executor. This can be used to check if the program has finished running and to get the program's output.
+
+***
+
+### `os.execute`
+
+Passes command to be executed by an operating system shell. To open a program to run in the background and monitor its output, use `os.createProcess`.
+
+```lua
+local exitCode = os.execute(command)
 ```
 
 **Parameters**:
 
 * `command` (string): The command to run.
-* `async` (boolean): *Default*: `false`. If set to true, the program will be run in a separate thread. The second return value, `executor`, can be used to monitor its execution.
 
 **Returns**:
 
-* `exitCode` (number): The exit code of the program. If running with `async` and if successful, the exit code will be STILL_ACTIVE (259).
-* `executor` ([mwseLuaExecutor](../../types/mwseLuaExecutor), nil): If running with `async`, and if successful, this is a handle to the executor. This can be used to check if the program has finished running and to get the program's output.
+* `exitCode` (number): The exit code of the program.
 
 ***
 

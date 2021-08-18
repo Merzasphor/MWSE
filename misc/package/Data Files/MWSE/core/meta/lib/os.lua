@@ -8,12 +8,24 @@ os = {}
 --- @return number result No description yet available.
 function os.clock() end
 
---- Passes command to be executed by an operating system shell. This will not display a console prompt that interrupts the game.
---- @param command string The command to run.
---- @param async boolean *Default*: `false`. If set to true, the program will be run in a separate thread. The second return value, `executor`, can be used to monitor its execution.
---- @return number exitCode The exit code of the program. If running with `async` and if successful, the exit code will be STILL_ACTIVE (259).
+--- Passes command to be executed by an operating system. Unlike `os.execute`, this will not display a console prompt that interrupts the game and cannot run direct shell commands.
+--- @param params os.createProcess.params This table accepts the following values:
+--- 
+--- `command`: string — The command to run.
+--- 
+--- `async`: boolean — *Default*: `true`. If set to false, Morrowind will halt execution until the program finishes.
 --- @return mwseLuaExecutor|nil executor If running with `async`, and if successful, this is a handle to the executor. This can be used to check if the program has finished running and to get the program's output.
-function os.execute(command, async) end
+function os.createProcess(params) end
+
+---Table parameter definitions for `os.createProcess`.
+--- @class os.createProcess.params
+--- @field command string The command to run.
+--- @field async boolean *Default*: `true`. If set to false, Morrowind will halt execution until the program finishes.
+
+--- Passes command to be executed by an operating system shell. To open a program to run in the background and monitor its output, use `os.createProcess`.
+--- @param command string The command to run.
+--- @return number exitCode The exit code of the program.
+function os.execute(command) end
 
 --- Returns the current clipboard text, if any is available.
 --- @return string|nil result No description yet available.

@@ -8,7 +8,7 @@ namespace mwse::lua {
 	std::optional<std::string> getClipboardText();
 	bool setClipboardText(std::optional<std::string> text);
 
-	std::tuple<unsigned int, sol::optional<std::shared_ptr<LuaExecutor>>> execute(const char* command, sol::optional<bool> async);
+	sol::optional<std::shared_ptr<LuaExecutor>> createProcess(sol::table params);
 
 	bool getIsVirtualKeyPressed(int VK_key);
 }

@@ -398,7 +398,7 @@ namespace mwse {
 			// Extend libraries.
 			luaState["os"]["getClipboardText"] = getClipboardText;
 			luaState["os"]["setClipboardText"] = setClipboardText;
-			luaState["os"]["execute"] = execute;
+			luaState["os"]["createProcess"] = createProcess;
 			LuaExecutor::defineLuaBindings();
 
 			// Bind TES3 data types.
