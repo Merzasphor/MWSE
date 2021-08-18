@@ -4390,7 +4390,7 @@ namespace mwse {
 			if (reference == nullptr) {
 				throw std::invalid_argument("Invalid 'reference' parameter provided.");
 			}
-			else if (!reference->isActor()) {
+			else if (!reference->baseObject->isActor()) {
 				throw std::invalid_argument("Invalid 'reference' parameter provided: reference does not have an inventory.");
 			}
 
