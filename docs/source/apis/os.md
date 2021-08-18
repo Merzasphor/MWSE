@@ -70,6 +70,20 @@ local result = os.getClipboardText()
 
 ***
 
+### `os.openURL`
+
+Opens the given `url` in the default browser. This has an advantage over using `os.execute("show https://my.url")` in that it does not create a command prompt window.
+
+```lua
+os.openURL(url)
+```
+
+**Parameters**:
+
+* `url` (string): The URL to open.
+
+***
+
 ### `os.setClipboardText`
 
 Sets the current clipboard text. If nil is passed, the clipboard will be cleared instead. If either operation fails, the function returns false.
@@ -85,20 +99,6 @@ local result = os.setClipboardText(text)
 **Returns**:
 
 * `result` (boolean)
-
-***
-
-### `os.showURL`
-
-Opens the given `url` in the default browser. This has an advantage over using `os.execute("show https://my.url")` in that it does not create a command prompt window.
-
-```lua
-os.showURL(url)
-```
-
-**Parameters**:
-
-* `url` (string): The URL to open.
 
 ***
 
