@@ -83,13 +83,12 @@ namespace mwse::lua {
 		auto executor = std::make_shared<LuaExecutor>(command);
 		executor->start();
 		if (!executor->isValid()) {
-			return {};
+			return executor;
 		}
 
 		// Allow non-async calls.
 		if (getOptionalParam<bool>(params, "async", true)) {
 			executor->wait();
-			return {};
 		}
 
 		return executor;

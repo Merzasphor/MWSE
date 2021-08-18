@@ -10,6 +10,6 @@ return {
 		},
 	}},
 	returns = {
-		{ name = "executor", type = "mwseLuaExecutor|nil", description = "If running with `async`, and if successful, this is a handle to the executor. This can be used to check if the program has finished running and to get the program's output." },
+		{ name = "executor", type = "mwseLuaExecutor", description = "A handle to the executor. This can be used to check if the program has errored, finished, and to get the program's output." },
 	},
 }

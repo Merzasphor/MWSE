@@ -34,7 +34,7 @@ local executor = os.createProcess({ command = ..., async = ... })
 
 **Returns**:
 
-* `executor` ([mwseLuaExecutor](../../types/mwseLuaExecutor), nil): If running with `async`, and if successful, this is a handle to the executor. This can be used to check if the program has finished running and to get the program's output.
+* `executor` ([mwseLuaExecutor](../../types/mwseLuaExecutor)): A handle to the executor. This can be used to check if the program has errored, finished, and to get the program's output.
 
 ***
 
