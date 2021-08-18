@@ -275,5 +275,3 @@ local index = tes3enchantment:getFirstIndexOfEffect(effectId)
 
 ## Functions
 
-***
-

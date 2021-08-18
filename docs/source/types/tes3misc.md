@@ -327,5 +327,3 @@ local isGold = tes3misc:isGold()
 
 ## Functions
 
-***
-

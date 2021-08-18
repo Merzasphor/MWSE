@@ -223,5 +223,3 @@ local string = tes3baseObject:__tojson()
 
 ## Functions
 
-***
-

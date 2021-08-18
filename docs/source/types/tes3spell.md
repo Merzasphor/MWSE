@@ -371,5 +371,3 @@ local schoolID = tes3spell:getLeastProficientSchool(actor)
 
 ## Functions
 
-***
-

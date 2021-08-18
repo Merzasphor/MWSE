@@ -25,8 +25,6 @@ The bounding box for the object.
 
 ***
 
-***
-
 ### `deleted`
 
 *Read-only*. The deleted state of the object.
