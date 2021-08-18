@@ -53,7 +53,7 @@ namespace TES3 {
 		bool castReady; // 0x5BE
 		char unknown_0x5BF;
 		bool playerInJail; // 0x5C0
-		bool playerIsTravelling; // 0x5C1
+		bool playerIsTraveling; // 0x5C1
 		char unknown_0x5C2; // Undefined.
 		char unknown_0x5C3; // Undefined.
 		int telekinesis; // 0x5C4

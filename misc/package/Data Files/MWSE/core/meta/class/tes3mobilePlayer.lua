@@ -34,7 +34,7 @@
 --- @field skillProgress table *Read-only*. Array-style table access to skill progress for each of the 27 skills.
 --- @field sleeping boolean Toggle flag for if the player is currently sleeping.
 --- @field telekinesis number Direct access to the player's telekinesis effect attribute.
---- @field travelling boolean Toggle flag for if the player is currently travelling.
+--- @field traveling boolean Toggle flag for if the player is currently travelling.
 --- @field vanityDisabled boolean Toggle flag for if the player's vanity camera is disabled.
 --- @field viewSwitchDisabled boolean Toggle flag for if the player can switch between first person and vanity cameras.
 --- @field visionBonus number Direct access to the player's vision bonus effect attribute.

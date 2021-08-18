@@ -174,8 +174,10 @@ local function writePackageDetails(file, package)
 	if (#values > 0) then
 		file:write("## Properties\n\n")
 		for _, value in ipairs(values) do
-			writeSubPackage(file, value, package)
-			file:write("***\n\n")
+			if (not value.deprecated) then
+				writeSubPackage(file, value, package)
+				file:write("***\n\n")
+			end
 		end
 	end
 
@@ -184,8 +186,10 @@ local function writePackageDetails(file, package)
 	if (#methods > 0) then
 		file:write("## Methods\n\n")
 		for _, method in ipairs(methods) do
-			writeSubPackage(file, method, package)
-			file:write("***\n\n")
+			if (not method.deprecated) then
+				writeSubPackage(file, method, package)
+				file:write("***\n\n")
+			end
 		end
 	end
 
@@ -194,8 +198,10 @@ local function writePackageDetails(file, package)
 	if (#functions > 0) then
 		file:write("## Functions\n\n")
 		for _, fn in ipairs(functions) do
-			writeSubPackage(file, fn, package)
-			file:write("***\n\n")
+			if (not fn.deprecated) then
+				writeSubPackage(file, fn, package)
+				file:write("***\n\n")
+			end
 		end
 	end
 

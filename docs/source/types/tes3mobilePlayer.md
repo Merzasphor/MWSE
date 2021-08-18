@@ -1781,7 +1781,7 @@ The currently equipped light.
 
 ***
 
-### `travelling`
+### `traveling`
 
 Toggle flag for if the player is currently travelling.
 
