@@ -260,7 +260,7 @@ function mwscript.getDistance(params) end
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field target tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string Actor to check distance to.
 
---- Wrapper for the GetItemCount mwscript function.
+--- Use `tes3.getItemCount` instead. Wrapper for the `GetItemCount` mwscript function.
 --- @deprecated
 --- @param params mwscript.getItemCount.params This table accepts the following values:
 --- 

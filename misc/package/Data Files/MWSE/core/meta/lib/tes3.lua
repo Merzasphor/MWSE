@@ -784,6 +784,20 @@ function tes3.getGlobal(id) end
 --- @return tes3inputConfig inputConfig No description yet available.
 function tes3.getInputBinding(keybind) end
 
+--- Returns the amount of a certain item that can be found in a reference's inventory.
+--- @param params tes3.getItemCount.params This table accepts the following values:
+--- 
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — The reference to get the item count for. Must be a reference that has an inventory.
+--- 
+--- `item`: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — The item to get the count of.
+--- @return number count The absolute value of the stack count in the reference's inventory.
+function tes3.getItemCount(params) end
+
+---Table parameter definitions for `tes3.getItemCount`.
+--- @class tes3.getItemCount.params
+--- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string The reference to get the item count for. Must be a reference that has an inventory.
+--- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string The item to get the count of.
+
 --- This function checks item's stolen flag.
 --- @param item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon The item to check.
 --- @param from tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3birthsign|tes3bodyPart|tes3book|tes3cell|tes3class|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3dialogue|tes3dialogueInfo|tes3door|tes3enchantment|tes3faction|tes3gameSetting|tes3globalVariable|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3magicSourceInstance|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3quest|tes3race|tes3reference|tes3region|tes3repairTool|tes3skill|tes3sound|tes3soundGenerator|tes3spell|tes3static|tes3weapon Where the item was stolen from.

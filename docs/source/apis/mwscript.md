@@ -343,7 +343,7 @@ local result = mwscript.getDistance({ reference = ..., target = ... })
 
 ### `mwscript.getItemCount`
 
-Wrapper for the GetItemCount mwscript function.
+Use `tes3.getItemCount` instead. Wrapper for the `GetItemCount` mwscript function.
 
 ```lua
 local result = mwscript.getItemCount({ reference = ..., item = ... })

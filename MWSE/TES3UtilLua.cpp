@@ -4385,6 +4385,29 @@ namespace mwse {
 			}
 		}
 
+		int getItemCount(sol::table params) {
+			TES3::Reference* reference = getOptionalParamExecutionReference(params);
+			if (reference == nullptr) {
+				throw std::invalid_argument("Invalid 'reference' parameter provided.");
+			}
+			else if (!reference->isActor()) {
+				throw std::invalid_argument("Invalid 'reference' parameter provided: reference does not have an inventory.");
+			}
+
+			auto item = getOptionalParamObject<TES3::Item>(params, "item");
+			if (item == nullptr) {
+				throw std::invalid_argument("Invalid 'item' parameter provided.");
+			}
+
+			auto asActor = reinterpret_cast<TES3::Actor*>(reference->baseObject);
+			auto stack = asActor->inventory.findItemStack(item);
+			if (stack == nullptr) {
+				return 0;
+			}
+
+			return std::abs(stack->count);
+		}
+
 		bool getItemIsStolen(sol::table params) {
 			auto item = getOptionalParamObject<TES3::Item>(params, "item");
 			auto from = getOptionalParamObject<TES3::BaseObject>(params, "from");
@@ -4880,6 +4903,7 @@ namespace mwse {
 			tes3["getGlobal"] = getGlobal;
 			tes3["getGMST"] = getGMST;
 			tes3["getInputBinding"] = getInputBinding;
+			tes3["getItemCount"] = getItemCount;
 			tes3["getItemIsStolen"] = getItemIsStolen;
 			tes3["getJournalIndex"] = getJournalIndex;
 			tes3["getKillCount"] = getKillCount;

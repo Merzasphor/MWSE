@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[Wrapper for the GetItemCount mwscript function.]],
+	description = [[Use `tes3.getItemCount` instead. Wrapper for the `GetItemCount` mwscript function.]],
 	arguments = {{
 		name = "params",
 		type = "table",

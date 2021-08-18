@@ -1398,6 +1398,26 @@ local inputConfig = tes3.getInputBinding(keybind)
 
 ***
 
+### `tes3.getItemCount`
+
+Returns the amount of a certain item that can be found in a reference's inventory.
+
+```lua
+local count = tes3.getItemCount({ reference = ..., item = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The reference to get the item count for. Must be a reference that has an inventory.
+	* `item` ([tes3item](../../types/tes3item), string): The item to get the count of.
+
+**Returns**:
+
+* `count` (number): The absolute value of the stack count in the reference's inventory.
+
+***
+
 ### `tes3.getItemIsStolen`
 
 This function checks item's stolen flag.
