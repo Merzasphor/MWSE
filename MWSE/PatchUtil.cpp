@@ -434,6 +434,50 @@ namespace mwse {
 		}
 
 		//
+		// Patch: Fix enchantment copying on books and weapons.
+		//
+
+		__declspec(naked) void PatchCopyBookEnchantmentCaller() {
+			__asm {
+				push ebp
+				mov ecx, ebx
+			}
+		}
+		__declspec(naked) void PatchCopyWeaponEnchantmentCaller() {
+			__asm {
+				push ebx
+				mov ecx, ebp
+			}
+		}
+		constexpr size_t PatchCopyEnchantmentCaller_size = 0x3;
+
+		void __fastcall PatchCopyEnchantment(TES3::Item* item, DWORD _EDX_, const TES3::Item* from) {
+			// Free existing enchantment ID string if available.
+			if (item->getEnchantment() && !item->getLinksResolved()) {
+				tes3::free(item->getEnchantment());
+			}
+			item->setEnchantment(nullptr);
+
+			if (from->getEnchantment()) {
+				if (from->getLinksResolved()) {
+					item->setEnchantment(from->getEnchantment());
+				}
+				else {
+					// Helper union so we don't have to reinterpret memory all the time.
+					union EnchantUnion { TES3::Enchantment* enchantment; char* id; };
+					EnchantUnion toEnchantment = {}, fromEnchantment = {};
+
+					// Make a copy of the enchantment's ID.
+					fromEnchantment.enchantment = from->getEnchantment();
+					const auto enchantmentIDLength = strnlen_s(fromEnchantment.id, 32) + 1;
+					toEnchantment.id = reinterpret_cast<char*>(tes3::malloc(enchantmentIDLength));
+					strncpy_s(toEnchantment.id, enchantmentIDLength, fromEnchantment.id, enchantmentIDLength);
+					item->setEnchantment(toEnchantment.enchantment);
+				}
+			}
+		}
+
+		//
 		// Install all the patches.
 		//
 
@@ -654,6 +698,16 @@ namespace mwse {
 
 			// Patch: Prevent the game from saving empty menu names to the INI file.
 			genCallUnprotected(0x5972AA, reinterpret_cast<DWORD>(PatchNonEmptyWritePrivateProfileStringA), 0x6);
+
+			// Patch: Fix book enchantment copying.
+			genNOPUnprotected(0x4A2618, 0x4A26D8 - 0x4A2618);
+			writePatchCodeUnprotected(0x4A2618, (BYTE*)&PatchCopyBookEnchantmentCaller, PatchCopyEnchantmentCaller_size);
+			genCallUnprotected(0x4A2618 + PatchCopyEnchantmentCaller_size, reinterpret_cast<DWORD>(PatchCopyEnchantment));
+
+			// Patch: Fix weapon enchantment copying.
+			genNOPUnprotected(0x4F26FF, 0x4F27BC - 0x4F26FF);
+			writePatchCodeUnprotected(0x4F26FF, (BYTE*)&PatchCopyWeaponEnchantmentCaller, PatchCopyEnchantmentCaller_size);
+			genCallUnprotected(0x4F26FF + PatchCopyEnchantmentCaller_size, reinterpret_cast<DWORD>(PatchCopyEnchantment));
 		}
 
 		void installPostLuaPatches() {

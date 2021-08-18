@@ -253,6 +253,9 @@ namespace TES3 {
 		bool isItem() const;
 		const char* getSourceFilename() const;
 
+		bool getLinksResolved() const;
+		void setLinksResolved(bool value);
+
 		bool getDisabled() const;
 		bool getDeleted() const;
 

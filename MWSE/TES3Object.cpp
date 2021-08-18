@@ -141,6 +141,14 @@ namespace TES3 {
 		return nullptr;
 	}
 
+	bool BaseObject::getLinksResolved() const {
+		return BIT_TEST(objectFlags, TES3::ObjectFlag::LinksResolvedBit);
+	}
+
+	void BaseObject::setLinksResolved(bool value) {
+		BIT_SET(objectFlags, TES3::ObjectFlag::LinksResolvedBit, value);
+	}
+
 	bool BaseObject::getDisabled() const {
 		return BIT_TEST(objectFlags, TES3::ObjectFlag::DisabledBit);
 	}
