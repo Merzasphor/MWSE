@@ -9,6 +9,7 @@
 mwseLuaExecutor = {}
 
 --- Reads the current output of the program, and clears the output buffer.
+--- @return string output The output written to stdout by the program.
 function mwseLuaExecutor:getOutput() end
 
 --- Pauses the main thread, locking up the program until the program has finished.

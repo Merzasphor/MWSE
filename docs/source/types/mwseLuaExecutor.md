@@ -20,7 +20,7 @@ The error code of the program, or 0 if there was no error.
 
 **Returns**:
 
-* `result` (string, nil)
+* `result` (number)
 
 ***
 
@@ -30,7 +30,7 @@ The exit code of the program, or nil if the program has not yet finished.
 
 **Returns**:
 
-* `result` (string, nil)
+* `result` (number, nil)
 
 ***
 
@@ -51,8 +51,12 @@ If true, the program is no longer running and output can be read.
 Reads the current output of the program, and clears the output buffer.
 
 ```lua
-mwseLuaExecutor:getOutput()
+local output = mwseLuaExecutor:getOutput()
 ```
+
+**Returns**:
+
+* `output` (string): The output written to stdout by the program.
 
 ***
 
