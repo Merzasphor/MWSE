@@ -2,7 +2,7 @@
 
 #include "TES3Game.h"
 
-namespace mwse {
+namespace mwse::lua {
 	size_t getVirtualMemoryUsage() {
 		PROCESS_MEMORY_COUNTERS_EX memCounter;
 		GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*)&memCounter, sizeof(memCounter));
@@ -74,6 +74,21 @@ namespace mwse {
 		CloseClipboard();
 
 		return true;
+	}
+
+	std::tuple<unsigned int, sol::optional<std::shared_ptr<LuaExecutor>>> execute(const char* command, sol::optional<bool> async) {
+		auto executor = std::make_shared<LuaExecutor>(command);
+		executor->start();
+		if (!executor->isValid()) {
+			return { executor->getErrorCode(), {} };
+		}
+
+		if (!async.value_or(false)) {
+			executor->wait();
+			return { executor->getExitCode().value(), executor };
+		}
+
+		return { STILL_ACTIVE, executor };
 	}
 
 	bool getIsVirtualKeyPressed(int VK_key) {

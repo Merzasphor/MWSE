@@ -395,9 +395,11 @@ namespace mwse {
 			bindLuaTimer();
 			bindMWSEUtil();
 
-			// Extend OS library.
+			// Extend libraries.
 			luaState["os"]["getClipboardText"] = getClipboardText;
 			luaState["os"]["setClipboardText"] = setClipboardText;
+			luaState["os"]["execute"] = execute;
+			LuaExecutor::defineLuaBindings();
 
 			// Bind TES3 data types.
 			bindTES3ActionData();

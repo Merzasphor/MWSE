@@ -21,6 +21,7 @@
     <ClInclude Include="LuaEnchantedItemCreatedEvent.h" />
     <ClInclude Include="LuaEnchantedItemCreateFailedEvent.h" />
     <ClInclude Include="LuaEnchantChargeUseEvent.h" />
+    <ClInclude Include="LuaExecutor.h" />
     <ClInclude Include="LuaInfoLinkResolveEvent.h" />
     <ClInclude Include="LuaPotionBrewSkillCheckEvent.h" />
     <ClInclude Include="NIBillboardNode.h" />
@@ -520,6 +521,7 @@
     <ClCompile Include="LuaEquipEvent.cpp" />
     <ClCompile Include="LuaBodyPartsUpdatedEvent.cpp" />
     <ClCompile Include="LuaEquippedEvent.cpp" />
+    <ClCompile Include="LuaExecutor.cpp" />
     <ClCompile Include="LuaFilterBarterMenuEvent.cpp" />
     <ClCompile Include="LuaFilterContentsMenuEvent.cpp" />
     <ClCompile Include="LuaFilterInventoryEvent.cpp" />
