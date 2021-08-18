@@ -13,7 +13,13 @@ function Hyperlink:execute()
 		buttons = {self.sYes, self.sNo},
 		callback = function (e)
 			if e.button == 0 then
-				os.execute(self.exec)
+				if (self.url) then
+					os.openURL(self.url)
+				elseif (self.exec) then
+					os.execute(self.exec)
+				else
+					error("Hyperlink must define a url to open.")
+				end
 			end
 		end
 	}
@@ -31,7 +37,7 @@ function Hyperlink:makeComponent(parentBlock)
 	link.widget.idle = tes3ui.getPalette("link_color")
 	link.widget.over = tes3ui.getPalette("link_over_color")
 	link.widget.pressed = tes3ui.getPalette("link_pressed_color")
-	
+
 	link.borderRight = self.indent-- * 2
 	link.wrapText = true
 	link.text = self.text

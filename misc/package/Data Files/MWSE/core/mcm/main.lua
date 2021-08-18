@@ -160,7 +160,7 @@ local function onClickModConfigButton()
 		splash.borderTop = 25
 
 		-- Create a link back to the website.
-		local site = containerPane:createLabel({ text = "mwse.github.io/MWSE/" })
+		local site = containerPane:createLabel({ text = "mwse.github.io/MWSE" })
 		site.absolutePosAlignX = 0.5
 		site.color = tes3ui.getPalette("link_color")
 		site:register("mouseClick", function()
@@ -169,7 +169,7 @@ local function onClickModConfigButton()
 				buttons = { tes3.findGMST(tes3.gmst.sYes).value, tes3.findGMST(tes3.gmst.sNo).value },
 				callback = function(e)
 					if (e.button == 0) then
-						os.execute("start https://mwse.github.io/MWSE/")
+						os.openURL("https://mwse.github.io/MWSE")
 					end
 				end
 			})

@@ -95,6 +95,10 @@ namespace mwse::lua {
 		return executor;
 	}
 
+	void openURL(const std::string& url) {
+		ShellExecute(0, 0, url.c_str(), 0, 0, SW_SHOW);
+	}
+
 	bool getIsVirtualKeyPressed(int VK_key) {
 		return (GetAsyncKeyState(VK_key) & 0x8000) == 0x8000;
 	}

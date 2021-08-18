@@ -36,3 +36,7 @@ function os.getClipboardText() end
 --- @return boolean result No description yet available.
 function os.setClipboardText(text) end
 
+--- Opens the given `url` in the default browser. This has an advantage over using `os.execute("show https://my.url")` in that it does not create a command prompt window.
+--- @param url string The URL to open.
+function os.showURL(url) end
+

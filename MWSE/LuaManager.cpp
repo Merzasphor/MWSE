@@ -399,6 +399,7 @@ namespace mwse {
 			luaState["os"]["getClipboardText"] = getClipboardText;
 			luaState["os"]["setClipboardText"] = setClipboardText;
 			luaState["os"]["createProcess"] = createProcess;
+			luaState["os"]["openURL"] = openURL;
 			LuaExecutor::defineLuaBindings();
 
 			// Bind TES3 data types.
