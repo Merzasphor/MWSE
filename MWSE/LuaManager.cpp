@@ -373,10 +373,6 @@ namespace mwse {
 			bindData();
 		}
 
-		void lua_os_getClipboardText() {
-
-		}
-
 		void LuaManager::bindData() {
 			// Bind our LuaScript type, which is used for holding script contexts.
 			auto usertypeDefinition = luaState.new_usertype<LuaScript>("LuaScript");
