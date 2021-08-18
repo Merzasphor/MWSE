@@ -13,18 +13,19 @@ function Hyperlink:execute()
 		buttons = {self.sYes, self.sNo},
 		callback = function (e)
 			if e.button == 0 then
-				if (self.url) then
-					os.openURL(self.url)
-				else
-					error("Hyperlink must define a url to open.")
-				end
+				os.openURL(self.url)
 			end
 		end
 	})
 end
 
 function Hyperlink:makeComponent(parentBlock)
-	if not self.text then
+	-- Convert legacy exec param to a URL.
+	if (not self.url and self.exec) then
+		self.url = self.exec:gsub("^start ", "")
+	end
+
+	if not self.text or not self.url then
 		mwse.log("ERROR: Text field missing for the following setting: ")
 		self:printComponent()
 	end
@@ -44,11 +45,6 @@ function Hyperlink:makeComponent(parentBlock)
 	link:register("mouseClick", function (e)
 		self:execute()
 	end)
-
-	-- Convert legacy exec param to a URL.
-	if (not self.url and self.exec) then
-		self.url = self.exec:gsub("^start ", "")
-	end
 
 	self.elements.info = link
 	return link
