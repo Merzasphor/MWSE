@@ -3244,6 +3244,15 @@ namespace mwse {
 		}
 
 		void LuaManager::hook() {
+			// Add core/lib directories to path.
+			{
+				std::stringstream envPath;
+				envPath << (std::filesystem::current_path() / "Data Files" / "MWSE" / "core").string() << ";";
+				envPath << (std::filesystem::current_path() / "Data Files" / "MWSE" / "lib").string() << ";";
+				envPath << getenv("Path");
+				_putenv_s("Path", envPath.str().c_str());
+			}
+
 			// Execute mwse_init.lua
 			try {
 				sol::protected_function_result result = luaState.safe_script_file("Data Files\\MWSE\\core\\mwse_init.lua");
