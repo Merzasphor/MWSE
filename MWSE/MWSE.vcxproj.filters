@@ -1548,6 +1548,9 @@
     <ClInclude Include="LuaExecutor.h">
       <Filter>Header Files\Lua</Filter>
     </ClInclude>
+    <ClInclude Include="LuaSpellMagickaUseEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -3406,6 +3409,9 @@
     </ClCompile>
     <ClCompile Include="LuaExecutor.cpp">
       <Filter>Source Files\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaSpellMagickaUseEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

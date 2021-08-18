@@ -24,6 +24,7 @@
     <ClInclude Include="LuaExecutor.h" />
     <ClInclude Include="LuaInfoLinkResolveEvent.h" />
     <ClInclude Include="LuaPotionBrewSkillCheckEvent.h" />
+    <ClInclude Include="LuaSpellMagickaUseEvent.h" />
     <ClInclude Include="NIBillboardNode.h" />
     <ClInclude Include="NIBSAnimationNode.h" />
     <ClInclude Include="LuaBarterOfferEvent.h" />
@@ -594,6 +595,7 @@
     <ClCompile Include="LuaSpellCastedEvent.cpp" />
     <ClCompile Include="LuaSpellCastEvent.cpp" />
     <ClCompile Include="LuaSpellCreatedEvent.cpp" />
+    <ClCompile Include="LuaSpellMagickaUseEvent.cpp" />
     <ClCompile Include="LuaSpellResistEvent.cpp" />
     <ClCompile Include="LuaSpellTickEvent.cpp" />
     <ClCompile Include="LuaAddTempSound.cpp" />

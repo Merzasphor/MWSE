@@ -229,6 +229,7 @@
 #include "LuaSkillRaisedEvent.h"
 #include "LuaSpellCastedEvent.h"
 #include "LuaSpellCreatedEvent.h"
+#include "LuaSpellMagickaUseEvent.h"
 #include "LuaSpellResistEvent.h"
 #include "LuaSpellTickEvent.h"
 #include "LuaUiRefreshedEvent.h"
@@ -3052,6 +3053,40 @@ namespace mwse {
 		}
 
 		//
+		// Event: Spell magicka cost on cast
+		//
+		
+		double __stdcall onSpellCastMagickaRequired(TES3::MagicSourceInstance* source) {
+			// Restore overwritten code.
+			unsigned int magickaCost = source->sourceCombo.source.asSpell->magickaCost;
+
+			if (event::SpellMagickaUseEvent::getEventEnabled()) {
+				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+
+				sol::object eventResult = stateHandle.triggerEvent(new event::SpellMagickaUseEvent(source));
+				if (eventResult.valid()) {
+					sol::table eventData = eventResult;
+					sol::optional<unsigned int> newCost = eventData["cost"];
+					if (newCost) {
+						magickaCost = newCost.value();
+					}
+				}
+			}
+
+			return magickaCost;
+		}
+
+		__declspec(naked) void patchSpellCastMagickaRequired() {
+			__asm {
+				add edi, 0x2C0						// edi += offset of MACT.magicka
+				push esi							// magicSourceInstance
+				call onSpellCastMagickaRequired		// Replace with call generation
+				jmp short $+6
+			}
+		}
+		const size_t patchSpellCastMagickaRequired_size = 0xE;
+
+		//
 		// Event: Enchanted item charge needed to cast
 		//
 
@@ -4507,6 +4542,10 @@ namespace mwse {
 
 			// Event: Power Recharged
 			overrideVirtualTableEnforced(0x74AC54, offsetof(PowersHashMap::VirtualTable, deleteKeyValuePair), 0x4F1C50, reinterpret_cast<DWORD>(OnDeletePowerHashMapKVP));
+
+			// Event: Spell magicka cost on cast
+			writePatchCodeUnprotected(0x51517A, (BYTE*)&patchSpellCastMagickaRequired, patchSpellCastMagickaRequired_size);
+			genCallUnprotected(0x515181, reinterpret_cast<DWORD>(onSpellCastMagickaRequired));
 
 			// Event: Enchanted item charge needed to cast.
 			writePatchCodeUnprotected(0x514F1E, (BYTE*)&patchEnchantItemChargeRequired_onCast, patchEnchantItemChargeRequired_onCast_size);
