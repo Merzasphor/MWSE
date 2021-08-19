@@ -7,6 +7,7 @@
 --- @field mesh string The path to the object's mesh.
 --- @field name string The player-facing name for the object.
 --- @field organic boolean Determines if the container's organic flag is enabled.
+--- @field reference tes3reference *Read-only*. The reference that the object is represented by.
 --- @field respawns boolean Determines if the container's respawn flag is enabled.
 --- @field script tes3script The script that runs on the object.
 tes3containerInstance = {}

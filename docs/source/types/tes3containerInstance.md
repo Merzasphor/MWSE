@@ -235,6 +235,16 @@ The previous object in parent collection's list.
 
 ***
 
+### `reference`
+
+*Read-only*. The reference that the object is represented by.
+
+**Returns**:
+
+* `result` ([tes3reference](../../types/tes3reference))
+
+***
+
 ### `respawns`
 
 Determines if the container's respawn flag is enabled.

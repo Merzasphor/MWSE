@@ -265,6 +265,16 @@ Always returns true.
 
 ***
 
+### `mobile`
+
+*Read-only*. The mobile that the object is represented by.
+
+**Returns**:
+
+* `result` ([tes3mobileActor](../../types/tes3mobileActor))
+
+***
+
 ### `modified`
 
 The modification state of the object since the last save.
@@ -352,6 +362,16 @@ The previous object in parent collection's list.
 **Returns**:
 
 * `result` ([tes3race](../../types/tes3race))
+
+***
+
+### `reference`
+
+*Read-only*. The reference that the object is represented by.
+
+**Returns**:
+
+* `result` ([tes3reference](../../types/tes3reference))
 
 ***
 

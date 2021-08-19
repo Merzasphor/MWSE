@@ -154,3 +154,15 @@ Mix volumes for music.
 
 ***
 
+## Methods
+
+### `clearTarget`
+
+Clears data related to activation, resetting what the player can activate.
+
+```lua
+tes3game:clearTarget()
+```
+
+***
+
