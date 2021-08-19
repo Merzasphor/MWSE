@@ -19,3 +19,6 @@
 --- @field worldSceneGraphRoot niBillboardNode|niCollisionSwitch|niNode|niSwitchNode *Read-only*. Access to the root of the scene graph.
 tes3game = {}
 
+--- Clears data related to activation, resetting what the player can activate.
+function tes3game:clearTarget() end
+

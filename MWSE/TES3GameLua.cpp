@@ -46,6 +46,7 @@ namespace mwse {
 			usertypeDefinition["worldRoot"] = sol::readonly_property(&TES3::Game::worldRoot);
 
 			// Basic function binding.
+			usertypeDefinition["clearTarget"] = &TES3::Game::clearTarget;
 			usertypeDefinition["setGamma"] = &TES3::Game::setGamma;
 
 			// Deprecated bindings.
