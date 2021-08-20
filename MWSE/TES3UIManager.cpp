@@ -602,6 +602,15 @@ namespace TES3 {
 			{ "soulgemFilled", reinterpret_cast<EventCallback*>(0x5C6B00) },
 		};
 
+		static sol::protected_function noValidItemsCallback = sol::nil;
+		static const char* noValidItemsTextOverride = nullptr;
+		Element* __cdecl messagePlayerForNoValidItems(const char* message, const char* image = nullptr, bool showInDialog = true) {
+			if (noValidItemsCallback.valid()) {
+				noValidItemsCallback();
+			}
+			return showMessageBox(noValidItemsTextOverride ? noValidItemsTextOverride : message, image, showInDialog);
+		}
+
 		void showInventorySelectMenu_lua(sol::table params) {
 			// Get our actor.
 			TES3::Reference* actorRef = mwse::lua::getOptionalParamExecutionReference(params);
@@ -647,12 +656,8 @@ namespace TES3 {
 			}
 
 			// Allow overwriting of our "no item found" text.
-			auto sInventorySelectNoItems = TES3::DataHandler::get()->nonDynamicData->GMSTs[TES3::GMST::sInventorySelectNoItems];
-			const char* oldNoResultsText = sInventorySelectNoItems->value.asString;
-			const char* noResultsText = mwse::lua::getOptionalParam<const char*>(params, "noResultsText", nullptr);
-			if (noResultsText != nullptr) {
-				sInventorySelectNoItems->value.asString = (char*)noResultsText;
-			}
+			noValidItemsTextOverride = mwse::lua::getOptionalParam<const char*>(params, "noResultsText", nullptr);
+			noValidItemsCallback = mwse::lua::getOptionalParam<sol::protected_function>(params, "noResultsCallback", sol::nil);
 
 			// Do we close the menu after?
 			inventorySelectLuaCallbackCloseAfter = mwse::lua::getOptionalParam<bool>(params, "leaveMenuMode", !TES3::WorldController::get()->flagMenuMode);
@@ -661,10 +666,9 @@ namespace TES3 {
 			*reinterpret_cast<EventCallback**>(0x7D3CA0) = filter;
 			showSelectMenu(actor, callback, titleText);
 
-			// Restore the previous results text.
-			if (noResultsText != nullptr) {
-				sInventorySelectNoItems->value.asString = (char*)oldNoResultsText;
-			}
+			// Reset our overrides.
+			noValidItemsTextOverride = nullptr;
+			noValidItemsCallback = sol::nil;
 
 			// If the menu was successfully shown, enter menu mode.
 			auto MenuInventorySelect = *reinterpret_cast<UI_ID*>(0x7D3C14);
@@ -727,6 +731,9 @@ namespace TES3 {
 			auto patch = &Element::patchUpdateLayout_propagateFlow;
 			mwse::genCallEnforced(0x585E1E, 0x584850, *reinterpret_cast<DWORD*>(&patch));
 			mwse::genCallEnforced(0x5863AE, 0x584850, *reinterpret_cast<DWORD*>(&patch));
+
+			// Patch item selection no items message to allow callbacks and changed text.
+			mwse::genCallEnforced(0x5D37CF, 0x5F90C0, reinterpret_cast<DWORD>(messagePlayerForNoValidItems));
 
 			// Provide some UI IDs for elements that don't have them, like tooltips:
 			pushNewUIID(0x590F59, "HelpMenu_titleBlock");
