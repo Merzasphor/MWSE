@@ -708,6 +708,82 @@ namespace TES3 {
 		return true;
 	}
 
+	bool MobileActor::equip_lua(sol::object arg) {
+		using mwse::lua::getOptionalParam;
+		using mwse::lua::getOptionalParamObject;
+
+		if (arg.is<Item>()) {
+			return equipItem(arg.as<Item*>());
+		}
+		else if (arg.is<sol::table>()) {
+			sol::table params = arg;
+
+			Item* item = getOptionalParamObject<Item>(params, "item");
+			if (item == nullptr) {
+				return false;
+			}
+
+			auto itemData = getOptionalParam<ItemData*>(params, "itemData", nullptr);
+			auto addItem = getOptionalParam<bool>(params, "addItem", false);
+			auto selectBestCondition = getOptionalParam<bool>(params, "selectBestCondition", false);
+			auto selectWorstCondition = getOptionalParam<bool>(params, "selectWorstCondition", false);
+
+			return equipItem(item, itemData, addItem, selectBestCondition, selectWorstCondition);
+		}
+
+		throw std::invalid_argument("Invalid parameter provided: must be a tes3item or table.");
+	}
+
+	bool MobileActor::unequip_lua(sol::table args) {
+		using mwse::lua::getOptionalParam;
+		using mwse::lua::getOptionalParamObject;
+
+		Actor* actor = static_cast<TES3::Actor*>(reference->baseObject);
+		EquipmentStack* s = nullptr;
+		auto item = mwse::lua::getOptionalParamObject<Item>(args, "item");
+		int type = args.get_or("type", 0);
+		int armourSlot = args.get_or("armorSlot", -1);
+		int clothingSlot = args.get_or("clothingSlot", -1);
+
+		if (item) {
+			// Match by item.
+			s = actor->getEquippedItem(item);
+		}
+		else if (armourSlot != -1) {
+			// Match by slot.
+			s = actor->getEquippedArmorBySlot(armourSlot);
+		}
+		else if (clothingSlot != -1) {
+			// Match by slot.
+			s = actor->getEquippedClothingBySlot(clothingSlot);
+		}
+		if (s) {
+			// Warning: Unequipping lights during menumode with updateGUI=true triggers a Morrowind crash.
+			// UI update has been moved to a separate function.
+			actor->unequipItem(s->object, true, this, false, s->itemData);
+			actor->postUnequipUIRefresh(this);
+			return true;
+		}
+
+		if (type) {
+			// Match all equipped items by objectType.
+			std::vector<TES3::EquipmentStack*> matches;
+			for (auto it = actor->equipment.head; it; it = it->next) {
+				if (it->data->object->objectType == type) {
+					matches.push_back(it->data);
+				}
+			}
+			// Warning: Unequipping lights during menumode with updateGUI=true triggers a Morrowind crash.
+			// UI update has been moved to a separate function.
+			for (auto it : matches) {
+				s = it;
+				actor->unequipItem(s->object, true, this, false, s->itemData);
+			}
+			actor->postUnequipUIRefresh(this);
+		}
+		return bool(s);
+	}
+
 	void MobileActor::updateOpacity() {
 		if (animationController.asActor) {
 			animationController.asActor->updateOpacity();

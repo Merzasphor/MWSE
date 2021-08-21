@@ -171,6 +171,29 @@ function tes3mobileActor:calcEffectiveDamage(params) end
 --- @field applyArmor boolean *Optional*. If armor should mitigate the incoming damage.
 --- @field resistAttribute number *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from tes3.effectAttributes.
 
+--- Equips an item, optionally adding the item if needed. If the best match is already equipped, it does not perform an unequip-equip cycle, but does return true.
+--- @param params tes3mobileActor.equip.params This table accepts the following values:
+--- 
+--- `item`: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — The item to equip.
+--- 
+--- `itemData`: tes3itemData — *Optional*. The item data of the specific item to equip.
+--- 
+--- `addItem`: boolean — If true, the item will be added to the actor's inventory if needed.
+--- 
+--- `selectBestCondition`: boolean — If true, the item in the inventory with the best condition and best charge will be selected.
+--- 
+--- `selectWorstCondition`: boolean — If true, the item in the inventory with the worst condition and worst charge will be selected. Can be useful for selecting tools.
+--- @return boolean itemEquipped No description yet available.
+function tes3mobileActor:equip(params) end
+
+---Table parameter definitions for `tes3mobileActor.equip`.
+--- @class tes3mobileActor.equip.params
+--- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string The item to equip.
+--- @field itemData tes3itemData *Optional*. The item data of the specific item to equip.
+--- @field addItem boolean If true, the item will be added to the actor's inventory if needed.
+--- @field selectBestCondition boolean If true, the item in the inventory with the best condition and best charge will be selected.
+--- @field selectWorstCondition boolean If true, the item in the inventory with the worst condition and worst charge will be selected. Can be useful for selecting tools.
+
 --- Fetches a filtered list of the active magic effects on the actor. Returns a table with tes3activeMagicEffect items.
 --- @param params tes3mobileActor.getActiveMagicEffects.params This table accepts the following values:
 --- 
@@ -258,6 +281,26 @@ function tes3mobileActor:startDialogue() end
 --- Ends combat for the actor.
 --- @param force boolean If false, the function won't stop combat if the actor has other valid hostile targets.
 function tes3mobileActor:stopCombat(force) end
+
+--- Unequips one or more items from the actor.
+--- @param params tes3mobileActor.unequip.params This table accepts the following values:
+--- 
+--- `item`: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — *Optional*. The item to unequip.
+--- 
+--- `type`: number — *Optional*. The item type to unequip. Only used if no other parameter is provided.
+--- 
+--- `armorSlot`: number — *Optional*. The armor slot to unequip.
+--- 
+--- `clothingSlot`: number — *Optional*. The clothing slot to unequip.
+--- @return boolean itemUnequipped No description yet available.
+function tes3mobileActor:unequip(params) end
+
+---Table parameter definitions for `tes3mobileActor.unequip`.
+--- @class tes3mobileActor.unequip.params
+--- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string *Optional*. The item to unequip.
+--- @field type number *Optional*. The item type to unequip. Only used if no other parameter is provided.
+--- @field armorSlot number *Optional*. The armor slot to unequip.
+--- @field clothingSlot number *Optional*. The clothing slot to unequip.
 
 --- Updates statistics derived from attributes, which are magicka, fatigue, and encumbrance. Will also update the UI if used on the player. Normally handled automatically when you use tes3.modStatistic.
 --- @param attribute tes3statistic|tes3statisticSkill *Optional*. Limits the update to statistics derived from this attribute.  e.g. `mobile:updateDerivedStatistics(mobile.strength)`. If not present, all derived statistics will be updated.

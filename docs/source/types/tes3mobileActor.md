@@ -1242,6 +1242,29 @@ local result = tes3mobileActor:calcEffectiveDamage({ damage = ..., applyArmor = 
 
 ***
 
+### `equip`
+
+Equips an item, optionally adding the item if needed. If the best match is already equipped, it does not perform an unequip-equip cycle, but does return true.
+
+```lua
+local itemEquipped = tes3mobileActor:equip({ item = ..., itemData = ..., addItem = ..., selectBestCondition = ..., selectWorstCondition = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `item` ([tes3item](../../types/tes3item), string): The item to equip.
+	* `itemData` ([tes3itemData](../../types/tes3itemData)): *Optional*. The item data of the specific item to equip.
+	* `addItem` (boolean): If true, the item will be added to the actor's inventory if needed.
+	* `selectBestCondition` (boolean): If true, the item in the inventory with the best condition and best charge will be selected.
+	* `selectWorstCondition` (boolean): If true, the item in the inventory with the worst condition and worst charge will be selected. Can be useful for selecting tools.
+
+**Returns**:
+
+* `itemEquipped` (boolean)
+
+***
+
 ### `getActiveMagicEffects`
 
 Fetches a filtered list of the active magic effects on the actor. Returns a table with tes3activeMagicEffect items.
@@ -1518,6 +1541,28 @@ tes3mobileActor:stopCombat(force)
 **Parameters**:
 
 * `force` (boolean): If false, the function won't stop combat if the actor has other valid hostile targets.
+
+***
+
+### `unequip`
+
+Unequips one or more items from the actor.
+
+```lua
+local itemUnequipped = tes3mobileActor:unequip({ item = ..., type = ..., armorSlot = ..., clothingSlot = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `item` ([tes3item](../../types/tes3item), string): *Optional*. The item to unequip.
+	* `type` (number): *Optional*. The item type to unequip. Only used if no other parameter is provided.
+	* `armorSlot` (number): *Optional*. The armor slot to unequip.
+	* `clothingSlot` (number): *Optional*. The clothing slot to unequip.
+
+**Returns**:
+
+* `itemUnequipped` (boolean)
 
 ***
 

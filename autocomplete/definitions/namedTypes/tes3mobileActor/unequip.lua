@@ -11,5 +11,6 @@ return {
 			{ name = "clothingSlot", type = "number", optional = true, description = "The clothing slot to unequip." },
 		}
 	}},
+	returns = "itemUnequipped",
 	valuetype = "boolean",
 }

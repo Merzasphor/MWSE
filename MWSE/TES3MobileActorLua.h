@@ -128,6 +128,7 @@ namespace mwse {
 			usertypeDefinition["applyFatigueDamage"] = &TES3::MobileActor::applyFatigueDamage;
 			usertypeDefinition["applyDamage"] = &TES3::MobileActor::applyDamage_lua;
 			usertypeDefinition["calcEffectiveDamage"] = &TES3::MobileActor::calcEffectiveDamage_lua;
+			usertypeDefinition["equip"] = &TES3::MobileActor::equip_lua;
 			usertypeDefinition["getActiveMagicEffects"] = &TES3::MobileActor::getActiveMagicEffectsList_lua;
 			usertypeDefinition["getBootsWeight"] = &TES3::MobileActor::getBootsWeight;
 			usertypeDefinition["getViewToActor"] = &TES3::MobileActor::getViewToActor;
@@ -144,6 +145,7 @@ namespace mwse {
 			usertypeDefinition["startCombat"] = &TES3::MobileActor::startCombat;
 			usertypeDefinition["startDialogue"] = &TES3::MobileActor::startDialogue;
 			usertypeDefinition["stopCombat"] = &TES3::MobileActor::stopCombat_lua;
+			usertypeDefinition["unequip"] = &TES3::MobileActor::unequip_lua;
 			usertypeDefinition["updateDerivedStatistics"] = &TES3::MobileActor::updateDerivedStatistics_lua;
 			usertypeDefinition["updateOpacity"] = &TES3::MobileActor::updateOpacity;
 

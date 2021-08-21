@@ -296,6 +296,8 @@ namespace TES3 {
 		void setMobileActorMovementFlag(ActorMovement::Flag, bool);
 
 		bool equipItem(Object* item, ItemData * itemData = nullptr, bool addItem = false, bool selectBestCondition = false, bool selectWorstCondition = false);
+		bool equip_lua(sol::object arg);
+		bool unequip_lua(sol::table args);
 
 		void updateOpacity();
 

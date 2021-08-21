@@ -2036,7 +2036,7 @@ local result = tes3mobileActor:calcEffectiveDamage({ damage = ..., applyArmor = 
 Equips an item, optionally adding the item if needed. If the best match is already equipped, it does not perform an unequip-equip cycle, but does return true.
 
 ```lua
-local itemEquipped = tes3mobileNPC:equip({ item = ..., itemData = ..., addItem = ..., selectBestCondition = ..., selectWorstCondition = ... })
+local itemEquipped = tes3mobileActor:equip({ item = ..., itemData = ..., addItem = ..., selectBestCondition = ..., selectWorstCondition = ... })
 ```
 
 **Parameters**:
@@ -2367,7 +2367,7 @@ tes3mobileActor:stopCombat(force)
 Unequips one or more items from the actor.
 
 ```lua
-local result = tes3mobileNPC:unequip({ item = ..., type = ..., armorSlot = ..., clothingSlot = ... })
+local itemUnequipped = tes3mobileActor:unequip({ item = ..., type = ..., armorSlot = ..., clothingSlot = ... })
 ```
 
 **Parameters**:
@@ -2380,7 +2380,7 @@ local result = tes3mobileNPC:unequip({ item = ..., type = ..., armorSlot = ..., 
 
 **Returns**:
 
-* `result` (boolean)
+* `itemUnequipped` (boolean)
 
 ***
 
