@@ -20,6 +20,7 @@ namespace TES3 {
 	const auto TES3_Actor_getEquippedClothingBySlot = reinterpret_cast<EquipmentStack* (__thiscall*)(Actor*, ClothingSlot::value_type)>(0x496E00);
 	const auto TES3_Actor_getEquippedItem = reinterpret_cast<EquipmentStack* (__thiscall*)(Actor*, Object*)>(0x496DD0);
 	const auto TES3_Actor_getEquippedItemExact = reinterpret_cast<EquipmentStack* (__thiscall*)(Actor*, Object*, ItemData*)>(0x496D90);
+	const auto TES3_Actor_getEquippedWeapon = reinterpret_cast<EquipmentStack* (__thiscall*)(Actor*)>(0x496EB0);
 
 	Actor * Actor::getBaseActor() {
 		return vTable.actor->getBaseActor(this);
@@ -126,6 +127,10 @@ namespace TES3 {
 
 	EquipmentStack* Actor::getEquippedClothingBySlot(ClothingSlot::value_type slot) {
 		return TES3_Actor_getEquippedClothingBySlot(this, slot);
+	}
+
+	EquipmentStack* Actor::getEquippedWeapon() {
+		return TES3_Actor_getEquippedWeapon(this);
 	}
 
 	bool Actor::isBaseActor() const {

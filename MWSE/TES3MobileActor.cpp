@@ -784,6 +784,30 @@ namespace TES3 {
 		return bool(s);
 	}
 
+	bool MobileActor::getWeaponReady() const {
+		return getMobileActorFlag(MobileActorFlag::WeaponDrawn) || actionData.animStateAttack == AttackAnimationState::ReadyingWeap;
+	}
+
+	void MobileActor::setWeaponReady(bool value) {
+		if (isDead()) {
+			return;
+		}
+
+		if (value && !getWeaponReady()) {
+			// Update equipped weapon, as this->readiedWeapon may have been cleared by an unequip.
+			const auto TES3_MobileActor_setReadiedWeapon = reinterpret_cast<void(__thiscall*)(MobileActor*, EquipmentStack*)>(0x52CB70);
+			auto weapon = static_cast<Actor*>(reference->baseObject)->getEquippedWeapon();
+			TES3_MobileActor_setReadiedWeapon(this, weapon);
+
+			// Start readying action.
+			actionData.animStateAttack = AttackAnimationState::ReadyingWeap;
+		}
+		else if (!value && getWeaponReady()) {
+			// Start unreadying action.
+			actionData.animStateAttack = AttackAnimationState::UnreadyWeap;
+		}
+	}
+
 	void MobileActor::updateOpacity() {
 		if (animationController.asActor) {
 			animationController.asActor->updateOpacity();

@@ -39,7 +39,7 @@
 --- @field viewSwitchDisabled boolean Toggle flag for if the player can switch between first person and vanity cameras.
 --- @field visionBonus number Direct access to the player's vision bonus effect attribute.
 --- @field waiting boolean Toggle flag for if the player is currently waiting.
---- @field weaponReady boolean Toggle flag for if the player has a weapon ready. Setting it to true will cause the player to take out their weapon. Setting it to false will cause them to put it away.
+--- @field weaponReady boolean A flag for if the player has a weapon ready or being readied (visible and held in the hand). Setting it to true will cause the player to take out their weapon. Setting it to false will cause the player to put it away.
 tes3mobilePlayer = {}
 
 --- Exercises a skill, providing experience in it.

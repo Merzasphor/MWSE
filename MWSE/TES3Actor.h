@@ -67,6 +67,7 @@ namespace TES3 {
 		EquipmentStack* getEquippedItemExact(Object* item, ItemData* itemData);
 		EquipmentStack* getEquippedArmorBySlot(ArmorSlot::value_type slot);
 		EquipmentStack* getEquippedClothingBySlot(ClothingSlot::value_type slot);
+		EquipmentStack* getEquippedWeapon();
 
 		//
 		// Custom functions.

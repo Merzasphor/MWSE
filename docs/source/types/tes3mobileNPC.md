@@ -1512,6 +1512,16 @@ Direct access to the actor's water walking effect attribute.
 
 ***
 
+### `weaponReady`
+
+A flag for if the actor has a weapon ready or being readied (visible and held in the hand). Setting it to true will cause the actor to take out their weapon. Setting it to false will cause the actor to put it away.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
 ### `werewolf`
 
 *Read-only*. Friendly access to the actor's flag that controls if the actor in werewolf form.

@@ -299,6 +299,9 @@ namespace TES3 {
 		bool equip_lua(sol::object arg);
 		bool unequip_lua(sol::table args);
 
+		bool getWeaponReady() const;
+		void setWeaponReady(bool value);
+
 		void updateOpacity();
 
 		ActorAnimationController* getAnimationController() const;

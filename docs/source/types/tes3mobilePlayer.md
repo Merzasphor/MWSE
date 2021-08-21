@@ -1903,7 +1903,7 @@ Direct access to the actor's water walking effect attribute.
 
 ### `weaponReady`
 
-Toggle flag for if the player has a weapon ready. Setting it to true will cause the player to take out their weapon. Setting it to false will cause them to put it away.
+A flag for if the player has a weapon ready or being readied (visible and held in the hand). Setting it to true will cause the player to take out their weapon. Setting it to false will cause the player to put it away.
 
 **Returns**:
 
