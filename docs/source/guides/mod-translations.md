@@ -28,36 +28,28 @@ Here we just want to allow translators to provide a different string instead of 
 !!! example "**The Hello World Mod\\i18n\\deu.lua**"
 	```lua linenums="1"
 	return {
-		deu = {
-			["Hello world!"] = "Hallo Welt!",
-		}
+		["Hello world!"] = "Hallo Welt!",
 	}
 	```
 
 !!! example "**The Hello World Mod\\i18n\\eng.lua**"
 	```lua linenums="1"
 	return {
-		eng = {
-			["Hello world!"] = "Hello world!",
-		}
+		["Hello world!"] = "Hello world!",
 	}
 	```
 
 !!! example "**The Hello World Mod\\i18n\\fra.lua**"
 	```lua linenums="1"
 	return {
-		fra = {
-			["Hello world!"] = "Bonjour le monde!",
-		}
+		["Hello world!"] = "Bonjour le monde!",
 	}
 	```
 
 !!! example "**The Hello World Mod\\i18n\\rus.lua**"
 	```lua linenums="1"
 	return {
-		rus = {
-			["Hello world!"] = "Привет, мир!",
-		}
+		["Hello world!"] = "Привет, мир!",
 	}
 	```
 
@@ -76,10 +68,7 @@ This code looks pretty simple, but what is really happening here? `mwse.loadTran
 
 ## Translation Files
 
-The translation files available in the **i18n** folder follow a simple format, but it warrants description here. Each is a simple lua file that returns a table. That table has a locale as a key, with a value another table with key/value translation pairs.
-
-!!! tip
-	There is nothing stopping you from using **eng.lua** to define all translations in one file, but it is not suggested that you do so. Because the locale is known when the game starts, and language cannot be changed mid-game, there is no reason to keep more than one dictionary in memory.
+The translation files available in the **i18n** folder follow a simple format, but it warrants description here. Each is a simple lua file that returns a table. The keys in that table can be passed to the `i18n` value returned from `mwse.loadTranslation` to get a translation for the player's language.
 
 A translation value is typically a string, but it can also have support for different translations based on values fed.
 
@@ -92,13 +81,11 @@ i18n supports the [unicode.org plural rules](http://cldr.unicode.org/index/cldr-
 	**i18n\\eng.lua**:
 	```lua linenums="1"
 	return = {
-		eng = {
-			itemCountNotification = {
-				zero = "You have no %{item}s.",
-				one = "You have 1 %{item}.",
-				other = "You have %{count} %{item}s.",
-			},
-		}
+		itemCountNotification = {
+			zero = "You have no %{item}s.",
+			one = "You have 1 %{item}.",
+			other = "You have %{count} %{item}s.",
+		},
 	}
 	```
 	**main.lua**:
@@ -125,13 +112,11 @@ Values can be passed to translation strings in a few different ways:
 	**i18n\\eng.lua**:
 	```lua linenums="1"
 	return = {
-		eng = {
-			itemCountNotification = {
-				zero = "You have no %{item}s.",
-				one = "You have 1 %{item}.",
-				other = "You have %{count} %{item}s.",
-			},
-		}
+		itemCountNotification = {
+			zero = "You have no %{item}s.",
+			one = "You have 1 %{item}.",
+			other = "You have %{count} %{item}s.",
+		},
 	}
 	```
 	**main.lua**:
@@ -143,13 +128,11 @@ Values can be passed to translation strings in a few different ways:
 	**i18n\\eng.lua**:
 	```lua linenums="1"
 	return = {
-		eng = {
-			itemCountNotification = {
-				zero = "You have no %ss.",
-				one = "You have 1 %s.",
-				other = "You have %d %ss.",
-			},
-		}
+		itemCountNotification = {
+			zero = "You have no %ss.",
+			one = "You have 1 %s.",
+			other = "You have %d %ss.",
+		},
 	}
 	```
 	**main.lua**:
@@ -165,13 +148,11 @@ Values can be passed to translation strings in a few different ways:
 	**i18n\\eng.lua**:
 	```lua linenums="1"
 	return = {
-		eng = {
-			itemCountNotification = {
-				zero = "You have no %<item>ss.",
-				one = "You have 1 %<item>d.",
-				other = "You have %<count>d %<item>ss.",
-			},
-		}
+		itemCountNotification = {
+			zero = "You have no %<item>ss.",
+			one = "You have 1 %<item>d.",
+			other = "You have %<count>d %<item>ss.",
+		},
 	}
 	```
 	**main.lua**:

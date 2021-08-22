@@ -99,7 +99,7 @@ local pluralizationFunctions = {}
 local function loadLocaleFile(i18nInstance, mod, locale)
 	local success, contents = pcall(dofile, string.format("%s.i18n.%s", mod, locale))
 	if (success) then
-		i18nInstance.load(contents)
+		i18nInstance.load({ [locale] = contents })
 	end
 	return success
 end
