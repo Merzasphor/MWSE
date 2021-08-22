@@ -123,8 +123,7 @@ function mwse.loadTranslation(mod)
 	package.loaded["i18n.plural"] = nil
 	package.loaded["i18n.variants"] = nil
 	package.loaded["i18n.version"] = nil
-	
-	mwse.log("Spinning up new i18n. Language: %s; Locale: %s; Fallback: %s", language, new.getLocale(), new.getFallbackLocale())
+
 	return new
 end
 
