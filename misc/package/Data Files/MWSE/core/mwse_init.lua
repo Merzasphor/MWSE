@@ -90,6 +90,46 @@ _G.json = require("dkjson")
 
 
 -------------------------------------------------
+-- Translation helpers
+-------------------------------------------------
+
+local pluralizationFunctions = {}
+-- TODO: Add these.
+
+local function loadLocaleFile(i18nInstance, mod, locale)
+	local success, contents = pcall(dofile, string.format("%s.i18n.%s", mod, locale))
+	if (success) then
+		i18nInstance.load(contents)
+	end
+	return success
+end
+
+function mwse.loadTranslation(mod)
+	local language = tes3.getLanguage() or "eng"
+
+	local new = require("i18n")
+	new.setLocale(language, pluralizationFunctions[language])
+
+	local loadedLanguage = false
+	local loadedDefault = loadLocaleFile(new, mod, "eng")
+	if (language ~= "eng") then
+		loadedLanguage = loadLocaleFile(new, mod, language)
+	end
+	assert(loadedDefault or loadedLanguage, "Could not load any valid i18n files.")
+
+	-- Unload packages so other calls get a new instance.
+	package.loaded["i18n"] = nil
+	package.loaded["i18n.interpolate"] = nil
+	package.loaded["i18n.plural"] = nil
+	package.loaded["i18n.variants"] = nil
+	package.loaded["i18n.version"] = nil
+	
+	mwse.log("Spinning up new i18n. Language: %s; Locale: %s; Fallback: %s", language, new.getLocale(), new.getFallbackLocale())
+	return new
+end
+
+
+-------------------------------------------------
 -- Extend base API: math
 -------------------------------------------------
 
