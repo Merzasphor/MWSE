@@ -270,6 +270,14 @@ function table.values(t, sort)
 	return values
 end
 
+function table.invert(t)
+	local inverted = {}
+	for k, v in pairs(t) do
+		inverted[v] = k
+	end
+	return inverted
+end
+
 
 -------------------------------------------------
 -- Extend base table: Add binary search/insert

@@ -178,6 +178,24 @@ local result = table.find(t, value)
 
 ***
 
+### `table.invert`
+
+Returns a copy of `t` with the keys and values flipped.
+
+```lua
+local result = table.invert(t)
+```
+
+**Parameters**:
+
+* `t` (table)
+
+**Returns**:
+
+* `result` (table)
+
+***
+
 ### `table.keys`
 
 Returns an array-style table of all keys in the given table, t. Optionally, it will sort the returned table.

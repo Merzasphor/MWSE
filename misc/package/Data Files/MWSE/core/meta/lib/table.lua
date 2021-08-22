@@ -67,6 +67,11 @@ function table.empty(t) end
 --- @return unknown result No description yet available.
 function table.find(t, value) end
 
+--- Returns a copy of `t` with the keys and values flipped.
+--- @param t table No description yet available.
+--- @return table result No description yet available.
+function table.invert(t) end
+
 --- Returns an array-style table of all keys in the given table, t. Optionally, it will sort the returned table.
 --- @param t table The table to get keys for.
 --- @param sort boolean|function|nil *Optional*. If true, the returned table will be sorted. If a function is passed, the table will be sorted using the given function.
