@@ -1,8 +1,9 @@
 #include "TES3ItemData.h"
 
-#include "TES3Actor.h"
+#include "TES3Creature.h"
 #include "TES3DataHandler.h"
 #include "TES3Enchantment.h"
+#include "TES3GlobalVariable.h"
 #include "TES3Light.h"
 #include "TES3Misc.h"
 #include "TES3Weapon.h"
@@ -61,6 +62,7 @@ namespace TES3 {
 	ItemData * ItemData::ctor(ItemData * self) {
 		ItemDataVanilla::ctor(self);
 		self->luaData = nullptr;
+		self->item = nullptr;
 		return self;
 	}
 
@@ -77,6 +79,7 @@ namespace TES3 {
 	ItemData * ItemData::createForObject(Object * object) {
 		auto itemData = mwse::tes3::_new<ItemData>();
 		ItemData::ctor(itemData);
+		itemData->item = object;
 
 		switch (object->objectType) {
 		case TES3::ObjectType::Armor:
@@ -125,17 +128,85 @@ namespace TES3 {
 		return true;
 	}
 
-	Actor * ItemData::getSoulActor() {
-		__try {
-			if (soul != nullptr && charge != -1.0f && soul->isActor()) {
-				return soul;
-			}
+	TES3::BaseObject* ItemData::getOwner() const {
+		return owner;
+	}
+
+	void ItemData::setOwner_lua(sol::object value) {
+		if (value == sol::nil) {
+			owner = nullptr;
 		}
-		__except (EXCEPTION_EXECUTE_HANDLER) {
-			return nullptr;
+		else if (value.is<TES3::BaseObject*>()) {
+			auto newOwner = value.as<TES3::BaseObject*>();
+
+			// We only support NPC and Faction owners.
+			if (newOwner->objectType != TES3::ObjectType::NPC && newOwner->objectType != TES3::ObjectType::Faction) {
+				throw std::exception("Ownership must be an NPC or a faction.");
+			}
+
+			// If the owner type is changing, reset the requirement.
+			if (owner->objectType != newOwner->objectType) {
+				requiredVariable = nullptr;
+			}
+
+			owner = newOwner;
+		}
+	}
+
+	sol::object ItemData::getOwnerRequirement_lua(sol::this_state ts) const {
+		if (owner == nullptr) {
+			return sol::nil;
+		}
+		else if (owner->objectType == TES3::ObjectType::Faction) {
+			sol::state_view state = ts;
+			return sol::make_object(state, requiredRank);
+		}
+		else if (owner->objectType == TES3::ObjectType::NPC) {
+			sol::state_view state = ts;
+			return sol::make_object(state, requiredVariable);
 		}
 
+		return sol::nil;
+	}
+
+	void ItemData::setOwnerRequirement_lua(sol::object value) {
+		if (owner == nullptr) {
+			throw std::exception("An owner must be set before the requirement can be set.");
+		}
+		else if (owner->objectType == TES3::ObjectType::Faction) {
+			if (value.is<int>()) {
+				requiredRank = value.as<int>();
+			}
+			else {
+				throw std::exception("Faction ownership used. Requirement must be a rank (number).");
+			}
+		}
+		else if (owner->objectType == TES3::ObjectType::NPC) {
+			if (value.is<TES3::GlobalVariable*>()) {
+				requiredVariable = value.as<TES3::GlobalVariable*>();
+			}
+			else {
+				throw std::exception("NPC ownership used. Requirement must be a global variable.");
+			}
+		}
+	}
+
+	Actor * ItemData::getSoul() const {
+		if (item->objectType == TES3::ObjectType::Misc) {
+			return soul;
+		}
 		return nullptr;
+	}
+
+	void ItemData::setSoul_lua(sol::object actor) {
+		if (item->objectType == TES3::ObjectType::Misc) {
+			if (actor.is<Creature*>()) {
+				soul = actor.as<Creature*>();
+			}
+			else if (actor.is<CreatureInstance*>()) {
+				soul = actor.as<CreatureInstance*>()->baseCreature;
+			}
+		}
 	}
 
 	void ItemData::setLuaDataTable(sol::object data) {
@@ -179,6 +250,10 @@ namespace TES3 {
 	}
 
 	sol::table ItemData::getOrCreateLuaDataTable() {
+		if (!item->getSupportsLuaData()) {
+			return sol::nil;
+		}
+
 		if (luaData == nullptr) {
 			luaData = new ItemData::LuaData();
 		}
@@ -187,6 +262,10 @@ namespace TES3 {
 	}
 
 	sol::table ItemData::getOrCreateLuaTempDataTable() {
+		if (!item->getSupportsLuaData()) {
+			return sol::nil;
+		}
+
 		if (luaData == nullptr) {
 			luaData = new ItemData::LuaData();
 		}

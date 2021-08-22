@@ -54,6 +54,7 @@ namespace TES3 {
 			sol::table tempData;
 		};
 		LuaData * luaData;
+		Object * item;
 
 		//
 		// Overrides for vanilla handlers.
@@ -73,7 +74,14 @@ namespace TES3 {
 		// Custom functions.
 		//
 
-		Actor * getSoulActor();
+		TES3::BaseObject* getOwner() const;
+		void setOwner_lua(sol::object value);
+
+		sol::object getOwnerRequirement_lua(sol::this_state ts) const;
+		void setOwnerRequirement_lua(sol::object value);
+
+		Actor * getSoul() const;
+		void setSoul_lua(sol::object actor);
 
 		void setLuaDataTable(sol::object data);
 		void setLuaTempDataTable(sol::object data);
