@@ -111,6 +111,24 @@ local result = mwse.loadConfig(fileName, defaults)
 
 ***
 
+### `mwse.loadTranslations`
+
+Loads translations from the i18n folder for a given mod. This is locale-aware, using the result from `tes3.getLanguage()`. See the [http://127.0.0.1:8000/guides/mod-translations/](mod translations guide) for more information.
+
+```lua
+local i18n = mwse.loadTranslations(mod)
+```
+
+**Parameters**:
+
+* `mod` (string): Name of the folder that your main.lua mod can be found in.
+
+**Returns**:
+
+* `i18n` (function): The callable translation results.
+
+***
+
 ### `mwse.log`
 
 This function writes information to the mwse.log file in the user's installation directory.

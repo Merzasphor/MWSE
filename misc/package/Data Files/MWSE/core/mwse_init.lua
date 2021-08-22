@@ -99,12 +99,13 @@ local pluralizationFunctions = {}
 local function loadLocaleFile(i18nInstance, mod, locale)
 	local success, contents = pcall(dofile, string.format("%s.i18n.%s", mod, locale))
 	if (success) then
+		assert(type(contents) == "table", string.format("Translation file for mod %q does not have valid translation file for locale %q.", mod, locale))
 		i18nInstance.load({ [locale] = contents })
 	end
 	return success
 end
 
-function mwse.loadTranslation(mod)
+function mwse.loadTranslations(mod)
 	local language = tes3.getLanguage() or "eng"
 
 	local new = require("i18n")

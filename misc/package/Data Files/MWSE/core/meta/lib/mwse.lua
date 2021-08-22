@@ -31,6 +31,11 @@ function mwse.getVirtualMemoryUsage() end
 --- @return table result No description yet available.
 function mwse.loadConfig(fileName, defaults) end
 
+--- Loads translations from the i18n folder for a given mod. This is locale-aware, using the result from `tes3.getLanguage()`. See the [http://127.0.0.1:8000/guides/mod-translations/](mod translations guide) for more information.
+--- @param mod string Name of the folder that your main.lua mod can be found in.
+--- @return function i18n The callable translation results.
+function mwse.loadTranslations(mod) end
+
 --- This function writes information to the mwse.log file in the user's installation directory.
 --- 
 --- The message accepts formatting and additional parameters matching string.format's usage.

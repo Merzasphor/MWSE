@@ -55,7 +55,7 @@ Here we just want to allow translators to provide a different string instead of 
 
 !!! example "**The Hello World Mod\\main.lua**"
 	```lua linenums="1"
-	local i18n = mwse.loadTranslation("The Hello World Mod")
+	local i18n = mwse.loadTranslations("The Hello World Mod")
 
 	local function onPressZ(e)
 		tes3.messageBox(i18n("Hello world!"))
@@ -63,12 +63,12 @@ Here we just want to allow translators to provide a different string instead of 
 	event.register("keyDown", onPressZ, { filter = tes3.scanCode.z })
 	```
 
-This code looks pretty simple, but what is really happening here? `mwse.loadTranslation("The Hello World Mod")` loads content from **The Hello World Mod\\i18n\\eng.lua** as well as an optional additional file, based on the player's game language. This can be **deu.lua**, **fra.lua**, or **rus.lua**. When the `i18n` translation result is called, it returns the translation for the player's current language with the key `"Hello world!"`.
+This code looks pretty simple, but what is really happening here? `mwse.loadTranslations("The Hello World Mod")` loads content from **The Hello World Mod\\i18n\\eng.lua** as well as an optional additional file, based on the player's game language. This can be **deu.lua**, **fra.lua**, or **rus.lua**. When the `i18n` translation result is called, it returns the translation for the player's current language with the key `"Hello world!"`.
 
 
 ## Translation Files
 
-The translation files available in the **i18n** folder follow a simple format, but it warrants description here. Each is a simple lua file that returns a table. The keys in that table can be passed to the `i18n` value returned from `mwse.loadTranslation` to get a translation for the player's language.
+The translation files available in the **i18n** folder follow a simple format, but it warrants description here. Each is a simple lua file that returns a table. The keys in that table can be passed to the `i18n` value returned from `mwse.loadTranslations` to get a translation for the player's language.
 
 A translation value is typically a string, but it can also have support for different translations based on values fed.
 
@@ -90,7 +90,7 @@ i18n supports the [unicode.org plural rules](http://cldr.unicode.org/index/cldr-
 	```
 	**main.lua**:
 	```lua linenums="1"
-	local i18n = mwse.loadTranslation("Iron Dagger Counter")
+	local i18n = mwse.loadTranslations("Iron Dagger Counter")
 	local function onPressZ(e)
 		local dagger = tes3.getObject("iron dagger")
 		local daggerCount = tes3.getItemCount({ reference = tes3.player, item = dagger })
