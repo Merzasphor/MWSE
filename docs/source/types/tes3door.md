@@ -1,6 +1,8 @@
 # tes3door
 
-A door game object.
+A door game object. Data specific to a single door is stored on the door reference as destination and lock attachments. See ``tes3reference`` for details.
+
+There is a special-case door with id ``PrisonMarker`` used for finding the nearest prison when the player is sent to jail. You should normally exclude this if you are iterating over all doors. Use the ``object.isLocationMarker`` property to detect these markers.
 
 This type inherits the following: [tes3physicalObject](../../types/tes3physicalObject), [tes3object](../../types/tes3object), [tes3baseObject](../../types/tes3baseObject)
 ## Properties
@@ -62,6 +64,16 @@ The sound to be played when the door closes.
 **Returns**:
 
 * `result` (string)
+
+***
+
+### `isLocationMarker`
+
+True if this object is an editor marker for a gameplay location. These include travel, intervention, prison, door, and interior north markers. Markers are invisible in-game.
+
+**Returns**:
+
+* `result` (boolean)
 
 ***
 
@@ -172,6 +184,16 @@ The object's scale.
 **Returns**:
 
 * `result` (number)
+
+***
+
+### `sceneCollisionRoot`
+
+The scene graph node for this object's physics collision, if its mesh has a root collision node.
+
+**Returns**:
+
+* `result` ([niNode](../../types/niNode))
 
 ***
 

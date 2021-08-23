@@ -65,6 +65,16 @@ The path to the object's icon.
 
 ***
 
+### `isLocationMarker`
+
+True if this object is an editor marker for a gameplay location. These include travel, intervention, prison, door, and interior north markers. Markers are invisible in-game.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
 ### `maxCondition`
 
 The maximum condition/health of the object.
@@ -182,6 +192,16 @@ The object's scale.
 **Returns**:
 
 * `result` (number)
+
+***
+
+### `sceneCollisionRoot`
+
+The scene graph node for this object's physics collision, if its mesh has a root collision node.
+
+**Returns**:
+
+* `result` ([niNode](../../types/niNode))
 
 ***
 

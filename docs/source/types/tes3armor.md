@@ -115,6 +115,16 @@ Determines if the armor is the left part of a pair.
 
 ***
 
+### `isLocationMarker`
+
+True if this object is an editor marker for a gameplay location. These include travel, intervention, prison, door, and interior north markers. Markers are invisible in-game.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
 ### `maxCondition`
 
 The object's maximum condition.
@@ -232,6 +242,16 @@ The object's scale.
 **Returns**:
 
 * `result` (number)
+
+***
+
+### `sceneCollisionRoot`
+
+The scene graph node for this object's physics collision, if its mesh has a root collision node.
+
+**Returns**:
+
+* `result` ([niNode](../../types/niNode))
 
 ***
 

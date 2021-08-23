@@ -1,6 +1,8 @@
 --- @meta
 
---- A door game object.
+--- A door game object. Data specific to a single door is stored on the door reference as destination and lock attachments. See ``tes3reference`` for details.
+--- 
+--- There is a special-case door with id ``PrisonMarker`` used for finding the nearest prison when the player is sent to jail. You should normally exclude this if you are iterating over all doors. Use the ``object.isLocationMarker`` property to detect these markers.
 --- @class tes3door : tes3physicalObject, tes3object, tes3baseObject
 --- @field closeSound tes3sound The sound to be played when the door closes.
 --- @field mesh string The path to the object's mesh.

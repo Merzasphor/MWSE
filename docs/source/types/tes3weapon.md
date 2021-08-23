@@ -145,6 +145,16 @@ Access to the flag that controls if this weapon bypasses the "Resist normal weap
 
 ***
 
+### `isLocationMarker`
+
+True if this object is an editor marker for a gameplay location. These include travel, intervention, prison, door, and interior north markers. Markers are invisible in-game.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
 ### `isMelee`
 
 *Read-only*. If true, the weapon has a melee weapon type.
@@ -322,6 +332,16 @@ The object's scale.
 **Returns**:
 
 * `result` (number)
+
+***
+
+### `sceneCollisionRoot`
+
+The scene graph node for this object's physics collision, if its mesh has a root collision node.
+
+**Returns**:
+
+* `result` ([niNode](../../types/niNode))
 
 ***
 

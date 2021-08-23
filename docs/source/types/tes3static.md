@@ -1,6 +1,8 @@
 # tes3static
 
-A static game object.
+A static game object. A non-animated object like a building or rock.
+
+There are special-case marker statics used for gameplay purposes, such as travel and intervention. Use the ``object.isLocationMarker`` property to detect these markers.
 
 This type inherits the following: [tes3physicalObject](../../types/tes3physicalObject), [tes3object](../../types/tes3object), [tes3baseObject](../../types/tes3baseObject)
 ## Properties
@@ -52,6 +54,16 @@ The bounding box for the object.
 **Returns**:
 
 * `result` (string)
+
+***
+
+### `isLocationMarker`
+
+True if this object is an editor marker for a gameplay location. These include travel, intervention, prison, door, and interior north markers. Markers are invisible in-game.
+
+**Returns**:
+
+* `result` (boolean)
 
 ***
 
@@ -142,6 +154,16 @@ The object's scale.
 **Returns**:
 
 * `result` (number)
+
+***
+
+### `sceneCollisionRoot`
+
+The scene graph node for this object's physics collision, if its mesh has a root collision node.
+
+**Returns**:
+
+* `result` ([niNode](../../types/niNode))
 
 ***
 
