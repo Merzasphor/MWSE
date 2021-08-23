@@ -87,11 +87,11 @@ No description yet available.
 
 ### `nockedProjectile`
 
-The currently knocked projectile the associated actor is using.
+The currently nocked projectile the associated actor is using. It is available while charging a projectile attack, before releasing the projectile. This can be modified, but can only be set to nil, which will remove the projectile without consuming ammo.
 
 **Returns**:
 
-* `result` ([tes3weapon](../../types/tes3weapon))
+* `result` ([tes3mobileProjectile](../../types/tes3mobileProjectile))
 
 ***
 

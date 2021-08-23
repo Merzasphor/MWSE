@@ -5,10 +5,23 @@
 
 #include "TES3ActionData.h"
 #include "TES3MobileActor.h"
+#include "TES3MobileProjectile.h"
 #include "TES3Item.h"
 
 namespace mwse {
 	namespace lua {
+		TES3::MobileProjectile* getNockedProjectile(TES3::ActionData* self) {
+			return self->nockedProjectile;
+		}
+
+		void setNockedProjectile(TES3::ActionData* self, sol::object value) {
+			auto projectile = self->nockedProjectile;
+			if (projectile && value == sol::nil) {
+				projectile->vTable.mobileObject->destructor(projectile, true);
+				self->nockedProjectile = nullptr;
+			}
+		}
+
 		void bindTES3ActionData() {
 			// Get our lua state.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
@@ -25,7 +38,7 @@ namespace mwse {
 			usertypeDefinition["currentAnimationGroup"] = &TES3::ActionData::currentAnimGroup;
 			usertypeDefinition["hitTarget"] = &TES3::ActionData::hitTarget;
 			usertypeDefinition["lastBarterHoursPassed"] = &TES3::ActionData::lastBarterHoursPassed;
-			usertypeDefinition["nockedProjectile"] = &TES3::ActionData::nockedProjectile;
+			usertypeDefinition["nockedProjectile"] = sol::property(getNockedProjectile, setNockedProjectile);
 			usertypeDefinition["physicalAttackType"] = &TES3::ActionData::physicalAttackType;
 			usertypeDefinition["physicalDamage"] = &TES3::ActionData::physicalDamage;
 			usertypeDefinition["stolenFrom"] = &TES3::ActionData::stolenFromFactionOrNPC;

@@ -64,7 +64,7 @@ namespace TES3 {
 		BaseObject * stolenFromFactionOrNPC; // 0x2C
 		bool attackWasBlocked; // 0x30
 		char padding_0x31[3];
-		Item * nockedProjectile; // 0x34
+		MobileProjectile * nockedProjectile; // 0x34
 		short countAIPackages; // 0x38
 		Vector3 unknown_0x3C;
 		Vector3 unknown_0x48;
