@@ -93,8 +93,8 @@ _G.json = require("dkjson")
 -- Translation helpers
 -------------------------------------------------
 
-local pluralizationFunctions = {}
 -- TODO: Add these.
+local pluralizationFunctions = {}
 
 local function loadLocaleFile(i18nInstance, mod, locale)
 	local success, contents = pcall(dofile, string.format("%s.i18n.%s", mod, locale))
@@ -108,9 +108,18 @@ end
 function mwse.loadTranslations(mod)
 	local language = tes3.getLanguage() or "eng"
 
+	-- Store the current state of the i18n package.
+	local i18n = table.swap(package.loaded, "i18n", nil)
+	local i18n_interpolate = table.swap(package.loaded, "i18n.interpolate", nil)
+	local i18n_plural = table.swap(package.loaded, "i18n.plural", nil)
+	local i18n_variants = table.swap(package.loaded, "i18n.variants", nil)
+	local i18n_version = table.swap(package.loaded, "i18n.version", nil)
+
+	-- Load our unique instance of i18n and set the locale.
 	local new = require("i18n")
 	new.setLocale(language, pluralizationFunctions[language])
 
+	-- Load the language files.
 	local loadedLanguage = false
 	local loadedDefault = loadLocaleFile(new, mod, "eng")
 	if (language ~= "eng") then
@@ -118,12 +127,12 @@ function mwse.loadTranslations(mod)
 	end
 	assert(loadedDefault or loadedLanguage, "Could not load any valid i18n files.")
 
-	-- Unload packages so other calls get a new instance.
-	package.loaded["i18n"] = nil
-	package.loaded["i18n.interpolate"] = nil
-	package.loaded["i18n.plural"] = nil
-	package.loaded["i18n.variants"] = nil
-	package.loaded["i18n.version"] = nil
+	-- Restore the packages to the previous state.
+	package.loaded["i18n"] = i18n
+	package.loaded["i18n.interpolate"] = i18n_interpolate
+	package.loaded["i18n.plural"] = i18n_plural
+	package.loaded["i18n.variants"] = i18n_variants
+	package.loaded["i18n.version"] = i18n_version
 
 	return new
 end
@@ -316,6 +325,12 @@ function table.invert(t)
 		inverted[v] = k
 	end
 	return inverted
+end
+
+function table.swap(t, key, value)
+	local old = t[key]
+	t[key] = value
+	return old
 end
 
 
