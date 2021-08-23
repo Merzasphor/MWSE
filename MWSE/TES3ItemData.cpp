@@ -94,7 +94,7 @@ namespace TES3 {
 			itemData->condition = object->getUses();
 			break;
 		case TES3::ObjectType::Light:
-			itemData->timeLeft = static_cast<Light*>(object)->time;
+			itemData->timeLeft = float(static_cast<Light*>(object)->time);
 			break;
 		case TES3::ObjectType::Misc:
 			itemData->count = static_cast<Misc*>(object)->getGoldStackCount();
