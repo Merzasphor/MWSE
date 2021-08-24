@@ -7,11 +7,7 @@ local function saveConfig()
 	mwse.saveConfig("MWSE", values)
 end
 
-collectgarbage("collect")
-local memoryBefore = collectgarbage("count")
 local i18n = mwse.loadTranslations("MWSE MCM")
-mwse.log("Memory used by i18n: %.2f", collectgarbage("count") - memoryBefore)
-collectgarbage("collect")
 
 local config = {
 	name = "Morrowind Script Extender",
