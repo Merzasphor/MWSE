@@ -72,6 +72,28 @@ The translation files available in the **i18n** folder follow a simple format, b
 
 A translation value is typically a string, but it can also have support for different translations based on values fed.
 
+!!! note "File Encoding"
+	The encoding used to save your files depends on the language you are writing for. Be sure you use the right encoding!
+
+	* **Windows 1252**: English, French, German, Spanish
+	* **Windows 1251**: Russian
+	* **Windows 1250**: Polish
+
+!!! warning "Dots in Translation Keys"
+	When using dots to break apart translation keys, be careful of not to use a category as a value. For example, the following will create an error:
+	```lua
+	return = {
+		["mcm.component.console"] = "Enable console component?",
+		["mcm.component.console.description"] = "It's really cool, so you should.",
+	}
+	```
+	Instead, use something like:
+	```lua
+	return = {
+		["mcm.component.console.label"] = "Enable console component?",
+		["mcm.component.console.description"] = "It's really cool, so you should.",
+	}
+	```
 
 ### Pluralization
 
