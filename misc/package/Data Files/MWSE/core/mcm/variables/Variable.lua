@@ -18,7 +18,7 @@
 local Variable = {}
 Variable.componentType = "Variable"
 Variable.inGameOnly = false
-Variable.restartRequiredMessage = "The game must be restarted before this change will come into effect."
+Variable.restartRequiredMessage = mwse.mcm.i18n("The game must be restarted before this change will come into effect.")
 function Variable:new(variable)
 	local t = variable or {}
 	if type(t) == "string" then

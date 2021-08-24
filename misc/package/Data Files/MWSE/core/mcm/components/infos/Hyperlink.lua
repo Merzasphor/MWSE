@@ -5,7 +5,7 @@
 local Parent = require("mcm.components.infos.Info")
 
 local Hyperlink = Parent:new()
-Hyperlink.sExecute = "Open web browser?"
+Hyperlink.sExecute = mwse.mcm.i18n("Open web browser?")
 
 function Hyperlink:execute()
 	tes3.messageBox({

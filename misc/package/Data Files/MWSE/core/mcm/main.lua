@@ -19,6 +19,7 @@ local modConfigContainer = nil
 
 -- Expose the mcm API.
 mwse.mcm = require("mcm.mcm")
+mwse.mcm.i18n = mwse.loadTranslations("mcm")
 
 -- Callback for when a mod name has been clicked in the left pane.
 local function onClickModName(e)
@@ -46,7 +47,7 @@ local function onClickModName(e)
 
 	-- Change the mod config title bar to include the mod's name.
 	local menu = tes3ui.findMenu(UIID_mwse_modConfigMenu)
-	menu.text = "Mod Configuration - " .. e.source.text
+	menu.text = mwse.mcm.i18n("Mod Configuration - %s", { e.source.text })
 	menu:updateLayout()
 end
 
@@ -95,7 +96,7 @@ local function onClickModConfigButton()
 	if (menu == nil) then
 		-- Create the main menu frame.
 		menu = tes3ui.createMenu({ id = UIID_mwse_modConfigMenu, dragFrame = true })
-		menu.text = "Mod Configuration"
+		menu.text = mwse.mcm.i18n("Mod Configuration")
 		menu.minWidth = 600
 		menu.minHeight = 500
 		menu.width = 1200
@@ -165,7 +166,7 @@ local function onClickModConfigButton()
 		site.color = tes3ui.getPalette("link_color")
 		site:register("mouseClick", function()
 			tes3.messageBox({
-				message = "Open web browser?",
+				message = mwse.mcm.i18n("Open web browser?"),
 				buttons = { tes3.findGMST(tes3.gmst.sYes).value, tes3.findGMST(tes3.gmst.sNo).value },
 				callback = function(e)
 					if (e.button == 0) then

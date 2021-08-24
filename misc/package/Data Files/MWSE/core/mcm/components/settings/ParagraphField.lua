@@ -42,7 +42,7 @@ function ParagraphField:makeComponent(parentBlock)
 
 	local inputField = border:createParagraphInput()
 	inputField.color = tes3ui.getPalette("disabled_color")
-	inputField.text = "(In-Game Only)"
+	inputField.text = string.format("(%s)", mwse.mcm.i18n("In-Game Only"))
 	inputField.widthProportional = 1.0
 	inputField.widget.lengthLimit = nil
 

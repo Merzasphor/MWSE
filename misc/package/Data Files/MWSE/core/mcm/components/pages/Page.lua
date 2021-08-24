@@ -34,11 +34,10 @@ function Page:createLabel(parentBlock)
 	end
 end
 
-
 function Page:disable()
 	--Update and grey out page label
 	if self.elements.label then
-		self.elements.label.text = (self.elements.label.text .. " (In-Game Only)")
+		self.elements.label.text = string.format("%s (%s)", self.elements.label.text, mwse.mcm.i18n("In-Game Only"))
 		self.elements.label.color = tes3ui.getPalette("disabled_color")
 	end
 	--Grey out all child elements

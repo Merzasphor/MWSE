@@ -2,9 +2,9 @@
 local Parent = require("mcm.components.settings.Setting")
 --Class Object
 local TextField = Parent:new()
-TextField.buttonText = "Submit"
-TextField.sNumbersOnly = "Value must be a number."
-TextField.sNewValue = "New value: '%s'"
+TextField.buttonText = mwse.mcm.i18n("Submit")
+TextField.sNumbersOnly = mwse.mcm.i18n("Value must be a number.")
+TextField.sNewValue = mwse.mcm.i18n("New value: '%s'")
 TextField.defaultSetting = ""
 function TextField:enable()
 	self.elements.inputField.text = self.variable.value or ""

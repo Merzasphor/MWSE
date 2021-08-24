@@ -14,10 +14,10 @@ local Parent = require("mcm.components.settings.Button")
 local KeyBinder = Parent:new()
 KeyBinder.allowCombinations = true
 KeyBinder.currentCombo = {}
-KeyBinder.messageDoRebind = "Set new key binding to: %s"
-KeyBinder.messageRebinded = "Key binding changed to '%s'"
-KeyBinder.sOkay = "Rebind"
-KeyBinder.sNotChanged = "Key binding not changed."
+KeyBinder.messageDoRebind = mwse.mcm.i18n("Set new key binding to: %s")
+KeyBinder.messageRebinded = mwse.mcm.i18n("Key binding changed to '%s'")
+KeyBinder.sOkay = mwse.mcm.i18n("Rebind")
+KeyBinder.sNotChanged = mwse.mcm.i18n("Key binding not changed.")
 KeyBinder.sCancel = tes3.findGMST(tes3.gmst.sCancel).value
 
 
@@ -42,7 +42,7 @@ function KeyBinder:getComboString(keyCombo)
 	-- otherwise just "X" (X being the key being pressed)
 	-- And so on for Alt and Ctrl
 
-	local letter = self:getLetter(keyCombo.keyCode) or "{unknown key}"
+	local letter = self:getLetter(keyCombo.keyCode) or string.format("{%s}", mwse.mcm.i18n("unknown key"))
 
 	--if you set allowCombinations to false, nothing functionally changes
 	--but the player doesn't see the prefix

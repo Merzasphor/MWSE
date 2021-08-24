@@ -8,14 +8,14 @@ local Parent = require("mcm.components.pages.Page")
 
 local ExclusionsPage = Parent:new()
 --public fields
-ExclusionsPage.label = "Exclusions"
-ExclusionsPage.rightListLabel = "Allowed"
-ExclusionsPage.leftListLabel = "Blocked"
-ExclusionsPage.toggleText = "Toggle Filtered"
+ExclusionsPage.label = mwse.mcm.i18n("Exclusions")
+ExclusionsPage.rightListLabel = mwse.mcm.i18n("Allowed")
+ExclusionsPage.leftListLabel = mwse.mcm.i18n("Blocked")
+ExclusionsPage.toggleText = mwse.mcm.i18n("Toggle Filtered")
 
 --private fields
 local itemID = tes3ui.registerID("ExclusionListItem")
-local placeholderText = "Search..."
+local placeholderText = mwse.mcm.i18n("Search...")
 
 
 --Constructor
