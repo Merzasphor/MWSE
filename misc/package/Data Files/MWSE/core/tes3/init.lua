@@ -74,18 +74,59 @@ tes3.magicSchoolSkill = {
 -- Functions
 -------------------------------------------------
 
+local attributeGMSTs = {
+	[tes3.attribute.strength] = tes3.gmst.sAttributeStrength,
+	[tes3.attribute.intelligence] = tes3.gmst.sAttributeIntelligence,
+	[tes3.attribute.willpower] = tes3.gmst.sAttributeWillpower,
+	[tes3.attribute.agility] = tes3.gmst.sAttributeAgility,
+	[tes3.attribute.speed] = tes3.gmst.sAttributeSpeed,
+	[tes3.attribute.endurance] = tes3.gmst.sAttributeEndurance,
+	[tes3.attribute.personality] = tes3.gmst.sAttributePersonality,
+	[tes3.attribute.luck] = tes3.gmst.sAttributeLuck,
+}
+
 -- Translate an attribute constant to a readable name.
 function tes3.getAttributeName(attributeId)
+	local GMSTId = attributeGMSTs[attributeId]
+	if (GMSTId) then
+		local GMST = tes3.findGMST(GMSTId)
+		if (GMST) then
+			return GMST.value
+		end
+	end
+
+	-- Fallback to legacy code for early loaders.
 	return tes3.attributeName[attributeId] or "invalid"
 end
 
 -- Translate an skill constant to a readable name.
 function tes3.getSkillName(skillId)
+	local skill = tes3.getSkill(skillId)
+	if (skill) then
+		return skill.name
+	end
+
+	-- Fallback to legacy code for early loaders.
 	return tes3.skillName[skillId] or "invalid"
 end
 
+local specializationGMSTs = {
+	[tes3.specialization.combat] = tes3.gmst.sSpecializationCombat,
+	[tes3.specialization.magic] = tes3.gmst.sSpecializationMagic,
+	[tes3.specialization.stealth] = tes3.gmst.sSpecializationStealth,
+}
+
 -- Translate an specialization constant to a readable name.
 function tes3.getSpecializationName(specializationId)
+	local GMSTId = specializationGMSTs[specializationId]
+	if (GMSTId) then
+		local GMST = tes3.findGMST(GMSTId)
+		if (GMST) then
+			return GMST.value
+		end
+	end
+
+	-- Fallback to legacy code for early loaders.
 	return tes3.specializationName[specializationId] or "invalid"
 end
 
