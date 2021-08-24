@@ -2,10 +2,11 @@
 	Stores variable as a Global short, but treats it as a Boolean, returning true/false
 ]]--
 
---Parent class
+-- Parent class
 local Parent = require("mcm.variables.Variable")
---Class object
-local GlobalVar =  Parent:new()
+
+-- Class object
+local GlobalVar = Parent:new()
 GlobalVar.inGameOnly = true
 
 function GlobalVar:get()

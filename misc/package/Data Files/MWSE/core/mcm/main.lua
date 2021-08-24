@@ -54,7 +54,7 @@ end
 --- Callback for when the close button has been clicked.
 --- @param e keyDownEventData
 local function onClickCloseButton(e)
-	
+
 	event.unregister("keyDown", onClickCloseButton, { filter = tes3.scanCode.escape })
 	-- If we have a current mod, fire its close event.
 	if (currentModConfig and currentModConfig.onClose) then
@@ -172,7 +172,7 @@ local function onClickModConfigButton()
 					if (e.button == 0) then
 						os.openURL("https://mwse.github.io/MWSE")
 					end
-				end
+				end,
 			})
 		end)
 
@@ -222,14 +222,14 @@ local function onCreatedMenuOptions(e)
 	if (not e.newlyCreated) then
 		return
 	end
-	
+
 	-- Don't show the UI if we don't have any mod configs to show.
 	if (getActiveModConfigCount() == 0) then
 		return
 	end
 
 	local mainMenu = e.element
-	
+
 	local creditsButton = mainMenu:findChild(tes3ui.registerID("MenuOptions_Credits_container"))
 	local buttonContainer = creditsButton.parent
 

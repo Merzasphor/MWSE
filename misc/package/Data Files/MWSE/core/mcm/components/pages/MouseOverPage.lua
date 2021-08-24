@@ -1,4 +1,4 @@
-local Parent = require ("mcm.components.pages.Page")
+local Parent = require("mcm.components.pages.Page")
 
 local MouseOverPage = Parent:new()
 MouseOverPage.noScroll = true
@@ -7,7 +7,7 @@ function MouseOverPage:createMouseOverBlock(parentBlock)
 	mouseOverBlock.flowDirection = "top_to_bottom"
 	mouseOverBlock.autoHeight = true
 	mouseOverBlock.widthProportional = 1.0
-	self.elements.mouseOverBlock = mouseOverBlock   
+	self.elements.mouseOverBlock = mouseOverBlock
 end
 
 --[[function MouseOverPage:createOuterContainer(parentBlock)
@@ -38,10 +38,7 @@ function MouseOverPage:createContentsContainer(parentBlock)
 	self:createSubcomponentsContainer(self.elements.innerContainer)
 	self:createSubcomponents(self.elements.subcomponentsContainer, self.components)
 
-	
-	
 	parentBlock:getTopLevelParent():updateLayout()
 end
-
 
 return MouseOverPage

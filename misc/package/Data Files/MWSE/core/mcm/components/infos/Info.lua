@@ -9,13 +9,12 @@
 	value for all parent categories and pages to ensure wrapping works correctly
 ]]--
 
-
 local Parent = require("mcm.components.settings.Setting")
 
 local Info = Parent:new()
 Info.componentType = "Info"
 Info.text = ""
---CONTROL METHODS
+-- CONTROL METHODS
 
 function Info:disable()
 	Parent.disable(self)
@@ -27,11 +26,11 @@ function Info:update()
 		self.text = tostring(self.variable.value)
 	end
 end
---UI METHODS
+-- UI METHODS
 
 function Info:makeComponent(parentBlock)
-	local info = parentBlock:createLabel({ id = tes3ui.registerID("Info")})
-	info.borderRight = self.indent-- * 2
+	local info = parentBlock:createLabel({ id = tes3ui.registerID("Info") })
+	info.borderRight = self.indent -- * 2
 	info.wrapText = true
 	info.text = self.text
 	info.autoHeight = true
@@ -43,6 +42,5 @@ function Info:makeComponent(parentBlock)
 	self:update()
 	info:getTopLevelParent():updateLayout()
 end
-
 
 return Info

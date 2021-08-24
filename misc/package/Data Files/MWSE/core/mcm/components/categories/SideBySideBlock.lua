@@ -1,9 +1,9 @@
 --[[
 	Displays settings side by side instead of vertically
 	Best used for small buttons with no labels
-]]--
+]] --
 
-local Parent = require ("mcm.components.categories.Category")
+local Parent = require("mcm.components.categories.Category")
 
 local SideBySideBlock = Parent:new()
 

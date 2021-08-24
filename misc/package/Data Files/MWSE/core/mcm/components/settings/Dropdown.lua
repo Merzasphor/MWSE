@@ -22,7 +22,6 @@ function Dropdown:enable()
 	end)
 end
 
-
 function Dropdown:update()
 	for _, option in ipairs(self.options) do
 		if option.label == self.elements.textBox.text then
@@ -31,7 +30,6 @@ function Dropdown:update()
 	end
 	Parent.update(self)
 end
-
 
 function Dropdown:selectOption(option)
 	self.elements.dropdownParent:destroyChildren()
@@ -42,11 +40,10 @@ function Dropdown:selectOption(option)
 	self:update()
 end
 
-
 function Dropdown:createDropdown()
 	if not self.dropdownActive then
 		self.dropdownActive = true
-		--Create dropdown
+		-- Create dropdown
 		local dropdown = self.elements.dropdownParent:createThinBorder()
 		dropdown.flowDirection = "top_to_bottom"
 		dropdown.autoHeight = true
@@ -55,9 +52,9 @@ function Dropdown:createDropdown()
 		dropdown.borderTop = 0
 		for _, option in ipairs(self.options) do
 			if option.value ~= self.variable.value then
-				
+
 				local listItem = dropdown:createTextSelect({ text = option.label })
-				
+
 				listItem.widthProportional = 1.0
 				listItem.autoHeight = true
 				listItem.borderBottom = 3
@@ -73,7 +70,7 @@ function Dropdown:createDropdown()
 		self.elements.dropdown = dropdown
 		dropdown:getTopLevelParent():updateLayout()
 
-	--Destroy dropdown
+		-- Destroy dropdown
 	else
 		self.elements.dropdownParent:destroyChildren()
 		self.dropdownActive = false
@@ -81,7 +78,6 @@ function Dropdown:createDropdown()
 	end
 
 end
-
 
 function Dropdown:makeComponent(parentBlock)
 
@@ -93,7 +89,6 @@ function Dropdown:makeComponent(parentBlock)
 	border.paddingBottom = 4
 	border.borderTop = 2
 	self.elements.border = border
-	
 
 	local textBox = border:createTextSelect({ text = "---" })
 	self.elements.textBox = textBox
@@ -105,7 +100,6 @@ function Dropdown:makeComponent(parentBlock)
 	textBox.widthProportional = 1.0
 	textBox.borderAllSides = 2
 
-
 	local dropdownParent = parentBlock:createBlock()
 	dropdownParent.flowDirection = "top_to_bottom"
 	dropdownParent.widthProportional = 1.0
@@ -114,12 +108,10 @@ function Dropdown:makeComponent(parentBlock)
 
 end
 
-
 function Dropdown:createOuterContainer(parentBlock)
 	Parent.createOuterContainer(self, parentBlock)
 	self.elements.outerContainer.paddingRight = self.indent -- * 2
 end
-
 
 function Dropdown:createContentsContainer(parentBlock)
 	self:createLabel(parentBlock)

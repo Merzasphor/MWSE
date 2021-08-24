@@ -1,4 +1,3 @@
-
 --[[
 	Category
 		--Base class for category and page type
@@ -16,35 +15,33 @@
 					... --list of components
 				}
 			}
-		
 ]]--
 
 local Parent = require("mcm.components.Component")
 local Category = Parent:new()
 Category.componentType = "Category"
---Category.childSpacing = 20
---Category.childIndent = 40
---CONTROL METHODS
+-- Category.childSpacing = 20
+-- Category.childIndent = 40
+-- CONTROL METHODS
 
 function Category:new(data)
 	local t = Parent:new(data)
 	t.components = t.components or {}
-	
+
 	setmetatable(t, self)
 	t.__index = self.__index
-	
+
 	return t
 end
 
 function Category:disable()
 	Parent.disable(self)
 	for _, element in ipairs(self.elements.subcomponentsContainer.children) do
-		if element.color then 
+		if element.color then
 			element.color = tes3ui.getPalette("disabled_color")
 		end
 	end
 end
-
 
 function Category:enable()
 	if self.elements.label then
@@ -54,34 +51,34 @@ end
 
 function Category:update()
 	for _, component in ipairs(self.components) do
-		if component.update then 
-			component.update() 
+		if component.update then
+			component.update()
 		end
 	end
-end 
+end
 
 function Category:checkDisabled()
-	--If has variables and all are inGameOnly, disable Category
+	-- If has variables and all are inGameOnly, disable Category
 	local isDisabled = true
 	local hasSettings = false
 	for _, component in ipairs(self.components) do
 		if component.componentType == "Setting" and component.variable then
-			hasSettings = true 
+			hasSettings = true
 			if component.variable.inGameOnly == false then
 				isDisabled = false
 			end
 		elseif component.componentType == "Category" then
 			componentDisabled = component:checkDisabled()
 			isDisabled = component:checkDisabled()
-			if componentDisabled then hasSettings = true end
+			if componentDisabled then
+				hasSettings = true
+			end
 		end
 	end
-	return ( hasSettings and not tes3.player and isDisabled )
+	return (hasSettings and not tes3.player and isDisabled)
 end
 
-
---UI METHODS 
-
+-- UI METHODS 
 
 function Category:createSubcomponentsContainer(parentBlock)
 	local subcomponentsContainer = parentBlock:createBlock({ id = tes3ui.registerID("Category_ContentsContainer") })
@@ -93,18 +90,16 @@ function Category:createSubcomponentsContainer(parentBlock)
 	self.elements.subcomponentsContainer = subcomponentsContainer
 end
 
-
 function Category:createSubcomponents(parentBlock, components)
 	if components then
 		for _, component in pairs(components) do
 			component.parentComponent = self
 			local newComponent = self:getComponent(component)
-			
+
 			newComponent:create(parentBlock)
 		end
 	end
 end
-
 
 function Category:createContentsContainer(parentBlock)
 	self:createLabel(parentBlock)
@@ -117,21 +112,21 @@ end
 function Category.__index(tbl, key)
 	local meta = getmetatable(tbl)
 	local prefixLen = string.len("create")
-	if string.sub( key, 1, prefixLen ) == "create" then
+	if string.sub(key, 1, prefixLen) == "create" then
 		local class = string.sub(key, prefixLen + 1)
 		local component
 		local classPaths = require("mcm.classPaths")
-		
+
 		for _, path in pairs(classPaths.components) do
-			
-			local classPath = (path .. class) 
+
+			local classPath = (path .. class)
 			local fullPath = lfs.currentdir() .. classPaths.basePath .. classPath .. ".lua"
 			local fileExists = lfs.attributes(fullPath, "mode") == "file"
-	
-			if fileExists then 
+
+			if fileExists then
 				component = require(classPath)
 				break
-			end	  
+			end
 		end
 
 		if component then
@@ -143,10 +138,9 @@ function Category.__index(tbl, key)
 				return component
 			end
 		end
-	end 
+	end
 
 	return meta[key]
 end
 
-
-return Category 
+return Category

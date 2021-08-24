@@ -1,17 +1,13 @@
 local Parent = require("mcm.components.settings.TextField")
 local ParagraphField = Parent:new()
 
-
 function ParagraphField:enable()
 	self.elements.inputField.text = self.variable.value
 
 	local function registerAcquireText(element)
-		element:register(
-			"mouseClick", 
-			function()
-				tes3ui.acquireTextInput(self.elements.inputField)
-			end
-		)
+		element:register("mouseClick", function()
+			tes3ui.acquireTextInput(self.elements.inputField)
+		end)
 	end
 
 	registerAcquireText(self.elements.textFrame)
@@ -19,20 +15,16 @@ function ParagraphField:enable()
 end
 
 function ParagraphField:registerEnterKey(element)
-	element:register("keyEnter",
-		function()
-			local inputController = tes3.worldController.inputController
-			local holdingShift = (
-				inputController:isKeyDown(tes3.scanCode.lShift) or
-				inputController:isKeyDown(tes3.scanCode.rShift)
-			)
-			if not holdingShift then
-				self:update()
-			else
-				element.text = element.text .. "\n"
-			end
+	element:register("keyEnter", function()
+		local inputController = tes3.worldController.inputController
+		local holdingShift = (inputController:isKeyDown(tes3.scanCode.lShift) or
+		                     inputController:isKeyDown(tes3.scanCode.rShift))
+		if not holdingShift then
+			self:update()
+		else
+			element.text = element.text .. "\n"
 		end
-	)
+	end)
 end
 
 function ParagraphField:makeComponent(parentBlock)
@@ -46,8 +38,6 @@ function ParagraphField:makeComponent(parentBlock)
 	inputField.widthProportional = 1.0
 	inputField.widget.lengthLimit = nil
 
-
-	
 	self.elements.border = border
 	self.elements.inputField = inputField
 	local scrollPane = inputField:findChild(tes3ui.registerID("PartParagraphInput_scroll_pane"))
@@ -57,13 +47,13 @@ function ParagraphField:makeComponent(parentBlock)
 	self.elements.scrollPane = scrollPane
 	self.elements.textInput = textInput
 
-	if self.height then scrollPane.parent.height = self.height end
-
+	if self.height then
+		scrollPane.parent.height = self.height
+	end
 
 	self:registerEnterKey(inputField)
 
-
-	--mouseOvers
+	-- mouseOvers
 	table.insert(self.mouseOvers, self.elements.label)
 	local function addMouseovers(children)
 		for _, element in ipairs(children) do
@@ -74,8 +64,7 @@ function ParagraphField:makeComponent(parentBlock)
 		end
 	end
 	addMouseovers(inputField.children)
-	
-end
 
+end
 
 return ParagraphField

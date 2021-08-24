@@ -1,5 +1,3 @@
-
-
 local Parent = require("mcm.components.settings.Setting")
 
 local Button = Parent:new()
@@ -7,16 +5,14 @@ Button.disabledText = "---"
 Button.leftSide = true
 Button.buttonText = "---"
 
---Determines what text is displayed on the button
+-- Determines what text is displayed on the button
 function Button:getText()
 	return self.buttonText
 end
- 
 
 function Button:setText(newText)
 	self.elements.button.text = newText
 end
-
 
 function Button:disable()
 	Parent.disable(self)
@@ -35,12 +31,9 @@ end
 function Button:enable()
 	Parent.enable(self)
 	self:setText(self:getText())
-	self.elements.button:register(
-		"mouseClick", 
-		function(e)
-			self:press()
-		end
-	)
+	self.elements.button:register("mouseClick", function(e)
+		self:press()
+	end)
 end
 
 function Button:makeComponent(parentBlock)
@@ -53,10 +46,9 @@ function Button:makeComponent(parentBlock)
 	table.insert(self.mouseOvers, button)
 end
 
-
 function Button:createOuterContainer(parentBlock)
 	Parent.createOuterContainer(self, parentBlock)
-	--A bit weird but it seems to line buttons up better with other settings
+	-- A bit weird but it seems to line buttons up better with other settings
 	self.elements.outerContainer.borderTop = self.paddingBottom
 	self.elements.outerContainer.borderBottom = 0
 	self.elements.outerContainer.flowDirection = "left_to_right"
@@ -77,6 +69,5 @@ function Button:createContentsContainer(parentBlock)
 		self:makeComponent(self.elements.innerContainer)
 	end
 end
-
 
 return Button

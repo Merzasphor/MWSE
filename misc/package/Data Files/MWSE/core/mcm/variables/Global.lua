@@ -1,9 +1,9 @@
---Parent class
+-- Parent class
 local Parent = require("mcm.variables.Variable")
---Class object
+
+-- Class object
 local GlobalVar = Parent:new()
 GlobalVar.inGameOnly = true
-
 
 function GlobalVar:get()
 	return tes3.findGlobal(self.id).value
@@ -14,8 +14,8 @@ function GlobalVar:set(newValue)
 	if (converter) then
 		newValue = converter(newValue)
 	end
-	
+
 	tes3.findGlobal(self.id).value = newValue
 end
 
-return GlobalVar 
+return GlobalVar

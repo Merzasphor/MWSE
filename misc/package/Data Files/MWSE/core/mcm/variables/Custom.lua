@@ -1,8 +1,8 @@
---Parent class
+-- Parent class
 local Parent = require("mcm.variables.Variable")
---Class object
-local Custom = Parent:new()
 
+-- Class object
+local Custom = Parent:new()
 
 function Custom:get()
 	return self:getter()
@@ -13,7 +13,7 @@ function Custom:set(newValue)
 	if (converter) then
 		newValue = converter(newValue)
 	end
-	
+
 	self:setter(newValue)
 end
 
