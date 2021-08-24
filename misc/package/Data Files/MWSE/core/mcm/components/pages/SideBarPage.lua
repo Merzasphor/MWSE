@@ -10,7 +10,7 @@ SideBarPage.triggerOff = "MCM:MouseLeave"
 
 
 function SideBarPage:new(data)
-	t = Parent:new(data)
+	local t = Parent:new(data)
 	t.sidebar = self:getComponent({ class = "MouseOverPage" })
 
 	setmetatable(t, self)
