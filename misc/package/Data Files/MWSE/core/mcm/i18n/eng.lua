@@ -12,7 +12,7 @@ return {
 	["Open web browser?"] = "Open web browser?",
 	["Rebind"] = "Rebind",
 	["Search..."] = "Search...",
-	["Set new key binding to: %s"] = "Set new key binding to: %s",
+	["Set new key binding to: %s"] = "Set new key binding to: %%s",
 	["Submit"] = "Submit",
 	["The game must be restarted before this change will come into effect."] = "The game must be restarted before this change will come into effect.",
 	["Toggle Filtered"] = "Toggle Filtered",
