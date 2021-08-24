@@ -93,48 +93,49 @@ _G.json = require("dkjson")
 -- Translation helpers
 -------------------------------------------------
 
+local i18n = require("i18n")
+
 -- TODO: Add these.
 local pluralizationFunctions = {}
 
-local function loadLocaleFile(i18nInstance, mod, locale)
+-- Metatable used to wrap around i18n so mods don't have to keep passing their mod name in translation calls/files.
+local i18nWrapper = {}
+
+function i18nWrapper:set(key, value)
+	i18n.set(self.mod .. "." .. key, value)
+end
+
+function i18nWrapper:translate(key, data)
+	return i18n.translate(self.mod .. "." .. key, data)
+end
+
+i18nWrapper.__call = i18nWrapper.translate
+
+-- Helper around i18n.load with safety checks, package.path support, and loads the translation into its own namespace.
+local function loadLocaleFile(mod, locale)
 	local success, contents = pcall(dofile, string.format("%s.i18n.%s", mod, locale))
 	if (success) then
 		assert(type(contents) == "table", string.format("Translation file for mod %q does not have valid translation file for locale %q.", mod, locale))
-		i18nInstance.load({ [locale] = contents })
+		i18n.load({ [locale] = { [mod] = contents } })
 	end
 	return success
 end
 
 function mwse.loadTranslations(mod)
+	-- Lazy set language, since tes3.getLanguage() isn't available.
 	local language = tes3.getLanguage() or "eng"
-
-	-- Store the current state of the i18n package.
-	local i18n = table.swap(package.loaded, "i18n", nil)
-	local i18n_interpolate = table.swap(package.loaded, "i18n.interpolate", nil)
-	local i18n_plural = table.swap(package.loaded, "i18n.plural", nil)
-	local i18n_variants = table.swap(package.loaded, "i18n.variants", nil)
-	local i18n_version = table.swap(package.loaded, "i18n.version", nil)
-
-	-- Load our unique instance of i18n and set the locale.
-	local new = require("i18n")
-	new.setLocale(language, pluralizationFunctions[language])
+	i18n.setLocale(language, pluralizationFunctions[language])
 
 	-- Load the language files.
 	local loadedLanguage = false
-	local loadedDefault = loadLocaleFile(new, mod, "eng")
+	local loadedDefault = loadLocaleFile(mod, "eng")
 	if (language ~= "eng") then
-		loadedLanguage = loadLocaleFile(new, mod, language)
+		loadedLanguage = loadLocaleFile(mod, language)
 	end
 	assert(loadedDefault or loadedLanguage, "Could not load any valid i18n files.")
 
-	-- Restore the packages to the previous state.
-	package.loaded["i18n"] = i18n
-	package.loaded["i18n.interpolate"] = i18n_interpolate
-	package.loaded["i18n.plural"] = i18n_plural
-	package.loaded["i18n.variants"] = i18n_variants
-	package.loaded["i18n.version"] = i18n_version
-
-	return new
+	-- We create a wrapper around i18n prefixing with the mod key.
+	return setmetatable({ mod = mod }, i18nWrapper)
 end
 
 
