@@ -3,7 +3,7 @@ return {
 	["notice.label"] = "Note :",
 	["notice.text"] = "Ces options peuvent ne pas prendre effet avant le prochain lancement du jeu.",
 	["credits.label"] = "Les personnes suivantes ont contribué à Morrowind Script Extender:",
-	["logWarningsWithLuaStack.label"] = "Journalisation des avertissements avec  Log warnings with lua stacktrace?",
+	["logWarningsWithLuaStack.label"] = "Journalisation des avertissements avec une trace d'appels Lua?",
 	["logWarningsWithLuaStack.text"] = "Si cette option est activée, tout avertissement déclenché en cours de jeu qui génère une ligne dans Warnings.txt générera également des lignes dans mwse.log. De plus, une trace d'appels sera fournie pour contextualiser quel mod a pu être responsable de l'avertissement généré.\n\nCette fonction peut entraîner la génération d'entrées superflues dans les fichiers log si vous utilisez certains mods (par exemple Better Bodies).",
 	["runInBackground.label"] = "Faire tourner Morrowind en arrière-plan?",
 	["runInBackground.text"] = "Par défaut, Morrowind suspend l'exécution d'une grande part de son code lorsqu'il n'est pas au premier plan. Lorsque vous utilisez le mode fenêtré (y compris le mode plein écran sans bordures), cette option permet à Morrowind de continuer à tourner. L'activation de cette option peut également améliorer la stabilité du jeu en raison de la façon dont Morrowind gère certains fils d'exécution audio.",
