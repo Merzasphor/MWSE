@@ -7,6 +7,12 @@ local function saveConfig()
 	mwse.saveConfig("MWSE", values)
 end
 
+collectgarbage("collect")
+local memoryBefore = collectgarbage("count")
+local i18n = mwse.loadTranslations("MWSE MCM")
+mwse.log("Memory used by i18n: %.2f", collectgarbage("count") - memoryBefore)
+collectgarbage("collect")
+
 local config = {
 	name = "Morrowind Script Extender",
 	template = "Template",
@@ -16,9 +22,9 @@ local config = {
 			class = "SideBarPage",
 			components = {
 				{
-					label = "Log warnings with lua stacktrace?",
 					class = "OnOffButton",
-					description = "When enabled, any warnings raised during normal gameplay that would write to warnings.txt will also write to mwse.log. In addition, a stack trace is provided to give context to what mod may be responsible for the warning.\n\nThis can lead to superfluous log entries when using certain mods, like Better Bodies.",
+					label = i18n("logWarningsWithLuaStack.label"),
+					description = i18n("logWarningsWithLuaStack.description"),
 					variable = {
 						id = "LogWarningsWithLuaStack",
 						class = "TableVariable",
@@ -26,9 +32,9 @@ local config = {
 					},
 				},
 				{
-					label = "Run Morrowind in the background?",
 					class = "OnOffButton",
-					description = "By default Morrowind skips most game logic when not in focus. When using windowed mode (including borderless fullscreen), this feature allows Morrowind to continue running. Enabling this can also help to increase stability, due to how Morrowind handles some audio threads.",
+					label = i18n("runInBackground.label"),
+					description = i18n("runInBackground.description"),
 					variable = {
 						id = "RunInBackground",
 						class = "TableVariable",
@@ -36,9 +42,9 @@ local config = {
 					},
 				},
 				{
-					label = "Fix NiFlipController cloning?",
 					class = "OnOffButton",
-					description = "Morrowind incorrectly handles the affected map when cloning NiFlipController objects, preventing mods from using the controller for anything but the base map. MWSE fixes this issue. However, some mods contain bugged assets that have the incorrect affected map assigned, relying on the bug to reassign the controller back to the base map. Disabling this fix will provide support for these mods, but will also prevent newer mods from taking advantage of the fixed controller.\n\nIt is recommended that you leave this enabled unless you know you need the compatibility.",
+					label = i18n("patchNiFlipController.label"),
+					description = i18n("patchNiFlipController.description"),
 					variable = {
 						id = "PatchNiFlipController",
 						class = "TableVariable",
@@ -46,9 +52,9 @@ local config = {
 					},
 				},
 				{
-					label = "Cache all NetImmerse lua objects?",
 					class = "OnOffButton",
-					description = "WARNING: Only used for debugging purposes. Enabling this without knowing what you're doing WILL lead to memory leaks.\n\nWhen enabled, NetImmerse objects will use the same lua object caching system that TES3 objects use, allowing them to be string-compared or used as table keys.",
+					label = i18n("keepAllNetImmerseObjectsAlive.label"),
+					description = i18n("keepAllNetImmerseObjectsAlive.description"),
 					variable = {
 						id = "KeepAllNetImmerseObjectsAlive",
 						class = "TableVariable",
@@ -56,9 +62,9 @@ local config = {
 					},
 				},
 				{
-					label = "Enable legacy lua mods?",
 					class = "OnOffButton",
-					description = "If enabled, early alpha lua mods will be supported\n\nLegacy lua mods can be found in:\nData Files\\MWSE\\lua folder.",
+					label = i18n("enableLegacyLuaMods.label"),
+					description = i18n("enableLegacyLuaMods.description"),
 					variable = {
 						id = "EnableLegacyLuaMods",
 						class = "TableVariable",
@@ -68,13 +74,13 @@ local config = {
 			},
 			sidebarComponents = {
 				{
-					label = "Notice:",
 					class = "Info",
-					text = "These options may not take effect until the next relaunch of the game.",
+					label = i18n("notice.label"),
+					text = i18n("notice.text"),
 				},
 				{
-					label = "The following individuals have contributed to the Morrowind Script Extender:",
 					class = "Info",
+					label = i18n("credits.label"),
 					text = [[Anthony Garcia
 Charles Cooley (cdcooley)
 Cody Erekson (Fliggerty)
