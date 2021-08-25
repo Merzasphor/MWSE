@@ -116,7 +116,7 @@ i18n supports the [unicode.org plural rules](http://cldr.unicode.org/index/cldr-
 	local function onPressZ(e)
 		local dagger = tes3.getObject("iron dagger")
 		local daggerCount = tes3.getItemCount({ reference = tes3.player, item = dagger })
-		tes3.messageBox(i18n(itemCountNotification, { count = daggerCount, item = dagger.name }))
+		tes3.messageBox(i18n("itemCountNotification", { count = daggerCount, item = dagger.name }))
 	end
 	event.register("keyDown", onPressZ, { filter = tes3.scanCode.z })
 	```
@@ -143,7 +143,7 @@ Values can be passed to translation strings in a few different ways:
 	```
 	**main.lua**:
 	```lua linenums="1"
-	tes3.messageBox(i18n(itemCountNotification, { count = daggerCount, item = dagger.name }))
+	tes3.messageBox(i18n("itemCountNotification", { count = daggerCount, item = dagger.name }))
 	```
 
 !!! example "`string.format` Style"
@@ -160,9 +160,9 @@ Values can be passed to translation strings in a few different ways:
 	**main.lua**:
 	```lua linenums="1"
 	if (daggerCount > 1) then
-		tes3.messageBox(i18n(itemCountNotification, { daggerCount, dagger.name }))
+		tes3.messageBox(i18n("itemCountNotification", { daggerCount, dagger.name }))
 	else
-		tes3.messageBox(i18n(itemCountNotification, { dagger.name }))
+		tes3.messageBox(i18n("itemCountNotification", { dagger.name }))
 	end
 	```
 
@@ -179,5 +179,5 @@ Values can be passed to translation strings in a few different ways:
 	```
 	**main.lua**:
 	```lua linenums="1"
-	tes3.messageBox(i18n(itemCountNotification, { count = daggerCount, item = dagger.name }))
+	tes3.messageBox(i18n("itemCountNotification", { count = daggerCount, item = dagger.name }))
 	```
