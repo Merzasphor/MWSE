@@ -111,11 +111,27 @@ end
 
 i18nWrapper.__call = i18nWrapper.translate
 
+local function convertUTF8Table(t, language)
+	for k, v in pairs(t) do
+		local vType = type(v)
+		if (vType == "string") then
+			t[k] = mwse.iconv(language, v)
+		elseif (vType == "table") then
+			convertUTF8Table(v, language)
+		end
+	end
+end
+
 -- Helper around i18n.load with safety checks, package.path support, and loads the translation into its own namespace.
 local function loadLocaleFile(mod, locale)
 	local success, contents = pcall(dofile, string.format("%s.i18n.%s", mod, locale))
 	if (success) then
 		assert(type(contents) == "table", string.format("Translation file for mod %q does not have valid translation file for locale %q.", mod, locale))
+
+		-- Convert encoding from UTF8 to the right type.
+		convertUTF8Table(contents, tes3.getLanguageCode())
+
+		-- Load the translation data.
 		i18n.load({ [locale] = { [mod] = contents } })
 	end
 	return success
