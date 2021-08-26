@@ -1,6 +1,4 @@
 {
-    "files.encoding": "windows1252",
-
     // Configure lua runtime.
     "Lua.runtime.version": "LuaJIT",
     "Lua.runtime.special" : {
