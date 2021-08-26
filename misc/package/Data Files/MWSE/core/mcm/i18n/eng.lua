@@ -6,7 +6,7 @@ return {
 	["In-Game Only"] = "In-Game Only",
 	["Key binding changed to '%s'"] = "Key binding changed to '%%s'",
 	["Key binding not changed."] = "Key binding not changed.",
-	["Mod Configuration - %s"] = "Mod Configuration - %%s",
+	["Mod Configuration - %s"] = "Mod Configuration - %s",
 	["Mod Configuration"] = "Mod Configuration",
 	["New value: '%s'"] = "New value: '%%s'",
 	["Open web browser?"] = "Open web browser?",
