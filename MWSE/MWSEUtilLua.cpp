@@ -4,6 +4,7 @@
 
 #include "BuildDate.h"
 #include "MWSEDefs.h"
+#include "UTF8Convert.h"
 #include "WindowsUtil.h"
 
 #include "LuaTimer.h"
@@ -57,6 +58,7 @@ namespace mwse::lua {
 		lua_mwse["crash"] = crash;
 		lua_mwse["getVersion"] = getVersion;
 		lua_mwse["getVirtualMemoryUsage"] = getVirtualMemoryUsage;
+		lua_mwse["iconv"] = iconv;
 		lua_mwse["overrideScript"] = overrideScript;
 		lua_mwse["virtualKeyPressed"] = getIsVirtualKeyPressed;
 	}
