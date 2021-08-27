@@ -58,11 +58,11 @@ function tes3reference:deleteDynamicLightAttachment(removeLightFromParent) end
 --- Removes the dynamic light from any affected scene graph nodes, but will not delete the associated attachment.
 function tes3reference:detachDynamicLightFromAffectedNodes() end
 
---- Hides the reference, stops all scripts for it, detaches all dynamic lights and sounds, and closes any mobile simulation. Sets the reference as modified implicitly.
+--- Hides the reference, detaches all dynamic lights and sounds, and stops any mobile simulation. Sets the reference as modified implicitly.
 --- @return boolean success If true, the reference was successfully disabled.
 function tes3reference:disable() end
 
---- Shows the reference, restarts all scripts for it, reattaches all dynamic lights and sounds, and restarts any mobile simulation if the player is close enough. Sets the reference as modified implicitly.
+--- Shows the reference, reattaches all dynamic lights and sounds, and restarts any mobile simulation if the player is close enough. Sets the reference as modified implicitly.
 --- @return boolean success If true, the reference was successfully enabled.
 function tes3reference:enable() end
 

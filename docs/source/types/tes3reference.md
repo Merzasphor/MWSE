@@ -571,7 +571,7 @@ tes3reference:detachDynamicLightFromAffectedNodes()
 
 ### `disable`
 
-Hides the reference, stops all scripts for it, detaches all dynamic lights and sounds, and closes any mobile simulation. Sets the reference as modified implicitly.
+Hides the reference, detaches all dynamic lights and sounds, and stops any mobile simulation. Sets the reference as modified implicitly.
 
 ```lua
 local success = tes3reference:disable()
@@ -585,7 +585,7 @@ local success = tes3reference:disable()
 
 ### `enable`
 
-Shows the reference, restarts all scripts for it, reattaches all dynamic lights and sounds, and restarts any mobile simulation if the player is close enough. Sets the reference as modified implicitly.
+Shows the reference, reattaches all dynamic lights and sounds, and restarts any mobile simulation if the player is close enough. Sets the reference as modified implicitly.
 
 ```lua
 local success = tes3reference:enable()
