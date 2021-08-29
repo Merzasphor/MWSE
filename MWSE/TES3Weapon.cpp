@@ -67,28 +67,28 @@ namespace TES3 {
 		maxCondition = value;
 	}
 
-	bool Weapon::getMaterialFlag(WeaponMaterialFlag::WeaponMaterialFlag flag) const {
+	bool Weapon::getMaterialFlag(WeaponMaterialFlag::FlagBit flag) const {
 		return BIT_TEST(materialFlags, flag);
 	}
 
-	void Weapon::setMaterialFlag(WeaponMaterialFlag::WeaponMaterialFlag flag, bool value) {
+	void Weapon::setMaterialFlag(WeaponMaterialFlag::FlagBit flag, bool value) {
 		BIT_SET(materialFlags, flag, value);
 	}
 
 	bool Weapon::getIgnoresNormalWeaponResistance() const {
-		return getMaterialFlag(WeaponMaterialFlag::IgnoresNormalWeaponResistance);
+		return getMaterialFlag(WeaponMaterialFlag::IgnoresNormalWeaponResistanceBit);
 	}
 
 	void Weapon::setIgnoresNormalWeaponResistance(bool value) {
-		setMaterialFlag(WeaponMaterialFlag::IgnoresNormalWeaponResistance, value);
+		setMaterialFlag(WeaponMaterialFlag::IgnoresNormalWeaponResistanceBit, value);
 	}
 
 	bool Weapon::getIsSilver() const {
-		return getMaterialFlag(WeaponMaterialFlag::Silver);
+		return getMaterialFlag(WeaponMaterialFlag::SilverBit);
 	}
 
 	void Weapon::setIsSilver(bool) {
-		setMaterialFlag(WeaponMaterialFlag::Silver, value);
+		setMaterialFlag(WeaponMaterialFlag::SilverBit, value);
 	}
 
 	int Weapon::getSkillId() const {

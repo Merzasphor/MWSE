@@ -30,9 +30,14 @@ namespace TES3 {
 	namespace WeaponMaterialFlag {
 		typedef unsigned int value_type;
 
-		enum WeaponMaterialFlag : value_type {
+		enum Flag : value_type {
 			IgnoresNormalWeaponResistance = 0x1,
 			Silver = 0x2
+		};
+
+		enum FlagBit {
+			IgnoresNormalWeaponResistanceBit = 0,
+			SilverBit = 1
 		};
 	}
 
@@ -74,8 +79,8 @@ namespace TES3 {
 		bool hasDurability() const;
 		void setDurability(int value);
 
-		bool getMaterialFlag(WeaponMaterialFlag::WeaponMaterialFlag) const;
-		void setMaterialFlag(WeaponMaterialFlag::WeaponMaterialFlag, bool);
+		bool getMaterialFlag(WeaponMaterialFlag::FlagBit) const;
+		void setMaterialFlag(WeaponMaterialFlag::FlagBit, bool);
 
 		bool getIgnoresNormalWeaponResistance() const;
 		void setIgnoresNormalWeaponResistance(bool);
