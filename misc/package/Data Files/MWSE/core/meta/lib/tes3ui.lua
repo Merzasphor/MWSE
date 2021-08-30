@@ -129,6 +129,9 @@ function tes3ui.logToConsole(text, isCommand) end
 --- @return boolean result No description yet available.
 function tes3ui.menuMode() end
 
+--- Causes the tooltip to be redisplayed. This will not use a configured delay. This will not function if the help menu does not currently exist, or if it is not currently visible.
+function tes3ui.refreshTooltip() end
+
 --- Registers a UI element name, returning a UI_ID. Once a property is registered, this function always returns the same UI_ID. These UI_IDs are used by the API to locate elements that may not exist (a weak reference), instead of by element name.
 --- 
 --- The registry namespace is shared between Property and UI_ID. It is advisable to use a namespace prefix to avoid collisions with other mods.

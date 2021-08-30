@@ -331,6 +331,16 @@ local result = tes3ui.menuMode()
 
 ***
 
+### `tes3ui.refreshTooltip`
+
+Causes the tooltip to be redisplayed. This will not use a configured delay. This will not function if the help menu does not currently exist, or if it is not currently visible.
+
+```lua
+tes3ui.refreshTooltip()
+```
+
+***
+
 ### `tes3ui.registerID`
 
 Registers a UI element name, returning a UI_ID. Once a property is registered, this function always returns the same UI_ID. These UI_IDs are used by the API to locate elements that may not exist (a weak reference), instead of by element name.
