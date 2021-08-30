@@ -815,12 +815,14 @@ end
 -- Setup debugger if necessary
 -------------------------------------------------
 
+local function onError(e)
+	mwse.log('[MWSE-Lua] Error: %s', e)
+end
+
 local targetDebugger = os.getenv("MWSE_LUA_DEBUGGER")
 if (targetDebugger == "vscode-debuggee") then
 	-- Start up our debuggee.
 	local debuggee = require('vscode-debuggee')
-	local startResult, breakerType = debuggee.start(json)
-	mwse.log("[MWSE-Lua] vscode-debuggee start -> Result: %s, Type: %s", startResult, breakerType)
 
 	-- Overwrite the mwse.log function to also print to the debug console.
 	mwse.log = function(str, ...)
@@ -831,6 +833,13 @@ if (targetDebugger == "vscode-debuggee") then
 
 	-- Poll every frame.
 	event.register("enterFrame", debuggee.poll, { priority = 9001 })
+	
+	-- Start the debugger.
+	local startResult, breakerType = debuggee.start(json, { onError = onError, luaStyleLog = true })
+	mwse.log("[MWSE-Lua] vscode-debuggee start -> Result: %s, Type: %s", startResult, breakerType)
+	if (startResult) then
+		mwse.debuggee = debuggee
+	end
 end
 
 

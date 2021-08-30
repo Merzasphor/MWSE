@@ -15,9 +15,9 @@
 			"listenPublicly": false,
 			"listenPort": 56789,
 			"encoding": "UTF-8",
-			"env": [
-				{ "Name": "MWSE_LUA_DEBUGGER", "Value": "vscode-debuggee" }
-			]
+			"env": {
+				"MWSE_LUA_DEBUGGER": "vscode-debuggee"
+			}
 		}
 	]
 }
