@@ -193,6 +193,13 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {
 				log << enabledFeatures[i];
 			}
 			log << std::endl;
+
+			// Make sure our necessary features are installed.
+			if (!mwse::mcp::getFeatureEnabled(mwse::mcp::feature::SavegameCorruptionFix)) {
+				mwse::log::getLog() << "The Morrowind Script Extender requires the Morrowind Code Patch \"Savegame Corruption Fix\" bugfix to be. Ensure that you have installed it." << std::endl;
+				MessageBox(NULL, "The Morrowind Script Extender requires the Morrowind Code Patch \"Savegame Corruption Fix\" bugfix to be. Ensure that you have installed it.", "Morrowind Code Patch installation insufficient!", MB_OK | MB_APPLMODAL | MB_ICONERROR);
+				return FALSE;
+			}
 		}
 		else {
 			mwse::log::getLog() << "The Morrowind Script Extender requires the Morrowind Code Patch to be installed. Ensure that you have installed it, and have not deleted the mcpatch folder." << std::endl;
