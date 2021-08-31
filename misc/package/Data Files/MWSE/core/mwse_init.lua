@@ -92,6 +92,10 @@ _G.tes3 = require("tes3.init")
 _G.event = require("event")
 _G.json = require("dkjson")
 
+-- Prevent requiring socket.core before socket from causing issues.
+local socket = require("socket")
+local socket_core = require("socket.core")
+
 
 -------------------------------------------------
 -- Translation helpers
