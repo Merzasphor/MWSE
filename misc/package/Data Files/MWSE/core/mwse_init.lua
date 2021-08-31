@@ -34,12 +34,16 @@ end
 -- Try to return a lowercased module first, fall back to regular require.
 function require(moduleName)
 	-- First try to load the lowercase module.
-	local status, result = pcall(originalRequire, moduleName:gsub("[/\\]", "."):lower())
+	local lower = moduleName:gsub("[/\\]", "."):lower()
+	local status, result = pcall(originalRequire, lower)
 	if (status) then
 		return result
+	elseif (moduleName == lower) then
+		-- If this was an unchanged call, and we got an actual error, return it rather than consuming it.
+		error(result)
 	end
 
-	-- Then load the original path.
+	-- Fall back to trying to load the normal path.
 	return originalRequire(moduleName)
 end
 
