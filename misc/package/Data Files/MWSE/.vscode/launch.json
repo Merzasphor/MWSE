@@ -5,6 +5,21 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
+			"name": "Morrowind (none)",
+			"type": "lua",
+			"request": "launch",
+			"workingDirectory": "${workspaceRoot}/../../",
+			"sourceBasePath": "${workspaceRoot}/../../",
+			"executable": "${workspaceRoot}/../../Morrowind.exe",
+			"arguments": "",
+			"listenPublicly": false,
+			"listenPort": 56789,
+			"encoding": "UTF-8",
+			"env": {
+				"MWSE_LUA_DEBUGGER": "none"
+			}
+		},
+		{
 			"name": "Morrowind (vscode-debuggee)",
 			"type": "lua",
 			"request": "launch",
