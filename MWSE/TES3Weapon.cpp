@@ -87,7 +87,7 @@ namespace TES3 {
 		return getMaterialFlag(WeaponMaterialFlag::SilverBit);
 	}
 
-	void Weapon::setIsSilver(bool) {
+	void Weapon::setIsSilver(bool value) {
 		setMaterialFlag(WeaponMaterialFlag::SilverBit, value);
 	}
 

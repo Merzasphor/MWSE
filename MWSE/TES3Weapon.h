@@ -79,13 +79,13 @@ namespace TES3 {
 		bool hasDurability() const;
 		void setDurability(int value);
 
-		bool getMaterialFlag(WeaponMaterialFlag::FlagBit) const;
-		void setMaterialFlag(WeaponMaterialFlag::FlagBit, bool);
+		bool getMaterialFlag(WeaponMaterialFlag::FlagBit flag) const;
+		void setMaterialFlag(WeaponMaterialFlag::FlagBit flag, bool value);
 
 		bool getIgnoresNormalWeaponResistance() const;
-		void setIgnoresNormalWeaponResistance(bool);
+		void setIgnoresNormalWeaponResistance(bool value);
 		bool getIsSilver() const;
-		void setIsSilver(bool);
+		void setIsSilver(bool value);
 
 		int getSkillId() const;
 		Skill* getSkill() const;
