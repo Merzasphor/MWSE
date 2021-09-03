@@ -55,7 +55,7 @@ namespace TES3 {
 		MobileProjectile * magicProjectile; // 0x9C
 		MagicSourceCombo sourceCombo; // 0xA0
 		unsigned int serialNumber; // 0xA8
-		void * unknown_0xAC;
+		float corprusHoursSinceLastWorsen; // 0xAC
 		float timestampCastBegin; // 0xB0
 		SpellEffectState state; // 0xB4
 		Reference * caster; // 0xB8
@@ -64,8 +64,8 @@ namespace TES3 {
 		char castingItemID[32]; // 0xC4
 		char magicID[32]; // 0xE4
 		Sound * soundEffects[8]; // 0x104
-		int unknown_0x124;
-		float unknown_0x128;
+		int countOnTargetVFX; // 0x124
+		Reference * mcpOriginalTarget; // 0x128
 
 		//
 		// Other related this-call functions.

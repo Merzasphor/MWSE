@@ -27,6 +27,7 @@ namespace mwse {
 
 			// Basic property binding.
 			usertypeDefinition["castChanceOverride"] = &TES3::MagicSourceInstance::overrideCastChance;
+			usertypeDefinition["corprusHoursSinceLastWorsen"] = &TES3::MagicSourceInstance::corprusHoursSinceLastWorsen;
 			usertypeDefinition["itemData"] = sol::readonly_property(&TES3::MagicSourceInstance::castingItemCondition);
 			usertypeDefinition["itemID"] = sol::readonly_property(&TES3::MagicSourceInstance::castingItemID);
 			usertypeDefinition["magicID"] = sol::readonly_property(&TES3::MagicSourceInstance::magicID);
