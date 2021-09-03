@@ -79,35 +79,82 @@ function Template:clickTab(thisPage)
 	pageBlock:getTopLevelParent():updateLayout()
 end
 
-function Template:createTab(page)
-	local button = self.elements.tabsBlock:createButton({ id = page.tabUID, text = page.label })
+local function formatTabButton(button)
 	button.borderAllSides = 0
 	button.paddingTop = 4
 	button.paddingLeft = 8
 	button.paddingRight = 8
 	button.paddingBottom = 6
+end
+
+local function toggleButtonState(button, enabled)
+	button.disabled = not enabled
+	button.widget.state = enabled and 1 or 2
+end
+
+function Template:createTab(page)
+	local button = self.elements.tabsBlock:createButton({ id = page.tabUID, text = page.label })
+	formatTabButton(button)
 	button:register("mouseClick", function()
 		self:clickTab(page)
 	end)
 end
 
 function Template:createTabsBlock(parentBlock)
-	-- Create page tab buttons
-	local tabsBlock = parentBlock:createBlock()
-	self.elements.tabsBlock = tabsBlock
-	tabsBlock.autoHeight = true
-	tabsBlock.widthProportional = 1.0
+	local outerTabsBlock = parentBlock:createBlock()
+	self.elements.outerTabsBlock = outerTabsBlock
+	outerTabsBlock.autoHeight = true
+	outerTabsBlock.widthProportional = 1.0
 
 	-- Create a tab for each page (no need if only one page)
 	if table.getn(self.pages) > 1 then
+		--Previous Button
+		local prevButton = outerTabsBlock:createButton{
+			id = "MCM_PreviousTab",
+			text = "<--"
+		}
+		do
+			formatTabButton(prevButton)
+			toggleButtonState(prevButton, false)
+		end
+		-- Create page tab buttons
+		local tabsBlock = outerTabsBlock:createBlock()
+		self.elements.tabsBlock = tabsBlock
+		tabsBlock.autoHeight = true
+		tabsBlock.widthProportional = 1.0
 		for _, page in ipairs(self.pages) do
 			self:createTab(page)
 		end
 		-- highlight first button
 		local firstTab = parentBlock:findChild(self.pages[1].tabUID)
 		firstTab.widget.state = 4
+		--Next Button
+		local nextButton = outerTabsBlock:createButton{
+			id = "MCM_NextTab",
+			text = "-->",
+		}
+		do
+			formatTabButton(nextButton)
+		end
+		--Pagination: "-->" button hides leftmost visible tab, "<--" button reveals them again
+		local hiddenTabs = 0
+		nextButton:register("mouseClick", function()
+			parentBlock:findChild(self.pages[hiddenTabs + 1].tabUID).visible = false
+			hiddenTabs = math.min(hiddenTabs + 1, #self.pages)
+			if hiddenTabs >= #self.pages-1 then
+				toggleButtonState(nextButton, false)
+			end
+			toggleButtonState(prevButton, true)
+		end)
+		prevButton:register("mouseClick", function()
+			parentBlock:findChild(self.pages[hiddenTabs].tabUID).visible = true
+			hiddenTabs = math.max(hiddenTabs - 1, 0)
+			if hiddenTabs == 0 then
+				toggleButtonState(prevButton, false)
+			end
+			toggleButtonState(nextButton, true)
+		end)
 	end
-
 end
 
 function Template:createSubcomponentsContainer(parentBlock)
