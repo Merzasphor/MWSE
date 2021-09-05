@@ -7,30 +7,42 @@
 namespace TES3 {
 	namespace UI {
 		struct MenuInputController {
+			struct Event {
+				int type;
+				int data0;
+				int data1;
+				Element* element;
+			};
+
 			NI::Pick pick; // 0x0
 			MenuController* menuController; // 0x4
-			Element* unknown_0x3C;
-			Element* unknown_0x40;
-			Element* unknown_0x44;
-			Element* unknown_0x48;
+			Element* pointerMoveEventSource;
+			Element* pointerMovePreviousEventSource;
+			Element* buttonPressEventSource;
+			Element* buttonPressPreviousEventSource;
 			int unknown_0x4C;
 			int unknown_0x50;
 			int unknown_0x54;
 			char unknown_0x58;
 			char unknown_0x59;
-			int unknown_0x5C;
-			float lastInputTime; // 0x60
-			int unknown_0x64;
-			int unknown_0x68;
-			int unknown_0x6C;
-			Element* unknown_0x70;
-			int unknown_0x74;
-			int unknown_0x78;
-			int unknown_0x7C;
-			Element* unknown_0x80;
-			char unknown_0x84;
+			char unknown_0x5A;
+			int repeatKeyCode; // 0x5C
+			float repeatKeyTimer; // 0x60
+			Event event0; // 0x64
+			Event event1; // 0x74
+			bool shiftKeyDown; // 0x84
 			Element* textInputFocus; // 0x88
-			char unknown_0x8C[0x20];
+			char unknown_0x8C;
+			int unknown_0x90;
+			int unknown_0x94;
+			int unknown_0x98;
+			unsigned int modifierKeyFlags; // 0x9C 
+			bool chargenNameDone; // 0xA0
+			bool unknown_0xA1;
+			bool chargenClassDone; // 0xA2
+			bool chargenRaceSexDone; // 0xA3
+			bool chargenBirthsignDone; // 0xA4
+			Reference* mouseoverWorldObject; // 0xA8
 
 			Element* getTextInputElement();
 			void acquireTextInput(Element* element);
@@ -49,6 +61,7 @@ namespace TES3 {
 			void updateObjectTooltip();
 		};
 		static_assert(sizeof(MenuInputController) == 0xAC, "TES3::UI::MenuInputController failed size validation");
+		static_assert(sizeof(MenuInputController::Event) == 0x10, "TES3::UI::MenuInputController::Event failed size validation");
 		static_assert(offsetof(MenuInputController, textInputFocus) == 0x88, "TES3::UI::MenuInputController::textInputFocus failed offset validation");
 
 		struct FontColor {
@@ -135,11 +148,11 @@ namespace TES3 {
 			char padding_0x3A[2];
 			UI_ID unknown_0x3C;
 			FontColor fontColors[FontColorId::MAX_ID + 1];
-			int unknown_0x28C;
-			int unknown_0x290;
+			void * unknown_0x28C;
+			void * unknown_0x290;
 			int unknown_0x294;
 			int unknown_0x298;
-			int unknown_0x29C;
+			float unknown_0x29C;
 			char unknown_0x2A0;
 
 			//

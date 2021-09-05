@@ -24,7 +24,7 @@ namespace mwse {
 				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Basic property binding.
-				usertypeDefinition["lastInputTime"] = &TES3::UI::MenuInputController::lastInputTime;
+				usertypeDefinition["lastInputTime"] = &TES3::UI::MenuInputController::repeatKeyTimer;
 				usertypeDefinition["menuController"] = sol::readonly_property(&TES3::UI::MenuInputController::menuController);
 				usertypeDefinition["textInputFocus"] = sol::property(&TES3::UI::MenuInputController::getTextInputElement, &TES3::UI::MenuInputController::acquireTextInput);
 
