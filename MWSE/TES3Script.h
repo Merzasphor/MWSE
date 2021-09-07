@@ -65,6 +65,7 @@ namespace TES3 {
 		float executeScriptOpCode(unsigned int opCode, char charParam, BaseObject * objectParam);
 
 		char getLocalVarIndexAndType(const char* name, unsigned int* out_index);
+		sol::optional<unsigned int> getShortVarIndex(const char* name) const;
 
 		short getShortValue(unsigned int index, bool useLocalVars);
 		int getLongValue(unsigned int index, bool useLocalVars);

@@ -46,6 +46,16 @@ namespace TES3 {
 		return reinterpret_cast<char(__thiscall *)(Script*, const char*, unsigned int*)>(TES3_Script_getLocalVarIndexAndType)(this, name, out_index);
 	}
 
+	sol::optional<unsigned int> Script::getShortVarIndex(const char* name) const {
+		for (int i = 0; i < shortCount; i++) {
+			const char* varName = shortVarNamePointers[i];
+			if (varName && _stricmp(name, varName) == 0) {
+				return i;
+			}
+		}
+		return {};
+	}
+
 	short Script::getShortValue(unsigned int index, bool useLocalVars) {
 		return reinterpret_cast<short(__thiscall *)(Script*, unsigned int, signed char)>(TES3_Script_getShortValue)(this, index, useLocalVars);
 	}

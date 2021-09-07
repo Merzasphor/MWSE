@@ -88,8 +88,6 @@ namespace TES3 {
 		sol::table getOrCreateLuaTempDataTable();
 
 		std::shared_ptr<mwse::lua::ScriptContext> createContext();
-		void setScriptShortValue(const char* name, short value);
-		void setScriptLongValue(const char* name, int value);
-		void setScriptFloatValue(const char* name, float value);
+		bool setScriptShortValue(const char* name, short value);
 	};
 }

@@ -275,30 +275,14 @@ namespace TES3 {
 		return std::make_shared<mwse::lua::ScriptContext>(script, scriptData);
 	}
 
-	void ItemData::setScriptShortValue(const char* name, short value) {
+	bool ItemData::setScriptShortValue(const char* name, short value) {
 		if (script) {
-			unsigned int varIndex;
-			if (script->getLocalVarIndexAndType(name, &varIndex) == 's') {
-				scriptData->shortVarValues[varIndex] = value;
+			auto varIndex = script->getShortVarIndex(name);
+			if (varIndex.has_value()) {
+				scriptData->shortVarValues[varIndex.value()] = value;
+				return true;
 			}
 		}
-	}
-
-	void ItemData::setScriptLongValue(const char* name, int value) {
-		if (script) {
-			unsigned int varIndex;
-			if (script->getLocalVarIndexAndType(name, &varIndex) == 'l') {
-				scriptData->longVarValues[varIndex] = value;
-			}
-		}
-	}
-
-	void ItemData::setScriptFloatValue(const char* name, float value) {
-		if (script) {
-			unsigned int varIndex;
-			if (script->getLocalVarIndexAndType(name, &varIndex) == 'f') {
-				scriptData->floatVarValues[varIndex] = value;
-			}
-		}
+		return false;
 	}
 }
