@@ -42,8 +42,8 @@ namespace TES3 {
 		return reinterpret_cast<float(__thiscall *)(Script*, int, char, BaseObject*)>(TES3_Script_executeScriptOpCode)(this, opCode, charParam, objectParam);
 	}
 
-	char Script::getLocalVarIndexAndType(const char* name, unsigned int* out_value) {
-		return reinterpret_cast<char(__thiscall *)(Script*, const char*, unsigned int*)>(TES3_Script_getLocalVarIndexAndType)(this, name, out_value);
+	char Script::getLocalVarIndexAndType(const char* name, unsigned int* out_index) {
+		return reinterpret_cast<char(__thiscall *)(Script*, const char*, unsigned int*)>(TES3_Script_getLocalVarIndexAndType)(this, name, out_index);
 	}
 
 	short Script::getShortValue(unsigned int index, bool useLocalVars) {

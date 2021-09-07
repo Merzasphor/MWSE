@@ -6,6 +6,7 @@
 #include "TES3GlobalVariable.h"
 #include "TES3Light.h"
 #include "TES3Misc.h"
+#include "TES3Script.h"
 #include "TES3Weapon.h"
 
 #include "LuaManager.h"
@@ -272,5 +273,32 @@ namespace TES3 {
 
 	std::shared_ptr<mwse::lua::ScriptContext> ItemData::createContext() {
 		return std::make_shared<mwse::lua::ScriptContext>(script, scriptData);
+	}
+
+	void ItemData::setScriptShortValue(const char* name, short value) {
+		if (script) {
+			unsigned int varIndex;
+			if (script->getLocalVarIndexAndType(name, &varIndex) == 's') {
+				scriptData->shortVarValues[varIndex] = value;
+			}
+		}
+	}
+
+	void ItemData::setScriptLongValue(const char* name, int value) {
+		if (script) {
+			unsigned int varIndex;
+			if (script->getLocalVarIndexAndType(name, &varIndex) == 'l') {
+				scriptData->longVarValues[varIndex] = value;
+			}
+		}
+	}
+
+	void ItemData::setScriptFloatValue(const char* name, float value) {
+		if (script) {
+			unsigned int varIndex;
+			if (script->getLocalVarIndexAndType(name, &varIndex) == 'f') {
+				scriptData->floatVarValues[varIndex] = value;
+			}
+		}
 	}
 }

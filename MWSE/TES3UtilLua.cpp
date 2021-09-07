@@ -3111,6 +3111,11 @@ namespace mwse {
 				}
 			}
 
+			// When transferring to the player, the OnPCAdd script variable should be set if it exists.
+			auto worldController = TES3::WorldController::get();
+			auto playerMobile = worldController->getMobilePlayer();
+			bool onPCAdd = playerMobile && (toMobile == playerMobile);
+
 			// Were we given an ItemData? If so, we only need to transfer one item.
 			if (itemData) {
 				if ((maxCapacity == -1.0f || currentWeight + itemWeight <= maxCapacity) && fromActor->inventory.containsItem(item, itemData)) {
@@ -3119,6 +3124,11 @@ namespace mwse {
 
 					if (!fromIsContainer) {
 						fromActor->unequipItem(item, true, fromMobile, false, itemData);
+					}
+
+					// Set this item's OnPCAdd notification script variable if it exists.
+					if (onPCAdd && itemData->script) {
+						itemData->setScriptShortValue("OnPCAdd", 1);
 					}
 
 					fulfilledCount = 1;
@@ -3185,6 +3195,11 @@ namespace mwse {
 						toActor->inventory.addItem(toMobile, item, 1, false, itemDataRef);
 						fromActor->inventory.removeItemWithData(fromMobile, item, itemDataRef ? *itemDataRef : nullptr, 1, false);
 
+						// Set this item's OnPCAdd notification script variable if it exists.
+						if (onPCAdd && itemDataRef && (*itemDataRef)->script) {
+							(*itemDataRef)->setScriptShortValue("OnPCAdd", 1);
+						}
+
 						fulfilledCount++;
 						itemsLeftToTransfer--;
 					}
@@ -3197,8 +3212,6 @@ namespace mwse {
 			}
 
 			// Play the relevant sound.
-			auto worldController = TES3::WorldController::get();
-			auto playerMobile = worldController->getMobilePlayer();
 			if (playerMobile && getOptionalParam<bool>(params, "playSound", true)) {
 				if (toMobile == playerMobile) {
 					worldController->playItemUpDownSound(item, TES3::ItemSoundState::Down);

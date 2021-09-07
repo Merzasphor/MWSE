@@ -64,12 +64,12 @@ namespace TES3 {
 		void getScriptParams(bool unknown = true);
 		float executeScriptOpCode(unsigned int opCode, char charParam, BaseObject * objectParam);
 
-		char getLocalVarIndexAndType(const char*, unsigned int*);
+		char getLocalVarIndexAndType(const char* name, unsigned int* out_index);
 
-		short getShortValue(unsigned int, bool);
-		int getLongValue(unsigned int, bool);
-		float getFloatValue(unsigned int, bool);
-		
+		short getShortValue(unsigned int index, bool useLocalVars);
+		int getLongValue(unsigned int index, bool useLocalVars);
+		float getFloatValue(unsigned int index, bool useLocalVars);
+
 		void doCommand(ScriptCompiler * compiler, const char* command, int source = TES3::CompilerSource::Default, Reference * reference = nullptr, ScriptVariables * variables = nullptr, DialogueInfo * info = nullptr, Dialogue * dialogue = nullptr);
 
 		void execute(Reference* reference, ScriptVariables* data, DialogueInfo* info, Reference* reference2);
