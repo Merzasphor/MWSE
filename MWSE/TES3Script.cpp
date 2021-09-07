@@ -5,14 +5,6 @@
 #include "TES3ItemData.h"
 #include "TES3Reference.h"
 
-#define TES3_Script_getScriptParams 0x500510
-#define TES3_Script_executeScriptOpCode 0x505770
-
-#define TES3_Script_getLocalVarIndexAndType 0x50E7B0
-
-#define TES3_Script_getShortValue 0x4FFB90
-#define TES3_Script_getLongValue 0x4FFC00
-#define TES3_Script_getFloatValue 0x4FFC70
 
 namespace TES3 {
 	//
@@ -34,16 +26,14 @@ namespace TES3 {
 	Script* Script::currentlyExecutingScript = nullptr;
 	Reference* Script::currentlyExecutingScriptReference = nullptr;
 
-	void Script::getScriptParams(bool unknown) {
-		reinterpret_cast<void(__thiscall *)(Script*, bool)>(TES3_Script_getScriptParams)(this, unknown);
-	}
-
+	const auto TES3_Script_executeScriptOpCode = reinterpret_cast<float(__thiscall *)(Script*, int, char, BaseObject*)>(0x505770);
 	float Script::executeScriptOpCode(unsigned int opCode, char charParam, BaseObject * objectParam) {
-		return reinterpret_cast<float(__thiscall *)(Script*, int, char, BaseObject*)>(TES3_Script_executeScriptOpCode)(this, opCode, charParam, objectParam);
+		return TES3_Script_executeScriptOpCode(this, opCode, charParam, objectParam);
 	}
 
+	const auto TES3_Script_getLocalVarIndexAndType = reinterpret_cast<char(__thiscall *)(Script*, const char*, unsigned int*)>(0x50E7B0);
 	char Script::getLocalVarIndexAndType(const char* name, unsigned int* out_index) {
-		return reinterpret_cast<char(__thiscall *)(Script*, const char*, unsigned int*)>(TES3_Script_getLocalVarIndexAndType)(this, name, out_index);
+		return TES3_Script_getLocalVarIndexAndType(this, name, out_index);
 	}
 
 	sol::optional<unsigned int> Script::getShortVarIndex(const char* name) const {
@@ -56,16 +46,19 @@ namespace TES3 {
 		return {};
 	}
 
+	const auto TES3_Script_getShortValue = reinterpret_cast<short(__thiscall*)(Script*, unsigned int, bool)>(0x4FFB90);
 	short Script::getShortValue(unsigned int index, bool useLocalVars) {
-		return reinterpret_cast<short(__thiscall *)(Script*, unsigned int, signed char)>(TES3_Script_getShortValue)(this, index, useLocalVars);
+		return TES3_Script_getShortValue(this, index, useLocalVars);
 	}
 
+	const auto TES3_Script_getLongValue = reinterpret_cast<int(__thiscall*)(Script*, unsigned int, bool)>(0x4FFC00);
 	int Script::getLongValue(unsigned int index, bool useLocalVars) {
-		return reinterpret_cast<int(__thiscall *)(Script*, unsigned int, signed char)>(TES3_Script_getLongValue)(this, index, useLocalVars);
+		return TES3_Script_getLongValue(this, index, useLocalVars);
 	}
 
+	const auto TES3_Script_getFloatValue = reinterpret_cast<float(__thiscall*)(Script*, unsigned int, bool)>(0x4FFC70);
 	float Script::getFloatValue(unsigned int index, bool useLocalVars) {
-		return reinterpret_cast<float(__thiscall *)(Script*, unsigned int, signed char)>(TES3_Script_getFloatValue)(this, index, useLocalVars);
+		return TES3_Script_getFloatValue(this, index, useLocalVars);
 	}
 
 	const auto TES3_Script_DoCommand = reinterpret_cast<void(__thiscall*)(Script*, ScriptCompiler *, const char*, int, Reference *, ScriptVariables *, DialogueInfo *, Dialogue *)>(0x50E5A0);
