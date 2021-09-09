@@ -2436,13 +2436,15 @@ namespace mwse {
 		// Event: Item Dropped.
 		//
 
-		void __fastcall OnItemDropped(TES3::DataHandler * dataHandler, DWORD _UNUSED_, TES3::Reference* reference) {
+		TES3::Matrix33* __fastcall OnItemDropped(TES3::Reference* reference, DWORD _UNUSED_, TES3::Matrix33* matrix, bool eulerXYZ) {
 			// Call overwritten code.
-			dataHandler->updateLightingForReference(reference);
+			auto result = reference->updateSceneMatrix(matrix, eulerXYZ);
 
 			if (mwse::lua::event::ItemDroppedEvent::getEventEnabled()) {
 				mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::ItemDroppedEvent(reference));
 			}
+
+			return result;
 		}
 
 		//
@@ -4036,8 +4038,7 @@ namespace mwse {
 			genCallEnforced(0x4A2A0F, 0x4A2A90, *reinterpret_cast<DWORD*>(&bookGetText));
 
 			// Event: Item Dropped.
-			genCallEnforced(0x485FCA, 0x485E40, reinterpret_cast<DWORD>(OnItemDropped)); // MCP-added function.
-			genCallEnforced(0x49B550, 0x485E40, reinterpret_cast<DWORD>(OnItemDropped)); // Vanilla function.
+			genCallEnforced(0x49B50B, 0x4E8450, reinterpret_cast<DWORD>(OnItemDropped));
 
 			// Event: Calculate hit chance.
 			genNOPUnprotected(0x55549B, 0x5C);
