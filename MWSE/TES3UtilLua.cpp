@@ -3196,7 +3196,7 @@ namespace mwse {
 						fromActor->inventory.removeItemWithData(fromMobile, item, itemDataRef ? *itemDataRef : nullptr, 1, false);
 
 						// Set this item's OnPCAdd notification script variable if it exists.
-						if (onPCAdd && itemDataRef && (*itemDataRef)->script) {
+						if (onPCAdd && itemDataRef && *itemDataRef && (*itemDataRef)->script) {
 							(*itemDataRef)->setScriptShortValue("OnPCAdd", 1);
 						}
 
