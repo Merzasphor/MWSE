@@ -206,6 +206,7 @@
 #include "LuaKeyDownEvent.h"
 #include "LuaKeyUpEvent.h"
 #include "LuaLeveledCreaturePickedEvent.h"
+#include "LuaLeveledItemPickedEvent.h"
 #include "LuaLevelUpEvent.h"
 #include "LuaLoadedGameEvent.h"
 #include "LuaMagicCastedEvent.h"
@@ -240,7 +241,6 @@
 #include "LuaWeatherCycledEvent.h"
 #include "LuaWeatherTransitionFinishedEvent.h"
 #include "LuaWeatherTransitionStartedEvent.h"
-#include "LuaLeveledItemPickedEvent.h"
 
 #include "NITextureEffectLua.h"
 
@@ -2440,8 +2440,8 @@ namespace mwse {
 			// Call overwritten code.
 			auto result = reference->updateSceneMatrix(matrix, eulerXYZ);
 
-			if (mwse::lua::event::ItemDroppedEvent::getEventEnabled()) {
-				mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::ItemDroppedEvent(reference));
+			if (event::ItemDroppedEvent::getEventEnabled()) {
+				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::ItemDroppedEvent(reference));
 			}
 
 			return result;
