@@ -225,6 +225,7 @@
 #include "LuaPreLevelUpEvent.h"
 #include "LuaPreventRestEvent.h"
 #include "LuaProjectileExpireEvent.h"
+#include "LuaReferenceActivatedEvent.h"
 #include "LuaRestInterruptEvent.h"
 #include "LuaSimulateEvent.h"
 #include "LuaSkillRaisedEvent.h"
@@ -2442,6 +2443,14 @@ namespace mwse {
 
 			if (event::ItemDroppedEvent::getEventEnabled()) {
 				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::ItemDroppedEvent(reference));
+			}
+
+			// Work-around for items being dropped not triggering activation. This should probably be consolidated elsewhere at some point.
+			if (event::ReferenceActivatedEvent::getEventEnabled()) {
+				auto cell = reference->getCell();
+				if (cell && cell->getCellActive()) {
+					reference->setReferenceActive();
+				}
 			}
 
 			return result;
