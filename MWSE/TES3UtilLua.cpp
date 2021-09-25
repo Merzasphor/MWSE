@@ -186,6 +186,10 @@ namespace mwse {
 		}
 
 		TES3::BaseObject* getObject(const char* id) {
+			if (!id) {
+				throw std::invalid_argument("Invalid first parameter provided. Must be a string ID.");
+			}
+
 			TES3::DataHandler* dataHandler = TES3::DataHandler::get();
 			if (dataHandler) {
 				return dataHandler->nonDynamicData->resolveObject(id);
