@@ -2729,10 +2729,32 @@ namespace mwse {
 			}
 		}
 
+		const auto TES3_UI_updateMagicMenu = reinterpret_cast<void(__cdecl*)()>(0x5E3070);
+		void updateMagicGUI_internal(TES3::Reference* reference) {
+			auto worldController = TES3::WorldController::get();
+			auto macp = worldController->getMobilePlayer();
+
+			// Player-specific handling.
+			if (macp && reference == macp->reference) {
+				// Update MenuMagic
+				auto menuMagic = TES3::UI::findMenu(*reinterpret_cast<TES3::UI::UI_ID*>(0x7D431E));
+				if (menuMagic) {
+					TES3_UI_updateMagicMenu();
+				}
+			}
+		}
+
 		void updateInventoryGUI(sol::table params) {
 			TES3::Reference* reference = getOptionalParamReference(params, "reference");
 			if (reference) {
 				updateInventoryGUI_internal(reference);
+			}
+		}
+
+		void updateMagicGUI(sol::table params) {
+			TES3::Reference* reference = getOptionalParamReference(params, "reference");
+			if (reference) {
+				updateMagicGUI_internal(reference);
 			}
 		}
 
@@ -2886,6 +2908,12 @@ namespace mwse {
 					}
 				}
 				updateInventoryGUI_internal(reference, newContainerWeight);
+
+				// Do we need to update the magic menu?
+				auto enchantment = item->getEnchantment();
+				if (enchantment && (enchantment->castType == TES3::EnchantmentCastType::Once || enchantment->castType == TES3::EnchantmentCastType::OnUse)) {
+					updateMagicGUI_internal(reference);
+				}
 			}
 
 			reference->setObjectModified(true);
@@ -3019,6 +3047,12 @@ namespace mwse {
 					newContainerWeight = currentWeight - item->getWeight() * fulfilledCount;
 				}
 				updateInventoryGUI_internal(reference, newContainerWeight);
+
+				// Do we need to update the magic menu?
+				auto enchantment = item->getEnchantment();
+				if (enchantment && (enchantment->castType == TES3::EnchantmentCastType::Once || enchantment->castType == TES3::EnchantmentCastType::OnUse)) {
+					updateMagicGUI_internal(reference);
+				}
 			}
 
 			reference->setObjectModified(true);
@@ -3281,6 +3315,13 @@ namespace mwse {
 
 				updateInventoryGUI_internal(fromReference, newContainerWeight);
 				updateInventoryGUI_internal(toReference, newContainerWeight);
+
+				// Do we need to update the magic menu?
+				auto enchantment = item->getEnchantment();
+				if (enchantment && (enchantment->castType == TES3::EnchantmentCastType::Once || enchantment->castType == TES3::EnchantmentCastType::OnUse)) {
+					updateMagicGUI_internal(fromReference);
+					updateMagicGUI_internal(toReference);
+				}
 			}
 
 			fromReference->setObjectModified(true);
@@ -3343,6 +3384,12 @@ namespace mwse {
 
 			if (getOptionalParam<bool>(params, "updateGUI", true)) {
 				updateInventoryGUI_internal(toReference);
+
+				// Do we need to update the magic menu?
+				auto enchantment = item->getEnchantment();
+				if (enchantment && (enchantment->castType == TES3::EnchantmentCastType::Once || enchantment->castType == TES3::EnchantmentCastType::OnUse)) {
+					updateMagicGUI_internal(toReference);
+				}
 			}
 
 			toReference->setObjectModified(true);
@@ -3653,6 +3700,12 @@ namespace mwse {
 			// Update inventory tiles if needed.
 			if (getOptionalParam<bool>(params, "updateGUI", true)) {
 				updateInventoryGUI_internal(mobile->reference);
+
+				// Do we need to update the magic menu?
+				auto enchantment = item->getEnchantment();
+				if (enchantment && (enchantment->castType == TES3::EnchantmentCastType::Once || enchantment->castType == TES3::EnchantmentCastType::OnUse)) {
+					updateMagicGUI_internal(mobile->reference);
+				}
 			}
 
 			return droppedReference;
@@ -5024,6 +5077,7 @@ namespace mwse {
 			tes3["unlock"] = unlock;
 			tes3["updateInventoryGUI"] = updateInventoryGUI;
 			tes3["updateJournal"] = updateJournal;
+			tes3["updateMagicGUI"] = updateMagicGUI;
 			tes3["wakeUp"] = wakeUp;
 		}
 	}

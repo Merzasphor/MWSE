@@ -3438,6 +3438,21 @@ local wasSet = tes3.updateJournal({ id = ..., index = ..., showMessage = ... })
 
 ***
 
+### `tes3.updateMagicGUI`
+
+Forces the GUI to update magic-relevant elements for a given reference. This can be used after many calls to magic- or magic item-manipulating functions while passing updateGUI as false to resync inventory tiles, container weights, and companion data.
+
+```lua
+tes3.updateMagicGUI({ reference = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The reference to update GUI elements for.
+
+***
+
 ### `tes3.wakeUp`
 
 This function wakes player up and returns true if successful.

@@ -2106,6 +2106,16 @@ function tes3.updateJournal(params) end
 --- @field index number No description yet available.
 --- @field showMessage boolean If set, a message may be shown to the player.
 
+--- Forces the GUI to update magic-relevant elements for a given reference. This can be used after many calls to magic- or magic item-manipulating functions while passing updateGUI as false to resync inventory tiles, container weights, and companion data.
+--- @param params tes3.updateMagicGUI.params This table accepts the following values:
+--- 
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — The reference to update GUI elements for.
+function tes3.updateMagicGUI(params) end
+
+---Table parameter definitions for `tes3.updateMagicGUI`.
+--- @class tes3.updateMagicGUI.params
+--- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string The reference to update GUI elements for.
+
 --- This function wakes player up and returns true if successful.
 --- 
 --- Note this function returns false if WorldController or MobilePlayer aren't initialized, and if the player is not sleeping or waiting
