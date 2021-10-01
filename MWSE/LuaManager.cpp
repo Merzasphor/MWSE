@@ -349,8 +349,10 @@ namespace mwse {
 			auto& luaManager = mwse::lua::LuaManager::getInstance();
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
-			// TODO: Optimize by caching function here.
-			std::string result = state["tostring"](message);
+
+			static sol::protected_function luaTostring = state["tostring"];
+			std::string result = luaTostring(message);
+
 			log::getLog() << result << std::endl;
 		}
 

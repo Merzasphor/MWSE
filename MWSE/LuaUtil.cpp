@@ -437,7 +437,9 @@ namespace mwse {
 
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
-			sol::protected_function_result result = state["debug"]["traceback"]();
+			static sol::protected_function luaDebugTraceback = state["debug"]["traceback"];
+
+			sol::protected_function_result result = luaDebugTraceback();
 			if (result.valid()) {
 				sol::optional<std::string> asString = result;
 				if (asString) {

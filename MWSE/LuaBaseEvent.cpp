@@ -13,8 +13,8 @@ namespace mwse {
 				sol::state& state = stateHandle.state;
 
 				// Trigger the function, check for lua errors.
-				sol::protected_function trigger = state["event"]["trigger"];
-				sol::protected_function_result result = trigger(eventType, eventData, eventOptions);
+				static sol::protected_function luaEventTrigger = state["event"]["trigger"];
+				sol::protected_function_result result = luaEventTrigger(eventType, eventData, eventOptions);
 				if (result.valid()) {
 					return result;
 				}
@@ -30,8 +30,8 @@ namespace mwse {
 				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 				sol::state& state = stateHandle.state;
 
-				sol::protected_function trigger = state["event"]["clear"];
-				trigger(sol::nil, filterObject);
+				static sol::protected_function luaEventClear = state["event"]["clear"];
+				luaEventClear(sol::nil, filterObject);
 			}
 		}
 	}
