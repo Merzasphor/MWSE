@@ -118,6 +118,22 @@ local wasAdded = tes3.addArmorSlot({ slot = ..., name = ..., weight = ..., scala
 
 ***
 
+### `tes3.addClothingSlot`
+
+Registers a new clothing slot. Adds a new place for clothing pieces with a matching slot number to equip to.
+
+```lua
+tes3.addClothingSlot({ slot = ..., name = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `slot` (number): Clothing slot number. A number greater than 9 to configure a slot for.
+	* `name` (string)
+
+***
+
 ### `tes3.addItem`
 
 Adds an item to a given reference's inventory or mobile's inventory.

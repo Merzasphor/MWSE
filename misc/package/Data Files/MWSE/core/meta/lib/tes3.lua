@@ -32,6 +32,19 @@ function tes3.addArmorSlot(params) end
 --- @field weight number *Default*: `0`. A stand-in for the armor base weight value, typically controlled by a GMST (e.g. iHelmWeight).
 --- @field scalar number *Default*: `0.1`. A multiplier with range 0.0-1.0 that controls how much of an item's armor value applies to a character's overall armor rating. For comparison, standard chest armor uses 0.3, helmets, greaves and pauldrons use 0.1, and gauntlets use 0.05.
 
+--- Registers a new clothing slot. Adds a new place for clothing pieces with a matching slot number to equip to.
+--- @param params tes3.addClothingSlot.params This table accepts the following values:
+--- 
+--- `slot`: number — Clothing slot number. A number greater than 9 to configure a slot for.
+--- 
+--- `name`: string — No description yet available.
+function tes3.addClothingSlot(params) end
+
+---Table parameter definitions for `tes3.addClothingSlot`.
+--- @class tes3.addClothingSlot.params
+--- @field slot number Clothing slot number. A number greater than 9 to configure a slot for.
+--- @field name string No description yet available.
+
 --- Adds an item to a given reference's inventory or mobile's inventory.
 --- @param params tes3.addItem.params This table accepts the following values:
 --- 
