@@ -333,8 +333,21 @@ function tes3.cancelAnimationLoop(params) end
 --- @field reference tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string The reference to the actor.
 
 --- This function returns true if player can rest.
+--- @param params tes3.canRest.params This table accepts the following values:
+--- 
+--- `checkForEnemies`: boolean — *Default*: `true`. Perform a check whether there are enemies nearby before opening rest menu. If there are, false is returned.
+--- 
+--- `checkForSolidGround`: boolean — *Default*: `true`. Perform a check if the player is underwater. If underwater, false is returned.
+--- 
+--- `showMessage`: boolean — If true, a messagebox will be shown if the player can't rest because some condition isn't met.
 --- @return boolean canRest No description yet available.
-function tes3.canRest() end
+function tes3.canRest(params) end
+
+---Table parameter definitions for `tes3.canRest`.
+--- @class tes3.canRest.params
+--- @field checkForEnemies boolean *Default*: `true`. Perform a check whether there are enemies nearby before opening rest menu. If there are, false is returned.
+--- @field checkForSolidGround boolean *Default*: `true`. Perform a check if the player is underwater. If underwater, false is returned.
+--- @field showMessage boolean If true, a messagebox will be shown if the player can't rest because some condition isn't met.
 
 --- Casts a spell from a given reference to a target reference. Touch effects will hit the target at any range, while target effects will create a projectile. By default, the spell always casts successfully and does not consume magicka. By default, an actor casting will stop and perform its cast animation, but the 'instant' flag can start the cast instantly, and allow more control over the spell.
 --- 
@@ -1919,13 +1932,13 @@ function tes3.showRepairServiceMenu() end
 --- Various parameters can be used to allow resting in situations not normally possible.
 --- @param params tes3.showRestMenu.params This table accepts the following values:
 --- 
---- `checkForEnemies`: boolean — *Default*: `true`. Perform a check weather there are enemies nearby before opening rest menu. If there are, false is returned.
+--- `checkForEnemies`: boolean — *Default*: `true`. Perform a check whether there are enemies nearby before opening rest menu. If there are, false is returned.
 --- 
 --- `checkForSolidGround`: boolean — *Default*: `true`. Perform a check if the player is underwater. If underwater, false is returned.
 --- 
---- `checkSleepingIllegal`: boolean — *Default*: `true`. Perform a check if the sleeping in the current cell is illegal. If illegal, false if returned.
+--- `checkSleepingIllegal`: boolean — *Default*: `true`. Perform a check if the sleeping in the current cell is illegal. If illegal, then the player will be prompted to wait instead of rest.
 --- 
---- `checkIsWerewolf`: boolean — *Default*: `true`. Perform a check if the player is Werewolf. If he/she is, then false is returned.
+--- `checkIsWerewolf`: boolean — *Default*: `true`. Perform a check if the player is Werewolf. If they are, then the player will be prompted to wait instead of rest.
 --- 
 --- `showMessage`: boolean — *Default*: `true`. Should a messagebox be shown if the player can't open resting menu because some condition isn't met.
 --- 
@@ -1937,10 +1950,10 @@ function tes3.showRestMenu(params) end
 
 ---Table parameter definitions for `tes3.showRestMenu`.
 --- @class tes3.showRestMenu.params
---- @field checkForEnemies boolean *Default*: `true`. Perform a check weather there are enemies nearby before opening rest menu. If there are, false is returned.
+--- @field checkForEnemies boolean *Default*: `true`. Perform a check whether there are enemies nearby before opening rest menu. If there are, false is returned.
 --- @field checkForSolidGround boolean *Default*: `true`. Perform a check if the player is underwater. If underwater, false is returned.
---- @field checkSleepingIllegal boolean *Default*: `true`. Perform a check if the sleeping in the current cell is illegal. If illegal, false if returned.
---- @field checkIsWerewolf boolean *Default*: `true`. Perform a check if the player is Werewolf. If he/she is, then false is returned.
+--- @field checkSleepingIllegal boolean *Default*: `true`. Perform a check if the sleeping in the current cell is illegal. If illegal, then the player will be prompted to wait instead of rest.
+--- @field checkIsWerewolf boolean *Default*: `true`. Perform a check if the player is Werewolf. If they are, then the player will be prompted to wait instead of rest.
 --- @field showMessage boolean *Default*: `true`. Should a messagebox be shown if the player can't open resting menu because some condition isn't met.
 --- @field resting boolean *Default*: `true`. Should this be a rest?
 --- @field waiting boolean *Optional*. Or, is this a wait?

@@ -23,7 +23,7 @@ namespace mwse {
 				usertypeDefinition["aiDistance"] = &TES3::ProcessManager::aiDistance;
 
 				// Basic function binding.
-				usertypeDefinition["canRest"] = &TES3::ProcessManager::canRest;
+				usertypeDefinition["checkPlayerHasNearbyEnemies"] = &TES3::ProcessManager::checkPlayerHasNearbyEnemies;
 				usertypeDefinition["detectPresence"] = &TES3::ProcessManager::detectPresence;
 				usertypeDefinition["detectSneak"] = &TES3::ProcessManager::detectSneak;
 				usertypeDefinition["checkAlarmRadius"] = &TES3::ProcessManager::checkAlarmRadius;

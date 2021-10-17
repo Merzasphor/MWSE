@@ -30,7 +30,7 @@ namespace TES3 {
 		void checkAlarmRadius(MobileActor * actor, IteratedList<AIPlanner*> * container);
 		void checkPlayerDistance();
 
-		bool canRest();
+		bool checkPlayerHasNearbyEnemies();
 
 		float getAIDistanceScale() const;
 		void setAIDistanceScale(float scalar);

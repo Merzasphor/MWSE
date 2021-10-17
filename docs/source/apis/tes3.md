@@ -388,8 +388,15 @@ tes3.cancelAnimationLoop({ reference = ... })
 This function returns true if player can rest.
 
 ```lua
-local canRest = tes3.canRest()
+local canRest = tes3.canRest({ checkForEnemies = ..., checkForSolidGround = ..., showMessage = ... })
 ```
+
+**Parameters**:
+
+* `params` (table)
+	* `checkForEnemies` (boolean): *Default*: `true`. Perform a check whether there are enemies nearby before opening rest menu. If there are, false is returned.
+	* `checkForSolidGround` (boolean): *Default*: `true`. Perform a check if the player is underwater. If underwater, false is returned.
+	* `showMessage` (boolean): If true, a messagebox will be shown if the player can't rest because some condition isn't met.
 
 **Returns**:
 
@@ -3210,10 +3217,10 @@ local success = tes3.showRestMenu({ checkForEnemies = ..., checkForSolidGround =
 **Parameters**:
 
 * `params` (table)
-	* `checkForEnemies` (boolean): *Default*: `true`. Perform a check weather there are enemies nearby before opening rest menu. If there are, false is returned.
+	* `checkForEnemies` (boolean): *Default*: `true`. Perform a check whether there are enemies nearby before opening rest menu. If there are, false is returned.
 	* `checkForSolidGround` (boolean): *Default*: `true`. Perform a check if the player is underwater. If underwater, false is returned.
-	* `checkSleepingIllegal` (boolean): *Default*: `true`. Perform a check if the sleeping in the current cell is illegal. If illegal, false if returned.
-	* `checkIsWerewolf` (boolean): *Default*: `true`. Perform a check if the player is Werewolf. If he/she is, then false is returned.
+	* `checkSleepingIllegal` (boolean): *Default*: `true`. Perform a check if the sleeping in the current cell is illegal. If illegal, then the player will be prompted to wait instead of rest.
+	* `checkIsWerewolf` (boolean): *Default*: `true`. Perform a check if the player is Werewolf. If they are, then the player will be prompted to wait instead of rest.
 	* `showMessage` (boolean): *Default*: `true`. Should a messagebox be shown if the player can't open resting menu because some condition isn't met.
 	* `resting` (boolean): *Default*: `true`. Should this be a rest?
 	* `waiting` (boolean): *Optional*. Or, is this a wait?

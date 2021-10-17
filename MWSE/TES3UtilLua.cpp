@@ -4671,22 +4671,14 @@ namespace mwse {
 			}
 		}
 
-		sol::optional<bool> canRest() {
-			auto worldController = TES3::WorldController::get();
-			if (worldController) {
-				return worldController->mobController->processManager->canRest();
-			}
-			return {};
-		}
-
-		bool showRestMenu(sol::optional<sol::table> params) {
-			auto worldController = TES3::WorldController::get();
+		bool canRest_internal(sol::optional<sol::table> params, bool showMessageByDefault) {
 			auto dataHandler = TES3::DataHandler::get();
+			auto worldController = TES3::WorldController::get();
 			if (!worldController || !dataHandler) return false;
 
 			// Check to see if there are enemies nearby.
-			if (getOptionalParam<bool>(params, "checkForEnemies", true) && !worldController->mobController->processManager->canRest()) {
-				if (getOptionalParam<bool>(params, "showMessage", true)) {
+			if (getOptionalParam<bool>(params, "checkForEnemies", true) && !worldController->mobController->processManager->checkPlayerHasNearbyEnemies()) {
+				if (getOptionalParam<bool>(params, "showMessage", showMessageByDefault)) {
 					TES3::UI::showMessageBox(dataHandler->nonDynamicData->GMSTs[TES3::GMST::sNotifyMessage2]->value.asString, nullptr, true);
 				}
 				return false;
@@ -4697,11 +4689,30 @@ namespace mwse {
 			if (getOptionalParam<bool>(params, "checkForSolidGround", true)) {
 				const auto excludedMovement = TES3::ActorMovement::Flying | TES3::ActorMovement::Jumping;
 				if ((macp->movementFlags & excludedMovement) || macp->getBasePositionIsUnderwater()) {
-					if (getOptionalParam<bool>(params, "showMessage", true)) {
+					if (getOptionalParam<bool>(params, "showMessage", showMessageByDefault)) {
 						TES3::UI::showMessageBox(dataHandler->nonDynamicData->GMSTs[TES3::GMST::sNotifyMessage1]->value.asString, nullptr, true);
 					}
 					return false;
 				}
+			}
+		}
+
+		sol::optional<bool> canRest(sol::optional<sol::table> params) {
+			auto dataHandler = TES3::DataHandler::get();
+			auto worldController = TES3::WorldController::get();
+			if (!worldController || !dataHandler) return {};
+
+			return canRest_internal(params, false);
+		}
+
+		bool showRestMenu(sol::optional<sol::table> params) {
+			auto worldController = TES3::WorldController::get();
+			auto dataHandler = TES3::DataHandler::get();
+			if (!worldController || !dataHandler) return false;
+
+			// Perform standard rest checks.
+			if (!canRest_internal(params, true)) {
+				return false;
 			}
 
 			// Allow using resting/waiting param. Defaults to resting.
@@ -4713,6 +4724,7 @@ namespace mwse {
 			}
 
 			// Werewolves can't sleep.
+			auto macp = worldController->getMobilePlayer();
 			if (resting && getOptionalParam<bool>(params, "checkIsWerewolf", true) && macp->getIsWerewolf()) {
 				resting = false;
 			}
