@@ -74,6 +74,16 @@ The base magicka cost to use in calculations.
 
 ***
 
+### `bigIcon`
+
+The path to the large icon to use for the effect. This is derived from the base icon path.
+
+**Returns**:
+
+* `result` (string)
+
+***
+
 ### `boltSoundEffect`
 
 The sound effect that plays for magic projectiles. Can be set to ``nil`` to use the default sound effect for the magic school.
@@ -226,7 +236,7 @@ No description yet available.
 
 ### `icon`
 
-The sound path to the icon to use for the effect.
+The path to the icon to use for the effect.
 
 **Returns**:
 

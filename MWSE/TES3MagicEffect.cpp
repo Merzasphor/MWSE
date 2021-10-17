@@ -59,6 +59,20 @@ namespace TES3 {
 		return icon;
 	}
 
+	std::string MagicEffect::getBigIcon() const {
+		std::string bigIcon = icon;
+
+		auto lastSeparator = bigIcon.rfind('\\');
+		if (lastSeparator != std::string::npos) {
+			bigIcon.insert(lastSeparator + 1, "B_");
+		}
+		else {
+			bigIcon.insert(0, "B_");
+		}
+
+		return std::move(bigIcon);
+	}
+
 	void MagicEffect::setIcon(const char* path) {
 		strcpy_s(icon, sizeof(icon), path);
 	}

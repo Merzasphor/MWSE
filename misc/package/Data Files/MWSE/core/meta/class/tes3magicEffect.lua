@@ -9,6 +9,7 @@
 --- @field areaVisualEffect tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon No description yet available.
 --- @field baseFlags number No description yet available.
 --- @field baseMagickaCost number The base magicka cost to use in calculations.
+--- @field bigIcon string The path to the large icon to use for the effect. This is derived from the base icon path.
 --- @field boltSoundEffect tes3sound The sound effect that plays for magic projectiles. Can be set to ``nil`` to use the default sound effect for the magic school.
 --- @field boltVisualEffect tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon No description yet available.
 --- @field canCastSelf boolean Access to the base flag that determines if this effect can be used with a range of self.
@@ -24,7 +25,7 @@
 --- @field hasNoMagnitude boolean Access to the base flag that determines if this effect doesn't make use of its magnitude.
 --- @field hitSoundEffect tes3sound The sound effect that plays when the effect hits a target. Can be set to ``nil`` to use the default sound effect for the magic school.
 --- @field hitVisualEffect tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon No description yet available.
---- @field icon string The sound path to the icon to use for the effect.
+--- @field icon string The path to the icon to use for the effect.
 --- @field illegalDaedra boolean Access to the base flag that determines if this effect summons an illegal daedra. This flag isn't used.
 --- @field isHarmful boolean Access to the base flag that determines if this effect is counted as a hostile action.
 --- @field lightingBlue number The amount of blue lighting to use when lighting projectiles.

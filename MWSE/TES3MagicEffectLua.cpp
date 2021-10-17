@@ -27,6 +27,7 @@ namespace mwse {
 				usertypeDefinition["areaSoundEffect"] = sol::property(&TES3::MagicEffect::getAreaSoundEffect, &TES3::MagicEffect::setAreaSoundEffect);
 				usertypeDefinition["areaVisualEffect"] = &TES3::MagicEffect::areaEffect;
 				usertypeDefinition["baseMagickaCost"] = &TES3::MagicEffect::baseMagickaCost;
+				usertypeDefinition["bigIcon"] = sol::readonly_property(&TES3::MagicEffect::getBigIcon);
 				usertypeDefinition["boltSoundEffect"] = sol::property(&TES3::MagicEffect::getBoltSoundEffect, &TES3::MagicEffect::setBoltSoundEffect);
 				usertypeDefinition["boltVisualEffect"] = &TES3::MagicEffect::boltEffect;
 				usertypeDefinition["castSoundEffect"] = sol::property(&TES3::MagicEffect::getCastSoundEffect, &TES3::MagicEffect::setCastSoundEffect);

@@ -269,6 +269,7 @@ namespace TES3 {
 
 		const char* getIcon() const;
 		void setIcon(const char* path);
+		std::string getBigIcon() const;
 		const char* getParticleTexture() const;
 		void setParticleTexture(const char* path);
 

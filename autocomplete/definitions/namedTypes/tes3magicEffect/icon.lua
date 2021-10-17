@@ -1,5 +1,5 @@
 return {
 	type = "value",
-	description = "The sound path to the icon to use for the effect.",
+	description = "The path to the icon to use for the effect.",
 	valuetype = "string",
 }
