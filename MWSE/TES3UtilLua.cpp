@@ -4695,6 +4695,8 @@ namespace mwse {
 					return false;
 				}
 			}
+
+			return true;
 		}
 
 		sol::optional<bool> canRest(sol::optional<sol::table> params) {
