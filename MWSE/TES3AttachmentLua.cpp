@@ -19,7 +19,7 @@ namespace mwse {
 
 			// Bind TES3::LightAttachmentNode
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::LightAttachmentNode>("tes3lightNode");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -30,7 +30,7 @@ namespace mwse {
 
 			// Bind TES3::LockAttachmentNode
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::LockAttachmentNode>("tes3lockNode");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -45,7 +45,7 @@ namespace mwse {
 
 			// Bind TES3::TravelDestination
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::TravelDestination>("tes3travelDestinationNode");
 				usertypeDefinition["new"] = sol::no_constructor;
 

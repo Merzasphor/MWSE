@@ -14,7 +14,7 @@ namespace mwse {
 
 			// NiPackedColor
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::PackedColor>("niPackedColor");
 				usertypeDefinition["new"] = sol::constructors<NI::PackedColor(), NI::PackedColor(unsigned char, unsigned char, unsigned char)>();
 
@@ -36,7 +36,7 @@ namespace mwse {
 
 			// NiColor
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::Color>("niColor");
 				usertypeDefinition["new"] = sol::constructors<NI::Color(), NI::Color(float, float, float)>();
 
@@ -70,7 +70,7 @@ namespace mwse {
 
 			// NiColorA
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::ColorA>("niColorA");
 				usertypeDefinition["new"] = sol::constructors<NI::ColorA(), NI::ColorA(float, float, float, float)>();
 

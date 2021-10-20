@@ -19,7 +19,7 @@ namespace mwse {
 
 			// Binding for TES3::RegionSound
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::RegionSound>("tes3regionSound");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -32,7 +32,7 @@ namespace mwse {
 
 			// Binding for TES3::Region.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::Region>("tes3region");
 				usertypeDefinition["new"] = sol::no_constructor;
 

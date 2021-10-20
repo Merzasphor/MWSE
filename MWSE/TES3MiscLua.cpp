@@ -21,7 +21,7 @@ namespace mwse {
 			sol::state& state = stateHandle.state;
 
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::SoulGemData>("tes3soulGemData");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -46,7 +46,7 @@ namespace mwse {
 			}
 
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::Misc>("tes3misc");
 				usertypeDefinition["new"] = sol::no_constructor;
 

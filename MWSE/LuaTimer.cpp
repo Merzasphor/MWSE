@@ -462,7 +462,7 @@ namespace mwse {
 
 			// Bind TimerController.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TimerController>("mwseTimerController");
 				usertypeDefinition["new"] = createController;
 
@@ -475,7 +475,7 @@ namespace mwse {
 
 			// Bind Timer.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<Timer>("mwseTimer");
 				usertypeDefinition["new"] = sol::no_constructor;
 

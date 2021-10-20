@@ -15,7 +15,7 @@ namespace mwse {
 
 			// Binding for TES3::Container.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::Container>("tes3container");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -45,7 +45,7 @@ namespace mwse {
 
 			// Binding for TES3::ContainerInstance.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::ContainerInstance>("tes3containerInstance");
 				usertypeDefinition["new"] = sol::no_constructor;
 

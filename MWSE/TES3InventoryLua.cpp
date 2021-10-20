@@ -20,7 +20,7 @@ namespace mwse {
 
 			// Binding for TES3::ItemData
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::ItemData>("tes3itemData");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -47,7 +47,7 @@ namespace mwse {
 
 			// Binding for TES3::ItemStack
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::ItemStack>("tes3itemStack");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -59,7 +59,7 @@ namespace mwse {
 
 			// Binding for TES3::EquipmentStack
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::EquipmentStack>("tes3equipmentStack");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -73,7 +73,7 @@ namespace mwse {
 
 			// Binding for TES3::Inventory
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::Inventory>("tes3inventory");
 				usertypeDefinition["new"] = sol::no_constructor;
 

@@ -120,7 +120,7 @@ namespace mwse {
 
 			// Binding for ScriptContext.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<ScriptContext>("tes3scriptContext");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -136,7 +136,7 @@ namespace mwse {
 
 			// Binding for TES3::GlobalScript
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::GlobalScript>("tes3globalScript");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -150,7 +150,7 @@ namespace mwse {
 
 			// Binding for TES3::StartScript
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::StartScript>("tes3startScript");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -164,7 +164,7 @@ namespace mwse {
 
 			// Binding for TES3::Script.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::Script>("tes3script");
 				usertypeDefinition["new"] = sol::no_constructor;
 

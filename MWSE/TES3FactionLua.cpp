@@ -14,7 +14,7 @@ namespace mwse {
 
 			// Binding for TES3::Faction::Rank
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::Faction::Rank>("tes3factionRank");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -28,7 +28,7 @@ namespace mwse {
 
 			// Binding for TES3::Faction::ReactionNode
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::Faction::ReactionNode>("tes3factionReaction");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -40,7 +40,7 @@ namespace mwse {
 			// Binding for TES3::Faction
 			//! TODO: Provide a more friendly way to access rank names. Probably needs to be hidden behind its own struct.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::Faction>("tes3faction");
 				usertypeDefinition["new"] = sol::no_constructor;
 

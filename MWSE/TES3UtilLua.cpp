@@ -4614,7 +4614,7 @@ namespace mwse {
 			if (actor == nullptr) {
 				throw std::invalid_argument("Invalid 'actor' parameter provided: must be an actor id.");
 			}
-			
+
 			sol::optional<int> count = params["count"];
 			if (!count) {
 				throw std::invalid_argument("Invalid 'count' parameter provided: must be a number.");

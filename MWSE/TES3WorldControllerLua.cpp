@@ -32,7 +32,7 @@ namespace mwse {
 
 			// Binding for TES3::WorldControllerRenderCamera::CameraData.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::WorldControllerRenderCamera::CameraData>("tes3worldControllerRenderCameraData");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -47,7 +47,7 @@ namespace mwse {
 
 			// Binding for TES3::WorldControllerRenderCamera.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::WorldControllerRenderCamera>("tes3worldControllerRenderCamera");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -63,7 +63,7 @@ namespace mwse {
 
 			// Binding for TES3::RechargingItem.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::RechargingItem>("tes3rechargingItem");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -75,7 +75,7 @@ namespace mwse {
 
 			// Binding for TES3::WorldController.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::WorldController>("tes3worldController");
 				usertypeDefinition["new"] = sol::no_constructor;
 

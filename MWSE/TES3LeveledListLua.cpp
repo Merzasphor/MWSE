@@ -14,7 +14,7 @@ namespace mwse {
 
 			// Binding for TES3::LeveledListNode
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::LeveledListNode>("tes3leveledListNode");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -25,7 +25,7 @@ namespace mwse {
 
 			// Binding for TES3::LeveledCreature
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::LeveledCreature>("tes3leveledCreature");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -48,7 +48,7 @@ namespace mwse {
 
 			// Binding for TES3::LeveledItem
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::LeveledItem>("tes3leveledItem");
 				usertypeDefinition["new"] = sol::no_constructor;
 

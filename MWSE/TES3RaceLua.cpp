@@ -16,7 +16,7 @@ namespace mwse {
 
 			// Binding for TES3::Race::SkillBonus.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::Race::SkillBonus>("tes3raceSkillBonus");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -27,7 +27,7 @@ namespace mwse {
 
 			// Binding for TES3::Race::BaseAttribute.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::Race::BaseAttribute>("tes3raceBaseAttribute");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -38,7 +38,7 @@ namespace mwse {
 
 			// Binding for TES3::Race::HeightWeight.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::Race::HeightWeight>("tes3raceHeightWeight");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -49,7 +49,7 @@ namespace mwse {
 
 			// Binding for TES3::Race::BodyParts.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::Race::BodyParts>("tes3raceBodyParts");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -74,7 +74,7 @@ namespace mwse {
 
 			// Binding for TES3::Race.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::Race>("tes3race");
 				usertypeDefinition["new"] = sol::no_constructor;
 

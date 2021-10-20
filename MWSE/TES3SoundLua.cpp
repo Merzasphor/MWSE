@@ -15,7 +15,7 @@ namespace mwse {
 
 			// Binding for TES3::Sound.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::Sound>("tes3sound");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -47,7 +47,7 @@ namespace mwse {
 
 			// Binding for TES3::SoundGenerator.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::SoundGenerator>("tes3soundGenerator");
 				usertypeDefinition["new"] = sol::no_constructor;
 

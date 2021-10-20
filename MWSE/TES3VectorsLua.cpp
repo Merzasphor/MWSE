@@ -15,7 +15,7 @@ namespace mwse {
 
 			// Binding for TES3::Range<int>.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::Range<int>>("tes3rangeInt");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -26,7 +26,7 @@ namespace mwse {
 
 			// Binding for TES3::Vector2.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::Vector2>("tes3vector2");
 				usertypeDefinition["new"] = sol::constructors<TES3::Vector2(), TES3::Vector2(float, float)>();
 
@@ -54,7 +54,7 @@ namespace mwse {
 
 			// Binding for TES3::Vector3.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::Vector3>("tes3vector3");
 				usertypeDefinition["new"] = sol::constructors<TES3::Vector3(), TES3::Vector3(float, float, float)>();
 
@@ -102,7 +102,7 @@ namespace mwse {
 
 			// Binding for TES3::Vector4.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::Vector4>("tes3vector4");
 				usertypeDefinition["new"] = sol::constructors<TES3::Vector4(), TES3::Vector4(float, float, float, float)>();
 
@@ -130,7 +130,7 @@ namespace mwse {
 
 			// Binding for TES3::BoundingBox.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::BoundingBox>("tes3boundingBox");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -150,7 +150,7 @@ namespace mwse {
 
 			// Binding for TES3::Matrix33.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::Matrix33>("tes3matrix33");
 				usertypeDefinition["new"] = sol::constructors<
 						TES3::Matrix33(), 
@@ -197,7 +197,7 @@ namespace mwse {
 
 			// Binding for TES3::Matrix44.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::Matrix44>("tes3matrix44");
 				usertypeDefinition["new"] = sol::constructors<
 					TES3::Matrix44(),
@@ -231,7 +231,7 @@ namespace mwse {
 
 			// Binding for TES3::Transform.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::Transform>("tes3transform");
 				usertypeDefinition["new"] = sol::no_constructor;
 

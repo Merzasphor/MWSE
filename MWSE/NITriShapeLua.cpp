@@ -19,7 +19,7 @@ namespace mwse {
 
 			// Binding for NI::TriShape.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::TriShape>("niTriShape");
 				usertypeDefinition["new"] = sol::no_constructor;
 

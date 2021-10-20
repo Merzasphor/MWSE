@@ -13,7 +13,7 @@ namespace mwse {
 
 			// Binding for TES3::InputConfig
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::InputConfig>("tes3inputConfig");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -24,7 +24,7 @@ namespace mwse {
 
 			// Binding for TES3::InputController::MouseState (DIMOUSESTATE2)
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::InputController::DirectInputMouseState>("tes3directInputMouseState");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -39,7 +39,7 @@ namespace mwse {
 
 			// Binding for TES3::InputController
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::InputController>("tes3inputController");
 				usertypeDefinition["new"] = sol::no_constructor;
 

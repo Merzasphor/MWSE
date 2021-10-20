@@ -26,7 +26,7 @@ namespace mwse {
 
 			// Binding for TES3::Weather
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::Weather>("tes3weather");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -36,7 +36,7 @@ namespace mwse {
 
 			// Binding for TES3::WeatherAsh
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::WeatherAsh>("tes3weatherAsh");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -50,7 +50,7 @@ namespace mwse {
 
 			// Binding for TES3::WeatherBlight
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::WeatherBlight>("tes3weatherBlight");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -66,7 +66,7 @@ namespace mwse {
 
 			// Binding for TES3::WeatherBlizzard
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::WeatherBlizzard>("tes3weatherBlizzard");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -80,7 +80,7 @@ namespace mwse {
 
 			// Binding for TES3::WeatherClear
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::WeatherClear>("tes3weatherClear");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -91,7 +91,7 @@ namespace mwse {
 
 			// Binding for TES3::WeatherCloudy
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::WeatherCloudy>("tes3weatherCloudy");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -102,7 +102,7 @@ namespace mwse {
 
 			// Binding for TES3::WeatherFoggy
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::WeatherFoggy>("tes3weatherFoggy");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -113,7 +113,7 @@ namespace mwse {
 
 			// Binding for TES3::WeatherOvercast
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::WeatherOvercast>("tes3weatherOvercast");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -124,7 +124,7 @@ namespace mwse {
 
 			// Binding for TES3::WeatherRain
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::WeatherRain>("tes3weatherRain");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -146,7 +146,7 @@ namespace mwse {
 
 			// Binding for TES3::WeatherSnow
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::WeatherSnow>("tes3weatherSnow");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -165,7 +165,7 @@ namespace mwse {
 
 			// Binding for TES3::WeatherThunder
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::WeatherThunder>("tes3weatherThunder");
 				usertypeDefinition["new"] = sol::no_constructor;
 

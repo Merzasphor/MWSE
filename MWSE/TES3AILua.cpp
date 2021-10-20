@@ -18,7 +18,7 @@ namespace mwse {
 
 			// Binding for TES3::AIConfig
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::AIConfig>("tes3aiConfig");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -53,7 +53,7 @@ namespace mwse {
 
 			// Binding for TES3::AIPlanner
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::AIPlanner>("tes3aiPlanner");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -75,7 +75,7 @@ namespace mwse {
 
 			// Binding for TES3::AIPackage
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::AIPackage>("tes3aiPackage");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -84,7 +84,7 @@ namespace mwse {
 
 			// Binding for TES3::AIPackageTravel
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::AIPackageTravel>("tes3aiPackageTravel");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -98,7 +98,7 @@ namespace mwse {
 
 			// Binding for TES3::AIPackageWander
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::AIPackageWander>("tes3aiPackageWander");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -113,7 +113,7 @@ namespace mwse {
 
 			// Binding for TES3::AIPackageWander::IdleNode
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::AIPackageWander::IdleNode>("tes3aiPackageWanderIdleNode");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -124,7 +124,7 @@ namespace mwse {
 
 			// Binding for TES3::AIPackageEscort
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::AIPackageEscort>("tes3aiPackageEscort");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -139,7 +139,7 @@ namespace mwse {
 
 			// Binding for TES3::AIPackageFollow
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::AIPackageFollow>("tes3aiPackageFollow");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -155,7 +155,7 @@ namespace mwse {
 
 			// Binding for TES3::AIPackageActivate
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::AIPackageActivate>("tes3aiPackageActivate");
 				usertypeDefinition["new"] = sol::no_constructor;
 

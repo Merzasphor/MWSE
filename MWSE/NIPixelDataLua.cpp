@@ -20,7 +20,7 @@ namespace mwse {
 
 			// Binding for NI::PixelData.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::PixelData>("niPixelData");
 				usertypeDefinition["new"] = &NI::PixelData::create_lua;
 

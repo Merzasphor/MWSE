@@ -13,7 +13,7 @@ namespace mwse::lua {
 
 		// Binding for NI::ExtraData.
 		{
-			// Start our usertype. We must finish this with state.set_usertype.
+			// Start our usertype.
 			auto usertypeDefinition = state.new_usertype<NI::ExtraData>("niExtraData");
 			usertypeDefinition["new"] = sol::no_constructor;
 
@@ -24,7 +24,7 @@ namespace mwse::lua {
 
 		// Binding for NI::StringExtraData.
 		{
-			// Start our usertype. We must finish this with state.set_usertype.
+			// Start our usertype.
 			auto usertypeDefinition = state.new_usertype<NI::StringExtraData>("niStringExtraData");
 			usertypeDefinition["new"] = sol::no_constructor;
 
@@ -38,7 +38,7 @@ namespace mwse::lua {
 
 		// Binding for NI::Tes3ExtraData.
 		{
-			// Start our usertype. We must finish this with state.set_usertype.
+			// Start our usertype.
 			auto usertypeDefinition = state.new_usertype<NI::Tes3ExtraData>("niTES3ExtraData");
 			usertypeDefinition["new"] = sol::no_constructor;
 
@@ -54,7 +54,7 @@ namespace mwse::lua {
 		{
 			// Binding for NI::TextKey.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::TextKey>("niTextKey");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -63,7 +63,7 @@ namespace mwse::lua {
 				usertypeDefinition["time"] = &NI::TextKey::time;
 			}
 
-			// Start our usertype. We must finish this with state.set_usertype.
+			// Start our usertype.
 			auto usertypeDefinition = state.new_usertype<NI::TextKeyExtraData>("niTextKeyExtraData");
 			usertypeDefinition["new"] = sol::no_constructor;
 

@@ -16,7 +16,7 @@ namespace mwse {
 
 			// Binding for TES3::ActiveMagicEffect
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::ActiveMagicEffect>("tes3activeMagicEffectLegacy");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -43,7 +43,7 @@ namespace mwse {
 
 			// Binding for TES3::ActiveMagicEffectLua
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::ActiveMagicEffectLua>("tes3activeMagicEffect");
 				usertypeDefinition["new"] = sol::no_constructor;
 

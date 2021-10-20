@@ -20,7 +20,7 @@ namespace mwse {
 
 			// Binding for NI::RTTI.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::RTTI>("niRTTI");
 				usertypeDefinition["new"] = sol::no_constructor;
 				usertypeDefinition[sol::meta_function::to_string] = &NI::RTTI::toString;
@@ -32,7 +32,7 @@ namespace mwse {
 
 			// Binding for NI::Object.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::Object>("niObject");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -42,7 +42,7 @@ namespace mwse {
 
 			// Binding for NI::ObjectNET.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::ObjectNET>("niObjectNET");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -53,7 +53,7 @@ namespace mwse {
 
 			// Binding for NI::AVObject.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::AVObject>("niAVObject");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -64,7 +64,7 @@ namespace mwse {
 
 			// Binding for NI::DynamicEffectLinkedList.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::DynamicEffectLinkedList>("niDynamicEffectLinkedList");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -75,7 +75,7 @@ namespace mwse {
 
 			// Binding for NI::NodeLinkedList.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::NodeLinkedList>("niNodeLinkedList");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -86,7 +86,7 @@ namespace mwse {
 
 			// Binding for NI::PropertyLinkedList.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::PropertyLinkedList>("niPropertyLinkedList");
 				usertypeDefinition["new"] = sol::no_constructor;
 

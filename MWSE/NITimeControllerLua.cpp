@@ -41,7 +41,7 @@ namespace mwse {
 
 			// Bind NI::TimeController
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::TimeController>("niTimeController");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -52,7 +52,7 @@ namespace mwse {
 
 			// Bind NI::LookAtController
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::LookAtController>("niLookAtController");
 				usertypeDefinition["new"] = sol::no_constructor;
 

@@ -18,7 +18,7 @@ namespace mwse {
 
 			// Binding for NI::Light.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::Light>("niLight");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -29,7 +29,7 @@ namespace mwse {
 
 			// Binding for NI::AmbientLight.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::AmbientLight>("niAmbientLight");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -40,7 +40,7 @@ namespace mwse {
 
 			// Binding for NI::DirectionalLight.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::DirectionalLight>("niDirectionalLight");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -54,7 +54,7 @@ namespace mwse {
 
 			// Binding for NI::PointLight.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::PointLight>("niPointLight");
 				usertypeDefinition["new"] = &NI::PointLight::create;
 
@@ -65,7 +65,7 @@ namespace mwse {
 
 			// Binding for NI::SpotLight.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::SpotLight>("niSpotLight");
 				usertypeDefinition["new"] = sol::no_constructor;
 

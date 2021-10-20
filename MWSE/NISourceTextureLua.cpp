@@ -17,7 +17,7 @@ namespace mwse {
 
 			// Binding for NI::SourceTexture::FormatPrefs.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::SourceTexture::FormatPrefs>("niFormatPrefs");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -29,7 +29,7 @@ namespace mwse {
 
 			// Binding for NI::SourceTexture.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::SourceTexture>("niSourceTexture");
 				usertypeDefinition["new"] = sol::no_constructor;
 

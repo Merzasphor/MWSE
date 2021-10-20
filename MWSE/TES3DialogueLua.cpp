@@ -25,7 +25,7 @@ namespace mwse {
 
 			// Binding for TES3::Dialogue
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::Dialogue>("tes3dialogue");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -54,7 +54,7 @@ namespace mwse {
 
 			// Binding for TES3::DialogueInfo
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::DialogueInfo>("tes3dialogueinfo");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -94,7 +94,7 @@ namespace mwse {
 
 			// Binding for TES3::Quest
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::Quest>("tes3quest");
 				usertypeDefinition["new"] = sol::no_constructor;
 

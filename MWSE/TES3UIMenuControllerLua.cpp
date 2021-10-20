@@ -19,7 +19,7 @@ namespace mwse {
 
 			// Binding for TES3::UI::MenuInputController
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::UI::MenuInputController>("tes3uiMenuInputController");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -34,7 +34,7 @@ namespace mwse {
 
 			// Binding for TES3::UI::FontColor
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::UI::FontColor>("tes3uiFontColor");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -46,7 +46,7 @@ namespace mwse {
 
 			// Binding for TES3::UI::MenuController
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::UI::MenuController>("tes3uiMenuController");
 				usertypeDefinition["new"] = sol::no_constructor;
 

@@ -17,7 +17,7 @@ namespace mwse {
 
 			// Define base mobile projectiles.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::MobileProjectile>("tes3mobileProjectile");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -28,7 +28,7 @@ namespace mwse {
 
 			// Define spell projectiles.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::MobileSpellProjectile>("tes3mobileSpellProjectile");
 				usertypeDefinition["new"] = sol::no_constructor;
 

@@ -12,7 +12,7 @@ namespace mwse::lua {
 
 		// Binding for NI::SkinInstance.
 		{
-			// Start our usertype. We must finish this with state.set_usertype.
+			// Start our usertype.
 			auto usertypeDefinition = state.new_usertype<NI::SkinInstance>("niSkinInstance");
 			usertypeDefinition["new"] = sol::no_constructor;
 
@@ -27,7 +27,7 @@ namespace mwse::lua {
 
 		// Binding for NI::SkinPartition.
 		{
-			// Start our usertype. We must finish this with state.set_usertype.
+			// Start our usertype.
 			auto usertypeDefinition = state.new_usertype<NI::SkinPartition>("niSkinPartition");
 			usertypeDefinition["new"] = sol::no_constructor;
 
@@ -40,7 +40,7 @@ namespace mwse::lua {
 
 		// Binding for NI::SkinPartition::Partition.
 		{
-			// Start our usertype. We must finish this with state.set_usertype.
+			// Start our usertype.
 			auto usertypeDefinition = state.new_usertype<NI::SkinPartition::Partition>("niSkinPartitionPartition");
 			usertypeDefinition["new"] = sol::no_constructor;
 
@@ -54,7 +54,7 @@ namespace mwse::lua {
 
 		// Binding for NI::SkinData.
 		{
-			// Start our usertype. We must finish this with state.set_usertype.
+			// Start our usertype.
 			auto usertypeDefinition = state.new_usertype<NI::SkinData>("niSkinData");
 			usertypeDefinition["new"] = sol::no_constructor;
 
@@ -71,7 +71,7 @@ namespace mwse::lua {
 
 		// Binding for NI::SkinData::BoneData.
 		{
-			// Start our usertype. We must finish this with state.set_usertype.
+			// Start our usertype.
 			auto usertypeDefinition = state.new_usertype<NI::SkinData::BoneData>("niSkinDataBoneData");
 			usertypeDefinition["new"] = sol::no_constructor;
 
@@ -85,7 +85,7 @@ namespace mwse::lua {
 
 		// Binding for NI::SkinData::BoneData::VertexWeight.
 		{
-			// Start our usertype. We must finish this with state.set_usertype.
+			// Start our usertype.
 			auto usertypeDefinition = state.new_usertype<NI::SkinData::BoneData::VertexWeight>("niSkinDataBoneDataVertexWeight");
 			usertypeDefinition["new"] = sol::no_constructor;
 

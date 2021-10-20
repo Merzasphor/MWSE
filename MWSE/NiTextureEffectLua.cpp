@@ -19,7 +19,7 @@ namespace mwse {
 
 			// Binding for NI::TextureEffect.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::TextureEffect>("niTextureEffect");
 				usertypeDefinition["new"] = &NI::TextureEffect::create;
 

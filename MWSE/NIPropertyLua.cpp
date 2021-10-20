@@ -17,7 +17,7 @@ namespace mwse {
 
 			// Binding for NI::Property.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::Property>("niProperty");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -28,7 +28,7 @@ namespace mwse {
 
 			// Binding for NI::AlphaProperty.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::AlphaProperty>("niAlphaProperty");
 				usertypeDefinition["new"] = &NI::AlphaProperty::create;
 
@@ -42,7 +42,7 @@ namespace mwse {
 
 			// Binding for NI::FogProperty.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::FogProperty>("niFogProperty");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -57,7 +57,7 @@ namespace mwse {
 
 			// Binding for NI::MaterialProperty.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::MaterialProperty>("niMaterialProperty");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -79,7 +79,7 @@ namespace mwse {
 
 			// Binding for NI::StencilProperty.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::StencilProperty>("niStencilProperty");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -100,7 +100,7 @@ namespace mwse {
 
 			// Binding for NI::TexturingProperty::Map.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::TexturingProperty::Map>("niTexturingPropertyMap");
 				usertypeDefinition["new"] = &NI::TexturingProperty::Map::create;
 
@@ -115,7 +115,7 @@ namespace mwse {
 
 			// Binding for NI::TexturingProperty.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::TexturingProperty>("niTexturingProperty");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -144,7 +144,7 @@ namespace mwse {
 
 			// Binding for NI::VertexColorProperty.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::VertexColorProperty>("niVertexColorProperty");
 				usertypeDefinition["new"] = &NI::VertexColorProperty::create;
 
@@ -159,7 +159,7 @@ namespace mwse {
 
 			// Binding for NI::ZBufferProperty.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::ZBufferProperty>("niZBufferProperty");
 				usertypeDefinition["new"] = &NI::ZBufferProperty::create;
 

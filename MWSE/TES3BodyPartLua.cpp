@@ -18,7 +18,7 @@ namespace mwse {
 
 			// Binding for TES3::BodyPart.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::BodyPart>("tes3bodyPart");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -45,7 +45,7 @@ namespace mwse {
 
 			// Binding for TES3::WearablePart
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::WearablePart>("tes3wearablePart");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -57,7 +57,7 @@ namespace mwse {
 
 			// Binding for TES3::BodyPartManager::AttachNode
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::BodyPartManager::AttachNode>("tes3bodyPartManagerAttachNode");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -70,7 +70,7 @@ namespace mwse {
 
 			// Binding for TES3::BodyPartManager::ActiveBodyPart
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::BodyPartManager::ActiveBodyPart>("tes3bodyPartManagerActiveBodyPart");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -83,7 +83,7 @@ namespace mwse {
 
 			// Binding for TES3::BodyPartManager
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::BodyPartManager>("tes3bodyPartManager");
 				usertypeDefinition["new"] = sol::no_constructor;
 

@@ -20,7 +20,7 @@ namespace mwse {
 
 			// Binding for TES3::Creature
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::Creature>("tes3creature");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -66,7 +66,7 @@ namespace mwse {
 
 			// Binding for TES3::CreatureInstance
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::CreatureInstance>("tes3creatureInstance");
 				usertypeDefinition["new"] = sol::no_constructor;
 

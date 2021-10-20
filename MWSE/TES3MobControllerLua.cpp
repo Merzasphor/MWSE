@@ -15,7 +15,7 @@ namespace mwse {
 
 			// Binding for TES3::ProcessManager.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::ProcessManager>("tes3processManager");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -35,7 +35,7 @@ namespace mwse {
 
 			// Binding for TES3::ProjectileController.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::ProjectileController>("tes3projectileController");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -45,7 +45,7 @@ namespace mwse {
 
 			// Binding for TES3::MobController.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::MobController>("tes3mobController");
 				usertypeDefinition["new"] = sol::no_constructor;
 

@@ -12,7 +12,7 @@ namespace mwse {
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
 
-			// Start our usertype. We must finish this with state.set_usertype.
+			// Start our usertype.
 			auto usertypeDefinition = state.new_usertype<TES3::Fader>("tes3fader");
 			usertypeDefinition["new"] = sol::constructors<TES3::Fader(), TES3::Fader(float, bool)>();
 

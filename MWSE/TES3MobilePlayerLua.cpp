@@ -24,7 +24,7 @@ namespace mwse {
 
 			// Binding for TES3::MobilePlayer
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::MobilePlayer>("tes3mobilePlayer");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -92,7 +92,7 @@ namespace mwse {
 
 			// Binding for TES3::MarkData.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::MarkData>("tes3markData");
 
 				// Basic property bindings.

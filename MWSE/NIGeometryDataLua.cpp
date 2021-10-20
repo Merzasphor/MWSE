@@ -16,7 +16,7 @@ namespace mwse::lua {
 
 		// Bind NI::GeometryData
 		{
-			// Start our usertype. We must finish this with state.set_usertype.
+			// Start our usertype.
 			auto usertypeDefinition = state.new_usertype<NI::GeometryData>("niGeometryData");
 			usertypeDefinition[sol::base_classes] = sol::bases<NI::Object>();
 			usertypeDefinition["new"] = sol::no_constructor;
@@ -27,7 +27,7 @@ namespace mwse::lua {
 
 		// Bind NI::TriBasedGeometryData
 		{
-			// Start our usertype. We must finish this with state.set_usertype.
+			// Start our usertype.
 			auto usertypeDefinition = state.new_usertype<NI::TriBasedGeometryData>("niTriBasedGeometryData");
 			usertypeDefinition[sol::base_classes] = sol::bases<NI::Object, NI::GeometryData>();
 			usertypeDefinition["new"] = sol::no_constructor;
@@ -42,7 +42,7 @@ namespace mwse::lua {
 
 		// Bind NI::TriShapeData
 		{
-			// Start our usertype. We must finish this with state.set_usertype.
+			// Start our usertype.
 			auto usertypeDefinition = state.new_usertype<NI::TriShapeData>("niTriShapeData");
 			usertypeDefinition[sol::base_classes] = sol::bases<NI::Object, NI::GeometryData, NI::TriBasedGeometryData>();
 			usertypeDefinition["new"] = sol::no_constructor;
@@ -61,7 +61,7 @@ namespace mwse::lua {
 
 		// Binding for NI::Triangle.
 		{
-			// Start our usertype. We must finish this with state.set_usertype.
+			// Start our usertype.
 			auto usertypeDefinition = state.new_usertype<NI::Triangle>("niTriangle");
 			usertypeDefinition["new"] = sol::no_constructor;
 

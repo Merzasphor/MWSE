@@ -15,7 +15,7 @@ namespace mwse {
 
 			// Binding for NI::Node.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::Node>("niNode");
 				usertypeDefinition["new"] = &NI::Node::create;
 
@@ -26,7 +26,7 @@ namespace mwse {
 
 			// Binding for NI::BillboardNode.
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<NI::BillboardNode>("niBillboardNode");
 				usertypeDefinition["new"] = &NI::BillboardNode::create;
 

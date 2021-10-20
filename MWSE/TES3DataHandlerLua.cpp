@@ -38,7 +38,7 @@ namespace mwse {
 
 			// Binding for TES3::NonDynamicData
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::NonDynamicData>("tes3nonDynamicData");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -82,7 +82,7 @@ namespace mwse {
 
 			// Binding for TES3::DataHandler::ExteriorCellData
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::DataHandler::ExteriorCellData>("tes3dataHandlerExteriorCellData");
 				usertypeDefinition["new"] = sol::no_constructor;
 
@@ -93,7 +93,7 @@ namespace mwse {
 
 			// Binding for TES3::DataHandler
 			{
-				// Start our usertype. We must finish this with state.set_usertype.
+				// Start our usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::DataHandler>("tes3dataHandler");
 				usertypeDefinition["new"] = sol::no_constructor;
 
