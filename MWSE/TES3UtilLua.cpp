@@ -4677,7 +4677,7 @@ namespace mwse {
 			if (!worldController || !dataHandler) return false;
 
 			// Check to see if there are enemies nearby.
-			if (getOptionalParam<bool>(params, "checkForEnemies", true) && !worldController->mobController->processManager->checkPlayerHasNearbyEnemies()) {
+			if (getOptionalParam<bool>(params, "checkForEnemies", true) && !worldController->mobController->processManager->checkNearbyEnemiesAllowRest()) {
 				if (getOptionalParam<bool>(params, "showMessage", showMessageByDefault)) {
 					TES3::UI::showMessageBox(dataHandler->nonDynamicData->GMSTs[TES3::GMST::sNotifyMessage2]->value.asString, nullptr, true);
 				}
