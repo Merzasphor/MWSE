@@ -231,6 +231,10 @@ namespace TES3 {
 		return 0.0f;
 	}
 
+	bool Spell::isActiveCast() const {
+		return castType == SpellCastType::Spell || castType == SpellCastType::Power;
+	}
+
 	std::reference_wrapper<Effect[8]> Spell::getEffects() {
 		return std::ref(effects);
 	}

@@ -105,6 +105,16 @@ A bit field for the spell's flags.
 
 ***
 
+### `isActiveCast`
+
+*Read-only*. True if the spell is actively cast. If false, the spell's effects are always passively affecting the owner.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
 ### `isLocationMarker`
 
 True if this object is an editor marker for a gameplay location. These include travel, intervention, prison, door, and interior north markers. Markers are invisible in-game.

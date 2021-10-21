@@ -94,6 +94,8 @@ namespace TES3 {
 		int calculateBasePuchaseCost() const;
 		float calculateCastChance_lua(sol::table params);
 
+		bool isActiveCast() const;
+
 		std::reference_wrapper<Effect[8]> getEffects();
 
 	};

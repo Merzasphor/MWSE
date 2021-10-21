@@ -8,6 +8,7 @@
 --- @field castType number The spell's cast type.
 --- @field effects table *Read-only*. An array-style table of the tes3effect data on the object.
 --- @field flags number A bit field for the spell's flags.
+--- @field isActiveCast boolean *Read-only*. True if the spell is actively cast. If false, the spell's effects are always passively affecting the owner.
 --- @field magickaCost number No description yet available.
 --- @field name string The name of the spell.
 --- @field playerStart boolean A flag that determines if the spell may be assigned to the player at character generation if the player has enough skill to cast it.

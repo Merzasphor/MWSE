@@ -79,6 +79,7 @@ namespace mwse {
 			usertypeDefinition["castType"] = &TES3::Spell::castType;
 			usertypeDefinition["effects"] = sol::readonly_property(&TES3::Spell::getEffects);
 			usertypeDefinition["flags"] = &TES3::Spell::spellFlags;
+			usertypeDefinition["isActiveCast"] = sol::readonly_property(&TES3::Spell::isActiveCast);
 			usertypeDefinition["magickaCost"] = &TES3::Spell::magickaCost;
 			usertypeDefinition["name"] = sol::property(&TES3::Spell::getName, &TES3::Spell::setName);
 
