@@ -2,8 +2,10 @@
 
 #include "TES3AIConfig.h"
 #include "TES3Class.h"
+#include "TES3Creature.h"
 #include "TES3MobileActor.h"
 #include "TES3MobilePlayer.h"
+#include "TES3NPC.h"
 #include "TES3Reference.h"
 
 #include "LuaUtil.h"
@@ -192,6 +194,26 @@ namespace TES3 {
 		// Clear blood flags.
 		actorFlags &= ~0x1C00;
 		actorFlags |= (value << 0xA);
+	}
+
+	SpellList* Actor::getSpellList() {
+		if (objectType == TES3::ObjectType::NPC) {
+			if (isBaseActor()) {
+				return &static_cast<TES3::NPC*>(this)->spellList;
+			}
+			else {
+				return static_cast<TES3::NPCInstance*>(this)->getBaseSpellList();
+			}
+		}
+		else if (objectType == TES3::ObjectType::Creature) {
+			if (isBaseActor()) {
+				return static_cast<TES3::Creature*>(this)->spellList;
+			}
+			else {
+				return static_cast<TES3::CreatureInstance*>(this)->getBaseSpells();
+			}
+		}
+		return nullptr;
 	}
 
 	void Actor::onCloseInventory_lua(TES3::Reference* reference, sol::optional<int> unknown) {

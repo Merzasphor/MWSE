@@ -275,6 +275,27 @@ local wasAdded = tes3.addSoulGem({ item = ... })
 
 ***
 
+### `tes3.addSpell`
+
+Adds a spell to an actor's spell list. If the spell is passive, the effects will be applied.
+
+```lua
+local wasAdded = tes3.addSpell({ reference = ..., actor = ..., spell = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): Who to give the spell to. To manipulate an actor without specifying any particular reference, use `actor` instead.
+	* `actor` ([tes3actor](../../types/tes3actor), string): Who to give the spell to. Providing a base actor can be done before a save has been loaded, but may not correctly update effects for instanced versions of that actor in an active save.
+	* `spell` ([tes3spell](../../types/tes3spell), string): The spell to add.
+
+**Returns**:
+
+* `wasAdded` (boolean): True if the spell was successfully added. This can be false if the actor's race or birthsign already contains the spell.
+
+***
+
 ### `tes3.adjustSoundVolume`
 
 Changes the volume of a sound that is playing on a given reference.
@@ -2030,6 +2051,27 @@ local hasAccess = tes3.hasOwnershipAccess({ reference = ..., target = ... })
 
 ***
 
+### `tes3.hasSpell`
+
+Determines if the player has access to a given spell.
+
+```lua
+local hasSpell = tes3.hasSpell({ reference = ..., actor = ..., spell = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): Who to check the spell list of. To check an actor without specifying any particular reference, use `actor` instead.
+	* `actor` ([tes3actor](../../types/tes3actor), string): Who to check the spell list of. Providing a base actor can be done before a save has been loaded, but may not correctly update effects for instanced versions of that actor in an active save.
+	* `spell` ([tes3spell](../../types/tes3spell), string): The spell to check.
+
+**Returns**:
+
+* `hasSpell` (boolean): True if the spell exists in the actor's spell list, race spell list, or birthsign spell list.
+
+***
+
 ### `tes3.incrementKillCount`
 
 Increases player's kill count of a certain type of actor by one.
@@ -2700,6 +2742,27 @@ tes3.removeSound({ sound = ..., reference = ... })
 * `params` (table)
 	* `sound` ([tes3sound](../../types/tes3sound), string): The sound object, or id of the sound to look for.
 	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The reference the sound is attached to.
+
+***
+
+### `tes3.removeSpell`
+
+Adds a spell to an actor's spell list. If the spell is passive, the effects will be applied.
+
+```lua
+local wasRemoved = tes3.removeSpell({ reference = ..., actor = ..., spell = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): Who to remove the spell from. To manipulate an actor without specifying any particular reference, use `actor` instead.
+	* `actor` ([tes3actor](../../types/tes3actor), string): Who to remove the spell from. Providing a base actor can be done before a save has been loaded, but may not correctly update effects for instanced versions of that actor in an active save.
+	* `spell` ([tes3spell](../../types/tes3spell), string): The spell to remove.
+
+**Returns**:
+
+* `wasRemoved` (boolean): True if the spell was successfully removed. This can be false if the spell comes from a race or birthsign.
 
 ***
 

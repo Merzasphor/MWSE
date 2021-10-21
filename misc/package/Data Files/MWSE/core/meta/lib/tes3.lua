@@ -240,6 +240,23 @@ function tes3.addSoulGem(params) end
 --- @class tes3.addSoulGem.params
 --- @field item tes3misc|string The item to recognize as a soul gem.
 
+--- Adds a spell to an actor's spell list. If the spell is passive, the effects will be applied.
+--- @param params tes3.addSpell.params This table accepts the following values:
+--- 
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — Who to give the spell to. To manipulate an actor without specifying any particular reference, use `actor` instead.
+--- 
+--- `actor`: tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance|string — Who to give the spell to. Providing a base actor can be done before a save has been loaded, but may not correctly update effects for instanced versions of that actor in an active save.
+--- 
+--- `spell`: tes3spell|string — The spell to add.
+--- @return boolean wasAdded True if the spell was successfully added. This can be false if the actor's race or birthsign already contains the spell.
+function tes3.addSpell(params) end
+
+---Table parameter definitions for `tes3.addSpell`.
+--- @class tes3.addSpell.params
+--- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string Who to give the spell to. To manipulate an actor without specifying any particular reference, use `actor` instead.
+--- @field actor tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance|string Who to give the spell to. Providing a base actor can be done before a save has been loaded, but may not correctly update effects for instanced versions of that actor in an active save.
+--- @field spell tes3spell|string The spell to add.
+
 --- Changes the volume of a sound that is playing on a given reference.
 --- @param params tes3.adjustSoundVolume.params This table accepts the following values:
 --- 
@@ -1043,6 +1060,23 @@ function tes3.hasOwnershipAccess(params) end
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Default*: `tes3.player`. The actor to check permissions for.
 --- @field target tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string The reference to check access of.
 
+--- Determines if the player has access to a given spell.
+--- @param params tes3.hasSpell.params This table accepts the following values:
+--- 
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — Who to check the spell list of. To check an actor without specifying any particular reference, use `actor` instead.
+--- 
+--- `actor`: tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance|string — Who to check the spell list of. Providing a base actor can be done before a save has been loaded, but may not correctly update effects for instanced versions of that actor in an active save.
+--- 
+--- `spell`: tes3spell|string — The spell to check.
+--- @return boolean hasSpell True if the spell exists in the actor's spell list, race spell list, or birthsign spell list.
+function tes3.hasSpell(params) end
+
+---Table parameter definitions for `tes3.hasSpell`.
+--- @class tes3.hasSpell.params
+--- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string Who to check the spell list of. To check an actor without specifying any particular reference, use `actor` instead.
+--- @field actor tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance|string Who to check the spell list of. Providing a base actor can be done before a save has been loaded, but may not correctly update effects for instanced versions of that actor in an active save.
+--- @field spell tes3spell|string The spell to check.
+
 --- Increases player's kill count of a certain type of actor by one.
 --- @param params tes3.incrementKillCount.params This table accepts the following values:
 --- 
@@ -1478,6 +1512,23 @@ function tes3.removeSound(params) end
 --- @class tes3.removeSound.params
 --- @field sound tes3sound|string The sound object, or id of the sound to look for.
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The reference the sound is attached to.
+
+--- Adds a spell to an actor's spell list. If the spell is passive, the effects will be applied.
+--- @param params tes3.removeSpell.params This table accepts the following values:
+--- 
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — Who to remove the spell from. To manipulate an actor without specifying any particular reference, use `actor` instead.
+--- 
+--- `actor`: tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance|string — Who to remove the spell from. Providing a base actor can be done before a save has been loaded, but may not correctly update effects for instanced versions of that actor in an active save.
+--- 
+--- `spell`: tes3spell|string — The spell to remove.
+--- @return boolean wasRemoved True if the spell was successfully removed. This can be false if the spell comes from a race or birthsign.
+function tes3.removeSpell(params) end
+
+---Table parameter definitions for `tes3.removeSpell`.
+--- @class tes3.removeSpell.params
+--- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string Who to remove the spell from. To manipulate an actor without specifying any particular reference, use `actor` instead.
+--- @field actor tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance|string Who to remove the spell from. Providing a base actor can be done before a save has been loaded, but may not correctly update effects for instanced versions of that actor in an active save.
+--- @field spell tes3spell|string The spell to remove.
 
 --- This function will compile and run a mwscript chunk of code. This is not ideal to use, but can be used for features not yet exposed to lua.
 --- @param params tes3.runLegacyScript.params This table accepts the following values:

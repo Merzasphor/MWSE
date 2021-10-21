@@ -72,6 +72,7 @@ namespace mwse {
 		sol::optional<TES3::Vector2> getOptionalParamVector2(sol::optional<sol::table> maybeParams, const char* key);
 		sol::optional<TES3::Vector3> getOptionalParamVector3(sol::optional<sol::table> maybeParams, const char* key);
 		TES3::Cell* getOptionalParamCell(sol::optional<sol::table> maybeParams, const char* key);
+		bool getOptionalComplexObjectParams(sol::optional<sol::table> params, TES3::Reference*& out_reference, TES3::BaseObject*& out_object, TES3::MobileActor*& out_mobile, const char* referenceKey = "reference", const char* mobileKey = "mobile", const char* objectKey = "object");
 
 		TES3::UI::Property getPropertyFromObject(sol::object object);
 		TES3::UI::UI_ID getUIIDFromObject(sol::object object);

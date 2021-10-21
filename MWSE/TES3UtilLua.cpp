@@ -2309,6 +2309,180 @@ namespace mwse {
 			}
 		}
 
+		bool addSpell(sol::table params) {
+			// Get some complex inputs...
+			TES3::Reference* reference = nullptr;
+			TES3::BaseObject* object = nullptr;
+			TES3::MobileActor* mobile = nullptr;
+			if (!getOptionalComplexObjectParams(params, reference, object, mobile, "reference", "mobile", "actor")) {
+				throw std::invalid_argument("Could not determine target. Provide a valid reference, mobile, or object.");
+			}
+
+			// Make sure we were given an actor that can use spells.
+			if (object->objectType != TES3::ObjectType::NPC && object->objectType != TES3::ObjectType::Creature) {
+				throw std::invalid_argument("Input target was not a valid spell-supporting actor.");
+			}
+
+			// Get a spell to add.
+			auto spell = getOptionalParamSpell(params, "spell");
+			if (spell == nullptr) {
+				throw std::invalid_argument("Invalid 'spell' parameter provided.");
+			}
+
+			// Get the spell list.
+			auto actor = static_cast<TES3::Actor*>(object);
+			auto spellList = actor->getSpellList();
+
+			// Do we already know this spell?
+			if (spellList->contains(spell)) {
+				return false;
+			}
+
+			// Do we already know if because of our race?
+			auto race = actor->getRace();
+			if (race && race->abilities->contains(spell)) {
+				return false;
+			}
+
+			// How about our birthsign?
+			auto mobilePlayer = TES3::WorldController::get()->getMobilePlayer();
+			if (mobilePlayer && mobilePlayer == mobile) {
+				if (mobilePlayer->birthsign && mobilePlayer->birthsign->spellList.contains(spell)) {
+					return false;
+				}
+			}
+
+			// We are free to add the spell.
+			if (!spellList->add(spell)) {
+				return false;
+			}
+
+			// Do we need to activate the effects?
+			auto instance = nullptr;
+			if (mobile && mobile->isActive() && !spell->isActiveCast()) {
+				auto magicInstanceController = TES3::WorldController::get()->magicInstanceController;
+
+				TES3::MagicSourceCombo sourceCombo = spell;
+				auto serial = magicInstanceController->activateSpell(reference, nullptr, &sourceCombo);
+				if (serial != 0) {
+					// Force bypass resistances.
+					auto instance = magicInstanceController->getInstanceFromSerial(serial);
+					if (instance) {
+						instance->bypassResistances = getOptionalParam(params, "bypassResistances", true);
+					}
+				}
+			}
+
+			// Update GUI elements if necessary.
+			updateMagicGUI_internal(reference, true, false);
+
+			// Update modified flags.
+			object->getBaseObject()->setObjectModified(true);
+			if (reference) {
+				reference->setObjectModified(true);
+			}
+
+			return true;
+		}
+
+		bool removeSpell(sol::table params) {
+			// Get some complex inputs...
+			TES3::Reference* reference = nullptr;
+			TES3::BaseObject* object = nullptr;
+			TES3::MobileActor* mobile = nullptr;
+			if (!getOptionalComplexObjectParams(params, reference, object, mobile, "reference", "mobile", "actor")) {
+				throw std::invalid_argument("Could not determine target. Provide a valid reference, mobile, or object.");
+			}
+
+			// Make sure we were given an actor that can use spells.
+			if (object->objectType != TES3::ObjectType::NPC && object->objectType != TES3::ObjectType::Creature) {
+				throw std::invalid_argument("Input target was not a valid spell-supporting actor.");
+			}
+
+			// Get a spell to remove.
+			auto spell = getOptionalParamSpell(params, "spell");
+			if (spell == nullptr) {
+				throw std::invalid_argument("Invalid 'spell' parameter provided.");
+			}
+
+			// Get the spell list.
+			auto actor = static_cast<TES3::Actor*>(object);
+			auto spellList = actor->getSpellList();
+
+			// Remove the spell.
+			if (!spellList->remove(spell)) {
+				return false;
+			}
+
+			// End any active effects for the spell.
+			if (mobile) {
+				for (const auto& effect : mobile->activeMagicEffects) {
+					auto instance = effect.getInstance();
+					if (instance) {
+						auto source = &instance->sourceCombo;
+						if (source->sourceType == TES3::MagicSourceType::Spell && source->source.asSpell == spell) {
+							instance->retire(reference);
+						}
+					}
+				}
+			}
+
+			// Update GUI elements if necessary.
+			updateMagicGUI_internal(reference, true, false);
+
+			// Update modified flags.
+			object->getBaseObject()->setObjectModified(true);
+			if (reference) {
+				reference->setObjectModified(true);
+			}
+
+			return true;
+		}
+
+		bool hasSpell(sol::table params) {
+			// Get some complex inputs...
+			TES3::Reference* reference = nullptr;
+			TES3::BaseObject* object = nullptr;
+			TES3::MobileActor* mobile = nullptr;
+			if (!getOptionalComplexObjectParams(params, reference, object, mobile, "reference", "mobile", "actor")) {
+				throw std::invalid_argument("Could not determine target. Provide a valid reference, mobile, or object.");
+			}
+
+			// Make sure we were given an actor that can use spells.
+			if (object->objectType != TES3::ObjectType::NPC && object->objectType != TES3::ObjectType::Creature) {
+				throw std::invalid_argument("Input target was not a valid spell-supporting actor.");
+			}
+
+			// Get a spell to check.
+			auto spell = getOptionalParamSpell(params, "spell");
+			if (spell == nullptr) {
+				throw std::invalid_argument("Invalid 'spell' parameter provided.");
+			}
+
+			// Check the racial list.
+			auto actor = static_cast<TES3::Actor*>(object);
+			auto race = actor->getRace();
+			if (race && race->abilities->contains(spell)) {
+				return true;
+			}
+
+			// How about our birthsign?
+			auto mobilePlayer = TES3::WorldController::get()->getMobilePlayer();
+			if (mobilePlayer && mobilePlayer == mobile) {
+				if (mobilePlayer->birthsign && mobilePlayer->birthsign->spellList.contains(spell)) {
+					return true;
+				}
+			}
+
+			// Now for the main spell list...
+			auto spellList = actor->getSpellList();
+			if (spellList->contains(spell)) {
+				return true;
+			}
+
+			return false;
+		}
+
 		void addArmorSlot(sol::table params) {
 			sol::optional<int> slot = params["slot"];
 			if (!slot || (slot.value() >= TES3::ArmorSlot::First && slot.value() <= TES3::ArmorSlot::Last) || mwse::tes3::getArmorSlotData(slot.value())) {
@@ -3058,6 +3232,7 @@ namespace mwse {
 				// Do we need to update the magic menu?
 				auto enchantment = item->getEnchantment();
 				if (enchantment && (enchantment->castType == TES3::EnchantmentCastType::Once || enchantment->castType == TES3::EnchantmentCastType::OnUse)) {
+					updateMagicGUI_internal(reference, false, true);
 				}
 			}
 
@@ -4938,6 +5113,7 @@ namespace mwse {
 			tes3["addJournalEntry"] = addJournalEntry;
 			tes3["addMagicEffect"] = addMagicEffect;
 			tes3["addSoulGem"] = addSoulGem;
+			tes3["addSpell"] = addSpell;
 			tes3["adjustSoundVolume"] = adjustSoundVolume;
 			tes3["advanceTime"] = advanceTime;
 			tes3["applyMagicSource"] = applyMagicSource;
@@ -5031,6 +5207,7 @@ namespace mwse {
 			tes3["hammerKey"] = hammerKey;
 			tes3["hasCodePatchFeature"] = hasCodePatchFeature;
 			tes3["hasOwnershipAccess"] = hasOwnershipAccess;
+			tes3["hasSpell"] = hasSpell;
 			tes3["incrementKillCount"] = incrementKillCount;
 			tes3["is3rdPerson"] = isThirdPerson;
 			tes3["isAffectedBy"] = isAffectedBy;
@@ -5057,6 +5234,7 @@ namespace mwse {
 			tes3["removeEffects"] = removeEffects;
 			tes3["removeItem"] = removeItem;
 			tes3["removeSound"] = removeSound;
+			tes3["removeSpell"] = removeSpell;
 			tes3["runLegacyScript"] = runLegacyScript;
 			tes3["saveGame"] = saveGame;
 			tes3["say"] = say;

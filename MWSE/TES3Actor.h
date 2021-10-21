@@ -82,6 +82,8 @@ namespace TES3 {
 		int getBloodType() const;
 		void setBloodType(int value);
 
+		SpellList* getSpellList();
+
 		void onCloseInventory_lua(TES3::Reference* reference, sol::optional<int> unknown);
 
 		bool hasItemEquipped_lua(sol::object itemOrItemId, sol::optional<TES3::ItemData*> itemData);
