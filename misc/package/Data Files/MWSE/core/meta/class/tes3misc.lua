@@ -3,6 +3,7 @@
 --- A core miscellaneous object.
 --- @class tes3misc : tes3item, tes3physicalObject, tes3object, tes3baseObject
 --- @field icon string The path to the object's icon.
+--- @field isGold boolean True if the misc item is a valid form of gold.
 --- @field isKey boolean Access to the flag determining if this item is recognized as a key.
 --- @field isSoulGem boolean *Read-only*. Determines if this item is a soul gem.
 --- @field mesh string The path to the object's mesh.
@@ -45,8 +46,4 @@ function tes3misc.create(params) end
 --- @field weight  tes3script *Default*: `0`. The weight of the object.
 --- @field value  string *Default*: `0`. The value of the object.
 --- @field flags  number *Default*: `0`. The object flags initially set.
-
---- Returns true if the misc item is gold.
---- @return boolean isGold No description yet available.
-function tes3misc:isGold() end
 

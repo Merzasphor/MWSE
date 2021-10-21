@@ -65,6 +65,16 @@ The path to the object's icon.
 
 ***
 
+### `isGold`
+
+True if the misc item is a valid form of gold.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
 ### `isKey`
 
 Access to the flag determining if this item is recognized as a key.
@@ -328,20 +338,6 @@ local string = tes3baseObject:__tojson()
 **Returns**:
 
 * `string` (string)
-
-***
-
-### `isGold`
-
-Returns true if the misc item is gold.
-
-```lua
-local isGold = tes3misc:isGold()
-```
-
-**Returns**:
-
-* `isGold` (boolean)
 
 ***
 
