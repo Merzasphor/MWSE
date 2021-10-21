@@ -2136,11 +2136,17 @@ function tes3.updateJournal(params) end
 --- @param params tes3.updateMagicGUI.params This table accepts the following values:
 --- 
 --- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — The reference to update GUI elements for.
+--- 
+--- `updateSpells`: boolean — *Default*: `true`. Determines if the spell and power lists are refreshed.
+--- 
+--- `updateEnchantments`: boolean — *Default*: `true`. Determines if the enchanted items list is refreshed.
 function tes3.updateMagicGUI(params) end
 
 ---Table parameter definitions for `tes3.updateMagicGUI`.
 --- @class tes3.updateMagicGUI.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string The reference to update GUI elements for.
+--- @field updateSpells boolean *Default*: `true`. Determines if the spell and power lists are refreshed.
+--- @field updateEnchantments boolean *Default*: `true`. Determines if the enchanted items list is refreshed.
 
 --- This function wakes player up and returns true if successful.
 --- 

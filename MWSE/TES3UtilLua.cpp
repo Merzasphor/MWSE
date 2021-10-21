@@ -2287,6 +2287,28 @@ namespace mwse {
 			return true;
 		}
 
+		const auto TES3_UI_updatSpellsList = reinterpret_cast<void(__cdecl*)()>(0x5E3D10);
+		const auto TES3_UI_updatEnchantmentsList = reinterpret_cast<void(__cdecl*)()>(0x5E3070);
+		void updateMagicGUI_internal(TES3::Reference* reference, bool updateSpells = true, bool updateEnchantments = true) {
+			auto worldController = TES3::WorldController::get();
+			auto macp = worldController->getMobilePlayer();
+
+			// Player-specific handling.
+			if (macp && reference == macp->reference) {
+				// Update MenuMagic
+				auto menuMagic = TES3::UI::findMenu(*reinterpret_cast<TES3::UI::UI_ID*>(0x7D431E));
+				if (menuMagic) {
+					if (updateSpells) {
+						TES3_UI_updatSpellsList();
+					}
+
+					if (updateEnchantments) {
+						TES3_UI_updatEnchantmentsList();
+					}
+				}
+			}
+		}
+
 		void addArmorSlot(sol::table params) {
 			sol::optional<int> slot = params["slot"];
 			if (!slot || (slot.value() >= TES3::ArmorSlot::First && slot.value() <= TES3::ArmorSlot::Last) || mwse::tes3::getArmorSlotData(slot.value())) {
@@ -2729,21 +2751,6 @@ namespace mwse {
 			}
 		}
 
-		const auto TES3_UI_updateMagicMenu = reinterpret_cast<void(__cdecl*)()>(0x5E3070);
-		void updateMagicGUI_internal(TES3::Reference* reference) {
-			auto worldController = TES3::WorldController::get();
-			auto macp = worldController->getMobilePlayer();
-
-			// Player-specific handling.
-			if (macp && reference == macp->reference) {
-				// Update MenuMagic
-				auto menuMagic = TES3::UI::findMenu(*reinterpret_cast<TES3::UI::UI_ID*>(0x7D431E));
-				if (menuMagic) {
-					TES3_UI_updateMagicMenu();
-				}
-			}
-		}
-
 		void updateInventoryGUI(sol::table params) {
 			TES3::Reference* reference = getOptionalParamReference(params, "reference");
 			if (reference) {
@@ -2751,10 +2758,10 @@ namespace mwse {
 			}
 		}
 
-		void updateMagicGUI(sol::table params) {
+		void updateMagicGUI(sol::optional<sol::table> params) {
 			TES3::Reference* reference = getOptionalParamReference(params, "reference");
 			if (reference) {
-				updateMagicGUI_internal(reference);
+				updateMagicGUI_internal(reference, getOptionalParam(params, "updateSpells", true), getOptionalParam(params, "updateEnchantments", true));
 			}
 		}
 
@@ -2912,7 +2919,7 @@ namespace mwse {
 				// Do we need to update the magic menu?
 				auto enchantment = item->getEnchantment();
 				if (enchantment && (enchantment->castType == TES3::EnchantmentCastType::Once || enchantment->castType == TES3::EnchantmentCastType::OnUse)) {
-					updateMagicGUI_internal(reference);
+					updateMagicGUI_internal(reference, false, true);
 				}
 			}
 
@@ -3051,7 +3058,6 @@ namespace mwse {
 				// Do we need to update the magic menu?
 				auto enchantment = item->getEnchantment();
 				if (enchantment && (enchantment->castType == TES3::EnchantmentCastType::Once || enchantment->castType == TES3::EnchantmentCastType::OnUse)) {
-					updateMagicGUI_internal(reference);
 				}
 			}
 
@@ -3319,8 +3325,8 @@ namespace mwse {
 				// Do we need to update the magic menu?
 				auto enchantment = item->getEnchantment();
 				if (enchantment && (enchantment->castType == TES3::EnchantmentCastType::Once || enchantment->castType == TES3::EnchantmentCastType::OnUse)) {
-					updateMagicGUI_internal(fromReference);
-					updateMagicGUI_internal(toReference);
+					updateMagicGUI_internal(fromReference, false, true);
+					updateMagicGUI_internal(toReference, false, true);
 				}
 			}
 
@@ -3388,7 +3394,7 @@ namespace mwse {
 				// Do we need to update the magic menu?
 				auto enchantment = item->getEnchantment();
 				if (enchantment && (enchantment->castType == TES3::EnchantmentCastType::Once || enchantment->castType == TES3::EnchantmentCastType::OnUse)) {
-					updateMagicGUI_internal(toReference);
+					updateMagicGUI_internal(toReference, false, true);
 				}
 			}
 
@@ -3704,7 +3710,7 @@ namespace mwse {
 				// Do we need to update the magic menu?
 				auto enchantment = item->getEnchantment();
 				if (enchantment && (enchantment->castType == TES3::EnchantmentCastType::Once || enchantment->castType == TES3::EnchantmentCastType::OnUse)) {
-					updateMagicGUI_internal(mobile->reference);
+					updateMagicGUI_internal(mobile->reference, false, true);
 				}
 			}
 
