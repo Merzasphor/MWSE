@@ -2374,7 +2374,9 @@ namespace mwse {
 			}
 
 			// Update GUI elements if necessary.
-			updateMagicGUI_internal(reference, true, false);
+			if (spell->isActiveCast() && getOptionalParam(params, "updateGUI", true)) {
+				updateMagicGUI_internal(reference, true, false);
+			}
 
 			// Update modified flags.
 			object->getBaseObject()->setObjectModified(true);
@@ -2446,7 +2448,7 @@ namespace mwse {
 
 			// Update GUI elements if necessary.
 			auto mobilePlayer = TES3::WorldController::get()->getMobilePlayer();
-			if (mobilePlayer && mobile == mobilePlayer && spell->isActiveCast()) {
+			if (mobilePlayer && mobile == mobilePlayer && spell->isActiveCast() && getOptionalParam(params, "updateGUI", true)) {
 				TES3_UI_removeSpellFromGUIList(spell);
 			}
 

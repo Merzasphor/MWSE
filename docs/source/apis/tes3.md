@@ -280,7 +280,7 @@ local wasAdded = tes3.addSoulGem({ item = ... })
 Adds a spell to an actor's spell list. If the spell is passive, the effects will be applied.
 
 ```lua
-local wasAdded = tes3.addSpell({ reference = ..., actor = ..., spell = ... })
+local wasAdded = tes3.addSpell({ reference = ..., actor = ..., spell = ..., updateGUI = ... })
 ```
 
 **Parameters**:
@@ -289,6 +289,7 @@ local wasAdded = tes3.addSpell({ reference = ..., actor = ..., spell = ... })
 	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): Who to give the spell to. To manipulate an actor without specifying any particular reference, use `actor` instead.
 	* `actor` ([tes3actor](../../types/tes3actor), string): Who to give the spell to. Providing a base actor can be done before a save has been loaded, but may not correctly update effects for instanced versions of that actor in an active save.
 	* `spell` ([tes3spell](../../types/tes3spell), string): The spell to add.
+	* `updateGUI` (boolean): *Default*: `true`. If true, the GUI will be updated respsecting the adding of the spell. This can be useful to disable when batch-adding many spells. The batch should be ended with `tes3.updateMagicGUI` to reflect the changes.
 
 **Returns**:
 
@@ -2750,7 +2751,7 @@ tes3.removeSound({ sound = ..., reference = ... })
 Removes a spell from an actor's spell list. If the spell is passive, any active effects from that spell are retired.
 
 ```lua
-local wasRemoved = tes3.removeSpell({ reference = ..., actor = ..., spell = ... })
+local wasRemoved = tes3.removeSpell({ reference = ..., actor = ..., spell = ..., updateGUI = ... })
 ```
 
 **Parameters**:
@@ -2759,6 +2760,7 @@ local wasRemoved = tes3.removeSpell({ reference = ..., actor = ..., spell = ... 
 	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): Who to remove the spell from. To manipulate an actor without specifying any particular reference, use `actor` instead.
 	* `actor` ([tes3actor](../../types/tes3actor), string): Who to remove the spell from. Providing a base actor can be done before a save has been loaded, but may not correctly update effects for instanced versions of that actor in an active save.
 	* `spell` ([tes3spell](../../types/tes3spell), string): The spell to remove.
+	* `updateGUI` (boolean): *Default*: `true`. If true, the GUI will be updated respsecting the removal of the spell. This can be useful to disable when batch-removing many spells. The batch should be ended with `tes3.updateMagicGUI` to reflect the changes.
 
 **Returns**:
 

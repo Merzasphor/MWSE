@@ -248,6 +248,8 @@ function tes3.addSoulGem(params) end
 --- `actor`: tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance|string — Who to give the spell to. Providing a base actor can be done before a save has been loaded, but may not correctly update effects for instanced versions of that actor in an active save.
 --- 
 --- `spell`: tes3spell|string — The spell to add.
+--- 
+--- `updateGUI`: boolean — *Default*: `true`. If true, the GUI will be updated respsecting the adding of the spell. This can be useful to disable when batch-adding many spells. The batch should be ended with `tes3.updateMagicGUI` to reflect the changes.
 --- @return boolean wasAdded True if the spell was successfully added. This can be false if the actor's race or birthsign already contains the spell.
 function tes3.addSpell(params) end
 
@@ -256,6 +258,7 @@ function tes3.addSpell(params) end
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string Who to give the spell to. To manipulate an actor without specifying any particular reference, use `actor` instead.
 --- @field actor tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance|string Who to give the spell to. Providing a base actor can be done before a save has been loaded, but may not correctly update effects for instanced versions of that actor in an active save.
 --- @field spell tes3spell|string The spell to add.
+--- @field updateGUI boolean *Default*: `true`. If true, the GUI will be updated respsecting the adding of the spell. This can be useful to disable when batch-adding many spells. The batch should be ended with `tes3.updateMagicGUI` to reflect the changes.
 
 --- Changes the volume of a sound that is playing on a given reference.
 --- @param params tes3.adjustSoundVolume.params This table accepts the following values:
@@ -1521,6 +1524,8 @@ function tes3.removeSound(params) end
 --- `actor`: tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance|string — Who to remove the spell from. Providing a base actor can be done before a save has been loaded, but may not correctly update effects for instanced versions of that actor in an active save.
 --- 
 --- `spell`: tes3spell|string — The spell to remove.
+--- 
+--- `updateGUI`: boolean — *Default*: `true`. If true, the GUI will be updated respsecting the removal of the spell. This can be useful to disable when batch-removing many spells. The batch should be ended with `tes3.updateMagicGUI` to reflect the changes.
 --- @return boolean wasRemoved True if the spell was successfully removed. This can be false if the spell comes from a race or birthsign.
 function tes3.removeSpell(params) end
 
@@ -1529,6 +1534,7 @@ function tes3.removeSpell(params) end
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string Who to remove the spell from. To manipulate an actor without specifying any particular reference, use `actor` instead.
 --- @field actor tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance|string Who to remove the spell from. Providing a base actor can be done before a save has been loaded, but may not correctly update effects for instanced versions of that actor in an active save.
 --- @field spell tes3spell|string The spell to remove.
+--- @field updateGUI boolean *Default*: `true`. If true, the GUI will be updated respsecting the removal of the spell. This can be useful to disable when batch-removing many spells. The batch should be ended with `tes3.updateMagicGUI` to reflect the changes.
 
 --- This function will compile and run a mwscript chunk of code. This is not ideal to use, but can be used for features not yet exposed to lua.
 --- @param params tes3.runLegacyScript.params This table accepts the following values:
