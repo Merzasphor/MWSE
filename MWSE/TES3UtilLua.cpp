@@ -2385,6 +2385,7 @@ namespace mwse {
 			return true;
 		}
 
+		const auto TES3_UI_removeSpellFromGUIList = reinterpret_cast<void(__cdecl*)(TES3::Spell*)>(0x5E3BD0);
 		bool removeSpell(sol::table params) {
 			// Get some complex inputs...
 			TES3::Reference* reference = nullptr;
@@ -2416,19 +2417,35 @@ namespace mwse {
 
 			// End any active effects for the spell.
 			if (mobile && !spell->isActiveCast()) {
+				std::unordered_set<unsigned int> instancesToRetire;
+
 				for (const auto& effect : mobile->activeMagicEffects) {
+					if (instancesToRetire.find(effect.magicInstanceSerial) != instancesToRetire.end()) {
+						continue;
+					}
+
 					auto instance = effect.getInstance();
 					if (instance) {
 						auto source = &instance->sourceCombo;
 						if (source->sourceType == TES3::MagicSourceType::Spell && source->source.asSpell == spell) {
-							instance->retire(reference);
+							instancesToRetire.insert(effect.magicInstanceSerial);
 						}
+					}
+				}
+
+				if (!instancesToRetire.empty()) {
+					for (const auto serial : instancesToRetire) {
+						auto instance = TES3::WorldController::get()->magicInstanceController->getInstanceFromSerial(serial);
+						instance->retire(reference);
 					}
 				}
 			}
 
 			// Update GUI elements if necessary.
-			updateMagicGUI_internal(reference, true, false);
+			auto mobilePlayer = TES3::WorldController::get()->getMobilePlayer();
+			if (mobilePlayer && mobile == mobilePlayer && spell->isActiveCast()) {
+				TES3_UI_removeSpellFromGUIList(spell);
+			}
 
 			// Update modified flags.
 			object->getBaseObject()->setObjectModified(true);
