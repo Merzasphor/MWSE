@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[Adds a spell to an actor's spell list. If the spell is passive, the effects will be applied.]],
+	description = [[Removes a spell from an actor's spell list. If the spell is passive, any active effects from that spell are retired.]],
 	arguments = {{
 		name = "params",
 		type = "table",
@@ -12,5 +12,5 @@ return {
 	}},
 	returns = {
 		{ name = "wasRemoved", type = "boolean", description = "True if the spell was successfully removed. This can be false if the spell comes from a race or birthsign." },
-	}
+	},
 }

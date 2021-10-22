@@ -2415,7 +2415,7 @@ namespace mwse {
 			}
 
 			// End any active effects for the spell.
-			if (mobile) {
+			if (mobile && !spell->isActiveCast()) {
 				for (const auto& effect : mobile->activeMagicEffects) {
 					auto instance = effect.getInstance();
 					if (instance) {

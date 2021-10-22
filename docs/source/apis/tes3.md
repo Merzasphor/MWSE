@@ -2747,7 +2747,7 @@ tes3.removeSound({ sound = ..., reference = ... })
 
 ### `tes3.removeSpell`
 
-Adds a spell to an actor's spell list. If the spell is passive, the effects will be applied.
+Removes a spell from an actor's spell list. If the spell is passive, any active effects from that spell are retired.
 
 ```lua
 local wasRemoved = tes3.removeSpell({ reference = ..., actor = ..., spell = ... })

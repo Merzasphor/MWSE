@@ -1513,7 +1513,7 @@ function tes3.removeSound(params) end
 --- @field sound tes3sound|string The sound object, or id of the sound to look for.
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The reference the sound is attached to.
 
---- Adds a spell to an actor's spell list. If the spell is passive, the effects will be applied.
+--- Removes a spell from an actor's spell list. If the spell is passive, any active effects from that spell are retired.
 --- @param params tes3.removeSpell.params This table accepts the following values:
 --- 
 --- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — Who to remove the spell from. To manipulate an actor without specifying any particular reference, use `actor` instead.
