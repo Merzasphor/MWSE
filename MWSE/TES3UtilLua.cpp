@@ -2434,9 +2434,12 @@ namespace mwse {
 				}
 
 				if (!instancesToRetire.empty()) {
+					auto magicInstanceController = TES3::WorldController::get()->magicInstanceController;
 					for (const auto serial : instancesToRetire) {
-						auto instance = TES3::WorldController::get()->magicInstanceController->getInstanceFromSerial(serial);
-						instance->retire(reference);
+						auto instance = magicInstanceController->getInstanceFromSerial(serial);
+						if (instance) {
+							instance->retire(reference);
+						}
 					}
 				}
 			}
