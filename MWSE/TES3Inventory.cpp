@@ -4,8 +4,10 @@
 #include "LuaUtil.h"
 
 #include "TES3Actor.h"
+#include "TES3Enchantment.h"
 #include "TES3Item.h"
 #include "TES3MobileActor.h"
+#include "TES3Spell.h"
 #include "TES3Reference.h"
 
 #include "LuaManager.h"
@@ -13,6 +15,86 @@
 #include "LuaLeveledItemPickedEvent.h"
 
 namespace TES3 {
+	//
+	// QuickKey
+	//
+
+	std::tuple<TES3::BaseObject*, TES3::ItemData*> QuickKey::getMagic() {
+		if (type != QuickKeyType::Magic) {
+			return {};
+		}
+
+		if (spell) {
+			return { spell, nullptr };
+		}
+		else {
+			return { item, itemData };
+		}
+	}
+
+	void QuickKey::setMagic(TES3::BaseObject* object, sol::optional<TES3::ItemData*> maybeItemData) {
+		if (object == nullptr) {
+			throw std::invalid_argument("Could not assign quickslot to a castable object. Given nil value.");
+		}
+		else if (object->objectType == ObjectType::Spell) {
+			type = QuickKeyType::Magic;
+			spell = static_cast<Spell*>(object);
+			item = nullptr;
+			itemData = nullptr;
+		}
+		else if (object->isItem()) {
+			auto objectAsItem = static_cast<Item*>(object);
+			auto enchantment = objectAsItem->getEnchantment();
+			if (enchantment == nullptr || enchantment->castType != EnchantmentCastType::OnUse) {
+				throw std::invalid_argument("Could not assign object to a castable quickslot. Item is missing a castable enchantment.");
+			}
+
+			type = QuickKeyType::Magic;
+			spell = nullptr;
+			item = objectAsItem;
+			itemData = maybeItemData.value_or(nullptr);
+		}
+		else {
+			throw std::invalid_argument("Could not assign quickslot to a castable object. Must be a spell or item.");
+		}
+	}
+
+	std::tuple<TES3::Item*, TES3::ItemData*> QuickKey::getItem() {
+		if (type != QuickKeyType::Item) {
+			return {};
+		}
+		
+		return { item, itemData };
+	}
+
+	void QuickKey::setItem(TES3::Item* object, sol::optional<TES3::ItemData*> maybeItemData) {
+		if (object == nullptr) {
+			throw std::invalid_argument("Could not assign quickslot to an item. Given nil value.");
+		}
+		else {
+			type = QuickKeyType::Item;
+			spell = nullptr;
+			item = object;
+			itemData = maybeItemData.value_or(nullptr);
+		}
+	}
+
+	void QuickKey::clear() {
+		type = QuickKeyType::None;
+		spell = nullptr;
+		item = nullptr;
+		itemData = nullptr;
+	}
+
+	QuickKey* QuickKey::getQuickKey(unsigned int slot) {
+		const auto slots = reinterpret_cast<TES3::QuickKey*>(0x7D56B0);
+		return &slots[slot];
+	}
+	
+	nonstd::span<QuickKey, 9> QuickKey::getQuickKeys() {
+		return nonstd::span<QuickKey, 9>(reinterpret_cast<TES3::QuickKey*>(0x7D56B0), 9);
+	}
+
 	//
 	// EquipmentStack
 	//

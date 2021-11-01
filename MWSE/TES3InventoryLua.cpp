@@ -5,6 +5,7 @@
 
 #include "TES3Actor.h"
 #include "TES3Script.h"
+#include "TES3Spell.h"
 
 #include "TES3ScriptLua.h"
 
@@ -17,6 +18,26 @@ namespace mwse {
 			// Get our lua state.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
+
+			// Binding for TES3::QuickKey
+			{
+				// Start our usertype.
+				auto usertypeDefinition = state.new_usertype<TES3::QuickKey>("tes3quickKey");
+				usertypeDefinition["new"] = sol::no_constructor;
+
+				// Basic property binding.
+				usertypeDefinition["type"] = sol::readonly_property(&TES3::QuickKey::type);
+				usertypeDefinition["spell"] = sol::readonly_property(&TES3::QuickKey::spell);
+				usertypeDefinition["item"] = sol::readonly_property(&TES3::QuickKey::item);
+				usertypeDefinition["itemData"] = sol::readonly_property(&TES3::QuickKey::itemData);
+
+				// Basic function binding.
+				usertypeDefinition["clear"] = &TES3::QuickKey::clear;
+				usertypeDefinition["getMagic"] = &TES3::QuickKey::getMagic;
+				usertypeDefinition["setMagic"] = &TES3::QuickKey::setMagic;
+				usertypeDefinition["getItem"] = &TES3::QuickKey::getItem;
+				usertypeDefinition["setItem"] = &TES3::QuickKey::setItem;
+			}
 
 			// Binding for TES3::ItemData
 			{

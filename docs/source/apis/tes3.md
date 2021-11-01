@@ -1771,6 +1771,25 @@ local result = tes3.getPlayerTarget()
 
 ***
 
+### `tes3.getQuickKey`
+
+This function retrieves data for a quick key.
+
+```lua
+local result = tes3.getQuickKey({ key = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `key` (number): The key to retrieve data for. This is a value between 1 and 9.
+
+**Returns**:
+
+* `result` ([tes3quickKey](../../types/tes3quickKey))
+
+***
+
 ### `tes3.getReference`
 
 Fetches the first reference for a given base object ID.

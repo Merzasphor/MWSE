@@ -558,6 +558,15 @@ namespace mwse {
 			return archives;
 		}
 
+		TES3::QuickKey* getQuickKey(sol::table params) {
+			auto slotNumber = getOptionalParam(params, "slot", 0) - 1;
+			if (slotNumber < 0 || slotNumber > 8) {
+				throw std::invalid_argument("Invalid 'slot' param provided.");
+			}
+
+			return TES3::QuickKey::getQuickKey(slotNumber);
+		}
+
 		void playItemPickupSound(sol::optional<sol::table> params) {
 			TES3::Reference* reference = getOptionalParamExecutionReference(params);
 			TES3::Item* item = getOptionalParamObject<TES3::Item>(params, "item");
@@ -5213,6 +5222,7 @@ namespace mwse {
 			tes3["getPlayerGold"] = getPlayerGold;
 			tes3["getPlayerRef"] = getPlayerRef;
 			tes3["getPlayerTarget"] = getPlayerTarget;
+			tes3["getQuickKey"] = getQuickKey;
 			tes3["getReference"] = getReference;
 			tes3["getRegion"] = getRegion;
 			tes3["getScript"] = getScript;
