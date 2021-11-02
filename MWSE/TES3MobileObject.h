@@ -280,6 +280,7 @@ namespace TES3 {
 		//
 
 		Vector3 getBoundSize() const;
+		void setBoundSize(const Vector3&);
 		Vector3* getImpulseVelocity();
 		void setImpulseVelocityFromLua(sol::stack_object);
 		Vector3* getPosition();

@@ -282,11 +282,21 @@ Direct access to the actor's blind effect attribute.
 
 ### `boundSize`
 
-*Read-only*. A vector that shows the size of the bounding box in each direction.
+A vector that shows the size of the bounding box in each direction. Note that this is a convenience feature, and delivers the `x` and `y` values from `boundSize2D` with the `z` value of the mobile's `height`. Editing the values of the returned vector will not change the values that they came from, though setting the property itself will work.
 
 **Returns**:
 
 * `result` ([tes3vector3](../../types/tes3vector3))
+
+***
+
+### `boundSize2D`
+
+A vector that shows the size of the bounding box in each direction. Note that this is a convenience feature, and delivers the values from `boundSize2D` with the `z` value of the mobile's `height`.
+
+**Returns**:
+
+* `result` ([tes3vector2](../../types/tes3vector2))
 
 ***
 
@@ -571,7 +581,7 @@ The actor's fight AI value.
 
 ### `flags`
 
-*Read-only*. Access to the root mobile object flags, represented as an integer. Should not be accessed directly.
+Access to the root mobile object flags, represented as an integer. Should not be accessed directly.
 
 **Returns**:
 
@@ -701,7 +711,7 @@ No description yet available.
 
 ### `height`
 
-*Read-only*. The height of the mobile above the ground.
+The height of the mobile above the ground.
 
 **Returns**:
 
@@ -1263,7 +1273,7 @@ Controls if the mobile has movement collision active. When false, the mobile can
 
 ### `movementFlags`
 
-*Read-only*. Access to the root mobile object movement flags, represented as an integer. Should not be accessed directly.
+Access to the root mobile object movement flags, represented as an integer. Should not be accessed directly.
 
 **Returns**:
 
@@ -1363,7 +1373,7 @@ A vector that represents the 3D position of the object.
 
 ### `prevMovementFlags`
 
-*Read-only*. Access to the root mobile object movement flags from the previous frame, represented as an integer. Should not be accessed directly.
+Access to the root mobile object movement flags from the previous frame, represented as an integer. Should not be accessed directly.
 
 **Returns**:
 

@@ -10,19 +10,20 @@ namespace mwse {
 		void setUserdataForTES3MobileObject(sol::usertype<T>& usertypeDefinition) {
 			// Basic property binding.
 			usertypeDefinition["objectType"] = sol::readonly_property(&TES3::MobileObject::objectType);
-			usertypeDefinition["flags"] = sol::readonly_property(&TES3::MobileObject::actorFlags);
+			usertypeDefinition["flags"] = &TES3::MobileObject::actorFlags;
+			usertypeDefinition["boundSize2D"] = &TES3::MobileObject::boundSize;
 			usertypeDefinition["cellX"] = sol::readonly_property(&TES3::MobileObject::cellX);
 			usertypeDefinition["cellY"] = sol::readonly_property(&TES3::MobileObject::cellY);
 			usertypeDefinition["collisionData"] = sol::readonly_property(&TES3::MobileObject::getCollisions_lua);
-			usertypeDefinition["height"] = sol::readonly_property(&TES3::MobileObject::height);
+			usertypeDefinition["height"] = &TES3::MobileObject::height;
 			usertypeDefinition["inventory"] = sol::readonly_property(&TES3::MobileObject::getInventory);
-			usertypeDefinition["movementFlags"] = sol::readonly_property(&TES3::MobileObject::movementFlags);
-			usertypeDefinition["playerDistance"] = sol::readonly_property(&TES3::MobileObject::simulationDistance);
-			usertypeDefinition["prevMovementFlags"] = sol::readonly_property(&TES3::MobileObject::prevMovementFlags);
+			usertypeDefinition["movementFlags"] = &TES3::MobileObject::movementFlags;
+			usertypeDefinition["playerDistance"] = &TES3::MobileObject::simulationDistance;
+			usertypeDefinition["prevMovementFlags"] = &TES3::MobileObject::prevMovementFlags;
 			usertypeDefinition["reference"] = sol::readonly_property(&TES3::MobileObject::reference);
 
 			// Vectors we want to handle differently, and allow table aliasing.
-			usertypeDefinition["boundSize"] = sol::readonly_property(&TES3::MobileObject::getBoundSize);
+			usertypeDefinition["boundSize"] = sol::property(&TES3::MobileObject::getBoundSize, &TES3::MobileObject::setBoundSize);
 			usertypeDefinition["impulseVelocity"] = sol::property(&TES3::MobileObject::getImpulseVelocity, &TES3::MobileObject::setImpulseVelocityFromLua);
 			usertypeDefinition["position"] = sol::property(&TES3::MobileObject::getPosition, &TES3::MobileObject::setPositionFromLua);
 			usertypeDefinition["velocity"] = sol::property(&TES3::MobileObject::getVelocity, &TES3::MobileObject::setVelocityFromLua);

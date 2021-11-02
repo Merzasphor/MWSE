@@ -156,6 +156,12 @@ namespace TES3 {
 		return Vector3(boundSize.x, boundSize.y, height);
 	}
 
+	void MobileObject::setBoundSize(const Vector3& value) {
+		boundSize.x = value.x;
+		boundSize.y = value.y;
+		height = value.z;
+	}
+
 	Vector3* MobileObject::getImpulseVelocity() {
 		return &impulseVelocity;
 	}
