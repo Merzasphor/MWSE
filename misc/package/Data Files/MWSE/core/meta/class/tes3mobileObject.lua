@@ -3,7 +3,7 @@
 --- The base object from which all other mobiles (AI/movement using) structures derive.
 --- @class tes3mobileObject
 --- @field boundSize tes3vector3 A vector that shows the size of the bounding box in each direction. Note that this is a convenience feature, and delivers the `x` and `y` values from `boundSize2D` with the `z` value of the mobile's `height`. Editing the values of the returned vector will not change the values that they came from, though setting the property itself will work.
---- @field boundSize2D tes3vector2 A vector that shows the size of the bounding box in each direction. Note that this is a convenience feature, and delivers the values from `boundSize2D` with the `z` value of the mobile's `height`.
+--- @field boundSize2D tes3vector2 A vector that shows the size of the bounding box in X and Y directions. `boundSize` is a convenience property that exposes the bounding in 3 dimensions.
 --- @field cellX number *Read-only*. The X grid coordinate of the cell the mobile is in.
 --- @field cellY number *Read-only*. The Y grid coordinate of the cell the mobile is in.
 --- @field flags number Access to the root mobile object flags, represented as an integer. Should not be accessed directly.

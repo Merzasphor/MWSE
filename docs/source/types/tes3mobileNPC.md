@@ -252,7 +252,7 @@ A vector that shows the size of the bounding box in each direction. Note that th
 
 ### `boundSize2D`
 
-A vector that shows the size of the bounding box in each direction. Note that this is a convenience feature, and delivers the values from `boundSize2D` with the `z` value of the mobile's `height`.
+A vector that shows the size of the bounding box in X and Y directions. `boundSize` is a convenience property that exposes the bounding in 3 dimensions.
 
 **Returns**:
 
