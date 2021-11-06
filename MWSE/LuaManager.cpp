@@ -4077,8 +4077,8 @@ namespace mwse {
 			genCallEnforced(0x4A2A0F, 0x4A2A90, *reinterpret_cast<DWORD*>(&bookGetText));
 
 			// Event: Item Dropped.
-			//genCallEnforced(0x49B1DF, 0x4E4510, reinterpret_cast<DWORD>(OnItemDropped_ReferenceCreated)); // Store the last created dropped reference.
-			//genCallEnforced(0x49B542, 0x485C50, reinterpret_cast<DWORD>(OnItemDropped_UpdateExteriors)); // Send event for exterior cells.
+			genCallEnforced(0x49B1DF, 0x4E4510, reinterpret_cast<DWORD>(OnItemDropped_ReferenceCreated)); // Store the last created dropped reference.
+			genCallEnforced(0x49B542, 0x485C50, reinterpret_cast<DWORD>(OnItemDropped_UpdateExteriors)); // Send event for exterior cells.
 			genCallEnforced(0x485FCA, 0x485E40, reinterpret_cast<DWORD>(OnItemDropped)); // MCP-added function.
 			genCallEnforced(0x49B550, 0x485E40, reinterpret_cast<DWORD>(OnItemDropped)); // Vanilla function.
 
