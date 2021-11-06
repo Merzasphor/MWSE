@@ -2456,6 +2456,36 @@ namespace mwse {
 			}
 		}
 
+		static TES3::Reference* OnItemDroppedExterior_LastCreatedReference = nullptr;
+
+		void __fastcall OnItemDropped_ReferenceCreated(TES3::Reference* reference) {
+			// Call overwritten code.
+			reference->ctor();
+
+			// Store the last created reference for later use.
+			OnItemDroppedExterior_LastCreatedReference = reference;
+		}
+
+		const auto TES3_DataHandler_updateAllLights = reinterpret_cast<void(__thiscall*)(TES3::DataHandler*)>(0x485C50);
+		void __fastcall OnItemDropped_UpdateExteriors(TES3::DataHandler* dataHandler) {
+			// Call overwritten code.
+			dataHandler->updateLightingForExteriorCells();
+
+			if (OnItemDroppedExterior_LastCreatedReference) {
+				if (event::ItemDroppedEvent::getEventEnabled()) {
+					LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::ItemDroppedEvent(OnItemDroppedExterior_LastCreatedReference));
+				}
+
+				// Work-around for items being dropped not triggering activation. This should probably be consolidated elsewhere at some point.
+				if (event::ReferenceActivatedEvent::getEventEnabled()) {
+					auto cell = OnItemDroppedExterior_LastCreatedReference->getCell();
+					if (cell && cell->getCellActive()) {
+						OnItemDroppedExterior_LastCreatedReference->setReferenceActive();
+					}
+				}
+			}
+		}
+
 		//
 		// Event: Calculate hit chance.
 		//
@@ -4047,6 +4077,8 @@ namespace mwse {
 			genCallEnforced(0x4A2A0F, 0x4A2A90, *reinterpret_cast<DWORD*>(&bookGetText));
 
 			// Event: Item Dropped.
+			//genCallEnforced(0x49B1DF, 0x4E4510, reinterpret_cast<DWORD>(OnItemDropped_ReferenceCreated)); // Store the last created dropped reference.
+			//genCallEnforced(0x49B542, 0x485C50, reinterpret_cast<DWORD>(OnItemDropped_UpdateExteriors)); // Send event for exterior cells.
 			genCallEnforced(0x485FCA, 0x485E40, reinterpret_cast<DWORD>(OnItemDropped)); // MCP-added function.
 			genCallEnforced(0x49B550, 0x485E40, reinterpret_cast<DWORD>(OnItemDropped)); // Vanilla function.
 

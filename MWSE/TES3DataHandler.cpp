@@ -52,8 +52,8 @@ namespace TES3 {
 	// MeshData
 	//
 
-	const auto TES3_MeshData_loadMesh = reinterpret_cast<NI::AVObject *(__thiscall*)(MeshData*, const char *)>(0x4EE0A0);
-	NI::AVObject * MeshData::loadMesh(const char* path) {
+	const auto TES3_MeshData_loadMesh = reinterpret_cast<NI::AVObject * (__thiscall*)(MeshData*, const char*)>(0x4EE0A0);
+	NI::AVObject* MeshData::loadMesh(const char* path) {
 		DataHandler::currentlyLoadingMesh = path;
 		auto countBefore = NIFs->count;
 		auto mesh = TES3_MeshData_loadMesh(this, path);
@@ -116,7 +116,7 @@ namespace TES3 {
 
 		luaManager.savePersistentTimers();
 
-		bool saved = reinterpret_cast<signed char(__thiscall *)(NonDynamicData*, const char*, const char*)>(TES3_NonDynamicData_saveGame)(this, eventFileName.c_str(), eventSaveName.c_str());
+		bool saved = reinterpret_cast<signed char(__thiscall*)(NonDynamicData*, const char*, const char*)>(TES3_NonDynamicData_saveGame)(this, eventFileName.c_str(), eventSaveName.c_str());
 
 		luaManager.clearPersistentTimers();
 
@@ -146,7 +146,7 @@ namespace TES3 {
 			eventFileName += ".ess";
 		}
 
-		bool loaded = reinterpret_cast<bool(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_loadGameInGame)(this, eventFileName.c_str());
+		bool loaded = reinterpret_cast<bool(__thiscall*)(NonDynamicData*, const char*)>(TES3_NonDynamicData_loadGameInGame)(this, eventFileName.c_str());
 
 		// Pass a follow-up event if we successfully loaded and clear timers.
 		if (loaded) {
@@ -183,7 +183,7 @@ namespace TES3 {
 			eventFileName += ".ess";
 		}
 
-		bool loaded = reinterpret_cast<bool(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_loadGameMainMenu)(this, eventFileName.c_str());
+		bool loaded = reinterpret_cast<bool(__thiscall*)(NonDynamicData*, const char*)>(TES3_NonDynamicData_loadGameMainMenu)(this, eventFileName.c_str());
 
 		// Pass a follow-up event if we successfully loaded and clear timers.
 		if (loaded) {
@@ -203,11 +203,11 @@ namespace TES3 {
 	}
 
 	BaseObject* NonDynamicData::resolveObject(const char* id) {
-		return reinterpret_cast<BaseObject*(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_resolveObject)(this, id);
+		return reinterpret_cast<BaseObject * (__thiscall*)(NonDynamicData*, const char*)>(TES3_NonDynamicData_resolveObject)(this, id);
 	}
 
 	Reference* NonDynamicData::findFirstCloneOfActor(const char* baseId) {
-		return reinterpret_cast<Reference*(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_findFirstCloneOfActor)(this, baseId);
+		return reinterpret_cast<Reference * (__thiscall*)(NonDynamicData*, const char*)>(TES3_NonDynamicData_findFirstCloneOfActor)(this, baseId);
 	}
 
 	Spell* NonDynamicData::getSpellById(const char* id) {
@@ -219,19 +219,19 @@ namespace TES3 {
 	}
 
 	Script* NonDynamicData::findScriptByName(const char* name) {
-		return reinterpret_cast<Script*(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_findScriptByName)(this, name);
+		return reinterpret_cast<Script * (__thiscall*)(NonDynamicData*, const char*)>(TES3_NonDynamicData_findScriptByName)(this, name);
 	}
 
 	GlobalVariable* NonDynamicData::findGlobalVariable(const char* name) {
 #if MWSE_CUSTOM_GLOBALS
 		return globals->getVariable(name);
 #else
-		return reinterpret_cast<GlobalVariable*(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_findGlobalVariable)(this, name);
+		return reinterpret_cast<GlobalVariable * (__thiscall*)(NonDynamicData*, const char*)>(TES3_NonDynamicData_findGlobalVariable)(this, name);
 #endif
 	}
 
 	Dialogue* NonDynamicData::findDialogue(const char* name) {
-		return reinterpret_cast<Dialogue*(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_findDialogue)(this, name);
+		return reinterpret_cast<Dialogue * (__thiscall*)(NonDynamicData*, const char*)>(TES3_NonDynamicData_findDialogue)(this, name);
 	}
 
 	bool NonDynamicData::addSound(Sound* sound) {
@@ -244,7 +244,7 @@ namespace TES3 {
 	}
 
 	Sound* NonDynamicData::findSound(const char* id) {
-		return reinterpret_cast<Sound*(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_findSound)(this, id);
+		return reinterpret_cast<Sound * (__thiscall*)(NonDynamicData*, const char*)>(TES3_NonDynamicData_findSound)(this, id);
 	}
 
 	const auto TES3_NonDynamicData_findClass = reinterpret_cast<Class * (__thiscall*)(NonDynamicData*, const char*)>(0x4BA6B0);
@@ -252,22 +252,22 @@ namespace TES3 {
 		return TES3_NonDynamicData_findClass(this, id);
 	}
 
-	const auto TES3_NonDynamicData_findFaction = reinterpret_cast<Faction *(__thiscall*)(NonDynamicData*, const char*)>(0x4BA750);
+	const auto TES3_NonDynamicData_findFaction = reinterpret_cast<Faction * (__thiscall*)(NonDynamicData*, const char*)>(0x4BA750);
 	Faction* NonDynamicData::findFaction(const char* id) {
 		return TES3_NonDynamicData_findFaction(this, id);
 	}
 
 	const auto TES3_NonDynamicData_findClosestExteriorReferenceOfObject = reinterpret_cast<Reference * (__thiscall*)(NonDynamicData*, PhysicalObject*, Vector3*, bool, int)>(0x4B96F0);
-	Reference* NonDynamicData::findClosestExteriorReferenceOfObject(PhysicalObject* object, Vector3* position, bool searchForExteriorDoorMarker, int ignored){
+	Reference* NonDynamicData::findClosestExteriorReferenceOfObject(PhysicalObject* object, Vector3* position, bool searchForExteriorDoorMarker, int ignored) {
 		return TES3_NonDynamicData_findClosestExteriorReferenceOfObject(this, object, position, searchForExteriorDoorMarker, ignored);
 	}
 
 	bool NonDynamicData::addNewObject(BaseObject* object) {
-		return reinterpret_cast<signed char(__thiscall *)(NonDynamicData*, BaseObject*)>(TES3_NonDynamicData_addNewObject)(this, object);
+		return reinterpret_cast<signed char(__thiscall*)(NonDynamicData*, BaseObject*)>(TES3_NonDynamicData_addNewObject)(this, object);
 	}
 
 	void NonDynamicData::deleteObject(BaseObject* object) {
-		reinterpret_cast<void(__thiscall *)(NonDynamicData*, BaseObject*)>(TES3_NonDynamicData_deleteObject)(this, object);
+		reinterpret_cast<void(__thiscall*)(NonDynamicData*, BaseObject*)>(TES3_NonDynamicData_deleteObject)(this, object);
 	}
 
 	const auto TES3_NonDynamicData_respawnContainers = reinterpret_cast<void(__thiscall*)(NonDynamicData*)>(0x4C3B00);
@@ -275,13 +275,13 @@ namespace TES3 {
 		TES3_NonDynamicData_respawnContainers(this);
 	}
 
-	const auto TES3_NonDynamicData_getCellByGrid = reinterpret_cast<Cell *(__thiscall*)(NonDynamicData*, int, int)>(0x4BAA10);
-	Cell * NonDynamicData::getCellByGrid(int x, int y) {
+	const auto TES3_NonDynamicData_getCellByGrid = reinterpret_cast<Cell * (__thiscall*)(NonDynamicData*, int, int)>(0x4BAA10);
+	Cell* NonDynamicData::getCellByGrid(int x, int y) {
 		return TES3_NonDynamicData_getCellByGrid(this, x, y);
 	}
 
-	const auto TES3_NonDynamicData_getCellByName = reinterpret_cast<Cell *(__thiscall*)(NonDynamicData*, const char*)>(0x4BA9B0);
-	Cell * NonDynamicData::getCellByName(const char* name) {
+	const auto TES3_NonDynamicData_getCellByName = reinterpret_cast<Cell * (__thiscall*)(NonDynamicData*, const char*)>(0x4BA9B0);
+	Cell* NonDynamicData::getCellByName(const char* name) {
 		return TES3_NonDynamicData_getCellByName(this, name);
 	}
 
@@ -290,12 +290,12 @@ namespace TES3 {
 		return TES3_NonDynamicData_getRegionById(this, id);
 	}
 
-	MagicEffect * NonDynamicData::getMagicEffect(int id) {
+	MagicEffect* NonDynamicData::getMagicEffect(int id) {
 		return magicEffects->getEffectObject(id);
 	}
 
 	const auto TES3_NonDynamicData_createReference = reinterpret_cast<float(__thiscall*)(NonDynamicData*, PhysicalObject*, Vector3*, Vector3*, bool&, Reference*, Cell*)>(0x4C0E80);
-	float NonDynamicData::createReference(PhysicalObject * object, Vector3 * position, Vector3 * orientation, bool& cellWasCreated, Reference * existingReference, Cell * cell) {
+	float NonDynamicData::createReference(PhysicalObject* object, Vector3* position, Vector3* orientation, bool& cellWasCreated, Reference* existingReference, Cell* cell) {
 		return TES3_NonDynamicData_createReference(this, object, position, orientation, cellWasCreated, existingReference, cell);
 	}
 
@@ -321,7 +321,7 @@ namespace TES3 {
 		TES3_NonDynamicData_drawCellMapMarker(this, cell, unused);
 	}
 
-	const auto TES3_NonDynamicData_getBaseAnimationFile = reinterpret_cast<const char*(__thiscall*)(const TES3::NonDynamicData*, int, int)>(0x4C2720);
+	const auto TES3_NonDynamicData_getBaseAnimationFile = reinterpret_cast<const char* (__thiscall*)(const TES3::NonDynamicData*, int, int)>(0x4C2720);
 	const char* NonDynamicData::getBaseAnimationFile(int isFemale, int firstPerson) const {
 		return TES3_NonDynamicData_getBaseAnimationFile(this, isFemale, firstPerson);
 	}
@@ -343,7 +343,7 @@ namespace TES3 {
 	// DataHandler
 	//
 
-	DataHandler * DataHandler::get() {
+	DataHandler* DataHandler::get() {
 		return *reinterpret_cast<TES3::DataHandler**>(0x7C67E0);
 	}
 
@@ -382,13 +382,13 @@ namespace TES3 {
 		TES3_DataHandler_addSound(this, sound, reference, playbackFlags, volume, pitch, isVoiceover, unknown);
 	}
 
-	const auto TES3_DataHandler_addSoundById = reinterpret_cast<Sound*(__thiscall*)(DataHandler*, const char*, Reference*, int, unsigned char, float, int)>(0x48BCB0);
+	const auto TES3_DataHandler_addSoundById = reinterpret_cast<Sound * (__thiscall*)(DataHandler*, const char*, Reference*, int, unsigned char, float, int)>(0x48BCB0);
 	Sound* DataHandler::addSoundById(const char* soundId, Reference* reference, int playbackFlags, unsigned char volume, float pitch, int unknown) {
 		return TES3_DataHandler_addSoundById(this, soundId, reference, playbackFlags, volume, pitch, unknown);
 	}
 
 	const auto TES3_DataHandler_addTemporySound = reinterpret_cast<void(__thiscall*)(DataHandler*, const char*, Reference*, int, int, float, bool, Sound*)>(0x48C2B0);
-	void DataHandler::addTemporySound(const char* path, Reference * reference, int playbackFlags, int volume, float pitch, bool isVoiceover, Sound * sound) {
+	void DataHandler::addTemporySound(const char* path, Reference* reference, int playbackFlags, int volume, float pitch, bool isVoiceover, Sound* sound) {
 		if (mwse::lua::event::AddTempSoundEvent::getEventEnabled()) {
 			auto& luaManager = mwse::lua::LuaManager::getInstance();
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
@@ -412,7 +412,7 @@ namespace TES3 {
 	}
 
 	SoundEvent* DataHandler::getSoundPlaying(Sound* sound, Reference* reference) {
-		return reinterpret_cast<SoundEvent*(__thiscall *)(DataHandler*, Sound*, Reference*)>(TES3_DataHandler_getSoundPlaying)(this, sound, reference);
+		return reinterpret_cast<SoundEvent * (__thiscall*)(DataHandler*, Sound*, Reference*)>(TES3_DataHandler_getSoundPlaying)(this, sound, reference);
 	}
 
 	void DataHandler::adjustSoundVolume(Sound* sound, Reference* reference, unsigned char volume) {
@@ -425,17 +425,22 @@ namespace TES3 {
 	}
 
 	void DataHandler::removeSound(Sound* sound, Reference* reference) {
-		reinterpret_cast<void(__thiscall *)(DataHandler*, Sound*, Reference*)>(TES3_DataHandler_removeSound)(this, sound, reference);
+		reinterpret_cast<void(__thiscall*)(DataHandler*, Sound*, Reference*)>(TES3_DataHandler_removeSound)(this, sound, reference);
 	}
 
-	const auto TES3_DataHandler_loadSourceTexture = reinterpret_cast<NI::SourceTexture*(__thiscall*)(TES3::DataHandler*, const char*)>(0x48DB60);
+	const auto TES3_DataHandler_loadSourceTexture = reinterpret_cast<NI::SourceTexture * (__thiscall*)(TES3::DataHandler*, const char*)>(0x48DB60);
 	NI::Pointer<NI::SourceTexture> DataHandler::loadSourceTexture(const char* path) {
 		return TES3_DataHandler_loadSourceTexture(this, path);
 	}
 
-	const auto TES3_DataHandler_updateLightingForReference = reinterpret_cast<void(__thiscall*)(TES3::DataHandler *, TES3::Reference *)>(0x485E40);
-	void DataHandler::updateLightingForReference(Reference * reference) {
+	const auto TES3_DataHandler_updateLightingForReference = reinterpret_cast<void(__thiscall*)(TES3::DataHandler*, TES3::Reference*)>(0x485E40);
+	void DataHandler::updateLightingForReference(Reference* reference) {
 		TES3_DataHandler_updateLightingForReference(this, reference);
+	}
+
+	const auto TES3_DataHandler_updateLightingForExteriorCells = reinterpret_cast<void(__thiscall*)(TES3::DataHandler*)>(0x485C50);
+	void DataHandler::updateLightingForExteriorCells() {
+		TES3_DataHandler_updateLightingForExteriorCells(this);
 	}
 
 	const auto TES3_DataHandler_setDynamicLightingForReference = reinterpret_cast<void(__thiscall*)(DataHandler*, Reference*)>(0x485B00);
