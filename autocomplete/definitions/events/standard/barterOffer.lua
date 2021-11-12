@@ -9,13 +9,12 @@ return {
         },
         ["success"] = {
             type = "boolean",
-            --readOnly = true,
             description = "Whether the trade was accepted or not.",
         },
         ["value"] = {
             type = "number",
             readOnly = true,
-            description = "Total value in gold of items being traded.",
+            description = "Total value in gold of items being traded. Negative means the player owes coin, positive means the player gets coin.",
         },
         ["offer"] = {
             type = "number",

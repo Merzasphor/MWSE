@@ -6,7 +6,7 @@ return {
         ["reference"] = {
             type = "tes3reference",
             readOnly = true,
-            description = "The reference which was deactivated.",
+            description = "The reference which was activated.",
         },
     },
     filter = "reference",

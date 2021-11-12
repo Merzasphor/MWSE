@@ -6,7 +6,7 @@ hide:
 # Sound Mix Types
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.soundGenType.*` namespace. For example, `tes3.soundGenType.roar` has a value of `1`.
+	These values are available in Lua by their identifier in the `tes3.soundMix.*` namespace. For example, `tes3.soundMix.footsteps` has a value of `3`.
 
 ID | Sound Mix Type
 -- | ---------------------
