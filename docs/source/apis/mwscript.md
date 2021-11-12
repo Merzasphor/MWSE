@@ -463,7 +463,7 @@ local result = mwscript.hasItemEquipped({ reference = ..., item = ... })
 
 * `params` (table)
 	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
-	* `item` ([tes3item](../../types/tes3item), string): The item to be added.
+	* `item` ([tes3item](../../types/tes3item), string): The item to check for.
 
 **Returns**:
 

@@ -21,5 +21,5 @@ event.register("exerciseSkill", exerciseSkillCallback)
 ## Event Data
 
 * `progress` (number): The amount of experience that skill is gaining. Note that experience is not on a scale of 1 to 100. This value is modifiable.
-* `skill` (number): *Read-only*. The skill that is gaining experience. This can be changed to provide experience to a different skill.
+* `skill` (number): The ID of the skill that is gaining experience. The IDs used are available in Lua by their indentifier in the tes3.skill.* namespace. This can be changed to provide experience to a different skill.
 

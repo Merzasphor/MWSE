@@ -9,4 +9,4 @@
 --- @field offer number *Read-only*. Offered gold amount.
 --- @field selling table *Read-only*. Table of tes3what being sold. These items will be transfered to bartender's inventory on a successful bartering event.
 --- @field success boolean Whether the trade was accepted or not.
---- @field value number *Read-only*. Total value in gold of items being traded.
+--- @field value number *Read-only*. Total value in gold of items being traded. Negative means the player owes coin, positive means the player gets coin.

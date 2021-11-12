@@ -1,6 +1,6 @@
 # addSound
 
-This event is triggered when a sound is player by the game or when tes3.playSound is called. This event can be blocked.
+This event is triggered when a sound is played by the game or when tes3.playSound is called.
 
 ```lua
 --- @param e addSoundEventData
@@ -17,10 +17,10 @@ event.register("addSound", addSoundCallback)
 
 ## Event Data
 
-* `flags` (number): *Read-only*. 
-* `isVoiceover` (boolean): 
+* `flags` (number): *Read-only*. A flag whether the sound is looping or not. 0 means the sound doesn't loop, 1 means the sound loops.
+* `isVoiceover` (boolean): A flag whether the sound is a voiced line, which are usually found in the Sound\Vo data folder.
 * `pitch` (number): Pitch of the sound.
 * `reference` ([tes3reference](../../types/tes3reference)): The reference which is emiting the sound.
 * `sound` ([tes3sound](../../types/tes3sound)): The sound going to be played.
-* `volume` (number): The volume of the sound. Volume = 1 means 100 % loudness. Values lower than 1 the sound quiter.
+* `volume` (number): The volume of the sound. Volume = 1 means 100 % loudness. Values lower than 1 make the sound quiter.
 

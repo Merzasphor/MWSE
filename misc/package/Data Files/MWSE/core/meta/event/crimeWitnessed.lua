@@ -3,7 +3,7 @@
 --- This event fires when a crime is witnessed by an actor.
 --- @class crimeWitnessedEventData
 --- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.
---- @field position tes3vector *Read-only*. The position that the crime ocurred at.
+--- @field position tes3vector3 *Read-only*. The position that the crime ocurred at.
 --- @field realTimestamp number *Read-only*. The timestamp that the crime ocurred at.
 --- @field type string *Read-only*. The type of crime that was committed.
 --- @field value number *Read-only*. The bounty value of the crime.

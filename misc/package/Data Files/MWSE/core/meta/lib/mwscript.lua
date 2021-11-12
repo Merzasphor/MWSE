@@ -321,14 +321,14 @@ function mwscript.getSpellEffects(params) end
 --- 
 --- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- 
---- `item`: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — The item to be added.
+--- `item`: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — The item to check for.
 --- @return boolean result No description yet available.
 function mwscript.hasItemEquipped(params) end
 
 ---Table parameter definitions for `mwscript.hasItemEquipped`.
 --- @class mwscript.hasItemEquipped.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
---- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string The item to be added.
+--- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string The item to check for.
 
 --- Wrapper for the PlaceAtPC mwscript function.
 --- @deprecated

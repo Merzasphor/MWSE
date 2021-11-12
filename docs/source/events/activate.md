@@ -37,7 +37,6 @@ event.register("activate", activateCallback)
 
 	```lua
 	
-	-- Show the id when the player activates an object.
 	local function myOnActivateCallback(e)
 		-- We only care if the PC is activating something.
 		if (e.activator ~= tes3.player) then

@@ -18,9 +18,11 @@
 tes3combatSession = {}
 
 --- This method equips an item to the mobile in this combat sesion.
-function tes3combatSession:changeEquipment() end
+--- @param equipmentStack tes3equipmentStack An item to equip.
+function tes3combatSession:changeEquipment(equipmentStack) end
 
 --- Selects the alchemy item with the greatest value, for a given effect ID and loads it into the selectedAlchemy property.
+--- @param id number No description yet available.
 --- @return number result No description yet available.
-function tes3combatSession:selectAlchemyWithEffect() end
+function tes3combatSession:selectAlchemyWithEffect(id) end
 
