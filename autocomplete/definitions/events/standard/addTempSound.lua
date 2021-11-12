@@ -14,21 +14,19 @@ return {
         ["flags"] = {
             type = "number",
             readOnly = true,
-            description = "",
+            description = "A flag whether the sound is looping or not. 0 means the sound doesn't loop, 1 means the sound loops.",
         },
         ["volume"] = {
             type = "number",
-            description = "The volume of the sound. Volume = 1 means 100 % loudness. Values lower than 1 the sound quiter."
+            description = "The volume of the sound. Volume = 1 means 100 % loudness. Values lower than 1 make the sound quiter."
         },
         ["pitch"] = {
             type = "number",
-            --readOnly = true,
             description = "Pitch of the sound.",
         },
         ["isVoiceover"] = {
             type = "boolean",
-            --readOnly = true,
-            description = "",
+            description = "A flag whether the sound is a voiced line, which are usually found in the Sound\\Vo data folder.",
         },
         ["sound"] = {
             type = "tes3sound",
