@@ -23,13 +23,10 @@ The Morrowind Script Extender is open source software that welcomes contribution
 
 #### Visual Studio
 
-Contributing to MWSE requires a copy of [Visual Studio 2019](https://www.visualstudio.com/downloads/), with the following features enabled:
+Contributing to MWSE requires a copy of [Visual Studio 2022](https://www.visualstudio.com/downloads/), with the following features enabled:
 
 - Workloads:
 	- Desktop development with C++
-	- Individual components:
-	- VC++ 2019 v142 toolset (x86,x64)
-	- Windows 10 SDK for Desktop C++ [x86 and x64] (any version will do)
 
 #### LuaJIT
 
