@@ -1,6 +1,8 @@
 return {
 	type = "function",
-	description = [[Plays a sound on a given reference. Provides control over volume (including volume channel), pitch, and loop control.]],
+	description = [[Plays a sound on a given reference. Provides control over volume (including volume channel), pitch, and loop control.
+	
+	Note: sounds in MP3 format can only be played if they are inside \Vo\ folder. The format is: 64 Kbps CBR, 44100 kHz, 16-bit mono]],
 	arguments = {{
 		name = "params",
 		type = "table",
