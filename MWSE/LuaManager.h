@@ -80,6 +80,7 @@ namespace mwse {
 			void releaseLuaThread();
 
 			bool overrideScript(const char* scriptId, sol::object function);
+			bool clearScriptOverride(const char* scriptId);
 
 			// Lua-bound static functions.
 			static void lua_print(sol::object object);

@@ -62,6 +62,24 @@ It is usually better to use mwse.buildDate instead.
 
 ## Functions
 
+### `mwse.clearScriptOverride`
+
+Configures MWSE to no longer execute a lua function instead when a script would run. This undoes the work of `mwse.overrideScript`.
+
+```lua
+local result = mwse.clearScriptOverride(scriptId)
+```
+
+**Parameters**:
+
+* `scriptId` (string)
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
 ### `mwse.getVersion`
 
 Equivalent to mwse.version.

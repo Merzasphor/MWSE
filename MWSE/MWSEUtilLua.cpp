@@ -30,6 +30,10 @@ namespace mwse::lua {
 		return LuaManager::getInstance().overrideScript(scriptId, target);
 	}
 
+	bool clearScriptOverride(const char* scriptId) {
+		return LuaManager::getInstance().clearScriptOverride(scriptId);
+	}
+
 	sol::object breakpoint() {
 		while (ShowCursor(TRUE) < 0);
 		return sol::nil;
@@ -60,6 +64,7 @@ namespace mwse::lua {
 		lua_mwse["getVirtualMemoryUsage"] = getVirtualMemoryUsage;
 		lua_mwse["iconv"] = iconv;
 		lua_mwse["overrideScript"] = overrideScript;
+		lua_mwse["clearScriptOverride"] = clearScriptOverride;
 		lua_mwse["virtualKeyPressed"] = getIsVirtualKeyPressed;
 	}
 }

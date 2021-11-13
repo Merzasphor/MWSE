@@ -15,6 +15,11 @@
 --- It is usually better to use mwse.buildDate instead.
 mwse = {}
 
+--- Configures MWSE to no longer execute a lua function instead when a script would run. This undoes the work of `mwse.overrideScript`.
+--- @param scriptId string No description yet available.
+--- @return boolean result No description yet available.
+function mwse.clearScriptOverride(scriptId) end
+
 --- Equivalent to mwse.version.
 --- @return number result No description yet available.
 function mwse.getVersion() end
