@@ -14,8 +14,7 @@ return {
 		},
         ["source"] = {
             type = "",
-            --readOnly = true,
-            description = "",
+            description = "The source of the skill raise. Its values are tes3.skillRaiseSource.* constants.",
         },
 	},
 	filter = "skill",
