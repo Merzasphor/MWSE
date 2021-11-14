@@ -15,9 +15,9 @@ return {
 		reference = {
 			type = "tes3reference",
 			readOnly = true,
-			description = "mobile’s associated reference.",
+			description = "The mobile’s associated reference.",
 		},
-        	attacker = {
+        attacker = {
 			type = "tes3mobileActor",
 			readOnly = true,
 			description = "The mobile actor dealing the damage. Can be nil.",
@@ -25,7 +25,7 @@ return {
 		attackerReference = {
 			type = "tes3reference",
 			readOnly = true,
-			description = "attacker mobile's associated reference. Can be nil.",
+			description = "The attacker mobile's associated reference. Can be nil.",
 		},
 		projectile = {
 			type = "tes3mobileProjectile",
@@ -43,9 +43,9 @@ return {
 			description = "tes3magicSourceInstance of a spell that caused damage. Can be nil.",
 		},
 		source = {
-			type ="damageSourceType",
+			type ="tes3.damageSource constants",
 			readOnly = true,
-			description = "The origin of damage. Values of this variable can be: \"script\", \"fall\", \"suffocation\", \"attack\", \"magic\", \"shield\" or nil.",
+			description = "The origin of damage. Values of this variable can be: \"script\", \"fall\", \"suffocation\", \"attack\", \"magic\", \"shield\" or nil. These damage sources are present as tes3.damageSource.* constants, and those should be used instead. See the example. Damage with \"shield\" source comes from magic shields. Other sources are self-explanatory.",
 		},
 	},
 	blockable = true,

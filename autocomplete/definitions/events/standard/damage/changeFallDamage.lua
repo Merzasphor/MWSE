@@ -7,7 +7,7 @@ local function onDamage(e)
     end
 
     -- Check if the damage was caused by a fall
-    if e.source ~= "fall" then
+    if e.source ~= tes3.damageSource.fall then
         return
     end
 
