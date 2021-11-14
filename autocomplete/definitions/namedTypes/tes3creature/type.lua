@@ -1,5 +1,5 @@
 return {
 	type = "value",
-	description = [[The type of the creature, represented by a number for normal, daedra, undead, or humanoid.]],
+	description = [[The type of the creature. Maps to tes3.creatureType.* constants.]],
 	valuetype = "number",
 }

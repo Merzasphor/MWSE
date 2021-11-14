@@ -497,7 +497,7 @@ Access to the creature's swims flag.
 
 ### `type`
 
-The type of the creature, represented by a number for normal, daedra, undead, or humanoid.
+The type of the creature. Maps to tes3.creatureType.* constants.
 
 **Returns**:
 
