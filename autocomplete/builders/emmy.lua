@@ -118,7 +118,7 @@ local function writeFunction(package, file, namespaceOverride)
 	end
 
 	for _, returnPackage in ipairs(common.getConsistentReturnValues(package) or {}) do
-		file:write(string.format("--- @return %s %s %s\n", getAllPossibleVariationsOfType(returnPackage.type) or "any", returnPackage.name or "result", common.getDescriptionString(returnPackage)))
+		file:write(string.format("--- @return %s %s %s\n", getAllPossibleVariationsOfType(returnPackage.type) or "any", returnPackage.name or "result", formatLineBreaks(common.getDescriptionString(returnPackage))))
 	end
 
 	file:write(string.format("function %s(%s) end\n\n", namespaceOverride or package.namespace, table.concat(getParamNames(package), ", ")))
@@ -127,7 +127,7 @@ local function writeFunction(package, file, namespaceOverride)
 		file:write(string.format("---Table parameter definitions for `%s`.\n", package.namespace))
 		file:write(string.format("--- @class %s.params\n", package.namespace))
 		for _, param in ipairs(package.arguments[1].tableParams) do
-			file:write(string.format("--- @field %s %s %s\n", param.name, getAllPossibleVariationsOfType(param.type), common.getDescriptionString(param)))
+			file:write(string.format("--- @field %s %s %s\n", param.name, getAllPossibleVariationsOfType(param.type), formatLineBreaks(common.getDescriptionString(param))))
 		end
 		file:write("\n")
 	end
