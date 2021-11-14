@@ -320,7 +320,7 @@ namespace mwse {
 				return false;
 			}
 
-			TES3::Script* script = dataHandler->nonDynamicData->findScriptByName(scriptId);
+			auto script = dataHandler->nonDynamicData->findScriptByName(scriptId);
 			if (script == nullptr) {
 				return false;
 			}
@@ -343,6 +343,20 @@ namespace mwse {
 			}
 
 			return false;
+		}
+
+		bool LuaManager::clearScriptOverride(const char* scriptId) {
+			auto dataHandler = TES3::DataHandler::get();
+			if (dataHandler == nullptr) {
+				return false;
+			}
+
+			auto script = dataHandler->nonDynamicData->findScriptByName(scriptId);
+			if (script == nullptr) {
+				return false;
+			}
+
+			return scriptOverrides.erase((unsigned long)script) == 1;
 		}
 
 		void LuaManager::lua_print(sol::object message) {

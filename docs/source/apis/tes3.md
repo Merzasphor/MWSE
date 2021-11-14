@@ -477,13 +477,14 @@ local offersService, refusalReply = tes3.checkMerchantOffersService(reference, s
 Determines if a merchant trades in a given item.
 
 ```lua
-local trades = tes3.checkMerchantTradesItem(item, reference)
+local trades = tes3.checkMerchantTradesItem({ item = ..., reference = ... })
 ```
 
 **Parameters**:
 
-* `item` ([tes3item](../../types/tes3item), string)
-* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string)
+* `params` (table)
+	* `item` ([tes3item](../../types/tes3item), string)
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string)
 
 **Returns**:
 
