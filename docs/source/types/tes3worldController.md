@@ -40,7 +40,7 @@ A value in the range [0, 1]. The (relative) maximum distance setting for AI simu
 
 **Returns**:
 
-* `result` (tes3audioController)
+* `result` ([tes3audioController](../../types/tes3audioController))
 
 ***
 

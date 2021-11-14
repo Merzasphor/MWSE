@@ -321,7 +321,7 @@ The scene graph reference node for this object.
 
 **Returns**:
 
-* `result` (tes3script)
+* `result` ([tes3script](../../types/tes3script))
 
 ***
 

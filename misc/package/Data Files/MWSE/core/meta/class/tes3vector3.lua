@@ -37,7 +37,7 @@ function tes3vector3:heightDifference(vec) end
 
 --- Calculates the interpolated position against the target vector using the distance parameter.
 --- @param targetPoint tes3vector3 No description yet available.
---- @param distance float No description yet available.
+--- @param distance number No description yet available.
 --- @return tes3vector3 result No description yet available.
 function tes3vector3:interpolate(targetPoint, distance) end
 

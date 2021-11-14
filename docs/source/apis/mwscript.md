@@ -427,7 +427,7 @@ local result = mwscript.getScript()
 
 **Returns**:
 
-* `result` (tes3script)
+* `result` ([tes3script](../../types/tes3script))
 
 ***
 
@@ -614,7 +614,7 @@ local result = mwscript.scriptRunning({ script = ... })
 **Parameters**:
 
 * `params` (table)
-	* `script` (tes3script, string)
+	* `script` ([tes3script](../../types/tes3script), string)
 
 **Returns**:
 
@@ -674,7 +674,7 @@ local executed = mwscript.startScript({ reference = ..., script = ... })
 
 * `params` (table)
 	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
-	* `script` (tes3script, string)
+	* `script` ([tes3script](../../types/tes3script), string)
 
 **Returns**:
 
@@ -714,7 +714,7 @@ local executed = mwscript.stopScript({ reference = ..., script = ... })
 
 * `params` (table)
 	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
-	* `script` (tes3script, string)
+	* `script` ([tes3script](../../types/tes3script), string)
 
 **Returns**:
 

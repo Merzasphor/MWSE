@@ -241,7 +241,7 @@ The script that runs on the object.
 
 **Returns**:
 
-* `result` (tes3script)
+* `result` ([tes3script](../../types/tes3script))
 
 ***
 

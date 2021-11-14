@@ -241,7 +241,7 @@ The script that runs on the object.
 
 **Returns**:
 
-* `result` (tes3script)
+* `result` ([tes3script](../../types/tes3script))
 
 ***
 
@@ -368,7 +368,7 @@ tes3alchemy.create({ id = ..., name = ..., script = ..., mesh = ..., icon = ...,
 * `params` (table)
 	* `id` (string): The new object's ID. Must be unique.
 	* `name` (string): *Default*: `"Potion"`. The new item's name.
-	* `script` (tes3script): *Optional*. A script to attach to the object.
+	* `script` ([tes3script](../../types/tes3script)): *Optional*. A script to attach to the object.
 	* `mesh` (string): *Default*: `"m\Misc_Potion_Bargain_01.nif"`. The mesh to use for the object.
 	* `icon` (string): *Default*: `"m\Tx_potion_bargain_01.nif"`. The icon to use for the object.
 	* `objectFlags` (number): *Default*: `8`. The object flags initially set. Force set as modified.

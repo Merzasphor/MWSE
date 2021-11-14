@@ -61,12 +61,48 @@ local timer = timer.delayOneFrame(callback, type)
 
 ***
 
+### `timer.register`
+
+Registers a named timer with a callback to persist between game sessions. Bear in mind that nothing in MWSE is sandboxed, so all the registered timers are in the global namespace. Consider prefixing your timer with mod name or something else to avoid name colligions. For instance, "iceCreamMod:myTimer".
+
+```lua
+timer.register({ name = ..., fn = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `name` (string): Name of the registered timer.
+	* `fn` (function): A callback function for the timer.
+
+??? example "Example: Show a Message After 1 Day"
+
+	```lua
+	
+	local function showMessage()
+		tes3.messageBox("One day later...")
+	end
+	
+	timer.register("testExample:OneDayTimer", showMessage)
+	
+	timer.start({
+	    type = timer.game,
+	    persist = true,
+	    iterations = 1,
+	    duration = 24,
+	    callback = "testExample:OneDayTimer" -- Notice that the callback isn't a function, but a custom timer.
+	})
+
+	```
+
+***
+
 ### `timer.start`
 
 Creates a timer.
 
 ```lua
-local timer = timer.start({ type = ..., duration = ..., callback = ..., iterations = ... })
+local timer = timer.start({ type = ..., duration = ..., callback = ..., iterations = ..., persist = ... })
 ```
 
 **Parameters**:
@@ -76,6 +112,7 @@ local timer = timer.start({ type = ..., duration = ..., callback = ..., iteratio
 	* `duration` (number): Duration of the timer. The method of time passing depends on the timer type.
 	* `callback` (function): The callback function that will execute when the timer expires.
 	* `iterations` (number): *Default*: `1`. The number of iterations to run. Use `-1` for infinite looping.
+	* `persist` (boolean): *Default*: `true`. Registering a timer with persist flag set to true will serialize the callback string in the save to persist between sessions. See timer.register().
 
 **Returns**:
 
@@ -87,13 +124,13 @@ local timer = timer.start({ type = ..., duration = ..., callback = ..., iteratio
 	local timeLeft = 0;
 	
 	local function onTimerExpired() 
-		timeLeft = timeLeft - 1;
-		tes3.messageBox("%d seconds left", timeLeft);
+		timeLeft = timeLeft - 1
+		tes3.messageBox("%d seconds left", timeLeft)
 	end
 	
 	local function onActivate(eventData)
 		if (eventData.activator == tes3.player) then
-			timeLeft = 10;
+			timeLeft = 10
 			timer.start{ duration = 1, iterations = 10, type = timer.simulate, callback = onTimerExpired }
 		end
 	end

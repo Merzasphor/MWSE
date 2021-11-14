@@ -30,7 +30,7 @@ Returns an ease of use script context for variable access.
 
 **Returns**:
 
-* `result` (tes3scriptContext)
+* `result` ([tes3scriptContext](../../types/tes3scriptContext))
 
 ***
 
@@ -80,7 +80,7 @@ A requirement, typically associated with ownership and when the player may freel
 
 **Returns**:
 
-* `result` (tes3script)
+* `result` ([tes3script](../../types/tes3script))
 
 ***
 

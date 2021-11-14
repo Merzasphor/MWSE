@@ -293,6 +293,26 @@ local string = tes3baseObject:__tojson()
 
 ***
 
+### `hasItemEquipped`
+
+Checks if the actor has provided item equipped.
+
+```lua
+local result = tes3actor:hasItemEquipped({ item = ..., itemData = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `item` ([tes3item](../../types/tes3item), string): The item to perform a check for.
+	* `itemData` ([tes3itemData](../../types/tes3itemData)): *Optional*.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
 ### `offersService`
 
 Checks if the actor will offer a service in dialogue. This an offer and may still be refused by dialogue checks. To also get the result of dialogue checks, use tes3.checkMerchantOffersService.

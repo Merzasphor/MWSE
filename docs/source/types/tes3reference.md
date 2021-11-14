@@ -73,7 +73,7 @@ The blocked state of the object.
 
 **Returns**:
 
-* `result` (tes3scriptContext)
+* `result` ([tes3scriptContext](../../types/tes3scriptContext))
 
 ***
 

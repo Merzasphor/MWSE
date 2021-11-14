@@ -1814,8 +1814,12 @@ local reference = tes3.getReference(id)
 Gets the current region the player is in. This checks the player's current cell first, but will fall back to the last exterior cell.
 
 ```lua
-local region = tes3.getRegion()
+local region = tes3.getRegion(useDoors)
 ```
+
+**Parameters**:
+
+* `useDoors` (boolean): *Optional*.
 
 **Returns**:
 
@@ -1837,7 +1841,7 @@ local script = tes3.getScript(id)
 
 **Returns**:
 
-* `script` (tes3script)
+* `script` ([tes3script](../../types/tes3script))
 
 ***
 
@@ -2505,6 +2509,8 @@ local executed = tes3.playItemPickupSound({ reference = ..., item = ..., pickup 
 ### `tes3.playSound`
 
 Plays a sound on a given reference. Provides control over volume (including volume channel), pitch, and loop control.
+	
+	Note: sounds in MP3 format can only be played if they are inside \Vo\ folder. The format is: 64 Kbps CBR, 44100 kHz, 16-bit mono
 
 ```lua
 local executed = tes3.playSound({ sound = ..., reference = ..., loop = ..., mixChannel = ..., volume = ..., pitch = ..., soundPath = ... })
@@ -2679,8 +2685,10 @@ local result = tes3.rayTest({ position = ..., direction = ..., findAll = ..., ma
 	    ignore = { tes3.player }
 	}
 	
+	local ref
+	
 	if result then
-	    local ref = tes3.makeSafeObjectHandle(result.reference)
+	    ref = tes3.makeSafeObjectHandle(result.reference)
 	end
 	
 	-- Before using ref, now we can chack if it is valid
@@ -2799,7 +2807,7 @@ local executed = tes3.runLegacyScript({ script = ..., source = ..., command = ..
 **Parameters**:
 
 * `params` (table)
-	* `script` (tes3script): *Default*: `tes3.worldController.scriptGlobals`. The base script to base the execution from.
+	* `script` ([tes3script](../../types/tes3script)): *Default*: `tes3.worldController.scriptGlobals`. The base script to base the execution from.
 	* `source` (number): The compilation source to use. Defaults to tes3.scriptSource.default
 	* `command` (string): The script text to compile and run.
 	* `variables` (tes3scriptVariables): *Optional*. If a reference is provided, the reference's variables will be used.

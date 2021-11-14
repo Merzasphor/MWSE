@@ -12,6 +12,20 @@
 --- @field inventory tes3inventory *Read-only*. The items currently carried by the actor.
 tes3actor = {}
 
+--- Checks if the actor has provided item equipped.
+--- @param params tes3actor.hasItemEquipped.params This table accepts the following values:
+--- 
+--- `item`: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — The item to perform a check for.
+--- 
+--- `itemData`: tes3itemData — *Optional*. No description yet available.
+--- @return boolean result No description yet available.
+function tes3actor:hasItemEquipped(params) end
+
+---Table parameter definitions for `tes3actor.hasItemEquipped`.
+--- @class tes3actor.hasItemEquipped.params
+--- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string The item to perform a check for.
+--- @field itemData tes3itemData *Optional*. No description yet available.
+
 --- Checks if the actor will offer a service in dialogue. This an offer and may still be refused by dialogue checks. To also get the result of dialogue checks, use tes3.checkMerchantOffersService.
 --- @param service number Use one of the tes3.merchantService.* constants.
 --- @return boolean result No description yet available.

@@ -280,7 +280,7 @@ local result = tes3nonDynamicData:findScript(id)
 
 **Returns**:
 
-* `result` (tes3script)
+* `result` ([tes3script](../../types/tes3script))
 
 ***
 

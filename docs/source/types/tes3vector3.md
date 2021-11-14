@@ -173,7 +173,7 @@ local result = tes3vector3:interpolate(targetPoint, distance)
 **Parameters**:
 
 * `targetPoint` ([tes3vector3](../../types/tes3vector3))
-* `distance` (float)
+* `distance` (number)
 
 **Returns**:
 

@@ -301,7 +301,7 @@ The script that runs on the object.
 
 **Returns**:
 
-* `result` (tes3script)
+* `result` ([tes3script](../../types/tes3script))
 
 ***
 
@@ -358,6 +358,26 @@ local string = tes3baseObject:__tojson()
 **Returns**:
 
 * `string` (string)
+
+***
+
+### `hasItemEquipped`
+
+Checks if the actor has provided item equipped.
+
+```lua
+local result = tes3actor:hasItemEquipped({ item = ..., itemData = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `item` ([tes3item](../../types/tes3item), string): The item to perform a check for.
+	* `itemData` ([tes3itemData](../../types/tes3itemData)): *Optional*.
+
+**Returns**:
+
+* `result` (boolean)
 
 ***
 
