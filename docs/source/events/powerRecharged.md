@@ -1,6 +1,6 @@
 # powerRecharged
 
-
+This event triggers when a power is recharged, and may be used again. In Morrowind, powers are a type of spells which may be cast once per day and don't cost any magicka.
 
 ```lua
 --- @param e powerRechargedEventData
@@ -17,7 +17,7 @@ event.register("powerRecharged", powerRechargedCallback)
 
 ## Event Data
 
-* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. 
-* `power` ([tes3spell](../../types/tes3spell)): *Read-only*. 
+* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The actor whose power recharged.
+* `power` ([tes3spell](../../types/tes3spell)): *Read-only*. A power which recharged.
 * `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. Mobile’s associated reference.
 

@@ -1,6 +1,6 @@
 # spellCreated
 
-
+This event is triggered when a new spell is created using spellmaking services or by a script using tes3spell.create().
 
 ```lua
 --- @param e spellCreatedEventData
@@ -17,6 +17,6 @@ event.register("spellCreated", spellCreatedCallback)
 
 ## Event Data
 
-* `source` (): 
-* `spell` ([tes3spell](../../types/tes3spell)): 
+* `source` (): This can be "script" or "service".
+* `spell` ([tes3spell](../../types/tes3spell)): A spell which was created.
 
