@@ -73,6 +73,34 @@ namespace mwse {
 				usertypeDefinition["enchantment"] = sol::readonly_property(&TES3::RechargingItem::enchantment);
 			}
 
+			// Binding for TES3::SplashController::ActiveSplash.
+			{
+				// Start our usertype.
+				auto usertypeDefinition = state.new_usertype<TES3::SplashController::ActiveSplash>("tes3splashControllerActiveSplash");
+				usertypeDefinition["new"] = sol::no_constructor;
+
+				// Basic property binding.
+				usertypeDefinition["age"] = &TES3::SplashController::ActiveSplash::age;
+				usertypeDefinition["maxAge"] = &TES3::SplashController::ActiveSplash::maxAge;
+				usertypeDefinition["node"] = sol::readonly_property(&TES3::SplashController::ActiveSplash::node);
+			}
+
+			// Binding for TES3::SplashController.
+			{
+				// Start our usertype.
+				auto usertypeDefinition = state.new_usertype<TES3::SplashController>("tes3splashController");
+				usertypeDefinition["new"] = sol::no_constructor;
+
+				// Basic property binding.
+				usertypeDefinition["activeSplashes"] = sol::readonly_property(&TES3::SplashController::activeSplashes);
+				usertypeDefinition["bloodMeshCount"] = sol::readonly_property(&TES3::SplashController::bloodMeshCount);
+				usertypeDefinition["bloodMeshes"] = sol::readonly_property(&TES3::SplashController::getBloodMeshes);
+				usertypeDefinition["bloodSplashDurations"] = sol::readonly_property(&TES3::SplashController::getBloodSplashDurations);
+				usertypeDefinition["bloodTextureCount"] = sol::readonly_property(&TES3::SplashController::bloodTextureCount);
+				usertypeDefinition["bloodTextureProperties"] = sol::readonly_property(&TES3::SplashController::getBloodTextureProperties);
+				usertypeDefinition["bloodTextures"] = sol::readonly_property(&TES3::SplashController::getBloodTextures);
+			}
+
 			// Binding for TES3::WorldController.
 			{
 				// Start our usertype.
@@ -145,6 +173,7 @@ namespace mwse {
 				usertypeDefinition["shadowCamera"] = sol::readonly_property(&TES3::WorldController::shadowCamera);
 				usertypeDefinition["shadows"] = &TES3::WorldController::bShadows;
 				usertypeDefinition["showSubtitles"] = &TES3::WorldController::showSubtitles;
+				usertypeDefinition["splashController"] = sol::readonly_property(&TES3::WorldController::splashController);
 				usertypeDefinition["splashscreenCamera"] = sol::readonly_property(&TES3::WorldController::splashscreenCamera);
 				usertypeDefinition["stopGameLoop"] = &TES3::WorldController::stopGameLoop;
 				usertypeDefinition["sunglareFader"] = sol::readonly_property(&TES3::WorldController::sunglareFader);

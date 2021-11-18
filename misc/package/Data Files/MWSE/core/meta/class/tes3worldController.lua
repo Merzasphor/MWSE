@@ -68,6 +68,7 @@
 --- @field shadowCamera tes3worldControllerRenderCamera *Read-only*. 
 --- @field shadows number An integer in the range [0,6]. Controls the amount of actor shadows drawn. Corresponds to the "Real-time shadows" option in the Options menu.
 --- @field showSubtitles boolean If subtitles are shown. Corresponds to the "Subtitles" option in the Options menu.
+--- @field splashController tes3splashController *Read-only*. Access to the splash controller.
 --- @field splashscreenCamera tes3worldControllerRenderCamera *Read-only*. 
 --- @field stopGameLoop boolean When true, the game simulation loop will stop. Not normally used, and may have other unknown effects.
 --- @field sunglareFader tes3fader *Read-only*. Screen overlay fader for sunglare.

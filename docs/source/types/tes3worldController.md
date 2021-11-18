@@ -637,6 +637,16 @@ If subtitles are shown. Corresponds to the "Subtitles" option in the Options men
 
 ***
 
+### `splashController`
+
+*Read-only*. Access to the splash controller.
+
+**Returns**:
+
+* `result` ([tes3splashController](../../types/tes3splashController))
+
+***
+
 ### `splashscreenCamera`
 
 *Read-only*. 

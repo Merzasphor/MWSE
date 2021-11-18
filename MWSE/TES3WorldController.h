@@ -215,6 +215,12 @@ namespace TES3 {
 		NI::Pointer<NI::SourceTexture> bloodTextures[8]; // 0x30
 		NI::Pointer<NI::TexturingProperty> bloodTextureProperties[8]; // 0x50
 		IteratedList<ActiveSplash*>* activeSplashes; // 0x70
+
+		std::reference_wrapper<NI::Pointer<NI::Node>[4]> getBloodMeshes();
+		std::reference_wrapper<float[6]> getBloodSplashDurations();
+		std::reference_wrapper<NI::Pointer<NI::SourceTexture>[8]> getBloodTextures();
+		std::reference_wrapper<NI::Pointer<NI::TexturingProperty>[8]> getBloodTextureProperties();
+
 	};
 	static_assert(sizeof(SplashController) == 0x74, "TES3::SplashController failed size validation");
 	static_assert(sizeof(SplashController::ActiveSplash) == 0xC, "TES3::SplashController::ActiveSplash failed size validation");

@@ -400,6 +400,26 @@ namespace TES3 {
 	}
 
 	//
+	// SplashController
+	//
+
+	std::reference_wrapper<NI::Pointer<NI::Node>[4]> SplashController::getBloodMeshes() {
+		return std::ref(bloodMeshes);
+	}
+
+	std::reference_wrapper<float[6]> SplashController::getBloodSplashDurations() {
+		return std::ref(bloodSplashDurations);
+	}
+
+	std::reference_wrapper<NI::Pointer<NI::SourceTexture>[8]> SplashController::getBloodTextures() {
+		return std::ref(bloodTextures);
+	}
+
+	std::reference_wrapper<NI::Pointer<NI::TexturingProperty>[8]> SplashController::getBloodTextureProperties() {
+		return std::ref(bloodTextureProperties);
+	}
+
+	//
 	// WorldController
 	//
 
