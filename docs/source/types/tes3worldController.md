@@ -450,7 +450,7 @@ The sound played when a UI button or other control is clicked.
 
 **Returns**:
 
-* `result` (tes3menuController)
+* `result` ([tes3uiMenuController](../../types/tes3uiMenuController))
 
 ***
 
