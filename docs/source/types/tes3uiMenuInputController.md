@@ -20,7 +20,7 @@ A handle back to the main menu controller.
 
 **Returns**:
 
-* `result` (tes3uiMenuController)
+* `result` ([tes3uiMenuController](../../types/tes3uiMenuController))
 
 ***
 

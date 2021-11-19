@@ -46,7 +46,7 @@
 --- @field menuAlpha number A value in the range [0, 1]. The alpha value of the black background of menus. Corresponds to the "Menu transparency" option in the Options menu.
 --- @field menuCamera tes3worldControllerRenderCamera *Read-only*. 
 --- @field menuClickSound tes3sound The sound played when a UI button or other control is clicked.
---- @field menuController tes3menuController *Read-only*. The controller responsible for the menu system.
+--- @field menuController tes3uiMenuController *Read-only*. The controller responsible for the menu system.
 --- @field menuSizeSound tes3sound Unused sound. Not used when a menu is resized.
 --- @field missSound tes3sound The sound played when a weapon fails its to-hit check.
 --- @field mobController tes3mobController *Read-only*. The controller responsible for mobile objects and collision.
