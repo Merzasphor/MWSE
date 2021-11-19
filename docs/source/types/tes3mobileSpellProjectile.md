@@ -225,6 +225,16 @@ The angular speed that the projectile rotates around its local Y axis.
 
 ***
 
+### `spellInstance`
+
+A quick access to tes3magicSourceInstance object of this tes3mobileProjectile if aplicable.
+
+**Returns**:
+
+* `result` ([tes3magicSourceInstance](../../types/tes3magicSourceInstance))
+
+***
+
 ### `velocity`
 
 Access to the current velocity of the projectile.
