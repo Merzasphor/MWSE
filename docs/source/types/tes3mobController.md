@@ -20,7 +20,7 @@ The controller responsible for mobile objects and collision.
 
 **Returns**:
 
-* `result` ([tes3processManager](../../types/tes3processManager))
+* `result` ([tes3projectileController](../../types/tes3projectileController))
 
 ***
 

@@ -2,5 +2,5 @@ return {
 	type = "value",
 	readOnly = true,
 	description = [[Access to Projectile Controller.]],
-	valuetype = "tes3processManager",
+	valuetype = "tes3projectileController",
 }
