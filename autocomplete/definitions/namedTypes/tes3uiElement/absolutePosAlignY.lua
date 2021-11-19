@@ -1,5 +1,5 @@
 return {
 	type = "value",
-	description = [[See absolutePosAlignY.]],
+	description = [[See absolutePosAlignX.]],
 	valuetype = "number",
 }
