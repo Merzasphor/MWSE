@@ -1,0 +1,4 @@
+return {
+	type = "function",
+	description = [[]],
+}

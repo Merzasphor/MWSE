@@ -480,7 +480,7 @@ The sound played when a weapon fails its to-hit check.
 
 **Returns**:
 
-* `result` (tes3mobController)
+* `result` ([tes3mobController](../../types/tes3mobController))
 
 ***
 
