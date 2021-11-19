@@ -81,7 +81,7 @@ Friendly access to the actor's flag that controls if AI is active.
 
 **Returns**:
 
-* `result` (tes3aiPlanner)
+* `result` ([tes3aiPlanner](../../types/tes3aiPlanner))
 
 ***
 

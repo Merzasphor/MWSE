@@ -21,7 +21,7 @@ This type inherits the following: [tes3actor](../../types/tes3actor), [tes3physi
 
 **Returns**:
 
-* `result` (tes3aiConfig)
+* `result` ([tes3aiConfig](../../types/tes3aiConfig))
 
 ***
 
