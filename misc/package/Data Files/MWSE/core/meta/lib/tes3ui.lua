@@ -18,6 +18,10 @@ function tes3ui.acquireTextInput(element) end
 --- @param capture boolean Turns on mouse capture for the element currently processing a mouse event if true, sending all further mouse events to that element. Turns off capture if false.
 function tes3ui.captureMouseDrag(capture) end
 
+--- Closes the Journal.
+--- @return boolean result No description yet available.
+function tes3ui.closeJournal() end
+
 --- Creates a help layer menu. Help layer menus include notifications and tooltips that are always above the rest of the interface. The game realizes this using a separate menu root and set of functions.
 --- 
 --- Note, to create tooltips with the correct behaviour, use tes3ui.createTooltipMenu.
@@ -125,6 +129,11 @@ function tes3ui.leaveMenuMode(id) end
 --- @param isCommand boolean No description yet available.
 function tes3ui.logToConsole(text, isCommand) end
 
+--- 
+--- @param unknown nil No description yet available.
+--- @return string executed No description yet available.
+function tes3ui.lookupID(unknown) end
+
 --- Checks if the game is in menu mode.
 --- @return boolean result No description yet available.
 function tes3ui.menuMode() end
@@ -150,9 +159,56 @@ function tes3ui.registerProperty(s) end
 --- @param text string No description yet available.
 function tes3ui.showBookMenu(text) end
 
+--- 
+--- @param params tes3ui.showDialogueMessage.params This table accepts the following values:
+--- 
+--- `text`: string — *Default*: ``. The text of the shown message.
+--- 
+--- `style`: number — *Default*: `0`. 
+--- 
+--- `answerIndex`: number — *Default*: `0`. 
+function tes3ui.showDialogueMessage(params) end
+
+---Table parameter definitions for `tes3ui.showDialogueMessage`.
+--- @class tes3ui.showDialogueMessage.params
+--- @field text string *Default*: ``. The text of the shown message.
+--- @field style number *Default*: `0`. 
+--- @field answerIndex number *Default*: `0`. 
+
+--- 
+--- @param params tes3ui.showInventorySelectMenu.params This table accepts the following values:
+--- 
+--- `actorRef`: tes3reference — *Default*: `tes3player`. 
+--- 
+--- `callback`: function — *Optional*. 
+--- 
+--- `filter`: function|string — *Optional*. 
+--- 
+--- `title`: string — 
+--- 
+--- `noResultsText`: string — *Optional*. 
+--- 
+--- `noResultsCallback`: function — *Optional*. 
+--- 
+--- `leaveMenuMode`: boolean — *Optional*. Is the menu going to be closed or open after closing Inventory Select Menu. By default, it will be in the state before this function was called.
+function tes3ui.showInventorySelectMenu(params) end
+
+---Table parameter definitions for `tes3ui.showInventorySelectMenu`.
+--- @class tes3ui.showInventorySelectMenu.params
+--- @field actorRef tes3reference *Default*: `tes3player`. 
+--- @field callback function *Optional*. 
+--- @field filter function|string *Optional*. 
+--- @field title string 
+--- @field noResultsText string *Optional*. 
+--- @field noResultsCallback function *Optional*. 
+--- @field leaveMenuMode boolean *Optional*. Is the menu going to be closed or open after closing Inventory Select Menu. By default, it will be in the state before this function was called.
+
 --- Displays the scroll menu with arbitrary text.
 --- @param text string No description yet available.
 function tes3ui.showScrollMenu(text) end
+
+--- 
+function tes3ui.stealHelpMenu() end
 
 --- Controls hiding of world object tooltips.
 --- @param suppress boolean Turns on suppression if true, immediately hiding any active tooltip and further world object tooltips. Turns off suppression if false.
@@ -164,6 +220,12 @@ function tes3ui.updateBarterMenuTiles() end
 --- Forces the game to update the contents menu's tile GUI elements.
 function tes3ui.updateContentsMenuTiles() end
 
+--- Forces the game to update the dialog disposition GUI element.
+function tes3ui.updateDialogDisposition() end
+
+--- Forces the game to update the enchanting menu GUI.
+function tes3ui.updateEnchantingMenu() end
+
 --- Tells the game to update the character image in the player's inventory. It will update immediately if the inventory is open, or the next time the inventory is opened otherwise.
 function tes3ui.updateInventoryCharacterImage() end
 
@@ -172,4 +234,7 @@ function tes3ui.updateInventorySelectTiles() end
 
 --- Forces the game to update the inventory tile GUI elements.
 function tes3ui.updateInventoryTiles() end
+
+--- Forces the game to update the spellmaking menu GUI.
+function tes3ui.updateSpellmakingMenu() end
 

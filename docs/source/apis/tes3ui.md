@@ -51,6 +51,20 @@ tes3ui.captureMouseDrag(capture)
 
 ***
 
+### `tes3ui.closeJournal`
+
+Closes the Journal.
+
+```lua
+local result = tes3ui.closeJournal()
+```
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
 ### `tes3ui.createHelpLayerMenu`
 
 Creates a help layer menu. Help layer menus include notifications and tooltips that are always above the rest of the interface. The game realizes this using a separate menu root and set of functions.
@@ -317,6 +331,24 @@ tes3ui.logToConsole(text, isCommand)
 
 ***
 
+### `tes3ui.lookupID`
+
+
+
+```lua
+local executed = tes3ui.lookupID(unknown)
+```
+
+**Parameters**:
+
+* `unnamed`
+
+**Returns**:
+
+* `executed` (string)
+
+***
+
 ### `tes3ui.menuMode`
 
 Checks if the game is in menu mode.
@@ -395,6 +427,44 @@ tes3ui.showBookMenu(text)
 
 ***
 
+### `tes3ui.showDialogueMessage`
+
+
+
+```lua
+tes3ui.showDialogueMessage({ text = ..., style = ..., answerIndex = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `text` (string): *Default*: ``. The text of the shown message.
+	* `style` (number): *Default*: `0`. 
+	* `answerIndex` (number): *Default*: `0`. 
+
+***
+
+### `tes3ui.showInventorySelectMenu`
+
+
+
+```lua
+tes3ui.showInventorySelectMenu({ actorRef = ..., callback = ..., filter = ..., title = ..., noResultsText = ..., noResultsCallback = ..., leaveMenuMode = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `actorRef` ([tes3reference](../../types/tes3reference)): *Default*: `tes3player`. 
+	* `callback` (function): *Optional*. 
+	* `filter` (function, string): *Optional*. 
+	* `title` (string): 
+	* `noResultsText` (string): *Optional*. 
+	* `noResultsCallback` (function): *Optional*. 
+	* `leaveMenuMode` (boolean): *Optional*. Is the menu going to be closed or open after closing Inventory Select Menu. By default, it will be in the state before this function was called.
+
+***
+
 ### `tes3ui.showScrollMenu`
 
 Displays the scroll menu with arbitrary text.
@@ -406,6 +476,16 @@ tes3ui.showScrollMenu(text)
 **Parameters**:
 
 * `text` (string)
+
+***
+
+### `tes3ui.stealHelpMenu`
+
+
+
+```lua
+tes3ui.stealHelpMenu()
+```
 
 ***
 
@@ -443,6 +523,26 @@ tes3ui.updateContentsMenuTiles()
 
 ***
 
+### `tes3ui.updateDialogDisposition`
+
+Forces the game to update the dialog disposition GUI element.
+
+```lua
+tes3ui.updateDialogDisposition()
+```
+
+***
+
+### `tes3ui.updateEnchantingMenu`
+
+Forces the game to update the enchanting menu GUI.
+
+```lua
+tes3ui.updateEnchantingMenu()
+```
+
+***
+
 ### `tes3ui.updateInventoryCharacterImage`
 
 Tells the game to update the character image in the player's inventory. It will update immediately if the inventory is open, or the next time the inventory is opened otherwise.
@@ -469,6 +569,16 @@ Forces the game to update the inventory tile GUI elements.
 
 ```lua
 tes3ui.updateInventoryTiles()
+```
+
+***
+
+### `tes3ui.updateSpellmakingMenu`
+
+Forces the game to update the spellmaking menu GUI.
+
+```lua
+tes3ui.updateSpellmakingMenu()
 ```
 
 ***

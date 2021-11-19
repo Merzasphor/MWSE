@@ -20,7 +20,7 @@ Sets element position to a point relative to the parent element. 0.0 = left/top 
 
 ### `absolutePosAlignY`
 
-See absolutePosAlignY.
+See absolutePosAlignX.
 
 **Returns**:
 

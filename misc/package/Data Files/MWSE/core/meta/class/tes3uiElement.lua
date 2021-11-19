@@ -7,7 +7,7 @@
 --- @field absolutePosAlignX number Sets element position to a point relative to the parent element. 0.0 = left/top content edge, 1.0 = right/bottom content edge. The positioning is absolute, which frees the element from the standard flow layout and allows overlapping elements.
 ---     
 ---     Bug note: Elements may not respond to widthProportional/heightProportional sizing after either of these properties are set. If you need to use both you should consider testing if it works first.
---- @field absolutePosAlignY number See absolutePosAlignY.
+--- @field absolutePosAlignY number See absolutePosAlignX.
 --- @field alpha number Element alpha colour, using range [0.0, 1.0]. Used to composite elements. If you wish to hide an element completely, use `disable` instead.
 --- @field autoHeight boolean When `true`, automatically expands element dimensions to fit child elements. Dimensions are restricted by minWidth, minHeight, maxWidth and maxHeight properties.
 --- @field autoWidth boolean When `true`, automatically expands element dimensions to fit child elements. Dimensions are restricted by minWidth, minHeight, maxWidth and maxHeight properties.
