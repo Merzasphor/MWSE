@@ -13,3 +13,4 @@ ID | Type
 0  | Major
 1  | Minor
 2  | Miscellaneous
+2  | Misc
