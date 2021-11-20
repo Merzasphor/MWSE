@@ -21,7 +21,7 @@ ID | Dialogue Type
 !!! tip
 	These values are available in Lua by their identifier in the `tes3.dialoguePage.voice.*` namespace. For example, `tes3.dialoguePage.voice.attack` has a value of `5`.
 
-ID | Voice Types
+ID | Voice
 -- | -----------
 0  | Hello
 1  | Idle
@@ -35,7 +35,7 @@ ID | Voice Types
 !!! tip
 	These values are available in Lua by their identifier in the `tes3.dialoguePage.greeting.*` namespace. For example, `tes3.dialoguePage.greeting.greeting4` has a value of `4`.
 
-ID | Greeting Types
+ID | Greeting
 -- | --------------
 0  | Greeting 0
 1  | Greeting 1
@@ -52,7 +52,7 @@ ID | Greeting Types
 !!! tip
 	These values are available in Lua by their identifier in the `tes3.dialoguePage.service.*` namespace. For example, `tes3.dialoguePage.service.infoRefusal` has a value of `0`.
 
-ID | Service Types
+ID | Service
 -- | -------------------
 0  | Info Refusal
 1  | Admire Success

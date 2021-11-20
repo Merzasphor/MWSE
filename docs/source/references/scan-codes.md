@@ -114,7 +114,7 @@ ID   | Scan Code
 42   | leftShift
 43   | backslash
 43   | backSlash
-43   | |
+43   | \|
 43   | pipe
 44   | z
 45   | x
@@ -123,7 +123,7 @@ ID   | Scan Code
 48   | b
 49   | n
 50   | m
-51   | 
+51   | ,
 51   | comma
 51   | <
 51   | lessThan

@@ -3,7 +3,7 @@ hide:
   - toc
 ---
 
-# Attributes
+# Body Part Attachments
 
 !!! tip
 	These values are available in Lua by their identifier in the `tes3.bodyPartAttachment.*` namespace. For example, `tes3.bodyPartAttachment.rightForearm2` has a value of `9`.
