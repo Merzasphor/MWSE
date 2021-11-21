@@ -71,12 +71,12 @@ local result = tes3bodyPartManager:getActiveBodyPart({ layer = ..., index = ... 
 The method fetches active body part of a actor for the given item.
 
 ```lua
-local result = tes3bodyPartManager:getActiveBodyPartForItem(unknown)
+local result = tes3bodyPartManager:getActiveBodyPartForItem(item)
 ```
 
 **Parameters**:
 
-* `unnamed`
+* `item` ([tes3item](../../types/tes3item)): The item to fetch the active body part for.
 
 **Returns**:
 
@@ -173,12 +173,12 @@ tes3bodyPartManager:setBodyPartForObject({ object = ..., index = ..., bodyPart =
 The method updates all body parts for a given reference.
 
 ```lua
-tes3bodyPartManager:updateForReference(unknown)
+tes3bodyPartManager:updateForReference(reference)
 ```
 
 **Parameters**:
 
-* `unnamed`
+* `reference` ([tes3reference](../../types/tes3reference)): The reference whose body parts to update.
 
 ***
 

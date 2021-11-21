@@ -23,9 +23,9 @@ function tes3bodyPartManager:getActiveBodyPart(params) end
 --- @field index number A value in tes3.activeBodyPart.* constants.
 
 --- The method fetches active body part of a actor for the given item.
---- @param unknown nil No description yet available.
+--- @param item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon The item to fetch the active body part for.
 --- @return tes3bodyPartManagerActiveBodyPart result No description yet available.
-function tes3bodyPartManager:getActiveBodyPartForItem(unknown) end
+function tes3bodyPartManager:getActiveBodyPartForItem(item) end
 
 --- The method fetches the NiNode-derived object for the loaded mesh of an active body part at a given layer and position.
 --- @param params tes3bodyPartManager.getActiveBodyPartNode.params This table accepts the following values:
@@ -102,6 +102,6 @@ function tes3bodyPartManager:setBodyPartForObject(params) end
 --- @field isFirstPerson boolean *Default*: `false`. A flag which controls whether the body part is used in first person.
 
 --- The method updates all body parts for a given reference.
---- @param unknown nil No description yet available.
-function tes3bodyPartManager:updateForReference(unknown) end
+--- @param reference tes3reference The reference whose body parts to update.
+function tes3bodyPartManager:updateForReference(reference) end
 
