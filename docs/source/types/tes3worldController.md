@@ -26,11 +26,11 @@ A value in the range [0, 1]. The (relative) maximum distance setting for AI simu
 
 ### `armCamera`
 
-*Read-only*. 
+*Read-only*. The access to the first person arms camera.
 
 **Returns**:
 
-* `result` (tes3worldControllerRenderCamera)
+* `result` ([tes3worldControllerRenderCamera](../../types/tes3worldControllerRenderCamera))
 
 ***
 
@@ -354,6 +354,16 @@ No known effect.
 
 ***
 
+### `instance`
+
+*Read-only*. 
+
+**Returns**:
+
+* `result` (HINSTANCE)
+
+***
+
 ### `itemRepairSound`
 
 The sound played when an item is repaired.
@@ -426,11 +436,11 @@ A value in the range [0, 1]. The alpha value of the black background of menus. C
 
 ### `menuCamera`
 
-*Read-only*. 
+*Read-only*. The access to the camera used to render menus.
 
 **Returns**:
 
-* `result` (tes3worldControllerRenderCamera)
+* `result` ([tes3worldControllerRenderCamera](../../types/tes3worldControllerRenderCamera))
 
 ***
 
@@ -547,6 +557,16 @@ The kind of music being played. Only updates when music is not muted.
 
 ***
 
+### `parentWindowHandle`
+
+*Read-only*. Handle to the parent window.
+
+**Returns**:
+
+* `result` (HWND)
+
+***
+
 ### `projectionDistance`
 
 
@@ -609,11 +629,11 @@ Period between reflection updates for pixel shader water. Not functional with MG
 
 ### `shadowCamera`
 
-*Read-only*. 
+*Read-only*. The access to the camera used for shadows rendering.
 
 **Returns**:
 
-* `result` (tes3worldControllerRenderCamera)
+* `result` ([tes3worldControllerRenderCamera](../../types/tes3worldControllerRenderCamera))
 
 ***
 
@@ -649,11 +669,11 @@ If subtitles are shown. Corresponds to the "Subtitles" option in the Options men
 
 ### `splashscreenCamera`
 
-*Read-only*. 
+*Read-only*. The access to the camera used to render splashscreens.
 
 **Returns**:
 
-* `result` (tes3worldControllerRenderCamera)
+* `result` ([tes3worldControllerRenderCamera](../../types/tes3worldControllerRenderCamera))
 
 ***
 
@@ -703,7 +723,7 @@ When true, the game simulation loop will stop. Not normally used, and may have o
 
 **Returns**:
 
-* `result` (object)
+* `result` ([tes3fader](../../types/tes3fader))
 
 ***
 
@@ -779,11 +799,11 @@ The camera FOV when the player is a werewolf.
 
 ### `worldCamera`
 
-*Read-only*. 
+*Read-only*. The access to the world camera.
 
 **Returns**:
 
-* `result` (tes3worldControllerRenderCamera)
+* `result` ([tes3worldControllerRenderCamera](../../types/tes3worldControllerRenderCamera))
 
 ***
 
@@ -794,6 +814,28 @@ The camera FOV when the player is a werewolf.
 **Returns**:
 
 * `result` (tes3global)
+
+***
+
+## Functions
+
+### `applyEnchantEffect`
+
+This function applies an enchantment's effects to a scene node.
+
+```lua
+local result = tes3worldController.applyEnchantEffect({ node = ..., enchantment = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `node` ([niNode](../../types/niNode)): A scene node to which to apply the enchantment's effects.
+	* `enchantment` ([tes3enchantment](../../types/tes3enchantment)): The enchantment's effects to apply.
+
+**Returns**:
+
+* `result` (boolean)
 
 ***
 

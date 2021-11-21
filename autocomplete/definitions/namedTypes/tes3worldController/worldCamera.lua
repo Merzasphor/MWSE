@@ -1,6 +1,6 @@
 return {
 	type = "value",
-	description = [[]],
+	description = [[The access to the world camera.]],
 	readOnly = true,
 	valuetype = "tes3worldControllerRenderCamera",
 }

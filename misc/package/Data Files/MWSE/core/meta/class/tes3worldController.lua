@@ -4,7 +4,7 @@
 --- @class tes3worldController
 --- @field aiDistanceScale number A value in the range [0, 1]. The (relative) maximum distance setting for AI simulation. Corresponds to the AI distance option in the Options menu.
 --- @field allMobileActors tes3iterator *Read-only*. The list of all active mobile actors (`tes3mobileActor`). Mobile actors expire after 72 hours if they have not been in a loaded cell.
---- @field armCamera tes3worldControllerRenderCamera *Read-only*. 
+--- @field armCamera tes3worldControllerRenderCamera *Read-only*. The access to the first person arms camera.
 --- @field audioController tes3audioController *Read-only*. The audio controller.
 --- @field blindnessFader tes3fader *Read-only*. Screen overlay fader for the blind effect.
 --- @field characterRenderTarget tes3worldControllerRenderTarget *Read-only*. 
@@ -37,6 +37,7 @@
 --- @field hour tes3global *Read-only*. The `GameHour` global variable, indicating the time of day.
 --- @field hudStyle number No known effect.
 --- @field inputController tes3inputController *Read-only*. The controller responsible for player input.
+--- @field instance HINSTANCE *Read-only*. 
 --- @field itemRepairSound tes3sound The sound played when an item is repaired.
 --- @field lastFrameTime object *Read-only*. The value of `tes3.worldController.systemTime` at the start of the previous frame. Measured in milliseconds since the program was started.
 --- @field lightArmorHitSound tes3sound The sound played when a light armor piece is hit.
@@ -44,7 +45,7 @@
 --- @field maxFPS number Maximum framerate target for the engine's FPS limiter.
 --- @field mediumArmorHitSound tes3sound The sound played when a medium armor piece is hit.
 --- @field menuAlpha number A value in the range [0, 1]. The alpha value of the black background of menus. Corresponds to the "Menu transparency" option in the Options menu.
---- @field menuCamera tes3worldControllerRenderCamera *Read-only*. 
+--- @field menuCamera tes3worldControllerRenderCamera *Read-only*. The access to the camera used to render menus.
 --- @field menuClickSound tes3sound The sound played when a UI button or other control is clicked.
 --- @field menuController tes3uiMenuController *Read-only*. The controller responsible for the menu system.
 --- @field menuSizeSound tes3sound Unused sound. Not used when a menu is resized.
@@ -59,22 +60,23 @@
 --- `1` Combat music
 --- `2` Main menu music
 --- @field nodeCursor niBillboardNode|niCollisionSwitch|niNode|niSwitchNode *Read-only*. The scenegraph node for the target crosshair.
+--- @field parentWindowHandle HWND *Read-only*. Handle to the parent window.
 --- @field projectionDistance number 
 --- @field quests tes3iterator *Read-only*. A list of all available `tes3quest`s.
 --- @field quickSaveWhenResting object Controls if auto-save on resting or waiting is enabled. Corresponds to the "Auto-save when rest" option in the Options menu.
 --- @field rechargingItems tes3iterator *Read-only*. A list of enchanted items that are recharging (type `tes3rechargingItem`). Items in the list may not all belong to the player.
 --- @field shaderWaterReflectTerrain boolean If pixel shader water reflection includes terrain. Not functional with MGE enabled.
 --- @field shaderWaterReflectUpdate number Period between reflection updates for pixel shader water. Not functional with MGE enabled.
---- @field shadowCamera tes3worldControllerRenderCamera *Read-only*. 
+--- @field shadowCamera tes3worldControllerRenderCamera *Read-only*. The access to the camera used for shadows rendering.
 --- @field shadows number An integer in the range [0,6]. Controls the amount of actor shadows drawn. Corresponds to the "Real-time shadows" option in the Options menu.
 --- @field showSubtitles boolean If subtitles are shown. Corresponds to the "Subtitles" option in the Options menu.
 --- @field splashController tes3splashController *Read-only*. Access to the splash controller.
---- @field splashscreenCamera tes3worldControllerRenderCamera *Read-only*. 
+--- @field splashscreenCamera tes3worldControllerRenderCamera *Read-only*. The access to the camera used to render splashscreens.
 --- @field stopGameLoop boolean When true, the game simulation loop will stop. Not normally used, and may have other unknown effects.
 --- @field sunglareFader tes3fader *Read-only*. Screen overlay fader for sunglare.
 --- @field systemTime number *Read-only*. Time in milliseconds since the program was started.
 --- @field timescale tes3global *Read-only*. The `timescale` global variable. Used to convert real time to in-game time.
---- @field transitionFader object *Read-only*. Screen overlay fader for cell transitions.
+--- @field transitionFader tes3fader *Read-only*. Screen overlay fader for cell transitions.
 --- @field useBestAttack boolean Automatically choose the best attack direction for attacks. Corresponds to the "Always use best attack" option in the Options menu.
 --- @field viewHeight number *Read-only*. The height of the UI viewport in pixels. Affected by UI scaling. For screen resolution, use `tes3.getViewportSize`.
 --- @field viewWidth number *Read-only*. The width of the UI viewport in pixels. Affected by UI scaling. For screen resolution, use `tes3.getViewportSize`.
@@ -82,7 +84,21 @@
 --- @field weatherController tes3weatherController *Read-only*. The weather controller.
 --- @field werewolfFader tes3fader *Read-only*. Screen overlay fader for werewolf vision.
 --- @field werewolfFOV number The camera FOV when the player is a werewolf.
---- @field worldCamera tes3worldControllerRenderCamera *Read-only*. 
+--- @field worldCamera tes3worldControllerRenderCamera *Read-only*. The access to the world camera.
 --- @field year tes3global *Read-only*. The `Year` global variable, indicating the current year.
 tes3worldController = {}
+
+--- This function applies an enchantment's effects to a scene node.
+--- @param params tes3worldController.applyEnchantEffect.params This table accepts the following values:
+--- 
+--- `node`: niBillboardNode|niCollisionSwitch|niNode|niSwitchNode — A scene node to which to apply the enchantment's effects.
+--- 
+--- `enchantment`: tes3enchantment — The enchantment's effects to apply.
+--- @return boolean result No description yet available.
+function tes3worldController.applyEnchantEffect(params) end
+
+---Table parameter definitions for `tes3worldController.applyEnchantEffect`.
+--- @class tes3worldController.applyEnchantEffect.params
+--- @field node niBillboardNode|niCollisionSwitch|niNode|niSwitchNode A scene node to which to apply the enchantment's effects.
+--- @field enchantment tes3enchantment The enchantment's effects to apply.
 
