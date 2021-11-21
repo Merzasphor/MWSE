@@ -20,7 +20,7 @@ event.register("bodyPartAssigned", bodyPartAssignedCallback)
 * `bodyPart` ([tes3bodyPart](../../types/tes3bodyPart)): 
 * `index` (number): *Read-only*. 
 * `isFirstPerson` (boolean): *Read-only*. 
-* `manager` (tes3bodyPartManager): *Read-only*. 
+* `manager` ([tes3bodyPartManager](../../types/tes3bodyPartManager)): *Read-only*. 
 * `object` ([tes3bodyPart](../../types/tes3bodyPart)): *Read-only*. 
 * `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. 
 

@@ -53,7 +53,7 @@ The blocked state of the object.
 
 **Returns**:
 
-* `result` (tes3bodyPartManager, nil)
+* `result` ([tes3bodyPartManager](../../types/tes3bodyPartManager), nil)
 
 ***
 
