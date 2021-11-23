@@ -2259,7 +2259,16 @@ namespace mwse {
 			return true;
 		}
 
+		static const auto isRussianExe = *reinterpret_cast<DWORD*>(0x400138) == 0x3EF35891;
+		static const auto isPolishExe = *reinterpret_cast<DWORD*>(0x40008D) == 0x402A7564;
+
 		int getLanguageCode() {
+			if (isRussianExe) {
+				return 3;
+			}
+			else if (isPolishExe) {
+				return 4;
+			}
 			return reinterpret_cast<int(__stdcall*)()>(0x4678F0)();
 		}
 
@@ -2277,6 +2286,8 @@ namespace mwse {
 				return "deu";
 			case 3:
 				return "rus";
+			case 4:
+				return "pol";
 			}
 
 			return sol::optional<std::string>();
