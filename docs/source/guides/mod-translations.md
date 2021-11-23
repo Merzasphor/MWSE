@@ -22,6 +22,7 @@ Here we just want to allow translators to provide a different string instead of 
 		* deu.lua
 		* eng.lua
 		* fra.lua
+		* pol.lua
 		* rus.lua
 	* main.lua
 
@@ -43,6 +44,13 @@ Here we just want to allow translators to provide a different string instead of 
 	```lua linenums="1"
 	return {
 		["Hello world!"] = "Bonjour le monde!",
+	}
+	```
+
+!!! example "**The Hello World Mod\\i18n\\pol.lua**"
+	```lua linenums="1"
+	return {
+		["Hello world!"] = "Witaj świecie!",
 	}
 	```
 

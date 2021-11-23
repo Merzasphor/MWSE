@@ -1537,7 +1537,7 @@ local killMap = tes3.getKillCounts()
 
 ### `tes3.getLanguage`
 
-Gets the language as an ISO string (e.g. "eng"), determined by the language entry in Morrowind.ini.
+Gets the language as an ISO string (e.g. "eng"), determined by the language entry in Morrowind.ini and the detected executable.
 
 ```lua
 local code = tes3.getLanguage()
@@ -1551,7 +1551,7 @@ local code = tes3.getLanguage()
 
 ### `tes3.getLanguageCode`
 
-Gets the language code, determined by the language entry in Morrowind.ini.
+Gets the language code, determined by the language entry in Morrowind.ini and the detected executable.
 
 ```lua
 local code = tes3.getLanguageCode()

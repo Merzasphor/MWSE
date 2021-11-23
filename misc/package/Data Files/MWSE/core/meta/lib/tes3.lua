@@ -884,11 +884,11 @@ function tes3.getKillCount(params) end
 --- @return table killMap No description yet available.
 function tes3.getKillCounts() end
 
---- Gets the language as an ISO string (e.g. "eng"), determined by the language entry in Morrowind.ini.
+--- Gets the language as an ISO string (e.g. "eng"), determined by the language entry in Morrowind.ini and the detected executable.
 --- @return string code No description yet available.
 function tes3.getLanguage() end
 
---- Gets the language code, determined by the language entry in Morrowind.ini.
+--- Gets the language code, determined by the language entry in Morrowind.ini and the detected executable.
 --- @return number code No description yet available.
 function tes3.getLanguageCode() end
 
