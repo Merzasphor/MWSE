@@ -5257,6 +5257,7 @@ namespace mwse {
 			tes3["getSoundPlaying"] = getSoundPlaying;
 			tes3["getTopMenu"] = TES3::UI::getMenuOnTop;
 			tes3["getTrap"] = getTrap;
+			tes3["getVanityMode"] = getVanityMode;
 			tes3["getViewportSize"] = getViewportSize;
 			tes3["getWerewolfKillCount"] = getWerewolfKillCount;
 			tes3["getWorldController"] = TES3::WorldController::get;
