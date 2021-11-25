@@ -39,6 +39,62 @@ namespace TES3 {
 		return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectName(id);
 	}
 
+	std::string MagicEffect::getComplexName(int attribute, int skill) {
+		auto ndd = TES3::DataHandler::get()->nonDynamicData;
+
+		std::stringstream ss;
+
+		int nameGMST = getNameGMST();
+		if (getFlagTargetSkill()) {
+			const char* skillName = ndd->GMSTs[mwse::tes3::getSkillNameGMST(skill)]->value.asString;
+			switch (nameGMST) {
+			case GMST::sEffectFortifySkill:
+				ss << ndd->GMSTs[GMST::sFortify]->value.asString << " " << skillName;
+				break;
+			case GMST::sEffectDrainSkill:
+				ss << ndd->GMSTs[GMST::sDrain]->value.asString << " " << skillName;
+				break;
+			case GMST::sEffectDamageSkill:
+				ss << ndd->GMSTs[GMST::sDamage]->value.asString << " " << skillName;
+				break;
+			case GMST::sEffectRestoreSkill:
+				ss << ndd->GMSTs[GMST::sRestore]->value.asString << " " << skillName;
+				break;
+			case GMST::sEffectAbsorbSkill:
+				ss << ndd->GMSTs[GMST::sAbsorb]->value.asString << " " << skillName;
+				break;
+			}
+		}
+		else if (getFlagTargetAttribute()) {
+			const char* attributeName = ndd->GMSTs[mwse::tes3::getAttributeNameGMST(attribute)]->value.asString;
+			switch (nameGMST) {
+			case GMST::sEffectFortifyAttribute:
+				ss << ndd->GMSTs[GMST::sFortify]->value.asString << " " << attributeName;
+				break;
+			case GMST::sEffectDrainAttribute:
+				ss << ndd->GMSTs[GMST::sDrain]->value.asString << " " << attributeName;
+				break;
+			case GMST::sEffectDamageAttribute:
+				ss << ndd->GMSTs[GMST::sDamage]->value.asString << " " << attributeName;
+				break;
+			case GMST::sEffectRestoreAttribute:
+				ss << ndd->GMSTs[GMST::sRestore]->value.asString << " " << attributeName;
+				break;
+			case GMST::sEffectAbsorbAttribute:
+				ss << ndd->GMSTs[GMST::sAbsorb]->value.asString << " " << attributeName;
+				break;
+			}
+		}
+		else if (nameGMST > 0) {
+			ss << ndd->GMSTs[nameGMST]->value.asString;
+		}
+		else {
+			ss << ndd->magicEffects->effectCustomNames[id];
+		}
+
+		return std::move(ss.str());
+	}
+
 	int MagicEffect::getNameGMST() const {
 		if (id < EffectID::FirstEffect || id > EffectID::LastEffect) {
 			return -1;
@@ -432,53 +488,7 @@ namespace TES3 {
 		std::stringstream ss;
 
 		// Get the base name. If the effect uses skills/attributes we need to remap the name.
-		int nameGMST = effectData->getNameGMST();
-		if (ndd->magicEffects->getEffectFlag(effectID, EffectFlag::TargetSkillBit)) {
-			const char* skillName = ndd->GMSTs[mwse::tes3::getSkillNameGMST(skillID)]->value.asString;
-			switch (nameGMST) {
-			case GMST::sEffectFortifySkill:
-				ss << ndd->GMSTs[GMST::sFortify]->value.asString << " " << skillName;
-				break;
-			case GMST::sEffectDrainSkill:
-				ss << ndd->GMSTs[GMST::sDrain]->value.asString << " " << skillName;
-				break;
-			case GMST::sEffectDamageSkill:
-				ss << ndd->GMSTs[GMST::sDamage]->value.asString << " " << skillName;
-				break;
-			case GMST::sEffectRestoreSkill:
-				ss << ndd->GMSTs[GMST::sRestore]->value.asString << " " << skillName;
-				break;
-			case GMST::sEffectAbsorbSkill:
-				ss << ndd->GMSTs[GMST::sAbsorb]->value.asString << " " << skillName;
-				break;
-			}
-		}
-		else if (ndd->magicEffects->getEffectFlag(effectID, EffectFlag::TargetAttributeBit)) {
-			const char* attributeName = ndd->GMSTs[mwse::tes3::getAttributeNameGMST(attributeID)]->value.asString;
-			switch (nameGMST) {
-			case GMST::sEffectFortifyAttribute:
-				ss << ndd->GMSTs[GMST::sFortify]->value.asString << " " << attributeName;
-				break;
-			case GMST::sEffectDrainAttribute:
-				ss << ndd->GMSTs[GMST::sDrain]->value.asString << " " << attributeName;
-				break;
-			case GMST::sEffectDamageAttribute:
-				ss << ndd->GMSTs[GMST::sDamage]->value.asString << " " << attributeName;
-				break;
-			case GMST::sEffectRestoreAttribute:
-				ss << ndd->GMSTs[GMST::sRestore]->value.asString << " " << attributeName;
-				break;
-			case GMST::sEffectAbsorbAttribute:
-				ss << ndd->GMSTs[GMST::sAbsorb]->value.asString << " " << attributeName;
-				break;
-			}
-		}
-		else if (nameGMST > 0) {
-			ss << ndd->GMSTs[nameGMST]->value.asString;
-		}
-		else {
-			ss << ndd->magicEffects->effectCustomNames[effectID];
-		}
+		ss << effectData->getComplexName();
 
 		// Add on the magnitude. Fortify magicka has its own logic because it has an x suffix.
 		if (effectID == EffectID::FortifyMagickaMultiplier) {

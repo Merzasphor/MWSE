@@ -1633,6 +1633,27 @@ local magicEffect = tes3.getMagicEffect(id)
 
 ***
 
+### `tes3.getMagicEffectName`
+
+Returns the complex name of a magic effect, taking into account attribute or skill values.
+
+```lua
+local complexName = tes3.getMagicEffectName({ effect = ..., attribute = ..., skill = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `effect` (number): The effect ID to get the name of.
+	* `attribute` (number): *Optional*. The attribute ID to use, if applicable.
+	* `skill` (number): *Optional*. The skill ID to use, if applicable.
+
+**Returns**:
+
+* `complexName` (string)
+
+***
+
 ### `tes3.getMagicSourceInstanceBySerial`
 
 Fetches an instance of the magic source of a given serial number.

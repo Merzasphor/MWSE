@@ -665,6 +665,18 @@ namespace mwse {
 			return nullptr;
 		}
 
+		std::string getMagicEffectName(sol::table params) {
+			// Try to get effect param.
+			auto effect = getMagicEffect(getOptionalParam<int>(params, "effect", -1));
+			if (!effect) {
+				throw std::exception("Invalid 'effect' param provided.");
+			}
+
+			auto attribute = getOptionalParam<int>(params, "attribute", -1);
+			auto skill = getOptionalParam<int>(params, "skill", -1);
+			return std::move(effect->getComplexName(attribute, skill));
+		}
+
 		// This function currently calls out to MGE, which should be changed at some point.
 		TES3::Vector3 getCameraVector() {
 			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEGetEyeVec);
@@ -5222,6 +5234,7 @@ namespace mwse {
 			tes3["getLocked"] = getLocked;
 			tes3["getLockLevel"] = getLockLevel;
 			tes3["getMagicEffect"] = getMagicEffect;
+			tes3["getMagicEffectName"] = getMagicEffectName;
 			tes3["getMagicSourceInstanceBySerial"] = getMagicSourceInstanceBySerial;
 			tes3["getMobilePlayer"] = getMobilePlayer;
 			tes3["getModList"] = getModList;

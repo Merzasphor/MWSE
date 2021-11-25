@@ -923,6 +923,23 @@ function tes3.getLockLevel(params) end
 --- @return tes3magicEffect magicEffect No description yet available.
 function tes3.getMagicEffect(id) end
 
+--- Returns the complex name of a magic effect, taking into account attribute or skill values.
+--- @param params tes3.getMagicEffectName.params This table accepts the following values:
+--- 
+--- `effect`: number — The effect ID to get the name of.
+--- 
+--- `attribute`: number — *Optional*. The attribute ID to use, if applicable.
+--- 
+--- `skill`: number — *Optional*. The skill ID to use, if applicable.
+--- @return string complexName No description yet available.
+function tes3.getMagicEffectName(params) end
+
+---Table parameter definitions for `tes3.getMagicEffectName`.
+--- @class tes3.getMagicEffectName.params
+--- @field effect number The effect ID to get the name of.
+--- @field attribute number *Optional*. The attribute ID to use, if applicable.
+--- @field skill number *Optional*. The skill ID to use, if applicable.
+
 --- Fetches an instance of the magic source of a given serial number.
 --- @param params tes3.getMagicSourceInstanceBySerial.params This table accepts the following values:
 --- 
