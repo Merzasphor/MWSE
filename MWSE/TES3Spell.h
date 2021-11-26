@@ -88,6 +88,8 @@ namespace TES3 {
 		bool getAlwaysSucceeds() const;
 		void setAlwaysSucceeds(bool value);
 
+		int getValue() const;
+
 		size_t getActiveEffectCount();
 		int getFirstIndexOfEffect(int effectId);
 

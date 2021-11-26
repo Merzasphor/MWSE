@@ -195,6 +195,10 @@ namespace TES3 {
 		setSpellFlag(SpellFlag::Flag::AlwaysSucceeds, value);
 	}
 
+	int Spell::getValue() const {
+		return DataHandler::get()->nonDynamicData->GMSTs[GMST::fSpellValueMult]->value.asFloat * magickaCost;
+	}
+
 	size_t Spell::getActiveEffectCount() {
 		size_t count = 0;
 		for (size_t i = 0; i < 8; i++) {

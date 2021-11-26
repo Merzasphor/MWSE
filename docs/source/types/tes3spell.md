@@ -295,6 +295,16 @@ If true, references of this object can store temporary or persistent lua data.
 
 ***
 
+### `value`
+
+*Read-only*. The calculated base price of the spell. This is the `magickaCost` of the spell multiplied by the `fSpellValueMult` GMST.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
 ## Methods
 
 ### `__tojson`

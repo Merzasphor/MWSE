@@ -82,6 +82,7 @@ namespace mwse {
 			usertypeDefinition["isActiveCast"] = sol::readonly_property(&TES3::Spell::isActiveCast);
 			usertypeDefinition["magickaCost"] = &TES3::Spell::magickaCost;
 			usertypeDefinition["name"] = sol::property(&TES3::Spell::getName, &TES3::Spell::setName);
+			usertypeDefinition["value"] = sol::readonly_property(&TES3::Spell::getValue);
 
 			// Basic function binding.
 			usertypeDefinition["create"] = &createSpell;

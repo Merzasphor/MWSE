@@ -12,6 +12,7 @@
 --- @field magickaCost number No description yet available.
 --- @field name string The name of the spell.
 --- @field playerStart boolean A flag that determines if the spell may be assigned to the player at character generation if the player has enough skill to cast it.
+--- @field value number *Read-only*. The calculated base price of the spell. This is the `magickaCost` of the spell multiplied by the `fSpellValueMult` GMST.
 tes3spell = {}
 
 --- Use `tes3.createObject` instead. This function created a new spell object, which will be stored as part of the current saved game.
