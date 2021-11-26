@@ -263,9 +263,9 @@ namespace TES3 {
 		// Custom functions
 		//
 		const char* getName() const;
-		std::string getComplexName(int attribute = -1, int skill = -1);
+		std::string getComplexName(int attribute = -1, int skill = -1) const;
 		int getNameGMST() const;
-		void setDescription( const char *value );
+		void setDescription(const char* value);
 		const char* getDescription() const noexcept;
 
 		const char* getIcon() const;
