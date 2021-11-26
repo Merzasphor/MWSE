@@ -126,7 +126,7 @@ namespace TES3 {
 
 		// Increment werewolf kills if the player is wolfing out.
 		auto worldController = TES3::WorldController::get();
-		if (werewolfKills > 0 && actor->objectType == TES3::ObjectType::NPC && worldController->getMobilePlayer()->getMobileActorFlag(TES3::MobileActorFlag::Werewolf)) {
+		if (werewolfKills > 0 && actor->objectType == TES3::ObjectType::NPC && worldController->getMobilePlayer()->getFlagWerewolf()) {
 			werewolfKills--;
 		}
 
