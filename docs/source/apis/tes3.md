@@ -390,6 +390,35 @@ local success = tes3.beginTransform({ reference = ... })
 
 ***
 
+### `tes3.calculatePrice`
+
+Calculates a price, given a merchant and associated trading data. This is useful beyond accessing the object's `.value` field in that it raises the appropriate events to let other mods modify the values.
+
+```lua
+local price = tes3.calculatePrice({ object = ..., basePrice = ..., buying = ..., selling = ..., merchant = ..., bartering = ..., repairing = ..., training = ..., count = ..., itemData = ..., skill = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `object` ([tes3object](../../types/tes3object)): *Optional*. The object to calculate the price for. If not provided, `basePrice` is required.
+	* `basePrice` (number): *Optional*. The base price to calculate the end price for. This defaults to the `object` param's `value`, if provided. This parameter is required if `object` is not provided.
+	* `buying` (boolean): *Default*: `true`. If `true`, uses the logic for buying a service/item. This is exclusive with `selling`.
+	* `selling` (boolean): If `true`, uses the logic for selling an item. This is exclusive with `buying`.
+	* `merchant` ([tes3mobileActor](../../types/tes3mobileActor)): The merchant to use for calculating the price.
+	* `bartering` (boolean): If `true`, a [calcBarterPrice](https://mwse.github.io/MWSE/events/calcBarterPrice) or [calcRepairPrice](https://mwse.github.io/MWSE/events/calcRepairPrice) event will be triggered.
+	* `repairing` (boolean): If `true`, a [calcRepairPrice](https://mwse.github.io/MWSE/events/calcRepairPrice) event will be triggered.
+	* `training` (boolean): If `true`, a [calcTrainingPrice](https://mwse.github.io/MWSE/events/calcTrainingPrice) event will be triggered, passing the given `skill` ID.
+	* `count` (number): *Default*: `1`. If `bartering`, the count passed to the [calcBarterPrice](https://mwse.github.io/MWSE/events/calcBarterPrice) event.
+	* `itemData` ([tes3itemData](../../types/tes3itemData)): *Optional*. If `bartering` or `repairing`, the item data passed to the [calcBarterPrice](https://mwse.github.io/MWSE/events/calcBarterPrice) or [calcRepairPrice](https://mwse.github.io/MWSE/events/calcRepairPrice) event.
+	* `skill` (number): If `training`, the skill ID passed to the [calcTrainingPrice](https://mwse.github.io/MWSE/events/calcTrainingPrice) event.
+
+**Returns**:
+
+* `price` (number): The calculated price, filtered by events.
+
+***
+
 ### `tes3.cancelAnimationLoop`
 
 Signals looping animations on the actor to stop looping and play to the end. The animation will continue, playing past the loop point until the end frame. Useful for exiting looping animations cleanly.

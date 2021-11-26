@@ -10,12 +10,13 @@
 namespace mwse {
 	namespace lua {
 		namespace event {
-			CalculateRepairPriceEvent::CalculateRepairPriceEvent(TES3::MobileActor * mobileActor, int basePrice, int price, TES3::ItemStack* stack) :
+			CalculateRepairPriceEvent::CalculateRepairPriceEvent(TES3::MobileActor* mobileActor, int basePrice, int price, TES3::Object* item, TES3::ItemData* itemData) :
 				ObjectFilteredEvent("calcRepairPrice", mobileActor->reference),
 				m_MobileActor(mobileActor),
 				m_BasePrice(basePrice),
 				m_Price(price),
-				m_Stack(stack)
+				m_Item(item),
+				m_ItemData(itemData)
 			{
 
 			}
@@ -30,12 +31,8 @@ namespace mwse {
 					eventData["reference"] = m_MobileActor->reference;
 				}
 
-				if (m_Stack) {
-					eventData["item"] = m_Stack->object;
-					if (m_Stack->variables->size() > 0) {
-						eventData["itemData"] = m_Stack->variables->at(0);
-					}
-				}
+				eventData["item"] = m_Item;
+				eventData["itemData"] = m_ItemData;
 
 				eventData["basePrice"] = m_BasePrice;
 				eventData["price"] = m_Price;

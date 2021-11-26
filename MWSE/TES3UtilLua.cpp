@@ -75,6 +75,12 @@
 #include "TES3WeatherController.h"
 #include "TES3WorldController.h"
 
+#include "LuaCalcBarterPriceEvent.h"
+#include "LuaCalcRepairPriceEvent.h"
+#include "LuaCalcSpellPriceEvent.h"
+#include "LuaCalcTrainingPriceEvent.h"
+#include "LuaCalcTravelPriceEvent.h"
+
 #include "BitUtil.h"
 #include <sstream>
 
@@ -5151,6 +5157,61 @@ namespace mwse {
 			return result;
 		}
 
+		int calculatePrice(sol::table params) {
+			bool buying = getOptionalParam(params, "buying", !getOptionalParam(params, "selling", false));
+
+			// Get the base value.
+			auto object = getOptionalParamObject<TES3::Object>(params, "object");
+			auto basePrice = getOptionalParam(params, "basePrice", object ? object->getValue() : 0);
+			if (object && object->objectType == TES3::ObjectType::Spell) {
+				basePrice = static_cast<TES3::Spell*>(object)->getValue();
+			}
+
+			// Get the first-modified value.
+			auto merchant = getOptionalParamMobileActor(params, "merchant");
+			if (merchant == nullptr) {
+				throw std::invalid_argument("Invalid 'merchant' parameter provided.");
+			}
+			auto price = merchant->determineModifiedPrice(basePrice, buying);
+
+			// Fire off the appropriate event.
+			event::BaseEvent* firedEvent = nullptr;
+			if (getOptionalParam(params, "bartering", false)) {
+				if (event::CalculateSpellPriceEvent::getEventEnabled() && object && object->objectType == TES3::ObjectType::Spell) {
+					firedEvent = new event::CalculateSpellPriceEvent(merchant, basePrice, price, static_cast<TES3::Spell*>(object));
+				}
+				else if (event::CalculateSpellPriceEvent::getEventEnabled()) {
+					auto count = getOptionalParam(params, "count", 1);
+					auto itemData = getOptionalParam<TES3::ItemData*>(params, "itemData", nullptr);
+					firedEvent = new event::CalculateBarterPriceEvent(merchant, basePrice, price, buying, count, object, itemData);
+				}
+			}
+			else if (getOptionalParam(params, "repairing", false)) {
+				if (event::CalculateRepairPriceEvent::getEventEnabled()) {
+					auto itemData = getOptionalParam<TES3::ItemData*>(params, "itemData", nullptr);
+					firedEvent = new event::CalculateRepairPriceEvent(merchant, basePrice, price, object, itemData);
+				}
+			}
+			else if (getOptionalParam(params, "training", false)) {
+				if (event::CalculateTrainingPriceEvent::getEventEnabled()) {
+					auto skill = getOptionalParam(params, "skill", TES3::SkillID::Invalid);
+					firedEvent = new event::CalculateTrainingPriceEvent(merchant, basePrice, price, skill);
+				}
+			}
+
+			// Allow the event to modify things, if we have one.
+			if (firedEvent) {
+				auto& luaManager = mwse::lua::LuaManager::getInstance();
+				auto stateHandle = luaManager.getThreadSafeStateHandle();
+				sol::table result = stateHandle.triggerEvent(firedEvent);
+				if (result.valid()) {
+					price = result.get_or("price", price);
+				}
+			}
+
+			return price;
+		}
+
 		void bindTES3Util() {
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
@@ -5172,6 +5233,7 @@ namespace mwse {
 			tes3["advanceTime"] = advanceTime;
 			tes3["applyMagicSource"] = applyMagicSource;
 			tes3["beginTransform"] = beginTransform;
+			tes3["calculatePrice"] = calculatePrice;
 			tes3["cancelAnimationLoop"] = cancelAnimationLoop;
 			tes3["canRest"] = canRest;
 			tes3["cast"] = cast;

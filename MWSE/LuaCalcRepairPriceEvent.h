@@ -8,14 +8,15 @@ namespace mwse {
 		namespace event {
 			class CalculateRepairPriceEvent : public ObjectFilteredEvent, public DisableableEvent<CalculateRepairPriceEvent> {
 			public:
-				CalculateRepairPriceEvent(TES3::MobileActor * mobileActor, int basePrice, int price, TES3::ItemStack* stack);
+				CalculateRepairPriceEvent(TES3::MobileActor* mobileActor, int basePrice, int price, TES3::Object* item, TES3::ItemData* itemData = nullptr);
 				sol::table createEventTable();
 
 			protected:
 				TES3::MobileActor* m_MobileActor;
 				int m_BasePrice;
 				int m_Price;
-				TES3::ItemStack* m_Stack;
+				TES3::Object* m_Item;
+				TES3::ItemData* m_ItemData;
 			};
 		}
 	}

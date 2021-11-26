@@ -1911,7 +1911,9 @@ namespace mwse {
 			if (event::CalculateBarterPriceEvent::getEventEnabled()) {
 				auto& luaManager = mwse::lua::LuaManager::getInstance();
 				auto stateHandle = luaManager.getThreadSafeStateHandle();
-				sol::table result = stateHandle.triggerEvent(new event::CalculateBarterPriceEvent(mobile, basePrice, price, buying, count, OnCalculateBarterPrice_stack));
+				auto item = static_cast<TES3::Item*>(OnCalculateBarterPrice_stack ? OnCalculateBarterPrice_stack->object : nullptr);
+				auto itemData = OnCalculateBarterPrice_stack ? OnCalculateBarterPrice_stack->itemData : nullptr;
+				sol::table result = stateHandle.triggerEvent(new event::CalculateBarterPriceEvent(mobile, basePrice, price, buying, count, item, itemData));
 				if (result.valid()) {
 					price = result["price"];
 				}
@@ -1949,7 +1951,9 @@ namespace mwse {
 			if (event::CalculateRepairPriceEvent::getEventEnabled()) {
 				auto& luaManager = mwse::lua::LuaManager::getInstance();
 				auto stateHandle = luaManager.getThreadSafeStateHandle();
-				sol::table result = stateHandle.triggerEvent(new event::CalculateRepairPriceEvent(mobile, basePrice, price, OnCalculateRepairPriceForList_CurrentInventoryList->current->data));
+				auto stack = OnCalculateRepairPriceForList_CurrentInventoryList->current->data;
+				auto itemData = stack->variables && !stack->variables->empty() ? stack->variables->at(0) : nullptr;
+				sol::table result = stateHandle.triggerEvent(new event::CalculateRepairPriceEvent(mobile, basePrice, price, stack->object, itemData));
 				if (result.valid()) {
 					price = result["price"];
 				}
@@ -1982,7 +1986,8 @@ namespace mwse {
 			if (event::CalculateRepairPriceEvent::getEventEnabled()) {
 				auto& luaManager = mwse::lua::LuaManager::getInstance();
 				auto stateHandle = luaManager.getThreadSafeStateHandle();
-				sol::table result = stateHandle.triggerEvent(new event::CalculateRepairPriceEvent(mobile, basePrice, price, OnCalculateRepairPrice_ItemStack));
+				auto itemData = OnCalculateRepairPrice_ItemStack->variables && !OnCalculateRepairPrice_ItemStack->variables->empty() ? OnCalculateRepairPrice_ItemStack->variables->at(0) : nullptr;
+				sol::table result = stateHandle.triggerEvent(new event::CalculateRepairPriceEvent(mobile, basePrice, price, OnCalculateRepairPrice_ItemStack->object, itemData));
 				if (result.valid()) {
 					price = result["price"];
 				}

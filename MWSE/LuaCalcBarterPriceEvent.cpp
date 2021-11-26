@@ -10,14 +10,15 @@
 namespace mwse {
 	namespace lua {
 		namespace event {
-			CalculateBarterPriceEvent::CalculateBarterPriceEvent(TES3::MobileActor * mobileActor, int basePrice, int price, bool buying, int count, TES3::EquipmentStack* stack) :
+			CalculateBarterPriceEvent::CalculateBarterPriceEvent(TES3::MobileActor * mobileActor, int basePrice, int price, bool buying, int count, TES3::Object* item, TES3::ItemData* itemData) :
 				ObjectFilteredEvent("calcBarterPrice", mobileActor->reference),
 				m_MobileActor(mobileActor),
 				m_BasePrice(basePrice),
 				m_Price(price),
 				m_Buying(buying),
 				m_Count(count),
-				m_Stack(stack)
+				m_Item(item),
+				m_ItemData(itemData)
 			{
 
 			}
@@ -32,11 +33,8 @@ namespace mwse {
 					eventData["reference"] = m_MobileActor->reference;
 				}
 
-				if (m_Stack) {
-					eventData["item"] = m_Stack->object;
-					eventData["itemData"] = m_Stack->itemData;
-				}
-
+				eventData["item"] = m_Item;
+				eventData["itemData"] = m_ItemData;
 				eventData["basePrice"] = m_BasePrice;
 				eventData["count"] = m_Count;
 				eventData["price"] = m_Price;
