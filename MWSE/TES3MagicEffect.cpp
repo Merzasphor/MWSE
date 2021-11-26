@@ -45,7 +45,7 @@ namespace TES3 {
 		std::stringstream ss;
 
 		int nameGMST = getNameGMST();
-		if (getFlagTargetSkill()) {
+		if (skill >= 0 && getFlagTargetSkill()) {
 			const char* skillName = ndd->GMSTs[mwse::tes3::getSkillNameGMST(skill)]->value.asString;
 			switch (nameGMST) {
 			case GMST::sEffectFortifySkill:
@@ -65,7 +65,7 @@ namespace TES3 {
 				break;
 			}
 		}
-		else if (getFlagTargetAttribute()) {
+		else if (attribute >= 0 && getFlagTargetAttribute()) {
 			const char* attributeName = ndd->GMSTs[mwse::tes3::getAttributeNameGMST(attribute)]->value.asString;
 			switch (nameGMST) {
 			case GMST::sEffectFortifyAttribute:
@@ -106,8 +106,7 @@ namespace TES3 {
 		mwse::tes3::setDataString(&description, value);
 	}
 
-	const char* MagicEffect::getDescription() const noexcept
-	{
+	const char* MagicEffect::getDescription() const noexcept {
 		return description;
 	}
 
@@ -481,14 +480,14 @@ namespace TES3 {
 		}
 
 		// Some data we'll want to hold onto.
-		NonDynamicData* ndd = DataHandler::get()->nonDynamicData;
-		MagicEffect* effectData = getEffectData();
+		auto ndd = DataHandler::get()->nonDynamicData;
+		const auto effectData = getEffectData();
 
 		// We'll use a string stream and build up the result.
 		std::stringstream ss;
 
 		// Get the base name. If the effect uses skills/attributes we need to remap the name.
-		ss << effectData->getComplexName();
+		ss << effectData->getComplexName(attributeID, skillID);
 
 		// Add on the magnitude. Fortify magicka has its own logic because it has an x suffix.
 		if (effectID == EffectID::FortifyMagickaMultiplier) {
