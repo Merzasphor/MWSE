@@ -44,6 +44,7 @@ namespace TES3 {
 		//
 		// WidgetButton
 		//
+
 		static Property propButtonState;
 		static Property propButtonIdle[4], propButtonOver[4], propButtonPressed[4];
 		static Property propButtonDisabled[4], propButtonDisabledOver[4], propButtonDisabledPressed[4];
@@ -124,6 +125,7 @@ namespace TES3 {
 		//
 		// WidgetFillbar
 		//
+
 		static Property propFillbarCurrent, propFillbarMax;
 		static Property propFillbarShowText;
 		static Property propFillbarCol[4];
@@ -225,6 +227,7 @@ namespace TES3 {
 		//
 		// WidgetParagraphInput
 		//
+
 		static Property propParagraphInputMaxLength;
 		static UI_ID uiidParagraphInputText;
 
@@ -270,6 +273,7 @@ namespace TES3 {
 		//
 		// WidgetScrollBar
 		//
+
 		static Property propScrollBarCurrent, propScrollBarMax;
 		static Property propScrollStepX, propScrollJumpX;
 
@@ -322,6 +326,7 @@ namespace TES3 {
 		//
 		// WidgetScrollPane
 		//
+
 		static UI_ID uiidScrollPaneHScroll, uiidScrollPaneVScroll;
 
 		const auto TES3_WidgetScrollPane_getContentPane = reinterpret_cast<TES3::UI::Element*(__cdecl*)(WidgetScrollPane*)>(0x649CA0);
@@ -404,6 +409,7 @@ namespace TES3 {
 		//
 		// WidgetTextInput
 		//
+
 		static Property propTextInputLengthLimit, propTextInputNoLimit;
 		static Property propTextInputEraseOnFirstKey;
 
