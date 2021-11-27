@@ -1109,6 +1109,10 @@ function tes3.getTrap(params) end
 --- @class tes3.getTrap.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string No description yet available.
 
+--- The function returns true if the player is in the vanity mode. Vanity mode is triggered by a period of inactivity from the player or by a tes3.setVanityMode() function. The view is switched to third person (if not already), and the camera is orbiting slowly around the player character.
+--- @return boolean result Is the vanity mode currently active?
+function tes3.getVanityMode() end
+
 --- Returns both the viewport width and the viewport height. Note that this the real resolution of the screen. For a value scaled by MGE's menu scaling, see the same-named function in the tes3ui namespace. To get the scale used, check getViewportScale in the tes3ui namespace.
 --- @return number width The width of the viewport.
 --- @return number height The height of the viewport.
@@ -2029,24 +2033,24 @@ function tes3.setTrap(params) end
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string No description yet available.
 --- @field spell tes3spell|string No description yet available.
 
---- Toggles the camera into third person mode. Returns true if changed to vanity mode.
+--- Toggles the camera into vanity mode. In vanity mode the camera is in third person and it is orbiting slowly around the player character. Returns true if changed to vanity mode.
 --- 
 --- Note that unlike the vanity mode caused by not doing anything for a while, this vanity mode must be toggled to go off.
 --- @param params tes3.setVanityMode.params This table accepts the following values:
 --- 
---- `enabled`: boolean — *Default*: `true`. 
+--- `enabled`: boolean — *Default*: `true`. This flag sets the vanity mode as enabled or disabled.
 --- 
---- `checkVanityDisabled`: boolean — *Default*: `true`. 
+--- `checkVanityDisabled`: boolean — *Default*: `true`. This will prevent changing vanity mode according to vanityDisabled flag on tes3.mobilePlayer.
 --- 
---- `toggle`: boolean — *Optional*. 
+--- `toggle`: boolean — *Optional*. When this flag is set to true. The vanity mode will be toggled. If the player was in vanity mode, this will make the player leave vanity mode. Conversly, if the player wasn't in the vanity mode, this will turn on the vanity mode.
 --- @return boolean changedVanityMode No description yet available.
 function tes3.setVanityMode(params) end
 
 ---Table parameter definitions for `tes3.setVanityMode`.
 --- @class tes3.setVanityMode.params
---- @field enabled boolean *Default*: `true`. 
---- @field checkVanityDisabled boolean *Default*: `true`. 
---- @field toggle boolean *Optional*. 
+--- @field enabled boolean *Default*: `true`. This flag sets the vanity mode as enabled or disabled.
+--- @field checkVanityDisabled boolean *Default*: `true`. This will prevent changing vanity mode according to vanityDisabled flag on tes3.mobilePlayer.
+--- @field toggle boolean *Optional*. When this flag is set to true. The vanity mode will be toggled. If the player was in vanity mode, this will make the player leave vanity mode. Conversly, if the player wasn't in the vanity mode, this will turn on the vanity mode.
 
 --- Sets player's kill count as a werewolf.
 --- @param params tes3.setWerewolfKillCount.params This table accepts the following values:

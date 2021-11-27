@@ -2045,6 +2045,20 @@ local spell = tes3.getTrap({ reference = ... })
 
 ***
 
+### `tes3.getVanityMode`
+
+The function returns true if the player is in the vanity mode. Vanity mode is triggered by a period of inactivity from the player or by a tes3.setVanityMode() function. The view is switched to third person (if not already), and the camera is orbiting slowly around the player character.
+
+```lua
+local result = tes3.getVanityMode()
+```
+
+**Returns**:
+
+* `result` (boolean): Is the vanity mode currently active?
+
+***
+
 ### `tes3.getViewportSize`
 
 Returns both the viewport width and the viewport height. Note that this the real resolution of the screen. For a value scaled by MGE's menu scaling, see the same-named function in the tes3ui namespace. To get the scale used, check getViewportScale in the tes3ui namespace.
@@ -3291,7 +3305,7 @@ local trapped = tes3.setTrap({ reference = ..., spell = ... })
 
 ### `tes3.setVanityMode`
 
-Toggles the camera into third person mode. Returns true if changed to vanity mode.
+Toggles the camera into vanity mode. In vanity mode the camera is in third person and it is orbiting slowly around the player character. Returns true if changed to vanity mode.
 
 Note that unlike the vanity mode caused by not doing anything for a while, this vanity mode must be toggled to go off.
 
@@ -3302,9 +3316,9 @@ local changedVanityMode = tes3.setVanityMode({ enabled = ..., checkVanityDisable
 **Parameters**:
 
 * `params` (table)
-	* `enabled` (boolean): *Default*: `true`. 
-	* `checkVanityDisabled` (boolean): *Default*: `true`. 
-	* `toggle` (boolean): *Optional*. 
+	* `enabled` (boolean): *Default*: `true`. This flag sets the vanity mode as enabled or disabled.
+	* `checkVanityDisabled` (boolean): *Default*: `true`. This will prevent changing vanity mode according to vanityDisabled flag on tes3.mobilePlayer.
+	* `toggle` (boolean): *Optional*. When this flag is set to true. The vanity mode will be toggled. If the player was in vanity mode, this will make the player leave vanity mode. Conversly, if the player wasn't in the vanity mode, this will turn on the vanity mode.
 
 **Returns**:
 
