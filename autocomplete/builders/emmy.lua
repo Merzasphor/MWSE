@@ -140,7 +140,7 @@ end
 
 common.compilePath(lfs.join(common.pathDefinitions, "global"), globals)
 common.compilePath(lfs.join(common.pathDefinitions, "namedTypes"), classes, "class")
-common.compilePath(lfs.join(common.pathDefinitions, "events", "standard"), classes, "event")
+common.compilePath(lfs.join(common.pathDefinitions, "events", "standard"), events, "event")
 
 
 --
@@ -187,6 +187,20 @@ local function build(package)
 	for _, value in ipairs(package.values or {}) do
 		if (not value.deprecated) then
 			file:write(string.format("--- @field %s %s %s\n", value.key, getAllPossibleVariationsOfType(value.valuetype) or "any", formatLineBreaks(common.getDescriptionString(value))))
+		end
+	end
+
+	-- Custom case: Write out event overrides.
+	if (package.type == "lib" and package.key == "event") then
+		local keys = {}
+		for key, event in pairs(events) do
+			table.insert(keys, key)
+		end
+		table.sort(keys)
+		
+		file:write(string.format("--- @field register fun(eventId: string, callback: fun(e: table), options: table)\n"))
+		for _, key in ipairs(keys) do
+			file:write(string.format("--- @field register fun(eventId: '\"%s\"', callback: fun(e: %sEventData), options: table)\n", key, key))
 		end
 	end
 
