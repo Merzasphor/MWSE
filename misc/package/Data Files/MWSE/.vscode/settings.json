@@ -22,9 +22,11 @@
 
     // Ignore problematic files.
     "Lua.workspace.ignoreDir": [
-        "./core/mwse_init.lua"
+        "./core/mwse_init.lua",
+        "./core/event.lua"
     ],
 
     // Ignore any potential 3rd party checks. We provide our definitions in core/meta
-    "Lua.workspace.checkThirdParty": false
+    "Lua.workspace.checkThirdParty": false,
+    "Lua.completion.autoRequire": false
 }
