@@ -192,14 +192,8 @@ local function build(package)
 
 	-- Custom case: Write out event overrides.
 	if (package.type == "lib" and package.key == "event") then
-		local keys = {}
-		for key, event in pairs(events) do
-			table.insert(keys, key)
-		end
-		table.sort(keys)
-		
 		file:write(string.format("--- @field register fun(eventId: string, callback: fun(e: table), options: table)\n"))
-		for _, key in ipairs(keys) do
+		for _, key in ipairs(table.keys(events, true)) do
 			file:write(string.format("--- @field register fun(eventId: '\"%s\"', callback: fun(e: %sEventData), options: table)\n", key, key))
 		end
 	end
