@@ -1554,6 +1554,15 @@
     <ClInclude Include="UTF8Convert.h">
       <Filter>Header Files\Utility</Filter>
     </ClInclude>
+    <ClInclude Include="TES3LoadScreenManager.h">
+      <Filter>Header Files\DataAdapters\TES3\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3CutscenePlayer.h">
+      <Filter>Header Files\DataAdapters\TES3\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="NIScreenPolygon.h">
+      <Filter>Header Files\DataAdapters\NI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

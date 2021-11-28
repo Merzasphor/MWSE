@@ -48,6 +48,7 @@ namespace TES3 {
 	struct CrimeEvent;
 	struct CrimeEventList;
 	struct CriticalSection;
+	struct CutscenePlayer;
 	struct DataHandler;
 	struct Dialogue;
 	struct DialogueConditional;
@@ -78,10 +79,12 @@ namespace TES3 {
 	struct LeveledItem;
 	struct LeveledListNode;
 	struct Light;
+	struct LoadScreenManager;
 	struct LockAttachmentNode;
 	struct Lockpick;
 	struct MagicEffect;
 	struct MagicEffectInstance;
+	struct MagicInstanceController;
 	struct MagicSourceCombo;
 	struct MagicSourceInstance;
 	struct MapNote;
@@ -129,7 +132,6 @@ namespace TES3 {
 	struct SoundBuffer;
 	struct SoundGenerator;
 	struct Spell;
-	struct MagicInstanceController;
 	struct SpellList;
 	struct StartScript;
 	struct Static;

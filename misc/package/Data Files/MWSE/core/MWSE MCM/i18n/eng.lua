@@ -6,6 +6,8 @@ return {
 	["logWarningsWithLuaStack.description"] = "When enabled, any warnings raised during normal gameplay that would write to warnings.txt will also write to mwse.log. In addition, a stack trace is provided to give context to what mod may be responsible for the warning.\n\nThis can lead to superfluous log entries when using certain mods, like Better Bodies.",
 	["runInBackground.label"] = "Run Morrowind in the background?",
 	["runInBackground.description"] = "By default Morrowind skips most game logic when not in focus. When using windowed mode (including borderless fullscreen), this feature allows Morrowind to continue running. Enabling this can also help to increase stability, due to how Morrowind handles some audio threads.",
+	["letterboxMovies.label"] = "Letterbox movies?",
+	["letterboxMovies.description"] = "Morrowind stretches movies to fill the whole window by default. This option will instead render movies with black bars to either side, centering the movie in the window.",
 	["patchNiFlipController.label"] = "Fix NiFlipController cloning?",
 	["patchNiFlipController.description"] = "Morrowind incorrectly handles the affected map when cloning NiFlipController objects, preventing mods from using the controller for anything but the base map. MWSE fixes this issue. However, some mods contain bugged assets that have the incorrect affected map assigned, relying on the bug to reassign the controller back to the base map. Disabling this fix will provide support for these mods, but will also prevent newer mods from taking advantage of the fixed controller.\n\nIt is recommended that you leave this enabled unless you know you need the compatibility.",
 	["keepAllNetImmerseObjectsAlive.label"] = "Cache all NetImmerse lua objects?",

@@ -7,11 +7,13 @@
 #include "TES3Actor.h"
 #include "TES3BodyPartManager.h"
 #include "TES3Cell.h"
+#include "TES3CutscenePlayer.h"
 #include "TES3DataHandler.h"
 #include "TES3Game.h"
 #include "TES3GameFile.h"
 #include "TES3GameSetting.h"
 #include "TES3InputController.h"
+#include "TES3LoadScreenManager.h"
 #include "TES3Misc.h"
 #include "TES3MobilePlayer.h"
 #include "TES3Reference.h"
@@ -478,6 +480,28 @@ namespace mwse {
 		}
 
 		//
+		// Patch: Letterbox movies.
+		//
+
+		const auto TES3_DrawMovieFrame = reinterpret_cast<int(__cdecl*)(void*, float, float, float, float, int, int)>(0x64FE20);
+		int __cdecl PatchDrawLetterboxMovieFrame(void* device, float left, float top, float scaleWidth, float scaleHeight, int textureWidth, int textureHeight) {
+			if (Configuration::LetterboxMovies) {
+				auto game = TES3::Game::get();
+				auto bink = game->loadScreenManager->cutscenePlayer->binkHandle;
+				if (scaleHeight < scaleWidth) {
+					left = (game->windowWidth - (scaleHeight * bink->width)) / 2.0f;
+					scaleWidth = scaleHeight;
+				}
+				else if (scaleWidth < scaleHeight) {
+					top = (game->windowHeight - (scaleWidth * bink->height)) / 2.0f;
+					scaleHeight = scaleWidth;
+				}
+			}
+
+			return TES3_DrawMovieFrame(device, left, top, scaleWidth, scaleHeight, textureWidth, textureHeight);
+		}
+
+		//
 		// Install all the patches.
 		//
 
@@ -706,6 +730,9 @@ namespace mwse {
 			genNOPUnprotected(0x4F26FF, 0x4F27BC - 0x4F26FF);
 			writePatchCodeUnprotected(0x4F26FF, (BYTE*)&PatchCopyWeaponEnchantmentCaller, PatchCopyEnchantmentCaller_size);
 			genCallUnprotected(0x4F26FF + PatchCopyEnchantmentCaller_size, reinterpret_cast<DWORD>(PatchCopyEnchantment));
+
+			// Patch: Letterbox movies.
+			genCallEnforced(0x64FC55, 0x64FE20, reinterpret_cast<DWORD>(PatchDrawLetterboxMovieFrame));
 		}
 
 		void installPostLuaPatches() {

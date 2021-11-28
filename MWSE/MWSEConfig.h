@@ -8,6 +8,7 @@ namespace mwse {
 		static bool KeepAllNetImmerseObjectsAlive;
 		static bool RunInBackground;
 		static bool PatchNiFlipController;
+		static bool LetterboxMovies;
 
 		static sol::table getDefaults();
 

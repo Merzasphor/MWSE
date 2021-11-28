@@ -11,6 +11,7 @@ namespace mwse {
 	bool Configuration::KeepAllNetImmerseObjectsAlive = false;
 	bool Configuration::RunInBackground = false;
 	bool Configuration::PatchNiFlipController = true;
+	bool Configuration::LetterboxMovies = false;
 
 	// Allow default values to be accessed later.
 	sol::table defaultConfig;
@@ -43,5 +44,6 @@ namespace mwse {
 		DECLARE_CONFIG(KeepAllNetImmerseObjectsAlive)
 		DECLARE_CONFIG(RunInBackground)
 		DECLARE_CONFIG(PatchNiFlipController)
+		DECLARE_CONFIG(LetterboxMovies)
 	}
 }

@@ -39,6 +39,16 @@ local config = {
 				},
 				{
 					class = "OnOffButton",
+					label = i18n("letterboxMovies.label"),
+					description = i18n("letterboxMovies.description"),
+					variable = {
+						id = "LetterboxMovies",
+						class = "TableVariable",
+						table = mwseConfig,
+					},
+				},
+				{
+					class = "OnOffButton",
 					label = i18n("patchNiFlipController.label"),
 					description = i18n("patchNiFlipController.description"),
 					variable = {
