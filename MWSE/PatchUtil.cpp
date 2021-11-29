@@ -884,6 +884,9 @@ namespace mwse {
 			PROCESS_MEMORY_COUNTERS_EX memCounter = {};
 			GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*)&memCounter, sizeof(memCounter));
 			log::getLog() << "Memory usage: " << std::dec << memCounter.PrivateUsage << " bytes." << std::endl;
+			if (memCounter.PrivateUsage > 3650722201) {
+				log::getLog() << "  Memory usage is high. Crash is likely due to running out of memory." << std::endl;
+			}
 
 			// Try to print the lua stack trace.
 			log::getLog() << "Lua traceback at time of crash:" << std::endl;
