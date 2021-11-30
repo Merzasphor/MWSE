@@ -3275,6 +3275,19 @@ namespace mwse {
 		}
 
 		//
+		// Allow changing the delta time scalar in a safer spot.
+		//
+
+		const auto TES3_WorldController_updateDeltaTime = reinterpret_cast<void(__thiscall*)(TES3::WorldController*)>(0x453630);
+		void __fastcall OnUpdateDeltaTime(TES3::WorldController* worldController) {
+			// Overwritten code.
+			TES3_WorldController_updateDeltaTime(worldController);
+
+			// Multiply our delta time by our scalar.
+			worldController->deltaTime *= TES3::WorldController::simulationTimeScalar;
+		}
+
+		//
 		//
 		//
 
@@ -4660,6 +4673,9 @@ namespace mwse {
 			overrideVirtualTableEnforced(0x748D10, offsetof(TES3::ObjectVirtualTable, setName), 0x4F1C50, *reinterpret_cast<DWORD*>(&TES3_Lockpick_setName));
 			overrideVirtualTableEnforced(0x748FA0, offsetof(TES3::ObjectVirtualTable, setName), 0x4F1C50, *reinterpret_cast<DWORD*>(&TES3_Probe_setName));
 			overrideVirtualTableEnforced(0x7490E8, offsetof(TES3::ObjectVirtualTable, setName), 0x4F1C50, *reinterpret_cast<DWORD*>(&TES3_RepairTool_setName));
+
+			// Allow changing simulation time scalar.
+			genCallEnforced(0x40F62B, 0x453630, reinterpret_cast<DWORD>(OnUpdateDeltaTime));
 
 			// Support for MobileSpellProjectile::explode.
 			// Initialize extra flag members in MobileProjectile::ctor.

@@ -423,6 +423,8 @@ namespace TES3 {
 	// WorldController
 	//
 
+	float WorldController::simulationTimeScalar = 1.0f;
+
 	WorldController * WorldController::get() {
 		return *reinterpret_cast<TES3::WorldController**>(0x7C67DC);
 	}

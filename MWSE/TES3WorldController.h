@@ -391,6 +391,12 @@ namespace TES3 {
 		_declspec(dllexport) void tickClock();
 		_declspec(dllexport) void checkForDayWrapping();
 
+		//
+		// Helpful static variables.
+		//
+
+		static float simulationTimeScalar;
+
 	};
 	static_assert(sizeof(WorldController) == 0x374, "TES3::WorldController failed size validation");
 	static_assert(offsetof(WorldController, inputController) == 0x4C, "TES3::WorldController failed offset validation");

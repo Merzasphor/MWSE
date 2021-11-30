@@ -657,6 +657,16 @@ If subtitles are shown. Corresponds to the "Subtitles" option in the Options men
 
 ***
 
+### `simulationTimeScalar`
+
+A scalar used for simulation time. At the start of every frame, the `deltaTime` is multiplied by this value. Doing this here is safer than doing it in another event.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
 ### `splashController`
 
 *Read-only*. Access to the splash controller.

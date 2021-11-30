@@ -173,6 +173,7 @@ namespace mwse {
 				usertypeDefinition["shadowCamera"] = sol::readonly_property(&TES3::WorldController::shadowCamera);
 				usertypeDefinition["shadows"] = &TES3::WorldController::bShadows;
 				usertypeDefinition["showSubtitles"] = &TES3::WorldController::showSubtitles;
+				usertypeDefinition["simulationTimeScalar"] = sol::var(std::ref(TES3::WorldController::simulationTimeScalar));
 				usertypeDefinition["splashController"] = sol::readonly_property(&TES3::WorldController::splashController);
 				usertypeDefinition["splashscreenCamera"] = sol::readonly_property(&TES3::WorldController::splashscreenCamera);
 				usertypeDefinition["stopGameLoop"] = &TES3::WorldController::stopGameLoop;
