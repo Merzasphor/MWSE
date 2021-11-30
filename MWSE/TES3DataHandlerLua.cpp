@@ -122,8 +122,8 @@ namespace mwse {
 				usertypeDefinition["updateCollisionGroupsForActiveCells"] = &TES3::DataHandler::updateCollisionGroupsForActiveCells;
 
 				// Static variable binding.
-				usertypeDefinition["dontThreadLoad"] = sol::var(&TES3::DataHandler::dontThreadLoad);
-				usertypeDefinition["suppressThreadLoad"] = sol::var(&TES3::DataHandler::suppressThreadLoad);
+				usertypeDefinition["dontThreadLoad"] = sol::var(std::ref(TES3::DataHandler::dontThreadLoad));
+				usertypeDefinition["suppressThreadLoad"] = sol::var(std::ref(TES3::DataHandler::suppressThreadLoad));
 			}
 		}
 	}
