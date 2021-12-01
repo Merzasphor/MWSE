@@ -166,10 +166,11 @@ namespace mwse::lua {
 			if (id.size() > 31)
 				throw std::invalid_argument{ "tes3.createObject: 'id' parameter must be less than 32 character long." };
 
-			if (auto existingObject = TES3::DataHandler::get()->nonDynamicData->resolveObject(id.c_str()); existingObject != nullptr)
+			if (auto existingObject = TES3::DataHandler::get()->nonDynamicData->resolveObject(id.c_str()); existingObject != nullptr) {
 				return (getIfExists && existingObject->objectType == TES3::ObjectType::Container) ?
-				existingObject :
-				throw std::invalid_argument{ "tes3.createObject: 'id' parameter already assigned to an existing object that is not a misc item." };
+					existingObject :
+					throw std::invalid_argument{ "tes3.createObject: 'id' parameter already assigned to an existing object that is not a misc item." };
+			}
 
 			std::string name = getOptionalParam<std::string>(params, "name", "Container");
 			if (name.size() > 31)
@@ -186,8 +187,9 @@ namespace mwse::lua {
 			container->setModelPath(mesh.c_str());
 
 			auto script = getOptionalParamScript(params, "script");
-			if (script != nullptr)
+			if (script != nullptr) {
 				container->script = script;
+			}
 
 			container->capacity = getOptionalParam(params, "capacity", 0.0f);
 			container->objectFlags = getOptionalParam(params, "objectFlags", 0u);
@@ -195,6 +197,9 @@ namespace mwse::lua {
 			container->setRespawns(getOptionalParam(params, "respawns", container->getRespawns()));
 			container->actorFlags = getOptionalParam(params, "actorFlags", 0u);
 			container->objectFlags |= TES3::ObjectFlag::Modified;
+
+			// Ensure is base actor.
+			container->actorFlags |= TES3::ActorFlag::IsBase;
 
 			if (!TES3::DataHandler::get()->nonDynamicData->addNewObject(container))
 				throw std::runtime_error("tes3.createObject: could not add the newly created misc item in its proper collection.");
