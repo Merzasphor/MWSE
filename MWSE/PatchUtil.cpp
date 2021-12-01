@@ -733,6 +733,13 @@ namespace mwse {
 
 			// Patch: Letterbox movies.
 			genCallEnforced(0x64FC55, 0x64FE20, reinterpret_cast<DWORD>(PatchDrawLetterboxMovieFrame));
+			genCallEnforced(0x64FC9C, 0x64FE20, reinterpret_cast<DWORD>(PatchDrawLetterboxMovieFrame));
+			genCallEnforced(0x64FCDF, 0x64FE20, reinterpret_cast<DWORD>(PatchDrawLetterboxMovieFrame));
+			genCallEnforced(0x64FD23, 0x64FE20, reinterpret_cast<DWORD>(PatchDrawLetterboxMovieFrame));
+			genCallEnforced(0x64FD69, 0x64FE20, reinterpret_cast<DWORD>(PatchDrawLetterboxMovieFrame));
+			genCallEnforced(0x64FDA1, 0x64FE20, reinterpret_cast<DWORD>(PatchDrawLetterboxMovieFrame));
+			genCallEnforced(0x64FDD2, 0x64FE20, reinterpret_cast<DWORD>(PatchDrawLetterboxMovieFrame));
+			genCallEnforced(0x64FE03, 0x64FE20, reinterpret_cast<DWORD>(PatchDrawLetterboxMovieFrame));
 		}
 
 		void installPostLuaPatches() {
