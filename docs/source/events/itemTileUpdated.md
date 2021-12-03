@@ -1,6 +1,6 @@
 # itemTileUpdated
 
-This event fires when a dialogue response is triggered.
+This event is fired whenever an inventory item tile is updated, as well as when the tile is created. This can be used to easily manipulate or extend the appearance of inventory tiles.
 
 ```lua
 --- @param e itemTileUpdatedEventData

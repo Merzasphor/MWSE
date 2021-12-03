@@ -1,6 +1,6 @@
 return {
 	type = "event",
-	description = "This event fires when a dialogue response is triggered.",
+	description = "This event is fired whenever an inventory item tile is updated, as well as when the tile is created. This can be used to easily manipulate or extend the appearance of inventory tiles.",
 	eventData = {
 		["element"] = {
 			type = "tes3uiElement",

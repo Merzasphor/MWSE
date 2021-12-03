@@ -1,6 +1,6 @@
 --- @meta
 
---- This event fires when a dialogue response is triggered.
+--- This event is fired whenever an inventory item tile is updated, as well as when the tile is created. This can be used to easily manipulate or extend the appearance of inventory tiles.
 --- @class itemTileUpdatedEventData
 --- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.
 --- @field element tes3uiElement *Read-only*. The command.
