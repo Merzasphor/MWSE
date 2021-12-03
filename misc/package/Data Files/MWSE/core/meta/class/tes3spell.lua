@@ -5,7 +5,7 @@
 --- @field alwaysSucceeds boolean A flag that determines if casting the spell will always succeed.
 --- @field autoCalc boolean Determines if the magicka cost for the spell is autocalculated, and if the spell may be automatically assigned to NPCs if they are skillful enough to cast it.
 --- @field basePurchaseCost number Calculates the base cost to purchase the spell. This value is not adjusted by mercantile skills.
---- @field castType number The spell's cast type.
+--- @field castType number The spell's cast type. Maps to [`tes3.spellType`](https://mwse.github.io/MWSE/references/spell-types/) constants.
 --- @field effects table *Read-only*. An array-style table of the tes3effect data on the object.
 --- @field flags number A bit field for the spell's flags.
 --- @field isActiveCast boolean *Read-only*. True if the spell is actively cast. If false, the spell's effects are always passively affecting the owner.

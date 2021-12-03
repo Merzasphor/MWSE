@@ -17,7 +17,7 @@ The blocked state of the object.
 
 ### `castType`
 
-The enchantment's cast type. Maps to tes3.enchantmentType.* constants.
+The enchantment's cast type. Maps to [`tes3.enchantmentType`](https://mwse.github.io/MWSE/references/enchantment-types/) constants.
 
 **Returns**:
 
@@ -137,7 +137,7 @@ The next object in parent collection's list.
 
 ### `objectType`
 
-*Read-only*. The type of object. Maps to values in tes3.objectType.
+*Read-only*. The type of object. Maps to values in [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/).
 
 **Returns**:
 
@@ -285,7 +285,7 @@ local index = tes3enchantment:getFirstIndexOfEffect(effectId)
 
 **Parameters**:
 
-* `effectId` (number): The effectID to perform a check for. Maps to tes3.effect.* constants.
+* `effectId` (number): The effectId to perform a check for. Maps to [`tes3.effect`](https://mwse.github.io/MWSE/references/magic-effects/) constants, including magic effects added with `tes3.addMagicEffect()`.
 
 **Returns**:
 

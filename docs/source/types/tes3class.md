@@ -247,7 +247,7 @@ The player-facing name for the object.
 
 ### `objectType`
 
-*Read-only*. The type of object. Maps to values in tes3.objectType.
+*Read-only*. The type of object. Maps to values in [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/).
 
 **Returns**:
 
@@ -367,7 +367,7 @@ The soruceless flag of the object.
 
 ### `specialization`
 
-The specialization for the class. Maps to the tes3.specialization table.
+The specialization for the class. Maps to the [`tes3.specialization`](https://mwse.github.io/MWSE/references/specialization-types/) constants table.
 
 **Returns**:
 

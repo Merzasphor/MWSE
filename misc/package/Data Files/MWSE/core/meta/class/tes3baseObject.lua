@@ -8,7 +8,7 @@
 --- @field id string *Read-only*. The unique identifier for the object.
 --- @field modified boolean The modification state of the object since the last save.
 --- @field objectFlags number *Read-only*. The raw flags of the object.
---- @field objectType number *Read-only*. The type of object. Maps to values in tes3.objectType.
+--- @field objectType number *Read-only*. The type of object. Maps to values in [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/).
 --- @field persistent boolean The persistent flag of the object.
 --- @field sourceless boolean The soruceless flag of the object.
 --- @field sourceMod string *Read-only*. The filename of the mod that owns this object.

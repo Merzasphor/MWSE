@@ -17,7 +17,7 @@
 --- @field slotName string *Read-only*. The name of the slot used by the armor.
 --- @field value number The value of the object.
 --- @field weight number The weight of the object.
---- @field weightClass number *Read-only*. The weight class of the armor. This value maps to tes3.armorWeightClass.* constants.
+--- @field weightClass number *Read-only*. The weight class of the armor. This value maps to [`tes3.armorWeightClass`](https://mwse.github.io/MWSE/references/armor-weight-classes/) constants.
 tes3armor = {}
 
 --- Calculates what armor rating is provided for a given mobile actor.

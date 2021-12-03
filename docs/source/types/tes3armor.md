@@ -187,7 +187,7 @@ The next object in parent collection's list.
 
 ### `objectType`
 
-*Read-only*. The type of object. Maps to values in tes3.objectType.
+*Read-only*. The type of object. Maps to values in [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/).
 
 **Returns**:
 
@@ -367,7 +367,7 @@ The weight of the object.
 
 ### `weightClass`
 
-*Read-only*. The weight class of the armor. This value maps to tes3.armorWeightClass.* constants.
+*Read-only*. The weight class of the armor. This value maps to [`tes3.armorWeightClass`](https://mwse.github.io/MWSE/references/armor-weight-classes/) constants.
 
 **Returns**:
 

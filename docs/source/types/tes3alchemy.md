@@ -157,7 +157,7 @@ The next object in parent collection's list.
 
 ### `objectType`
 
-*Read-only*. The type of object. Maps to values in tes3.objectType.
+*Read-only*. The type of object. Maps to values in [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/).
 
 **Returns**:
 
@@ -345,7 +345,7 @@ local index = tes3alchemy:getFirstIndexOfEffect(effectId)
 
 **Parameters**:
 
-* `effectId` (number): The effectID to perform a check for. Maps to tes3.effect.* constants.
+* `effectId` (number): The effectId to perform a check for. Maps to [`tes3.effect`](https://mwse.github.io/MWSE/references/magic-effects/) constants.
 
 **Returns**:
 

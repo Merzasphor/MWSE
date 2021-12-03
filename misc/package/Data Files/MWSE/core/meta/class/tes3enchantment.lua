@@ -2,7 +2,7 @@
 
 --- An enchantment game object.
 --- @class tes3enchantment : tes3object, tes3baseObject
---- @field castType number The enchantment's cast type. Maps to tes3.enchantmentType.* constants.
+--- @field castType number The enchantment's cast type. Maps to [`tes3.enchantmentType`](https://mwse.github.io/MWSE/references/enchantment-types/) constants.
 --- @field chargeCost number The cost of using the enchantment.
 --- @field effects table *Read-only*. An array-style table of the tes3effect data on the object.
 --- @field flags number A bit field for the enchantment's flags.
@@ -40,7 +40,7 @@ function tes3enchantment.create(params) end
 function tes3enchantment:getActiveEffectCount() end
 
 --- Returns the index of a first effect of a given effectId in the parent tes3enchantment object.
---- @param effectId number The effectID to perform a check for. Maps to tes3.effect.* constants.
+--- @param effectId number The effectId to perform a check for. Maps to [`tes3.effect`](https://mwse.github.io/MWSE/references/magic-effects/) constants, including magic effects added with `tes3.addMagicEffect()`.
 --- @return number index No description yet available.
 function tes3enchantment:getFirstIndexOfEffect(effectId) end
 

@@ -127,7 +127,7 @@ The modification state of the object since the last save.
 
 ### `objectType`
 
-*Read-only*. The type of object. Maps to values in tes3.objectType.
+*Read-only*. The type of object. Maps to values in [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/).
 
 **Returns**:
 
@@ -207,7 +207,7 @@ The soruceless flag of the object.
 
 ### `sourceType`
 
-*Read-only*. The type of this magic source. Maps to tes3.magicSourceType.* constants.
+*Read-only*. The type of this magic source. Maps to [`tes3.magicSourceType`](https://mwse.github.io/MWSE/references/magic-source-types/) constants.
 
 **Returns**:
 

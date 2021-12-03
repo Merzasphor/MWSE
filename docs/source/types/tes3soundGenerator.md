@@ -67,7 +67,7 @@ The modification state of the object since the last save.
 
 ### `objectType`
 
-*Read-only*. The type of object. Maps to values in tes3.objectType.
+*Read-only*. The type of object. Maps to values in [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/).
 
 **Returns**:
 
@@ -127,7 +127,7 @@ If true, references of this object can store temporary or persistent lua data.
 
 ### `type`
 
-*Read-only*. Maps to tes3.soundGenType constants.
+*Read-only*. Maps to [`tes3.soundGenType`](https://mwse.github.io/MWSE/references/sound-generator-types/) constants.
 
 **Returns**:
 

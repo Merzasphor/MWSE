@@ -47,7 +47,7 @@ The blocked state of the object.
 
 ### `castType`
 
-The spell's cast type.
+The spell's cast type. Maps to [`tes3.spellType`](https://mwse.github.io/MWSE/references/spell-types/) constants.
 
 **Returns**:
 
@@ -177,7 +177,7 @@ The next object in parent collection's list.
 
 ### `objectType`
 
-*Read-only*. The type of object. Maps to values in tes3.objectType.
+*Read-only*. The type of object. Maps to values in [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/).
 
 **Returns**:
 

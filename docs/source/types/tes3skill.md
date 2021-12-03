@@ -17,7 +17,7 @@ This type inherits the following: [tes3baseObject](../../types/tes3baseObject)
 
 ### `attribute`
 
-*Read-only*. Skill's governing attribute. Maps to tes3.attribute.* constants.
+*Read-only*. Skill's governing attribute. Maps to [`tes3.attribute`](https://mwse.github.io/MWSE/references/attributes/) constants.
 
 **Returns**:
 
@@ -107,7 +107,7 @@ The modification state of the object since the last save.
 
 ### `objectType`
 
-*Read-only*. The type of object. Maps to values in tes3.objectType.
+*Read-only*. The type of object. Maps to values in [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/).
 
 **Returns**:
 
@@ -147,7 +147,7 @@ The soruceless flag of the object.
 
 ### `specialization`
 
-The specialization in which the skill belongs. Maps to tes3.specialization.* constants.
+The specialization in which the skill belongs. Maps to [`tes3.specialization`](https://mwse.github.io/MWSE/references/specialization-types/) constants.
 
 **Returns**:
 
