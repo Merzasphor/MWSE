@@ -1,6 +1,6 @@
 return {
 	type = "event",
-    description = "This event is triggered on a collision.",
+    description = "This event is triggered on a collision and all the frames during the collision.",
     eventData = {
         ["mobile"] = {
             type = "tes3mobileObject",

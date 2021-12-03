@@ -1,6 +1,6 @@
 # collideWater
 
-This event is triggered when a mobile object collides with water.
+This event is triggered when a mobile object collides with water and all the frames during the collision.
 
 ```lua
 --- @param e collideWaterEventData

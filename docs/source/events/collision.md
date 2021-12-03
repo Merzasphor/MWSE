@@ -1,6 +1,6 @@
 # collision
 
-This event is triggered on a collision.
+This event is triggered on a collision and all the frames during the collision.
 
 ```lua
 --- @param e collisionEventData

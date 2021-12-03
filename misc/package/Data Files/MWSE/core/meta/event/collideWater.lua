@@ -1,6 +1,6 @@
 --- @meta
 
---- This event is triggered when a mobile object collides with water.
+--- This event is triggered when a mobile object collides with water and all the frames during the collision.
 --- @class collideWaterEventData
 --- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.
 --- @field inWater boolean *Read-only*. 
