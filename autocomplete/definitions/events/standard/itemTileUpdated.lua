@@ -5,27 +5,27 @@ return {
 		["element"] = {
 			type = "tes3uiElement",
 			readOnly = true,
-			description = "The command.",
+			description = "The UI element that the tile is displayed on.",
 		},
 		["item"] = {
 			type = "tes3item",
 			readOnly = true,
-			description = "The reference.",
+			description = "The tile's item.",
 		},
 		["itemData"] = {
 			type = "tesitemData",
 			readOnly = true,
-			description = "The script variables.",
+			description = "The tile's item data, if any.",
 		},
 		["menu"] = {
 			type = "tes3uiElement",
 			readOnly = true,
-			description = "The dialogue object.",
+			description = "The root menu of the tile. This will typically be the MenuInventory, MenuContents, or MenuBarter menus.",
 		},
 		["tile"] = {
 			type = "tes3inventoryTile",
 			readOnly = true,
-			description = "The dialogue info object.",
+			description = "The tile data itself. This typically contains references to all the other event fields, among other tile-specific information.",
 		},
 	},
 }
