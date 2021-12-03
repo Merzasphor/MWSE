@@ -8,7 +8,7 @@ return {
 			{
 				name = "id",
 				type = "number",
-				description = "Id of the new effect. Maps to tes3.effect.* constants claimed with tes3.claimSpellEffectId(). If the effect of this id already exists, an error will be thrown."
+				description = "Id of the new effect. Maps to newly claimed `tes3.effect` constants with `tes3.claimSpellEffectId()`. If the effect of this id already exists, an error will be thrown."
 			},
 			{
 				name = "name",
@@ -29,7 +29,7 @@ return {
 				type = "number",
 				optional = true,
 				default = "tes3.magicSchool.alteration",
-				description = "The magic school the new effect will be assigned to. Maps to [tes3.magicSchool.*](https://mwse.github.io/MWSE/references/magic-schools/) constants."
+				description = "The magic school the new effect will be assigned to. Maps to [`tes3.magicSchool`](https://mwse.github.io/MWSE/references/magic-schools/) constants."
 			},
 			{
 				name = "size",

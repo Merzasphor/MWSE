@@ -6,7 +6,7 @@
 --- @field dataHandler tes3dataHandler One of the core game objects.
 --- @field game tes3game One of the core game objects.
 --- @field installDirectory string The currently executed root Morrowind installation path.
---- @field magicSchoolSkill tes3.skill.* constants These constants are used to convert magic schools to their respective skill. These constants map to their respective tes3.skill constants.
+--- @field magicSchoolSkill number This table is used to convert numerical magic school IDs to their respective skill IDs. These constants will return their respective `tes3.skill` constants.
 --- @field mobilePlayer tes3mobilePlayer The player's mobile actor.
 --- @field player tes3reference A reference to the player.
 --- @field worldController tes3worldController One of the core game objects.
@@ -110,13 +110,13 @@ function tes3.addJournalEntry(params) end
 --- This function creates a new custom magic effect. The effect can be scripted through lua.
 --- @param params tes3.addMagicEffect.params This table accepts the following values:
 --- 
---- `id`: number — Id of the new effect. Maps to tes3.effect.* constants claimed with tes3.claimSpellEffectId(). If the effect of this id already exists, an error will be thrown.
+--- `id`: number — Id of the new effect. Maps to newly claimed `tes3.effect` constants with `tes3.claimSpellEffectId()`. If the effect of this id already exists, an error will be thrown.
 --- 
 --- `name`: string — *Default*: `Unnamed Effect`. Name of the effect.
 --- 
 --- `baseCost`: number — *Default*: `1`. Base magicka cost for the effect.
 --- 
---- `school`: number — *Default*: `tes3.magicSchool.alteration`. The magic school the new effect will be assigned to. Maps to [tes3.magicSchool.*](https://mwse.github.io/MWSE/references/magic-schools/) constants.
+--- `school`: number — *Default*: `tes3.magicSchool.alteration`. The magic school the new effect will be assigned to. Maps to [`tes3.magicSchool`](https://mwse.github.io/MWSE/references/magic-schools/) constants.
 --- 
 --- `size`: number — *Default*: `1`. No description yet available.
 --- 
@@ -190,10 +190,10 @@ function tes3.addMagicEffect(params) end
 
 ---Table parameter definitions for `tes3.addMagicEffect`.
 --- @class tes3.addMagicEffect.params
---- @field id number Id of the new effect. Maps to tes3.effect.* constants claimed with tes3.claimSpellEffectId(). If the effect of this id already exists, an error will be thrown.
+--- @field id number Id of the new effect. Maps to newly claimed `tes3.effect` constants with `tes3.claimSpellEffectId()`. If the effect of this id already exists, an error will be thrown.
 --- @field name string *Default*: `Unnamed Effect`. Name of the effect.
 --- @field baseCost number *Default*: `1`. Base magicka cost for the effect.
---- @field school number *Default*: `tes3.magicSchool.alteration`. The magic school the new effect will be assigned to. Maps to [tes3.magicSchool.*](https://mwse.github.io/MWSE/references/magic-schools/) constants.
+--- @field school number *Default*: `tes3.magicSchool.alteration`. The magic school the new effect will be assigned to. Maps to [`tes3.magicSchool`](https://mwse.github.io/MWSE/references/magic-schools/) constants.
 --- @field size number *Default*: `1`. No description yet available.
 --- @field sizeCap number *Default*: `1`. No description yet available.
 --- @field speed number *Default*: `1`. No description yet available.
@@ -267,7 +267,7 @@ function tes3.addSpell(params) end
 --- 
 --- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — The reference to attach the sound to.
 --- 
---- `mixChannel`: number — *Default*: `tes3.audioMixType.effects`. The channel to base volume off of. Maps to [tes3.audioMixType.*](https://mwse.github.io/MWSE/references/audio-mix-types/) constants.
+--- `mixChannel`: number — *Default*: `tes3.audioMixType.effects`. The channel to base volume off of. Maps to [`tes3.audioMixType`](https://mwse.github.io/MWSE/references/audio-mix-types/) constants.
 --- 
 --- `volume`: number — *Default*: `1.0`. A value between 0.0 and 1.0 to scale the volume off of.
 function tes3.adjustSoundVolume(params) end
@@ -276,7 +276,7 @@ function tes3.adjustSoundVolume(params) end
 --- @class tes3.adjustSoundVolume.params
 --- @field sound tes3sound|string The sound object, or id of the sound to look for.
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string The reference to attach the sound to.
---- @field mixChannel number *Default*: `tes3.audioMixType.effects`. The channel to base volume off of. Maps to [tes3.audioMixType.*](https://mwse.github.io/MWSE/references/audio-mix-types/) constants.
+--- @field mixChannel number *Default*: `tes3.audioMixType.effects`. The channel to base volume off of. Maps to [`tes3.audioMixType`](https://mwse.github.io/MWSE/references/audio-mix-types/) constants.
 --- @field volume number *Default*: `1.0`. A value between 0.0 and 1.0 to scale the volume off of.
 
 --- Advances the game time. Can be used to simulate player resting.
@@ -459,7 +459,7 @@ function tes3.checkMerchantTradesItem(params) end
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string No description yet available.
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string No description yet available.
 
---- This function is used to claim a unique spell effect name and id. This is needed before actually creating a new effect by calling tes3.addMagicEffect(). A claimed effect id can be retrieved as: tes3.effect.effectName (just like any regular spell effect).
+--- This function is used to claim a unique spell effect name and id. This is needed before actually creating a new effect by calling `tes3.addMagicEffect()`. A claimed effect id can be retrieved as: `tes3.effect.effectName` (just like any regular spell effect).
 --- @param params tes3.claimSpellEffectId.params This table accepts the following values:
 --- 
 --- `name`: string — The name of the new spell effect. Must be unique. An error will be thrown if it's non-unique.
@@ -814,20 +814,20 @@ function tes3.getDialogueInfo(dialogue, id) end
 --- 
 --- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — An associated mobile should exist for this function to be able to work.
 --- 
---- `effect`: tes3.effect.* constants — Effect ID. Can be any of the predefined spell effects, or one added by tes3.claimSpellEffectId.
+--- `effect`: number — Effect ID. Can be any of the predefined spell effects, or one added by `tes3.claimSpellEffectId()`. Maps to values of [`tes3.effect`](https://mwse.github.io/MWSE/references/magic-effects/) constants
 --- 
---- `skill`: tes3.skill.* constants — *Default*: `-1`. If effect parameter specified is: Absorb, Damage, Drain, Fortify or Restore Skill, a skill should be provided. This also applies to any custom spell effect which operates on a certain skill.
+--- `skill`: number — *Default*: `-1`. If effect parameter specified is: Absorb, Damage, Drain, Fortify or Restore Skill, a skill should be provided. This also applies to any custom spell effect which operates on a certain skill. This value maps to [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) constants.
 --- 
---- `attribute`: tes3.attribute.* constants — *Default*: `-1`. If effect parameter specified is: Absorb, Damage, Drain, Fortify or Restore Attribute, an attribute should be provided. This also applies to any custom spell effect which operates on a certain attribute.
+--- `attribute`: number — *Default*: `-1`. If effect parameter specified is: Absorb, Damage, Drain, Fortify or Restore Attribute, an attribute should be provided. This also applies to any custom spell effect which operates on a certain attribute. This value maps to [`tes3.attribute`](https://mwse.github.io/MWSE/references/attributes/) constants.
 --- @return number, number magnitude, unresistedMagnitude No description yet available.
 function tes3.getEffectMagnitude(params) end
 
 ---Table parameter definitions for `tes3.getEffectMagnitude`.
 --- @class tes3.getEffectMagnitude.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string An associated mobile should exist for this function to be able to work.
---- @field effect tes3.effect.* constants Effect ID. Can be any of the predefined spell effects, or one added by tes3.claimSpellEffectId.
---- @field skill tes3.skill.* constants *Default*: `-1`. If effect parameter specified is: Absorb, Damage, Drain, Fortify or Restore Skill, a skill should be provided. This also applies to any custom spell effect which operates on a certain skill.
---- @field attribute tes3.attribute.* constants *Default*: `-1`. If effect parameter specified is: Absorb, Damage, Drain, Fortify or Restore Attribute, an attribute should be provided. This also applies to any custom spell effect which operates on a certain attribute.
+--- @field effect number Effect ID. Can be any of the predefined spell effects, or one added by `tes3.claimSpellEffectId()`. Maps to values of [`tes3.effect`](https://mwse.github.io/MWSE/references/magic-effects/) constants
+--- @field skill number *Default*: `-1`. If effect parameter specified is: Absorb, Damage, Drain, Fortify or Restore Skill, a skill should be provided. This also applies to any custom spell effect which operates on a certain skill. This value maps to [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) constants.
+--- @field attribute number *Default*: `-1`. If effect parameter specified is: Absorb, Damage, Drain, Fortify or Restore Attribute, an attribute should be provided. This also applies to any custom spell effect which operates on a certain attribute. This value maps to [`tes3.attribute`](https://mwse.github.io/MWSE/references/attributes/) constants.
 
 --- Returns an actor's equipped item stack, provided a given filter
 ---
@@ -838,11 +838,11 @@ function tes3.getEffectMagnitude(params) end
 --- 
 --- `enchanted`: boolean — *Optional*. If true, filters to enchanted items.
 --- 
---- `objectType`: number — *Optional*. Maps to tes3.objectType constants. Used to filter equipment by type.
+--- `objectType`: number — *Optional*. Maps to [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) constants. Used to filter equipment by type.
 --- 
---- `slot`: number — *Optional*. Maps to tes3.armorSlot or tes3.clothingSlot. Used to filter equipment by slot.
+--- `slot`: number — *Optional*. Maps to [`tes3.armorSlot`](https://mwse.github.io/MWSE/references/armor-slots/) or [`tes3.clothingSlot`](https://mwse.github.io/MWSE/references/clothing-slots/). Used to filter equipment by slot.
 --- 
---- `type`: number — *Optional*. Maps to tes3.weaponType. Used to filter equipment by type.
+--- `type`: number — *Optional*. Maps to [`tes3.weaponType`](https://mwse.github.io/MWSE/references/weapon-types/). Used to filter equipment by type.
 --- @return tes3equipmentStack stack No description yet available.
 function tes3.getEquippedItem(params) end
 
@@ -850,9 +850,9 @@ function tes3.getEquippedItem(params) end
 --- @class tes3.getEquippedItem.params
 --- @field actor tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance No description yet available.
 --- @field enchanted boolean *Optional*. If true, filters to enchanted items.
---- @field objectType number *Optional*. Maps to tes3.objectType constants. Used to filter equipment by type.
---- @field slot number *Optional*. Maps to tes3.armorSlot or tes3.clothingSlot. Used to filter equipment by slot.
---- @field type number *Optional*. Maps to tes3.weaponType. Used to filter equipment by type.
+--- @field objectType number *Optional*. Maps to [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) constants. Used to filter equipment by type.
+--- @field slot number *Optional*. Maps to [`tes3.armorSlot`](https://mwse.github.io/MWSE/references/armor-slots/) or [`tes3.clothingSlot`](https://mwse.github.io/MWSE/references/clothing-slots/). Used to filter equipment by slot.
+--- @field type number *Optional*. Maps to [`tes3.weaponType`](https://mwse.github.io/MWSE/references/weapon-types/). Used to filter equipment by type.
 
 --- Fetches the core game faction object for a given faction ID.
 --- @param id string No description yet available.
@@ -875,7 +875,7 @@ function tes3.getFileSource(path) end
 function tes3.getGlobal(id) end
 
 --- Gets the input configuration for a given keybind.
---- @param keybind number Maps to [tes3.keybind.*](https://mwse.github.io/MWSE/references/keybinds/) constants.
+--- @param keybind number Maps to [`tes3.keybind`](https://mwse.github.io/MWSE/references/keybinds/) constants.
 --- @return tes3inputConfig inputConfig No description yet available.
 function tes3.getInputBinding(keybind) end
 
@@ -1057,7 +1057,7 @@ function tes3.getScript(id) end
 function tes3.getSimulationTimestamp() end
 
 --- Fetches the core game object for a given skill ID.
---- @param id number Maps to tes3.skill constants.
+--- @param id number Maps to [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) constants.
 --- @return tes3skill skill No description yet available.
 function tes3.getSkill(id) end
 
@@ -1072,7 +1072,7 @@ function tes3.getSound(id) end
 
 --- Returns a sound generator by a given creature id and type.
 --- @param creatureId string No description yet available.
---- @param soundType number Maps to tes3.soundGenType constants.
+--- @param soundType number Maps to [`tes3.soundGenType`](https://mwse.github.io/MWSE/references/sound-generator-types/) constants.
 --- @return tes3soundGenerator soundGenerator No description yet available.
 function tes3.getSoundGenerator(creatureId, soundType) end
 
@@ -1127,7 +1127,7 @@ function tes3.getWerewolfKillCount() end
 function tes3.hammerKey(keyCode) end
 
 --- Attempts to determine if a given Morrowind Code Patch feature is enabled. This may not be possible, in which case nil will be returned.
---- @param id number No description yet available.
+--- @param id number The id of the feature. Maps to values in [`tes3.codePatchFeature`](https://mwse.github.io/MWSE/references/code-patch-features/) constants.
 --- @return boolean|nil state No description yet available.
 function tes3.hasCodePatchFeature(id) end
 
@@ -1176,24 +1176,24 @@ function tes3.incrementKillCount(params) end
 --- @return boolean state No description yet available.
 function tes3.is3rdPerson() end
 
---- This function check whether a reference is affected by a certain object or effect.
+--- This function performs a check whether the provided reference is affected by a certain object or magic effect.
 --- 
---- Note reference.object.spells:contains(spellID) will give the same output as this function for abilities, diseases, and curses, because having them in your spell list also makes them affect you.
+--- Note `reference.object.spells:contains(spellID)` will give the same output as this function for abilities, diseases, and curses, because having them in your spell list also makes them affect you.
 --- @param params tes3.isAffectedBy.params This table accepts the following values:
 --- 
 --- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — No description yet available.
 --- 
---- `effect`: tes3.effect — *Optional*. A tes3.effect constant to check for.
+--- `effect`: number — *Optional*. A numerical identifier of the magic effect to perform a check for. Maps to [`tes3.effect`](https://mwse.github.io/MWSE/references/magic-effects/) constant, including those claimed with `tes3.claimSpellEffectId()`, and then added with `tes3.addMagicEffect()`.
 --- 
---- `object`: tes3alchemy|tes3enchantment|tes3spell|tes3magicEffect|string — *Optional*. An object to check for.
+--- `object`: tes3alchemy|tes3enchantment|tes3spell|tes3magicEffect|string — *Optional*. An object to perform a check for.
 --- @return boolean isAffectedBy No description yet available.
 function tes3.isAffectedBy(params) end
 
 ---Table parameter definitions for `tes3.isAffectedBy`.
 --- @class tes3.isAffectedBy.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string No description yet available.
---- @field effect tes3.effect *Optional*. A tes3.effect constant to check for.
---- @field object tes3alchemy|tes3enchantment|tes3spell|tes3magicEffect|string *Optional*. An object to check for.
+--- @field effect number *Optional*. A numerical identifier of the magic effect to perform a check for. Maps to [`tes3.effect`](https://mwse.github.io/MWSE/references/magic-effects/) constant, including those claimed with `tes3.claimSpellEffectId()`, and then added with `tes3.addMagicEffect()`.
+--- @field object tes3alchemy|tes3enchantment|tes3spell|tes3magicEffect|string *Optional*. An object to perform a check for.
 
 --- Determines if the player has a given ESP or ESM file active.
 --- @param filename string The filename of the mod to find, including the extension.
@@ -1206,7 +1206,7 @@ function tes3.isModActive(filename) end
 function tes3.iterate(iterator) end
 
 --- Iteration function used for looping over game options.
---- @param filter number Maps to tes3.objectType constants.
+--- @param filter number Maps to [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) constants.
 --- @return tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3enchantment|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3reference|tes3repairTool|tes3spell|tes3static|tes3weapon object No description yet available.
 function tes3.iterateObjects(filter) end
 
@@ -1356,22 +1356,22 @@ function tes3.persuade(params) end
 
 --- Plays a given animation group. Optional flags can be used to define how the group starts.
 --- 
---- When 'group' is specified, the actor AI is paused while playing the animation, as if in an idle state. When one or more of 'lower', 'upper', or 'shield' are specified without 'group', the actor AI retains control, and the animations are layered. e.g. tes3.playAnimation{reference = ..., upper = tes3.animationGroup.idle3, loopCount = 0} will play the idle3 animation once (without looping) on the upper body, while the player or NPC is still able to walk around. Using 'upper' defers combat actions until the animation is done. Using 'shield' still allows combat actions.
+--- When 'group' is specified, the actor AI is paused while playing the animation, as if in an idle state. When one or more of 'lower', 'upper', or 'shield' are specified without 'group', the actor AI retains control, and the animations are layered. e.g. `tes3.playAnimation{reference = ..., upper = tes3.animationGroup.idle3, loopCount = 0}` will play the idle3 animation once (without looping) on the upper body, while the player or NPC is still able to walk around. Using 'upper' defers combat actions until the animation is done. Using 'shield' still allows combat actions.
 --- 
---- As a special case, tes3.playAnimation{reference = ..., group = 0} returns control to the AI, as the AI knows that is the actor's neutral idle state.
+--- As a special case, `tes3.playAnimation{reference = ..., group = 0}` returns control to the AI, as the AI knows that is the actor's neutral idle state.
 --- @param params tes3.playAnimation.params This table accepts the following values:
 --- 
 --- `reference`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string — The reference that will play the animation.
 --- 
---- `group`: number — *Optional*. The animation group id to start playing -- a value from 0 to 149. Applies the animation to the whole body. Maps to tes3.animationGroup.* constants.
+--- `group`: number — *Optional*. The animation group id to start playing -- a value from 0 to 149. Applies the animation to the whole body. Maps to [`tes3.animationGroup`](https://mwse.github.io/MWSE/references/animation-groups/) constants.
 --- 
---- `lower`: number — *Optional*. Sets the animation group id for the lower body. This is used to combine different animations for each body section. Maps to tes3.animationGroup.* constants.
+--- `lower`: number — *Optional*. Sets the animation group id for the lower body. This is used to combine different animations for each body section. Maps to [`tes3.animationGroup`](https://mwse.github.io/MWSE/references/animation-groups/) constants.
 --- 
---- `upper`: number — *Optional*. Sets the animation group id for the upper body. This is used to combine different animations for each body section. Maps to tes3.animationGroup.* constants.
+--- `upper`: number — *Optional*. Sets the animation group id for the upper body. This is used to combine different animations for each body section. Maps to [`tes3.animationGroup`](https://mwse.github.io/MWSE/references/animation-groups/) constants.
 --- 
---- `shield`: number — *Optional*. Sets the animation group id for the shield arm. This is used to combine different animations for each body section. Maps to tes3.animationGroup.* constants.
+--- `shield`: number — *Optional*. Sets the animation group id for the shield arm. This is used to combine different animations for each body section. Maps to [`tes3.animationGroup`](https://mwse.github.io/MWSE/references/animation-groups/) constants.
 --- 
---- `startFlag`: number — *Default*: `tes3.animationStartFlag.immediate`. A flag for starting the group with, using tes3.animationStartFlag.* constants.
+--- `startFlag`: number — *Default*: `tes3.animationStartFlag.immediate`. A flag for starting the group with, using [`tes3.animationStartFlag`](https://mwse.github.io/MWSE/references/animation-start-flags/) constants.
 --- 
 --- `loopCount`: number — *Default*: `-1`. If provided, the animation will repeat its loop section a given number of times. To make an animation play through once, set loopCount = 0. Defaults to infinite looping.
 --- 
@@ -1381,11 +1381,11 @@ function tes3.playAnimation(params) end
 ---Table parameter definitions for `tes3.playAnimation`.
 --- @class tes3.playAnimation.params
 --- @field reference tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string The reference that will play the animation.
---- @field group number *Optional*. The animation group id to start playing -- a value from 0 to 149. Applies the animation to the whole body. Maps to tes3.animationGroup.* constants.
---- @field lower number *Optional*. Sets the animation group id for the lower body. This is used to combine different animations for each body section. Maps to tes3.animationGroup.* constants.
---- @field upper number *Optional*. Sets the animation group id for the upper body. This is used to combine different animations for each body section. Maps to tes3.animationGroup.* constants.
---- @field shield number *Optional*. Sets the animation group id for the shield arm. This is used to combine different animations for each body section. Maps to tes3.animationGroup.* constants.
---- @field startFlag number *Default*: `tes3.animationStartFlag.immediate`. A flag for starting the group with, using tes3.animationStartFlag.* constants.
+--- @field group number *Optional*. The animation group id to start playing -- a value from 0 to 149. Applies the animation to the whole body. Maps to [`tes3.animationGroup`](https://mwse.github.io/MWSE/references/animation-groups/) constants.
+--- @field lower number *Optional*. Sets the animation group id for the lower body. This is used to combine different animations for each body section. Maps to [`tes3.animationGroup`](https://mwse.github.io/MWSE/references/animation-groups/) constants.
+--- @field upper number *Optional*. Sets the animation group id for the upper body. This is used to combine different animations for each body section. Maps to [`tes3.animationGroup`](https://mwse.github.io/MWSE/references/animation-groups/) constants.
+--- @field shield number *Optional*. Sets the animation group id for the shield arm. This is used to combine different animations for each body section. Maps to [`tes3.animationGroup`](https://mwse.github.io/MWSE/references/animation-groups/) constants.
+--- @field startFlag number *Default*: `tes3.animationStartFlag.immediate`. A flag for starting the group with, using [`tes3.animationStartFlag`](https://mwse.github.io/MWSE/references/animation-start-flags/) constants.
 --- @field loopCount number *Default*: `-1`. If provided, the animation will repeat its loop section a given number of times. To make an animation play through once, set loopCount = 0. Defaults to infinite looping.
 --- @field mesh string *Optional*. Deprecated. Please use tes3.loadAnimation (check its documentation) before calling playAnimation. You can also use loadAnimation to reset loaded animations to default.
 
@@ -1408,7 +1408,7 @@ function tes3.playItemPickupSound(params) end
 
 --- Plays a sound on a given reference. Provides control over volume (including volume channel), pitch, and loop control.
 --- 	
---- 	Note: sounds in MP3 format can only be played if they are inside \Vo\ folder. The format is: 64 Kbps CBR, 44100 kHz, 16-bit mono
+--- **Note**: MP3 sound files can only be played if they are inside \\Vo\\ folder. The files must conform to the MPEG Layer-3, 64 Kbps 44100 kHz, 16-bit mono specification.
 --- @param params tes3.playSound.params This table accepts the following values:
 --- 
 --- `sound`: tes3sound|string — The sound object, or id of the sound to look for.
@@ -1417,7 +1417,7 @@ function tes3.playItemPickupSound(params) end
 --- 
 --- `loop`: boolean — If true, the sound will loop.
 --- 
---- `mixChannel`: number — *Default*: `tes3.audioMixType.effects`. The channel to base volume off of. Maps to tes3.audioMixType constants.
+--- `mixChannel`: number — *Default*: `tes3.audioMixType.effects`. The channel to base volume off of. Maps to [`tes3.audioMixType`](https://mwse.github.io/MWSE/references/audio-mix-types/) constants.
 --- 
 --- `volume`: number — *Default*: `1.0`. A value between 0.0 and 1.0 to scale the volume off of.
 --- 
@@ -1432,7 +1432,7 @@ function tes3.playSound(params) end
 --- @field sound tes3sound|string The sound object, or id of the sound to look for.
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The reference to attach the sound to.
 --- @field loop boolean If true, the sound will loop.
---- @field mixChannel number *Default*: `tes3.audioMixType.effects`. The channel to base volume off of. Maps to tes3.audioMixType constants.
+--- @field mixChannel number *Default*: `tes3.audioMixType.effects`. The channel to base volume off of. Maps to [`tes3.audioMixType`](https://mwse.github.io/MWSE/references/audio-mix-types/) constants.
 --- @field volume number *Default*: `1.0`. A value between 0.0 and 1.0 to scale the volume off of.
 --- @field pitch number *Default*: `1.0`. The pitch-shift multiplier. For 22kHz audio (most typical) it can have the range [0.005, 4.5]; for 44kHz audio it can have the range [0.0025, 2.25].
 --- @field soundPath string *Optional*. The path to a custom soundfile (useful for playing sounds that are not registered in the Construction Set). Starts in Data Files\Sound.
@@ -1442,14 +1442,14 @@ function tes3.playSound(params) end
 --- 
 --- `actor`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string — The actor to play a voiceover.
 --- 
---- `voiceover`: number — Maps to tes3.voiceover constants.
+--- `voiceover`: number — Maps to [`tes3.voiceover`](https://mwse.github.io/MWSE/references/voiceovers/) constants.
 --- @return boolean played No description yet available.
 function tes3.playVoiceover(params) end
 
 ---Table parameter definitions for `tes3.playVoiceover`.
 --- @class tes3.playVoiceover.params
 --- @field actor tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string The actor to play a voiceover.
---- @field voiceover number Maps to tes3.voiceover constants.
+--- @field voiceover number Maps to [`tes3.voiceover`](https://mwse.github.io/MWSE/references/voiceovers/) constants.
 
 --- Positions a reference to another place.
 --- @param params tes3.positionCell.params This table accepts the following values:
@@ -1552,10 +1552,10 @@ function tes3.releaseKey(keyCode) end
 
 --- Removes magic effects from a given reference. Requires that either the effect or castType parameter be provided.
 --- @param reference tes3reference Target reference to remove effects from.
---- @param effect number *Optional*. Maps to tes3.effect constants.
---- @param castType number *Optional*. Maps to tes3.castType constants.
+--- @param effect number *Optional*. Maps to [`tes3.effect`](https://mwse.github.io/MWSE/references/magic-effects/) constants.
+--- @param castType number *Optional*. Maps to [`tes3.spellType`](https://mwse.github.io/MWSE/references/spell-types/) constants.
 --- @param chance number *Default*: `100`. The chance for the effect to be removed.
---- @param removeSpell boolean *Optional*. If removing by cast type, determines if the spell should be removed from the target's spell list. Defaults to true if castType is not tes3.castType.spell. This causes diseases and curses to be removed when dispelled.
+--- @param removeSpell boolean *Optional*. If removing by cast type, determines if the spell should be removed from the target's spell list. Defaults to true if castType is not `tes3.spellType.spell.` This causes diseases and curses to be removed when dispelled.
 function tes3.removeEffects(reference, effect, castType, chance, removeSpell) end
 
 --- Removes an item from a given reference's inventory.
@@ -2114,7 +2114,7 @@ function tes3.skipAnimationFrame(params) end
 --- 
 --- `path`: string — Path to the music file, relative to Data Files/music/.
 --- 
---- `situation`: number — *Default*: `tes3.musicSituation.uninterruptible`. Determines what kind of gameplay situation the music should stay active for. Explore music plays during non-combat, and ends when combat starts. Combat music starts during combat, and ends when combat ends. Uninterruptible music always plays, ending only when the track does.
+--- `situation`: number — *Default*: `tes3.musicSituation.uninterruptible`. Determines what kind of gameplay situation the music should stay active for. Explore music plays during non-combat, and ends when combat starts. Combat music starts during combat, and ends when combat ends. Uninterruptible music always plays, ending only when the track does. This value maps to [`tes3.musicSituation`](https://mwse.github.io/MWSE/references/music-situations/) constants.
 --- 
 --- `crossfade`: number — *Default*: `1.0`. The duration in seconds of the crossfade from the old to the new track. The default is 1.0.
 --- @return boolean executed No description yet available.
@@ -2123,7 +2123,7 @@ function tes3.streamMusic(params) end
 ---Table parameter definitions for `tes3.streamMusic`.
 --- @class tes3.streamMusic.params
 --- @field path string Path to the music file, relative to Data Files/music/.
---- @field situation number *Default*: `tes3.musicSituation.uninterruptible`. Determines what kind of gameplay situation the music should stay active for. Explore music plays during non-combat, and ends when combat starts. Combat music starts during combat, and ends when combat ends. Uninterruptible music always plays, ending only when the track does.
+--- @field situation number *Default*: `tes3.musicSituation.uninterruptible`. Determines what kind of gameplay situation the music should stay active for. Explore music plays during non-combat, and ends when combat starts. Combat music starts during combat, and ends when combat ends. Uninterruptible music always plays, ending only when the track does. This value maps to [`tes3.musicSituation`](https://mwse.github.io/MWSE/references/music-situations/) constants.
 --- @field crossfade number *Default*: `1.0`. The duration in seconds of the crossfade from the old to the new track. The default is 1.0.
 
 --- Simulates tapping a keyboard key.
@@ -2204,7 +2204,7 @@ function tes3.transferItem(params) end
 --- 
 --- `forceDetection`: boolean — Can be set to true to ignore normal detection checks.
 --- 
---- `type`: number — *Default*: `tes3.crimeType.stealing`. Maps to tes3.crimeType constants.
+--- `type`: number — *Default*: `tes3.crimeType.stealing`. Maps to [`tes3.crimeType`](https://mwse.github.io/MWSE/references/crime-types/) constants.
 --- 
 --- `value`: number — Penalty for the crime. Defaults to 25 for pickpocketing.
 --- 
@@ -2216,7 +2216,7 @@ function tes3.triggerCrime(params) end
 --- @class tes3.triggerCrime.params
 --- @field criminal tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string *Default*: `tes3.mobilePlayer`. No description yet available.
 --- @field forceDetection boolean Can be set to true to ignore normal detection checks.
---- @field type number *Default*: `tes3.crimeType.stealing`. Maps to tes3.crimeType constants.
+--- @field type number *Default*: `tes3.crimeType.stealing`. Maps to [`tes3.crimeType`](https://mwse.github.io/MWSE/references/crime-types/) constants.
 --- @field value number Penalty for the crime. Defaults to 25 for pickpocketing.
 --- @field victim tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string *Default*: `tes3.mobilePlayer`. No description yet available.
 

@@ -7,9 +7,9 @@ return {
 		tableParams = {
 			{ name = "actor", type = "tes3reference|tes3mobileActor|tes3actor" },
 			{ name = "enchanted", type = "boolean", optional = true, description = "If true, filters to enchanted items." },
-			{ name = "objectType", type = "number", optional = true, description = "Maps to tes3.objectType constants. Used to filter equipment by type." },
-			{ name = "slot", type = "number", optional = true, description = "Maps to tes3.armorSlot or tes3.clothingSlot. Used to filter equipment by slot." },
-			{ name = "type", type = "number", optional = true, description = "Maps to tes3.weaponType. Used to filter equipment by type." },
+			{ name = "objectType", type = "number", optional = true, description = "Maps to [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) constants. Used to filter equipment by type." },
+			{ name = "slot", type = "number", optional = true, description = "Maps to [`tes3.armorSlot`](https://mwse.github.io/MWSE/references/armor-slots/) or [`tes3.clothingSlot`](https://mwse.github.io/MWSE/references/clothing-slots/). Used to filter equipment by slot." },
+			{ name = "type", type = "number", optional = true, description = "Maps to [`tes3.weaponType`](https://mwse.github.io/MWSE/references/weapon-types/). Used to filter equipment by type." },
 		},
 	}},
 	returns = "stack",

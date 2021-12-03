@@ -7,7 +7,7 @@ return {
 		tableParams = {
 			{ name = "sound", type = "tes3sound|string", description = "The sound object, or id of the sound to look for." },
 			{ name = "reference", type = "tes3reference|tes3mobileActor|string", description = "The reference to attach the sound to." },
-			{ name = "mixChannel", type = "number", default = "tes3.audioMixType.effects", description = "The channel to base volume off of. Maps to [tes3.audioMixType.*](https://mwse.github.io/MWSE/references/audio-mix-types/) constants." },
+			{ name = "mixChannel", type = "number", default = "tes3.audioMixType.effects", description = "The channel to base volume off of. Maps to [`tes3.audioMixType`](https://mwse.github.io/MWSE/references/audio-mix-types/) constants." },
 			{ name = "volume", type = "number", default = "1.0", description = "A value between 0.0 and 1.0 to scale the volume off of." },
 		},
 	}},
