@@ -2,7 +2,9 @@
 package.path = ".\\Data Files\\MWSE\\core\\?.lua;.\\Data Files\\MWSE\\core\\?\\init.lua;"
 package.cpath = "?.dll;.\\Data Files\\MWSE\\core\\?.dll;"
 
--- Next, look in the library folder.
+-- Next, look in the library folders.
+package.path = package.path .. ".\\Data Files\\MWSE\\core\\lib\\?.lua;.\\Data Files\\MWSE\\core\\lib\\?\\init.lua;"
+package.cpath = package.cpath .. ".\\Data Files\\MWSE\\core\\lib\\?.dll;"
 package.path = package.path .. ".\\Data Files\\MWSE\\lib\\?.lua;.\\Data Files\\MWSE\\lib\\?\\init.lua;"
 package.cpath = package.cpath .. ".\\Data Files\\MWSE\\lib\\?.dll;"
 

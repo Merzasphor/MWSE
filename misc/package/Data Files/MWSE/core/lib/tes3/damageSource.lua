@@ -1,8 +1,8 @@
 return {
-	script = "script",
-	fall = "fall",
-	suffocation = "suffocation",
 	attack = "attack",
+	fall = "fall",
 	magic = "magic",
+	script = "script",
 	shield = "shield",
+	suffocation = "suffocation",
 }
