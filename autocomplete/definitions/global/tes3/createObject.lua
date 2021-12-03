@@ -5,7 +5,7 @@ return {
 		name = "params",
 		type = "table",
 		tableParams = {
-			{ name = "objectType", type = "number", description = "Maps to `tes3.objectType` constants. Used to filter object type to create." },
+			{ name = "objectType", type = "number", description = "Maps to [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) constants. Used to filter object type to create." },
 			{ name = "getIfExists", type = "boolean", default = true, description = "If `true`, an existing object of the same type and ID will be returned instead of creating a new one." },
 		},
 	}},

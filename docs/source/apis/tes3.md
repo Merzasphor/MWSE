@@ -208,10 +208,10 @@ local effect = tes3.addMagicEffect({ id = ..., name = ..., baseCost = ..., schoo
 **Parameters**:
 
 * `params` (table)
-	* `id` (tes3.effect): Id of the new effect. Maps to tes3.effect.* added with tes3.claimSpellEffectId. If the effect of this id already exists, an error will be thrown.
+	* `id` (number): Id of the new effect. Maps to tes3.effect.* constants claimed with tes3.claimSpellEffectId(). If the effect of this id already exists, an error will be thrown.
 	* `name` (string): *Default*: `Unnamed Effect`. Name of the effect.
 	* `baseCost` (number): *Default*: `1`. Base magicka cost for the effect.
-	* `school` (tes3.magicSchool): *Default*: `tes3.magicSchool.alteration`. The magic school the new effect will be assigned to. Maps to tes3.magicSchool.* constants
+	* `school` (number): *Default*: `tes3.magicSchool.alteration`. The magic school the new effect will be assigned to. Maps to [tes3.magicSchool.*](https://mwse.github.io/MWSE/references/magic-schools/) constants.
 	* `size` (number): *Default*: `1`.
 	* `sizeCap` (number): *Default*: `1`.
 	* `speed` (number): *Default*: `1`.
@@ -230,23 +230,23 @@ local effect = tes3.addMagicEffect({ id = ..., name = ..., baseCost = ..., schoo
 	* `boltVFX` ([tes3physicalObject](../../types/tes3physicalObject)): *Optional*.
 	* `hitVFX` ([tes3physicalObject](../../types/tes3physicalObject)): *Optional*.
 	* `areaVFX` ([tes3physicalObject](../../types/tes3physicalObject)): *Optional*.
-	* `allowEnchanting` (boolean): *Default*: `true`. Can this effect be used in a custom enchantment?
-	* `allowSpellmaking` (boolean): *Default*: `true`. Can this effect be used in a custom spell?
-	* `appliesOnce` (boolean): *Default*: `true`.
-	* `canCastSelf` (boolean): *Default*: `true`. Can this effect used with cast on self range?
-	* `canCastTarget` (boolean): *Default*: `true`. Can this effect be used with cast on target range?
-	* `canCastTouch` (boolean): *Default*: `true`. Can this effect be used with cast on touch range?
+	* `allowEnchanting` (boolean): *Default*: `true`. A flag which controls whether this effect can be used in a custom enchantment.
+	* `allowSpellmaking` (boolean): *Default*: `true`. A flag which controls whether this effect can be used in a custom spell.
+	* `appliesOnce` (boolean): *Default*: `true`. A flag which controls whether this effect applies once or is a ticking effect.
+	* `canCastSelf` (boolean): *Default*: `true`. A flag which controls whether this effect can be used with cast on self range.
+	* `canCastTarget` (boolean): *Default*: `true`. A flag which controls whether this effect can be used with cast on target range.
+	* `canCastTouch` (boolean): *Default*: `true`. A flag which controls whether this effect can be used with cast on touch range.
 	* `casterLinked` (boolean): *Default*: `true`.
-	* `hasContinuousVFX` (boolean): *Default*: `true`. Will the effect's VFX be played during its whole duration?
-	* `hasNoDuration` (boolean): *Default*: `true`.
-	* `hasNoMagnitude` (boolean): *Default*: `true`.
-	* `illegalDaedra` (boolean): *Default*: `true`. Is this effect illegal to use in public, because it summons Daedra? Note: this mechanic is not implemented in the game. Some mods might rely on this parameter.
-	* `isHarmful` (boolean): *Default*: `true`. Is this effect considered harmful and casting it can be considered as an attack?
-	* `nonRecastable` (boolean): *Default*: `true`. Can this effect be recast while it already is in duration?
-	* `targetsAttributes` (boolean): *Default*: `true`.
-	* `targetsSkills` (boolean): *Default*: `true`.
-	* `unreflectable` (boolean): *Default*: `true`. Can the effect be reflected?
-	* `usesNegativeLighting` (boolean): *Default*: `true`.
+	* `hasContinuousVFX` (boolean): *Default*: `true`. A flag which controls whether the effect's VFX be played during its whole duration?
+	* `hasNoDuration` (boolean): *Default*: `true`. A flag which controls whether this effect doesn't have duration.
+	* `hasNoMagnitude` (boolean): *Default*: `true`. A flag which controls whether this effect doesn't have magnitude.
+	* `illegalDaedra` (boolean): *Default*: `true`. A flag which controls whether this effect is illegal to use in public, because it summons Daedra. Note: this mechanic is not implemented in the game. Some mods might rely on this parameter.
+	* `isHarmful` (boolean): *Default*: `true`. A flag which controls whether this effect is considered harmful and casting it can be considered as an attack.
+	* `nonRecastable` (boolean): *Default*: `true`. A flag which controls whether this effect can be recast while it already is in duration.
+	* `targetsAttributes` (boolean): *Default*: `true`. A flag which controls whether this effect targets a certain attribute or attributes.
+	* `targetsSkills` (boolean): *Default*: `true`. A flag which controls whether this effect targets a certain skill or skills.
+	* `unreflectable` (boolean): *Default*: `true`. A flag which controls whether this effect can be reflected.
+	* `usesNegativeLighting` (boolean): *Default*: `true`. A flag which controls whether this effect uses negative lighting.
 	* `onTick` (function): *Optional*. A function which will be called on each tick of a spell containing this effect.
 	* `onCollision` (function): *Optional*. A function which will be called when a spell containing this spell effect collides with something.
 
@@ -310,7 +310,7 @@ tes3.adjustSoundVolume({ sound = ..., reference = ..., mixChannel = ..., volume 
 * `params` (table)
 	* `sound` ([tes3sound](../../types/tes3sound), string): The sound object, or id of the sound to look for.
 	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The reference to attach the sound to.
-	* `mixChannel` (number): *Default*: `tes3.audioMixType.effects`. The channel to base volume off of. Maps to tes3.audioMixType constants.
+	* `mixChannel` (number): *Default*: `tes3.audioMixType.effects`. The channel to base volume off of. Maps to [tes3.audioMixType.*](https://mwse.github.io/MWSE/references/audio-mix-types/) constants.
 	* `volume` (number): *Default*: `1.0`. A value between 0.0 and 1.0 to scale the volume off of.
 
 ***
@@ -347,14 +347,14 @@ local instance = tes3.applyMagicSource({ reference = ..., source = ..., name = .
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string)
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): A reference on which the magic source will be applied.
 	* `source` ([tes3object](../../types/tes3object)): *Optional*. A magic source to apply.
 	* `name` (string): *Optional*. If applying alchemy as a source, you can specifiy a name for the magic source.
 	* `effects` (table): *Optional*. A table of custom effects to apply as a potion. Maximal number of effects is 8.
 		* `id` (boolean): *Default*: `-1`. ID of the effect.
-		* `skill` (tes3.skill.* constants): *Default*: `-1`. If effect parameter specified is: Absorb, Damage, Drain, Fortify or Restore Skill, a skill should be provided. This also applies to any custom spell effect which operates on a certain skill.
-		* `attribute` (tes3.attribute.* constants): *Default*: `-1`. If effect parameter specified is: Absorb, Damage, Drain, Fortify or Restore Attribute, an attribute should be provided. This also applies to any custom spell effect which operates on a certain attribute.
-		* `range` (tes3.effectRange.* constants): *Default*: `tes3.effectRange.self`. The range of the effect. This maps to tes3.effectRange.* constants.
+		* `skill` (number): *Default*: `-1`. This value maps to [tes3.skill.*](https://mwse.github.io/MWSE/references/skills/) constants. If effect parameter specified is: Absorb, Damage, Drain, Fortify or Restore Skill, a skill should be provided. This also applies to any custom spell effect which operates on a certain skill.
+		* `attribute` (number): *Default*: `-1`. This value maps to [tes3.attribute.*](https://mwse.github.io/MWSE/references/attributes/) constants. If effect parameter specified is: Absorb, Damage, Drain, Fortify or Restore Attribute, an attribute should be provided. This also applies to any custom spell effect which operates on a certain attribute.
+		* `range` (number): *Default*: `tes3.effectRange.self`. The range of the effect. This maps to [tes3.effectRange.*](https://mwse.github.io/MWSE/references/effect-ranges/) constants.
 		* `radius` (number): *Default*: `0`. The radius of the effect.
 		* `duration` (number): *Default*: `0`. Number of seconds the effect is going to be active.
 		* `min` (number): *Default*: `0`. The minimal magintude of the effect per tick.
@@ -523,7 +523,7 @@ local trades = tes3.checkMerchantTradesItem({ item = ..., reference = ... })
 
 ### `tes3.claimSpellEffectId`
 
-This function is used to claim a unique spell effect name and id. This is needed before actually creating a new effect by calling tes3.addMagicEffect. A claimed effect id can be retrieved as: tes3.effect.effectName (just like any regular spell effect).
+This function is used to claim a unique spell effect name and id. This is needed before actually creating a new effect by calling tes3.addMagicEffect(). A claimed effect id can be retrieved as: tes3.effect.effectName (just like any regular spell effect).
 
 ```lua
 tes3.claimSpellEffectId({ name = ..., id = ... })
@@ -558,7 +558,7 @@ local createdObject = tes3.createObject({ objectType = ..., getIfExists = ... })
 **Parameters**:
 
 * `params` (table)
-	* `objectType` (number): Maps to `tes3.objectType` constants. Used to filter object type to create.
+	* `objectType` (number): Maps to [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) constants. Used to filter object type to create.
 	* `getIfExists` (boolean): *Default*: `true`. If `true`, an existing object of the same type and ID will be returned instead of creating a new one.
 
 **Returns**:
@@ -1465,7 +1465,7 @@ local inputConfig = tes3.getInputBinding(keybind)
 
 **Parameters**:
 
-* `keybind` (number): Maps to tes3.keybind constants.
+* `keybind` (number): Maps to [tes3.keybind.*](https://mwse.github.io/MWSE/references/keybinds/) constants.
 
 **Returns**:
 

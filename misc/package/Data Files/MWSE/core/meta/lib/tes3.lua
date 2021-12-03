@@ -110,13 +110,13 @@ function tes3.addJournalEntry(params) end
 --- This function creates a new custom magic effect. The effect can be scripted through lua.
 --- @param params tes3.addMagicEffect.params This table accepts the following values:
 --- 
---- `id`: tes3.effect — Id of the new effect. Maps to tes3.effect.* added with tes3.claimSpellEffectId. If the effect of this id already exists, an error will be thrown.
+--- `id`: number — Id of the new effect. Maps to tes3.effect.* constants claimed with tes3.claimSpellEffectId(). If the effect of this id already exists, an error will be thrown.
 --- 
 --- `name`: string — *Default*: `Unnamed Effect`. Name of the effect.
 --- 
 --- `baseCost`: number — *Default*: `1`. Base magicka cost for the effect.
 --- 
---- `school`: tes3.magicSchool — *Default*: `tes3.magicSchool.alteration`. The magic school the new effect will be assigned to. Maps to tes3.magicSchool.* constants
+--- `school`: number — *Default*: `tes3.magicSchool.alteration`. The magic school the new effect will be assigned to. Maps to [tes3.magicSchool.*](https://mwse.github.io/MWSE/references/magic-schools/) constants.
 --- 
 --- `size`: number — *Default*: `1`. No description yet available.
 --- 
@@ -148,39 +148,39 @@ function tes3.addJournalEntry(params) end
 --- 
 --- `areaVFX`: tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon — *Optional*. No description yet available.
 --- 
---- `allowEnchanting`: boolean — *Default*: `true`. Can this effect be used in a custom enchantment?
+--- `allowEnchanting`: boolean — *Default*: `true`. A flag which controls whether this effect can be used in a custom enchantment.
 --- 
---- `allowSpellmaking`: boolean — *Default*: `true`. Can this effect be used in a custom spell?
+--- `allowSpellmaking`: boolean — *Default*: `true`. A flag which controls whether this effect can be used in a custom spell.
 --- 
---- `appliesOnce`: boolean — *Default*: `true`. No description yet available.
+--- `appliesOnce`: boolean — *Default*: `true`. A flag which controls whether this effect applies once or is a ticking effect.
 --- 
---- `canCastSelf`: boolean — *Default*: `true`. Can this effect used with cast on self range?
+--- `canCastSelf`: boolean — *Default*: `true`. A flag which controls whether this effect can be used with cast on self range.
 --- 
---- `canCastTarget`: boolean — *Default*: `true`. Can this effect be used with cast on target range?
+--- `canCastTarget`: boolean — *Default*: `true`. A flag which controls whether this effect can be used with cast on target range.
 --- 
---- `canCastTouch`: boolean — *Default*: `true`. Can this effect be used with cast on touch range?
+--- `canCastTouch`: boolean — *Default*: `true`. A flag which controls whether this effect can be used with cast on touch range.
 --- 
 --- `casterLinked`: boolean — *Default*: `true`. No description yet available.
 --- 
---- `hasContinuousVFX`: boolean — *Default*: `true`. Will the effect's VFX be played during its whole duration?
+--- `hasContinuousVFX`: boolean — *Default*: `true`. A flag which controls whether the effect's VFX be played during its whole duration?
 --- 
---- `hasNoDuration`: boolean — *Default*: `true`. No description yet available.
+--- `hasNoDuration`: boolean — *Default*: `true`. A flag which controls whether this effect doesn't have duration.
 --- 
---- `hasNoMagnitude`: boolean — *Default*: `true`. No description yet available.
+--- `hasNoMagnitude`: boolean — *Default*: `true`. A flag which controls whether this effect doesn't have magnitude.
 --- 
---- `illegalDaedra`: boolean — *Default*: `true`. Is this effect illegal to use in public, because it summons Daedra? Note: this mechanic is not implemented in the game. Some mods might rely on this parameter.
+--- `illegalDaedra`: boolean — *Default*: `true`. A flag which controls whether this effect is illegal to use in public, because it summons Daedra. Note: this mechanic is not implemented in the game. Some mods might rely on this parameter.
 --- 
---- `isHarmful`: boolean — *Default*: `true`. Is this effect considered harmful and casting it can be considered as an attack?
+--- `isHarmful`: boolean — *Default*: `true`. A flag which controls whether this effect is considered harmful and casting it can be considered as an attack.
 --- 
---- `nonRecastable`: boolean — *Default*: `true`. Can this effect be recast while it already is in duration?
+--- `nonRecastable`: boolean — *Default*: `true`. A flag which controls whether this effect can be recast while it already is in duration.
 --- 
---- `targetsAttributes`: boolean — *Default*: `true`. No description yet available.
+--- `targetsAttributes`: boolean — *Default*: `true`. A flag which controls whether this effect targets a certain attribute or attributes.
 --- 
---- `targetsSkills`: boolean — *Default*: `true`. No description yet available.
+--- `targetsSkills`: boolean — *Default*: `true`. A flag which controls whether this effect targets a certain skill or skills.
 --- 
---- `unreflectable`: boolean — *Default*: `true`. Can the effect be reflected?
+--- `unreflectable`: boolean — *Default*: `true`. A flag which controls whether this effect can be reflected.
 --- 
---- `usesNegativeLighting`: boolean — *Default*: `true`. No description yet available.
+--- `usesNegativeLighting`: boolean — *Default*: `true`. A flag which controls whether this effect uses negative lighting.
 --- 
 --- `onTick`: function — *Optional*. A function which will be called on each tick of a spell containing this effect.
 --- 
@@ -190,10 +190,10 @@ function tes3.addMagicEffect(params) end
 
 ---Table parameter definitions for `tes3.addMagicEffect`.
 --- @class tes3.addMagicEffect.params
---- @field id tes3.effect Id of the new effect. Maps to tes3.effect.* added with tes3.claimSpellEffectId. If the effect of this id already exists, an error will be thrown.
+--- @field id number Id of the new effect. Maps to tes3.effect.* constants claimed with tes3.claimSpellEffectId(). If the effect of this id already exists, an error will be thrown.
 --- @field name string *Default*: `Unnamed Effect`. Name of the effect.
 --- @field baseCost number *Default*: `1`. Base magicka cost for the effect.
---- @field school tes3.magicSchool *Default*: `tes3.magicSchool.alteration`. The magic school the new effect will be assigned to. Maps to tes3.magicSchool.* constants
+--- @field school number *Default*: `tes3.magicSchool.alteration`. The magic school the new effect will be assigned to. Maps to [tes3.magicSchool.*](https://mwse.github.io/MWSE/references/magic-schools/) constants.
 --- @field size number *Default*: `1`. No description yet available.
 --- @field sizeCap number *Default*: `1`. No description yet available.
 --- @field speed number *Default*: `1`. No description yet available.
@@ -209,23 +209,23 @@ function tes3.addMagicEffect(params) end
 --- @field boltVFX tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon *Optional*. No description yet available.
 --- @field hitVFX tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon *Optional*. No description yet available.
 --- @field areaVFX tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon *Optional*. No description yet available.
---- @field allowEnchanting boolean *Default*: `true`. Can this effect be used in a custom enchantment?
---- @field allowSpellmaking boolean *Default*: `true`. Can this effect be used in a custom spell?
---- @field appliesOnce boolean *Default*: `true`. No description yet available.
---- @field canCastSelf boolean *Default*: `true`. Can this effect used with cast on self range?
---- @field canCastTarget boolean *Default*: `true`. Can this effect be used with cast on target range?
---- @field canCastTouch boolean *Default*: `true`. Can this effect be used with cast on touch range?
+--- @field allowEnchanting boolean *Default*: `true`. A flag which controls whether this effect can be used in a custom enchantment.
+--- @field allowSpellmaking boolean *Default*: `true`. A flag which controls whether this effect can be used in a custom spell.
+--- @field appliesOnce boolean *Default*: `true`. A flag which controls whether this effect applies once or is a ticking effect.
+--- @field canCastSelf boolean *Default*: `true`. A flag which controls whether this effect can be used with cast on self range.
+--- @field canCastTarget boolean *Default*: `true`. A flag which controls whether this effect can be used with cast on target range.
+--- @field canCastTouch boolean *Default*: `true`. A flag which controls whether this effect can be used with cast on touch range.
 --- @field casterLinked boolean *Default*: `true`. No description yet available.
---- @field hasContinuousVFX boolean *Default*: `true`. Will the effect's VFX be played during its whole duration?
---- @field hasNoDuration boolean *Default*: `true`. No description yet available.
---- @field hasNoMagnitude boolean *Default*: `true`. No description yet available.
---- @field illegalDaedra boolean *Default*: `true`. Is this effect illegal to use in public, because it summons Daedra? Note: this mechanic is not implemented in the game. Some mods might rely on this parameter.
---- @field isHarmful boolean *Default*: `true`. Is this effect considered harmful and casting it can be considered as an attack?
---- @field nonRecastable boolean *Default*: `true`. Can this effect be recast while it already is in duration?
---- @field targetsAttributes boolean *Default*: `true`. No description yet available.
---- @field targetsSkills boolean *Default*: `true`. No description yet available.
---- @field unreflectable boolean *Default*: `true`. Can the effect be reflected?
---- @field usesNegativeLighting boolean *Default*: `true`. No description yet available.
+--- @field hasContinuousVFX boolean *Default*: `true`. A flag which controls whether the effect's VFX be played during its whole duration?
+--- @field hasNoDuration boolean *Default*: `true`. A flag which controls whether this effect doesn't have duration.
+--- @field hasNoMagnitude boolean *Default*: `true`. A flag which controls whether this effect doesn't have magnitude.
+--- @field illegalDaedra boolean *Default*: `true`. A flag which controls whether this effect is illegal to use in public, because it summons Daedra. Note: this mechanic is not implemented in the game. Some mods might rely on this parameter.
+--- @field isHarmful boolean *Default*: `true`. A flag which controls whether this effect is considered harmful and casting it can be considered as an attack.
+--- @field nonRecastable boolean *Default*: `true`. A flag which controls whether this effect can be recast while it already is in duration.
+--- @field targetsAttributes boolean *Default*: `true`. A flag which controls whether this effect targets a certain attribute or attributes.
+--- @field targetsSkills boolean *Default*: `true`. A flag which controls whether this effect targets a certain skill or skills.
+--- @field unreflectable boolean *Default*: `true`. A flag which controls whether this effect can be reflected.
+--- @field usesNegativeLighting boolean *Default*: `true`. A flag which controls whether this effect uses negative lighting.
 --- @field onTick function *Optional*. A function which will be called on each tick of a spell containing this effect.
 --- @field onCollision function *Optional*. A function which will be called when a spell containing this spell effect collides with something.
 
@@ -267,7 +267,7 @@ function tes3.addSpell(params) end
 --- 
 --- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — The reference to attach the sound to.
 --- 
---- `mixChannel`: number — *Default*: `tes3.audioMixType.effects`. The channel to base volume off of. Maps to tes3.audioMixType constants.
+--- `mixChannel`: number — *Default*: `tes3.audioMixType.effects`. The channel to base volume off of. Maps to [tes3.audioMixType.*](https://mwse.github.io/MWSE/references/audio-mix-types/) constants.
 --- 
 --- `volume`: number — *Default*: `1.0`. A value between 0.0 and 1.0 to scale the volume off of.
 function tes3.adjustSoundVolume(params) end
@@ -276,7 +276,7 @@ function tes3.adjustSoundVolume(params) end
 --- @class tes3.adjustSoundVolume.params
 --- @field sound tes3sound|string The sound object, or id of the sound to look for.
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string The reference to attach the sound to.
---- @field mixChannel number *Default*: `tes3.audioMixType.effects`. The channel to base volume off of. Maps to tes3.audioMixType constants.
+--- @field mixChannel number *Default*: `tes3.audioMixType.effects`. The channel to base volume off of. Maps to [tes3.audioMixType.*](https://mwse.github.io/MWSE/references/audio-mix-types/) constants.
 --- @field volume number *Default*: `1.0`. A value between 0.0 and 1.0 to scale the volume off of.
 
 --- Advances the game time. Can be used to simulate player resting.
@@ -299,7 +299,7 @@ function tes3.advanceTime(params) end
 --- 
 --- @param params tes3.applyMagicSource.params This table accepts the following values:
 --- 
---- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — No description yet available.
+--- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — A reference on which the magic source will be applied.
 --- 
 --- `source`: tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3enchantment|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3reference|tes3repairTool|tes3spell|tes3static|tes3weapon — *Optional*. A magic source to apply.
 --- 
@@ -321,7 +321,7 @@ function tes3.applyMagicSource(params) end
 
 ---Table parameter definitions for `tes3.applyMagicSource`.
 --- @class tes3.applyMagicSource.params
---- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string No description yet available.
+--- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string A reference on which the magic source will be applied.
 --- @field source tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3enchantment|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3reference|tes3repairTool|tes3spell|tes3static|tes3weapon *Optional*. A magic source to apply.
 --- @field name string *Optional*. If applying alchemy as a source, you can specifiy a name for the magic source.
 --- @field effects table *Optional*. A table of custom effects to apply as a potion. Maximal number of effects is 8.
@@ -459,7 +459,7 @@ function tes3.checkMerchantTradesItem(params) end
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string No description yet available.
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string No description yet available.
 
---- This function is used to claim a unique spell effect name and id. This is needed before actually creating a new effect by calling tes3.addMagicEffect. A claimed effect id can be retrieved as: tes3.effect.effectName (just like any regular spell effect).
+--- This function is used to claim a unique spell effect name and id. This is needed before actually creating a new effect by calling tes3.addMagicEffect(). A claimed effect id can be retrieved as: tes3.effect.effectName (just like any regular spell effect).
 --- @param params tes3.claimSpellEffectId.params This table accepts the following values:
 --- 
 --- `name`: string — The name of the new spell effect. Must be unique. An error will be thrown if it's non-unique.
@@ -480,7 +480,7 @@ function tes3.clearMarkLocation() end
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3/#tes3createobject).
 --- @param params tes3.createObject.params This table accepts the following values:
 --- 
---- `objectType`: number — Maps to `tes3.objectType` constants. Used to filter object type to create.
+--- `objectType`: number — Maps to [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) constants. Used to filter object type to create.
 --- 
 --- `getIfExists`: boolean — *Default*: `true`. If `true`, an existing object of the same type and ID will be returned instead of creating a new one.
 --- @return tes3activator|tes3alchemy|tes3container|tes3enchantment|tes3misc|tes3sound|tes3spell|tes3static|tes3weapon createdObject No description yet available.
@@ -488,7 +488,7 @@ function tes3.createObject(params) end
 
 ---Table parameter definitions for `tes3.createObject`.
 --- @class tes3.createObject.params
---- @field objectType number Maps to `tes3.objectType` constants. Used to filter object type to create.
+--- @field objectType number Maps to [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) constants. Used to filter object type to create.
 --- @field getIfExists boolean *Default*: `true`. If `true`, an existing object of the same type and ID will be returned instead of creating a new one.
 
 --- Similar to mwscript's PlaceAtPC or PlaceAtMe, this creates a new reference in the game world.
@@ -875,7 +875,7 @@ function tes3.getFileSource(path) end
 function tes3.getGlobal(id) end
 
 --- Gets the input configuration for a given keybind.
---- @param keybind number Maps to tes3.keybind constants.
+--- @param keybind number Maps to [tes3.keybind.*](https://mwse.github.io/MWSE/references/keybinds/) constants.
 --- @return tes3inputConfig inputConfig No description yet available.
 function tes3.getInputBinding(keybind) end
 

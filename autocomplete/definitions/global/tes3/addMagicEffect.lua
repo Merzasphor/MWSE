@@ -7,8 +7,8 @@ return {
 		tableParams = {
 			{
 				name = "id",
-				type = "tes3.effect",
-				description = "Id of the new effect. Maps to tes3.effect.* added with tes3.claimSpellEffectId. If the effect of this id already exists, an error will be thrown."
+				type = "number",
+				description = "Id of the new effect. Maps to tes3.effect.* constants claimed with tes3.claimSpellEffectId(). If the effect of this id already exists, an error will be thrown."
 			},
 			{
 				name = "name",
@@ -26,10 +26,10 @@ return {
 			},
 			{
 				name = "school",
-				type = "tes3.magicSchool",
+				type = "number",
 				optional = true,
 				default = "tes3.magicSchool.alteration",
-				description = "The magic school the new effect will be assigned to. Maps to tes3.magicSchool.* constants"
+				description = "The magic school the new effect will be assigned to. Maps to [tes3.magicSchool.*](https://mwse.github.io/MWSE/references/magic-schools/) constants."
 			},
 			{
 				name = "size",
@@ -149,42 +149,42 @@ return {
 				type = "boolean",
 				optional = true,
 				default = true,
-				description = "Can this effect be used in a custom enchantment?"
+				description = "A flag which controls whether this effect can be used in a custom enchantment."
 			},
 			{
 				name = "allowSpellmaking",
 				type = "boolean",
 				optional = true,
 				default = true,
-				description = "Can this effect be used in a custom spell?"
+				description = "A flag which controls whether this effect can be used in a custom spell."
 			},
 			{
 				name = "appliesOnce",
 				type = "boolean",
 				optional = true,
 				default = true,
-				-- description = ""
+				description = "A flag which controls whether this effect applies once or is a ticking effect."
 			},
 			{
 				name = "canCastSelf",
 				type = "boolean",
 				optional = true,
 				default = true,
-				description = "Can this effect used with cast on self range?"
+				description = "A flag which controls whether this effect can be used with cast on self range."
 			},
 			{
 				name = "canCastTarget",
 				type = "boolean",
 				optional = true,
 				default = true,
-				description = "Can this effect be used with cast on target range?"
+				description = "A flag which controls whether this effect can be used with cast on target range."
 			},
 			{
 				name = "canCastTouch",
 				type = "boolean",
 				optional = true,
 				default = true,
-				description = "Can this effect be used with cast on touch range?"
+				description = "A flag which controls whether this effect can be used with cast on touch range."
 			},
 			{
 				name = "casterLinked",
@@ -198,70 +198,70 @@ return {
 				type = "boolean",
 				optional = true,
 				default = true,
-				description = "Will the effect's VFX be played during its whole duration?"
+				description = "A flag which controls whether the effect's VFX be played during its whole duration?"
 			},
 			{
 				name = "hasNoDuration",
 				type = "boolean",
 				optional = true,
 				default = true,
-				-- description = ""
+				description = "A flag which controls whether this effect doesn't have duration."
 			},
 			{
 				name = "hasNoMagnitude",
 				type = "boolean",
 				optional = true,
 				default = true,
-				-- description = ""
+				description = "A flag which controls whether this effect doesn't have magnitude."
 			},
 			{
 				name = "illegalDaedra",
 				type = "boolean",
 				optional = true,
 				default = true,
-				description = "Is this effect illegal to use in public, because it summons Daedra? Note: this mechanic is not implemented in the game. Some mods might rely on this parameter."
+				description = "A flag which controls whether this effect is illegal to use in public, because it summons Daedra. Note: this mechanic is not implemented in the game. Some mods might rely on this parameter."
 			},
 			{
 				name = "isHarmful",
 				type = "boolean",
 				optional = true,
 				default = true,
-				description = "Is this effect considered harmful and casting it can be considered as an attack?"
+				description = "A flag which controls whether this effect is considered harmful and casting it can be considered as an attack."
 			},
 			{
 				name = "nonRecastable",
 				type = "boolean",
 				optional = true,
 				default = true,
-				description = "Can this effect be recast while it already is in duration?"
+				description = "A flag which controls whether this effect can be recast while it already is in duration."
 			},
 			{
 				name = "targetsAttributes",
 				type = "boolean",
 				optional = true,
 				default = true,
-				-- description = ""
+				description = "A flag which controls whether this effect targets a certain attribute or attributes."
 			},
 			{
 				name = "targetsSkills",
 				type = "boolean",
 				optional = true,
 				default = true,
-				-- description = ""
+				description = "A flag which controls whether this effect targets a certain skill or skills."
 			},
 			{
 				name = "unreflectable",
 				type = "boolean",
 				optional = true,
 				default = true,
-				description = "Can the effect be reflected?"
+				description = "A flag which controls whether this effect can be reflected."
 			},
 			{
 				name = "usesNegativeLighting",
 				type = "boolean",
 				optional = true,
 				default = true,
-				-- description = ""
+				description = "A flag which controls whether this effect uses negative lighting."
 			},
 			{
 				name = "onTick",
