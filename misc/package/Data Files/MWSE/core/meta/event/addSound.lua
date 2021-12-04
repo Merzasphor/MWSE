@@ -1,6 +1,6 @@
 --- @meta
 
---- This event is triggered when a sound is played by the game or when tes3.playSound is called.
+--- This event is triggered when a sound is played by the game or when `tes3.playSound()` is called.
 --- @class addSoundEventData
 --- @field block boolean If set to `true`, vanilla logic will be suppressed. Returning `false` will set this to `true`.
 --- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.

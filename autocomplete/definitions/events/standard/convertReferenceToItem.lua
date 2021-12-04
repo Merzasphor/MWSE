@@ -1,6 +1,6 @@
 return {
 	type = "event",
-	description = "This event is raised when an in-world tes3reference for an item is about to be converted to fit into a tes3itemStack.",
+	description = "This event is raised when an in-world `tes3reference` for an item is about to be converted to fit into a `tes3itemStack`.",
 	eventData = {
 		["reference"] = {
 			type = "tes3reference",

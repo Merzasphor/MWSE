@@ -19,7 +19,7 @@ return {
 		["resistAttribute"] = {
 			type = "number",
 			readOnly = true,
-			description = "The attribute resisted. This is an index into a tes3mobileActor.effectAttributes. Note that the index here is 0-based, while Lua is 1-based.",
+			description = "The attribute resisted. This is an index into a `tes3mobileActor.effectAttributes`. Note that the index here is 0-based, while Lua is 1-based.",
 		},
 		["source"] = {
 			type = "tes3alchemy|tes3enchantment|tes3spell",

@@ -18,7 +18,7 @@ return {
 		},
 		["isCast"] = {
 			type = "boolean",
-			description = "True if the calculation is for a on-strike or on-use action, false if for UI enchant charge display. The type of action is found at e.source.castType.",
+			description = "True if the calculation is for a on-strike or on-use action, false if for UI enchant charge display. The type of action is found at `e.source.castType`.",
 		},
 	},
 	filter = "caster",

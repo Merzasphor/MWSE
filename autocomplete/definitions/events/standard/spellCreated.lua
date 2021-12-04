@@ -1,6 +1,6 @@
 return{
 	type = "event",
-    description = "This event is triggered when a new spell is created using spellmaking services or by a script using tes3spell.create().",
+    description = "This event is triggered when a new spell is created using spellmaking services or by a script using `tes3spell.create()`.",
     eventData = {
         ["spell"] = {
             type = "tes3spell",
