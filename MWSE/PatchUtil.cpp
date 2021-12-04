@@ -502,6 +502,30 @@ namespace mwse {
 		}
 
 		//
+		// Patch: Slight optimization to journal updating.
+		//
+
+		__declspec(naked) void PatchSwapJournalUpdateCheckForSpeakerOrder() {
+			__asm {
+				// Check speaker first.
+				mov eax, [edi + 0x28]            // Size: 0x3
+				test eax, eax                    // Size: 0x2
+				jnz $ + 0xE5                     // Size: 0x6
+
+				// Then bother to check to see if we have text.
+				mov ecx, edi                     // Size: 0x2
+				nop							     // Size: 0x5. Replaced with a call generation. Can't do so here, because offsets aren't accurate.
+				nop							     // ^
+				nop							     // ^
+				nop							     // ^
+				nop							     // ^
+				test eax, eax                    // Size: 0x2
+				jz $ + 0xD6                      // Size: 0x6
+			}
+		}
+		constexpr auto PatchSwapJournalUpdateCheckForSpeakerOrder_size = (0x4B2FF1u - 0x4B2FD7u);
+
+		//
 		// Install all the patches.
 		//
 
@@ -740,6 +764,10 @@ namespace mwse {
 			genCallEnforced(0x64FDA1, 0x64FE20, reinterpret_cast<DWORD>(PatchDrawLetterboxMovieFrame));
 			genCallEnforced(0x64FDD2, 0x64FE20, reinterpret_cast<DWORD>(PatchDrawLetterboxMovieFrame));
 			genCallEnforced(0x64FE03, 0x64FE20, reinterpret_cast<DWORD>(PatchDrawLetterboxMovieFrame));
+
+			// Patch: Slight journal update optimization.
+			writePatchCodeUnprotected(0x4B2FD7, (BYTE*)&PatchSwapJournalUpdateCheckForSpeakerOrder, PatchSwapJournalUpdateCheckForSpeakerOrder_size);
+			genCallUnprotected(0x4B2FD7 + 0xD, 0x4B1B80);
 		}
 
 		void installPostLuaPatches() {
