@@ -21,7 +21,7 @@ return {
         ["index"] = {
             type = "number",
             readOnly = true,
-            description = "The body slot index of the newly assigned body part. Maps to values in [tes3.activeBodyPart.*](https://mwse.github.io/MWSE/references/active-body-parts/) constants.",
+            description = "The body slot index of the newly assigned body part. Maps to values in [`tes3.activeBodyPart`](https://mwse.github.io/MWSE/references/active-body-parts/) constants.",
         },
         ["bodyPart"] = {
             type = "tes3bodyPart",

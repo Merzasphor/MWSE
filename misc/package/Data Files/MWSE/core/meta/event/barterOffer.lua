@@ -4,9 +4,9 @@
 --- @class barterOfferEventData
 --- @field block boolean If set to `true`, vanilla logic will be suppressed. Returning `false` will set this to `true`.
 --- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.
---- @field buying table *Read-only*. Table of tes3inventoryTile objects being bought. These items will be transfered to player's inventory on a successful bartering event.
+--- @field buying table *Read-only*. Table of [`tes3inventoryTile`](https://mwse.github.io/MWSE/types/tes3inventoryTile/) objects being bought. These items will be transfered to player's inventory on a successful bartering event.
 --- @field mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer *Read-only*. The mobile actor of the merchant the player is interacting with.
 --- @field offer number *Read-only*. Offered gold amount.
---- @field selling table *Read-only*. Table of tes3inventoryTile objects being sold. These items will be transfered to bartender's inventory on a successful bartering event.
+--- @field selling table *Read-only*. Table of [`tes3inventoryTile`](https://mwse.github.io/MWSE/types/tes3inventoryTile/) objects being sold. These items will be transfered to bartender's inventory on a successful bartering event.
 --- @field success boolean Whether the trade was accepted or not.
 --- @field value number *Read-only*. Total value in gold of items being traded. Negative means the player owes coin, positive means the player gets coin.

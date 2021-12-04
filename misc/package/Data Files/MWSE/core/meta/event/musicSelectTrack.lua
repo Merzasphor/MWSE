@@ -4,4 +4,4 @@
 --- @class musicSelectTrackEventData
 --- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.
 --- @field music string *Optional*. If set to the path of a given track (relative to Data Files/music), it will play the given path instead of a random one.
---- @field situation number *Read-only*. Maps to tes3.musicSituation.*, indicating combat or non-combat music.
+--- @field situation number *Read-only*. Maps to [`tes3.musicSituation`](https://mwse.github.io/MWSE/references/music-situations/), indicating combat or non-combat music.

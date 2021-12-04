@@ -25,7 +25,7 @@ return {
 		["ingredients"] = {
 			type = "table",
 			readOnly = true,
-			description = "An array of up to 4 tes3ingredient objects, which were used to create the potion.",
+			description = "An array of up to 4 [`tes3ingredient`](https://mwse.github.io/MWSE/types/tes3ingredient/) objects, which were used to create the potion.",
 		},
 	},
 }

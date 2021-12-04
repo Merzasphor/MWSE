@@ -16,7 +16,7 @@ event.register("potionBrewSkillCheck", potionBrewSkillCheckCallback)
 
 * `alembic` ([tes3apparatus](../../types/tes3apparatus)): *Read-only*. The alembic apparatus used to create the potion.
 * `calcinator` ([tes3apparatus](../../types/tes3apparatus)): *Read-only*. The calcinator apparatus used to create the potion.
-* `ingredients` (table): *Read-only*. An array of up to 4 tes3ingredient objects, which were used to create the potion.
+* `ingredients` (table): *Read-only*. An array of up to 4 [`tes3ingredient`](https://mwse.github.io/MWSE/types/tes3ingredient/) objects, which were used to create the potion.
 * `mortar` ([tes3apparatus](../../types/tes3apparatus)): *Read-only*. The mortar apparatus used to create the potion.
 * `potionStrength` (number): Can be modified. The strength multiplier used to scale the potion effects. For each different effect, it can modify magnitude, duration, or both. This is initially equal to -1 if the potion failed to brew.
 * `retort` ([tes3apparatus](../../types/tes3apparatus)): *Read-only*. The retort apparatus used to create the potion.

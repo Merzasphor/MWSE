@@ -19,5 +19,5 @@ event.register("skillRaised", skillRaisedCallback)
 
 * `level` (number): *Read-only*. The new level of the skill.
 * `skill` (number): *Read-only*. The skill that gained a new level experience.
-* `source` (): The source of the skill raise. Its values are tes3.skillRaiseSource.* constants.
+* `source` (tes3.skillRaiseSource): The source of the skill raise. Its values are available as [`tes3.skillRaiseSource`](https://mwse.github.io/MWSE/references/skill-raise-sources/) enumeration.
 

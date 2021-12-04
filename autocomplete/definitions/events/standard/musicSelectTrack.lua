@@ -5,7 +5,7 @@ return {
 		["situation"] = {
 			type = "number",
 			readOnly = true,
-			description = "Maps to tes3.musicSituation.*, indicating combat or non-combat music.",
+			description = "Maps to [`tes3.musicSituation`](https://mwse.github.io/MWSE/references/music-situations/), indicating combat or non-combat music.",
 		},
 		["music"] = {
 			type = "string",

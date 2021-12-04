@@ -35,17 +35,17 @@ return {
 		activeMagicEffect = {
 			type = "tes3magicEffect",
 			readOnly = true,
-			description = "tes3magicEffect which caused damage. Can be nil.",
+			description = "Magic effect which caused damage. Can be nil.",
 		},
 		magicSourceInstance = {
 			type = "tes3magicSourceInstance",
 			readonly = true ,
-			description = "tes3magicSourceInstance of a spell that caused damage. Can be nil.",
+			description = "A `tes3magicSourceInstance` object of a spell that caused damage. Can be nil.",
 		},
 		source = {
-			type ="tes3.damageSource constants",
+			type ="number",
 			readOnly = true,
-			description = "The origin of damage. Values of this variable can be: \"script\", \"fall\", \"suffocation\", \"attack\", \"magic\", \"shield\" or nil. These damage sources are present as tes3.damageSource.* constants, and those should be used instead. See the example. Damage with \"shield\" source comes from magic shields. Other sources are self-explanatory.",
+			description = "The origin of damage. These damage sources are present as [`tes3.damageSource`](https://mwse.github.io/MWSE/references/damage-sources/) constants. See the example. Damage with `tes3.damageSource.shield` source comes from magic shields. Other sources are self-explanatory.",
 		},
 	},
 	blockable = true,
