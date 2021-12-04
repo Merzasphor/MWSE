@@ -4,8 +4,12 @@
 --- @class tes3dialogueInfo : tes3baseObject
 --- @field actor tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance *Read-only*. The speaker's actor that the info is filtered for.
 --- @field cell tes3cell *Read-only*. The speaker's current cell that the info is filtered for.
---- @field disposition number *Read-only*. The minimum disposition that the info is filtered for.
+--- @field disposition number|nil The minimum disposition that the info is filtered for. For journal-based dialogues, this will be `nil`.
 --- @field firstHeardFrom tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance The actor that the player first heard the info from.
+--- @field isQuestFinished boolean|nil Quick access to the "quest finished" flag. For dialogues that aren't journal-based, this will be `nil`.
+--- @field isQuestName boolean|nil Quick access to the "quest name" flag. If this is true, this info contains the name of the quest. For dialogues that aren't journal-based, this will be `nil`.
+--- @field isQuestRestart boolean|nil Quick access to the "quest restart" flag. For dialogues that aren't journal-based, this will be `nil`.
+--- @field journalIndex number|nil The current index for the quest. For dialogues that aren't journal-based, this will be `nil`.
 --- @field npcClass tes3class *Read-only*. The speaker's class that the info is filtered for.
 --- @field npcFaction tes3faction *Read-only*. The speaker's faction that the info is filtered for.
 --- @field npcRace tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance *Read-only*. The speaker's race that the info is filtered for.

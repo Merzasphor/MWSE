@@ -4,6 +4,7 @@
 #include "LuaUtil.h"
 
 #include "TES3Dialogue.h"
+#include "TES3DialogueInfo.h"
 
 namespace mwse {
 	namespace lua {
@@ -26,6 +27,8 @@ namespace mwse {
 				eventData["index"] = m_NewIndex;
 				eventData["previousIndex"] = m_OldIndex;
 				eventData["new"] = (m_OldIndex == 0 && m_NewIndex > m_OldIndex);
+				eventData["info"] = m_Topic->getJournalInfoForIndex(m_NewIndex);
+				eventData["previousInfo"] = m_Topic->getJournalInfoForIndex(m_OldIndex);
 
 				return eventData;
 			}

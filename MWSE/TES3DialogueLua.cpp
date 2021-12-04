@@ -42,14 +42,14 @@ namespace mwse {
 
 				// Basic property binding.
 				usertypeDefinition["info"] = sol::readonly_property(&TES3::Dialogue::info);
-				usertypeDefinition["journalIndex"] = sol::property(&TES3::Dialogue::journalIndex, &TES3::Dialogue::setJournalIndex);
+				usertypeDefinition["journalIndex"] = sol::property(&TES3::Dialogue::getJournalIndex, &TES3::Dialogue::setJournalIndex);
 				usertypeDefinition["type"] = sol::readonly_property(&TES3::Dialogue::type);
 
-				// Expose the ability to add it to the journal.
+				// Basic property binding.
 				usertypeDefinition["addToJournal"] = &TES3::Dialogue::addToJournal_lua;
-
-				// Expose filtering.
 				usertypeDefinition["getInfo"] = &TES3::Dialogue::getDeepFilteredInfo_lua;
+				usertypeDefinition["getJournalInfo"] = &TES3::Dialogue::getJournalInfo;
+				usertypeDefinition["loadQuestName"] = &TES3::Dialogue::getQuestName;
 			}
 
 			// Binding for TES3::DialogueInfo
@@ -66,12 +66,16 @@ namespace mwse {
 				usertypeDefinition["__tojson"] = &TES3::DialogueInfo::toJson;
 
 				// Basic property binding.
-				usertypeDefinition["type"] = sol::readonly_property(&TES3::DialogueInfo::type);
-				usertypeDefinition["disposition"] = sol::readonly_property(&TES3::DialogueInfo::disposition);
+				usertypeDefinition["disposition"] = sol::property(&TES3::DialogueInfo::getDisposition_lua, &TES3::DialogueInfo::setDisposition_lua);
+				usertypeDefinition["firstHeardFrom"] = &TES3::DialogueInfo::firstHeardFrom;
+				usertypeDefinition["isQuestFinished"] = sol::property(&TES3::DialogueInfo::isQuestFinished);
+				usertypeDefinition["isQuestName"] = sol::property(&TES3::DialogueInfo::isQuestName);
+				usertypeDefinition["isQuestRestart"] = sol::property(&TES3::DialogueInfo::isQuestRestart);
+				usertypeDefinition["journalIndex"] = sol::property(&TES3::DialogueInfo::getJournalIndex_lua, &TES3::DialogueInfo::setJournalIndex_lua);
 				usertypeDefinition["npcRank"] = sol::readonly_property(&TES3::DialogueInfo::npcRank);
 				usertypeDefinition["npcSex"] = sol::readonly_property(&TES3::DialogueInfo::npcSex);
 				usertypeDefinition["pcRank"] = sol::readonly_property(&TES3::DialogueInfo::pcRank);
-				usertypeDefinition["firstHeardFrom"] = &TES3::DialogueInfo::firstHeardFrom;
+				usertypeDefinition["type"] = sol::readonly_property(&TES3::DialogueInfo::type);
 
 				// Filter functions.
 				usertypeDefinition["actor"] = sol::property(&TES3::DialogueInfo::getFilterActor);

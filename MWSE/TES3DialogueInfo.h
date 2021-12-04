@@ -22,6 +22,22 @@ namespace TES3 {
 		Conditional5
 	};
 
+	namespace ObjectFlag {
+		typedef unsigned int value_type;
+
+		enum DialogueInfoFlag : value_type {
+			QuestName = 0x40,
+			QuestFinished = 0x100,
+			QuestRestart = 0x200,
+		};
+
+		enum DialogueInfoFlagBit {
+			QuestNameBit = 6,
+			QuestFinishedBit = 8,
+			QuestRestartBit = 9,
+		};
+	}
+
 	struct DialogueInfoFilterNode {
 		DialogueInfoFilterType tag;
 		DialogueInfoFilterNode* next;
@@ -46,7 +62,10 @@ namespace TES3 {
 		};
 		LoadLinkNode * loadLinkNode; // 0x10
 		DialogueType type; // 0x14
-		int disposition; // 0x18
+		union {
+			int disposition; // 0x18
+			int journalIndex; // 0x18
+		};
 		signed char npcRank; // 0x1C
 		signed char npcSex; // 0x1D
 		signed char pcRank; // 0x1E
@@ -72,6 +91,11 @@ namespace TES3 {
 
 		sol::optional<std::string> getID();
 
+		sol::optional<int> getDisposition_lua() const;
+		void setDisposition_lua(int value);
+		sol::optional<int> getJournalIndex_lua() const;
+		void setJournalIndex_lua(int value);
+
 		BaseObject* getFilterObject(TES3::DialogueInfoFilterType type);
 
 		Actor* getFilterActor();
@@ -80,6 +104,10 @@ namespace TES3 {
 		Faction* getFilterNPCFaction();
 		Cell* getFilterNPCCell();
 		Faction* getFilterPCFaction();
+
+		sol::optional<bool> isQuestName() const;
+		sol::optional<bool> isQuestFinished() const;
+		sol::optional<bool> isQuestRestart() const;
 
 		// Loads the string of numbers from disk and returns them.
 		std::string getLongIDFromFile();

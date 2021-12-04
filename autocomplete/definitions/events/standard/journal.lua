@@ -22,5 +22,15 @@ return {
 			readOnly = true,
 			description = "The topic that dictates the journal entry.",
 		},
+		info = {
+			type = "tes3dialogueInfo",
+			readOnly = true,
+			description = "The info for the newly set journal index.",
+		},
+		previousInfo = {
+			type = "tes3dialogueInfo|nil",
+			readOnly = true,
+			description = "The info for the previously set journal index. If the journal entry is `new`ly added, this will be `nil`.",
+		},
 	},
 }

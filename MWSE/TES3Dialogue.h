@@ -30,8 +30,12 @@ namespace TES3 {
 		//
 
 		bool addToJournal(int index, MobileActor* actor);
+
+		sol::optional<const char*> getQuestName() const;
+		sol::optional<int> getJournalIndex() const;
 		bool setJournalIndex(int index);
 
+		DialogueInfo* getJournalInfoForIndex(int index) const;
 		DialogueInfo* getDeepFilteredInfo(Actor* actor, Reference* reference, bool flag);
 		DialogueInfo* getFilteredInfo(Actor* actor, Reference* reference, bool flag);
 
@@ -43,6 +47,7 @@ namespace TES3 {
 
 		bool addToJournal_lua(sol::table params);
 		DialogueInfo* getDeepFilteredInfo_lua(sol::table params);
+		DialogueInfo* getJournalInfo(sol::optional<int> index) const;
 
 		//
 		// Other related static functions.

@@ -9,6 +9,8 @@
 #include "TES3Race.h"
 #include "TES3Cell.h"
 
+#include "BitUtil.h"
+
 namespace TES3 {
 	const auto TES3_DialogueInfo_getText = reinterpret_cast<const char* (__thiscall*)(DialogueInfo*)>(0x4B1B80);
 	const auto TES3_DialogueInfo_loadId = reinterpret_cast<bool(__thiscall*)(DialogueInfo*)>(0x4B1A10);
@@ -58,6 +60,33 @@ namespace TES3 {
 		return sol::optional<std::string>();
 	}
 
+
+	sol::optional<int> DialogueInfo::getDisposition_lua() const {
+		if (type != DialogueType::Journal) {
+			return disposition;
+		}
+		return {};
+	}
+
+	void DialogueInfo::setDisposition_lua(int value) {
+		if (type != DialogueType::Journal) {
+			disposition = value;
+		}
+	}
+
+	sol::optional<int> DialogueInfo::getJournalIndex_lua() const {
+		if (type == DialogueType::Journal) {
+			return journalIndex;
+		}
+		return {};
+	}
+
+	void DialogueInfo::setJournalIndex_lua(int value) {
+		if (type == DialogueType::Journal) {
+			journalIndex = value;
+		}
+	}
+
 	BaseObject* DialogueInfo::getFilterObject(TES3::DialogueInfoFilterType type) {
 		TES3::DialogueInfoFilterNode* node;
 
@@ -105,6 +134,30 @@ namespace TES3 {
 
 	Faction* DialogueInfo::getFilterPCFaction() {
 		return static_cast<Faction*>(getFilterObject(TES3::DialogueInfoFilterType::PCFaction));
+	}
+
+	sol::optional<bool> DialogueInfo::isQuestName() const {
+		if (type != DialogueType::Journal) {
+			return {};
+		}
+
+		return BIT_TEST(objectFlags, TES3::ObjectFlag::QuestNameBit);
+	}
+
+	sol::optional<bool> DialogueInfo::isQuestFinished() const {
+		if (type != DialogueType::Journal) {
+			return {};
+		}
+
+		return BIT_TEST(objectFlags, TES3::ObjectFlag::QuestFinishedBit);
+	}
+
+	sol::optional<bool> DialogueInfo::isQuestRestart() const {
+		if (type != DialogueType::Journal) {
+			return {};
+		}
+
+		return BIT_TEST(objectFlags, TES3::ObjectFlag::QuestRestartBit);
 	}
 
 	std::string DialogueInfo::getLongIDFromFile() {

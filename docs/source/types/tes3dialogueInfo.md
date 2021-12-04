@@ -57,11 +57,11 @@ The blocked state of the object.
 
 ### `disposition`
 
-*Read-only*. The minimum disposition that the info is filtered for.
+The minimum disposition that the info is filtered for. For journal-based dialogues, this will be `nil`.
 
 **Returns**:
 
-* `result` (number)
+* `result` (number, nil)
 
 ***
 
@@ -82,6 +82,46 @@ The actor that the player first heard the info from.
 **Returns**:
 
 * `result` (string)
+
+***
+
+### `isQuestFinished`
+
+Quick access to the "quest finished" flag. For dialogues that aren't journal-based, this will be `nil`.
+
+**Returns**:
+
+* `result` (boolean, nil)
+
+***
+
+### `isQuestName`
+
+Quick access to the "quest name" flag. If this is true, this info contains the name of the quest. For dialogues that aren't journal-based, this will be `nil`.
+
+**Returns**:
+
+* `result` (boolean, nil)
+
+***
+
+### `isQuestRestart`
+
+Quick access to the "quest restart" flag. For dialogues that aren't journal-based, this will be `nil`.
+
+**Returns**:
+
+* `result` (boolean, nil)
+
+***
+
+### `journalIndex`
+
+The current index for the quest. For dialogues that aren't journal-based, this will be `nil`.
+
+**Returns**:
+
+* `result` (number, nil)
 
 ***
 

@@ -6,6 +6,7 @@
 
 #include "LuaUtil.h"
 
+#include "TES3DialogueInfo.h"
 #include "TES3MobilePlayer.h"
 #include "TES3Reference.h"
 #include "TES3WorldController.h"
@@ -18,7 +19,7 @@ namespace TES3 {
 		return name;
 	}
 
-	bool Dialogue::addToJournal(int index, MobileActor * actor) {
+	bool Dialogue::addToJournal(int index, MobileActor* actor) {
 		if (type != DialogueType::Journal) {
 			return false;
 		}
@@ -27,7 +28,7 @@ namespace TES3 {
 		int oldIndex = journalIndex;
 
 		// Call the original function.
-		bool added = reinterpret_cast<bool(__thiscall *)(Dialogue*, int, MobileActor *)>(TES3_Dialogue_journalAdd)(this, index, actor);
+		bool added = reinterpret_cast<bool(__thiscall*)(Dialogue*, int, MobileActor*)>(TES3_Dialogue_journalAdd)(this, index, actor);
 
 		// If the journal index changed, raise an event that it was modified.
 		if (journalIndex > oldIndex && mwse::lua::event::JournalEvent::getEventEnabled()) {
@@ -35,6 +36,25 @@ namespace TES3 {
 		}
 
 		return added;
+	}
+
+	sol::optional<const char*> Dialogue::getQuestName() const {
+		if (type == DialogueType::Journal) {
+			for (auto i : info) {
+				if (i->isQuestName().value_or(false)) {
+					return i->getText();
+				}
+			}
+		}
+		return {};
+	}
+
+	sol::optional<int> Dialogue::getJournalIndex() const {
+		if (type != DialogueType::Journal) {
+			return {};
+		}
+
+		return journalIndex;
 	}
 
 	bool Dialogue::setJournalIndex(int index) {
@@ -60,6 +80,18 @@ namespace TES3 {
 		}
 
 		return true;
+	}
+
+	DialogueInfo* Dialogue::getJournalInfoForIndex(int index) const {
+		if (type == DialogueType::Journal) {
+			for (auto i : info) {
+				if (i->journalIndex == index) {
+					return i;
+				}
+			}
+		}
+
+		return nullptr;
 	}
 
 	DialogueInfo* Dialogue::getDeepFilteredInfo(Actor* actor, Reference* reference, bool flag) {
@@ -96,6 +128,10 @@ namespace TES3 {
 	DialogueInfo* Dialogue::getDeepFilteredInfo_lua(sol::table params) {
 		TES3::MobileActor* mobile = mwse::lua::getOptionalParamMobileActor(params, "actor");
 		return getDeepFilteredInfo(reinterpret_cast<TES3::Actor*>(mobile->reference->baseObject), mobile->reference, true);
+	}
+
+	DialogueInfo* Dialogue::getJournalInfo(sol::optional<int> index) const {
+		return getJournalInfoForIndex(index.value_or(journalIndex));
 	}
 
 	const auto TES3_getDialogue = reinterpret_cast<Dialogue* (__cdecl*)(int, int)>(0x4B2C00);

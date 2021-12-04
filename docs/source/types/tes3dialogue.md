@@ -61,7 +61,7 @@ For journal dialogues, the currently active journal index.
 
 **Returns**:
 
-* `result` (number)
+* `result` (number, nil)
 
 ***
 
@@ -197,6 +197,38 @@ local result = tes3dialogue:getInfo({ actor = ... })
 **Returns**:
 
 * `result` ([tes3dialogueInfo](../../types/tes3dialogueInfo))
+
+***
+
+### `getJournalInfo`
+
+Retrieves the info object for a journal. By default this will return the info for the player's current journal index for this dialogue. An index can be provided to fetch a specific index's related info.
+
+```lua
+local journalInfo = tes3dialogue:getJournalInfo(index)
+```
+
+**Parameters**:
+
+* `index` (number): *Optional*. The index of the journal to fetch the info for. If not provided, the current player's journal index is used.
+
+**Returns**:
+
+* `journalInfo` ([tes3dialogueInfo](../../types/tes3dialogueInfo))
+
+***
+
+### `loadQuestName`
+
+This method finds the info that contains the quest name, then loads and returns its text. This method accesses the disk, and may be slow to operate. For dialogues that aren't journal-based, this will be `nil`.
+
+```lua
+local questName = tes3dialogue:loadQuestName()
+```
+
+**Returns**:
+
+* `questName` (string, nil)
 
 ***
 
