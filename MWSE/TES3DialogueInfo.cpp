@@ -60,20 +60,6 @@ namespace TES3 {
 		return sol::optional<std::string>();
 	}
 
-
-	sol::optional<int> DialogueInfo::getDisposition_lua() const {
-		if (type != DialogueType::Journal) {
-			return disposition;
-		}
-		return {};
-	}
-
-	void DialogueInfo::setDisposition_lua(int value) {
-		if (type != DialogueType::Journal) {
-			disposition = value;
-		}
-	}
-
 	sol::optional<int> DialogueInfo::getJournalIndex_lua() const {
 		if (type == DialogueType::Journal) {
 			return journalIndex;

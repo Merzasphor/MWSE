@@ -66,7 +66,7 @@ namespace mwse {
 				usertypeDefinition["__tojson"] = &TES3::DialogueInfo::toJson;
 
 				// Basic property binding.
-				usertypeDefinition["disposition"] = sol::property(&TES3::DialogueInfo::getDisposition_lua, &TES3::DialogueInfo::setDisposition_lua);
+				usertypeDefinition["disposition"] = sol::readonly_property(&TES3::DialogueInfo::disposition);
 				usertypeDefinition["firstHeardFrom"] = &TES3::DialogueInfo::firstHeardFrom;
 				usertypeDefinition["isQuestFinished"] = sol::property(&TES3::DialogueInfo::isQuestFinished);
 				usertypeDefinition["isQuestName"] = sol::property(&TES3::DialogueInfo::isQuestName);

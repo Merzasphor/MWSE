@@ -57,11 +57,11 @@ The blocked state of the object.
 
 ### `disposition`
 
-The minimum disposition that the info is filtered for. For journal-based dialogues, this will be `nil`.
+The minimum disposition that the info is filtered for. For journal-based dialogues, this is the same as the `journalIndex` property, which should be used instead.
 
 **Returns**:
 
-* `result` (number, nil)
+* `result` (number)
 
 ***
 

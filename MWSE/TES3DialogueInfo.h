@@ -91,8 +91,6 @@ namespace TES3 {
 
 		sol::optional<std::string> getID();
 
-		sol::optional<int> getDisposition_lua() const;
-		void setDisposition_lua(int value);
 		sol::optional<int> getJournalIndex_lua() const;
 		void setJournalIndex_lua(int value);
 
