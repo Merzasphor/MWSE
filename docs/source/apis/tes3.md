@@ -1752,6 +1752,20 @@ local object = tes3.getOwner(reference)
 
 ***
 
+### `tes3.getPlayerActivationDistance`
+
+This function returns the distance that the player can activate objects with. This is a sum of the iMaxActivateDist GMST value and the player's telekinesis strength.
+
+```lua
+local result = tes3.getPlayerActivationDistance()
+```
+
+**Returns**:
+
+* `result` (number)
+
+***
+
 ### `tes3.getPlayerCell`
 
 Fetches the cell that the player is currently in.

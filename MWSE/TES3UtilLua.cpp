@@ -724,6 +724,25 @@ namespace mwse {
 			return sol::optional<TES3::Vector3>();
 		}
 
+		int getPlayerActivationDistance() {
+			int distance = 0;
+
+			auto dataHandler = TES3::DataHandler::get();
+			if (dataHandler) {
+				distance += dataHandler->nonDynamicData->GMSTs[TES3::GMST::iMaxActivateDist]->value.asLong;
+			}
+
+			auto worldController = TES3::WorldController::get();
+			if (worldController) {
+				auto macp = worldController->getMobilePlayer();
+				if (macp) {
+					distance += macp->telekinesis;
+				}
+			}
+
+			return distance;
+		}
+
 		sol::optional<TES3::Vector3> get3rdPersonCameraOffset() {
 			auto worldController = TES3::WorldController::get();
 			if (!worldController) {
@@ -5302,6 +5321,7 @@ namespace mwse {
 			tes3["getModList"] = getModList;
 			tes3["getObject"] = getObject;
 			tes3["getOwner"] = sol::overload(getOwnerLegacy, getOwner);
+			tes3["getPlayerActivationDistance"] = getPlayerActivationDistance;
 			tes3["getPlayerCell"] = getPlayerCell;
 			tes3["getPlayerEyePosition"] = getPlayerEyePosition;
 			tes3["getPlayerEyeVector"] = getPlayerEyeVector;

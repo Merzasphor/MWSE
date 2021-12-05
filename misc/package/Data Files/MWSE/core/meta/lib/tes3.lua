@@ -1006,6 +1006,10 @@ function tes3.getObject(id) end
 --- @return tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3enchantment|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3reference|tes3repairTool|tes3spell|tes3static|tes3weapon object No description yet available.
 function tes3.getOwner(reference) end
 
+--- This function returns the distance that the player can activate objects with. This is a sum of the iMaxActivateDist GMST value and the player's telekinesis strength.
+--- @return number result No description yet available.
+function tes3.getPlayerActivationDistance() end
+
 --- Fetches the cell that the player is currently in.
 --- @return tes3cell result No description yet available.
 function tes3.getPlayerCell() end
