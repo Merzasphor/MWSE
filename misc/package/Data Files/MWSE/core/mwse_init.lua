@@ -196,6 +196,12 @@ function math.round(value, digits)
 	return math.floor(value * mult + 0.5) / mult
 end
 
+function math.isclose(a, b, absoluteTolerance, relativeTolerance)
+	absoluteTolerance = absoluteTolerance or math.epsilon
+	relativeTolerance = relativeTolerance or 1e-9
+	return math.abs(a-b) <= math.max(relativeTolerance * math.max(math.abs(a), math.abs(b)), absoluteTolerance)
+end
+
 
 -------------------------------------------------
 -- Extend base API: table

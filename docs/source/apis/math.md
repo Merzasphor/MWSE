@@ -2,6 +2,28 @@
 
 This library is an interface to the standard C math library. This library has been further extended by MWSE. The functions implemented by MWSE are listed here. It provides all its functions inside the table math.
 
+## Properties
+
+### `math.epsilon`
+
+The *machine* epsilon available for double-precision numbers. This is the difference between 1.0 and the next representable value using lua numbers.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `math.fepsilon`
+
+The *machine* epsilon available for single-precision numbers. This is the difference between 1.0 and the next representable value for many Morrowind structures.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
 ## Functions
 
 ### `math.clamp`
@@ -17,6 +39,27 @@ local result = math.clamp(value, min, max)
 * `value` (number)
 * `min` (number)
 * `max` (number)
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `math.isclose`
+
+This function compares `a` and `b` and returns true if they are close together. This can be useful when comparing floating-point numbers with some degree of tolerance.
+
+```lua
+local result = math.isclose(a, b, absoluteTolerance, relativeTolerance)
+```
+
+**Parameters**:
+
+* `a` (number): First value.
+* `b` (number): Second value.
+* `absoluteTolerance` (number): *Default*: `math.epsilon`. The absolute difference allowed between the two numbers. A value of 0.01 will only allow the values to differ by 0.01.
+* `relativeTolerance` (number): *Default*: `1e-09`. The relative difference allowed between the two numbers. A value of 0.01 will only allow the values to differ by 1%.
 
 **Returns**:
 
