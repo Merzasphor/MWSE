@@ -418,9 +418,11 @@ namespace mwse {
 			luaState["os"]["getClipboardText"] = getClipboardText;
 			luaState["os"]["openURL"] = openURL;
 			luaState["os"]["setClipboardText"] = setClipboardText;
+			LuaExecutor::defineLuaBindings();
+
+			// Extend math library.
 			luaState["math"]["epsilon"] = std::numeric_limits<double>::epsilon();
 			luaState["math"]["fepsilon"] = std::numeric_limits<float>::epsilon();
-			LuaExecutor::defineLuaBindings();
 
 			// Bind TES3 data types.
 			bindTES3ActionData();
