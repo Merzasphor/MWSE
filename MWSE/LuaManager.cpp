@@ -3971,7 +3971,7 @@ namespace mwse {
 			genCallEnforced(0x57595B, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
 			genCallEnforced(0x635390, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
 
-			// Event: Mobile added to controller.
+			// Event: Mobile removed from controller.
 			auto mobControllerRemoveMob = &TES3::MobController::removeMob;
 			genCallEnforced(0x4668D8, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
 			genCallEnforced(0x484E24, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
@@ -3988,6 +3988,15 @@ namespace mwse {
 			genCallEnforced(0x57509A, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
 			genCallEnforced(0x57548A, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
 			genCallEnforced(0x575647, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
+
+			// Event Mobile added/removed from simulation by recalculated distance.
+			auto mobileEnterLeaveSimulationByDistance = &TES3::MobileObject::enterLeaveSimulationByDistance;
+			genCallEnforced(0x5090D1, 0x55FFC0, *reinterpret_cast<DWORD*>(&mobileEnterLeaveSimulationByDistance));
+			genCallEnforced(0x509EFF, 0x55FFC0, *reinterpret_cast<DWORD*>(&mobileEnterLeaveSimulationByDistance));
+			genCallEnforced(0x50EF90, 0x55FFC0, *reinterpret_cast<DWORD*>(&mobileEnterLeaveSimulationByDistance));
+			genCallEnforced(0x50F033, 0x55FFC0, *reinterpret_cast<DWORD*>(&mobileEnterLeaveSimulationByDistance));
+			genCallEnforced(0x5244F5, 0x55FFC0, *reinterpret_cast<DWORD*>(&mobileEnterLeaveSimulationByDistance));
+			genJumpEnforced(0x564F97, 0x55FFC0, *reinterpret_cast<DWORD*>(&mobileEnterLeaveSimulationByDistance));
 
 			// Event: Calculate barter price.
 			if (genCallEnforced(0x5A447B, 0x5A46E0, reinterpret_cast<DWORD>(OnCalculateBarterPrice_CalcItemValue))) {
