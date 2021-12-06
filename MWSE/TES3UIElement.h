@@ -194,7 +194,7 @@ namespace TES3 {
 			bool getConsumeMouseEvents() const;
 			void setConsumeMouseEvents_lua(sol::optional<bool> value = true);
 			const char* getContentPath() const;
-			void setContentPath_lua(sol::optional<const char*> value);
+			void setContentPath_lua(sol::optional<std::string> value);
 			bool getDisabled() const;
 			void setDisabled(bool value);
 			std::string getFlowDirectionString() const;

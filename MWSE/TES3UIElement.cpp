@@ -641,8 +641,18 @@ namespace TES3 {
 			return contentPath.cString;
 		}
 
-		void Element::setContentPath_lua(sol::optional<const char*> value) {
-			setIcon(value.value_or(""));
+		void Element::setContentPath_lua(sol::optional<std::string> value) {
+			if (value) {
+				std::string& path = value.value();
+
+				// Sanitize path.
+				std::replace(path.begin(), path.end(), '/', '\\');
+
+				setIcon(path.c_str());
+			}
+			else {
+				setIcon("");
+			}
 		}
 
 		bool Element::getDisabled() const {
