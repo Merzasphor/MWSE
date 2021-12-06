@@ -8,5 +8,10 @@ return {
 			readOnly = true,
 			description = "The reference that the mobile has been activated for.",
 		},
+		["mobile"] = {
+			type = "tes3mobileActor",
+			readOnly = true,
+			description = "The activated mobile.",
+		},
 	},
 }

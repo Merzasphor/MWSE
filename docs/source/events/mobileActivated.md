@@ -14,5 +14,6 @@ event.register("mobileActivated", mobileActivatedCallback)
 
 ## Event Data
 
+* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The activated mobile.
 * `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. The reference that the mobile has been activated for.
 
