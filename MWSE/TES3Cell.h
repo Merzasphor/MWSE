@@ -131,7 +131,6 @@ namespace TES3 {
 
 		Reference * getFirstObjectOfType(ObjectType::ObjectType, bool) const;
 
-		bool isInterior() const;
 		int getGridX() const;
 		void setGridX(int x);
 		int getGridY() const;
@@ -175,6 +174,10 @@ namespace TES3 {
 
 		bool getSleepingIsIllegal() const;
 		void setSleepingIsIllegal(bool value);
+
+		bool getIsLoaded() const;
+
+		bool getIsOrBehavesAsExterior() const;
 
 		//
 		// Custom functions.

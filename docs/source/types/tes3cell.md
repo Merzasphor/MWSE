@@ -175,6 +175,16 @@ If true, the cell is an interior.
 
 ***
 
+### `isOrBehavesAsExterior`
+
+*Read-only*. `true` if the cell is not an interior or if it behaves as an exterior.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
 ### `modified`
 
 The modification state of the object since the last save.

@@ -303,7 +303,7 @@ namespace TES3 {
 	void NonDynamicData::showLocationOnMap(const char* name) {
 		auto idLength = strnlen_s(name, 32);
 		for (auto cell : *cells) {
-			if (cell->name && !cell->isInterior() && !(cell->cellFlags & 0x20)) {
+			if (cell->name && !cell->getIsInterior() && !cell->getIsLoaded()) {
 				if (_strnicmp(cell->name, name, idLength) == 0) {
 					drawCellMapMarker(cell);
 				}

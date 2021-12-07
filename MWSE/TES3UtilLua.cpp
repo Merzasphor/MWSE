@@ -1200,7 +1200,7 @@ namespace mwse {
 					}
 
 					// Try to get a cell region.
-					if (dataHandler->currentCell->isInterior() && getOptionalParam(maybeParams, "useDoors", false)) {
+					if (dataHandler->currentCell->getIsInterior() && getOptionalParam(maybeParams, "useDoors", false)) {
 						for (auto ref : dataHandler->currentCell->persistentRefs) {
 							if (ref->baseObject->objectType == TES3::ObjectType::Door) {
 								auto destination = ref->getAttachedTravelDestination();
@@ -2623,7 +2623,7 @@ namespace mwse {
 				}
 
 				cell = TES3::Cell::create();
-				cell->setCellFlag(TES3::CellFlag::Interior, false);
+				cell->setIsInterior(false);
 				cell->setGridX(gridX.value());
 				cell->setGridY(gridY.value());
 				cell->setName("");
@@ -2642,7 +2642,7 @@ namespace mwse {
 				}
 
 				cell = TES3::Cell::create();
-				cell->setCellFlag(TES3::CellFlag::Interior, true);
+				cell->setIsInterior(true);
 				cell->setName(name.value());
 			}
 
@@ -2680,7 +2680,7 @@ namespace mwse {
 
 			// Try to resolve the sell, either by what we were given, or a valid cell based on the given position.
 			TES3::Cell* cell = getOptionalParamCell(params, "cell");
-			if (cell == nullptr || (!cell->isInterior() && !cell->isPointInCell(maybePosition.value().x, maybePosition.value().y))) {
+			if (cell == nullptr || (!cell->getIsInterior() && !cell->isPointInCell(maybePosition.value().x, maybePosition.value().y))) {
 				int cellX = TES3::Cell::toGridCoord(maybePosition.value().x);
 				int cellY = TES3::Cell::toGridCoord(maybePosition.value().y);
 				cell = dataHandler->nonDynamicData->getCellByGrid(cellX, cellY);

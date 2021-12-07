@@ -15,6 +15,7 @@
 --- @field gridY number The cell's Y grid coordinate. Only available on exterior cells.
 --- @field hasWater boolean If true, the cell has water. Only applies to interior cells.
 --- @field isInterior boolean If true, the cell is an interior.
+--- @field isOrBehavesAsExterior boolean *Read-only*. `true` if the cell is not an interior or if it behaves as an exterior.
 --- @field name string The name and id of the cell. See also displayName and editorName.
 --- @field pickObjectsRoot niBillboardNode|niCollisionSwitch|niNode|niSwitchNode The scenegraph node containing player-interactable objects from this cell.
 --- @field region tes3region The region associated with the cell. Only available on exterior cells, or interior cells that behave as exterior cells.
