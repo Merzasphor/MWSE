@@ -10,9 +10,8 @@ function TableVariable:get()
 end
 
 function TableVariable:set(newVal)
-	local converter = self.converter
-	if (converter) then
-		newVal = converter(newVal)
+	if (self.converter) then
+		newVal = self.converter(newVal)
 	end
 
 	self.table[self.id] = newVal

@@ -21,9 +21,8 @@ function ConfigVariable:get()
 end
 
 function ConfigVariable:set(newValue)
-	local converter = self.converter
-	if (converter) then
-		newValue = converter(newValue)
+	if (self.converter) then
+		newValue = self.converter(newValue)
 	end
 
 	local config = mwse.loadConfig(self.path)

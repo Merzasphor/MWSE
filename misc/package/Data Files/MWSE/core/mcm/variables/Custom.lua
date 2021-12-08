@@ -9,9 +9,8 @@ function Custom:get()
 end
 
 function Custom:set(newValue)
-	local converter = self.converter
-	if (converter) then
-		newValue = converter(newValue)
+	if (self.converter) then
+		newValue = self.converter(newValue)
 	end
 
 	self:setter(newValue)

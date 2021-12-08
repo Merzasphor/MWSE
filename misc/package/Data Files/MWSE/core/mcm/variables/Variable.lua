@@ -36,9 +36,8 @@ function Variable:get()
 end
 
 function Variable:set(newValue)
-	local converter = self.converter
-	if (converter) then
-		newValue = converter(newValue)
+	if (self.converter) then
+		newValue = self.converter(newValue)
 	end
 
 	rawset(self, "value", newValue)
@@ -53,7 +52,7 @@ function Variable.__index(tbl, key)
 end
 
 function Variable:__newindex(key, value)
-	meta = getmetatable(self)
+	local meta = getmetatable(self)
 	if key == "value" then
 		if self.restartRequired then
 			local sOk = tes3.findGMST(tes3.gmst.sOK).value

@@ -222,7 +222,6 @@ function Template:register()
 end
 
 function Template.__index(tbl, key)
-
 	local meta = getmetatable(tbl)
 	local prefixLen = string.len("create")
 	if string.sub(key, 1, prefixLen) == "create" then
