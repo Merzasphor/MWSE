@@ -1391,6 +1391,10 @@ namespace mwse {
 		}
 
 		NI::Pointer<NI::Object> loadMesh(const char* relativePath, sol::optional<bool> useCached) {
+			if (relativePath == nullptr) {
+				throw std::invalid_argument("No path provided. Pass the path relative to the Meshes folder as the first parameter.");
+			}
+
 			std::string path = "Meshes\\";
 			path += relativePath;
 
