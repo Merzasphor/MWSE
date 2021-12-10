@@ -2289,7 +2289,7 @@ namespace mwse {
 			}
 			else {
 				TES3::DataHandler::suppressThreadLoad = true;
-				reference->relocate(cell, &position.value(), orientation.value().z);
+				reference->relocate(cell, &position.value(), orientation.value().z * (180.0f / M_PI));
 				TES3::DataHandler::suppressThreadLoad = false;
 			}
 
