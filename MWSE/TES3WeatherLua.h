@@ -6,6 +6,8 @@ namespace mwse {
 	namespace lua {
 		template <typename T>
 		void setUserdataForTES3Weather(sol::usertype<T>& usertypeDefinition) {
+			usertypeDefinition["__tojson"] = &TES3::Weather::toJson;
+
 			// Basic property binding.
 			usertypeDefinition["ambientDayColor"] = sol::readonly_property(&TES3::Weather::ambientDayCol);
 			usertypeDefinition["ambientNightColor"] = sol::readonly_property(&TES3::Weather::ambientNightCol);

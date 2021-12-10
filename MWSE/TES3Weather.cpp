@@ -18,6 +18,12 @@
 #include "LuaObjectInvalidatedEvent.h"
 
 namespace TES3 {
+	std::string Weather::toJson() const {
+		std::ostringstream ss;
+		ss << "\"tes3weather:" << index << "\"";
+		return std::move(ss.str());
+	}
+
 	const char* Weather::getCloudTexturePath() const {
 		return texturePathCloud;
 	}
