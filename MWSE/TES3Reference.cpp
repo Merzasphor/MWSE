@@ -911,13 +911,9 @@ namespace TES3 {
 
 		// Recalculate rotation to always be between [0,2pi].
 		constexpr auto math2Pi = (M_PI * 2);
-		auto rotationInRadians = rotationInDegrees * (M_PI / 180.f);
-		while (rotationInRadians > math2Pi) {
-			rotationInRadians -= math2Pi;
-		}
-		while (rotationInRadians < 0.0f) {
+		auto rotationInRadians = fmod(rotationInDegrees * (M_PI / 180.f), math2Pi);
+		if (rotationInRadians < 0)
 			rotationInRadians += math2Pi;
-		}
 
 		// Get reused variables.
 		auto dataHandler = TES3::DataHandler::get();
@@ -1027,9 +1023,12 @@ namespace TES3 {
 	}
 
 	void Reference::relocateNoRotation(Cell* cell, const Vector3* position) {
-		const auto z = orientation.z;
-		relocate(cell, position, z * (180.0f / M_PI));
-		orientation.z = z;
+		// Save current rotation and restore it once relocate has finished.
+		// The orientation member not reliable (SetAngle bug), so calculate it maunally.
+		auto orientation = Vector3();
+		sceneNode->localRotation->toEulerXYZ(&orientation.x, &orientation.y, &orientation.z);
+		relocate(cell, position, orientation.z * (180.0f / M_PI));
+		setOrientation(&orientation);
 	}
 
 	bool Reference::clone() {
