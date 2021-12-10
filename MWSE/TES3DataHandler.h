@@ -352,6 +352,8 @@ namespace TES3 {
 		void updateCollisionGroupsForActiveCells(bool force = true, bool isResettingData = false, bool resetCollisionGroups = true);
 		void updateCollisionGroupsForActiveCells_raw(bool force = true);
 
+		bool isCellInMemory(const Cell* cell, bool unknown) const;
+
 		//
 		// Custom functions.
 		//

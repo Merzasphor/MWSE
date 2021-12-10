@@ -903,13 +903,117 @@ namespace TES3 {
 		return &reinterpret_cast<Actor*>(baseObject)->equipment;
 	}
 
+	void __cdecl TES3_game_relocateReference_replacement(Reference* reference, Cell* cell, const Vector3* position, float rotationInDegrees) {
+		// Parameter guards.
+		if (!cell || !position) {
+			return;
+		}
+
+		// Recalculate rotation to always be between [0,2pi].
+		constexpr auto math2Pi = (M_PI * 2);
+		auto rotationInRadians = rotationInDegrees * (M_PI / 180.f);
+		while (rotationInRadians > math2Pi) {
+			rotationInRadians -= math2Pi;
+		}
+		while (rotationInRadians < 0.0f) {
+			rotationInRadians += math2Pi;
+		}
+
+		// Get reused variables.
+		auto dataHandler = TES3::DataHandler::get();
+		const auto isCellInMemory = dataHandler->isCellInMemory(cell, false);
+
+		do {
+			// Update reference position/orientation.
+			reference->position = *position;
+			reference->orientation.z = rotationInRadians;
+
+			// Update scene node.
+			auto sceneNode = reference->getSceneGraphNode();
+			if (sceneNode) {
+				Matrix33 rotationMatrix;
+				reference->updateSceneMatrix(&rotationMatrix, false);
+				sceneNode->setLocalRotationMatrix(&rotationMatrix);
+				sceneNode->localTranslate = *position;
+				sceneNode->update();
+			}
+
+			if (cell != reference->getCell()) {
+				if (sceneNode || isCellInMemory) {
+					if (isCellInMemory) {
+						if (reference->baseObject->objectType != ObjectType::Static) {
+							cell->getOrCreateActivatorsNode()->attachChild(reference->getSceneGraphNode(), true);
+						}
+					}
+					else {
+						reference->resetVisualNode();
+					}
+				}
+
+				const auto global_dontSaveObject = *reinterpret_cast<bool*>(0x7CEBDD);
+				if (!global_dontSaveObject) {
+					reference->setObjectModified(true);
+				}
+
+				cell->setObjectModified(true);
+				cell->addReference(reference);
+			}
+
+			// Update mobile.
+			auto mobile = reference->getAttachedMobileActor();
+			if (mobile) {
+				cell->getOrCreateActivatorsNode()->attachChild(reference->getSceneGraphNode(), true);
+				mobile->setFootPoint(position);
+				mobile->setFacing(rotationInRadians);
+				mobile->vTable.mobileObject->setActorFlag40(mobile, true);
+				mobile->actorFlags &= ~MobileActorFlag::GroundCollision;
+				mobile->unknown_0x230 = 1;
+				mobile->collidingReference = nullptr;
+				mobile->enterLeaveSimulationByDistance();
+				if (isCellInMemory) {
+					WorldController::get()->mobController->addMob(reference);
+				}
+				else {
+					WorldController::get()->mobController->removeMob(reference);
+				}
+			}
+			else if (isCellInMemory) {
+				// Create mobile if needed.
+				if (sceneNode) {
+					if (reference->baseObject->objectType == ObjectType::Creature || reference->baseObject->objectType == ObjectType::NPC) {
+						WorldController::get()->mobController->addMob(reference);
+						mobile = reference->getAttachedMobileActor();
+						if (mobile) {
+							mobile->setFootPoint(position);
+							mobile->setFacing(rotationInRadians);
+							mobile->vTable.mobileObject->setActorFlag40(mobile, true);
+							mobile->actorFlags &= ~MobileActorFlag::GroundCollision;
+							mobile->unknown_0x230 = 1;
+							mobile->collidingReference = nullptr;
+							mobile->enterLeaveSimulationByDistance();
+
+						}
+					}
+				}
+			}
+
+			// Skip if we're not looking at leveled creatures.
+			if (reference->baseObject->objectType != ObjectType::LeveledCreature) {
+				break;
+			}
+
+			// Move on to the leveled source reference.
+			reference = reference->getLeveledBaseReference();
+		} while (reference);
+	}
+
 	const auto TES3_game_relocateReference = reinterpret_cast<void(__cdecl*)(Reference*, Cell*, const Vector3*, float)>(0x50EDD0);
 	void Reference::relocate(Cell * cell, const Vector3 * position, float rotation) {
 		// Store old cell.
 		const auto oldCell = getCell();
 
 		// Fire off original function.
-		TES3_game_relocateReference(this, cell, position, rotation);
+		TES3_game_relocateReference_replacement(this, cell, position, rotation);
 		
 		// Determine if cell active state changed.
 		const auto oldCellActive = oldCell ? oldCell->getCellActive() : false;
@@ -924,7 +1028,7 @@ namespace TES3 {
 
 	void Reference::relocateNoRotation(Cell* cell, const Vector3* position) {
 		const auto z = orientation.z;
-		relocate(cell, position, z);
+		relocate(cell, position, z * (180.0f / M_PI));
 		orientation.z = z;
 	}
 

@@ -140,7 +140,10 @@ namespace TES3 {
 
 		void addMapNote(Vector2* position, float unknown, const char* text);
 
+		void addReference(Reference* reference);
 		void insertReference(Reference* reference);
+
+		NI::Node* getOrCreateActivatorsNode();
 
 		//
 		// Other getter/setter functions.

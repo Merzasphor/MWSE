@@ -461,6 +461,11 @@ namespace TES3 {
 		TES3_DataHandler_updateCollisionGroupsForActiveCells(this, force);
 	}
 
+	const auto TES3_DataHandler_isCellInMemory  = reinterpret_cast<bool(__thiscall*)(const DataHandler*, const Cell*, bool)>(0x484AF0);
+	bool DataHandler::isCellInMemory(const Cell* cell, bool unknown) const {
+		return TES3_DataHandler_isCellInMemory(this, cell, unknown);
+	}
+
 	std::reference_wrapper<DataHandler::ExteriorCellData* [9]> DataHandler::getExteriorCellData_lua() {
 		return std::ref(exteriorCellData);
 	}

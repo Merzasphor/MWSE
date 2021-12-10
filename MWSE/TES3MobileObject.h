@@ -117,7 +117,7 @@ namespace TES3 {
 		void * clearCollisionActive; // 0x38
 		void * setupCollision; // 0x3C
 		void * setPosition; // 0x40
-		void * setFacing; // 0x44
+		void (__thiscall* setFacing)(MobileObject*, float); // 0x44
 		void * setOrientation; // 0x48
 		void * setReference; // 0x4C
 		void * jumpingFalling; // 0x50
@@ -130,7 +130,7 @@ namespace TES3 {
 		void * waterImpact; // 0x6C
 		void (__thiscall * enterLeaveSimulation)(MobileObject*, bool); // 0x70
 		void * setActorFlag8; // 0x74
-		void * setActorFlag40; // 0x78
+		void (__thiscall* setActorFlag40)(MobileObject*, bool); // 0x78
 		bool (__thiscall * findDropPointOnCollider)(MobileObject*, float, NI::AVObject*, float*, Vector3*); // 0x7C
 		bool (__thiscall * onActorCollision)(MobileProjectile*, int); // 0x80
 		bool (__thiscall * onObjectCollision)(MobileProjectile*, int, bool); // 0x84
@@ -258,6 +258,8 @@ namespace TES3 {
 		// vTable accessor functions.
 		//
 
+		void setFacing(float facingInRadians);
+
 		bool onActorCollision(int collisionIndex);
 		bool onObjectCollision(int collisionIndex, bool flag);
 		bool onTerrainCollision(int collisionIndex);
@@ -270,6 +272,8 @@ namespace TES3 {
 		//
 		// Other related this-call functions.
 		//
+
+		void setFootPoint(const Vector3* point);
 
 		void enterLeaveSimulationByDistance();
 		IteratedList<ItemStack*>* getInventory() const;

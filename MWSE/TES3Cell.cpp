@@ -52,6 +52,11 @@ namespace TES3 {
 		TES3_Cell_addMapNote(this, position, unknown, text);
 	}
 
+	const auto TES3_Cell_addReference = reinterpret_cast<void(__thiscall*)(Cell*, Reference*)>(0x4DC0A0);
+	void Cell::addReference(Reference* reference) {
+		TES3_Cell_addReference(this, reference);
+	}
+
 	const auto TES3_Cell_insertReference = reinterpret_cast<void(__thiscall *)(Cell*, Reference*)>(0x4DC030);
 	void Cell::insertReference(Reference* reference) {
 		TES3_Cell_insertReference(this, reference);
@@ -60,6 +65,11 @@ namespace TES3 {
 		if (getCellActive()) {
 			reference->setReferenceActive();
 		}
+	}
+
+	const auto TES3_Cell_getOrCreateActivatorsNode = reinterpret_cast<NI::Node*(__thiscall*)(Cell*)>(0x4E2680);
+	NI::Node* Cell::getOrCreateActivatorsNode() {
+		return TES3_Cell_getOrCreateActivatorsNode(this);
 	}
 
 	const char* Cell::getName() const {

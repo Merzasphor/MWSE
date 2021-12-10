@@ -53,6 +53,10 @@ namespace TES3 {
 #define TES3_vTable_MobileProjectile 0x74B2B4
 #define TES3_vTable_SpellProjectile 0x74B360
 
+	void MobileObject::setFacing(float facingInRadians) {
+		vTable.mobileObject->setFacing(this, facingInRadians);
+	}
+
 	const auto TES3_MobileObject_onActorCollision = reinterpret_cast<bool(__thiscall*)(MobileObject*, int)>(0x5615A0);
 	bool MobileObject::onActorCollision(int collisionIndex) {
 		// Grab the hit reference now, it won't be available after calling the main function.
@@ -139,6 +143,11 @@ namespace TES3 {
 
 	void MobileObject::enterLeaveSimulation(bool entering) {
 		vTable.mobileObject->enterLeaveSimulation(this, entering);
+	}
+
+	const auto TES3_MobileObject_setFootPoint = reinterpret_cast<void(__thiscall*)(MobileObject*, const Vector3*)>(0x561960);
+	void MobileObject::setFootPoint(const Vector3* point) {
+		TES3_MobileObject_setFootPoint(this, point);
 	}
 
 	const auto TES3_MobileObject_enterLeaveSimulationByDistance = reinterpret_cast<void(__thiscall *)(MobileObject*)>(0x55FFC0);
