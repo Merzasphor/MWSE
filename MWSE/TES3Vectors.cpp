@@ -528,6 +528,10 @@ namespace TES3 {
 		return TES3_Matrix33_reorthogonalize(this);
 	}
 
+	bool Matrix33::toEulerXYZ(Vector3* vector) const {
+		return TES3_Matrix33_toEulerXYZ(this, &vector->x, &vector->y, &vector->z);
+	}
+
 	bool Matrix33::toEulerXYZ(float * x, float * y, float * z) const {
 		return TES3_Matrix33_toEulerXYZ(this, x, y, z);
 	}
@@ -536,6 +540,10 @@ namespace TES3 {
 		float x, y, z;
 		bool isUnique = toEulerXYZ(&x, &y, &z);
 		return std::make_tuple(Vector3(x, y, z), isUnique);
+	}
+
+	bool Matrix33::toEulerZYX(Vector3* vector) const {
+		return toEulerZYX(&vector->x, &vector->y, &vector->z);
 	}
 
 	bool Matrix33::toEulerZYX(float* x, float* y, float* z) const {
