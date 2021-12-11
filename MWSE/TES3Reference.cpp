@@ -1025,10 +1025,19 @@ namespace TES3 {
 	void Reference::relocateNoRotation(Cell* cell, const Vector3* position) {
 		// Save current rotation and restore it once relocate has finished.
 		// The orientation member not reliable (SetAngle bug), so calculate it maunally.
-		auto orientation = Vector3();
-		sceneNode->localRotation->toEulerXYZ(&orientation.x, &orientation.y, &orientation.z);
-		relocate(cell, position, orientation.z * (180.0f / M_PI));
-		setOrientation(&orientation);
+		std::optional<Vector3> maybeCachedOrientation;
+		if (sceneNode) {
+			orientation = Vector3();
+			sceneNode->localRotation->toEulerXYZ(&maybeCachedOrientation.value());
+		}
+
+		if (maybeCachedOrientation) {
+			relocate(cell, position, maybeCachedOrientation.value().z * (180.0f / M_PI));
+			setOrientation(&maybeCachedOrientation.value());
+		}
+		else {
+			relocate(cell, position, getOrientation()->z * (180.0f / M_PI));
+		}
 	}
 
 	bool Reference::clone() {
