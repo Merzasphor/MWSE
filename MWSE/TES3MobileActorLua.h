@@ -6,6 +6,7 @@
 #include "TES3AIData.h"
 #include "TES3Cell.h"
 #include "TES3CombatSession.h"
+#include "TES3MobileActor.h"
 
 namespace mwse {
 	namespace lua {

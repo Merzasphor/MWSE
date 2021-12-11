@@ -2,6 +2,8 @@
 
 #include "TES3MobileActorLua.h"
 
+#include "TES3MobileNPC.h"
+
 namespace mwse {
 	namespace lua {
 		template <typename T>

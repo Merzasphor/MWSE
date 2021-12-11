@@ -1,7 +1,10 @@
 #pragma once
 
 #include "TES3MobileActor.h"
+#include "TES3MobileProjectile.h"
 #include "TES3Weapon.h"
+
+#include "TES3MobileObjectLua.h"
 
 namespace mwse {
 	namespace lua {

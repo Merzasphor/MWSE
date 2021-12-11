@@ -2,6 +2,8 @@
 
 #include "LuaUtil.h"
 
+#include "TES3Weather.h"
+
 namespace mwse {
 	namespace lua {
 		template <typename T>

@@ -1,5 +1,7 @@
 #include "NIGeometryData.h"
 
+#include "NIColor.h"
+
 namespace NI {
 	unsigned short GeometryData::getActiveVertexCount() const {
 		return vTable.asGeometryData->getActiveVertexCount(this);

@@ -1,5 +1,9 @@
 #pragma once
 
+#include "NIProperty.h"
+
+#include "NIObjectLua.h"
+
 namespace mwse {
 	namespace lua {
 		template <typename T>

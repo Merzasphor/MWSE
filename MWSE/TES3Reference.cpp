@@ -1028,7 +1028,7 @@ namespace TES3 {
 
 		// The orientation member may not be reliable (SetAngle bug), so calculate it manually.
 		if (sceneNode) {
-			sceneNode->localRotation->toEulerXYZ(&cachedOrientation.x, &cachedOrientation.y, &cachedOrientation.z);
+			sceneNode->localRotation->toEulerXYZ(&cachedOrientation);
 		}
 
 		relocate(cell, position, cachedOrientation.z * (180.0f / M_PI));

@@ -259,7 +259,7 @@ namespace mwse {
 				start = end;
 			}
 
-			return result;
+			return std::move(result);
 		}
 
 		bool enumerate(const char *format, int& substitutions, bool& eolmode) {

@@ -278,21 +278,6 @@ namespace TES3 {
 		iterator erase(size_type position) {
 			return erase(begin() + position);
 		}
-
-		//
-		// Cached iterator access.
-		//
-
-		Node* cached_begin() {
-			current = head;
-			return current;
-		}
-
-		Node* cached_next() {
-			current = current->next;
-			return current;
-		}
-
 	};
 	static_assert(sizeof(StlList<void*>) == 0xC, "TES3::StlList failed size validation");
 	static_assert(offsetof(StlList<void*>, count) == 0x0, "TES3::StlList::count failed offset validation");

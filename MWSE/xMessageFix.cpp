@@ -71,7 +71,7 @@ namespace mwse {
 		if (format != 0 && !format.empty()) {
 			bool suppressNull = false;
 			std::string badCodes;
-			std::string& newString = mwse::string::interpolate(format, virtualMachine, &suppressNull, &badCodes);
+			std::string newString = mwse::string::interpolate(format, virtualMachine, &suppressNull, &badCodes);
 			if (badCodes != "") {
 				mwse::log::getLog() << "xMessageFix: Bad format \"" << badCodes << "\" in \"" << format << "\" generating \"" << newString << "\"." << std::endl;
 			}
@@ -116,7 +116,7 @@ namespace mwse {
 			if (!newButtonText.empty()) {
 				bool suppressNull = false;
 				std::string badCodes;
-				std::string& newString = mwse::string::interpolate(newButtonText, virtualMachine, &suppressNull, &badCodes);
+				std::string newString = mwse::string::interpolate(newButtonText, virtualMachine, &suppressNull, &badCodes);
 				if (badCodes != "") {
 					mwse::log::getLog() << "xMessageFix: Bad format \"" << badCodes << "\" in \"" << format << "\" generating \"" << newString << "\"." << std::endl;
 				}

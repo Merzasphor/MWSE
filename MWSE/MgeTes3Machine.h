@@ -32,7 +32,7 @@ struct TES3MACHINE : public VIRTUALMACHINE
 	virtual bool GetRegister(WORD regidx, VMREGTYPE& value);
 	virtual bool SetRegister(WORD regidx, VMREGTYPE value);
 	virtual const char* GetScriptName(void);
-	virtual const char* TES3MACHINE::GetString(VPVOID addr);
+	virtual const char* GetString(VPVOID addr);
 	virtual bool SetVMDebuggerBreakpoint(HWBREAKPOINT* breakpoint);
 	virtual HWBREAKPOINT* GetVMDebuggerBreakpoint();
 

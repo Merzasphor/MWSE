@@ -3,6 +3,7 @@
 #include "NIDynamicEffectLua.h"
 
 #include "NIColor.h"
+#include "NIPointLight.h"
 
 namespace mwse {
 	namespace lua {

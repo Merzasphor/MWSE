@@ -3,6 +3,7 @@
 #include "LuaUtil.h"
 
 #include "TES3Reference.h"
+#include "TES3MobileObject.h"
 
 namespace mwse {
 	namespace lua {

@@ -75,8 +75,7 @@ namespace mwse
 
 				// Increment script instruction pointer in esi, when called from game_executeScript function only.
 				long callReturn = *reinterpret_cast<long*>(context.ebp + 4);
-				if (callReturn == 0x5053C0)
-				{
+				if (callReturn == 0x5053C0) {
 					long * returnESI = reinterpret_cast<long*>(context.esp + 4);
 					*returnESI = *(vmInstance.getScriptIP());
 				}

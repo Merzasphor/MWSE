@@ -24,14 +24,14 @@ namespace MWSE
         /// <summary>
         /// Where we download the file from.
         /// </summary>
-        static string DownloadURL = "https://github.com/MWSE/MWSE/releases/download/build-automatic/mwse.zip";
-        static string GitHubVersionInfoURL = "https://api.github.com/repos/MWSE/MWSE/releases/tags/build-automatic";
+        static readonly string DownloadURL = "https://github.com/MWSE/MWSE/releases/download/build-automatic/mwse.zip";
+        static readonly string GitHubVersionInfoURL = "https://api.github.com/repos/MWSE/MWSE/releases/tags/build-automatic";
 
         /// <summary>
         /// Files that are in use by the updater, and so need to be extracted as temporary files.
         /// These files are then swapped out when MWSE is loaded by running Morrowind.exe.
         /// </summary>
-        static HashSet<string> TemporaryInstallFiles = new HashSet<string> { "MWSE-Update.exe", "Newtonsoft.Json.dll" };
+        static readonly HashSet<string> TemporaryInstallFiles = new HashSet<string> { "MWSE-Update.exe", "Newtonsoft.Json.dll" };
 
         /// <summary>
         /// Determines if Morrowind is currently running in the background.

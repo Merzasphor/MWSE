@@ -293,6 +293,8 @@ namespace TES3 {
 			Property propertyValue;
 			EventCallback eventCallback;
 			PropertyAccessCallback propertyCallback;
+
+			PropertyValue() { integerValue = 0; }
 		};
 
 	}

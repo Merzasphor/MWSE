@@ -228,21 +228,6 @@ namespace TES3 {
 		iterator erase(size_type position) {
 			return erase(begin() + position);
 		}
-
-		//
-		// Cached iterator access.
-		//
-
-		Node* cached_begin() {
-			current = head;
-			return current;
-		}
-
-		Node* cached_next() {
-			current = current->next;
-			return current;
-		}
-
 	};
 	static_assert(sizeof(Deque<int>) == 0xC, "TES3::Deque failed size validation");
 	static_assert(offsetof(Deque<int>, unknown_0x0) == 0x0, "TES3::Deque::unknown_0x0 failed offset validation");

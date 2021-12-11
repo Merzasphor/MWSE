@@ -86,7 +86,7 @@ namespace mwse {
 						eventData["relativeY"] = target->cached_screenY - data1;
 					}
 
-					auto callbacks = iterCallback->second;
+					auto& callbacks = iterCallback->second;
 					for (const auto& eventLua : callbacks) {
 						// Note: sol::protected_function needs to be a local, as Lua functions can destroy it when modifying events.
 						sol::protected_function callback = eventLua.callback;
@@ -178,7 +178,7 @@ namespace mwse {
 						eventData["relativeY"] = target->cached_screenY - data1;
 					}
 
-					auto callbacks = iterCallback->second;
+					auto& callbacks = iterCallback->second;
 					for (const auto& eventLua : callbacks) {
 						// Note: sol::protected_function needs to be a local, as Lua functions can destroy it when modifying events.
 						sol::protected_function callback = eventLua.callback;
@@ -316,7 +316,7 @@ namespace mwse {
 				const auto& propertyItt = targetItt->second.find(eventID);
 				if (propertyItt != targetItt->second.end()) {
 					// Search for our callback.
-					for (auto& itt = propertyItt->second.begin(); itt != propertyItt->second.end(); itt++) {
+					for (auto itt = propertyItt->second.begin(); itt != propertyItt->second.end(); itt++) {
 						if (itt->callback == callback) {
 							propertyItt->second.erase(itt);
 							return true;
@@ -334,7 +334,7 @@ namespace mwse {
 				const auto& propertyItt = targetItt->second.find(eventID);
 				if (propertyItt != targetItt->second.end()) {
 					// Search for our callback.
-					for (auto& itt = propertyItt->second.begin(); itt != propertyItt->second.end(); itt++) {
+					for (auto itt = propertyItt->second.begin(); itt != propertyItt->second.end(); itt++) {
 						if (itt->callback == callback) {
 							propertyItt->second.erase(itt);
 							return true;

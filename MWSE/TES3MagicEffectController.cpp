@@ -34,7 +34,7 @@ namespace TES3 {
 	}
 
 	MagicEffectController::~MagicEffectController() {
-		for (auto itt : effectObjects) {
+		for (auto& itt : effectObjects) {
 			delete itt.second;
 		}
 	}
@@ -143,7 +143,7 @@ namespace TES3 {
 	void __stdcall ResolveAllLinks() {
 		auto nonDynamicData = DataHandler::get()->nonDynamicData;
 		auto controller = nonDynamicData->magicEffects;
-		for (auto itt : controller->effectObjects) {
+		for (auto& itt : controller->effectObjects) {
 			itt.second->resolveLinks(nonDynamicData);
 		}
 
@@ -316,10 +316,9 @@ namespace TES3 {
 
 		// Provide values to modify.
 		union {
-			int asInt;
+			int asInt = 0;
 			float asFloat;
 		} genericEventValue;
-		genericEventValue.asInt = 0;
 		Statistic * statisticEventValue = nullptr;
 		void * eventValue = nullptr;
 
@@ -452,7 +451,7 @@ namespace TES3 {
 		auto macp = WorldController::get()->getMobilePlayer();
 		auto spellList = macp->getCombatSpellList();
 
-		for (auto effectItt : magicEffectController->effectObjects) {
+		for (auto& effectItt : magicEffectController->effectObjects) {
 			auto effect = effectItt.second;
 			bool hasEffect = false;
 			if (effect->flags & EffectFlag::AllowEnchanting) {
@@ -506,7 +505,7 @@ namespace TES3 {
 		auto macp = WorldController::get()->getMobilePlayer();
 		auto spellList = macp->getCombatSpellList();
 
-		for (auto effectItt : magicEffectController->effectObjects) {
+		for (auto& effectItt : magicEffectController->effectObjects) {
 			auto effect = effectItt.second;
 			bool hasEffect = false;
 			if (effect->flags & EffectFlag::AllowSpellmaking) {
