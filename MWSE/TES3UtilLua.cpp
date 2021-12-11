@@ -2234,7 +2234,8 @@ namespace mwse {
 
 			// Get the orientation.
 			sol::optional<TES3::Vector3> orientation = getOptionalParamVector3(params, "orientation");
-			if (!orientation) {
+			const auto userProvidedOrientation = orientation.has_value();
+			if (!userProvidedOrientation) {
 				orientation = reference->orientation;
 			}
 
@@ -2289,7 +2290,12 @@ namespace mwse {
 			}
 			else {
 				TES3::DataHandler::suppressThreadLoad = true;
-				reference->relocate(cell, &position.value(), orientation.value().z * (180.0f / M_PI));
+				if (userProvidedOrientation) {
+					reference->relocate(cell, &position.value(), orientation.value().z * (180.0f / M_PI));
+				}
+				else {
+					reference->relocateNoRotation(cell, &position.value());
+				}
 				TES3::DataHandler::suppressThreadLoad = false;
 			}
 
