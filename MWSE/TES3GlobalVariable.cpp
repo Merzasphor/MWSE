@@ -12,13 +12,13 @@ namespace TES3 {
 	void GlobalVariable::setValue_lua(double v) {
 		switch (toupper(valueType)) {
 		case 'S':
-			value = short(v);
+			value = float(short(v));
 			break;
 		case 'L':
-			value = int(v);
+			value = float(int(v));
 			break;
 		default:
-			value = v;
+			value = float(v);
 		}
 	}
 }
