@@ -49,6 +49,7 @@ namespace NI {
 		void clamp();
 
 		std::string toString() const;
+		std::string toJson() const;
 
 	};
 	static_assert(sizeof(Color) == 0xC, "NI::Color failed size validation");

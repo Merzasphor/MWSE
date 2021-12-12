@@ -12,6 +12,9 @@ namespace mwse {
 		// Speed-optimized binding for NI::Object.
 		template <typename T>
 		void setUserdataForNIObject(sol::usertype<T>& usertypeDefinition) {
+			usertypeDefinition[sol::meta_function::to_string] = &NI::Object::toString;
+			usertypeDefinition["__tojson"] = &NI::Object::toJson;
+
 			// Basic property binding.
 			usertypeDefinition["refCount"] = sol::readonly_property(&NI::Object::refCount);
 

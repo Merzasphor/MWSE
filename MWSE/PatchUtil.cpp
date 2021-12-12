@@ -526,10 +526,68 @@ namespace mwse {
 		constexpr auto PatchSwapJournalUpdateCheckForSpeakerOrder_size = (0x4B2FF1u - 0x4B2FD7u);
 
 		//
+		// Patch: Fix GetAngle/SetAngle/Rotate/RotateWorld.
+		// 
+		// Throughout the engine, all calls to Reference::updateSceneMatrix pass false to the eulerXYZ
+		// parameter. Of course, mwscript is a steaming pile of garbage, so it decides to pass true. This
+		// leads to modders passing Z when they want X and X when they want Z.
+		// 
+		// To fix this we're going to force Reference::updateSceneMatrix to pass false for these functions,
+		// and flip the X/Z values if true was passed instead. We also need to make similar patches to 
+		// GetAngle, Rotate, and RotateWorld.
+		//
+
+		void clampPrimaryAngle(float& radians) {
+			constexpr auto math2Pi = std::numbers::pi_v<float> * 2;
+			radians = fmod(radians, math2Pi);
+			if (radians < 0.0f) {
+				radians += math2Pi;
+			}
+		}
+
+		void convertFromXYZToZYX(TES3::Vector3* in_vector, TES3::Vector3* out_vector) {
+			TES3::Matrix33 matrix;
+			matrix.fromEulerXYZ(in_vector->x, in_vector->y, in_vector->z);
+			matrix.toEulerZYX(out_vector);
+		}
+
+		static TES3::Vector3 PatchMWScriptEulerAngles_dummyOrientation;
+
+		TES3::Vector3* __fastcall PatchMWScriptEulerAngles_createDummyOrientation(TES3::Reference* reference) {
+			convertFromXYZToZYX(reference->getOrientation(), &PatchMWScriptEulerAngles_dummyOrientation);
+			return &PatchMWScriptEulerAngles_dummyOrientation;
+		}
+
+		void __fastcall PatchMWScriptEulerAngles_updateSceneMatrix(TES3::Reference* reference, DWORD _EDX_, TES3::Matrix33* matrix, bool eulerXYZ) {
+			auto orientation = reference->getOrientation();
+
+			// Rotate with our corrupt orientation.
+			*orientation = PatchMWScriptEulerAngles_dummyOrientation;
+			reference->sceneNode->setLocalRotationMatrix(reference->updateSceneMatrix(matrix, eulerXYZ));
+
+			// Restore the orientation to XYZ.
+			if (eulerXYZ) {
+				mwse::log::getLog() << "Converting shit back to normal." << std::endl;
+				reference->sceneNode->localRotation->toEulerXYZ(reference->getOrientation());
+			}
+		}
+
+		//
 		// Install all the patches.
 		//
 
 		void installPatches() {
+#if true
+			// Patch: Fix mwscript XYZ/ZYX parameters in GetAngle/SetAngle/Rotate/RotateWorld.
+			//writeDoubleWordEnforced(0x5068FC + 0x2, 0x5069FF - 0x5068FC - 0x6, 0x506A64 - 0x5068FC - 0x6);
+			//writeDoubleWordEnforced(0x50690A + 0x2, 0x506A64 - 0x50690A - 0x6, 0x5069FF - 0x5068FC - 0x6);
+			genCallEnforced(0x5068EE, 0x4E5970, reinterpret_cast<DWORD>(PatchMWScriptEulerAngles_createDummyOrientation)); // Rotate
+			genCallEnforced(0x506A74, 0x4E8450, reinterpret_cast<DWORD>(PatchMWScriptEulerAngles_updateSceneMatrix), 0x506A81 - 0x506A74); // Rotate
+			genCallUnprotected(0x506DD2, reinterpret_cast<DWORD>(PatchMWScriptEulerAngles_createDummyOrientation), 0x506DF0 - 0x506DD2); // GetAngle
+			genCallUnprotected(0x506E65, reinterpret_cast<DWORD>(PatchMWScriptEulerAngles_createDummyOrientation), 0x506E83 - 0x506E65); // SetAngle
+			genCallEnforced(0x506ED3, 0x4E8450, reinterpret_cast<DWORD>(PatchMWScriptEulerAngles_updateSceneMatrix), 0x506EE0 - 0x506ED3); // SetAngle
+#endif
+
 			// Patch: Enable/Disable.
 			genCallUnprotected(0x508FEB, reinterpret_cast<DWORD>(PatchScriptOpEnable), 0x9);
 			genCallUnprotected(0x5090DB, reinterpret_cast<DWORD>(PatchScriptOpDisable), 0x9);

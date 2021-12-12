@@ -110,6 +110,12 @@ namespace NI {
 		return std::move(ss.str());
 	}
 
+	std::string Color::toJson() const {
+		std::ostringstream ss;
+		ss << "{\"r\":" << r << ",\"g\":" << g << ",\"b\":" << b << "}";
+		return std::move(ss.str());
+	}
+
 	//
 	// NiColorA
 	//

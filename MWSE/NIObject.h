@@ -83,6 +83,9 @@ namespace NI {
 
 		bool saveBinary(const char* filename);
 
+		std::string toString() const;
+		std::string toJson() const;
+
 		//
 		// Access to this type's raw functions.
 		//

@@ -48,6 +48,7 @@ namespace mwse {
 					sol::resolve<NI::Color(const float)>(&NI::Color::operator*)
 				);
 				usertypeDefinition[sol::meta_function::to_string] = &NI::Color::toString;
+				usertypeDefinition["__tojson"] = &NI::Color::toJson;
 
 				// Basic property binding.
 				usertypeDefinition["r"] = &NI::Color::r;

@@ -87,6 +87,26 @@ namespace NI {
 		return stream.save(filename);
 	}
 
+	std::string Object::toString() const {
+		std::ostringstream ss;
+		const char* name = nullptr;
+		if (isInstanceOfType(NI::RTTIStaticPtr::NiObjectNET)) {
+			name = static_cast<const ObjectNET*>(this)->name;
+		}
+		ss << getRunTimeTypeInformation()->toString() << ":" << (name ? name : "(unnamed)");
+		return std::move(ss.str());
+	}
+
+	std::string Object::toJson() const {
+		std::ostringstream ss;
+		const char* name = nullptr;
+		if (isInstanceOfType(NI::RTTIStaticPtr::NiObjectNET)) {
+			name = static_cast<const ObjectNET*>(this)->name;
+		}
+		ss << "\"" << getRunTimeTypeInformation()->toString() << ":" << (name ? name : "(unnamed)") << "\"";
+		return std::move(ss.str());
+	}
+
 	static std::unordered_map<const Object*, sol::object> niObjectCache;
 
 	sol::object Object::getOrCreateLuaObject(lua_State* L) {
