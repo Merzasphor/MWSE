@@ -47,7 +47,17 @@ tes3mobilePlayer = {}
 --- @param progress number The amount of experience to grant.
 function tes3mobilePlayer:exerciseSkill(skill, progress) end
 
+--- Returns the total progress needed to progress the skill to the next level.
+--- @param skill number The skill index to check.
+--- @return number progressNeeded No description yet available.
+function tes3mobilePlayer:getSkillProgressRequirement(skill) end
+
 --- Checks to see if a skill is ready to be leveled up, and performs any levelup logic.
 --- @param skill number The skill index to check for leveling.
-function tes3mobilePlayer:levelSkill(skill) end
+function tes3mobilePlayer:progressSkillLevelIfRequirementsMet(skill) end
+
+--- Increments the player's skill to the next level, while respecting all level up mechanics.
+--- @param skill number The skill index to increase.
+--- @return number newLevel No description yet available.
+function tes3mobilePlayer:progressSkillToNextLevel(skill) end
 

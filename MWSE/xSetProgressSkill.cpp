@@ -91,7 +91,7 @@ namespace mwse
 		mobileObject->skillProgress[skillIndex] = progress;
 
 		// Check for skill level up.
-		mobileObject->levelSkill(skillIndex);
+		mobileObject->progressSkillLevelIfRequirementsMet(skillIndex);
 
 		mwse::Stack::getInstance().pushLong(true);
 

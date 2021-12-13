@@ -2145,6 +2145,24 @@ local timestamp = tes3mobileActor:getPowerUseTimestamp(power)
 
 ***
 
+### `getSkillProgressRequirement`
+
+Returns the total progress needed to progress the skill to the next level.
+
+```lua
+local progressNeeded = tes3mobilePlayer:getSkillProgressRequirement(skill)
+```
+
+**Parameters**:
+
+* `skill` (number): The skill index to check.
+
+**Returns**:
+
+* `progressNeeded` (number)
+
+***
+
 ### `getSkillStatistic`
 
 Fetches the statistic object of a skill with a given index. This is the way to access skills for any type of actor, as creatures have a limited version of the skill system. Note that creatures share a statistic between multiple skills (they only have combat, magic, and stealth stats), so many values will be the same.
@@ -2287,17 +2305,35 @@ local result = tes3mobileActor:isAffectedByObject(object)
 
 ***
 
-### `levelSkill`
+### `progressSkillLevelIfRequirementsMet`
 
 Checks to see if a skill is ready to be leveled up, and performs any levelup logic.
 
 ```lua
-tes3mobilePlayer:levelSkill(skill)
+tes3mobilePlayer:progressSkillLevelIfRequirementsMet(skill)
 ```
 
 **Parameters**:
 
 * `skill` (number): The skill index to check for leveling.
+
+***
+
+### `progressSkillToNextLevel`
+
+Increments the player's skill to the next level, while respecting all level up mechanics.
+
+```lua
+local newLevel = tes3mobilePlayer:progressSkillToNextLevel(skill)
+```
+
+**Parameters**:
+
+* `skill` (number): The skill index to increase.
+
+**Returns**:
+
+* `newLevel` (number)
 
 ***
 

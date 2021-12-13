@@ -89,7 +89,8 @@ namespace TES3 {
 		//
 
 		void exerciseSkill(int skillId, float progress);
-		void levelSkill(int skillId);
+		float getSkillProgressRequirement(int skillId) const;
+		void progressSkillLevelIfRequirementsMet(int skillId);
 		void onDeath();
 		int getGold();
 		void wakeUp();
@@ -107,6 +108,8 @@ namespace TES3 {
 		//
 		// Custom functions.
 		//
+
+		int progressSkillToNextLevel(int skillId);
 
 		void setMovementFlagSneaking(bool value);
 

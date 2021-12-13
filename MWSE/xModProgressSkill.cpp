@@ -92,7 +92,7 @@ namespace mwse
 		macp->skillProgress[skillId] = progress;
 
 		// Call Morrowind's native CheckForSkillUp function.
-		macp->levelSkill(skillId);
+		macp->progressSkillLevelIfRequirementsMet(skillId);
 
 		// Push to indicate success.
 		mwse::Stack::getInstance().pushLong(1);

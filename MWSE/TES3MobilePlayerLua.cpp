@@ -80,7 +80,9 @@ namespace mwse {
 
 				// Basic function binding.
 				usertypeDefinition["exerciseSkill"] = &TES3::MobilePlayer::exerciseSkill;
-				usertypeDefinition["levelSkill"] = &TES3::MobilePlayer::levelSkill;
+				usertypeDefinition["getSkillProgressRequirement"] = &TES3::MobilePlayer::getSkillProgressRequirement;
+				usertypeDefinition["progressSkillLevelIfRequirementsMet"] = &TES3::MobilePlayer::progressSkillLevelIfRequirementsMet;
+				usertypeDefinition["progressSkillToNextLevel"] = &TES3::MobilePlayer::progressSkillToNextLevel;
 
 				// Functions exposed as properties.
 				usertypeDefinition["cameraHeight"] = sol::property(&TES3::MobilePlayer::getCameraHeight, &TES3::MobilePlayer::setCameraHeight_lua);

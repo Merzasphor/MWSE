@@ -454,7 +454,7 @@ void TES3MACHINE::CheckForSkillUp(long skill_id)
 #if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
 #endif
-	TES3::WorldController::get()->getMobilePlayer()->levelSkill(skill_id);
+	TES3::WorldController::get()->getMobilePlayer()->progressSkillLevelIfRequirementsMet(skill_id);
 }
 
 TES3::MobilePlayer* TES3MACHINE::GetMacpRecord()

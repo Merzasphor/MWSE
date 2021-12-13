@@ -103,7 +103,7 @@ namespace mwse
 
 		// If our specialization changed, check for a skill level up.
 		if (oldSpecialization != specialization) {
-			TES3::WorldController::get()->getMobilePlayer()->levelSkill(skillIndex);
+			TES3::WorldController::get()->getMobilePlayer()->progressSkillLevelIfRequirementsMet(skillIndex);
 		}
 
 		mwse::Stack::getInstance().pushLong(true);

@@ -3,6 +3,8 @@
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
+#include "TES3UIManager.h"
+
 #include "LuaDeathEvent.h"
 #include "LuaSkillExerciseEvent.h"
 
@@ -14,7 +16,6 @@
 #include "TES3PlayerAnimationController.h"
 
 #define TES3_MobilePlayer_exerciseSkill 0x56A5D0
-#define TES3_MobilePlayer_levelSkill 0x56BBE0
 #define TES3_MobilePlayer_getGoldHeld 0x52B450
 #define TES3_MobilePlayer_onDeath 0x56A120
 #define TES3_MobilePlayer_getBounty 0x5688B0
@@ -45,8 +46,14 @@ namespace TES3 {
 		reinterpret_cast<void(__thiscall *)(MobilePlayer*, int, float)>(TES3_MobilePlayer_exerciseSkill)(this, skillId, progress);
 	}
 
-	void MobilePlayer::levelSkill(int skillId) {
-		reinterpret_cast<void(__thiscall *)(MobilePlayer*, int)>(TES3_MobilePlayer_levelSkill)(this, skillId);
+	const auto TES3_MobilePlayer_getSkillProgressRequirement = reinterpret_cast<float(__thiscall*)(const MobilePlayer*, int)>(0x56A520);
+	float MobilePlayer::getSkillProgressRequirement(int skillId) const {
+		return TES3_MobilePlayer_getSkillProgressRequirement(this, skillId);
+	}
+
+	const auto TES3_MobilePlayer_progressSkillLevelIfRequirementsMet = reinterpret_cast<float(__thiscall*)(const MobilePlayer*, int)>(0x56BBE0);
+	void MobilePlayer::progressSkillLevelIfRequirementsMet(int skillId) {
+		TES3_MobilePlayer_progressSkillLevelIfRequirementsMet(this, skillId);
 	}
 
 	void MobilePlayer::onDeath() {
@@ -110,6 +117,14 @@ namespace TES3 {
 	const auto TES3_MobilePlayer_setVanityState = reinterpret_cast<void(__thiscall*)(MobilePlayer*, int)>(0x567960);
 	void MobilePlayer::setVanityState(int state) {
 		TES3_MobilePlayer_setVanityState(this, state);
+	}
+
+	int MobilePlayer::progressSkillToNextLevel(int skillId) {
+		auto progressNeeded = getSkillProgressRequirement(skillId);
+		skillProgress[skillId] = progressNeeded;
+		progressSkillLevelIfRequirementsMet(skillId);
+		TES3::UI::updateStatsPane();
+		return int(skills[skillId].base);
 	}
 
 	void MobilePlayer::setMovementFlagSneaking(bool value) {
