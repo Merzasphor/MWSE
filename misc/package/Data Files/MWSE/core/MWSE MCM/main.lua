@@ -77,6 +77,16 @@ local config = {
 						table = mwseConfig,
 					},
 				},
+				{
+					class = "OnOffButton",
+					label = i18n("enableLogColors.label"),
+					description = i18n("enableLogColors.description"),
+					variable = {
+						id = "EnableLogColors",
+						class = "TableVariable",
+						table = mwseConfig,
+					},
+				}
 			},
 			sidebarComponents = {
 				{

@@ -3,7 +3,6 @@ local ansicolors = require("logging.colors")
 ---@field name string Name of mod, also counts as unique id of logger
 ---@field outputFile string Optional. If set, logs will be sent to a file of this name
 ---@field logLevel string Set the log level. Options are: TRACE, DEBUG, INFO, WARN and ERROR
----@field doColors boolean Default true. If true, log messages will be colored according to their level.
 
 ---@class MWSELogger
 ---@field name string Name of mod, also counts as unique id of logger
@@ -29,7 +28,6 @@ local Logger = {}
 local registeredLoggers = {}
 local defaults = {
     logLevel = "INFO",
-    doColors = true
 }
 
 local logLevels = {
@@ -140,7 +138,7 @@ function Logger:write(logLevel, color, message, ...)
         tostring(message):format(...)
     )
     --Add log colors if enabled
-    if self.doColors then
+    if mwse.getConfig("EnableLogColors") then
         output = addColor(output, color)
     end
     --Prints to custom file if defined

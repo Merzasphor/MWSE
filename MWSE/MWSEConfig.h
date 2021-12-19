@@ -9,6 +9,7 @@ namespace mwse {
 		static bool RunInBackground;
 		static bool PatchNiFlipController;
 		static bool LetterboxMovies;
+		static bool EnableLogColors;
 
 		static sol::table getDefaults();
 

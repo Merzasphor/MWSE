@@ -12,6 +12,7 @@ namespace mwse {
 	bool Configuration::RunInBackground = false;
 	bool Configuration::PatchNiFlipController = true;
 	bool Configuration::LetterboxMovies = false;
+	bool Configuration::EnableLogColors = false;
 
 	// Allow default values to be accessed later.
 	sol::table defaultConfig;
@@ -45,5 +46,6 @@ namespace mwse {
 		DECLARE_CONFIG(RunInBackground)
 		DECLARE_CONFIG(PatchNiFlipController)
 		DECLARE_CONFIG(LetterboxMovies)
+		DECLARE_CONFIG(EnableLogColors)
 	}
 }

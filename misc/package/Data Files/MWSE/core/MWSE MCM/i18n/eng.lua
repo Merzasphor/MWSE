@@ -14,4 +14,6 @@ return {
 	["keepAllNetImmerseObjectsAlive.description"] = "WARNING: Only used for debugging purposes. Enabling this without knowing what you're doing WILL lead to memory leaks.\n\nWhen enabled, NetImmerse objects will use the same lua object caching system that TES3 objects use, allowing them to be string-compared or used as table keys.",
 	["enableLegacyLuaMods.label"] = "Enable legacy lua mods?",
 	["enableLegacyLuaMods.description"] = "If enabled, early alpha lua mods will be supported\n\nLegacy lua mods can be found in:\nData Files\\MWSE\\lua folder.",
+	["enableLogColors.label"] = "Enable Log Colors",
+	["enableLogColors.description"] = "If enabled, log colors will be enabled in the console. However, this will make the mwse.log file more difficult to read in a text editor.",
 }
