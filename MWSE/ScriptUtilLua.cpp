@@ -17,6 +17,7 @@
 #include "TES3Spell.h"
 
 #include "BitUtil.h"
+#include "InstructionStore.h"
 
 namespace mwse {
 	namespace lua {
@@ -499,6 +500,9 @@ namespace mwse {
 			state["mge"]["getScreenWidth"] = []() {
 				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEGetWidth);
 				return Stack::getInstance().popLong();
+			};
+			state["mge"]["enabled"] = []() {
+				return InstructionStore::getInstance().isOpcode(OpCode::xGetGS);
 			};
 			state["mge"]["getVersion"] = []() {
 				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEGetVersion);

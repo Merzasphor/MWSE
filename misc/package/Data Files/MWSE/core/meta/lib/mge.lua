@@ -26,6 +26,10 @@ function mge.disableZoom() end
 --- @param acceleration number *Optional*. No description yet available.
 function mge.enableCameraShake(magnitude, acceleration) end
 
+--- Determines if the MGE XE interface is enabled.
+--- @return boolean enabled No description yet available.
+function mge.enabled() end
+
 --- Enables a HUD element. If a HUD ID is provided, this is a warpper for MGEEnableHUD, otherwise it is a wrapper for MGENIDEnableHUD.
 --- @param hud string *Optional*. No description yet available.
 function mge.enableHUD(hud) end

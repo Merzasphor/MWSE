@@ -245,6 +245,8 @@
 
 #include "NITextureEffectLua.h"
 
+#include "InstructionStore.h"
+
 #define TES3_HOOK_RUNSCRIPT_LUACHECK 0x5029A4
 #define TES3_HOOK_RUNSCRIPT_LUACHECK_SIZE 0x6
 #define TES3_HOOK_RUNSCRIPT_LUACHECK_RETURN (TES3_HOOK_RUNSCRIPT_LUACHECK + TES3_HOOK_RUNSCRIPT_LUACHECK_SIZE)
@@ -4696,6 +4698,11 @@ namespace mwse {
 			// The explode logic is deferred to execute at the same point as projectile simulation to preserve consistency.
 			auto projectileControllerResolveCollisions = &TES3::ProjectileController::resolveCollisions;
 			genCallEnforced(0x5638F8, 0x5753A0, *reinterpret_cast<DWORD*>(&projectileControllerResolveCollisions));
+
+			// Warn about MGE being disabled.
+			if (!InstructionStore::getInstance().isOpcode(OpCode::xGetGS)) {
+				log::getLog() << "WARNING: MGE XE is flagged as disabled. Some mods may have unintended behavior." << std::endl;
+			}
 
 			// Look for main.lua scripts in the usual directories.
 			executeMainModScripts("Data Files\\MWSE\\core");

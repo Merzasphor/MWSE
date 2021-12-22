@@ -77,6 +77,20 @@ mge.enableCameraShake(magnitude, acceleration)
 
 ***
 
+### `mge.enabled`
+
+Determines if the MGE XE interface is enabled.
+
+```lua
+local enabled = mge.enabled()
+```
+
+**Returns**:
+
+* `enabled` (boolean)
+
+***
+
 ### `mge.enableHUD`
 
 Enables a HUD element. If a HUD ID is provided, this is a warpper for MGEEnableHUD, otherwise it is a wrapper for MGENIDEnableHUD.

@@ -102,8 +102,10 @@ bool VIRTUALMACHINE::AddInstruction(OPCODE opcode, INSTRUCTION* instruction)
 #if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << " opcode: " << std::hex << opcode << std::endl;
 #endif
-	mwse::MgeInstruction* mge_instruction =
-		new mwse::MgeInstruction((OpCode::OpCode_t)opcode, instruction);
+
+	// The memory here is managed in the instruction interface.
+	auto mge_instruction = new mwse::MgeInstruction((OpCode::OpCode_t)opcode, instruction);
+
 	return true;
 }
 
