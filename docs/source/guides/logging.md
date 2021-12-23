@@ -43,7 +43,7 @@ log:setLogLevel("INFO")
 
 ## Creating an MCM to control Log Level
 
-In your MCM configl, create a dropdown with the following options:
+In your MCM config, create a dropdown with the following options:
 ```lua
 settings:createDropdown{
   label = "Logging Level",

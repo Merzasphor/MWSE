@@ -36,7 +36,7 @@ Constant to represent timers that run in real-time.
 
 ### `timer.simulate`
 
-Constant to represent timers that run when the game isn't paused. It matches the simulate event's timing. If the game is simulating, simulate events and simulate timers progress. Duration is measured in seconds.
+Constant to represent timers that run when the game isn't paused. It matches the `simulate` event's timing. If the game is simulating, simulate events and simulate timers progress. Duration is measured in seconds.
 
 ***
 
@@ -53,7 +53,7 @@ local timer = timer.delayOneFrame(callback, type)
 **Parameters**:
 
 * `callback` (function): The callback function that will execute when the timer expires.
-* `type` (number): *Default*: `timer.simulate`. Type of the timer. This value can be timer.simulate, timer.game or timer.real.
+* `type` (number): *Default*: ``timer.simulate``. Type of the timer. This value can be `timer.simulate`, `timer.game` or `timer.real`.
 
 **Returns**:
 
@@ -63,7 +63,7 @@ local timer = timer.delayOneFrame(callback, type)
 
 ### `timer.register`
 
-Registers a named timer with a callback to persist between game sessions. Bear in mind that nothing in MWSE is sandboxed, so all the registered timers are in the global namespace. Consider prefixing your timer with mod name or something else to avoid name colligions. For instance, "iceCreamMod:myTimer".
+Registers a named timer with a callback to persist between game sessions. Bear in mind that nothing in MWSE is sandboxed, so all the registered timers are in the global namespace. Consider prefixing your timer with mod name or something else to avoid name collisions. For instance, `iceCreamMod:myTimer`.
 
 ```lua
 timer.register({ name = ..., fn = ... })
@@ -108,11 +108,11 @@ local timer = timer.start({ type = ..., duration = ..., callback = ..., iteratio
 **Parameters**:
 
 * `params` (table)
-	* `type` (number): *Default*: `timer.simulate`. Type of the timer. This value can be timer.simulate, timer.game or timer.real.
+	* `type` (number): *Default*: ``timer.simulate``. Type of the timer. This value can be `timer.simulate`, `timer.game` or `timer.real`.
 	* `duration` (number): Duration of the timer. The method of time passing depends on the timer type.
 	* `callback` (function): The callback function that will execute when the timer expires.
 	* `iterations` (number): *Default*: `1`. The number of iterations to run. Use `-1` for infinite looping.
-	* `persist` (boolean): *Default*: `true`. Registering a timer with persist flag set to true will serialize the callback string in the save to persist between sessions. See timer.register().
+	* `persist` (boolean): *Default*: `true`. Registering a timer with persist flag set to `true` will serialize the callback string in the save to persist between sessions. See `timer.register()`.
 
 **Returns**:
 
