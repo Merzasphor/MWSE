@@ -524,7 +524,6 @@ namespace mwse {
 
 			// Bind our disable event manager.
 			mwse::lua::event::DisableableEventManager::bindToLua();
-			luaState["mwse"]["disableableEvents"] = &m_DisableableEventManager;
 		}
 
 		//

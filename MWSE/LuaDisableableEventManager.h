@@ -5,6 +5,9 @@ namespace mwse {
 		namespace event {
 			class DisableableEventManager {
 			public:
+				DisableableEventManager() = delete;
+				~DisableableEventManager() = delete;
+
 				static void bindToLua();
 			};
 		}

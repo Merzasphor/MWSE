@@ -28,7 +28,7 @@ local function eventSorter(a, b)
 	return eventPriorities[a] > eventPriorities[b]
 end
 
-local disableableEvents = mwse.disableableEvents
+local disableableEvents = mwseDisableableEventManager
 
 function this.register(eventType, callback, options)
 	-- Validate event type.
