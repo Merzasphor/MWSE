@@ -69,6 +69,7 @@
 #include "TES3SoundGenerator.h"
 #include "TES3Spell.h"
 #include "TES3UIElement.h"
+#include "TES3UIInventoryTile.h"
 #include "TES3UIManager.h"
 #include "TES3UIMenuController.h"
 #include "TES3Weather.h"
@@ -3666,6 +3667,86 @@ namespace mwse {
 			return itemData;
 		}
 
+		bool removeItemData(sol::table params) {
+			auto forceRemoval = getOptionalParam(params, "force", false);
+			auto ignoreOwnership = getOptionalParam(params, "ignoreOwnership", true);
+
+			// Get the reference of the item or item container.
+			auto reference = getOptionalParamReference(params, "from");
+			if (reference == nullptr) {
+				throw std::invalid_argument("Invalid 'from' parameter provided.");
+			}
+
+			// Check if it's setting a world reference or an item in a container.
+			auto referenceActor = static_cast<TES3::Actor*>(reference->baseObject);
+			if (!referenceActor->isActor()) {
+				// It's a reference. This is the easy part.
+				auto itemData = reference->getAttachedItemData();
+				if (!itemData) {
+					return false;
+				}
+
+				// Check to see if the item is fully repaired.
+				if (!forceRemoval && !TES3::ItemData::isFullyRepaired(itemData, static_cast<TES3::Item*>(reference->baseObject), ignoreOwnership)) {
+					return false;
+				}
+
+				// Detach the attachment and delete the associated data.
+				reference->removeAttachment(reference->getAttachment(TES3::AttachmentType::Variables));
+				tes3::_delete(itemData);
+				reference->setObjectModified(true);
+				return true;
+			}
+
+			// Get the item that relates to the item data.
+			auto item = getOptionalParamObject<TES3::Item>(params, "item");
+			if (item == nullptr) {
+				throw std::invalid_argument("Invalid 'item' parameter provided.");
+			}
+
+			// Get the item data to remove.
+			auto itemData = getOptionalParam<TES3::ItemData*>(params, "itemData", nullptr);
+			if (item == nullptr) {
+				throw std::invalid_argument("Invalid 'itemData' parameter provided.");
+			}
+
+			// We don't want to remove it if the item is equipped.
+			auto equipped = referenceActor->getEquippedItemExact(item, itemData);
+			if (equipped) {
+				return false;
+			}
+
+			// Do we need to remove it?
+			if (!forceRemoval && !TES3::ItemData::isFullyRepaired(itemData, item, ignoreOwnership)) {
+				return false;
+			}
+
+			// Check to see if the itemData actually exists for this item.
+			auto stack = referenceActor->inventory.findItemStack(item);
+			if (!stack || !stack->variables || !stack->variables->contains(itemData)) {
+				return false;
+			}
+
+			// Actually remove and delete the item data.
+			referenceActor->inventory.removeItemData(item, itemData);
+
+			// Update the GUI.
+			if (getOptionalParam<bool>(params, "updateGUI", true)) {
+				updateInventoryGUI_internal(reference);
+
+				// Do we need to update the magic menu?
+				auto enchantment = item->getEnchantment();
+				if (enchantment && (enchantment->castType == TES3::EnchantmentCastType::Once || enchantment->castType == TES3::EnchantmentCastType::OnUse)) {
+					updateMagicGUI_internal(reference, false, true);
+				}
+			}
+
+			reference->baseObject->setObjectModified(true);
+			reference->setObjectModified(true);
+
+			return true;
+		}
+
 		int getCurrentAIPackageId(sol::table params) {
 			TES3::Reference* refr = getOptionalParamReference(params, "reference");
 			TES3::MobileActor* mobileActor = getOptionalParamMobileActor(params, "reference");
@@ -5382,6 +5463,7 @@ namespace mwse {
 			tes3["releaseKey"] = releaseKey;
 			tes3["removeEffects"] = removeEffects;
 			tes3["removeItem"] = removeItem;
+			tes3["removeItemData"] = removeItemData;
 			tes3["removeSound"] = removeSound;
 			tes3["removeSpell"] = removeSpell;
 			tes3["runLegacyScript"] = runLegacyScript;
