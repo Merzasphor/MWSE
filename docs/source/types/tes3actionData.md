@@ -37,7 +37,7 @@ No description yet available.
 
 ### `attackDirection`
 
-**Deprecated. Use tes3actionData.physicalAttackType instead.** When attacking, the direction swung with the weapon. This shows if the actor was thrusting, swinging, or chopping.
+**Deprecated. Use `tes3actionData.physicalAttackType` instead.** When attacking, the direction swung with the weapon. This shows if the actor was thrusting, swinging, or chopping.
 
 **Returns**:
 
@@ -97,7 +97,7 @@ The currently nocked projectile the associated actor is using. It is available w
 
 ### `physicalAttackType`
 
-A number from the tes3.physicalAttackType enumeration identifying the physical attack type. Can be tes3.physicalAttackType.slash, .chop, .thrust, .projectile, .creature1, .creature2, or .creature3.
+A number from the `tes3.physicalAttackType` enumeration identifying the physical attack type. Can be `tes3.physicalAttackType.slash`, `.chop`, `.thrust`, `.projectile`, `.creature1`, `.creature2`, or `.creature3.`
 
 **Returns**:
 

@@ -9,13 +9,13 @@
 ---     Bug note: Elements may not respond to widthProportional/heightProportional sizing after either of these properties are set. If you need to use both you should consider testing if it works first.
 --- @field absolutePosAlignY number See absolutePosAlignX.
 --- @field alpha number Element alpha colour, using range [0.0, 1.0]. Used to composite elements. If you wish to hide an element completely, use `disable` instead.
---- @field autoHeight boolean When `true`, automatically expands element dimensions to fit child elements. Dimensions are restricted by minWidth, minHeight, maxWidth and maxHeight properties.
---- @field autoWidth boolean When `true`, automatically expands element dimensions to fit child elements. Dimensions are restricted by minWidth, minHeight, maxWidth and maxHeight properties.
+--- @field autoHeight boolean When `true`, automatically expands element dimensions to fit child elements. Dimensions are restricted by `minWidth`, `minHeight`, `maxWidth` and `maxHeight` properties.
+--- @field autoWidth boolean When `true`, automatically expands element dimensions to fit child elements. Dimensions are restricted by `minWidth`, `minHeight`, `maxWidth` and `maxHeight` properties.
 --- @field borderAllSides number Integer number. Border size in pixels. Border is the extra empty space around an element. Individual border sizes default to using the borderAllSides setting.
---- @field borderBottom number Integer number. Bottom border size in pixels. When this is set to -1, the borderAllSides setting is used for this side instead.
---- @field borderLeft number Integer number. Left border size in pixels. When this is set to -1, the borderAllSides setting is used for this side instead.
---- @field borderRight number Integer number. Left border size in pixels. When this is set to -1, the borderAllSides setting is used for this side instead.
---- @field borderTop number Integer number. Top border size in pixels. When this is set to -1, the borderAllSides setting is used for this side instead.
+--- @field borderBottom number Integer number. Bottom border size in pixels. When this is set to `-1`, the borderAllSides setting is used for this side instead.
+--- @field borderLeft number Integer number. Left border size in pixels. When this is set to `-1`, the borderAllSides setting is used for this side instead.
+--- @field borderRight number Integer number. Left border size in pixels. When this is set to `-1`, the borderAllSides setting is used for this side instead.
+--- @field borderTop number Integer number. Top border size in pixels. When this is set to `-1`, the borderAllSides setting is used for this side instead.
 --- @field childAlignX number Sets alignment of child elements inside its parent, though it only works in specific conditions. 0.0 = left/top edge touches left/top edge of parent, 0.5 = centred, 1.0 = right/bottom edge touches right/bottom edge of parent. For negative values, there is a special case behaviour: all children but the last will be left-aligned/top-aligned, the last child will be right-aligned/bottom-aligned.
 ---     
 ---     Child alignment only works if the element has proportional sizing (using widthProportional/heightProportional) and all children use non-proportional sizing (widthProportional and heightProportional are nil).
@@ -26,7 +26,7 @@
 --- @field color table Element RGB colour, an array of 3 floats with value range [0.0, 1.0]. For menus and rects, it sets the background colour. For text, it sets the text colour. For images, it multiplies the image by the colour.
 --- @field consumeMouseEvents boolean When `true`, mouse events over this element are sent to event handlers, or discarded if there is no handler. When `false`, mouse events go upwards to the first ancestor that can consume mouse events. Useful to set on widget sub-elements. `true` by default.
 --- @field disabled boolean Disables user actions on this element. Widgets may stop accepting mouse and keyboard input while disabled.
---- @field flowDirection string Can have values `"left_to_right"` or `"top_to_bottom"`. Indicates which direction child elements are laid out.
+--- @field flowDirection string Can have values `"left_to_right"` or `"top_to_bottom"`. These values are available as [`tes3.flowDirection`](https://mwse.github.io/MWSE/references/flow-directions/) enumeration. Indicates which direction child elements are laid out.
 --- @field font number Index of font to use for text.
 ---         0 - Magic Cards (default)
 ---         1 - Century Sans
@@ -40,17 +40,17 @@
 --- @field id number *Read-only*. The element's ID.  The element can be later accessed by `ancestor:findChild(id)`. Note that multiple elements may have the same ID, such as subparts of a widget, or list items. Therefore, you may think of ids as an element class identifier.
 --- @field imageScaleX number Image scaling multipliers. Only applies to image elements.
 --- @field imageScaleY number Image scaling multipliers. Only applies to image elements.
---- @field justifyText string Can have values `"left"`, `"center"`, or `"right"`. Controls text justification. To work correctly for center/right justification,  `wrapText` must be `true`.
+--- @field justifyText string Can have values `"left"`, `"center"`, or `"right"`. Controls text justification. These values are available as [`tes3.justifyText`](https://mwse.github.io/MWSE/references/justify-text/) enumeration. To work correctly for center/right justification,  `wrapText` must be `true`.
 --- @field maxHeight number Maximum dimensions for auto-size layout and resizable frames. Integer number.
 --- @field maxWidth number Maximum dimensions for auto-size layout and resizable frames. Integer number.
 --- @field minHeight number Minimum dimensions for auto-size layout and resizable frames. Integer number.
 --- @field minWidth number Minimum dimensions for auto-size layout and resizable frames. Integer number.
 --- @field name string *Read-only*. The element's name, taken from the name registered for the ID.
---- @field paddingAllSides number Integer number. Padding size in pixels. Padding is the blank space between the edge of an element and its contents. Individual padding sizes default to -1, making it use the paddingAllSides setting.
---- @field paddingBottom number Integer number. Bottom padding size in pixels. When this is set to -1, the paddingAllSides setting is used for this side instead.
---- @field paddingLeft number Integer number. Left padding size in pixels. When this is set to -1, the paddingAllSides setting is used for this side instead.
---- @field paddingRight number Integer number. Right padding size in pixels. When this is set to -1, the paddingAllSides setting is used for this side instead.
---- @field paddingTop number Integer number. Top padding size in pixels. When this is set to -1, the paddingAllSides setting is used for this side instead.
+--- @field paddingAllSides number Integer number. Padding size in pixels. Padding is the blank space between the edge of an element and its contents. Individual padding sizes default to `-1`, making it use the paddingAllSides setting.
+--- @field paddingBottom number Integer number. Bottom padding size in pixels. When this is set to `-1`, the paddingAllSides setting is used for this side instead.
+--- @field paddingLeft number Integer number. Left padding size in pixels. When this is set to `-1`, the paddingAllSides setting is used for this side instead.
+--- @field paddingRight number Integer number. Right padding size in pixels. When this is set to `-1`, the paddingAllSides setting is used for this side instead.
+--- @field paddingTop number Integer number. Top padding size in pixels. When this is set to `-1`, the paddingAllSides setting is used for this side instead.
 --- @field parent tes3uiElement *Read-only*. A reference to the parent element.
 --- @field positionX number Integer number. Element X position relative to its parent's top-left content area. For top-level menus there is a difference: (0, 0) is the centre of the screen.
 --- @field positionY number Integer number. Element Y position relative to its parent's top-left content area. For top-level menus there is a difference: (0, 0) is the centre of the screen.
@@ -74,7 +74,7 @@ tes3uiElement = {}
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createBlock(id) end
 
---- Creates a clickable button. Register the "mouseClick" event to capture a button press.
+--- Creates a clickable button. Register the `mouseClick` event to capture a button press.
 ---     
 ---     Custom widget properties:
 ---         | `number`_ `element.widget.state`: Interaction state. 1 = normal, 2 = disabled, 4 = active. Controls which colour set to use for text.

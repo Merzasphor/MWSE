@@ -1,6 +1,6 @@
 return {
 	type = "method",
-	description = [[Removes an item from the inventory directly. This should not be used, in favor of the tes3.removeItem function.]],
+	description = [[Removes an item from the inventory directly. This should not be used, in favor of the [`tes3.removeItem()`](https://mwse.github.io/MWSE/apis/tes3/#tes3removeitem) function.]],
 	arguments = {{
 		name = "params",
 		type = "table",

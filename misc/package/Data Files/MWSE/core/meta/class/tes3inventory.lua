@@ -9,7 +9,7 @@
 --- Direct access to the container that holds the inventory's items.
 tes3inventory = {}
 
---- Adds an item into the inventory directly. This should not be used, in favor of the tes3.addItem function.
+--- Adds an item into the inventory directly. This should not be used, in favor of the [`tes3.addItem()`](https://mwse.github.io/MWSE/apis/tes3/#tes3additem) function.
 --- @param params tes3inventory.addItem.params This table accepts the following values:
 --- 
 --- `mobile`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string — *Optional*. The mobile actor whose stats will be updated.
@@ -38,7 +38,7 @@ function tes3inventory:calculateWeight() end
 --- @return boolean result No description yet available.
 function tes3inventory:contains(item, itemData) end
 
---- Checks to see if the inventory contains an item. This should not be used, instead use the tes3.dropItem function.
+--- Checks to see if the inventory contains an item. This should not be used, instead use the [`tes3.dropItem()`](https://mwse.github.io/MWSE/apis/tes3/#tes3dropitem) function.
 --- @param mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string The mobile actor whose stats will be updated.
 --- @param item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string The item to drop.
 --- @param itemData tes3itemData If provided, it will check for the specific data to drop it.
@@ -53,7 +53,7 @@ function tes3inventory:dropItem(mobile, item, itemData, count, position, orienta
 --- @return tes3itemStack result No description yet available.
 function tes3inventory:findItemStack(item) end
 
---- Removes an item from the inventory directly. This should not be used, in favor of the tes3.removeItem function.
+--- Removes an item from the inventory directly. This should not be used, in favor of the [`tes3.removeItem()`](https://mwse.github.io/MWSE/apis/tes3/#tes3removeitem) function.
 --- @param params tes3inventory.removeItem.params This table accepts the following values:
 --- 
 --- `mobile`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string — *Optional*. The mobile actor whose stats will be updated.

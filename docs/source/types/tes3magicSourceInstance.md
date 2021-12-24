@@ -217,7 +217,7 @@ The soruceless flag of the object.
 
 ### `state`
 
-Shows if the state is pre-cast, cast, beginning, working, ending, retired, etc.
+Shows if the state is pre-cast, cast, beginning, working, ending, retired, etc. Maps to [`tes3.spellState`](https://mwse.github.io/MWSE/references/spell-states/) constants.
 
 **Returns**:
 
@@ -281,7 +281,7 @@ local result = tes3magicSourceInstance:getEffectInstance(index, target)
 
 **Parameters**:
 
-* `index` (number): The index in the effect list to fetch, between 0 and 7.
+* `index` (number): The index in the effect list to fetch, between `0` and `7`.
 * `target` ([tes3reference](../../types/tes3reference)): The target actor for the effect.
 
 **Returns**:
@@ -300,7 +300,7 @@ local result = tes3magicSourceInstance:getMagnitudeForIndex(index)
 
 **Parameters**:
 
-* `index` (number): The index in the effect list to fetch, between 0 and 7.
+* `index` (number): The index in the effect list to fetch, between `0` and `7`.
 
 **Returns**:
 
@@ -310,7 +310,7 @@ local result = tes3magicSourceInstance:getMagnitudeForIndex(index)
 
 ### `playVisualEffect`
 
-This function plays an effect from tes3magicSourceInstance of a given index.
+This function plays an animation for an effect from the `tes3magicSourceInstance` object.
 
 ```lua
 tes3magicSourceInstance:playVisualEffect()

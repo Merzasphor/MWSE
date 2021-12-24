@@ -36,7 +36,7 @@ The amount of iterations left for the timer.
 
 ### `state`
 
-The state of the timer, matching timer.active, timer.paused, or timer.expired.
+The state of the timer, matching `timer.active`, `timer.paused`, or `timer.expired`.
 
 **Returns**:
 

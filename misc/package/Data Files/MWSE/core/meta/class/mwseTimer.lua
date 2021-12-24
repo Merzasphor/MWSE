@@ -5,7 +5,7 @@
 --- @field callback function The callback that will be invoked when the timer elapses.
 --- @field duration number The amount of time left on the timer.
 --- @field iterations number The amount of iterations left for the timer.
---- @field state number The state of the timer, matching timer.active, timer.paused, or timer.expired.
+--- @field state number The state of the timer, matching `timer.active`, `timer.paused`, or `timer.expired`.
 --- @field timeLeft number The amount of time left before this timer will complete.
 --- @field timing number When this timer ends, or the time remaining if the timer is paused.
 mwseTimer = {}

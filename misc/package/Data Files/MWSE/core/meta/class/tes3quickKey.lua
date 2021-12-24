@@ -5,7 +5,7 @@
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon *Read-only*. The raw item bound to the quick key. To change its value, use either the `setItem` or `setMagic` methods.
 --- @field itemData tes3itemData *Read-only*. The raw item data bound to the quick key. To change its value, use either the `setItem` or `setMagic` methods.
 --- @field spell tes3spell *Read-only*. The raw spell bound to the quick key. To change its value, use the `setMagic` method.
---- @field type number *Read-only*. The type of the quick key, with the numeric value matching `tes3.quickKeyType` constants.
+--- @field type number *Read-only*. The type of the quick key, with the numeric value matching [`tes3.quickKeyType`](https://mwse.github.io/MWSE/references/quick-key-types/) constants.
 tes3quickKey = {}
 
 --- Unbinds the quick key, removing any data in it.

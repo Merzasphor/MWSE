@@ -6,7 +6,7 @@ A game object which holds information about an active body part, it's associated
 
 ### `bodyPart`
 
-Access to the body part.
+Access to the body part object.
 
 **Returns**:
 

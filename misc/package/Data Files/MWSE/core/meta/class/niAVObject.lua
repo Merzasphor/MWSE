@@ -8,7 +8,7 @@
 --- @field fogProperty niFogProperty|nil Convenient access to this object's fog property. Setting this value to be nil will erase the property, while setting it to a valid fog property will set (or replace) it.
 --- @field materialProperty niMaterialProperty|nil Convenient access to this object's material property. Setting this value to be nil will erase the property, while setting it to a valid material property will set (or replace) it.
 --- @field parent niBillboardNode|niCollisionSwitch|niNode|niSwitchNode The object's parent. It may not have one if it is not attached to the scene.
---- @field properties niPropertyLinkedList The list of properties attached to this niAVObject.
+--- @field properties niPropertyLinkedList The list of properties attached to this `niAVObject`.
 --- @field rotation tes3matrix33 The object's local rotation matrix.
 --- @field scale number The object's local uniform scaling factor.
 --- @field stencilProperty niStencilProperty|nil Convenient access to this object's stencil property. Setting this value to be nil will erase the property, while setting it to a valid stencil property will set (or replace) it.

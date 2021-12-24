@@ -1,6 +1,6 @@
 --- @meta
 
---- A child for a given dialogue. Whereas a dialogue may be a conversation topic, a tes3dialogueInfo would be an individual response.
+--- A child for a given dialogue. Whereas a dialogue may be a conversation topic, a `tes3dialogueInfo` would be an individual response.
 --- @class tes3dialogueInfo : tes3baseObject
 --- @field actor tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance *Read-only*. The speaker's actor that the info is filtered for.
 --- @field cell tes3cell *Read-only*. The speaker's current cell that the info is filtered for.
@@ -21,7 +21,7 @@
 --- @field type number *Read-only*. The type of the info.
 tes3dialogueInfo = {}
 
---- This method filters the associated dialogue info for given arguments and returns true if the dialogue info filtering passes. This method rises infoFilter event.
+--- This method filters the associated dialogue info for given arguments and returns true if the dialogue info filtering passes. This method rises [`infoFilter`](https://mwse.github.io/MWSE/events/infoFilter/) event.
 --- @param actor tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3enchantment|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3reference|tes3repairTool|tes3spell|tes3static|tes3weapon No description yet available.
 --- @param reference tes3reference No description yet available.
 --- @param source number No description yet available.

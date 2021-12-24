@@ -6,7 +6,7 @@ A structure that defines information for an effect and its associated variables,
 
 ### `attribute`
 
-The attribute associated with this effect, or -1 if no attribute is used.
+The attribute associated with this effect, or `-1` if no attribute is used.
 
 **Returns**:
 
@@ -36,7 +36,7 @@ How long the effect should last.
 
 ### `id`
 
-The base tes3magicEffect ID that the effect uses.
+The base `tes3magicEffect` ID that the effect uses.
 
 **Returns**:
 
@@ -66,7 +66,7 @@ The minimum magnitude of the effect.
 
 ### `object`
 
-*Read-only*. Fetches the tes3magicEffect for the given id used.
+*Read-only*. Fetches the `tes3magicEffect` for the given id used.
 
 **Returns**:
 
@@ -86,7 +86,7 @@ The radius of the effect.
 
 ### `rangeType`
 
-Determines if the effect is self, touch, or target ranged.
+Determines if the effect is self, touch, or target ranged. Maps to [`tes3.effectRange`](https://mwse.github.io/MWSE/references/effect-ranges/) constants.
 
 **Returns**:
 
@@ -96,7 +96,7 @@ Determines if the effect is self, touch, or target ranged.
 
 ### `skill`
 
-The skill associated with this effect, or -1 if no skill is used.
+The skill associated with this effect, or `-1` if no skill is used.
 
 **Returns**:
 

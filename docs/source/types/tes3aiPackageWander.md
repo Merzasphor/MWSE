@@ -17,7 +17,7 @@ This type inherits the following: [tes3aiPackage](../../types/tes3aiPackage)
 
 ### `idles`
 
-*Read-only*. A table with idle nodes (tes3aiPackageWanderIdleNode objects) for this AI Wander package.
+*Read-only*. A table with idle nodes ([`tes3aiPackageWanderIdleNode`](https://mwse.github.io/MWSE/types/tes3aiPackageWanderIdleNode/) objects) for this AI Wander package.
 
 **Returns**:
 

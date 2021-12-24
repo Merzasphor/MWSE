@@ -1,6 +1,6 @@
 return {
 	type = "value",
-	description = [[The region sound's sound.]],
+	description = [[The access to object's associated sound.]],
 	readOnly = false,
-	valuetype = "tes3regionSound",
+	valuetype = "tes3sound",
 }

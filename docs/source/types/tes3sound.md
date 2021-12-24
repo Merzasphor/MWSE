@@ -57,7 +57,7 @@ The blocked state of the object.
 
 ### `maxDistance`
 
-The maximum distance the sound will be played at. Defaults to 0. If both this and minDistance are 0, the values are ignored.
+The maximum distance the sound will be played at. Defaults to `0`. If both this and minDistance are `0`, the values are ignored.
 
 **Returns**:
 
@@ -67,7 +67,7 @@ The maximum distance the sound will be played at. Defaults to 0. If both this an
 
 ### `minDistance`
 
-The minimum distance the sound will be played at. Defaults to 0.
+The minimum distance the sound will be played at. Defaults to `0`.
 
 **Returns**:
 
@@ -173,7 +173,7 @@ local result = tes3sound:__tojson()
 
 ### `isLooping`
 
-Returns true if the sound is actively looping.
+Returns `true` if the sound is actively looping.
 
 ```lua
 local result = tes3sound:isLooping()
@@ -187,7 +187,7 @@ local result = tes3sound:isLooping()
 
 ### `isPlaying`
 
-Returns true if the sound is actively playing.
+Returns `true` if the sound is actively playing.
 
 ```lua
 local result = tes3sound:isPlaying()
@@ -201,7 +201,7 @@ local result = tes3sound:isPlaying()
 
 ### `play`
 
-This metod plays the sound.
+This method plays the sound.
 
 ```lua
 tes3sound:play(playbackFlags, volume, pitch, isNot3D)
@@ -209,7 +209,7 @@ tes3sound:play(playbackFlags, volume, pitch, isNot3D)
 
 **Parameters**:
 
-* `playbackFlags` (number): *Optional*. These match low-level DirectSound flags. Most mods don't need to modify this, though a value of 1 to loop may be useful. The rest of the flags can be read in the IDirectSoundBuffer8::Play documentation: https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ee418074(v=vs.85).
+* `playbackFlags` (number): *Optional*. These match low-level DirectSound flags. Most mods don't need to modify this, though a value of `1` to loop may be useful. The rest of the flags can be read in the IDirectSoundBuffer8::Play documentation: https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ee418074(v=vs.85).
 * `volume` (number): *Optional*.
 * `pitch` (number): *Optional*.
 * `isNot3D` (boolean): *Optional*.

@@ -423,7 +423,7 @@ local string = tes3baseObject:__tojson()
 
 ### `getTimeLeft`
 
-Gets the time remaining for a light, given a tes3itemData, tes3reference, or tes3equipmentStack.
+Gets the time remaining for a light, given a `tes3itemData`, `tes3reference`, or `tes3equipmentStack`.
 
 ```lua
 local result = tes3light:getTimeLeft(data)

@@ -7,7 +7,7 @@ This type inherits the following: [tes3baseObject](../../types/tes3baseObject)
 
 ### `abilities`
 
-*Read-only*. A list of abilities that NPCs of that race have access to. It is a tes3spellList, which is a list wrapper with helper functions. The actual list is accessed with .iterator. e.g. for _, ability in pairs(race.abilities.iterator) do print(ability.name) end
+*Read-only*. A list of abilities that NPCs of that race have access to. It is a `tes3spellList`, which is a list wrapper with helper functions. The actual list is accessed with `.iterator`. e.g. `for _, ability in pairs(race.abilities.iterator) do print(ability.name) end`
 
 **Returns**:
 
@@ -17,7 +17,7 @@ This type inherits the following: [tes3baseObject](../../types/tes3baseObject)
 
 ### `baseAttributes`
 
-*Read-only*. Array-style table access to base 8 attributes for the race. Each element in the array is a tes3raceBaseAttribute.
+*Read-only*. Array-style table access to base 8 attributes for the race. Each element in the array is a [`tes3raceBaseAttribute`](https://mwse.github.io/MWSE/types/tes3raceBaseAttribute/).
 
 **Returns**:
 
@@ -187,7 +187,7 @@ The persistent flag of the object.
 
 ### `skillBonuses`
 
-*Read-only*. Array-style table access for 7 skill bonuses for the race. Each element in the array is a tes3raceSkillBonus.
+*Read-only*. Array-style table access for 7 skill bonuses for the race. Each element in the array is a [`tes3raceSkillBonus`](https://mwse.github.io/MWSE/types/tes3raceSkillBonus/).
 
 **Returns**:
 

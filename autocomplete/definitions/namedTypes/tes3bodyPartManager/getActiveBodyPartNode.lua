@@ -5,8 +5,8 @@ return {
 		name = "params",
 		type = "table",
 		tableParams = {
-			{ name = "layer", type = "number", description = "A value in tes3.activeBodyPartLayer.* constants." },
-			{ name = "index", type = "number", description = "A value in tes3.activeBodyPart.* constants." },
+			{ name = "layer", type = "number", description = "A value from [`tes3.activeBodyPartLayer`](https://mwse.github.io/MWSE/references/active-body-part-layers/) namespace." },
+			{ name = "index", type = "number", description = "A value from [`tes3.activeBodyPart`](https://mwse.github.io/MWSE/references/active-body-parts/) namespace." },
 		},
 	}},
 	valuetype = "niNode",

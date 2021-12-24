@@ -317,7 +317,7 @@ The previous object in parent collection's list.
 
 ### `reach`
 
-The weapon's relative reach. A value of 1.0 is the standard reach. It is multiplied by the GMST fCombatDistance to find the attack reach in world units.
+The weapon's relative reach. A value of `1.0` is the standard reach. It is multiplied by the GMST `fCombatDistance` to find the attack reach in world units.
 
 **Returns**:
 
@@ -437,7 +437,7 @@ The soruceless flag of the object.
 
 ### `speed`
 
-The relative attack speed of the weapon. Controls attack timing and animation speed. Standard speed is 1.0.
+The relative attack speed of the weapon. Controls attack timing and animation speed. Standard speed is `1.0`.
 
 **Returns**:
 
@@ -487,7 +487,7 @@ Thrust damage inflicted at minimum weapon swing.
 
 ### `type`
 
-*Read-only*. A number representing the weapon type. Matches values from the tes3.weaponType table.
+*Read-only*. A number representing the weapon type. Matches values from the [`tes3.weaponType`](https://mwse.github.io/MWSE/references/weapon-types/) table.
 
 **Returns**:
 

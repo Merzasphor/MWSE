@@ -26,17 +26,17 @@ function tes3actor:hasItemEquipped(params) end
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string The item to perform a check for.
 --- @field itemData tes3itemData *Optional*. No description yet available.
 
---- Checks if the actor will offer a service in dialogue. This an offer and may still be refused by dialogue checks. To also get the result of dialogue checks, use tes3.checkMerchantOffersService.
---- @param service number Use one of the tes3.merchantService.* constants.
+--- Checks if the actor will offer a service in dialogue. This an offer and may still be refused by dialogue checks. To also get the result of dialogue checks, use [`tes3.checkMerchantOffersService()`](https://mwse.github.io/MWSE/apis/tes3/#tes3checkmerchantoffersservice).
+--- @param service number Use one of the [`tes3.merchantService.*`](https://mwse.github.io/MWSE/references/merchant-service-types/) constants.
 --- @return boolean result No description yet available.
 function tes3actor:offersService(service) end
 
---- A callback function invoked when an inventory is closed. Typically not used outside of specific purposes. You may find tes3.reference's onCloseInventory() to be more convenient to use.
+--- A callback function invoked when an inventory is closed. Typically not used outside of specific purposes. You may find `tes3.reference`'s `onCloseInventory()` to be more convenient to use.
 --- @param reference tes3reference No description yet available.
 function tes3actor:onInventoryClose(reference) end
 
---- Checks if the actor will buy and sell items of a given object type. e.g. actor:tradesItemType(tes3.objectType.repairItem)
---- @param objectType tes3objectType tes3.objectType.* constants can be passed here.
+--- Checks if the actor will buy and sell items of a given object type. e.g. `actor:tradesItemType(tes3.objectType.repairItem)`
+--- @param objectType tes3objectType [`tes3.objectType.*`](https://mwse.github.io/MWSE/references/object-types/) constants can be passed here.
 --- @return boolean result No description yet available.
 function tes3actor:tradesItemType(objectType) end
 

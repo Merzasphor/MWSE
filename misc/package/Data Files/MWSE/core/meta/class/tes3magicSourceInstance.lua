@@ -13,22 +13,22 @@
 --- @field source tes3alchemy|tes3enchantment|tes3spell *Read-only*. No description yet available.
 --- @field sourceEffects table *Read-only*. An array-style table holding spell effects this magic source has.
 --- @field sourceType number *Read-only*. The type of this magic source. Maps to [`tes3.magicSourceType`](https://mwse.github.io/MWSE/references/magic-source-types/) constants.
---- @field state number Shows if the state is pre-cast, cast, beginning, working, ending, retired, etc.
+--- @field state number Shows if the state is pre-cast, cast, beginning, working, ending, retired, etc. Maps to [`tes3.spellState`](https://mwse.github.io/MWSE/references/spell-states/) constants.
 --- @field target tes3reference *Read-only*. No description yet available.
 --- @field timestampCastBegin number No description yet available.
 tes3magicSourceInstance = {}
 
 --- Gets the magic effect instance for a given effect index and target reference. Effect instances may not all be active on a target, due to reflect, absorption, dispels, different durations and other factors.
---- @param index number The index in the effect list to fetch, between 0 and 7.
+--- @param index number The index in the effect list to fetch, between `0` and `7`.
 --- @param target tes3reference The target actor for the effect.
 --- @return tes3magicEffectInstance result No description yet available.
 function tes3magicSourceInstance:getEffectInstance(index, target) end
 
 --- Gets the magnitude from the casting source for a given effect index.
---- @param index number The index in the effect list to fetch, between 0 and 7.
+--- @param index number The index in the effect list to fetch, between `0` and `7`.
 --- @return number result No description yet available.
 function tes3magicSourceInstance:getMagnitudeForIndex(index) end
 
---- This function plays an effect from tes3magicSourceInstance of a given index.
+--- This function plays an animation for an effect from the `tes3magicSourceInstance` object.
 function tes3magicSourceInstance:playVisualEffect() end
 

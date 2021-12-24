@@ -197,7 +197,7 @@ The modification state of the object since the last save.
 
 ### `name`
 
-The name and id of the cell. See also displayName and editorName.
+The name and id of the cell. See also `displayName` and `editorName`.
 
 **Returns**:
 
@@ -380,7 +380,7 @@ tes3cell:iterateReferences(filter)
 
 **Parameters**:
 
-* `filter` (number): *Optional*. The TES3 object type to filter results by.
+* `filter` (number): *Optional*. The TES3 object type to filter results by. Those are stored in [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) namespace.
 
 ***
 

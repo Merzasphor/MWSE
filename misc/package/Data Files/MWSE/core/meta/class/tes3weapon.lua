@@ -20,16 +20,16 @@
 --- @field maxCondition number The object's maximum condition.
 --- @field mesh string The path to the object's mesh.
 --- @field name string The player-facing name for the object.
---- @field reach number The weapon's relative reach. A value of 1.0 is the standard reach. It is multiplied by the GMST fCombatDistance to find the attack reach in world units.
+--- @field reach number The weapon's relative reach. A value of `1.0` is the standard reach. It is multiplied by the GMST `fCombatDistance` to find the attack reach in world units.
 --- @field script tes3script *Read-only*. The script that runs on the object.
 --- @field skill tes3skill Gets the skill data for the attack skill used by the weapon.
 --- @field skillId number Gets the skill ID for the attack skill used by the weapon.
 --- @field slashMax number Slash damage inflicted at maximum weapon swing.
 --- @field slashMin number Slash damage inflicted at minimum weapon swing.
---- @field speed number The relative attack speed of the weapon. Controls attack timing and animation speed. Standard speed is 1.0.
+--- @field speed number The relative attack speed of the weapon. Controls attack timing and animation speed. Standard speed is `1.0`.
 --- @field thrustMax number Thrust damage inflicted at maximum weapon swing.
 --- @field thrustMin number Thrust damage inflicted at minimum weapon swing.
---- @field type number *Read-only*. A number representing the weapon type. Matches values from the tes3.weaponType table.
+--- @field type number *Read-only*. A number representing the weapon type. Matches values from the [`tes3.weaponType`](https://mwse.github.io/MWSE/references/weapon-types/) table.
 --- @field typeName string *Read-only*. The player-facing name for the weapon type.
 --- @field value number The value of the object.
 --- @field weight number The weight of the object.

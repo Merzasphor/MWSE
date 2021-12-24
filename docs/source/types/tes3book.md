@@ -237,7 +237,7 @@ The script that runs on the object.
 
 ### `skill`
 
-The skill learned from the book, or -1 if the book doesn't have one, or has already been read.
+The skill learned from the book, or `-1` if the book doesn't have one, or has already been read.
 
 **Returns**:
 
@@ -297,7 +297,7 @@ If true, references of this object can store temporary or persistent lua data.
 
 ### `type`
 
-The book type, where 0 is book and 1 is scroll.
+The book type. Maps to values in [`tes3.bookType`](https://mwse.github.io/MWSE/references/book-types/) namespace.
 
 **Returns**:
 

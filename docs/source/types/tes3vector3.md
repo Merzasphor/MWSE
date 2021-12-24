@@ -16,7 +16,7 @@ The angle between the vector and the water plane.
 
 ### `b`
 
-The third value in the vector. An alias for z.
+The third value in the vector. An alias for `z`.
 
 **Returns**:
 
@@ -26,7 +26,7 @@ The third value in the vector. An alias for z.
 
 ### `g`
 
-The second value in the vector. An alias for y.
+The second value in the vector. An alias for `y`.
 
 **Returns**:
 
@@ -36,7 +36,7 @@ The second value in the vector. An alias for y.
 
 ### `r`
 
-The first value in the vector. An alias for x.
+The first value in the vector. An alias for `x`.
 
 **Returns**:
 
@@ -164,7 +164,7 @@ local result = tes3vector3:heightDifference(vec)
 
 ### `interpolate`
 
-Calculates the interpolated position against the target vector using the distance parameter.
+Calculates the interpolated position against the target vector using the `distance` parameter.
 
 ```lua
 local result = tes3vector3:interpolate(targetPoint, distance)
@@ -206,7 +206,7 @@ local lerpedVector = tes3vector3:lerp(toVector, transition)
 **Parameters**:
 
 * `toVector` ([tes3vector3](../../types/tes3vector3)): The vector to interpolate towards.
-* `transition` (number): The interpolation value. Must be between 0.0 (closer to this vector) and 1.0 (closer to the other vector).
+* `transition` (number): The interpolation value. Must be between `0.0` (closer to this vector) and `1.0` (closer to the other vector).
 
 **Returns**:
 
@@ -226,7 +226,7 @@ tes3vector3:negate()
 
 ### `normalize`
 
-Normalize the vector in-place, or set its components to zero if normalization is not possible. Returns true if the vector was successfully normalized.
+Normalize the vector in-place, or set its components to zero if normalization is not possible. Returns `true` if the vector was successfully normalized.
 
 ```lua
 local result = tes3vector3:normalize()
@@ -272,7 +272,7 @@ local result = tes3vector3:outerProduct(vec)
 
 ### `toColor`
 
-Converts the vector to niColor.
+Converts the vector to `niColor` object.
 
 ```lua
 local result = tes3vector3:toColor()

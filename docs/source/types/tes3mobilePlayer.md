@@ -27,7 +27,7 @@ This type inherits the following: [tes3mobileNPC](../../types/tes3mobileNPC), [t
 
 ### `actionData`
 
-*Read-only*. Current action data. Pre-combat action data is stored in the actionBeforeCombat property.
+*Read-only*. Current action data. Pre-combat action data is stored in the `actionBeforeCombat` property.
 
 **Returns**:
 
@@ -47,7 +47,7 @@ Friendly access to the actor's flag that controls if AI is active.
 
 ### `activeMagicEffectList`
 
-*Read-only*. The active magic effects on the actor, from which all others can be accessed. A table with tes3activeMagicEffect items.
+*Read-only*. The active magic effects on the actor, from which all others can be accessed. A table with [`tes3activeMagicEffect`](https://mwse.github.io/MWSE/types/tes3activeMagicEffect/) items.
 
 **Returns**:
 
@@ -57,7 +57,7 @@ Friendly access to the actor's flag that controls if AI is active.
 
 ### `actorType`
 
-*Read-only*. The type of the mobile actor. 0 is a creature, 1 is an NPC, 2 is the player.
+*Read-only*. The type of the mobile actor. Maps to values in [`tes3.actorType`](https://mwse.github.io/MWSE/references/actor-types/) namespace.
 
 **Returns**:
 
@@ -147,7 +147,7 @@ Toggle flag for if the player should always run.
 
 ### `armorRating`
 
-*Read-only*. The actor's current armour rating, taking equipment condition into account. Armour mitigation can be automatically applied to damage by using the applyDamage function.
+*Read-only*. The actor's current armour rating, taking equipment condition into account. Armour mitigation can be automatically applied to damage by using the `applyDamage` function.
 
 Armour mitigation calculation:
 x = damage / (damage + target.armorRating)
@@ -202,7 +202,7 @@ Toggle flag for if the player can attack.
 
 ### `attributes`
 
-*Read-only*. Access to a table of 8 tes3statistic objects for the actor's attributes.
+*Read-only*. Access to a table of 8 [`tes3statistic`](https://mwse.github.io/MWSE/types/tes3statistic/) objects for the actor's attributes.
 
 **Returns**:
 
@@ -312,7 +312,7 @@ The player's current bounty.
 
 ### `cameraHeight`
 
-Access to the player camera height, used for both the first person and third person camera (specifically the orbit centre). It is normally placed at head height by the game, on loading, or when a race is selected. The camera height can be reset to its regular value by setting this property to nil.
+Access to the player camera height, used for both the first person and third person camera (specifically the orbit centre). It is normally placed at head height by the game, on loading, or when a race is selected. The camera height can be reset to its regular value by setting this property to `nil`.
 
 **Returns**:
 
@@ -391,7 +391,7 @@ Direct access to the actor's chameleon effect attribute.
 
 ### `clawMultiplier`
 
-*Read-only*. Quick access to the ClawMultiplier global variable.
+*Read-only*. Quick access to the `ClawMultiplier` global variable.
 
 **Returns**:
 
@@ -651,7 +651,7 @@ Toggle flag for if the NPC sneaks.
 
 ### `friendlyActors`
 
-*Read-only*. A collection of other tes3mobileActors that this actor considers friendly.
+*Read-only*. A collection of other `tes3mobileActor`s that this actor considers friendly.
 
 **Returns**:
 
@@ -741,7 +741,7 @@ No description yet available.
 
 ### `hostileActors`
 
-*Read-only*. A collection of other tes3mobileActors that this actor considers hostile.
+*Read-only*. A collection of other `tes3mobileActor`s that this actor considers hostile.
 
 **Returns**:
 
@@ -1031,7 +1031,7 @@ Toggle flag for if the player can jump.
 
 ### `knownWerewolf`
 
-*Read-only*. Quick access to the KnownWerewolf global variable.
+*Read-only*. Quick access to the `KnownWerewolf` global variable.
 
 **Returns**:
 
@@ -1241,7 +1241,7 @@ Toggle flag for if the player can use magic.
 
 ### `mobToMobCollision`
 
-Allows modifying if this actor will collide with other actors. When true (default), the actor cannot move through other actors. When false, the actor is allowed to move through other actors, and other actors can move through it.
+Allows modifying if this actor will collide with other actors. When `true` (default), the actor cannot move through other actors. When `false`, the actor is allowed to move through other actors, and other actors can move through it.
 
 May be useful when free movement is required in crowded situations, or to temporarily let the player move past an actor.
 
@@ -1323,7 +1323,7 @@ Access to the root mobile object movement flags, represented as an integer. Shou
 
 ### `objectType`
 
-*Read-only*. The type of mobile object. Maps to values in tes3.objectType.
+*Read-only*. The type of mobile object. Maps to values in [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) namespace.
 
 **Returns**:
 
@@ -1955,7 +1955,7 @@ A flag for if the player has a weapon ready or being readied (visible and held i
 
 ### `applyDamage`
 
-Damages the actor, with options to control mitigation and difficulty scaling. Invokes the 'damage' and 'damaged' events, with 'script' source. Returns the actual damage done after armor mitigation and resistance, but before difficulty scaling.
+Damages the actor, with options to control mitigation and difficulty scaling. Invokes the [`damage`](https://mwse.github.io/MWSE/events/damage/) and [`damaged`](https://mwse.github.io/MWSE/events/damaged/) events, with `tes3.damageSource.script` source. Returns the actual damage done after armor mitigation and resistance, but before difficulty scaling.
 
 ```lua
 local result = tes3mobileActor:applyDamage({ damage = ..., applyArmor = ..., resistAttribute = ..., applyDifficulty = ..., playerAttack = ..., doNotChangeHealth = ... })
@@ -1966,8 +1966,8 @@ local result = tes3mobileActor:applyDamage({ damage = ..., applyArmor = ..., res
 * `params` (table)
 	* `damage` (number): The amount of damage to apply.
 	* `applyArmor` (boolean): *Optional*. If armor should mitigate the incoming damage. If the player is the target, armor experience will be gained.
-	* `resistAttribute` (number): *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from tes3.effectAttributes.
-	* `applyDifficulty` (boolean): *Optional*. If the game difficulty modifier should be applied. Must be used with the 'playerAttack' argument to apply the correct modifier.
+	* `resistAttribute` (number): *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
+	* `applyDifficulty` (boolean): *Optional*. If the game difficulty modifier should be applied. Must be used with the `playerAttack` argument to apply the correct modifier.
 	* `playerAttack` (boolean): *Optional*. If the attack came from the player. Used for difficulty calculation.
 	* `doNotChangeHealth` (boolean): *Optional*. If all armor effects except the health change should be applied. These include hit sounds, armor condition damage, and player experience gain from being hit.
 
@@ -1979,7 +1979,7 @@ local result = tes3mobileActor:applyDamage({ damage = ..., applyArmor = ..., res
 
 ### `applyFatigueDamage`
 
-Damages the actor's fatigue, with accompanying reaction from the reciever. Invokes the 'damageHandToHand' and 'damagedHandToHand' events, with 'script' source. Returns the actual fatigue damage done.
+Damages the actor's fatigue, with accompanying reaction from the reciever. Invokes the [`damageHandToHand`](https://mwse.github.io/MWSE/events/damageHandToHand/) and [`damagedHandToHand`](https://mwse.github.io/MWSE/events/damagedHandToHand/) events, with `tes3.damageSource.script` source. Returns the actual fatigue damage done.
 
 ```lua
 local result = tes3mobileActor:applyFatigueDamage(fatigueDamage, swing, alwaysPlayHitVoice)
@@ -1999,7 +1999,7 @@ local result = tes3mobileActor:applyFatigueDamage(fatigueDamage, swing, alwaysPl
 
 ### `applyHealthDamage`
 
-**Deprecated, please use applyDamage instead.**
+**Deprecated, please use [`applyDamage()`](https://mwse.github.io/MWSE/types/tes3mobileActor/#applydamage) instead.**
 
 Damages the actor.
 
@@ -2033,7 +2033,7 @@ local result = tes3mobileActor:calcEffectiveDamage({ damage = ..., applyArmor = 
 * `params` (table)
 	* `damage` (number): The amount of damage to apply.
 	* `applyArmor` (boolean): *Optional*. If armor should mitigate the incoming damage.
-	* `resistAttribute` (number): *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from tes3.effectAttributes.
+	* `resistAttribute` (number): *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
 
 **Returns**:
 
@@ -2043,7 +2043,7 @@ local result = tes3mobileActor:calcEffectiveDamage({ damage = ..., applyArmor = 
 
 ### `equip`
 
-Equips an item, optionally adding the item if needed. If the best match is already equipped, it does not perform an unequip-equip cycle, but does return true.
+Equips an item, optionally adding the item if needed. If the best match is already equipped, it does not perform an unequip-equip cycle, but does return `true`.
 
 ```lua
 local itemEquipped = tes3mobileActor:equip({ item = ..., itemData = ..., addItem = ..., selectBestCondition = ..., selectWorstCondition = ... })
@@ -2054,9 +2054,9 @@ local itemEquipped = tes3mobileActor:equip({ item = ..., itemData = ..., addItem
 * `params` (table)
 	* `item` ([tes3item](../../types/tes3item), string): The item to equip.
 	* `itemData` ([tes3itemData](../../types/tes3itemData)): *Optional*. The item data of the specific item to equip.
-	* `addItem` (boolean): If true, the item will be added to the actor's inventory if needed.
-	* `selectBestCondition` (boolean): If true, the item in the inventory with the best condition and best charge will be selected.
-	* `selectWorstCondition` (boolean): If true, the item in the inventory with the worst condition and worst charge will be selected. Can be useful for selecting tools.
+	* `addItem` (boolean): If `true`, the item will be added to the actor's inventory if needed.
+	* `selectBestCondition` (boolean): If `true`, the item in the inventory with the best condition and best charge will be selected.
+	* `selectWorstCondition` (boolean): If `true`, the item in the inventory with the worst condition and worst charge will be selected. Can be useful for selecting tools.
 
 **Returns**:
 
@@ -2081,7 +2081,7 @@ tes3mobilePlayer:exerciseSkill(skill, progress)
 
 ### `getActiveMagicEffects`
 
-Fetches a filtered list of the active magic effects on the actor. Returns a table with tes3activeMagicEffect items.
+Fetches a filtered list of the active magic effects on the actor. Returns a table with [`tes3activeMagicEffect`](https://mwse.github.io/MWSE/types/tes3activeMagicEffect/) items.
 
 ```lua
 local result = tes3mobileActor:getActiveMagicEffects({ effect = ..., serial = ... })
@@ -2129,7 +2129,7 @@ local result = tes3mobileActor:getFatigueTerm()
 
 ### `getPowerUseTimestamp`
 
-Finds the timestamp a recharging power was used. Powers recharge 24 hours after this timestamp. The timestamp units are hours. The current time as a timestamp can be accessed at tes3.getSimulationTimestamp().
+Finds the timestamp a recharging power was used. Powers recharge 24 hours after this timestamp. The timestamp units are hours. The current time as a timestamp can be accessed at [`tes3.getSimulationTimestamp()`](https://mwse.github.io/MWSE/apis/tes3/#tes3getsimulationtimestamp).
 
 ```lua
 local timestamp = tes3mobileActor:getPowerUseTimestamp(power)
@@ -2243,7 +2243,7 @@ local result = tes3mobileActor:getViewToPointWithFacing()
 
 ### `getWeaponSpeed`
 
-Fetches the weapon speed of the actor's currently equipped weapon, or 1.0 if no weapon is equipped.
+Fetches the weapon speed of the actor's currently equipped weapon, or `1.0` if no weapon is equipped.
 
 ```lua
 local result = tes3mobileActor:getWeaponSpeed()
@@ -2366,7 +2366,7 @@ tes3mobileActor:setPowerUseTimestamp(power, timestamp)
 **Parameters**:
 
 * `power` ([tes3spell](../../types/tes3spell)): The spell object for the power.
-* `timestamp` (number): The timestamp of the moment the power was casted, or 24 hours before the recharge point. The timestamp units are hours. The current time as a timestamp can be accessed at tes3.getSimulationTimestamp().
+* `timestamp` (number): The timestamp of the moment the power was casted, or 24 hours before the recharge point. The timestamp units are hours. The current time as a timestamp can be accessed at [`tes3.getSimulationTimestamp()`](https://mwse.github.io/MWSE/apis/tes3/#tes3getsimulationtimestamp).
 
 ***
 
@@ -2404,7 +2404,7 @@ tes3mobileActor:stopCombat(force)
 
 **Parameters**:
 
-* `force` (boolean): If false, the function won't stop combat if the actor has other valid hostile targets.
+* `force` (boolean): If `false`, the function won't stop combat if the actor has other valid hostile targets.
 
 ***
 
@@ -2432,7 +2432,7 @@ local itemUnequipped = tes3mobileActor:unequip({ item = ..., type = ..., armorSl
 
 ### `updateDerivedStatistics`
 
-Updates statistics derived from attributes, which are magicka, fatigue, and encumbrance. Will also update the UI if used on the player. Normally handled automatically when you use tes3.modStatistic.
+Updates statistics derived from attributes, which are magicka, fatigue, and encumbrance. Will also update the UI if used on the player. Normally handled automatically when you use `tes3.modStatistic()`.
 
 ```lua
 tes3mobileActor:updateDerivedStatistics(attribute)

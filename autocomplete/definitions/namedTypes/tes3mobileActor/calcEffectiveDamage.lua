@@ -7,7 +7,7 @@ return {
 		tableParams = {
 			{ name = "damage", type = "number", description = "The amount of damage to apply." },
 			{ name = "applyArmor", type = "boolean", optional = true, description = "If armor should mitigate the incoming damage." },
-			{ name = "resistAttribute", type = "number", optional = true, description = "The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from tes3.effectAttributes." },
+			{ name = "resistAttribute", type = "number", optional = true, description = "The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace." },
 		},
 	}},
 	valuetype = "number",

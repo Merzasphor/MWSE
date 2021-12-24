@@ -7,7 +7,7 @@
 --- @field mesh string The path to the object's mesh.
 tes3static = {}
 
---- Use `tes3.createObject` instead. This function created a new static object, which will be stored as part of the current saved game.
+--- Use [`tes3.createObject()`](https://mwse.github.io/MWSE/apis/tes3/#tes3createobject) instead. This function creates a new static object, which will be stored as part of the current saved game.
 --- @deprecated
 --- @param params tes3static.create.params This table accepts the following values:
 --- 

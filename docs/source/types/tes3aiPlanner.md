@@ -36,7 +36,7 @@ The access to mobile actor this tes3aiPlanner object works on.
 
 ### `packages`
 
-*Read-only*. The table with tes3aiPackage objects assigned to this mobile actor.
+*Read-only*. The table with `tes3aiPackage` objects assigned to this mobile actor.
 
 **Returns**:
 

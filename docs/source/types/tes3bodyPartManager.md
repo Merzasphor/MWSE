@@ -6,7 +6,7 @@ A game object which holds information about body parts.
 
 ### `activeBodyParts`
 
-*Read-only*. The access to the reference's tes3bodyPartManagerActiveBodyPart objects. It's a 2-dimensional table, with first dimension indexes stored as tes3.activeBodyPartLayer.* namespace, while its second dimension indexes are stored as tes3.activeBodyPart.* namespace.
+*Read-only*. The access to the reference's [`tes3bodyPartManagerActiveBodyPart`](https://mwse.github.io/MWSE/types/tes3bodyPartManagerActiveBodyPart/) objects. It's a 2-dimensional table, with first dimension index values from [`tes3.activeBodyPartLayer`](https://mwse.github.io/MWSE/references/active-body-part-layers/) namespace, while its second dimension indexes are values from [`tes3.activeBodyPart`](https://mwse.github.io/MWSE/references/active-body-parts/) namespace.
 
 **Returns**:
 
@@ -26,7 +26,7 @@ A game object which holds information about body parts.
 
 ### `attachNodes`
 
-*Read-only*. The access to the reference's tes3bodyPartManagerAttachNode objects. Indexes of that table are stored in tes3.bodyPartAttachment.* namespace.
+*Read-only*. The access to the reference's [`tes3bodyPartManagerAttachNode`](https://mwse.github.io/MWSE/types/tes3bodyPartManagerAttachNode/) objects. Indexes of that table are values from [`tes3.bodyPartAttachment`](https://mwse.github.io/MWSE/references/body-part-attachments/) namespace.
 
 **Returns**:
 
@@ -57,8 +57,8 @@ local result = tes3bodyPartManager:getActiveBodyPart({ layer = ..., index = ... 
 **Parameters**:
 
 * `params` (table)
-	* `layer` (number): A value in tes3.activeBodyPartLayer.* constants.
-	* `index` (number): A value in tes3.activeBodyPart.* constants.
+	* `layer` (number): A value from [`tes3.activeBodyPartLayer`](https://mwse.github.io/MWSE/references/active-body-part-layers/) namespace.
+	* `index` (number): A value from [`tes3.activeBodyPart`](https://mwse.github.io/MWSE/references/active-body-parts/) namespace.
 
 **Returns**:
 
@@ -95,8 +95,8 @@ local result = tes3bodyPartManager:getActiveBodyPartNode({ layer = ..., index = 
 **Parameters**:
 
 * `params` (table)
-	* `layer` (number): A value in tes3.activeBodyPartLayer.* constants.
-	* `index` (number): A value in tes3.activeBodyPart.* constants.
+	* `layer` (number): A value from [`tes3.activeBodyPartLayer`](https://mwse.github.io/MWSE/references/active-body-part-layers/) namespace.
+	* `index` (number): A value from [`tes3.activeBodyPart`](https://mwse.github.io/MWSE/references/active-body-parts/) namespace.
 
 **Returns**:
 
@@ -125,8 +125,8 @@ tes3bodyPartManager:setActivePartData({ layer = ..., index = ..., overwriteData 
 **Parameters**:
 
 * `params` (table)
-	* `layer` (number): A value in tes3.activeBodyPartLayer.* constants.
-	* `index` (number): A value in tes3.activeBodyPart.* constants.
+	* `layer` (number): A value from [`tes3.activeBodyPartLayer`](https://mwse.github.io/MWSE/references/active-body-part-layers/) namespace.
+	* `index` (number): A value from [`tes3.activeBodyPart`](https://mwse.github.io/MWSE/references/active-body-parts/) namespace.
 	* `overwriteData` (boolean): *Default*: `true`. A flag which controls whether the current data should be overwritten.
 	* `node` ([niNode](../../types/niNode)): *Default*: `nil`. 
 
@@ -143,9 +143,9 @@ tes3bodyPartManager:setBodyPartByIdForObject({ object = ..., index = ..., bodyPa
 **Parameters**:
 
 * `params` (table)
-	* `object` ([tes3physicalObject](../../types/tes3physicalObject)): A object whose body part to set.
-	* `index` (number): A value in tes3.activeBodyPart.* constants.
-	* `bodyPartId` (string): The unique ID of the tes3bodyPart object to set as a new body part for given object.
+	* `object` ([tes3physicalObject](../../types/tes3physicalObject)): An object whose body part to set.
+	* `index` (number): A value from [`tes3.activeBodyPart`](https://mwse.github.io/MWSE/references/active-body-parts/) namespace.
+	* `bodyPartId` (string): The unique ID of the `tes3bodyPart` object to set as a new body part for given object.
 	* `isFirstPerson` (boolean): *Default*: `false`. A flag which controls whether the body part is used in first person.
 
 ***
@@ -161,9 +161,9 @@ tes3bodyPartManager:setBodyPartForObject({ object = ..., index = ..., bodyPart =
 **Parameters**:
 
 * `params` (table)
-	* `object` ([tes3physicalObject](../../types/tes3physicalObject)): A object whose body part to set.
-	* `index` (number): A value in tes3.activeBodyPart.* constants.
-	* `bodyPart` ([tes3bodyPart](../../types/tes3bodyPart)): The tes3bodyPart object to set as a new body part for given object.
+	* `object` ([tes3physicalObject](../../types/tes3physicalObject)): An object whose body part to set.
+	* `index` (number): A value from [`tes3.activeBodyPart`](https://mwse.github.io/MWSE/references/active-body-parts/) namespace.
+	* `bodyPart` ([tes3bodyPart](../../types/tes3bodyPart)): The `tes3bodyPart` object to set as a new body part for given object.
 	* `isFirstPerson` (boolean): *Default*: `false`. A flag which controls whether the body part is used in first person.
 
 ***

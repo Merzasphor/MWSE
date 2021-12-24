@@ -23,7 +23,7 @@
 --- @field weight number The weight of the object.
 tes3light = {}
 
---- Gets the time remaining for a light, given a tes3itemData, tes3reference, or tes3equipmentStack.
+--- Gets the time remaining for a light, given a `tes3itemData`, `tes3reference`, or `tes3equipmentStack`.
 --- @param data tes3reference|tes3itemData|tes3equipmentStack No description yet available.
 --- @return number result No description yet available.
 function tes3light:getTimeLeft(data) end

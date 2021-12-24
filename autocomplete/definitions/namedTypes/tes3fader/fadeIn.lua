@@ -1,6 +1,6 @@
 return {
 	type = "method",
-	description = [[Transitions the fader to a value of 1 over a given duration.]],
+	description = [[Transitions the fader to a value of `1` over a given duration.]],
 	arguments = {{
 		name = "params",
 		type = "table",

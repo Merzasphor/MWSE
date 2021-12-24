@@ -148,7 +148,7 @@ tes3combatSession:changeEquipment(equipmentStack)
 
 ### `selectAlchemyWithEffect`
 
-Selects the alchemy item with the greatest value, for a given effect ID and loads it into the selectedAlchemy property.
+Selects the alchemy item with the greatest value, for a given effect ID and loads it into the `selectedAlchemy` property.
 
 ```lua
 local result = tes3combatSession:selectAlchemyWithEffect(id)

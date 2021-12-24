@@ -1,6 +1,6 @@
 # tes3nonDynamicData
 
-A child container from tes3dataHandler, where game data is stored.
+A child container from [`tes3dataHandler`](https://mwse.github.io/MWSE/types/tes3dataHandler/), where game data is stored.
 
 ## Properties
 
@@ -156,7 +156,7 @@ A child container from tes3dataHandler, where game data is stored.
 
 ### `startScripts`
 
-*Read-only*. A collection of all tes3startScript objects.
+*Read-only*. A collection of all [`tes3startScript`](https://mwse.github.io/MWSE/types/tes3startScript/) objects.
 
 **Returns**:
 
@@ -322,7 +322,7 @@ local result = tes3nonDynamicData:resolveObject(id)
 
 ### `showLocationOnMap`
 
-Draws map marker boxes onto the world map for all cells with names starting with the prefix. e.g. showLocationOnMap("Vivec") draws boxes for all cells in Vivec, because the cell names "Vivec, Arena", "Vivec, Temple", etc. matches.
+Draws map marker boxes onto the world map for all cells with names starting with the prefix. e.g. `showLocationOnMap("Vivec")` draws boxes for all cells in Vivec, because the cell names "Vivec, Arena", "Vivec, Temple", etc. matches.
 
 ```lua
 tes3nonDynamicData:showLocationOnMap(cellNamePrefix)

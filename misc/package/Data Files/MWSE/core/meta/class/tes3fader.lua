@@ -15,7 +15,7 @@ function tes3fader:activate() end
 --- Deactivates an activated fader.
 function tes3fader:deactivate() end
 
---- Transitions the fader to a value of 1 over a given duration.
+--- Transitions the fader to a value of `1` over a given duration.
 --- @param params tes3fader.fadeIn.params This table accepts the following values:
 --- 
 --- `duration`: number — *Default*: `1`. The time it takes to fade, in seconds.
@@ -25,7 +25,7 @@ function tes3fader:fadeIn(params) end
 --- @class tes3fader.fadeIn.params
 --- @field duration number *Default*: `1`. The time it takes to fade, in seconds.
 
---- Transitions the fader to a value of 0 over a given duration.
+--- Transitions the fader to a value of `0` over a given duration.
 --- @param params tes3fader.fadeOut.params This table accepts the following values:
 --- 
 --- `duration`: number — *Default*: `1`. The time it takes to fade, in seconds.

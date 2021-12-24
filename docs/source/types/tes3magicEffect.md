@@ -26,7 +26,7 @@ Access to the flag that determines if this effect can be used with spellmaking.
 
 ### `appliesOnce`
 
-Access to the base flag that determines if this effect can be used in enchanting.
+Access to the base flag that determines if this effect is applied only once.
 
 **Returns**:
 

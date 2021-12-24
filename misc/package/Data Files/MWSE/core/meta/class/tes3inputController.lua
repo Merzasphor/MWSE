@@ -23,32 +23,32 @@ function tes3inputController:isCapsLockActive() end
 function tes3inputController:isControlDown() end
 
 --- Performs a key down test for a given scan key code.
---- @param key number The scan code to test. Constants available through `tes3.scanCode`.
+--- @param key number The scan code to test. Constants available through [`tes3.scanCode`](https://mwse.github.io/MWSE/references/scan-codes/).
 --- @return boolean result No description yet available.
 function tes3inputController:isKeyDown(key) end
 
 --- Checks to see if a given scan code is pressed, and wasn't pressed last frame.
---- @param key number The scan code to test. Constants available through `tes3.scanCode`.
+--- @param key number The scan code to test. Constants available through [`tes3.scanCode`](https://mwse.github.io/MWSE/references/scan-codes/).
 --- @return boolean result No description yet available.
 function tes3inputController:isKeyPressedThisFrame(key) end
 
 --- Checks to see if a given scan code is released, and was pressed last frame.
---- @param key number The scan code to test. Constants available through `tes3.scanCode`.
+--- @param key number The scan code to test. Constants available through [`tes3.scanCode`](https://mwse.github.io/MWSE/references/scan-codes/).
 --- @return boolean result No description yet available.
 function tes3inputController:isKeyReleasedThisFrame(key) end
 
 --- Returns the mouse down state for a given mouse button.
---- @param button number The mouse button to test. Must be between 0 and 7.
+--- @param button number The mouse button to test. Must be between `0` and `7`.
 --- @return boolean result No description yet available.
 function tes3inputController:isMouseButtonDown(button) end
 
 --- Returns true if a mouse button was up last frame, and down this frame.
---- @param button number The mouse button to test. Must be between 0 and 7.
+--- @param button number The mouse button to test. Must be between `0` and `7`.
 --- @return boolean result No description yet available.
 function tes3inputController:isMouseButtonPressedThisFrame(button) end
 
 --- Returns true if a mouse button was down last frame, and up this frame.
---- @param button number The mouse button to test. Must be between 0 and 7.
+--- @param button number The mouse button to test. Must be between `0` and `7`.
 --- @return boolean result No description yet available.
 function tes3inputController:isMouseButtonReleasedThisFrame(button) end
 
@@ -61,8 +61,8 @@ function tes3inputController:isShiftDown() end
 function tes3inputController:isSuperDown() end
 
 --- Performs a test for a given keybind, and optionally a transition state.
---- @param key number The keybind to test. Constants available through `tes3.keybind`.
---- @param transition number *Optional*. Transition state, e.g. down, or up. Constants available through `tes3.keyTransition`.
+--- @param key number The keybind to test. Constants available through [`tes3.keybind`](https://mwse.github.io/MWSE/references/keybinds/).
+--- @param transition number *Optional*. Transition state, e.g. down, or up. Constants available through [`tes3.keyTransition`](https://mwse.github.io/MWSE/references/key-transitions/).
 --- @return boolean result No description yet available.
 function tes3inputController:keybindTest(key, transition) end
 

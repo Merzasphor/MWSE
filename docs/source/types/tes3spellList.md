@@ -62,7 +62,7 @@ local result = tes3spellList:containsType(spellType)
 
 **Parameters**:
 
-* `spellType` (number): A value from tes3.spellType.
+* `spellType` (number): A value from [`tes3.spellType`](https://mwse.github.io/MWSE/references/spell-types/) enumeration.
 
 **Returns**:
 

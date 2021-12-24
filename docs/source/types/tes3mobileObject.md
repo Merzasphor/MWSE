@@ -96,7 +96,7 @@ Access to the root mobile object movement flags, represented as an integer. Shou
 
 ### `objectType`
 
-*Read-only*. The type of mobile object. Maps to values in tes3.objectType.
+*Read-only*. The type of mobile object. Maps to values in [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) namespace.
 
 **Returns**:
 

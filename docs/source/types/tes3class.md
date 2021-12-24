@@ -207,7 +207,7 @@ Loads from disk and returns the description of the class.
 
 ### `minorSkills`
 
-*Read-only*. An array-style table of the 5 skills IDs associated with the class' major skills.
+*Read-only*. An array-style table of the 5 skills IDs associated with the class' minor skills.
 
 **Returns**:
 
@@ -297,7 +297,7 @@ If true, the class will offer spell selling services.
 
 ### `offersTraining`
 
-If true, the class will offer spell training services.
+If true, the class will offer training services.
 
 **Returns**:
 
@@ -327,7 +327,7 @@ If true, the class is selectable at character generation.
 
 ### `services`
 
-The services offered by the class. This is a bit field, and its values should typically be accessed through values such as bartersAlchemy.
+The services offered by the class. This is a bit field, and its values should typically be accessed through values such as `bartersAlchemy`.
 
 **Returns**:
 
@@ -337,7 +337,7 @@ The services offered by the class. This is a bit field, and its values should ty
 
 ### `skills`
 
-*Read-only*. An array-style table of the 10 skills IDs associated with the class. For major or minor skills specifically, use the majorSkills and MinorSkills properties.
+*Read-only*. An array-style table of the 10 skills IDs associated with the class. For major or minor skills specifically, use the `majorSkills` and `minorSkills` properties.
 
 **Returns**:
 

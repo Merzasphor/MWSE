@@ -5,7 +5,7 @@
 --- @field currentPackageIndex number *Read-only*. Access to index of currently active AI package in packages table.
 --- @field mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer The access to mobile actor this tes3aiPlanner object works on.
 --- @field nextOpenPackageIndex number *Read-only*. 
---- @field packages table *Read-only*. The table with tes3aiPackage objects assigned to this mobile actor.
+--- @field packages table *Read-only*. The table with `tes3aiPackage` objects assigned to this mobile actor.
 tes3aiPlanner = {}
 
 --- Fetches currently active AI package.

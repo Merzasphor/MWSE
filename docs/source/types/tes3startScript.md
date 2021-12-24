@@ -87,7 +87,7 @@ The persistent flag of the object.
 
 ### `script`
 
-*Read-only*. A script which is set to start at game start with this tes3startScript object.
+*Read-only*. A script which is set to start at game start with this `tes3startScript` object.
 
 **Returns**:
 

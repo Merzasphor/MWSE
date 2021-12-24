@@ -57,7 +57,7 @@ The modification state of the object since the last save.
 
 ### `name`
 
-The region's name. Must be a string less than 32 characters.
+The region's name. It must be a string less than 32 characters long.
 
 **Returns**:
 
@@ -107,7 +107,7 @@ The persistent flag of the object.
 
 ### `sounds`
 
-*Read-only*. Array-style table for the different region sounds. Each object in the table is a tes3regionSound.
+*Read-only*. Array-style table for the different region sounds. Each object in the table is a [`tes3regionSound`](https://mwse.github.io/MWSE/types/tes3regionSound/).
 
 **Returns**:
 

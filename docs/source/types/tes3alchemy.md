@@ -57,7 +57,7 @@ The bounding box for the object.
 
 ### `effects`
 
-*Read-only*. An array-style table of the tes3effect data on the object.
+*Read-only*. An array-style table of the [`tes3effect`](https://mwse.github.io/MWSE/types/tes3effect/) data on the object.
 
 **Returns**:
 

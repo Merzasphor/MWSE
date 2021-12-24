@@ -16,7 +16,7 @@ The charge of the item. Provides incorrect values on misc items, which instead h
 
 ### `condition`
 
-The condition/health of the item. Provides incorrect values on light items, which instead have a timeLeft property.
+The condition/health of the item. Provides incorrect values on light items, which instead have a `timeLeft` property.
 
 **Returns**:
 
@@ -36,7 +36,7 @@ Returns an ease of use script context for variable access.
 
 ### `count`
 
-The total number of identical items represented by this data. Reserved for use by in-world references. It should always be 1 for items in inventories. Inventories utilize the stack count in tes3itemStack.
+The total number of identical items represented by this data. Reserved for use by in-world references. It should always be `1` for items in inventories. Inventories utilize the stack count in [`tes3itemStack`](https://mwse.github.io/MWSE/types/tes3itemStack/) object.
 
 **Returns**:
 
@@ -46,7 +46,7 @@ The total number of identical items represented by this data. Reserved for use b
 
 ### `data`
 
-A generic lua table that data can be written to, and synced to/from the save. All information stored must be valid for serialization to json. For data that doesn't persist, use tempData.
+A generic lua table that data can be written to, and synced to/from the save. All information stored must be valid for serialization to json. For data that doesn't persist, use `tempData`.
 
 **Returns**:
 
@@ -56,7 +56,7 @@ A generic lua table that data can be written to, and synced to/from the save. Al
 
 ### `owner`
 
-The script associated with the scriptVariables.
+The owner of the associated item. An item can have an owner or it can be faction-owned.
 
 **Returns**:
 
@@ -116,7 +116,7 @@ A generic lua table that data can be written to, but is not synced to/from a sav
 
 ### `timeLeft`
 
-The time remaining on a light. Provides incorrect values on non-light items, which instead have a condition property.
+The time remaining on a light. Provides incorrect values on non-light items, which instead have a `condition` property.
 
 **Returns**:
 

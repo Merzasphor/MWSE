@@ -147,7 +147,7 @@ The player's current reputation in the faction.
 
 ### `ranks`
 
-*Read-only*. An array-style table holding the ten related tes3factionRanks.
+*Read-only*. An array-style table holding the ten related [`tes3factionRank`](https://mwse.github.io/MWSE/types/tes3factionRank/)s.
 
 **Returns**:
 
@@ -157,7 +157,7 @@ The player's current reputation in the faction.
 
 ### `reactions`
 
-*Read-only*. A collection of tes3factionReactions.
+*Read-only*. A collection of [`tes3factionReaction`](https://mwse.github.io/MWSE/types/tes3factionReaction/)s.
 
 **Returns**:
 

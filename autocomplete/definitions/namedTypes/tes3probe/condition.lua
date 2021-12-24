@@ -1,6 +1,6 @@
 return {
 	type = "value",
-	description = [[Use tes3probe.maxCondition.
+	description = [[Use `.maxCondition`.
 
 The maximum condition/health of the object.]],
 	deprecated = true,

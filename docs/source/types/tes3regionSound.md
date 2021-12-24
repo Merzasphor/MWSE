@@ -16,11 +16,11 @@ The chance the region sound will be used. Must be an integer between 0 - 100.
 
 ### `sound`
 
-The region sound's sound.
+The access to object's associated sound.
 
 **Returns**:
 
-* `result` ([tes3regionSound](../../types/tes3regionSound))
+* `result` ([tes3sound](../../types/tes3sound))
 
 ***
 

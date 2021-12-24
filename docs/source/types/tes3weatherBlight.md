@@ -87,7 +87,7 @@ The weather's blight chance value.
 
 ### `blightDiseases`
 
-*Read-only*. The weather's blight diseases, provided as a table of TES3Spell.
+*Read-only*. The weather's blight diseases, provided as a table of [`tes3spell`](https://mwse.github.io/MWSE/types/tes3spell/) objects.
 
 **Returns**:
 

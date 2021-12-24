@@ -18,16 +18,16 @@
 --- @field bartersWeapons boolean If true, the class will barter weapon items.
 --- @field description string Loads from disk and returns the description of the class.
 --- @field majorSkills table *Read-only*. An array-style table of the 5 skills IDs associated with the class' major skills.
---- @field minorSkills table *Read-only*. An array-style table of the 5 skills IDs associated with the class' major skills.
+--- @field minorSkills table *Read-only*. An array-style table of the 5 skills IDs associated with the class' minor skills.
 --- @field name string The player-facing name for the object.
 --- @field offersEnchanting boolean If true, the class will offer repair services.
 --- @field offersRepairs boolean If true, the class will offer enchanting services.
 --- @field offersSpellmaking boolean If true, the class will offer spellmaking services.
 --- @field offersSpells boolean If true, the class will offer spell selling services.
---- @field offersTraining boolean If true, the class will offer spell training services.
+--- @field offersTraining boolean If true, the class will offer training services.
 --- @field playable boolean If true, the class is selectable at character generation.
---- @field services number The services offered by the class. This is a bit field, and its values should typically be accessed through values such as bartersAlchemy.
---- @field skills table *Read-only*. An array-style table of the 10 skills IDs associated with the class. For major or minor skills specifically, use the majorSkills and MinorSkills properties.
+--- @field services number The services offered by the class. This is a bit field, and its values should typically be accessed through values such as `bartersAlchemy`.
+--- @field skills table *Read-only*. An array-style table of the 10 skills IDs associated with the class. For major or minor skills specifically, use the `majorSkills` and `minorSkills` properties.
 --- @field specialization number The specialization for the class. Maps to the [`tes3.specialization`](https://mwse.github.io/MWSE/references/specialization-types/) constants table.
 tes3class = {}
 

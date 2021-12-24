@@ -111,7 +111,7 @@ The object's parent. It may not have one if it is not attached to the scene.
 
 ### `properties`
 
-The list of properties attached to this niAVObject.
+The list of properties attached to this `niAVObject`.
 
 **Returns**:
 

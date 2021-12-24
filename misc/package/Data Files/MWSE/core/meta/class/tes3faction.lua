@@ -8,8 +8,8 @@
 --- @field playerJoined boolean The player's join state for the faction.
 --- @field playerRank number The player's current rank in the faction.
 --- @field playerReputation number The player's current reputation in the faction.
---- @field ranks table *Read-only*. An array-style table holding the ten related tes3factionRanks.
---- @field reactions tes3iterator *Read-only*. A collection of tes3factionReactions.
+--- @field ranks table *Read-only*. An array-style table holding the ten related [`tes3factionRank`](https://mwse.github.io/MWSE/types/tes3factionRank/)s.
+--- @field reactions tes3iterator *Read-only*. A collection of [`tes3factionReaction`](https://mwse.github.io/MWSE/types/tes3factionReaction/)s.
 --- @field skills table *Read-only*. An array-style table holding the seven skills that govern advancement.
 tes3faction = {}
 

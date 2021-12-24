@@ -3,15 +3,15 @@
 --- A mobile object for a creature, NPC, or the player.
 --- @class tes3mobileActor : tes3mobileObject
 --- @field actionBeforeCombat tes3actionData *Read-only*. Action data stored before the actor entered combat.
---- @field actionData tes3actionData *Read-only*. Current action data. Pre-combat action data is stored in the actionBeforeCombat property.
+--- @field actionData tes3actionData *Read-only*. Current action data. Pre-combat action data is stored in the `actionBeforeCombat` property.
 --- @field activeAI boolean Friendly access to the actor's flag that controls if AI is active.
---- @field activeMagicEffectList table *Read-only*. The active magic effects on the actor, from which all others can be accessed. A table with tes3activeMagicEffect items.
---- @field actorType number *Read-only*. The type of the mobile actor. 0 is a creature, 1 is an NPC, 2 is the player.
+--- @field activeMagicEffectList table *Read-only*. The active magic effects on the actor, from which all others can be accessed. A table with [`tes3activeMagicEffect`](https://mwse.github.io/MWSE/types/tes3activeMagicEffect/) items.
+--- @field actorType number *Read-only*. The type of the mobile actor. Maps to values in [`tes3.actorType`](https://mwse.github.io/MWSE/references/actor-types/) namespace.
 --- @field agility tes3statistic|tes3statisticSkill *Read-only*. Direct access to the actor's agility attribute statistic.
 --- @field aiPlanner tes3aiPlanner *Read-only*. Access to the mobile's AI planner and AI package information.
 --- @field alarm number The actor's alarm AI value.
 --- @field animationController tes3actorAnimationController|tes3playerAnimationController *Read-only*. No description yet available.
---- @field armorRating number *Read-only*. The actor's current armour rating, taking equipment condition into account. Armour mitigation can be automatically applied to damage by using the applyDamage function.
+--- @field armorRating number *Read-only*. The actor's current armour rating, taking equipment condition into account. Armour mitigation can be automatically applied to damage by using the `applyDamage` function.
 --- 
 --- Armour mitigation calculation:
 --- x = damage / (damage + target.armorRating)
@@ -19,7 +19,7 @@
 --- if damage < 1 then damage = 1 end
 --- @field attackBonus number Direct access to the actor's attack bonus effect attribute.
 --- @field attacked boolean *Read-only*. Friendly access to the actor's flag that controls if the actor has been attacked.
---- @field attributes table *Read-only*. Access to a table of 8 tes3statistic objects for the actor's attributes.
+--- @field attributes table *Read-only*. Access to a table of 8 [`tes3statistic`](https://mwse.github.io/MWSE/types/tes3statistic/) objects for the actor's attributes.
 --- @field barterGold number The current amount of gold that the actor has access to for bartering.
 --- @field blind number Direct access to the actor's blind effect attribute.
 --- @field cell tes3cell *Read-only*. Fetches the cell that the actor is in.
@@ -36,13 +36,13 @@
 --- @field fatigue tes3statistic|tes3statisticSkill *Read-only*. Access to the actor's fatigue statistic.
 --- @field fight number The actor's fight AI value.
 --- @field flee number The actor's flee AI value.
---- @field friendlyActors tes3iterator *Read-only*. A collection of other tes3mobileActors that this actor considers friendly.
+--- @field friendlyActors tes3iterator *Read-only*. A collection of other `tes3mobileActor`s that this actor considers friendly.
 --- @field greetDuration number No description yet available.
 --- @field greetTimer number *Read-only*. No description yet available.
 --- @field health tes3statistic|tes3statisticSkill *Read-only*. Access to the actor's health statistic.
 --- @field hello number The actor's hello AI value.
 --- @field holdBreathTime number No description yet available.
---- @field hostileActors tes3iterator *Read-only*. A collection of other tes3mobileActors that this actor considers hostile.
+--- @field hostileActors tes3iterator *Read-only*. A collection of other `tes3mobileActor`s that this actor considers hostile.
 --- @field idleAnim boolean *Read-only*. Friendly access to the actor's flag that controls if the actor is using their idle animation.
 --- @field inCombat boolean *Read-only*. Friendly access to the actor's flag that controls if the actor is in combat.
 --- @field intelligence tes3statistic|tes3statisticSkill *Read-only*. Direct access to the actor's intelligence attribute statistic.
@@ -70,7 +70,7 @@
 --- @field luck tes3statistic|tes3statisticSkill *Read-only*. Direct access to the actor's luck attribute statistic.
 --- @field magicka tes3statistic|tes3statisticSkill *Read-only*. Access to the actor's magicka statistic.
 --- @field magickaMultiplier tes3statistic|tes3statisticSkill *Read-only*. Access to the actor's magicka multiplier statistic.
---- @field mobToMobCollision boolean Allows modifying if this actor will collide with other actors. When true (default), the actor cannot move through other actors. When false, the actor is allowed to move through other actors, and other actors can move through it.
+--- @field mobToMobCollision boolean Allows modifying if this actor will collide with other actors. When `true` (default), the actor cannot move through other actors. When `false`, the actor is allowed to move through other actors, and other actors can move through it.
 --- 
 --- May be useful when free movement is required in crowded situations, or to temporarily let the player move past an actor.
 --- @field nextActionWeight number *Read-only*. No description yet available.
@@ -112,16 +112,16 @@
 --- @field willpower tes3statistic|tes3statisticSkill *Read-only*. Direct access to the actor's willpower attribute statistic.
 tes3mobileActor = {}
 
---- Damages the actor, with options to control mitigation and difficulty scaling. Invokes the 'damage' and 'damaged' events, with 'script' source. Returns the actual damage done after armor mitigation and resistance, but before difficulty scaling.
+--- Damages the actor, with options to control mitigation and difficulty scaling. Invokes the [`damage`](https://mwse.github.io/MWSE/events/damage/) and [`damaged`](https://mwse.github.io/MWSE/events/damaged/) events, with `tes3.damageSource.script` source. Returns the actual damage done after armor mitigation and resistance, but before difficulty scaling.
 --- @param params tes3mobileActor.applyDamage.params This table accepts the following values:
 --- 
 --- `damage`: number — The amount of damage to apply.
 --- 
 --- `applyArmor`: boolean — *Optional*. If armor should mitigate the incoming damage. If the player is the target, armor experience will be gained.
 --- 
---- `resistAttribute`: number — *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from tes3.effectAttributes.
+--- `resistAttribute`: number — *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
 --- 
---- `applyDifficulty`: boolean — *Optional*. If the game difficulty modifier should be applied. Must be used with the 'playerAttack' argument to apply the correct modifier.
+--- `applyDifficulty`: boolean — *Optional*. If the game difficulty modifier should be applied. Must be used with the `playerAttack` argument to apply the correct modifier.
 --- 
 --- `playerAttack`: boolean — *Optional*. If the attack came from the player. Used for difficulty calculation.
 --- 
@@ -133,19 +133,19 @@ function tes3mobileActor:applyDamage(params) end
 --- @class tes3mobileActor.applyDamage.params
 --- @field damage number The amount of damage to apply.
 --- @field applyArmor boolean *Optional*. If armor should mitigate the incoming damage. If the player is the target, armor experience will be gained.
---- @field resistAttribute number *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from tes3.effectAttributes.
---- @field applyDifficulty boolean *Optional*. If the game difficulty modifier should be applied. Must be used with the 'playerAttack' argument to apply the correct modifier.
+--- @field resistAttribute number *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
+--- @field applyDifficulty boolean *Optional*. If the game difficulty modifier should be applied. Must be used with the `playerAttack` argument to apply the correct modifier.
 --- @field playerAttack boolean *Optional*. If the attack came from the player. Used for difficulty calculation.
 --- @field doNotChangeHealth boolean *Optional*. If all armor effects except the health change should be applied. These include hit sounds, armor condition damage, and player experience gain from being hit.
 
---- Damages the actor's fatigue, with accompanying reaction from the reciever. Invokes the 'damageHandToHand' and 'damagedHandToHand' events, with 'script' source. Returns the actual fatigue damage done.
+--- Damages the actor's fatigue, with accompanying reaction from the reciever. Invokes the [`damageHandToHand`](https://mwse.github.io/MWSE/events/damageHandToHand/) and [`damagedHandToHand`](https://mwse.github.io/MWSE/events/damagedHandToHand/) events, with `tes3.damageSource.script` source. Returns the actual fatigue damage done.
 --- @param fatigueDamage number The amount of fatigue damage to apply.
 --- @param swing number *Optional*. The attack swing magnitude, range 0-1. Only modifies hit volume.
 --- @param alwaysPlayHitVoice boolean *Optional*. Always play the hit reaction voiceover.
 --- @return number result No description yet available.
 function tes3mobileActor:applyFatigueDamage(fatigueDamage, swing, alwaysPlayHitVoice) end
 
---- **Deprecated, please use applyDamage instead.**
+--- **Deprecated, please use [`applyDamage()`](https://mwse.github.io/MWSE/types/tes3mobileActor/#applydamage) instead.**
 --- 
 --- Damages the actor.
 --- @param damage number The amount of damage to apply.
@@ -162,7 +162,7 @@ function tes3mobileActor:applyHealthDamage(damage, isPlayerAttack, scaleWithDiff
 --- 
 --- `applyArmor`: boolean — *Optional*. If armor should mitigate the incoming damage.
 --- 
---- `resistAttribute`: number — *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from tes3.effectAttributes.
+--- `resistAttribute`: number — *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
 --- @return number result No description yet available.
 function tes3mobileActor:calcEffectiveDamage(params) end
 
@@ -170,20 +170,20 @@ function tes3mobileActor:calcEffectiveDamage(params) end
 --- @class tes3mobileActor.calcEffectiveDamage.params
 --- @field damage number The amount of damage to apply.
 --- @field applyArmor boolean *Optional*. If armor should mitigate the incoming damage.
---- @field resistAttribute number *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from tes3.effectAttributes.
+--- @field resistAttribute number *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
 
---- Equips an item, optionally adding the item if needed. If the best match is already equipped, it does not perform an unequip-equip cycle, but does return true.
+--- Equips an item, optionally adding the item if needed. If the best match is already equipped, it does not perform an unequip-equip cycle, but does return `true`.
 --- @param params tes3mobileActor.equip.params This table accepts the following values:
 --- 
 --- `item`: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — The item to equip.
 --- 
 --- `itemData`: tes3itemData — *Optional*. The item data of the specific item to equip.
 --- 
---- `addItem`: boolean — If true, the item will be added to the actor's inventory if needed.
+--- `addItem`: boolean — If `true`, the item will be added to the actor's inventory if needed.
 --- 
---- `selectBestCondition`: boolean — If true, the item in the inventory with the best condition and best charge will be selected.
+--- `selectBestCondition`: boolean — If `true`, the item in the inventory with the best condition and best charge will be selected.
 --- 
---- `selectWorstCondition`: boolean — If true, the item in the inventory with the worst condition and worst charge will be selected. Can be useful for selecting tools.
+--- `selectWorstCondition`: boolean — If `true`, the item in the inventory with the worst condition and worst charge will be selected. Can be useful for selecting tools.
 --- @return boolean itemEquipped No description yet available.
 function tes3mobileActor:equip(params) end
 
@@ -191,11 +191,11 @@ function tes3mobileActor:equip(params) end
 --- @class tes3mobileActor.equip.params
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string The item to equip.
 --- @field itemData tes3itemData *Optional*. The item data of the specific item to equip.
---- @field addItem boolean If true, the item will be added to the actor's inventory if needed.
---- @field selectBestCondition boolean If true, the item in the inventory with the best condition and best charge will be selected.
---- @field selectWorstCondition boolean If true, the item in the inventory with the worst condition and worst charge will be selected. Can be useful for selecting tools.
+--- @field addItem boolean If `true`, the item will be added to the actor's inventory if needed.
+--- @field selectBestCondition boolean If `true`, the item in the inventory with the best condition and best charge will be selected.
+--- @field selectWorstCondition boolean If `true`, the item in the inventory with the worst condition and worst charge will be selected. Can be useful for selecting tools.
 
---- Fetches a filtered list of the active magic effects on the actor. Returns a table with tes3activeMagicEffect items.
+--- Fetches a filtered list of the active magic effects on the actor. Returns a table with [`tes3activeMagicEffect`](https://mwse.github.io/MWSE/types/tes3activeMagicEffect/) items.
 --- @param params tes3mobileActor.getActiveMagicEffects.params This table accepts the following values:
 --- 
 --- `effect`: number — *Optional*. The magic effect ID to search for.
@@ -217,7 +217,7 @@ function tes3mobileActor:getBootsWeight() end
 --- @return number result No description yet available.
 function tes3mobileActor:getFatigueTerm() end
 
---- Finds the timestamp a recharging power was used. Powers recharge 24 hours after this timestamp. The timestamp units are hours. The current time as a timestamp can be accessed at tes3.getSimulationTimestamp().
+--- Finds the timestamp a recharging power was used. Powers recharge 24 hours after this timestamp. The timestamp units are hours. The current time as a timestamp can be accessed at [`tes3.getSimulationTimestamp()`](https://mwse.github.io/MWSE/apis/tes3/#tes3getsimulationtimestamp).
 --- @param power tes3spell The spell object for the power.
 --- @return number timestamp No description yet available.
 function tes3mobileActor:getPowerUseTimestamp(power) end
@@ -244,7 +244,7 @@ function tes3mobileActor:getViewToPoint() end
 --- @return number result No description yet available.
 function tes3mobileActor:getViewToPointWithFacing() end
 
---- Fetches the weapon speed of the actor's currently equipped weapon, or 1.0 if no weapon is equipped.
+--- Fetches the weapon speed of the actor's currently equipped weapon, or `1.0` if no weapon is equipped.
 --- @return number result No description yet available.
 function tes3mobileActor:getWeaponSpeed() end
 
@@ -269,7 +269,7 @@ function tes3mobileActor:rechargePower(power) end
 
 --- Sets the timestamp a recharging power was used. Powers recharge 24 hours after this timestamp.
 --- @param power tes3spell The spell object for the power.
---- @param timestamp number The timestamp of the moment the power was casted, or 24 hours before the recharge point. The timestamp units are hours. The current time as a timestamp can be accessed at tes3.getSimulationTimestamp().
+--- @param timestamp number The timestamp of the moment the power was casted, or 24 hours before the recharge point. The timestamp units are hours. The current time as a timestamp can be accessed at [`tes3.getSimulationTimestamp()`](https://mwse.github.io/MWSE/apis/tes3/#tes3getsimulationtimestamp).
 function tes3mobileActor:setPowerUseTimestamp(power, timestamp) end
 
 --- Forces the actor into combat with another actor.
@@ -280,7 +280,7 @@ function tes3mobileActor:startCombat(target) end
 function tes3mobileActor:startDialogue() end
 
 --- Ends combat for the actor.
---- @param force boolean If false, the function won't stop combat if the actor has other valid hostile targets.
+--- @param force boolean If `false`, the function won't stop combat if the actor has other valid hostile targets.
 function tes3mobileActor:stopCombat(force) end
 
 --- Unequips one or more items from the actor.
@@ -303,7 +303,7 @@ function tes3mobileActor:unequip(params) end
 --- @field armorSlot number *Optional*. The armor slot to unequip.
 --- @field clothingSlot number *Optional*. The clothing slot to unequip.
 
---- Updates statistics derived from attributes, which are magicka, fatigue, and encumbrance. Will also update the UI if used on the player. Normally handled automatically when you use tes3.modStatistic.
+--- Updates statistics derived from attributes, which are magicka, fatigue, and encumbrance. Will also update the UI if used on the player. Normally handled automatically when you use `tes3.modStatistic()`.
 --- @param attribute tes3statistic|tes3statisticSkill *Optional*. Limits the update to statistics derived from this attribute.  e.g. `mobile:updateDerivedStatistics(mobile.strength)`. If not present, all derived statistics will be updated.
 function tes3mobileActor:updateDerivedStatistics(attribute) end
 

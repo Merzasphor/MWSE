@@ -25,6 +25,6 @@
 --- @field offersSpellmaking boolean Friendly access to a flag that controls whether the actor offers spellmaking service.
 --- @field offersSpells boolean Friendly access to a flag that controls whether the actor sells spells.
 --- @field offersTraining boolean Friendly access to a flag that controls whether the actor offers training services.
---- @field travelDestinations table A table access to all tes3travelDestinationNode objects this actor can take the player to.
+--- @field travelDestinations table A table access to all [`tes3travelDestinationNode`](https://mwse.github.io/MWSE/types/tes3travelDestinationNode/) objects this actor can take the player to.
 tes3aiConfig = {}
 

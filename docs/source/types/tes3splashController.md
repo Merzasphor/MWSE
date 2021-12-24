@@ -6,7 +6,7 @@ A core game controller responsible for controlling temporary graphics.
 
 ### `activeSplashes`
 
-*Read-only*. A list of tes3splashControllerActiveSplash objects.
+*Read-only*. A list of [`tes3splashControllerActiveSplash`](https://mwse.github.io/MWSE/types/tes3splashControllerActiveSplash/) objects.
 
 **Returns**:
 

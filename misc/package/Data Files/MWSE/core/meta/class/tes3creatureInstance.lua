@@ -3,7 +3,7 @@
 --- A creature object that has been cloned. Typically represents a creature that has been instanced in the world.
 --- @class tes3creatureInstance : tes3actor, tes3physicalObject, tes3object, tes3baseObject
 --- @field aiConfig tes3aiConfig *Read-only*. Simplified access to the base creature's AI configuration.
---- @field attacks table Simplified access to the base creature's attacks. A table of three attacks, represented by a trio of tes3rangeInt.
+--- @field attacks table Simplified access to the base creature's attacks. A table of three attacks, represented by a trio of [`tes3rangeInt`](https://mwse.github.io/MWSE/types/tes3rangeInt/).
 --- @field attributes table Simplified access to the base creature's attributes. A table of eight numbers, representing the base values for the creature's attributes.
 --- @field baseObject tes3creature Access to creature that this one is instanced from.
 --- @field biped boolean Access to the creature's biped flag.
@@ -26,9 +26,9 @@
 --- @field skills table Simplified access to the base creature's skills. A table of three numbers, representing the base values for the creature's combat, magic, and stealth skills.
 --- @field soul number Simplified access to the base creature's soul. The amount of soul value that the creature provides.
 --- @field soundCreature tes3creature Simplified access to the base creature's sound generator. A creature to use instead of this one for sound generation.
---- @field spells tes3spellList *Read-only*. Quick access to the base creature's spell list. It is a tes3spellList, which is a list wrapper with helper functions. The actual list is accessed with .iterator. e.g. for _, spell in pairs(creature.spells.iterator) do print(spell.name) end
+--- @field spells tes3spellList *Read-only*. Quick access to the base creature's spell list. It is a `tes3spellList`, which is a list wrapper with helper functions. The actual list is accessed with `.iterator`. e.g. `for _, spell in pairs(creature.spells.iterator) do print(spell.name) end`
 --- @field swims boolean Access to the creature's swims flag.
---- @field type number Simplified access to the base creature's type. The type of the creature, represented by a number for normal, daedra, undead, or humanoid.
+--- @field type number Simplified access to the base creature's type. The type of the creature, maps to values in [`tes3.creatureType`](https://mwse.github.io/MWSE/references/creature-types/) namespace.
 --- @field usesEquipment boolean Access to the creature's usesEquipment flag.
 --- @field walks boolean Access to the creature's walks flag.
 --- @field weapon tes3weapon *Read-only*. The creature's currently equipped weapon.

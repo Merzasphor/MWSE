@@ -1,6 +1,6 @@
 return {
 	type = "method",
-	description = [[Fetches a filtered list of the active magic effects on the actor. Returns a table with tes3activeMagicEffect items.]],
+	description = [[Fetches a filtered list of the active magic effects on the actor. Returns a table with [`tes3activeMagicEffect`](https://mwse.github.io/MWSE/types/tes3activeMagicEffect/) items.]],
 	arguments = {{
 		name = "params",
 		type = "table",

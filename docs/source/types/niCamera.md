@@ -107,7 +107,7 @@ The port on the backbuffer of the camera.
 
 ### `properties`
 
-The list of properties attached to this niAVObject.
+The list of properties attached to this `niAVObject`.
 
 **Returns**:
 

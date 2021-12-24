@@ -77,7 +77,7 @@ The spell's cast type. Maps to [`tes3.spellType`](https://mwse.github.io/MWSE/re
 
 ### `effects`
 
-*Read-only*. An array-style table of the tes3effect data on the object.
+*Read-only*. An array-style table of the [`tes3effect`](https://mwse.github.io/MWSE/types/tes3effect/) data on the object.
 
 **Returns**:
 
@@ -365,7 +365,7 @@ local result = tes3spell:getFirstIndexOfEffect(effectId)
 
 **Parameters**:
 
-* `effectId` (number): The tes3effect ID to look for.
+* `effectId` (number): The ID of a `tes3effect` object to look for.
 
 **Returns**:
 
@@ -383,11 +383,11 @@ local effect = tes3spell:getLeastProficientEffect(actor)
 
 **Parameters**:
 
-* `actor` ([tes3mobileActor](../../types/tes3mobileActor), [tes3reference](../../types/tes3reference), [tes3npc](../../types/tes3npc), [tes3npcInstance](../../types/tes3npcInstance)): The actor to calculate for. A mobile actor is preferred, as passing only a tes3npc will not use up to date skill information.
+* `actor` ([tes3mobileActor](../../types/tes3mobileActor), [tes3reference](../../types/tes3reference), [tes3npc](../../types/tes3npc), [tes3npcInstance](../../types/tes3npcInstance)): The actor to calculate for. A mobile actor is preferred, as passing only a `tes3npc` will not use up to date skill information.
 
 **Returns**:
 
-* `effect` ([tes3effect](../../types/tes3effect), nil): The least proficient effect, or nil if the spell has no valid effects.
+* `effect` ([tes3effect](../../types/tes3effect), nil): The least proficient effect, or `nil` if the spell has no valid effects.
 
 ***
 
@@ -401,11 +401,11 @@ local schoolID = tes3spell:getLeastProficientSchool(actor)
 
 **Parameters**:
 
-* `actor` ([tes3mobileActor](../../types/tes3mobileActor), [tes3reference](../../types/tes3reference), [tes3npc](../../types/tes3npc), [tes3npcInstance](../../types/tes3npcInstance)): The actor to calculate for. A mobile actor is preferred, as passing only a tes3npc will not use up to date skill information.
+* `actor` ([tes3mobileActor](../../types/tes3mobileActor), [tes3reference](../../types/tes3reference), [tes3npc](../../types/tes3npc), [tes3npcInstance](../../types/tes3npcInstance)): The actor to calculate for. A mobile actor is preferred, as passing only a `tes3npc` will not use up to date skill information.
 
 **Returns**:
 
-* `schoolID` (number, nil): The least proficient school ID, or nil if the spell has no valid effects.
+* `schoolID` (number, nil): The least proficient school ID, or `nil` if the spell has no valid effects.
 
 ***
 

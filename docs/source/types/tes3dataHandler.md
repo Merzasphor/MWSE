@@ -96,7 +96,7 @@ Access to the current ambient water sound.
 
 ### `exteriorCells`
 
-*Read-only*. A table of nine tes3cellExteriorData objects for any loaded exterior cells.
+*Read-only*. A table of nine [`tes3cellExteriorData`](https://mwse.github.io/MWSE/types/tes3cellExteriorData/) objects for all loaded exterior cells.
 
 **Returns**:
 

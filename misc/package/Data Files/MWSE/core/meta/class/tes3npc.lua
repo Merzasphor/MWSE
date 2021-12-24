@@ -27,6 +27,6 @@
 --- @field reputation number The actor's base reputation.
 --- @field script tes3script The script that runs on the object.
 --- @field skills table A table of twenty seven numbers, representing the base values for the NPC's skills.
---- @field spells tes3spellList *Read-only*. A list of spells that the actor has access to. It is a tes3spellList, which is a list wrapper with helper functions. The actual list is accessed with .iterator. e.g. for _, spell in pairs(npc.spells.iterator) do print(spell.name) end
+--- @field spells tes3spellList *Read-only*. A list of spells that the actor has access to. It is a `tes3spellList`, which is a list wrapper with helper functions. The actual list is accessed with `.iterator`. e.g. `for _, spell in pairs(npc.spells.iterator) do print(spell.name) end`
 tes3npc = {}
 

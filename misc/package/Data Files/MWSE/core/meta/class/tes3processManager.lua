@@ -3,7 +3,7 @@
 --- 
 --- @class tes3processManager
 --- @field aiDistance number A value which controls how far the game AI is processed, measured in game distance units. Corresponds to AI Distance slider in Options menu.
---- @field aiDistanceScale number A value which controls how far the game AI is processed. Corresponds to AI Distance slider in Options menu. This scale is in range [0, 1]. Where 0 means the minimal AI processing range, while 1 means maximal AI processing range.
+--- @field aiDistanceScale number A value which controls how far the game AI is processed. Corresponds to AI Distance slider in Options menu. This scale is in range [0, 1]. Where `0` means the minimal AI processing range, while `1` means maximal AI processing range.
 tes3processManager = {}
 
 --- 

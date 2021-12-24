@@ -27,7 +27,7 @@ The bounding box for the object.
 
 ### `calculateFromAllLevels`
 
-If true, the leveled list is picked from the entire level range, instead of just the highest.
+If `true`, the leveled list is picked from the entire level range, instead of just the highest.
 
 **Returns**:
 
@@ -37,7 +37,7 @@ If true, the leveled list is picked from the entire level range, instead of just
 
 ### `chanceForNothing`
 
-The percent chance, from 0 to 100, for no object to be chosen.
+The percent chance, from `0` to `100`, for no object to be chosen.
 
 **Returns**:
 
@@ -107,7 +107,7 @@ True if this object is an editor marker for a gameplay location. These include t
 
 ### `list`
 
-*Read-only*. The collection that itself, containing tes3leveledListNodes.
+*Read-only*. The collection that contains [`tes3leveledListNode`](https://mwse.github.io/MWSE/types/tes3leveledListNode/)s.
 
 **Returns**:
 
@@ -283,7 +283,7 @@ local string = tes3baseObject:__tojson()
 
 ### `insert`
 
-This function inserts given creature in the creature leveled list. True is returned if the operation was successful.
+This function inserts given creature in the creature leveled list. Returns `true` if the operation was successful.
 
 ```lua
 local result = tes3leveledCreature:insert(entry, level)
@@ -316,7 +316,7 @@ local result = tes3leveledCreature:pickFrom()
 
 ### `remove`
 
-This function removes a creature from the creature leveled list. True is returned if the operation was successful.
+This function removes a creature from the creature leveled list. Returns `true` if the operation was successful.
 
 ```lua
 local result = tes3leveledCreature:remove(entry, level)

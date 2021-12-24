@@ -27,7 +27,7 @@ This type inherits the following: [tes3actor](../../types/tes3actor), [tes3physi
 
 ### `attacks`
 
-A table of three attacks, represented by a trio of tes3rangeInt.
+A table of three attacks, represented by a trio of [`tes3rangeInt`](https://mwse.github.io/MWSE/types/tes3rangeInt/).
 
 **Returns**:
 
@@ -457,7 +457,7 @@ The soruceless flag of the object.
 
 ### `spells`
 
-*Read-only*. A list of spells that the actor has access to. It is a tes3spellList, which is a list wrapper with helper functions. The actual list is accessed with .iterator. e.g. for _, spell in pairs(creature.spells.iterator) do print(spell.name) end
+*Read-only*. A list of spells that the actor has access to. It is a `tes3spellList`, which is a list wrapper with helper functions. The actual list is accessed with `.iterator`. e.g. `for _, spell in pairs(creature.spells.iterator) do print(spell.name) end`
 
 **Returns**:
 
@@ -563,7 +563,7 @@ local result = tes3actor:hasItemEquipped({ item = ..., itemData = ... })
 
 ### `offersService`
 
-Checks if the actor will offer a service in dialogue. This an offer and may still be refused by dialogue checks. To also get the result of dialogue checks, use tes3.checkMerchantOffersService.
+Checks if the actor will offer a service in dialogue. This an offer and may still be refused by dialogue checks. To also get the result of dialogue checks, use [`tes3.checkMerchantOffersService()`](https://mwse.github.io/MWSE/apis/tes3/#tes3checkmerchantoffersservice).
 
 ```lua
 local result = tes3actor:offersService(service)
@@ -571,7 +571,7 @@ local result = tes3actor:offersService(service)
 
 **Parameters**:
 
-* `service` (number): Use one of the tes3.merchantService.* constants.
+* `service` (number): Use one of the [`tes3.merchantService.*`](https://mwse.github.io/MWSE/references/merchant-service-types/) constants.
 
 **Returns**:
 
@@ -581,7 +581,7 @@ local result = tes3actor:offersService(service)
 
 ### `onInventoryClose`
 
-A callback function invoked when an inventory is closed. Typically not used outside of specific purposes. You may find tes3.reference's onCloseInventory() to be more convenient to use.
+A callback function invoked when an inventory is closed. Typically not used outside of specific purposes. You may find `tes3.reference`'s `onCloseInventory()` to be more convenient to use.
 
 ```lua
 tes3actor:onInventoryClose(reference)
@@ -595,7 +595,7 @@ tes3actor:onInventoryClose(reference)
 
 ### `tradesItemType`
 
-Checks if the actor will buy and sell items of a given object type. e.g. actor:tradesItemType(tes3.objectType.repairItem)
+Checks if the actor will buy and sell items of a given object type. e.g. `actor:tradesItemType(tes3.objectType.repairItem)`
 
 ```lua
 local result = tes3actor:tradesItemType(objectType)
@@ -603,7 +603,7 @@ local result = tes3actor:tradesItemType(objectType)
 
 **Parameters**:
 
-* `objectType` (tes3objectType): tes3.objectType.* constants can be passed here.
+* `objectType` (tes3objectType): [`tes3.objectType.*`](https://mwse.github.io/MWSE/references/object-types/) constants can be passed here.
 
 **Returns**:
 

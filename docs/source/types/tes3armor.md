@@ -207,7 +207,7 @@ The collection responsible for holding this object.
 
 ### `parts`
 
-*Read-only*. An array-style table of the tes3wearablePart data on the object.
+*Read-only*. An array-style table of the [`tes3wearablePart`](https://mwse.github.io/MWSE/types/tes3wearablePart/) data on the object.
 
 **Returns**:
 

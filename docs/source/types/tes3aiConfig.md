@@ -236,7 +236,7 @@ Friendly access to a flag that controls whether the actor offers training servic
 
 ### `travelDestinations`
 
-A table access to all tes3travelDestinationNode objects this actor can take the player to.
+A table access to all [`tes3travelDestinationNode`](https://mwse.github.io/MWSE/types/tes3travelDestinationNode/) objects this actor can take the player to.
 
 **Returns**:
 

@@ -79,7 +79,7 @@ The blocked state of the object.
 
 ### `data`
 
-A generic lua table that data can be written to, and synced to/from the save. All information stored must be valid for serialization to json. For item references, this is the same table as on the tes3itemData structure. To store data that doesn't get serialized to/from the save, use tempData.
+A generic lua table that data can be written to, and synced to/from the save. All information stored must be valid for serialization to json. For item references, this is the same table as on the `tes3itemData` structure. To store data that doesn't get serialized to/from the save, use `tempData`.
 
 **Returns**:
 
@@ -99,7 +99,7 @@ A generic lua table that data can be written to, and synced to/from the save. Al
 
 ### `destination`
 
-*Read-only*. Returns the travel destination node for this reference, or nil. This can be used to determine where a given door links to.
+*Read-only*. Returns the travel destination node for this reference, or `nil`. This can be used to determine where a given door links to.
 
 **Returns**:
 
@@ -129,7 +129,7 @@ Convenient access to the z-component of the reference's orientation. Setting the
 
 ### `hasNoCollision`
 
-Sets the no-collision flag on this reference, and recalculates collision groups. Use the setNoCollisionFlag function to manage collision group recalculation instead.
+Sets the no-collision flag on this reference, and recalculates collision groups. Use the [`setNoCollisionFlag()`](https://mwse.github.io/MWSE/types/tes3reference/?h=setnocollisionflag#setnocollisionflag) function to manage collision group recalculation instead.
 
 **Returns**:
 
@@ -149,7 +149,7 @@ Sets the no-collision flag on this reference, and recalculates collision groups.
 
 ### `isDead`
 
-*Read-only*. Returns true if the object is dead, false if they are alive, or nil if that couldn't be determined.
+*Read-only*. Returns `true` if the object is dead, `false` if they are alive, or `nil` if that couldn't be determined.
 
 **Returns**:
 
@@ -199,7 +199,7 @@ True if this object is an editor marker for a gameplay location. These include t
 
 ### `itemData`
 
-Gets or sets the attached itemData for this reference. If set to nil, the item data will be unhooked but not deleted.
+Gets or sets the attached `itemData` for this reference. If set to `nil`, the item data will be unhooked but not deleted.
 
 **Returns**:
 
@@ -209,7 +209,7 @@ Gets or sets the attached itemData for this reference. If set to nil, the item d
 
 ### `leveledBaseReference`
 
-*Read-only*. If this reference is a leveled spawn, this is the leveled creature spawn reference. If this reference wasn't the result of a leveled spawn, the value is nil.
+*Read-only*. If this reference is a leveled spawn, this is the leveled creature spawn reference. If this reference wasn't the result of a leveled spawn, the value is `nil`.
 
 **Returns**:
 
@@ -469,7 +469,7 @@ If true, this reference can store temporary or persistent lua data.
 
 ### `tempData`
 
-As with the data field, a generic lua table that data can be written to. No information in this table will persist into saves. For item references, this is the same table as on the tes3itemData structure.
+As with the `data` field, a generic lua table that data can be written to. No information in this table will persist into saves. For item references, this is the same table as on the `tes3itemData` structure.
 
 **Returns**:
 
@@ -555,7 +555,7 @@ tes3reference:deleteDynamicLightAttachment(removeLightFromParent)
 
 **Parameters**:
 
-* `removeLightFromParent` (boolean): *Default*: `false`. If true, the dynamic light is removed from its parent node as well.
+* `removeLightFromParent` (boolean): *Default*: `false`. If `true`, the dynamic light is removed from its parent node as well.
 
 ***
 
@@ -579,7 +579,7 @@ local success = tes3reference:disable()
 
 **Returns**:
 
-* `success` (boolean): If true, the reference was successfully disabled.
+* `success` (boolean): If `true`, the reference was successfully disabled.
 
 ***
 
@@ -593,7 +593,7 @@ local success = tes3reference:enable()
 
 **Returns**:
 
-* `success` (boolean): If true, the reference was successfully enabled.
+* `success` (boolean): If `true`, the reference was successfully enabled.
 
 ***
 
@@ -692,7 +692,7 @@ tes3reference:setDynamicLighting()
 
 ### `setNoCollisionFlag`
 
-Sets if this reference has active collision. This is preferable to the hasNoCollision property, if are manipulating multiple objects at once and do not want to constantly recalculate collision groups.
+Sets if this reference has active collision. This is preferable to changing the `hasNoCollision` property, if you are manipulating multiple objects at once and do not want to constantly recalculate collision groups.
 
 ```lua
 tes3reference:setNoCollisionFlag(hasNoCollision, updateCollisions)
@@ -700,8 +700,8 @@ tes3reference:setNoCollisionFlag(hasNoCollision, updateCollisions)
 
 **Parameters**:
 
-* `hasNoCollision` (boolean): If true, the reference no longer has collision.
-* `updateCollisions` (boolean): If true, collision groups for the active cells are recalculated.
+* `hasNoCollision` (boolean): If `true`, the reference no longer has collision.
+* `updateCollisions` (boolean): If `true`, collision groups for the active cells are recalculated.
 
 ***
 

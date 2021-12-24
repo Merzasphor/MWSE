@@ -1,6 +1,6 @@
 return {
 	type = "method",
-	description = [[Creates a clickable button. Register the "mouseClick" event to capture a button press.
+	description = [[Creates a clickable button. Register the `mouseClick` event to capture a button press.
     
     Custom widget properties:
         | `number`_ `element.widget.state`: Interaction state. 1 = normal, 2 = disabled, 4 = active. Controls which colour set to use for text.

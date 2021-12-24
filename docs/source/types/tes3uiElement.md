@@ -40,7 +40,7 @@ Element alpha colour, using range [0.0, 1.0]. Used to composite elements. If you
 
 ### `autoHeight`
 
-When `true`, automatically expands element dimensions to fit child elements. Dimensions are restricted by minWidth, minHeight, maxWidth and maxHeight properties.
+When `true`, automatically expands element dimensions to fit child elements. Dimensions are restricted by `minWidth`, `minHeight`, `maxWidth` and `maxHeight` properties.
 
 **Returns**:
 
@@ -50,7 +50,7 @@ When `true`, automatically expands element dimensions to fit child elements. Dim
 
 ### `autoWidth`
 
-When `true`, automatically expands element dimensions to fit child elements. Dimensions are restricted by minWidth, minHeight, maxWidth and maxHeight properties.
+When `true`, automatically expands element dimensions to fit child elements. Dimensions are restricted by `minWidth`, `minHeight`, `maxWidth` and `maxHeight` properties.
 
 **Returns**:
 
@@ -70,7 +70,7 @@ Integer number. Border size in pixels. Border is the extra empty space around an
 
 ### `borderBottom`
 
-Integer number. Bottom border size in pixels. When this is set to -1, the borderAllSides setting is used for this side instead.
+Integer number. Bottom border size in pixels. When this is set to `-1`, the borderAllSides setting is used for this side instead.
 
 **Returns**:
 
@@ -80,7 +80,7 @@ Integer number. Bottom border size in pixels. When this is set to -1, the border
 
 ### `borderLeft`
 
-Integer number. Left border size in pixels. When this is set to -1, the borderAllSides setting is used for this side instead.
+Integer number. Left border size in pixels. When this is set to `-1`, the borderAllSides setting is used for this side instead.
 
 **Returns**:
 
@@ -90,7 +90,7 @@ Integer number. Left border size in pixels. When this is set to -1, the borderAl
 
 ### `borderRight`
 
-Integer number. Left border size in pixels. When this is set to -1, the borderAllSides setting is used for this side instead.
+Integer number. Left border size in pixels. When this is set to `-1`, the borderAllSides setting is used for this side instead.
 
 **Returns**:
 
@@ -100,7 +100,7 @@ Integer number. Left border size in pixels. When this is set to -1, the borderAl
 
 ### `borderTop`
 
-Integer number. Top border size in pixels. When this is set to -1, the borderAllSides setting is used for this side instead.
+Integer number. Top border size in pixels. When this is set to `-1`, the borderAllSides setting is used for this side instead.
 
 **Returns**:
 
@@ -192,7 +192,7 @@ Disables user actions on this element. Widgets may stop accepting mouse and keyb
 
 ### `flowDirection`
 
-Can have values `"left_to_right"` or `"top_to_bottom"`. Indicates which direction child elements are laid out.
+Can have values `"left_to_right"` or `"top_to_bottom"`. These values are available as [`tes3.flowDirection`](https://mwse.github.io/MWSE/references/flow-directions/) enumeration. Indicates which direction child elements are laid out.
 
 **Returns**:
 
@@ -269,7 +269,7 @@ Image scaling multipliers. Only applies to image elements.
 
 ### `justifyText`
 
-Can have values `"left"`, `"center"`, or `"right"`. Controls text justification. To work correctly for center/right justification,  `wrapText` must be `true`.
+Can have values `"left"`, `"center"`, or `"right"`. Controls text justification. These values are available as [`tes3.justifyText`](https://mwse.github.io/MWSE/references/justify-text/) enumeration. To work correctly for center/right justification,  `wrapText` must be `true`.
 
 **Returns**:
 
@@ -329,7 +329,7 @@ Minimum dimensions for auto-size layout and resizable frames. Integer number.
 
 ### `paddingAllSides`
 
-Integer number. Padding size in pixels. Padding is the blank space between the edge of an element and its contents. Individual padding sizes default to -1, making it use the paddingAllSides setting.
+Integer number. Padding size in pixels. Padding is the blank space between the edge of an element and its contents. Individual padding sizes default to `-1`, making it use the paddingAllSides setting.
 
 **Returns**:
 
@@ -339,7 +339,7 @@ Integer number. Padding size in pixels. Padding is the blank space between the e
 
 ### `paddingBottom`
 
-Integer number. Bottom padding size in pixels. When this is set to -1, the paddingAllSides setting is used for this side instead.
+Integer number. Bottom padding size in pixels. When this is set to `-1`, the paddingAllSides setting is used for this side instead.
 
 **Returns**:
 
@@ -349,7 +349,7 @@ Integer number. Bottom padding size in pixels. When this is set to -1, the paddi
 
 ### `paddingLeft`
 
-Integer number. Left padding size in pixels. When this is set to -1, the paddingAllSides setting is used for this side instead.
+Integer number. Left padding size in pixels. When this is set to `-1`, the paddingAllSides setting is used for this side instead.
 
 **Returns**:
 
@@ -359,7 +359,7 @@ Integer number. Left padding size in pixels. When this is set to -1, the padding
 
 ### `paddingRight`
 
-Integer number. Right padding size in pixels. When this is set to -1, the paddingAllSides setting is used for this side instead.
+Integer number. Right padding size in pixels. When this is set to `-1`, the paddingAllSides setting is used for this side instead.
 
 **Returns**:
 
@@ -369,7 +369,7 @@ Integer number. Right padding size in pixels. When this is set to -1, the paddin
 
 ### `paddingTop`
 
-Integer number. Top padding size in pixels. When this is set to -1, the paddingAllSides setting is used for this side instead.
+Integer number. Top padding size in pixels. When this is set to `-1`, the paddingAllSides setting is used for this side instead.
 
 **Returns**:
 
@@ -523,7 +523,7 @@ local result = tes3uiElement:createBlock(id)
 
 ### `createButton`
 
-Creates a clickable button. Register the "mouseClick" event to capture a button press.
+Creates a clickable button. Register the `mouseClick` event to capture a button press.
     
     Custom widget properties:
         | `number`_ `element.widget.state`: Interaction state. 1 = normal, 2 = disabled, 4 = active. Controls which colour set to use for text.

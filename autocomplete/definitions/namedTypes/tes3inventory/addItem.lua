@@ -1,6 +1,6 @@
 return {
 	type = "method",
-	description = [[Adds an item into the inventory directly. This should not be used, in favor of the tes3.addItem function.]],
+	description = [[Adds an item into the inventory directly. This should not be used, in favor of the [`tes3.addItem()`](https://mwse.github.io/MWSE/apis/tes3/#tes3additem) function.]],
 	arguments = {{
 		name = "params",
 		type = "table",

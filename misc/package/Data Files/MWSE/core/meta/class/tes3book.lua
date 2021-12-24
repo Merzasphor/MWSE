@@ -8,9 +8,9 @@
 --- @field mesh string The path to the object's mesh.
 --- @field name string The player-facing name for the object.
 --- @field script tes3script The script that runs on the object.
---- @field skill number The skill learned from the book, or -1 if the book doesn't have one, or has already been read.
+--- @field skill number The skill learned from the book, or `-1` if the book doesn't have one, or has already been read.
 --- @field text string *Read-only*. Loads and displays the text of the book.
---- @field type number The book type, where 0 is book and 1 is scroll.
+--- @field type number The book type. Maps to values in [`tes3.bookType`](https://mwse.github.io/MWSE/references/book-types/) namespace.
 --- @field value number The value of the object.
 --- @field weight number The weight of the object.
 tes3book = {}

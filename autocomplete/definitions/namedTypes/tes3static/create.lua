@@ -1,7 +1,7 @@
 return {
 	type = "function",
 	deprecated = true,
-	description = [[Use `tes3.createObject` instead. This function created a new static object, which will be stored as part of the current saved game.]],
+	description = [[Use [`tes3.createObject()`](https://mwse.github.io/MWSE/apis/tes3/#tes3createobject) instead. This function creates a new static object, which will be stored as part of the current saved game.]],
 	arguments = {{
 		name = "params",
 		type = "table",

@@ -36,7 +36,7 @@ A configuration detailing a quick key.
 
 ### `type`
 
-*Read-only*. The type of the quick key, with the numeric value matching `tes3.quickKeyType` constants.
+*Read-only*. The type of the quick key, with the numeric value matching [`tes3.quickKeyType`](https://mwse.github.io/MWSE/references/quick-key-types/) constants.
 
 **Returns**:
 
