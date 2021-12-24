@@ -335,6 +335,16 @@ namespace TES3 {
 		TES3_InventoryData_AddInventoryItems(this, inventory, type);
 	}
 
+	const auto TES3_InventoryData_findTile = reinterpret_cast<UI::InventoryTile * (__thiscall*)(InventoryData*, Item*, ItemData*, int)>(0x633E40);
+	UI::InventoryTile* InventoryData::findTile(Item* item, ItemData* itemData, int type) {
+		return TES3_InventoryData_findTile(this, item, itemData, type);
+	}
+
+	const auto TES3_InventoryData_mergeTile = reinterpret_cast<void(__thiscall*)(InventoryData*, UI::InventoryTile*)>(0x632FC0);
+	void InventoryData::mergeTile(UI::InventoryTile* tile) {
+		TES3_InventoryData_mergeTile(this, tile);
+	}
+
 	//
 	// JournalHTML
 	//
