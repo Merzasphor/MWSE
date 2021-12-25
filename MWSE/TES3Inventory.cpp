@@ -131,6 +131,11 @@ namespace TES3 {
 		return TES3_Inventory_AddItemByReference(this, mobile, reference, out_count);
 	}
 
+	const auto TES3_Inventory_removeItemData = reinterpret_cast<ItemData * (__thiscall*)(Inventory*, Item*, ItemData*)>(0x4997F0);
+	void Inventory::removeItemData(Item* item, ItemData* itemData) {
+		TES3_Inventory_removeItemData(this, item, itemData);
+	}
+
 	const auto TES3_Inventory_RemoveItemWithData = reinterpret_cast<void(__thiscall*)(Inventory*, MobileActor*, Item *, ItemData *, int, bool)>(0x499550);
 	void Inventory::removeItemWithData(MobileActor * mobile, Item * item, ItemData * itemData, int count, bool deleteStackData) {
 		TES3_Inventory_RemoveItemWithData(this, mobile, item, itemData, count, deleteStackData);

@@ -1591,6 +1591,32 @@ function tes3.removeItem(params) end
 --- @field playSound boolean *Default*: `true`. If false, the up/down sound for the item won't be played.
 --- @field updateGUI boolean *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though `tes3ui.forcePlayerInventoryUpdate()` must manually be called after all inventory updates are finished.
 
+--- Removes and deletes item data from a given reference, or from their inventory. If no `itemData` is provided, it will be removed from the reference itself.
+--- @param params tes3.removeItemData.params This table accepts the following values:
+--- 
+--- `from`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — The reference or mobile whose inventory will be modified.
+--- 
+--- `item`: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — The item to remove item data for.
+--- 
+--- `itemData`: tes3itemData — *Optional*. The exact item data to remove. If no itemData is provided, the itemData from the reference itself will be removed.
+--- 
+--- `force`: boolean — If true, no checks are made to see if the item data should be deleted. It will always be purged.
+--- 
+--- `ignoreOwnership`: boolean — *Default*: `true`. If `force` is false, a check will be made to see if the item data is empty and can be deleted. By default this ignores any ownership data. Setting this to false will override that behavior.
+--- 
+--- `updateGUI`: boolean — *Default*: `true`. If false, the player or contents menu won't be updated.
+--- @return boolean wasRemoved No description yet available.
+function tes3.removeItemData(params) end
+
+---Table parameter definitions for `tes3.removeItemData`.
+--- @class tes3.removeItemData.params
+--- @field from tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string The reference or mobile whose inventory will be modified.
+--- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string The item to remove item data for.
+--- @field itemData tes3itemData *Optional*. The exact item data to remove. If no itemData is provided, the itemData from the reference itself will be removed.
+--- @field force boolean If true, no checks are made to see if the item data should be deleted. It will always be purged.
+--- @field ignoreOwnership boolean *Default*: `true`. If `force` is false, a check will be made to see if the item data is empty and can be deleted. By default this ignores any ownership data. Setting this to false will override that behavior.
+--- @field updateGUI boolean *Default*: `true`. If false, the player or contents menu won't be updated.
+
 --- Stops a sound playing. Without a reference, it will match unattached sounds. With a reference, it will only match a sound playing on that specific reference.
 --- @param params tes3.removeSound.params This table accepts the following values:
 --- 

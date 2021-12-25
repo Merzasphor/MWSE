@@ -66,6 +66,7 @@ namespace TES3 {
 		int addItem(MobileActor * mobile, Item * item, int count, bool overwriteCount, ItemData ** itemDataRef);
 		int addItemWithoutData(MobileActor * mobile, Item * item, int count, bool something);
 		ItemData* addItemByReference(MobileActor * mobile, Reference * reference, int * out_count);
+		void removeItemData(Item* item, ItemData* itemData);
 		void removeItemWithData(MobileActor * mobile, Item * item, ItemData * itemData, int count, bool deleteStackData);
 		void dropItem(MobileActor* mobileActor, Item * item, ItemData * itemData, int count, Vector3 position, Vector3 orientation, bool ignoreItemData = false);
 

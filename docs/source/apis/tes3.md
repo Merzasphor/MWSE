@@ -2836,6 +2836,30 @@ local removedCount = tes3.removeItem({ reference = ..., item = ..., itemData = .
 
 ***
 
+### `tes3.removeItemData`
+
+Removes and deletes item data from a given reference, or from their inventory. If no `itemData` is provided, it will be removed from the reference itself.
+
+```lua
+local wasRemoved = tes3.removeItemData({ from = ..., item = ..., itemData = ..., force = ..., ignoreOwnership = ..., updateGUI = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `from` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The reference or mobile whose inventory will be modified.
+	* `item` ([tes3item](../../types/tes3item), string): The item to remove item data for.
+	* `itemData` ([tes3itemData](../../types/tes3itemData)): *Optional*. The exact item data to remove. If no itemData is provided, the itemData from the reference itself will be removed.
+	* `force` (boolean): If true, no checks are made to see if the item data should be deleted. It will always be purged.
+	* `ignoreOwnership` (boolean): *Default*: `true`. If `force` is false, a check will be made to see if the item data is empty and can be deleted. By default this ignores any ownership data. Setting this to false will override that behavior.
+	* `updateGUI` (boolean): *Default*: `true`. If false, the player or contents menu won't be updated.
+
+**Returns**:
+
+* `wasRemoved` (boolean)
+
+***
+
 ### `tes3.removeSound`
 
 Stops a sound playing. Without a reference, it will match unattached sounds. With a reference, it will only match a sound playing on that specific reference.

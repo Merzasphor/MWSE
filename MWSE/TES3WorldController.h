@@ -165,6 +165,8 @@ namespace TES3 {
 
 		_declspec(dllexport) void clearIcons(int type);
 		_declspec(dllexport) void addInventoryItems(Inventory* inventory, int type);
+		_declspec(dllexport) UI::InventoryTile* findTile(Item* item, ItemData* itemData, int type);
+		_declspec(dllexport) void mergeTile(UI::InventoryTile* tile);
 
 	};
 	static_assert(sizeof(InventoryData) == 0x24, "TES3::InventoryData failed size validation");
