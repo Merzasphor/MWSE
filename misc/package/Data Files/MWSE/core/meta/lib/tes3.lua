@@ -442,7 +442,7 @@ function tes3.cast(params) end
 --- @param reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string No description yet available.
 --- @param service number *Optional*. The specific service to check for availability. Uses the tes3.merchantService.* constants.
 --- @return boolean offersService No description yet available.
---- @return tes3DialogueInfo refusalReply No description yet available.
+--- @return tes3dialogueInfo refusalReply No description yet available.
 function tes3.checkMerchantOffersService(reference, service) end
 
 --- Determines if a merchant trades in a given item.
@@ -1285,7 +1285,7 @@ function tes3.menuMode() end
 --- 
 --- `showInDialog`: boolean — *Optional*. Specifying showInDialog = false forces the toast-style message, which is not shown in the dialog menu. Defaults to true.
 --- 
---- `duration`: float — *Optional*. Overrides how long the toast-style message remains visible.
+--- `duration`: number — *Optional*. Overrides how long the toast-style message remains visible.
 --- @vararg any *Optional*. Only used if messageOrParams is a string.
 --- @return tes3uiElement|nil element The UI menu created for the notification, if any.
 function tes3.messageBox(messageOrParams, ...) end
@@ -1296,7 +1296,7 @@ function tes3.messageBox(messageOrParams, ...) end
 --- @field buttons table *Optional*. An array of strings to use for buttons.
 --- @field callback function No description yet available.
 --- @field showInDialog boolean *Optional*. Specifying showInDialog = false forces the toast-style message, which is not shown in the dialog menu. Defaults to true.
---- @field duration float *Optional*. Overrides how long the toast-style message remains visible.
+--- @field duration number *Optional*. Overrides how long the toast-style message remains visible.
 
 --- Modifies a statistic on a given actor. This should be used instead of manually setting values on the game structures, to ensure that events and GUI elements are properly handled. Either skill, attribute, or name must be provided.
 ---
@@ -1851,9 +1851,9 @@ function tes3.setAnimationTiming(params) end
 --- 
 --- `reference`: tes3reference — The door reference that will be updated.
 --- 
---- `position`: tes3vector|table — The new coordinates of the transition.
+--- `position`: tes3vector3|table — The new coordinates of the transition.
 --- 
---- `orientation`: tes3vector|table — The new rotation to use after transition.
+--- `orientation`: tes3vector3|table — The new rotation to use after transition.
 --- 
 --- `cell`: tes3cell|string — *Optional*. The cell to transition to, if transitioning to an interior.
 function tes3.setDestination(params) end
@@ -1861,8 +1861,8 @@ function tes3.setDestination(params) end
 ---Table parameter definitions for `tes3.setDestination`.
 --- @class tes3.setDestination.params
 --- @field reference tes3reference The door reference that will be updated.
---- @field position tes3vector|table The new coordinates of the transition.
---- @field orientation tes3vector|table The new rotation to use after transition.
+--- @field position tes3vector3|table The new coordinates of the transition.
+--- @field orientation tes3vector3|table The new rotation to use after transition.
 --- @field cell tes3cell|string *Optional*. The cell to transition to, if transitioning to an interior.
 
 --- Enables or disables a reference.

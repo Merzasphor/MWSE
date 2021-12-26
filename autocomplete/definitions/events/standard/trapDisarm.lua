@@ -13,7 +13,7 @@ return {
 			description = "The lock data of the reference.",
 		},
 		["disarmer"] = {
-			type = "tes3mobileNpc",
+			type = "tes3mobileNPC",
 			readOnly = true,
 			description = "The Mobile NPC doing the disarming.",
 		},

@@ -13,7 +13,7 @@ return {
 			description = "The tile's item.",
 		},
 		["itemData"] = {
-			type = "tesitemData",
+			type = "tes3itemData",
 			readOnly = true,
 			description = "The tile's item data, if any.",
 		},

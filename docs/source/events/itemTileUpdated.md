@@ -16,7 +16,7 @@ event.register("itemTileUpdated", itemTileUpdatedCallback)
 
 * `element` ([tes3uiElement](../../types/tes3uiElement)): *Read-only*. The UI element that the tile is displayed on.
 * `item` ([tes3item](../../types/tes3item)): *Read-only*. The tile's item.
-* `itemData` (tesitemData): *Read-only*. The tile's item data, if any.
+* `itemData` ([tes3itemData](../../types/tes3itemData)): *Read-only*. The tile's item data, if any.
 * `menu` ([tes3uiElement](../../types/tes3uiElement)): *Read-only*. The root menu of the tile. This will typically be the MenuInventory, MenuContents, or MenuBarter menus.
 * `tile` ([tes3inventoryTile](../../types/tes3inventoryTile)): *Read-only*. The tile data itself. This typically contains references to all the other event fields, among other tile-specific information.
 

@@ -497,7 +497,7 @@ local offersService, refusalReply = tes3.checkMerchantOffersService(reference, s
 **Returns**:
 
 * `offersService` (boolean)
-* `refusalReply` (tes3DialogueInfo)
+* `refusalReply` ([tes3dialogueInfo](../../types/tes3dialogueInfo))
 
 ***
 
@@ -2437,7 +2437,7 @@ local element = tes3.messageBox({ message = ..., buttons = ..., callback = ..., 
 	* `buttons` (table): *Optional*. An array of strings to use for buttons.
 	* `callback` (function)
 	* `showInDialog` (boolean): *Optional*. Specifying showInDialog = false forces the toast-style message, which is not shown in the dialog menu. Defaults to true.
-	* `duration` (float): *Optional*. Overrides how long the toast-style message remains visible.
+	* `duration` (number): *Optional*. Overrides how long the toast-style message remains visible.
 * `formatAdditions` (variadic): *Optional*. Only used if messageOrParams is a string.
 
 **Returns**:
@@ -3103,8 +3103,8 @@ tes3.setDestination({ reference = ..., position = ..., orientation = ..., cell =
 
 * `params` (table)
 	* `reference` ([tes3reference](../../types/tes3reference)): The door reference that will be updated.
-	* `position` (tes3vector, table): The new coordinates of the transition.
-	* `orientation` (tes3vector, table): The new rotation to use after transition.
+	* `position` ([tes3vector3](../../types/tes3vector3), table): The new coordinates of the transition.
+	* `orientation` ([tes3vector3](../../types/tes3vector3), table): The new rotation to use after transition.
 	* `cell` ([tes3cell](../../types/tes3cell), string): *Optional*. The cell to transition to, if transitioning to an interior.
 
 ***

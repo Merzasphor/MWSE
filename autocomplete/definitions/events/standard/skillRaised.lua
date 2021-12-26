@@ -13,8 +13,8 @@ return {
 			description = "The new level of the skill.",
 		},
         ["source"] = {
-            type = "tes3.skillRaiseSource",
-            description = "The source of the skill raise. Its values are available as [`tes3.skillRaiseSource`](https://mwse.github.io/MWSE/references/skill-raise-sources/) enumeration.",
+            type = "string",
+            description = "The source of the skill raise. Maps to values in [`tes3.skillRaiseSource`](https://mwse.github.io/MWSE/references/skill-raise-sources/) enumeration.",
         },
 	},
 	filter = "skill",

@@ -10,7 +10,7 @@ return {
 				{ name = "buttons", type = "table", description = "An array of strings to use for buttons.", optional = true },
 				{ name = "callback", type = "function" },
 				{ name = "showInDialog", type = "boolean", description = "Specifying showInDialog = false forces the toast-style message, which is not shown in the dialog menu. Defaults to true.", optional = true },
-				{ name = "duration", type = "float", description = "Overrides how long the toast-style message remains visible.", optional = true },
+				{ name = "duration", type = "number", description = "Overrides how long the toast-style message remains visible.", optional = true },
 			},
 		},
 		{ name = "formatAdditions", type = "variadic", optional = true, description = "Only used if messageOrParams is a string." },

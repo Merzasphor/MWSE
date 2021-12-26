@@ -7,6 +7,6 @@ return {
 	},
 	returns = {
 		{ name = "offersService", type = "boolean" },
-		{ name = "refusalReply", type = "tes3DialogueInfo" },
+		{ name = "refusalReply", type = "tes3dialogueInfo" },
 	},
 }
