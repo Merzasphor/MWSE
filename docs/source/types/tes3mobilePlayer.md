@@ -11,7 +11,7 @@ This type inherits the following: [tes3mobileNPC](../../types/tes3mobileNPC), [t
 
 **Returns**:
 
-* `result` (tes3skillStatistic)
+* `result` ([tes3statisticSkill](../../types/tes3statisticSkill))
 
 ***
 
@@ -101,7 +101,7 @@ The actor's alarm AI value.
 
 **Returns**:
 
-* `result` (tes3skillStatistic)
+* `result` ([tes3statisticSkill](../../types/tes3statisticSkill))
 
 ***
 
@@ -111,7 +111,7 @@ The actor's alarm AI value.
 
 **Returns**:
 
-* `result` (tes3skillStatistic)
+* `result` ([tes3statisticSkill](../../types/tes3statisticSkill))
 
 ***
 
@@ -141,7 +141,7 @@ Toggle flag for if the player should always run.
 
 **Returns**:
 
-* `result` (tes3skillStatistic)
+* `result` ([tes3statisticSkill](../../types/tes3statisticSkill))
 
 ***
 
@@ -166,7 +166,7 @@ if damage < 1 then damage = 1 end
 
 **Returns**:
 
-* `result` (tes3skillStatistic)
+* `result` ([tes3statisticSkill](../../types/tes3statisticSkill))
 
 ***
 
@@ -226,7 +226,7 @@ Toggle flag for if the player should constantly run forward.
 
 **Returns**:
 
-* `result` (tes3skillStatistic)
+* `result` ([tes3statisticSkill](../../types/tes3statisticSkill))
 
 ***
 
@@ -266,7 +266,7 @@ Direct access to the actor's blind effect attribute.
 
 **Returns**:
 
-* `result` (tes3skillStatistic)
+* `result` ([tes3statisticSkill](../../types/tes3statisticSkill))
 
 ***
 
@@ -276,7 +276,7 @@ Direct access to the actor's blind effect attribute.
 
 **Returns**:
 
-* `result` (tes3skillStatistic)
+* `result` ([tes3statisticSkill](../../types/tes3statisticSkill))
 
 ***
 
@@ -425,7 +425,7 @@ Direct access to the actor's chameleon effect attribute.
 
 **Returns**:
 
-* `result` (tes3skillStatistic)
+* `result` ([tes3statisticSkill](../../types/tes3statisticSkill))
 
 ***
 
@@ -475,7 +475,7 @@ No description yet available.
 
 **Returns**:
 
-* `result` (tes3skillStatistic)
+* `result` ([tes3statisticSkill](../../types/tes3statisticSkill))
 
 ***
 
@@ -505,7 +505,7 @@ No description yet available.
 
 **Returns**:
 
-* `result` (tes3skillStatistic)
+* `result` ([tes3statisticSkill](../../types/tes3statisticSkill))
 
 ***
 
@@ -685,7 +685,7 @@ No description yet available.
 
 **Returns**:
 
-* `result` (tes3skillStatistic)
+* `result` ([tes3statisticSkill](../../types/tes3statisticSkill))
 
 ***
 
@@ -705,7 +705,7 @@ No description yet available.
 
 **Returns**:
 
-* `result` (tes3skillStatistic)
+* `result` ([tes3statisticSkill](../../types/tes3statisticSkill))
 
 ***
 
@@ -765,7 +765,7 @@ No description yet available.
 
 **Returns**:
 
-* `result` (tes3skillStatistic)
+* `result` ([tes3statisticSkill](../../types/tes3statisticSkill))
 
 ***
 
@@ -1145,7 +1145,7 @@ Direct access to the actor's levitate effect attribute.
 
 **Returns**:
 
-* `result` (tes3skillStatistic)
+* `result` ([tes3statisticSkill](../../types/tes3statisticSkill))
 
 ***
 
@@ -1155,7 +1155,7 @@ Direct access to the actor's levitate effect attribute.
 
 **Returns**:
 
-* `result` (tes3skillStatistic)
+* `result` ([tes3statisticSkill](../../types/tes3statisticSkill))
 
 ***
 
@@ -1215,7 +1215,7 @@ Toggle flag for if the player can use magic.
 
 **Returns**:
 
-* `result` (tes3skillStatistic)
+* `result` ([tes3statisticSkill](../../types/tes3statisticSkill))
 
 ***
 
@@ -1225,7 +1225,7 @@ Toggle flag for if the player can use magic.
 
 **Returns**:
 
-* `result` (tes3skillStatistic)
+* `result` ([tes3statisticSkill](../../types/tes3statisticSkill))
 
 ***
 
@@ -1235,7 +1235,7 @@ Toggle flag for if the player can use magic.
 
 **Returns**:
 
-* `result` (tes3skillStatistic)
+* `result` ([tes3statisticSkill](../../types/tes3statisticSkill))
 
 ***
 
@@ -1297,7 +1297,7 @@ Access to the root mobile object movement flags, represented as an integer. Shou
 
 **Returns**:
 
-* `result` (tes3skillStatistic)
+* `result` ([tes3statisticSkill](../../types/tes3statisticSkill))
 
 ***
 
@@ -1547,7 +1547,7 @@ How many hours are left while resting.
 
 **Returns**:
 
-* `result` (tes3skillStatistic)
+* `result` ([tes3statisticSkill](../../types/tes3statisticSkill))
 
 ***
 
@@ -1597,7 +1597,7 @@ Direct access to the actor's sanctuary effect attribute.
 
 **Returns**:
 
-* `result` (tes3skillStatistic)
+* `result` ([tes3statisticSkill](../../types/tes3statisticSkill))
 
 ***
 
@@ -1617,7 +1617,7 @@ Direct access to the actor's shield effect attribute.
 
 **Returns**:
 
-* `result` (tes3skillStatistic)
+* `result` ([tes3statisticSkill](../../types/tes3statisticSkill))
 
 ***
 
@@ -1643,7 +1643,7 @@ Direct access to the actor's silence effect attribute.
 
 ### `skills`
 
-*Read-only*. An array-style table with access to the twenty seven NPC skill statistics.
+*Read-only*. An array-style table with access to the twenty seven NPC skill statistics ([tes3statisticSkill](https://mwse.github.io/MWSE/types/tes3statisticSkill/)).
 
 **Returns**:
 
@@ -1667,7 +1667,7 @@ Toggle flag for if the player is currently sleeping.
 
 **Returns**:
 
-* `result` (tes3skillStatistic)
+* `result` ([tes3statisticSkill](../../types/tes3statisticSkill))
 
 ***
 
@@ -1687,7 +1687,7 @@ Direct access to the actor's sound effect attribute.
 
 **Returns**:
 
-* `result` (tes3skillStatistic)
+* `result` ([tes3statisticSkill](../../types/tes3statisticSkill))
 
 ***
 
@@ -1697,7 +1697,7 @@ Direct access to the actor's sound effect attribute.
 
 **Returns**:
 
-* `result` (tes3skillStatistic)
+* `result` ([tes3statisticSkill](../../types/tes3statisticSkill))
 
 ***
 
@@ -1807,7 +1807,7 @@ Toggle flag for if the player is currently travelling.
 
 **Returns**:
 
-* `result` (tes3skillStatistic)
+* `result` ([tes3statisticSkill](../../types/tes3statisticSkill))
 
 ***
 
@@ -2177,7 +2177,7 @@ local result = tes3mobileActor:getSkillStatistic(skillId)
 
 **Returns**:
 
-* `result` (tes3skillStatistic)
+* `result` ([tes3statisticSkill](../../types/tes3statisticSkill))
 
 ***
 

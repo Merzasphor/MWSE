@@ -2,5 +2,5 @@ return {
 	type = "value",
 	description = [[Direct access to the NPC's security skill statistic.]],
 	readOnly = true,
-	valuetype = "tes3skillStatistic",
+	valuetype = "tes3statisticSkill",
 }

@@ -224,7 +224,7 @@ function tes3mobileActor:getPowerUseTimestamp(power) end
 
 --- Fetches the statistic object of a skill with a given index. This is the way to access skills for any type of actor, as creatures have a limited version of the skill system. Note that creatures share a statistic between multiple skills (they only have combat, magic, and stealth stats), so many values will be the same.
 --- @param skillId number The index of the skill statistic to fetch.
---- @return tes3skillStatistic result No description yet available.
+--- @return tes3statisticSkill result No description yet available.
 function tes3mobileActor:getSkillStatistic(skillId) end
 
 --- Fetches the current value of a skill with a given index. This is the way to access skills for any type of actor, as creatures have a limited version of the skill system. Note that creatures share a statistic between multiple skills (they only have combat, magic, and stealth stats), so many values will be the same.

@@ -4,5 +4,5 @@ return {
 	arguments = {
 		{ name = "skillId", type = "number", description = "The index of the skill statistic to fetch." },
 	},
-	valuetype = "tes3skillStatistic",
+	valuetype = "tes3statisticSkill",
 }

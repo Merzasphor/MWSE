@@ -1365,7 +1365,7 @@ local result = tes3mobileActor:getSkillStatistic(skillId)
 
 **Returns**:
 
-* `result` (tes3skillStatistic)
+* `result` ([tes3statisticSkill](../../types/tes3statisticSkill))
 
 ***
 
