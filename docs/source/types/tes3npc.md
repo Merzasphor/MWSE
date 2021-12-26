@@ -613,7 +613,7 @@ local result = tes3actor:tradesItemType(objectType)
 
 **Parameters**:
 
-* `objectType` (tes3objectType): [`tes3.objectType.*`](https://mwse.github.io/MWSE/references/object-types/) constants can be passed here.
+* `objectType` (number): Accepts values from [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) namespace.
 
 **Returns**:
 

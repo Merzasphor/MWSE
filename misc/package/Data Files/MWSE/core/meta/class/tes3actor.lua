@@ -36,7 +36,7 @@ function tes3actor:offersService(service) end
 function tes3actor:onInventoryClose(reference) end
 
 --- Checks if the actor will buy and sell items of a given object type. e.g. `actor:tradesItemType(tes3.objectType.repairItem)`
---- @param objectType tes3objectType [`tes3.objectType.*`](https://mwse.github.io/MWSE/references/object-types/) constants can be passed here.
+--- @param objectType number Accepts values from [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) namespace.
 --- @return boolean result No description yet available.
 function tes3actor:tradesItemType(objectType) end
 
