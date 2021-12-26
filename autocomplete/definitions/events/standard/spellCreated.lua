@@ -7,8 +7,8 @@ return{
             description = "A spell which was created.",
         },
         ["source"] = {
-            type = "",
-            description = "This can be \"script\" or \"service\".",
+            type = "string",
+            description = "Was the origin of the spell spellmaker or a script?  Maps to values in [`tes3.spellSource`](https://mwse.github.io/MWSE/references/spell-sources/) namespace.",
         },
     },
     filter = "source",
