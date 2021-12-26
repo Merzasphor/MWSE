@@ -15,7 +15,7 @@ event.register("calcTravelPrice", calcTravelPriceCallback)
 ## Event Data
 
 * `basePrice` (number): *Read-only*. The price before adjustment.
-* `companions` (table): *Read-only*. A table of companions (tes3references) that will travel with the player, or nil if no companions are present.
+* `companions` (table): *Read-only*. A table of companions (`tes3reference`s) that will travel with the player, or `nil` if no companions are present.
 * `destination` ([tes3reference](../../types/tes3reference)): *Read-only*. The travel marker that marks the destination.
 * `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile actor of the merchant the player is interacting with.
 * `price` (number): The adjusted price of travelling.

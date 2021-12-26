@@ -29,7 +29,7 @@ return {
 		["companions"] = {
 			type = "table",
 			readOnly = true,
-			description = "A table of companions (tes3references) that will travel with the player, or nil if no companions are present."
+			description = "A table of companions (`tes3reference`s) that will travel with the player, or `nil` if no companions are present."
 		},
 	},
 }
