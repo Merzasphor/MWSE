@@ -880,7 +880,7 @@ namespace mwse {
 			std::vector<NI::AVObject*> ignoreRestoreList;
 			if (rayTestIgnoreRoots.empty()) {
 				auto weather = TES3::WorldController::get()->weatherController;
-				auto world = TES3::Game::get()->worldRoot;
+				auto& world = TES3::Game::get()->worldRoot;
 				rayTestIgnoreRoots.push_back(weather->sgRainRoot);
 				rayTestIgnoreRoots.push_back(weather->sgSnowRoot);
 				rayTestIgnoreRoots.push_back(weather->sgStormRoot);
