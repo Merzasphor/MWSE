@@ -3825,6 +3825,7 @@ namespace mwse {
 			genCallEnforced(0x5F1ED6, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuMessage
 			genCallEnforced(0x5F4823, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuMulti
 			genCallEnforced(0x5F8634, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuName
+			genCallEnforced(0x5F9376, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuNotify1-3
 			genCallEnforced(0x5FCA28, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuOptions
 			genCallEnforced(0x5FF250, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuOptions
 			genCallEnforced(0x60016F, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuPersuasion, without MCP Persuasion Improvements
