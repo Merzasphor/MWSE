@@ -79,6 +79,7 @@
 #include "TES3ActorAnimationControllerLua.h"
 #include "TES3AILua.h"
 #include "TES3AlchemyLua.h"
+#include "TES3AnimationDataLua.h"
 #include "TES3ApparatusLua.h"
 #include "TES3ArmorLua.h"
 #include "TES3AttachmentLua.h"
@@ -109,8 +110,11 @@
 #include "TES3LeveledListLua.h"
 #include "TES3LightLua.h"
 #include "TES3LockpickLua.h"
+#include "TES3MagicEffectInstanceLua.h"
 #include "TES3MagicEffectLua.h"
+#include "TES3MagicSourceInstanceLua.h"
 #include "TES3MiscLua.h"
+#include "TES3MobControllerLua.h"
 #include "TES3MobileActorLua.h"
 #include "TES3MobileCreatureLua.h"
 #include "TES3MobileNPCLua.h"
@@ -121,18 +125,15 @@
 #include "TES3PlayerAnimationControllerLua.h"
 #include "TES3ProbeLua.h"
 #include "TES3RaceLua.h"
-#include "TES3ReferenceLua.h"
 #include "TES3ReferenceListLua.h"
+#include "TES3ReferenceLua.h"
 #include "TES3RegionLua.h"
 #include "TES3RepairToolLua.h"
 #include "TES3ScriptLua.h"
 #include "TES3SkillLua.h"
 #include "TES3SoundLua.h"
-#include "TES3SpellLua.h"
 #include "TES3SpellListLua.h"
-#include "TES3MagicEffectInstanceLua.h"
-#include "TES3MagicSourceInstanceLua.h"
-#include "TES3MobControllerLua.h"
+#include "TES3SpellLua.h"
 #include "TES3StaticLua.h"
 #include "TES3StatisticLua.h"
 #include "TES3UIElementLua.h"
@@ -432,6 +433,7 @@ namespace mwse {
 			bindTES3ActorAnimationController();
 			bindTES3AI();
 			bindTES3Alchemy();
+			bindTES3AnimationData();
 			bindTES3Apparatus();
 			bindTES3Armor();
 			bindTES3Attachment();
@@ -466,8 +468,8 @@ namespace mwse {
 			bindTES3MagicEffectInstance();
 			bindTES3MagicSourceInstance();
 			bindTES3Misc();
-			bindTES3MobileActor();
 			bindTES3MobController();
+			bindTES3MobileActor();
 			bindTES3MobileCreature();
 			bindTES3MobileNPC();
 			bindTES3MobilePlayer();

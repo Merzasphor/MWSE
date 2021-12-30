@@ -66,4 +66,51 @@ namespace TES3 {
 		return keyframeLayers[0].lower != nullptr;
 	}
 
+	std::reference_wrapper<decltype(AnimationData::currentAnimGroup)> AnimationData::getCurrentAnimGroups() {
+		return std::ref(currentAnimGroup);
+	}
+
+	std::reference_wrapper<decltype(AnimationData::currentNodeIndices)> AnimationData::getCurrentNodeIndices() {
+		return std::ref(currentNodeIndices);
+	}
+
+	std::reference_wrapper<decltype(AnimationData::loopCounts)> AnimationData::getLoopCounts() {
+		return std::ref(loopCounts);
+	}
+
+	std::reference_wrapper<decltype(AnimationData::timing)> AnimationData::getTimings() {
+		return std::ref(timing);
+	}
+
+	std::reference_wrapper<decltype(AnimationData::animationGroups)> AnimationData::getAnimationGroups() {
+		return std::ref(animationGroups);
+	}
+
+	std::reference_wrapper<decltype(AnimationData::keyframeLayers)> AnimationData::getKeyframeLayers() {
+		return std::ref(keyframeLayers);
+	}
+
+	std::reference_wrapper<decltype(AnimationData::currentAnimGroupLayer)> AnimationData::getCurrentAnimGroupLayers() {
+		return std::ref(currentAnimGroupLayer);
+	}
+
+	std::reference_wrapper<decltype(AnimationData::animGroupLayerIndex)> AnimationData::getAnimGroupLayerIndicies() {
+		return std::ref(animGroupLayerIndex);
+	}
+
+	std::reference_wrapper<decltype(AnimationData::approxRootTravelSpeed)> AnimationData::getApproxRootTravelSpeeds() {
+		return std::ref(approxRootTravelSpeed);
+	}
+
+	std::reference_wrapper<decltype(AnimationData::currentSoundgenIndices)> AnimationData::getCurrentSoundgenIndices() {
+		return std::ref(currentSoundgenIndices);
+	}
+
+	std::reference_wrapper<decltype(AnimationData::animationGroupSoundgenCounts)> AnimationData::getAnimationGroupSoundgenCounts() {
+		return std::ref(animationGroupSoundgenCounts);
+	}
+
+	std::reference_wrapper<decltype(AnimationData::animationGroupSoundgens)> AnimationData::getAnimationGroupSoundgens() {
+		return std::ref(animationGroupSoundgens);
+	}
 }
