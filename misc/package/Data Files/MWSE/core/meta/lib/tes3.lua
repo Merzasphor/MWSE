@@ -1033,13 +1033,13 @@ function tes3.getPlayerTarget() end
 --- This function retrieves data for a quick key.
 --- @param params tes3.getQuickKey.params This table accepts the following values:
 --- 
---- `key`: number — The key to retrieve data for. This is a value between 1 and 9.
+--- `slot`: number — The key to retrieve data for. This is a value between 1 and 9.
 --- @return tes3quickKey result No description yet available.
 function tes3.getQuickKey(params) end
 
 ---Table parameter definitions for `tes3.getQuickKey`.
 --- @class tes3.getQuickKey.params
---- @field key number The key to retrieve data for. This is a value between 1 and 9.
+--- @field slot number The key to retrieve data for. This is a value between 1 and 9.
 
 --- Fetches the first reference for a given base object ID.
 --- @param id string No description yet available.

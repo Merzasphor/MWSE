@@ -5,7 +5,7 @@ return {
 		name = "params",
 		type = "table",
 		tableParams = {
-			{ name = "key", type = "number", description = "The key to retrieve data for. This is a value between 1 and 9." },
+			{ name = "slot", type = "number", description = "The key to retrieve data for. This is a value between 1 and 9." },
 		},
 	}},
 	valuetype = "tes3quickKey",

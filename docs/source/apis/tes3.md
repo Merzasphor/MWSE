@@ -1841,13 +1841,13 @@ local result = tes3.getPlayerTarget()
 This function retrieves data for a quick key.
 
 ```lua
-local result = tes3.getQuickKey({ key = ... })
+local result = tes3.getQuickKey({ slot = ... })
 ```
 
 **Parameters**:
 
 * `params` (table)
-	* `key` (number): The key to retrieve data for. This is a value between 1 and 9.
+	* `slot` (number): The key to retrieve data for. This is a value between 1 and 9.
 
 **Returns**:
 
