@@ -183,38 +183,37 @@ function tes3.addJournalEntry(params) end
 --- `usesNegativeLighting`: boolean — *Default*: `true`. A flag which controls whether this effect uses negative lighting.
 --- 
 --- `onTick`: function — *Optional*. A function which will be called on each tick of a spell containing this effect. Following table will be passed to the callback function:
---- --- - `effectId` (number)
---- --- - `sourceInstance` ([tes3magicSourceInstance](https://mwse.github.io/MWSE/types/tes3magicSourceInstance/))
---- --- - `deltaTime (number): The time passed from the last tick of the spell.`
---- --- - `effectInstance` ([tes3magicEffectInstance](https://mwse.github.io/MWSE/types/tes3magicEffectInstance/))
---- --- - `effectIndex (number): The index of the effect in the spell.`
+--- --- 		- `effectId` (number)
+--- --- 		- `sourceInstance` ([tes3magicSourceInstance](https://mwse.github.io/MWSE/types/tes3magicSourceInstance/))
+--- --- 		- `deltaTime (number): The time passed from the last tick of the spell.`
+--- --- 		- `effectInstance` ([tes3magicEffectInstance](https://mwse.github.io/MWSE/types/tes3magicEffectInstance/))
+--- --- 		- `effectIndex (number): The index of the effect in the spell.`
 --- --- 
---- --- In addition, a function registerd as onTick can also call the following methods:
+--- --- 	In addition, a function registerd as onTick can also call the following methods:
 --- --- 
---- --- - trigger(`params`)
---- --- **Parameters:**
---- --- - `params` (table)
---- --- 	- `negateOnExpiry` (boolean): *Optional. Default:* `true`.
---- --- 	- `isUncapped` (boolean): *Optional.*
---- --- 	- `attribute` (number): *Optional.*
---- --- 	- `type` (number): *Optional. Default:* `0`.
---- --- 	- `value` (number): *Optional. Default:* `0`.
---- --- 	- `resistanceCheck` (function):
+--- --- 		- trigger(`params`)
+--- --- 		**Parameters:**
+--- --- 		- `params` (table)
+--- --- 			- `negateOnExpiry` (boolean): *Optional. Default:* `true`.
+--- --- 			- `isUncapped` (boolean): *Optional.*
+--- --- 			- `attribute` (number): *Optional.*
+--- --- 			- `type` (number): *Optional. Default:* `0`.
+--- --- 			- `value` (number): *Optional. Default:* `0`.
+--- --- 			- `resistanceCheck` (function):
 --- --- 
---- --- - triggerBoundWeapon(`id`): Performs weapon summoning logic.
---- --- **Parameters:**
---- --- - `id` (string): The ID of the weapon object to summon.
+--- --- 		- triggerBoundWeapon(`id`): Performs weapon summoning logic.
+--- --- 		**Parameters:**
+--- --- 		- `id` (string): The ID of the weapon object to summon.
 --- --- 
---- --- - triggerBoundWeapon(`params`): Performs armor summoning logic. It can summon one or two armor objects.
---- --- **Parameters:**
---- --- - `params` (table)
---- --- - `id` (string): The ID of the armor object to summon.
---- --- - `id2` (string): *Optional.* The ID of the weapon object to summon.
+--- --- 		- triggerBoundWeapon(`params`): Performs armor summoning logic. It can summon one or two armor objects.
+--- --- 		**Parameters:**
+--- --- 		- `params` (table)
+--- --- 		- `id` (string): The ID of the armor object to summon.
+--- --- 		- `id2` (string): *Optional.* The ID of the weapon object to summon.
 --- --- 
---- --- - triggerSummon(`id`): Performs creature summoning logic.
---- --- **Parameters:**
---- --- - `id` (string): The ID of the creature object to summon.
---- --- 	
+--- --- 		- triggerSummon(`id`): Performs creature summoning logic.
+--- --- 		**Parameters:**
+--- --- 		- `id` (string): The ID of the creature object to summon.
 --- 
 --- `onCollision`: function — *Optional*. A function which will be called when a spell containing this spell effect collides with something.
 --- @return tes3effect effect No description yet available.
@@ -259,38 +258,37 @@ function tes3.addMagicEffect(params) end
 --- @field unreflectable boolean *Default*: `true`. A flag which controls whether this effect can be reflected.
 --- @field usesNegativeLighting boolean *Default*: `true`. A flag which controls whether this effect uses negative lighting.
 --- @field onTick function *Optional*. A function which will be called on each tick of a spell containing this effect. Following table will be passed to the callback function:
---- - `effectId` (number)
---- - `sourceInstance` ([tes3magicSourceInstance](https://mwse.github.io/MWSE/types/tes3magicSourceInstance/))
---- - `deltaTime (number): The time passed from the last tick of the spell.`
---- - `effectInstance` ([tes3magicEffectInstance](https://mwse.github.io/MWSE/types/tes3magicEffectInstance/))
---- - `effectIndex (number): The index of the effect in the spell.`
+--- 		- `effectId` (number)
+--- 		- `sourceInstance` ([tes3magicSourceInstance](https://mwse.github.io/MWSE/types/tes3magicSourceInstance/))
+--- 		- `deltaTime (number): The time passed from the last tick of the spell.`
+--- 		- `effectInstance` ([tes3magicEffectInstance](https://mwse.github.io/MWSE/types/tes3magicEffectInstance/))
+--- 		- `effectIndex (number): The index of the effect in the spell.`
 --- 
---- In addition, a function registerd as onTick can also call the following methods:
+--- 	In addition, a function registerd as onTick can also call the following methods:
 --- 
---- - trigger(`params`)
---- **Parameters:**
---- - `params` (table)
---- 	- `negateOnExpiry` (boolean): *Optional. Default:* `true`.
---- 	- `isUncapped` (boolean): *Optional.*
---- 	- `attribute` (number): *Optional.*
---- 	- `type` (number): *Optional. Default:* `0`.
---- 	- `value` (number): *Optional. Default:* `0`.
---- 	- `resistanceCheck` (function):
+--- 		- trigger(`params`)
+--- 		**Parameters:**
+--- 		- `params` (table)
+--- 			- `negateOnExpiry` (boolean): *Optional. Default:* `true`.
+--- 			- `isUncapped` (boolean): *Optional.*
+--- 			- `attribute` (number): *Optional.*
+--- 			- `type` (number): *Optional. Default:* `0`.
+--- 			- `value` (number): *Optional. Default:* `0`.
+--- 			- `resistanceCheck` (function):
 --- 
---- - triggerBoundWeapon(`id`): Performs weapon summoning logic.
---- **Parameters:**
---- - `id` (string): The ID of the weapon object to summon.
+--- 		- triggerBoundWeapon(`id`): Performs weapon summoning logic.
+--- 		**Parameters:**
+--- 		- `id` (string): The ID of the weapon object to summon.
 --- 
---- - triggerBoundWeapon(`params`): Performs armor summoning logic. It can summon one or two armor objects.
---- **Parameters:**
---- - `params` (table)
---- - `id` (string): The ID of the armor object to summon.
---- - `id2` (string): *Optional.* The ID of the weapon object to summon.
+--- 		- triggerBoundWeapon(`params`): Performs armor summoning logic. It can summon one or two armor objects.
+--- 		**Parameters:**
+--- 		- `params` (table)
+--- 		- `id` (string): The ID of the armor object to summon.
+--- 		- `id2` (string): *Optional.* The ID of the weapon object to summon.
 --- 
---- - triggerSummon(`id`): Performs creature summoning logic.
---- **Parameters:**
---- - `id` (string): The ID of the creature object to summon.
---- 	
+--- 		- triggerSummon(`id`): Performs creature summoning logic.
+--- 		**Parameters:**
+--- 		- `id` (string): The ID of the creature object to summon.
 --- @field onCollision function *Optional*. A function which will be called when a spell containing this spell effect collides with something.
 
 --- Causes a misc item to be recognized as a soul gem, so that it can be used for soul trapping.
