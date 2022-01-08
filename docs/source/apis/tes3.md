@@ -249,9 +249,9 @@ local effect = tes3.addMagicEffect({ id = ..., name = ..., baseCost = ..., schoo
 	* `usesNegativeLighting` (boolean): *Default*: `true`. A flag which controls whether this effect uses negative lighting.
 	* `onTick` (function): *Optional*. A function which will be called on each tick of a spell containing this effect. Following table will be passed to the callback function:
 - `effectId` (number)
-- `sourceInstance` ((tes3magicSourceInstance)[https://mwse.github.io/MWSE/types/tes3magicSourceInstance/])
+- `sourceInstance` ([tes3magicSourceInstance](https://mwse.github.io/MWSE/types/tes3magicSourceInstance/))
 - `deltaTime (number): The time passed from the last tick of the spell.`
-- `effectInstance` ((tes3magicEffectInstance)[https://mwse.github.io/MWSE/types/tes3magicEffectInstance/])
+- `effectInstance` ([tes3magicEffectInstance](https://mwse.github.io/MWSE/types/tes3magicEffectInstance/))
 - `effectIndex (number): The index of the effect in the spell.`
 
 In addition, a function registerd as onTick can also call the following methods:
