@@ -254,31 +254,32 @@ local effect = tes3.addMagicEffect({ id = ..., name = ..., baseCost = ..., schoo
 		- `effectInstance` ([tes3magicEffectInstance](https://mwse.github.io/MWSE/types/tes3magicEffectInstance/))
 		- `effectIndex (number): The index of the effect in the spell.`
 
-	In addition, a function registerd as onTick can also call the following methods:
+		In addition, a function registerd as onTick can also call the following methods:
 
-		- trigger(`params`)
-		**Parameters:**
-		- `params` (table)
-			- `negateOnExpiry` (boolean): *Optional. Default:* `true`.
-			- `isUncapped` (boolean): *Optional.*
-			- `attribute` (number): *Optional.*
-			- `type` (number): *Optional. Default:* `0`.
-			- `value` (number): *Optional. Default:* `0`.
-			- `resistanceCheck` (function):
+			- trigger(`params`)
+			**Parameters:**
+			- `params` (table)
+				- `negateOnExpiry` (boolean): *Optional. Default:* `true`.
+				- `isUncapped` (boolean): *Optional.*
+				- `attribute` (number): *Optional.*
+				- `type` (number): *Optional. Default:* `0`.
+				- `value` (number): *Optional. Default:* `0`.
+				- `resistanceCheck` (function):
 
-		- triggerBoundWeapon(`id`): Performs weapon summoning logic.
-		**Parameters:**
-		- `id` (string): The ID of the weapon object to summon.
+			- triggerBoundWeapon(`id`): Performs weapon summoning logic.
+			**Parameters:**
+			- `id` (string): The ID of the weapon object to summon.
 
-		- triggerBoundWeapon(`params`): Performs armor summoning logic. It can summon one or two armor objects.
-		**Parameters:**
-		- `params` (table)
-		- `id` (string): The ID of the armor object to summon.
-		- `id2` (string): *Optional.* The ID of the weapon object to summon.
+			- triggerBoundWeapon(`params`): Performs armor summoning logic. It can summon one or two armor objects.
+			**Parameters:**
+			- `params` (table)
+			- `id` (string): The ID of the armor object to summon.
+			- `id2` (string): *Optional.* The ID of the weapon object to summon.
 
-		- triggerSummon(`id`): Performs creature summoning logic.
-		**Parameters:**
-		- `id` (string): The ID of the creature object to summon.
+			- triggerSummon(`id`): Performs creature summoning logic.
+			**Parameters:**
+			- `id` (string): The ID of the creature object to summon.
+
 	* `onCollision` (function): *Optional*. A function which will be called when a spell containing this spell effect collides with something.
 
 **Returns**:
