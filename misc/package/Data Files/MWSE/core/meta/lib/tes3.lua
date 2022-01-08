@@ -190,8 +190,9 @@ function tes3.addJournalEntry(params) end
 --- --- 		- `effectIndex (number): The index of the effect in the spell.`
 --- --- 
 --- --- 		In addition, a function registerd as onTick can also call the following methods:
---- --- 
---- --- 			- trigger(`params`)
+--- --- 	
+--- --- 		- trigger(`params`)
+--- --- 		
 --- --- 			**Parameters:**
 --- --- 			- `params` (table)
 --- --- 				- `negateOnExpiry` (boolean): *Optional. Default:* `true`.
@@ -201,17 +202,17 @@ function tes3.addJournalEntry(params) end
 --- --- 				- `value` (number): *Optional. Default:* `0`.
 --- --- 				- `resistanceCheck` (function):
 --- --- 
---- --- 			- triggerBoundWeapon(`id`): Performs weapon summoning logic.
+--- --- 		- triggerBoundWeapon(`id`): Performs weapon summoning logic.
 --- --- 			**Parameters:**
 --- --- 			- `id` (string): The ID of the weapon object to summon.
 --- --- 
---- --- 			- triggerBoundWeapon(`params`): Performs armor summoning logic. It can summon one or two armor objects.
+--- --- 		- triggerBoundArmor(`params`): Performs armor summoning logic. It can summon one or two armor objects.
 --- --- 			**Parameters:**
 --- --- 			- `params` (table)
 --- --- 			- `id` (string): The ID of the armor object to summon.
 --- --- 			- `id2` (string): *Optional.* The ID of the weapon object to summon.
 --- --- 
---- --- 			- triggerSummon(`id`): Performs creature summoning logic.
+--- --- 		- triggerSummon(`id`): Performs creature summoning logic.
 --- --- 			**Parameters:**
 --- --- 			- `id` (string): The ID of the creature object to summon.
 --- --- 
@@ -266,8 +267,9 @@ function tes3.addMagicEffect(params) end
 --- 		- `effectIndex (number): The index of the effect in the spell.`
 --- 
 --- 		In addition, a function registerd as onTick can also call the following methods:
---- 
---- 			- trigger(`params`)
+--- 	
+--- 		- trigger(`params`)
+--- 		
 --- 			**Parameters:**
 --- 			- `params` (table)
 --- 				- `negateOnExpiry` (boolean): *Optional. Default:* `true`.
@@ -277,17 +279,17 @@ function tes3.addMagicEffect(params) end
 --- 				- `value` (number): *Optional. Default:* `0`.
 --- 				- `resistanceCheck` (function):
 --- 
---- 			- triggerBoundWeapon(`id`): Performs weapon summoning logic.
+--- 		- triggerBoundWeapon(`id`): Performs weapon summoning logic.
 --- 			**Parameters:**
 --- 			- `id` (string): The ID of the weapon object to summon.
 --- 
---- 			- triggerBoundWeapon(`params`): Performs armor summoning logic. It can summon one or two armor objects.
+--- 		- triggerBoundArmor(`params`): Performs armor summoning logic. It can summon one or two armor objects.
 --- 			**Parameters:**
 --- 			- `params` (table)
 --- 			- `id` (string): The ID of the armor object to summon.
 --- 			- `id2` (string): *Optional.* The ID of the weapon object to summon.
 --- 
---- 			- triggerSummon(`id`): Performs creature summoning logic.
+--- 		- triggerSummon(`id`): Performs creature summoning logic.
 --- 			**Parameters:**
 --- 			- `id` (string): The ID of the creature object to summon.
 --- 
