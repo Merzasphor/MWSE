@@ -220,12 +220,12 @@ local effect = tes3.addMagicEffect({ id = ..., name = ..., baseCost = ..., schoo
 		* `x` (number): *Default*: `1`. Value of red color channel. In range of 0 - 1.
 		* `y` (number): *Default*: `1`. Value of green color channel. In range of 0 - 1.
 		* `z` (number): *Default*: `1`. Value of blue color channel. In range of 0 - 1.
-	* `icon` (string): *Optional*. Path to the effect icon. Must be a string no longer than 31 characters long.
-	* `particleTexture` (string): *Optional*. Path to the particle texture to use for the effect. Must be a string no longer than 31 characters long.
-	* `castSound` (string): *Optional*. The sound ID which will be played on casting a spell with this effect. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
-	* `boltSound` (string): *Optional*. The sound ID which will be played when a spell with this effect is in flight. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
-	* `hitSound` (string): *Optional*. The sound ID which will be played when a spell with this effect hits something. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
-	* `areaSound` (string): *Optional*. The sound ID which will be played on area of effect impact. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
+	* `icon` (string): Path to the effect icon. Must be a string no longer than 31 characters long.
+	* `particleTexture` (string): Path to the particle texture to use for the effect. Must be a string no longer than 31 characters long.
+	* `castSound` (string): The sound ID which will be played on casting a spell with this effect. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
+	* `boltSound` (string): The sound ID which will be played when a spell with this effect is in flight. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
+	* `hitSound` (string): The sound ID which will be played when a spell with this effect hits something. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
+	* `areaSound` (string): The sound ID which will be played on area of effect impact. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
 	* `castVFX` ([tes3physicalObject](../../types/tes3physicalObject)): *Optional*.
 	* `boltVFX` ([tes3physicalObject](../../types/tes3physicalObject)): *Optional*.
 	* `hitVFX` ([tes3physicalObject](../../types/tes3physicalObject)): *Optional*.
@@ -247,7 +247,39 @@ local effect = tes3.addMagicEffect({ id = ..., name = ..., baseCost = ..., schoo
 	* `targetsSkills` (boolean): *Default*: `true`. A flag which controls whether this effect targets a certain skill or skills.
 	* `unreflectable` (boolean): *Default*: `true`. A flag which controls whether this effect can be reflected.
 	* `usesNegativeLighting` (boolean): *Default*: `true`. A flag which controls whether this effect uses negative lighting.
-	* `onTick` (function): *Optional*. A function which will be called on each tick of a spell containing this effect.
+	* `onTick` (function): *Optional*. A function which will be called on each tick of a spell containing this effect. Following table will be passed to the callback function:
+- `effectId` (number)
+- `sourceInstance` ((tes3magicSourceInstance)[https://mwse.github.io/MWSE/types/tes3magicSourceInstance/])
+- `deltaTime (number): The time passed from the last tick of the spell.`
+- `effectInstance` ((tes3magicEffectInstance)[https://mwse.github.io/MWSE/types/tes3magicEffectInstance/])
+- `effectIndex (number): The index of the effect in the spell.`
+
+In addition, a function registerd as onTick can also call the following methods:
+
+- trigger(`params`)
+**Parameters:**
+- `params` (table)
+	- `negateOnExpiry` (boolean): *Optional. Default:* `true`.
+	- `isUncapped` (boolean): *Optional.*
+	- `attribute` (number): *Optional.*
+	- `type` (number): *Optional. Default:* `0`.
+	- `value` (number): *Optional. Default:* `0`.
+	- `resistanceCheck` (function):
+
+- triggerBoundWeapon(`id`): Performs weapon summoning logic.
+**Parameters:**
+- `id` (string): The ID of the weapon object to summon.
+
+- triggerBoundWeapon(`params`): Performs armor summoning logic. It can summon one or two armor objects.
+**Parameters:**
+- `params` (table)
+- `id` (string): The ID of the armor object to summon.
+- `id2` (string): *Optional.* The ID of the weapon object to summon.
+
+- triggerSummon(`id`): Performs creature summoning logic.
+**Parameters:**
+- `id` (string): The ID of the creature object to summon.
+	
 	* `onCollision` (function): *Optional*. A function which will be called when a spell containing this spell effect collides with something.
 
 **Returns**:

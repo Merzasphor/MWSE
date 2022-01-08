@@ -87,37 +87,31 @@ return {
 			{
 				name = "icon",
 				type = "string",
-				optional = true,
 				description = "Path to the effect icon. Must be a string no longer than 31 characters long."
 			},
 			{
 				name = "particleTexture",
 				type = "string",
-				optional = true,
 				description = "Path to the particle texture to use for the effect. Must be a string no longer than 31 characters long."
 			},
 			{
 				name = "castSound",
 				type = "string",
-				optional = true,
 				description = "The sound ID which will be played on casting a spell with this effect. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used."
 			},
 			{
 				name = "boltSound",
 				type = "string",
-				optional = true,
 				description = "The sound ID which will be played when a spell with this effect is in flight. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used."
 			},
 			{
 				name = "hitSound",
 				type = "string",
-				optional = true,
 				description = "The sound ID which will be played when a spell with this effect hits something. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used."
 			},
 			{
 				name = "areaSound",
 				type = "string",
-				optional = true,
 				description = "The sound ID which will be played on area of effect impact. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used."
 			},
 			{
@@ -267,7 +261,39 @@ return {
 				name = "onTick",
 				type = "function",
 				optional = true,
-				description = "A function which will be called on each tick of a spell containing this effect."
+				description = [[A function which will be called on each tick of a spell containing this effect. Following table will be passed to the callback function:
+- `effectId` (number)
+- `sourceInstance` ((tes3magicSourceInstance)[https://mwse.github.io/MWSE/types/tes3magicSourceInstance/])
+- `deltaTime (number): The time passed from the last tick of the spell.`
+- `effectInstance` ((tes3magicEffectInstance)[https://mwse.github.io/MWSE/types/tes3magicEffectInstance/])
+- `effectIndex (number): The index of the effect in the spell.`
+
+In addition, a function registerd as onTick can also call the following methods:
+
+- trigger(`params`)
+**Parameters:**
+- `params` (table)
+	- `negateOnExpiry` (boolean): *Optional. Default:* `true`.
+	- `isUncapped` (boolean): *Optional.*
+	- `attribute` (number): *Optional.*
+	- `type` (number): *Optional. Default:* `0`.
+	- `value` (number): *Optional. Default:* `0`.
+	- `resistanceCheck` (function):
+
+- triggerBoundWeapon(`id`): Performs weapon summoning logic.
+**Parameters:**
+- `id` (string): The ID of the weapon object to summon.
+
+- triggerBoundWeapon(`params`): Performs armor summoning logic. It can summon one or two armor objects.
+**Parameters:**
+- `params` (table)
+- `id` (string): The ID of the armor object to summon.
+- `id2` (string): *Optional.* The ID of the weapon object to summon.
+
+- triggerSummon(`id`): Performs creature summoning logic.
+**Parameters:**
+- `id` (string): The ID of the creature object to summon.
+	]],
 			},
 			{
 				name = "onCollision",

@@ -112,7 +112,7 @@ local timer = timer.start({ type = ..., duration = ..., callback = ..., iteratio
 	* `duration` (number): Duration of the timer. The method of time passing depends on the timer type.
 	* `callback` (function): The callback function that will execute when the timer expires.
 	* `iterations` (number): *Default*: `1`. The number of iterations to run. Use `-1` for infinite looping.
-	* `persist` (boolean): *Default*: `true`. Registering a timer with persist flag set to `true` will serialize the callback string in the save to persist between sessions. See `timer.register()`.
+	* `persist` (boolean): *Default*: `true`. Registering a timer with persist flag set to `true` will serialize the callback string in the save to persist between sessions. Only a registered timer will persist between sessions. See `timer.register()`.
 
 **Returns**:
 
