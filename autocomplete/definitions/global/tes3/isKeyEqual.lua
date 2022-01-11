@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[Compares two key objects and returns their equality. Returns true if the object are equal, false otherwise.]],
+	description = [[Compares two key objects and returns their equality. Returns true if the objects are equal, false otherwise.]],
 	arguments = {{
 		name = "params",
 		type = "table",
@@ -14,7 +14,7 @@ return {
 						name = "keyCode",
 						type = "number",
 						default = false,
-						description = "Value of the actual key scan code, such as the letter `p`. Maps to `tes3.scanCode.*`."
+						description = "Value of the actual key scan code, such as the letter `p`. Maps to [`tes3.scanCode.*`](https://mwse.github.io/MWSE/references/scan-codes/)."
 					},
 					{
 						name = "isShiftDown",
@@ -51,7 +51,7 @@ return {
                         name = "keyCode",
                         type = "number",
                         default = false,
-                        description = "Value of the expected key scan code, such as the letter `p`. Maps to `tes3.scanCode.*`."
+                        description = "Value of the expected key scan code, such as the letter `p`. Maps to [`tes3.scanCode.*`](https://mwse.github.io/MWSE/references/scan-codes/)."
                     },
                     {
                         name = "isShiftDown",
