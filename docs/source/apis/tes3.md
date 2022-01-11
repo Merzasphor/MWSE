@@ -2260,6 +2260,36 @@ local isAffectedBy = tes3.isAffectedBy({ reference = ..., effect = ..., object =
 
 ***
 
+### `tes3.isKeyEqual`
+
+Compares two key objects and returns their equality. Returns true if the object are equal, false otherwise.
+
+```lua
+local equal = tes3.isKeyEqual({ actual = ..., expected = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `actual` (table): The key object that is being compared.
+		* `keyCode` (number): Value of the actual key scan code, such as the letter `p`. Maps to `tes3.scanCode.*`.
+		* `isShiftDown` (boolean): Value of whether the shift key is pressed.
+		* `isControlDown` (boolean): Value of whether the control key is pressed.
+		* `isAltDown` (boolean): Value of whether the alt key is pressed.
+		* `isSuperDown` (boolean): Value of whether the super (Windows key) key is pressed.
+	* `expected` (table): The key object that is being compared against.
+		* `keyCode` (number): Value of the expected key scan code, such as the letter `p`. Maps to `tes3.scanCode.*`.
+		* `isShiftDown` (boolean): Value of whether the shift key is expected to be pressed.
+		* `isControlDown` (boolean): Value of whether the control key is expected to be pressed.
+		* `isAltDown` (boolean): Value of whether the alt key is expected to be pressed.
+		* `isSuperDown` (boolean): Value of whether the super (Windows key) key is pressed.
+
+**Returns**:
+
+* `equal` (boolean)
+
+***
+
 ### `tes3.isModActive`
 
 Determines if the player has a given ESP or ESM file active.

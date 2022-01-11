@@ -1265,6 +1265,20 @@ function tes3.isAffectedBy(params) end
 --- @field effect number *Optional*. A numerical identifier of the magic effect to perform a check for. Maps to [`tes3.effect`](https://mwse.github.io/MWSE/references/magic-effects/) constant, including those claimed with `tes3.claimSpellEffectId()`, and then added with `tes3.addMagicEffect()`.
 --- @field object tes3alchemy|tes3enchantment|tes3spell|tes3magicEffect|string *Optional*. An object to perform a check for.
 
+--- Compares two key objects and returns their equality. Returns true if the object are equal, false otherwise.
+--- @param params tes3.isKeyEqual.params This table accepts the following values:
+--- 
+--- `actual`: table — The key object that is being compared.
+--- 
+--- `expected`: table — The key object that is being compared against.
+--- @return boolean equal No description yet available.
+function tes3.isKeyEqual(params) end
+
+---Table parameter definitions for `tes3.isKeyEqual`.
+--- @class tes3.isKeyEqual.params
+--- @field actual table The key object that is being compared.
+--- @field expected table The key object that is being compared against.
+
 --- Determines if the player has a given ESP or ESM file active.
 --- @param filename string The filename of the mod to find, including the extension.
 --- @return boolean result No description yet available.
