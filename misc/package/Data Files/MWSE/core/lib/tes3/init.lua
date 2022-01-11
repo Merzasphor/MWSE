@@ -140,6 +140,18 @@ function tes3.getAttachment(reference, attachment)
 	return reference and reference.attachments and reference.attachments[attachment]
 end
 
+-- Function to compare two keybind objects for equality. Useful in key events.
+function tes3.isKeyEqual(params)
+    if (params.actual.keyCode ~= params.expected.keyCode
+        or (params.actual.isShiftDown or false) ~= (params.expected.isShiftDown or false)
+        or (params.actual.isControlDown or false) ~= (params.expected.isControlDown or false)
+        or (params.actual.isAltDown or false) ~= (params.expected.isAltDown or false)) then
+        return false
+    end
+
+    return true
+end
+
 -- Iterator to use TES3::Iterator in a for loop.
 -- Only returns values, rather than a key-value pair.
 function tes3.iterate(iterator)
