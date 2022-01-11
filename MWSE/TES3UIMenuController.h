@@ -15,11 +15,11 @@ namespace TES3 {
 			};
 
 			NI::Pick pick; // 0x0
-			MenuController* menuController; // 0x4
-			Element* pointerMoveEventSource;
-			Element* pointerMovePreviousEventSource;
-			Element* buttonPressEventSource;
-			Element* buttonPressPreviousEventSource;
+			MenuController* menuController; // 0x38
+			Element* pointerMoveEventSource; // 0x3C
+			Element* pointerMovePreviousEventSource; // 0x40
+			Element* buttonPressEventSource; // 0x44
+			Element* buttonPressPreviousEventSource; // 0x48
 			int unknown_0x4C;
 			int unknown_0x50;
 			int unknown_0x54;
@@ -28,8 +28,7 @@ namespace TES3 {
 			char unknown_0x5A;
 			int repeatKeyCode; // 0x5C
 			float repeatKeyTimer; // 0x60
-			Event event0; // 0x64
-			Event event1; // 0x74
+			Event events[2]; // 0x64
 			bool shiftKeyDown; // 0x84
 			Element* textInputFocus; // 0x88
 			char unknown_0x8C;
@@ -138,7 +137,7 @@ namespace TES3 {
 			int unknown_0x24; // Maybe toggle flags?
 			int helpDelay; // 0x28
 			char unknown_0x2C;
-			int unknown_0x30;
+			TES3::UI::Element* unknown_0x30;
 			bool inventoryMenuEnabled; // 0x34
 			bool statsMenuEnabled; // 0x35
 			bool magicMenuEnabled; // 0x36

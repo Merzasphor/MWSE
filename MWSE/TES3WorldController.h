@@ -99,20 +99,8 @@ namespace TES3 {
 		int unknown_0x44;
 		int unknown_0x48;
 		int unknown_0x4C;
-		int unknown_0x50;
-		int unknown_0x54;
-		int unknown_0x58;
-		int unknown_0x5C;
-		int unknown_0x60;
-		int unknown_0x64;
-		int unknown_0x68;
-		int unknown_0x6C;
-		int unknown_0x70;
-		int unknown_0x74;
-		int unknown_0x78;
-		int unknown_0x7C;
 	};
-	static_assert(sizeof(MouseController) == 0x80, "TES3::MouseController failed size validation");
+	static_assert(sizeof(MouseController) == 0x50, "TES3::MouseController failed size validation");
 
 #define MWSE_CUSTOM_KILLCOUNTER true
 	struct KillCounter {
