@@ -8,7 +8,7 @@ local typeNames = {
 -- Write our markdown header.
 local f = assert(io.open("Data Files\\MWSE\\tmp\\GMSTs.md", "w"))
 f:write("# GMSTs\n\n")
-f:write("Index | Type    | Identifier                       | Default Value\n")
+f:write("Index | Type	| Identifier					   | Default Value\n")
 f:write("----- | ------- | -------------------------------- | --------------------------------------------\n")
 
 -- Go through all our GMSTs...

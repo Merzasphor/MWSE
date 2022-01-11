@@ -5,5 +5,5 @@ return {
 		{ name = "id", type = "number", description = "A registered identifier to help find this element later.", optional = true },
 		{ name = "color", type = "table", description = "The fill colour for the element.", optional = true },
 	},
-    valuetype = "tes3uiElement",
+	valuetype = "tes3uiElement",
 }

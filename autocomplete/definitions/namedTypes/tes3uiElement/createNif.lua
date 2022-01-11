@@ -5,5 +5,5 @@ return {
 		{ name = "id", type = "number", description = "A registered identifier to help find this element later.", optional = true },
 		{ name = "text", type = "string", description = "A model path. This path is relative to `Data Files`." },
 	},
-    valuetype = "tes3uiElement",
+	valuetype = "tes3uiElement",
 }

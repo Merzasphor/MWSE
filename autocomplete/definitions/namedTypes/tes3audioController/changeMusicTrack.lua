@@ -1,7 +1,7 @@
 return {
 	type = "method",
 	description = [[Changes currently playing music track according to provided parameters.]],
-    arguments = {{
+	arguments = {{
 		name = "params",
 		type = "table",
 		tableParams = {

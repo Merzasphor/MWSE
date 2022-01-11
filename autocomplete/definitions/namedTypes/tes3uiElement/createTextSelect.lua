@@ -6,5 +6,5 @@ return {
 		{ name = "text", type = "string", description = "The text to display.", optional = true },
 		{ name = "state", type = "number", description = "The initial interaction state. Defaults to normal.", optional = true },
 	},
-    valuetype = "tes3uiWidgetTextSelect",
+	valuetype = "tes3uiWidgetTextSelect",
 }

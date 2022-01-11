@@ -7,5 +7,5 @@ return {
 		{ name = "over", type = "string", description = "The path to the mouse hover image. This path is relative to `Data Files`." },
 		{ name = "path", type = "string", description = "The path to the mouse pressed image. This path is relative to `Data Files`." },
 	},
-    valuetype = "tes3uiElement",
+	valuetype = "tes3uiElement",
 }

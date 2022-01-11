@@ -1,6 +1,6 @@
 return {
 	type = "value",
 	description = [[The object of the record.]],
-    valuetype = "niAVObject",
-    readOnly = true,
+	valuetype = "niAVObject",
+	readOnly = true,
 }

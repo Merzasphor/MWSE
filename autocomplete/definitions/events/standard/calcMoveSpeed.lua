@@ -37,10 +37,10 @@ The movement event flow is described below:
 		},
 	},
 	links = {
-        ["calcWalkSpeed"] = "lua/event/calcWalkSpeed",
-        ["calcRunSpeed"] = "lua/event/calcRunSpeed",
-        ["calcSwimSpeed"] = "lua/event/calcSwimSpeed",
-        ["calcSwimRunSpeed"] = "lua/event/calcSwimRunSpeed",
-        ["calcFlySpeed"] = "lua/event/calcFlySpeed",
-    },
+		["calcWalkSpeed"] = "lua/event/calcWalkSpeed",
+		["calcRunSpeed"] = "lua/event/calcRunSpeed",
+		["calcSwimSpeed"] = "lua/event/calcSwimSpeed",
+		["calcSwimRunSpeed"] = "lua/event/calcSwimRunSpeed",
+		["calcFlySpeed"] = "lua/event/calcFlySpeed",
+	},
 }

@@ -17,7 +17,7 @@ return {
 			readOnly = true,
 			description = "The mobile’s associated reference.",
 		},
-        attacker = {
+		attacker = {
 			type = "tes3mobileActor",
 			readOnly = true,
 			description = "The mobile actor dealing the damage. Can be nil.",

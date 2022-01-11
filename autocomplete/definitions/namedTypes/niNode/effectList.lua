@@ -1,6 +1,6 @@
 return {
 	type = "value",
-    description = [[The effect list of the node.]],
-    readOnly = true,
+	description = [[The effect list of the node.]],
+	readOnly = true,
 	valuetype = "niDynamicEffectLinkedList",
 }

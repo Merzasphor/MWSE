@@ -12,10 +12,10 @@ return {
 			readOnly = true,
 			description = "The new level of the skill.",
 		},
-        ["source"] = {
-            type = "string",
-            description = "The source of the skill raise. Maps to values in [`tes3.skillRaiseSource`](https://mwse.github.io/MWSE/references/skill-raise-sources/) enumeration.",
-        },
+		["source"] = {
+			type = "string",
+			description = "The source of the skill raise. Maps to values in [`tes3.skillRaiseSource`](https://mwse.github.io/MWSE/references/skill-raise-sources/) enumeration.",
+		},
 	},
 	filter = "skill",
 }

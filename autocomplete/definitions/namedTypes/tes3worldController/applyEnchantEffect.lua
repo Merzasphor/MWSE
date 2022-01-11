@@ -9,5 +9,5 @@ return {
 			{ name = "enchantment", type = "tes3enchantment", description = "The enchantment's effects to apply." },
 		},
 	}},
-    valuetype = "boolean",
+	valuetype = "boolean",
 }

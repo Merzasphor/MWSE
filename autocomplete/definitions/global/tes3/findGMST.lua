@@ -6,7 +6,7 @@ return {
 	},
 	returns = "gameSetting",
 	valuetype = "tes3gameSetting",
-    examples = {
+	examples = {
 		["retrieveGMST"] = {
 			title = "Retrieve value of a GMST",
 			description = "This example shows how to read a value of a GMST and how to change it.",

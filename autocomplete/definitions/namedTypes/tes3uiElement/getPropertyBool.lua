@@ -4,5 +4,5 @@ return {
 	arguments = {
 		{ name = "propName", type = "string", description = "The property name." },
 	},
-    valuetype = "boolean",
+	valuetype = "boolean",
 }
