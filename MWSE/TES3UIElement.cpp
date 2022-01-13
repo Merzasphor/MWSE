@@ -687,7 +687,6 @@ namespace TES3 {
 
 		void Element::setHeight(int value) {
 			setProperty(Property::height, value);
-			flagContentChanged = true;
 		}
 
 		sol::optional<float> Element::getHeightProportional_lua() const {
@@ -904,7 +903,6 @@ namespace TES3 {
 
 		void Element::setWidth(int value) {
 			setProperty(TES3::UI::Property::width, value);
-			flagContentChanged = true;
 		}
 
 		sol::optional<float> Element::getWidthProportional_lua() const {
