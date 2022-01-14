@@ -12,7 +12,7 @@ return {
 			{ name = "count", type = "number", default = "1", description = "The maximum number of items to transfer." },
 			{ name = "playSound", type = "boolean", default = true, description = "If false, the up/down sound for the item won't be played." },
 			{ name = "limitCapacity", type = "boolean", default = true, description = "If false, items can be placed into containers that shouldn't normally be allowed. This includes organic containers, and containers that are full." },
-			{ name = "updateGUI", type = "boolean", default = true, description = "If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though `tes3ui.forcePlayerInventoryUpdate()` must manually be called after all inventory updates are finished." },
+			{ name = "updateGUI", type = "boolean", default = true, description = "If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though [`tes3ui.forcePlayerInventoryUpdate()`](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uiforceplayerinventoryupdate) must manually be called after all inventory updates are finished." },
 		},
 	}},
 	returns = {{ name = "transferredCount", type = "number" }},

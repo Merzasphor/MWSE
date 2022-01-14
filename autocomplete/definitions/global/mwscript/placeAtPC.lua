@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[Wrapper for the PlaceAtPC mwscript function.]],
+	description = [[Wrapper for the PlaceAtPC mwscript function. See [`tes3.createReference()`](https://mwse.github.io/MWSE/apis/tes3/#tes3createreference) for a proper replacement.]],
 	arguments = {{
 		name = "params",
 		type = "table",

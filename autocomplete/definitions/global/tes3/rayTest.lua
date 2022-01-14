@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[Performs a ray test and returns various information related to the result(s). If findAll is set, the result will be a table of results, otherwise only the first result is returned.]],
+	description = [[Performs a ray test and returns various information related to the result(s). If `findAll` is set, the result will be a table of results, otherwise only the first result is returned.]],
 	arguments = {{
 		name = "params",
 		type = "table",
@@ -36,10 +36,10 @@ return {
 			title = "Multiple Results",
 			description = "This example performs a ray test and displays all results in the entire ray test, rather than ending at the first object hit.",
 		},
-			["rayTestForLater"] = {
+		["rayTestForLater"] = {
 					title = "Save rayTest result for use at a later point",
 					description = "If you plan to use the results of rayTest, you should make sure it still exists. For example, an object which was in a list of results of rayTest can get unloaded when the player changes cells and become invalid, so it shouldn't be accessed.",
-			},
+		},
 	},
 	returns = "result",
 	valuetype = "niPickRecord|table",
