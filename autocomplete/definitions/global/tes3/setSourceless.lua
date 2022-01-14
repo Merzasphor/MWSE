@@ -5,8 +5,8 @@ return {
 		name = "params",
 		type = "table",
 		tableParams = {
-			{ name = "object", type = "tes3baseObject", description = "" },
-			{ name = "sourceless", type = "boolean", optional = true, default = true, description = "" },
+			{ name = "object", type = "tes3baseObject", description = "The object whose sourceless flag to modify." },
+			{ name = "sourceless", type = "boolean", optional = true, default = true, description = "Allows flagging an object as sourceless or undoing that action." },
 		},
 	}},
 }

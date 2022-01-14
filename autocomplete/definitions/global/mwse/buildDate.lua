@@ -4,4 +4,9 @@ return {
 
 Formatted as YYYYMMDD.]],
 	valuetype = "number",
+	examples = {
+		["buildDateCheck"] = {
+			title = "Check if the user has minimal required MWSE build installed.",
+		},
+	},
 }
