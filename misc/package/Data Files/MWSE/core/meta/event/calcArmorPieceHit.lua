@@ -4,18 +4,18 @@
 --- 
 --- The following table is used by default to determine what armor piece is hit:
 --- 
---- Roll (1-100) | Slot            | Fallback
+--- Roll (1-100) | Slot			| Fallback
 --- ------------ | --------------- | ---------------
---- 1-29         | Cuirass         | *None*
---- 30-34        | Shield          | Cuirass
---- 35-39        | Shield          | Left Pauldron
---- 40-49        | Left Pauldron   | *None*
---- 50-59        | Right Pauldron  | *None*
---- 60-69        | Greaves         | *None*
---- 70-79        | Helmet          | *None*
---- 80-89        | Boots           | *None*
---- 90-94        | Right Gauntlet  | Right Bracer
---- 95-100       | Left Gauntlet   | Left Bracer
+--- 1-29		 | Cuirass		 | *None*
+--- 30-34		| Shield		  | Cuirass
+--- 35-39		| Shield		  | Left Pauldron
+--- 40-49		| Left Pauldron   | *None*
+--- 50-59		| Right Pauldron  | *None*
+--- 60-69		| Greaves		 | *None*
+--- 70-79		| Helmet		  | *None*
+--- 80-89		| Boots		   | *None*
+--- 90-94		| Right Gauntlet  | Right Bracer
+--- 95-100	   | Left Gauntlet   | Left Bracer
 --- @class calcArmorPieceHitEventData
 --- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.
 --- @field fallback number A secondary slot to check for equipment on, if no armor is found using the primary slot.

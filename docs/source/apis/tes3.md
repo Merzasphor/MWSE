@@ -152,7 +152,7 @@ local addedCount = tes3.addItem({ reference = ..., item = ..., itemData = ..., s
 	* `count` (number): *Default*: `1`. The maximum number of items to add.
 	* `playSound` (boolean): *Default*: `true`. If false, the up/down sound for the item won't be played.
 	* `limit` (boolean): If false, items can be placed into containers that shouldn't normally be allowed. This includes organic containers, and containers that are full.
-	* `updateGUI` (boolean): *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though `tes3ui.forcePlayerInventoryUpdate()` must manually be called after all inventory updates are finished.
+	* `updateGUI` (boolean): *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though [`tes3ui.forcePlayerInventoryUpdate()`](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uiforceplayerinventoryupdate) must manually be called after all inventory updates are finished.
 
 **Returns**:
 
@@ -322,7 +322,7 @@ local wasAdded = tes3.addSpell({ reference = ..., actor = ..., spell = ..., upda
 	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): Who to give the spell to. To manipulate an actor without specifying any particular reference, use `actor` instead.
 	* `actor` ([tes3actor](../../types/tes3actor), string): Who to give the spell to. Providing a base actor can be done before a save has been loaded, but may not correctly update effects for instanced versions of that actor in an active save.
 	* `spell` ([tes3spell](../../types/tes3spell), string): The spell to add.
-	* `updateGUI` (boolean): *Default*: `true`. If true, the GUI will be updated respsecting the adding of the spell. This can be useful to disable when batch-adding many spells. The batch should be ended with `tes3.updateMagicGUI` to reflect the changes.
+	* `updateGUI` (boolean): *Default*: `true`. If true, the GUI will be updated respsecting the adding of the spell. This can be useful to disable when batch-adding many spells. The batch should be ended with [`tes3.updateMagicGUI`](https://mwse.github.io/MWSE/apis/tes3/#tes3updatemagicgui) to reflect the changes.
 
 **Returns**:
 
@@ -516,7 +516,7 @@ local executed = tes3.cast({ reference = ..., target = ..., spell = ..., instant
 
 ### `tes3.checkMerchantOffersService`
 
-Checks if a merchant will offer a service to you, including dialogue checks like disposition and faction membership. A specific service can be checked, or if no service is given, a generic dialogue check is made. If the service if refused, the dialogue reply for the refusal may also returned (it may be nil, as there may not always be a reply available).
+Checks if a merchant will offer a service to you, including dialogue checks like disposition and faction membership. A specific service can be checked, or if no service is given, a generic dialogue check is made. If the service is refused, the dialogue reply for the refusal may also be returned (it may be nil, as there may not always be a reply available).
 
 ```lua
 local offersService, refusalReply = tes3.checkMerchantOffersService(reference, service)
@@ -525,7 +525,7 @@ local offersService, refusalReply = tes3.checkMerchantOffersService(reference, s
 **Parameters**:
 
 * `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string)
-* `service` (number): *Optional*. The specific service to check for availability. Uses the tes3.merchantService.* constants.
+* `service` (number): *Optional*. The specific service to check for availability. Uses the [`tes3.merchantService`](https://mwse.github.io/MWSE/references/merchant-service-types/) constants.
 
 **Returns**:
 
@@ -735,7 +735,7 @@ tes3.disableKey(keyCode)
 
 **Parameters**:
 
-* `keyCode` (number)
+* `keyCode` (number): Maps to values in [`tes3.scanCode`](https://mwse.github.io/MWSE/references/scan-codes/) namespace.
 
 ***
 
@@ -773,7 +773,7 @@ tes3.enableKey(keyCode)
 
 **Parameters**:
 
-* `keyCode` (number)
+* `keyCode` (number): Maps to values in [`tes3.scanCode`](https://mwse.github.io/MWSE/references/scan-codes/) namespace.
 
 ***
 
@@ -919,8 +919,8 @@ local dialogue = tes3.findDialogue({ topic = ..., type = ..., page = ... })
 
 * `params` (table)
 	* `topic` (string): *Optional*. The dialogue topic to look for.
-	* `type` (number): *Optional*. The type of dialogue to look for. Uses tes3.dialogueType.* constants.
-	* `page` (number): *Optional*. The page of dialogue to fetch. Uses tes3.dialoguePage.* constants.
+	* `type` (number): *Optional*. The type of dialogue to look for. Uses [`tes3.dialogueType`](https://mwse.github.io/MWSE/references/dialogue-types/) constants.
+	* `page` (number): *Optional*. The page of dialogue to fetch. Uses [`tes3.dialoguePage`](https://mwse.github.io/MWSE/references/dialogue-types/) constants.
 
 **Returns**:
 
@@ -948,7 +948,7 @@ local globalVariable = tes3.findGlobal(id)
 
 ### `tes3.findGMST`
 
-Fetches the core game object that represents a game setting. While this function accepts a name, it is recommended to use the tes3.GMST constants.
+Fetches the core game object that represents a game setting. While this function accepts a name, it is recommended to use the [`tes3.GMST`](https://mwse.github.io/MWSE/references/gmst/) constants.
 
 ```lua
 local gameSetting = tes3.findGMST(id)
@@ -975,7 +975,7 @@ local gameSetting = tes3.findGMST(id)
 	-- Write our markdown header.
 	local f = assert(io.open("Data Files\\MWSE\\tmp\\GMSTs.md", "w"))
 	f:write("# GMSTs\n\n")
-	f:write("Index | Type    | Identifier                       | Default Value\n")
+	f:write("Index | Type	| Identifier					   | Default Value\n")
 	f:write("----- | ------- | -------------------------------- | --------------------------------------------\n")
 	
 	-- Go through all our GMSTs...
@@ -1395,9 +1395,9 @@ local stack = tes3.getEquippedItem({ actor = ..., enchanted = ..., objectType = 
 	```lua
 	local equippedLightStack = tes3.getEquippedItem({ actor = tes3.player, objectType = tes3.objectType.light })
 	if (equippedLightStack) then
-	    mwse.log("Equipped light: %s", equippedLightStack.object.id)
+		mwse.log("Equipped light: %s", equippedLightStack.object.id)
 	else
-	    mwse.log("No light equipped.")
+		mwse.log("No light equipped.")
 	end
 
 	```
@@ -1407,9 +1407,9 @@ local stack = tes3.getEquippedItem({ actor = ..., enchanted = ..., objectType = 
 	```lua
 	local equippedShieldStack = tes3.getEquippedItem({ actor = tes3.player, objectType = tes3.objectType.armor, slot = tes3.armorSlot.shield })
 	if (equippedShieldStack) then
-	    mwse.log("Equipped shield: %s", equippedShieldStack.object.id)
+		mwse.log("Equipped shield: %s", equippedShieldStack.object.id)
 	else
-	    mwse.log("No shield equipped.")
+		mwse.log("No shield equipped.")
 	end
 
 	```
@@ -2094,7 +2094,7 @@ local spell = tes3.getTrap({ reference = ... })
 
 ### `tes3.getVanityMode`
 
-The function returns true if the player is in the vanity mode. Vanity mode is triggered by a period of inactivity from the player or by a tes3.setVanityMode() function. The view is switched to third person (if not already), and the camera is orbiting slowly around the player character.
+The function returns true if the player is in the vanity mode. Vanity mode is triggered by a period of inactivity from the player or by a `tes3.setVanityMode()` function. The view is switched to third person (if not already), and the camera is orbiting slowly around the player character.
 
 ```lua
 local result = tes3.getVanityMode()
@@ -2108,7 +2108,7 @@ local result = tes3.getVanityMode()
 
 ### `tes3.getViewportSize`
 
-Returns both the viewport width and the viewport height. Note that this the real resolution of the screen. For a value scaled by MGE's menu scaling, see the same-named function in the tes3ui namespace. To get the scale used, check getViewportScale in the tes3ui namespace.
+Returns both the viewport width and the viewport height. Note that this is the real resolution of the screen. For a value scaled by MGE's menu scaling, see the [same-named function](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uigetviewportsize) in the tes3ui namespace. To get the scale used, check [getViewportScale](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uigetviewportscale) in the tes3ui namespace.
 
 ```lua
 local width, height = tes3.getViewportSize()
@@ -2311,6 +2311,8 @@ local result = tes3.isModActive(filename)
 ### `tes3.iterate`
 
 This function returns a function that iterates over a tes3iterator object. This is useful for for loops.
+		
+Note that tes3iterator objects support iteration with `pairs()` function.
 
 ```lua
 local function = tes3.iterate(iterator)
@@ -2456,7 +2458,7 @@ local iterationFunction = tes3.loopTArray(tarray)
 
 ### `tes3.makeSafeObjectHandle`
 
-Returns a safe handle for the object. To use the object use :getObject(). To check if it still exists use :valid().
+Returns a safe handle for the object. To use the object use `:getObject()`. To check if it still exists use `:valid()`.
 
 ```lua
 local object = tes3.makeSafeObjectHandle(unknown, unknown, unknown)
@@ -2499,7 +2501,7 @@ local element = tes3.messageBox({ message = ..., buttons = ..., callback = ..., 
 	* `message` (string)
 	* `buttons` (table): *Optional*. An array of strings to use for buttons.
 	* `callback` (function)
-	* `showInDialog` (boolean): *Optional*. Specifying showInDialog = false forces the toast-style message, which is not shown in the dialog menu. Defaults to true.
+	* `showInDialog` (boolean): *Default*: `true`. Specifying showInDialog = false forces the toast-style message, which is not shown in the dialog menu.
 	* `duration` (number): *Optional*. Overrides how long the toast-style message remains visible.
 * `formatAdditions` (variadic): *Optional*. Only used if messageOrParams is a string.
 
@@ -2534,9 +2536,9 @@ tes3.modStatistic({ reference = ..., name = ..., attribute = ..., skill = ..., b
 
 	```lua
 	tes3.modStatistic({
-	    reference = tes3.mobilePlayer,
-	    name = "health",
-	    current = -10
+		reference = tes3.mobilePlayer,
+		name = "health",
+		current = -10
 	})
 
 	```
@@ -2545,9 +2547,9 @@ tes3.modStatistic({ reference = ..., name = ..., attribute = ..., skill = ..., b
 
 	```lua
 	tes3.modStatistic({
-	    reference = tes3.mobilePlayer,
-	    name = "magicka",
-	    current = 20,
+		reference = tes3.mobilePlayer,
+		name = "magicka",
+		current = 20,
 		limitToBase = true
 	})
 
@@ -2622,7 +2624,7 @@ tes3.playAnimation({ reference = ..., group = ..., lower = ..., upper = ..., shi
 	* `shield` (number): *Optional*. Sets the animation group id for the shield arm. This is used to combine different animations for each body section. Maps to [`tes3.animationGroup`](https://mwse.github.io/MWSE/references/animation-groups/) constants.
 	* `startFlag` (number): *Default*: `tes3.animationStartFlag.immediate`. A flag for starting the group with, using [`tes3.animationStartFlag`](https://mwse.github.io/MWSE/references/animation-start-flags/) constants.
 	* `loopCount` (number): *Default*: `-1`. If provided, the animation will repeat its loop section a given number of times. To make an animation play through once, set loopCount = 0. Defaults to infinite looping.
-	* `mesh` (string): *Optional*. Deprecated. Please use tes3.loadAnimation (check its documentation) before calling playAnimation. You can also use loadAnimation to reset loaded animations to default.
+	* `mesh` (string): *Optional*. Deprecated. Please use [`tes3.loadAnimation`](https://mwse.github.io/MWSE/apis/tes3/#tes3loadanimation) (check its documentation) before calling `playAnimation`. You can also use `loadAnimation` to reset loaded animations to default.
 
 ***
 
@@ -2729,7 +2731,7 @@ tes3.pushKey(keyCode)
 
 **Parameters**:
 
-* `keyCode` (number)
+* `keyCode` (number): Maps to values in [`tes3.scanCode`](https://mwse.github.io/MWSE/references/scan-codes/) namespace.
 
 ***
 
@@ -2749,7 +2751,7 @@ tes3.random(seed)
 
 ### `tes3.rayTest`
 
-Performs a ray test and returns various information related to the result(s). If findAll is set, the result will be a table of results, otherwise only the first result is returned.
+Performs a ray test and returns various information related to the result(s). If `findAll` is set, the result will be a table of results, otherwise only the first result is returned.
 
 ```lua
 local result = tes3.rayTest({ position = ..., direction = ..., findAll = ..., maxDistance = ..., sort = ..., useModelBounds = ..., useModelCoordinates = ..., useBackTriangles = ..., observeAppCullFlag = ..., root = ..., ignoreSkinned = ..., returnColor = ..., returnNormal = ..., returnSmoothNormal = ..., returnTexture = ..., ignore = ... })
@@ -2821,20 +2823,20 @@ local result = tes3.rayTest({ position = ..., direction = ..., findAll = ..., ma
 
 	```lua
 	local result = tes3.rayTest{ -- result can get invalidated
-	    position = tes3.getPlayerEyePosition(),
-	    direction = tes3.getPlayerEyeVector(),
-	    ignore = { tes3.player }
+		position = tes3.getPlayerEyePosition(),
+		direction = tes3.getPlayerEyeVector(),
+		ignore = { tes3.player }
 	}
 	
 	local ref
 	
 	if result then
-	    ref = tes3.makeSafeObjectHandle(result.reference)
+		ref = tes3.makeSafeObjectHandle(result.reference)
 	end
 	
 	-- Before using ref, now we can chack if it is valid
 	if ref:valid() then
-	    -- Now we can safely do something with ref
+		-- Now we can safely do something with ref
 	
 	end
 
@@ -2852,13 +2854,13 @@ tes3.releaseKey(keyCode)
 
 **Parameters**:
 
-* `keyCode` (number)
+* `keyCode` (number): Maps to values in [`tes3.scanCode`](https://mwse.github.io/MWSE/references/scan-codes/) namespace.
 
 ***
 
 ### `tes3.removeEffects`
 
-Removes magic effects from a given reference. Requires that either the effect or castType parameter be provided.
+Removes magic effects from a given reference. Requires that either the `effect` or `castType` parameter be provided.
 
 ```lua
 tes3.removeEffects(reference, effect, castType, chance, removeSpell)
@@ -2870,7 +2872,43 @@ tes3.removeEffects(reference, effect, castType, chance, removeSpell)
 * `effect` (number): *Optional*. Maps to [`tes3.effect`](https://mwse.github.io/MWSE/references/magic-effects/) constants.
 * `castType` (number): *Optional*. Maps to [`tes3.spellType`](https://mwse.github.io/MWSE/references/spell-types/) constants.
 * `chance` (number): *Default*: `100`. The chance for the effect to be removed.
-* `removeSpell` (boolean): *Optional*. If removing by cast type, determines if the spell should be removed from the target's spell list. Defaults to true if castType is not `tes3.spellType.spell.` This causes diseases and curses to be removed when dispelled.
+* `removeSpell` (boolean): *Optional*. If removing by cast type, determines if the spell should be removed from the target's spell list. Defaults to true if `castType` is not `tes3.spellType.spell.` This causes diseases and curses to be removed when dispelled.
+
+??? example "Example: Simulating a Dispel"
+
+	```lua
+	local function example(e)
+			-- We only care about the player
+		if (e.mobile.objectType ~= tes3.objectType.mobilePlayer) then
+			return
+		end
+	
+		local cell = tes3.mobilePlayer.cell
+	
+		if (cell.isInterior and not cell.hasWater) then
+			return
+		end
+	
+		local waterLevel = cell.waterLevel
+		local headPosition = tes3.mobilePlayer.position.z + tes3.mobilePlayer.height
+	
+		local underwater = headPosition < waterLevel
+	
+		if underwater then
+			-- There is a 50 % chance that any Water Breathing effect will be removed from the player
+			tes3.removeEffects({
+				reference = tes3.player,
+				chance = 50,
+				effect = tes3.effect.waterBreathing,
+			})
+		end
+	end
+	
+	event.register("initialized", function ()
+		event.register("calcMoveSpeed", example)
+	end)
+
+	```
 
 ***
 
@@ -2891,7 +2929,7 @@ local removedCount = tes3.removeItem({ reference = ..., item = ..., itemData = .
 	* `deleteItemData` ([tes3itemData](../../types/tes3itemData)): *Optional*. Whether to delete the item data after remove succeeds. Automatically set if itemData is used. Does not need to be specified for normal usage.
 	* `count` (number): *Default*: `1`. The maximum number of items to remove.
 	* `playSound` (boolean): *Default*: `true`. If false, the up/down sound for the item won't be played.
-	* `updateGUI` (boolean): *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though `tes3ui.forcePlayerInventoryUpdate()` must manually be called after all inventory updates are finished.
+	* `updateGUI` (boolean): *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though [`tes3ui.forcePlayerInventoryUpdate()`](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uiforceplayerinventoryupdate) must manually be called after all inventory updates are finished.
 
 **Returns**:
 
@@ -2953,7 +2991,7 @@ local wasRemoved = tes3.removeSpell({ reference = ..., actor = ..., spell = ...,
 	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): Who to remove the spell from. To manipulate an actor without specifying any particular reference, use `actor` instead.
 	* `actor` ([tes3actor](../../types/tes3actor), string): Who to remove the spell from. Providing a base actor can be done before a save has been loaded, but may not correctly update effects for instanced versions of that actor in an active save.
 	* `spell` ([tes3spell](../../types/tes3spell), string): The spell to remove.
-	* `updateGUI` (boolean): *Default*: `true`. If true, the GUI will be updated respsecting the removal of the spell. This can be useful to disable when batch-removing many spells. The batch should be ended with `tes3.updateMagicGUI` to reflect the changes.
+	* `updateGUI` (boolean): *Default*: `true`. If true, the GUI will be updated respecting the removal of the spell. This can be useful to disable when batch-removing many spells. The batch should be ended with [`tes3.updateMagicGUI`](https://mwse.github.io/MWSE/apis/tes3/#tes3updatemagicgui) to reflect the changes.
 
 **Returns**:
 
@@ -3185,7 +3223,7 @@ local success = tes3.setEnabled({ reference = ..., toggle = ..., enabled = ... }
 * `params` (table)
 	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The reference to enable/disable.
 	* `toggle` (boolean): If true, the enabled state will be toggled.
-	* `enabled` (boolean): *Default*: `true`. If not toggling, will set true to enable or false to disable.
+	* `enabled` (boolean): *Default*: `true`. If not toggling, setting `enabled` to true will enable the reference or to false will disable the reference.
 
 **Returns**:
 
@@ -3214,7 +3252,7 @@ local value = tes3.setGlobal(id, value)
 
 ### `tes3.setItemIsStolen`
 
-This function changes an item's stolen flag. Morrowind handles stealing by marking the base item (not the inventory stack) with with NPCs that you have stolen that item from. The NPC will recognize an item is stolen if they are marked as stolen on the base item.
+This function changes an item's stolen flag. Morrowind handles stealing by marking the base item (not the inventory stack) with NPCs that you have stolen that item from. The NPC will recognize an item as stolen if they are marked as stolen on the base item.
 
 ```lua
 tes3.setItemIsStolen(item, from, stolen)
@@ -3317,8 +3355,8 @@ tes3.setOwner({ reference = ..., remove = ..., owner = ..., requiredGlobal = ...
 	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): A reference whose owner to set.
 	* `remove` (boolean): *Optional*. If this parameter is set to true, reference's owner field will be removed.
 	* `owner` ([tes3npc](../../types/tes3npc), [tes3faction](../../types/tes3faction), string): Assigns this NPC or a faction as the owner of the reference.
-	* `requiredGlobal` ([tes3globalVariable](../../types/tes3globalVariable)): *Optional*. If owner is set to NPC, requiredGlobal variable can be set.
-	* `requiredRank` (number): *Default*: `0`. If owner is set to faction, requitedRank variable controls minimal rank in faction the player has to have to be able to freely take the reference.
+	* `requiredGlobal` ([tes3globalVariable](../../types/tes3globalVariable)): *Optional*. If `owner` is set to NPC, `requiredGlobal` variable can be set.
+	* `requiredRank` (number): *Default*: `0`. If `owner` is set to faction, `requitedRank` variable controls minimal rank in faction the player has to have to be able to freely take the reference.
 
 ***
 
@@ -3357,8 +3395,8 @@ tes3.setSourceless({ object = ..., sourceless = ... })
 **Parameters**:
 
 * `params` (table)
-	* `object` ([tes3baseObject](../../types/tes3baseObject)): 
-	* `sourceless` (boolean): *Default*: `true`. 
+	* `object` ([tes3baseObject](../../types/tes3baseObject)): The object whose sourceless flag to modify.
+	* `sourceless` (boolean): *Default*: `true`. Allows flagging an object as sourceless or undoing that action.
 
 ***
 
@@ -3535,7 +3573,7 @@ tes3.tapKey(keyCode)
 
 **Parameters**:
 
-* `keyCode` (number)
+* `keyCode` (number): Maps to values in [`tes3.scanCode`](https://mwse.github.io/MWSE/references/scan-codes/) namespace.
 
 ***
 
@@ -3600,7 +3638,7 @@ local transferredCount = tes3.transferItem({ from = ..., to = ..., item = ..., i
 	* `count` (number): *Default*: `1`. The maximum number of items to transfer.
 	* `playSound` (boolean): *Default*: `true`. If false, the up/down sound for the item won't be played.
 	* `limitCapacity` (boolean): *Default*: `true`. If false, items can be placed into containers that shouldn't normally be allowed. This includes organic containers, and containers that are full.
-	* `updateGUI` (boolean): *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though `tes3ui.forcePlayerInventoryUpdate()` must manually be called after all inventory updates are finished.
+	* `updateGUI` (boolean): *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though [`tes3ui.forcePlayerInventoryUpdate()`](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uiforceplayerinventoryupdate) must manually be called after all inventory updates are finished.
 
 **Returns**:
 
@@ -3660,7 +3698,7 @@ tes3.unhammerKey(keyCode)
 
 **Parameters**:
 
-* `keyCode` (number)
+* `keyCode` (number): Maps to values in [`tes3.scanCode`](https://mwse.github.io/MWSE/references/scan-codes/) namespace.
 
 ***
 

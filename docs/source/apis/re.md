@@ -62,7 +62,7 @@ local result = re.find(subject, pattern, init)
 	local re = require("re")
 	
 	local function onLoaded(e)
-	    
+		
 		-- find the position of the first numeral in a string
 		mwse.log("%d %d", re.find("the number 423 is odd", "[0-9]+"))  --> 12 14
 		
@@ -134,10 +134,10 @@ local result = re.match(subject, pattern)
 	local re = require("re")
 	
 	local function onLoaded(e)
-	    
+		
 		-- returns all words in a string
 		mwse.log("%s %s %s %s", re.match("the number 423 is odd", "({%a+} / .)*"))
-		--> the    number    is    odd
+		--> the	number	is	odd
 	
 		-- returns the first numeral in a string
 		mwse.log(re.match("the number 423 is odd", "s <- {%d+} / . s"))

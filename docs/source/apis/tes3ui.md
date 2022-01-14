@@ -38,13 +38,13 @@ tes3ui.captureMouseDrag(capture)
 
 	```lua
 	element:register("mouseDown", function(e)
-	    -- Capture must be inside a mouse event.
-	    tes3ui.captureMouseDrag(true)
+		-- Capture must be inside a mouse event.
+		tes3ui.captureMouseDrag(true)
 	end)
 	
 	element:register("mouseRelease", function(e)
-	    -- Release may be anywhere.
-	    tes3ui.captureMouseDrag(false)
+		-- Release may be anywhere.
+		tes3ui.captureMouseDrag(false)
 	end)
 
 	```
@@ -285,7 +285,7 @@ local scale = tes3ui.getViewportScale()
 
 ### `tes3ui.getViewportSize`
 
-Returns both the viewport width and the viewport height. Note that this value is not necessarily the real resolution of the screen. For that value, see the same-named function in the tes3 namespace. To get the scale used, check getViewportScale.
+Returns both the viewport width and the viewport height. Note that this value is not necessarily the real resolution of the screen. For that value, see the [`same-named function`](https://mwse.github.io/MWSE/apis/tes3/#tes3getviewportsize) in the tes3 namespace. To get the scale used, check `getViewportScale`.
 
 ```lua
 local width, height = tes3ui.getViewportSize()

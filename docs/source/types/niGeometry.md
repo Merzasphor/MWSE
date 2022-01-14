@@ -1,7 +1,7 @@
 # niGeometry
 
 Base class for most geometric objects. Includes basic vertex and normal management.
-    
+	
 
 This type inherits the following: [niAVObject](../../types/niAVObject), [niObjectNET](../../types/niObjectNET), [niObject](../../types/niObject)
 ## Properties

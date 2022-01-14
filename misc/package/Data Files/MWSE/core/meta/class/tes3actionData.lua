@@ -6,14 +6,14 @@
 --- 
 --- Value | Behavior
 --- ----- | ---------
---- -1    | Undecided
---- 0     | Hello
---- 2     | Idle
---- 3     | Attack
---- 4     | Avoid
---- 6     | Flee
---- 8     | Walk
---- 12    | Greet
+--- -1	| Undecided
+--- 0	 | Hello
+--- 2	 | Idle
+--- 3	 | Attack
+--- 4	 | Avoid
+--- 6	 | Flee
+--- 8	 | Walk
+--- 12	| Greet
 --- @field animationAttackState number No description yet available.
 --- @field attackDirection number **Deprecated. Use `tes3actionData.physicalAttackType` instead.** When attacking, the direction swung with the weapon. This shows if the actor was thrusting, swinging, or chopping.
 --- @field attackSwing number When attacking, this value represents how much the weapon has been pulled back. The value ranges from [0.0 - 1.0].

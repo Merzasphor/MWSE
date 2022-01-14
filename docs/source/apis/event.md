@@ -53,7 +53,7 @@ event.trigger(eventId, payload, options)
 
 ### `event.unregister`
 
-Unregisters a function  event is raised.
+Unregisters a function previously registered for an event with `event.register()`.
 
 ```lua
 event.unregister(eventId, callback, options)

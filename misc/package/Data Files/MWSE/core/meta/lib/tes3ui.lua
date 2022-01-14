@@ -114,7 +114,7 @@ function tes3ui.getServiceActor() end
 --- @return number scale The UI scale value set from MGE.
 function tes3ui.getViewportScale() end
 
---- Returns both the viewport width and the viewport height. Note that this value is not necessarily the real resolution of the screen. For that value, see the same-named function in the tes3 namespace. To get the scale used, check getViewportScale.
+--- Returns both the viewport width and the viewport height. Note that this value is not necessarily the real resolution of the screen. For that value, see the [`same-named function`](https://mwse.github.io/MWSE/apis/tes3/#tes3getviewportsize) in the tes3 namespace. To get the scale used, check `getViewportScale`.
 --- @return number width The scaled width of the viewport.
 --- @return number height The scaled height of the viewport.
 function tes3ui.getViewportSize() end

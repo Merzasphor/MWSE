@@ -12,7 +12,7 @@
 --- 
 --- Formatted as AAABBBCCC, where A is the major version, BBB is the minor version, and CCC is the patch version. BBB and CCC are forward-padded.
 --- 
---- It is usually better to use mwse.buildDate instead.
+--- It is usually better to use `mwse.buildDate` instead.
 mwse = {}
 
 --- Configures MWSE to no longer execute a lua function instead when a script would run. This undoes the work of `mwse.overrideScript`.
@@ -36,7 +36,7 @@ function mwse.getVirtualMemoryUsage() end
 --- @return table result No description yet available.
 function mwse.loadConfig(fileName, defaults) end
 
---- Loads translations from the i18n folder for a given mod. This is locale-aware, using the result from `tes3.getLanguage()`. See the [http://127.0.0.1:8000/guides/mod-translations/](mod translations guide) for more information.
+--- Loads translations from the i18n folder for a given mod. This is locale-aware, using the result from `tes3.getLanguage()`. See the [mod translations guide](https://mwse.github.io/MWSE/guides/mod-translations/) for more information.
 --- @param mod string Name of the folder that your main.lua mod can be found in.
 --- @return function i18n The callable translation results.
 function mwse.loadTranslations(mod) end

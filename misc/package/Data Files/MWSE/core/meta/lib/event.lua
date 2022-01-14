@@ -157,7 +157,7 @@ function event.register(eventId, callback, options) end
 --- @param options table *Optional*. No description yet available.
 function event.trigger(eventId, payload, options) end
 
---- Unregisters a function  event is raised.
+--- Unregisters a function previously registered for an event with `event.register()`.
 --- @param eventId string No description yet available.
 --- @param callback function No description yet available.
 --- @param options table *Optional*. No description yet available.

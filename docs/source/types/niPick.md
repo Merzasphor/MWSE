@@ -17,7 +17,7 @@ The coordinate type for the object.
 ### `frontOnly`
 
 If true, back face triangles (those with clockwise winding order) are culled prior to intersection calculations. If false, intersections of ray with triangles are computed regardless of triangle orientation.
-    
+	
 
 **Returns**:
 
@@ -48,7 +48,7 @@ The pick record that was last added to the object.
 ### `observeAppCullFlag`
 
 If true, the pick stops if it encounters an object with the 'app culled' flag set.  If false, the pick will continue over 'app culled' objects.
-    
+	
 
 **Returns**:
 

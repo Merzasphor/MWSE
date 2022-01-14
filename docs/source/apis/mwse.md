@@ -14,6 +14,17 @@ Formatted as YYYYMMDD.
 
 * `result` (number)
 
+??? example "Example: Check if the user has minimal required MWSE build installed."
+
+	```lua
+	-- Ensure we have the features we need.
+	if (mwse.buildDate == nil or mwse.buildDate < 20210817) then
+		mwse.log("[Example] Build date of %s does not meet minimum build date of 20210817.", mwse.buildDate)
+		return
+	end
+
+	```
+
 ***
 
 ### `mwse.gameTimers`
@@ -52,7 +63,7 @@ A numerical representation of the release version of MWSE currently being used.
 
 Formatted as AAABBBCCC, where A is the major version, BBB is the minor version, and CCC is the patch version. BBB and CCC are forward-padded.
 
-It is usually better to use mwse.buildDate instead.
+It is usually better to use `mwse.buildDate` instead.
 
 **Returns**:
 
@@ -131,7 +142,7 @@ local result = mwse.loadConfig(fileName, defaults)
 
 ### `mwse.loadTranslations`
 
-Loads translations from the i18n folder for a given mod. This is locale-aware, using the result from `tes3.getLanguage()`. See the [http://127.0.0.1:8000/guides/mod-translations/](mod translations guide) for more information.
+Loads translations from the i18n folder for a given mod. This is locale-aware, using the result from `tes3.getLanguage()`. See the [mod translations guide](https://mwse.github.io/MWSE/guides/mod-translations/) for more information.
 
 ```lua
 local i18n = mwse.loadTranslations(mod)

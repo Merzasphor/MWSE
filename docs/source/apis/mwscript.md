@@ -473,7 +473,7 @@ local result = mwscript.hasItemEquipped({ reference = ..., item = ... })
 
 ### `mwscript.placeAtPC`
 
-Wrapper for the PlaceAtPC mwscript function.
+Wrapper for the PlaceAtPC mwscript function. See [`tes3.createReference()`](https://mwse.github.io/MWSE/apis/tes3/#tes3createreference) for a proper replacement.
 
 ```lua
 local lastPlacedReference = mwscript.placeAtPC({ reference = ..., object = ..., count = ..., distance = ..., direction = ... })

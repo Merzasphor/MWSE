@@ -62,7 +62,7 @@ function tes3.addClothingSlot(params) end
 --- 
 --- `limit`: boolean — If false, items can be placed into containers that shouldn't normally be allowed. This includes organic containers, and containers that are full.
 --- 
---- `updateGUI`: boolean — *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though `tes3ui.forcePlayerInventoryUpdate()` must manually be called after all inventory updates are finished.
+--- `updateGUI`: boolean — *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though [`tes3ui.forcePlayerInventoryUpdate()`](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uiforceplayerinventoryupdate) must manually be called after all inventory updates are finished.
 --- @return number addedCount No description yet available.
 function tes3.addItem(params) end
 
@@ -75,7 +75,7 @@ function tes3.addItem(params) end
 --- @field count number *Default*: `1`. The maximum number of items to add.
 --- @field playSound boolean *Default*: `true`. If false, the up/down sound for the item won't be played.
 --- @field limit boolean If false, items can be placed into containers that shouldn't normally be allowed. This includes organic containers, and containers that are full.
---- @field updateGUI boolean *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though `tes3ui.forcePlayerInventoryUpdate()` must manually be called after all inventory updates are finished.
+--- @field updateGUI boolean *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though [`tes3ui.forcePlayerInventoryUpdate()`](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uiforceplayerinventoryupdate) must manually be called after all inventory updates are finished.
 
 --- Creates an item data if there is room for a new stack in a given inventory. This can be then used to add custom user data or adjust an item's condition. This will return nil if no item data could be allocated for the item -- for example if the reference doesn't have the item in their inventory or each item of that type already has item data.
 --- @param params tes3.addItemData.params This table accepts the following values:
@@ -315,7 +315,7 @@ function tes3.addSoulGem(params) end
 --- 
 --- `spell`: tes3spell|string — The spell to add.
 --- 
---- `updateGUI`: boolean — *Default*: `true`. If true, the GUI will be updated respsecting the adding of the spell. This can be useful to disable when batch-adding many spells. The batch should be ended with `tes3.updateMagicGUI` to reflect the changes.
+--- `updateGUI`: boolean — *Default*: `true`. If true, the GUI will be updated respsecting the adding of the spell. This can be useful to disable when batch-adding many spells. The batch should be ended with [`tes3.updateMagicGUI`](https://mwse.github.io/MWSE/apis/tes3/#tes3updatemagicgui) to reflect the changes.
 --- @return boolean wasAdded True if the spell was successfully added. This can be false if the actor's race or birthsign already contains the spell.
 function tes3.addSpell(params) end
 
@@ -324,7 +324,7 @@ function tes3.addSpell(params) end
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string Who to give the spell to. To manipulate an actor without specifying any particular reference, use `actor` instead.
 --- @field actor tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance|string Who to give the spell to. Providing a base actor can be done before a save has been loaded, but may not correctly update effects for instanced versions of that actor in an active save.
 --- @field spell tes3spell|string The spell to add.
---- @field updateGUI boolean *Default*: `true`. If true, the GUI will be updated respsecting the adding of the spell. This can be useful to disable when batch-adding many spells. The batch should be ended with `tes3.updateMagicGUI` to reflect the changes.
+--- @field updateGUI boolean *Default*: `true`. If true, the GUI will be updated respsecting the adding of the spell. This can be useful to disable when batch-adding many spells. The batch should be ended with [`tes3.updateMagicGUI`](https://mwse.github.io/MWSE/apis/tes3/#tes3updatemagicgui) to reflect the changes.
 
 --- Changes the volume of a sound that is playing on a given reference.
 --- @param params tes3.adjustSoundVolume.params This table accepts the following values:
@@ -504,9 +504,9 @@ function tes3.cast(params) end
 --- @field alwaysSucceeds boolean *Default*: `true`. When true, the spell cannot fail and does not consume magicka. When false, it is cast using the actor's spell skill, and requires and takes enough magicka to cast. Only applies when 'instant' is true.
 --- @field bypassResistances boolean The spell will bypass the target's resistances. Only applies when 'instant' is true.
 
---- Checks if a merchant will offer a service to you, including dialogue checks like disposition and faction membership. A specific service can be checked, or if no service is given, a generic dialogue check is made. If the service if refused, the dialogue reply for the refusal may also returned (it may be nil, as there may not always be a reply available).
+--- Checks if a merchant will offer a service to you, including dialogue checks like disposition and faction membership. A specific service can be checked, or if no service is given, a generic dialogue check is made. If the service is refused, the dialogue reply for the refusal may also be returned (it may be nil, as there may not always be a reply available).
 --- @param reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string No description yet available.
---- @param service number *Optional*. The specific service to check for availability. Uses the tes3.merchantService.* constants.
+--- @param service number *Optional*. The specific service to check for availability. Uses the [`tes3.merchantService`](https://mwse.github.io/MWSE/references/merchant-service-types/) constants.
 --- @return boolean offersService No description yet available.
 --- @return tes3dialogueInfo refusalReply No description yet available.
 function tes3.checkMerchantOffersService(reference, service) end
@@ -595,7 +595,7 @@ function tes3.decrementKillCount(params) end
 function tes3.deleteObject(object) end
 
 --- Disables the use of a keyboard key.
---- @param keyCode number No description yet available.
+--- @param keyCode number Maps to values in [`tes3.scanCode`](https://mwse.github.io/MWSE/references/scan-codes/) namespace.
 function tes3.disableKey(keyCode) end
 
 --- Drops one or more items from a reference's inventory onto the ground at their feet. It will unequip the item if it is equipped. The return value will be nil if no matching item was found.
@@ -625,7 +625,7 @@ function tes3.dropItem(params) end
 --- @field updateGUI boolean *Default*: `true`. If false, the player or contents menu won't be updated.
 
 --- Enables the use of a keyboard key.
---- @param keyCode number No description yet available.
+--- @param keyCode number Maps to values in [`tes3.scanCode`](https://mwse.github.io/MWSE/references/scan-codes/) namespace.
 function tes3.enableKey(keyCode) end
 
 --- Similar to the vanilla FadeIn mwscript command.
@@ -730,24 +730,24 @@ function tes3.findClosestExteriorReferenceOfObject(params) end
 --- 
 --- `topic`: string — *Optional*. The dialogue topic to look for.
 --- 
---- `type`: number — *Optional*. The type of dialogue to look for. Uses tes3.dialogueType.* constants.
+--- `type`: number — *Optional*. The type of dialogue to look for. Uses [`tes3.dialogueType`](https://mwse.github.io/MWSE/references/dialogue-types/) constants.
 --- 
---- `page`: number — *Optional*. The page of dialogue to fetch. Uses tes3.dialoguePage.* constants.
+--- `page`: number — *Optional*. The page of dialogue to fetch. Uses [`tes3.dialoguePage`](https://mwse.github.io/MWSE/references/dialogue-types/) constants.
 --- @return tes3dialogue dialogue No description yet available.
 function tes3.findDialogue(params) end
 
 ---Table parameter definitions for `tes3.findDialogue`.
 --- @class tes3.findDialogue.params
 --- @field topic string *Optional*. The dialogue topic to look for.
---- @field type number *Optional*. The type of dialogue to look for. Uses tes3.dialogueType.* constants.
---- @field page number *Optional*. The page of dialogue to fetch. Uses tes3.dialoguePage.* constants.
+--- @field type number *Optional*. The type of dialogue to look for. Uses [`tes3.dialogueType`](https://mwse.github.io/MWSE/references/dialogue-types/) constants.
+--- @field page number *Optional*. The page of dialogue to fetch. Uses [`tes3.dialoguePage`](https://mwse.github.io/MWSE/references/dialogue-types/) constants.
 
 --- Fetches the core game object that represents a global variable.
 --- @param id string No description yet available.
 --- @return tes3globalVariable globalVariable No description yet available.
 function tes3.findGlobal(id) end
 
---- Fetches the core game object that represents a game setting. While this function accepts a name, it is recommended to use the tes3.GMST constants.
+--- Fetches the core game object that represents a game setting. While this function accepts a name, it is recommended to use the [`tes3.GMST`](https://mwse.github.io/MWSE/references/gmst/) constants.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3/#tes3findgmst).
 --- @param id number|string No description yet available.
@@ -1179,11 +1179,11 @@ function tes3.getTrap(params) end
 --- @class tes3.getTrap.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string No description yet available.
 
---- The function returns true if the player is in the vanity mode. Vanity mode is triggered by a period of inactivity from the player or by a tes3.setVanityMode() function. The view is switched to third person (if not already), and the camera is orbiting slowly around the player character.
+--- The function returns true if the player is in the vanity mode. Vanity mode is triggered by a period of inactivity from the player or by a `tes3.setVanityMode()` function. The view is switched to third person (if not already), and the camera is orbiting slowly around the player character.
 --- @return boolean result Is the vanity mode currently active?
 function tes3.getVanityMode() end
 
---- Returns both the viewport width and the viewport height. Note that this the real resolution of the screen. For a value scaled by MGE's menu scaling, see the same-named function in the tes3ui namespace. To get the scale used, check getViewportScale in the tes3ui namespace.
+--- Returns both the viewport width and the viewport height. Note that this is the real resolution of the screen. For a value scaled by MGE's menu scaling, see the [same-named function](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uigetviewportsize) in the tes3ui namespace. To get the scale used, check [getViewportScale](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uigetviewportscale) in the tes3ui namespace.
 --- @return number width The width of the viewport.
 --- @return number height The height of the viewport.
 function tes3.getViewportSize() end
@@ -1285,6 +1285,8 @@ function tes3.isKeyEqual(params) end
 function tes3.isModActive(filename) end
 
 --- This function returns a function that iterates over a tes3iterator object. This is useful for for loops.
+--- 		
+--- Note that tes3iterator objects support iteration with `pairs()` function.
 --- @param iterator tes3iterator No description yet available.
 --- @return function function No description yet available.
 function tes3.iterate(iterator) end
@@ -1346,7 +1348,7 @@ function tes3.lock(params) end
 --- @return function iterationFunction No description yet available.
 function tes3.loopTArray(tarray) end
 
---- Returns a safe handle for the object. To use the object use :getObject(). To check if it still exists use :valid().
+--- Returns a safe handle for the object. To use the object use `:getObject()`. To check if it still exists use `:valid()`.
 --- @return tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3enchantment|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3reference|tes3repairTool|tes3spell|tes3static|tes3weapon object No description yet available.
 function tes3.makeSafeObjectHandle() end
 
@@ -1363,7 +1365,7 @@ function tes3.menuMode() end
 --- 
 --- `callback`: function — No description yet available.
 --- 
---- `showInDialog`: boolean — *Optional*. Specifying showInDialog = false forces the toast-style message, which is not shown in the dialog menu. Defaults to true.
+--- `showInDialog`: boolean — *Default*: `true`. Specifying showInDialog = false forces the toast-style message, which is not shown in the dialog menu.
 --- 
 --- `duration`: number — *Optional*. Overrides how long the toast-style message remains visible.
 --- @vararg any *Optional*. Only used if messageOrParams is a string.
@@ -1375,7 +1377,7 @@ function tes3.messageBox(messageOrParams, ...) end
 --- @field message string No description yet available.
 --- @field buttons table *Optional*. An array of strings to use for buttons.
 --- @field callback function No description yet available.
---- @field showInDialog boolean *Optional*. Specifying showInDialog = false forces the toast-style message, which is not shown in the dialog menu. Defaults to true.
+--- @field showInDialog boolean *Default*: `true`. Specifying showInDialog = false forces the toast-style message, which is not shown in the dialog menu.
 --- @field duration number *Optional*. Overrides how long the toast-style message remains visible.
 
 --- Modifies a statistic on a given actor. This should be used instead of manually setting values on the game structures, to ensure that events and GUI elements are properly handled. Either skill, attribute, or name must be provided.
@@ -1459,7 +1461,7 @@ function tes3.persuade(params) end
 --- 
 --- `loopCount`: number — *Default*: `-1`. If provided, the animation will repeat its loop section a given number of times. To make an animation play through once, set loopCount = 0. Defaults to infinite looping.
 --- 
---- `mesh`: string — *Optional*. Deprecated. Please use tes3.loadAnimation (check its documentation) before calling playAnimation. You can also use loadAnimation to reset loaded animations to default.
+--- `mesh`: string — *Optional*. Deprecated. Please use [`tes3.loadAnimation`](https://mwse.github.io/MWSE/apis/tes3/#tes3loadanimation) (check its documentation) before calling `playAnimation`. You can also use `loadAnimation` to reset loaded animations to default.
 function tes3.playAnimation(params) end
 
 ---Table parameter definitions for `tes3.playAnimation`.
@@ -1471,7 +1473,7 @@ function tes3.playAnimation(params) end
 --- @field shield number *Optional*. Sets the animation group id for the shield arm. This is used to combine different animations for each body section. Maps to [`tes3.animationGroup`](https://mwse.github.io/MWSE/references/animation-groups/) constants.
 --- @field startFlag number *Default*: `tes3.animationStartFlag.immediate`. A flag for starting the group with, using [`tes3.animationStartFlag`](https://mwse.github.io/MWSE/references/animation-start-flags/) constants.
 --- @field loopCount number *Default*: `-1`. If provided, the animation will repeat its loop section a given number of times. To make an animation play through once, set loopCount = 0. Defaults to infinite looping.
---- @field mesh string *Optional*. Deprecated. Please use tes3.loadAnimation (check its documentation) before calling playAnimation. You can also use loadAnimation to reset loaded animations to default.
+--- @field mesh string *Optional*. Deprecated. Please use [`tes3.loadAnimation`](https://mwse.github.io/MWSE/apis/tes3/#tes3loadanimation) (check its documentation) before calling `playAnimation`. You can also use `loadAnimation` to reset loaded animations to default.
 
 --- Plays the sound responsible for picking up or putting down an item.
 --- @param params tes3.playItemPickupSound.params This table accepts the following values:
@@ -1565,14 +1567,14 @@ function tes3.positionCell(params) end
 --- @field teleportCompanions boolean *Default*: `true`. If used on the player, determines if companions should also be teleported.
 
 --- Simulates pushing a keyboard key.
---- @param keyCode number No description yet available.
+--- @param keyCode number Maps to values in [`tes3.scanCode`](https://mwse.github.io/MWSE/references/scan-codes/) namespace.
 function tes3.pushKey(keyCode) end
 
 --- Returns a value from Morrowind's random number generator. This is not preferrable to lua's math.random function, but may be necessary for reproducing Morrowind's generation.
 --- @param seed number *Optional*. If provided, it the number generator is seeded with this value. Pointers to objects may be used, such as a reference's sceneNode, to create a consistent if less than random seed.
 function tes3.random(seed) end
 
---- Performs a ray test and returns various information related to the result(s). If findAll is set, the result will be a table of results, otherwise only the first result is returned.
+--- Performs a ray test and returns various information related to the result(s). If `findAll` is set, the result will be a table of results, otherwise only the first result is returned.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3/#tes3raytest).
 --- @param params tes3.rayTest.params This table accepts the following values:
@@ -1631,15 +1633,17 @@ function tes3.rayTest(params) end
 --- @field ignore table *Optional*. An array of references and/or scene graph nodes to cull from the result(s).
 
 --- Simulates releasing a keyboard key.
---- @param keyCode number No description yet available.
+--- @param keyCode number Maps to values in [`tes3.scanCode`](https://mwse.github.io/MWSE/references/scan-codes/) namespace.
 function tes3.releaseKey(keyCode) end
 
---- Removes magic effects from a given reference. Requires that either the effect or castType parameter be provided.
+--- Removes magic effects from a given reference. Requires that either the `effect` or `castType` parameter be provided.
+---
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3/#tes3removeeffects).
 --- @param reference tes3reference Target reference to remove effects from.
 --- @param effect number *Optional*. Maps to [`tes3.effect`](https://mwse.github.io/MWSE/references/magic-effects/) constants.
 --- @param castType number *Optional*. Maps to [`tes3.spellType`](https://mwse.github.io/MWSE/references/spell-types/) constants.
 --- @param chance number *Default*: `100`. The chance for the effect to be removed.
---- @param removeSpell boolean *Optional*. If removing by cast type, determines if the spell should be removed from the target's spell list. Defaults to true if castType is not `tes3.spellType.spell.` This causes diseases and curses to be removed when dispelled.
+--- @param removeSpell boolean *Optional*. If removing by cast type, determines if the spell should be removed from the target's spell list. Defaults to true if `castType` is not `tes3.spellType.spell.` This causes diseases and curses to be removed when dispelled.
 function tes3.removeEffects(reference, effect, castType, chance, removeSpell) end
 
 --- Removes an item from a given reference's inventory.
@@ -1657,7 +1661,7 @@ function tes3.removeEffects(reference, effect, castType, chance, removeSpell) en
 --- 
 --- `playSound`: boolean — *Default*: `true`. If false, the up/down sound for the item won't be played.
 --- 
---- `updateGUI`: boolean — *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though `tes3ui.forcePlayerInventoryUpdate()` must manually be called after all inventory updates are finished.
+--- `updateGUI`: boolean — *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though [`tes3ui.forcePlayerInventoryUpdate()`](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uiforceplayerinventoryupdate) must manually be called after all inventory updates are finished.
 --- @return number removedCount No description yet available.
 function tes3.removeItem(params) end
 
@@ -1669,7 +1673,7 @@ function tes3.removeItem(params) end
 --- @field deleteItemData tes3itemData *Optional*. Whether to delete the item data after remove succeeds. Automatically set if itemData is used. Does not need to be specified for normal usage.
 --- @field count number *Default*: `1`. The maximum number of items to remove.
 --- @field playSound boolean *Default*: `true`. If false, the up/down sound for the item won't be played.
---- @field updateGUI boolean *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though `tes3ui.forcePlayerInventoryUpdate()` must manually be called after all inventory updates are finished.
+--- @field updateGUI boolean *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though [`tes3ui.forcePlayerInventoryUpdate()`](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uiforceplayerinventoryupdate) must manually be called after all inventory updates are finished.
 
 --- Removes and deletes item data from a given reference, or from their inventory. If no `itemData` is provided, it will be removed from the reference itself.
 --- @param params tes3.removeItemData.params This table accepts the following values:
@@ -1719,7 +1723,7 @@ function tes3.removeSound(params) end
 --- 
 --- `spell`: tes3spell|string — The spell to remove.
 --- 
---- `updateGUI`: boolean — *Default*: `true`. If true, the GUI will be updated respsecting the removal of the spell. This can be useful to disable when batch-removing many spells. The batch should be ended with `tes3.updateMagicGUI` to reflect the changes.
+--- `updateGUI`: boolean — *Default*: `true`. If true, the GUI will be updated respecting the removal of the spell. This can be useful to disable when batch-removing many spells. The batch should be ended with [`tes3.updateMagicGUI`](https://mwse.github.io/MWSE/apis/tes3/#tes3updatemagicgui) to reflect the changes.
 --- @return boolean wasRemoved True if the spell was successfully removed. This can be false if the spell comes from a race or birthsign.
 function tes3.removeSpell(params) end
 
@@ -1728,7 +1732,7 @@ function tes3.removeSpell(params) end
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string Who to remove the spell from. To manipulate an actor without specifying any particular reference, use `actor` instead.
 --- @field actor tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance|string Who to remove the spell from. Providing a base actor can be done before a save has been loaded, but may not correctly update effects for instanced versions of that actor in an active save.
 --- @field spell tes3spell|string The spell to remove.
---- @field updateGUI boolean *Default*: `true`. If true, the GUI will be updated respsecting the removal of the spell. This can be useful to disable when batch-removing many spells. The batch should be ended with `tes3.updateMagicGUI` to reflect the changes.
+--- @field updateGUI boolean *Default*: `true`. If true, the GUI will be updated respecting the removal of the spell. This can be useful to disable when batch-removing many spells. The batch should be ended with [`tes3.updateMagicGUI`](https://mwse.github.io/MWSE/apis/tes3/#tes3updatemagicgui) to reflect the changes.
 
 --- This function will compile and run a mwscript chunk of code. This is not ideal to use, but can be used for features not yet exposed to lua.
 --- @param params tes3.runLegacyScript.params This table accepts the following values:
@@ -1952,7 +1956,7 @@ function tes3.setDestination(params) end
 --- 
 --- `toggle`: boolean — If true, the enabled state will be toggled.
 --- 
---- `enabled`: boolean — *Default*: `true`. If not toggling, will set true to enable or false to disable.
+--- `enabled`: boolean — *Default*: `true`. If not toggling, setting `enabled` to true will enable the reference or to false will disable the reference.
 --- @return boolean success No description yet available.
 function tes3.setEnabled(params) end
 
@@ -1960,7 +1964,7 @@ function tes3.setEnabled(params) end
 --- @class tes3.setEnabled.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string The reference to enable/disable.
 --- @field toggle boolean If true, the enabled state will be toggled.
---- @field enabled boolean *Default*: `true`. If not toggling, will set true to enable or false to disable.
+--- @field enabled boolean *Default*: `true`. If not toggling, setting `enabled` to true will enable the reference or to false will disable the reference.
 
 --- Sets the value of a global value. If the global could not be found, the function returns false.
 --- @param id string No description yet available.
@@ -1968,7 +1972,7 @@ function tes3.setEnabled(params) end
 --- @return boolean value No description yet available.
 function tes3.setGlobal(id, value) end
 
---- This function changes an item's stolen flag. Morrowind handles stealing by marking the base item (not the inventory stack) with with NPCs that you have stolen that item from. The NPC will recognize an item is stolen if they are marked as stolen on the base item.
+--- This function changes an item's stolen flag. Morrowind handles stealing by marking the base item (not the inventory stack) with NPCs that you have stolen that item from. The NPC will recognize an item as stolen if they are marked as stolen on the base item.
 --- @param item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon The item whose stolen flag to modify.
 --- @param from tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3birthsign|tes3bodyPart|tes3book|tes3cell|tes3class|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3dialogue|tes3dialogueInfo|tes3door|tes3enchantment|tes3faction|tes3gameSetting|tes3globalVariable|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3magicSourceInstance|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3quest|tes3race|tes3reference|tes3region|tes3repairTool|tes3script|tes3skill|tes3sound|tes3soundGenerator|tes3spell|tes3startScript|tes3static|tes3weapon The location the item is stolen from.
 --- @param stolen boolean *Default*: `true`. If this parameter is set to true, the item will be flagged as stolen. Otherwise, the item's stolen flag will be removed.
@@ -2046,9 +2050,9 @@ function tes3.setMarkLocation(params) end
 --- 
 --- `owner`: tes3npc|tes3faction|string — Assigns this NPC or a faction as the owner of the reference.
 --- 
---- `requiredGlobal`: tes3globalVariable — *Optional*. If owner is set to NPC, requiredGlobal variable can be set.
+--- `requiredGlobal`: tes3globalVariable — *Optional*. If `owner` is set to NPC, `requiredGlobal` variable can be set.
 --- 
---- `requiredRank`: number — *Default*: `0`. If owner is set to faction, requitedRank variable controls minimal rank in faction the player has to have to be able to freely take the reference.
+--- `requiredRank`: number — *Default*: `0`. If `owner` is set to faction, `requitedRank` variable controls minimal rank in faction the player has to have to be able to freely take the reference.
 function tes3.setOwner(params) end
 
 ---Table parameter definitions for `tes3.setOwner`.
@@ -2056,8 +2060,8 @@ function tes3.setOwner(params) end
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string A reference whose owner to set.
 --- @field remove boolean *Optional*. If this parameter is set to true, reference's owner field will be removed.
 --- @field owner tes3npc|tes3faction|string Assigns this NPC or a faction as the owner of the reference.
---- @field requiredGlobal tes3globalVariable *Optional*. If owner is set to NPC, requiredGlobal variable can be set.
---- @field requiredRank number *Default*: `0`. If owner is set to faction, requitedRank variable controls minimal rank in faction the player has to have to be able to freely take the reference.
+--- @field requiredGlobal tes3globalVariable *Optional*. If `owner` is set to NPC, `requiredGlobal` variable can be set.
+--- @field requiredRank number *Default*: `0`. If `owner` is set to faction, `requitedRank` variable controls minimal rank in faction the player has to have to be able to freely take the reference.
 
 --- Enables or disables player's controls state.
 --- @param params tes3.setPlayerControlState.params This table accepts the following values:
@@ -2088,15 +2092,15 @@ function tes3.setPlayerControlState(params) end
 --- Sets an object (of any kind) to be sourceless, which are objects the game does not store in savegames. This can be useful for mod-created temporary objects which are not necessary to save.
 --- @param params tes3.setSourceless.params This table accepts the following values:
 --- 
---- `object`: tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3birthsign|tes3bodyPart|tes3book|tes3cell|tes3class|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3dialogue|tes3dialogueInfo|tes3door|tes3enchantment|tes3faction|tes3gameSetting|tes3globalVariable|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3magicSourceInstance|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3quest|tes3race|tes3reference|tes3region|tes3repairTool|tes3script|tes3skill|tes3sound|tes3soundGenerator|tes3spell|tes3startScript|tes3static|tes3weapon — 
+--- `object`: tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3birthsign|tes3bodyPart|tes3book|tes3cell|tes3class|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3dialogue|tes3dialogueInfo|tes3door|tes3enchantment|tes3faction|tes3gameSetting|tes3globalVariable|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3magicSourceInstance|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3quest|tes3race|tes3reference|tes3region|tes3repairTool|tes3script|tes3skill|tes3sound|tes3soundGenerator|tes3spell|tes3startScript|tes3static|tes3weapon — The object whose sourceless flag to modify.
 --- 
---- `sourceless`: boolean — *Default*: `true`. 
+--- `sourceless`: boolean — *Default*: `true`. Allows flagging an object as sourceless or undoing that action.
 function tes3.setSourceless(params) end
 
 ---Table parameter definitions for `tes3.setSourceless`.
 --- @class tes3.setSourceless.params
---- @field object tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3birthsign|tes3bodyPart|tes3book|tes3cell|tes3class|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3dialogue|tes3dialogueInfo|tes3door|tes3enchantment|tes3faction|tes3gameSetting|tes3globalVariable|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3magicSourceInstance|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3quest|tes3race|tes3reference|tes3region|tes3repairTool|tes3script|tes3skill|tes3sound|tes3soundGenerator|tes3spell|tes3startScript|tes3static|tes3weapon 
---- @field sourceless boolean *Default*: `true`. 
+--- @field object tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3birthsign|tes3bodyPart|tes3book|tes3cell|tes3class|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3dialogue|tes3dialogueInfo|tes3door|tes3enchantment|tes3faction|tes3gameSetting|tes3globalVariable|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3magicSourceInstance|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3quest|tes3race|tes3reference|tes3region|tes3repairTool|tes3script|tes3skill|tes3sound|tes3soundGenerator|tes3spell|tes3startScript|tes3static|tes3weapon The object whose sourceless flag to modify.
+--- @field sourceless boolean *Default*: `true`. Allows flagging an object as sourceless or undoing that action.
 
 --- Sets a statistic on a given actor. This should be used instead of manually setting values on the game structures, to ensure that events and GUI elements are properly handled. Either skill, attribute, or name must be provided.
 --- @param params tes3.setStatistic.params This table accepts the following values:
@@ -2237,7 +2241,7 @@ function tes3.streamMusic(params) end
 --- @field crossfade number *Default*: `1.0`. The duration in seconds of the crossfade from the old to the new track. The default is 1.0.
 
 --- Simulates tapping a keyboard key.
---- @param keyCode number No description yet available.
+--- @param keyCode number Maps to values in [`tes3.scanCode`](https://mwse.github.io/MWSE/references/scan-codes/) namespace.
 function tes3.tapKey(keyCode) end
 
 --- Checks if there is a clear line of sight between two references, or two points in space, in the same method that the game uses for actor vision. You should pass two references, or two positions and heights.
@@ -2292,7 +2296,7 @@ function tes3.togglePOV() end
 --- 
 --- `limitCapacity`: boolean — *Default*: `true`. If false, items can be placed into containers that shouldn't normally be allowed. This includes organic containers, and containers that are full.
 --- 
---- `updateGUI`: boolean — *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though `tes3ui.forcePlayerInventoryUpdate()` must manually be called after all inventory updates are finished.
+--- `updateGUI`: boolean — *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though [`tes3ui.forcePlayerInventoryUpdate()`](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uiforceplayerinventoryupdate) must manually be called after all inventory updates are finished.
 --- @return number transferredCount No description yet available.
 function tes3.transferItem(params) end
 
@@ -2305,7 +2309,7 @@ function tes3.transferItem(params) end
 --- @field count number *Default*: `1`. The maximum number of items to transfer.
 --- @field playSound boolean *Default*: `true`. If false, the up/down sound for the item won't be played.
 --- @field limitCapacity boolean *Default*: `true`. If false, items can be placed into containers that shouldn't normally be allowed. This includes organic containers, and containers that are full.
---- @field updateGUI boolean *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though `tes3ui.forcePlayerInventoryUpdate()` must manually be called after all inventory updates are finished.
+--- @field updateGUI boolean *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though [`tes3ui.forcePlayerInventoryUpdate()`](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uiforceplayerinventoryupdate) must manually be called after all inventory updates are finished.
 
 --- Emulates the player committing a crime.
 --- @param params tes3.triggerCrime.params This table accepts the following values:
@@ -2342,7 +2346,7 @@ function tes3.undoTransform(params) end
 --- @field reference tes3reference A reference to change back to human.
 
 --- Stops simulating hammering a keyboard key.
---- @param keyCode number No description yet available.
+--- @param keyCode number Maps to values in [`tes3.scanCode`](https://mwse.github.io/MWSE/references/scan-codes/) namespace.
 function tes3.unhammerKey(keyCode) end
 
 --- Unlocks an object. Returns true if the object can be and wasn't already unlocked.
