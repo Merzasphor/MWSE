@@ -18,5 +18,25 @@ event.register("bookGetText", bookGetTextCallback)
 ## Event Data
 
 * `book` ([tes3book](../../types/tes3book)): *Read-only*. The book whose text is being retrieved.
-* `text` (string): If set, the book's text will be overwritten with this value.
+* `text` (string): If set, the book's text will be overwritten with this value. It needs to follow book text conventions as in the Construction Set. In essence, it uses HTML syntax.
+
+## Examples
+
+!!! example "Example: Change the text of a book"
+
+	```lua
+	
+	local newText = [[
+	<DIV ALIGN="LEFT"><FONT COLOR="000000" SIZE="3" FACE="Magic Cards"><BR>
+	Sweetroll
+	<BR>
+	]]
+	
+	local function example(e)
+		e.text = newText
+	end
+	
+	event.register("bookGetText", example)
+
+	```
 

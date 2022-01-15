@@ -9,8 +9,14 @@ return {
 		},
 		["text"] = {
 			type = "string",
-			description = "If set, the book's text will be overwritten with this value.",
+			description = "If set, the book's text will be overwritten with this value. It needs to follow book text conventions as in the Construction Set. In essence, it uses HTML syntax.",
 		},
 	},
 	filter = "book",
+	examples = {
+		["changeText"] = {
+			title = "Change the text of a book",
+			description = "This will make every book read Sweetroll."
+		},
+	},
 }
