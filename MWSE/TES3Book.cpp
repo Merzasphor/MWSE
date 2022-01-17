@@ -9,9 +9,8 @@
 #include "MemoryUtil.h"
 #include "Log.h"
 
-#define TES3_Book_loadBookText 0x4A2A90
-
 namespace TES3 {
+	const auto TES3_Book_loadBookText = reinterpret_cast<const char*(__thiscall*)(const Book*)>(0x4A2A90);
 	const char* Book::getBookText() {
 		// Allow the event to override the text.
 		if (mwse::lua::event::BookGetTextEvent::getEventEnabled()) {
@@ -23,11 +22,13 @@ namespace TES3 {
 				if (newText) {
 					// Create our new buffer.
 					auto length = strlen(newText.value());
-					char * buffer = reinterpret_cast<char*>(mwse::tes3::_new(length + 1));
+					auto buffer = reinterpret_cast<char*>(mwse::tes3::_new(length + 1));
 
 					// Delete the previous buffer and replace it with this one.
-					mwse::tes3::_delete(*reinterpret_cast<char**>(0x7CA44C));
-					*reinterpret_cast<char**>(0x7CA44C) = buffer;
+					if (*BOOK_TEXT_CACHE) {
+						mwse::tes3::_delete(*BOOK_TEXT_CACHE);
+					}
+					*BOOK_TEXT_CACHE = buffer;
 
 					// Copy into the buffer and get out of here.
 					buffer[length] = '\0';
@@ -37,7 +38,7 @@ namespace TES3 {
 			}
 		}
 
-		return reinterpret_cast<char*(__thiscall *)(Book*)>(TES3_Book_loadBookText)(this);
+		return TES3_Book_loadBookText(this);
 	}
 
 	void Book::setIconPath(const char* path) {
