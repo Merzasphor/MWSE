@@ -31,6 +31,8 @@ namespace TES3 {
 			};
 		};
 
+		constexpr static auto INVALID_ATTACHMENT = reinterpret_cast<Attachment*>(0x3F800000);
+
 		//
 		// Basic operators.
 		//
