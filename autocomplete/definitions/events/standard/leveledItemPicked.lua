@@ -13,6 +13,11 @@ return {
 			--readOnly = true,
 			description = "The result of the pick by vanilla mechanism.", -- This can be modified to change the result to something else.
 		},
+		["spawner"] = {
+			type = "tes3reference|nil",
+			--readOnly = true,
+			description = "The reference for the inventory that the item is being picked in. In many cases this may be `nil`.",
+		},
 	},
 	filter = "list",
 	blockable = true,
