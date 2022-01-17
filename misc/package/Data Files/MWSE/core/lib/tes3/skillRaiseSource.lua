@@ -1,4 +1,5 @@
 return {
 	book = "book",
-	progress = "progress"
+	progress = "progress",
+	training = "training",
 }

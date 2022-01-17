@@ -12,3 +12,4 @@ ID        | Skill Raise Source
 --------- | ------------------
 book      | Book
 progress  | Progress
+training  | Training
