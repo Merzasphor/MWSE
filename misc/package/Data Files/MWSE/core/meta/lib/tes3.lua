@@ -299,7 +299,7 @@ function tes3.addMagicEffect(params) end
 --- @param params tes3.addSoulGem.params This table accepts the following values:
 --- 
 --- `item`: tes3misc|string — The item to recognize as a soul gem.
---- @return number wasAdded No description yet available.
+--- @return boolean wasAdded No description yet available.
 function tes3.addSoulGem(params) end
 
 ---Table parameter definitions for `tes3.addSoulGem`.

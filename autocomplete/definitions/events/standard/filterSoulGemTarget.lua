@@ -10,12 +10,21 @@ return {
 		["mobile"] = {
 			type = "tes3mobileActor",
 			readOnly = true,
-			description = "The mobile actor.",
+			description = "The mobile actor whose soul is to be soultrapped.",
 		},
 		["reference"] = {
 			type = "tes3reference",
 			readOnly = true,
 			description = "The reference.",
+		},
+		["filter"] = {
+			type = "boolean",
+			description = "Setting this to `false` or `nil` will prevent the `mobile`'s soul to end up in the `soulGem`. Setting this to `true` will make the opposite."
+		}
+	},
+	examples = {
+		["example"] = {
+			title = "Example"
 		},
 	},
 }

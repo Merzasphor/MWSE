@@ -304,7 +304,7 @@ local wasAdded = tes3.addSoulGem({ item = ... })
 
 **Returns**:
 
-* `wasAdded` (number)
+* `wasAdded` (boolean)
 
 ***
 

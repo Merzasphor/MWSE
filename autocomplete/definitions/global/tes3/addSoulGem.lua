@@ -8,6 +8,5 @@ return {
 			{ name = "item", type = "tes3misc|string", description = "The item to recognize as a soul gem." },
 		},
 	}},
-	returns = "wasAdded",
-	valuetype = "number",
+	returns = {{ name = "wasAdded", type = "boolean" }},
 }

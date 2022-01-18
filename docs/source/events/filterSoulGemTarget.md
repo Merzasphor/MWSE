@@ -14,7 +14,28 @@ event.register("filterSoulGemTarget", filterSoulGemTargetCallback)
 
 ## Event Data
 
-* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile actor.
+* `filter` (boolean): Setting this to `false` or `nil` will prevent the `mobile`'s soul to end up in the `soulGem`. Setting this to `true` will make the opposite.
+* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile actor whose soul is to be soultrapped.
 * `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. The reference.
 * `soulGem` ([tes3misc](../../types/tes3misc)): *Read-only*. The soul gem object.
+
+## Examples
+
+!!! example "Example: Example"
+
+	```lua
+	local function onInitialized()
+	    tes3.addSoulGem({ item = "vivec_soul_container" })
+	end
+	event.register("initialized", onInitialized)
+	
+	local function onFilterSoulGemTarget(e)
+	    -- Make it so Vivec can only be trapped by a special container.
+	    if (e.reference.baseObject.id:lower() == "vivec") then
+	        return e.soulGem.id == "vivec_soul_container"
+	    end
+	end
+	event.register("filterSoulGemTarget", onFilterSoulGemTarget)
+
+	```
 
