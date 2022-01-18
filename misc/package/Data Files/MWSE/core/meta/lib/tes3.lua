@@ -192,7 +192,6 @@ function tes3.addJournalEntry(params) end
 --- --- 		In addition, a function registerd as `onTick` can also call the following methods:
 --- --- 	
 --- --- 		- trigger(`params`): Allowed the effect to run through the normal spell event system.
---- --- 		
 --- --- 			**Parameters:**
 --- --- 			- `params` (table)
 --- --- 			- `negateOnExpiry` (boolean): *Optional. Default:* `true`.
@@ -200,7 +199,7 @@ function tes3.addJournalEntry(params) end
 --- --- 			- `attribute` (number): *Optional. Default:* `tes3.effectAttribute.nonResistable` Maps to values in [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
 --- --- 			- `type` (number): *Optional. Default:* `0`.
 --- --- 			- `value` (number): *Optional. Default:* `0`.
---- --- 			- `onResist` (function): The function passed as `onResist` will be used on any of the game's spell resistance checks. The function should return boolean values.
+--- --- 			- `resistanceCheck` (function): The function passed as `resistanceCheck` will be used on any of the game's spell resistance checks. The function should return boolean values.
 --- --- 
 --- --- 		- triggerBoundWeapon(`id`): Performs weapon summoning logic.
 --- --- 			**Parameters:**
@@ -269,7 +268,6 @@ function tes3.addMagicEffect(params) end
 --- 		In addition, a function registerd as `onTick` can also call the following methods:
 --- 	
 --- 		- trigger(`params`): Allowed the effect to run through the normal spell event system.
---- 		
 --- 			**Parameters:**
 --- 			- `params` (table)
 --- 			- `negateOnExpiry` (boolean): *Optional. Default:* `true`.
@@ -277,7 +275,7 @@ function tes3.addMagicEffect(params) end
 --- 			- `attribute` (number): *Optional. Default:* `tes3.effectAttribute.nonResistable` Maps to values in [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
 --- 			- `type` (number): *Optional. Default:* `0`.
 --- 			- `value` (number): *Optional. Default:* `0`.
---- 			- `onResist` (function): The function passed as `onResist` will be used on any of the game's spell resistance checks. The function should return boolean values.
+--- 			- `resistanceCheck` (function): The function passed as `resistanceCheck` will be used on any of the game's spell resistance checks. The function should return boolean values.
 --- 
 --- 		- triggerBoundWeapon(`id`): Performs weapon summoning logic.
 --- 			**Parameters:**
