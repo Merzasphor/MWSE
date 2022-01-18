@@ -107,7 +107,9 @@ function tes3.addJournalEntry(params) end
 --- @field text string The text of the new Journal entry.
 --- @field showMessage boolean *Default*: `true`. If this parameter is true, a "Your journal has been updated" message will be displayed.
 
---- This function creates a new custom magic effect. The effect can be scripted through lua.
+--- This function creates a new custom magic effect. The effect can be scripted through lua. This function should be used inside [`addMagicEffect`](https://mwse.github.io/MWSE/events/addMagicEffect/) event callback.
+---
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3/#tes3addmagiceffect).
 --- @param params tes3.addMagicEffect.params This table accepts the following values:
 --- 
 --- `id`: number — Id of the new effect. Maps to newly claimed `tes3.effect` constants with `tes3.claimSpellEffectId()`. If the effect of this id already exists, an error will be thrown.
@@ -118,9 +120,9 @@ function tes3.addJournalEntry(params) end
 --- 
 --- `school`: number — *Default*: `tes3.magicSchool.alteration`. The magic school the new effect will be assigned to. Maps to [`tes3.magicSchool`](https://mwse.github.io/MWSE/references/magic-schools/) constants.
 --- 
---- `size`: number — *Default*: `1`. No description yet available.
+--- `size`: number — *Default*: `1`. The size scale for the spells containing this magic effect.
 --- 
---- `sizeCap`: number — *Default*: `1`. No description yet available.
+--- `sizeCap`: number — *Default*: `1`. The maximum possible size of the projectile.
 --- 
 --- `speed`: number — *Default*: `1`. No description yet available.
 --- 
@@ -128,7 +130,7 @@ function tes3.addJournalEntry(params) end
 --- 
 --- `lighting`: table — *Optional*. No description yet available.
 --- 
---- `icon`: string — Path to the effect icon. Must be a string no longer than 31 characters long.
+--- `icon`: string — Path to the effect icon. Must be a string no longer than 31 characters long. Use \\ as path separator.
 --- 
 --- `particleTexture`: string — Path to the particle texture to use for the effect. Must be a string no longer than 31 characters long.
 --- 
@@ -140,13 +142,13 @@ function tes3.addJournalEntry(params) end
 --- 
 --- `areaSound`: string — The sound ID which will be played on area of effect impact. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
 --- 
---- `castVFX`: tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon — *Optional*. No description yet available.
+--- `castVFX`: tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon — *Optional*. The visual played when a spell with this effect is cast.
 --- 
---- `boltVFX`: tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon — *Optional*. No description yet available.
+--- `boltVFX`: tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon — *Optional*. The visual played when a spell with this effect is in flight.
 --- 
---- `hitVFX`: tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon — *Optional*. No description yet available.
+--- `hitVFX`: tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon — *Optional*. The visual played when a spell with this effect hits something.
 --- 
---- `areaVFX`: tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon — *Optional*. No description yet available.
+--- `areaVFX`: tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon — *Optional*. The visual played when a spell with this effect, with area of effect hits something.
 --- 
 --- `allowEnchanting`: boolean — *Default*: `true`. A flag which controls whether this effect can be used in a custom enchantment.
 --- 
@@ -162,7 +164,7 @@ function tes3.addJournalEntry(params) end
 --- 
 --- `casterLinked`: boolean — *Default*: `true`. No description yet available.
 --- 
---- `hasContinuousVFX`: boolean — *Default*: `true`. A flag which controls whether the effect's VFX be played during its whole duration?
+--- `hasContinuousVFX`: boolean — *Default*: `true`. A flag which controls whether the effect's visual is continuously played during the whole duration of the effect.
 --- 
 --- `hasNoDuration`: boolean — *Default*: `true`. A flag which controls whether this effect doesn't have duration.
 --- 
@@ -182,7 +184,7 @@ function tes3.addJournalEntry(params) end
 --- 
 --- `usesNegativeLighting`: boolean — *Default*: `true`. A flag which controls whether this effect uses negative lighting.
 --- 
---- `onTick`: function — *Optional*. A function which will be called on each tick of a spell containing this effect. A table `tickParams` will be passed to the callback function:
+--- `onTick`: function — *Optional*. A function which will be called on each tick of a spell containing this effect. A table `tickParams` will be passed to the callback function. Note: `dt`(frame time) scaling is handled automatically.
 --- --- 		- `tickParams` (table)
 --- --- 		- `effectId` (number)
 --- --- 		- `sourceInstance` ([tes3magicSourceInstance](https://mwse.github.io/MWSE/types/tes3magicSourceInstance/)): Access to the magic source of the effect instance. 
@@ -200,7 +202,7 @@ function tes3.addJournalEntry(params) end
 --- --- 			- `attribute` (number): *Optional. Default:* `tes3.effectAttribute.nonResistable` The attribute used in resistance calculations agains this effect. Maps to values in [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
 --- --- 			- `type` (number): *Optional. Default:* `tes3.effectEventType.boolean`. This flag controls how the effect behaves. For example, `tes3.effectEventType.modStatistic` will make the effect work as calling `tes3.modStatistic`. Maps to values in [`tes3.effectEventType`](https://mwse.github.io/MWSE/references/effect-event-types/) namespace.
 --- --- 			- `value` (number): *Optional. Default:* `0`. The variable this effect changes.
---- --- 			- `resistanceCheck(resistParams)` (function): *Optional.* The function passed as `resistanceCheck` will be used on any of the game's spell resistance checks. For example, the only effect in vanilla Morrowind that implements this function is Water Walking. It disallows using a spell with Water Walking when the player is deep underwater, by setting it as expired. So, returning `true` from this function will set your effect to expired, and depending on your trigger code may stop processing. This function passed here must returns boolean values.
+--- --- 			- `resistanceCheck(resistParams)` (function): *Optional.* The function passed as `resistanceCheck` will be used on any of the game's spell resistance checks. For example, the only effect in vanilla Morrowind that implements this function is Water Walking. It disallows using a spell with Water Walking when the player is deep underwater, by setting it as expired. So, returning `true` from this function will set your effect to expired, and depending on your trigger code may stop processing. The function passed here must returns boolean values.
 --- --- 				**Parameters**
 --- --- 				- `resistParams` (table)
 --- --- 				- `sourceInstance` ([tes3magicSourceInstance](https://mwse.github.io/MWSE/types/tes3magicSourceInstance/)): Access to the magic source of the effect instance. 
@@ -232,21 +234,21 @@ function tes3.addMagicEffect(params) end
 --- @field name string *Default*: `Unnamed Effect`. Name of the effect.
 --- @field baseCost number *Default*: `1`. Base magicka cost for the effect.
 --- @field school number *Default*: `tes3.magicSchool.alteration`. The magic school the new effect will be assigned to. Maps to [`tes3.magicSchool`](https://mwse.github.io/MWSE/references/magic-schools/) constants.
---- @field size number *Default*: `1`. No description yet available.
---- @field sizeCap number *Default*: `1`. No description yet available.
+--- @field size number *Default*: `1`. The size scale for the spells containing this magic effect.
+--- @field sizeCap number *Default*: `1`. The maximum possible size of the projectile.
 --- @field speed number *Default*: `1`. No description yet available.
 --- @field description string *Default*: `No description available.`. Description for the effect.
 --- @field lighting table *Optional*. No description yet available.
---- @field icon string Path to the effect icon. Must be a string no longer than 31 characters long.
+--- @field icon string Path to the effect icon. Must be a string no longer than 31 characters long. Use \\ as path separator.
 --- @field particleTexture string Path to the particle texture to use for the effect. Must be a string no longer than 31 characters long.
 --- @field castSound string The sound ID which will be played on casting a spell with this effect. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
 --- @field boltSound string The sound ID which will be played when a spell with this effect is in flight. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
 --- @field hitSound string The sound ID which will be played when a spell with this effect hits something. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
 --- @field areaSound string The sound ID which will be played on area of effect impact. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
---- @field castVFX tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon *Optional*. No description yet available.
---- @field boltVFX tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon *Optional*. No description yet available.
---- @field hitVFX tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon *Optional*. No description yet available.
---- @field areaVFX tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon *Optional*. No description yet available.
+--- @field castVFX tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon *Optional*. The visual played when a spell with this effect is cast.
+--- @field boltVFX tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon *Optional*. The visual played when a spell with this effect is in flight.
+--- @field hitVFX tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon *Optional*. The visual played when a spell with this effect hits something.
+--- @field areaVFX tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon *Optional*. The visual played when a spell with this effect, with area of effect hits something.
 --- @field allowEnchanting boolean *Default*: `true`. A flag which controls whether this effect can be used in a custom enchantment.
 --- @field allowSpellmaking boolean *Default*: `true`. A flag which controls whether this effect can be used in a custom spell.
 --- @field appliesOnce boolean *Default*: `true`. A flag which controls whether this effect applies once or is a ticking effect.
@@ -254,7 +256,7 @@ function tes3.addMagicEffect(params) end
 --- @field canCastTarget boolean *Default*: `true`. A flag which controls whether this effect can be used with cast on target range.
 --- @field canCastTouch boolean *Default*: `true`. A flag which controls whether this effect can be used with cast on touch range.
 --- @field casterLinked boolean *Default*: `true`. No description yet available.
---- @field hasContinuousVFX boolean *Default*: `true`. A flag which controls whether the effect's VFX be played during its whole duration?
+--- @field hasContinuousVFX boolean *Default*: `true`. A flag which controls whether the effect's visual is continuously played during the whole duration of the effect.
 --- @field hasNoDuration boolean *Default*: `true`. A flag which controls whether this effect doesn't have duration.
 --- @field hasNoMagnitude boolean *Default*: `true`. A flag which controls whether this effect doesn't have magnitude.
 --- @field illegalDaedra boolean *Default*: `true`. A flag which controls whether this effect is illegal to use in public, because it summons Daedra. Note: this mechanic is not implemented in the game. Some mods might rely on this parameter.
@@ -264,7 +266,7 @@ function tes3.addMagicEffect(params) end
 --- @field targetsSkills boolean *Default*: `true`. A flag which controls whether this effect targets a certain skill or skills.
 --- @field unreflectable boolean *Default*: `true`. A flag which controls whether this effect can be reflected.
 --- @field usesNegativeLighting boolean *Default*: `true`. A flag which controls whether this effect uses negative lighting.
---- @field onTick function *Optional*. A function which will be called on each tick of a spell containing this effect. A table `tickParams` will be passed to the callback function:
+--- @field onTick function *Optional*. A function which will be called on each tick of a spell containing this effect. A table `tickParams` will be passed to the callback function. Note: `dt`(frame time) scaling is handled automatically.
 --- 		- `tickParams` (table)
 --- 		- `effectId` (number)
 --- 		- `sourceInstance` ([tes3magicSourceInstance](https://mwse.github.io/MWSE/types/tes3magicSourceInstance/)): Access to the magic source of the effect instance. 
@@ -282,7 +284,7 @@ function tes3.addMagicEffect(params) end
 --- 			- `attribute` (number): *Optional. Default:* `tes3.effectAttribute.nonResistable` The attribute used in resistance calculations agains this effect. Maps to values in [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
 --- 			- `type` (number): *Optional. Default:* `tes3.effectEventType.boolean`. This flag controls how the effect behaves. For example, `tes3.effectEventType.modStatistic` will make the effect work as calling `tes3.modStatistic`. Maps to values in [`tes3.effectEventType`](https://mwse.github.io/MWSE/references/effect-event-types/) namespace.
 --- 			- `value` (number): *Optional. Default:* `0`. The variable this effect changes.
---- 			- `resistanceCheck(resistParams)` (function): *Optional.* The function passed as `resistanceCheck` will be used on any of the game's spell resistance checks. For example, the only effect in vanilla Morrowind that implements this function is Water Walking. It disallows using a spell with Water Walking when the player is deep underwater, by setting it as expired. So, returning `true` from this function will set your effect to expired, and depending on your trigger code may stop processing. This function passed here must returns boolean values.
+--- 			- `resistanceCheck(resistParams)` (function): *Optional.* The function passed as `resistanceCheck` will be used on any of the game's spell resistance checks. For example, the only effect in vanilla Morrowind that implements this function is Water Walking. It disallows using a spell with Water Walking when the player is deep underwater, by setting it as expired. So, returning `true` from this function will set your effect to expired, and depending on your trigger code may stop processing. The function passed here must returns boolean values.
 --- 				**Parameters**
 --- 				- `resistParams` (table)
 --- 				- `sourceInstance` ([tes3magicSourceInstance](https://mwse.github.io/MWSE/types/tes3magicSourceInstance/)): Access to the magic source of the effect instance. 
@@ -535,7 +537,7 @@ function tes3.checkMerchantTradesItem(params) end
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string No description yet available.
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string No description yet available.
 
---- This function is used to claim a unique spell effect name and id. This is needed before actually creating a new effect by calling `tes3.addMagicEffect()`. A claimed effect id can be retrieved as: `tes3.effect.effectName` (just like any regular spell effect).
+--- This function is used to claim a unique spell effect name and id. This is needed before actually creating a new effect by calling `tes3.addMagicEffect()`. A claimed effect id is then available as: `tes3.effect.effectName` (just like any other spell effect). For examples of this function in practice see [`tes3.addMagicEffect()`](https://mwse.github.io/MWSE/apis/tes3/#tes3addmagiceffect) example.
 --- @param params tes3.claimSpellEffectId.params This table accepts the following values:
 --- 
 --- `name`: string — The name of the new spell effect. Must be unique. An error will be thrown if it's non-unique.

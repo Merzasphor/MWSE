@@ -199,7 +199,7 @@ tes3.addJournalEntry({ text = ..., showMessage = ... })
 
 ### `tes3.addMagicEffect`
 
-This function creates a new custom magic effect. The effect can be scripted through lua.
+This function creates a new custom magic effect. The effect can be scripted through lua. This function should be used inside [`addMagicEffect`](https://mwse.github.io/MWSE/events/addMagicEffect/) event callback.
 
 ```lua
 local effect = tes3.addMagicEffect({ id = ..., name = ..., baseCost = ..., school = ..., size = ..., sizeCap = ..., speed = ..., description = ..., lighting = ..., icon = ..., particleTexture = ..., castSound = ..., boltSound = ..., hitSound = ..., areaSound = ..., castVFX = ..., boltVFX = ..., hitVFX = ..., areaVFX = ..., allowEnchanting = ..., allowSpellmaking = ..., appliesOnce = ..., canCastSelf = ..., canCastTarget = ..., canCastTouch = ..., casterLinked = ..., hasContinuousVFX = ..., hasNoDuration = ..., hasNoMagnitude = ..., illegalDaedra = ..., isHarmful = ..., nonRecastable = ..., targetsAttributes = ..., targetsSkills = ..., unreflectable = ..., usesNegativeLighting = ..., onTick = ..., onCollision = ... })
@@ -212,24 +212,24 @@ local effect = tes3.addMagicEffect({ id = ..., name = ..., baseCost = ..., schoo
 	* `name` (string): *Default*: `Unnamed Effect`. Name of the effect.
 	* `baseCost` (number): *Default*: `1`. Base magicka cost for the effect.
 	* `school` (number): *Default*: `tes3.magicSchool.alteration`. The magic school the new effect will be assigned to. Maps to [`tes3.magicSchool`](https://mwse.github.io/MWSE/references/magic-schools/) constants.
-	* `size` (number): *Default*: `1`.
-	* `sizeCap` (number): *Default*: `1`.
+	* `size` (number): *Default*: `1`. The size scale for the spells containing this magic effect.
+	* `sizeCap` (number): *Default*: `1`. The maximum possible size of the projectile.
 	* `speed` (number): *Default*: `1`.
 	* `description` (string): *Default*: `No description available.`. Description for the effect.
 	* `lighting` (table): *Optional*.
 		* `x` (number): *Default*: `1`. Value of red color channel. In range of 0 - 1.
 		* `y` (number): *Default*: `1`. Value of green color channel. In range of 0 - 1.
 		* `z` (number): *Default*: `1`. Value of blue color channel. In range of 0 - 1.
-	* `icon` (string): Path to the effect icon. Must be a string no longer than 31 characters long.
+	* `icon` (string): Path to the effect icon. Must be a string no longer than 31 characters long. Use \\ as path separator.
 	* `particleTexture` (string): Path to the particle texture to use for the effect. Must be a string no longer than 31 characters long.
 	* `castSound` (string): The sound ID which will be played on casting a spell with this effect. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
 	* `boltSound` (string): The sound ID which will be played when a spell with this effect is in flight. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
 	* `hitSound` (string): The sound ID which will be played when a spell with this effect hits something. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
 	* `areaSound` (string): The sound ID which will be played on area of effect impact. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
-	* `castVFX` ([tes3physicalObject](../../types/tes3physicalObject)): *Optional*.
-	* `boltVFX` ([tes3physicalObject](../../types/tes3physicalObject)): *Optional*.
-	* `hitVFX` ([tes3physicalObject](../../types/tes3physicalObject)): *Optional*.
-	* `areaVFX` ([tes3physicalObject](../../types/tes3physicalObject)): *Optional*.
+	* `castVFX` ([tes3physicalObject](../../types/tes3physicalObject)): *Optional*. The visual played when a spell with this effect is cast.
+	* `boltVFX` ([tes3physicalObject](../../types/tes3physicalObject)): *Optional*. The visual played when a spell with this effect is in flight.
+	* `hitVFX` ([tes3physicalObject](../../types/tes3physicalObject)): *Optional*. The visual played when a spell with this effect hits something.
+	* `areaVFX` ([tes3physicalObject](../../types/tes3physicalObject)): *Optional*. The visual played when a spell with this effect, with area of effect hits something.
 	* `allowEnchanting` (boolean): *Default*: `true`. A flag which controls whether this effect can be used in a custom enchantment.
 	* `allowSpellmaking` (boolean): *Default*: `true`. A flag which controls whether this effect can be used in a custom spell.
 	* `appliesOnce` (boolean): *Default*: `true`. A flag which controls whether this effect applies once or is a ticking effect.
@@ -237,7 +237,7 @@ local effect = tes3.addMagicEffect({ id = ..., name = ..., baseCost = ..., schoo
 	* `canCastTarget` (boolean): *Default*: `true`. A flag which controls whether this effect can be used with cast on target range.
 	* `canCastTouch` (boolean): *Default*: `true`. A flag which controls whether this effect can be used with cast on touch range.
 	* `casterLinked` (boolean): *Default*: `true`.
-	* `hasContinuousVFX` (boolean): *Default*: `true`. A flag which controls whether the effect's VFX be played during its whole duration?
+	* `hasContinuousVFX` (boolean): *Default*: `true`. A flag which controls whether the effect's visual is continuously played during the whole duration of the effect.
 	* `hasNoDuration` (boolean): *Default*: `true`. A flag which controls whether this effect doesn't have duration.
 	* `hasNoMagnitude` (boolean): *Default*: `true`. A flag which controls whether this effect doesn't have magnitude.
 	* `illegalDaedra` (boolean): *Default*: `true`. A flag which controls whether this effect is illegal to use in public, because it summons Daedra. Note: this mechanic is not implemented in the game. Some mods might rely on this parameter.
@@ -247,7 +247,7 @@ local effect = tes3.addMagicEffect({ id = ..., name = ..., baseCost = ..., schoo
 	* `targetsSkills` (boolean): *Default*: `true`. A flag which controls whether this effect targets a certain skill or skills.
 	* `unreflectable` (boolean): *Default*: `true`. A flag which controls whether this effect can be reflected.
 	* `usesNegativeLighting` (boolean): *Default*: `true`. A flag which controls whether this effect uses negative lighting.
-	* `onTick` (function): *Optional*. A function which will be called on each tick of a spell containing this effect. A table `tickParams` will be passed to the callback function:
+	* `onTick` (function): *Optional*. A function which will be called on each tick of a spell containing this effect. A table `tickParams` will be passed to the callback function. Note: `dt`(frame time) scaling is handled automatically.
 		- `tickParams` (table)
 		- `effectId` (number)
 		- `sourceInstance` ([tes3magicSourceInstance](https://mwse.github.io/MWSE/types/tes3magicSourceInstance/)): Access to the magic source of the effect instance. 
@@ -265,7 +265,7 @@ local effect = tes3.addMagicEffect({ id = ..., name = ..., baseCost = ..., schoo
 			- `attribute` (number): *Optional. Default:* `tes3.effectAttribute.nonResistable` The attribute used in resistance calculations agains this effect. Maps to values in [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
 			- `type` (number): *Optional. Default:* `tes3.effectEventType.boolean`. This flag controls how the effect behaves. For example, `tes3.effectEventType.modStatistic` will make the effect work as calling `tes3.modStatistic`. Maps to values in [`tes3.effectEventType`](https://mwse.github.io/MWSE/references/effect-event-types/) namespace.
 			- `value` (number): *Optional. Default:* `0`. The variable this effect changes.
-			- `resistanceCheck(resistParams)` (function): *Optional.* The function passed as `resistanceCheck` will be used on any of the game's spell resistance checks. For example, the only effect in vanilla Morrowind that implements this function is Water Walking. It disallows using a spell with Water Walking when the player is deep underwater, by setting it as expired. So, returning `true` from this function will set your effect to expired, and depending on your trigger code may stop processing. This function passed here must returns boolean values.
+			- `resistanceCheck(resistParams)` (function): *Optional.* The function passed as `resistanceCheck` will be used on any of the game's spell resistance checks. For example, the only effect in vanilla Morrowind that implements this function is Water Walking. It disallows using a spell with Water Walking when the player is deep underwater, by setting it as expired. So, returning `true` from this function will set your effect to expired, and depending on your trigger code may stop processing. The function passed here must returns boolean values.
 				**Parameters**
 				- `resistParams` (table)
 				- `sourceInstance` ([tes3magicSourceInstance](https://mwse.github.io/MWSE/types/tes3magicSourceInstance/)): Access to the magic source of the effect instance. 
@@ -291,6 +291,135 @@ local effect = tes3.addMagicEffect({ id = ..., name = ..., baseCost = ..., schoo
 **Returns**:
 
 * `effect` ([tes3effect](../../types/tes3effect))
+
+??? example "Example: Fire Damage effect"
+
+	```lua
+	-- Claiming an ID is needed before actually
+	-- creating an effect with that ID
+	tes3.claimSpellEffectId("customFireDmg", 220)
+	
+	local function onFireDmgTick(tickParams)
+	
+		-- This will print current health for any actor our spell hit
+		tes3.messageBox("%s, health: %s", tickParams.effectInstance.target.object.id, tickParams.effectInstance.target.mobile.health.current)
+	
+		tickParams:trigger({
+			type = tes3.effectEventType.modStatistic,
+			-- The resistance attribute against Fire Damage should be Resist Fire
+			attribute = tes3.effectAttribute.resistFire,
+			value = tickParams.effectInstance.target.mobile.health,
+			negateOnExpiry = false,
+			isUncapped = true,
+		})
+	end
+	
+	event.register("magicEffectsResolved", function()
+		tes3.addMagicEffect({
+			-- The ID we claimed before is now available in tes3.effect namespace
+			id = tes3.effect.customFireDmg,
+	
+			-- This information if just copied from the Construction Set --
+			name = "Fire Damage",		
+			description = (
+				"This spell effect produces a manifestation of elemental fire. Upon "..
+				"contact with an object, this manifestation explodes, causing damage."
+			),
+			baseCost = 5,
+			school = tes3.magicSchool.destruction,
+			size = 1.25,
+			sizeCap = 50,
+			speed = 1,
+			lighting = { x = 0.99, y = 0.26, z = 0.53 },
+			usesNegativeLighting = false,
+	
+			icon = "s\\Tx_S_fire_damage.tga",
+	        particleTexture = "vfx_firealpha00A.tga",
+			castSound = "destruction cast",
+			castVFX = "VFX_DestructCast",
+			boltSound = "destruction bolt",
+			boltVFX = "VFX_DestructBolt",
+			hitSound = "destruction hit",
+			hitVFX = "VFX_DestructHit",
+			areaSound = "destruction area",
+			areaVFX = "VFX_DestructArea",
+			-- --
+	
+			appliesOnce = false,
+			hasNoDuration = false,
+			hasNoMagnitude = false,
+			illegalDaedra = false,
+			unreflectable = false,
+			casterLinked = false,
+			nonRecastable = false,
+			targetsAttributes = false,
+			targetsSkills = false,
+	
+	        onTick = onFireDmgTick,
+	    })
+	end)
+	
+	event.register("loaded", function()
+		local spell1 = tes3.createObject({ objectType = tes3.objectType.spell })
+		tes3.setSourceless(spell1)
+		spell1.name = "TEST SPELL - self"
+	    spell1.magickaCost = 1
+	
+		local effect = spell1.effects[1]
+	    effect.id = tes3.effect.customFireDmg
+	    effect.rangeType = tes3.effectRange.self
+	    effect.min = 10
+	    effect.max = 10
+	    effect.duration = 10
+	    effect.radius = 0
+	    effect.skill = -1
+	    effect.attribute = -1
+	
+		local spell2 = tes3.createObject({ objectType = tes3.objectType.spell })
+		tes3.setSourceless(spell2)
+		spell2.name = "TEST SPELL - target"
+	    spell2.magickaCost = 1
+	
+		local effect = spell2.effects[1]
+	    effect.id = tes3.effect.customFireDmg
+	    effect.rangeType = tes3.effectRange.target
+	    effect.min = 3
+	    effect.max = 3
+	    effect.duration = 10
+	    effect.radius = 15
+	    effect.skill = -1
+	    effect.attribute = -1
+	
+		local spell3 = tes3.createObject({ objectType = tes3.objectType.spell })
+		tes3.setSourceless(spell3)
+		spell3.name = "TEST SPELL - touch"
+	    spell3.magickaCost = 1
+	
+		local effect = spell3.effects[1]
+	    effect.id = tes3.effect.customFireDmg
+	    effect.rangeType = tes3.effectRange.touch
+	    effect.min = 3
+	    effect.max = 3
+	    effect.duration = 10
+	    effect.radius = 0
+	    effect.skill = -1
+	    effect.attribute = -1
+	
+		tes3.addSpell({
+			reference  = tes3.mobilePlayer,
+			spell = spell1,
+		})
+		tes3.addSpell({
+			reference  = tes3.mobilePlayer,
+			spell = spell2,
+		})
+		tes3.addSpell({
+			reference  = tes3.mobilePlayer,
+			spell = spell3,
+		})
+	end)
+
+	```
 
 ***
 
@@ -561,7 +690,7 @@ local trades = tes3.checkMerchantTradesItem({ item = ..., reference = ... })
 
 ### `tes3.claimSpellEffectId`
 
-This function is used to claim a unique spell effect name and id. This is needed before actually creating a new effect by calling `tes3.addMagicEffect()`. A claimed effect id can be retrieved as: `tes3.effect.effectName` (just like any regular spell effect).
+This function is used to claim a unique spell effect name and id. This is needed before actually creating a new effect by calling `tes3.addMagicEffect()`. A claimed effect id is then available as: `tes3.effect.effectName` (just like any other spell effect). For examples of this function in practice see [`tes3.addMagicEffect()`](https://mwse.github.io/MWSE/apis/tes3/#tes3addmagiceffect) example.
 
 ```lua
 tes3.claimSpellEffectId({ name = ..., id = ... })

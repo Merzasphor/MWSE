@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[This function creates a new custom magic effect. The effect can be scripted through lua.]],
+	description = [[This function creates a new custom magic effect. The effect can be scripted through lua. This function should be used inside [`addMagicEffect`](https://mwse.github.io/MWSE/events/addMagicEffect/) event callback.]],
 	arguments = {{
 		name = "params",
 		type = "table",
@@ -36,14 +36,14 @@ return {
 				type = "number",
 				optional = true,
 				default = 1.0,
-				-- description = ""
+				description = "The size scale for the spells containing this magic effect."
 			},
 			{
 				name = "sizeCap",
 				type = "number",
 				optional = true,
 				default = 1.0,
-				-- description = ""
+				description = "The maximum possible size of the projectile."
 			},
 			{
 				name = "speed",
@@ -87,7 +87,7 @@ return {
 			{
 				name = "icon",
 				type = "string",
-				description = "Path to the effect icon. Must be a string no longer than 31 characters long."
+				description = "Path to the effect icon. Must be a string no longer than 31 characters long. Use \\\\ as path separator."
 			},
 			{
 				name = "particleTexture",
@@ -118,25 +118,25 @@ return {
 				name = "castVFX",
 				type = "tes3physicalObject",
 				optional = true,
-				-- description = ""
+				description = "The visual played when a spell with this effect is cast."
 			},
 			{
 				name = "boltVFX",
 				type = "tes3physicalObject",
 				optional = true,
-				-- description = ""
+				description = "The visual played when a spell with this effect is in flight."
 			},
 			{
 				name = "hitVFX",
 				type = "tes3physicalObject",
 				optional = true,
-				-- description = ""
+				description = "The visual played when a spell with this effect hits something."
 			},
 			{
 				name = "areaVFX",
 				type = "tes3physicalObject",
 				optional = true,
-				-- description = ""
+				description = "The visual played when a spell with this effect, with area of effect hits something."
 			},
 			{
 				name = "allowEnchanting",
@@ -192,7 +192,7 @@ return {
 				type = "boolean",
 				optional = true,
 				default = true,
-				description = "A flag which controls whether the effect's VFX be played during its whole duration?"
+				description = "A flag which controls whether the effect's visual is continuously played during the whole duration of the effect."
 			},
 			{
 				name = "hasNoDuration",
@@ -261,7 +261,7 @@ return {
 				name = "onTick",
 				type = "function",
 				optional = true,
-				description = [[A function which will be called on each tick of a spell containing this effect. A table `tickParams` will be passed to the callback function:
+				description = [[A function which will be called on each tick of a spell containing this effect. A table `tickParams` will be passed to the callback function. Note: `dt`(frame time) scaling is handled automatically.
 		- `tickParams` (table)
 		- `effectId` (number)
 		- `sourceInstance` ([tes3magicSourceInstance](https://mwse.github.io/MWSE/types/tes3magicSourceInstance/)): Access to the magic source of the effect instance. 
@@ -279,7 +279,7 @@ return {
 			- `attribute` (number): *Optional. Default:* `tes3.effectAttribute.nonResistable` The attribute used in resistance calculations agains this effect. Maps to values in [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
 			- `type` (number): *Optional. Default:* `tes3.effectEventType.boolean`. This flag controls how the effect behaves. For example, `tes3.effectEventType.modStatistic` will make the effect work as calling `tes3.modStatistic`. Maps to values in [`tes3.effectEventType`](https://mwse.github.io/MWSE/references/effect-event-types/) namespace.
 			- `value` (number): *Optional. Default:* `0`. The variable this effect changes.
-			- `resistanceCheck(resistParams)` (function): *Optional.* The function passed as `resistanceCheck` will be used on any of the game's spell resistance checks. For example, the only effect in vanilla Morrowind that implements this function is Water Walking. It disallows using a spell with Water Walking when the player is deep underwater, by setting it as expired. So, returning `true` from this function will set your effect to expired, and depending on your trigger code may stop processing. This function passed here must returns boolean values.
+			- `resistanceCheck(resistParams)` (function): *Optional.* The function passed as `resistanceCheck` will be used on any of the game's spell resistance checks. For example, the only effect in vanilla Morrowind that implements this function is Water Walking. It disallows using a spell with Water Walking when the player is deep underwater, by setting it as expired. So, returning `true` from this function will set your effect to expired, and depending on your trigger code may stop processing. The function passed here must returns boolean values.
 				**Parameters**
 				- `resistParams` (table)
 				- `sourceInstance` ([tes3magicSourceInstance](https://mwse.github.io/MWSE/types/tes3magicSourceInstance/)): Access to the magic source of the effect instance. 
@@ -309,5 +309,11 @@ return {
 			},
 		},
 	}},
+	examples = {
+		["fireEffect"] = {
+			title = "Fire Damage effect",
+			description = "An implementation of the vanilla Fire Damage effect. Also, three spells are constructed with newly created magic effect, which are added to the player. You can test this in-game.",
+		}
+	},
 	returns = {{ name = "effect", type = "tes3effect"}},
 }
