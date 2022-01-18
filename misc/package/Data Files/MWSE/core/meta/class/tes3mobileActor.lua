@@ -29,7 +29,7 @@
 --- @field corpseHourstamp number No description yet available.
 --- @field currentEnchantedItem tes3equipmentStack *Read-only*. The currently equipped enchanted item that the actor will use.
 --- @field currentSpell tes3spell *Read-only*. The currently equipped spell that the actor will use.
---- @field effectAttributes table *Read-only*. Access to a table of 24 numbers for the actor's effect attributes.
+--- @field effectAttributes table *Read-only*. Access to a table of 24 numbers for the actor's effect attributes. In order those are: `attackBonus`, `sanctuary`, `resistMagicka`, `resistFire`, `resistFrost`, `resistShock`, `resistCommonDisease`, `resistBlightDisease`, `resistCorprus`, `resistPoison`, `resistParalysis`, `chameleon`, `resistNormalWeapons`, `waterBreathing`, `waterWalking`, `swiftSwim`, `jump`, `levitate`, `shield`, `sound`, `silence`, `blind`, `paralyze`, and `invisibility`. Each of those can be accessed individually. For example, `tes3mobileActor.chameleon`.
 --- @field encumbrance tes3statistic|tes3statisticSkill *Read-only*. Access to the actor's encumbrance statistic.
 --- @field endurance tes3statistic|tes3statisticSkill *Read-only*. Direct access to the actor's endurance attribute statistic.
 --- @field facing number *Read-only*. The facing of the actor, in radians.
