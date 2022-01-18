@@ -249,23 +249,23 @@ local effect = tes3.addMagicEffect({ id = ..., name = ..., baseCost = ..., schoo
 	* `usesNegativeLighting` (boolean): *Default*: `true`. A flag which controls whether this effect uses negative lighting.
 	* `onTick` (function): *Optional*. A function which will be called on each tick of a spell containing this effect. Following table will be passed to the callback function:
 		- `effectId` (number)
-		- `sourceInstance` ([tes3magicSourceInstance](https://mwse.github.io/MWSE/types/tes3magicSourceInstance/))
-		- `deltaTime (number): The time passed from the last tick of the spell.`
-		- `effectInstance` ([tes3magicEffectInstance](https://mwse.github.io/MWSE/types/tes3magicEffectInstance/))
-		- `effectIndex (number): The index of the effect in the spell.`
+		- `sourceInstance` ([tes3magicSourceInstance](https://mwse.github.io/MWSE/types/tes3magicSourceInstance/)): Access to the magic source of the effect instance. 
+		- `deltaTime` (number): The time passed from the last tick of the spell. Useful for scaling with the frame rate.
+		- `effectInstance` ([tes3magicEffectInstance](https://mwse.github.io/MWSE/types/tes3magicEffectInstance/)): Access to the magic effect instance.
+		- `effectIndex` (number): The index of the effect in the spell.
 
-		In addition, a function registerd as onTick can also call the following methods:
+		In addition, a function registerd as `onTick` can also call the following methods:
 	
-		- trigger(`params`)
+		- trigger(`params`): Allowed the effect to run through the normal spell event system.
 		
 			**Parameters:**
 			- `params` (table)
-				- `negateOnExpiry` (boolean): *Optional. Default:* `true`.
-				- `isUncapped` (boolean): *Optional.*
-				- `attribute` (number): *Optional.*
-				- `type` (number): *Optional. Default:* `0`.
-				- `value` (number): *Optional. Default:* `0`.
-				- `resistanceCheck` (function):
+			- `negateOnExpiry` (boolean): *Optional. Default:* `true`.
+			- `isUncapped` (boolean): *Optional.*
+			- `attribute` (number): *Optional. Default:* `tes3.effectAttribute.nonResistable` Maps to values in [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
+			- `type` (number): *Optional. Default:* `0`.
+			- `value` (number): *Optional. Default:* `0`.
+			- `onResist` (function): The function passed as `onResist` will be used on any of the game's spell resistance checks. The function should return boolean values.
 
 		- triggerBoundWeapon(`id`): Performs weapon summoning logic.
 			**Parameters:**
@@ -275,7 +275,7 @@ local effect = tes3.addMagicEffect({ id = ..., name = ..., baseCost = ..., schoo
 			**Parameters:**
 			- `params` (table)
 			- `id` (string): The ID of the armor object to summon.
-			- `id2` (string): *Optional.* The ID of the weapon object to summon.
+			- `id2` (string): *Optional.* The ID of the additional armor object to summon.
 
 		- triggerSummon(`id`): Performs creature summoning logic.
 			**Parameters:**
