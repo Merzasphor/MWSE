@@ -182,36 +182,42 @@ function tes3.addJournalEntry(params) end
 --- 
 --- `usesNegativeLighting`: boolean — *Default*: `true`. A flag which controls whether this effect uses negative lighting.
 --- 
---- `onTick`: function — *Optional*. A function which will be called on each tick of a spell containing this effect. Following table will be passed to the callback function:
+--- `onTick`: function — *Optional*. A function which will be called on each tick of a spell containing this effect. A table `tickParams` will be passed to the callback function:
+--- --- 		- `tickParams` (table)
 --- --- 		- `effectId` (number)
 --- --- 		- `sourceInstance` ([tes3magicSourceInstance](https://mwse.github.io/MWSE/types/tes3magicSourceInstance/)): Access to the magic source of the effect instance. 
---- --- 		- `deltaTime` (number): The time passed from the last tick of the spell. Useful for scaling with the frame rate.
+--- --- 		- `deltaTime` (number): The time passed since the last tick of the spell.
 --- --- 		- `effectInstance` ([tes3magicEffectInstance](https://mwse.github.io/MWSE/types/tes3magicEffectInstance/)): Access to the magic effect instance.
 --- --- 		- `effectIndex` (number): The index of the effect in the spell.
 --- --- 
 --- --- 		In addition, a function registerd as `onTick` can also call the following methods:
 --- --- 	
---- --- 		- trigger(`params`): Allowed the effect to run through the normal spell event system.
+--- --- 		- trigger(`triggerParams`): Allows the effect to run through the normal spell event system.
 --- --- 			**Parameters:**
---- --- 			- `params` (table)
---- --- 			- `negateOnExpiry` (boolean): *Optional. Default:* `true`.
+--- --- 			- `triggerParams` (table)
+--- --- 			- `negateOnExpiry` (boolean): *Optional. Default:* `true` If this flag is `true`, the effect will be negated on expiry.
 --- --- 			- `isUncapped` (boolean): *Optional.*
---- --- 			- `attribute` (number): *Optional. Default:* `tes3.effectAttribute.nonResistable` Maps to values in [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
---- --- 			- `type` (number): *Optional. Default:* `0`.
---- --- 			- `value` (number): *Optional. Default:* `0`.
---- --- 			- `resistanceCheck` (function): The function passed as `resistanceCheck` will be used on any of the game's spell resistance checks. The function should return boolean values.
+--- --- 			- `attribute` (number): *Optional. Default:* `tes3.effectAttribute.nonResistable` The attribute used in resistance calculations agains this effect. Maps to values in [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
+--- --- 			- `type` (number): *Optional. Default:* `tes3.effectEventType.boolean`. This flag controls how the effect behaves. For example, `tes3.effectEventType.modStatistic` will make the effect work as calling `tes3.modStatistic`.
+--- --- 			- `value` (number): *Optional. Default:* `0`. The variable this effect changes.
+--- --- 			- `resistanceCheck(resistParams)` (function): *Optional.* The function passed as `resistanceCheck` will be used on any of the game's spell resistance checks. For example, the only effect in vanilla Morrowind that implements this function is Water Walking. It disallows using a spell with Water Walking when the player is deep underwater, by setting it as expired. So, returning `true` from this function will set your effect to expired, and depending on your trigger code may stop processing. This function passed here must returns boolean values.
+--- --- 				**Parameters**
+--- --- 				- `resistParams` (table)
+--- --- 				- `sourceInstance` ([tes3magicSourceInstance](https://mwse.github.io/MWSE/types/tes3magicSourceInstance/)): Access to the magic source of the effect instance. 
+--- --- 				- `effectInstance` ([tes3magicEffectInstance](https://mwse.github.io/MWSE/types/tes3magicEffectInstance/)): Access to the magic effect instance.
+--- --- 				- `effectIndex` (number): The index of the effect in the spell.
 --- --- 
---- --- 		- triggerBoundWeapon(`id`): Performs weapon summoning logic.
+--- --- 		- triggerBoundWeapon(`id`): Performs vanilla weapon summoning logic. It will create a summoned version of the weapon with provided ID. 
 --- --- 			**Parameters:**
 --- --- 			- `id` (string): The ID of the weapon object to summon.
 --- --- 
---- --- 		- triggerBoundArmor(`params`): Performs armor summoning logic. It can summon one or two armor objects.
+--- --- 		- triggerBoundArmor(`params`): Performs vanilla armor summoning logic. It can summon one or two armor objects with provided ID(s).
 --- --- 			**Parameters:**
 --- --- 			- `params` (table)
 --- --- 			- `id` (string): The ID of the armor object to summon.
 --- --- 			- `id2` (string): *Optional.* The ID of the additional armor object to summon.
 --- --- 
---- --- 		- triggerSummon(`id`): Performs creature summoning logic.
+--- --- 		- triggerSummon(`id`): Performs vanilla creature summoning logic. It will create a summoned version of a creature with provided ID.
 --- --- 			**Parameters:**
 --- --- 			- `id` (string): The ID of the creature object to summon.
 --- --- 
@@ -258,36 +264,42 @@ function tes3.addMagicEffect(params) end
 --- @field targetsSkills boolean *Default*: `true`. A flag which controls whether this effect targets a certain skill or skills.
 --- @field unreflectable boolean *Default*: `true`. A flag which controls whether this effect can be reflected.
 --- @field usesNegativeLighting boolean *Default*: `true`. A flag which controls whether this effect uses negative lighting.
---- @field onTick function *Optional*. A function which will be called on each tick of a spell containing this effect. Following table will be passed to the callback function:
+--- @field onTick function *Optional*. A function which will be called on each tick of a spell containing this effect. A table `tickParams` will be passed to the callback function:
+--- 		- `tickParams` (table)
 --- 		- `effectId` (number)
 --- 		- `sourceInstance` ([tes3magicSourceInstance](https://mwse.github.io/MWSE/types/tes3magicSourceInstance/)): Access to the magic source of the effect instance. 
---- 		- `deltaTime` (number): The time passed from the last tick of the spell. Useful for scaling with the frame rate.
+--- 		- `deltaTime` (number): The time passed since the last tick of the spell.
 --- 		- `effectInstance` ([tes3magicEffectInstance](https://mwse.github.io/MWSE/types/tes3magicEffectInstance/)): Access to the magic effect instance.
 --- 		- `effectIndex` (number): The index of the effect in the spell.
 --- 
 --- 		In addition, a function registerd as `onTick` can also call the following methods:
 --- 	
---- 		- trigger(`params`): Allowed the effect to run through the normal spell event system.
+--- 		- trigger(`triggerParams`): Allows the effect to run through the normal spell event system.
 --- 			**Parameters:**
---- 			- `params` (table)
---- 			- `negateOnExpiry` (boolean): *Optional. Default:* `true`.
+--- 			- `triggerParams` (table)
+--- 			- `negateOnExpiry` (boolean): *Optional. Default:* `true` If this flag is `true`, the effect will be negated on expiry.
 --- 			- `isUncapped` (boolean): *Optional.*
---- 			- `attribute` (number): *Optional. Default:* `tes3.effectAttribute.nonResistable` Maps to values in [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
---- 			- `type` (number): *Optional. Default:* `0`.
---- 			- `value` (number): *Optional. Default:* `0`.
---- 			- `resistanceCheck` (function): The function passed as `resistanceCheck` will be used on any of the game's spell resistance checks. The function should return boolean values.
+--- 			- `attribute` (number): *Optional. Default:* `tes3.effectAttribute.nonResistable` The attribute used in resistance calculations agains this effect. Maps to values in [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
+--- 			- `type` (number): *Optional. Default:* `tes3.effectEventType.boolean`. This flag controls how the effect behaves. For example, `tes3.effectEventType.modStatistic` will make the effect work as calling `tes3.modStatistic`.
+--- 			- `value` (number): *Optional. Default:* `0`. The variable this effect changes.
+--- 			- `resistanceCheck(resistParams)` (function): *Optional.* The function passed as `resistanceCheck` will be used on any of the game's spell resistance checks. For example, the only effect in vanilla Morrowind that implements this function is Water Walking. It disallows using a spell with Water Walking when the player is deep underwater, by setting it as expired. So, returning `true` from this function will set your effect to expired, and depending on your trigger code may stop processing. This function passed here must returns boolean values.
+--- 				**Parameters**
+--- 				- `resistParams` (table)
+--- 				- `sourceInstance` ([tes3magicSourceInstance](https://mwse.github.io/MWSE/types/tes3magicSourceInstance/)): Access to the magic source of the effect instance. 
+--- 				- `effectInstance` ([tes3magicEffectInstance](https://mwse.github.io/MWSE/types/tes3magicEffectInstance/)): Access to the magic effect instance.
+--- 				- `effectIndex` (number): The index of the effect in the spell.
 --- 
---- 		- triggerBoundWeapon(`id`): Performs weapon summoning logic.
+--- 		- triggerBoundWeapon(`id`): Performs vanilla weapon summoning logic. It will create a summoned version of the weapon with provided ID. 
 --- 			**Parameters:**
 --- 			- `id` (string): The ID of the weapon object to summon.
 --- 
---- 		- triggerBoundArmor(`params`): Performs armor summoning logic. It can summon one or two armor objects.
+--- 		- triggerBoundArmor(`params`): Performs vanilla armor summoning logic. It can summon one or two armor objects with provided ID(s).
 --- 			**Parameters:**
 --- 			- `params` (table)
 --- 			- `id` (string): The ID of the armor object to summon.
 --- 			- `id2` (string): *Optional.* The ID of the additional armor object to summon.
 --- 
---- 		- triggerSummon(`id`): Performs creature summoning logic.
+--- 		- triggerSummon(`id`): Performs vanilla creature summoning logic. It will create a summoned version of a creature with provided ID.
 --- 			**Parameters:**
 --- 			- `id` (string): The ID of the creature object to summon.
 --- 
