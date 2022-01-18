@@ -31,6 +31,11 @@ return {
 			readOnly = true,
 			description = "The unique instance of the magic source.",
 		},
+		["spellCastChance"] = {
+			type = "number",
+			readOnly = true,
+			description = "The cast chance of the magic source. This is only available if the `source` is a spell or an enchantment.",
+		},
 		["effectIndex"] = {
 			type = "number",
 			readOnly = true,
@@ -40,6 +45,11 @@ return {
 			type = "tes3magicEffectInstance",
 			readOnly = true,
 			description = "The unique instance of the magic effect.",
+		},
+		["effect"] = {
+			type = "tes3effect",
+			readOnly = true,
+			description = "The specific effect that triggered the event. This is equal as doing `e.source.effects[effectIndex]`. This field may not always be available.",
 		},
 	},
 	filter = "source",
