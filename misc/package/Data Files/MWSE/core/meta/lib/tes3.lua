@@ -107,7 +107,7 @@ function tes3.addJournalEntry(params) end
 --- @field text string The text of the new Journal entry.
 --- @field showMessage boolean *Default*: `true`. If this parameter is true, a "Your journal has been updated" message will be displayed.
 
---- This function creates a new custom magic effect. The effect can be scripted through lua. This function should be used inside [`addMagicEffect`](https://mwse.github.io/MWSE/events/addMagicEffect/) event callback.
+--- This function creates a new custom magic effect. The effect can be scripted through lua. This function should be used inside [`magicEffectsResolved`](https://mwse.github.io/MWSE/events/magicEffectsResolved/) event callback.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3/#tes3addmagiceffect).
 --- @param params tes3.addMagicEffect.params This table accepts the following values:
@@ -130,7 +130,7 @@ function tes3.addJournalEntry(params) end
 --- 
 --- `lighting`: table — *Optional*. No description yet available.
 --- 
---- `icon`: string — Path to the effect icon. Must be a string no longer than 31 characters long. Use \\ as path separator.
+--- `icon`: string — Path to the effect icon. Must be a string no longer than 31 characters long. Use double \ as path separator.
 --- 
 --- `particleTexture`: string — Path to the particle texture to use for the effect. Must be a string no longer than 31 characters long.
 --- 
@@ -239,7 +239,7 @@ function tes3.addMagicEffect(params) end
 --- @field speed number *Default*: `1`. No description yet available.
 --- @field description string *Default*: `No description available.`. Description for the effect.
 --- @field lighting table *Optional*. No description yet available.
---- @field icon string Path to the effect icon. Must be a string no longer than 31 characters long. Use \\ as path separator.
+--- @field icon string Path to the effect icon. Must be a string no longer than 31 characters long. Use double \ as path separator.
 --- @field particleTexture string Path to the particle texture to use for the effect. Must be a string no longer than 31 characters long.
 --- @field castSound string The sound ID which will be played on casting a spell with this effect. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
 --- @field boltSound string The sound ID which will be played when a spell with this effect is in flight. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.

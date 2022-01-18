@@ -199,7 +199,7 @@ tes3.addJournalEntry({ text = ..., showMessage = ... })
 
 ### `tes3.addMagicEffect`
 
-This function creates a new custom magic effect. The effect can be scripted through lua. This function should be used inside [`addMagicEffect`](https://mwse.github.io/MWSE/events/addMagicEffect/) event callback.
+This function creates a new custom magic effect. The effect can be scripted through lua. This function should be used inside [`magicEffectsResolved`](https://mwse.github.io/MWSE/events/magicEffectsResolved/) event callback.
 
 ```lua
 local effect = tes3.addMagicEffect({ id = ..., name = ..., baseCost = ..., school = ..., size = ..., sizeCap = ..., speed = ..., description = ..., lighting = ..., icon = ..., particleTexture = ..., castSound = ..., boltSound = ..., hitSound = ..., areaSound = ..., castVFX = ..., boltVFX = ..., hitVFX = ..., areaVFX = ..., allowEnchanting = ..., allowSpellmaking = ..., appliesOnce = ..., canCastSelf = ..., canCastTarget = ..., canCastTouch = ..., casterLinked = ..., hasContinuousVFX = ..., hasNoDuration = ..., hasNoMagnitude = ..., illegalDaedra = ..., isHarmful = ..., nonRecastable = ..., targetsAttributes = ..., targetsSkills = ..., unreflectable = ..., usesNegativeLighting = ..., onTick = ..., onCollision = ... })
@@ -220,7 +220,7 @@ local effect = tes3.addMagicEffect({ id = ..., name = ..., baseCost = ..., schoo
 		* `x` (number): *Default*: `1`. Value of red color channel. In range of 0 - 1.
 		* `y` (number): *Default*: `1`. Value of green color channel. In range of 0 - 1.
 		* `z` (number): *Default*: `1`. Value of blue color channel. In range of 0 - 1.
-	* `icon` (string): Path to the effect icon. Must be a string no longer than 31 characters long. Use \\ as path separator.
+	* `icon` (string): Path to the effect icon. Must be a string no longer than 31 characters long. Use double \ as path separator.
 	* `particleTexture` (string): Path to the particle texture to use for the effect. Must be a string no longer than 31 characters long.
 	* `castSound` (string): The sound ID which will be played on casting a spell with this effect. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
 	* `boltSound` (string): The sound ID which will be played when a spell with this effect is in flight. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.

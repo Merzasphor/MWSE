@@ -14,16 +14,17 @@ event.register("damaged", damagedCallback)
 
 ## Event Data
 
-* `activeMagicEffect` ([tes3magicEffect](../../types/tes3magicEffect)): *Read-only*. Magic effect which caused damage. Can be nil.
-* `attacker` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile actor dealing the damage. Can be nil.
-* `attackerReference` ([tes3reference](../../types/tes3reference)): *Read-only*. The attacker mobile's associated reference. Can be nil.
+* `activeMagicEffect` ([tes3magicEffect](../../types/tes3magicEffect)): *Read-only*. Magic effect which caused damage. Can be `nil`.
+* `attacker` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile actor dealing the damage. Can be `nil`.
+* `attackerReference` ([tes3reference](../../types/tes3reference)): *Read-only*. The attacker mobile's associated reference. Can be `nil`.
 * `damage` (number): *Read-only*. The amount of damage done.
 * `killingBlow` (boolean): *Read-only*. If true, the damage killed the target.
-* `magicSourceInstance` ([tes3magicSourceInstance](../../types/tes3magicSourceInstance)): A `tes3magicSourceInstance` object of a spell that caused damage. Can be nil.
+* `magicEffectInstance` ([tes3magicEffectInstance](../../types/tes3magicEffectInstance)): An instance of the magic effect in the spell that caused damage. Can be `nil`.
+* `magicSourceInstance` ([tes3magicSourceInstance](../../types/tes3magicSourceInstance)): A `tes3magicSourceInstance` object of a spell that caused damage. Can be `nil`.
 * `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile actor that took damage.
-* `projectile` ([tes3mobileProjectile](../../types/tes3mobileProjectile)): *Read-only*. Projectile that dealt the damage. Can be nil.
+* `projectile` ([tes3mobileProjectile](../../types/tes3mobileProjectile)): *Read-only*. Projectile that dealt the damage. Can be `nil`.
 * `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. The mobile’s associated reference.
-* `source` (number): *Read-only*. The origin of damage. These damage sources are present as [`tes3.damageSource`](https://mwse.github.io/MWSE/references/damage-sources/) constants. See the example. Damage with `tes3.damageSource.shield` source comes from magic shields. Other sources are self-explanatory.
+* `source` (string): *Read-only*. The origin of damage. These damage sources are present as [`tes3.damageSource`](https://mwse.github.io/MWSE/references/damage-sources/) constants. See the example. Damage with `tes3.damageSource.shield` source comes from magic shields. Other sources are self-explanatory.
 
 ## Examples
 

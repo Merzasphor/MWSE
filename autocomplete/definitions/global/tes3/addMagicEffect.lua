@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[This function creates a new custom magic effect. The effect can be scripted through lua. This function should be used inside [`addMagicEffect`](https://mwse.github.io/MWSE/events/addMagicEffect/) event callback.]],
+	description = [[This function creates a new custom magic effect. The effect can be scripted through lua. This function should be used inside [`magicEffectsResolved`](https://mwse.github.io/MWSE/events/magicEffectsResolved/) event callback.]],
 	arguments = {{
 		name = "params",
 		type = "table",
@@ -87,7 +87,7 @@ return {
 			{
 				name = "icon",
 				type = "string",
-				description = "Path to the effect icon. Must be a string no longer than 31 characters long. Use \\\\ as path separator."
+				description = "Path to the effect icon. Must be a string no longer than 31 characters long. Use double \\ as path separator."
 			},
 			{
 				name = "particleTexture",
