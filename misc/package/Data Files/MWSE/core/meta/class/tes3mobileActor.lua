@@ -223,12 +223,12 @@ function tes3mobileActor:getFatigueTerm() end
 function tes3mobileActor:getPowerUseTimestamp(power) end
 
 --- Fetches the statistic object of a skill with a given index. This is the way to access skills for any type of actor, as creatures have a limited version of the skill system. Note that creatures share a statistic between multiple skills (they only have combat, magic, and stealth stats), so many values will be the same.
---- @param skillId number The index of the skill statistic to fetch.
+--- @param skillId number The index of the skill statistic to fetch. Maps to values in [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) namespace.
 --- @return tes3statisticSkill result No description yet available.
 function tes3mobileActor:getSkillStatistic(skillId) end
 
 --- Fetches the current value of a skill with a given index. This is the way to access skills for any type of actor, as creatures have a limited version of the skill system. Note that creatures share a statistic between multiple skills (they only have combat, magic, and stealth stats), so many values will be the same.
---- @param skillId number The index of the skill statistic's value to fetch.
+--- @param skillId number The index of the skill statistic's value to fetch. Maps to values in [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) namespace.
 --- @return number result No description yet available.
 function tes3mobileActor:getSkillValue(skillId) end
 
@@ -288,20 +288,20 @@ function tes3mobileActor:stopCombat(force) end
 --- 
 --- `item`: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — *Optional*. The item to unequip.
 --- 
---- `type`: number — *Optional*. The item type to unequip. Only used if no other parameter is provided.
+--- `type`: number — *Optional*. The item type to unequip. Only used if no other parameter is provided. Only values pertaining to equipment from [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) can be passed here.
 --- 
---- `armorSlot`: number — *Optional*. The armor slot to unequip.
+--- `armorSlot`: number — *Optional*. The armor slot to unequip. Maps to values in [`tes3.armorSlot`](https://mwse.github.io/MWSE/references/armor-slots/) namespace.
 --- 
---- `clothingSlot`: number — *Optional*. The clothing slot to unequip.
+--- `clothingSlot`: number — *Optional*. The clothing slot to unequip. Maps to values in [`tes3.clothingSlot`](https://mwse.github.io/MWSE/references/clothing-slots/) namespace
 --- @return boolean itemUnequipped No description yet available.
 function tes3mobileActor:unequip(params) end
 
 ---Table parameter definitions for `tes3mobileActor.unequip`.
 --- @class tes3mobileActor.unequip.params
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string *Optional*. The item to unequip.
---- @field type number *Optional*. The item type to unequip. Only used if no other parameter is provided.
---- @field armorSlot number *Optional*. The armor slot to unequip.
---- @field clothingSlot number *Optional*. The clothing slot to unequip.
+--- @field type number *Optional*. The item type to unequip. Only used if no other parameter is provided. Only values pertaining to equipment from [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) can be passed here.
+--- @field armorSlot number *Optional*. The armor slot to unequip. Maps to values in [`tes3.armorSlot`](https://mwse.github.io/MWSE/references/armor-slots/) namespace.
+--- @field clothingSlot number *Optional*. The clothing slot to unequip. Maps to values in [`tes3.clothingSlot`](https://mwse.github.io/MWSE/references/clothing-slots/) namespace
 
 --- Updates statistics derived from attributes, which are magicka, fatigue, and encumbrance. Will also update the UI if used on the player. Normally handled automatically when you use `tes3.modStatistic()`.
 --- @param attribute tes3statistic|tes3statisticSkill *Optional*. Limits the update to statistics derived from this attribute.  e.g. `mobile:updateDerivedStatistics(mobile.strength)`. If not present, all derived statistics will be updated.

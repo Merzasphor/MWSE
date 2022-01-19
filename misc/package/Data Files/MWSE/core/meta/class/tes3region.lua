@@ -20,7 +20,7 @@
 tes3region = {}
 
 --- Changes the current weather for the region to the provided weather-type parameter.
---- @param weatherId number No description yet available.
+--- @param weatherId number Maps to values in [`tes3.weather`](https://mwse.github.io/MWSE/references/weather-types/) namespace.
 function tes3region:changeWeather(weatherId) end
 
 --- Changes the weather to a random weather type.

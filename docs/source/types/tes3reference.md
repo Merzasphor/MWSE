@@ -517,7 +517,7 @@ tes3reference:clearActionFlag(flagIndex)
 
 **Parameters**:
 
-* `flagIndex` (number): The action flag to clear.
+* `flagIndex` (number): The action flag to clear. Maps to values in [`tes3.actionFlag`](https://mwse.github.io/MWSE/references/action-flags/) namespace.
 
 ***
 
@@ -707,7 +707,7 @@ tes3reference:setNoCollisionFlag(hasNoCollision, updateCollisions)
 
 ### `testActionFlag`
 
-Returns the flag's value in the reference's action data attachment
+Returns the flag's value in the reference's action data attachment.
 
 ```lua
 local result = tes3reference:testActionFlag(flagIndex)
@@ -715,7 +715,7 @@ local result = tes3reference:testActionFlag(flagIndex)
 
 **Parameters**:
 
-* `flagIndex` (number): The action flag to clear.
+* `flagIndex` (number): The action flag to test. Maps to values in [`tes3.actionFlag`](https://mwse.github.io/MWSE/references/action-flags/) namespace.
 
 **Returns**:
 

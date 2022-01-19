@@ -1751,7 +1751,7 @@ local result = tes3mobileActor:getSkillStatistic(skillId)
 
 **Parameters**:
 
-* `skillId` (number): The index of the skill statistic to fetch.
+* `skillId` (number): The index of the skill statistic to fetch. Maps to values in [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) namespace.
 
 **Returns**:
 
@@ -1769,7 +1769,7 @@ local result = tes3mobileActor:getSkillValue(skillId)
 
 **Parameters**:
 
-* `skillId` (number): The index of the skill statistic's value to fetch.
+* `skillId` (number): The index of the skill statistic's value to fetch. Maps to values in [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) namespace.
 
 **Returns**:
 
@@ -1966,9 +1966,9 @@ local itemUnequipped = tes3mobileActor:unequip({ item = ..., type = ..., armorSl
 
 * `params` (table)
 	* `item` ([tes3item](../../types/tes3item), string): *Optional*. The item to unequip.
-	* `type` (number): *Optional*. The item type to unequip. Only used if no other parameter is provided.
-	* `armorSlot` (number): *Optional*. The armor slot to unequip.
-	* `clothingSlot` (number): *Optional*. The clothing slot to unequip.
+	* `type` (number): *Optional*. The item type to unequip. Only used if no other parameter is provided. Only values pertaining to equipment from [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) can be passed here.
+	* `armorSlot` (number): *Optional*. The armor slot to unequip. Maps to values in [`tes3.armorSlot`](https://mwse.github.io/MWSE/references/armor-slots/) namespace.
+	* `clothingSlot` (number): *Optional*. The clothing slot to unequip. Maps to values in [`tes3.clothingSlot`](https://mwse.github.io/MWSE/references/clothing-slots/) namespace
 
 **Returns**:
 
