@@ -257,7 +257,7 @@ The script that runs on the object.
 
 ### `slot`
 
-The slot used by the armor.
+The slot used by the clothing object.
 
 **Returns**:
 
@@ -267,7 +267,7 @@ The slot used by the armor.
 
 ### `slotName`
 
-The name of the slot used by the armor.
+The name of the slot used by the clothing object.
 
 **Returns**:
 

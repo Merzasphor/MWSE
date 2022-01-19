@@ -10,8 +10,8 @@
 --- @field name string The player-facing name for the object.
 --- @field parts table An array-style table of the [`tes3wearablePart`](https://mwse.github.io/MWSE/types/tes3wearablePart/) data on the object.
 --- @field script tes3script The script that runs on the object.
---- @field slot number The slot used by the armor.
---- @field slotName string The name of the slot used by the armor.
+--- @field slot number The slot used by the clothing object.
+--- @field slotName string The name of the slot used by the clothing object.
 --- @field value number The value of the object. For this object type, its maximum value is 65535. Larger numbers will overflow.
 --- @field weight number The weight of the object.
 tes3clothing = {}

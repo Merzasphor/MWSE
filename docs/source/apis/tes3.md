@@ -300,7 +300,6 @@ local effect = tes3.addMagicEffect({ id = ..., name = ..., baseCost = ..., schoo
 	tes3.claimSpellEffectId("customFireDmg", 220)
 	
 	local function onFireDmgTick(tickParams)
-	
 		-- This will print current health for any actor our spell hit
 		tes3.messageBox("%s, health: %s", tickParams.effectInstance.target.object.id, tickParams.effectInstance.target.mobile.health.current)
 	
@@ -320,11 +319,9 @@ local effect = tes3.addMagicEffect({ id = ..., name = ..., baseCost = ..., schoo
 			id = tes3.effect.customFireDmg,
 	
 			-- This information if just copied from the Construction Set --
-			name = "Fire Damage",		
-			description = (
-				"This spell effect produces a manifestation of elemental fire. Upon "..
-				"contact with an object, this manifestation explodes, causing damage."
-			),
+			name = "Fire Damage",
+			description = ("This spell effect produces a manifestation of elemental fire. Upon " ..
+			"contact with an object, this manifestation explodes, causing damage."),
 			baseCost = 5,
 			school = tes3.magicSchool.destruction,
 			size = 1.25,
@@ -334,7 +331,7 @@ local effect = tes3.addMagicEffect({ id = ..., name = ..., baseCost = ..., schoo
 			usesNegativeLighting = false,
 	
 			icon = "s\\Tx_S_fire_damage.tga",
-	        particleTexture = "vfx_firealpha00A.tga",
+			particleTexture = "vfx_firealpha00A.tga",
 			castSound = "destruction cast",
 			castVFX = "VFX_DestructCast",
 			boltSound = "destruction bolt",
@@ -355,68 +352,59 @@ local effect = tes3.addMagicEffect({ id = ..., name = ..., baseCost = ..., schoo
 			targetsAttributes = false,
 			targetsSkills = false,
 	
-	        onTick = onFireDmgTick,
-	    })
+			onTick = onFireDmgTick,
+		})
 	end)
 	
 	event.register("loaded", function()
 		local spell1 = tes3.createObject({ objectType = tes3.objectType.spell })
 		tes3.setSourceless(spell1)
 		spell1.name = "TEST SPELL - self"
-	    spell1.magickaCost = 1
+		spell1.magickaCost = 1
 	
 		local effect = spell1.effects[1]
-	    effect.id = tes3.effect.customFireDmg
-	    effect.rangeType = tes3.effectRange.self
-	    effect.min = 10
-	    effect.max = 10
-	    effect.duration = 10
-	    effect.radius = 0
-	    effect.skill = -1
-	    effect.attribute = -1
+		effect.id = tes3.effect.customFireDmg
+		effect.rangeType = tes3.effectRange.self
+		effect.min = 10
+		effect.max = 10
+		effect.duration = 10
+		effect.radius = 0
+		effect.skill = -1
+		effect.attribute = -1
 	
 		local spell2 = tes3.createObject({ objectType = tes3.objectType.spell })
 		tes3.setSourceless(spell2)
 		spell2.name = "TEST SPELL - target"
-	    spell2.magickaCost = 1
+		spell2.magickaCost = 1
 	
 		local effect = spell2.effects[1]
-	    effect.id = tes3.effect.customFireDmg
-	    effect.rangeType = tes3.effectRange.target
-	    effect.min = 3
-	    effect.max = 3
-	    effect.duration = 10
-	    effect.radius = 15
-	    effect.skill = -1
-	    effect.attribute = -1
+		effect.id = tes3.effect.customFireDmg
+		effect.rangeType = tes3.effectRange.target
+		effect.min = 3
+		effect.max = 3
+		effect.duration = 10
+		effect.radius = 15
+		effect.skill = -1
+		effect.attribute = -1
 	
 		local spell3 = tes3.createObject({ objectType = tes3.objectType.spell })
 		tes3.setSourceless(spell3)
 		spell3.name = "TEST SPELL - touch"
-	    spell3.magickaCost = 1
+		spell3.magickaCost = 1
 	
 		local effect = spell3.effects[1]
-	    effect.id = tes3.effect.customFireDmg
-	    effect.rangeType = tes3.effectRange.touch
-	    effect.min = 3
-	    effect.max = 3
-	    effect.duration = 10
-	    effect.radius = 0
-	    effect.skill = -1
-	    effect.attribute = -1
+		effect.id = tes3.effect.customFireDmg
+		effect.rangeType = tes3.effectRange.touch
+		effect.min = 3
+		effect.max = 3
+		effect.duration = 10
+		effect.radius = 0
+		effect.skill = -1
+		effect.attribute = -1
 	
-		tes3.addSpell({
-			reference  = tes3.mobilePlayer,
-			spell = spell1,
-		})
-		tes3.addSpell({
-			reference  = tes3.mobilePlayer,
-			spell = spell2,
-		})
-		tes3.addSpell({
-			reference  = tes3.mobilePlayer,
-			spell = spell3,
-		})
+		tes3.addSpell({ reference = tes3.mobilePlayer, spell = spell1 })
+		tes3.addSpell({ reference = tes3.mobilePlayer, spell = spell2 })
+		tes3.addSpell({ reference = tes3.mobilePlayer, spell = spell3 })
 	end)
 
 	```
@@ -528,7 +516,7 @@ local instance = tes3.applyMagicSource({ reference = ..., source = ..., name = .
 		* `max` (number): *Default*: `0`. The maximal magnitude of the effect per tick.
 	* `createCopy` (boolean): *Optional*. This parameter controls whether the function will return the original magic source or a copy of the magic source. This parameter is only used if source is alchemy.
 	* `fromStack` ([tes3equipmentStack](../../types/tes3equipmentStack)): *Optional*. The piece of equipment this magic source is coming from. The fromStack has to be an already equipped item from tes3actor.equipment. This will probably change in the future.
-	* `castChance` (number): *Default*: `This parameter allows overriding the casting chance of the magic source.`.
+	* `castChance` (number): *Optional*. This parameter allows overriding the casting chance of the magic source.
 	* `target` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target of the magic.
 	* `bypassResistances` (boolean): *Optional*. Is this effect going to bypass magic resistance?
 
