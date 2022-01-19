@@ -11,15 +11,33 @@
 --- @field currentAmbientWaterSound tes3sound Access to the current ambient water sound.
 --- @field currentCell tes3cell *Read-only*. Access to the cell that the player is currently in.
 --- @field currentInteriorCell tes3cell *Read-only*. Access to the current interior cell, if the player is in an interior.
+--- @field dontThreadLoad boolean Access to dontThreadLoad setting.
 --- @field exteriorCells table *Read-only*. A table of nine [`tes3cellExteriorData`](https://mwse.github.io/MWSE/types/tes3cellExteriorData/) objects for all loaded exterior cells.
 --- @field lastExteriorCell tes3cell *Read-only*. Access to the last visited exterior cell.
 --- @field mainThread number *Read-only*. A Windows handle to the main execution thread.
 --- @field mainThreadId number *Read-only*. The thread ID for the main execution thread.
 --- @field nonDynamicData tes3nonDynamicData *Read-only*. A child structure where core game objects are held.
+--- @field suppressThreadLoad boolean Access to suppressThreadLoad setting.
 --- @field threadSleepTime number *Read-only*. No description yet available.
 --- @field useCellTransitionFader boolean An engine flag that controls if there is a fade in/out between cells.
 --- @field worldLandscapeRoot niBillboardNode|niCollisionSwitch|niNode|niSwitchNode *Read-only*. One of the core parent scene graph nodes.
 --- @field worldObjectRoot niBillboardNode|niCollisionSwitch|niNode|niSwitchNode *Read-only*. One of the core parent scene graph nodes.
 --- @field worldPickObjectRoot niBillboardNode|niCollisionSwitch|niNode|niSwitchNode *Read-only*. One of the core parent scene graph nodes.
 tes3dataHandler = {}
+
+--- 
+--- @param params tes3dataHandler.updateCollisionGroupsForActiveCells.params This table accepts the following values:
+--- 
+--- `force`: boolean — *Default*: `true`. No description yet available.
+--- 
+--- `isResettingData`: boolean — *Default*: `false`. No description yet available.
+--- 
+--- `resetCollisionGroups`: boolean — *Default*: `true`. No description yet available.
+function tes3dataHandler:updateCollisionGroupsForActiveCells(params) end
+
+---Table parameter definitions for `tes3dataHandler.updateCollisionGroupsForActiveCells`.
+--- @class tes3dataHandler.updateCollisionGroupsForActiveCells.params
+--- @field force boolean *Default*: `true`. No description yet available.
+--- @field isResettingData boolean *Default*: `false`. No description yet available.
+--- @field resetCollisionGroups boolean *Default*: `true`. No description yet available.
 
