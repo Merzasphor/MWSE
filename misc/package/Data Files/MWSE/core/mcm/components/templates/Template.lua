@@ -83,7 +83,7 @@ function Template:clickTab(thisPage)
 	-- update view
 	pageBlock:getTopLevelParent():updateLayout()
 
-	--Enable Prev button if first tab is not active
+	-- Enable Prev button if first tab is not active
 	local tab1 = tabsBlock:findChild(self.pages[1].tabUID)
 	local prevButton = self.elements.previousTabButton
 	if tab1.widget.state ~= 4 then
@@ -118,11 +118,8 @@ function Template:createTabsBlock(parentBlock)
 	-- Create a tab for each page (no need if only one page)
 	if table.getn(self.pages) > 1 then
 
-		--Previous Button
-		local prevButton = outerTabsBlock:createButton{
-			id = tes3ui.registerID("MCM_PreviousButton"),
-			text = "<--"
-		}
+		-- Previous Button
+		local prevButton = outerTabsBlock:createButton{ id = tes3ui.registerID("MCM_PreviousButton"), text = "<--" }
 		formatTabButton(prevButton)
 		toggleButtonState(prevButton, false)
 		self.elements.previousTabButton = prevButton
@@ -138,54 +135,51 @@ function Template:createTabsBlock(parentBlock)
 		local firstTab = parentBlock:findChild(self.pages[1].tabUID)
 		firstTab.widget.state = 4
 
-		--Next Button
-		local nextButton = outerTabsBlock:createButton{
-			id = tes3ui.registerID("MCM_NextButton"),
-			text = "-->",
-		}
+		-- Next Button
+		local nextButton = outerTabsBlock:createButton{ id = tes3ui.registerID("MCM_NextButton"), text = "-->" }
 		formatTabButton(nextButton)
 		self.elements.nextTabButton = nextButton
 
-		--Pagination
+		-- Pagination
 
 		local hiddenTabCount = 0
 		nextButton:register("mouseClick", function()
-			--Hide next tab
+			-- Hide next tab
 			local tabToHide = parentBlock:findChild(self.pages[hiddenTabCount + 1].tabUID)
 			tabToHide.visible = false
-			--Move active tab forward 1
+			-- Move active tab forward 1
 			for i, page in ipairs(self.pages) do
 				local tab = tabsBlock:findChild(page.tabUID)
-				if tab.widget.state == 4 and self.pages[i+1] then
-					self:clickTab(self.pages[i+1])
+				if tab.widget.state == 4 and self.pages[i + 1] then
+					self:clickTab(self.pages[i + 1])
 					break
 				end
 			end
-			--increment hiddenTabCount
+			-- increment hiddenTabCount
 			hiddenTabCount = math.min(hiddenTabCount + 1, #self.pages)
-			--If only last tab is visible, disable Next button
-			if hiddenTabCount >= #self.pages-1 then
+			-- If only last tab is visible, disable Next button
+			if hiddenTabCount >= #self.pages - 1 then
 				toggleButtonState(nextButton, false)
 			end
 			toggleButtonState(prevButton, true)
 		end)
 
 		prevButton:register("mouseClick", function()
-			--Move active tab back 1
+			-- Move active tab back 1
 			for i, page in ipairs(self.pages) do
 				local tab = tabsBlock:findChild(page.tabUID)
-				if tab.widget.state == 4 and self.pages[i-1] then
-					local prevTab = parentBlock:findChild(self.pages[i-1].tabUID)
+				if tab.widget.state == 4 and self.pages[i - 1] then
+					local prevTab = parentBlock:findChild(self.pages[i - 1].tabUID)
 					if prevTab.visible == false then
-						--decrement hiddenTabCount
+						-- decrement hiddenTabCount
 						hiddenTabCount = math.max(hiddenTabCount - 1, 0)
 						prevTab.visible = true
 					end
-					self:clickTab(self.pages[i-1])
+					self:clickTab(self.pages[i - 1])
 					break
 				end
 			end
-			--If first tab is active, disable Prev button
+			-- If first tab is active, disable Prev button
 			if tabsBlock:findChild(self.pages[1].tabUID).widget.state == 4 then
 				toggleButtonState(prevButton, false)
 			end

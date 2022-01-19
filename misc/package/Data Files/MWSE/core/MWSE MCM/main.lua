@@ -1,4 +1,3 @@
-
 local function saveConfig()
 	local values = {}
 	for k, _ in pairs(mwseConfig.getDefaults()) do

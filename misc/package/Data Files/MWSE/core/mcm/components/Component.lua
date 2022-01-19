@@ -11,8 +11,7 @@ Component.sCancel = tes3.findGMST(tes3.gmst.sCancel).value
 Component.sYes = tes3.findGMST(tes3.gmst.sYes).value
 Component.sNo = tes3.findGMST(tes3.gmst.sNo).value
 
-
---CONTROL METHODS
+-- CONTROL METHODS
 
 function Component:new(data)
 	local t = data or {}
@@ -31,17 +30,14 @@ function Component:__index(key)
 	return self[key]
 end
 
---Prints the component table to the log
+-- Prints the component table to the log
 function Component:printComponent(component)
 	mwse.log("{")
 	for key, val in pairs(component or self) do
 		if type(val) ~= "table" and type(val) ~= "function" then
 			local maxLength = 50
-			local shortenedValue = ( 
-				string.len(val) < maxLength ) and 
-				val or  ( string.sub(val, 1, maxLength) .. "..." 
-			)
-			mwse.log("	%s: %s", key, shortenedValue ) 
+			local shortenedValue = (string.len(val) < maxLength) and val or (string.sub(val, 1, maxLength) .. "...")
+			mwse.log("	%s: %s", key, shortenedValue)
 		end
 	end
 	mwse.log("}")
@@ -56,11 +52,12 @@ function Component:prepareData(data)
 	return data
 end
 
-
 function Component:getComponent(componentData)
 
-	--if componentType field is set then we've already built it
-	if componentData.componentType then return componentData end
+	-- if componentType field is set then we've already built it
+	if componentData.componentType then
+		return componentData
+	end
 
 	if not componentData.class then
 		mwse.log("ERROR: No class found for component:")
@@ -69,13 +66,13 @@ function Component:getComponent(componentData)
 	local component
 	local classPaths = require("mcm.classPaths")
 	for _, path in pairs(classPaths.components) do
-		local classPath = (path .. componentData.class) 
+		local classPath = (path .. componentData.class)
 		local fullPath = lfs.currentdir() .. classPaths.basePath .. classPath .. ".lua"
 		local fileExists = lfs.attributes(fullPath, "mode") == "file"
 
-		if fileExists then 
+		if fileExists then
 			component = require(classPath)
-			break 
+			break
 		end
 	end
 	if component then
@@ -86,35 +83,26 @@ function Component:getComponent(componentData)
 	end
 end
 
-
 function Component:registerMouseOverElements(mouseOverList)
 	if mouseOverList then
 		for _, element in ipairs(mouseOverList) do
-			element:register(
-				"mouseOver",
-				function(e)
-					event.trigger("MCM:MouseOver", self)
-					e.source:forwardEvent(e)
-				end
-			)
-			element:register(
-				"mouseLeave",
-				function(e)
-					event.trigger("MCM:MouseLeave")
-					e.source:forwardEvent(e)
-				end
-			)
+			element:register("mouseOver", function(e)
+				event.trigger("MCM:MouseOver", self)
+				e.source:forwardEvent(e)
+			end)
+			element:register("mouseLeave", function(e)
+				event.trigger("MCM:MouseLeave")
+				e.source:forwardEvent(e)
+			end)
 		end
 	end
 end
-
 
 function Component:disable()
 	if self.elements.label then
 		self.elements.label.color = tes3ui.getPalette("disabled_color")
 	end
 end
-
 
 function Component:enable()
 	if self.elements.label then
@@ -123,37 +111,31 @@ function Component:enable()
 end
 
 function Component:checkDisabled()
-	local disabled = (
-		self.inGameOnly == true and 
-		not tes3.player
-	)
+	local disabled = (self.inGameOnly == true and not tes3.player)
 	return disabled
 end
 
-
---UI METHODS
-
+-- UI METHODS
 
 function Component:createLabelBlock(parentBlock)
 	local block = parentBlock:createBlock({ id = tes3ui.registerID("LabelBlock") })
 	block.flowDirection = "top_to_bottom"
-	--if parentBlock.flowDirection == "top_to_bottom" then
-		block.widthProportional = 1.0
-	--else
+	-- if parentBlock.flowDirection == "top_to_bottom" then
+	block.widthProportional = 1.0
+	-- else
 	--	block.autoWidth = true
-	--end
+	-- end
 	block.autoHeight = true
-	
+
 	self.elements.labelBlock = block
 	table.insert(self.mouseOvers, block)
 end
-
 
 function Component:createLabel(parentBlock)
 	if self.label then
 		self:createLabelBlock(parentBlock)
 
-		local id =  ("Label: " .. self.label )
+		local id = ("Label: " .. self.label)
 		local label = self.elements.labelBlock:createLabel({ id = tes3ui.registerID(id), text = self.label })
 		label.borderBottom = self.paddingBottom
 		label.borderAllSides = 0
@@ -166,7 +148,7 @@ function Component:createLabel(parentBlock)
 		table.insert(self.mouseOvers, label)
 	end
 end
- 
+
 --[[
 	Wraps up the entire component 
 ]]
@@ -178,7 +160,6 @@ function Component:createOuterContainer(parentBlock)
 	outerContainer.autoWidth = true
 
 	outerContainer.widthProportional = 1.0
-	
 
 	outerContainer.autoHeight = true
 	outerContainer.paddingBottom = self.paddingBottom * 2
@@ -188,7 +169,7 @@ function Component:createOuterContainer(parentBlock)
 end
 
 function Component:createInnerContainer(parentBlock)
-	local innerContainer = parentBlock:createBlock({id = tes3ui.registerID("InnerContainer")})
+	local innerContainer = parentBlock:createBlock({ id = tes3ui.registerID("InnerContainer") })
 	innerContainer.widthProportional = parentBlock.widthProportional
 	innerContainer.autoWidth = parentBlock.autoWidth
 	innerContainer.heightProportional = parentBlock.heightProportional
@@ -200,14 +181,13 @@ function Component:createInnerContainer(parentBlock)
 	self.elements.innerContainer = innerContainer
 end
 
-
 function Component:create(parentBlock)
 
 	self.elements = {}
 	self.mouseOvers = {}
 
 	self:createOuterContainer(parentBlock)
-	
+
 	self:createContentsContainer(self.elements.outerContainer)
 
 	if self:checkDisabled() then
@@ -215,17 +195,15 @@ function Component:create(parentBlock)
 	else
 		self:enable()
 	end
-	
-	--Register mouse overs
+
+	-- Register mouse overs
 	self:registerMouseOverElements(self.mouseOvers)
 
-	--Can define a custom formatting function to make adjustments to any element saved
+	-- Can define a custom formatting function to make adjustments to any element saved
 	-- in self.elements
 	if self.postCreate then
 		self:postCreate()
 	end
 end
-
-
 
 return Component

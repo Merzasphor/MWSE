@@ -47,7 +47,7 @@ function this.register(eventType, callback, options)
 	-- If 'doOnce' was set, wrap with a call to unregister.
 	if options.doOnce then
 		local originalCallback = callback
-		callback = function (e)
+		callback = function(e)
 			this.unregister(eventType, callback, options)
 			originalCallback(e)
 		end
@@ -111,8 +111,8 @@ function this.unregister(eventType, callback, options)
 	local callbacks = getEventTable(eventType, options.filter)
 	local removed = table.removevalue(callbacks, callback)
 	-- if (not removed) then
-		-- print("event.register: Attempted to unregister '" .. eventType .. "' event callback that wasn't registered.")
-		-- print(debug.traceback())
+	-- print("event.register: Attempted to unregister '" .. eventType .. "' event callback that wasn't registered.")
+	-- print(debug.traceback())
 	-- end
 
 	-- Do we no longer care about this event?

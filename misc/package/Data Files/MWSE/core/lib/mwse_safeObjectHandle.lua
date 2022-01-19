@@ -33,7 +33,7 @@ function this.new(object)
 	local handle = setmetatable(raw, this)
 	handles[object] = handle
 
-    return handle
+	return handle
 end
 
 -- Allow this handle to index into the reference, with some checking.
