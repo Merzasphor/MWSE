@@ -31,8 +31,12 @@
 --- @field position tes3vector3 Access to the reference's position. Setting the position sets the reference as modified.
 --- @field previousNode tes3reference *Read-only*. The previous reference in the parent reference list.
 --- @field sceneNode niBillboardNode|niCollisionSwitch|niNode|niSwitchNode *Read-only*. The scene graph node that the reference uses for rendering.
+--- @field sourceFormId number No description yet available.
+--- @field sourceModId number No description yet available.
 --- @field stackSize number Access to the size of a stack, if the reference represents one or more items.
 --- @field supportsLuaData boolean If true, this reference can store temporary or persistent lua data.
+--- @field targetFormId number No description yet available.
+--- @field targetModId number No description yet available.
 --- @field tempData table As with the `data` field, a generic lua table that data can be written to. No information in this table will persist into saves. For item references, this is the same table as on the `tes3itemData` structure.
 tes3reference = {}
 

@@ -14,9 +14,29 @@ The alpha color value.
 
 ***
 
+### `alpha`
+
+The alpha color value. Another alias for a.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
 ### `b`
 
 The blue color value.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `blue`
+
+The blue color value. Another alias for b.
 
 **Returns**:
 
@@ -34,9 +54,29 @@ The green color value.
 
 ***
 
+### `green`
+
+The green color value. Another alias for g.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
 ### `r`
 
 The red color value.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `red`
+
+The red color value. Another alias for r.
 
 **Returns**:
 
