@@ -111,6 +111,36 @@ local result = tes3matrix33:reorthogonalize()
 
 ***
 
+### `toEulerXYZ`
+
+Converts the matrix to a 3D vector.
+
+```lua
+local isUnique, vector3 = tes3matrix33:toEulerXYZ()
+```
+
+**Returns**:
+
+* `isUnique` (boolean)
+* `vector3` ([tes3vector3](../../types/tes3vector3))
+
+***
+
+### `toEulerZYX`
+
+Converts the matrix to a 3D vector.
+
+```lua
+local isUnique, vector3 = tes3matrix33:toEulerZYX()
+```
+
+**Returns**:
+
+* `isUnique` (boolean)
+* `vector3` ([tes3vector3](../../types/tes3vector3))
+
+***
+
 ### `toIdentity`
 
 Converts the matrix to the identity matrix's values.
