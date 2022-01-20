@@ -389,7 +389,7 @@ function tes3.advanceTime(params) end
 --- 
 --- `fromStack`: tes3equipmentStack — *Optional*. The piece of equipment this magic source is coming from. The fromStack has to be an already equipped item from tes3actor.equipment. This will probably change in the future.
 --- 
---- `castChance`: number — *Default*: `This parameter allows overriding the casting chance of the magic source.`. No description yet available.
+--- `castChance`: number — *Optional*. This parameter allows overriding the casting chance of the magic source.
 --- 
 --- `target`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target of the magic.
 --- 
@@ -405,7 +405,7 @@ function tes3.applyMagicSource(params) end
 --- @field effects table *Optional*. A table of custom effects to apply as a potion. Maximal number of effects is 8.
 --- @field createCopy boolean *Optional*. This parameter controls whether the function will return the original magic source or a copy of the magic source. This parameter is only used if source is alchemy.
 --- @field fromStack tes3equipmentStack *Optional*. The piece of equipment this magic source is coming from. The fromStack has to be an already equipped item from tes3actor.equipment. This will probably change in the future.
---- @field castChance number *Default*: `This parameter allows overriding the casting chance of the magic source.`. No description yet available.
+--- @field castChance number *Optional*. This parameter allows overriding the casting chance of the magic source.
 --- @field target tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target of the magic.
 --- @field bypassResistances boolean *Optional*. Is this effect going to bypass magic resistance?
 

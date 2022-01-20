@@ -6,9 +6,9 @@ hide:
 # Weather Types
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.weatherType.*` namespace. For example, `tes3.weatherType.rain` has a value of `4`.
+	These values are available in Lua by their identifier in the `tes3.weather.*` namespace. For example, `tes3.weather.rain` has a value of `4`.
 
-ID | Weather Type
+ID | Weather
 -- | ---------------------
 0  | Clear
 1  | Cloudy

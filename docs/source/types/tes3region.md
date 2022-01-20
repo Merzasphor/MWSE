@@ -291,7 +291,7 @@ tes3region:changeWeather(weatherId)
 
 **Parameters**:
 
-* `weatherId` (number)
+* `weatherId` (number): Maps to values in [`tes3.weather`](https://mwse.github.io/MWSE/references/weather-types/) namespace.
 
 ***
 

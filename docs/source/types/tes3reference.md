@@ -427,6 +427,16 @@ The scene graph reference node for this object.
 
 ***
 
+### `sourceFormId`
+
+No description yet available.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
 ### `sourceless`
 
 The soruceless flag of the object.
@@ -447,6 +457,16 @@ The soruceless flag of the object.
 
 ***
 
+### `sourceModId`
+
+No description yet available.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
 ### `stackSize`
 
 Access to the size of a stack, if the reference represents one or more items.
@@ -464,6 +484,26 @@ If true, this reference can store temporary or persistent lua data.
 **Returns**:
 
 * `result` (boolean)
+
+***
+
+### `targetFormId`
+
+No description yet available.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `targetModId`
+
+No description yet available.
+
+**Returns**:
+
+* `result` (number)
 
 ***
 
@@ -517,7 +557,7 @@ tes3reference:clearActionFlag(flagIndex)
 
 **Parameters**:
 
-* `flagIndex` (number): The action flag to clear.
+* `flagIndex` (number): The action flag to clear. Maps to values in [`tes3.actionFlag`](https://mwse.github.io/MWSE/references/action-flags/) namespace.
 
 ***
 
@@ -625,7 +665,7 @@ local result = tes3reference:getAttachedDynamicLight()
 
 **Returns**:
 
-* `result` (tes3lightNode)
+* `result` ([tes3lightNode](../../types/tes3lightNode))
 
 ***
 
@@ -648,7 +688,7 @@ local result = tes3reference:getOrCreateAttachedDynamicLight(light, phase)
 
 **Returns**:
 
-* `result` (tes3lightNode)
+* `result` ([tes3lightNode](../../types/tes3lightNode))
 
 ***
 
@@ -707,7 +747,7 @@ tes3reference:setNoCollisionFlag(hasNoCollision, updateCollisions)
 
 ### `testActionFlag`
 
-Returns the flag's value in the reference's action data attachment
+Returns the flag's value in the reference's action data attachment.
 
 ```lua
 local result = tes3reference:testActionFlag(flagIndex)
@@ -715,7 +755,7 @@ local result = tes3reference:testActionFlag(flagIndex)
 
 **Parameters**:
 
-* `flagIndex` (number): The action flag to clear.
+* `flagIndex` (number): The action flag to test. Maps to values in [`tes3.actionFlag`](https://mwse.github.io/MWSE/references/action-flags/) namespace.
 
 **Returns**:
 

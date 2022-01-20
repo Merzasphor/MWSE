@@ -31,8 +31,12 @@
 --- @field position tes3vector3 Access to the reference's position. Setting the position sets the reference as modified.
 --- @field previousNode tes3reference *Read-only*. The previous reference in the parent reference list.
 --- @field sceneNode niBillboardNode|niCollisionSwitch|niNode|niSwitchNode *Read-only*. The scene graph node that the reference uses for rendering.
+--- @field sourceFormId number No description yet available.
+--- @field sourceModId number No description yet available.
 --- @field stackSize number Access to the size of a stack, if the reference represents one or more items.
 --- @field supportsLuaData boolean If true, this reference can store temporary or persistent lua data.
+--- @field targetFormId number No description yet available.
+--- @field targetModId number No description yet available.
 --- @field tempData table As with the `data` field, a generic lua table that data can be written to. No information in this table will persist into saves. For item references, this is the same table as on the `tes3itemData` structure.
 tes3reference = {}
 
@@ -41,7 +45,7 @@ tes3reference = {}
 function tes3reference:activate(reference) end
 
 --- Unsets a bit in the reference's action data attachment
---- @param flagIndex number The action flag to clear.
+--- @param flagIndex number The action flag to clear. Maps to values in [`tes3.actionFlag`](https://mwse.github.io/MWSE/references/action-flags/) namespace.
 function tes3reference:clearActionFlag(flagIndex) end
 
 --- Clones a reference for a base actor into a reference to an instance of that actor. For example, this will force a container to resolve its leveled items and have its own unique inventory.
@@ -101,8 +105,8 @@ function tes3reference:setDynamicLighting() end
 --- @param updateCollisions boolean If `true`, collision groups for the active cells are recalculated.
 function tes3reference:setNoCollisionFlag(hasNoCollision, updateCollisions) end
 
---- Returns the flag's value in the reference's action data attachment
---- @param flagIndex number The action flag to clear.
+--- Returns the flag's value in the reference's action data attachment.
+--- @param flagIndex number The action flag to test. Maps to values in [`tes3.actionFlag`](https://mwse.github.io/MWSE/references/action-flags/) namespace.
 --- @return boolean result No description yet available.
 function tes3reference:testActionFlag(flagIndex) end
 

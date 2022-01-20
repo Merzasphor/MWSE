@@ -94,6 +94,16 @@ Access to the current ambient water sound.
 
 ***
 
+### `dontThreadLoad`
+
+Access to dontThreadLoad setting.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
 ### `exteriorCells`
 
 *Read-only*. A table of nine [`tes3cellExteriorData`](https://mwse.github.io/MWSE/types/tes3cellExteriorData/) objects for all loaded exterior cells.
@@ -144,6 +154,16 @@ Access to the current ambient water sound.
 
 ***
 
+### `suppressThreadLoad`
+
+Access to suppressThreadLoad setting.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
 ### `threadSleepTime`
 
 *Read-only*. No description yet available.
@@ -191,6 +211,25 @@ An engine flag that controls if there is a fade in/out between cells.
 **Returns**:
 
 * `result` ([niNode](../../types/niNode))
+
+***
+
+## Methods
+
+### `updateCollisionGroupsForActiveCells`
+
+
+
+```lua
+tes3dataHandler:updateCollisionGroupsForActiveCells({ force = ..., isResettingData = ..., resetCollisionGroups = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `force` (boolean): *Default*: `true`.
+	* `isResettingData` (boolean): *Default*: `false`.
+	* `resetCollisionGroups` (boolean): *Default*: `true`.
 
 ***
 

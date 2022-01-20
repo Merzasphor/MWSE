@@ -25,15 +25,15 @@ event.register("filterSoulGemTarget", filterSoulGemTargetCallback)
 
 	```lua
 	local function onInitialized()
-	    tes3.addSoulGem({ item = "vivec_soul_container" })
+		tes3.addSoulGem({ item = "vivec_soul_container" })
 	end
 	event.register("initialized", onInitialized)
 	
 	local function onFilterSoulGemTarget(e)
-	    -- Make it so Vivec can only be trapped by a special container.
-	    if (e.reference.baseObject.id:lower() == "vivec") then
-	        return e.soulGem.id == "vivec_soul_container"
-	    end
+		-- Make it so Vivec can only be trapped by a special container.
+		if (e.reference.baseObject.id:lower() == "vivec") then
+			return e.soulGem.id == "vivec_soul_container"
+		end
 	end
 	event.register("filterSoulGemTarget", onFilterSoulGemTarget)
 

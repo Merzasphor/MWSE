@@ -227,11 +227,21 @@ The angular speed that the projectile rotates around its local Y axis.
 
 ### `spellInstance`
 
-A quick access to [`tes3magicSourceInstance`](https://mwse.github.io/MWSE/types/tes3magicSourceInstance/) object of this `tes3mobileProjectile` if aplicable.
+Access to the magic source instance of the object.
 
 **Returns**:
 
 * `result` ([tes3magicSourceInstance](../../types/tes3magicSourceInstance))
+
+***
+
+### `spellInstanceSerial`
+
+No description yet available.
+
+**Returns**:
+
+* `result` (number)
 
 ***
 
