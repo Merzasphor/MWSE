@@ -113,7 +113,7 @@ local result = tes3matrix33:reorthogonalize()
 
 ### `toEulerXYZ`
 
-Converts the matrix to a 3D vector.
+Converts the matrix to a vector with 3 Euler angles.
 
 ```lua
 local isUnique, vector3 = tes3matrix33:toEulerXYZ()
@@ -128,7 +128,7 @@ local isUnique, vector3 = tes3matrix33:toEulerXYZ()
 
 ### `toEulerZYX`
 
-Converts the matrix to a 3D vector.
+Converts the matrix to a vector with 3 Euler angles.
 
 ```lua
 local isUnique, vector3 = tes3matrix33:toEulerZYX()
