@@ -13,6 +13,7 @@
 --- @field fogDensity number The cell's fog density. Only available on interior cells.
 --- @field gridX number The cell's X grid coordinate. Only available on exterior cells.
 --- @field gridY number The cell's Y grid coordinate. Only available on exterior cells.
+--- @field hasMapMarker boolean *Read-only*. If true, the cell will have be marked on the player's map. This does not take into account if the player has been to that cell.
 --- @field hasWater boolean If true, the cell has water. Only applies to interior cells.
 --- @field isInterior boolean If true, the cell is an interior.
 --- @field isOrBehavesAsExterior boolean *Read-only*. `true` if the cell is not an interior or if it behaves as an exterior.

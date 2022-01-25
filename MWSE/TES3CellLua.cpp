@@ -130,6 +130,7 @@ namespace mwse {
 				usertypeDefinition["gridX"] = sol::property(&TES3::Cell::getGridX, &TES3::Cell::setGridX);
 				usertypeDefinition["gridY"] = sol::property(&TES3::Cell::getGridY, &TES3::Cell::setGridY);
 				usertypeDefinition["hasWater"] = sol::property(&TES3::Cell::getHasWater, &TES3::Cell::setHasWater);
+				usertypeDefinition["hasMapMarker"] = sol::readonly_property(&TES3::Cell::getHasCellMarker);
 				usertypeDefinition["isInterior"] = sol::property(&TES3::Cell::getIsInterior, &TES3::Cell::setIsInterior);
 				usertypeDefinition["isOrBehavesAsExterior"] = sol::readonly_property(&TES3::Cell::getIsOrBehavesAsExterior);
 				usertypeDefinition["name"] = sol::property(&TES3::Cell::getName, &TES3::Cell::setName);
