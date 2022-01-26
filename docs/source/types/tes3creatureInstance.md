@@ -633,6 +633,16 @@ tes3actor:onInventoryClose(reference)
 
 ***
 
+### `reevaluateEquipment`
+
+Causes the creature to reevaluate its equipment choices and equip the best available.
+
+```lua
+tes3creatureInstance:reevaluateEquipment()
+```
+
+***
+
 ### `tradesItemType`
 
 Checks if the actor will buy and sell items of a given object type. e.g. `actor:tradesItemType(tes3.objectType.repairItem)`
