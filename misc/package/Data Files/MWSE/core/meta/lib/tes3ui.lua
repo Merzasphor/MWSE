@@ -120,9 +120,8 @@ function tes3ui.getViewportScale() end
 function tes3ui.getViewportSize() end
 
 --- Requests menu mode be deactivated on a menu with a given id.
---- @param id number No description yet available.
 --- @return boolean result No description yet available.
-function tes3ui.leaveMenuMode(id) end
+function tes3ui.leaveMenuMode() end
 
 --- Logs a message to the console.
 --- @param text string No description yet available.

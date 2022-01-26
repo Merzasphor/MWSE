@@ -1561,11 +1561,11 @@ function tes3.playVoiceover(params) end
 --- 
 --- `position`: tes3vector3|table — The position to move the reference to.
 --- 
---- `orientation`: tes3vector3|table — *Optional*. The position to move the reference to.
+--- `orientation`: tes3vector3|table — *Optional*. The new orientation of the reference.
 --- 
---- `forceCellChange`: boolean — When true, forces the game to update a reference that has moved within a single cell, as if it was moved into a new cell.
+--- `forceCellChange`: boolean — *Optional*. When true, forces the game to update a reference that has moved within a single cell, as if it was moved into a new cell.
 --- 
---- `suppressFader`: boolean — When moving the player, can be used to prevent the fade in and out visual effect.
+--- `suppressFader`: boolean — *Optional*. When moving the player, can be used to prevent the fade in and out visual effect.
 --- 
 --- `teleportCompanions`: boolean — *Default*: `true`. If used on the player, determines if companions should also be teleported.
 --- @return boolean executed No description yet available.
@@ -1576,9 +1576,9 @@ function tes3.positionCell(params) end
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Default*: `tes3.mobilePlayer`. The reference to reposition.
 --- @field cell tes3cell *Optional*. The cell to move the reference to. If not provided, the reference will be moved to a cell in the exterior worldspace at the position provided.
 --- @field position tes3vector3|table The position to move the reference to.
---- @field orientation tes3vector3|table *Optional*. The position to move the reference to.
---- @field forceCellChange boolean When true, forces the game to update a reference that has moved within a single cell, as if it was moved into a new cell.
---- @field suppressFader boolean When moving the player, can be used to prevent the fade in and out visual effect.
+--- @field orientation tes3vector3|table *Optional*. The new orientation of the reference.
+--- @field forceCellChange boolean *Optional*. When true, forces the game to update a reference that has moved within a single cell, as if it was moved into a new cell.
+--- @field suppressFader boolean *Optional*. When moving the player, can be used to prevent the fade in and out visual effect.
 --- @field teleportCompanions boolean *Default*: `true`. If used on the player, determines if companions should also be teleported.
 
 --- Simulates pushing a keyboard key.

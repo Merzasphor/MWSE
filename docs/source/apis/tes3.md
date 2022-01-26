@@ -2833,9 +2833,9 @@ local executed = tes3.positionCell({ reference = ..., cell = ..., position = ...
 	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Default*: `tes3.mobilePlayer`. The reference to reposition.
 	* `cell` ([tes3cell](../../types/tes3cell)): *Optional*. The cell to move the reference to. If not provided, the reference will be moved to a cell in the exterior worldspace at the position provided.
 	* `position` ([tes3vector3](../../types/tes3vector3), table): The position to move the reference to.
-	* `orientation` ([tes3vector3](../../types/tes3vector3), table): *Optional*. The position to move the reference to.
-	* `forceCellChange` (boolean): When true, forces the game to update a reference that has moved within a single cell, as if it was moved into a new cell.
-	* `suppressFader` (boolean): When moving the player, can be used to prevent the fade in and out visual effect.
+	* `orientation` ([tes3vector3](../../types/tes3vector3), table): *Optional*. The new orientation of the reference.
+	* `forceCellChange` (boolean): *Optional*. When true, forces the game to update a reference that has moved within a single cell, as if it was moved into a new cell.
+	* `suppressFader` (boolean): *Optional*. When moving the player, can be used to prevent the fade in and out visual effect.
 	* `teleportCompanions` (boolean): *Default*: `true`. If used on the player, determines if companions should also be teleported.
 
 **Returns**:

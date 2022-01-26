@@ -303,12 +303,8 @@ local width, height = tes3ui.getViewportSize()
 Requests menu mode be deactivated on a menu with a given id.
 
 ```lua
-local result = tes3ui.leaveMenuMode(id)
+local result = tes3ui.leaveMenuMode()
 ```
-
-**Parameters**:
-
-* `id` (number)
 
 **Returns**:
 
