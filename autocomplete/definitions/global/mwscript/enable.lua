@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[Wrapper for the Enable mwscript function.]],
+	description = [[Wrapper for the Enable mwscript function. Replacements: [`tes3.setEnabled()`](https://mwse.github.io/MWSE/apis/tes3/#tes3setenabled) or [`reference:enable()`](https://mwse.github.io/MWSE/types/tes3reference/#enable).]],
 	arguments = {{
 		name = "params",
 		type = "table",

@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[Wrapper for the Drop mwscript function.]],
+	description = [[Wrapper for the Drop mwscript function. Replacements: [`tes3.dropItem()`](https://mwse.github.io/MWSE/apis/tes3/#tes3dropitem) or [`inventory:dropItem()`](https://mwse.github.io/MWSE/types/tes3inventory/#dropitem).]],
 	arguments = {{
 		name = "params",
 		type = "table",

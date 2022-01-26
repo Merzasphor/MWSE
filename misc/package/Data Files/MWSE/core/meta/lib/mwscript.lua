@@ -4,7 +4,7 @@
 --- @class mwscriptlib
 mwscript = {}
 
---- Wrapper for the Activate mwscript function.
+--- Wrapper for the Activate mwscript function. Replacements: [`reference:activate()`](https://mwse.github.io/MWSE/types/tes3reference/#activate) or [`tes3.setAIActivate`](https://mwse.github.io/MWSE/apis/tes3/#tes3setaiactivate).
 --- @deprecated
 --- @param params mwscript.activate.params This table accepts the following values:
 --- 
@@ -15,7 +15,7 @@ function mwscript.activate(params) end
 --- @class mwscript.activate.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 
---- Wrapper for the AddItem mwscript function.
+--- Wrapper for the AddItem mwscript function. Replacements: [`tes3.addItem()`](https://mwse.github.io/MWSE/apis/tes3/#tes3additem), [`inventory:addItem()`](https://mwse.github.io/MWSE/types/tes3inventory/#additem), and depending on your needs [`mobileActor:equip()`](https://mwse.github.io/MWSE/types/tes3mobileActor/#equip).
 --- @deprecated
 --- @param params mwscript.addItem.params This table accepts the following values:
 --- 
@@ -33,7 +33,7 @@ function mwscript.addItem(params) end
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string The item to be added.
 --- @field count number *Default*: `1`. The number of items to be added.
 
---- Wrapper for the AddSoulGem mwscript function.
+--- Wrapper for the AddSoulGem mwscript function. Replacement: use [`tes3.addItem()`](https://mwse.github.io/MWSE/apis/tes3/#tes3additem) with the `soul` parameter.
 --- @deprecated
 --- @param params mwscript.addSoulGem.params This table accepts the following values:
 --- 
@@ -51,7 +51,7 @@ function mwscript.addSoulGem(params) end
 --- @field creature tes3creature|string The creature to be stored in the soul gem.
 --- @field soulgem tes3misc|string The soul gem to store the soul in.
 
---- Wrapper for the AddItem mwscript function.
+--- Wrapper for the AddSpell mwscript function. Replacements: [`tes3.addSpell()`](https://mwse.github.io/MWSE/apis/tes3/#tes3addspell) or [`spellList:add()`](https://mwse.github.io/MWSE/types/tes3spellList/#add).
 --- @deprecated
 --- @param params mwscript.addSpell.params This table accepts the following values:
 --- 
@@ -114,7 +114,7 @@ function mwscript.addTopic(params) end
 --- @class mwscript.addTopic.params
 --- @field topic tes3dialogue|string No description yet available.
 
---- Wrapper for the AITravel mwscript function.
+--- Wrapper for the AITravel mwscript function. Replacement: [`tes3.setAITravel()`](https://mwse.github.io/MWSE/apis/tes3/#tes3setaitravel).
 --- @deprecated
 --- @param params mwscript.aiTravel.params This table accepts the following values:
 --- 
@@ -135,7 +135,7 @@ function mwscript.aiTravel(params) end
 --- @field y number No description yet available.
 --- @field z number No description yet available.
 
---- Wrapper for the Disable mwscript function.
+--- Wrapper for the Disable mwscript function. Replacements: [reference:disable()](https://mwse.github.io/MWSE/types/tes3reference/#disable) or [`tes3.setEnabled()`](https://mwse.github.io/MWSE/apis/tes3/#tes3setenabled).
 --- @deprecated
 --- @param params mwscript.disable.params This table accepts the following values:
 --- 
@@ -150,7 +150,7 @@ function mwscript.disable(params) end
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field modify boolean *Default*: `true`. Set the object as modified.
 
---- Wrapper for the Drop mwscript function.
+--- Wrapper for the Drop mwscript function. Replacements: [`tes3.dropItem()`](https://mwse.github.io/MWSE/apis/tes3/#tes3dropitem) or [`inventory:dropItem()`](https://mwse.github.io/MWSE/types/tes3inventory/#dropitem).
 --- @deprecated
 --- @param params mwscript.drop.params This table accepts the following values:
 --- 
@@ -168,7 +168,7 @@ function mwscript.drop(params) end
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string The item to be dropped.
 --- @field count number *Default*: `1`. The number of items to drop.
 
---- Wrapper for the Enable mwscript function.
+--- Wrapper for the Enable mwscript function. Replacements: [`tes3.setEnabled()`](https://mwse.github.io/MWSE/apis/tes3/#tes3setenabled) or [`reference:enable()`](https://mwse.github.io/MWSE/types/tes3reference/#enable).
 --- @deprecated
 --- @param params mwscript.enable.params This table accepts the following values:
 --- 
@@ -183,7 +183,7 @@ function mwscript.enable(params) end
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field modify boolean *Default*: `true`. Set the object as modified.
 
---- Wrapper for the Equip mwscript function.
+--- Wrapper for the Equip mwscript function. Replacements: [`mobile:equip()`](https://mwse.github.io/MWSE/types/tes3mobileActor/#equip) or [`mobile.combatSession:changeEquipment()`](https://mwse.github.io/MWSE/types/tes3combatSession/#changeequipment).
 --- @deprecated
 --- @param params mwscript.equip.params This table accepts the following values:
 --- 
@@ -558,7 +558,7 @@ function mwscript.stopSound(params) end
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field sound tes3sound|string No description yet available.
 
---- Wrapper for the WakeUpPC mwscript function.
+--- Wrapper for the WakeUpPC mwscript function. Replacement: [`tes3.wakeUp()`](https://mwse.github.io/MWSE/apis/tes3/#tes3wakeup).
 --- @deprecated
 function mwscript.wakeUpPC() end
 
