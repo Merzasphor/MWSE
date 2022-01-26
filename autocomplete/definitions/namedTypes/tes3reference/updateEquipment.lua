@@ -1,4 +1,4 @@
 return {
 	type = "method",
-	description = [[Causes the reference, if of an actor, to reevaluate its equipment choices and equip items it should.]],
+	description = [[Causes the reference, if of an actor, to update the reference's bodyparts with the currently equipped ones.]],
 }

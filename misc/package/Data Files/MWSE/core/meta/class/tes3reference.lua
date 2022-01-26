@@ -110,12 +110,12 @@ function tes3reference:setNoCollisionFlag(hasNoCollision, updateCollisions) end
 --- @return boolean result No description yet available.
 function tes3reference:testActionFlag(flagIndex) end
 
---- Causes the reference, if of an actor, to reevaluate its equipment choices and equip items it should.
+--- Causes the reference, if of an actor, to update the reference's bodyparts with the currently equipped ones.
 function tes3reference:updateEquipment() end
 
 --- Updates the lighting of the reference using the global data handler.
 function tes3reference:updateLighting() end
 
---- Updates the reference's local rotation matrix, propagates position changes to the scene graph, and sets the reference's modified flag.
+--- Updates the reference's local rotation matrix, propagates position changes to the scene graph, and sets the reference's modified flag. You need to call this if the orientation or position was manually modified.
 function tes3reference:updateSceneGraph() end
 

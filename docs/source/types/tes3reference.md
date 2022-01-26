@@ -765,7 +765,7 @@ local result = tes3reference:testActionFlag(flagIndex)
 
 ### `updateEquipment`
 
-Causes the reference, if of an actor, to reevaluate its equipment choices and equip items it should.
+Causes the reference, if of an actor, to update the reference's bodyparts with the currently equipped ones.
 
 ```lua
 tes3reference:updateEquipment()
@@ -785,7 +785,7 @@ tes3reference:updateLighting()
 
 ### `updateSceneGraph`
 
-Updates the reference's local rotation matrix, propagates position changes to the scene graph, and sets the reference's modified flag.
+Updates the reference's local rotation matrix, propagates position changes to the scene graph, and sets the reference's modified flag. You need to call this if the orientation or position was manually modified.
 
 ```lua
 tes3reference:updateSceneGraph()
