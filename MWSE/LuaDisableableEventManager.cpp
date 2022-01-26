@@ -50,6 +50,7 @@
 #include "LuaEnchantedItemCreatedEvent.h"
 #include "LuaEnchantedItemCreateFailedEvent.h"
 #include "LuaEquipEvent.h"
+#include "LuaEquipmentReevaluatedEvent.h"
 #include "LuaEquippedEvent.h"
 #include "LuaFilterBarterMenuEvent.h"
 #include "LuaFilterContentsMenuEvent.h"
@@ -198,6 +199,7 @@ namespace mwse {
 				usertypeDefinition["enchantedItemCreateFailed"] = sol::property(&EnchantedItemCreateFailedEvent::getEventEnabled, &EnchantedItemCreateFailedEvent::setEventEnabled);
 				usertypeDefinition["enterFrame"] = sol::property(&FrameEvent::getEventEnabled, &FrameEvent::setEventEnabled);
 				usertypeDefinition["equip"] = sol::property(&EquipEvent::getEventEnabled, &EquipEvent::setEventEnabled);
+				usertypeDefinition["equipmentReevaluated"] = sol::property(&EquipmentReevaluatedEvent::getEventEnabled, &EquipmentReevaluatedEvent::setEventEnabled);
 				usertypeDefinition["equipped"] = sol::property(&EquippedEvent::getEventEnabled, &EquippedEvent::setEventEnabled);
 				usertypeDefinition["exerciseSkill"] = sol::property(&SkillExerciseEvent::getEventEnabled, &SkillExerciseEvent::setEventEnabled);
 				usertypeDefinition["filterBarterMenu"] = sol::property(&FilterBarterMenuEvent::getEventEnabled, &FilterBarterMenuEvent::setEventEnabled);
@@ -259,8 +261,8 @@ namespace mwse {
 				usertypeDefinition["spellCasted"] = sol::property(&SpellCastedEvent::getEventEnabled, &SpellCastedEvent::setEventEnabled);
 				usertypeDefinition["spellCastedFailure"] = sol::property(&SpellCastedEvent::getEventEnabled, &SpellCastedEvent::setEventEnabled);
 				usertypeDefinition["spellCreated"] = sol::property(&SpellCreatedEvent::getEventEnabled, &SpellCreatedEvent::setEventEnabled);
-				usertypeDefinition["spellResist"] = sol::property(&SpellResistEvent::getEventEnabled, &SpellResistEvent::setEventEnabled);
 				usertypeDefinition["spellMagickaUse"] = sol::property(&SpellMagickaUseEvent::getEventEnabled, &SpellMagickaUseEvent::setEventEnabled);
+				usertypeDefinition["spellResist"] = sol::property(&SpellResistEvent::getEventEnabled, &SpellResistEvent::setEventEnabled);
 				usertypeDefinition["spellTick"] = sol::property(&SpellTickEvent::getEventEnabled, &SpellTickEvent::setEventEnabled);
 				usertypeDefinition["topicAdded"] = sol::property(&AddTopicEvent::getEventEnabled, &AddTopicEvent::setEventEnabled);
 				usertypeDefinition["trapDisarm"] = sol::property(&DisarmTrapEvent::getEventEnabled, &DisarmTrapEvent::setEventEnabled);

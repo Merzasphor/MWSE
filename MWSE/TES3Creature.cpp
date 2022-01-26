@@ -3,6 +3,7 @@
 #include "BitUtil.h"
 
 #include "LuaCalcSoulValueEvent.h"
+#include "LuaEquipmentReevaluatedEvent.h"
 
 #include "LuaManager.h"
 
@@ -124,6 +125,22 @@ namespace TES3 {
 
 	SpellList* CreatureInstance::getBaseSpells() const {
 		return baseCreature->spellList;
+	}
+
+	const auto TES3_CreatureInstance_reevaluateEquipment = reinterpret_cast<void(__thiscall*)(CreatureInstance*)>(0x49EF60);
+	void CreatureInstance::reevaluateEquipment() {
+		if (!BIT_TEST(inventory.flags, 0)) {
+			return;
+		}
+
+		// Call original function.
+		TES3_CreatureInstance_reevaluateEquipment(this);
+
+		// Fire off event to let people know equipment has been reevaluated so custom slots can be equipped.
+		if (mwse::lua::event::EquipmentReevaluatedEvent::getEventEnabled()) {
+			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
+			stateHandle.triggerEvent(new mwse::lua::event::EquipmentReevaluatedEvent(this));
+		}
 	}
 
 	int CreatureInstance::getBaseSoulValue() const {

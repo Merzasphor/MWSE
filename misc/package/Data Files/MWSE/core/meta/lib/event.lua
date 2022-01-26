@@ -55,6 +55,7 @@
 --- @field register fun(eventId: '"enchantChargeUse"', callback: fun(e: enchantChargeUseEventData), options: table)
 --- @field register fun(eventId: '"enterFrame"', callback: fun(e: enterFrameEventData), options: table)
 --- @field register fun(eventId: '"equip"', callback: fun(e: equipEventData), options: table)
+--- @field register fun(eventId: '"equipmentReevaluated"', callback: fun(e: equipmentReevaluatedEventData), options: table)
 --- @field register fun(eventId: '"equipped"', callback: fun(e: equippedEventData), options: table)
 --- @field register fun(eventId: '"exerciseSkill"', callback: fun(e: exerciseSkillEventData), options: table)
 --- @field register fun(eventId: '"filterBarterMenu"', callback: fun(e: filterBarterMenuEventData), options: table)

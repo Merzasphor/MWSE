@@ -4653,6 +4653,14 @@ namespace mwse {
 			genCallEnforced(0x5E33FB, 0x72769E, reinterpret_cast<DWORD>(onEnchantItemChargeRequired_ftol));
 			genCallEnforced(0x5E3724, 0x72769E, reinterpret_cast<DWORD>(onEnchantItemChargeRequired_ftol));
 
+			// Event: Equipment reevaluated.
+			auto CreatureInstance_reevaluateEquipment = &TES3::CreatureInstance::reevaluateEquipment;
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::CreatureInstance, offsetof(TES3::ObjectVirtualTable, reevaluateEquipment), 0x49EF60, *reinterpret_cast<DWORD*>(&CreatureInstance_reevaluateEquipment));
+			genCallEnforced(0x49D5CB, 0x49EF60, *reinterpret_cast<DWORD*>(&CreatureInstance_reevaluateEquipment));
+			auto NPCInstance_reevaluateEquipment = &TES3::NPCInstance::reevaluateEquipment;
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::NPCInstance, offsetof(TES3::ObjectVirtualTable, reevaluateEquipment), 0x4D9A20, *reinterpret_cast<DWORD*>(&NPCInstance_reevaluateEquipment));
+			genCallEnforced(0x4D83AB, 0x4D9A20, *reinterpret_cast<DWORD*>(&NPCInstance_reevaluateEquipment));
+
 			// UI framework hooks
 			TES3::UI::hook();
 

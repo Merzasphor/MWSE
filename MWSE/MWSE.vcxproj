@@ -14,6 +14,7 @@
     <ClInclude Include="ArrayUtil.h" />
     <ClInclude Include="BitUtil.h" />
     <ClInclude Include="BSAnimationManager.h" />
+    <ClInclude Include="LuaEquipmentReevaluatedEvent.h" />
     <ClInclude Include="NIScreenPolygon.h" />
     <ClInclude Include="TES3AnimationDataLua.h" />
     <ClInclude Include="TES3CutscenePlayer.h" />
@@ -526,6 +527,7 @@
     <ClCompile Include="LuaEnchantChargeUseEvent.cpp" />
     <ClCompile Include="LuaEquipEvent.cpp" />
     <ClCompile Include="LuaBodyPartsUpdatedEvent.cpp" />
+    <ClCompile Include="LuaEquipmentReevaluatedEvent.cpp" />
     <ClCompile Include="LuaEquippedEvent.cpp" />
     <ClCompile Include="LuaExecutor.cpp" />
     <ClCompile Include="LuaFilterBarterMenuEvent.cpp" />

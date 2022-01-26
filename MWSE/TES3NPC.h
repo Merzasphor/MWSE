@@ -100,6 +100,7 @@ namespace TES3 {
 		//
 
 		int getDisposition(bool clamp = false);
+		void reevaluateEquipment();
 
 		//
 		// Custom functions.

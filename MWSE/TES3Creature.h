@@ -131,6 +131,7 @@ namespace TES3 {
 		Creature* getBaseSoundGenerator() const;
 		int getBaseCreatureType() const;
 		SpellList* getBaseSpells() const;
+		void reevaluateEquipment();
 
 		int getBaseSoulValue() const;
 		void setBaseSoulValue(int value);
