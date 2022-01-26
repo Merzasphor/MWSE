@@ -3151,6 +3151,12 @@ namespace mwse {
 				}
 			}
 
+			// Update equipment if needed.
+			// TODO: This can be more efficient by just comparing the newly added item to the equipped item.
+			if (item->promptsEquipmentReevaluation() && getOptionalParam<bool>(params, "reevaluateEquipment", true)) {
+				actor->reevaluateEquipment();
+			}
+
 			// Update body parts for creatures/NPCs that may have items unequipped.
 			if (mobile) {
 				reference->updateBipedParts();
@@ -3299,6 +3305,12 @@ namespace mwse {
 				if (mobile == playerMobile) {
 					worldController->playItemUpDownSound(item, TES3::ItemSoundState::Up);
 				}
+			}
+
+			// Update equipment if needed.
+			// TODO: This can be more efficient by just comparing the newly added item to the equipped item.
+			if (item->promptsEquipmentReevaluation() && getOptionalParam<bool>(params, "reevaluateEquipment", true)) {
+				actor->reevaluateEquipment();
 			}
 
 			// If either of them are the player, we need to update the GUI.
@@ -3528,6 +3540,13 @@ namespace mwse {
 				else if (fromMobile == playerMobile) {
 					worldController->playItemUpDownSound(item, TES3::ItemSoundState::Up);
 				}
+			}
+
+			// Update equipment if needed.
+			// TODO: This can be more efficient by just comparing the newly added item to the equipped item.
+			if (item->promptsEquipmentReevaluation() && getOptionalParam<bool>(params, "reevaluateEquipment", true)) {
+				toActor->reevaluateEquipment();
+				fromActor->reevaluateEquipment();
 			}
 
 			// Update body parts for creatures/NPCs that may have items unequipped.

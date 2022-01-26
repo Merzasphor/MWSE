@@ -139,7 +139,7 @@ tes3.addClothingSlot({ slot = ..., name = ... })
 Adds an item to a given reference's inventory or mobile's inventory.
 
 ```lua
-local addedCount = tes3.addItem({ reference = ..., item = ..., itemData = ..., soul = ..., count = ..., playSound = ..., limit = ..., updateGUI = ... })
+local addedCount = tes3.addItem({ reference = ..., item = ..., itemData = ..., soul = ..., count = ..., playSound = ..., limit = ..., reevaluateEquipment = ..., updateGUI = ... })
 ```
 
 **Parameters**:
@@ -152,6 +152,7 @@ local addedCount = tes3.addItem({ reference = ..., item = ..., itemData = ..., s
 	* `count` (number): *Default*: `1`. The maximum number of items to add.
 	* `playSound` (boolean): *Default*: `true`. If false, the up/down sound for the item won't be played.
 	* `limit` (boolean): If false, items can be placed into containers that shouldn't normally be allowed. This includes organic containers, and containers that are full.
+	* `reevaluateEquipment` (boolean): *Default*: `true`. If true, and the item added is armor, clothing, or a weapon, the actor will reevaluate its equipment choices to see if the new item is worth equipping.
 	* `updateGUI` (boolean): *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though [`tes3ui.forcePlayerInventoryUpdate()`](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uiforceplayerinventoryupdate) must manually be called after all inventory updates are finished.
 
 **Returns**:
@@ -3039,7 +3040,7 @@ tes3.removeEffects(reference, effect, castType, chance, removeSpell)
 Removes an item from a given reference's inventory.
 
 ```lua
-local removedCount = tes3.removeItem({ reference = ..., item = ..., itemData = ..., deleteItemData = ..., count = ..., playSound = ..., updateGUI = ... })
+local removedCount = tes3.removeItem({ reference = ..., item = ..., itemData = ..., deleteItemData = ..., count = ..., playSound = ..., reevaluateEquipment = ..., updateGUI = ... })
 ```
 
 **Parameters**:
@@ -3051,6 +3052,7 @@ local removedCount = tes3.removeItem({ reference = ..., item = ..., itemData = .
 	* `deleteItemData` ([tes3itemData](../../types/tes3itemData)): *Optional*. Whether to delete the item data after remove succeeds. Automatically set if itemData is used. Does not need to be specified for normal usage.
 	* `count` (number): *Default*: `1`. The maximum number of items to remove.
 	* `playSound` (boolean): *Default*: `true`. If false, the up/down sound for the item won't be played.
+	* `reevaluateEquipment` (boolean): *Default*: `true`. If true, and the item removed is armor, clothing, or a weapon, the actor will reevaluate its equipment choices to see if it needs to equip a new item.
 	* `updateGUI` (boolean): *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though [`tes3ui.forcePlayerInventoryUpdate()`](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uiforceplayerinventoryupdate) must manually be called after all inventory updates are finished.
 
 **Returns**:
@@ -3747,7 +3749,7 @@ local was3rdPerson = tes3.togglePOV()
 Moves one or more items from one reference to another. Returns the actual amount of items successfully transferred.
 
 ```lua
-local transferredCount = tes3.transferItem({ from = ..., to = ..., item = ..., itemData = ..., count = ..., playSound = ..., limitCapacity = ..., updateGUI = ... })
+local transferredCount = tes3.transferItem({ from = ..., to = ..., item = ..., itemData = ..., count = ..., playSound = ..., limitCapacity = ..., reevaluateEquipment = ..., updateGUI = ... })
 ```
 
 **Parameters**:
@@ -3760,6 +3762,7 @@ local transferredCount = tes3.transferItem({ from = ..., to = ..., item = ..., i
 	* `count` (number): *Default*: `1`. The maximum number of items to transfer.
 	* `playSound` (boolean): *Default*: `true`. If false, the up/down sound for the item won't be played.
 	* `limitCapacity` (boolean): *Default*: `true`. If false, items can be placed into containers that shouldn't normally be allowed. This includes organic containers, and containers that are full.
+	* `reevaluateEquipment` (boolean): *Default*: `true`. If true, and the item transferred is armor, clothing, or a weapon, the actors will reevaluate their equipment choices to see if the new item is worth equipping.
 	* `updateGUI` (boolean): *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though [`tes3ui.forcePlayerInventoryUpdate()`](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uiforceplayerinventoryupdate) must manually be called after all inventory updates are finished.
 
 **Returns**:

@@ -25,7 +25,7 @@
 --- @field worldPickObjectRoot niBillboardNode|niCollisionSwitch|niNode|niSwitchNode *Read-only*. One of the core parent scene graph nodes.
 tes3dataHandler = {}
 
---- 
+--- No description yet available.
 --- @param params tes3dataHandler.updateCollisionGroupsForActiveCells.params This table accepts the following values:
 --- 
 --- `force`: boolean — *Default*: `true`. No description yet available.

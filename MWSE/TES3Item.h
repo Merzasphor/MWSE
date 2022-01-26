@@ -12,6 +12,7 @@ namespace TES3 {
 		//
 
 		ItemData * createItemData();
+		bool promptsEquipmentReevaluation() const;
 
 	};
 	static_assert(sizeof(Item) == 0x30, "TES3::Item failed size validation");

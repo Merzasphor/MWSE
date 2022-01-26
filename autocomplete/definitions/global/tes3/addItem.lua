@@ -12,6 +12,7 @@ return {
 			{ name = "count", type = "number", default = "1", description = "The maximum number of items to add." },
 			{ name = "playSound", type = "boolean", default = true, description = "If false, the up/down sound for the item won't be played." },
 			{ name = "limit", type = "boolean", default = false, description = "If false, items can be placed into containers that shouldn't normally be allowed. This includes organic containers, and containers that are full." },
+			{ name = "reevaluateEquipment", type = "boolean", default = true, description = "If true, and the item added is armor, clothing, or a weapon, the actor will reevaluate its equipment choices to see if the new item is worth equipping." },
 			{ name = "updateGUI", type = "boolean", default = true, description = "If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though [`tes3ui.forcePlayerInventoryUpdate()`](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uiforceplayerinventoryupdate) must manually be called after all inventory updates are finished." },
 		},
 	}},

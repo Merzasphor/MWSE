@@ -218,7 +218,7 @@ An engine flag that controls if there is a fade in/out between cells.
 
 ### `updateCollisionGroupsForActiveCells`
 
-
+No description yet available.
 
 ```lua
 tes3dataHandler:updateCollisionGroupsForActiveCells({ force = ..., isResettingData = ..., resetCollisionGroups = ... })
