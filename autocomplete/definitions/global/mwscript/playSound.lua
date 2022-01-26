@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[Wrapper for the PlaySound mwscript function.]],
+	description = [[Use [`tes3.playSound()`](https://mwse.github.io/MWSE/apis/tes3/#tes3playsound), [`tes3sound:play()`](https://mwse.github.io/MWSE/types/tes3sound/#play) method, or [`tes3.playItemPickupSound()`](https://mwse.github.io/MWSE/apis/tes3/#tes3playitempickupsound) instead. Wrapper for the PlaySound mwscript function.]],
 	arguments = {{
 		name = "params",
 		type = "table",

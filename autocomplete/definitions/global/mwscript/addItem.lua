@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[Wrapper for the AddItem mwscript function. Replacements: [`tes3.addItem()`](https://mwse.github.io/MWSE/apis/tes3/#tes3additem), [`inventory:addItem()`](https://mwse.github.io/MWSE/types/tes3inventory/#additem), and depending on your needs [`mobileActor:equip()`](https://mwse.github.io/MWSE/types/tes3mobileActor/#equip).]],
+	description = [[Use [`tes3.addItem()`](https://mwse.github.io/MWSE/apis/tes3/#tes3additem), [`tes3inventory:addItem()`](https://mwse.github.io/MWSE/types/tes3inventory/#additem), or depending on your needs [`tes3mobileActor:equip()`](https://mwse.github.io/MWSE/types/tes3mobileActor/#equip) instead. Wrapper for the AddItem mwscript function.]],
 	arguments = {{
 		name = "params",
 		type = "table",

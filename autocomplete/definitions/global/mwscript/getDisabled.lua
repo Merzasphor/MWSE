@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[Wrapper for the GetDisabled mwscript function.]],
+	description = [[Use [`object.disabled`](https://mwse.github.io/MWSE/types/tes3baseObject/#disabled) on any object inheriting from `tes3baseObject`. Wrapper for the GetDisabled mwscript function.]],
 	arguments = {{
 		name = "params",
 		type = "table",

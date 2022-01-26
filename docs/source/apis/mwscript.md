@@ -9,7 +9,7 @@ The mwscript library allows vanilla mwscript functions to be called. This is not
 
 ### `mwscript.activate`
 
-Wrapper for the Activate mwscript function. Replacements: [`reference:activate()`](https://mwse.github.io/MWSE/types/tes3reference/#activate) or [`tes3.setAIActivate`](https://mwse.github.io/MWSE/apis/tes3/#tes3setaiactivate).
+Use [`tes3reference:activate()`](https://mwse.github.io/MWSE/types/tes3reference/#activate) or [`tes3.setAIActivate()`](https://mwse.github.io/MWSE/apis/tes3/#tes3setaiactivate) instead. Wrapper for the Activate mwscript function.
 
 ```lua
 mwscript.activate({ reference = ... })
@@ -24,7 +24,7 @@ mwscript.activate({ reference = ... })
 
 ### `mwscript.addItem`
 
-Wrapper for the AddItem mwscript function. Replacements: [`tes3.addItem()`](https://mwse.github.io/MWSE/apis/tes3/#tes3additem), [`inventory:addItem()`](https://mwse.github.io/MWSE/types/tes3inventory/#additem), and depending on your needs [`mobileActor:equip()`](https://mwse.github.io/MWSE/types/tes3mobileActor/#equip).
+Use [`tes3.addItem()`](https://mwse.github.io/MWSE/apis/tes3/#tes3additem), [`tes3inventory:addItem()`](https://mwse.github.io/MWSE/types/tes3inventory/#additem), or depending on your needs [`tes3mobileActor:equip()`](https://mwse.github.io/MWSE/types/tes3mobileActor/#equip) instead. Wrapper for the AddItem mwscript function.
 
 ```lua
 local executed = mwscript.addItem({ reference = ..., item = ..., count = ... })
@@ -45,7 +45,7 @@ local executed = mwscript.addItem({ reference = ..., item = ..., count = ... })
 
 ### `mwscript.addSoulGem`
 
-Wrapper for the AddSoulGem mwscript function. Replacement: use [`tes3.addItem()`](https://mwse.github.io/MWSE/apis/tes3/#tes3additem) with the `soul` parameter.
+use [`tes3.addItem()`](https://mwse.github.io/MWSE/apis/tes3/#tes3additem) with the `soul` parameter instead. Wrapper for the AddSoulGem mwscript function.
 
 ```lua
 local executed = mwscript.addSoulGem({ reference = ..., creature = ..., soulgem = ... })
@@ -66,7 +66,7 @@ local executed = mwscript.addSoulGem({ reference = ..., creature = ..., soulgem 
 
 ### `mwscript.addSpell`
 
-Wrapper for the AddSpell mwscript function. Replacements: [`tes3.addSpell()`](https://mwse.github.io/MWSE/apis/tes3/#tes3addspell) or [`spellList:add()`](https://mwse.github.io/MWSE/types/tes3spellList/#add).
+Use [`tes3.addSpell()`](https://mwse.github.io/MWSE/apis/tes3/#tes3addspell) or [`tes3spellList:add()`](https://mwse.github.io/MWSE/types/tes3spellList/#add) instead. Wrapper for the AddSpell mwscript function.
 
 ```lua
 local executed = mwscript.addSpell({ reference = ..., spell = ... })
@@ -86,7 +86,7 @@ local executed = mwscript.addSpell({ reference = ..., spell = ... })
 
 ### `mwscript.addToLevCreature`
 
-Wrapper for the AddToLevCreature mwscript function.
+Use [`tes3leveledCreature:insert()`](https://mwse.github.io/MWSE/types/tes3leveledCreature/#insert) instead. Wrapper for the AddToLevCreature mwscript function.
 
 ```lua
 local executed = mwscript.addToLevCreature({ list = ..., creature = ..., level = ... })
@@ -107,7 +107,7 @@ local executed = mwscript.addToLevCreature({ list = ..., creature = ..., level =
 
 ### `mwscript.addToLevItem`
 
-Wrapper for the AddToLevItem mwscript function.
+Use [`tes3leveledItem:insert()`](https://mwse.github.io/MWSE/types/tes3leveledItem/#insert) instead. Wrapper for the AddToLevItem mwscript function.
 
 ```lua
 local executed = mwscript.addToLevItem({ list = ..., item = ..., level = ... })
@@ -147,7 +147,7 @@ local executed = mwscript.addTopic({ topic = ... })
 
 ### `mwscript.aiTravel`
 
-Wrapper for the AITravel mwscript function. Replacement: [`tes3.setAITravel()`](https://mwse.github.io/MWSE/apis/tes3/#tes3setaitravel).
+Use [`tes3.setAITravel()`](https://mwse.github.io/MWSE/apis/tes3/#tes3setaitravel) instead. Wrapper for the AITravel mwscript function.
 
 ```lua
 local executed = mwscript.aiTravel({ reference = ..., x = ..., y = ..., z = ... })
@@ -169,7 +169,7 @@ local executed = mwscript.aiTravel({ reference = ..., x = ..., y = ..., z = ... 
 
 ### `mwscript.disable`
 
-Wrapper for the Disable mwscript function. Replacements: [reference:disable()](https://mwse.github.io/MWSE/types/tes3reference/#disable) or [`tes3.setEnabled()`](https://mwse.github.io/MWSE/apis/tes3/#tes3setenabled).
+Use [`tes3reference:disable()`](https://mwse.github.io/MWSE/types/tes3reference/#disable) or [`tes3.setEnabled()`](https://mwse.github.io/MWSE/apis/tes3/#tes3setenabled) instead. Wrapper for the Disable mwscript function.
 
 ```lua
 local executed = mwscript.disable({ reference = ..., modify = ... })
@@ -189,7 +189,7 @@ local executed = mwscript.disable({ reference = ..., modify = ... })
 
 ### `mwscript.drop`
 
-Wrapper for the Drop mwscript function. Replacements: [`tes3.dropItem()`](https://mwse.github.io/MWSE/apis/tes3/#tes3dropitem) or [`inventory:dropItem()`](https://mwse.github.io/MWSE/types/tes3inventory/#dropitem).
+Use [`tes3.dropItem()`](https://mwse.github.io/MWSE/apis/tes3/#tes3dropitem) or [`tes3inventory:dropItem()`](https://mwse.github.io/MWSE/types/tes3inventory/#dropitem) instead. Wrapper for the Drop mwscript function.
 
 ```lua
 local executed = mwscript.drop({ reference = ..., item = ..., count = ... })
@@ -210,7 +210,7 @@ local executed = mwscript.drop({ reference = ..., item = ..., count = ... })
 
 ### `mwscript.enable`
 
-Wrapper for the Enable mwscript function. Replacements: [`tes3.setEnabled()`](https://mwse.github.io/MWSE/apis/tes3/#tes3setenabled) or [`reference:enable()`](https://mwse.github.io/MWSE/types/tes3reference/#enable).
+Use [`tes3.setEnabled()`](https://mwse.github.io/MWSE/apis/tes3/#tes3setenabled) or [`tes3reference:enable()`](https://mwse.github.io/MWSE/types/tes3reference/#enable) instead. Wrapper for the Enable mwscript function.
 
 ```lua
 local executed = mwscript.enable({ reference = ..., modify = ... })
@@ -230,7 +230,7 @@ local executed = mwscript.enable({ reference = ..., modify = ... })
 
 ### `mwscript.equip`
 
-Wrapper for the Equip mwscript function. Replacements: [`mobile:equip()`](https://mwse.github.io/MWSE/types/tes3mobileActor/#equip) or [`mobile.combatSession:changeEquipment()`](https://mwse.github.io/MWSE/types/tes3combatSession/#changeequipment).
+Use [`tes3mobileActor:equip()`](https://mwse.github.io/MWSE/types/tes3mobileActor/#equip) or [`tes3mobileActor.combatSession:changeEquipment()`](https://mwse.github.io/MWSE/types/tes3combatSession/#changeequipment) instead. Wrapper for the Equip mwscript function.
 
 ```lua
 local executed = mwscript.equip({ reference = ..., item = ... })
@@ -270,7 +270,7 @@ local executed = mwscript.explodeSpell({ reference = ..., spell = ... })
 
 ### `mwscript.getButtonPressed`
 
-Wrapper for the GetButtonPressed mwscript function.
+Use [`tes3.messageBox()`](https://mwse.github.io/MWSE/apis/tes3/#tes3messagebox) instead. Wrapper for the GetButtonPressed mwscript function.
 
 ```lua
 local buttonIndex = mwscript.getButtonPressed()
@@ -284,7 +284,7 @@ local buttonIndex = mwscript.getButtonPressed()
 
 ### `mwscript.getDetected`
 
-Wrapper for the GetDetected mwscript function.
+Use [`tes3mobileActor.isPlayerDetected`](https://mwse.github.io/MWSE/types/tes3mobileActor/#isplayerdetected) or depending on what you are doing, [`detectSneak`](https://mwse.github.io/MWSE/events/detectSneak/) event may be desirable. Wrapper for the GetDetected mwscript function.
 
 ```lua
 local result = mwscript.getDetected({ reference = ..., target = ... })
@@ -304,7 +304,7 @@ local result = mwscript.getDetected({ reference = ..., target = ... })
 
 ### `mwscript.getDisabled`
 
-Wrapper for the GetDisabled mwscript function.
+Use [`object.disabled`](https://mwse.github.io/MWSE/types/tes3baseObject/#disabled) on any object inheriting from `tes3baseObject`. Wrapper for the GetDisabled mwscript function.
 
 ```lua
 local result = mwscript.getDisabled({ reference = ... })
@@ -323,7 +323,7 @@ local result = mwscript.getDisabled({ reference = ... })
 
 ### `mwscript.getDistance`
 
-Wrapper for the GetDistance mwscript function.
+Use [`tes3reference.position`](https://mwse.github.io/MWSE/types/tes3reference/#position) or [`tes3mobileActor.position`](https://mwse.github.io/MWSE/types/tes3mobileActor/#position) to compute the distance or depending on the desired effect, [`tes3mobileActor.playerDistance`](https://mwse.github.io/MWSE/types/tes3mobileActor/#playerdistance). Wrapper for the GetDistance mwscript function. Replacement: any reference or mobile actor has [`position`](https://mwse.github.io/MWSE/types/tes3reference/#position) field, while the distance can be computed. In addition, mobile actor has [`mobile.playerDistance`]() field.
 
 ```lua
 local result = mwscript.getDistance({ reference = ..., target = ... })
@@ -343,7 +343,7 @@ local result = mwscript.getDistance({ reference = ..., target = ... })
 
 ### `mwscript.getItemCount`
 
-Use `tes3.getItemCount` instead. Wrapper for the `GetItemCount` mwscript function.
+Use [`tes3.getItemCount()`](https://mwse.github.io/MWSE/apis/tes3/#tes3getitemcount) instead. Wrapper for the `GetItemCount` mwscript function.
 
 ```lua
 local result = mwscript.getItemCount({ reference = ..., item = ... })
@@ -363,7 +363,7 @@ local result = mwscript.getItemCount({ reference = ..., item = ... })
 
 ### `mwscript.getPCJumping`
 
-Wrapper for the GetPCJumping mwscript function.
+Use [`tes3.mobilePlayer.isJumping`](https://mwse.github.io/MWSE/types/tes3mobilePlayer/#isjumping) instead. Wrapper for the GetPCJumping mwscript function.
 
 ```lua
 local result = mwscript.getPCJumping()
@@ -377,7 +377,7 @@ local result = mwscript.getPCJumping()
 
 ### `mwscript.getPCRunning`
 
-Wrapper for the GetPCRunning mwscript function.
+Use [`tes3.mobilePlayer.isRunning`](https://mwse.github.io/MWSE/types/tes3mobilePlayer/#isrunning) instead. Wrapper for the GetPCRunning mwscript function.
 
 ```lua
 local result = mwscript.getPCRunning()
@@ -391,7 +391,7 @@ local result = mwscript.getPCRunning()
 
 ### `mwscript.getPCSneaking`
 
-Wrapper for the GetPCSneaking mwscript function.
+Use [`tes3.mobilePlayer.isSneaking`](https://mwse.github.io/MWSE/types/tes3mobilePlayer/#issneaking) instead. Wrapper for the GetPCSneaking mwscript function.
 
 ```lua
 local result = mwscript.getPCSneaking()
@@ -433,7 +433,7 @@ local result = mwscript.getScript()
 
 ### `mwscript.getSpellEffects`
 
-Wrapper for the GetSpellEffects mwscript function.
+Use  [`tes3.isAffectedBy()`](https://mwse.github.io/MWSE/apis/tes3/#tes3isaffectedby) or [`tes3mobileActor:isAffectedByObject()`](https://mwse.github.io/MWSE/types/tes3mobileActor/#isaffectedbyobject) instead. Wrapper for the GetSpellEffects mwscript function.
 
 ```lua
 local result = mwscript.getSpellEffects({ reference = ..., spell = ... })
@@ -453,7 +453,7 @@ local result = mwscript.getSpellEffects({ reference = ..., spell = ... })
 
 ### `mwscript.hasItemEquipped`
 
-Wrapper for the HasItemEquipped mwscript function.
+Use [`tes3actor:hasItemEquipped()`](https://mwse.github.io/MWSE/types/tes3actor/#hasitemequipped) or [`tes3.getEquippedItem()`](https://mwse.github.io/MWSE/apis/tes3/#tes3getequippeditem) instead. Wrapper for the HasItemEquipped mwscript function.
 
 ```lua
 local result = mwscript.hasItemEquipped({ reference = ..., item = ... })
@@ -473,7 +473,7 @@ local result = mwscript.hasItemEquipped({ reference = ..., item = ... })
 
 ### `mwscript.placeAtPC`
 
-Wrapper for the PlaceAtPC mwscript function. See [`tes3.createReference()`](https://mwse.github.io/MWSE/apis/tes3/#tes3createreference) for a proper replacement.
+Use [`tes3.createReference()`](https://mwse.github.io/MWSE/apis/tes3/#tes3createreference) instead. Wrapper for the PlaceAtPC mwscript function.
 
 ```lua
 local lastPlacedReference = mwscript.placeAtPC({ reference = ..., object = ..., count = ..., distance = ..., direction = ... })
@@ -496,7 +496,7 @@ local lastPlacedReference = mwscript.placeAtPC({ reference = ..., object = ..., 
 
 ### `mwscript.playSound`
 
-Wrapper for the PlaySound mwscript function.
+Use [`tes3.playSound()`](https://mwse.github.io/MWSE/apis/tes3/#tes3playsound), [`tes3sound:play()`](https://mwse.github.io/MWSE/types/tes3sound/#play) method, or [`tes3.playItemPickupSound()`](https://mwse.github.io/MWSE/apis/tes3/#tes3playitempickupsound) instead. Wrapper for the PlaySound mwscript function.
 
 ```lua
 local result = mwscript.playSound({ reference = ..., sound = ... })
@@ -516,7 +516,7 @@ local result = mwscript.playSound({ reference = ..., sound = ... })
 
 ### `mwscript.position`
 
-Wrapper for the Position mwscript function.
+Set [`tes3reference.position`](https://mwse.github.io/MWSE/types/tes3reference/#position) or [`tes3mobileActor.position`](https://mwse.github.io/MWSE/types/tes3mobileActor/#position) to desired new position instead, or use [`tes3.positionCell()`](https://mwse.github.io/MWSE/apis/tes3/#tes3positioncell). Wrapper for the Position mwscript function.
 
 ```lua
 local executed = mwscript.position({ reference = ..., cell = ..., x = ..., y = ..., z = ..., rotation = ... })
@@ -540,7 +540,7 @@ local executed = mwscript.position({ reference = ..., cell = ..., x = ..., y = .
 
 ### `mwscript.positionCell`
 
-Wrapper for the PositionCell mwscript function.
+Use [`tes3.positionCell()`](https://mwse.github.io/MWSE/apis/tes3/#tes3positioncell) instead. Wrapper for the PositionCell mwscript function.
 
 ```lua
 local executed = mwscript.positionCell({ reference = ..., cell = ..., x = ..., y = ..., z = ..., rotation = ... })
@@ -564,7 +564,7 @@ local executed = mwscript.positionCell({ reference = ..., cell = ..., x = ..., y
 
 ### `mwscript.removeItem`
 
-Wrapper for the RemoveItem mwscript function.
+Use [`tes3.removeItem()`](https://mwse.github.io/MWSE/apis/tes3/#tes3removeitem), [tes3.removeItemData()](https://mwse.github.io/MWSE/apis/tes3/#tes3removeitemdata) or [`tes3inventory:removeItem()`](https://mwse.github.io/MWSE/types/tes3inventory/#removeitem) instead. Wrapper for the RemoveItem mwscript function.
 
 ```lua
 local executed = mwscript.removeItem({ reference = ..., item = ..., count = ... })
@@ -624,7 +624,7 @@ local result = mwscript.scriptRunning({ script = ... })
 
 ### `mwscript.setLevel`
 
-Wrapper for the SetLevel mwscript function.
+Use [`tes3npc.level`](https://mwse.github.io/MWSE/types/tes3npc/#level) instead. Wrapper for the SetLevel mwscript function.
 
 ```lua
 local executed = mwscript.setLevel({ reference = ..., level = ... })
@@ -724,7 +724,7 @@ local executed = mwscript.stopScript({ reference = ..., script = ... })
 
 ### `mwscript.stopSound`
 
-Wrapper for the StopSound mwscript function.
+Use [`tes3sound:stop()`](https://mwse.github.io/MWSE/types/tes3sound/#stop) instead. Wrapper for the StopSound mwscript function.
 
 ```lua
 local result = mwscript.stopSound({ reference = ..., sound = ... })
@@ -744,7 +744,7 @@ local result = mwscript.stopSound({ reference = ..., sound = ... })
 
 ### `mwscript.wakeUpPC`
 
-Wrapper for the WakeUpPC mwscript function. Replacement: [`tes3.wakeUp()`](https://mwse.github.io/MWSE/apis/tes3/#tes3wakeup).
+Use [`tes3.wakeUp()`](https://mwse.github.io/MWSE/apis/tes3/#tes3wakeup) instead. Wrapper for the WakeUpPC mwscript function.
 
 ```lua
 mwscript.wakeUpPC()

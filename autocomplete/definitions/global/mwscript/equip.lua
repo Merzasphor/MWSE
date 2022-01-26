@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[Wrapper for the Equip mwscript function. Replacements: [`mobile:equip()`](https://mwse.github.io/MWSE/types/tes3mobileActor/#equip) or [`mobile.combatSession:changeEquipment()`](https://mwse.github.io/MWSE/types/tes3combatSession/#changeequipment).]],
+	description = [[Use [`tes3mobileActor:equip()`](https://mwse.github.io/MWSE/types/tes3mobileActor/#equip) or [`tes3mobileActor.combatSession:changeEquipment()`](https://mwse.github.io/MWSE/types/tes3combatSession/#changeequipment) instead. Wrapper for the Equip mwscript function.]],
 	arguments = {{
 		name = "params",
 		type = "table",

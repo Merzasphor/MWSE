@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[Wrapper for the Activate mwscript function. Replacements: [`reference:activate()`](https://mwse.github.io/MWSE/types/tes3reference/#activate) or [`tes3.setAIActivate`](https://mwse.github.io/MWSE/apis/tes3/#tes3setaiactivate).]],
+	description = [[Use [`tes3reference:activate()`](https://mwse.github.io/MWSE/types/tes3reference/#activate) or [`tes3.setAIActivate()`](https://mwse.github.io/MWSE/apis/tes3/#tes3setaiactivate) instead. Wrapper for the Activate mwscript function.]],
 	arguments = {{
 		name = "params",
 		type = "table",
