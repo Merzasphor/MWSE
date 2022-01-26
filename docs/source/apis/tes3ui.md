@@ -415,7 +415,7 @@ local result = tes3ui.registerProperty(s)
 
 ### `tes3ui.showBookMenu`
 
-Displays the book menu with arbitrary text. Paging is automatically handled.
+Displays the book menu with arbitrary text. Paging is automatically handled. It needs to follow book text conventions as in the Construction Set. In essence, it uses HTML syntax. Important: every book needs to end with a `<BR>` statement to be displayed properly. See [`bookGetText`](https://mwse.github.io/MWSE/events/bookGetText/#examples) for an example of properly formatted book text.
 
 ```lua
 tes3ui.showBookMenu(text)
@@ -467,7 +467,7 @@ tes3ui.showInventorySelectMenu({ actorRef = ..., callback = ..., filter = ..., t
 
 ### `tes3ui.showScrollMenu`
 
-Displays the scroll menu with arbitrary text.
+Displays the scroll menu with arbitrary text. It needs to follow book text conventions as in the Construction Set. In essence, it uses HTML syntax. Important: every book needs to end with a `<BR>` statement to be displayed properly. See [`bookGetText`](https://mwse.github.io/MWSE/events/bookGetText/#examples) for an example of properly formatted scroll text.
 
 ```lua
 tes3ui.showScrollMenu(text)

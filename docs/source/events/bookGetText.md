@@ -18,7 +18,7 @@ event.register("bookGetText", bookGetTextCallback)
 ## Event Data
 
 * `book` ([tes3book](../../types/tes3book)): *Read-only*. The book whose text is being retrieved.
-* `text` (string): If set, the book's text will be overwritten with this value. It needs to follow book text conventions as in the Construction Set. In essence, it uses HTML syntax.
+* `text` (string): If set, the book's text will be overwritten with this value. It needs to follow book text conventions as in the Construction Set. In essence, it uses HTML syntax. Important: every book needs to end with a `<BR>` statement to be displayed properly.
 
 ## Examples
 

@@ -155,7 +155,7 @@ function tes3ui.registerID(s) end
 --- @return number result No description yet available.
 function tes3ui.registerProperty(s) end
 
---- Displays the book menu with arbitrary text. Paging is automatically handled.
+--- Displays the book menu with arbitrary text. Paging is automatically handled. It needs to follow book text conventions as in the Construction Set. In essence, it uses HTML syntax. Important: every book needs to end with a `<BR>` statement to be displayed properly. See [`bookGetText`](https://mwse.github.io/MWSE/events/bookGetText/#examples) for an example of properly formatted book text.
 --- @param text string No description yet available.
 function tes3ui.showBookMenu(text) end
 
@@ -203,7 +203,7 @@ function tes3ui.showInventorySelectMenu(params) end
 --- @field noResultsCallback function *Optional*. 
 --- @field leaveMenuMode boolean *Optional*. Is the menu going to be closed or open after closing Inventory Select Menu. By default, it will be in the state before this function was called.
 
---- Displays the scroll menu with arbitrary text.
+--- Displays the scroll menu with arbitrary text. It needs to follow book text conventions as in the Construction Set. In essence, it uses HTML syntax. Important: every book needs to end with a `<BR>` statement to be displayed properly. See [`bookGetText`](https://mwse.github.io/MWSE/events/bookGetText/#examples) for an example of properly formatted scroll text.
 --- @param text string No description yet available.
 function tes3ui.showScrollMenu(text) end
 
