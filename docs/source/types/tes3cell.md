@@ -145,6 +145,16 @@ The cell's Y grid coordinate. Only available on exterior cells.
 
 ***
 
+### `hasMapMarker`
+
+*Read-only*. If true, the cell will have be marked on the player's map. This does not take into account if the player has been to that cell.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
 ### `hasWater`
 
 If true, the cell has water. Only applies to interior cells.

@@ -8,11 +8,11 @@ local ansicolors = require("logging.colors")
 ---@class MWSELogger
 ---@field name string Name of mod, also counts as unique id of logger
 ---@field doLog function Check log level to determine if log should be written out
----@field info function Log info message
----@field debug function Log debug message
----@field trace function Log trace message
----@field warn function Log warn message
----@field error function Log error message
+---@field info fun(self: MWSELogger, message: string, ...) Log info message
+---@field debug fun(self: MWSELogger, message: string, ...) Log debug message
+---@field trace fun(self: MWSELogger, message: string, ...) Log trace message
+---@field warn fun(self: MWSELogger, message: string, ...) Log warn message
+---@field error fun(self: MWSELogger, message: string, ...) Log error message
 ---@field setLogLevel function Set the log level. Options are: TRACE, DEBUG, INFO, WARN and ERROR
 ---@field setOutputFile function Set the output file. If set, logs will be sent to a file of this name
 

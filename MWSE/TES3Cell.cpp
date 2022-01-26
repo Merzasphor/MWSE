@@ -234,6 +234,21 @@ namespace TES3 {
 		return activeCells.find(this) != activeCells.end();
 	}
 
+	bool Cell::getHasCellMarker() const {
+		// Interiors never have a marker.
+		if (getIsInterior()) {
+			return false;
+		}
+
+		// If we don't have a name, we don't have a marker.
+		auto name = getName();
+		if (name == nullptr || name[0] == '\0') {
+			return false;
+		}
+
+		return true;
+	}
+
 	const char* Cell::getDisplayName() const {
 		// Try the cell name first.
 		auto name = getName();

@@ -190,6 +190,8 @@ namespace TES3 {
 		void setCellInactive();
 		bool getCellActive() const;
 
+		bool getHasCellMarker() const;
+
 		const char* getDisplayName() const;
 		std::string getEditorName() const;
 
