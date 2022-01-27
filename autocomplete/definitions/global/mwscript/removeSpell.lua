@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[Wrapper for the RemoveSpell mwscript function.]],
+	description = [[Use [`tes3.removeSpell()`](https://mwse.github.io/MWSE/apis/tes3/#tes3removespell) or [`tes3spellList:remove()`](https://mwse.github.io/MWSE/types/tes3spellList/#remove) instead. Wrapper for the RemoveSpell mwscript function.]],
 	arguments = {{
 		name = "params",
 		type = "table",

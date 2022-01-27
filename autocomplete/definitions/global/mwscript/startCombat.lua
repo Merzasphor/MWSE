@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[Wrapper for the StartCombat mwscript function.]],
+	description = [[Use [`tes3mobileActor:startCombat()`](https://mwse.github.io/MWSE/types/tes3mobileActor/#startcombat) instead. Wrapper for the StartCombat mwscript function.]],
 	arguments = {{
 		name = "params",
 		type = "table",

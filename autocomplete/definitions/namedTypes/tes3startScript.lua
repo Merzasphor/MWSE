@@ -1,5 +1,5 @@
 return {
 	type = "class",
-	description = [[A start script object.]],
+	description = [[An object representing a script which autostarts at the game load.]],
 	inherits = "tes3baseObject",
 }

@@ -245,7 +245,7 @@ function mwscript.getDisabled(params) end
 --- @class mwscript.getDisabled.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 
---- Use [`tes3reference.position`](https://mwse.github.io/MWSE/types/tes3reference/#position) or [`tes3mobileActor.position`](https://mwse.github.io/MWSE/types/tes3mobileActor/#position) to compute the distance or depending on the desired effect, [`tes3mobileActor.playerDistance`](https://mwse.github.io/MWSE/types/tes3mobileActor/#playerdistance). Wrapper for the GetDistance mwscript function. Replacement: any reference or mobile actor has [`position`](https://mwse.github.io/MWSE/types/tes3reference/#position) field, while the distance can be computed. In addition, mobile actor has [`mobile.playerDistance`]() field.
+--- Use [`tes3reference.position`](https://mwse.github.io/MWSE/types/tes3reference/#position) or [`tes3mobileActor.position`](https://mwse.github.io/MWSE/types/tes3mobileActor/#position) to compute the distance or depending on the desired effect, [`tes3mobileActor.playerDistance`](https://mwse.github.io/MWSE/types/tes3mobileActor/#playerdistance). Wrapper for the GetDistance mwscript function.
 --- @deprecated
 --- @param params mwscript.getDistance.params This table accepts the following values:
 --- 
@@ -290,7 +290,7 @@ function mwscript.getPCRunning() end
 --- @return boolean result No description yet available.
 function mwscript.getPCSneaking() end
 
---- Returns the script target for the currently running Morrowind script, if any.
+--- Use [`tes3globalScript.reference`](https://mwse.github.io/MWSE/types/tes3globalScript/#reference) instead. Returns the script target for the currently running Morrowind script, if any.
 --- @deprecated
 --- @return tes3reference result No description yet available.
 function mwscript.getReference() end
@@ -423,7 +423,7 @@ function mwscript.positionCell(params) end
 --- @field z number *Default*: `0`. No description yet available.
 --- @field rotation number *Default*: `0`. No description yet available.
 
---- Use [`tes3.removeItem()`](https://mwse.github.io/MWSE/apis/tes3/#tes3removeitem), [tes3.removeItemData()](https://mwse.github.io/MWSE/apis/tes3/#tes3removeitemdata) or [`tes3inventory:removeItem()`](https://mwse.github.io/MWSE/types/tes3inventory/#removeitem) instead. Wrapper for the RemoveItem mwscript function.
+--- Use [`tes3.removeItem()`](https://mwse.github.io/MWSE/apis/tes3/#tes3removeitem), [`tes3.removeItemData()`](https://mwse.github.io/MWSE/apis/tes3/#tes3removeitemdata) or [`tes3inventory:removeItem()`](https://mwse.github.io/MWSE/types/tes3inventory/#removeitem) instead. Wrapper for the RemoveItem mwscript function.
 --- @deprecated
 --- @param params mwscript.removeItem.params This table accepts the following values:
 --- 
@@ -441,7 +441,7 @@ function mwscript.removeItem(params) end
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string The item to be added.
 --- @field count number *Default*: `1`. The number of items to be added.
 
---- Wrapper for the RemoveSpell mwscript function.
+--- Use [`tes3.removeSpell()`](https://mwse.github.io/MWSE/apis/tes3/#tes3removespell) or [`tes3spellList:remove()`](https://mwse.github.io/MWSE/types/tes3spellList/#remove) instead. Wrapper for the RemoveSpell mwscript function.
 --- @deprecated
 --- @param params mwscript.removeSpell.params This table accepts the following values:
 --- 
@@ -483,7 +483,7 @@ function mwscript.setLevel(params) end
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field level number No description yet available.
 
---- Wrapper for the StartCombat mwscript function.
+--- Use [`tes3mobileActor:startCombat()`](https://mwse.github.io/MWSE/types/tes3mobileActor/#startcombat) instead. Wrapper for the StartCombat mwscript function.
 --- @deprecated
 --- @param params mwscript.startCombat.params This table accepts the following values:
 --- 
@@ -498,7 +498,7 @@ function mwscript.startCombat(params) end
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field target tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string Actor to start combat with.
 
---- Wrapper for the StartCombat mwscript function.
+--- Use [`tes3.runLegacyScript()`](https://mwse.github.io/MWSE/apis/tes3/?h=script#tes3runlegacyscript) instead. Wrapper for the StartCombat mwscript function.
 --- @deprecated
 --- @param params mwscript.startScript.params This table accepts the following values:
 --- 
@@ -513,7 +513,7 @@ function mwscript.startScript(params) end
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field script tes3script|string No description yet available.
 
---- Wrapper for the StopCombat mwscript function.
+--- Use [`tes3mobileActor:stopCombat()`](https://mwse.github.io/MWSE/types/tes3mobileActor/#stopcombat) instead. Wrapper for the StopCombat mwscript function.
 --- @deprecated
 --- @param params mwscript.stopCombat.params This table accepts the following values:
 --- 
@@ -543,7 +543,7 @@ function mwscript.stopScript(params) end
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 --- @field script tes3script|string No description yet available.
 
---- Use [`tes3sound:stop()`](https://mwse.github.io/MWSE/types/tes3sound/#stop) instead. Wrapper for the StopSound mwscript function.
+--- Use [`tes3.removeSound()`](https://mwse.github.io/MWSE/apis/tes3/#tes3removesound) or [`tes3sound:stop()`](https://mwse.github.io/MWSE/types/tes3sound/#stop) instead. Wrapper for the StopSound mwscript function.
 --- @deprecated
 --- @param params mwscript.stopSound.params This table accepts the following values:
 --- 

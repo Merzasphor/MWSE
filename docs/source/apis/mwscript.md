@@ -323,7 +323,7 @@ local result = mwscript.getDisabled({ reference = ... })
 
 ### `mwscript.getDistance`
 
-Use [`tes3reference.position`](https://mwse.github.io/MWSE/types/tes3reference/#position) or [`tes3mobileActor.position`](https://mwse.github.io/MWSE/types/tes3mobileActor/#position) to compute the distance or depending on the desired effect, [`tes3mobileActor.playerDistance`](https://mwse.github.io/MWSE/types/tes3mobileActor/#playerdistance). Wrapper for the GetDistance mwscript function. Replacement: any reference or mobile actor has [`position`](https://mwse.github.io/MWSE/types/tes3reference/#position) field, while the distance can be computed. In addition, mobile actor has [`mobile.playerDistance`]() field.
+Use [`tes3reference.position`](https://mwse.github.io/MWSE/types/tes3reference/#position) or [`tes3mobileActor.position`](https://mwse.github.io/MWSE/types/tes3mobileActor/#position) to compute the distance or depending on the desired effect, [`tes3mobileActor.playerDistance`](https://mwse.github.io/MWSE/types/tes3mobileActor/#playerdistance). Wrapper for the GetDistance mwscript function.
 
 ```lua
 local result = mwscript.getDistance({ reference = ..., target = ... })
@@ -405,7 +405,7 @@ local result = mwscript.getPCSneaking()
 
 ### `mwscript.getReference`
 
-Returns the script target for the currently running Morrowind script, if any.
+Use [`tes3globalScript.reference`](https://mwse.github.io/MWSE/types/tes3globalScript/#reference) instead. Returns the script target for the currently running Morrowind script, if any.
 
 ```lua
 local result = mwscript.getReference()
@@ -564,7 +564,7 @@ local executed = mwscript.positionCell({ reference = ..., cell = ..., x = ..., y
 
 ### `mwscript.removeItem`
 
-Use [`tes3.removeItem()`](https://mwse.github.io/MWSE/apis/tes3/#tes3removeitem), [tes3.removeItemData()](https://mwse.github.io/MWSE/apis/tes3/#tes3removeitemdata) or [`tes3inventory:removeItem()`](https://mwse.github.io/MWSE/types/tes3inventory/#removeitem) instead. Wrapper for the RemoveItem mwscript function.
+Use [`tes3.removeItem()`](https://mwse.github.io/MWSE/apis/tes3/#tes3removeitem), [`tes3.removeItemData()`](https://mwse.github.io/MWSE/apis/tes3/#tes3removeitemdata) or [`tes3inventory:removeItem()`](https://mwse.github.io/MWSE/types/tes3inventory/#removeitem) instead. Wrapper for the RemoveItem mwscript function.
 
 ```lua
 local executed = mwscript.removeItem({ reference = ..., item = ..., count = ... })
@@ -585,7 +585,7 @@ local executed = mwscript.removeItem({ reference = ..., item = ..., count = ... 
 
 ### `mwscript.removeSpell`
 
-Wrapper for the RemoveSpell mwscript function.
+Use [`tes3.removeSpell()`](https://mwse.github.io/MWSE/apis/tes3/#tes3removespell) or [`tes3spellList:remove()`](https://mwse.github.io/MWSE/types/tes3spellList/#remove) instead. Wrapper for the RemoveSpell mwscript function.
 
 ```lua
 local executed = mwscript.removeSpell({ reference = ..., spell = ... })
@@ -644,7 +644,7 @@ local executed = mwscript.setLevel({ reference = ..., level = ... })
 
 ### `mwscript.startCombat`
 
-Wrapper for the StartCombat mwscript function.
+Use [`tes3mobileActor:startCombat()`](https://mwse.github.io/MWSE/types/tes3mobileActor/#startcombat) instead. Wrapper for the StartCombat mwscript function.
 
 ```lua
 local executed = mwscript.startCombat({ reference = ..., target = ... })
@@ -664,7 +664,7 @@ local executed = mwscript.startCombat({ reference = ..., target = ... })
 
 ### `mwscript.startScript`
 
-Wrapper for the StartCombat mwscript function.
+Use [`tes3.runLegacyScript()`](https://mwse.github.io/MWSE/apis/tes3/?h=script#tes3runlegacyscript) instead. Wrapper for the StartCombat mwscript function.
 
 ```lua
 local executed = mwscript.startScript({ reference = ..., script = ... })
@@ -684,7 +684,7 @@ local executed = mwscript.startScript({ reference = ..., script = ... })
 
 ### `mwscript.stopCombat`
 
-Wrapper for the StopCombat mwscript function.
+Use [`tes3mobileActor:stopCombat()`](https://mwse.github.io/MWSE/types/tes3mobileActor/#stopcombat) instead. Wrapper for the StopCombat mwscript function.
 
 ```lua
 local executed = mwscript.stopCombat({ reference = ..., target = ... })
@@ -724,7 +724,7 @@ local executed = mwscript.stopScript({ reference = ..., script = ... })
 
 ### `mwscript.stopSound`
 
-Use [`tes3sound:stop()`](https://mwse.github.io/MWSE/types/tes3sound/#stop) instead. Wrapper for the StopSound mwscript function.
+Use [`tes3.removeSound()`](https://mwse.github.io/MWSE/apis/tes3/#tes3removesound) or [`tes3sound:stop()`](https://mwse.github.io/MWSE/types/tes3sound/#stop) instead. Wrapper for the StopSound mwscript function.
 
 ```lua
 local result = mwscript.stopSound({ reference = ..., sound = ... })

@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[Wrapper for the StopCombat mwscript function.]],
+	description = [[Use [`tes3mobileActor:stopCombat()`](https://mwse.github.io/MWSE/types/tes3mobileActor/#stopcombat) instead. Wrapper for the StopCombat mwscript function.]],
 	arguments = {{
 		name = "params",
 		type = "table",
