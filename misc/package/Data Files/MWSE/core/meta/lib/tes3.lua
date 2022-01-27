@@ -62,7 +62,7 @@ function tes3.addClothingSlot(params) end
 --- 
 --- `limit`: boolean — If false, items can be placed into containers that shouldn't normally be allowed. This includes organic containers, and containers that are full.
 --- 
---- `reevaluateEquipment`: boolean — *Default*: `true`. If true, and the item added is armor, clothing, or a weapon, the actor will reevaluate its equipment choices to see if the new item is worth equipping.
+--- `reevaluateEquipment`: boolean — *Default*: `true`. If true, and the item added is armor, clothing, or a weapon, the actor will reevaluate its equipment choices to see if the new item is worth equipping. This does not affect the player.
 --- 
 --- `updateGUI`: boolean — *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though [`tes3ui.forcePlayerInventoryUpdate()`](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uiforceplayerinventoryupdate) must manually be called after all inventory updates are finished.
 --- @return number addedCount No description yet available.
@@ -77,7 +77,7 @@ function tes3.addItem(params) end
 --- @field count number *Default*: `1`. The maximum number of items to add.
 --- @field playSound boolean *Default*: `true`. If false, the up/down sound for the item won't be played.
 --- @field limit boolean If false, items can be placed into containers that shouldn't normally be allowed. This includes organic containers, and containers that are full.
---- @field reevaluateEquipment boolean *Default*: `true`. If true, and the item added is armor, clothing, or a weapon, the actor will reevaluate its equipment choices to see if the new item is worth equipping.
+--- @field reevaluateEquipment boolean *Default*: `true`. If true, and the item added is armor, clothing, or a weapon, the actor will reevaluate its equipment choices to see if the new item is worth equipping. This does not affect the player.
 --- @field updateGUI boolean *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though [`tes3ui.forcePlayerInventoryUpdate()`](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uiforceplayerinventoryupdate) must manually be called after all inventory updates are finished.
 
 --- Creates an item data if there is room for a new stack in a given inventory. This can be then used to add custom user data or adjust an item's condition. This will return nil if no item data could be allocated for the item -- for example if the reference doesn't have the item in their inventory or each item of that type already has item data.
@@ -1676,7 +1676,7 @@ function tes3.removeEffects(reference, effect, castType, chance, removeSpell) en
 --- 
 --- `playSound`: boolean — *Default*: `true`. If false, the up/down sound for the item won't be played.
 --- 
---- `reevaluateEquipment`: boolean — *Default*: `true`. If true, and the item removed is armor, clothing, or a weapon, the actor will reevaluate its equipment choices to see if it needs to equip a new item.
+--- `reevaluateEquipment`: boolean — *Default*: `true`. If true, and the item removed is armor, clothing, or a weapon, the actor will reevaluate its equipment choices to see if it needs to equip a new item. This does not affect the player.
 --- 
 --- `updateGUI`: boolean — *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though [`tes3ui.forcePlayerInventoryUpdate()`](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uiforceplayerinventoryupdate) must manually be called after all inventory updates are finished.
 --- @return number removedCount No description yet available.
@@ -1690,7 +1690,7 @@ function tes3.removeItem(params) end
 --- @field deleteItemData tes3itemData *Optional*. Whether to delete the item data after remove succeeds. Automatically set if itemData is used. Does not need to be specified for normal usage.
 --- @field count number *Default*: `1`. The maximum number of items to remove.
 --- @field playSound boolean *Default*: `true`. If false, the up/down sound for the item won't be played.
---- @field reevaluateEquipment boolean *Default*: `true`. If true, and the item removed is armor, clothing, or a weapon, the actor will reevaluate its equipment choices to see if it needs to equip a new item.
+--- @field reevaluateEquipment boolean *Default*: `true`. If true, and the item removed is armor, clothing, or a weapon, the actor will reevaluate its equipment choices to see if it needs to equip a new item. This does not affect the player.
 --- @field updateGUI boolean *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though [`tes3ui.forcePlayerInventoryUpdate()`](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uiforceplayerinventoryupdate) must manually be called after all inventory updates are finished.
 
 --- Removes and deletes item data from a given reference, or from their inventory. If no `itemData` is provided, it will be removed from the reference itself.
@@ -2314,7 +2314,7 @@ function tes3.togglePOV() end
 --- 
 --- `limitCapacity`: boolean — *Default*: `true`. If false, items can be placed into containers that shouldn't normally be allowed. This includes organic containers, and containers that are full.
 --- 
---- `reevaluateEquipment`: boolean — *Default*: `true`. If true, and the item transferred is armor, clothing, or a weapon, the actors will reevaluate their equipment choices to see if the new item is worth equipping.
+--- `reevaluateEquipment`: boolean — *Default*: `true`. If true, and the item transferred is armor, clothing, or a weapon, the actors will reevaluate their equipment choices to see if the new item is worth equipping. This does not affect the player.
 --- 
 --- `updateGUI`: boolean — *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though [`tes3ui.forcePlayerInventoryUpdate()`](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uiforceplayerinventoryupdate) must manually be called after all inventory updates are finished.
 --- @return number transferredCount No description yet available.
@@ -2329,7 +2329,7 @@ function tes3.transferItem(params) end
 --- @field count number *Default*: `1`. The maximum number of items to transfer.
 --- @field playSound boolean *Default*: `true`. If false, the up/down sound for the item won't be played.
 --- @field limitCapacity boolean *Default*: `true`. If false, items can be placed into containers that shouldn't normally be allowed. This includes organic containers, and containers that are full.
---- @field reevaluateEquipment boolean *Default*: `true`. If true, and the item transferred is armor, clothing, or a weapon, the actors will reevaluate their equipment choices to see if the new item is worth equipping.
+--- @field reevaluateEquipment boolean *Default*: `true`. If true, and the item transferred is armor, clothing, or a weapon, the actors will reevaluate their equipment choices to see if the new item is worth equipping. This does not affect the player.
 --- @field updateGUI boolean *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though [`tes3ui.forcePlayerInventoryUpdate()`](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uiforceplayerinventoryupdate) must manually be called after all inventory updates are finished.
 
 --- Emulates the player committing a crime.

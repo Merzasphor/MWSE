@@ -3153,7 +3153,7 @@ namespace mwse {
 
 			// Update equipment if needed.
 			// TODO: This can be more efficient by just comparing the newly added item to the equipped item.
-			if (item->promptsEquipmentReevaluation() && getOptionalParam<bool>(params, "reevaluateEquipment", true)) {
+			if (reference != playerMobile->reference && item->promptsEquipmentReevaluation() && getOptionalParam<bool>(params, "reevaluateEquipment", true)) {
 				actor->reevaluateEquipment();
 			}
 
@@ -3309,7 +3309,7 @@ namespace mwse {
 
 			// Update equipment if needed.
 			// TODO: This can be more efficient by just comparing the newly added item to the equipped item.
-			if (item->promptsEquipmentReevaluation() && getOptionalParam<bool>(params, "reevaluateEquipment", true)) {
+			if (reference != playerMobile->reference && item->promptsEquipmentReevaluation() && getOptionalParam<bool>(params, "reevaluateEquipment", true)) {
 				actor->reevaluateEquipment();
 			}
 
@@ -3545,8 +3545,12 @@ namespace mwse {
 			// Update equipment if needed.
 			// TODO: This can be more efficient by just comparing the newly added item to the equipped item.
 			if (item->promptsEquipmentReevaluation() && getOptionalParam<bool>(params, "reevaluateEquipment", true)) {
-				toActor->reevaluateEquipment();
-				fromActor->reevaluateEquipment();
+				if (toReference != playerMobile->reference) {
+					toActor->reevaluateEquipment();
+				}
+				if (fromReference != playerMobile->reference) {
+					fromActor->reevaluateEquipment();
+				}
 			}
 
 			// Update body parts for creatures/NPCs that may have items unequipped.
