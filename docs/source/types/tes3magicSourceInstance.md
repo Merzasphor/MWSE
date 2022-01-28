@@ -35,6 +35,16 @@ No description yet available.
 
 ***
 
+### `corprusHoursSinceLastWorsen`
+
+The number of hours passed since the player's corprus state last worsened.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
 ### `deleted`
 
 *Read-only*. The deleted state of the object.

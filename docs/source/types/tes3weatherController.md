@@ -4,6 +4,46 @@ A data structure that handles the weather.
 
 ## Properties
 
+### `ambientPostSunriseTime`
+
+Each weather's ambiental color has one color for day and night states each. The day color will be used when the game hour is between `ambientPostSunriseTime` and `ambientPreSunsetTime`. This corresponds to the setting of the same name in Morrowind.ini file.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `ambientPostSunsetTime`
+
+Each weather's ambiental color has one color for day and night states each. The night color will be used when the game hour is between `ambientPostSunsetTime` and `ambientPreSunriseTime`. This corresponds to the setting of the same name in Morrowind.ini file.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `ambientPreSunriseTime`
+
+Each weather's ambiental color has one color for day and night states each. The night color will be used when the game hour is between `ambientPostSunsetTime` and `ambientPreSunriseTime`. This corresponds to the setting of the same name in Morrowind.ini file.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `ambientPreSunsetTime`
+
+Each weather's ambiental color has one color for day and night states each. The day color will be used when the game hour is between `ambientPostSunriseTime` and `ambientPreSunsetTime`. This corresponds to the setting of the same name in Morrowind.ini file.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
 ### `currentFogColor`
 
 The current fog color.
@@ -36,7 +76,7 @@ The current sky color.
 
 ### `daysRemaining`
 
-The days remaining.
+The days remaining for the current weather.
 
 **Returns**:
 
@@ -44,7 +84,57 @@ The days remaining.
 
 ***
 
-### `hoursBetweenWeatherChange`
+### `fogDepthChangeSpeed`
+
+Controls the speed of how fast the fog comes in. This corresponds to the setting of the same name in Morrowind.ini file.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `fogPostSunriseTime`
+
+Each weather's fog color has one color for day and night states each. The day color will be used when the game hour is between `fogPostSunriseTime` and `fogPreSunsetTime`. This corresponds to the setting of the same name in Morrowind.ini file.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `fogPostSunsetTime`
+
+Each weather's fog color has one color for day and night states each. The night color will be used when the game hour is between `fogPostSunsetTime` and `fogPreSunriseTime`. This corresponds to the setting of the same name in Morrowind.ini file.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `fogPreSunriseTime`
+
+Each weather's fog color has one color for day and night states each. The night color will be used when the game hour is between `fogPostSunsetTime` and `fogPreSunriseTime`. This corresponds to the setting of the same name in Morrowind.ini file.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `fogPreSunsetTime`
+
+Each weather's fog color has one color for day and night states each. The day color will be used when the game hour is between `fogPostSunriseTime` and `fogPreSunsetTime`. This corresponds to the setting of the same name in Morrowind.ini file.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `hoursBetweenWeatherChanges`
 
 The hours between weather changes. Stored as a float value.
 
@@ -184,6 +274,76 @@ The hours remaining.
 
 ***
 
+### `skyPostSunriseTime`
+
+The sky has one color for day and night states each. The day color will be used when the game hour is between `skyPostSunriseTime` and `skyPreSunsetTime`. This corresponds to the setting of the same name in Morrowind.ini file.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `skyPostSunsetTime`
+
+The sky has one color for day and night states each. The night color will be used when the game hour is between `skyPostSunsetTime` and `skyPreSunriseTime`. This corresponds to the setting of the same name in Morrowind.ini file.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `skyPreSunriseTime`
+
+The sky has one color for day and night states each. The night color will be used when the game hour is between `skyPostSunsetTime` and `skyPreSunriseTime`. This corresponds to the setting of the same name in Morrowind.ini file.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `skyPreSunsetTime`
+
+The sky has one color for day and night states each. The day color will be used when the game hour is between `skyPostSunriseTime` and `skyPreSunsetTime`. This corresponds to the setting of the same name in Morrowind.ini file.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `starsFadingDuration`
+
+The stars will fade in `starsPostSunsetStart` hours after the sunset. They fade out `starsPreSunriseFinish` hours before sunrise. This value represents the duration of the fadeing. This corresponds to the setting of the same name in Morrowind.ini file.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `starsPostSunsetStart`
+
+The stars will start to fade in (appear) `starsPostSunsetStart` hours before sunrise. This corresponds to the setting of the same name in Morrowind.ini file.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `starsPreSunriseFinish`
+
+The stars will start to fade out (disappear) `starsPreSunriseFinish` hours before sunrise. This corresponds to the setting of the same name in Morrowind.ini file.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
 ### `sunglareFaderAngleMax`
 
 The sunglare fader maximum angle.
@@ -207,6 +367,46 @@ The sunglare fader color.
 ### `sunglareFaderMax`
 
 The sunglare fader maximum.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `sunPostSunriseTime`
+
+The Sun has one color for day and night states each. The day color will be used when the game hour is between `sunPostSunriseTime` and `sunPreSunsetTime`. This corresponds to the setting of the same name in Morrowind.ini file.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `sunPostSunsetTime`
+
+The Sun has one color for day and night states each. The night color will be used when the game hour is between `sunPostSunsetTime` and `sunPreSunriseTime`. This corresponds to the setting of the same name in Morrowind.ini file.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `sunPreSunriseTime`
+
+The Sun has one color for day and night states each. The night color will be used when the game hour is between `sunPostSunsetTime` and `sunPreSunriseTime`. This corresponds to the setting of the same name in Morrowind.ini file.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `sunPreSunsetTime`
+
+The Sun has one color for day and night states each. The day color will be used when the game hour is between `sunPostSunriseTime` and `sunPreSunsetTime`. This corresponds to the setting of the same name in Morrowind.ini file.
 
 **Returns**:
 

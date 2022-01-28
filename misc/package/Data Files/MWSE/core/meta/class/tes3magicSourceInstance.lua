@@ -4,6 +4,7 @@
 --- @class tes3magicSourceInstance : tes3baseObject
 --- @field castChanceOverride number No description yet available.
 --- @field caster tes3reference *Read-only*. No description yet available.
+--- @field corprusHoursSinceLastWorsen number The number of hours passed since the player's corprus state last worsened.
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon *Read-only*. No description yet available.
 --- @field itemData tes3itemData *Read-only*. No description yet available.
 --- @field itemID string *Read-only*. No description yet available.
