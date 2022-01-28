@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[Use [`tes3.positionCell()`](https://mwse.github.io/MWSE/apis/tes3/#tes3positioncell) instead. Wrapper for the PositionCell mwscript function.]],
+	description = [[Use [`tes3.positionCell()`](https://mwse.github.io/MWSE/apis/tes3/#tes3positioncell) instead. Wrapper for the `PositionCell` mwscript function.]],
 	arguments = {{
 		name = "params",
 		type = "table",

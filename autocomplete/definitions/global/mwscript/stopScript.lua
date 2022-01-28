@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[Wrapper for the StartCombat mwscript function.]],
+	description = [[Wrapper for the `StopCombat` mwscript function.]],
 	arguments = {{
 		name = "params",
 		type = "table",

@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[Use [`tes3.addSpell()`](https://mwse.github.io/MWSE/apis/tes3/#tes3addspell) or [`tes3spellList:add()`](https://mwse.github.io/MWSE/types/tes3spellList/#add) instead. Wrapper for the AddSpell mwscript function.]],
+	description = [[Use [`tes3.addSpell()`](https://mwse.github.io/MWSE/apis/tes3/#tes3addspell) or [`tes3spellList:add()`](https://mwse.github.io/MWSE/types/tes3spellList/#add) instead. Wrapper for the `AddSpell` mwscript function.]],
 	arguments = {{
 		name = "params",
 		type = "table",

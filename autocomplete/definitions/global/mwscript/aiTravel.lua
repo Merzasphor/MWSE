@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[Use [`tes3.setAITravel()`](https://mwse.github.io/MWSE/apis/tes3/#tes3setaitravel) instead. Wrapper for the AITravel mwscript function.]],
+	description = [[Use [`tes3.setAITravel()`](https://mwse.github.io/MWSE/apis/tes3/#tes3setaitravel) instead. Wrapper for the `AITravel` mwscript function.]],
 	arguments = {{
 		name = "params",
 		type = "table",

@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[Use [`tes3leveledItem:insert()`](https://mwse.github.io/MWSE/types/tes3leveledItem/#insert) instead. Wrapper for the AddToLevItem mwscript function.]],
+	description = [[Use [`tes3leveledItem:insert()`](https://mwse.github.io/MWSE/types/tes3leveledItem/#insert) instead. Wrapper for the `AddToLevItem` mwscript function.]],
 	arguments = {{
 		name = "params",
 		type = "table",

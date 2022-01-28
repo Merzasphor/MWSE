@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[Use [`tes3leveledCreature:insert()`](https://mwse.github.io/MWSE/types/tes3leveledCreature/#insert) instead. Wrapper for the AddToLevCreature mwscript function.]],
+	description = [[Use [`tes3leveledCreature:insert()`](https://mwse.github.io/MWSE/types/tes3leveledCreature/#insert) instead. Wrapper for the `AddToLevCreature` mwscript function.]],
 	arguments = {{
 		name = "params",
 		type = "table",

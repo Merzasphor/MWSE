@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[Use [`tes3.removeItem()`](https://mwse.github.io/MWSE/apis/tes3/#tes3removeitem), [`tes3.removeItemData()`](https://mwse.github.io/MWSE/apis/tes3/#tes3removeitemdata) or [`tes3inventory:removeItem()`](https://mwse.github.io/MWSE/types/tes3inventory/#removeitem) instead. Wrapper for the RemoveItem mwscript function.]],
+	description = [[Use [`tes3.removeItem()`](https://mwse.github.io/MWSE/apis/tes3/#tes3removeitem), [`tes3.removeItemData()`](https://mwse.github.io/MWSE/apis/tes3/#tes3removeitemdata) or [`tes3inventory:removeItem()`](https://mwse.github.io/MWSE/types/tes3inventory/#removeitem) instead. Wrapper for the `RemoveItem` mwscript function.]],
 	arguments = {{
 		name = "params",
 		type = "table",

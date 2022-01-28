@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[Wrapper for the AddItem mwscript function.]],
+	description = [[Wrapper for the `AddTopic` mwscript function.]],
 	arguments = {{
 		name = "params",
 		type = "table",

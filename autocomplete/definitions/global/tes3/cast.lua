@@ -16,4 +16,9 @@ When the caster is the player, the target parameter is optional; without a targe
 		},
 	}},
 	returns = {{ name = "executed", type = "boolean" }},
+	examples = {
+		["imitateExplodeSpell"] = {
+			title = "This is an example of how to use tes3.cast instead of mwscript.explodeSpell",
+		},
+	},
 }

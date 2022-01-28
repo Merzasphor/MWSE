@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[Wrapper for the ScriptRunning mwscript function.]],
+	description = [[Wrapper for the `ScriptRunning` mwscript function.]],
 	arguments = {{
 		name = "params",
 		type = "table",

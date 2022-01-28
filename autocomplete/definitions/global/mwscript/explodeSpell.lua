@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[Wrapper for the ExplodeSpell mwscript function.]],
+	description = [[Use [`tes3.cast()`](https://mwse.github.io/MWSE/apis/tes3/#tes3cast) instead. Wrapper for the `ExplodeSpell` mwscript function.]],
 	arguments = {{
 		name = "params",
 		type = "table",
