@@ -10,7 +10,7 @@
 namespace mwse {
 	namespace lua {
 		namespace event {
-			CalculateSoulValueEvent::CalculateSoulValueEvent(TES3::Actor * actor, int value) :
+			CalculateSoulValueEvent::CalculateSoulValueEvent(TES3::Actor * actor, sol::optional<int> value) :
 				ObjectFilteredEvent("calcSoulValue", actor),
 				m_Actor(actor),
 				m_Value(value)

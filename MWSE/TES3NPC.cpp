@@ -9,6 +9,7 @@
 
 #include "LuaManager.h"
 
+#include "LuaCalcSoulValueEvent.h"
 #include "LuaEquipmentReevaluatedEvent.h"
 #include "LuaIsGuardEvent.h"
 
@@ -83,6 +84,19 @@ namespace TES3 {
 		return std::ref(skills);
 	}
 
+	sol::optional<int> NPC::getSoulValue() {
+		// Allow lua to determine the soul's value.
+		if (mwse::lua::event::CalculateSoulValueEvent::getEventEnabled()) {
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table payload = stateHandle.triggerEvent(new mwse::lua::event::CalculateSoulValueEvent(this));
+			if (payload.valid()) {
+				return payload["value"];
+			}
+		}
+
+		return {};
+	}
 	//
 	// NPC Instance
 	//
@@ -146,6 +160,10 @@ namespace TES3 {
 	
 	std::reference_wrapper<unsigned char[27]> NPCInstance::getSkills() {
 		return baseNPC->getSkills();
+	}
+
+	sol::optional<int> NPCInstance::getBaseSoulValue() {
+		return baseNPC->getSoulValue();
 	}
 
 	Class* NPCInstance::getBaseClass() {

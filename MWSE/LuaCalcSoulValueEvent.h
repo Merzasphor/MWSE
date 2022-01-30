@@ -8,12 +8,12 @@ namespace mwse {
 		namespace event {
 			class CalculateSoulValueEvent : public ObjectFilteredEvent, public DisableableEvent<CalculateSoulValueEvent> {
 			public:
-				CalculateSoulValueEvent(TES3::Actor * actor, int value);
+				CalculateSoulValueEvent(TES3::Actor* actor, sol::optional<int> value = {});
 				sol::table createEventTable();
 
 			protected:
 				TES3::Actor* m_Actor;
-				int m_Value;
+				sol::optional<int> m_Value;
 			};
 		}
 	}

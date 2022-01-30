@@ -8,8 +8,8 @@ return {
 			description = "The actor whose soul is being evaluated.",
 		},
 		["value"] = {
-			type = "number",
-			description = "The value of the actor's soul.",
+			type = "number|nil",
+			description = "The value of the actor's soul. This may be `nil` for NPCs.",
 		},
 	},
 }

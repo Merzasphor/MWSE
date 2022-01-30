@@ -43,6 +43,7 @@ namespace mwse {
 				usertypeDefinition["faction"] = &TES3::NPC::faction;
 				usertypeDefinition["race"] = &TES3::NPC::race;
 				usertypeDefinition["script"] = sol::readonly_property(&TES3::NPC::getScript);
+				usertypeDefinition["soul"] = sol::readonly_property(&TES3::NPC::getSoulValue);
 
 				// Indirect bindings to unions and arrays.
 				usertypeDefinition["attributes"] = sol::property(&TES3::NPC::getAttributes);
@@ -102,6 +103,7 @@ namespace mwse {
 				usertypeDefinition["faction"] = sol::readonly_property(&TES3::NPCInstance::getBaseFaction);
 				usertypeDefinition["race"] = sol::readonly_property(&TES3::NPCInstance::getBaseRace);
 				usertypeDefinition["script"] = sol::readonly_property(&TES3::NPCInstance::getBaseScript);
+				usertypeDefinition["soul"] = sol::readonly_property(&TES3::NPCInstance::getBaseSoulValue);
 
 				// Functions exposed as properties.
 				usertypeDefinition["aiConfig"] = sol::readonly_property(&TES3::NPCInstance::getAIConfig);

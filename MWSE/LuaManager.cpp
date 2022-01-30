@@ -2652,6 +2652,90 @@ namespace mwse {
 			element->setProperty(property, value, type);
 		}
 
+		TES3::Creature PatchGetAliasedSoulValueProperty_AliasedCreature;
+
+		TES3::UI::PropertyValue* __fastcall PatchGetAliasedSoulValueProperty(const TES3::UI::Element* self, DWORD _UNUSED_, TES3::UI::PropertyValue* propValue, TES3::UI::Property prop, TES3::UI::PropertyType propType, const TES3::UI::Element* element, bool checkInherited) {
+			auto result = self->getProperty(propValue, prop, propType, element, checkInherited);
+
+			auto actor = static_cast<TES3::Actor*>(result->ptrValue);
+			if (actor) {
+				if (actor->objectType == TES3::ObjectType::Creature) {
+					PatchGetAliasedSoulValueProperty_AliasedCreature.soul = static_cast<TES3::Creature*>(actor)->getSoulValue();
+					result->ptrValue = &PatchGetAliasedSoulValueProperty_AliasedCreature;
+				}
+				else if (actor->objectType == TES3::ObjectType::NPC) {
+					auto maybeSoulValue = static_cast<TES3::NPC*>(actor)->getSoulValue();
+					if (maybeSoulValue) {
+						PatchGetAliasedSoulValueProperty_AliasedCreature.soul = maybeSoulValue.value();
+						result->ptrValue = &PatchGetAliasedSoulValueProperty_AliasedCreature;
+					}
+					else {
+						result->ptrValue = nullptr;
+					}
+				}
+
+			}
+
+			return result;
+		}
+
+		__declspec(naked) void PatchGetSoulValueForTooltip_LoadObject() {
+			__asm {
+				mov edx, esi // Size: 0x2
+				nop          // Size: 0x1
+			}
+		}
+		constexpr size_t PatchGetSoulValueForTooltip_LoadObject_Size = 0x3;
+
+		int __fastcall PatchGetSoulValueForTooltip(TES3::ItemData* itemData, TES3::Misc* soulGem) {
+			auto actor = itemData->soul;
+			
+			int baseValue = 0;
+			if (actor->objectType == TES3::ObjectType::Creature) {
+				auto creature = static_cast<TES3::Creature*>(actor);
+				baseValue = creature->getSoulValue();
+			}
+			else if (actor->objectType == TES3::ObjectType::NPC) {
+				auto npc = static_cast<TES3::NPC*>(actor);
+				baseValue = npc->getSoulValue().value_or(0);
+			}
+
+			if (baseValue <= 0) {
+				return 0;
+			}
+
+			// MCP value change.
+			return pow(baseValue, 3) / 1000 + baseValue * 2;
+		}
+
+		__declspec(naked) void PatchGetSoulValueForTooltip_NoMCPLoader() {
+			__asm {
+				mov ecx, [esp + 0x30 - 0x20] // Size: 0x4
+				mov edx, esi                 // Size: 0x2
+			}
+		}
+		constexpr size_t PatchGetSoulValueForTooltip_NoMCPLoader_Size = 0x6;
+
+		int __fastcall PatchGetSoulValueForTooltip_NoMCP(TES3::ItemData* itemData, TES3::Misc* soulGem) {
+			auto actor = itemData->soul;
+
+			int baseValue = 0;
+			if (actor->objectType == TES3::ObjectType::Creature) {
+				auto creature = static_cast<TES3::Creature*>(actor);
+				baseValue = creature->getSoulValue();
+			}
+			else if (actor->objectType == TES3::ObjectType::NPC) {
+				auto npc = static_cast<TES3::NPC*>(actor);
+				baseValue = npc->getSoulValue().value_or(0);
+			}
+
+			if (baseValue <= 0) {
+				return 0;
+			}
+
+			return soulGem->getValue() * baseValue;
+		}
+
 		//
 		// Fire an event when item tiles are updated.
 		//
@@ -4182,6 +4266,19 @@ namespace mwse {
 			genCallUnprotected(0x5C5E69, reinterpret_cast<DWORD>(PatchSPrintFSoulValue), 0x6);
 			genNOPUnprotected(0x5C5E6F, 0x6);
 			genCallEnforced(0x5C5E87, 0x581F30, reinterpret_cast<DWORD>(PatchSetSoulValueProperty));
+
+			// Override actor soul value checking: recharging
+			genCallEnforced(0x60E2D8, 0x581440, reinterpret_cast<DWORD>(PatchGetAliasedSoulValueProperty));
+
+			// Override actor soul value check: tooltip
+			if (genCallEnforced(0x591760, 0x73658C, reinterpret_cast<DWORD>(PatchGetSoulValueForTooltip))) {
+				writePatchCodeUnprotected(0x59175D, (BYTE*)&PatchGetSoulValueForTooltip_LoadObject, PatchGetSoulValueForTooltip_LoadObject_Size);
+			}
+			else {
+				genNOPUnprotected(0x591759, 0x591777 - 0x591759);
+				writePatchCodeUnprotected(0x591759, (BYTE*)&PatchGetSoulValueForTooltip_NoMCPLoader, PatchGetSoulValueForTooltip_NoMCPLoader_Size);
+				genCallUnprotected(0x591759 + PatchGetSoulValueForTooltip_NoMCPLoader_Size, reinterpret_cast<DWORD>(PatchGetSoulValueForTooltip_NoMCP));
+			}
 
 			// Patch reading correct light culling radius from non-light entities during light updates.
 			writePatchCodeUnprotected(0x485DAD, (BYTE*)&patchGetEntityLightRadius, patchGetEntityLightRadius_size);

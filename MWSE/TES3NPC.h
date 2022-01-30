@@ -85,6 +85,8 @@ namespace TES3 {
 		std::reference_wrapper<unsigned char[8]> getAttributes();
 		std::reference_wrapper<unsigned char[27]> getSkills();
 
+		sol::optional<int> getSoulValue();
+
 	};
 	static_assert(sizeof(NPC) == 0xF0, "TES3::NPC failed size validation");
 
@@ -118,6 +120,8 @@ namespace TES3 {
 
 		std::reference_wrapper<unsigned char[8]> getAttributes();
 		std::reference_wrapper<unsigned char[27]> getSkills();
+
+		sol::optional<int> getBaseSoulValue();
 
 		Class* getBaseClass();
 		Faction* getBaseFaction();

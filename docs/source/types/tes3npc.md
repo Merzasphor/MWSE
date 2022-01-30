@@ -485,6 +485,16 @@ A table of twenty seven numbers, representing the base values for the NPC's skil
 
 ***
 
+### `soul`
+
+The soul value for this NPC. This is typically `nil`, unless the `calcSouLValue` event provides one for this actor.
+
+**Returns**:
+
+* `result` (number, nil)
+
+***
+
 ### `sourceless`
 
 The soruceless flag of the object.

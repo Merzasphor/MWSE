@@ -445,6 +445,16 @@ Quick access to the base NPC's skills.
 
 ***
 
+### `soul`
+
+The soul value for this NPC's base object. This is typically `nil`, unless the `calcSouLValue` event provides one for the base actor.
+
+**Returns**:
+
+* `result` (number, nil)
+
+***
+
 ### `sourceless`
 
 The soruceless flag of the object.
