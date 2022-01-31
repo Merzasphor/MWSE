@@ -34,7 +34,7 @@ namespace NI {
 		// Custom functions.
 		//
 
-		static Pointer<SourceTexture> createFromPath_lua(const char* path);
+		static Pointer<SourceTexture> createFromPath_lua(const char* path, sol::optional<bool> useCached = true);
 
 	};
 	static_assert(sizeof(SourceTexture) == 0x3C, "NI::SourceTexture failed size validation");

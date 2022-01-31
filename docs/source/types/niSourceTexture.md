@@ -222,12 +222,13 @@ niObjectNET:removeController(type)
 Creates an NiSourceTexture from the given filepath.
 
 ```lua
-niSourceTexture.createFromPath(path)
+niSourceTexture.createFromPath(path, useCached)
 ```
 
 **Parameters**:
 
 * `path` (string): The filepath of the texture to load.
+* `useCached` (boolean): *Default*: `true`. If true, the texture will be stored in the normal texture source cache, so that multiple calls to the same path will return the same object. This behavior can be disabled if necessary.
 
 ***
 
