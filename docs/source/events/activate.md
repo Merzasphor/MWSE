@@ -48,7 +48,7 @@ event.register(tes3.event.activate, activateCallback)
 			return false
 		end
 	end
-	event.register("activate", myOnActivateCallback)
+	event.register(tes3.event.activate, myOnActivateCallback)
 
 	```
 
@@ -61,7 +61,7 @@ event.register(tes3.event.activate, activateCallback)
 			tes3.messageBox({ message = "Activated " .. e.target.object.id })
 		end
 	end
-	event.register("activate", myOnActivateCallback)
+	event.register(tes3.event.activate, myOnActivateCallback)
 
 	```
 

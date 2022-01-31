@@ -26,7 +26,7 @@ event.register(tes3.event.potionBrewed, potionBrewedCallback)
 !!! example "Example: Replace a brewed potion with a modified version"
 
 	```lua
-	event.register("potionBrewed", function(e)
+	event.register(tes3.event.potionBrewed, function(e)
 		local p = {
 			["name"] = "[*]" .. e.object.name,
 			["mesh"] = e.object.mesh,

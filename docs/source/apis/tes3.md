@@ -58,7 +58,7 @@ This table is used to convert numerical magic school IDs to their respective ski
 		tes3.mobilePlayer:exerciseSkill(skill, 100)
 	end
 	
-	event.register("spellCastedFailure", OnSpellFailed)
+	event.register(tes3.event.spellCastedFailure, OnSpellFailed)
 
 	```
 
@@ -314,7 +314,7 @@ local effect = tes3.addMagicEffect({ id = ..., name = ..., baseCost = ..., schoo
 		})
 	end
 	
-	event.register("magicEffectsResolved", function()
+	event.register(tes3.event.magicEffectsResolved, function()
 		tes3.addMagicEffect({
 			-- The ID we claimed before is now available in tes3.effect namespace
 			id = tes3.effect.customFireDmg,
@@ -357,7 +357,7 @@ local effect = tes3.addMagicEffect({ id = ..., name = ..., baseCost = ..., schoo
 		})
 	end)
 	
-	event.register("loaded", function()
+	event.register(tes3.event.loaded, function()
 		local spell1 = tes3.createObject({ objectType = tes3.objectType.spell })
 		tes3.setSourceless(spell1)
 		spell1.name = "TEST SPELL - self"
@@ -640,7 +640,7 @@ local executed = tes3.cast({ reference = ..., target = ..., spell = ..., instant
 	```lua
 	-- The following code can be tested in-game by pressing Alt + l or Alt + k
 	
-	event.register("keyDown", function(e)
+	event.register(tes3.event.keyDown, function(e)
 		if e.isAltDown then
 			tes3.messageBox("mwscript.explodeSpell")
 			mwscript.explodeSpell({
@@ -650,7 +650,7 @@ local executed = tes3.cast({ reference = ..., target = ..., spell = ..., instant
 		end
 	end, { filter = tes3.scanCode.l })
 	
-	event.register("keyDown", function(e)
+	event.register(tes3.event.keyDown, function(e)
 		if e.isAltDown then
 			tes3.messageBox("tes3.cast")
 			-- This will behave the same as will mwscript.explodeSpell()
@@ -3055,8 +3055,8 @@ tes3.removeEffects(reference, effect, castType, chance, removeSpell)
 		end
 	end
 	
-	event.register("initialized", function ()
-		event.register("calcMoveSpeed", example)
+	event.register(tes3.event.initialized, function ()
+		event.register(tes3.event.calcMoveSpeed, example)
 	end)
 
 	```

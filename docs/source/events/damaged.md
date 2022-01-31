@@ -48,7 +48,7 @@ event.register(tes3.event.damaged, damagedCallback)
 			end
 		end
 	end
-	event.register("damaged", onDamaged)
+	event.register(tes3.event.damaged, onDamaged)
 
 	```
 
@@ -75,7 +75,7 @@ event.register(tes3.event.damaged, damagedCallback)
 			end
 		end
 	end
-	event.register("damaged", onDamaged)
+	event.register(tes3.event.damaged, onDamaged)
 
 	```
 

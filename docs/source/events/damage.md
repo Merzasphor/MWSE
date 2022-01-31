@@ -55,7 +55,7 @@ event.register(tes3.event.damage, damageCallback)
 			e.damage = e.damage * 2
 		end
 	end
-	event.register("damage", onDamage)
+	event.register(tes3.event.damage, onDamage)
 
 	```
 

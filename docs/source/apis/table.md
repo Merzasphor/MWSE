@@ -300,7 +300,7 @@ local result = table.traverse(t, k)
 		end
 	end
 	
-	event.register("loaded", onLoaded)
+	event.register(tes3.event.loaded, onLoaded)
 
 	```
 

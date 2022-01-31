@@ -68,7 +68,7 @@ local result = re.find(subject, pattern, init)
 		
 	end
 	
-	event.register("loaded", onLoaded)
+	event.register(tes3.event.loaded, onLoaded)
 
 	```
 
@@ -105,7 +105,7 @@ local result = re.gsub(subject, pattern, replacement)
 		
 	end
 	
-	event.register("loaded", onLoaded)
+	event.register(tes3.event.loaded, onLoaded)
 
 	```
 
@@ -145,7 +145,7 @@ local result = re.match(subject, pattern)
 		
 	end
 	
-	event.register("loaded", onLoaded)
+	event.register(tes3.event.loaded, onLoaded)
 
 	```
 

@@ -344,7 +344,7 @@ local result = lpeg.match(p, subject, init)
 		
 	end
 	
-	event.register("loaded", onLoaded)
+	event.register(tes3.event.loaded, onLoaded)
 
 	```
 
@@ -424,7 +424,7 @@ local result = lpeg.R(p)
 		
 	end
 	
-	event.register("loaded", onLoaded)
+	event.register(tes3.event.loaded, onLoaded)
 
 	```
 

@@ -42,7 +42,7 @@ event.register(tes3.event.potionBrewSkillCheck, potionBrewSkillCheckCallback)
 		end
 	end
 	
-	event.register("potionBrewSkillCheck", brewSkillCheck)
+	event.register(tes3.event.potionBrewSkillCheck, brewSkillCheck)
 
 	```
 

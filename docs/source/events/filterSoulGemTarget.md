@@ -27,7 +27,7 @@ event.register(tes3.event.filterSoulGemTarget, filterSoulGemTargetCallback)
 	local function onInitialized()
 		tes3.addSoulGem({ item = "vivec_soul_container" })
 	end
-	event.register("initialized", onInitialized)
+	event.register(tes3.event.initialized, onInitialized)
 	
 	local function onFilterSoulGemTarget(e)
 		-- Make it so Vivec can only be trapped by a special container.
@@ -35,7 +35,7 @@ event.register(tes3.event.filterSoulGemTarget, filterSoulGemTargetCallback)
 			return e.soulGem.id == "vivec_soul_container"
 		end
 	end
-	event.register("filterSoulGemTarget", onFilterSoulGemTarget)
+	event.register(tes3.event.filterSoulGemTarget, onFilterSoulGemTarget)
 
 	```
 
