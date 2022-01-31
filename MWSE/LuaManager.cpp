@@ -2705,7 +2705,7 @@ namespace mwse {
 			}
 
 			// MCP value change.
-			return pow(baseValue, 3) / 1000 + baseValue * 2;
+			return int(pow(baseValue, 3) / 1000 + baseValue * 2);
 		}
 
 		__declspec(naked) void PatchGetSoulValueForTooltip_NoMCPLoader() {
