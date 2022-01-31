@@ -6,7 +6,7 @@ This event is called after any leveled creature list is resolved. The event may 
 --- @param e leveledCreaturePickedEventData
 local function leveledCreaturePickedCallback(e)
 end
-event.register("leveledCreaturePicked", leveledCreaturePickedCallback)
+event.register(tes3.event.leveledCreaturePicked, leveledCreaturePickedCallback)
 ```
 
 !!! tip

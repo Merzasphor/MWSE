@@ -6,7 +6,7 @@ The musicSelectTrack event occurs when new music is needed after a playing music
 --- @param e musicSelectTrackEventData
 local function musicSelectTrackCallback(e)
 end
-event.register("musicSelectTrack", musicSelectTrackCallback)
+event.register(tes3.event.musicSelectTrack, musicSelectTrackCallback)
 ```
 
 !!! tip

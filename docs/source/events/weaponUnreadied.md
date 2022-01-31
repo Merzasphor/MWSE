@@ -6,7 +6,7 @@ This event is called when a weapon is no longer readied, and pairs with the weap
 --- @param e weaponUnreadiedEventData
 local function weaponUnreadiedCallback(e)
 end
-event.register("weaponUnreadied", weaponUnreadiedCallback)
+event.register(tes3.event.weaponUnreadied, weaponUnreadiedCallback)
 ```
 
 !!! tip

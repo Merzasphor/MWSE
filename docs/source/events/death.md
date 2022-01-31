@@ -6,7 +6,7 @@ This event triggers when an actor dies.
 --- @param e deathEventData
 local function deathCallback(e)
 end
-event.register("death", deathCallback)
+event.register(tes3.event.death, deathCallback)
 ```
 
 !!! tip

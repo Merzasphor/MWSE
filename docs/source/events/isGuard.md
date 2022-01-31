@@ -6,7 +6,7 @@ The isGuard event triggers whenever the game engine checks if an NPC object is a
 --- @param e isGuardEventData
 local function isGuardCallback(e)
 end
-event.register("isGuard", isGuardCallback)
+event.register(tes3.event.isGuard, isGuardCallback)
 ```
 
 !!! tip

@@ -6,7 +6,7 @@ The potionBrewFailed event is raised when the player fails a potion brew attempt
 --- @param e potionBrewFailedEventData
 local function potionBrewFailedCallback(e)
 end
-event.register("potionBrewFailed", potionBrewFailedCallback)
+event.register(tes3.event.potionBrewFailed, potionBrewFailedCallback)
 ```
 
 !!! tip

@@ -10,7 +10,7 @@ The movement event flow is described below:
 --- @param e calcRunSpeedEventData
 local function calcRunSpeedCallback(e)
 end
-event.register("calcRunSpeed", calcRunSpeedCallback)
+event.register(tes3.event.calcRunSpeed, calcRunSpeedCallback)
 ```
 
 !!! tip

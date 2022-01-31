@@ -6,7 +6,7 @@ This event is triggered when any spell fails to cast due to failing the cast cha
 --- @param e spellCastedFailureEventData
 local function spellCastedFailureCallback(e)
 end
-event.register("spellCastedFailure", spellCastedFailureCallback)
+event.register(tes3.event.spellCastedFailure, spellCastedFailureCallback)
 ```
 
 !!! tip

@@ -6,7 +6,7 @@ This event is triggered when a reference is activated.
 --- @param e referenceActivatedEventData
 local function referenceActivatedCallback(e)
 end
-event.register("referenceActivated", referenceActivatedCallback)
+event.register(tes3.event.referenceActivated, referenceActivatedCallback)
 ```
 
 !!! tip

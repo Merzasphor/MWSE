@@ -6,7 +6,7 @@ This event is called after any leveled item list is resolved.
 --- @param e leveledItemPickedEventData
 local function leveledItemPickedCallback(e)
 end
-event.register("leveledItemPicked", leveledItemPickedCallback)
+event.register(tes3.event.leveledItemPicked, leveledItemPickedCallback)
 ```
 
 !!! tip

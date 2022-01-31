@@ -6,7 +6,7 @@ The projectileExpire event fires just prior to a fired projectile expiring.
 --- @param e projectileExpireEventData
 local function projectileExpireCallback(e)
 end
-event.register("projectileExpire", projectileExpireCallback)
+event.register(tes3.event.projectileExpire, projectileExpireCallback)
 ```
 
 !!! tip

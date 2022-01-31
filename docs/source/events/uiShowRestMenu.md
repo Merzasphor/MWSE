@@ -6,7 +6,7 @@ The uiShowRestMenu event is raised when the rest menu is about to be displayed. 
 --- @param e uiShowRestMenuEventData
 local function uiShowRestMenuCallback(e)
 end
-event.register("uiShowRestMenu", uiShowRestMenuCallback)
+event.register(tes3.event.uiShowRestMenu, uiShowRestMenuCallback)
 ```
 
 !!! tip

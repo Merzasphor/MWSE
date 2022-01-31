@@ -6,7 +6,7 @@ This event triggers when a power is recharged, and may be used again. In Morrowi
 --- @param e powerRechargedEventData
 local function powerRechargedCallback(e)
 end
-event.register("powerRecharged", powerRechargedCallback)
+event.register(tes3.event.powerRecharged, powerRechargedCallback)
 ```
 
 !!! tip

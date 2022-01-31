@@ -6,7 +6,7 @@ uiEvent is triggered through various UI events. This includes scrolling through 
 --- @param e uiEventEventData
 local function uiEventCallback(e)
 end
-event.register("uiEvent", uiEventCallback)
+event.register(tes3.event.uiEvent, uiEventCallback)
 ```
 
 !!! tip

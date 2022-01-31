@@ -6,7 +6,7 @@ This event is raised when a book's text is about to be displayed. By providing y
 --- @param e bookGetTextEventData
 local function bookGetTextCallback(e)
 end
-event.register("bookGetText", bookGetTextCallback)
+event.register(tes3.event.bookGetText, bookGetTextCallback)
 ```
 
 !!! tip

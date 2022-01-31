@@ -11,4 +11,4 @@ local function onActivate(eventData)
 		timer.start{ duration = 1, iterations = 10, type = timer.simulate, callback = onTimerExpired }
 	end
 end
-event.register("activate", onActivate)
+event.register(tes3.event.activate, onActivate)

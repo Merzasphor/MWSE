@@ -6,7 +6,7 @@ This event triggers after all magic effect links have been resolved. This event 
 --- @param e magicEffectsResolvedEventData
 local function magicEffectsResolvedCallback(e)
 end
-event.register("magicEffectsResolved", magicEffectsResolvedCallback)
+event.register(tes3.event.magicEffectsResolved, magicEffectsResolvedCallback)
 ```
 
 !!! tip

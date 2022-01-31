@@ -6,7 +6,7 @@ The cellChanged event is occurs when the player changes cells. This might occur 
 --- @param e cellChangedEventData
 local function cellChangedCallback(e)
 end
-event.register("cellChanged", cellChangedCallback)
+event.register(tes3.event.cellChanged, cellChangedCallback)
 ```
 
 !!! tip

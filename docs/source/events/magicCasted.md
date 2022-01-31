@@ -6,7 +6,7 @@ This event is triggered when any spell or enchant is cast successfully, or when 
 --- @param e magicCastedEventData
 local function magicCastedCallback(e)
 end
-event.register("magicCasted", magicCastedCallback)
+event.register(tes3.event.magicCasted, magicCastedCallback)
 ```
 
 !!! tip

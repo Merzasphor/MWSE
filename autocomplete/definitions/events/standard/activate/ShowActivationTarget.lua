@@ -4,4 +4,4 @@ local function myOnActivateCallback(e)
 		tes3.messageBox({ message = "Activated " .. e.target.object.id })
 	end
 end
-event.register("activate", myOnActivateCallback)
+event.register(tes3.event.activate, myOnActivateCallback)

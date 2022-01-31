@@ -6,7 +6,7 @@ This event fires when a SceneNode is created for a reference.
 --- @param e referenceSceneNodeCreatedEventData
 local function referenceSceneNodeCreatedCallback(e)
 end
-event.register("referenceSceneNodeCreated", referenceSceneNodeCreatedCallback)
+event.register(tes3.event.referenceSceneNodeCreated, referenceSceneNodeCreatedCallback)
 ```
 
 !!! tip

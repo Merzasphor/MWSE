@@ -21,7 +21,7 @@ Roll (1-100) | Slot			| Fallback
 --- @param e calcArmorPieceHitEventData
 local function calcArmorPieceHitCallback(e)
 end
-event.register("calcArmorPieceHit", calcArmorPieceHitCallback)
+event.register(tes3.event.calcArmorPieceHit, calcArmorPieceHitCallback)
 ```
 
 !!! tip

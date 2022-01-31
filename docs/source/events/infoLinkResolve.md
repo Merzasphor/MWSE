@@ -6,7 +6,7 @@ This event fires when a dialogue hyperlink is being resolved to a topic, during 
 --- @param e infoLinkResolveEventData
 local function infoLinkResolveCallback(e)
 end
-event.register("infoLinkResolve", infoLinkResolveCallback)
+event.register(tes3.event.infoLinkResolve, infoLinkResolveCallback)
 ```
 
 !!! tip

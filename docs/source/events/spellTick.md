@@ -6,7 +6,7 @@ The spellTick event happens every frame that an effect is active on a target. Th
 --- @param e spellTickEventData
 local function spellTickCallback(e)
 end
-event.register("spellTick", spellTickCallback)
+event.register(tes3.event.spellTick, spellTickCallback)
 ```
 
 !!! tip

@@ -6,7 +6,7 @@ This event is raised when determining the hit chance for an actor.
 --- @param e calcHitChanceEventData
 local function calcHitChanceCallback(e)
 end
-event.register("calcHitChance", calcHitChanceCallback)
+event.register(tes3.event.calcHitChance, calcHitChanceCallback)
 ```
 
 !!! tip

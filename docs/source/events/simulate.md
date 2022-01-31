@@ -6,7 +6,7 @@ The simulate event occurs at the start of every frame, excluding when the game i
 --- @param e simulateEventData
 local function simulateCallback(e)
 end
-event.register("simulate", simulateCallback)
+event.register(tes3.event.simulate, simulateCallback)
 ```
 
 !!! tip

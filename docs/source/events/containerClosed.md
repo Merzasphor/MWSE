@@ -6,7 +6,7 @@ This event is raised when a container is closed.
 --- @param e containerClosedEventData
 local function containerClosedCallback(e)
 end
-event.register("containerClosed", containerClosedCallback)
+event.register(tes3.event.containerClosed, containerClosedCallback)
 ```
 
 !!! tip

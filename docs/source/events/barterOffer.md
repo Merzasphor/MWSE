@@ -6,7 +6,7 @@ This event is called when a potentially successful barter offer is made by the p
 --- @param e barterOfferEventData
 local function barterOfferCallback(e)
 end
-event.register("barterOffer", barterOfferCallback)
+event.register(tes3.event.barterOffer, barterOfferCallback)
 ```
 
 !!! tip

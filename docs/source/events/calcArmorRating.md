@@ -6,7 +6,7 @@ This event is fired before an actor's armor rating has been calculated, and can 
 --- @param e calcArmorRatingEventData
 local function calcArmorRatingCallback(e)
 end
-event.register("calcArmorRating", calcArmorRatingCallback)
+event.register(tes3.event.calcArmorRating, calcArmorRatingCallback)
 ```
 
 !!! tip

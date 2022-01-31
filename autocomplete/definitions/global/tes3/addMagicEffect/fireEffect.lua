@@ -16,7 +16,7 @@ local function onFireDmgTick(tickParams)
 	})
 end
 
-event.register("magicEffectsResolved", function()
+event.register(tes3.event.magicEffectsResolved, function()
 	tes3.addMagicEffect({
 		-- The ID we claimed before is now available in tes3.effect namespace
 		id = tes3.effect.customFireDmg,
@@ -59,7 +59,7 @@ event.register("magicEffectsResolved", function()
 	})
 end)
 
-event.register("loaded", function()
+event.register(tes3.event.loaded, function()
 	local spell1 = tes3.createObject({ objectType = tes3.objectType.spell })
 	tes3.setSourceless(spell1)
 	spell1.name = "TEST SPELL - self"

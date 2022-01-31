@@ -6,7 +6,7 @@ The weatherChangedImmediate event occurs when the currently simulated weather is
 --- @param e weatherChangedImmediateEventData
 local function weatherChangedImmediateCallback(e)
 end
-event.register("weatherChangedImmediate", weatherChangedImmediateCallback)
+event.register(tes3.event.weatherChangedImmediate, weatherChangedImmediateCallback)
 ```
 
 !!! tip

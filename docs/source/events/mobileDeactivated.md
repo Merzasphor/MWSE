@@ -6,7 +6,7 @@ This event is called when a Mobile Actor is deactivated. Typically this happens 
 --- @param e mobileDeactivatedEventData
 local function mobileDeactivatedCallback(e)
 end
-event.register("mobileDeactivated", mobileDeactivatedCallback)
+event.register(tes3.event.mobileDeactivated, mobileDeactivatedCallback)
 ```
 
 !!! tip

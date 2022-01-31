@@ -6,7 +6,7 @@ This event is triggered when a reference is deactivated.
 --- @param e referenceDeactivatedEventData
 local function referenceDeactivatedCallback(e)
 end
-event.register("referenceDeactivated", referenceDeactivatedCallback)
+event.register(tes3.event.referenceDeactivated, referenceDeactivatedCallback)
 ```
 
 !!! tip

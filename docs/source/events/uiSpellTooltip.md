@@ -6,7 +6,7 @@ The uiSpellTooltip event triggers when a new tooltip is displayed for a spell. T
 --- @param e uiSpellTooltipEventData
 local function uiSpellTooltipCallback(e)
 end
-event.register("uiSpellTooltip", uiSpellTooltipCallback)
+event.register(tes3.event.uiSpellTooltip, uiSpellTooltipCallback)
 ```
 
 !!! tip

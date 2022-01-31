@@ -6,7 +6,7 @@ The **equipped** event fires after an actor has successfully equipped an item. T
 --- @param e equippedEventData
 local function equippedCallback(e)
 end
-event.register("equipped", equippedCallback)
+event.register(tes3.event.equipped, equippedCallback)
 ```
 
 !!! tip

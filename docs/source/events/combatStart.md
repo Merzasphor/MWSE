@@ -6,7 +6,7 @@ The combatStart event occurs when combat is about to begin between two actors. T
 --- @param e combatStartEventData
 local function combatStartCallback(e)
 end
-event.register("combatStart", combatStartCallback)
+event.register(tes3.event.combatStart, combatStartCallback)
 ```
 
 !!! tip

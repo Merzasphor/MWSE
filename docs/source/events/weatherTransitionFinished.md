@@ -8,7 +8,7 @@ Weather will continue transitioning in interiors, and may finish while in an int
 --- @param e weatherTransitionFinishedEventData
 local function weatherTransitionFinishedCallback(e)
 end
-event.register("weatherTransitionFinished", weatherTransitionFinishedCallback)
+event.register(tes3.event.weatherTransitionFinished, weatherTransitionFinishedCallback)
 ```
 
 !!! tip

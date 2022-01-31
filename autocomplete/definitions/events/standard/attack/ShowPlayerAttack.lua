@@ -9,4 +9,4 @@ local function myOnAttackCallback(e)
 		tes3.messageBox("You hit %s!", e.targetReference.object.name or e.targetReference.object.id)
 	end
 end
-event.register("attack", myOnAttackCallback)
+event.register(tes3.event.attack, myOnAttackCallback)

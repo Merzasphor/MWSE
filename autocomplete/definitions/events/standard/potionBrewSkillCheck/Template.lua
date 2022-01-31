@@ -13,4 +13,4 @@ local function brewSkillCheck(e)
 	end
 end
 
-event.register("potionBrewSkillCheck", brewSkillCheck)
+event.register(tes3.event.potionBrewSkillCheck, brewSkillCheck)

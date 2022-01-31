@@ -6,7 +6,7 @@ This event is called when a Mobile Actor is activated. This may be the first tim
 --- @param e mobileActivatedEventData
 local function mobileActivatedCallback(e)
 end
-event.register("mobileActivated", mobileActivatedCallback)
+event.register(tes3.event.mobileActivated, mobileActivatedCallback)
 ```
 
 !!! tip

@@ -6,7 +6,7 @@ This event is triggered when any spell is cast successfully; this includes spell
 --- @param e spellCastedEventData
 local function spellCastedCallback(e)
 end
-event.register("spellCasted", spellCastedCallback)
+event.register(tes3.event.spellCasted, spellCastedCallback)
 ```
 
 !!! tip

@@ -6,7 +6,7 @@ This event is triggered when an actor's body parts have finished updating. This 
 --- @param e bodyPartsUpdatedEventData
 local function bodyPartsUpdatedCallback(e)
 end
-event.register("bodyPartsUpdated", bodyPartsUpdatedCallback)
+event.register(tes3.event.bodyPartsUpdated, bodyPartsUpdatedCallback)
 ```
 
 !!! tip

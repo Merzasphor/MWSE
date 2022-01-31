@@ -6,7 +6,7 @@ The load event fires when the game is about to load. This event allows scripts t
 --- @param e loadEventData
 local function loadCallback(e)
 end
-event.register("load", loadCallback)
+event.register(tes3.event.load, loadCallback)
 ```
 
 !!! tip

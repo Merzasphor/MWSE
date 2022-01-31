@@ -6,7 +6,7 @@ The projectileHitObject event fires when a projectile collides with an object.
 --- @param e projectileHitObjectEventData
 local function projectileHitObjectCallback(e)
 end
-event.register("projectileHitObject", projectileHitObjectCallback)
+event.register(tes3.event.projectileHitObject, projectileHitObjectCallback)
 ```
 
 !!! tip

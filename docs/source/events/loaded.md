@@ -6,7 +6,7 @@ The loaded event fires after the game has been successfully loaded. This event i
 --- @param e loadedEventData
 local function loadedCallback(e)
 end
-event.register("loaded", loadedCallback)
+event.register(tes3.event.loaded, loadedCallback)
 ```
 
 !!! tip

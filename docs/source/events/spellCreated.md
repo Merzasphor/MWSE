@@ -6,7 +6,7 @@ This event is triggered when a new spell is created using spellmaking services o
 --- @param e spellCreatedEventData
 local function spellCreatedCallback(e)
 end
-event.register("spellCreated", spellCreatedCallback)
+event.register(tes3.event.spellCreated, spellCreatedCallback)
 ```
 
 !!! tip

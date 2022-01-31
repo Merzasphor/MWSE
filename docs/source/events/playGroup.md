@@ -6,7 +6,7 @@
 --- @param e playGroupEventData
 local function playGroupCallback(e)
 end
-event.register("playGroup", playGroupCallback)
+event.register(tes3.event.playGroup, playGroupCallback)
 ```
 
 !!! tip

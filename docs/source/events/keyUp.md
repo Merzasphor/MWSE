@@ -6,7 +6,7 @@ The key event fires when a key is released.
 --- @param e keyUpEventData
 local function keyUpCallback(e)
 end
-event.register("keyUp", keyUpCallback)
+event.register(tes3.event.keyUp, keyUpCallback)
 ```
 
 !!! tip

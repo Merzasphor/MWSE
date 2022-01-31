@@ -6,7 +6,7 @@ uiPreEvent is triggered through various UI events. This includes scrolling throu
 --- @param e uiPreEventEventData
 local function uiPreEventCallback(e)
 end
-event.register("uiPreEvent", uiPreEventCallback)
+event.register(tes3.event.uiPreEvent, uiPreEventCallback)
 ```
 
 !!! tip

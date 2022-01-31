@@ -6,7 +6,7 @@ This event is triggered just before a spell or power is used by any actor. It al
 --- @param e spellMagickaUseEventData
 local function spellMagickaUseCallback(e)
 end
-event.register("spellMagickaUse", spellMagickaUseCallback)
+event.register(tes3.event.spellMagickaUse, spellMagickaUseCallback)
 ```
 
 !!! tip

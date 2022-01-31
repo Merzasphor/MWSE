@@ -6,7 +6,7 @@ This event fires when a soul gem target is filtered
 --- @param e filterSoulGemTargetEventData
 local function filterSoulGemTargetCallback(e)
 end
-event.register("filterSoulGemTarget", filterSoulGemTargetCallback)
+event.register(tes3.event.filterSoulGemTarget, filterSoulGemTargetCallback)
 ```
 
 !!! tip

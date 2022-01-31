@@ -6,7 +6,7 @@ This event is raised when an item price is being determined when bartering.
 --- @param e calcBarterPriceEventData
 local function calcBarterPriceCallback(e)
 end
-event.register("calcBarterPrice", calcBarterPriceCallback)
+event.register(tes3.event.calcBarterPrice, calcBarterPriceCallback)
 ```
 
 !!! tip

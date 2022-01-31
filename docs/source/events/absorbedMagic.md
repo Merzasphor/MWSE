@@ -8,7 +8,7 @@ This event occurs once per effect restored, so a multi-effect spell may trigger 
 --- @param e absorbedMagicEventData
 local function absorbedMagicCallback(e)
 end
-event.register("absorbedMagic", absorbedMagicCallback)
+event.register(tes3.event.absorbedMagic, absorbedMagicCallback)
 ```
 
 !!! tip

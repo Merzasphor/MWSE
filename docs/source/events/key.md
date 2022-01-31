@@ -6,7 +6,7 @@ The key event fires when a key up or key down input is detected. It is preferred
 --- @param e keyEventData
 local function keyCallback(e)
 end
-event.register("key", keyCallback)
+event.register(tes3.event.key, keyCallback)
 ```
 
 !!! tip

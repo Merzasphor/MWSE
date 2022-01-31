@@ -6,7 +6,7 @@ This event is triggered on a collision and all the frames during the collision.
 --- @param e collisionEventData
 local function collisionCallback(e)
 end
-event.register("collision", collisionCallback)
+event.register(tes3.event.collision, collisionCallback)
 ```
 
 !!! tip

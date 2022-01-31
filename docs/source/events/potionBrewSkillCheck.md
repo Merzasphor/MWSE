@@ -6,7 +6,7 @@ This event is triggered when the player attempts to brew a potion. It controls b
 --- @param e potionBrewSkillCheckEventData
 local function potionBrewSkillCheckCallback(e)
 end
-event.register("potionBrewSkillCheck", potionBrewSkillCheckCallback)
+event.register(tes3.event.potionBrewSkillCheck, potionBrewSkillCheckCallback)
 ```
 
 !!! tip

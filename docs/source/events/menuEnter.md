@@ -6,7 +6,7 @@ The menuEnter event fires when the player enters menu mode.
 --- @param e menuEnterEventData
 local function menuEnterCallback(e)
 end
-event.register("menuEnter", menuEnterCallback)
+event.register(tes3.event.menuEnter, menuEnterCallback)
 ```
 
 !!! tip

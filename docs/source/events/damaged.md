@@ -6,7 +6,7 @@ The damaged event triggers after an actor has been damaged.
 --- @param e damagedEventData
 local function damagedCallback(e)
 end
-event.register("damaged", damagedCallback)
+event.register(tes3.event.damaged, damagedCallback)
 ```
 
 !!! tip

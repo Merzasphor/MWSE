@@ -6,7 +6,7 @@ This event is triggered when a mobile object collides with water and all the fra
 --- @param e collideWaterEventData
 local function collideWaterCallback(e)
 end
-event.register("collideWater", collideWaterCallback)
+event.register(tes3.event.collideWater, collideWaterCallback)
 ```
 
 !!! tip

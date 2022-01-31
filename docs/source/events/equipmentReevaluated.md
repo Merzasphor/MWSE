@@ -6,7 +6,7 @@ The **equipmentReevaluated** event fires after an actor has gone through its ite
 --- @param e equipmentReevaluatedEventData
 local function equipmentReevaluatedCallback(e)
 end
-event.register("equipmentReevaluated", equipmentReevaluatedCallback)
+event.register(tes3.event.equipmentReevaluated, equipmentReevaluatedCallback)
 ```
 
 !!! tip

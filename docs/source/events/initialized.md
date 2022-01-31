@@ -6,7 +6,7 @@ The initialized event fires when game code has finished initializing, and all .e
 --- @param e initializedEventData
 local function initializedCallback(e)
 end
-event.register("initialized", initializedCallback)
+event.register(tes3.event.initialized, initializedCallback)
 ```
 
 !!! tip

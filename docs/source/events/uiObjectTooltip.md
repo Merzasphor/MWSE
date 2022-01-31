@@ -6,7 +6,7 @@ The uiObjectTooltip event triggers when a new tooltip is displayed for all in-wo
 --- @param e uiObjectTooltipEventData
 local function uiObjectTooltipCallback(e)
 end
-event.register("uiObjectTooltip", uiObjectTooltipCallback)
+event.register(tes3.event.uiObjectTooltip, uiObjectTooltipCallback)
 ```
 
 !!! tip

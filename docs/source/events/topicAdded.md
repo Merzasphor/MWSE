@@ -6,7 +6,7 @@ This event is raised when the player gains access to a new dialogue topic.
 --- @param e topicAddedEventData
 local function topicAddedCallback(e)
 end
-event.register("topicAdded", topicAddedCallback)
+event.register(tes3.event.topicAdded, topicAddedCallback)
 ```
 
 !!! tip

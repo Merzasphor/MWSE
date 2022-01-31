@@ -6,7 +6,7 @@ The **weatherCycled** event occurs when region weathers are randomized. This occ
 --- @param e weatherCycledEventData
 local function weatherCycledCallback(e)
 end
-event.register("weatherCycled", weatherCycledCallback)
+event.register(tes3.event.weatherCycled, weatherCycledCallback)
 ```
 
 !!! tip

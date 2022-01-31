@@ -6,7 +6,7 @@ The menuExit event fires when the player leaves menu mode.
 --- @param e menuExitEventData
 local function menuExitCallback(e)
 end
-event.register("menuExit", menuExitCallback)
+event.register(tes3.event.menuExit, menuExitCallback)
 ```
 
 !!! tip

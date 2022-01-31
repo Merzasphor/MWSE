@@ -6,7 +6,7 @@ This event fires when a dialogue info object is filtered.
 --- @param e infoFilterEventData
 local function infoFilterCallback(e)
 end
-event.register("infoFilter", infoFilterCallback)
+event.register(tes3.event.infoFilter, infoFilterCallback)
 ```
 
 !!! tip

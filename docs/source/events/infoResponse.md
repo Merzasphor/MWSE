@@ -6,7 +6,7 @@ This event fires when a dialogue response is triggered.
 --- @param e infoResponseEventData
 local function infoResponseCallback(e)
 end
-event.register("infoResponse", infoResponseCallback)
+event.register(tes3.event.infoResponse, infoResponseCallback)
 ```
 
 !!! tip

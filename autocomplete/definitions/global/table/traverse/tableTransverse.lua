@@ -5,4 +5,4 @@ local function onLoaded()
 	end
 end
 
-event.register("loaded", onLoaded)
+event.register(tes3.event.loaded, onLoaded)

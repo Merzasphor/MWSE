@@ -6,7 +6,7 @@ The key event fires when a key is pressed.
 --- @param e keyDownEventData
 local function keyDownCallback(e)
 end
-event.register("keyDown", keyDownCallback)
+event.register(tes3.event.keyDown, keyDownCallback)
 ```
 
 !!! tip

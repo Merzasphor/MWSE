@@ -6,7 +6,7 @@ This event is triggered just before an on-strike or on-use enchantment is used b
 --- @param e enchantChargeUseEventData
 local function enchantChargeUseCallback(e)
 end
-event.register("enchantChargeUse", enchantChargeUseCallback)
+event.register(tes3.event.enchantChargeUse, enchantChargeUseCallback)
 ```
 
 !!! tip

@@ -6,7 +6,7 @@ This event is invoked when a rest is about to be interrupted. The ambushing spaw
 --- @param e restInterruptEventData
 local function restInterruptCallback(e)
 end
-event.register("restInterrupt", restInterruptCallback)
+event.register(tes3.event.restInterrupt, restInterruptCallback)
 ```
 
 !!! tip

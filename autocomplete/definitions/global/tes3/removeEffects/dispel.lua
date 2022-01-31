@@ -25,6 +25,6 @@ local function example(e)
 	end
 end
 
-event.register("initialized", function ()
-	event.register("calcMoveSpeed", example)
+event.register(tes3.event.initialized, function ()
+	event.register(tes3.event.calcMoveSpeed, example)
 end)

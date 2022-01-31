@@ -6,7 +6,7 @@ This event is raised when the potential activation target for the player changes
 --- @param e activationTargetChangedEventData
 local function activationTargetChangedCallback(e)
 end
-event.register("activationTargetChanged", activationTargetChangedCallback)
+event.register(tes3.event.activationTargetChanged, activationTargetChangedCallback)
 ```
 
 !!! tip

@@ -8,7 +8,7 @@ Weather will not start transitioning in interiors, but will continue transitioni
 --- @param e weatherTransitionStartedEventData
 local function weatherTransitionStartedCallback(e)
 end
-event.register("weatherTransitionStarted", weatherTransitionStartedCallback)
+event.register(tes3.event.weatherTransitionStarted, weatherTransitionStartedCallback)
 ```
 
 !!! tip

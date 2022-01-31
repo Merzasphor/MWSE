@@ -8,7 +8,7 @@ This can interrupt weather transitions, which means the [weatherTransitionFinish
 --- @param e weatherTransitionImmediateEventData
 local function weatherTransitionImmediateCallback(e)
 end
-event.register("weatherTransitionImmediate", weatherTransitionImmediateCallback)
+event.register(tes3.event.weatherTransitionImmediate, weatherTransitionImmediateCallback)
 ```
 
 !!! tip

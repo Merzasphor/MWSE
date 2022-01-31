@@ -6,7 +6,7 @@ This event is invoked whenever the player naturally gains a new level a skill. T
 --- @param e skillRaisedEventData
 local function skillRaisedCallback(e)
 end
-event.register("skillRaised", skillRaisedCallback)
+event.register(tes3.event.skillRaised, skillRaisedCallback)
 ```
 
 !!! tip

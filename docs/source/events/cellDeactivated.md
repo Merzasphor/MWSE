@@ -6,7 +6,7 @@ This event is triggered when a cell is deactivated.
 --- @param e cellDeactivatedEventData
 local function cellDeactivatedCallback(e)
 end
-event.register("cellDeactivated", cellDeactivatedCallback)
+event.register(tes3.event.cellDeactivated, cellDeactivatedCallback)
 ```
 
 !!! tip

@@ -6,7 +6,7 @@ The save event fires when the game is about to save. This event allows scripts t
 --- @param e saveEventData
 local function saveCallback(e)
 end
-event.register("save", saveCallback)
+event.register(tes3.event.save, saveCallback)
 ```
 
 !!! tip

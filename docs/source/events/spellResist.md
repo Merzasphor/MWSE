@@ -6,7 +6,7 @@ This event is used when calculating a creature's spell resistance, and allows Lu
 --- @param e spellResistEventData
 local function spellResistCallback(e)
 end
-event.register("spellResist", spellResistCallback)
+event.register(tes3.event.spellResist, spellResistCallback)
 ```
 
 !!! tip

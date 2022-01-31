@@ -6,7 +6,7 @@ This event is triggered just before the player levels up.
 --- @param e preLevelUpEventData
 local function preLevelUpCallback(e)
 end
-event.register("preLevelUp", preLevelUpCallback)
+event.register(tes3.event.preLevelUp, preLevelUpCallback)
 ```
 
 !!! tip

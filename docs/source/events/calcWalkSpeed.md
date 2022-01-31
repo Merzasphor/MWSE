@@ -13,7 +13,7 @@ The movement event flow is described below:
 --- @param e calcWalkSpeedEventData
 local function calcWalkSpeedCallback(e)
 end
-event.register("calcWalkSpeed", calcWalkSpeedCallback)
+event.register(tes3.event.calcWalkSpeed, calcWalkSpeedCallback)
 ```
 
 !!! tip

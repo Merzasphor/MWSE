@@ -10,4 +10,4 @@ local function myOnActivateCallback(e)
 		return false
 	end
 end
-event.register("activate", myOnActivateCallback)
+event.register(tes3.event.activate, myOnActivateCallback)

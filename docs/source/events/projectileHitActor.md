@@ -6,7 +6,7 @@ The projectileHitActor event fires when a projectile collides with an actor.
 --- @param e projectileHitActorEventData
 local function projectileHitActorCallback(e)
 end
-event.register("projectileHitActor", projectileHitActorCallback)
+event.register(tes3.event.projectileHitActor, projectileHitActorCallback)
 ```
 
 !!! tip

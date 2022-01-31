@@ -6,7 +6,7 @@ This event fires when an actor has determined an action in a combat session.
 --- @param e determinedActionEventData
 local function determinedActionCallback(e)
 end
-event.register("determinedAction", determinedActionCallback)
+event.register(tes3.event.determinedAction, determinedActionCallback)
 ```
 
 !!! tip

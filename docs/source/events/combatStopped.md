@@ -6,7 +6,7 @@ The **combatStopped** event occurs after an actor has left combat. This event is
 --- @param e combatStoppedEventData
 local function combatStoppedCallback(e)
 end
-event.register("combatStopped", combatStoppedCallback)
+event.register(tes3.event.combatStopped, combatStoppedCallback)
 ```
 
 !!! tip

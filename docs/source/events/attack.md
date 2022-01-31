@@ -6,7 +6,7 @@ This event is invoked whenever an actor makes an attack with their fists or a we
 --- @param e attackEventData
 local function attackCallback(e)
 end
-event.register("attack", attackCallback)
+event.register(tes3.event.attack, attackCallback)
 ```
 
 !!! tip

@@ -6,7 +6,7 @@ This event fires when an item in the barter menu is filtered.
 --- @param e filterBarterMenuEventData
 local function filterBarterMenuCallback(e)
 end
-event.register("filterBarterMenu", filterBarterMenuCallback)
+event.register(tes3.event.filterBarterMenu, filterBarterMenuCallback)
 ```
 
 !!! tip

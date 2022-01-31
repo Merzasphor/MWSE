@@ -6,7 +6,7 @@ The combatStop event occurs when an actor is about to leave combat. This event a
 --- @param e combatStopEventData
 local function combatStopCallback(e)
 end
-event.register("combatStop", combatStopCallback)
+event.register(tes3.event.combatStop, combatStopCallback)
 ```
 
 !!! tip

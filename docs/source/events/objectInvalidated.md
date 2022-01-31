@@ -6,7 +6,7 @@ This event is raised when reference is invalidated. This includes being removed 
 --- @param e objectInvalidatedEventData
 local function objectInvalidatedCallback(e)
 end
-event.register("objectInvalidated", objectInvalidatedCallback)
+event.register(tes3.event.objectInvalidated, objectInvalidatedCallback)
 ```
 
 !!! tip

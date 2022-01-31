@@ -6,7 +6,7 @@ This event fires immediately after a dialogue response is processed.
 --- @param e postInfoResponseEventData
 local function postInfoResponseCallback(e)
 end
-event.register("postInfoResponse", postInfoResponseCallback)
+event.register(tes3.event.postInfoResponse, postInfoResponseCallback)
 ```
 
 !!! tip

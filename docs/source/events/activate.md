@@ -14,7 +14,7 @@ Some examples of when the activate event fires includes:
 --- @param e activateEventData
 local function activateCallback(e)
 end
-event.register("activate", activateCallback)
+event.register(tes3.event.activate, activateCallback)
 ```
 
 !!! tip

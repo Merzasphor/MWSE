@@ -6,7 +6,7 @@
 --- @param e addTempSoundEventData
 local function addTempSoundCallback(e)
 end
-event.register("addTempSound", addTempSoundCallback)
+event.register(tes3.event.addTempSound, addTempSoundCallback)
 ```
 
 !!! tip

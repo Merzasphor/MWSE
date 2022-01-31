@@ -6,7 +6,7 @@ This event fires when an item in the inventory is filtered.
 --- @param e filterInventoryEventData
 local function filterInventoryCallback(e)
 end
-event.register("filterInventory", filterInventoryCallback)
+event.register(tes3.event.filterInventory, filterInventoryCallback)
 ```
 
 !!! tip

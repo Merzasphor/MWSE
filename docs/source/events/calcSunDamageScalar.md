@@ -6,7 +6,7 @@ calcSunDamageScalar is used when calculating the amount of damage to apply for t
 --- @param e calcSunDamageScalarEventData
 local function calcSunDamageScalarCallback(e)
 end
-event.register("calcSunDamageScalar", calcSunDamageScalarCallback)
+event.register(tes3.event.calcSunDamageScalar, calcSunDamageScalarCallback)
 ```
 
 !!! tip

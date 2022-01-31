@@ -5,4 +5,4 @@ function myOnKeyCallback(e)
 end
 
 -- Filter by the scan code to get Z key presses only.
-event.register("key", myOnKeyCallback, { filter = tes3.scanCode.z } )
+event.register(tes3.event.key, myOnKeyCallback, { filter = tes3.scanCode.z } )

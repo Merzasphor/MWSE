@@ -5,4 +5,4 @@ local function OnSpellFailed(e)
 	tes3.mobilePlayer:exerciseSkill(skill, 100)
 end
 
-event.register("spellCastedFailure", OnSpellFailed)
+event.register(tes3.event.spellCastedFailure, OnSpellFailed)

@@ -9,4 +9,4 @@ local function example(e)
 	e.text = newText
 end
 
-event.register("bookGetText", example)
+event.register(tes3.event.bookGetText, example)

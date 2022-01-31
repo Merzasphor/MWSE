@@ -6,7 +6,7 @@ Allows reading and overwriting body part assignments.
 --- @param e bodyPartAssignedEventData
 local function bodyPartAssignedCallback(e)
 end
-event.register("bodyPartAssigned", bodyPartAssignedCallback)
+event.register(tes3.event.bodyPartAssigned, bodyPartAssignedCallback)
 ```
 
 !!! tip

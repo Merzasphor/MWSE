@@ -8,7 +8,7 @@ This event is invoked after a UI menu has been built or made visible, at the poi
 --- @param e uiActivatedEventData
 local function uiActivatedCallback(e)
 end
-event.register("uiActivated", uiActivatedCallback)
+event.register(tes3.event.uiActivated, uiActivatedCallback)
 ```
 
 !!! tip

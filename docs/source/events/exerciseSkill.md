@@ -6,7 +6,7 @@ This event is invoked whenever the player gains experience in a skill. The event
 --- @param e exerciseSkillEventData
 local function exerciseSkillCallback(e)
 end
-event.register("exerciseSkill", exerciseSkillCallback)
+event.register(tes3.event.exerciseSkill, exerciseSkillCallback)
 ```
 
 !!! tip

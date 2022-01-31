@@ -8,7 +8,7 @@ This event is invoked after a UI menu has been created or recreated. This can be
 --- @param e uiRefreshedEventData
 local function uiRefreshedCallback(e)
 end
-event.register("uiRefreshed", uiRefreshedCallback)
+event.register(tes3.event.uiRefreshed, uiRefreshedCallback)
 ```
 
 !!! tip

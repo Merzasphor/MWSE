@@ -6,7 +6,7 @@ The mouseAxis event fires when the mouse is moved, providing deltaX and deltaY v
 --- @param e mouseAxisEventData
 local function mouseAxisCallback(e)
 end
-event.register("mouseAxis", mouseAxisCallback)
+event.register(tes3.event.mouseAxis, mouseAxisCallback)
 ```
 
 !!! tip

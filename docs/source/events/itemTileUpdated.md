@@ -6,7 +6,7 @@ This event is fired whenever an inventory item tile is updated, as well as when 
 --- @param e itemTileUpdatedEventData
 local function itemTileUpdatedCallback(e)
 end
-event.register("itemTileUpdated", itemTileUpdatedCallback)
+event.register(tes3.event.itemTileUpdated, itemTileUpdatedCallback)
 ```
 
 !!! tip

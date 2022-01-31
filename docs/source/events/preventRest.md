@@ -6,7 +6,7 @@ This event can be used to prevent player from resting by returning false.
 --- @param e preventRestEventData
 local function preventRestCallback(e)
 end
-event.register("preventRest", preventRestCallback)
+event.register(tes3.event.preventRest, preventRestCallback)
 ```
 
 !!! tip

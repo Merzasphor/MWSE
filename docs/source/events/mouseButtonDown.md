@@ -6,7 +6,7 @@ The mouseButtonDown event fires when a button on the mouse is pressed.
 --- @param e mouseButtonDownEventData
 local function mouseButtonDownCallback(e)
 end
-event.register("mouseButtonDown", mouseButtonDownCallback)
+event.register(tes3.event.mouseButtonDown, mouseButtonDownCallback)
 ```
 
 !!! tip

@@ -6,7 +6,7 @@ The enterFrame event occurs at the start of every frame, including when the game
 --- @param e enterFrameEventData
 local function enterFrameCallback(e)
 end
-event.register("enterFrame", enterFrameCallback)
+event.register(tes3.event.enterFrame, enterFrameCallback)
 ```
 
 !!! tip

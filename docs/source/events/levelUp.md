@@ -6,7 +6,7 @@ This even is called whenever the player successfully finishes leveling up.
 --- @param e levelUpEventData
 local function levelUpCallback(e)
 end
-event.register("levelUp", levelUpCallback)
+event.register(tes3.event.levelUp, levelUpCallback)
 ```
 
 !!! tip

@@ -6,7 +6,7 @@ The damageHandToHand event triggers before an actor takes fatigue damage from ha
 --- @param e damageHandToHandEventData
 local function damageHandToHandCallback(e)
 end
-event.register("damageHandToHand", damageHandToHandCallback)
+event.register(tes3.event.damageHandToHand, damageHandToHandCallback)
 ```
 
 !!! tip

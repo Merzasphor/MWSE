@@ -6,7 +6,7 @@ This event fires when an item is dropped.
 --- @param e itemDroppedEventData
 local function itemDroppedCallback(e)
 end
-event.register("itemDropped", itemDroppedCallback)
+event.register(tes3.event.itemDropped, itemDroppedCallback)
 ```
 
 !!! tip

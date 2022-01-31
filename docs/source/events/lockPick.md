@@ -6,7 +6,7 @@ This event fires when a lock is being picked.
 --- @param e lockPickEventData
 local function lockPickCallback(e)
 end
-event.register("lockPick", lockPickCallback)
+event.register(tes3.event.lockPick, lockPickCallback)
 ```
 
 !!! tip

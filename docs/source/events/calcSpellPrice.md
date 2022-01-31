@@ -6,7 +6,7 @@ This event is called when determining the cost of purchasing a spell. The price 
 --- @param e calcSpellPriceEventData
 local function calcSpellPriceCallback(e)
 end
-event.register("calcSpellPrice", calcSpellPriceCallback)
+event.register(tes3.event.calcSpellPrice, calcSpellPriceCallback)
 ```
 
 !!! tip

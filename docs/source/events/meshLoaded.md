@@ -6,7 +6,7 @@ This event is triggered when a mesh is loaded.
 --- @param e meshLoadedEventData
 local function meshLoadedCallback(e)
 end
-event.register("meshLoaded", meshLoadedCallback)
+event.register(tes3.event.meshLoaded, meshLoadedCallback)
 ```
 
 !!! tip

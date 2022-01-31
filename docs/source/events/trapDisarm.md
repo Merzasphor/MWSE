@@ -6,7 +6,7 @@ This event fires when a trap is being disarmed.
 --- @param e trapDisarmEventData
 local function trapDisarmCallback(e)
 end
-event.register("trapDisarm", trapDisarmCallback)
+event.register(tes3.event.trapDisarm, trapDisarmCallback)
 ```
 
 !!! tip

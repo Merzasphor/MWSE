@@ -6,7 +6,7 @@ This event is raised when determining the value of a soul, unmodified by GMSTs. 
 --- @param e calcSoulValueEventData
 local function calcSoulValueCallback(e)
 end
-event.register("calcSoulValue", calcSoulValueCallback)
+event.register(tes3.event.calcSoulValue, calcSoulValueCallback)
 ```
 
 !!! tip

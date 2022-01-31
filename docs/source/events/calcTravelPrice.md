@@ -6,7 +6,7 @@ This event is called when determining the price of traveling, and can be used to
 --- @param e calcTravelPriceEventData
 local function calcTravelPriceCallback(e)
 end
-event.register("calcTravelPrice", calcTravelPriceCallback)
+event.register(tes3.event.calcTravelPrice, calcTravelPriceCallback)
 ```
 
 !!! tip

@@ -8,7 +8,7 @@ The item must not be removed from the inventory during this event, as the item a
 --- @param e equipEventData
 local function equipCallback(e)
 end
-event.register("equip", equipCallback)
+event.register(tes3.event.equip, equipCallback)
 ```
 
 !!! tip

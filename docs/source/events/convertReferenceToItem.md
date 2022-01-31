@@ -6,7 +6,7 @@ This event is raised when an in-world `tes3reference` for an item is about to be
 --- @param e convertReferenceToItemEventData
 local function convertReferenceToItemCallback(e)
 end
-event.register("convertReferenceToItem", convertReferenceToItemCallback)
+event.register(tes3.event.convertReferenceToItem, convertReferenceToItemCallback)
 ```
 
 !!! tip

@@ -6,7 +6,7 @@ The **combatStarted** event occurs after combat has began between two actors. Th
 --- @param e combatStartedEventData
 local function combatStartedCallback(e)
 end
-event.register("combatStarted", combatStartedCallback)
+event.register(tes3.event.combatStarted, combatStartedCallback)
 ```
 
 !!! tip

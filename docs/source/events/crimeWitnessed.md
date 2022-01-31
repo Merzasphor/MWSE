@@ -6,7 +6,7 @@ This event fires when a crime is witnessed by an actor.
 --- @param e crimeWitnessedEventData
 local function crimeWitnessedCallback(e)
 end
-event.register("crimeWitnessed", crimeWitnessedCallback)
+event.register(tes3.event.crimeWitnessed, crimeWitnessedCallback)
 ```
 
 !!! tip

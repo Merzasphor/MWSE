@@ -6,7 +6,7 @@ The damage event triggers before an actor is damaged. The damage value can be mo
 --- @param e damageEventData
 local function damageCallback(e)
 end
-event.register("damage", damageCallback)
+event.register(tes3.event.damage, damageCallback)
 ```
 
 !!! tip

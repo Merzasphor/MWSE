@@ -6,7 +6,7 @@ This event fires when a dialogue info object text is retrieved.
 --- @param e infoGetTextEventData
 local function infoGetTextCallback(e)
 end
-event.register("infoGetText", infoGetTextCallback)
+event.register(tes3.event.infoGetText, infoGetTextCallback)
 ```
 
 !!! tip

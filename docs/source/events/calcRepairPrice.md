@@ -6,7 +6,7 @@ This event is called when determining the price of repairing an item. It can be 
 --- @param e calcRepairPriceEventData
 local function calcRepairPriceCallback(e)
 end
-event.register("calcRepairPrice", calcRepairPriceCallback)
+event.register(tes3.event.calcRepairPrice, calcRepairPriceCallback)
 ```
 
 !!! tip

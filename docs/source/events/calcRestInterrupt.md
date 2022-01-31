@@ -6,7 +6,7 @@ This event is called when the player is about to start resting. The hour and cou
 --- @param e calcRestInterruptEventData
 local function calcRestInterruptCallback(e)
 end
-event.register("calcRestInterrupt", calcRestInterruptCallback)
+event.register(tes3.event.calcRestInterrupt, calcRestInterruptCallback)
 ```
 
 !!! tip

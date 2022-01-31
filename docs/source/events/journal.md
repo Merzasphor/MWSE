@@ -6,7 +6,7 @@ The journal event is invoked when a journal state progresses.
 --- @param e journalEventData
 local function journalCallback(e)
 end
-event.register("journal", journalCallback)
+event.register(tes3.event.journal, journalCallback)
 ```
 
 !!! tip

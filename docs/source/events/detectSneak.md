@@ -6,7 +6,7 @@ This event is invoked whenever an actor is checking if they can detect another a
 --- @param e detectSneakEventData
 local function detectSneakCallback(e)
 end
-event.register("detectSneak", detectSneakCallback)
+event.register(tes3.event.detectSneak, detectSneakCallback)
 ```
 
 !!! tip

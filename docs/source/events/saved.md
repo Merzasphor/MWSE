@@ -6,7 +6,7 @@ The saved event fires after the game has successfully been saved. This event is 
 --- @param e savedEventData
 local function savedCallback(e)
 end
-event.register("saved", savedCallback)
+event.register(tes3.event.saved, savedCallback)
 ```
 
 !!! tip

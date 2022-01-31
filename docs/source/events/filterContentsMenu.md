@@ -6,7 +6,7 @@ This event fires when an item in the contents menu is filtered.
 --- @param e filterContentsMenuEventData
 local function filterContentsMenuCallback(e)
 end
-event.register("filterContentsMenu", filterContentsMenuCallback)
+event.register(tes3.event.filterContentsMenu, filterContentsMenuCallback)
 ```
 
 !!! tip

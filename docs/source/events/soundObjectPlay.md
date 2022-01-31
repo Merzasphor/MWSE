@@ -6,7 +6,7 @@
 --- @param e soundObjectPlayEventData
 local function soundObjectPlayCallback(e)
 end
-event.register("soundObjectPlay", soundObjectPlayCallback)
+event.register(tes3.event.soundObjectPlay, soundObjectPlayCallback)
 ```
 
 !!! tip

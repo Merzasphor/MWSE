@@ -6,7 +6,7 @@ The potionBrewed event is raised when the player brews a new potion.
 --- @param e potionBrewedEventData
 local function potionBrewedCallback(e)
 end
-event.register("potionBrewed", potionBrewedCallback)
+event.register(tes3.event.potionBrewed, potionBrewedCallback)
 ```
 
 !!! tip

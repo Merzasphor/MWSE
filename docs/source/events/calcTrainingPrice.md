@@ -6,7 +6,7 @@ This event is called when determining the cost of training, and can be used to m
 --- @param e calcTrainingPriceEventData
 local function calcTrainingPriceCallback(e)
 end
-event.register("calcTrainingPrice", calcTrainingPriceCallback)
+event.register(tes3.event.calcTrainingPrice, calcTrainingPriceCallback)
 ```
 
 !!! tip

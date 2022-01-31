@@ -6,7 +6,7 @@ The projectileHitTerrain event fires when a projectile collides with terrain.
 --- @param e projectileHitTerrainEventData
 local function projectileHitTerrainCallback(e)
 end
-event.register("projectileHitTerrain", projectileHitTerrainCallback)
+event.register(tes3.event.projectileHitTerrain, projectileHitTerrainCallback)
 ```
 
 !!! tip

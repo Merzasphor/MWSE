@@ -6,7 +6,7 @@ The unequipped event fires after an actor has successfully equipped an item.
 --- @param e unequippedEventData
 local function unequippedCallback(e)
 end
-event.register("unequipped", unequippedCallback)
+event.register(tes3.event.unequipped, unequippedCallback)
 ```
 
 !!! tip
