@@ -2736,6 +2736,58 @@ namespace mwse {
 			return soulGem->getValue() * baseValue;
 		}
 
+		__declspec(naked) void PatchGetSoulValueForRechargeTitle_Setup() {
+			__asm {
+				mov ecx, ebp // Size: 0x2
+			}
+		}
+
+		constexpr size_t PatchGetSoulValueForRechargeTitle_Setup_Size = 0x2;
+
+		int __fastcall PatchGetSoulValueForRechargeTitle(TES3::UI::InventoryTile* tile) {
+			auto actor = tile->itemData->soul;
+			if (actor->objectType == TES3::ObjectType::Creature) {
+				auto creature = static_cast<TES3::Creature*>(actor);
+				return creature->getSoulValue();
+			}
+			else if (actor->objectType == TES3::ObjectType::NPC) {
+				auto npc = static_cast<TES3::NPC*>(actor);
+				return npc->getSoulValue().value_or(0);
+			}
+			return 0;
+		}
+
+		const auto& TES3_UI_ID_MenuEnchantment_SoulGem = *reinterpret_cast<TES3::UI::UI_ID*>(0x7D35A6);
+		const auto& TES3_UI_ID_MenuEnchantment_Item = *reinterpret_cast<TES3::UI::Property*>(0x7D358C);
+		const auto& TES3_UI_ID_MenuEnchantment_soulcharge = *reinterpret_cast<TES3::UI::Property*>(0x7D36C4);
+		const auto& TES3_UI_ID_MenuEnchantment_Effect = *reinterpret_cast<TES3::UI::Property*>(0x7D36BA);
+
+		void __fastcall PatchSetCorrectSoulValueForEnchanting(TES3::UI::Element* self, DWORD _UNUSED_, char* text) {
+			// Get a hook to our soul gem so we can figure out its item data.
+			auto soulGemElement = self->getTopLevelParent()->findChild(TES3_UI_ID_MenuEnchantment_SoulGem);
+			auto itemData = reinterpret_cast<TES3::ItemData*>(soulGemElement->getProperty(TES3::UI::PropertyType::Pointer, TES3_UI_ID_MenuEnchantment_Item).ptrValue);
+
+			// Calculate the new soul value.
+			auto actor = itemData->soul;
+			int soulValue = 0;
+			if (itemData->soul->objectType == TES3::ObjectType::Creature) {
+				auto creature = static_cast<TES3::Creature*>(actor);
+				soulValue = creature->getSoulValue();
+			}
+			else if (itemData->soul->objectType == TES3::ObjectType::NPC) {
+				auto npc = static_cast<TES3::NPC*>(actor);
+				soulValue = npc->getSoulValue().value_or(0);
+			}
+
+			// Update the stored soul value on the GUI elements.
+			self->setProperty(TES3_UI_ID_MenuEnchantment_soulcharge, soulValue);
+			self->setProperty(TES3_UI_ID_MenuEnchantment_Effect, soulValue);
+
+			// Override replaced code, with the new value. The text buffer here is the thread safe game string buffer and can fit all values.
+			sprintf(text, "%d", soulValue);
+			self->setText(text);
+		}
+
 		//
 		// Fire an event when item tiles are updated.
 		//
@@ -4279,6 +4331,14 @@ namespace mwse {
 				writePatchCodeUnprotected(0x591759, (BYTE*)&PatchGetSoulValueForTooltip_NoMCPLoader, PatchGetSoulValueForTooltip_NoMCPLoader_Size);
 				genCallUnprotected(0x591759 + PatchGetSoulValueForTooltip_NoMCPLoader_Size, reinterpret_cast<DWORD>(PatchGetSoulValueForTooltip_NoMCP));
 			}
+
+			// Override actor soul value checking: enchanting
+			genCallEnforced(0x5C5E8F, 0x58AD30, reinterpret_cast<DWORD>(PatchSetCorrectSoulValueForEnchanting));
+
+			// Override actor soul value check: repair header
+			writePatchCodeUnprotected(0x60DCD3, (BYTE*)&PatchGetSoulValueForRechargeTitle_Setup, PatchGetSoulValueForRechargeTitle_Setup_Size);
+			genCallUnprotected(0x60DCD3 + PatchGetSoulValueForRechargeTitle_Setup_Size, reinterpret_cast<DWORD>(PatchGetSoulValueForRechargeTitle), 0x60DCE5 - 0x60DCD3 - PatchGetSoulValueForRechargeTitle_Setup_Size);
+
 
 			// Patch reading correct light culling radius from non-light entities during light updates.
 			writePatchCodeUnprotected(0x485DAD, (BYTE*)&patchGetEntityLightRadius, patchGetEntityLightRadius_size);
