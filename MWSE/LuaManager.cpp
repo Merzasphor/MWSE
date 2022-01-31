@@ -2652,31 +2652,41 @@ namespace mwse {
 			element->setProperty(property, value, type);
 		}
 
-		TES3::Creature PatchGetAliasedSoulValueProperty_AliasedCreature;
+		static TES3::Creature PatchGetAliasedSoulValueProperty_AliasedCreature;
+		static bool PatchGetAliasedSoulValueProperty_UseAliasedCreature = false;
 
-		TES3::UI::PropertyValue* __fastcall PatchGetAliasedSoulValueProperty(const TES3::UI::Element* self, DWORD _UNUSED_, TES3::UI::PropertyValue* propValue, TES3::UI::Property prop, TES3::UI::PropertyType propType, const TES3::UI::Element* element, bool checkInherited) {
-			auto result = self->getProperty(propValue, prop, propType, element, checkInherited);
+		TES3::UI::PropertyValue* __fastcall PatchGetAliasedSoulValueProperty_GetRepairTool(const TES3::UI::Element* self, DWORD _UNUSED_, TES3::UI::PropertyValue* propValue, TES3::UI::Property prop, TES3::UI::PropertyType propType, const TES3::UI::Element* element, bool checkInherited) {
+			// Get the original value.
+			auto value = self->getProperty(propValue, prop, propType, element, checkInherited);
 
-			auto actor = static_cast<TES3::Actor*>(result->ptrValue);
-			if (actor) {
-				if (actor->objectType == TES3::ObjectType::Creature) {
-					PatchGetAliasedSoulValueProperty_AliasedCreature.soul = static_cast<TES3::Creature*>(actor)->getSoulValue();
-					result->ptrValue = &PatchGetAliasedSoulValueProperty_AliasedCreature;
-				}
-				else if (actor->objectType == TES3::ObjectType::NPC) {
-					auto maybeSoulValue = static_cast<TES3::NPC*>(actor)->getSoulValue();
-					if (maybeSoulValue) {
-						PatchGetAliasedSoulValueProperty_AliasedCreature.soul = maybeSoulValue.value();
-						result->ptrValue = &PatchGetAliasedSoulValueProperty_AliasedCreature;
-					}
-					else {
-						result->ptrValue = nullptr;
-					}
-				}
+			// Determine if we need a patch or not.
+			auto repairTool = reinterpret_cast<TES3::Item*>(value->ptrValue);
+			PatchGetAliasedSoulValueProperty_UseAliasedCreature = repairTool && repairTool->objectType == TES3::ObjectType::Misc;
 
+			return value;
+		}
+
+		TES3::UI::PropertyValue* __fastcall PatchGetAliasedSoulValueProperty_GetRepairItemData(const TES3::UI::Element* self, DWORD _UNUSED_, TES3::UI::PropertyValue* propValue, TES3::UI::Property prop, TES3::UI::PropertyType propType, const TES3::UI::Element* element, bool checkInherited) {
+			// Do we need to set our aliased soul?
+			auto value = self->getProperty(propValue, prop, propType, element, checkInherited);
+			if (!PatchGetAliasedSoulValueProperty_UseAliasedCreature) {
+				return value;
 			}
 
-			return result;
+			// Change the soul to the aliased creature. The item will be destroyed (or the value unset) soon,
+			// but we must make sure that future events don't require the original value.
+			auto itemData = reinterpret_cast<TES3::ItemData*>(value->ptrValue);
+			auto actor = itemData->soul;
+			if (actor->objectType == TES3::ObjectType::Creature) {
+				PatchGetAliasedSoulValueProperty_AliasedCreature.soul = static_cast<TES3::Creature*>(actor)->getSoulValue();
+				itemData->soul = &PatchGetAliasedSoulValueProperty_AliasedCreature;
+			}
+			else if (actor->objectType == TES3::ObjectType::NPC) {
+				PatchGetAliasedSoulValueProperty_AliasedCreature.soul = static_cast<TES3::NPC*>(actor)->getSoulValue().value_or(0);
+				itemData->soul = &PatchGetAliasedSoulValueProperty_AliasedCreature;
+			}
+
+			return value;
 		}
 
 		__declspec(naked) void PatchGetSoulValueForTooltip_LoadObject() {
@@ -4320,7 +4330,8 @@ namespace mwse {
 			genCallEnforced(0x5C5E87, 0x581F30, reinterpret_cast<DWORD>(PatchSetSoulValueProperty));
 
 			// Override actor soul value checking: recharging
-			genCallEnforced(0x60E2D8, 0x581440, reinterpret_cast<DWORD>(PatchGetAliasedSoulValueProperty));
+			genCallEnforced(0x60E2D8, 0x581440, reinterpret_cast<DWORD>(PatchGetAliasedSoulValueProperty_GetRepairTool));
+			genCallEnforced(0x60E2FC, 0x581440, reinterpret_cast<DWORD>(PatchGetAliasedSoulValueProperty_GetRepairItemData));
 
 			// Override actor soul value check: tooltip
 			if (genCallEnforced(0x591760, 0x73658C, reinterpret_cast<DWORD>(PatchGetSoulValueForTooltip))) {
