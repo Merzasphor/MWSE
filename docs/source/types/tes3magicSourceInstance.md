@@ -323,8 +323,43 @@ local result = tes3magicSourceInstance:getMagnitudeForIndex(index)
 This function plays an animation for an effect from the `tes3magicSourceInstance` object.
 
 ```lua
-tes3magicSourceInstance:playVisualEffect()
+tes3magicSourceInstance:playVisualEffect({ effectIndex = ..., position = ..., visual = ..., duration = ..., reference = ... })
 ```
+
+**Parameters**:
+
+* `params` (table)
+	* `effectIndex` (number): The index in the effect whose visual will be played, a number in range [0, 7].
+	* `position` ([tes3vector3](../../types/tes3vector3), table): A table or a `tes3vector3` holding `x`, `y` and `z` coordinates at which the visual effect will be played.
+	* `visual` ([tes3physicalObject](../../types/tes3physicalObject), string): The visual effect to be played.
+	* `duration` (number): *Default*: `1`. For how long the visual effect will be played. Measured in seconds.
+	* `reference` ([tes3reference](../../types/tes3reference), string): A reference on which the visual effect will be played.
+
+??? example "Example: Plays the soul trap effect if the player kills a target that is affected by vampirism."
+
+	```lua
+	local function onDamaged(e)
+	    -- Check if we killed our target with this damage.
+		if e.killingBlow then
+	        -- Iterate through the killed target's active magic effects.
+			for _, activeMagicEffect in pairs(e.mobile.activeMagicEffectList) do
+	            -- Check if the target is a vampire.
+				if activeMagicEffect.effectId == tes3.effect.vampirism then
+	                -- Play the soul trap visual effect at the position of the target.
+					activeMagicEffect.instance:playVisualEffect{
+						effectIndex = 0,
+						position = e.mobile.position,
+						visual = "VFX_Soul_Trap"
+					}
+					break
+				end
+			end
+		end
+	end
+	
+	event.register("damaged", onDamaged)
+
+	```
 
 ***
 
