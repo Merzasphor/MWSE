@@ -1,4 +1,4 @@
-function myOnKeyCallback(e)
+local function myOnKeyCallback(e)
 	if( e.isControlDown ) then
 		tes3.messageBox({ message = "You pressed Ctrl-Z, but you can't undo all your mistakes." })
 	end

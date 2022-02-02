@@ -253,7 +253,7 @@ The path to the object's mesh.
 
 **Returns**:
 
-* `result` ([tes3mobileCreature](../../types/tes3mobileCreature), [tes3mobileNPC](../../types/tes3mobileNPC), [tes3mobilePlayer](../../types/tes3mobilePlayer), [tes3mobileProjectile](../../types/tes3mobileProjectile), tes3mobileSpell, nil)
+* `result` ([tes3mobileCreature](../../types/tes3mobileCreature), [tes3mobileNPC](../../types/tes3mobileNPC), [tes3mobilePlayer](../../types/tes3mobilePlayer), [tes3mobileProjectile](../../types/tes3mobileProjectile), [tes3mobileSpellProjectile](../../types/tes3mobileSpellProjectile), nil)
 
 ***
 

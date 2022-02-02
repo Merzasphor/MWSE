@@ -28,5 +28,5 @@ return {
 			description = "One of two undefined variables related to the event.",
 		},
 	},
-	blockable = true,
+	blockable = true, --This line causes warning: Duplicate defined fields `block`
 }
