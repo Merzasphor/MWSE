@@ -311,6 +311,8 @@ function tes3.addMagicEffect(params) end
 --- @field onCollision function *Optional*. A function which will be called when a spell containing this spell effect collides with something.
 
 --- Causes a misc item to be recognized as a soul gem, so that it can be used for soul trapping.
+---
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3/#tes3addsoulgem).
 --- @param params tes3.addSoulGem.params This table accepts the following values:
 --- 
 --- `item`: tes3misc|string — The item to recognize as a soul gem.
