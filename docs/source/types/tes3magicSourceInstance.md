@@ -323,7 +323,7 @@ local result = tes3magicSourceInstance:getMagnitudeForIndex(index)
 This function plays an animation for an effect from the `tes3magicSourceInstance` object.
 
 ```lua
-tes3magicSourceInstance:playVisualEffect({ effectIndex = ..., position = ..., visual = ..., duration = ..., reference = ... })
+tes3magicSourceInstance:playVisualEffect({ effectIndex = ..., position = ..., visual = ..., scale = ..., reference = ... })
 ```
 
 **Parameters**:
@@ -332,7 +332,7 @@ tes3magicSourceInstance:playVisualEffect({ effectIndex = ..., position = ..., vi
 	* `effectIndex` (number): The index in the effect whose visual will be played, a number in range [0, 7].
 	* `position` ([tes3vector3](../../types/tes3vector3), table): A table or a `tes3vector3` holding `x`, `y` and `z` coordinates at which the visual effect will be played.
 	* `visual` ([tes3physicalObject](../../types/tes3physicalObject), string): The visual effect to be played.
-	* `duration` (number): *Default*: `1`. For how long the visual effect will be played. Measured in seconds.
+	* `scale` (number): *Default*: `1`. The scale of the effect. Only applies to effects that are designed to be scaled.
 	* `reference` ([tes3reference](../../types/tes3reference), string): A reference on which the visual effect will be played.
 
 ??? example "Example: Plays the soul trap effect if the player kills a target that is affected by vampirism."
