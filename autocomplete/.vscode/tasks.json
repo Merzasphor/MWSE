@@ -7,7 +7,7 @@
 			"label": "Build Autocomplete",
 			"type": "shell",
 			"group": "build",
-			"command": "lua",
+			"command": ".\\lua\\lua.exe",
 			"args": [
 				".\\builders\\emmy.lua"
 			],
@@ -16,7 +16,7 @@
 		{
 			"label": "Build mkdocs",
 			"type": "shell",
-			"command": "lua",
+			"command": ".\\lua\\lua.exe",
 			"args": [
 				".\\builders\\mkdocs.lua"
 			],
@@ -26,7 +26,7 @@
 		{
 			"label": "Build ReadTheDocs",
 			"type": "shell",
-			"command": "lua",
+			"command": ".\\lua\\lua.exe",
 			"args": [
 				".\\builders\\readthedocs.lua"
 			],
