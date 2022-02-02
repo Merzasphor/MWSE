@@ -70,7 +70,7 @@ A value in the range [0, 1]. The (relative) maximum distance setting for AI simu
 
 **Returns**:
 
-* `result` (tes3global)
+* `result` ([tes3globalVariable](../../types/tes3globalVariable))
 
 ***
 
@@ -120,7 +120,7 @@ If the target crosshair is disabled. Corresponds to the "Crosshair" option in th
 
 **Returns**:
 
-* `result` (tes3global)
+* `result` ([tes3globalVariable](../../types/tes3globalVariable))
 
 ***
 
@@ -130,7 +130,7 @@ If the target crosshair is disabled. Corresponds to the "Crosshair" option in th
 
 **Returns**:
 
-* `result` (tes3global)
+* `result` ([tes3globalVariable](../../types/tes3globalVariable))
 
 ***
 
@@ -330,7 +330,7 @@ A number in the range [0, 2]. The delay in seconds before a tooltip appears. Cor
 
 **Returns**:
 
-* `result` (tes3global)
+* `result` ([tes3globalVariable](../../types/tes3globalVariable))
 
 ***
 
@@ -500,7 +500,7 @@ The sound played when a weapon fails its to-hit check.
 
 **Returns**:
 
-* `result` (tes3global)
+* `result` ([tes3globalVariable](../../types/tes3globalVariable))
 
 ***
 
@@ -510,7 +510,7 @@ The sound played when a weapon fails its to-hit check.
 
 **Returns**:
 
-* `result` (tes3global)
+* `result` ([tes3globalVariable](../../types/tes3globalVariable))
 
 ***
 
@@ -725,7 +725,7 @@ When true, the game simulation loop will stop. Not normally used, and may have o
 
 **Returns**:
 
-* `result` (tes3global)
+* `result` ([tes3globalVariable](../../types/tes3globalVariable))
 
 ***
 
@@ -825,7 +825,7 @@ The camera FOV when the player is a werewolf.
 
 **Returns**:
 
-* `result` (tes3global)
+* `result` ([tes3globalVariable](../../types/tes3globalVariable))
 
 ***
 

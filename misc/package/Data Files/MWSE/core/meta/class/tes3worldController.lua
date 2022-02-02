@@ -8,13 +8,13 @@
 --- @field audioController tes3audioController *Read-only*. The audio controller.
 --- @field blindnessFader tes3fader *Read-only*. Screen overlay fader for the blind effect.
 --- @field characterRenderTarget tes3worldControllerRenderTarget *Read-only*. 
---- @field charGenState tes3global *Read-only*. The `charGenState` global variable. Indicates progress through character generation. Has a value of `-1` when chargen is complete.
+--- @field charGenState tes3globalVariable *Read-only*. The `charGenState` global variable. Indicates progress through character generation. Has a value of `-1` when chargen is complete.
 --- @field countMusicTracksBattle number *Read-only*. The number of available battle music tracks.
 --- @field countMusicTracksExplore number *Read-only*. The number of available explore music tracks.
 --- @field criticalDamageSound tes3sound The sound played when an actor takes damage from a critical hit. It plays instead of the normal health damage sound.
 --- @field cursorOff boolean If the target crosshair is disabled. Corresponds to the "Crosshair" option in the Options menu.
---- @field day tes3global *Read-only*. The `Day` global variable, indicating the current day. Day numbering starts at `1` for the first day of a month.
---- @field daysPassed tes3global *Read-only*. The `DaysPassed` global variable, indicating the days passed since the game started for this character.
+--- @field day tes3globalVariable *Read-only*. The `Day` global variable, indicating the current day. Day numbering starts at `1` for the first day of a month.
+--- @field daysPassed tes3globalVariable *Read-only*. The `DaysPassed` global variable, indicating the days passed since the game started for this character.
 --- @field deadFloatScale number 
 --- @field defaultLandSound tes3sound 
 --- @field defaultLandWaterSound tes3sound 
@@ -34,7 +34,7 @@
 --- @field heavyArmorHitSound tes3sound The sound played when a heavy armor piece is hit.
 --- @field helpDelay number A number in the range [0, 2]. The delay in seconds before a tooltip appears. Corresponds to the "Menu help delay" option in the Options menu.
 --- @field hitFader tes3fader *Read-only*. Screen overlay fader that pulses when damage is taken.
---- @field hour tes3global *Read-only*. The `GameHour` global variable, indicating the time of day.
+--- @field hour tes3globalVariable *Read-only*. The `GameHour` global variable, indicating the time of day.
 --- @field hudStyle number No known effect.
 --- @field inputController tes3inputController *Read-only*. The controller responsible for player input.
 --- @field instance HINSTANCE *Read-only*. 
@@ -51,8 +51,8 @@
 --- @field menuSizeSound tes3sound Unused sound. Not used when a menu is resized.
 --- @field missSound tes3sound The sound played when a weapon fails its to-hit check.
 --- @field mobController tes3mobController *Read-only*. The controller responsible for mobile objects and collision.
---- @field month tes3global *Read-only*. The `Month` global variable, indicating the current month. Month numbering starts at `0` for the first month, Morning Star.
---- @field monthsToRespawn tes3global *Read-only*. The `monthsToRespawn` global variable, used by the game to count the time left until containers are respawned. This is decremented at the end of a month (or end of a day with the appropriate MCP option). When it reaches `0`, containers are respawned.
+--- @field month tes3globalVariable *Read-only*. The `Month` global variable, indicating the current month. Month numbering starts at `0` for the first month, Morning Star.
+--- @field monthsToRespawn tes3globalVariable *Read-only*. The `monthsToRespawn` global variable, used by the game to count the time left until containers are respawned. This is decremented at the end of a month (or end of a day with the appropriate MCP option). When it reaches `0`, containers are respawned.
 --- @field mouseSensitivityX number The horizontal camera rotation sensitivity. Corresponds to the "Horizontal sensitivity" option in the Options menu.
 --- @field mouseSensitivityY number The vertical camera rotation sensitivity. Corresponds to the "Vertical sensitivity" option in the Options menu.
 --- @field musicSituation number The kind of music being played. Only updates when music is not muted.
@@ -78,7 +78,7 @@
 --- @field stopGameLoop boolean When true, the game simulation loop will stop. Not normally used, and may have other unknown effects.
 --- @field sunglareFader tes3fader *Read-only*. Screen overlay fader for sunglare.
 --- @field systemTime number *Read-only*. Time in milliseconds since the program was started.
---- @field timescale tes3global *Read-only*. The `timescale` global variable. Used to convert real time to in-game time.
+--- @field timescale tes3globalVariable *Read-only*. The `timescale` global variable. Used to convert real time to in-game time.
 --- @field transitionFader tes3fader *Read-only*. Screen overlay fader for cell transitions.
 --- @field useBestAttack boolean Automatically choose the best attack direction for attacks. Corresponds to the "Always use best attack" option in the Options menu.
 --- @field viewHeight number *Read-only*. The height of the UI viewport in pixels. Affected by UI scaling. For screen resolution, use [`tes3.getViewportSize()`](https://mwse.github.io/MWSE/apis/tes3/#tes3getviewportsize).
@@ -88,7 +88,7 @@
 --- @field werewolfFader tes3fader *Read-only*. Screen overlay fader for werewolf vision.
 --- @field werewolfFOV number The camera FOV when the player is a werewolf.
 --- @field worldCamera tes3worldControllerRenderCamera *Read-only*. The access to the world camera.
---- @field year tes3global *Read-only*. The `Year` global variable, indicating the current year.
+--- @field year tes3globalVariable *Read-only*. The `Year` global variable, indicating the current year.
 tes3worldController = {}
 
 --- This function applies an enchantment's effects to a scene node.

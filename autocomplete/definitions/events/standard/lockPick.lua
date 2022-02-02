@@ -8,7 +8,7 @@ return {
 			description = "The reference that triggered the event (container, door, etc.).",
 		},
 		["lockData"] = {
-			type = "tes3lockAttachmentNode",
+			type = "tes3lockNode",
 			readOnly = true,
 			description = "The lock data of the reference.",
 		},

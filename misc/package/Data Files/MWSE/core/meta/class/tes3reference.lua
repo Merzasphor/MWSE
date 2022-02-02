@@ -23,7 +23,7 @@
 --- @field light niPointLight|niSpotLight *Read-only*. Direct access to the scene graph light, if a dynamic light is set.
 --- @field lockNode tes3lockNode *Read-only*. Quick access to the reference's lock node, if any.
 --- @field mesh string The path to the object's mesh.
---- @field mobile tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3mobilePlayer|tes3mobileProjectile|tes3mobileSpellProjectile|tes3mobileSpell|nil *Read-only*. Access to the attached mobile object, if applicable.
+--- @field mobile tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3mobilePlayer|tes3mobileProjectile|tes3mobileSpellProjectile|tes3mobileSpellProjectile|nil *Read-only*. Access to the attached mobile object, if applicable.
 --- @field nextNode tes3reference *Read-only*. The next reference in the parent reference list.
 --- @field nodeData tes3reference *Read-only*. Redundant access to this object, for iterating over a tes3referenceList.
 --- @field object tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon *Read-only*. The object that the reference is for, such as a weapon, armor, or actor.
