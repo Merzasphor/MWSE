@@ -14,4 +14,4 @@ layout         | layout
 model          | model
 rect           | rect
 image          | image
-mtextodel      | text
+text           | text
