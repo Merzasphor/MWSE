@@ -5,7 +5,7 @@ return {
 	Custom widget properties:
 		| `number`_ (integer) `element.widget.lengthLimit`: Maximum input length. Default is `1023`.]],
 	arguments = {
-		{ name = "id", type = "number", description = "A registered identifier to help find this element later.", optional = true },
+		{ name = "id", type = "string|number", description = "An identifier to help find this element later.", optional = true },
 	},
 	valuetype = "tes3uiElement",
 }

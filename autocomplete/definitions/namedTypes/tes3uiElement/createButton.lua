@@ -14,7 +14,7 @@ return {
 		| `table`_ (float[3]) `element.widget.overActive`: Text colour for active state, on mouseOver.
 		| `table`_ (float[3]) `element.widget.pressedActive`: Text colour for active state, on mouseDown.]],
 	arguments = {
-		{ name = "id", type = "number", description = "A registered identifier to help find this element later.", optional = true },
+		{ name = "id", type = "string|number", description = "An identifier to help find this element later.", optional = true },
 	},
 	valuetype = "tes3uiElement",
 }

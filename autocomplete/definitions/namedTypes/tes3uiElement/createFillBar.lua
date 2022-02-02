@@ -9,7 +9,7 @@ return {
 		| `table`_ (float[3]) `element.widget.fillColor`: Colour of filled area.
 		| `number`_ (float) `element.widget.fillAlpha`: Alpha transparency of filled area.]],
 	arguments = {
-		{ name = "id", type = "number", description = "A registered identifier to help find this element later.", optional = true },
+		{ name = "id", type = "string|number", description = "An identifier to help find this element later.", optional = true },
 		{ name = "current", type = "number", description = "The initial current value.", optional = true },
 		{ name = "max", type = "number", description = "The initial maximum value.", optional = true },
 	},
