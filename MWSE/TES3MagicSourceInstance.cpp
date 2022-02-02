@@ -141,6 +141,11 @@ namespace TES3 {
 			throw std::invalid_argument("Invalid 'effectIndex' parameter. Must be a number between 0 and 7.");
 		}
 
+		float scale = mwse::lua::getOptionalParam<int>(params, "scale", 1.0);
+		if (scale < 0) {
+			throw std::invalid_argument("Invalid 'scale' parameter. Must be a positive number.");
+		}
+
 		auto position = mwse::lua::getOptionalParamVector3(params, "position");
 		if (!position) {
 			throw std::invalid_argument("Invalid 'position' parameter. Must be a table[3] or tes3vector3.");
@@ -151,10 +156,9 @@ namespace TES3 {
 			throw std::invalid_argument("Invalid 'visual' parameter. Must be a valid tes3physicalObject or string that can resolve into one.");
 		}
 
-		float duration = mwse::lua::getOptionalParam<float>(params, "duration", 1.0f);
 		TES3::Reference* reference = mwse::lua::getOptionalParamExecutionReference(params);
 
-		playSpellVFX(duration, position.value(), reference, 0, visual, effectIndex, 0);
+		playSpellVFX(scale, position.value(), reference, 0, visual, effectIndex, 0);
 	}
 }
 
