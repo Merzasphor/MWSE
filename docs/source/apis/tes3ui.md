@@ -80,7 +80,7 @@ local result = tes3ui.createHelpLayerMenu({ id = ... })
 **Parameters**:
 
 * `params` (table)
-	* `id` (number): The menu’s ID. The menu can be later accessed by tes3ui.findHelpLayerMenu(id).
+	* `id` (string, number): The menu’s ID. The menu can be later accessed by tes3ui.findHelpLayerMenu(id).
 
 **Returns**:
 
@@ -99,7 +99,7 @@ local result = tes3ui.createMenu({ id = ..., dragFrame = ..., fixedFrame = ..., 
 **Parameters**:
 
 * `params` (table)
-	* `id` (number): The menu’s ID. The menu can be later accessed by tes3ui.findMenu(id).
+	* `id` (string, number): The menu’s ID. The menu can be later accessed by tes3ui.findMenu(id).
 	* `dragFrame` (boolean): Constructs a draggable and resizeable frame and background for the menu. It is similar to the stats, inventory, magic and map menus in the standard UI. After construction, position and minimum dimensions should be set.
 	* `fixedFrame` (boolean): Constructs a fixed (non-draggable) frame and background for the menu. The layout system should automatically centre and size it to fit whatever is added to the menu.
 	* `loadable` (boolean): *Default*: `true`. If set to false, calls to loadMenuPosition will fail.
@@ -153,7 +153,7 @@ local result = tes3ui.enterMenuMode(id)
 
 **Parameters**:
 
-* `id` (number)
+* `id` (string, number)
 
 **Returns**:
 
@@ -171,7 +171,7 @@ local result = tes3ui.findHelpLayerMenu(id)
 
 **Parameters**:
 
-* `id` (number)
+* `id` (string, number)
 
 **Returns**:
 
@@ -189,7 +189,7 @@ local result = tes3ui.findMenu(id)
 
 **Parameters**:
 
-* `id` (number): The ID of the menu to locate.
+* `id` (string, number): The ID of the menu to locate.
 
 **Returns**:
 

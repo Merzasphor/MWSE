@@ -29,18 +29,18 @@ function tes3ui.closeJournal() end
 --- Unlike standard menus, help layer menus are always created with a fixed frame.
 --- @param params tes3ui.createHelpLayerMenu.params This table accepts the following values:
 --- 
---- `id`: number — The menu’s ID. The menu can be later accessed by tes3ui.findHelpLayerMenu(id).
+--- `id`: string|number — The menu’s ID. The menu can be later accessed by tes3ui.findHelpLayerMenu(id).
 --- @return tes3uiElement result No description yet available.
 function tes3ui.createHelpLayerMenu(params) end
 
 ---Table parameter definitions for `tes3ui.createHelpLayerMenu`.
 --- @class tes3ui.createHelpLayerMenu.params
---- @field id number The menu’s ID. The menu can be later accessed by tes3ui.findHelpLayerMenu(id).
+--- @field id string|number The menu’s ID. The menu can be later accessed by tes3ui.findHelpLayerMenu(id).
 
 --- Creates a top-level menu.
 --- @param params tes3ui.createMenu.params This table accepts the following values:
 --- 
---- `id`: number — The menu’s ID. The menu can be later accessed by tes3ui.findMenu(id).
+--- `id`: string|number — The menu’s ID. The menu can be later accessed by tes3ui.findMenu(id).
 --- 
 --- `dragFrame`: boolean — Constructs a draggable and resizeable frame and background for the menu. It is similar to the stats, inventory, magic and map menus in the standard UI. After construction, position and minimum dimensions should be set.
 --- 
@@ -52,7 +52,7 @@ function tes3ui.createMenu(params) end
 
 ---Table parameter definitions for `tes3ui.createMenu`.
 --- @class tes3ui.createMenu.params
---- @field id number The menu’s ID. The menu can be later accessed by tes3ui.findMenu(id).
+--- @field id string|number The menu’s ID. The menu can be later accessed by tes3ui.findMenu(id).
 --- @field dragFrame boolean Constructs a draggable and resizeable frame and background for the menu. It is similar to the stats, inventory, magic and map menus in the standard UI. After construction, position and minimum dimensions should be set.
 --- @field fixedFrame boolean Constructs a fixed (non-draggable) frame and background for the menu. The layout system should automatically centre and size it to fit whatever is added to the menu.
 --- @field loadable boolean *Default*: `true`. If set to false, calls to loadMenuPosition will fail.
@@ -74,17 +74,17 @@ function tes3ui.createTooltipMenu(params) end
 --- @field itemData tes3itemData *Optional*. The item data for the item.
 
 --- Requests menu mode be activated on a menu with a given id.
---- @param id number No description yet available.
+--- @param id string|number No description yet available.
 --- @return boolean result No description yet available.
 function tes3ui.enterMenuMode(id) end
 
 --- Locates a help layer menu through its id. Help layer menus include notifications and tooltips that are always above the rest of the interface. The game realizes this using a separate menu root and set of functions.
---- @param id number No description yet available.
+--- @param id string|number No description yet available.
 --- @return tes3uiElement result No description yet available.
 function tes3ui.findHelpLayerMenu(id) end
 
 --- Locates a top-level menu through its id.
---- @param id number The ID of the menu to locate.
+--- @param id string|number The ID of the menu to locate.
 --- @return tes3uiElement result No description yet available.
 function tes3ui.findMenu(id) end
 
