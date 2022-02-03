@@ -2,20 +2,13 @@ return {
 	type = "method",
 	description = [[Creates a horizontal slider.
 
-	Custom widget properties:
-		| `number`_ (integer) `element.widget.current`: Current value.
-		| `number`_ (integer) `element.widget.max`: Maximum value.
-		| `number`_ (integer) `element.widget.step`: Amount changed by left and right arrow buttons.
-		| `number`_ (integer) `element.widget.jump`: Amount changed by clicking inside the slider area.
-
-	Custom events used with register:
-		| `"PartScrollBar_changed"`: Triggers on value change; moving the slider is not enough if the value is the same.]],
+Slider specific properties can be accessed through the `widget` property. The widget type for sliders is [`tes3uiSlider`](https://mwse.github.io/MWSE/types/tes3uiSlider/).]],
 	arguments = {
 		{ name = "id", type = "string|number", description = "An identifier to help find this element later.", optional = true },
-		{ name = "current", type = "number", description = "The initial value for the slider." },
-		{ name = "max", type = "number", description = "The maximum value for the slider." },
-		{ name = "step", type = "number", description = "Amount changed by left and right arrow buttons.", optional = true },
-		{ name = "jump", type = "number", description = "Amount changed by clicking inside the slider area.", optional = true },
+		{ name = "current", type = "number", description = "The current value of the slider." },
+		{ name = "max", type = "number", description = "The maximum value of the slider." },
+		{ name = "step", type = "number", description = "The change in value when clicking the left and right arrow buttons.", optional = true, default = 1 },
+		{ name = "jump", type = "number", description = "The change in value when clicking into the empty areas next to the slider handle.", optional = true, default = 5 },
 	},
 	valuetype = "tes3uiElement",
 }

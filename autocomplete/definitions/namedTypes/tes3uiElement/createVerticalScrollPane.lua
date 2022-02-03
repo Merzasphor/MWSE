@@ -2,12 +2,7 @@ return {
 	type = "method",
 	description = [[Creates a vertically scrolling pane. Useful as a list box.
 
-	Custom widget properties:
-		| `number`_ `element.widget.positionY`: Vertical scroll offset in pixels.
-		| `boolean`_ `element.widget.scrollbarVisible`: Set if the scrollbar is displayed.
-
-	Custom widget methods:
-		| `element.widget:contentsChanged()`: Call to update scroll bar slider and limits after adding or removing elements to the content container. Because content size depends on layout, this must be run after a menu:updateLayout(). Only required if the content size changes.]],
+Scroll pane specific properties can be accessed through the `widget` property. The widget type for scroll panes is [`tes3uiScrollPane`](https://mwse.github.io/MWSE/types/tes3uiScrollPane/).]],
 	arguments = {
 		{ name = "id", type = "string|number", description = "An identifier to help find this element later.", optional = true },
 	},
