@@ -220,6 +220,10 @@ namespace TES3 {
 			setColourProperty(*this, propFillbarCol, c);
 		}
 
+		float WidgetFillbar::getFillAlpha() {
+			return getProperty(PropertyType::Float, propFillbarCol[3]).floatValue;
+		}
+
 		void WidgetFillbar::setFillAlpha(float a) {
 			setProperty(propFillbarCol[3], a);
 		}

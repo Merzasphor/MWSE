@@ -58,6 +58,7 @@ namespace TES3 {
 			sol::table getFillColour_lua(sol::this_state ts);
 			void setFillColour(const float(&c)[3]);
 			void setFillColour_lua(sol::table c);
+			float getFillAlpha();
 			void setFillAlpha(float a);
 
 			WidgetFillbar() = delete;

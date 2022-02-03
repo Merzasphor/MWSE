@@ -54,7 +54,7 @@ namespace mwse {
 				usertypeDefinition["showText"] = sol::property(&WidgetFillbar::getShowText, &WidgetFillbar::setShowText);
 				usertypeDefinition["normalized"] = sol::property(&WidgetFillbar::getNormalized, &WidgetFillbar::setNormalized);
 				usertypeDefinition["fillColor"] = sol::property(&WidgetFillbar::getFillColour_lua, &WidgetFillbar::setFillColour_lua);
-				usertypeDefinition["fillAlpha"] = sol::property(&WidgetFillbar::setFillAlpha);
+				usertypeDefinition["fillAlpha"] = sol::property(&WidgetFillbar::getFillAlpha, &WidgetFillbar::setFillAlpha);
 			}
 
 			//
