@@ -469,11 +469,11 @@ Controls if the element is visible.
 
 ### `widget`
 
-Access to custom properties specific to a widget. These properties are documented in the widget create* function descriptions.
+Access to element specific properties. This will be `nil` if there are no element specific properties. See the return types and the create* functions for more details.
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3uiButton](../../types/tes3uiButton), [tes3uiFillBar](../../types/tes3uiFillBar), [tes3uiParagraphInput](../../types/tes3uiParagraphInput), [tes3uiSlider](../../types/tes3uiSlider), [tes3uiScrollPane](../../types/tes3uiScrollPane), [tes3uiTextInput](../../types/tes3uiTextInput), [tes3uiTextSelect](../../types/tes3uiTextSelect), nil)
 
 ***
 
@@ -534,18 +534,8 @@ local result = tes3uiElement:createBlock(id)
 ### `createButton`
 
 Creates a clickable button. Register the `mouseClick` event to capture a button press.
-	
-	Custom widget properties:
-		| `number`_ `element.widget.state`: Interaction state. 1 = normal, 2 = disabled, 4 = active. Controls which colour set to use for text.
-		| `table`_ (float[3]) `element.widget.idle`: Text colour for normal state, no mouse interaction.
-		| `table`_ (float[3]) `element.widget.over`: Text colour for normal state, on mouseOver.
-		| `table`_ (float[3]) `element.widget.pressed`: Text colour for normal state, on mouseDown.
-		| `table`_ (float[3]) `element.widget.idleDisabled`: Text colour for disabled state, no mouse interaction.
-		| `table`_ (float[3]) `element.widget.overDisabled`: Text colour for disabled state, on mouseOver.
-		| `table`_ (float[3]) `element.widget.pressedDisabled`: Text colour for disabled state, on mouseDown.
-		| `table`_ (float[3]) `element.widget.idleActive`: Text colour for active state, no mouse interaction.
-		| `table`_ (float[3]) `element.widget.overActive`: Text colour for active state, on mouseOver.
-		| `table`_ (float[3]) `element.widget.pressedActive`: Text colour for active state, on mouseDown.
+
+Button specific properties can be accessed through the `widget` property. The widget type for buttons is [`tes3uiButton`](https://mwse.github.io/MWSE/types/tes3uiButton/).
 
 ```lua
 local result = tes3uiElement:createButton(id)
@@ -583,12 +573,7 @@ local result = tes3uiElement:createDivider(id)
 
 Creates a horizontal quantity indicator bar.
 
-	Custom widget properties:
-		| `number`_ (integer) `element.widget.current`: Current (filled) value.
-		| `number`_ (integer) `element.widget.max`: Maximum value.
-		| `boolean`_ `element.widget.showText`: If text of the format "current/max" is shown. Default is `true`.
-		| `table`_ (float[3]) `element.widget.fillColor`: Colour of filled area.
-		| `number`_ (float) `element.widget.fillAlpha`: Alpha transparency of filled area.
+Fillbar specific properties can be accessed through the `widget` property. The widget type for fillbars is [`tes3uiFillBar`](https://mwse.github.io/MWSE/types/tes3uiFillBar/).
 
 ```lua
 local result = tes3uiElement:createFillBar(id, current, max)
@@ -597,8 +582,8 @@ local result = tes3uiElement:createFillBar(id, current, max)
 **Parameters**:
 
 * `id` (string, number): *Optional*. An identifier to help find this element later.
-* `current` (number): *Optional*. The initial current value.
-* `max` (number): *Optional*. The initial maximum value.
+* `current` (number): *Optional*. The current value of the fillbar.
+* `max` (number): *Optional*. The maximum value of the fillbar.
 
 **Returns**:
 
@@ -610,12 +595,7 @@ local result = tes3uiElement:createFillBar(id, current, max)
 
 Creates a horizontally scrolling pane.
 
-	Custom widget properties:
-		| `number`_ `element.widget.positionX`: Horizontal scroll offset in pixels.
-		| `boolean`_ `element.widget.scrollbarVisible`: Set if the scrollbar is displayed.
-
-	Custom widget methods:
-		| `element.widget:contentsChanged()`: Call to update scroll bar slider and limits after adding or removing elements to the content container. Because content size depends on layout, this must be run after a menu:updateLayout(). Only required if the content size changes.
+Scroll pane specific properties can be accessed through the `widget` property. The widget type for scroll panes is [`tes3uiScrollPane`](https://mwse.github.io/MWSE/types/tes3uiScrollPane/).
 
 ```lua
 local result = tes3uiElement:createHorizontalScrollPane(id)
@@ -731,8 +711,7 @@ local result = tes3uiElement:createNif(id, text)
 
 Creates a multi-line text input element, with line wrapping on. To receive input the keyboard must be captured with `tes3ui.acquireTextInput(element)`. Read the input with the `text` property. Write an initial value to edit by setting the `text` property.
 
-	Custom widget properties:
-		| `number`_ (integer) `element.widget.lengthLimit`: Maximum input length. Default is `1023`.
+Paragraph input specific properties can be accessed through the `widget` property. The widget type for paragraph inputs is [`tes3uiParagraphInput`](https://mwse.github.io/MWSE/types/tes3uiParagraphInput/).
 
 ```lua
 local result = tes3uiElement:createParagraphInput(id)
@@ -771,14 +750,7 @@ local result = tes3uiElement:createRect(id, color)
 
 Creates a horizontal slider.
 
-	Custom widget properties:
-		| `number`_ (integer) `element.widget.current`: Current value.
-		| `number`_ (integer) `element.widget.max`: Maximum value.
-		| `number`_ (integer) `element.widget.step`: Amount changed by left and right arrow buttons.
-		| `number`_ (integer) `element.widget.jump`: Amount changed by clicking inside the slider area.
-
-	Custom events used with register:
-		| `"PartScrollBar_changed"`: Triggers on value change; moving the slider is not enough if the value is the same.
+Slider specific properties can be accessed through the `widget` property. The widget type for sliders is [`tes3uiSlider`](https://mwse.github.io/MWSE/types/tes3uiSlider/).
 
 ```lua
 local result = tes3uiElement:createSlider(id, current, max, step, jump)
@@ -787,10 +759,10 @@ local result = tes3uiElement:createSlider(id, current, max, step, jump)
 **Parameters**:
 
 * `id` (string, number): *Optional*. An identifier to help find this element later.
-* `current` (number): The initial value for the slider.
-* `max` (number): The maximum value for the slider.
-* `step` (number): *Optional*. Amount changed by left and right arrow buttons.
-* `jump` (number): *Optional*. Amount changed by clicking inside the slider area.
+* `current` (number): The current value of the slider.
+* `max` (number): The maximum value of the slider.
+* `step` (number): *Default*: `1`. The change in value when clicking the left and right arrow buttons.
+* `jump` (number): *Default*: `5`. The change in value when clicking into the empty areas next to the slider handle.
 
 **Returns**:
 
@@ -802,14 +774,7 @@ local result = tes3uiElement:createSlider(id, current, max, step, jump)
 
 Creates a vertical slider.
 
-	Custom widget properties:
-		| `number`_ (integer) `element.widget.current`: Current value.
-		| `number`_ (integer) `element.widget.max`: Maximum value.
-		| `number`_ (integer) `element.widget.step`: Amount changed by up and down arrow buttons.
-		| `number`_ (integer) `element.widget.jump`: Amount changed by clicking inside the slider area.
-
-	Custom events used with register:
-		| `"PartScrollBar_changed"`: Triggers on value change; moving the slider is not enough if the value is the same.
+Slider specific properties can be accessed through the `widget` property. The widget type for sliders is [`tes3uiSlider`](https://mwse.github.io/MWSE/types/tes3uiSlider/).
 
 ```lua
 local result = tes3uiElement:createSliderVertical(id, current, max, step, jump)
@@ -818,10 +783,10 @@ local result = tes3uiElement:createSliderVertical(id, current, max, step, jump)
 **Parameters**:
 
 * `id` (string, number): *Optional*. An identifier to help find this element later.
-* `current` (number): The initial value for the slider.
-* `max` (number): The maximum value for the slider.
-* `step` (number): *Optional*. Amount changed by left and right arrow buttons. The default is 1.
-* `jump` (number): *Optional*. Amount changed by clicking inside the slider area. The default is 5.
+* `current` (number): The current value of the slider.
+* `max` (number): The maximum value of the slider.
+* `step` (number): *Default*: `1`. The change in value when clicking the left and right arrow buttons.
+* `jump` (number): *Default*: `5`. The change in value when clicking into the empty areas next to the slider handle.
 
 **Returns**:
 
@@ -833,9 +798,7 @@ local result = tes3uiElement:createSliderVertical(id, current, max, step, jump)
 
 Creates a single line text input element. To receive input the keyboard must be captured with `tes3ui.acquireTextInput(element)`. Read the input with the `text` property. Write an initial value to display by setting the `text` property; that value will be cleared on the first keypress.
 
-	Custom widget properties:
-		| `boolean`_ `element.widget.eraseOnFirstKey`: Clears the initial value if the first keypress is not an edit action. Default is `true`.
-		| `number`_ (integer) `element.widget.lengthLimit"`: Maximum input length, or `nil` for no limit. If you are setting names, the engine limits most identifiers to 31 characters. Default is `nil`.
+Text input specific properties can be accessed through the `widget` property. The widget type for text inputs is [`tes3uiTextInput`](https://mwse.github.io/MWSE/types/tes3uiTextInput/).
 
 ```lua
 local result = tes3uiElement:createTextInput(id)
@@ -853,7 +816,9 @@ local result = tes3uiElement:createTextInput(id)
 
 ### `createTextSelect`
 
-Creates a selectable line of text, with configurable hover, click, and disabled colours. Can be used to create a list box by placing them in a ScrollPane. `state` sets the initial interaction state.
+Creates a selectable line of text, with configurable hover, click, and disabled colours. Can be used to create a list box by placing them in a ScrollPane.
+	
+Text select specific properties can be accessed through the `widget` property. The widget type for text selects is [`tes3uiTextSelect`](https://mwse.github.io/MWSE/types/tes3uiTextSelect/).
 
 ```lua
 local result = tes3uiElement:createTextSelect(id, text, state)
@@ -863,11 +828,11 @@ local result = tes3uiElement:createTextSelect(id, text, state)
 
 * `id` (string, number): *Optional*. An identifier to help find this element later.
 * `text` (string): *Optional*. The text to display.
-* `state` (number): *Optional*. The initial interaction state. Defaults to normal.
+* `state` (number): *Default*: `tes3.uiState.normal`. The initial interaction state.
 
 **Returns**:
 
-* `result` (tes3uiWidgetTextSelect)
+* `result` ([tes3uiElement](../../types/tes3uiElement))
 
 ***
 
@@ -893,12 +858,7 @@ local result = tes3uiElement:createThinBorder(id)
 
 Creates a vertically scrolling pane. Useful as a list box.
 
-	Custom widget properties:
-		| `number`_ `element.widget.positionY`: Vertical scroll offset in pixels.
-		| `boolean`_ `element.widget.scrollbarVisible`: Set if the scrollbar is displayed.
-
-	Custom widget methods:
-		| `element.widget:contentsChanged()`: Call to update scroll bar slider and limits after adding or removing elements to the content container. Because content size depends on layout, this must be run after a menu:updateLayout(). Only required if the content size changes.
+Scroll pane specific properties can be accessed through the `widget` property. The widget type for scroll panes is [`tes3uiScrollPane`](https://mwse.github.io/MWSE/types/tes3uiScrollPane/).
 
 ```lua
 local result = tes3uiElement:createVerticalScrollPane(id)
@@ -1090,61 +1050,56 @@ tes3uiElement:loadMenuPosition()
 
 ### `register`
 
-Sets an `event` handler, which can add or override an existing event handler. The use of `registerBefore` or `registerAfter` is recommended if you do not want to replace the existing event handler. The eventID can be a standard `event` name, or an event specific to an element class. The callback receives an argument with the event data. See below for details.
+Sets an `event` handler, which can add or override an existing event handler. The use of `registerBefore` or `registerAfter` is recommended if you do not want to replace the existing event handler. The eventID can be a standard `event` name, or an event specific to an element class. These can be accessed through [`tes3.uiEvent`](https://mwse.github.io/MWSE/references/ui-events/) for convenience. The callback receives an argument with the event data. See below for details.
 	
 The original Morrowind callback is captured and can be invoked with the `forwardEvent` method on the event argument. If there is an existing Lua callback, it is replaced.
 
+	Standard events:
+		**mouseLeave**
+			Mouse cursor moving outside an element. Triggers once.
+		**mouseOver**
+			Mouse cursor moving over an element. Triggers once.
+		**mouseDown**
+			Left mouse button down over an element.
+		**mouseClick**
+			Left mouse button up over an element, after a mouseDown over the element.
+		**mouseScrollUp**
+			..
+		**mouseScrollDown**
+			Mouse wheel scrolling.
+		**mouseDoubleClick**
+			Standard double-click.
+		**mouseStillIdle**
+			Mouse cursor positioned outside an element. Triggers every frame.
+		**mouseStillOver**
+			Mouse cursor positioned over an element. Triggers every frame.
+		**mouseStillPressed**
+			Mouse cursor positioned over an element, after a mouseDown over the element. Triggers every frame.
+		**mouseStillPressedOutside**
+			Apparently not working in the engine. Mouse cursor positioned outside an element, after a mouseDown over the element. Triggers every frame.
+		**mouseRelease**
+			Left mouse button up over an element.
+		**keyPress**
+			A raw key press.
+		**keyEnter**
+			The Return key is pressed.
+		**help**
+			On mouseover, but also marking the element as having a tooltip. Create a tooltip within the callback using the `tes3ui.createTooltipMenu` function.
+		**focus**
+			When a menu is clicked on, and moved on top of other menus.
+		**unfocus**
+			Just before another menu is clicked on, or a widget in that menu receives an event, or when the menu mode is toggled off. You may return false from this event to prevent the menu from being deselected, and to prevent leaving menu mode.
+		**preUpdate**
+			Before the menu layout is updated.
+		**update**
+			After the menu layout is updated.
+		**destroy**
+			When the UI element is destroyed, before any data or children are destroyed.
 
-
-Lua UI event specification:
-
-Events can be bound to elements via the `Element`_ `register` method, which takes an event name. Event names can be one of the standard events listed here, or a widget-specific event.
-
-Standard events:
-	**mouseLeave**
-		Mouse cursor moving outside an element. Triggers once.
-	**mouseOver**
-		Mouse cursor moving over an element. Triggers once.
-	**mouseDown**
-		Left mouse button down over an element.
-	**mouseClick**
-		Left mouse button up over an element, after a mouseDown over the element.
-	**mouseScrollUp**
-		..
-	**mouseScrollDown**
-		Mouse wheel scrolling.
-	**mouseDoubleClick**
-		Standard double-click.
-	**mouseStillIdle**
-		Mouse cursor positioned outside an element. Triggers every frame.
-	**mouseStillOver**
-		Mouse cursor positioned over an element. Triggers every frame.
-	**mouseStillPressed**
-		Mouse cursor positioned over an element, after a mouseDown over the element. Triggers every frame.
-	**mouseStillPressedOutside**
-		Apparently not working in the engine. Mouse cursor positioned outside an element, after a mouseDown over the element. Triggers every frame.
-	**mouseRelease**
-		Left mouse button up over an element.
-	**keyPress**
-		A raw key press.
-	**keyEnter**
-		The Return key is pressed.
-	**help**
-		On mouseover, but also marking the element as having a tooltip. Create a tooltip within the callback using the `tes3ui.createTooltipMenu`_ function.
-	**focus**
-		When a menu is clicked on, and moved on top of other menus.
-	**unfocus**
-		Just before another menu is clicked on, or a widget in that menu receives an event, or when the menu mode is toggled off. You may return false from this event to prevent the menu from being deselected, and to prevent leaving menu mode.
-	**preUpdate**
-		Before the menu layout is updated.
-	**update**
-		After the menu layout is updated.
-	**destroy**
-		When the UI element is destroyed, before any data or children are destroyed.
-
-
-**Widget-specific events**
-	To be documented.
+	Widget-specific events:
+		Slider:
+			**PartScrollBar_changed**
+				Triggers on value change; moving the slider is not enough if the value is the same.
 
 
 Event forwarding
@@ -1153,8 +1108,6 @@ Event forwarding
 The original Morrowind event handler is saved when you first register an event. It may be optionally invoked with the `forwardEvent` method.  Note that handler may or may not destroy the event widget or the menu, so you should know how it behaves before accessing any elements after a callback. 
 
 **Example**
-
-.. code-block:: lua
 
 	local function onClick(e)
 		-- pre-event code
@@ -1171,31 +1124,31 @@ Event handler
 
 The standard type signature for events.
 
-`boolean`_ eventHandler(**EventData** e)
-	Returns: `optional`
-		Returning `false` may cancel an interaction for certain events. e.g. unfocus
-   
-	EventData:
-		**source** (`Element`_)
-			The source element of the event.
-		
-		**id** (`number`_)
-			The numeric id of the event type.
+	`boolean`_ eventHandler(**EventData** e)
+		Returns: `optional`
+			Returning `false` may cancel an interaction for certain events. e.g. unfocus
 	
-		**widget** (`Element`_)
-			The widget element that the source belongs to, if the element is a sub-part of a widget. May not be accurate if the element is not a sub-part.
-		
-		**data0** (`number`_)
-			..
+		EventData:
+			**source** (`Element`_)
+				The source element of the event.
 			
-		**data1** (`number`_)
-			Event-specific raw data values. For mouse events, these are the screen X and Y coordinates of the pointer. For keyboard events, data0 is the `scan code`_.
+			**id** (`number`_)
+				The numeric id of the event type.
 		
-		**relativeX** (`number`_)
-			..
+			**widget** (`Element`_)
+				The widget element that the source belongs to, if the element is a sub-part of a widget. May not be accurate if the element is not a sub-part.
 			
-		**relativeY** (`number`_)
-			For mouse events only. X and Y coordinates of the pointer relative to the top-left of the element.
+			**data0** (`number`_)
+				..
+				
+			**data1** (`number`_)
+				Event-specific raw data values. For mouse events, these are the screen X and Y coordinates of the pointer. For keyboard events, data0 is the `scan code`_.
+			
+			**relativeX** (`number`_)
+				..
+				
+			**relativeY** (`number`_)
+				For mouse events only. X and Y coordinates of the pointer relative to the top-left of the element.
 
 ```lua
 tes3uiElement:register(eventID, callback)
@@ -1203,7 +1156,7 @@ tes3uiElement:register(eventID, callback)
 
 **Parameters**:
 
-* `eventID` (string): The event id.
+* `eventID` (string): The event id. Maps to values in [`tes3.uiEvent`](https://mwse.github.io/MWSE/references/ui-events/).
 * `callback` (function): The callback function.
 
 ***
