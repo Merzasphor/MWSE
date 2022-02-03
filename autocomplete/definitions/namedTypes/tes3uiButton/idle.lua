@@ -1,5 +1,5 @@
 return {
 	type = "value",
-	description = [[A table with RGB colours for the button in idle state.]],
+	description = [[The RGB color of the button's text when `state` is set to `normal`.	An array of 3 floats with values ranging from `0.0` to `1.0`.]],
 	valuetype = "table",
 }
