@@ -17,9 +17,9 @@ hide:
 ID                    | Object Type   | CS ID   | Meaning
 --------------------- | ------------- | ------- | ------------------------
 activator             | 1230259009    | ACTI    | Activator
-alchemy               | 1212369985    | ACTI    | Alchemy
+alchemy               | 1212369985    | ALCH    | Alchemy
 ammunition            | 1330466113    | AMMO    | Ammunition
-apparatus             | 1095782465    | ACTI    | Apparatus
+apparatus             | 1095782465    | APPA    | Apparatus
 armor                 | 1330467393    | ARMO    | Armor
 book                  | 1263488834    | BOOK    | Book
 clothing              | 1414483011    | CLOT    | Clothing
@@ -39,7 +39,7 @@ reference             | 1380336978    | REFR    | Reference
 probe                 | 1112494672    | PROB    | Probe
 repairItem            | 1095779666    | REPA    | Repair Item
 script                | 1414546259    | SCPT    | Script
-sound                 | 1314213715    | SOUN    | Soundd
+sound                 | 1314213715    | SOUN    | Sound
 soundGenerator        | 1195658835    | SNDG    | Sound Generator
 spell                 | 1279610963    | SPEL    | Spell
 static                | 1413567571    | STAT    | Static
