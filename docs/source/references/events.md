@@ -6,7 +6,7 @@ hide:
 # Events
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.event.*` namespace. For example, `tes3.event.calcRepairPrice` has value `calcRepairPrice`.
+	These values are available in Lua by their identifier in the `tes3.event.*` namespace. For example, `tes3.event.calcRepairPrice` has a value of `calcRepairPrice`.
 
 ID                         | Event
 -------------------------- | -----------------------------
