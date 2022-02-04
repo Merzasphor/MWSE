@@ -16,19 +16,91 @@ package.cpath = package.cpath .. ".\\Data Files\\MWSE\\mods\\?.dll;"
 package.path = package.path .. ".\\Data Files\\MWSE\\lua\\?.lua;.\\Data Files\\MWSE\\lua\\?\\init.lua;"
 package.cpath = package.cpath .. ".\\Data Files\\MWSE\\lua\\?.dll;"
 
-local originalRequire = require
-
--- Always lowercase module names.
-function require(moduleName)
-	return originalRequire(moduleName:gsub("[/\\]", "."):lower())
+--- Converts a given module name into a standard format, and ensures that it is lowercase.
+--- @param s string
+--- @return string
+local function convertModuleName(s)
+	local t = type(s)
+	if t == "string" then
+		return s:gsub("[/\\]", "."):lower()
+	elseif t == "number" then
+		return tostring(s):gsub("[/\\]", "."):lower()
+	else
+		error("bad argument #1 to 'require' (string expected, got "..t..")", 3)
+	end
 end
 
--- Allow users to try to include files that may not exist.
-function include(moduleName)
-	local status, result = pcall(require, moduleName)
-	if (status) then
-		return result
+--- A tweaked version of pygy/require.lua (https://github.com/pygy/require.lua)
+--- to make all module names lowercased.
+--- @param name string
+--- @return any
+function require(name)
+	name = convertModuleName(name)
+	local module = package.loaded[name]
+	if module then return module end
+
+	local msg = {}
+	local loader, param
+	for _, searcher in ipairs(package.searchers) do
+		loader, param = searcher(name)
+		if type(loader) == "function" then break end
+		if type(loader) == "string" then
+			-- `loader` is actually an error message
+			msg[#msg + 1] = loader
+		end
+		loader = nil
 	end
+	if loader == nil then
+		error("module '" .. name .. "' not found: "..t_concat(msg), 2)
+	end
+	local res = loader(name, param)
+	if res ~= nil then
+		module = res
+	elseif not package.loaded[name] then
+		module = true
+	else
+	module = package.loaded[name]
+	end
+
+	package.loaded[name] = module
+	return module
+end
+
+--- A tweaked version of pygy/require.lua (https://github.com/pygy/require.lua)
+--- to make all module names lowercased. Instead of erroring when a module
+--- isn't found, return nil.
+--- @param name string
+--- @return any
+function include(name)
+	name = convertModuleName(name)
+	local module = package.loaded[name]
+	if module then return module end
+
+	local msg = {}
+	local loader, param
+	for _, searcher in ipairs(package.searchers) do
+		loader, param = searcher(name)
+		if type(loader) == "function" then break end
+		if type(loader) == "string" then
+			-- `loader` is actually an error message
+			msg[#msg + 1] = loader
+		end
+		loader = nil
+	end
+	if loader == nil then
+		return
+	end
+	local res = loader(name, param)
+	if res ~= nil then
+		module = res
+	elseif not package.loaded[name] then
+		module = true
+	else
+	module = package.loaded[name]
+	end
+
+	package.loaded[name] = module
+	return module
 end
 
 -- Custom dofile that respects package pathing and supports lua's dot notation for paths.
