@@ -6,16 +6,11 @@
 #include "TES3Skill.h"
 #include "TES3Reference.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xGetBaseLongBlade : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xGetBaseLongBlade : InstructionInterface_t {
 	public:
 		xGetBaseLongBlade();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	private:
 		const float INVALID_VALUE = -1.0f;
 	};
@@ -24,25 +19,22 @@ namespace mwse
 
 	xGetBaseLongBlade::xGetBaseLongBlade() : mwse::InstructionInterface_t(OpCode::xGetBaseLongBlade) {}
 
-	void xGetBaseLongBlade::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xGetBaseLongBlade::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xGetBaseLongBlade::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get the associated MACP record.
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == nullptr) {
-#if _DEBUG
-			mwse::log::getLog() << "xGetBaseLongBlade: No reference provided." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetBaseLongBlade: No reference provided." << std::endl;
+			}
 			mwse::Stack::getInstance().pushFloat(INVALID_VALUE);
 			return 0.0f;
 		}
 
 		auto mobileObject = reference->getAttachedMobileNPC();
 		if (mobileObject == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xGetBaseLongBlade: Could not find MACP record for reference." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetBaseLongBlade: Could not find MACP record for reference." << std::endl;
+			}
 			mwse::Stack::getInstance().pushFloat(INVALID_VALUE);
 			return 0.0f;
 		}

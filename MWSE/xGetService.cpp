@@ -7,29 +7,25 @@
 #include "TES3Reference.h"
 #include "TES3AIConfig.h"
 
-using namespace mwse;
 
 namespace mwse {
-	class xGetService : mwse::InstructionInterface_t {
+	class xGetService : InstructionInterface_t {
 	public:
 		xGetService();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xGetService xGetServiceInstance;
 
 	xGetService::xGetService() : mwse::InstructionInterface_t(OpCode::xGetService) {}
 
-	void xGetService::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xGetService::execute(mwse::VMExecuteInterface &virtualMachine) {
+	float xGetService::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xGetRace: No reference provided." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetRace: No reference provided." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}
@@ -41,10 +37,11 @@ namespace mwse {
 		TES3::AIConfig* aiConfig = reference->baseObject->vTable.object->getAIConfig(reference->baseObject);
 		if (aiConfig) {
 			flags = aiConfig->merchantFlags & mask;
-		} else {
-#if _DEBUG
-			mwse::log::getLog() << "xGetService: Could not resolve AI configuration." << std::endl;
-#endif
+		}
+		else {
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetService: Could not resolve AI configuration." << std::endl;
+			}
 		}
 
 		mwse::Stack::getInstance().pushLong(flags);

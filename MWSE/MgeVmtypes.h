@@ -13,8 +13,8 @@ typedef DWORD VMFLAGSTYPE;	// how many flags do you need?
 
 // 'ui32' is the pre-Visual C++ 2005 suffix, equivalent
 // to 'll'.
-constexpr auto VMSIZE_MAX = (1ui64<<32);
-constexpr auto VMBYTE_MAX = (1<<8);
-constexpr auto VMSHORT_MAX = (1<<16);
-constexpr auto VMLONG_MAX = (1ui64<<32);
+constexpr auto VMSIZE_MAX = (1ui64 << 32);
+constexpr auto VMBYTE_MAX = (1 << 8);
+constexpr auto VMSHORT_MAX = (1 << 16);
+constexpr auto VMLONG_MAX = (1ui64 << 32);
 

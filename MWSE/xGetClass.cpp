@@ -7,32 +7,24 @@
 #include "TES3Reference.h"
 #include "TES3Class.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xGetClass : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xGetClass : InstructionInterface_t {
 	public:
 		xGetClass();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xGetClass xGetClassInstance;
 
 	xGetClass::xGetClass() : mwse::InstructionInterface_t(OpCode::xGetClass) {}
 
-	void xGetClass::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xGetClass::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xGetClass::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xGetClass: No reference provided." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetClass: No reference provided." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
@@ -46,9 +38,9 @@ namespace mwse
 		// Get the base record.
 		TES3::BaseObject* object = reference->baseObject;
 		if (object == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xGetClass: No object found for reference." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetClass: No object found for reference." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
@@ -59,9 +51,9 @@ namespace mwse
 			return 0.0f;
 		}
 		else if (object->objectType != TES3::ObjectType::NPC) {
-#if _DEBUG
-			mwse::log::getLog() << "xGetClass: Called on a non-NPC reference." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetClass: Called on a non-NPC reference." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
@@ -72,7 +64,7 @@ namespace mwse
 			return 0.0f;
 		}
 
-		// Get argument: 
+		// Get argument:
 		long attributesMask = mwse::Stack::getInstance().popLong();
 		long majorMask = mwse::Stack::getInstance().popLong();
 		long minorMask = mwse::Stack::getInstance().popLong();

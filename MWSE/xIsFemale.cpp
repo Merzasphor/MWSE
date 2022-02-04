@@ -5,29 +5,25 @@
 #include "TES3NPC.h"
 #include "TES3Reference.h"
 
-using namespace mwse;
 
 namespace mwse {
-	class xIsFemale : mwse::InstructionInterface_t {
+	class xIsFemale : InstructionInterface_t {
 	public:
 		xIsFemale();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xIsFemale xIsFemaleInstance;
 
 	xIsFemale::xIsFemale() : mwse::InstructionInterface_t(OpCode::xIsFemale) {}
 
-	void xIsFemale::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xIsFemale::execute(mwse::VMExecuteInterface &virtualMachine) {
+	float xIsFemale::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xIsFemale: Called on invalid reference." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xIsFemale: Called on invalid reference." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}

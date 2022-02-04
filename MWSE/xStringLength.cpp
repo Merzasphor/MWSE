@@ -4,26 +4,18 @@
 #include "Log.h"
 #include "StringUtil.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xStringLength : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xStringLength : InstructionInterface_t {
 	public:
 		xStringLength();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xStringLength xStringLengthInstance;
 
 	xStringLength::xStringLength() : mwse::InstructionInterface_t(OpCode::xStringLength) {}
 
-	void xStringLength::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xStringLength::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xStringLength::execute(mwse::VMExecuteInterface& virtualMachine) {
 		mwseString& parameter = virtualMachine.getString(Stack::getInstance().popLong());
 
 		long result = parameter.length();

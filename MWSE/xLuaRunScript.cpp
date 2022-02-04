@@ -6,16 +6,11 @@
 
 #include "TES3Script.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xLuaRunScript : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xLuaRunScript : InstructionInterface_t {
 	public:
 		xLuaRunScript();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 
 	private:
 		std::unordered_map<int, sol::table> cachedScripts;
@@ -25,10 +20,7 @@ namespace mwse
 
 	xLuaRunScript::xLuaRunScript() : mwse::InstructionInterface_t(OpCode::xLuaRunScript) {}
 
-	void xLuaRunScript::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xLuaRunScript::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xLuaRunScript::execute(mwse::VMExecuteInterface& virtualMachine) {
 		lua::LuaManager& manager = lua::LuaManager::getInstance();
 		auto stateHandle = manager.getThreadSafeStateHandle();
 		sol::state& state = stateHandle.state;
@@ -40,7 +32,7 @@ namespace mwse
 		// Update the LuaManager to reference our current context.
 		manager.setCurrentReference(virtualMachine.getReference());
 		manager.setCurrentScript(virtualMachine.getScript());
-		
+
 		// Does this script exist in our storage?
 		sol::table cachedModule = sol::nil;
 		auto cacheHit = cachedScripts.find(scriptNameKey);

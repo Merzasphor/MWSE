@@ -7,7 +7,7 @@ namespace mwse {
 
 	class Arrays {
 	public:
-		static Arrays &getInstance() { return singleton; };
+		static Arrays& getInstance() { return singleton; };
 
 		size_t create(std::string const& caller);
 

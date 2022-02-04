@@ -6,36 +6,27 @@
 #include "VirtualMachine.h"
 #include "ScriptUtil.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xStartCombat : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xStartCombat : InstructionInterface_t {
 	public:
 		xStartCombat();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xStartCombat xStartCombatInstance;
 
 	xStartCombat::xStartCombat() : mwse::InstructionInterface_t(OpCode::xStartCombat) {}
 
-	void xStartCombat::loadParameters(mwse::VMExecuteInterface &virtualMachine) {
-	}
-
-	float xStartCombat::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xStartCombat::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get parameters.
 		TES3::Reference* target = reinterpret_cast<TES3::Reference*>(mwse::Stack::getInstance().popLong());
 
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xStartCombat: Called on invalid reference." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xStartCombat: Called on invalid reference." << std::endl;
+			}
 			return 0.0f;
 		}
 

@@ -6,26 +6,18 @@
 #include "TES3DataHandler.h"
 #include "TES3Ingredient.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xGetIngredientEffect : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xGetIngredientEffect : InstructionInterface_t {
 	public:
 		xGetIngredientEffect();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xGetIngredientEffect xGetIngredientEffectInstance;
 
 	xGetIngredientEffect::xGetIngredientEffect() : mwse::InstructionInterface_t(OpCode::xGetIngredientEffect) {}
 
-	void xGetIngredientEffect::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xGetIngredientEffect::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xGetIngredientEffect::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get parameters.
 		mwseString& id = virtualMachine.getString(Stack::getInstance().popLong());
 		long index = Stack::getInstance().popLong() - 1;
@@ -37,19 +29,19 @@ namespace mwse
 		// Get the ingredient.
 		TES3::Ingredient* ingredient = TES3::DataHandler::get()->nonDynamicData->resolveObjectByType<TES3::Ingredient>(id, TES3::ObjectType::Ingredient);
 		if (ingredient == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xGetIngredientEffect: No ingredient record found with id '" << id << "'." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetIngredientEffect: No ingredient record found with id '" << id << "'." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(skillAttributeId);
 			mwse::Stack::getInstance().pushLong(effectEnumId);
 			return 0.0f;
 		}
-		
+
 		// Validate index.
 		if (index < 0 || index > 3) {
-#if _DEBUG
-			mwse::log::getLog() << "xGetIngredientEffect: Invalid index. Value must be between 1 and 4." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetIngredientEffect: Invalid index. Value must be between 1 and 4." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(skillAttributeId);
 			mwse::Stack::getInstance().pushLong(effectEnumId);
 			return 0.0f;

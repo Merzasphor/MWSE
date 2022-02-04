@@ -6,26 +6,18 @@
 #include "TES3DataHandler.h"
 #include "TES3GameSetting.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xGetGSString : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xGetGSString : InstructionInterface_t {
 	public:
 		xGetGSString();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xGetGSString xGetGSStringInstance;
 
 	xGetGSString::xGetGSString() : mwse::InstructionInterface_t(OpCode::xGetGSString) {}
 
-	void xGetGSString::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xGetGSString::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xGetGSString::execute(mwse::VMExecuteInterface& virtualMachine) {
 		long gmstId = Stack::getInstance().popLong();
 
 		if (gmstId < 0) {
@@ -35,7 +27,7 @@ namespace mwse
 		}
 
 		// Get the string. No real sanity checks here...
-		char * value = TES3::DataHandler::get()->nonDynamicData->GMSTs[gmstId]->value.asString;
+		char* value = TES3::DataHandler::get()->nonDynamicData->GMSTs[gmstId]->value.asString;
 
 		mwse::Stack::getInstance().pushString(value);
 

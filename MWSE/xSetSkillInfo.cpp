@@ -8,26 +8,18 @@
 #include "TES3Skill.h"
 #include "TES3WorldController.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xSetSkillInfo : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xSetSkillInfo : InstructionInterface_t {
 	public:
 		xSetSkillInfo();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xSetSkillInfo xSetSkillInfoInstance;
 
 	xSetSkillInfo::xSetSkillInfo() : mwse::InstructionInterface_t(OpCode::xSetSkillInfo) {}
 
-	void xSetSkillInfo::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xSetSkillInfo::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xSetSkillInfo::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get parameter.
 		long skillIndex = mwse::Stack::getInstance().popLong();
 
@@ -41,27 +33,27 @@ namespace mwse
 
 		// Validate skill index.
 		if (skillIndex < TES3::SkillID::FirstSkill || skillIndex > TES3::SkillID::LastSkill) {
-#if _DEBUG
-			mwse::log::getLog() << "xSetSkillInfo: Skill index out of range." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xSetSkillInfo: Skill index out of range." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
 
 		// Validate attribute.
 		if (attributeId < TES3::Attribute::FirstAttribute || attributeId > TES3::Attribute::LastAttribute) {
-#if _DEBUG
-			mwse::log::getLog() << "xSetSkillInfo: Attribute id out of range." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xSetSkillInfo: Attribute id out of range." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
 
 		// Validate specialization.
 		if (specialization < TES3::SkillSpecialization::FirstSpecialization || specialization > TES3::SkillSpecialization::LastSpecialization) {
-#if _DEBUG
-			mwse::log::getLog() << "xSetSkillInfo: Specialization out of range." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xSetSkillInfo: Specialization out of range." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}

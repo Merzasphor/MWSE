@@ -3,26 +3,18 @@
 #include "InstructionInterface.h"
 #include "FileUtil.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xFileReadLong : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xFileReadLong : InstructionInterface_t {
 	public:
 		xFileReadLong();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xFileReadLong xFileReadLongInstance;
 
 	xFileReadLong::xFileReadLong() : mwse::InstructionInterface_t(OpCode::xFileReadLong) {}
 
-	void xFileReadLong::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xFileReadLong::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xFileReadLong::execute(mwse::VMExecuteInterface& virtualMachine) {
 		if (mwse::Stack::getInstance().size() < 2) {
 			mwse::log::getLog() << "xFileReadLong: Function called with too few arguments." << std::endl;
 			return 0.0f;

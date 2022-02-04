@@ -4,25 +4,18 @@
 #include "Log.h"
 #include "StringUtil.h"
 #include "MWSEDefs.h"
-
-namespace mwse
-{
-	class xStringParse : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xStringParse : InstructionInterface_t {
 	public:
 		xStringParse();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xStringParse xStringParseInstance;
 
 	xStringParse::xStringParse() : mwse::InstructionInterface_t(OpCode::xStringParse) {}
 
-	void xStringParse::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xStringParse::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xStringParse::execute(mwse::VMExecuteInterface& virtualMachine) {
 		mwseString& format = virtualMachine.getString(Stack::getInstance().popLong());
 
 		// We have to hijack this function for version checking, to make it backwards-compatible.

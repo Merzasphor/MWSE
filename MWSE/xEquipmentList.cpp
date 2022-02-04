@@ -11,14 +11,11 @@
 #include "TES3Reference.h"
 #include "TES3Weapon.h"
 
-using namespace mwse;
-
 namespace mwse {
-	class xEquipmentList : mwse::InstructionInterface_t {
+	class xEquipmentList : InstructionInterface_t {
 	public:
 		xEquipmentList();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 
 	private:
 		bool nodeMatchesFilter(TES3::IteratedList<TES3::EquipmentStack*>::Node* node, long typeFilter, long subtypeFilter);
@@ -29,9 +26,7 @@ namespace mwse {
 
 	xEquipmentList::xEquipmentList() : mwse::InstructionInterface_t(OpCode::xEquipmentList) {}
 
-	void xEquipmentList::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xEquipmentList::execute(mwse::VMExecuteInterface &virtualMachine) {
+	float xEquipmentList::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get parameters.
 		auto node = reinterpret_cast<TES3::IteratedList<TES3::EquipmentStack*>::Node*>(mwse::Stack::getInstance().popLong());
 		long typeFilter = mwse::Stack::getInstance().popLong();

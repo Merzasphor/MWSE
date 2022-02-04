@@ -4,16 +4,14 @@
 
 #include "NITextureEffect.h"
 
-namespace mwse {
-	namespace lua {
-		template <typename T>
-		void setUserdataForNITextureEffect(sol::usertype<T>& usertypeDefinition) {
-			setUserdataForNIDynamicEffect(usertypeDefinition);
+namespace mwse::lua {
+	template <typename T>
+	void setUserdataForNITextureEffect(sol::usertype<T>& usertypeDefinition) {
+		setUserdataForNIDynamicEffect(usertypeDefinition);
 
-			// Basic property binding. 
-			usertypeDefinition["sourceTexture"] = &NI::TextureEffect::sourceTexture;
-		}
-
-		void bindNITextureEffect();
+		// Basic property binding. 
+		usertypeDefinition["sourceTexture"] = &NI::TextureEffect::sourceTexture;
 	}
+
+	void bindNITextureEffect();
 }

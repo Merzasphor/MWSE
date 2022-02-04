@@ -7,26 +7,23 @@
 #include "TES3Reference.h"
 
 namespace mwse {
-	class xGetStackSize : mwse::InstructionInterface_t {
+	class xGetStackSize : InstructionInterface_t {
 	public:
 		xGetStackSize();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xGetStackSize xGetStackSizeInstance;
 
 	xGetStackSize::xGetStackSize() : mwse::InstructionInterface_t(OpCode::xGetStackSize) {}
 
-	void xGetStackSize::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xGetStackSize::execute(mwse::VMExecuteInterface &virtualMachine) {
+	float xGetStackSize::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xGetStackSize: No reference provided." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetStackSize: No reference provided." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}

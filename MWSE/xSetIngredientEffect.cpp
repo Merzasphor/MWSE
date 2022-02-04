@@ -6,26 +6,18 @@
 #include "TES3DataHandler.h"
 #include "TES3Ingredient.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xSetIngredientEffect : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xSetIngredientEffect : InstructionInterface_t {
 	public:
 		xSetIngredientEffect();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xSetIngredientEffect xSetIngredientEffectInstance;
 
 	xSetIngredientEffect::xSetIngredientEffect() : mwse::InstructionInterface_t(OpCode::xSetIngredientEffect) {}
 
-	void xSetIngredientEffect::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xSetIngredientEffect::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xSetIngredientEffect::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get parameters.
 		mwseString& id = virtualMachine.getString(Stack::getInstance().popLong());
 		long index = Stack::getInstance().popLong() - 1;
@@ -35,27 +27,27 @@ namespace mwse
 		// Get the ingredient.
 		TES3::Ingredient* ingredient = TES3::DataHandler::get()->nonDynamicData->resolveObjectByType<TES3::Ingredient>(id, TES3::ObjectType::Ingredient);
 		if (ingredient == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xSetIngredientEffect: No ingredient record found with id '" << id << "'." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xSetIngredientEffect: No ingredient record found with id '" << id << "'." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
 
 		// Validate index.
 		if (index < 0 || index > 3) {
-#if _DEBUG
-			mwse::log::getLog() << "xSetIngredientEffect: Invalid index. Value must be between 1 and 4." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xSetIngredientEffect: Invalid index. Value must be between 1 and 4." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
 
 		// Validate effect id.
 		if (effectEnumId < TES3::EffectID::FirstEffect || effectEnumId > TES3::EffectID::LastEffect) {
-#if _DEBUG
-			mwse::log::getLog() << "xSetIngredientEffect: Invalid effect id." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xSetIngredientEffect: Invalid effect id." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}

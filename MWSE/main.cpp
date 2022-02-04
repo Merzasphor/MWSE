@@ -26,13 +26,13 @@ VersionStruct GetMGEVersion() {
 		return VersionStruct{};
 	}
 
-	BYTE * pbVersionInfo = new BYTE[dwSize];
+	BYTE* pbVersionInfo = new BYTE[dwSize];
 	if (!GetFileVersionInfo("MGEXEgui.exe", 0, dwSize, pbVersionInfo)) {
 		delete[] pbVersionInfo;
 		return VersionStruct{};
 	}
 
-	VS_FIXEDFILEINFO * pFileInfo = NULL;
+	VS_FIXEDFILEINFO* pFileInfo = NULL;
 	UINT puLenFileInfo = 0;
 	if (!VerQueryValue(pbVersionInfo, TEXT("\\"), (LPVOID*)&pFileInfo, &puLenFileInfo)) {
 		delete[] pbVersionInfo;
@@ -49,8 +49,8 @@ VersionStruct GetMGEVersion() {
 	return version;
 }
 
-const auto TES3_Game_ctor = reinterpret_cast<TES3::Game*(__thiscall*)(TES3::Game*)>(0x417280);
-TES3::Game* __fastcall OnGameStructCreated(TES3::Game * game) {
+const auto TES3_Game_ctor = reinterpret_cast<TES3::Game * (__thiscall*)(TES3::Game*)>(0x417280);
+TES3::Game* __fastcall OnGameStructCreated(TES3::Game* game) {
 	// Install necessary patches.
 	mwse::patch::installPatches();
 
@@ -128,7 +128,7 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {
 		std::vector<std::string> updaterTempFiles;
 		updaterTempFiles.push_back("MWSE-Update.exe");
 		updaterTempFiles.push_back("Newtonsoft.Json.dll");
-		
+
 		// Look to see if an update to the MWSE Updater was downloaded. If so, swap the temp files.
 		for (const std::string& destFile : updaterTempFiles) {
 			const std::string tempFile = destFile + ".tmp";
@@ -220,7 +220,7 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {
 extern "C"
 {
 	__declspec(dllexport) TES3MACHINE* MWSEGetVM();
-	__declspec(dllexport) bool MWSEAddInstruction(OPCODE op, INSTRUCTION *ins);
+	__declspec(dllexport) bool MWSEAddInstruction(OPCODE op, INSTRUCTION* ins);
 }
 
 TES3MACHINE* MWSEGetVM()
@@ -228,7 +228,7 @@ TES3MACHINE* MWSEGetVM()
 	return mge_virtual_machine;
 }
 
-bool MWSEAddInstruction(OPCODE op, INSTRUCTION *ins)
+bool MWSEAddInstruction(OPCODE op, INSTRUCTION* ins)
 {
 	return mge_virtual_machine->AddInstruction(op, ins);
 }

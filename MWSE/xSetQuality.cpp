@@ -9,44 +9,36 @@
 #include "TES3RepairTool.h"
 #include "TES3Apparatus.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xSetQuality : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xSetQuality : InstructionInterface_t {
 	public:
 		xSetQuality();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xSetQuality xSetQualityInstance;
 
 	xSetQuality::xSetQuality() : mwse::InstructionInterface_t(OpCode::xSetQuality) {}
 
-	void xSetQuality::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xSetQuality::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xSetQuality::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get parameters.
 		float value = mwse::Stack::getInstance().popFloat();
 
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xSetQuality: No reference provided." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xSetQuality: No reference provided." << std::endl;
+			}
 			return 0.0f;
 		}
 
 		// Get record.
 		TES3::BaseObject* record = reference->baseObject;
 		if (record == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xSetQuality: No base record found." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xSetQuality: No base record found." << std::endl;
+			}
 			return 0.0f;
 		}
 
@@ -70,9 +62,9 @@ namespace mwse
 			valueSet = true;
 		}
 		else {
-#if _DEBUG
-			mwse::log::getLog() << "xSetQuality: Call on unsupported record type: " << recordType << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xSetQuality: Call on unsupported record type: " << recordType << std::endl;
+			}
 		}
 
 		mwse::Stack::getInstance().pushLong(valueSet);

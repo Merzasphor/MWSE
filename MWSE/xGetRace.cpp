@@ -10,16 +10,11 @@
 #include "TES3Race.h"
 #include "TES3Skill.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xGetRace : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xGetRace : InstructionInterface_t {
 	public:
 		xGetRace();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	private:
 		std::map<long, long> arrayMap;
 	};
@@ -28,31 +23,28 @@ namespace mwse
 
 	xGetRace::xGetRace() : mwse::InstructionInterface_t(OpCode::xGetRace) {}
 
-	void xGetRace::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xGetRace::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xGetRace::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xGetRace: No reference provided." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetRace: No reference provided." << std::endl;
+			}
 			return 0.0f;
 		}
 
 		// Get the base record.
 		TES3::NPCInstance* object = reinterpret_cast<TES3::NPCInstance*>(reference->baseObject);
 		if (object == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xGetRace: No record found for reference." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetRace: No record found for reference." << std::endl;
+			}
 			return 0.0f;
 		}
 		else if (object->objectType != TES3::ObjectType::NPC) {
-#if _DEBUG
-			mwse::log::getLog() << "xGetRace: Called on a non-NPC reference." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetRace: Called on a non-NPC reference." << std::endl;
+			}
 			return 0.0f;
 		}
 

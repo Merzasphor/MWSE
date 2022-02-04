@@ -225,7 +225,7 @@ namespace mwse {
 
 		// Create our call.
 		MemAccess<DWORD>::Set(location, to);
-		
+
 		// Protect memory again.
 		VirtualProtect((DWORD*)location, 0x4, oldProtect, &oldProtect);
 

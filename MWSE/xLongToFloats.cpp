@@ -2,26 +2,18 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xLongToFloats : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xLongToFloats : InstructionInterface_t {
 	public:
 		xLongToFloats();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xLongToFloats xLongToFloatsInstance;
 
 	xLongToFloats::xLongToFloats() : mwse::InstructionInterface_t(OpCode::xLongToFloats) {}
 
-	void xLongToFloats::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xLongToFloats::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xLongToFloats::execute(mwse::VMExecuteInterface& virtualMachine) {
 		long param = mwse::Stack::getInstance().popLong();
 
 		mwse::Stack::getInstance().pushFloat((param >> 16) + 0x10000);

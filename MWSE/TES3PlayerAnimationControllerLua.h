@@ -1,7 +1,5 @@
 #pragma once
 
-namespace mwse {
-	namespace lua {
-		void bindTES3PlayerAnimationController();
-	}
+namespace mwse::lua {
+	void bindTES3PlayerAnimationController();
 }

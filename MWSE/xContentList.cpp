@@ -7,32 +7,28 @@
 #include "TES3Inventory.h"
 #include "TES3Reference.h"
 
-using namespace mwse;
 
 namespace mwse {
-	class xContentList : mwse::InstructionInterface_t {
+	class xContentList : InstructionInterface_t {
 	public:
 		xContentList();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xContentList xContentListInstance;
 
 	xContentList::xContentList() : mwse::InstructionInterface_t(OpCode::xContentList) {}
 
-	void xContentList::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xContentList::execute(mwse::VMExecuteInterface &virtualMachine) {
+	float xContentList::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get parameters.
 		TES3::IteratedList<TES3::ItemStack*>::Node* node = reinterpret_cast<TES3::IteratedList<TES3::ItemStack*>::Node*>(mwse::Stack::getInstance().popLong());
 
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xContentList: Called on invalid reference." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xContentList: Called on invalid reference." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushFloat(0.0f);
@@ -60,14 +56,14 @@ namespace mwse {
 		// Validate the node we've obtained.
 		if (node && node->data && node->data->object) {
 			TES3::Object* object = node->data->object;
-			
+
 			id = object->vTable.object->getObjectID(object);
 			count = node->data->count;
 			type = object->objectType;
 			value = object->vTable.object->getValue(object);
 			weight = object->vTable.object->getWeight(object);
 			name = object->vTable.object->getName(object);
-			
+
 			next = node->next;
 		}
 

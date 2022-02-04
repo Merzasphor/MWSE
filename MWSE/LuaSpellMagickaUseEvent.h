@@ -5,18 +5,14 @@
 
 #include "TES3Defines.h"
 
-namespace mwse {
-	namespace lua {
-		namespace event {
-			class SpellMagickaUseEvent : public GenericEvent, public DisableableEvent<SpellMagickaUseEvent> {
-			public:
-				SpellMagickaUseEvent(TES3::MagicSourceInstance* source);
-				sol::table createEventTable();
-				sol::object getEventOptions();
+namespace mwse::lua::event {
+	class SpellMagickaUseEvent : public GenericEvent, public DisableableEvent<SpellMagickaUseEvent> {
+	public:
+		SpellMagickaUseEvent(TES3::MagicSourceInstance* source);
+		sol::table createEventTable();
+		sol::object getEventOptions();
 
-			protected:
-				TES3::MagicSourceInstance* m_Source;
-			};
-		}
-	}
+	protected:
+		TES3::MagicSourceInstance* m_Source;
+	};
 }

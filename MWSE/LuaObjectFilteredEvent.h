@@ -4,18 +4,14 @@
 
 #include "TES3Defines.h"
 
-namespace mwse {
-	namespace lua {
-		namespace event {
-			// 
-			class ObjectFilteredEvent : public GenericEvent {
-			public:
-				ObjectFilteredEvent(const char* name, TES3::BaseObject* filter);
-				sol::object getEventOptions();
+namespace mwse::lua::event {
+	// 
+	class ObjectFilteredEvent : public GenericEvent {
+	public:
+		ObjectFilteredEvent(const char* name, TES3::BaseObject* filter);
+		sol::object getEventOptions();
 
-			protected:
-				TES3::BaseObject* m_EventFilter;
-			};
-		}
-	}
+	protected:
+		TES3::BaseObject* m_EventFilter;
+	};
 }

@@ -13,13 +13,13 @@ struct ADDRESSSPACE;
 struct VIRTUALMACHINE {
 	virtual ~VIRTUALMACHINE(void);
 
-	virtual bool GetRegister(WORD regidx, VMREGTYPE& value)=0;
-	virtual bool SetRegister(WORD regidx, VMREGTYPE value)=0;
-	
+	virtual bool GetRegister(WORD regidx, VMREGTYPE& value) = 0;
+	virtual bool SetRegister(WORD regidx, VMREGTYPE value) = 0;
+
 	virtual bool IsInstruction(OPCODE inst);
-	virtual bool step(bool skip= false);
+	virtual bool step(bool skip = false);
 	virtual bool run(void);
-	
+
 	virtual bool GetInstruction(VPVOID addr, OPCODE& opcode);
 	virtual bool AccessMem(MEMACCESSOR& access, VPVOID addr, VOID* buf, VMSIZE size);
 	virtual bool ReadMem(const VPVOID addr, VOID* buf, VMSIZE size);
@@ -28,7 +28,7 @@ struct VIRTUALMACHINE {
 	virtual void SetFlags(VMREGTYPE value);
 	virtual void SetFlags(VMFLOAT value);
 	virtual VMFLAGSTYPE GetFlags(void);
-	
+
 	virtual bool push(VMREGTYPE val);
 	virtual bool push(VMFLOAT val);
 	virtual bool pop(VMREGTYPE& val);
@@ -45,23 +45,22 @@ private:
 };
 
 template<typename T>
-struct VMPTR
-{
-	VMPTR(VIRTUALMACHINE& machine, T* to= 0)
-	: vm(machine), ptr(to), oldptr(0)
+struct VMPTR {
+	VMPTR(VIRTUALMACHINE& machine, T* to = 0)
+		: vm(machine), ptr(to), oldptr(0)
 	{
 	}
 
 	VMPTR(VMPTR<T>& to)
-	: vm(to.vm), ptr(to.ptr), oldptr(to.oldptr), realobject(to.realobject)
+		: vm(to.vm), ptr(to.ptr), oldptr(to.oldptr), realobject(to.realobject)
 	{
 	}
 
-	operator T*() {
+	operator T* () {
 		if (!ptr) {
 			return 0;
 		}
-			
+
 		readobject();
 		return &realobject;
 	}
@@ -70,7 +69,7 @@ struct VMPTR
 		if (!ptr) {
 			return 0;
 		}
-			
+
 		readobject();
 		return &realobject;
 	}
@@ -79,7 +78,7 @@ struct VMPTR
 		if (!ptr) {
 			throw 0;
 		}
-			
+
 		readobject();
 		return realobject;
 	}
@@ -109,7 +108,7 @@ struct VMPTR
 			oldptr = ptr;
 		}
 	}
-  
+
 private:
 	T* ptr;
 	T* oldptr;

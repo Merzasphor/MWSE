@@ -5,7 +5,6 @@
 
 #include "TES3Alchemy.h"
 
-
 namespace mwse::lua::event {
 	class PotionBrewFailedEvent : public GenericEvent, public DisableableEvent<PotionBrewFailedEvent> {
 	public:

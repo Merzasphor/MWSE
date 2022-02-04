@@ -2,26 +2,18 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xFloatsToLong : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xFloatsToLong : InstructionInterface_t {
 	public:
 		xFloatsToLong();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xFloatsToLong xFloatsToLongInstance;
 
 	xFloatsToLong::xFloatsToLong() : mwse::InstructionInterface_t(OpCode::xFloatsToLong) {}
 
-	void xFloatsToLong::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xFloatsToLong::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xFloatsToLong::execute(mwse::VMExecuteInterface& virtualMachine) {
 		float param1 = mwse::Stack::getInstance().popFloat();
 		float param2 = mwse::Stack::getInstance().popFloat();
 
@@ -30,7 +22,8 @@ namespace mwse
 		if (param1 >= 0x10000) {
 			high = param1;
 			low = param2;
-		} else {
+		}
+		else {
 			high = param2;
 			low = param1;
 		}

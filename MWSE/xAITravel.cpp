@@ -6,27 +6,18 @@
 #include "VirtualMachine.h"
 #include "ScriptUtil.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xAITravel : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xAITravel : InstructionInterface_t {
 	public:
 		xAITravel();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xAITravel xAITravelInstance;
 
 	xAITravel::xAITravel() : mwse::InstructionInterface_t(OpCode::xAITravel) {}
 
-	void xAITravel::loadParameters(mwse::VMExecuteInterface &virtualMachine) {
-	}
-
-	float xAITravel::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xAITravel::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get parameters.
 		float x = mwse::Stack::getInstance().popFloat();
 		float y = mwse::Stack::getInstance().popFloat();
@@ -35,9 +26,9 @@ namespace mwse
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xAITravel: Called on invalid reference." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xAITravel: Called on invalid reference." << std::endl;
+			}
 			return 0.0f;
 		}
 

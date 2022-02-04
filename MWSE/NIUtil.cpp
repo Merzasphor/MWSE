@@ -10,6 +10,6 @@ namespace NI {
 	}
 
 	TES3::Reference* getAssociatedReference(AVObject* object) {
-		return reinterpret_cast<TES3::Reference*(__cdecl*)(AVObject*)>(NI_getAssociatedReference)(object);
+		return reinterpret_cast<TES3::Reference * (__cdecl*)(AVObject*)>(NI_getAssociatedReference)(object);
 	}
 }

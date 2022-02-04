@@ -6,36 +6,27 @@
 #include "VirtualMachine.h"
 #include "ScriptUtil.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xPlace : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xPlace : InstructionInterface_t {
 	public:
 		xPlace();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xPlace xPlaceInstance;
 
 	xPlace::xPlace() : mwse::InstructionInterface_t(OpCode::xPlace) {}
 
-	void xPlace::loadParameters(mwse::VMExecuteInterface &virtualMachine) {
-	}
-
-	float xPlace::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xPlace::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get parameters.
 		mwseString& id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference("player");
 		if (reference == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xPlace: Called on invalid reference." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xPlace: Called on invalid reference." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}
@@ -43,9 +34,9 @@ namespace mwse
 		// Get the template we're supposed to place.
 		TES3::BaseObject* templateToPlace = virtualMachine.getTemplate(id.c_str());
 		if (templateToPlace == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xPlace: No template found for id '" << id << "'." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xPlace: No template found for id '" << id << "'." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}

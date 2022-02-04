@@ -11,26 +11,18 @@
 #include "TES3Reference.h"
 #include "TES3Weapon.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xGetEnchant : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xGetEnchant : InstructionInterface_t {
 	public:
 		xGetEnchant();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xGetEnchant xGetEnchantInstance;
 
 	xGetEnchant::xGetEnchant() : mwse::InstructionInterface_t(OpCode::xGetEnchant) {}
 
-	void xGetEnchant::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xGetEnchant::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xGetEnchant::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Return values.
 		char* enchId = NULL;
 		long type = 0;
@@ -63,15 +55,15 @@ namespace mwse
 				}
 			}
 			else {
-#if _DEBUG
-				log::getLog() << "xGetEnchant: Could not find enchant record of record type: " << reference->baseObject->objectType << std::endl;
-#endif
+				if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+					log::getLog() << "xGetEnchant: Could not find enchant record of record type: " << reference->baseObject->objectType << std::endl;
+				}
 			}
 		}
 		else {
-#if _DEBUG
-			log::getLog() << "xGetEnchant: No reference found for function." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				log::getLog() << "xGetEnchant: No reference found for function." << std::endl;
+			}
 		}
 
 		// Push results to the stack.

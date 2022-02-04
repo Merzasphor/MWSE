@@ -7,14 +7,12 @@
 #include "TES3Inventory.h"
 #include "TES3Reference.h"
 
-using namespace mwse;
 
 namespace mwse {
-	class xContentListFiltered : mwse::InstructionInterface_t {
+	class xContentListFiltered : InstructionInterface_t {
 	public:
 		xContentListFiltered();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 
 	private:
 		long getBitMaskForRecordType(long recordType);
@@ -51,18 +49,16 @@ namespace mwse {
 
 	xContentListFiltered::xContentListFiltered() : mwse::InstructionInterface_t(OpCode::xContentListFiltered) {}
 
-	void xContentListFiltered::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xContentListFiltered::execute(mwse::VMExecuteInterface &virtualMachine) {
+	float xContentListFiltered::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get parameters.
 		TES3::IteratedList<TES3::ItemStack*>::Node* node = reinterpret_cast<TES3::IteratedList<TES3::ItemStack*>::Node*>(mwse::Stack::getInstance().popLong());
 		long filter = mwse::Stack::getInstance().popLong();
 
 		// If we're not filtering, abandon ship.
 		if (filter == 0) {
-#if _DEBUG
-			mwse::log::getLog() << "xContentListFiltered: No filter provided." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xContentListFiltered: No filter provided." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushFloat(0.0f);
@@ -76,9 +72,9 @@ namespace mwse {
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xContentListFiltered: Called on invalid reference." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xContentListFiltered: Called on invalid reference." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushFloat(0.0f);
@@ -90,9 +86,9 @@ namespace mwse {
 		}
 
 		if (!reference->baseObject->isActor()) {
-#if _DEBUG
-			mwse::log::getLog() << "xContentListFiltered: Reference is not for an actor." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xContentListFiltered: Reference is not for an actor." << std::endl;
+			}
 			mwse::Stack::getInstance().pushFloat(0.0f);
 			return 0.0f;
 		}

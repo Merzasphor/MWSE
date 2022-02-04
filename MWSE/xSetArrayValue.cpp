@@ -3,26 +3,18 @@
 #include "InstructionInterface.h"
 #include "ArrayUtil.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xSetArrayValue : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xSetArrayValue : InstructionInterface_t {
 	public:
 		xSetArrayValue();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xSetArrayValue xSetArrayValueInstance;
 
 	xSetArrayValue::xSetArrayValue() : mwse::InstructionInterface_t(OpCode::xSetArrayValue) {}
 
-	void xSetArrayValue::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xSetArrayValue::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xSetArrayValue::execute(mwse::VMExecuteInterface& virtualMachine) {
 		if (mwse::Stack::getInstance().size() < 3) {
 			mwse::log::getLog() << "xSetArrayValue: Function called with too few arguments." << std::endl;
 			mwse::Stack::getInstance().pushLong(0);

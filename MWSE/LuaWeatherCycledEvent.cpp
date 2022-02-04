@@ -1,15 +1,11 @@
 #include "LuaWeatherCycledEvent.h"
 
-namespace mwse {
-	namespace lua {
-		namespace event {
-			WeatherCycledEvent::WeatherCycledEvent() :
-				GenericEvent("weatherCycled")
-			{
+namespace mwse::lua::event {
+	WeatherCycledEvent::WeatherCycledEvent() :
+		GenericEvent("weatherCycled")
+	{
 
-			}
-
-			bool WeatherCycledEvent::m_EventEnabled = false;
-		}
 	}
+
+	bool WeatherCycledEvent::m_EventEnabled = false;
 }

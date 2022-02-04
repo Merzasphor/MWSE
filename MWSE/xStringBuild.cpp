@@ -4,26 +4,18 @@
 #include "Log.h"
 #include "StringUtil.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xStringBuild : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xStringBuild : InstructionInterface_t {
 	public:
 		xStringBuild();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xStringBuild xStringBuildInstance;
 
 	xStringBuild::xStringBuild() : mwse::InstructionInterface_t(OpCode::xStringBuild) {}
 
-	void xStringBuild::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xStringBuild::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xStringBuild::execute(mwse::VMExecuteInterface& virtualMachine) {
 		mwseString& format = virtualMachine.getString(Stack::getInstance().popLong());
 
 		bool suppressNull = false;

@@ -4,32 +4,24 @@
 #include "TES3Util.h"
 #include "TES3Reference.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xGetName : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xGetName : InstructionInterface_t {
 	public:
 		xGetName();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xGetName xGetNameInstance;
 
 	xGetName::xGetName() : mwse::InstructionInterface_t(OpCode::xGetName) {}
 
-	void xGetName::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xGetName::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xGetName::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xGetName: No reference provided." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetName: No reference provided." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}
@@ -42,9 +34,9 @@ namespace mwse
 			name = reference->baseObject->vTable.object->getName(reference->baseObject);
 		}
 		else {
-#if _DEBUG
-			mwse::log::getLog() << "xGetName: Could not obtain record from reference." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetName: Could not obtain record from reference." << std::endl;
+			}
 		}
 
 		mwse::Stack::getInstance().pushString(name);

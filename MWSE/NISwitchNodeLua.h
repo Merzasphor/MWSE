@@ -1,7 +1,5 @@
 #pragma once
 
-namespace mwse {
-	namespace lua {
-		void bindNISwitchNode();
-	}
+namespace mwse::lua {
+	void bindNISwitchNode();
 }

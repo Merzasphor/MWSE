@@ -2,37 +2,33 @@
 
 #include "LuaManager.h"
 
-namespace mwse {
-	namespace lua {
-		namespace event {
-			MouseAxisEvent::MouseAxisEvent(int deltaX, int deltaY, bool controlDown, bool shiftDown, bool altDown, bool superDown) :
-				GenericEvent("mouseAxis"),
-				m_DeltaX(deltaX),
-				m_DeltaY(deltaY),
-				m_ControlDown(controlDown),
-				m_ShiftDown(shiftDown),
-				m_AltDown(altDown),
-				m_SuperDown(superDown)
-			{
+namespace mwse::lua::event {
+	MouseAxisEvent::MouseAxisEvent(int deltaX, int deltaY, bool controlDown, bool shiftDown, bool altDown, bool superDown) :
+		GenericEvent("mouseAxis"),
+		m_DeltaX(deltaX),
+		m_DeltaY(deltaY),
+		m_ControlDown(controlDown),
+		m_ShiftDown(shiftDown),
+		m_AltDown(altDown),
+		m_SuperDown(superDown)
+	{
 
-			}
-
-			sol::table MouseAxisEvent::createEventTable() {
-				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-				sol::state& state = stateHandle.state;
-				sol::table eventData = state.create_table();
-
-				eventData["deltaX"] = m_DeltaX;
-				eventData["deltaY"] = m_DeltaY;
-				eventData["isControlDown"] = m_ControlDown;
-				eventData["isShiftDown"] = m_ShiftDown;
-				eventData["isAltDown"] = m_AltDown;
-				eventData["isSuperDown"] = m_SuperDown;
-
-				return eventData;
-			}
-
-			bool MouseAxisEvent::m_EventEnabled = false;
-		}
 	}
+
+	sol::table MouseAxisEvent::createEventTable() {
+		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+		sol::state& state = stateHandle.state;
+		sol::table eventData = state.create_table();
+
+		eventData["deltaX"] = m_DeltaX;
+		eventData["deltaY"] = m_DeltaY;
+		eventData["isControlDown"] = m_ControlDown;
+		eventData["isShiftDown"] = m_ShiftDown;
+		eventData["isAltDown"] = m_AltDown;
+		eventData["isSuperDown"] = m_SuperDown;
+
+		return eventData;
+	}
+
+	bool MouseAxisEvent::m_EventEnabled = false;
 }

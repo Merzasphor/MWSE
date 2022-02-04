@@ -1,7 +1,5 @@
 #pragma once
 
-namespace mwse {
-	namespace lua {
-		void bindNIParticles();
-	}
+namespace mwse::lua {
+	void bindNIParticles();
 }

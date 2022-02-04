@@ -7,26 +7,18 @@
 #include "TES3Reference.h"
 #include "TES3Enchantment.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xSetMaxCharge : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xSetMaxCharge : InstructionInterface_t {
 	public:
 		xSetMaxCharge();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xSetMaxCharge xSetMaxChargeInstance;
 
 	xSetMaxCharge::xSetMaxCharge() : mwse::InstructionInterface_t(OpCode::xSetMaxCharge) {}
 
-	void xSetMaxCharge::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xSetMaxCharge::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xSetMaxCharge::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get parameter from the stack.
 		float maxCharge = mwse::Stack::getInstance().popFloat();
 		bool success = false;
@@ -34,9 +26,9 @@ namespace mwse
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xSetMaxCharge: No reference provided." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xSetMaxCharge: No reference provided." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
@@ -44,9 +36,9 @@ namespace mwse
 		// Get the base record.
 		TES3::BaseObject* object = reference->baseObject;
 		if (object == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xSetMaxCharge: No record found for reference." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xSetMaxCharge: No record found for reference." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}

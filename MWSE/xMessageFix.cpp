@@ -6,24 +6,20 @@
 #include "StringUtil.h"
 #include "TES3Script.h"
 
-using namespace mwse;
 
 namespace mwse {
-	class xMessageFix : mwse::InstructionInterface_t {
+	class xMessageFix : InstructionInterface_t {
 	public:
 		xMessageFix();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xMessageFix xMessageFixInstance;
 
 	xMessageFix::xMessageFix() : mwse::InstructionInterface_t(OpCode::xMessageFix) {}
 
-	void xMessageFix::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	// This function changes the script at runtime. 
-	float xMessageFix::execute(mwse::VMExecuteInterface &virtualMachine) {
+	// This function changes the script at runtime.
+	float xMessageFix::execute(mwse::VMExecuteInterface& virtualMachine) {
 		unsigned short mboxhdr[2];
 
 		// We want to modify the real script SCDT info. We'll keep track of where we're reading/writing with a read/write pointer,

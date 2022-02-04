@@ -3,17 +3,13 @@
 #include "LuaObjectFilteredEvent.h"
 #include "LuaDisableableEvent.h"
 
-namespace mwse {
-	namespace lua {
-		namespace event {
-			class ReferenceDeactivatedEvent : public ObjectFilteredEvent, public DisableableEvent<ReferenceDeactivatedEvent> {
-			public:
-				ReferenceDeactivatedEvent(TES3::Reference* reference);
-				sol::table createEventTable();
+namespace mwse::lua::event {
+	class ReferenceDeactivatedEvent : public ObjectFilteredEvent, public DisableableEvent<ReferenceDeactivatedEvent> {
+	public:
+		ReferenceDeactivatedEvent(TES3::Reference* reference);
+		sol::table createEventTable();
 
-			protected:
-				TES3::Reference* m_Reference;
-			};
-		}
-	}
+	protected:
+		TES3::Reference* m_Reference;
+	};
 }

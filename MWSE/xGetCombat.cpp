@@ -5,41 +5,33 @@
 #include "TES3MobileNPC.h"
 #include "TES3Reference.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xGetCombat : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xGetCombat : InstructionInterface_t {
 	public:
 		xGetCombat();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xGetCombat xGetCombatInstance;
 
 	xGetCombat::xGetCombat() : mwse::InstructionInterface_t(OpCode::xGetCombat) {}
 
-	void xGetCombat::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xGetCombat::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xGetCombat::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get MACP record.
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == nullptr) {
-#if _DEBUG
-			mwse::log::getLog() << "xGetCombat: No reference provided." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetCombat: No reference provided." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}
 
 		auto mobileObject = reference->getAttachedMobileActor();
 		if (mobileObject == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xGetCombat: No mach node found." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetCombat: No mach node found." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}

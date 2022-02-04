@@ -1,7 +1,5 @@
 #pragma once
 
-namespace mwse {
-	namespace lua {
-		void bindNITimeController();
-	}
+namespace mwse::lua {
+	void bindNITimeController();
 }

@@ -7,34 +7,26 @@
 #include "TES3MagicEffect.h"
 #include "TES3MagicEffectController.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xGetBaseEffectInfo : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xGetBaseEffectInfo : InstructionInterface_t {
 	public:
 		xGetBaseEffectInfo();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xGetBaseEffectInfo xGetBaseEffectInfoInstance;
 
 	xGetBaseEffectInfo::xGetBaseEffectInfo() : mwse::InstructionInterface_t(OpCode::xGetBaseEffectInfo) {}
 
-	void xGetBaseEffectInfo::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xGetBaseEffectInfo::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xGetBaseEffectInfo::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get parameters.
 		long id = Stack::getInstance().popLong();
 
 		// Validate id.
 		if (id < TES3::EffectID::FirstEffect || id > TES3::EffectID::LastEffect) {
-#if _DEBUG
-			log::getLog() << "xGetBaseEffectInfo: Effect ID out of range." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				log::getLog() << "xGetBaseEffectInfo: Effect ID out of range." << std::endl;
+			}
 			Stack::getInstance().pushLong(0);
 			Stack::getInstance().pushFloat(0.0f);
 			Stack::getInstance().pushLong(0);
@@ -43,7 +35,7 @@ namespace mwse
 
 		// Get the effect.
 		auto nonDynamicData = TES3::DataHandler::get()->nonDynamicData;
-		TES3::MagicEffect * effect = nonDynamicData->getMagicEffect(id);
+		TES3::MagicEffect* effect = nonDynamicData->getMagicEffect(id);
 
 		// Flags are a unique case. There is other data associated with flags that we want
 		// to expose, so we will return it here.

@@ -7,32 +7,28 @@
 #include "TES3MobilePlayer.h"
 #include "TES3WorldController.h"
 
-namespace mwse {
-	namespace lua {
-		namespace event {
-			RestInterruptEvent::RestInterruptEvent(TES3::LeveledCreature * leveledCreature) :
-				GenericEvent("restInterrupt"),
-				m_Creature(leveledCreature)
-			{
+namespace mwse::lua::event {
+	RestInterruptEvent::RestInterruptEvent(TES3::LeveledCreature* leveledCreature) :
+		GenericEvent("restInterrupt"),
+		m_Creature(leveledCreature)
+	{
 
-			}
-
-			sol::table RestInterruptEvent::createEventTable() {
-				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-				sol::state& state = stateHandle.state;
-				sol::table eventData = state.create_table();
-
-				eventData["creature"] = m_Creature;
-
-				// Add easy access to sleeping and waiting state.
-				TES3::MobilePlayer * macp = TES3::WorldController::get()->getMobilePlayer();
-				eventData["resting"] = macp->sleeping;
-				eventData["waiting"] = macp->waiting;
-
-				return eventData;
-			}
-
-			bool RestInterruptEvent::m_EventEnabled = false;
-		}
 	}
+
+	sol::table RestInterruptEvent::createEventTable() {
+		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+		sol::state& state = stateHandle.state;
+		sol::table eventData = state.create_table();
+
+		eventData["creature"] = m_Creature;
+
+		// Add easy access to sleeping and waiting state.
+		TES3::MobilePlayer* macp = TES3::WorldController::get()->getMobilePlayer();
+		eventData["resting"] = macp->sleeping;
+		eventData["waiting"] = macp->waiting;
+
+		return eventData;
+	}
+
+	bool RestInterruptEvent::m_EventEnabled = false;
 }

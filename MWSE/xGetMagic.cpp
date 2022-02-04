@@ -7,26 +7,18 @@
 #include "TES3Reference.h"
 #include "TES3Spell.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xGetMagic : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xGetMagic : InstructionInterface_t {
 	public:
 		xGetMagic();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xGetMagic xGetMagicInstance;
 
 	xGetMagic::xGetMagic() : mwse::InstructionInterface_t(OpCode::xGetMagic) {}
 
-	void xGetMagic::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xGetMagic::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xGetMagic::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Return values.
 		long type = 0;
 		const char* id = NULL;
@@ -38,26 +30,26 @@ namespace mwse
 			if (recordType == TES3::ObjectType::Creature || recordType == TES3::ObjectType::NPC) {
 				auto mobileObject = reference->getAttachedMobileActor();
 				if (mobileObject && mobileObject->currentSpell.source.asGeneric) {
-					TES3::Object * spellSource = mobileObject->currentSpell.source.asGeneric;
+					TES3::Object* spellSource = mobileObject->currentSpell.source.asGeneric;
 					id = spellSource->getObjectID();
 					type = spellSource->objectType;
 				}
 				else {
-#if _DEBUG
-					log::getLog() << "xGetMagic: Could not obtain MACP record for reference." << std::endl;
-#endif
+					if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+						log::getLog() << "xGetMagic: Could not obtain MACP record for reference." << std::endl;
+					}
 				}
 			}
 			else {
-#if _DEBUG
-				log::getLog() << "xGetMagic: Invalid reference type:" << recordType << std::endl;
-#endif
+				if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+					log::getLog() << "xGetMagic: Invalid reference type:" << recordType << std::endl;
+				}
 			}
 		}
 		else {
-#if _DEBUG
-			log::getLog() << "xGetMagic: Could not obtain reference." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				log::getLog() << "xGetMagic: Could not obtain reference." << std::endl;
+			}
 		}
 
 		// Return type/id.

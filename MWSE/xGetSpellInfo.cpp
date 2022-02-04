@@ -6,26 +6,18 @@
 #include "TES3DataHandler.h"
 #include "TES3Spell.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xGetSpellInfo : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xGetSpellInfo : InstructionInterface_t {
 	public:
 		xGetSpellInfo();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xGetSpellInfo xGetSpellInfoInstance;
 
 	xGetSpellInfo::xGetSpellInfo() : mwse::InstructionInterface_t(OpCode::xGetSpellInfo) {}
 
-	void xGetSpellInfo::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xGetSpellInfo::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xGetSpellInfo::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get parameters.
 		mwseString& spellId = virtualMachine.getString(Stack::getInstance().popLong());
 
@@ -48,9 +40,9 @@ namespace mwse
 			origin = spell->objectFlags & 0x3;
 		}
 		else {
-#if _DEBUG
-			mwse::log::getLog() << "xGetSpellInfo: Could not find spell of id '" << spellId << "'" << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetSpellInfo: Could not find spell of id '" << spellId << "'" << std::endl;
+			}
 		}
 
 		mwse::Stack::getInstance().pushLong(origin);

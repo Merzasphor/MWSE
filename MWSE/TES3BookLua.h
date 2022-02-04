@@ -1,7 +1,5 @@
 #pragma once
 
-namespace mwse {
-	namespace lua {
-		void bindTES3Book();
-	}
+namespace mwse::lua {
+	void bindTES3Book();
 }

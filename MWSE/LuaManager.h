@@ -4,115 +4,113 @@
 
 #include "LuaBaseEvent.h"
 
-namespace mwse {
-	namespace lua {
-		typedef std::unordered_map<unsigned long, sol::object> UserdataMap;
+namespace mwse::lua {
+	typedef std::unordered_map<unsigned long, sol::object> UserdataMap;
 
-		class TimerController;
-		class LuaManager;
+	class TimerController;
+	class LuaManager;
 
-		enum class TimerType {
-			RealTime,
-			SimulationTime,
-			GameTime
+	enum class TimerType {
+		RealTime,
+		SimulationTime,
+		GameTime
+	};
+
+	class ThreadedStateHandle {
+	public:
+		ThreadedStateHandle(LuaManager*);
+		~ThreadedStateHandle();
+
+		// Trigger a thread-safe event.
+		sol::object triggerEvent(event::BaseEvent*);
+
+		sol::state& state;
+
+	private:
+		LuaManager* luaManager;
+	};
+
+	class LuaManager {
+		friend class ThreadedStateHandle;
+
+	public:
+		// Returns an instance to the singleton.
+		static LuaManager& getInstance() {
+			return singleton;
 		};
 
-		class ThreadedStateHandle {
-		public:
-			ThreadedStateHandle(LuaManager *);
-			~ThreadedStateHandle();
+		// Returns a thread-locking reference to the sol2 lua state.
+		ThreadedStateHandle getThreadSafeStateHandle();
 
-			// Trigger a thread-safe event.
-			sol::object triggerEvent(event::BaseEvent*);
+		const sol::state_view& getReadOnlyStateView();
 
-			sol::state& state;
+		// Uses the MemoryUtil library to create the necessary injections into Morrowind.
+		void hook();
 
-		private:
-			LuaManager * luaManager;
-		};
+		// Performs cleanup to safely detach the DLL.
+		void cleanup();
 
-		class LuaManager {
-			friend class ThreadedStateHandle;
+		// Set context for lua scripts.
+		TES3::Script* getCurrentScript();
+		void setCurrentScript(TES3::Script*);
+		TES3::Reference* getCurrentReference();
+		void setCurrentReference(TES3::Reference*);
 
-		public:
-			// Returns an instance to the singleton.
-			static LuaManager& getInstance() {
-				return singleton;
-			};
+		// Handle our button pressed callbacks. There can only be one at a time.
+		void setButtonPressedCallback(sol::optional<sol::protected_function>);
+		void triggerButtonPressed();
 
-			// Returns a thread-locking reference to the sol2 lua state.
-			ThreadedStateHandle getThreadSafeStateHandle();
+		// Helper function to execute main.lua scripts recursively in a directory.
+		void executeMainModScripts(const char* path, const char* filename = "main.lua");
 
-			const sol::state_view& getReadOnlyStateView();
+		// Management functions for timers.
+		void updateTimers(float deltaTime, double simulationTimestamp, bool simulating);
+		void savePersistentTimers();
+		void restorePersistentTimers();
+		void clearPersistentTimers();
+		void clearTimers();
+		std::shared_ptr<TimerController> getTimerController(TimerType type);
+		TimerType getTimerControllerType(std::shared_ptr<TimerController> controller);
 
-			// Uses the MemoryUtil library to create the necessary injections into Morrowind.
-			void hook();
+		//
+		void claimLuaThread();
+		void releaseLuaThread();
 
-			// Performs cleanup to safely detach the DLL.
-			void cleanup();
+		bool overrideScript(const char* scriptId, sol::object function);
+		bool clearScriptOverride(const char* scriptId);
 
-			// Set context for lua scripts.
-			TES3::Script* getCurrentScript();
-			void setCurrentScript(TES3::Script*);
-			TES3::Reference* getCurrentReference();
-			void setCurrentReference(TES3::Reference*);
-
-			// Handle our button pressed callbacks. There can only be one at a time.
-			void setButtonPressedCallback(sol::optional<sol::protected_function>);
-			void triggerButtonPressed();
-
-			// Helper function to execute main.lua scripts recursively in a directory.
-			void executeMainModScripts(const char* path, const char* filename = "main.lua");
-
-			// Management functions for timers.
-			void updateTimers(float deltaTime, double simulationTimestamp, bool simulating);
-			void savePersistentTimers();
-			void restorePersistentTimers();
-			void clearPersistentTimers();
-			void clearTimers();
-			std::shared_ptr<TimerController> getTimerController(TimerType type);
-			TimerType getTimerControllerType(std::shared_ptr<TimerController> controller);
-
-			//
-			void claimLuaThread();
-			void releaseLuaThread();
-
-			bool overrideScript(const char* scriptId, sol::object function);
-			bool clearScriptOverride(const char* scriptId);
-
-			// Lua-bound static functions.
-			static void lua_print(sol::object object);
+		// Lua-bound static functions.
+		static void lua_print(sol::object object);
 
 
-		private:
-			LuaManager();
+	private:
+		LuaManager();
 
-			//
-			void bindData();
+		//
+		void bindData();
 
-			// Event management.
-			sol::object triggerEvent(event::BaseEvent*);
+		// Event management.
+		sol::object triggerEvent(event::BaseEvent*);
 
-			// 
-			static LuaManager singleton;
+		// 
+		static LuaManager singleton;
 
-			// 
-			sol::state luaState;
+		// 
+		sol::state luaState;
 
-			std::recursive_mutex stateThreadMutex;
+		std::recursive_mutex stateThreadMutex;
 
-			//
-			TES3::Script* currentScript = nullptr;
-			TES3::Reference* currentReference = nullptr;
+		//
+		TES3::Script* currentScript = nullptr;
+		TES3::Reference* currentReference = nullptr;
 
-			// Storage for our current button pressed callback.
-			sol::protected_function buttonPressedCallback = sol::nil;
+		// Storage for our current button pressed callback.
+		sol::protected_function buttonPressedCallback = sol::nil;
 
-		public:
-			// Timers.
-			std::shared_ptr<TimerController> gameTimers;
-			std::shared_ptr<TimerController> simulateTimers;
-			std::shared_ptr<TimerController> realTimers;
-		};
-	}
+	public:
+		// Timers.
+		std::shared_ptr<TimerController> gameTimers;
+		std::shared_ptr<TimerController> simulateTimers;
+		std::shared_ptr<TimerController> realTimers;
+	};
 }

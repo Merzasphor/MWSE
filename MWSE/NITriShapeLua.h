@@ -1,7 +1,5 @@
 #pragma once
 
-namespace mwse {
-	namespace lua {
-		void bindNITriShape();
-	}
+namespace mwse::lua {
+	void bindNITriShape();
 }

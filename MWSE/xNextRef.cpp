@@ -6,26 +6,18 @@
 #include "TES3Script.h"
 #include "TES3GameFile.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xNextRef : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xNextRef : InstructionInterface_t {
 	public:
 		xNextRef();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xNextRef xNextRefInstance;
 
 	xNextRef::xNextRef() : mwse::InstructionInterface_t(OpCode::xNextRef) {}
 
-	void xNextRef::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xNextRef::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xNextRef::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get REFR pointer as an argument.
 		TES3::Reference* reference = (TES3::Reference*)mwse::Stack::getInstance().popLong();
 
@@ -45,16 +37,16 @@ namespace mwse
 				}
 			}
 			else {
-#if _DEBUG
-				mwse::log::getLog() << "xNextRef: Null argument." << std::endl;
-#endif
+				if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+					mwse::log::getLog() << "xNextRef: Null argument." << std::endl;
+				}
 			}
 		}
 		__except (EXCEPTION_EXECUTE_HANDLER) {
-			TES3::Script * script = virtualMachine.getScript();
-#if _DEBUG
-			mwse::log::getLog() << "xNextRef: Invalid object given in script " << script->sourceMod->filename << "/" << script->name << ". Fix script to not save variables across saves!" << std::endl;
-#endif
+			TES3::Script* script = virtualMachine.getScript();
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xNextRef: Invalid object given in script " << script->sourceMod->filename << "/" << script->name << ". Fix script to not save variables across saves!" << std::endl;
+			}
 			next = NULL;
 		}
 

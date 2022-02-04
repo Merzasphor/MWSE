@@ -7,16 +7,11 @@
 #include "TES3MobileActor.h"
 #include "TES3Skill.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xGetSkillInfo : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xGetSkillInfo : InstructionInterface_t {
 	public:
 		xGetSkillInfo();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	private:
 		const float INVALID_VALUE = -1.0f;
 	};
@@ -25,10 +20,7 @@ namespace mwse
 
 	xGetSkillInfo::xGetSkillInfo() : mwse::InstructionInterface_t(OpCode::xGetSkillInfo) {}
 
-	void xGetSkillInfo::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xGetSkillInfo::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xGetSkillInfo::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get parameter.
 		long skillIndex = Stack::getInstance().popLong();
 
@@ -48,9 +40,9 @@ namespace mwse
 			}
 		}
 		else {
-#if _DEBUG
-			mwse::log::getLog() << "xGetSkillInfo: Skill index out of range." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetSkillInfo: Skill index out of range." << std::endl;
+			}
 		}
 
 		// Push desired values.

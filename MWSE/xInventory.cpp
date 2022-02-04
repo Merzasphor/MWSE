@@ -6,31 +6,24 @@
 #include "TES3Actor.h"
 #include "TES3Inventory.h"
 #include "TES3Reference.h"
-
-namespace mwse
-{
-	class xInventory : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xInventory : InstructionInterface_t {
 	public:
 		xInventory();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xInventory xInventoryInstance;
 
 	xInventory::xInventory() : mwse::InstructionInterface_t(OpCode::xInventory) {}
 
-	void xInventory::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xInventory::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xInventory::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xInventory: Invalid reference attachment." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xInventory: Invalid reference attachment." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
@@ -38,13 +31,13 @@ namespace mwse
 		}
 
 		if (!reference->baseObject->isActor()) {
-#if _DEBUG
-			mwse::log::getLog() << "xInventory: Reference is not for an actor." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xInventory: Reference is not for an actor." << std::endl;
+			}
 			mwse::Stack::getInstance().pushFloat(0.0f);
 			return 0.0f;
 		}
-		
+
 		TES3::IteratedList<TES3::ItemStack*>::Node* firstItem = static_cast<TES3::Actor*>(reference->baseObject)->inventory.itemStacks.head;
 		if (firstItem == NULL) {
 			mwse::Stack::getInstance().pushLong(0);

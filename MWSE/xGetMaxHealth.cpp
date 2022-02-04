@@ -5,16 +5,11 @@
 #include "TES3MobileNPC.h"
 #include "TES3Reference.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xGetMaxHealth : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xGetMaxHealth : InstructionInterface_t {
 	public:
 		xGetMaxHealth();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	private:
 		const float INVALID_VALUE = -1.0f;
 	};
@@ -23,17 +18,14 @@ namespace mwse
 
 	xGetMaxHealth::xGetMaxHealth() : mwse::InstructionInterface_t(OpCode::xGetMaxHealth) {}
 
-	void xGetMaxHealth::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xGetMaxHealth::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xGetMaxHealth::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get the associated MACP record.
 		TES3::Reference* reference = virtualMachine.getReference();
 		auto mobileObject = reference->getAttachedMobileActor();
 		if (mobileObject == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xGetMaxHealth: Could not find MACP record for reference." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetMaxHealth: Could not find MACP record for reference." << std::endl;
+			}
 			mwse::Stack::getInstance().pushFloat(INVALID_VALUE);
 			return 0.0f;
 		}

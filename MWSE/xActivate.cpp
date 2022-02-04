@@ -8,44 +8,36 @@
 
 #include "MemoryUtil.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xActivate : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xActivate : InstructionInterface_t {
 	public:
 		xActivate();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xActivate xActivateInstance;
 
-	xActivate::xActivate() : mwse::InstructionInterface_t(OpCode::xActivate) {}
+	xActivate::xActivate() : InstructionInterface_t(OpCode::xActivate) {}
 
-	void xActivate::loadParameters(mwse::VMExecuteInterface &virtualMachine) {
-	}
-
-	float xActivate::execute(mwse::VMExecuteInterface &virtualMachine) {
+	float xActivate::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get potential target.
 		long parameter = Stack::getInstance().popLong();
 
 		// Verify that the script is called on a valid reference.
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
-#if _DEBUG
-			log::getLog() << __FUNCTION__ << ": Called on invalid reference." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				log::getLog() << __FUNCTION__ << ": Called on invalid reference." << std::endl;
+			}
 			return 0.0f;
 		}
 
 		// Only certain types of objects can actually activate things without crashing.
 		auto baseObjectType = reference->baseObject->objectType;
 		if (baseObjectType != TES3::ObjectType::NPC && baseObjectType != TES3::ObjectType::Creature) {
-#if _DEBUG
-			log::getLog() << __FUNCTION__ << ": Called on non-NPC, non-creature reference.." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				log::getLog() << __FUNCTION__ << ": Called on non-NPC, non-creature reference.." << std::endl;
+			}
 			return 0.0f;
 		}
 
@@ -58,20 +50,20 @@ namespace mwse
 			}
 		}
 		catch (std::exception&) {
-#if _DEBUG
-			log::getLog() << __FUNCTION__ << ": Target reference could not be resolved." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				log::getLog() << __FUNCTION__ << ": Target reference could not be resolved." << std::endl;
+			}
 			return 0.0f;
 		}
 
 		// Verify that the target reference was found.
 		if (target == NULL) {
-#if _DEBUG
-			log::getLog() << __FUNCTION__ << ": Target reference is invalid." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				log::getLog() << __FUNCTION__ << ": Target reference is invalid." << std::endl;
+			}
 			return 0.0f;
 		}
-		
+
 		// Set up the attachment node.
 		auto activator = static_cast<TES3::ActionAttachment*>(target->getAttachment(TES3::AttachmentType::Action));
 		if (activator == NULL) {

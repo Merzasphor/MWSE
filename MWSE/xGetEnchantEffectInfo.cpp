@@ -6,26 +6,18 @@
 #include "TES3DataHandler.h"
 #include "TES3Enchantment.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xGetEnchantEffectInfo : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xGetEnchantEffectInfo : InstructionInterface_t {
 	public:
 		xGetEnchantEffectInfo();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xGetEnchantEffectInfo xGetEnchantEffectInfoInstance;
 
 	xGetEnchantEffectInfo::xGetEnchantEffectInfo() : mwse::InstructionInterface_t(OpCode::xGetEnchantEffectInfo) {}
 
-	void xGetEnchantEffectInfo::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xGetEnchantEffectInfo::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xGetEnchantEffectInfo::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get parameters.
 		mwseString& effectId = virtualMachine.getString(Stack::getInstance().popLong());
 		short effectIndex = Stack::getInstance().popShort();
@@ -55,15 +47,15 @@ namespace mwse
 				}
 			}
 			else {
-#if _DEBUG
-				mwse::log::getLog() << "xGetEnchantEffectInfo: No spell found with id '" << effectId << "'." << std::endl;
-#endif
+				if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+					mwse::log::getLog() << "xGetEnchantEffectInfo: No spell found with id '" << effectId << "'." << std::endl;
+				}
 			}
 		}
 		else {
-#if _DEBUG
-			mwse::log::getLog() << "xGetEnchantEffectInfo: Invalid effect index. Value must be between 1 and 8." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetEnchantEffectInfo: Invalid effect index. Value must be between 1 and 8." << std::endl;
+			}
 		}
 
 		mwse::Stack::getInstance().pushLong(magMax);

@@ -13,34 +13,26 @@
 #include "TES3NPC.h"
 #include "TES3Reference.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xSetName : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xSetName : InstructionInterface_t {
 	public:
 		xSetName();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xSetName xSetNameInstance;
 
 	xSetName::xSetName() : mwse::InstructionInterface_t(OpCode::xSetName) {}
 
-	void xSetName::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xSetName::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xSetName::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get parameter from the stack.
 		mwseString& name = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Enforce name length.
 		if (name.length() > 31) {
-#if _DEBUG
-			mwse::log::getLog() << "xSetName: Given name length must be 31 characters or less." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xSetName: Given name length must be 31 characters or less." << std::endl;
+			}
 			mwse::Stack::getInstance().pushShort(false);
 			return 0.0f;
 		}
@@ -48,19 +40,19 @@ namespace mwse
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xSetName: No reference provided." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xSetName: No reference provided." << std::endl;
+			}
 			mwse::Stack::getInstance().pushShort(false);
 			return 0.0f;
 		}
-		
+
 		// Get the base record.
 		TES3::BaseObject* recordGeneric = reference->baseObject;
 		if (recordGeneric == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xSetName: No record found for reference." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xSetName: No record found for reference." << std::endl;
+			}
 			mwse::Stack::getInstance().pushShort(false);
 			return 0.0f;
 		}
@@ -113,9 +105,9 @@ namespace mwse
 
 		// Bail out if we haven't found the name.
 		if (namePtr == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xSetName: Unsupported record format: " << recordType << "." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xSetName: Unsupported record format: " << recordType << "." << std::endl;
+			}
 			mwse::Stack::getInstance().pushShort(false);
 			return 0.0f;
 		}

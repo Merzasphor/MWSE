@@ -6,26 +6,18 @@
 #include "TES3DataHandler.h"
 #include "TES3Cell.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xFirstStatic : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xFirstStatic : InstructionInterface_t {
 	public:
 		xFirstStatic();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xFirstStatic xFirstStaticInstance;
 
 	xFirstStatic::xFirstStatic() : mwse::InstructionInterface_t(OpCode::xFirstStatic) {}
 
-	void xFirstStatic::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xFirstStatic::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xFirstStatic::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Clear elements in our stored exterior ref list.
 		mwse::tes3::clearExteriorRefs();
 

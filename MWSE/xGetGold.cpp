@@ -7,32 +7,24 @@
 #include "TES3Creature.h"
 #include "TES3Reference.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xGetGold : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xGetGold : InstructionInterface_t {
 	public:
 		xGetGold();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xGetGold xGetGoldInstance;
 
 	xGetGold::xGetGold() : mwse::InstructionInterface_t(OpCode::xGetGold) {}
 
-	void xGetGold::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xGetGold::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xGetGold::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xGetGold: Called on invalid reference." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetGold: Called on invalid reference." << std::endl;
+			}
 			mwse::Stack::getInstance().pushShort(0);
 			return 0.0f;
 		}
@@ -52,9 +44,9 @@ namespace mwse
 					gold = npc->baseNPC->barterGold;
 				}
 				else {
-#if _DEBUG
-					mwse::log::getLog() << "xGetGold: Could not get base NPC record for \"" << npc->objectID << "\"" << std::endl;
-#endif
+					if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+						mwse::log::getLog() << "xGetGold: Could not get base NPC record for \"" << npc->objectID << "\"" << std::endl;
+					}
 				}
 			}
 			else if (baseRecord->objectType == TES3::ObjectType::Creature) {
@@ -63,9 +55,9 @@ namespace mwse
 					gold = creature->baseCreature->barterGold;
 				}
 				else {
-#if _DEBUG
-					mwse::log::getLog() << "xGetGold: Could not get base creature record for \"" << creature->objectID << "\"" << std::endl;
-#endif
+					if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+						mwse::log::getLog() << "xGetGold: Could not get base creature record for \"" << creature->objectID << "\"" << std::endl;
+					}
 				}
 			}
 		}

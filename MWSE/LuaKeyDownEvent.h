@@ -2,13 +2,9 @@
 
 #include "LuaKeyEvent.h"
 
-namespace mwse {
-	namespace lua {
-		namespace event {
-			class KeyDownEvent : public KeyEvent, public DisableableEvent<KeyDownEvent> {
-			public:
-				KeyDownEvent(int keyCode, bool controlDown, bool shiftDown, bool altDown, bool superDown);
-			};
-		}
-	}
+namespace mwse::lua::event {
+	class KeyDownEvent : public KeyEvent, public DisableableEvent<KeyDownEvent> {
+	public:
+		KeyDownEvent(int keyCode, bool controlDown, bool shiftDown, bool altDown, bool superDown);
+	};
 }

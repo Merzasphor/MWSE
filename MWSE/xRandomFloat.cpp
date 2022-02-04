@@ -3,26 +3,18 @@
 #include "InstructionInterface.h"
 #include "RngUtil.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xRandomFloat : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xRandomFloat : InstructionInterface_t {
 	public:
 		xRandomFloat();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xRandomFloat xRandomFloatInstance;
 
 	xRandomFloat::xRandomFloat() : mwse::InstructionInterface_t(OpCode::xRandomFloat) {}
 
-	void xRandomFloat::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xRandomFloat::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xRandomFloat::execute(mwse::VMExecuteInterface& virtualMachine) {
 		float min = mwse::Stack::getInstance().popFloat();
 		float max = mwse::Stack::getInstance().popFloat();
 

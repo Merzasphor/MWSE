@@ -91,413 +91,411 @@
 
 #include "MemoryUtil.h"
 
-namespace mwse {
-	namespace lua {
-		template <>
-		std::string getOptionalParam(sol::optional<sol::table> maybeParams, const char* key, std::string defaultValue) {
-			auto value = std::move(defaultValue);
+namespace mwse::lua {
+	template <>
+	std::string getOptionalParam(sol::optional<sol::table> maybeParams, const char* key, std::string defaultValue) {
+		auto value = std::move(defaultValue);
 
-			if (maybeParams) {
-				sol::table params = maybeParams.value();
-				sol::object maybeValue = params[key];
-				if (maybeValue.valid() && maybeValue.is<std::string>()) {
-					value = std::move(maybeValue.as<std::string>());
-				}
+		if (maybeParams) {
+			sol::table params = maybeParams.value();
+			sol::object maybeValue = params[key];
+			if (maybeValue.valid() && maybeValue.is<std::string>()) {
+				value = std::move(maybeValue.as<std::string>());
 			}
-
-			return std::move(value);
 		}
 
-		TES3::BaseObject* getOptionalParamBaseObject(sol::optional<sol::table> maybeParams, const char* key) {
-			if (maybeParams) {
-				sol::table params = maybeParams.value();
-				sol::object maybeObject = params[key];
-				if (maybeObject.valid()) {
-					if (maybeObject.is<std::string>()) {
-						auto obj = TES3::DataHandler::get()->nonDynamicData->resolveObject(maybeObject.as<std::string>().c_str());
-						if (obj) {
-							return obj->getBaseObject();
-						}
-					}
-					else if (maybeObject.is<TES3::BaseObject>()) {
-						return maybeObject.as<TES3::BaseObject*>()->getBaseObject();
-					}
-					else if (maybeObject.is<TES3::MobileCreature>()) {
-						return maybeObject.as<TES3::MobileCreature*>()->creatureInstance->baseCreature;
-					}
-					else if (maybeObject.is<TES3::MobileNPC>()) {
-						return maybeObject.as<TES3::MobileNPC*>()->npcInstance->baseNPC;
+		return std::move(value);
+	}
+
+	TES3::BaseObject* getOptionalParamBaseObject(sol::optional<sol::table> maybeParams, const char* key) {
+		if (maybeParams) {
+			sol::table params = maybeParams.value();
+			sol::object maybeObject = params[key];
+			if (maybeObject.valid()) {
+				if (maybeObject.is<std::string>()) {
+					auto obj = TES3::DataHandler::get()->nonDynamicData->resolveObject(maybeObject.as<std::string>().c_str());
+					if (obj) {
+						return obj->getBaseObject();
 					}
 				}
+				else if (maybeObject.is<TES3::BaseObject>()) {
+					return maybeObject.as<TES3::BaseObject*>()->getBaseObject();
+				}
+				else if (maybeObject.is<TES3::MobileCreature>()) {
+					return maybeObject.as<TES3::MobileCreature*>()->creatureInstance->baseCreature;
+				}
+				else if (maybeObject.is<TES3::MobileNPC>()) {
+					return maybeObject.as<TES3::MobileNPC*>()->npcInstance->baseNPC;
+				}
 			}
-			return nullptr;
+		}
+		return nullptr;
+	}
+
+	TES3::Script* getOptionalParamExecutionScript(sol::optional<sol::table> maybeParams) {
+		if (maybeParams) {
+			sol::table params = maybeParams.value();
+			sol::object maybeScript = params["_script"];
+			if (maybeScript.valid()) {
+				if (maybeScript.is<std::string>()) {
+					return TES3::DataHandler::get()->nonDynamicData->findScriptByName(maybeScript.as<std::string>().c_str());
+				}
+				else if (maybeScript.is<TES3::Script*>()) {
+					return maybeScript.as<TES3::Script*>();
+				}
+			}
 		}
 
-		TES3::Script* getOptionalParamExecutionScript(sol::optional<sol::table> maybeParams) {
-			if (maybeParams) {
-				sol::table params = maybeParams.value();
-				sol::object maybeScript = params["_script"];
-				if (maybeScript.valid()) {
-					if (maybeScript.is<std::string>()) {
-						return TES3::DataHandler::get()->nonDynamicData->findScriptByName(maybeScript.as<std::string>().c_str());
-					}
-					else if (maybeScript.is<TES3::Script*>()) {
-						return maybeScript.as<TES3::Script*>();
-					}
+		// Fall back to the currently executing script.
+		return LuaManager::getInstance().getCurrentScript();
+	}
+
+	TES3::Reference* getOptionalParamExecutionReference(sol::optional<sol::table> maybeParams) {
+		TES3::Reference* reference = nullptr;
+
+		if (maybeParams) {
+			sol::table params = maybeParams.value();
+			sol::object maybeReference = params["reference"];
+			if (maybeReference.valid()) {
+				if (maybeReference.is<std::string>()) {
+					reference = tes3::getReference(maybeReference.as<std::string>());
+				}
+				else if (maybeReference.is<TES3::Reference*>()) {
+					reference = maybeReference.as<TES3::Reference*>();
+				}
+				else if (maybeReference.is<TES3::MobileActor*>()) {
+					reference = maybeReference.as<TES3::MobileActor*>()->reference;
 				}
 			}
-
-			// Fall back to the currently executing script.
-			return LuaManager::getInstance().getCurrentScript();
 		}
 
-		TES3::Reference* getOptionalParamExecutionReference(sol::optional<sol::table> maybeParams) {
-			TES3::Reference* reference = nullptr;
-
-			if (maybeParams) {
-				sol::table params = maybeParams.value();
-				sol::object maybeReference = params["reference"];
-				if (maybeReference.valid()) {
-					if (maybeReference.is<std::string>()) {
-						reference = tes3::getReference(maybeReference.as<std::string>());
-					}
-					else if (maybeReference.is<TES3::Reference*>()) {
-						reference = maybeReference.as<TES3::Reference*>();
-					}
-					else if (maybeReference.is<TES3::MobileActor*>()) {
-						reference = maybeReference.as<TES3::MobileActor*>()->reference;
-					}
-				}
-			}
-
-			if (reference == nullptr) {
-				reference = LuaManager::getInstance().getCurrentReference();
-			}
-
-			return reference;
+		if (reference == nullptr) {
+			reference = LuaManager::getInstance().getCurrentReference();
 		}
 
-		TES3::Script* getOptionalParamScript(sol::optional<sol::table> maybeParams, const char* key) {
-			if (maybeParams) {
-				sol::table params = maybeParams.value();
-				sol::object maybeValue = params[key];
-				if (maybeValue.valid()) {
-					if (maybeValue.is<std::string>()) {
-						return TES3::DataHandler::get()->nonDynamicData->findScriptByName(maybeValue.as<std::string>().c_str());
+		return reference;
+	}
+
+	TES3::Script* getOptionalParamScript(sol::optional<sol::table> maybeParams, const char* key) {
+		if (maybeParams) {
+			sol::table params = maybeParams.value();
+			sol::object maybeValue = params[key];
+			if (maybeValue.valid()) {
+				if (maybeValue.is<std::string>()) {
+					return TES3::DataHandler::get()->nonDynamicData->findScriptByName(maybeValue.as<std::string>().c_str());
+				}
+				else if (maybeValue.is<TES3::Script*>()) {
+					return maybeValue.as<TES3::Script*>();
+				}
+			}
+		}
+
+		return NULL;
+	}
+
+	TES3::Reference* getOptionalParamReference(sol::optional<sol::table> maybeParams, const char* key) {
+		TES3::Reference* value = nullptr;
+
+		if (maybeParams) {
+			sol::table params = maybeParams.value();
+			sol::object maybeValue = params[key];
+			if (maybeValue.valid()) {
+				if (maybeValue.is<std::string>()) {
+					value = tes3::getReference(maybeValue.as<std::string>());
+				}
+				else if (maybeValue.is<TES3::Reference*>()) {
+					value = maybeValue.as<TES3::Reference*>();
+				}
+				else if (maybeValue.is<TES3::MobileActor*>()) {
+					value = maybeValue.as<TES3::MobileActor*>()->reference;
+				}
+			}
+		}
+
+		return value;
+	}
+
+	TES3::MobileActor* getOptionalParamMobileActor(sol::optional<sol::table> maybeParams, const char* key) {
+		TES3::MobileActor* value = nullptr;
+
+		if (maybeParams) {
+			sol::table params = maybeParams.value();
+			sol::object maybeValue = params[key];
+			if (maybeValue.valid()) {
+				if (maybeValue.is<std::string>()) {
+					TES3::Reference* reference = tes3::getReference(maybeValue.as<std::string>());
+					if (reference) {
+						value = reference->getAttachedMobileActor();
 					}
-					else if (maybeValue.is<TES3::Script*>()) {
-						return maybeValue.as<TES3::Script*>();
+				}
+				else if (maybeValue.is<TES3::Reference*>()) {
+					value = maybeValue.as<TES3::Reference*>()->getAttachedMobileActor();
+				}
+				else if (maybeValue.is<TES3::MobileActor*>()) {
+					value = maybeValue.as<TES3::MobileActor*>();
+				}
+			}
+		}
+
+		return value;
+	}
+
+	TES3::Spell* getOptionalParamSpell(sol::optional<sol::table> maybeParams, const char* key) {
+		TES3::Spell* value = nullptr;
+
+		if (maybeParams) {
+			sol::table params = maybeParams.value();
+			sol::object maybeValue = params[key];
+			if (maybeValue.valid()) {
+				if (maybeValue.is<std::string>()) {
+					value = TES3::DataHandler::get()->nonDynamicData->getSpellById(maybeValue.as<std::string>().c_str());
+				}
+				else if (maybeValue.is<TES3::Spell*>()) {
+					value = maybeValue.as<TES3::Spell*>();
+				}
+			}
+		}
+
+		return value;
+	}
+
+	TES3::Dialogue* getOptionalParamDialogue(sol::optional<sol::table> maybeParams, const char* key) {
+		TES3::Dialogue* value = nullptr;
+
+		if (maybeParams) {
+			sol::table params = maybeParams.value();
+			sol::object maybeValue = params[key];
+			if (maybeValue.valid()) {
+				if (maybeValue.is<const char*>()) {
+					value = TES3::DataHandler::get()->nonDynamicData->findDialogue(maybeValue.as<const char*>());
+				}
+				else if (maybeValue.is<TES3::Dialogue*>()) {
+					value = maybeValue.as<TES3::Dialogue*>();
+				}
+			}
+		}
+
+		return value;
+	}
+
+	TES3::Sound* getOptionalParamSound(sol::optional<sol::table> maybeParams, const char* key) {
+		TES3::Sound* value = nullptr;
+
+		if (maybeParams) {
+			sol::table params = maybeParams.value();
+			sol::object maybeValue = params[key];
+			if (maybeValue.valid()) {
+				if (maybeValue.is<std::string>()) {
+					value = TES3::DataHandler::get()->nonDynamicData->findSound(maybeValue.as<std::string>().c_str());
+				}
+				else if (maybeValue.is<TES3::Sound*>()) {
+					value = maybeValue.as<TES3::Sound*>();
+				}
+			}
+		}
+
+		return value;
+	}
+
+	sol::optional<TES3::Vector2> getOptionalParamVector2(sol::optional<sol::table> maybeParams, const char* key) {
+		if (maybeParams) {
+			sol::table params = maybeParams.value();
+			sol::object maybeValue = params[key];
+			if (maybeValue.valid()) {
+				// Were we given a real vector?
+				if (maybeValue.is<TES3::Vector2>()) {
+					return maybeValue.as<TES3::Vector2>();
+				}
+				// Were we given a vector3 for some reason?
+				else if (maybeValue.is<TES3::Vector3>()) {
+					return TES3::Vector2(maybeValue.as<TES3::Vector2&>().x, maybeValue.as<TES3::Vector2&>().y);
+				}
+				// Were we given a table?
+				else if (maybeValue.get_type() == sol::type::table) {
+					return maybeValue.as<sol::table>();
+				}
+			}
+		}
+
+		return {};
+	}
+
+	sol::optional<TES3::Vector3> getOptionalParamVector3(sol::optional<sol::table> maybeParams, const char* key) {
+		if (maybeParams) {
+			sol::table params = maybeParams.value();
+			sol::object maybeValue = params[key];
+			if (maybeValue.valid()) {
+				// Were we given a real vector?
+				if (maybeValue.is<TES3::Vector3*>()) {
+					return *maybeValue.as<TES3::Vector3*>();
+				}
+
+				// Were we given a table?
+				else if (maybeValue.get_type() == sol::type::table) {
+					sol::table value = maybeValue.as<sol::table>();
+					return TES3::Vector3(value[1], value[2], value[3]);
+				}
+			}
+		}
+
+		return sol::optional<TES3::Vector3>();
+	}
+
+	TES3::Cell* getOptionalParamCell(sol::optional<sol::table> maybeParams, const char* key) {
+		TES3::Cell* value = nullptr;
+
+		if (maybeParams) {
+			sol::table params = maybeParams.value();
+			sol::object maybeValue = params[key];
+			if (maybeValue.valid()) {
+				if (maybeValue.is<const char*>()) {
+					value = TES3::DataHandler::get()->nonDynamicData->getCellByName(maybeValue.as<const char*>());
+				}
+				else if (maybeValue.is<TES3::Cell*>()) {
+					value = maybeValue.as<TES3::Cell*>();
+				}
+				else if (maybeValue.get_type() == sol::type::table) {
+					sol::table coordsTable = maybeValue.as<sol::table>();
+					if (coordsTable.size() == 2) {
+						value = TES3::DataHandler::get()->nonDynamicData->getCellByGrid(coordsTable[1], coordsTable[2]);
 					}
 				}
 			}
-
-			return NULL;
 		}
 
-		TES3::Reference* getOptionalParamReference(sol::optional<sol::table> maybeParams, const char* key) {
-			TES3::Reference* value = nullptr;
+		return value;
+	}
 
-			if (maybeParams) {
-				sol::table params = maybeParams.value();
-				sol::object maybeValue = params[key];
-				if (maybeValue.valid()) {
-					if (maybeValue.is<std::string>()) {
-						value = tes3::getReference(maybeValue.as<std::string>());
-					}
-					else if (maybeValue.is<TES3::Reference*>()) {
-						value = maybeValue.as<TES3::Reference*>();
-					}
-					else if (maybeValue.is<TES3::MobileActor*>()) {
-						value = maybeValue.as<TES3::MobileActor*>()->reference;
-					}
-				}
+	bool getOptionalComplexObjectParams(sol::optional<sol::table> params, TES3::Reference*& out_reference, TES3::BaseObject*& out_object, TES3::MobileActor*& out_mobile, const char* referenceKey, const char* mobileKey, const char* objectKey) {
+		if (params) {
+			// Were we passed a reference?
+			auto reference = getOptionalParamReference(params, referenceKey);
+			if (reference) {
+				out_reference = reference;
+				out_mobile = reference->getAttachedMobileActor();
+				out_object = reference->baseObject;
+				return true;
 			}
 
-			return value;
-		}
-
-		TES3::MobileActor* getOptionalParamMobileActor(sol::optional<sol::table> maybeParams, const char* key) {
-			TES3::MobileActor* value = nullptr;
-
-			if (maybeParams) {
-				sol::table params = maybeParams.value();
-				sol::object maybeValue = params[key];
-				if (maybeValue.valid()) {
-					if (maybeValue.is<std::string>()) {
-						TES3::Reference * reference = tes3::getReference(maybeValue.as<std::string>());
-						if (reference) {
-							value = reference->getAttachedMobileActor();
-						}
-					}
-					else if (maybeValue.is<TES3::Reference*>()) {
-						value = maybeValue.as<TES3::Reference*>()->getAttachedMobileActor();
-					}
-					else if (maybeValue.is<TES3::MobileActor*>()) {
-						value = maybeValue.as<TES3::MobileActor*>();
-					}
-				}
+			// A mobile?
+			auto mobile = getOptionalParamMobileActor(params, mobileKey);
+			if (mobile) {
+				out_reference = mobile->reference;
+				out_mobile = mobile;
+				out_object = mobile->reference->baseObject;
+				return true;
 			}
 
-			return value;
-		}
+			// How about an object?
+			TES3::BaseObject* object = getOptionalParamObject<TES3::BaseObject>(params, objectKey);
+			if (object) {
+				out_reference = nullptr;
+				out_mobile = nullptr;
+				out_object = object;
 
-		TES3::Spell* getOptionalParamSpell(sol::optional<sol::table> maybeParams, const char* key) {
-			TES3::Spell* value = nullptr;
+				// Try to recover reference/mobile from object.
+				if (object->isActor()) {
+					auto actor = static_cast<TES3::Actor*>(object);
 
-			if (maybeParams) {
-				sol::table params = maybeParams.value();
-				sol::object maybeValue = params[key];
-				if (maybeValue.valid()) {
-					if (maybeValue.is<std::string>()) {
-						value = TES3::DataHandler::get()->nonDynamicData->getSpellById(maybeValue.as<std::string>().c_str());
+					auto reference = actor->getReference();
+					if (reference) {
+						out_reference = reference;
+						out_mobile = reference->getAttachedMobileActor();
+						return true;
 					}
-					else if (maybeValue.is<TES3::Spell*>()) {
-						value = maybeValue.as<TES3::Spell*>();
+
+					auto mobile = static_cast<TES3::MobileActor*>(actor->getMobile());
+					if (mobile) {
+						out_reference = mobile->reference;
+						out_mobile = mobile;
+						return true;
 					}
 				}
+
+				return true;
 			}
-
-			return value;
 		}
 
-		TES3::Dialogue* getOptionalParamDialogue(sol::optional<sol::table> maybeParams, const char* key) {
-			TES3::Dialogue* value = nullptr;
+		return false;
+	}
 
-			if (maybeParams) {
-				sol::table params = maybeParams.value();
-				sol::object maybeValue = params[key];
-				if (maybeValue.valid()) {
-					if (maybeValue.is<const char*>()) {
-						value = TES3::DataHandler::get()->nonDynamicData->findDialogue(maybeValue.as<const char*>());
-					}
-					else if (maybeValue.is<TES3::Dialogue*>()) {
-						value = maybeValue.as<TES3::Dialogue*>();
-					}
-				}
-			}
+	const TES3::UI::UI_ID TES3_UI_ID_NULL = static_cast<TES3::UI::UI_ID>(TES3::UI::Property::null);
 
-			return value;
+	TES3::UI::Property getPropertyFromObject(sol::object object) {
+		if (object.is<TES3::UI::Property>()) {
+			return object.as<TES3::UI::Property>();
+		}
+		else if (object.is<const char*>()) {
+			return TES3::UI::registerProperty(object.as<const char*>());
 		}
 
-		TES3::Sound* getOptionalParamSound(sol::optional<sol::table> maybeParams, const char* key) {
-			TES3::Sound* value = nullptr;
+		throw std::invalid_argument("Could not determine property from value.");
+	}
 
-			if (maybeParams) {
-				sol::table params = maybeParams.value();
-				sol::object maybeValue = params[key];
-				if (maybeValue.valid()) {
-					if (maybeValue.is<std::string>()) {
-						value = TES3::DataHandler::get()->nonDynamicData->findSound(maybeValue.as<std::string>().c_str());
-					}
-					else if (maybeValue.is<TES3::Sound*>()) {
-						value = maybeValue.as<TES3::Sound*>();
-					}
-				}
-			}
-
-			return value;
-		}
-
-		sol::optional<TES3::Vector2> getOptionalParamVector2(sol::optional<sol::table> maybeParams, const char* key) {
-			if (maybeParams) {
-				sol::table params = maybeParams.value();
-				sol::object maybeValue = params[key];
-				if (maybeValue.valid()) {
-					// Were we given a real vector?
-					if (maybeValue.is<TES3::Vector2>()) {
-						return maybeValue.as<TES3::Vector2>();
-					}
-					// Were we given a vector3 for some reason?
-					else if (maybeValue.is<TES3::Vector3>()) {
-						return TES3::Vector2(maybeValue.as<TES3::Vector2&>().x, maybeValue.as<TES3::Vector2&>().y);
-					}
-					// Were we given a table?
-					else if (maybeValue.get_type() == sol::type::table) {
-						return maybeValue.as<sol::table>();
-					}
-				}
-			}
-
-			return {};
-		}
-
-		sol::optional<TES3::Vector3> getOptionalParamVector3(sol::optional<sol::table> maybeParams, const char* key) {
-			if (maybeParams) {
-				sol::table params = maybeParams.value();
-				sol::object maybeValue = params[key];
-				if (maybeValue.valid()) {
-					// Were we given a real vector?
-					if (maybeValue.is<TES3::Vector3*>()) {
-						return *maybeValue.as<TES3::Vector3*>();
-					}
-
-					// Were we given a table?
-					else if (maybeValue.get_type() == sol::type::table) {
-						sol::table value = maybeValue.as<sol::table>();
-						return TES3::Vector3(value[1], value[2], value[3]);
-					}
-				}
-			}
-
-			return sol::optional<TES3::Vector3>();
-		}
-
-		TES3::Cell* getOptionalParamCell(sol::optional<sol::table> maybeParams, const char* key) {
-			TES3::Cell* value = nullptr;
-
-			if (maybeParams) {
-				sol::table params = maybeParams.value();
-				sol::object maybeValue = params[key];
-				if (maybeValue.valid()) {
-					if (maybeValue.is<const char*>()) {
-						value = TES3::DataHandler::get()->nonDynamicData->getCellByName(maybeValue.as<const char*>());
-					}
-					else if (maybeValue.is<TES3::Cell*>()) {
-						value = maybeValue.as<TES3::Cell*>();
-					}
-					else if (maybeValue.get_type() == sol::type::table) {
-						sol::table coordsTable = maybeValue.as<sol::table>();
-						if (coordsTable.size() == 2) {
-							value = TES3::DataHandler::get()->nonDynamicData->getCellByGrid(coordsTable[1], coordsTable[2]);
-						}
-					}
-				}
-			}
-
-			return value;
-		}
-
-		bool getOptionalComplexObjectParams(sol::optional<sol::table> params, TES3::Reference*& out_reference, TES3::BaseObject*& out_object, TES3::MobileActor*& out_mobile, const char* referenceKey, const char* mobileKey, const char* objectKey) {
-			if (params) {
-				// Were we passed a reference?
-				auto reference = getOptionalParamReference(params, referenceKey);
-				if (reference) {
-					out_reference = reference;
-					out_mobile = reference->getAttachedMobileActor();
-					out_object = reference->baseObject;
-					return true;
-				}
-
-				// A mobile?
-				auto mobile = getOptionalParamMobileActor(params, mobileKey);
-				if (mobile) {
-					out_reference = mobile->reference;
-					out_mobile = mobile;
-					out_object = mobile->reference->baseObject;
-					return true;
-				}
-
-				// How about an object?
-				TES3::BaseObject* object = getOptionalParamObject<TES3::BaseObject>(params, objectKey);
-				if (object) {
-					out_reference = nullptr;
-					out_mobile = nullptr;
-					out_object = object;
-
-					// Try to recover reference/mobile from object.
-					if (object->isActor()) {
-						auto actor = static_cast<TES3::Actor*>(object);
-
-						auto reference = actor->getReference();
-						if (reference) {
-							out_reference = reference;
-							out_mobile = reference->getAttachedMobileActor();
-							return true;
-						}
-
-						auto mobile = static_cast<TES3::MobileActor*>(actor->getMobile());
-						if (mobile) {
-							out_reference = mobile->reference;
-							out_mobile = mobile;
-							return true;
-						}
-					}
-
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-		const TES3::UI::UI_ID TES3_UI_ID_NULL = static_cast<TES3::UI::UI_ID>(TES3::UI::Property::null);
-
-		TES3::UI::Property getPropertyFromObject(sol::object object) {
-			if (object.is<TES3::UI::Property>()) {
-				return object.as<TES3::UI::Property>();
+	TES3::UI::UI_ID getUIIDFromObject(sol::object object) {
+		if (object.valid()) {
+			if (object.is<TES3::UI::UI_ID>()) {
+				return object.as<TES3::UI::UI_ID>();
 			}
 			else if (object.is<const char*>()) {
-				return TES3::UI::registerProperty(object.as<const char*>());
+				return TES3::UI::registerID(object.as<const char*>());
 			}
-
-			throw std::invalid_argument("Could not determine property from value.");
 		}
 
-		TES3::UI::UI_ID getUIIDFromObject(sol::object object) {
-			if (object.valid()) {
-				if (object.is<TES3::UI::UI_ID>()) {
-					return object.as<TES3::UI::UI_ID>();
-				}
-				else if (object.is<const char*>()) {
-					return TES3::UI::registerID(object.as<const char*>());
-				}
-			}
+		return TES3_UI_ID_NULL;
+	}
 
-			return TES3_UI_ID_NULL;
+	TES3::UI::UI_ID getOptionalUIID(sol::optional<sol::table> maybeParams, const char* key) {
+		if (maybeParams) {
+			return getUIIDFromObject(maybeParams.value()[key]);
+		}
+		return TES3_UI_ID_NULL;
+	}
+
+	bool setVectorFromLua(TES3::Vector2& vector, sol::stack_object value) {
+		// Is it a vector?
+		if (value.is<TES3::Vector2>()) {
+			vector = value.as<TES3::Vector2&>();
+			return true;
+		}
+		// Allow a simple table to be provided.
+		else if (value.get_type() == sol::type::table) {
+			vector = value.as<sol::table>();
+			return true;
 		}
 
-		TES3::UI::UI_ID getOptionalUIID(sol::optional<sol::table> maybeParams, const char* key) {
-			if (maybeParams) {
-				return getUIIDFromObject(maybeParams.value()[key]);
-			}
-			return TES3_UI_ID_NULL;
+		return false;
+	}
+
+	bool setVectorFromLua(TES3::Vector3& vector, sol::stack_object value) {
+		// Is it a vector?
+		if (value.is<TES3::Vector3*>()) {
+			vector = value.as<TES3::Vector3&>();
+			return true;
+		}
+		// Allow a simple table to be provided.
+		else if (value.get_type() == sol::type::table) {
+			vector = value.as<sol::table>();
+			return true;
 		}
 
-		bool setVectorFromLua(TES3::Vector2& vector, sol::stack_object value) {
-			// Is it a vector?
-			if (value.is<TES3::Vector2>()) {
-				vector = value.as<TES3::Vector2&>();
-				return true;
-			}
-			// Allow a simple table to be provided.
-			else if (value.get_type() == sol::type::table) {
-				vector = value.as<sol::table>();
-				return true;
-			}
+		return false;
+	}
 
-			return false;
+	void logStackTrace(const char* message) {
+		if (message != nullptr) {
+			log::getLog() << message << std::endl;
 		}
 
-		bool setVectorFromLua(TES3::Vector3& vector, sol::stack_object value) {
-			// Is it a vector?
-			if (value.is<TES3::Vector3*>()) {
-				vector = value.as<TES3::Vector3&>();
-				return true;
-			}
-			// Allow a simple table to be provided.
-			else if (value.get_type() == sol::type::table) {
-				vector = value.as<sol::table>();
-				return true;
-			}
+		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+		sol::state& state = stateHandle.state;
+		static sol::protected_function luaDebugTraceback = state["debug"]["traceback"];
 
-			return false;
-		}
-
-		void logStackTrace(const char* message) {
-			if (message != nullptr) {
-				log::getLog() << message << std::endl;
-			}
-
-			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-			sol::state& state = stateHandle.state;
-			static sol::protected_function luaDebugTraceback = state["debug"]["traceback"];
-
-			sol::protected_function_result result = luaDebugTraceback();
-			if (result.valid()) {
-				sol::optional<std::string> asString = result;
-				if (asString) {
-					log::getLog() << asString.value() << std::endl;
-				}
+		sol::protected_function_result result = luaDebugTraceback();
+		if (result.valid()) {
+			sol::optional<std::string> asString = result;
+			if (asString) {
+				log::getLog() << asString.value() << std::endl;
 			}
 		}
 	}

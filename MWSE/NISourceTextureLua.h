@@ -1,7 +1,5 @@
 #pragma once
 
-namespace mwse {
-	namespace lua {
-		void bindNISourceTexture();
-	}
+namespace mwse::lua {
+	void bindNISourceTexture();
 }

@@ -6,26 +6,18 @@
 #include "TES3Reference.h"
 #include "TES3Spell.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xGetTrap : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xGetTrap : InstructionInterface_t {
 	public:
 		xGetTrap();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xGetTrap xGetTrapInstance;
 
 	xGetTrap::xGetTrap() : mwse::InstructionInterface_t(OpCode::xGetTrap) {}
 
-	void xGetTrap::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xGetTrap::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xGetTrap::execute(mwse::VMExecuteInterface& virtualMachine) {
 		char* id = NULL;
 		char* name = NULL;
 		short cost = 0;
@@ -33,9 +25,9 @@ namespace mwse
 		// Get reference to what we're finding the trap of.
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xGetTrap: Called on invalid reference." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetTrap: Called on invalid reference." << std::endl;
+			}
 			Stack::getInstance().pushShort(cost);
 			Stack::getInstance().pushString(name);
 			Stack::getInstance().pushString(id);
@@ -54,15 +46,15 @@ namespace mwse
 				}
 			}
 			else {
-#if _DEBUG
-				log::getLog() << "xGetTrap: Could not obtain lock node." << std::endl;
-#endif
+				if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+					log::getLog() << "xGetTrap: Could not obtain lock node." << std::endl;
+				}
 			}
 		}
 		else {
-#if _DEBUG
-			log::getLog() << "xGetTrap: Called on a non-container, non-door reference." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				log::getLog() << "xGetTrap: Called on a non-container, non-door reference." << std::endl;
+			}
 		}
 
 		Stack::getInstance().pushShort(cost);

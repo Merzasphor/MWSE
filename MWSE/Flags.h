@@ -3,7 +3,7 @@
 namespace mwse {
 	class Flags {
 	public:
-		template<class T> static inline void setFlags(T &value) {
+		template<class T> static inline void setFlags(T& value) {
 			positive = (value >= 0);
 			zero = (value == 0);
 		}

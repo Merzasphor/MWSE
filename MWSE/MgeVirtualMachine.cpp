@@ -5,8 +5,6 @@
 #include "InstructionInterface.h"
 #include "OpCodes.h"
 
-using namespace mwse;
-
 namespace mwse {
 	class MgeInstruction : InstructionInterface_t {
 	public:
@@ -39,6 +37,7 @@ namespace mwse {
 	}
 }
 
+using namespace mwse;
 
 VIRTUALMACHINE::~VIRTUALMACHINE(void) {
 

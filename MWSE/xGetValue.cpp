@@ -6,29 +6,25 @@
 #include "TES3ItemData.h"
 #include "TES3Reference.h"
 
-using namespace mwse;
 
 namespace mwse {
-	class xGetValue : mwse::InstructionInterface_t {
+	class xGetValue : InstructionInterface_t {
 	public:
 		xGetValue();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xGetValue xGetValueInstance;
 
 	xGetValue::xGetValue() : mwse::InstructionInterface_t(OpCode::xGetValue) {}
 
-	void xGetValue::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xGetValue::execute(mwse::VMExecuteInterface &virtualMachine) {
+	float xGetValue::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xGetValue: No reference provided." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetValue: No reference provided." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}
@@ -52,9 +48,9 @@ namespace mwse {
 			}
 		}
 		catch (std::exception& e) {
-#if _DEBUG
-			mwse::log::getLog() << "xGetValue: " << e.what() << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetValue: " << e.what() << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}

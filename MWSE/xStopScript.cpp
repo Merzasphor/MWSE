@@ -9,27 +9,18 @@
 #include "TES3DataHandler.h"
 #include "TES3Script.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xStopScript : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xStopScript : InstructionInterface_t {
 	public:
 		xStopScript();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xStopScript xStopScriptInstance;
 
 	xStopScript::xStopScript() : mwse::InstructionInterface_t(OpCode::xStopScript) {}
 
-	void xStopScript::loadParameters(mwse::VMExecuteInterface &virtualMachine) {
-	}
-
-	float xStopScript::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xStopScript::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get parameter: script name. We allow a value of 0 to target the current script.
 		long scriptNameId = mwse::Stack::getInstance().popLong();
 		const char* scriptName = NULL;
@@ -43,9 +34,9 @@ namespace mwse
 		// Try to get the target script.
 		TES3::Script* targetScript = TES3::DataHandler::get()->nonDynamicData->findScriptByName(scriptName);
 		if (targetScript == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xStopScript: No script could be found with name '" << scriptName << "'." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xStopScript: No script could be found with name '" << scriptName << "'." << std::endl;
+			}
 			return 0.0f;
 		}
 

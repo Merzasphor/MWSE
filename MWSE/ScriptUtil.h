@@ -8,155 +8,151 @@
 
 #undef PlaySound
 
-namespace mwse
-{
-	namespace mwscript
-	{
+namespace mwse::mwscript {
 
-		//
-		// Manipulation of script state.
-		//
+	//
+	// Manipulation of script state.
+	//
 
-		int getInstructionPointer();
-		void setInstructionPointer(int IP);
+	int getInstructionPointer();
+	void setInstructionPointer(int IP);
 
-		//
-		// Manipulation of script variables.
-		//
+	//
+	// Manipulation of script variables.
+	//
 
-		TES3::ScriptVariables* getLocalScriptVariables();
+	TES3::ScriptVariables* getLocalScriptVariables();
 
-		TES3::Reference* getScriptTargetReference();
-		void setScriptTargetReference(TES3::Reference* reference);
+	TES3::Reference* getScriptTargetReference();
+	void setScriptTargetReference(TES3::Reference* reference);
 
-		TES3::BaseObject* getScriptTargetTemplate();
-		void setScriptTargetTemplate(TES3::BaseObject* record);
+	TES3::BaseObject* getScriptTargetTemplate();
+	void setScriptTargetTemplate(TES3::BaseObject* record);
 
-		TES3::BaseObject* getScriptSecondObject();
-		void setScriptSecondObject(const char* string);
-		void setScriptSecondObject(TES3::BaseObject* record);
+	TES3::BaseObject* getScriptSecondObject();
+	void setScriptSecondObject(const char* string);
+	void setScriptSecondObject(TES3::BaseObject* record);
 
-		TES3::BaseObject* getDataBufferObject();
-		void setDataBufferObject(TES3::BaseObject*);
+	TES3::BaseObject* getDataBufferObject();
+	void setDataBufferObject(TES3::BaseObject*);
 
-		const char* getDataBufferString();
-		void setDataBufferString(const char*);
+	const char* getDataBufferString();
+	void setDataBufferString(const char*);
 
-		long getScriptVariableIndex();
-		void setScriptVariableIndex(long index);
+	long getScriptVariableIndex();
+	void setScriptVariableIndex(long index);
 
-		float getScriptDestinationX();
-		void setScriptDestinationX(float value);
+	float getScriptDestinationX();
+	void setScriptDestinationX(float value);
 
-		float getScriptDestinationY();
-		void setScriptDestinationY(float value);
+	float getScriptDestinationY();
+	void setScriptDestinationY(float value);
 
-		float getScriptDestinationZ();
-		void setScriptDestinationZ(float value);
+	float getScriptDestinationZ();
+	void setScriptDestinationZ(float value);
 
-		void setScriptDestination(float x, float y, float z);
+	void setScriptDestination(float x, float y, float z);
 
-		float getScriptTargetRotationX();
-		void setScriptTargetRotationX(float value);
+	float getScriptTargetRotationX();
+	void setScriptTargetRotationX(float value);
 
-		float getScriptTargetRotationY();
-		void setScriptTargetRotationY(float value);
+	float getScriptTargetRotationY();
+	void setScriptTargetRotationY(float value);
 
-		float getScriptTargetRotationZ();
-		void setScriptTargetRotationZ(float value);
+	float getScriptTargetRotationZ();
+	void setScriptTargetRotationZ(float value);
 
-		void setScriptTargetRotation(float x, float y, float z);
+	void setScriptTargetRotation(float x, float y, float z);
 
-		//
-		// Execute original op code.
-		//
+	//
+	// Execute original op code.
+	//
 
-		float RunOriginalOpCode(TES3::Script* script, TES3::Reference* reference, OpCode::OpCode_t opCode, TES3::BaseObject* objectParam = nullptr, char charParam = '\0');
+	float RunOriginalOpCode(TES3::Script* script, TES3::Reference* reference, OpCode::OpCode_t opCode, TES3::BaseObject* objectParam = nullptr, char charParam = '\0');
 
-		//
-		// Wrapper functions for original opcodes.
-		//
+	//
+	// Wrapper functions for original opcodes.
+	//
 
-		void Activate(TES3::Script* script, TES3::Reference* reference);
+	void Activate(TES3::Script* script, TES3::Reference* reference);
 
-		void AddItem(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate, long count);
+	void AddItem(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate, long count);
 
-		void AddSoulGem(TES3::Script*, TES3::Reference*, TES3::Creature*, TES3::Misc*);
+	void AddSoulGem(TES3::Script*, TES3::Reference*, TES3::Creature*, TES3::Misc*);
 
-		void AddToLevCreature(TES3::Script*, TES3::Reference*, TES3::BaseObject*, TES3::Actor*, unsigned short);
+	void AddToLevCreature(TES3::Script*, TES3::Reference*, TES3::BaseObject*, TES3::Actor*, unsigned short);
 
-		void AddToLevItem(TES3::Script*, TES3::Reference*, TES3::BaseObject*, TES3::PhysicalObject*, unsigned short);
+	void AddToLevItem(TES3::Script*, TES3::Reference*, TES3::BaseObject*, TES3::PhysicalObject*, unsigned short);
 
-		void AddTopic(TES3::Script* script, TES3::Reference* reference, TES3::Dialogue* topic);
+	void AddTopic(TES3::Script* script, TES3::Reference* reference, TES3::Dialogue* topic);
 
-		void AddSpell(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* spellTemplate);
+	void AddSpell(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* spellTemplate);
 
-		void AITravel(TES3::Script* script, TES3::Reference* reference, float x, float y, float z);
+	void AITravel(TES3::Script* script, TES3::Reference* reference, float x, float y, float z);
 
-		void Cast(TES3::Script* script, TES3::Reference* reference, TES3::Spell* spell, TES3::BaseObject* target);
+	void Cast(TES3::Script* script, TES3::Reference* reference, TES3::Spell* spell, TES3::BaseObject* target);
 
-		void Disable(TES3::Script* script, TES3::Reference* reference);
+	void Disable(TES3::Script* script, TES3::Reference* reference);
 
-		void Drop(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate, long count);
+	void Drop(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate, long count);
 
-		void Enable(TES3::Script* script, TES3::Reference* reference);
+	void Enable(TES3::Script* script, TES3::Reference* reference);
 
-		void Equip(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate);
+	void Equip(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate);
 
-		void ExplodeSpell(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* spellTemplate);
+	void ExplodeSpell(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* spellTemplate);
 
-		int GetButtonPressed(TES3::Script* script, TES3::Reference* reference);
+	int GetButtonPressed(TES3::Script* script, TES3::Reference* reference);
 
-		bool HasItemEquipped(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate);
+	bool HasItemEquipped(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate);
 
-		bool GetDetected(TES3::Script* script, TES3::Reference* reference, TES3::Reference* target);
+	bool GetDetected(TES3::Script* script, TES3::Reference* reference, TES3::Reference* target);
 
-		bool GetDisabled(TES3::Script* script, TES3::Reference* reference);
+	bool GetDisabled(TES3::Script* script, TES3::Reference* reference);
 
-		float GetDistance(TES3::Script* script, TES3::Reference* reference, TES3::Reference* target);
-		
-		long GetItemCount(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate);
+	float GetDistance(TES3::Script* script, TES3::Reference* reference, TES3::Reference* target);
 
-		bool GetPCJumping(TES3::Script* script);
+	long GetItemCount(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate);
 
-		bool GetPCRunning(TES3::Script* script);
+	bool GetPCJumping(TES3::Script* script);
 
-		bool GetPCSneaking(TES3::Script* script);
+	bool GetPCRunning(TES3::Script* script);
 
-		bool GetSpellEffects(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* spellTemplate);
+	bool GetPCSneaking(TES3::Script* script);
 
-		void PlaceAtPC(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* placedTemplate, long count, float distance, float direction);
+	bool GetSpellEffects(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* spellTemplate);
 
-		void PlaySound(TES3::Script* script, TES3::Reference* reference, TES3::Sound* sound);
+	void PlaceAtPC(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* placedTemplate, long count, float distance, float direction);
 
-		void Position(TES3::Script* script, TES3::Reference* reference, float x, float y, float z, float rotation);
+	void PlaySound(TES3::Script* script, TES3::Reference* reference, TES3::Sound* sound);
 
-		void PositionCell(TES3::Script* script, TES3::Reference* reference, float x, float y, float z, float rotation, const char* cell);
+	void Position(TES3::Script* script, TES3::Reference* reference, float x, float y, float z, float rotation);
 
-		void RemoveItem(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate, long count);
+	void PositionCell(TES3::Script* script, TES3::Reference* reference, float x, float y, float z, float rotation, const char* cell);
 
-		void RemoveSpell(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* spellTemplate);
+	void RemoveItem(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate, long count);
 
-		bool ScriptRunning(TES3::Script* script, TES3::Script* targetScript);
+	void RemoveSpell(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* spellTemplate);
 
-		void SetLevel(TES3::Script* script, TES3::Reference* reference, short level);
+	bool ScriptRunning(TES3::Script* script, TES3::Script* targetScript);
 
-		void StartCombat(TES3::Script* script, TES3::Reference* reference, TES3::Reference* target);
+	void SetLevel(TES3::Script* script, TES3::Reference* reference, short level);
 
-		void StartScript(TES3::Script* script, TES3::Reference* reference, TES3::Script* targetScript);
+	void StartCombat(TES3::Script* script, TES3::Reference* reference, TES3::Reference* target);
 
-		void StopCombat(TES3::Script* script, TES3::Reference* reference);
+	void StartScript(TES3::Script* script, TES3::Reference* reference, TES3::Script* targetScript);
 
-		void StopScript(TES3::Script* script, TES3::Script* targetScript);
+	void StopCombat(TES3::Script* script, TES3::Reference* reference);
 
-		void StopSound(TES3::Script* script, TES3::Reference* reference, TES3::Sound* sound);
+	void StopScript(TES3::Script* script, TES3::Script* targetScript);
 
-		//
-		// In-function hook callbacks for getting script variables.
-		//
+	void StopSound(TES3::Script* script, TES3::Reference* reference, TES3::Sound* sound);
 
-		extern TES3::Reference* lastCreatedPlaceAtPCReference;
+	//
+	// In-function hook callbacks for getting script variables.
+	//
 
-		void OnPlaceReferenceCreated(TES3::Reference* reference);
-	}
+	extern TES3::Reference* lastCreatedPlaceAtPCReference;
+
+	void OnPlaceReferenceCreated(TES3::Reference* reference);
 }

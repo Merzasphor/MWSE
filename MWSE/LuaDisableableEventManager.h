@@ -1,15 +1,11 @@
 #pragma once
 
-namespace mwse {
-	namespace lua {
-		namespace event {
-			class DisableableEventManager {
-			public:
-				DisableableEventManager() = delete;
-				~DisableableEventManager() = delete;
+namespace mwse::lua::event {
+	class DisableableEventManager {
+	public:
+		DisableableEventManager() = delete;
+		~DisableableEventManager() = delete;
 
-				static void bindToLua();
-			};
-		}
-	}
+		static void bindToLua();
+	};
 }

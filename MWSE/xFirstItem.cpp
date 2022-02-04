@@ -7,26 +7,18 @@
 #include "TES3Cell.h"
 #include "TES3Reference.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xFirstItem : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xFirstItem : InstructionInterface_t {
 	public:
 		xFirstItem();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xFirstItem xFirstItemInstance;
 
 	xFirstItem::xFirstItem() : mwse::InstructionInterface_t(OpCode::xFirstItem) {}
 
-	void xFirstItem::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xFirstItem::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xFirstItem::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Clear elements in our stored exterior ref list.
 		mwse::tes3::clearExteriorRefs();
 

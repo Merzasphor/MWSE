@@ -3,23 +3,19 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
-using namespace mwse;
 
 namespace mwse {
-	class xKeyPressed : mwse::InstructionInterface_t {
+	class xKeyPressed : InstructionInterface_t {
 	public:
 		xKeyPressed();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xKeyPressed xKeyPressedInstance;
 
 	xKeyPressed::xKeyPressed() : mwse::InstructionInterface_t(OpCode::xKeyPressed) {}
 
-	void xKeyPressed::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xKeyPressed::execute(mwse::VMExecuteInterface &virtualMachine) {
+	float xKeyPressed::execute(mwse::VMExecuteInterface& virtualMachine) {
 		long keyCode = Stack::getInstance().popLong();
 
 		// A particular key, based on virtual key codes.

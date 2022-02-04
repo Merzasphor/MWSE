@@ -2,45 +2,41 @@
 
 #include "LuaManager.h"
 
-namespace mwse {
-	namespace lua {
-		namespace event {
-			KeyEvent::KeyEvent(int keyCode, bool pressed, bool controlDown, bool shiftDown, bool altDown, bool superDown) :
-				GenericEvent("key"),
-				m_KeyCode(keyCode),
-				m_Pressed(pressed),
-				m_ControlDown(controlDown),
-				m_ShiftDown(shiftDown),
-				m_AltDown(altDown),
-				m_SuperDown(superDown)
-			{
+namespace mwse::lua::event {
+	KeyEvent::KeyEvent(int keyCode, bool pressed, bool controlDown, bool shiftDown, bool altDown, bool superDown) :
+		GenericEvent("key"),
+		m_KeyCode(keyCode),
+		m_Pressed(pressed),
+		m_ControlDown(controlDown),
+		m_ShiftDown(shiftDown),
+		m_AltDown(altDown),
+		m_SuperDown(superDown)
+	{
 
-			}
+	}
 
-			sol::table KeyEvent::createEventTable() {
-				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-				sol::state& state = stateHandle.state;
-				sol::table eventData = state.create_table();
+	sol::table KeyEvent::createEventTable() {
+		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+		sol::state& state = stateHandle.state;
+		sol::table eventData = state.create_table();
 
-				eventData["keyCode"] = m_KeyCode;
-				eventData["pressed"] = m_Pressed;
-				eventData["isControlDown"] = m_ControlDown;
-				eventData["isShiftDown"] = m_ShiftDown;
-				eventData["isAltDown"] = m_AltDown;
-				eventData["isSuperDown"] = m_SuperDown;
+		eventData["keyCode"] = m_KeyCode;
+		eventData["pressed"] = m_Pressed;
+		eventData["isControlDown"] = m_ControlDown;
+		eventData["isShiftDown"] = m_ShiftDown;
+		eventData["isAltDown"] = m_AltDown;
+		eventData["isSuperDown"] = m_SuperDown;
 
-				return eventData;
-			}
+		return eventData;
+	}
 
-			sol::object KeyEvent::getEventOptions() {
-				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-				sol::state& state = stateHandle.state;
-				sol::table options = state.create_table();
+	sol::object KeyEvent::getEventOptions() {
+		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+		sol::state& state = stateHandle.state;
+		sol::table options = state.create_table();
 
-				options["filter"] = m_KeyCode;
+		options["filter"] = m_KeyCode;
 
-				return options;
-			}
-		}
+		return options;
 	}
 }

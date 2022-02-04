@@ -9,29 +9,27 @@
 
 #include "TES3Item.h"
 
-namespace mwse {
-	namespace lua {
-		void bindTES3UIInventoryTile() {
-			// Get our lua state.
-			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-			sol::state& state = stateHandle.state;
+namespace mwse::lua {
+	void bindTES3UIInventoryTile() {
+		// Get our lua state.
+		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+		sol::state& state = stateHandle.state;
 
-			// Start our usertype.
-			auto usertypeDefinition = state.new_usertype<TES3::UI::InventoryTile>("tes3inventoryTile");
-			usertypeDefinition["new"] = sol::no_constructor;
+		// Start our usertype.
+		auto usertypeDefinition = state.new_usertype<TES3::UI::InventoryTile>("tes3inventoryTile");
+		usertypeDefinition["new"] = sol::no_constructor;
 
-			// Functions exposed as properties.
-			usertypeDefinition["count"] = sol::readonly_property(&TES3::UI::InventoryTile::count);
-			usertypeDefinition["element"] = sol::readonly_property(&TES3::UI::InventoryTile::element);
-			usertypeDefinition["flags"] = sol::readonly_property(&TES3::UI::InventoryTile::flags);
-			usertypeDefinition["isBoundItem"] = sol::readonly_property(&TES3::UI::InventoryTile::isBoundItem);
-			usertypeDefinition["item"] = sol::readonly_property(&TES3::UI::InventoryTile::item);
-			usertypeDefinition["itemData"] = sol::readonly_property(&TES3::UI::InventoryTile::itemData);
-			usertypeDefinition["type"] = sol::readonly_property(&TES3::UI::InventoryTile::tileType);
+		// Functions exposed as properties.
+		usertypeDefinition["count"] = sol::readonly_property(&TES3::UI::InventoryTile::count);
+		usertypeDefinition["element"] = sol::readonly_property(&TES3::UI::InventoryTile::element);
+		usertypeDefinition["flags"] = sol::readonly_property(&TES3::UI::InventoryTile::flags);
+		usertypeDefinition["isBoundItem"] = sol::readonly_property(&TES3::UI::InventoryTile::isBoundItem);
+		usertypeDefinition["item"] = sol::readonly_property(&TES3::UI::InventoryTile::item);
+		usertypeDefinition["itemData"] = sol::readonly_property(&TES3::UI::InventoryTile::itemData);
+		usertypeDefinition["type"] = sol::readonly_property(&TES3::UI::InventoryTile::tileType);
 
-			// Access into flags.
-			usertypeDefinition["isBartered"] = sol::property(&TES3::UI::InventoryTile::getIsBartered, &TES3::UI::InventoryTile::setIsBartered);
-			usertypeDefinition["isEquipped"] = sol::property(&TES3::UI::InventoryTile::getIsEquipped, &TES3::UI::InventoryTile::setIsEquipped);
-		}
+		// Access into flags.
+		usertypeDefinition["isBartered"] = sol::property(&TES3::UI::InventoryTile::getIsBartered, &TES3::UI::InventoryTile::setIsBartered);
+		usertypeDefinition["isEquipped"] = sol::property(&TES3::UI::InventoryTile::getIsEquipped, &TES3::UI::InventoryTile::setIsEquipped);
 	}
 }

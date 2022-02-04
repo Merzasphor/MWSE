@@ -8,32 +8,24 @@
 #include "TES3Enchantment.h"
 #include "TES3Spell.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xDeleteEffect : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xDeleteEffect : InstructionInterface_t {
 	public:
 		xDeleteEffect();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xDeleteEffect xDeleteEffectInstance;
 
 	xDeleteEffect::xDeleteEffect() : mwse::InstructionInterface_t(OpCode::xDeleteEffect) {}
 
-	void xDeleteEffect::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xDeleteEffect::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xDeleteEffect::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get parameters.
 		long type = mwse::Stack::getInstance().popLong();
 		mwseString& id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 		long effectIndex = mwse::Stack::getInstance().popLong() - 1; // 0-based index.
 		size_t effectCount = 0;
-		
+
 		// Get the desired effect.
 		TES3::Effect* effects = NULL;
 		if (type == TES3::ObjectType::Spell) {
@@ -43,9 +35,9 @@ namespace mwse
 				effectCount = spell->getActiveEffectCount();
 			}
 			else {
-#if _DEBUG
-				mwse::log::getLog() << "xDeleteEffect: No spell found with id '" << id << "'." << std::endl;
-#endif
+				if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+					mwse::log::getLog() << "xDeleteEffect: No spell found with id '" << id << "'." << std::endl;
+				}
 				mwse::Stack::getInstance().pushLong(false);
 				return 0.0f;
 			}
@@ -57,9 +49,9 @@ namespace mwse
 				effectCount = enchant->getActiveEffectCount();
 			}
 			else {
-#if _DEBUG
-				mwse::log::getLog() << "xDeleteEffect: No spell found with id '" << id << "'." << std::endl;
-#endif
+				if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+					mwse::log::getLog() << "xDeleteEffect: No spell found with id '" << id << "'." << std::endl;
+				}
 				mwse::Stack::getInstance().pushLong(false);
 				return 0.0f;
 			}
@@ -71,31 +63,31 @@ namespace mwse
 				effectCount = alchemy->getActiveEffectCount();
 			}
 			else {
-#if _DEBUG
-				mwse::log::getLog() << "xDeleteEffect: No alchemy record found with id '" << id << "'." << std::endl;
-#endif
+				if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+					mwse::log::getLog() << "xDeleteEffect: No alchemy record found with id '" << id << "'." << std::endl;
+				}
 			}
 		}
 		else {
-#if _DEBUG
-			mwse::log::getLog() << "xDeleteEffect: Record type of " << type << " is not supported." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xDeleteEffect: Record type of " << type << " is not supported." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
 
 		// Verify that the effect can be deleted.
 		if (effectCount == 1) {
-#if _DEBUG
-			mwse::log::getLog() << "xDeleteEffect: Effect count must be at least one." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xDeleteEffect: Effect count must be at least one." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
 		else if (effectIndex >= effectCount) {
-#if _DEBUG
-			mwse::log::getLog() << "xDeleteEffect: Effect index out of range for effect." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xDeleteEffect: Effect index out of range for effect." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}

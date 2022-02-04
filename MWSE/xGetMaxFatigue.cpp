@@ -5,16 +5,11 @@
 #include "TES3MobileNPC.h"
 #include "TES3Reference.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xGetMaxFatigue : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xGetMaxFatigue : InstructionInterface_t {
 	public:
 		xGetMaxFatigue();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	private:
 		const float INVALID_VALUE = -1.0f;
 	};
@@ -23,17 +18,14 @@ namespace mwse
 
 	xGetMaxFatigue::xGetMaxFatigue() : mwse::InstructionInterface_t(OpCode::xGetMaxFatigue) {}
 
-	void xGetMaxFatigue::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xGetMaxFatigue::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xGetMaxFatigue::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get the associated MACP record.
 		TES3::Reference* reference = virtualMachine.getReference();
 		auto mobileObject = reference->getAttachedMobileActor();
 		if (mobileObject == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xGetMaxFatigue: Could not find MACP record for reference." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetMaxFatigue: Could not find MACP record for reference." << std::endl;
+			}
 			mwse::Stack::getInstance().pushFloat(INVALID_VALUE);
 			return 0.0f;
 		}

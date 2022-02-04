@@ -11,26 +11,18 @@
 #include "TES3Skill.h"
 #include "TES3Spell.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xGetEffectInfo : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xGetEffectInfo : InstructionInterface_t {
 	public:
 		xGetEffectInfo();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xGetEffectInfo xGetEffectInfoInstance;
 
 	xGetEffectInfo::xGetEffectInfo() : mwse::InstructionInterface_t(OpCode::xGetEffectInfo) {}
 
-	void xGetEffectInfo::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xGetEffectInfo::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xGetEffectInfo::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get parameters.
 		long effectType = Stack::getInstance().popLong();
 		mwseString& effectId = virtualMachine.getString(Stack::getInstance().popLong());
@@ -55,9 +47,9 @@ namespace mwse
 					effect = &spell->effects[effectIndex - 1];
 				}
 				else {
-#if _DEBUG
-					mwse::log::getLog() << "xGetEffectInfo: No spell record found with id '" << effectId << "'." << std::endl;
-#endif
+					if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+						mwse::log::getLog() << "xGetEffectInfo: No spell record found with id '" << effectId << "'." << std::endl;
+					}
 				}
 			}
 			else if (effectType == TES3::ObjectType::Enchantment) {
@@ -66,9 +58,9 @@ namespace mwse
 					effect = &enchant->effects[effectIndex - 1];
 				}
 				else {
-#if _DEBUG
-					mwse::log::getLog() << "xGetEffectInfo: No enchant record found with id '" << effectId << "'." << std::endl;
-#endif
+					if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+						mwse::log::getLog() << "xGetEffectInfo: No enchant record found with id '" << effectId << "'." << std::endl;
+					}
 				}
 			}
 			else if (effectType == TES3::ObjectType::Alchemy) {
@@ -77,15 +69,15 @@ namespace mwse
 					effect = &alchemy->effects[effectIndex - 1];
 				}
 				else {
-#if _DEBUG
-					mwse::log::getLog() << "xGetEffectInfo: No alchemy record found with id '" << effectId << "'." << std::endl;
-#endif
+					if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+						mwse::log::getLog() << "xGetEffectInfo: No alchemy record found with id '" << effectId << "'." << std::endl;
+					}
 				}
 			}
 			else {
-#if _DEBUG
-				mwse::log::getLog() << "xGetEffectInfo: Record type of " << effectType << " is not supported." << std::endl;
-#endif
+				if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+					mwse::log::getLog() << "xGetEffectInfo: Record type of " << effectType << " is not supported." << std::endl;
+				}
 			}
 
 			// If we found an effect, set the values.
@@ -109,9 +101,9 @@ namespace mwse
 			}
 		}
 		else {
-#if _DEBUG
-			mwse::log::getLog() << "xGetEffectInfo: Invalid effect index. Value must be between 1 and 8." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetEffectInfo: Invalid effect index. Value must be between 1 and 8." << std::endl;
+			}
 		}
 
 		mwse::Stack::getInstance().pushLong(magMax);

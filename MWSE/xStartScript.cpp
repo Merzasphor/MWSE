@@ -8,36 +8,27 @@
 
 #include "TES3DataHandler.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xStartScript : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xStartScript : InstructionInterface_t {
 	public:
 		xStartScript();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xStartScript xStartScriptInstance;
 
 	xStartScript::xStartScript() : mwse::InstructionInterface_t(OpCode::xStartScript) {}
 
-	void xStartScript::loadParameters(mwse::VMExecuteInterface &virtualMachine) {
-	}
-
-	float xStartScript::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xStartScript::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get parameters.
 		mwseString& scriptName = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Try to get the target script.
 		TES3::Script* targetScript = TES3::DataHandler::get()->nonDynamicData->findScriptByName(scriptName.c_str());
 		if (targetScript == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xStartScript: No script could be found with name '" << scriptName << "'." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xStartScript: No script could be found with name '" << scriptName << "'." << std::endl;
+			}
 			return 0.0f;
 		}
 

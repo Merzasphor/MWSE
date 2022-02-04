@@ -3,26 +3,18 @@
 #include "InstructionInterface.h"
 #include "ArrayUtil.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xGetArrayValue : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xGetArrayValue : InstructionInterface_t {
 	public:
 		xGetArrayValue();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xGetArrayValue xGetArrayValueInstance;
 
 	xGetArrayValue::xGetArrayValue() : mwse::InstructionInterface_t(OpCode::xGetArrayValue) {}
 
-	void xGetArrayValue::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xGetArrayValue::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xGetArrayValue::execute(mwse::VMExecuteInterface& virtualMachine) {
 		if (mwse::Stack::getInstance().size() < 2) {
 			mwse::log::getLog() << "xGetArrayValue: Function requires 2 arguments." << std::endl;
 			mwse::Stack::getInstance().pushLong(0);

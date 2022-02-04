@@ -1,7 +1,5 @@
 #pragma once
 
-namespace mwse {
-	namespace lua {
-		void bindStringUtil();
-	}
+namespace mwse::lua {
+	void bindStringUtil();
 }

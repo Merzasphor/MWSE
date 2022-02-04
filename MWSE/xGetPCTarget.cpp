@@ -2,28 +2,21 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 
-using namespace mwse;
-
-namespace mwse
-{
+namespace mwse {
 	class xGetPCTarget : InstructionInterface_t
 	{
 	public:
 		xGetPCTarget();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xGetPCTarget xGetPCTargetInstance;
 
 	xGetPCTarget::xGetPCTarget() : InstructionInterface_t(OpCode::xGetPCTarget) {}
 
-	void xGetPCTarget::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xGetPCTarget::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xGetPCTarget::execute(mwse::VMExecuteInterface& virtualMachine) {
 		//get the current target
-		TES3::Reference * target = virtualMachine.getCurrentTarget();
+		TES3::Reference* target = virtualMachine.getCurrentTarget();
 
 		//push the Reference on the stack.
 		Stack::getInstance().pushLong((long)target);

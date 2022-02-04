@@ -6,27 +6,18 @@
 #include "VirtualMachine.h"
 #include "ScriptUtil.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xPositionCell : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xPositionCell : InstructionInterface_t {
 	public:
 		xPositionCell();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xPositionCell xPositionCellInstance;
 
 	xPositionCell::xPositionCell() : mwse::InstructionInterface_t(OpCode::xPositionCell) {}
 
-	void xPositionCell::loadParameters(mwse::VMExecuteInterface &virtualMachine) {
-	}
-
-	float xPositionCell::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xPositionCell::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get parameters.
 		float x = mwse::Stack::getInstance().popFloat();
 		float y = mwse::Stack::getInstance().popFloat();
@@ -37,9 +28,9 @@ namespace mwse
 		// Get other context information for original opcode.
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xPositionCell: Called on invalid reference." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xPositionCell: Called on invalid reference." << std::endl;
+			}
 			return 0.0f;
 		}
 

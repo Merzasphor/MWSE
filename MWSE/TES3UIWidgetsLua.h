@@ -2,9 +2,6 @@
 
 #include "TES3UIDefines.h"
 
-
-namespace mwse {
-	namespace lua {
-		void bindTES3UIWidgets();
-	}
+namespace mwse::lua {
+	void bindTES3UIWidgets();
 }

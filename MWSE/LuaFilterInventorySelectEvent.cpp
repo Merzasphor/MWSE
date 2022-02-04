@@ -6,39 +6,35 @@
 #include "TES3Item.h"
 #include "TES3ItemData.h"
 
-namespace mwse {
-	namespace lua {
-		namespace event {
-			FilterInventorySelectEvent::FilterInventorySelectEvent(const char * type, TES3::Item * item, TES3::ItemData * itemData) :
-				GenericEvent("filterInventorySelect"),
-				m_Type(type),
-				m_Item(item),
-				m_ItemData(itemData)
-			{
+namespace mwse::lua::event {
+	FilterInventorySelectEvent::FilterInventorySelectEvent(const char* type, TES3::Item* item, TES3::ItemData* itemData) :
+		GenericEvent("filterInventorySelect"),
+		m_Type(type),
+		m_Item(item),
+		m_ItemData(itemData)
+	{
 
-			}
-
-			sol::table FilterInventorySelectEvent::createEventTable() {
-				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-				sol::state& state = stateHandle.state;
-				sol::table eventData = state.create_table();
-
-				eventData["item"] = m_Item;
-				eventData["itemData"] = m_ItemData;
-				eventData["type"] = m_Type;
-
-				return eventData;
-			}
-
-			sol::object FilterInventorySelectEvent::getEventOptions() {
-				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-				sol::state& state = stateHandle.state;
-				sol::table options = state.create_table();
-				options["filter"] = m_Type;
-				return options;
-			}
-
-			bool FilterInventorySelectEvent::m_EventEnabled = false;
-		}
 	}
+
+	sol::table FilterInventorySelectEvent::createEventTable() {
+		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+		sol::state& state = stateHandle.state;
+		sol::table eventData = state.create_table();
+
+		eventData["item"] = m_Item;
+		eventData["itemData"] = m_ItemData;
+		eventData["type"] = m_Type;
+
+		return eventData;
+	}
+
+	sol::object FilterInventorySelectEvent::getEventOptions() {
+		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+		sol::state& state = stateHandle.state;
+		sol::table options = state.create_table();
+		options["filter"] = m_Type;
+		return options;
+	}
+
+	bool FilterInventorySelectEvent::m_EventEnabled = false;
 }

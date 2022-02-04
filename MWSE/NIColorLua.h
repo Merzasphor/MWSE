@@ -1,7 +1,5 @@
 #pragma once
 
-namespace mwse {
-	namespace lua {
-		void bindNIColor();
-	}
+namespace mwse::lua {
+	void bindNIColor();
 }

@@ -1,19 +1,15 @@
 #pragma once
 
-namespace mwse
-{
-	namespace log
-	{
-		void OpenLog(const char *path);
-		void CloseLog();
+namespace mwse::log {
+	void OpenLog(const char* path);
+	void CloseLog();
 
-		std::ostream& getLog();
-		std::ostream& getDebug(); //outputs to OutputDebugString
-		
-		void prettyDump(const void* data, const size_t length);
+	std::ostream& getLog();
+	std::ostream& getDebug(); //outputs to OutputDebugString
 
-		template<class T> void prettyDump(const T* data) {
-			prettyDump(data, sizeof(T));
-		};
-	}
-};
+	void prettyDump(const void* data, const size_t length);
+
+	template<class T> void prettyDump(const T* data) {
+		prettyDump(data, sizeof(T));
+	};
+}

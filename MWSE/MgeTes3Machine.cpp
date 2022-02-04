@@ -192,7 +192,8 @@ long TES3MACHINE::CreateArray(std::string const& caller) {
 	if (arrays_.size() < kMaxArrayId) {
 		id = arrays_.size() + 1;
 		arrays_.push_back(std::vector<long>());
-	} else {
+	}
+	else {
 		if constexpr (DEBUG_MGE_VM) {
 			mwse::log::getLog() << caller << ": Unable to create array. Maximum number of arrays reached. id: " << id << std::endl;
 		}
@@ -233,20 +234,22 @@ long TES3MACHINE::SetArrayValue(std::string const& caller, long const id, long c
 	}
 
 	long success = 0;
-	if (id > 0 && id <= arrays_.size())	{
-		if (index >= 0)	{
+	if (id > 0 && id <= arrays_.size()) {
+		if (index >= 0) {
 			std::vector<long>& a = arrays_[id - 1];
 			if (index + 1 > a.size()) {
 				a.resize(index + 1);
 			}
 			a[index] = value;
 			success = 1;
-		} else {
+		}
+		else {
 			if constexpr (DEBUG_MGE_VM) {
 				mwse::log::getLog() << caller << "Array index out of bounds. id: " << id << " index: " << index << std::endl;
 			}
 		}
-	} else {
+	}
+	else {
 		if constexpr (DEBUG_MGE_VM) {
 			mwse::log::getLog() << caller << ": Invalid array id: " << id << std::endl;
 		}
@@ -263,7 +266,8 @@ long TES3MACHINE::GetArraySize(std::string const& caller, long const id) {
 	long size = 0;
 	if (id > 0 && id <= arrays_.size()) {
 		size = arrays_[id - 1].size();
-	} else {
+	}
+	else {
 		if constexpr (DEBUG_MGE_VM) {
 			mwse::log::getLog() << caller << ": Invalid array id: " << id << std::endl;
 		}
@@ -281,7 +285,8 @@ long TES3MACHINE::ClearArray(std::string const& caller, long const id) {
 	if (id > 0 && id <= arrays_.size()) {
 		arrays_[id - 1].clear();
 		success = 1;
-	} else {
+	}
+	else {
 		if constexpr (DEBUG_MGE_VM) {
 			mwse::log::getLog() << caller << ": Invalid array id: " << id << std::endl;
 		}

@@ -6,29 +6,25 @@
 #include "TES3Class.h"
 #include "TES3Reference.h"
 
-using namespace mwse;
 
 namespace mwse {
-	class xIsTrader : mwse::InstructionInterface_t {
+	class xIsTrader : InstructionInterface_t {
 	public:
 		xIsTrader();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xIsTrader xIsTraderInstance;
 
 	xIsTrader::xIsTrader() : mwse::InstructionInterface_t(OpCode::xIsTrader) {}
 
-	void xIsTrader::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xIsTrader::execute(mwse::VMExecuteInterface &virtualMachine) {
+	float xIsTrader::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xIsTrader: Called on invalid reference." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xIsTrader: Called on invalid reference." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}
@@ -48,9 +44,9 @@ namespace mwse {
 			}
 		}
 		else {
-#if _DEBUG
-			mwse::log::getLog() << "xIsTrader: Failed to get AI configuration for target." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xIsTrader: Failed to get AI configuration for target." << std::endl;
+			}
 		}
 
 		mwse::Stack::getInstance().pushLong(npcServiceFlags | classServiceFlags);

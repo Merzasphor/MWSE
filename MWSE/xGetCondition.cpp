@@ -6,32 +6,24 @@
 #include "TES3ItemData.h"
 #include "TES3Reference.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xGetCondition : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xGetCondition : InstructionInterface_t {
 	public:
 		xGetCondition();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xGetCondition xGetConditionInstance;
 
 	xGetCondition::xGetCondition() : mwse::InstructionInterface_t(OpCode::xGetCondition) {}
 
-	void xGetCondition::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xGetCondition::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xGetCondition::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xGetCondition: No reference provided." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetCondition: No reference provided." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}

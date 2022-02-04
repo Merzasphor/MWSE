@@ -4,26 +4,18 @@
 #include "FileUtil.h"
 #include "StringUtil.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xFileWriteText : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xFileWriteText : InstructionInterface_t {
 	public:
 		xFileWriteText();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xFileWriteText xFileWriteTextInstance;
 
 	xFileWriteText::xFileWriteText() : mwse::InstructionInterface_t(OpCode::xFileWriteText) {}
 
-	void xFileWriteText::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xFileWriteText::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xFileWriteText::execute(mwse::VMExecuteInterface& virtualMachine) {
 		if (mwse::Stack::getInstance().size() < 2) {
 			mwse::log::getLog() << "xFileWriteText: Function called with too few arguments." << std::endl;
 			return 0.0f;

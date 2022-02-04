@@ -8,26 +8,18 @@
 #include "TES3Reference.h"
 #include "TES3Spell.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xGetSpell : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xGetSpell : InstructionInterface_t {
 	public:
 		xGetSpell();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xGetSpell xGetSpellInstance;
 
 	xGetSpell::xGetSpell() : mwse::InstructionInterface_t(OpCode::xGetSpell) {}
 
-	void xGetSpell::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xGetSpell::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xGetSpell::execute(mwse::VMExecuteInterface& virtualMachine) {
 		short result = 0;
 
 		// Get spell id from the stack.
@@ -36,16 +28,16 @@ namespace mwse
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xGetSpell: Could not find reference." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetSpell: Could not find reference." << std::endl;
+			}
 			mwse::Stack::getInstance().pushShort(result);
 			return 0.0f;
 		}
 		else if (reference->baseObject->objectType != TES3::ObjectType::NPC) {
-#if _DEBUG
-			mwse::log::getLog() << "xGetSpell: Target is not an NPC." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetSpell: Target is not an NPC." << std::endl;
+			}
 			mwse::Stack::getInstance().pushShort(result);
 			return 0.0f;
 		}

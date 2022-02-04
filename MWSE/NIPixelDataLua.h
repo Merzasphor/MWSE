@@ -1,7 +1,5 @@
 #pragma once
 
-namespace mwse {
-	namespace lua {
-		void bindNIPixelData();
-	}
+namespace mwse::lua {
+	void bindNIPixelData();
 }

@@ -4,12 +4,9 @@
 #include "Log.h"
 #include "StringUtil.h"
 
-using namespace mwse;
-
-namespace mwse
-{
+namespace mwse {
 	// Provides an interface to mwse::log, allowing scripts to write to the default MWSE.log file.
-	// 
+	//
 	// MWScript Usage:
 	//	<none> xLogMessage sFormat ...
 	//
@@ -20,22 +17,17 @@ namespace mwse
 	//	Param1 = Long | String
 	//	Param2 = Short | Long | Float | String | Many | Optional
 	//	Opcode = 0x3c09
-	class xLogMessage : mwse::InstructionInterface_t
-	{
+	class xLogMessage : InstructionInterface_t {
 	public:
 		xLogMessage();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xLogMessage xLogMessageInstance;
 
 	xLogMessage::xLogMessage() : mwse::InstructionInterface_t(OpCode::xLogMessage) {}
 
-	void xLogMessage::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xLogMessage::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xLogMessage::execute(mwse::VMExecuteInterface& virtualMachine) {
 		mwseString& format = virtualMachine.getString(Stack::getInstance().popLong());
 
 		bool suppressNull = false;

@@ -89,6 +89,6 @@ namespace mwse {
 	}
 
 	ContainedArray_t& Arrays::get(size_t index) {
-		return arrays[index-1];
+		return arrays[index - 1];
 	}
 }

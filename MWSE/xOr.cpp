@@ -2,26 +2,18 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xOr : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xOr : InstructionInterface_t {
 	public:
 		xOr();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xOr xOrInstance;
 
 	xOr::xOr() : mwse::InstructionInterface_t(OpCode::xOr) {}
 
-	void xOr::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xOr::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xOr::execute(mwse::VMExecuteInterface& virtualMachine) {
 		long param1 = mwse::Stack::getInstance().popLong();
 		long param2 = mwse::Stack::getInstance().popLong();
 

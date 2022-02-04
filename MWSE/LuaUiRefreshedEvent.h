@@ -5,18 +5,14 @@
 
 #include "TES3Defines.h"
 
-namespace mwse {
-	namespace lua {
-		namespace event {
-			class UiRefreshedEvent : public GenericEvent, public DisableableEvent<UiRefreshedEvent> {
-			public:
-				UiRefreshedEvent(TES3::UI::Element * element);
-				sol::table createEventTable();
-				sol::object getEventOptions();
+namespace mwse::lua::event {
+	class UiRefreshedEvent : public GenericEvent, public DisableableEvent<UiRefreshedEvent> {
+	public:
+		UiRefreshedEvent(TES3::UI::Element* element);
+		sol::table createEventTable();
+		sol::object getEventOptions();
 
-			protected:
-				TES3::UI::Element * m_Element;
-			};
-		}
-	}
+	protected:
+		TES3::UI::Element* m_Element;
+	};
 }

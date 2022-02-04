@@ -8,26 +8,18 @@
 #include "TES3ItemData.h"
 #include "TES3Reference.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xGetOwnerInfo : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xGetOwnerInfo : InstructionInterface_t {
 	public:
 		xGetOwnerInfo();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xGetOwnerInfo xGetOwnerInfoInstance;
 
 	xGetOwnerInfo::xGetOwnerInfo() : mwse::InstructionInterface_t(OpCode::xGetOwnerInfo) {}
 
-	void xGetOwnerInfo::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xGetOwnerInfo::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xGetOwnerInfo::execute(mwse::VMExecuteInterface& virtualMachine) {
 		const char* id = NULL;
 		long rank = 0;
 		long type = 0;
@@ -48,26 +40,27 @@ namespace mwse
 						}
 					}
 					else if (type == TES3::ObjectType::Faction) {
-						TES3::Faction * faction = reinterpret_cast<TES3::Faction*>(owner);
+						TES3::Faction* faction = reinterpret_cast<TES3::Faction*>(owner);
 						id = faction->objectID;
 						rank = varNode->requiredRank;
 					}
 					else {
-#if _DEBUG
-						mwse::log::getLog() << "xGetOwnerInfo: Owner was of unhandled type " << type << "." << std::endl;
-#endif
+						if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+							mwse::log::getLog() << "xGetOwnerInfo: Owner was of unhandled type " << type << "." << std::endl;
+						}
 					}
 				}
 			}
 			else {
-#if _DEBUG
-				mwse::log::getLog() << "xGetOwnerInfo: Could not obtain attached VARNODE." << std::endl;
-#endif
+				if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+					mwse::log::getLog() << "xGetOwnerInfo: Could not obtain attached VARNODE." << std::endl;
+				}
 			}
-		} else {
-#if _DEBUG
-			mwse::log::getLog() << "xGetOwnerInfo: No reference provided." << std::endl;
-#endif
+		}
+		else {
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetOwnerInfo: No reference provided." << std::endl;
+			}
 		}
 
 		mwse::Stack::getInstance().pushLong(rank);

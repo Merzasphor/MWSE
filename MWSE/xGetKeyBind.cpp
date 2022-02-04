@@ -7,14 +7,12 @@
 #include "TES3InputController.h"
 #include "TES3DataHandler.h"
 
-using namespace mwse;
 
 namespace mwse {
-	class xGetKeyBind : mwse::InstructionInterface_t {
+	class xGetKeyBind : InstructionInterface_t {
 	public:
 		xGetKeyBind();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	enum xGetKeyBindReturnType {
@@ -26,17 +24,15 @@ namespace mwse {
 
 	xGetKeyBind::xGetKeyBind() : mwse::InstructionInterface_t(OpCode::xGetKeyBind) {}
 
-	void xGetKeyBind::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xGetKeyBind::execute(mwse::VMExecuteInterface &virtualMachine) {
+	float xGetKeyBind::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get parameters.
 		long inputIndex = Stack::getInstance().popLong();
 
 		// Validate index.
 		if (inputIndex < TES3::KeyBind::FirstKey || inputIndex > TES3::KeyBind::LastKey) {
-#if _DEBUG
-			mwse::log::getLog() << "xGetKeyBind: Index out of bounds." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetKeyBind: Index out of bounds." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
@@ -75,9 +71,9 @@ namespace mwse {
 			}
 		}
 		else {
-#if _DEBUG
-			mwse::log::getLog() << "xGetKeyBind: Device type " << scanDevice << " cannot be converted." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetKeyBind: Device type " << scanDevice << " cannot be converted." << std::endl;
+			}
 		}
 
 		// Return values.

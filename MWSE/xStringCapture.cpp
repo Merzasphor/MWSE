@@ -4,26 +4,18 @@
 #include "Log.h"
 #include "StringUtil.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xStringCapture : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xStringCapture : InstructionInterface_t {
 	public:
 		xStringCapture();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xStringCapture xStringCaptureInstance;
 
 	xStringCapture::xStringCapture() : mwse::InstructionInterface_t(OpCode::xStringCapture) {}
 
-	void xStringCapture::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xStringCapture::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xStringCapture::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get parameters from stack.
 		mwseString& string = virtualMachine.getString(Stack::getInstance().popLong());
 		mwseString& pattern = virtualMachine.getString(Stack::getInstance().popLong());

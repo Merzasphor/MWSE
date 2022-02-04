@@ -6,30 +6,22 @@
 #include "TES3Reference.h"
 #include "TES3Class.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xModService : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xModService : InstructionInterface_t {
 	public:
 		xModService();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xModService xModServiceInstance;
 
 	xModService::xModService() : mwse::InstructionInterface_t(OpCode::xModService) {}
 
-	void xModService::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xModService::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xModService::execute(mwse::VMExecuteInterface& virtualMachine) {
 		if (mwse::Stack::getInstance().size() < 1) {
-#if _DEBUG
-			mwse::log::getLog() << "xModService: Function called with too few arguments." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xModService: Function called with too few arguments." << std::endl;
+			}
 			return 0.0f;
 		}
 
@@ -38,9 +30,9 @@ namespace mwse
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xModService: Called on invalid reference." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xModService: Called on invalid reference." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}
@@ -48,9 +40,9 @@ namespace mwse
 		// Get AI configuration.
 		TES3::AIConfig* aiConfig = reference->baseObject->vTable.object->getAIConfig(reference->baseObject);
 		if (!aiConfig) {
-#if _DEBUG
-			mwse::log::getLog() << "xModService: Called on non-NPC reference." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xModService: Called on non-NPC reference." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}
@@ -58,9 +50,9 @@ namespace mwse
 		// Get the NPC's class.
 		TES3::Class* classRecord = reference->baseObject->vTable.object->getClass(reference->baseObject);
 		if (!classRecord) {
-#if _DEBUG
-			mwse::log::getLog() << "xModService: Failed to obtain NPC's class." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xModService: Failed to obtain NPC's class." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}

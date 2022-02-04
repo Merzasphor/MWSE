@@ -1,10 +1,8 @@
 #pragma once
 
-namespace mwse {
-	namespace patch {
-		void installPatches();
-		void installPostLuaPatches();
+namespace mwse::patch {
+	void installPatches();
+	void installPostLuaPatches();
 
-		bool installMiniDumpHook();
-	}
+	bool installMiniDumpHook();
 }

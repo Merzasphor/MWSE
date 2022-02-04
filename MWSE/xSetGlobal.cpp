@@ -6,23 +6,19 @@
 #include "TES3DataHandler.h"
 #include "TES3GlobalVariable.h"
 
-using namespace mwse;
 
 namespace mwse {
-	class xSetGlobal : mwse::InstructionInterface_t {
+	class xSetGlobal : InstructionInterface_t {
 	public:
 		xSetGlobal();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xSetGlobal xSetGlobalInstance;
 
 	xSetGlobal::xSetGlobal() : mwse::InstructionInterface_t(OpCode::xSetGlobal) {}
 
-	void xSetGlobal::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xSetGlobal::execute(mwse::VMExecuteInterface &virtualMachine) {
+	float xSetGlobal::execute(mwse::VMExecuteInterface& virtualMachine) {
 		mwseString& variable = virtualMachine.getString(Stack::getInstance().popLong());
 		float value = Stack::getInstance().popFloat();
 

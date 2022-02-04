@@ -8,30 +8,22 @@
 #include "TES3Skill.h"
 #include "TES3WorldController.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xModProgressSkill : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xModProgressSkill : InstructionInterface_t {
 	public:
 		xModProgressSkill();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xModProgressSkill xModProgressSkillInstance;
 
 	xModProgressSkill::xModProgressSkill() : mwse::InstructionInterface_t(OpCode::xModProgressSkill) {}
 
-	void xModProgressSkill::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xModProgressSkill::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xModProgressSkill::execute(mwse::VMExecuteInterface& virtualMachine) {
 		if (mwse::Stack::getInstance().size() < 3) {
-#if _DEBUG
-			mwse::log::getLog() << "xModProgressSkill: Function called with too few arguments." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xModProgressSkill: Function called with too few arguments." << std::endl;
+			}
 			return 0.0f;
 		}
 
@@ -41,14 +33,14 @@ namespace mwse
 
 		// Verify attribute range.
 		if (skillId < TES3::SkillID::FirstSkill || skillId > TES3::SkillID::LastSkill) {
-#if _DEBUG
-			mwse::log::getLog() << "xModProgressSkill: Invalid skill id: " << skillId << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xModProgressSkill: Invalid skill id: " << skillId << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}
 
-		// 
+		//
 		auto macp = TES3::WorldController::get()->getMobilePlayer();
 
 		// Mod value.

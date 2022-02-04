@@ -6,31 +6,23 @@
 #include "TES3DataHandler.h"
 #include "TES3Cell.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xPCCellID : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xPCCellID : InstructionInterface_t {
 	public:
 		xPCCellID();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xPCCellID xPCCellIDInstance;
 
 	xPCCellID::xPCCellID() : mwse::InstructionInterface_t(OpCode::xPCCellID) {}
 
-	void xPCCellID::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xPCCellID::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xPCCellID::execute(mwse::VMExecuteInterface& virtualMachine) {
 		TES3::DataHandler* masterCell = TES3::DataHandler::get();
 		if (masterCell == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xPCCellID: Cell master could not be found." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xPCCellID: Cell master could not be found." << std::endl;
+			}
 			mwse::Stack::getInstance().pushString("Wilderness");
 			return 0.0f;
 		}

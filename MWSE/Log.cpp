@@ -18,7 +18,7 @@ protected:
 	int sync()
 	{
 	}
-	void output_debug_string(const CharT *text)
+	void output_debug_string(const CharT* text)
 	{
 	}
 };
@@ -31,84 +31,79 @@ int basic_debugbuf<char>::sync()
 }
 
 template<class CharT, class TraitsT = std::char_traits<CharT> >
-class basic_dostream : 
+class basic_dostream :
 	public std::basic_ostream<CharT, TraitsT>
 {
 public:
 
 	basic_dostream() : std::basic_ostream<CharT, TraitsT>
-				(new basic_debugbuf<CharT, TraitsT>()) {}
-	~basic_dostream() 
+		(new basic_debugbuf<CharT, TraitsT>()) {}
+	~basic_dostream()
 	{
-//        delete rdbuf(); 
+		//        delete rdbuf(); 
 	}
 };
 
 typedef basic_dostream<char>	odstream;
 
+namespace mwse::log {
+	static std::ofstream logstream;
+	static odstream debugstream;
 
-namespace mwse
-{
-	namespace log
+	void OpenLog(const char* path)
 	{
-		static std::ofstream logstream;
-		static odstream debugstream;
+		logstream.open(path);
+	}
 
-		void OpenLog(const char *path)
-		{
-			logstream.open(path);
-		}
+	void CloseLog()
+	{
+		logstream.close();
+	}
 
-		void CloseLog()
-		{
-			logstream.close();
-		}
+	std::ostream& getLog()
+	{
+		return logstream;
+	}
 
-		std::ostream& getLog()
-		{
-			return logstream;
-		}
+	std::ostream& getDebug()
+	{
+		return debugstream;
+	}
 
-		std::ostream& getDebug()
-		{
-			return debugstream;
-		}
+	void prettyDump(const void* data, const size_t length) {
+		constexpr unsigned int LINE_WIDTH = 16u;
 
-		void prettyDump(const void* data, const size_t length) {
-			constexpr unsigned int LINE_WIDTH = 16u;
+		// Prepare log.
+		auto& log = getLog();
+		log << std::hex << std::setfill('0');
 
-			// Prepare log.
-			auto& log = getLog();
-			log << std::hex << std::setfill('0');
+		unsigned long address = size_t(data);
+		const size_t dataEnd = address + length;
+		while (address < size_t(data) + length) {
+			// Show address
+			log << std::setw(8) << address;
 
-			unsigned long address = size_t(data);
-			const size_t dataEnd = address + length;
-			while (address < size_t(data) + length) {
-				// Show address
-				log << std::setw(8) << address;
-
-				// Show the hex codes
-				for (unsigned int offset = 0; offset < LINE_WIDTH; offset++) {
-					if (address + offset < dataEnd) {
-						log << ' ' << std::setw(2) << unsigned int(*reinterpret_cast<const unsigned char*>(address + offset));
-					}
-					else {
-						log << "   ";
-					}
+			// Show the hex codes
+			for (unsigned int offset = 0; offset < LINE_WIDTH; offset++) {
+				if (address + offset < dataEnd) {
+					log << ' ' << std::setw(2) << unsigned int(*reinterpret_cast<const unsigned char*>(address + offset));
 				}
-
-				// Show printable characters
-				log << "  ";
-				for (unsigned int offset = 0; offset < LINE_WIDTH; offset++) {
-					if (address + offset < dataEnd) {
-						if (*reinterpret_cast<const unsigned char*>(address + offset) < 32u) log << '.';
-						else log << *reinterpret_cast<const char*>(address + offset);
-					}
+				else {
+					log << "   ";
 				}
-
-				log << std::endl;
-				address += 0x10;
 			}
+
+			// Show printable characters
+			log << "  ";
+			for (unsigned int offset = 0; offset < LINE_WIDTH; offset++) {
+				if (address + offset < dataEnd) {
+					if (*reinterpret_cast<const unsigned char*>(address + offset) < 32u) log << '.';
+					else log << *reinterpret_cast<const char*>(address + offset);
+				}
+			}
+
+			log << std::endl;
+			address += 0x10;
 		}
 	}
 }

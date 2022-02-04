@@ -3,26 +3,18 @@
 #include "InstructionInterface.h"
 #include "FileUtil.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xFileWriteFloat : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xFileWriteFloat : InstructionInterface_t {
 	public:
 		xFileWriteFloat();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xFileWriteFloat xFileWriteFloatInstance;
 
 	xFileWriteFloat::xFileWriteFloat() : mwse::InstructionInterface_t(OpCode::xFileWriteFloat) {}
 
-	void xFileWriteFloat::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xFileWriteFloat::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xFileWriteFloat::execute(mwse::VMExecuteInterface& virtualMachine) {
 		if (mwse::Stack::getInstance().size() < 2) {
 			mwse::log::getLog() << "xFileWriteFloat: Function called with too few arguments." << std::endl;
 			return 0.0f;

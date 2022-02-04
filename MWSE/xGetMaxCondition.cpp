@@ -4,32 +4,24 @@
 #include "TES3Util.h"
 #include "TES3Reference.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xGetMaxCondition : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xGetMaxCondition : InstructionInterface_t {
 	public:
 		xGetMaxCondition();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xGetMaxCondition xGetMaxConditionInstance;
 
 	xGetMaxCondition::xGetMaxCondition() : mwse::InstructionInterface_t(OpCode::xGetMaxCondition) {}
 
-	void xGetMaxCondition::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xGetMaxCondition::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xGetMaxCondition::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xGetMaxCondition: No reference provided." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetMaxCondition: No reference provided." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}

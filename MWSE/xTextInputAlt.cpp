@@ -4,14 +4,12 @@
 #include "TES3Util.h"
 #include "StringUtil.h"
 
-using namespace mwse;
 
 namespace mwse {
-	class xTextInputAlt : mwse::InstructionInterface_t {
+	class xTextInputAlt : InstructionInterface_t {
 	public:
 		xTextInputAlt();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 
 	private:
 		bool GetKeyIsPressed(int VK_key);
@@ -21,19 +19,17 @@ namespace mwse {
 
 	xTextInputAlt::xTextInputAlt() : mwse::InstructionInterface_t(OpCode::xTextInputAlt) {}
 
-	void xTextInputAlt::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
 	static std::map<int, char> keyCharMap;
 
 	bool xTextInputAlt::GetKeyIsPressed(int VK_key) {
 		return (GetAsyncKeyState(VK_key) & 0x8001) == 0x8001;
 	}
 
-	float xTextInputAlt::execute(mwse::VMExecuteInterface &virtualMachine) {
+	float xTextInputAlt::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// 1st parameter: Message Id.
 		mwseString& message = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
-		// 2nd parameter: Key to use to end the input stream. 
+		// 2nd parameter: Key to use to end the input stream.
 		long endCode = mwse::Stack::getInstance().popLong();
 
 		// The default endcode is return.

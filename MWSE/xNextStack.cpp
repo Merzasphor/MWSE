@@ -5,26 +5,18 @@
 
 #include "TES3Inventory.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xNextStack : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xNextStack : InstructionInterface_t {
 	public:
 		xNextStack();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xNextStack xNextStackInstance;
 
 	xNextStack::xNextStack() : mwse::InstructionInterface_t(OpCode::xNextStack) {}
 
-	void xNextStack::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xNextStack::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xNextStack::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get the passed node.
 		auto node = reinterpret_cast<TES3::IteratedList<TES3::ItemStack*>::Node*>(mwse::Stack::getInstance().popLong());
 		if (node == NULL) {

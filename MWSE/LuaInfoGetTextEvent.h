@@ -3,19 +3,15 @@
 #include "LuaObjectFilteredEvent.h"
 #include "LuaDisableableEvent.h"
 
-namespace mwse {
-	namespace lua {
-		namespace event {
-			class InfoGetTextEvent : public ObjectFilteredEvent, public DisableableEvent<InfoGetTextEvent> {
-			public:
-				InfoGetTextEvent(TES3::DialogueInfo * info);
-				sol::table createEventTable();
+namespace mwse::lua::event {
+	class InfoGetTextEvent : public ObjectFilteredEvent, public DisableableEvent<InfoGetTextEvent> {
+	public:
+		InfoGetTextEvent(TES3::DialogueInfo* info);
+		sol::table createEventTable();
 
-				static std::string getOriginalText(sol::table self);
+		static std::string getOriginalText(sol::table self);
 
-			protected:
-				TES3::DialogueInfo* m_DialogueInfo;
-			};
-		}
-	}
+	protected:
+		TES3::DialogueInfo* m_DialogueInfo;
+	};
 }

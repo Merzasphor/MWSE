@@ -1,7 +1,5 @@
 #pragma once
 
-namespace mwse {
-	namespace lua {
-		void bindNIPick();
-	}
+namespace mwse::lua {
+	void bindNIPick();
 }

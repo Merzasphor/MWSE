@@ -6,26 +6,18 @@
 #include "TES3DataHandler.h"
 #include "TES3Cell.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xFirstNPC : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xFirstNPC : InstructionInterface_t {
 	public:
 		xFirstNPC();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xFirstNPC xFirstNPCInstance;
 
 	xFirstNPC::xFirstNPC() : mwse::InstructionInterface_t(OpCode::xFirstNPC) {}
 
-	void xFirstNPC::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xFirstNPC::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xFirstNPC::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Clear elements in our stored exterior ref list.
 		mwse::tes3::clearExteriorRefs();
 
@@ -57,7 +49,7 @@ namespace mwse
 						mwse::log::getLog() << "xFirstNPC: Exterior flags is " << cellPointer->loadingFlags << ". Skipping exterior " << i << "." << std::endl;
 					}
 				}
-				
+
 				// Make sure that we end our list with a NULL, so we know we're done.
 				mwse::tes3::exteriorRefs[exteriorCount] = NULL;
 

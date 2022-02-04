@@ -16,8 +16,7 @@ typedef void* VPTEMPLATE;
 
 typedef enum { INTSWITCHREFERENCE = 1 } INTERRUPTS;
 
-struct TES3MACHINE : public VIRTUALMACHINE
-{
+struct TES3MACHINE : public VIRTUALMACHINE {
 	TES3MACHINE();
 
 	virtual void searchforscripttarget(void);

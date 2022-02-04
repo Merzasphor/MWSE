@@ -2,26 +2,18 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xBitAnd : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xBitAnd : InstructionInterface_t {
 	public:
 		xBitAnd();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xBitAnd xBitAndInstance;
 
 	xBitAnd::xBitAnd() : mwse::InstructionInterface_t(OpCode::xBitAnd) {}
 
-	void xBitAnd::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xBitAnd::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xBitAnd::execute(mwse::VMExecuteInterface& virtualMachine) {
 		long param1 = mwse::Stack::getInstance().popLong();
 		long param2 = mwse::Stack::getInstance().popLong();
 

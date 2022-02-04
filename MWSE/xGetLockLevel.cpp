@@ -4,34 +4,26 @@
 #include "TES3Util.h"
 #include "TES3Reference.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xGetLockLevel : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xGetLockLevel : InstructionInterface_t {
 	public:
 		xGetLockLevel();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xGetLockLevel xGetLockLevelInstance;
 
 	xGetLockLevel::xGetLockLevel() : mwse::InstructionInterface_t(OpCode::xGetLockLevel) {}
 
-	void xGetLockLevel::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xGetLockLevel::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xGetLockLevel::execute(mwse::VMExecuteInterface& virtualMachine) {
 		short lockLevel = -1;
 
 		// Get reference to what we're finding the lock level of.
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xGetLockLevel: No reference provided." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				mwse::log::getLog() << "xGetLockLevel: No reference provided." << std::endl;
+			}
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}
@@ -43,15 +35,15 @@ namespace mwse
 				lockLevel = lockNode->lockLevel;
 			}
 			else {
-#if _DEBUG
-				log::getLog() << "xGetLockLevel: Could not obtain lock node." << std::endl;
-#endif
+				if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+					log::getLog() << "xGetLockLevel: Could not obtain lock node." << std::endl;
+				}
 			}
 		}
 		else {
-#if _DEBUG
-			log::getLog() << "xGetLockLevel: Called on a non-container, non-door reference." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				log::getLog() << "xGetLockLevel: Called on a non-container, non-door reference." << std::endl;
+			}
 		}
 
 		Stack::getInstance().pushShort(lockLevel);

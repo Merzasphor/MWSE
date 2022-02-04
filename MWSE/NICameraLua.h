@@ -1,7 +1,5 @@
 #pragma once
 
-namespace mwse {
-	namespace lua {
-		void bindNICamera();
-	}
+namespace mwse::lua {
+	void bindNICamera();
 }

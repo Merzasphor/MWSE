@@ -6,20 +6,17 @@
 #include "CodePatchUtil.h"
 
 namespace mwse {
-	class xGetMCPFeatureState : mwse::InstructionInterface_t {
+	class xGetMCPFeatureState : InstructionInterface_t {
 	public:
 		xGetMCPFeatureState();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xGetMCPFeatureState xGetMCPFeatureStateInstance;
 
 	xGetMCPFeatureState::xGetMCPFeatureState() : mwse::InstructionInterface_t(OpCode::xGetMCPFeatureState) {}
 
-	void xGetMCPFeatureState::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xGetMCPFeatureState::execute(mwse::VMExecuteInterface &virtualMachine) {
+	float xGetMCPFeatureState::execute(mwse::VMExecuteInterface& virtualMachine) {
 		long id = mwse::Stack::getInstance().popLong();
 
 		if (mwse::mcp::hasFeaturesFound()) {

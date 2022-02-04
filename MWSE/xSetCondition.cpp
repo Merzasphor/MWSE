@@ -6,35 +6,27 @@
 #include "TES3ItemData.h"
 #include "TES3Reference.h"
 
-using namespace mwse;
-
-namespace mwse
-{
-	class xSetCondition : mwse::InstructionInterface_t
-	{
+namespace mwse {
+	class xSetCondition : InstructionInterface_t {
 	public:
 		xSetCondition();
-		virtual float execute(VMExecuteInterface &virtualMachine);
-		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+		virtual float execute(VMExecuteInterface& virtualMachine);
 	};
 
 	static xSetCondition xSetConditionInstance;
 
 	xSetCondition::xSetCondition() : mwse::InstructionInterface_t(OpCode::xSetCondition) {}
 
-	void xSetCondition::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
-
-	float xSetCondition::execute(mwse::VMExecuteInterface &virtualMachine)
-	{
+	float xSetCondition::execute(mwse::VMExecuteInterface& virtualMachine) {
 		// Get parameter.
 		long value = Stack::getInstance().popLong();
 
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
-#if _DEBUG
-			log::getLog() << "xSetCondition: No reference provided." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				log::getLog() << "xSetCondition: No reference provided." << std::endl;
+			}
 			Stack::getInstance().pushShort(0);
 			return 0.0f;
 		}
@@ -45,9 +37,9 @@ namespace mwse
 			varNode->condition = value;
 		}
 		else {
-#if _DEBUG
-			log::getLog() << "xSetCondition: Could not get attached VARNODE." << std::endl;
-#endif
+			if constexpr (DEBUG_MWSCRIPT_FUNCTIONS) {
+				log::getLog() << "xSetCondition: Could not get attached VARNODE." << std::endl;
+			}
 			Stack::getInstance().pushShort(0);
 			return 0.0f;
 		}

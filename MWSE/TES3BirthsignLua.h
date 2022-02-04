@@ -1,7 +1,5 @@
 #pragma once
 
-namespace mwse {
-	namespace lua {
+namespace mwse::lua {
 		void bindTES3Birthsign();
-	}
 }

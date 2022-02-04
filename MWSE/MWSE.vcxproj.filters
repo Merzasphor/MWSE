@@ -774,9 +774,6 @@
     <ClInclude Include="TES3UIManagerLua.h">
       <Filter>Header Files\Lua\Bindings\TES3\UI</Filter>
     </ClInclude>
-    <ClInclude Include="TES3UIMenuController.h">
-      <Filter>Header Files\Lua\Bindings\TES3\UI</Filter>
-    </ClInclude>
     <ClInclude Include="TES3UIElement.h">
       <Filter>Header Files\DataAdapters\TES3\UI</Filter>
     </ClInclude>
@@ -1539,9 +1536,6 @@
     <ClInclude Include="NILookAtController.h">
       <Filter>Header Files\DataAdapters\NI</Filter>
     </ClInclude>
-    <ClInclude Include="NIBillboardNode.h">
-      <Filter>Header Files\Lua\Bindings\NI</Filter>
-    </ClInclude>
     <ClInclude Include="NITriangle.h">
       <Filter>Header Files\DataAdapters\NI</Filter>
     </ClInclude>
@@ -1568,6 +1562,12 @@
     </ClInclude>
     <ClInclude Include="LuaEquipmentReevaluatedEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="NIBillboardNode.h">
+      <Filter>Header Files\DataAdapters\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3UIMenuController.h">
+      <Filter>Header Files\DataAdapters\TES3\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -3416,9 +3416,6 @@
     <ClCompile Include="NILookAtController.cpp">
       <Filter>Source Files\DataAdapters\NI</Filter>
     </ClCompile>
-    <ClCompile Include="NIBillboardNode.cpp">
-      <Filter>Source Files\Lua\Bindings\NI</Filter>
-    </ClCompile>
     <ClCompile Include="LuaPotionBrewSkillCheckEvent.cpp">
       <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
@@ -3439,6 +3436,9 @@
     </ClCompile>
     <ClCompile Include="LuaEquipmentReevaluatedEvent.cpp">
       <Filter>Source Files\Lua\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="NIBillboardNode.cpp">
+      <Filter>Source Files\DataAdapters\NI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
