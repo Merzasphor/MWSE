@@ -51,7 +51,7 @@ function require(name)
 		loader = nil
 	end
 	if loader == nil then
-		error("module '" .. name .. "' not found: "..t_concat(msg), 2)
+		error("module '" .. name .. "' not found: " .. table.concat(msg), 2)
 	end
 	local res = loader(name, param)
 	if res ~= nil then
