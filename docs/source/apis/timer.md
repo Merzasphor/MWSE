@@ -16,6 +16,16 @@ Constant to represent a timer that has completed.
 
 ***
 
+### `timer.frame`
+
+Access to frame timer functions.
+
+**Returns**:
+
+* `result` (table)
+
+***
+
 ### `timer.game`
 
 Constant to represent timers that run based on in-world time. Duration measured in game-scale hours.

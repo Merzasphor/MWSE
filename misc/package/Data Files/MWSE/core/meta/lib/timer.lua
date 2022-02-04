@@ -4,6 +4,7 @@
 --- @class timerlib
 --- @field active any Constant to represent a timer that is actively running.
 --- @field expired any Constant to represent a timer that has completed.
+--- @field frame table Access to frame timer functions.
 --- @field game any Constant to represent timers that run based on in-world time. Duration measured in game-scale hours.
 --- @field paused any Constant to represent a timer that is paused.
 --- @field real any Constant to represent timers that run in real-time.
