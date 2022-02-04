@@ -18,35 +18,17 @@ package.cpath = package.cpath .. ".\\Data Files\\MWSE\\lua\\?.dll;"
 
 local originalRequire = require
 
--- Allow users to try to include files that may not exist.
-function include(moduleName)
-	-- First try to load the lowercase module.
-	local status, result = pcall(originalRequire, moduleName:gsub("[/\\]", "."):lower())
-	if (status) then
-		return result
-	end
-
-	-- Then try to load the original path.
-	local status, result = pcall(originalRequire, moduleName)
-	if (status) then
-		return result
-	end
+-- Always lowercase module names.
+function require(moduleName)
+	return originalRequire(moduleName:gsub("[/\\]", "."):lower())
 end
 
--- Try to return a lowercased module first, fall back to regular require.
-function require(moduleName)
-	-- First try to load the lowercase module.
-	local lower = moduleName:gsub("[/\\]", "."):lower()
-	local status, result = pcall(originalRequire, lower)
+-- Allow users to try to include files that may not exist.
+function include(moduleName)
+	local status, result = pcall(require, moduleName)
 	if (status) then
 		return result
-	elseif (moduleName == lower) then
-		-- If this was an unchanged call, and we got an actual error, return it rather than consuming it.
-		error(result)
 	end
-
-	-- Fall back to trying to load the normal path.
-	return originalRequire(moduleName)
 end
 
 -- Custom dofile that respects package pathing and supports lua's dot notation for paths.
