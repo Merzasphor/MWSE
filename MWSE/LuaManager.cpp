@@ -580,6 +580,8 @@ namespace mwse::lua {
 
 	// Hook for HookRunScriptIndirect.
 	static DWORD callbackRunScript = TES3_HOOK_RUNSCRIPT_LUACHECK_RETURN;
+#define HookRunScript_TargetReference 0x7CEBECu
+	static_assert(TES3_SCRIPTTARGETREF_IMAGE == HookRunScript_TargetReference, "Script reference address failed validation for hook. constexpr cannot be used in assembly reliably.");
 	static __declspec(naked) void HookRunScript() {
 		_asm
 		{
@@ -594,7 +596,7 @@ namespace mwse::lua {
 			popad
 
 			// Overwritten code.
-			mov ecx, dword ptr ds : [TES3_SCRIPTTARGETREF_IMAGE]
+			mov ecx, dword ptr ds : [HookRunScript_TargetReference]
 
 			// Resume normal execution.
 			jmp callbackRunScript
