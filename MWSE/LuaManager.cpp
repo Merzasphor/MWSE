@@ -2835,6 +2835,17 @@ namespace mwse {
 			TriggerItemTileUpdatedEventForElement(element, 0x7D308C);
 		}
 
+		const auto TES3_AttachTileToCursor = reinterpret_cast<TES3::UI::Element*(__cdecl*)(TES3::UI::InventoryTile*, int)>(0x5D14F0);
+		TES3::UI::Element* __cdecl OnAttachTileToCursor(TES3::UI::InventoryTile* tile, int location) {
+			auto element = TES3_AttachTileToCursor(tile, location);
+
+			if (element && lua::event::ItemTileUpdatedEvent::getEventEnabled()) {
+				lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new lua::event::ItemTileUpdatedEvent(tile));
+			}
+
+			return element;
+		}
+
 		//
 		// Handle all the hacks needed to get ItemData transferred over to a bigger structure.
 		//
@@ -4405,7 +4416,14 @@ namespace mwse {
 			genCallEnforced(0x5B6F13, 0x47E720, reinterpret_cast<DWORD>(GetNextInventoryTileToUpdate)); // General contents menu update.
 			genCallEnforced(0x5CC366, 0x58AE20, reinterpret_cast<DWORD>(OnSetItemTileIcon)); // On manual AddTile.
 			genCallEnforced(0x5CD147, 0x47E720, reinterpret_cast<DWORD>(GetNextInventoryTileToUpdate)); // General inventory menu update.
-			genCallEnforced(0x5D1943, 0x58AE20, reinterpret_cast<DWORD>(OnSetItemTileIcon)); // Root purpose unclear.
+			genCallEnforced(0x4EA72E, 0x5D14F0, reinterpret_cast<DWORD>(OnAttachTileToCursor));
+			genCallEnforced(0x5A4475, 0x5D14F0, reinterpret_cast<DWORD>(OnAttachTileToCursor));
+			genCallEnforced(0x5A44B4, 0x5D14F0, reinterpret_cast<DWORD>(OnAttachTileToCursor));
+			genCallEnforced(0x5B556F, 0x5D14F0, reinterpret_cast<DWORD>(OnAttachTileToCursor));
+			genCallEnforced(0x5B5C3B, 0x5D14F0, reinterpret_cast<DWORD>(OnAttachTileToCursor));
+			genCallEnforced(0x5C6024, 0x5D14F0, reinterpret_cast<DWORD>(OnAttachTileToCursor));
+			genCallEnforced(0x5CBBCD, 0x5D14F0, reinterpret_cast<DWORD>(OnAttachTileToCursor));
+			genCallEnforced(0x5D0F5F, 0x5D14F0, reinterpret_cast<DWORD>(OnAttachTileToCursor));
 
 			// Override ItemData creation/deletion.
 			genPushEnforced(0x498A50, (BYTE)sizeof(TES3::ItemData)) && genCallEnforced(0x498A6C, 0x4E44B0, reinterpret_cast<DWORD>(&TES3::ItemData::ctor));
