@@ -735,7 +735,8 @@ namespace TES3 {
 			// Patch item selection no items message to allow callbacks and changed text.
 			mwse::genCallEnforced(0x5D37CF, 0x5F90C0, reinterpret_cast<DWORD>(messagePlayerForNoValidItems));
 
-			// Provide some UI IDs for elements that don't have them, like tooltips:
+			// Provide some UI IDs for elements that don't have them:
+			// Tooltips (HelpMenu)
 			pushNewUIID(0x590F59, "HelpMenu_titleBlock");
 			pushNewUIID(0x590FBD, "HelpMenu_icon");
 			pushNewUIID(0x5911DC, "HelpMenu_name");
@@ -774,7 +775,7 @@ namespace TES3 {
 			pushNewUIID(0x5915E6, "HelpMenu_locked");
 			pushNewUIID(0x591614, "HelpMenu_trapped");
 
-			// Enchantment Menu
+			// Enchantment Menu (MenuEnchantment)
 			pushNewUIID(0x5C1A89, "MenuEnchantment_topRow");
 			pushNewUIID(0x5C1AC5, "MenuEnchantment_selectablesContainer");
 			pushNewUIID(0x5C1B99, "MenuEnchantment_nameLabel");
@@ -798,6 +799,72 @@ namespace TES3 {
 			pushNewUIID(0x5C26F5, "MenuEnchantment_priceContainer");
 			pushNewUIID(0x5C2752, "MenuEnchantment_priceLabel");
 			pushNewUIID(0x5C2852, "MenuEnchantment_buttonContainer");
+
+			// Inventory Menu (MenuInventory)
+			pushNewUIID(0x5CA225, "MenuInventory_top_layout");
+			pushNewUIID(0x5CA67B, "MenuInventory_bottom_layout");
+			pushNewUIID(0x5CA68B, "MenuInventory_character_layout");
+			pushNewUIID(0x5CA818, "MenuInventory_items_layout");
+
+			// Status Menu (MenuStat)
+			pushNewUIID(0x624F7F, "MenuStat_layout");
+			pushNewUIID(0x62562F, "MenuStat_general_frame");
+			pushNewUIID(0x6256FF, "MenuStat_level_name");
+			pushNewUIID(0x625818, "MenuStat_race_name");
+			pushNewUIID(0x625934, "MenuStat_class_name");
+			pushNewUIID(0x6259E8, "MenuStat_attributes_frame");
+			pushNewUIID(0x625AC6, "MenuStat_attribute_strength_name");
+			pushNewUIID(0x625B9B, "MenuStat_attribute_intellegence_name"); // Spelling mistake for consistency with other ids
+			pushNewUIID(0x625C8C, "MenuStat_attribute_willpower_name");
+			pushNewUIID(0x625D7E, "MenuStat_attribute_agility_name");
+			pushNewUIID(0x625E71, "MenuStat_attribute_speed_name");
+			pushNewUIID(0x625F64, "MenuStat_attribute_endurance_name");
+			pushNewUIID(0x626056, "MenuStat_attribute_personality_name");
+			pushNewUIID(0x626149, "MenuStat_attribute_luck_name");
+			pushNewUIID(0x626757, "MenuStat_major_title");
+			pushNewUIID(0x626817, "MenuStat_major_name");
+			pushNewUIID(0x6268AC, "MenuStat_major_value");
+			pushNewUIID(0x626994, "MenuStat_divider");
+			pushNewUIID(0x6269D4, "MenuStat_minor_title");
+			pushNewUIID(0x626A95, "MenuStat_minor_name");
+			pushNewUIID(0x626B2B, "MenuStat_minor_value");
+			pushNewUIID(0x626C13, "MenuStat_divider");
+			pushNewUIID(0x626C53, "MenuStat_misc_title");
+			pushNewUIID(0x626D3E, "MenuStat_misc_name");
+			pushNewUIID(0x626DC1, "MenuStat_misc_value");
+			pushNewUIID(0x626EB3, "MenuStat_divider");
+			pushNewUIID(0x626EF6, "MenuStat_faction_title");
+			pushNewUIID(0x626FFB, "MenuStat_divider");
+			pushNewUIID(0x6270D2, "MenuStat_divider");
+			pushNewUIID(0x627171, "MenuStat_reputation_name");
+			pushNewUIID(0x6271DC, "MenuStat_reputation_value");
+			pushNewUIID(0x627249, "MenuStat_Bounty_name");
+
+			// Magic Menu (MenuMagic)
+			pushNewUIID(0x5E0DD3, "MagicMenu_spells_layout");
+			pushNewUIID(0x5E0E45, "MagicMenu_power_title");
+			pushNewUIID(0x5E0E5F, "MagicMenu_power_layout");
+			pushNewUIID(0x5E0F28, "MagicMenu_divider");
+			pushNewUIID(0x5E0FB5, "MagicMenu_spell_title");
+			pushNewUIID(0x5E0FE2, "MagicMenu_spell_cost_title");
+			pushNewUIID(0x5E0FFC, "MagicMenu_spell_layout");
+			pushNewUIID(0x5E1127, "MagicMenu_divider");
+			pushNewUIID(0x5E11B4, "MagicMenu_item_title");
+			pushNewUIID(0x5E11E1, "MagicMenu_item_cost_title");
+			pushNewUIID(0x5E11FB, "MagicMenu_item_layout");
+
+			// HUD (MenuMulti)
+			pushNewUIID(0x5F333F, "MenuMulti_bottom_row_left");
+			pushNewUIID(0x5F339A, "MenuMulti_npc");
+			pushNewUIID(0x5F34DC, "MenuMulti_fillbars");
+			pushNewUIID(0x5F38EA, "MenuMulti_icons");
+			pushNewUIID(0x5F391D, "MenuMulti_icons_spacer");
+			pushNewUIID(0x5F393E, "MenuMulti_icons_layout");
+			pushNewUIID(0x5F39DF, "MenuMulti_weapon_border");
+			pushNewUIID(0x5F3C70, "MenuMulti_magic_border");
+			pushNewUIID(0x5F3F83, "MenuMulti_bottom_row_right");
+			pushNewUIID(0x5F4168, "MenuMulti_map");
+			pushNewUIID(0x5F4226, "MenuMap_layout");
 		}
 	}
 }
