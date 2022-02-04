@@ -9,7 +9,7 @@ These extra functions allow modders to add features and behavior to scripts that
 
 ## Installation
 
-- Install the [Visual Studio x86 2017 Redistributable](https://aka.ms/vs/15/release/VC_redist.x86.exe) is required for MWSE v2.0 on older versions of Windows. Note that you will need the x86 version, even if you already have the x64 redistributable installed.
+- Install the [Visual Studio x86 2022 Redistributable](https://aka.ms/vs/17/release/vc_redist.x86.exe) is required for MWSE. Note that you will need the x86 version, even if you already have the x64 redistributable installed.
 - Install the [Morrowind Code Patch](https://www.nexusmods.com/morrowind/mods/19510/) modifies the game executable, and MWSE assumes you have at least the base patches performed for its own modifications.
 - Install the [Morrowind Graphic Extender XE](https://www.nexusmods.com/morrowind/mods/41102) (MGE XE) allows MWSE to be loaded.
 - Run MWSE-Update.exe in your Morrowind install folder. This was downloaded and installed as part of MGE XE's installation.
