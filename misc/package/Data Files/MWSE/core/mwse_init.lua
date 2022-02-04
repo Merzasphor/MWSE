@@ -50,16 +50,18 @@ function require(name)
 		end
 		loader = nil
 	end
+
 	if loader == nil then
 		error("module '" .. name .. "' not found: " .. table.concat(msg), 2)
 	end
+
 	local res = loader(name, param)
 	if res ~= nil then
 		module = res
 	elseif not package.loaded[name] then
 		module = true
 	else
-	module = package.loaded[name]
+		module = package.loaded[name]
 	end
 
 	package.loaded[name] = module
@@ -92,17 +94,19 @@ function include(name)
 		end
 		loader = nil
 	end
+
 	if loader == nil then
 		package.noinclude[name] = true
 		return
 	end
+	
 	local res = loader(name, param)
 	if res ~= nil then
 		module = res
 	elseif not package.loaded[name] then
 		module = true
 	else
-	module = package.loaded[name]
+		module = package.loaded[name]
 	end
 
 	package.loaded[name] = module
