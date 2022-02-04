@@ -3,8 +3,6 @@
 #include "InstructionInterface.h"
 #include "Flags.h"
 
-using namespace mwse;
-
 namespace mwse
 {
 	//----------------------------------------

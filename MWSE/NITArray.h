@@ -1,7 +1,5 @@
 #pragma once
 
-#define USE_STL 1
-
 namespace NI {
 	template <typename T>
 	class TArray {

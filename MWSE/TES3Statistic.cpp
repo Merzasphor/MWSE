@@ -1,21 +1,11 @@
 #include "TES3Statistic.h"
 
-#define TES3_Statistic_getBase 0x401030
-#define TES3_Statistic_getCurrent 0x40D3B0
-#define TES3_Statistic_getNormalized 0x4012B0
-#define TES3_Statistic_modBaseWithCaps 0x401100
-#define TES3_Statistic_modCurrentWithCaps 0x401150
-#define TES3_Statistic_setBase 0x401240
-#define TES3_Statistic_setBaseAndCurrent 0x401290
-#define TES3_Statistic_setBaseToCurrent 0x4012A0
-#define TES3_Statistic_setCurrentCapped 0x401250
-
 namespace TES3 {
 	//
 	// Virtual table function wrappers.
 	//
 
-	float Statistic::getCurrent() {
+	float Statistic::getCurrent() const {
 		return vTable->getCurrentValue(this);
 	}
 
@@ -23,40 +13,49 @@ namespace TES3 {
 	// Other related this-call functions.
 	//
 
-	float Statistic::getBase() {
-		return reinterpret_cast<float(__thiscall *)(Statistic*)>(TES3_Statistic_getBase)(this);
+	const auto TES3_Statistic_getBase = reinterpret_cast<float(__thiscall*)(const Statistic*)>(0x401030);
+	float Statistic::getBase() const {
+		return TES3_Statistic_getBase(this);
 	}
 
-	float Statistic::getCurrentRaw() {
-		return reinterpret_cast<float(__thiscall *)(Statistic*)>(TES3_Statistic_getCurrent)(this);
+	const auto TES3_Statistic_getCurrent = reinterpret_cast<float(__thiscall*)(const Statistic*)>(0x40D3B0);
+	float Statistic::getCurrentRaw() const {
+		return TES3_Statistic_getCurrent(this);
 	}
 
-	float Statistic::getNormalized() {
-		return reinterpret_cast<float(__thiscall *)(Statistic*)>(TES3_Statistic_getNormalized)(this);
+	const auto TES3_Statistic_getNormalized = reinterpret_cast<float(__thiscall*)(const Statistic*)>(0x4012B0);
+	float Statistic::getNormalized() const {
+		return TES3_Statistic_getNormalized(this);
 	}
 
+	const auto TES3_Statistic_modBaseWithCaps = reinterpret_cast<float(__thiscall*)(Statistic*, float, bool, bool)>(0x401100);
 	void Statistic::modBaseCapped(float delta, bool capAt0, bool capAt100) {
-		reinterpret_cast<float(__thiscall *)(Statistic*, float, bool, bool)>(TES3_Statistic_modBaseWithCaps)(this, delta, capAt0, capAt100);
+		TES3_Statistic_modBaseWithCaps(this, delta, capAt0, capAt100);
 	}
 
+	const auto TES3_Statistic_modCurrentWithCaps = reinterpret_cast<float(__thiscall*)(Statistic*, float, bool, bool, bool)>(0x401150);
 	void Statistic::modCurrentCapped(float delta, bool capAt0, bool capAtBase, bool capAt100) {
-		reinterpret_cast<float(__thiscall *)(Statistic*, float, bool, bool, bool)>(TES3_Statistic_modCurrentWithCaps)(this, delta, capAt0, capAtBase, capAt100);
+		TES3_Statistic_modCurrentWithCaps(this, delta, capAt0, capAtBase, capAt100);
 	}
 
+	const auto TES3_Statistic_setBase = reinterpret_cast<float(__thiscall*)(Statistic*, float)>(0x401240);
 	void Statistic::setBase(float value) {
-		reinterpret_cast<float(__thiscall *)(Statistic*, float)>(TES3_Statistic_setBase)(this, value);
+		TES3_Statistic_setBase(this, value);
 	}
 
+	const auto TES3_Statistic_setBaseAndCurrent = reinterpret_cast<float(__thiscall*)(Statistic*, float)>(0x401290);
 	void Statistic::setBaseAndCurrent(float value) {
-		reinterpret_cast<float(__thiscall *)(Statistic*, float)>(TES3_Statistic_setBaseAndCurrent)(this, value);
+		TES3_Statistic_setBaseAndCurrent(this, value);
 	}
 
+	const auto TES3_Statistic_setBaseToCurrent = reinterpret_cast<float(__thiscall*)(Statistic*)>(0x4012A0);
 	void Statistic::setBaseToCurrent() {
-		reinterpret_cast<float(__thiscall *)(Statistic*)>(TES3_Statistic_setBaseToCurrent)(this);
+		TES3_Statistic_setBaseToCurrent(this);
 	}
 
+	const auto TES3_Statistic_setCurrentCapped = reinterpret_cast<float(__thiscall*)(Statistic*, float, bool)>(0x401250);
 	void Statistic::setCurrentCapped(float value, bool applyCaps) {
-		reinterpret_cast<float(__thiscall *)(Statistic*, float, bool)>(TES3_Statistic_setCurrentCapped)(this, value, applyCaps);
+		TES3_Statistic_setCurrentCapped(this, value, applyCaps);
 	}
 
 	void Statistic::setCurrent_lua(float value) {

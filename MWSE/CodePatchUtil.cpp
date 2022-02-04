@@ -2,10 +2,10 @@
 
 #include "Log.h"
 
-#define DEBUG_MCP_FEATURESET false
-
 namespace mwse {
 	namespace mcp {
+		constexpr auto DEBUG_MCP_FEATURESET = false;
+
 		FeatureStoreMap_t featureStore;
 
 		bool loadFeatureList() {
@@ -46,15 +46,15 @@ namespace mwse {
 				// If the value we got back was negative, the feature is disabled.
 				long id = std::abs(value);
 				if (value > 0) {
-#if DEBUG_MCP_FEATURESET
-					mwse::log::getLog() << __FUNCTION__ << ": Feature #" << id << " is enabled." << std::endl;
-#endif
+					if constexpr (DEBUG_MCP_FEATURESET) {
+						mwse::log::getLog() << __FUNCTION__ << ": Feature #" << id << " is enabled." << std::endl;
+					}
 					featureStore[id] = true;
 				}
 				else {
-#if DEBUG_MCP_FEATURESET
-					mwse::log::getLog() << __FUNCTION__ << ": Feature #" << id << " is disabled." << std::endl;
-#endif
+					if constexpr (DEBUG_MCP_FEATURESET) {
+						mwse::log::getLog() << __FUNCTION__ << ": Feature #" << id << " is disabled." << std::endl;
+					}
 					featureStore[id] = false;
 				}
 			}

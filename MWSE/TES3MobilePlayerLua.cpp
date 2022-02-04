@@ -3,7 +3,6 @@
 #include "LuaManager.h"
 #include "TES3MobileNPCLua.h"
 
-
 #include "TES3Alchemy.h"
 #include "TES3Cell.h"
 #include "TES3Enchantment.h"

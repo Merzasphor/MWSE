@@ -5,28 +5,25 @@
 #include "TES3DataHandler.h"
 #include "TES3Spell.h"
 
-#define TES3_SpellList_addByObject 0x4AC880
-#define TES3_SpellList_addById 0x4AC750
-#define TES3_SpellList_removeByObject 0x4ACBE0
-#define TES3_SpellList_containsObject 0x4ACB50
-#define TES3_SpellList_getCheapest 0x4ACB90
-
 namespace TES3 {
+	const auto TES3_SpellList_addByObject = reinterpret_cast<bool(__thiscall*)(SpellList*, Spell*)>(0x4AC880);
 	bool SpellList::add(Spell* spell) {
-		return reinterpret_cast<bool(__thiscall*)(SpellList*, Spell*)>(TES3_SpellList_addByObject)(this, spell);
+		return TES3_SpellList_addByObject(this, spell);
 	}
 
+	const auto TES3_SpellList_addById = reinterpret_cast<bool(__thiscall*)(SpellList*, const char*)>(0x4AC750);
 	bool SpellList::add(const char* id) {
-		return reinterpret_cast<bool(__thiscall*)(SpellList*, const char*)>(TES3_SpellList_addById)(this, id);
+		return TES3_SpellList_addById(this, id);
 	}
 
 	bool SpellList::add(const std::string& id) {
 		return add(id.c_str());
 	}
 
+	const auto TES3_SpellList_removeByObject = reinterpret_cast<void(__thiscall*)(SpellList*, Spell*)>(0x4ACBE0);
 	bool SpellList::remove(Spell* spell) {
 		int previousSize = list.size();
-		reinterpret_cast<void(__thiscall*)(SpellList*, Spell*)>(TES3_SpellList_removeByObject)(this, spell);
+		TES3_SpellList_removeByObject(this, spell);
 		return list.size() < previousSize;
 	}
 
@@ -44,8 +41,9 @@ namespace TES3 {
 		return remove(id.c_str());
 	}
 
+	const auto TES3_SpellList_containsObject = reinterpret_cast<bool(__thiscall*)(SpellList*, Spell*)>(0x4ACB50);
 	bool SpellList::contains(Spell* spell) {
-		return reinterpret_cast<bool(__thiscall*)(SpellList*, Spell*)>(TES3_SpellList_containsObject)(this, spell);
+		return TES3_SpellList_containsObject(this, spell);
 	}
 
 	bool SpellList::contains(const char* id) {
@@ -61,10 +59,10 @@ namespace TES3 {
 		return contains(id.c_str());
 	}
 
+	const auto TES3_SpellList_getCheapest = reinterpret_cast<Spell * (__thiscall*)(SpellList*)>(0x4ACB90);
 	Spell* SpellList::getCheapest() {
-		return reinterpret_cast<Spell*(__thiscall*)(SpellList*)>(TES3_SpellList_getCheapest)(this);
+		return TES3_SpellList_getCheapest(this);
 	}
-
 
 	bool SpellList::add_lua(sol::object value) {
 		if (value.is<TES3::Spell*>()) {

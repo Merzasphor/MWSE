@@ -3,11 +3,11 @@
 #include "VMExecuteInterface.h"
 #include "mwseString.h"
 
-#define MWSE_STRING_STORE_FIRSTID 40000
-
 namespace mwse {
 	namespace string {
 		namespace store {
+			constexpr auto MWSE_STRING_STORE_FIRSTID = 40000;
+
 			// Type of our string storage.
 			typedef std::map<long, mwseString> StringMap_t;
 

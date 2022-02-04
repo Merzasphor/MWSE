@@ -47,12 +47,6 @@ namespace TES3 {
 	}
 #pragma optimize( "", on )
 
-#define TES3_vTable_MobileCreature 0x74AFA4
-#define TES3_vTable_MobileNPC 0x74AE6C
-#define TES3_vTable_MobilePlayer 0x74B174
-#define TES3_vTable_MobileProjectile 0x74B2B4
-#define TES3_vTable_SpellProjectile 0x74B360
-
 	void MobileObject::setFacing(float facingInRadians) {
 		vTable.mobileObject->setFacing(this, facingInRadians);
 	}
@@ -266,19 +260,19 @@ namespace TES3 {
 
 		sol::object ref = sol::nil;
 		switch ((unsigned int)vTable.mobileObject) {
-		case TES3_vTable_MobileCreature:
+		case VirtualTableAddress::MobileCreature:
 			ref = sol::make_object(L, static_cast<const TES3::MobileCreature*>(this));
 			break;
-		case TES3_vTable_MobileNPC:
+		case VirtualTableAddress::MobileNPC:
 			ref = sol::make_object_userdata(L, static_cast<const TES3::MobileNPC*>(this));
 			break;
-		case TES3_vTable_MobilePlayer:
+		case VirtualTableAddress::MobilePlayer:
 			ref = sol::make_object(L, static_cast<const TES3::MobilePlayer*>(this));
 			break;
-		case TES3_vTable_MobileProjectile:
+		case VirtualTableAddress::MobileProjectile:
 			ref = sol::make_object_userdata(L, static_cast<const TES3::MobileProjectile*>(this));
 			break;
-		case TES3_vTable_SpellProjectile:
+		case VirtualTableAddress::SpellProjectile:
 			ref = sol::make_object(L, static_cast<const TES3::MobileSpellProjectile*>(this));
 			break;
 		}

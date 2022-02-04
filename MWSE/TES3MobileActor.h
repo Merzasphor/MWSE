@@ -229,7 +229,7 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
-		Cell* getCell();
+		Cell* getCell() const;
 
 		float getFatigueTerm() const;
 

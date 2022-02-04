@@ -1,8 +1,8 @@
 #include "NIUtil.h"
 
-#define NI_global_pick 0x7D12E8
+constexpr auto NI_global_pick = 0x7D12E8;
 
-#define NI_getAssociatedReference 0x4C3C40
+constexpr auto NI_getAssociatedReference = 0x4C3C40;
 
 namespace NI {
 	Pick* getGlobalPick() {

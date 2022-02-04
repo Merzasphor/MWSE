@@ -7,10 +7,6 @@
 #include "TES3UIManager.h"
 #include "TES3WorldController.h"
 
-#define TES3_Class_loadDescription 0x4A81D0
-#define TES3_Class_setDescription 0x4A8200
-#define TES3_Class_freeDescription 0x4A8450
-
 namespace TES3 {
 	const char* Class::getObjectID() const {
 		return id;
@@ -44,8 +40,9 @@ namespace TES3 {
 		}
 	}
 
-	char * Class::loadDescription() {
-		return reinterpret_cast<char *(__thiscall *)(Class*)>(TES3_Class_loadDescription)(this);
+	const auto TES3_Class_loadDescription = reinterpret_cast<char*(__thiscall*)(Class*)>(0x4A81D0);
+	char* Class::loadDescription() {
+		return TES3_Class_loadDescription(this);
 	}
 
 	sol::optional<std::string> Class::getOrLoadDescription() {
@@ -68,12 +65,14 @@ namespace TES3 {
 		return {};
 	}
 
+	const auto TES3_Class_setDescription = reinterpret_cast<void(__thiscall*)(Class*, const char*)>(0x4A8200);
 	void Class::setDescription(const char * description) {
-		reinterpret_cast<void(__thiscall *)(Class*, const char*)>(TES3_Class_setDescription)(this, description);
+		TES3_Class_setDescription(this, description);
 	}
 
+	const auto TES3_Class_freeDescription = reinterpret_cast<void(__thiscall*)(Class*)>(0x4A8450);
 	void Class::freeDescription() {
-		reinterpret_cast<void(__thiscall *)(Class*)>(TES3_Class_freeDescription)(this);
+		TES3_Class_freeDescription(this);
 	}
 
 	std::reference_wrapper<int[2]> Class::getAttributes() {

@@ -4,9 +4,6 @@
 #include "TES3WeatherController.h"
 #include "TES3WorldController.h"
 
-#define TES3_Region_changeWeather 0x4812F0
-#define TES3_Region_randomizeWeather 0x4812A0
-
 namespace TES3 {
 	//
 	// TES3::RegionSound
@@ -20,12 +17,14 @@ namespace TES3 {
 	// TES3::Region
 	//
 
+	const auto TES3_Region_changeWeather = reinterpret_cast<void(__thiscall*)(Region*, int)>(0x4812F0);
 	void Region::changeWeather(int weather) {
-		reinterpret_cast<void(__thiscall *)(Region*,int)>(TES3_Region_changeWeather)(this, weather);
+		TES3_Region_changeWeather(this, weather);
 	}
 
+	const auto TES3_Region_randomizeWeather = reinterpret_cast<void(__thiscall*)(Region*)>(0x4812A0);
 	void Region::randomizeWeather() {
-		reinterpret_cast<void(__thiscall *)(Region*)>(TES3_Region_randomizeWeather)(this);
+		TES3_Region_randomizeWeather(this);
 	}
 
 	const char* Region::getName() const {

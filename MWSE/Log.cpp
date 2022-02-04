@@ -27,21 +27,21 @@ template<>
 int basic_debugbuf<char>::sync()
 {
 	OutputDebugStringA(str().c_str());
-    return 0;
+	return 0;
 }
 
 template<class CharT, class TraitsT = std::char_traits<CharT> >
 class basic_dostream : 
-    public std::basic_ostream<CharT, TraitsT>
+	public std::basic_ostream<CharT, TraitsT>
 {
 public:
 
-    basic_dostream() : std::basic_ostream<CharT, TraitsT>
-                (new basic_debugbuf<CharT, TraitsT>()) {}
-    ~basic_dostream() 
-    {
+	basic_dostream() : std::basic_ostream<CharT, TraitsT>
+				(new basic_debugbuf<CharT, TraitsT>()) {}
+	~basic_dostream() 
+	{
 //        delete rdbuf(); 
-    }
+	}
 };
 
 typedef basic_dostream<char>	odstream;
@@ -74,41 +74,41 @@ namespace mwse
 			return debugstream;
 		}
 
-        void prettyDump(const void* data, const size_t length) {
-            constexpr unsigned int LINE_WIDTH = 16u;
+		void prettyDump(const void* data, const size_t length) {
+			constexpr unsigned int LINE_WIDTH = 16u;
 
-            // Prepare log.
-            auto& log = getLog();
-            log << std::hex << std::setfill('0');
+			// Prepare log.
+			auto& log = getLog();
+			log << std::hex << std::setfill('0');
 
-            unsigned long address = size_t(data);
-            const size_t dataEnd = address + length;
-            while (address < size_t(data) + length) {
-                // Show address
-                log << std::setw(8) << address;
+			unsigned long address = size_t(data);
+			const size_t dataEnd = address + length;
+			while (address < size_t(data) + length) {
+				// Show address
+				log << std::setw(8) << address;
 
-                // Show the hex codes
-                for (unsigned int offset = 0; offset < LINE_WIDTH; offset++) {
-                    if (address + offset < dataEnd) {
-                        log << ' ' << std::setw(2) << unsigned int(*reinterpret_cast<const unsigned char*>(address + offset));
-                    }
-                    else {
-                        log << "   ";
-                    }
-                }
+				// Show the hex codes
+				for (unsigned int offset = 0; offset < LINE_WIDTH; offset++) {
+					if (address + offset < dataEnd) {
+						log << ' ' << std::setw(2) << unsigned int(*reinterpret_cast<const unsigned char*>(address + offset));
+					}
+					else {
+						log << "   ";
+					}
+				}
 
-                // Show printable characters
-                log << "  ";
-                for (unsigned int offset = 0; offset < LINE_WIDTH; offset++) {
-                    if (address + offset < dataEnd) {
-                        if (*reinterpret_cast<const unsigned char*>(address + offset) < 32u) log << '.';
-                        else log << *reinterpret_cast<const char*>(address + offset);
-                    }
-                }
+				// Show printable characters
+				log << "  ";
+				for (unsigned int offset = 0; offset < LINE_WIDTH; offset++) {
+					if (address + offset < dataEnd) {
+						if (*reinterpret_cast<const unsigned char*>(address + offset) < 32u) log << '.';
+						else log << *reinterpret_cast<const char*>(address + offset);
+					}
+				}
 
-                log << std::endl;
-                address += 0x10;
-            }
+				log << std::endl;
+				address += 0x10;
+			}
 		}
 	}
 }

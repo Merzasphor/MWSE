@@ -11,14 +11,12 @@
 #include "TES3Reference.h"
 #include "TES3WorldController.h"
 
-#define TES3_Dialogue_journalAdd 0x4B2F80
-#define TES3_Dialogue_journalSetIndex 0x50F8B0
-
 namespace TES3 {
 	const char* Dialogue::getObjectID() const {
 		return name;
 	}
 
+	const auto TES3_Dialogue_journalAdd = reinterpret_cast<bool(__thiscall*)(Dialogue*, int, MobileActor*)>(0x4B2F80);
 	bool Dialogue::addToJournal(int index, MobileActor* actor) {
 		if (type != DialogueType::Journal) {
 			return false;
@@ -28,7 +26,7 @@ namespace TES3 {
 		int oldIndex = journalIndex;
 
 		// Call the original function.
-		bool added = reinterpret_cast<bool(__thiscall*)(Dialogue*, int, MobileActor*)>(TES3_Dialogue_journalAdd)(this, index, actor);
+		bool added = TES3_Dialogue_journalAdd(this, index, actor);
 
 		// If the journal index changed, raise an event that it was modified.
 		if (journalIndex > oldIndex && mwse::lua::event::JournalEvent::getEventEnabled()) {

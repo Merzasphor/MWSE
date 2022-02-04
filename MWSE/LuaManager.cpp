@@ -248,41 +248,41 @@
 
 #include "InstructionStore.h"
 
-#define TES3_HOOK_RUNSCRIPT_LUACHECK 0x5029A4
-#define TES3_HOOK_RUNSCRIPT_LUACHECK_SIZE 0x6
-#define TES3_HOOK_RUNSCRIPT_LUACHECK_RETURN (TES3_HOOK_RUNSCRIPT_LUACHECK + TES3_HOOK_RUNSCRIPT_LUACHECK_SIZE)
-
-#define TES3_HOOK_SAVE_REFERENCE 0x4E1C95
-#define TES3_HOOK_SAVE_REFERENCE_SIZE 0x6
-#define TES3_HOOK_SAVE_REFERENCE_RETURN (TES3_HOOK_SAVE_REFERENCE + TES3_HOOK_SAVE_REFERENCE_SIZE)
-
-#define TES3_HOOK_LOAD_REFERENCE 0x4DE532
-#define TES3_HOOK_LOAD_REFERENCE_SIZE 0x5
-#define TES3_HOOK_LOAD_REFERENCE_RETURN (TES3_HOOK_LOAD_REFERENCE + TES3_HOOK_LOAD_REFERENCE_SIZE)
-#define TES3_HOOK_LOAD_REFERENCE_RETURN_SUCCESS 0x4DE406
-
-#define TES3_HOOK_UI_EVENT 0x58371A
-#define TES3_HOOK_UI_EVENT_SIZE 0x5
-#define TES3_HOOK_UI_EVENT_RETURN (TES3_HOOK_UI_EVENT + TES3_HOOK_UI_EVENT_SIZE)
-
-#define TES3_HOOK_MAGIC_CAST_SUCCESS 0x5157E6
-#define TES3_HOOK_MAGIC_CAST_SUCCESS_SIZE 0xA
-#define TES3_HOOK_MAGIC_CAST_SUCCESS_RETURN (TES3_HOOK_MAGIC_CAST_SUCCESS + TES3_HOOK_MAGIC_CAST_SUCCESS_SIZE)
-
-#define TES3_HOOK_SPELL_CAST_FAILURE 0x5157D5
-#define TES3_HOOK_SPELL_CAST_FAILURE_SIZE 0xA
-#define TES3_HOOK_SPELL_CAST_FAILURE_RETURN (TES3_HOOK_SPELL_CAST_FAILURE + TES3_HOOK_SPELL_CAST_FAILURE_SIZE)
-
-#define TES3_PATCH_MAGIC_SAVE_LOAD 0x51391F
-#define TES3_PATCH_MAGIC_SAVE_LOAD_SIZE 0x8
-#define TES3_PATCH_MAGIC_SAVE_LOAD_RETURN (TES3_PATCH_MAGIC_SAVE_LOAD + TES3_PATCH_MAGIC_SAVE_LOAD_SIZE)
-
-#define TES3_ActorAnimController_attackCheckMeleeHit 0x541530
-
-#define TES3_BaseObject_destructor 0x4F0CA0
-
 namespace mwse {
 	namespace lua {
+		constexpr auto TES3_HOOK_RUNSCRIPT_LUACHECK = 0x5029A4;
+		constexpr auto TES3_HOOK_RUNSCRIPT_LUACHECK_SIZE = 0x6;
+		constexpr auto TES3_HOOK_RUNSCRIPT_LUACHECK_RETURN = (TES3_HOOK_RUNSCRIPT_LUACHECK + TES3_HOOK_RUNSCRIPT_LUACHECK_SIZE);
+
+		constexpr auto TES3_HOOK_SAVE_REFERENCE = 0x4E1C95;
+		constexpr auto TES3_HOOK_SAVE_REFERENCE_SIZE = 0x6;
+		constexpr auto TES3_HOOK_SAVE_REFERENCE_RETURN = (TES3_HOOK_SAVE_REFERENCE + TES3_HOOK_SAVE_REFERENCE_SIZE);
+
+		constexpr auto TES3_HOOK_LOAD_REFERENCE = 0x4DE532;
+		constexpr auto TES3_HOOK_LOAD_REFERENCE_SIZE = 0x5;
+		constexpr auto TES3_HOOK_LOAD_REFERENCE_RETURN = (TES3_HOOK_LOAD_REFERENCE + TES3_HOOK_LOAD_REFERENCE_SIZE);
+		constexpr auto TES3_HOOK_LOAD_REFERENCE_RETURN_SUCCESS = 0x4DE406;
+
+		constexpr auto TES3_HOOK_UI_EVENT = 0x58371A;
+		constexpr auto TES3_HOOK_UI_EVENT_SIZE = 0x5;
+		constexpr auto TES3_HOOK_UI_EVENT_RETURN = (TES3_HOOK_UI_EVENT + TES3_HOOK_UI_EVENT_SIZE);
+
+		constexpr auto TES3_HOOK_MAGIC_CAST_SUCCESS = 0x5157E6;
+		constexpr auto TES3_HOOK_MAGIC_CAST_SUCCESS_SIZE = 0xA;
+		constexpr auto TES3_HOOK_MAGIC_CAST_SUCCESS_RETURN = (TES3_HOOK_MAGIC_CAST_SUCCESS + TES3_HOOK_MAGIC_CAST_SUCCESS_SIZE);
+
+		constexpr auto TES3_HOOK_SPELL_CAST_FAILURE = 0x5157D5;
+		constexpr auto TES3_HOOK_SPELL_CAST_FAILURE_SIZE = 0xA;
+		constexpr auto TES3_HOOK_SPELL_CAST_FAILURE_RETURN = (TES3_HOOK_SPELL_CAST_FAILURE + TES3_HOOK_SPELL_CAST_FAILURE_SIZE);
+
+		constexpr auto TES3_PATCH_MAGIC_SAVE_LOAD = 0x51391F;
+		constexpr auto TES3_PATCH_MAGIC_SAVE_LOAD_SIZE = 0x8;
+		constexpr auto TES3_PATCH_MAGIC_SAVE_LOAD_RETURN = (TES3_PATCH_MAGIC_SAVE_LOAD + TES3_PATCH_MAGIC_SAVE_LOAD_SIZE);
+
+		constexpr auto TES3_ActorAnimController_attackCheckMeleeHit = 0x541530;
+
+		constexpr auto TES3_BaseObject_destructor = 0x4F0CA0;
+
 		// Initialize singleton.
 		LuaManager LuaManager::singleton;
 
@@ -3718,54 +3718,54 @@ namespace mwse {
 			auto mobileObjectCollideTerrain = &TES3::MobileObject::onTerrainCollision;
 			auto mobileObjectCollideWater = &TES3::MobileObject::onWaterCollision;
 			auto mobileObjectCollideActivator = &TES3::MobileObject::onActivatorCollision;
-			overrideVirtualTableEnforced(0x74B0C0, 0x80, 0x5615A0, *reinterpret_cast<DWORD*>(&mobileObjectCollideActor));
-			overrideVirtualTableEnforced(0x74B0C0, 0x84, 0x5615C0, *reinterpret_cast<DWORD*>(&mobileObjectCollidObject));
-			overrideVirtualTableEnforced(0x74B0C0, 0x88, 0x5615E0, *reinterpret_cast<DWORD*>(&mobileObjectCollideTerrain));
-			overrideVirtualTableEnforced(0x74B0C0, 0x8C, 0x5615E0, *reinterpret_cast<DWORD*>(&mobileObjectCollideTerrain));
-			overrideVirtualTableEnforced(0x74B0C0, 0x90, 0x561600, *reinterpret_cast<DWORD*>(&mobileObjectCollideActivator));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileObject, 0x80, 0x5615A0, *reinterpret_cast<DWORD*>(&mobileObjectCollideActor));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileObject, 0x84, 0x5615C0, *reinterpret_cast<DWORD*>(&mobileObjectCollidObject));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileObject, 0x88, 0x5615E0, *reinterpret_cast<DWORD*>(&mobileObjectCollideTerrain));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileObject, 0x8C, 0x5615E0, *reinterpret_cast<DWORD*>(&mobileObjectCollideTerrain));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileObject, 0x90, 0x561600, *reinterpret_cast<DWORD*>(&mobileObjectCollideActivator));
 
 			// Collision events: Mobile Actor
 			auto mobileActorCollideActor = &TES3::MobileActor::onActorCollision;
 			auto mobileActorCollidObject = &TES3::MobileActor::onObjectCollision;
 			auto mobileActorCollideTerrain = &TES3::MobileActor::onTerrainCollision;
 			auto mobileActorCollideActivator = &TES3::MobileActor::onActivatorCollision;
-			overrideVirtualTableEnforced(0x74AB4C, 0x80, 0x5234A0, *reinterpret_cast<DWORD*>(&mobileActorCollideActor));
-			overrideVirtualTableEnforced(0x74AB4C, 0x84, 0x5233B0, *reinterpret_cast<DWORD*>(&mobileActorCollidObject));
-			overrideVirtualTableEnforced(0x74AB4C, 0x88, 0x523310, *reinterpret_cast<DWORD*>(&mobileActorCollideTerrain));
-			overrideVirtualTableEnforced(0x74AB4C, 0x8C, 0x5615E0, *reinterpret_cast<DWORD*>(&mobileObjectCollideTerrain));
-			overrideVirtualTableEnforced(0x74AB4C, 0x90, 0x523590, *reinterpret_cast<DWORD*>(&mobileActorCollideActivator));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileActor, 0x80, 0x5234A0, *reinterpret_cast<DWORD*>(&mobileActorCollideActor));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileActor, 0x84, 0x5233B0, *reinterpret_cast<DWORD*>(&mobileActorCollidObject));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileActor, 0x88, 0x523310, *reinterpret_cast<DWORD*>(&mobileActorCollideTerrain));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileActor, 0x8C, 0x5615E0, *reinterpret_cast<DWORD*>(&mobileObjectCollideTerrain));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileActor, 0x90, 0x523590, *reinterpret_cast<DWORD*>(&mobileActorCollideActivator));
 
 			// Collision events: Mobile Creature
-			overrideVirtualTableEnforced(0x74AFA4, 0x80, 0x5234A0, *reinterpret_cast<DWORD*>(&mobileActorCollideActor));
-			overrideVirtualTableEnforced(0x74AFA4, 0x84, 0x5233B0, *reinterpret_cast<DWORD*>(&mobileActorCollidObject));
-			overrideVirtualTableEnforced(0x74AFA4, 0x88, 0x523310, *reinterpret_cast<DWORD*>(&mobileActorCollideTerrain));
-			overrideVirtualTableEnforced(0x74AFA4, 0x8C, 0x5615E0, *reinterpret_cast<DWORD*>(&mobileObjectCollideTerrain));
-			overrideVirtualTableEnforced(0x74AFA4, 0x90, 0x523590, *reinterpret_cast<DWORD*>(&mobileActorCollideActivator));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileCreature, 0x80, 0x5234A0, *reinterpret_cast<DWORD*>(&mobileActorCollideActor));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileCreature, 0x84, 0x5233B0, *reinterpret_cast<DWORD*>(&mobileActorCollidObject));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileCreature, 0x88, 0x523310, *reinterpret_cast<DWORD*>(&mobileActorCollideTerrain));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileCreature, 0x8C, 0x5615E0, *reinterpret_cast<DWORD*>(&mobileObjectCollideTerrain));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileCreature, 0x90, 0x523590, *reinterpret_cast<DWORD*>(&mobileActorCollideActivator));
 
 			// Collision events: Mobile NPC
-			overrideVirtualTableEnforced(0x74AE6C, 0x80, 0x5234A0, *reinterpret_cast<DWORD*>(&mobileActorCollideActor));
-			overrideVirtualTableEnforced(0x74AE6C, 0x84, 0x5233B0, *reinterpret_cast<DWORD*>(&mobileActorCollidObject));
-			overrideVirtualTableEnforced(0x74AE6C, 0x88, 0x523310, *reinterpret_cast<DWORD*>(&mobileActorCollideTerrain));
-			overrideVirtualTableEnforced(0x74AE6C, 0x8C, 0x5615E0, *reinterpret_cast<DWORD*>(&mobileObjectCollideTerrain));
-			overrideVirtualTableEnforced(0x74AE6C, 0x90, 0x523590, *reinterpret_cast<DWORD*>(&mobileActorCollideActivator));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileNPC, 0x80, 0x5234A0, *reinterpret_cast<DWORD*>(&mobileActorCollideActor));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileNPC, 0x84, 0x5233B0, *reinterpret_cast<DWORD*>(&mobileActorCollidObject));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileNPC, 0x88, 0x523310, *reinterpret_cast<DWORD*>(&mobileActorCollideTerrain));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileNPC, 0x8C, 0x5615E0, *reinterpret_cast<DWORD*>(&mobileObjectCollideTerrain));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileNPC, 0x90, 0x523590, *reinterpret_cast<DWORD*>(&mobileActorCollideActivator));
 
 			// Collision events: Mobile Player
-			overrideVirtualTableEnforced(0x74B174, 0x80, 0x5234A0, *reinterpret_cast<DWORD*>(&mobileActorCollideActor));
-			overrideVirtualTableEnforced(0x74B174, 0x84, 0x5233B0, *reinterpret_cast<DWORD*>(&mobileActorCollidObject));
-			overrideVirtualTableEnforced(0x74B174, 0x88, 0x523310, *reinterpret_cast<DWORD*>(&mobileActorCollideTerrain));
-			overrideVirtualTableEnforced(0x74B174, 0x8C, 0x5615E0, *reinterpret_cast<DWORD*>(&mobileObjectCollideTerrain));
-			overrideVirtualTableEnforced(0x74B174, 0x90, 0x523590, *reinterpret_cast<DWORD*>(&mobileActorCollideActivator));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobilePlayer, 0x80, 0x5234A0, *reinterpret_cast<DWORD*>(&mobileActorCollideActor));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobilePlayer, 0x84, 0x5233B0, *reinterpret_cast<DWORD*>(&mobileActorCollidObject));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobilePlayer, 0x88, 0x523310, *reinterpret_cast<DWORD*>(&mobileActorCollideTerrain));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobilePlayer, 0x8C, 0x5615E0, *reinterpret_cast<DWORD*>(&mobileObjectCollideTerrain));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobilePlayer, 0x90, 0x523590, *reinterpret_cast<DWORD*>(&mobileActorCollideActivator));
 
 			// Collision events: Mobile Projectile
 			auto mobileProjectileCollideActor = &TES3::MobileProjectile::onActorCollision;
 			auto mobileProjectileCollideObject = &TES3::MobileProjectile::onObjectCollision;
 			auto mobileProjectileCollideTerrain = &TES3::MobileProjectile::onTerrainCollision;
 			auto mobileProjectileCollideWater = &TES3::MobileProjectile::onWaterCollision;
-			overrideVirtualTableEnforced(0x74B2B4, 0x80, 0x573860, *reinterpret_cast<DWORD*>(&mobileProjectileCollideActor));
-			overrideVirtualTableEnforced(0x74B2B4, 0x84, 0x573820, *reinterpret_cast<DWORD*>(&mobileProjectileCollideObject));
-			overrideVirtualTableEnforced(0x74B2B4, 0x88, 0x5737F0, *reinterpret_cast<DWORD*>(&mobileProjectileCollideTerrain));
-			overrideVirtualTableEnforced(0x74B2B4, 0x8C, 0x573790, *reinterpret_cast<DWORD*>(&mobileProjectileCollideWater));
-			overrideVirtualTableEnforced(0x74B2B4, 0x90, 0x561600, *reinterpret_cast<DWORD*>(&mobileObjectCollideActivator));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileProjectile, 0x80, 0x573860, *reinterpret_cast<DWORD*>(&mobileProjectileCollideActor));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileProjectile, 0x84, 0x573820, *reinterpret_cast<DWORD*>(&mobileProjectileCollideObject));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileProjectile, 0x88, 0x5737F0, *reinterpret_cast<DWORD*>(&mobileProjectileCollideTerrain));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileProjectile, 0x8C, 0x573790, *reinterpret_cast<DWORD*>(&mobileProjectileCollideWater));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileProjectile, 0x90, 0x561600, *reinterpret_cast<DWORD*>(&mobileObjectCollideActivator));
 
 			// Mobile Projectile Expire
 			genCallEnforced(0x57548A, 0x5637F0, reinterpret_cast<DWORD>(OnProjectileExpire));
@@ -3783,10 +3783,10 @@ namespace mwse {
 			genCallEnforced(0x736C04, 0x4065E0, reinterpret_cast<DWORD>(OnKeyReadState));
 
 			// Event: Dying/death.
-			overrideVirtualTable(0x74AB4C, 0xB8, reinterpret_cast<DWORD>(OnMobileActorDeath)); // MACT
-			overrideVirtualTable(0x74AFA4, 0xB8, reinterpret_cast<DWORD>(OnMobileActorDeath)); // MACR
-			overrideVirtualTable(0x74AE6C, 0xB8, reinterpret_cast<DWORD>(OnMobileActorDeath)); // MACH
-			overrideVirtualTable(0x74B174, 0xB8, reinterpret_cast<DWORD>(OnMobilePlayerDeath)); // MACP
+			overrideVirtualTable(TES3::VirtualTableAddress::MobileActor, 0xB8, reinterpret_cast<DWORD>(OnMobileActorDeath)); // MACT
+			overrideVirtualTable(TES3::VirtualTableAddress::MobileCreature, 0xB8, reinterpret_cast<DWORD>(OnMobileActorDeath)); // MACR
+			overrideVirtualTable(TES3::VirtualTableAddress::MobileNPC, 0xB8, reinterpret_cast<DWORD>(OnMobileActorDeath)); // MACH
+			overrideVirtualTable(TES3::VirtualTableAddress::MobilePlayer, 0xB8, reinterpret_cast<DWORD>(OnMobilePlayerDeath)); // MACP
 
 			// Event: Damage(d)
 			genCallEnforced(0x50B72C, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromScript));
@@ -3870,7 +3870,7 @@ namespace mwse {
 
 			// Clean unused alchemy attribute and skill IDs on loading.
 			auto alchemyLoadObjectSpecific = &TES3::Alchemy::loadObjectSpecific;
-			overrideVirtualTableEnforced(0x749684, offsetof(TES3::BaseObjectVirtualTable, TES3::BaseObjectVirtualTable::loadObjectSpecific), 0x4ABD90, *reinterpret_cast<DWORD*>(&alchemyLoadObjectSpecific));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::Alchemy, offsetof(TES3::BaseObjectVirtualTable, TES3::BaseObjectVirtualTable::loadObjectSpecific), 0x4ABD90, *reinterpret_cast<DWORD*>(&alchemyLoadObjectSpecific));
 
 			// Event: Spell created from service menu.
 			genCallEnforced(0x622D05, 0x4B8980, reinterpret_cast<DWORD>(OnAddNewlyCreatedSpell));
@@ -3891,10 +3891,10 @@ namespace mwse {
 			// Event: Calculate walk speed.
 			auto calculateCreatureWalkSpeed = &TES3::MobileCreature::calculateWalkSpeed;
 			auto calculateNPCWalkSpeed = &TES3::MobileNPC::calculateWalkSpeed;
-			overrideVirtualTableEnforced(0x74AFA4, 0xB4, 0x55AAF0, *reinterpret_cast<DWORD*>(&calculateCreatureWalkSpeed));
-			overrideVirtualTableEnforced(0x74AB4C, 0xB4, 0x526F70, *reinterpret_cast<DWORD*>(&calculateNPCWalkSpeed));
-			overrideVirtualTableEnforced(0x74AE6C, 0xB4, 0x526F70, *reinterpret_cast<DWORD*>(&calculateNPCWalkSpeed));
-			overrideVirtualTableEnforced(0x74B174, 0xB4, 0x526F70, *reinterpret_cast<DWORD*>(&calculateNPCWalkSpeed));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileCreature, 0xB4, 0x55AAF0, *reinterpret_cast<DWORD*>(&calculateCreatureWalkSpeed));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileActor, 0xB4, 0x526F70, *reinterpret_cast<DWORD*>(&calculateNPCWalkSpeed));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileNPC, 0xB4, 0x526F70, *reinterpret_cast<DWORD*>(&calculateNPCWalkSpeed));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobilePlayer, 0xB4, 0x526F70, *reinterpret_cast<DWORD*>(&calculateNPCWalkSpeed));
 
 			// Event: Calculate run speed.
 			auto calculateRunSpeed = &TES3::MobileActor::calculateRunSpeed;
@@ -4393,11 +4393,11 @@ namespace mwse {
 
 			// Allow overriding of armor slot name.
 			auto armorGetSlotName = &TES3::Armor::getSlotName;
-			overrideVirtualTableEnforced(0x748258, offsetof(TES3::ObjectVirtualTable, getTypeName), 0x4A1270, *reinterpret_cast<DWORD*>(&armorGetSlotName));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::Armor, offsetof(TES3::ObjectVirtualTable, getTypeName), 0x4A1270, *reinterpret_cast<DWORD*>(&armorGetSlotName));
 
 			// Allow overriding of clothing slot name.
 			auto clothingGetSlotName = &TES3::Clothing::getSlotName;
-			overrideVirtualTableEnforced(0x748634, offsetof(TES3::ObjectVirtualTable, getTypeName), 0x4A38E0, *reinterpret_cast<DWORD*>(&clothingGetSlotName));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::Clothing, offsetof(TES3::ObjectVirtualTable, getTypeName), 0x4A38E0, *reinterpret_cast<DWORD*>(&clothingGetSlotName));
 
 			// Recognize when an inventory tile is updated.
 			genCallEnforced(0x5A5DA4, 0x47E720, reinterpret_cast<DWORD>(GetNextInventoryTileToUpdate)); // General barter menu update.
@@ -4534,7 +4534,7 @@ namespace mwse {
 
 			// Event: Reference Scene Graph Node Created
 			auto referenceGetSceneGraphNode = &TES3::Reference::getSceneGraphNode;
-			overrideVirtualTableEnforced(0x74A140, 0x2C, 0x4E81A0, *reinterpret_cast<DWORD*>(&referenceGetSceneGraphNode));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::Reference, 0x2C, 0x4E81A0, *reinterpret_cast<DWORD*>(&referenceGetSceneGraphNode));
 
 			// Event: Convert reference to item.
 			auto inventoryAddItemByReference = &TES3::Inventory::addItemByReference;
@@ -4547,8 +4547,8 @@ namespace mwse {
 
 			// Event: Calc Armor Piece Hit.
 			auto mobileNPCApplyArmorRating = &TES3::MobileNPC::applyArmorRating;
-			overrideVirtualTableEnforced(0x74AE6C, 0xE0, 0x54D820, *reinterpret_cast<DWORD*>(&mobileNPCApplyArmorRating)); // MACH
-			overrideVirtualTableEnforced(0x74B174, 0xE0, 0x54D820, *reinterpret_cast<DWORD*>(&mobileNPCApplyArmorRating)); // MACP
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileNPC, 0xE0, 0x54D820, *reinterpret_cast<DWORD*>(&mobileNPCApplyArmorRating)); // MACH
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobilePlayer, 0xE0, 0x54D820, *reinterpret_cast<DWORD*>(&mobileNPCApplyArmorRating)); // MACP
 
 			// Events: disarmTrap/pickLock
 			auto referenceAttemptUnlockDisarm = &TES3::Reference::attemptUnlockDisarm;
@@ -4566,7 +4566,7 @@ namespace mwse {
 
 			// Allow overriding of guard status.
 			auto npcBaseIsGuard = &TES3::NPCBase::isGuard;
-			overrideVirtualTableEnforced(0x749DE8, offsetof(TES3::ActorVirtualTable, isGuard), 0x04DA5E0, *reinterpret_cast<DWORD*>(&npcBaseIsGuard));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::NPCBase, offsetof(TES3::ActorVirtualTable, isGuard), 0x04DA5E0, *reinterpret_cast<DWORD*>(&npcBaseIsGuard));
 
 			// Allow overriding of sun damage calculation.
 			auto weatherControllerCalcSunDamageScalar = &TES3::WeatherController::calcSunDamageScalar;
@@ -4862,10 +4862,10 @@ namespace mwse {
 			auto TES3_Lockpick_setName = &TES3::Lockpick::setName;
 			auto TES3_Probe_setName = &TES3::Probe::setName;
 			auto TES3_RepairTool_setName = &TES3::RepairTool::setName;
-			overrideVirtualTableEnforced(0x748110, offsetof(TES3::ObjectVirtualTable, setName), 0x4F1C50, *reinterpret_cast<DWORD*>(&TES3_Apparatus_setName));
-			overrideVirtualTableEnforced(0x748D10, offsetof(TES3::ObjectVirtualTable, setName), 0x4F1C50, *reinterpret_cast<DWORD*>(&TES3_Lockpick_setName));
-			overrideVirtualTableEnforced(0x748FA0, offsetof(TES3::ObjectVirtualTable, setName), 0x4F1C50, *reinterpret_cast<DWORD*>(&TES3_Probe_setName));
-			overrideVirtualTableEnforced(0x7490E8, offsetof(TES3::ObjectVirtualTable, setName), 0x4F1C50, *reinterpret_cast<DWORD*>(&TES3_RepairTool_setName));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::Apparatus, offsetof(TES3::ObjectVirtualTable, setName), 0x4F1C50, *reinterpret_cast<DWORD*>(&TES3_Apparatus_setName));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::Lockpick, offsetof(TES3::ObjectVirtualTable, setName), 0x4F1C50, *reinterpret_cast<DWORD*>(&TES3_Lockpick_setName));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::Probe, offsetof(TES3::ObjectVirtualTable, setName), 0x4F1C50, *reinterpret_cast<DWORD*>(&TES3_Probe_setName));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::RepairTool, offsetof(TES3::ObjectVirtualTable, setName), 0x4F1C50, *reinterpret_cast<DWORD*>(&TES3_RepairTool_setName));
 
 			// Allow changing simulation time scalar.
 			genCallEnforced(0x40F62B, 0x453630, reinterpret_cast<DWORD>(OnUpdateDeltaTime));

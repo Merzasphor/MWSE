@@ -4,9 +4,9 @@
 
 #include "MemoryUtil.h"
 
-#define NI_AVObject_updateEffects 0x6EB380
-#define NI_AVObject_updateProperties 0x6EB0E0
-#define NI_AVObject_update 0x6EB000
+constexpr auto NI_AVObject_updateEffects = 0x6EB380;
+constexpr auto NI_AVObject_updateProperties = 0x6EB0E0;
+constexpr auto NI_AVObject_update = 0x6EB000;
 
 namespace NI {
 	TES3::Vector3 AVObject::getLocalVelocity() const {

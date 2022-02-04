@@ -4,69 +4,63 @@
 
 #include "LuaShowRestWaitMenuEvent.h"
 
-#define TES3_ui_menu_inventory 0x7D3988
-
-#define TES3_ui_requestMenuModeOff 0x595270
-#define TES3_ui_requestMenuModeOn 0x595230
-#define TES3_ui_getMenuNode 0x595370
-
-#define TES3_ui_buttonPressedIndex 0x7B88C0
-
-#define TES3_ui_inventory_addTile 0x5CBCC0
-#define TES3_ui_inventory_updateIcons 0x5CC910
-#define TES3_ui_inventory_equipInventoryTileToPlayer 0x5CE130
-#define TES3_ui_inventory_equipInventoryItemToPlayer 0x5D1190
-#define TES3_ui_data_inventory_updatePaperDoll 0x7B6D04
-
-#define TES3_ui_showRestWaitMenu 0x610170
-
 namespace mwse {
 	namespace tes3 {
 		namespace ui {
+			const auto TES3_ui_requestMenuModeOff = reinterpret_cast<bool(__cdecl*)()>(0x595270);
 			bool requestMenuModeOff() {
-				return reinterpret_cast<signed char(__cdecl *)()>(TES3_ui_requestMenuModeOff)();
+				return TES3_ui_requestMenuModeOff();
 			}
 
+			const auto TES3_ui_requestMenuModeOn = reinterpret_cast<bool(__cdecl*)(bool)>(0x595230);
 			bool requestMenuModeOn(short prop) {
-				return reinterpret_cast<signed char(__cdecl *)(short)>(TES3_ui_requestMenuModeOn)(prop);
+				return TES3_ui_requestMenuModeOn(prop);
 			}
 
+			auto& TES3_ui_buttonPressedIndex = *reinterpret_cast<int*>(0x7B88C0);
 			int getButtonPressedIndex() {
-				return *reinterpret_cast<int*>(TES3_ui_buttonPressedIndex);
+				return TES3_ui_buttonPressedIndex;
 			}
 
 			void resetButtonPressedIndex() {
-				*reinterpret_cast<int*>(TES3_ui_buttonPressedIndex) = -1;
+				TES3_ui_buttonPressedIndex = -1;
 			}
 
+			const auto TES3_ui_getMenuNode = reinterpret_cast<TES3::UI::Element * (__cdecl*)(short)>(0x595370);
 			TES3::UI::Element* getMenuNode(short id) {
-				return reinterpret_cast<TES3::UI::Element*(__cdecl *)(short)>(TES3_ui_getMenuNode)(id);
+				return TES3_ui_getMenuNode(id);
 			}
 
 			short getInventoryMenuId() {
-				return *reinterpret_cast<short*>(TES3_ui_menu_inventory);
+				return *reinterpret_cast<short*>(0x7D3988);
 			}
 
-			TES3::UI::InventoryTile* inventoryAddTile(int something, TES3::UI::InventoryTile* tile) {
-				return reinterpret_cast<TES3::UI::InventoryTile*(__cdecl *)(int, TES3::UI::InventoryTile*)>(TES3_ui_inventory_addTile)(something, tile);
+			const auto TES3_ui_inventory_addTile = reinterpret_cast<TES3::UI::InventoryTile * (__cdecl*)(int, TES3::UI::InventoryTile*)>(0x5CBCC0);
+			TES3::UI::InventoryTile* inventoryAddTile(int _UNUSED_, TES3::UI::InventoryTile* tile) {
+				return TES3_ui_inventory_addTile(_UNUSED_, tile);
 			}
 
-			signed char inventoryUpdateIcons() {
-				return reinterpret_cast<signed char(__cdecl *)()>(TES3_ui_inventory_updateIcons)();
+			const auto TES3_ui_inventory_updateIcons = reinterpret_cast<void(__cdecl*)()>(0x5CC910);
+			void inventoryUpdateIcons() {
+				return TES3_ui_inventory_updateIcons();
 			}
 
-			signed char equipInventoryTile(TES3::UI::InventoryTile* tile) {
-				return reinterpret_cast<signed char(__cdecl *)(TES3::UI::InventoryTile*)>(TES3_ui_inventory_equipInventoryTileToPlayer)(tile);
+			const auto TES3_ui_inventory_equipInventoryTileToPlayer = reinterpret_cast<bool(__cdecl*)(TES3::UI::InventoryTile*)>(0x5CE130);
+			bool equipInventoryTile(TES3::UI::InventoryTile* tile) {
+				return TES3_ui_inventory_equipInventoryTileToPlayer(tile);
 			}
 
-			signed char equipInventoryItem(TES3::PhysicalObject* object, TES3::ItemData* data) {
-				return reinterpret_cast<signed char(__cdecl *)(TES3::PhysicalObject*, TES3::ItemData*)>(TES3_ui_inventory_equipInventoryItemToPlayer)(object, data);
+			const auto TES3_ui_inventory_equipInventoryItemToPlayer = reinterpret_cast<bool(__cdecl*)(TES3::PhysicalObject*, TES3::ItemData*)>(0x5D1190);
+			bool equipInventoryItem(TES3::PhysicalObject* object, TES3::ItemData* data) {
+				return TES3_ui_inventory_equipInventoryItemToPlayer(object, data);
 			}
 
+			auto& TES3_ui_data_inventory_updatePaperDoll = *reinterpret_cast<bool*>(0x7B6D04);
 			void flagPaperDollUpdate() {
-				*reinterpret_cast<signed char*>(TES3_ui_data_inventory_updatePaperDoll) = 1;
+				TES3_ui_data_inventory_updatePaperDoll = 1;
 			}
 
+			const auto TES3_ui_showRestWaitMenu = reinterpret_cast<void(__cdecl*)(bool)>(0x610170);
 			void showRestWaitMenu(bool allowRest, bool scripted) {
 				// Execute event. If the event blocked the call, bail.
 				if (mwse::lua::event::ShowRestWaitMenuEvent::getEventEnabled()) {
@@ -82,7 +76,7 @@ namespace mwse {
 					}
 				}
 
-				reinterpret_cast<void(__cdecl *)(bool)>(TES3_ui_showRestWaitMenu)(allowRest);
+				TES3_ui_showRestWaitMenu(allowRest);
 			}
 		}
 	}

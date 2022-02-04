@@ -15,12 +15,12 @@
 #include "TES3Skill.h"
 #include "TES3PlayerAnimationController.h"
 
-#define TES3_MobilePlayer_exerciseSkill 0x56A5D0
-#define TES3_MobilePlayer_getGoldHeld 0x52B450
-#define TES3_MobilePlayer_onDeath 0x56A120
-#define TES3_MobilePlayer_getBounty 0x5688B0
-#define TES3_MobilePlayer_setBounty 0x5688D0
-#define TES3_MobilePlayer_modBounty 0x5688F0
+constexpr auto TES3_MobilePlayer_exerciseSkill = 0x56A5D0;
+constexpr auto TES3_MobilePlayer_getGoldHeld = 0x52B450;
+constexpr auto TES3_MobilePlayer_onDeath = 0x56A120;
+constexpr auto TES3_MobilePlayer_getBounty = 0x5688B0;
+constexpr auto TES3_MobilePlayer_setBounty = 0x5688D0;
+constexpr auto TES3_MobilePlayer_modBounty = 0x5688F0;
 
 namespace TES3 {
 	void MobilePlayer::exerciseSkill(int skillId, float progress) {

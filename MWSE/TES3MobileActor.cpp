@@ -34,22 +34,7 @@
 
 #include "TES3Util.h"
 
-#define TES3_MobileActor_getCell 0x521630
-#define TES3_MobileActor_stopCombat 0x558720
-#define TES3_MobileActor_onDeath 0x523AA0
-#define TES3_MobileActor_hasFreeAction 0x527580
-#define TES3_MobileActor_calculateRunSpeed 0x527050
-#define TES3_MobileActor_calculateSwimSpeed 0x5270B0
-#define TES3_MobileActor_calculateSwimRunSpeed 0x527130
-#define TES3_MobileActor_calculateFlySpeed 0x5271F0
-
 namespace TES3 {
-	const auto TES3_MobileActor_isInAttackAnim = reinterpret_cast<bool (__thiscall*)(const MobileActor*)>(0x5567D0);
-	const auto TES3_MobileActor_wearItem = reinterpret_cast<void (__thiscall*)(MobileActor*, Object*, ItemData*, bool, bool)>(0x52C770);
-	const auto TES3_MobileActor_calcDerivedStats = reinterpret_cast<void(__thiscall*)(const MobileActor*, Statistic*)>(0x527BC0);
-	const auto TES3_MobileActor_determineModifiedPrice = reinterpret_cast<int(__thiscall*)(const MobileActor*, int, int)>(0x52AA50);
-	const auto TES3_MobileActor_playVoiceover = reinterpret_cast<void(__thiscall*)(const MobileActor*, int)>(0x528F80);
-
 	MagicSourceInstance* ActiveMagicEffect::getInstance() const {
 		return WorldController::get()->magicInstanceController->getInstanceFromSerial(magicInstanceSerial);
 	}
@@ -187,8 +172,9 @@ namespace TES3 {
 		TES3_MobileActor_setCurrentSpell(this, spell);
 	}
 
-	Cell* MobileActor::getCell() {
-		return reinterpret_cast<Cell*(__thiscall *)(MobileActor*)>(TES3_MobileActor_getCell)(this);
+	const auto TES3_MobileActor_getCell = reinterpret_cast<Cell* (__thiscall*)(const MobileActor*)>(0x521630);
+	Cell* MobileActor::getCell() const {
+		return TES3_MobileActor_getCell(this);
 	}
 
 	const auto TES3_MobileActor_getFatigueTerm = reinterpret_cast<float(__thiscall *)(const MobileActor*)>(0x527610);
@@ -252,6 +238,7 @@ namespace TES3 {
 		}
 	}
 
+	const auto TES3_MobileActor_stopCombat = reinterpret_cast<void(__thiscall*)(MobileActor*, bool)>(0x558720);
 	void MobileActor::stopCombat(bool something) {
 		// Invoke our combat stop event and check if it is blocked.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
@@ -264,7 +251,7 @@ namespace TES3 {
 		}
 
 		// Call original function.
-		reinterpret_cast<void(__thiscall *)(MobileActor*, bool)>(TES3_MobileActor_stopCombat)(this, something);
+		TES3_MobileActor_stopCombat(this, something);
 
 		// Do our follow up stopped event.
 		if (mwse::lua::event::CombatStoppedEvent::getEventEnabled()) {
@@ -280,8 +267,9 @@ namespace TES3 {
 		return actionData.animStateAttack == AttackAnimationState::Dead || actionData.animStateAttack == AttackAnimationState::Dying;
 	}
 
+	const auto TES3_MobileActor_onDeath = reinterpret_cast<void(__thiscall*)(MobileActor*)>(0x523AA0);
 	void MobileActor::onDeath() {
-		reinterpret_cast<void(__thiscall *)(MobileActor*)>(TES3_MobileActor_onDeath)(this);
+		TES3_MobileActor_onDeath(this);
 
 		// Trigger death event.
 		if (mwse::lua::event::DeathEvent::getEventEnabled()) {
@@ -422,13 +410,15 @@ namespace TES3 {
 		return result;
 	}
 
+	const auto TES3_MobileActor_hasFreeAction = reinterpret_cast<bool(__thiscall*)(const MobileActor*)>(0x527580);
 	bool MobileActor::hasFreeAction() const {
-		return reinterpret_cast<bool(__thiscall *)(const MobileActor*)>(TES3_MobileActor_hasFreeAction)(this);
+		return TES3_MobileActor_hasFreeAction(this);
 	}
 
+	const auto TES3_MobileActor_calculateRunSpeed = reinterpret_cast<float(__thiscall*)(MobileActor*)>(0x527050);
 	float MobileActor::calculateRunSpeed() {
 		// Call the original function to get the default movement speed value.
-		float speed = reinterpret_cast<float(__thiscall *)(MobileActor*)>(TES3_MobileActor_calculateRunSpeed)(this);
+		float speed = TES3_MobileActor_calculateRunSpeed(this);
 
 		// Launch our event, and overwrite the speed with what was given back to us.
 		if (mwse::lua::event::CalculateMovementSpeed::getEventEnabled()) {
@@ -443,9 +433,10 @@ namespace TES3 {
 		return speed;
 	}
 
+	const auto TES3_MobileActor_calculateSwimSpeed = reinterpret_cast<float(__thiscall*)(MobileActor*)>(0x5270B0);
 	float MobileActor::calculateSwimSpeed() {
 		// Call the original function to get the default movement speed value.
-		float speed = reinterpret_cast<float(__thiscall *)(MobileActor*)>(TES3_MobileActor_calculateSwimSpeed)(this);
+		float speed = TES3_MobileActor_calculateSwimSpeed(this);
 
 		// Launch our event, and overwrite the speed with what was given back to us.
 		if (mwse::lua::event::CalculateMovementSpeed::getEventEnabled()) {
@@ -481,9 +472,10 @@ namespace TES3 {
 		return speed;
 	}
 
+	const auto TES3_MobileActor_calculateFlySpeed = reinterpret_cast<float(__thiscall*)(MobileActor*)>(0x5271F0);
 	float MobileActor::calculateFlySpeed() {
 		// Call the original function to get the default movement speed value.
-		float speed = reinterpret_cast<float(__thiscall *)(MobileActor*)>(TES3_MobileActor_calculateFlySpeed)(this);
+		float speed = TES3_MobileActor_calculateFlySpeed(this);
 
 		// Launch our event, and overwrite the speed with what was given back to us.
 		if (mwse::lua::event::CalculateMovementSpeed::getEventEnabled()) {
@@ -498,6 +490,7 @@ namespace TES3 {
 		return speed;
 	}
 
+	const auto TES3_MobileActor_calcDerivedStats = reinterpret_cast<void(__thiscall*)(const MobileActor*, Statistic*)>(0x527BC0);
 	void MobileActor::updateDerivedStatistics(Statistic * baseStatistic) {
 		TES3_MobileActor_calcDerivedStats(this, baseStatistic);
 	}
@@ -506,10 +499,12 @@ namespace TES3 {
 		TES3_MobileActor_calcDerivedStats(this, baseStatistic.value_or(nullptr));
 	}
 
+	const auto TES3_MobileActor_determineModifiedPrice = reinterpret_cast<int(__thiscall*)(const MobileActor*, int, int)>(0x52AA50);
 	int MobileActor::determineModifiedPrice(int basePrice, bool buying) {
 		return TES3_MobileActor_determineModifiedPrice(this, basePrice, buying);
 	}
 
+	const auto TES3_MobileActor_playVoiceover = reinterpret_cast<void(__thiscall*)(const MobileActor*, int)>(0x528F80);
 	void MobileActor::playVoiceover(int voiceover) {
 		TES3_MobileActor_playVoiceover(this, voiceover);
 	}
@@ -612,6 +607,8 @@ namespace TES3 {
 		}
 	}
 
+	const auto TES3_MobileActor_isInAttackAnim = reinterpret_cast<bool(__thiscall*)(const MobileActor*)>(0x5567D0);
+	const auto TES3_MobileActor_wearItem = reinterpret_cast<void(__thiscall*)(MobileActor*, Object*, ItemData*, bool, bool)>(0x52C770);
 	bool MobileActor::equipItem(Object* item, ItemData* itemData, bool addItem, bool selectBestCondition, bool selectWorstCondition) {
 		Actor* actor = static_cast<Actor*>(reference->baseObject);
 

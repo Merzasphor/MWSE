@@ -3771,8 +3771,8 @@ namespace mwse {
 		}
 
 		int getCurrentAIPackageId(sol::table params) {
-			TES3::Reference* refr = getOptionalParamReference(params, "reference");
-			TES3::MobileActor* mobileActor = getOptionalParamMobileActor(params, "reference");
+			auto refr = getOptionalParamReference(params, "reference");
+			auto mobileActor = getOptionalParamMobileActor(params, "reference");
 			if (mobileActor) {
 				if (mobileActor->aiPlanner != nullptr) {
 					auto currentPackage = mobileActor->aiPlanner->getActivePackage();

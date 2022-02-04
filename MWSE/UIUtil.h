@@ -15,9 +15,9 @@ namespace mwse {
 			short getInventoryMenuId();
 
 			TES3::UI::InventoryTile* inventoryAddTile(int, TES3::UI::InventoryTile*);
-			signed char inventoryUpdateIcons();
-			signed char equipInventoryTile(TES3::UI::InventoryTile*);
-			signed char equipInventoryItem(TES3::PhysicalObject*, TES3::ItemData*);
+			void inventoryUpdateIcons();
+			bool equipInventoryTile(TES3::UI::InventoryTile*);
+			bool equipInventoryItem(TES3::PhysicalObject*, TES3::ItemData*);
 			void flagPaperDollUpdate();
 
 			void showRestWaitMenu(bool allowRest, bool scripted = true);

@@ -7,13 +7,8 @@
 
 #include "ScriptUtil.h"
 
-using namespace mwse;
-using namespace mwAdapter;
-
-namespace mwse
-{
-	namespace mwAdapter
-	{
+namespace mwse {
+	namespace mwAdapter {
 		// House the registers obtained before/to return after hooking a function.
 		static HookContext context;
 
@@ -22,12 +17,10 @@ namespace mwse
 		static VirtualMachine vmInstance;
 
 		// Determines if we want to own this opcode, and handles it if so.
-		static void _stdcall HookGetNextInstructionIndirect()
-		{
+		static void _stdcall HookGetNextInstructionIndirect() {
 			OpCode::OpCode_t opcode = (OpCode::OpCode_t)context.eax;
 
-			if (vmInstance.isOpcode(opcode))
-			{
+			if (vmInstance.isOpcode(opcode)) {
 				TES3::Script * script = reinterpret_cast<TES3::Script*>(context.ebx);
 
 				vmInstance.loadParametersForOperation(opcode, context, script);
@@ -39,12 +32,10 @@ namespace mwse
 		}
 
 		// If we own the opcode here, execute the code assigned to it.
-		static float _stdcall HookRunFunctionIndirect()
-		{
+		static float _stdcall HookRunFunctionIndirect() {
 			OpCode::OpCode_t opcode = (OpCode::OpCode_t)context.edx;
 
-			if (vmInstance.isOpcode(opcode))
-			{
+			if (vmInstance.isOpcode(opcode)) {
 				TES3::Script * script = *(reinterpret_cast<TES3::Script**>(context.esp + 0x8));
 
 				// Our default return address. This can be changed below.
@@ -54,52 +45,45 @@ namespace mwse
 
 				// Increment script instruction pointer in esi, when called from game_executeScript function only.
 				long callReturn = *reinterpret_cast<long*>(context.ebp + 4);
-				if (callReturn == 0x5053C0) {
+				if (callReturn == 0x5053C0u) {
 					long * returnESI = reinterpret_cast<long*>(context.esp + 4);
 					*returnESI = *(vmInstance.getScriptIP());
 				}
 
 				return returnValue;
 			}
-			else
-			{
+			else {
 				return 0.0f;
 			}
 		}
 
 		// Called when a reference is created for during PlaceAtPC
-		static void _stdcall HookPlaceAtPCReferenceCreatedIndirect()
-		{
+		static void _stdcall HookPlaceAtPCReferenceCreatedIndirect() {
 			TES3::Reference* reference = reinterpret_cast<TES3::Reference*>(context.esi);
 			mwse::mwscript::OnPlaceReferenceCreated(reference);
 		}
 
 		// Code to generate a jump in memory. Don't forget to unprotect it first!
-		void genJump(DWORD Address, DWORD To)
-		{
+		void genJump(DWORD Address, DWORD To) {
 			MemAccess<unsigned char>::Set(Address, 0xE9);
 			MemAccess<DWORD>::Set(Address + 1, To - Address - 0x5);
 		}
 
 		// Code to generate a call in memory. Don't forget to unprotect it first!
-		void genCall(DWORD Address, DWORD To)
-		{
+		void genCall(DWORD Address, DWORD To) {
 			MemAccess<unsigned char>::Set(Address, 0xE8);
 			MemAccess<DWORD>::Set(Address + 1, To - Address - 0x5);
 		}
 
 		// Code to generate a nop in memory. Don't forget to unprotect it first!
-		void genNOP(DWORD Address)
-		{
+		void genNOP(DWORD Address) {
 			MemAccess<unsigned char>::Set(Address, 0x90);
 		}
 
 		// Hook scaffolding for HookGetNextInstructionIndirect().
-		static const DWORD getNextInstructionReturnAddress = 0x500561;
-		static __declspec(naked) void HookGetNextInstructionDirect()
-		{
-			_asm
-			{
+		static const DWORD getNextInstructionReturnAddress = 0x500561u;
+		static __declspec(naked) void HookGetNextInstructionDirect() {
+			_asm {
 				// Save eax.
 				mov context.eax, eax
 
@@ -143,10 +127,8 @@ namespace mwse
 		}
 
 		// Hook scaffolding for HookRunFunctionIndirect().
-		static __declspec(naked) void HookRunFunctionDirect()
-		{
-			_asm
-			{
+		static __declspec(naked) void HookRunFunctionDirect() {
+			_asm {
 				// Save eax.
 				mov context.eax, eax
 
@@ -195,10 +177,11 @@ namespace mwse
 			}
 		}
 
-		static __declspec(naked) void HookPlaceAtPCReferenceCreatedDirect()
-		{
-			__asm
-			{
+		// Define return address, because we can't use constexpr here.
+#define HookPlaceAtPCReferenceCreatedDirect_Return 0x509998
+		static_assert(TES3_HOOK_PLACE_GETREFERENCE_RETURN == HookPlaceAtPCReferenceCreatedDirect_Return);
+		static __declspec(naked) void HookPlaceAtPCReferenceCreatedDirect() {
+			__asm {
 				// Save eax.
 				mov context.eax, eax
 
@@ -218,7 +201,7 @@ namespace mwse
 
 				// Store our default return address. HookRunFunctionIndirect may
 				// change this (relatively) safely.
-				mov context.callbackAddress, TES3_HOOK_PLACE_GETREFERENCE_RETURN
+				mov context.callbackAddress, HookPlaceAtPCReferenceCreatedDirect_Return
 
 				// Actually use our hook.
 				call HookPlaceAtPCReferenceCreatedIndirect
@@ -245,8 +228,7 @@ namespace mwse
 		}
 
 		// Put our hooks into the Morrowind engine.
-		void Hook()
-		{
+		void Hook() {
 			DWORD OldProtect;
 
 			// Add our first hook. This hook happens when Morrowind is trying to
@@ -275,8 +257,7 @@ namespace mwse
 
 		// If we need access to our virtual machine outside of the usual context,
 		// this is how we get it. Useful for things like our MGE XE interface hack.
-		VirtualMachine* GetVMInstance()
-		{
+		VirtualMachine* GetVMInstance() {
 			return &vmInstance;
 		}
 	}

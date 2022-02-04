@@ -17,8 +17,6 @@
 #include "TES3MobilePlayer.h"
 #include "TES3WorldController.h"
 
-#define TES3_MobileNPC_calcWalkSpeed 0x526F70
-
 namespace TES3 {
 	float MobileNPC::applyArmorRating(float damage, float swing, bool damageEquipment) {
 		auto attackAnimState = actionData.animStateAttack;
@@ -153,9 +151,10 @@ namespace TES3 {
 		return adjustedDamage;
 	}
 
+	const auto TES3_MobileNPC_calcWalkSpeed = reinterpret_cast<float(__thiscall*)(MobileNPC*)>(0x526F70);
 	float MobileNPC::calculateWalkSpeed() {
 		// Call the original function to get the default walk value.
-		float speed = reinterpret_cast<float(__thiscall *)(MobileNPC*)>(TES3_MobileNPC_calcWalkSpeed)(this);
+		float speed = TES3_MobileNPC_calcWalkSpeed(this);
 
 		// Launch our event, and overwrite the speed with what was given back to us.
 		if (mwse::lua::event::CalculateMovementSpeed::getEventEnabled()) {

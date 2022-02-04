@@ -40,14 +40,6 @@
 
 #include "BitUtil.h"
 
-#define TES3_Reference_activate 0x4E9610
-#define TES3_Reference_setActionFlag 0x4E55A0
-#define TES3_Reference_clearActionFlag 0x4E55E0
-#define TES3_Reference_testActionFlag 0x4E5520
-#define TES3_Reference_setActionReference 0x4E5610
-#define TES3_Reference_getActionReference 0x4E5650
-
-#define TES3_Reference_addItemDataAttachment 0x4E5360
 
 namespace TES3 {
 	Reference::Reference() {
@@ -74,6 +66,7 @@ namespace TES3 {
 		TES3_Reference_dtor(this);
 	}
 
+	const auto TES3_Reference_activate = reinterpret_cast<void(__thiscall*)(Reference*, Reference*, int)>(0x4E9610);
 	void Reference::activate(Reference* activator, int unknown) {
 		// If our event data says to block, don't let the object activate.
 		if (mwse::lua::event::ActivateEvent::getEventEnabled()) {
@@ -87,31 +80,37 @@ namespace TES3 {
 			}
 		}
 
-		reinterpret_cast<void(__thiscall *)(Reference*, Reference*, int)>(TES3_Reference_activate)(this, activator, unknown);
+		TES3_Reference_activate(this, activator, unknown);
 	}
 
+	const auto TES3_Reference_setActionFlag = reinterpret_cast<void(__thiscall*)(Reference*, int)>(0x4E55A0);
 	void Reference::setActionFlag(int flag) {
-		reinterpret_cast<void(__thiscall *)(Reference*, int)>(TES3_Reference_setActionFlag)(this, flag);
+		TES3_Reference_setActionFlag(this, flag);
 	}
 
+	const auto TES3_Reference_clearActionFlag = reinterpret_cast<void(__thiscall*)(Reference*, int)>(0x4E55E0);
 	void Reference::clearActionFlag(int flag) {
-		reinterpret_cast<void(__thiscall *)(Reference*, int)>(TES3_Reference_clearActionFlag)(this, flag);
+		TES3_Reference_clearActionFlag(this, flag);
 	}
 
+	const auto TES3_Reference_testActionFlag = reinterpret_cast<bool(__thiscall*)(Reference*, int)>(0x4E5520);
 	bool Reference::testActionFlag(int flag) {
-		return (reinterpret_cast<signed char(__thiscall *)(Reference*, int)>(TES3_Reference_testActionFlag)(this, flag) != 0);
+		return TES3_Reference_testActionFlag(this, flag);
 	}
 
+	const auto TES3_Reference_setActionReference = reinterpret_cast<void(__thiscall*)(Reference*, Reference*)>(0x4E5610);
 	void Reference::setActionReference(Reference* reference) {
-		reinterpret_cast<void (__thiscall *)(Reference*, Reference*)>(TES3_Reference_setActionReference)(this, reference);
+		TES3_Reference_setActionReference(this, reference);
 	}
 
+	const auto TES3_Reference_getActionReference = reinterpret_cast<Reference * (__thiscall*)(Reference*)>(0x4E5650);
 	Reference* Reference::getActionReference() {
-		return reinterpret_cast<Reference* (__thiscall *)(Reference*)>(TES3_Reference_getActionReference)(this);
+		return TES3_Reference_getActionReference(this);
 	}
 
+	const auto TES3_Reference_addItemDataAttachment = reinterpret_cast<ItemDataAttachment * (__thiscall*)(Reference*, ItemData*)>(0x4E5360);
 	ItemDataAttachment* Reference::addItemDataAttachment(ItemData* data) {
-		return reinterpret_cast<ItemDataAttachment* (__thiscall *)(Reference*, ItemData*)>(TES3_Reference_addItemDataAttachment)(this, data);
+		return TES3_Reference_addItemDataAttachment(this, data);
 	}
 
 	Vector3* Reference::getOrCreateOrientationFromAttachment() {
@@ -648,11 +647,11 @@ namespace TES3 {
 
 	bool Reference::getEmptyInventoryFlag() {
 		return BIT_TEST(objectFlags, ObjectFlag::EmptyInventoryBit);
-    }
+	}
 
-    void Reference::setEmptyInventoryFlag(bool set) {
+	void Reference::setEmptyInventoryFlag(bool set) {
 		BIT_SET(objectFlags, ObjectFlag::EmptyInventoryBit, set);
-    }
+	}
 
 	void Reference::attemptUnlockDisarm(MobileNPC * disarmer, Item * tool, ItemData * toolItemData) {
 		if (baseObject->objectType != ObjectType::Door && baseObject->objectType != ObjectType::Container) {
