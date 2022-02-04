@@ -76,14 +76,13 @@ local timer = timer.delayOneFrame(callback, type)
 Registers a named timer with a callback to persist between game sessions. Bear in mind that nothing in MWSE is sandboxed, so all the registered timers are in the global namespace. Consider prefixing your timer with mod name or something else to avoid name collisions. For instance, `iceCreamMod:myTimer`.
 
 ```lua
-timer.register({ name = ..., fn = ... })
+timer.register(name, fn)
 ```
 
 **Parameters**:
 
-* `params` (table)
-	* `name` (string): Name of the registered timer.
-	* `fn` (function): A callback function for the timer.
+* `name` (string): Name of the registered timer.
+* `fn` (function): A callback function for the timer.
 
 ??? example "Example: Show a Message After 1 Day"
 
