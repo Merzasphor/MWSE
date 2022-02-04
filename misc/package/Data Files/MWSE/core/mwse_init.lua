@@ -66,6 +66,10 @@ function require(name)
 	return module
 end
 
+--- A dictionary keeping track of what files have already tried to be included.
+--- @type <string, boolean>
+package.noinclude = {}
+
 --- A tweaked version of pygy/require.lua (https://github.com/pygy/require.lua)
 --- to make all module names lowercased. Instead of erroring when a module
 --- isn't found, return nil.
@@ -75,6 +79,7 @@ function include(name)
 	name = convertModuleName(name)
 	local module = package.loaded[name]
 	if module then return module end
+	if package.noinclude[name] then return end
 
 	local msg = {}
 	local loader, param
@@ -88,6 +93,7 @@ function include(name)
 		loader = nil
 	end
 	if loader == nil then
+		package.noinclude[name] = true
 		return
 	end
 	local res = loader(name, param)
