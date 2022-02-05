@@ -37,7 +37,7 @@ namespace mwse::lua {
 		usertypeDefinition["shouldJump"] = &TES3::ActorAnimationController::shouldJump;
 		usertypeDefinition["speedMultiplier"] = &TES3::ActorAnimationController::speedMultiplier;
 		usertypeDefinition["startTime"] = &TES3::ActorAnimationController::startTime;
-		usertypeDefinition["swimmingFlyingRotation"] = &TES3::ActorAnimationController::swimmingFlyingRotation;
+		usertypeDefinition["verticalRotation"] = &TES3::ActorAnimationController::verticalRotation;
 		usertypeDefinition["vertexColorProperty"] = &TES3::ActorAnimationController::vertexColorProperty;
 
 		// Custom properties.

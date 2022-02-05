@@ -61,7 +61,7 @@ namespace TES3 {
 		NI::Pointer<NI::MaterialProperty> materialProperty; // 0x44
 		NI::Pointer<NI::VertexColorProperty> vertexColorProperty; // 0x48
 		Matrix33 groundPlaneRotation; // 0x4C
-		Matrix33 swimmingFlyingRotation; // 0x70
+		Matrix33 verticalRotation; // 0x70
 		int unknown_0x94;
 		unsigned char animGroupMovement; // 0x98
 		unsigned char animGroupIdle; // 0x99
