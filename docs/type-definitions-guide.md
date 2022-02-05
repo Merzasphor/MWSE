@@ -1,6 +1,6 @@
 # Type Definitions Guide
 
-Type definitions can be found in autocomplete\definitions\namedTypes. Each type has a Lua file of the name of the type and a folder of the same name which contains definitions for all of the type's exposed values and methods. The type definition file is just a regular Lua table with the following fields:
+Type definitions can be found in autocomplete\definitions\namedTypes. Each type has a definition file of the type's name. In addition, some types have a folder of the same name which contains definitions for all of the type's exposed values and methods. The type definition file is just a regular Lua table with the following fields:
 
 | Field | Type | Description |
 | ----- | ---- | ----------- |
@@ -71,4 +71,4 @@ For a more elaborate description of the argument and return tables, please refer
 
 ## Notes
 
-Some types may have fields which are not valuer nor methods. In that case, you can pass different type to the `type` value of the definition.
+Some types may have fields which are not values nor methods. In that case, you can pass different type to the `type` value of the definition.
