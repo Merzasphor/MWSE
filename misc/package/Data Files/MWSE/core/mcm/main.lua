@@ -63,22 +63,20 @@ local function onClickCloseButton(e)
 			mwse.log("Error in mod config close callback: %s\n%s", error, debug.traceback())
 		end
 	end
+	
+	-- Destroy the mod config menu.
+	local modConfigMenu = tes3ui.findMenu(UIID_mwse_modConfigMenu)
+	if (modConfigMenu) then
+		currentModConfig = nil
+		modConfigContainer = nil
+		modConfigMenu:destroy()
+	end
 
 	-- Get the main menu so we can show it again.
 	local mainMenu = tes3ui.findMenu(tes3ui.registerID("MenuOptions"))
 	if (mainMenu) then
-		-- Destroy the mod config menu.
-		local modConfigMenu = tes3ui.findMenu(UIID_mwse_modConfigMenu)
-		if (modConfigMenu) then
-			currentModConfig = nil
-			modConfigContainer = nil
-			modConfigMenu:destroy()
-		end
-
 		-- Show the main menu again.
 		mainMenu.visible = true
-	else
-		mwse.log("Couldn't find main menu!")
 	end
 end
 
