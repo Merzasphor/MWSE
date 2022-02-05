@@ -26,6 +26,7 @@ namespace mwse::lua {
 		usertypeDefinition["attackSwing"] = &TES3::ActorAnimationController::attackSwing;
 		usertypeDefinition["groundPlaneRotation"] = &TES3::ActorAnimationController::groundPlaneRotation;
 		usertypeDefinition["hitTiming"] = &TES3::ActorAnimationController::hitTiming;
+		usertypeDefinition["animationData"] = &TES3::ActorAnimationController::animationData;
 		usertypeDefinition["materialProperty"] = &TES3::ActorAnimationController::materialProperty;
 		usertypeDefinition["maxAttackTiming"] = &TES3::ActorAnimationController::maxAttackTiming;
 		usertypeDefinition["minAttackTiming"] = &TES3::ActorAnimationController::minAttackTiming;
