@@ -54,7 +54,7 @@ function tes3.addClothingSlot(params) end
 --- 
 --- `itemData`: tes3itemData — *Optional*. The item data for the item.
 --- 
---- `soul`: tes3creature — *Optional*. For creating filled soul gems.
+--- `soul`: tes3creature|tes3npc — *Optional*. For creating filled soul gems.
 --- 
 --- `count`: number — *Default*: `1`. The maximum number of items to add.
 --- 
@@ -73,7 +73,7 @@ function tes3.addItem(params) end
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string Who to give items to.
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|tes3leveledItem|string The item to add. If a leveled item is passed, it will be resolved and added.
 --- @field itemData tes3itemData *Optional*. The item data for the item.
---- @field soul tes3creature *Optional*. For creating filled soul gems.
+--- @field soul tes3creature|tes3npc *Optional*. For creating filled soul gems.
 --- @field count number *Default*: `1`. The maximum number of items to add.
 --- @field playSound boolean *Default*: `true`. If false, the up/down sound for the item won't be played.
 --- @field limit boolean If false, items can be placed into containers that shouldn't normally be allowed. This includes organic containers, and containers that are full.

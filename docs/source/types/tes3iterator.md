@@ -24,16 +24,6 @@ A collection that can be iterated over Contains items in a simple linked list, a
 
 ***
 
-### `size`
-
-*Read-only*. The amount of items in the iterator.
-
-**Returns**:
-
-* `result` (number)
-
-***
-
 ### `tail`
 
 *Read-only*. The last node in the collection.
@@ -41,6 +31,22 @@ A collection that can be iterated over Contains items in a simple linked list, a
 **Returns**:
 
 * `result` ([tes3iteratorNode](../../types/tes3iteratorNode))
+
+***
+
+## Methods
+
+### `size`
+
+*Read-only*. Returns the amount of items in the iterator.
+
+```lua
+local result = tes3iterator:size()
+```
+
+**Returns**:
+
+* `result` (number)
 
 ***
 
