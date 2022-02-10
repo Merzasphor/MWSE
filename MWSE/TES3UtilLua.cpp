@@ -3913,7 +3913,7 @@ namespace mwse::lua {
 
 		sol::table idles = maybeIdles.value();
 		for (size_t i = 0; i < 8; i++) {
-			config->idles[i] = idles.get_or(i, 0);
+			config->idles[i] = idles.get_or(i + 1, 0);
 		}
 
 		auto actor = static_cast<TES3::Actor*>(mobileActor->reference->baseObject);
