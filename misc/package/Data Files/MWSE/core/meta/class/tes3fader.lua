@@ -62,7 +62,7 @@ function tes3fader:setColor(params) end
 --- @field color tes3vector3|table The RGB values to set.
 --- @field flag boolean No description yet available.
 
---- Updates the fader for the current frame.
+--- This method allows changing the texture of the fader.
 --- @param path string A path for the texture that will be displayed on screen.
 function tes3fader:setTexture(path) end
 

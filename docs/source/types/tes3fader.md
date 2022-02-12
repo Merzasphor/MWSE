@@ -104,7 +104,7 @@ local result = tes3fader:setColor({ color = ..., flag = ... })
 
 ### `setTexture`
 
-Updates the fader for the current frame.
+This method allows changing the texture of the fader.
 
 ```lua
 tes3fader:setTexture(path)

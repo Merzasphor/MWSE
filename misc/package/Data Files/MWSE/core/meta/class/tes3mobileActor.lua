@@ -26,7 +26,7 @@
 --- @field chameleon number Direct access to the actor's chameleon effect attribute.
 --- @field collidingReference tes3reference *Read-only*. The reference that the mobile has collided with this frame.
 --- @field combatSession tes3combatSession *Read-only*. Combat session data. This exists while the actor is in combat to provide memory for AI combat decisions.
---- @field corpseHourstamp number No description yet available.
+--- @field corpseHourstamp number This is the time measured in hours from the beginning of the game when the actor died. Returns a UNIX-style timestamp based on in-world simulation time since the start of the era. For living actors this field has value a of `0`.
 --- @field currentEnchantedItem tes3equipmentStack *Read-only*. The currently equipped enchanted item that the actor will use.
 --- @field currentSpell tes3spell *Read-only*. The currently equipped spell that the actor will use.
 --- @field effectAttributes table *Read-only*. Access to a table of 24 numbers for the actor's effect attributes. In order those are: `attackBonus`, `sanctuary`, `resistMagicka`, `resistFire`, `resistFrost`, `resistShock`, `resistCommonDisease`, `resistBlightDisease`, `resistCorprus`, `resistPoison`, `resistParalysis`, `chameleon`, `resistNormalWeapons`, `waterBreathing`, `waterWalking`, `swiftSwim`, `jump`, `levitate`, `shield`, `sound`, `silence`, `blind`, `paralyze`, and `invisibility`. Each of those can be accessed individually. For example, `tes3mobileActor.chameleon`.
@@ -41,7 +41,7 @@
 --- @field greetTimer number *Read-only*. No description yet available.
 --- @field health tes3statistic|tes3statisticSkill *Read-only*. Access to the actor's health statistic.
 --- @field hello number The actor's hello AI value.
---- @field holdBreathTime number No description yet available.
+--- @field holdBreathTime number This is the time the actor can stay underwater without taking drowning damage, measured in seconds. It's starting value is `fHoldBreathTime`(GMST) seconds by default. Once the actor is underwater, this value is decreasing based on the time passed while underwater. The actor will start taking drowning damage once this time is below 0. During drowning this time will have more and more negative values based on the duration of the drowning. Changing this allows manipulating for how long the actor can stay underwater without drowning. Note that player's Breath HUD element won't show values larger than `fHoldBreathTime`.
 --- @field hostileActors tes3iterator *Read-only*. A collection of other `tes3mobileActor`s that this actor considers hostile.
 --- @field idleAnim boolean *Read-only*. Friendly access to the actor's flag that controls if the actor is using their idle animation.
 --- @field inCombat boolean *Read-only*. Friendly access to the actor's flag that controls if the actor is in combat.

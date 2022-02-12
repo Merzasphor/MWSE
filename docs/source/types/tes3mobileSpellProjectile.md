@@ -237,7 +237,7 @@ Access to the magic source instance of the object.
 
 ### `spellInstanceSerial`
 
-No description yet available.
+Unique indentifier for just this magic source.
 
 **Returns**:
 

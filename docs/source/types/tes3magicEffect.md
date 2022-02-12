@@ -46,7 +46,7 @@ The sound effect that plays on area of effect impacts. Can be set to ``nil`` to 
 
 ### `areaVisualEffect`
 
-No description yet available.
+The visual played when a spell with this effect, with area of effect hits something.
 
 **Returns**:
 
@@ -96,7 +96,7 @@ The sound effect that plays for magic projectiles. Can be set to ``nil`` to use 
 
 ### `boltVisualEffect`
 
-No description yet available.
+The visual played when a spell with this effect is in flight.
 
 **Returns**:
 
@@ -156,7 +156,7 @@ The sound effect that plays when casting. Can be set to ``nil`` to use the defau
 
 ### `castVisualEffect`
 
-No description yet available.
+The visual played when a spell with this effect is cast.
 
 **Returns**:
 
@@ -226,7 +226,7 @@ The sound effect that plays when the effect hits a target. Can be set to ``nil``
 
 ### `hitVisualEffect`
 
-No description yet available.
+The visual played when a spell with this effect hits something.
 
 **Returns**:
 
@@ -336,7 +336,7 @@ Access to the base flag that determines if this effect can be refreshed by recas
 
 ### `school`
 
-The school that the effect is associated with.
+The school that the effect is associated with. Maps to [`tes3.magicSchool`](https://mwse.github.io/MWSE/references/magic-schools/) constants.
 
 **Returns**:
 
@@ -346,7 +346,7 @@ The school that the effect is associated with.
 
 ### `size`
 
-No description yet available.
+The size scale for the spells containing this magic effect.
 
 **Returns**:
 
@@ -356,7 +356,7 @@ No description yet available.
 
 ### `sizeCap`
 
-No description yet available.
+The maximum possible size of the spell projectile with this effect.
 
 **Returns**:
 
