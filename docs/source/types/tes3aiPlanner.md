@@ -16,7 +16,7 @@ A game object which contains information on actor's current and assigned AI pack
 
 ### `mobile`
 
-The access to mobile actor this tes3aiPlanner object works on.
+The access to mobile actor this `tes3aiPlanner` object works on.
 
 **Returns**:
 
@@ -56,7 +56,7 @@ local result = tes3aiPlanner:getActivePackage()
 
 **Returns**:
 
-* `result` ([tes3aiPackage](../../types/tes3aiPackage))
+* `result` ([tes3aiPackageActivate](../../types/tes3aiPackageActivate), [tes3aiPackageEscort](../../types/tes3aiPackageEscort), [tes3aiPackageFollow](../../types/tes3aiPackageFollow), [tes3aiPackageTravel](../../types/tes3aiPackageTravel), [tes3aiPackageWander](../../types/tes3aiPackageWander))
 
 ***
 
