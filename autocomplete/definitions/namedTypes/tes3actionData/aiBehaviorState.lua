@@ -1,7 +1,7 @@
 return {
 	type = "value",
 	valuetype = "number",
-	description = [[The behavior state of the [tes3actionData](https://mwse.github.io/MWSE/types/tes3actionData).
+	description = [[The behavior state of the [tes3actionData](https://mwse.github.io/MWSE/types/tes3actionData). This maps to values in [`tes3.aiBehaviorState`](https://mwse.github.io/MWSE/references/ai-behavior-states/) namespace.
 
 Value | Behavior
 ----- | ---------
