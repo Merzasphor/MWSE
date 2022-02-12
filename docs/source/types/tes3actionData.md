@@ -6,7 +6,7 @@ A substructure of mobile actors that provides information about the current or p
 
 ### `aiBehaviorState`
 
-The behavior state of the [tes3actionData](https://mwse.github.io/MWSE/types/tes3actionData).
+The behavior state of the [tes3actionData](https://mwse.github.io/MWSE/types/tes3actionData). This maps to values in [`tes3.aiBehaviorState`](https://mwse.github.io/MWSE/references/ai-behavior-states/) namespace.
 
 Value | Behavior
 ----- | ---------
@@ -27,17 +27,7 @@ Value | Behavior
 
 ### `animationAttackState`
 
-No description yet available.
-
-**Returns**:
-
-* `result` (number)
-
-***
-
-### `attackDirection`
-
-**Deprecated. Use `tes3actionData.physicalAttackType` instead.** When attacking, the direction swung with the weapon. This shows if the actor was thrusting, swinging, or chopping.
+The actor's animation state. Maps to values in [`tes3.animationState`](https://mwse.github.io/MWSE/references/animation-states/) namespace.
 
 **Returns**:
 
@@ -57,7 +47,7 @@ When attacking, this value represents how much the weapon has been pulled back. 
 
 ### `currentAnimationGroup`
 
-No description yet available.
+Actor's current animation group. Maps to values in [`tes3.animationGroup`](https://mwse.github.io/MWSE/references/animation-groups/) namespace.
 
 **Returns**:
 
@@ -67,7 +57,7 @@ No description yet available.
 
 ### `hitTarget`
 
-No description yet available.
+The actor's attack target. The target will be saved in `hitTarget` field until a new attack is made.
 
 **Returns**:
 
@@ -107,7 +97,7 @@ A number from the [`tes3.physicalAttackType`](https://mwse.github.io/MWSE/refere
 
 ### `physicalDamage`
 
-When attacking, this is the value of the weapon damage that was rolled. This value doesn't take into account the actor's strength, or other additional damage.
+When attacking, this is the value of the weapon damage that was rolled. This value takes into account the actor's strength, attack swing and weapon condition, but it doesn't include difficulty nor target's armor. This value is updated on a attack. After the attack this value will still contain the damage rolled. It will be refreshed on new attack.
 
 **Returns**:
 
@@ -127,7 +117,7 @@ No description yet available.
 
 ### `target`
 
-No description yet available.
+The actor's attack target.
 
 **Returns**:
 
