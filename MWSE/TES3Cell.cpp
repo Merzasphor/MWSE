@@ -197,7 +197,7 @@ namespace TES3 {
 
 	void Cell::setCellActive() {
 		// Skip if the cell is already active.
-		if (getCellActive()) {
+		if (activeCells.find(this) != activeCells.end()) {
 			return;
 		}
 
@@ -216,11 +216,6 @@ namespace TES3 {
 	}
 
 	void Cell::setCellInactive() {
-		// Skip if the cell isn't active.
-		if (!getCellActive()) {
-			return;
-		}
-
 		// Fire off reference inactive events.
 		for (auto ref : actors) ref->setReferenceInactive();
 		for (auto ref : persistentRefs) ref->setReferenceInactive();
