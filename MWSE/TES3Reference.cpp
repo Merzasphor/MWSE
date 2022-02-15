@@ -498,6 +498,10 @@ namespace TES3 {
 	}
 
 	void Reference::setDeleted(bool deleted) {
+		if (deleted == getDeleted()) {
+			return;
+		}
+
 		// Deactivate the reference if needed.
 		if (objectType == ObjectType::Reference) {
 			// Are we marking a reference deleted in an active cell?

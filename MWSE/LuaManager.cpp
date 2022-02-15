@@ -624,6 +624,9 @@ namespace mwse::lua {
 		state["tes3"]["mobilePlayer"] = macp;
 		state["tes3"]["player"] = player;
 		state["tes3"]["player1stPerson"] = macp->firstPersonReference;
+
+		// Ensure that the player reference gets activated.
+		player->setReferenceActive();
 	}
 
 	TES3::Reference* __fastcall OnPlayerReferenceCreated(TES3::Reference* player) {
