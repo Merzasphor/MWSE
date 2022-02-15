@@ -502,6 +502,8 @@ namespace TES3 {
 			return;
 		}
 
+		BIT_SET(objectFlags, ObjectFlag::DeleteBit, deleted);
+
 		// Deactivate the reference if needed.
 		if (objectType == ObjectType::Reference) {
 			// Are we marking a reference deleted in an active cell?
@@ -509,13 +511,11 @@ namespace TES3 {
 				if (deleted) {
 					setReferenceInactive();
 				}
-				else if (!deleted) {
+				else {
 					setReferenceActive(false);
 				}
 			}
 		}
-
-		BIT_SET(objectFlags, ObjectFlag::DeleteBit, deleted);
 	}
 
 	bool Reference::getNoCollision() const {
