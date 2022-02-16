@@ -8,6 +8,13 @@ edit_uri: "" # Hide the edit button, most files are auto-generated
 plugins:
   - search
   - awesome-pages
+  - mermaid2:
+      arguments:
+        theme: |
+          ^(JSON.parse(__md_get("__palette").index == 1)) ? 'dark' : 'light'
+
+extra_javascript:
+  - assets/js/reloadMermaidPagesOnPaletteSwitch.js
 
 extra_css:
   - assets/mwse.css
@@ -55,7 +62,11 @@ markdown_extensions:
   - pymdownx.snippets:
       base_path: includes
       check_paths: true
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:mermaid2.fence_mermaid
   - toc:
       permalink: ⚓︎
       toc_depth: 3
