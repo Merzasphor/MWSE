@@ -45,7 +45,7 @@ namespace TES3 {
 
 
 	struct SkillStatistic : Statistic {
-		unsigned int type; // 0xC // Not specialization?
+		unsigned int type; // 0xC // Values from TES3::SkillType::SkillType enumeration
 
 		//
 		// Other related this-call functions.

@@ -9,6 +9,6 @@
 --- @field current number The current value of the skill statistic.
 --- @field currentRaw number The current value of the skill statistic, as stored in memory. Prefer to use `.current` unless you know what you're doing.
 --- @field normalized number The normalized value of the skill statistic.
---- @field type number No description yet available.
+--- @field type number The type of the skill, as assigned by the actor's class. Maps to values in [`tes3.skillType`](https://mwse.github.io/MWSE/references/skill-types/) namespace.
 tes3statisticSkill = {}
 
