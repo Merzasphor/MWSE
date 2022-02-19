@@ -1,6 +1,6 @@
 return {
 	type = "event",
-	description = "This event fires when a dialogue info object text is retrieved.",
+	description = "This event fires when a dialogue info object text is retrieved. That can be when starting a conversation with an NPC, a service was refused to the player, NPC's responses to player persuading them and if the subtitles are enabled, getting the text for the subtitle will also trigger `infoGetText` event.",
 	related = { "infoGetText", "infoLinkResolve", "infoResponse", "infoFilter", "postInfoResponse" },
 	eventData = {
 		["text"] = {
@@ -17,4 +17,10 @@ return {
 			description = "Loads the original text for the info from the game files, bypassing this event.",
 		},
 	},
+	filter = "info",
+	examples = {
+		["appendText"] = {
+			title = "Append custom text to a greeting line."
+		}
+	}
 }
