@@ -9,7 +9,7 @@ For example, `tes3.findDialogue({type = tes3.dialogueType.greeting, page = tes3.
 		tableParams = {
 			{ name = "topic", type = "string", optional = true, description = "The dialogue topic to look for." },
 			{ name = "type", type = "number", optional = true, description = "The type of dialogue to look for. Uses [`tes3.dialogueType`](https://mwse.github.io/MWSE/references/dialogue-types/) constants." },
-			{ name = "page", type = "number", optional = true, description = "The page of dialogue to fetch. Uses [`tes3.dialoguePage`](https://mwse.github.io/MWSE/references/dialogue-types/) constants." },
+			{ name = "page", type = "number", optional = true, description = "The page of dialogue to fetch. Uses [`tes3.dialoguePage`](https://mwse.github.io/MWSE/references/dialogue-pages/) constants." },
 		},
 	}},
 	returns = {{ name = "dialogue", type = "tes3dialogue" }},

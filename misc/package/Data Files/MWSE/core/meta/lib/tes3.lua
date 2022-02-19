@@ -2,7 +2,6 @@
 
 --- The tes3 library provides the majority of the functions for interacting with the game system.
 --- @class tes3lib
---- @field animationState any Constant values relating to animation state.
 --- @field dataHandler tes3dataHandler One of the core game objects.
 --- @field game tes3game One of the core game objects.
 --- @field installDirectory string The currently executed root Morrowind installation path.
@@ -743,7 +742,7 @@ function tes3.findClosestExteriorReferenceOfObject(params) end
 --- 
 --- `type`: number — *Optional*. The type of dialogue to look for. Uses [`tes3.dialogueType`](https://mwse.github.io/MWSE/references/dialogue-types/) constants.
 --- 
---- `page`: number — *Optional*. The page of dialogue to fetch. Uses [`tes3.dialoguePage`](https://mwse.github.io/MWSE/references/dialogue-types/) constants.
+--- `page`: number — *Optional*. The page of dialogue to fetch. Uses [`tes3.dialoguePage`](https://mwse.github.io/MWSE/references/dialogue-pages/) constants.
 --- @return tes3dialogue dialogue No description yet available.
 function tes3.findDialogue(params) end
 
@@ -751,7 +750,7 @@ function tes3.findDialogue(params) end
 --- @class tes3.findDialogue.params
 --- @field topic string *Optional*. The dialogue topic to look for.
 --- @field type number *Optional*. The type of dialogue to look for. Uses [`tes3.dialogueType`](https://mwse.github.io/MWSE/references/dialogue-types/) constants.
---- @field page number *Optional*. The page of dialogue to fetch. Uses [`tes3.dialoguePage`](https://mwse.github.io/MWSE/references/dialogue-types/) constants.
+--- @field page number *Optional*. The page of dialogue to fetch. Uses [`tes3.dialoguePage`](https://mwse.github.io/MWSE/references/dialogue-pages/) constants.
 
 --- Fetches the core game object that represents a global variable.
 --- @param id string No description yet available.

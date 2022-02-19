@@ -4,12 +4,6 @@ The tes3 library provides the majority of the functions for interacting with the
 
 ## Properties
 
-### `tes3.animationState`
-
-Constant values relating to animation state.
-
-***
-
 ### `tes3.dataHandler`
 
 One of the core game objects.
@@ -1100,7 +1094,7 @@ local dialogue = tes3.findDialogue({ topic = ..., type = ..., page = ... })
 * `params` (table)
 	* `topic` (string): *Optional*. The dialogue topic to look for.
 	* `type` (number): *Optional*. The type of dialogue to look for. Uses [`tes3.dialogueType`](https://mwse.github.io/MWSE/references/dialogue-types/) constants.
-	* `page` (number): *Optional*. The page of dialogue to fetch. Uses [`tes3.dialoguePage`](https://mwse.github.io/MWSE/references/dialogue-types/) constants.
+	* `page` (number): *Optional*. The page of dialogue to fetch. Uses [`tes3.dialoguePage`](https://mwse.github.io/MWSE/references/dialogue-pages/) constants.
 
 **Returns**:
 
