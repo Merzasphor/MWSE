@@ -349,7 +349,7 @@ function tes3.addSpell(params) end
 --- 
 --- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — The reference to attach the sound to.
 --- 
---- `mixChannel`: number — *Default*: `tes3.audioMixType.effects`. The channel to base volume off of. Maps to [`tes3.audioMixType`](https://mwse.github.io/MWSE/references/audio-mix-types/) constants.
+--- `mixChannel`: number — *Default*: `tes3.soundMix.effects`. The channel to base volume off of. Maps to [`tes3.soundMix`](https://mwse.github.io/MWSE/references/sound-mix-types/) constants.
 --- 
 --- `volume`: number — *Default*: `1.0`. A value between 0.0 and 1.0 to scale the volume off of.
 function tes3.adjustSoundVolume(params) end
@@ -358,7 +358,7 @@ function tes3.adjustSoundVolume(params) end
 --- @class tes3.adjustSoundVolume.params
 --- @field sound tes3sound|string The sound object, or id of the sound to look for.
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string The reference to attach the sound to.
---- @field mixChannel number *Default*: `tes3.audioMixType.effects`. The channel to base volume off of. Maps to [`tes3.audioMixType`](https://mwse.github.io/MWSE/references/audio-mix-types/) constants.
+--- @field mixChannel number *Default*: `tes3.soundMix.effects`. The channel to base volume off of. Maps to [`tes3.soundMix`](https://mwse.github.io/MWSE/references/sound-mix-types/) constants.
 --- @field volume number *Default*: `1.0`. A value between 0.0 and 1.0 to scale the volume off of.
 
 --- Advances the game time. Can be used to simulate player resting.
@@ -1503,7 +1503,7 @@ function tes3.playItemPickupSound(params) end
 --- @field pickup boolean *Default*: `true`. If false, the place down item will be used.
 
 --- Plays a sound on a given reference. Provides control over volume (including volume channel), pitch, and loop control.
---- 	
+--- 
 --- **Note**: MP3 sound files can only be played if they are inside \\Vo\\ folder. The files must conform to the MPEG Layer-3, 64 Kbps 44100 kHz, 16-bit mono specification.
 --- @param params tes3.playSound.params This table accepts the following values:
 --- 
@@ -1513,7 +1513,7 @@ function tes3.playItemPickupSound(params) end
 --- 
 --- `loop`: boolean — If true, the sound will loop.
 --- 
---- `mixChannel`: number — *Default*: `tes3.audioMixType.effects`. The channel to base volume off of. Maps to [`tes3.audioMixType`](https://mwse.github.io/MWSE/references/audio-mix-types/) constants.
+--- `mixChannel`: number — *Default*: `tes3.soundMix.effects`. The channel to base volume off of. Maps to [`tes3.soundMix`](https://mwse.github.io/MWSE/references/sound-mix-types/) constants.
 --- 
 --- `volume`: number — *Default*: `1.0`. A value between 0.0 and 1.0 to scale the volume off of.
 --- 
@@ -1528,7 +1528,7 @@ function tes3.playSound(params) end
 --- @field sound tes3sound|string The sound object, or id of the sound to look for.
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The reference to attach the sound to.
 --- @field loop boolean If true, the sound will loop.
---- @field mixChannel number *Default*: `tes3.audioMixType.effects`. The channel to base volume off of. Maps to [`tes3.audioMixType`](https://mwse.github.io/MWSE/references/audio-mix-types/) constants.
+--- @field mixChannel number *Default*: `tes3.soundMix.effects`. The channel to base volume off of. Maps to [`tes3.soundMix`](https://mwse.github.io/MWSE/references/sound-mix-types/) constants.
 --- @field volume number *Default*: `1.0`. A value between 0.0 and 1.0 to scale the volume off of.
 --- @field pitch number *Default*: `1.0`. The pitch-shift multiplier. For 22kHz audio (most typical) it can have the range [0.005, 4.5]; for 44kHz audio it can have the range [0.0025, 2.25].
 --- @field soundPath string *Optional*. The path to a custom soundfile (useful for playing sounds that are not registered in the Construction Set). Starts in Data Files\Sound.

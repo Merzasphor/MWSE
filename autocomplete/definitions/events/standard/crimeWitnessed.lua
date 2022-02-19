@@ -5,7 +5,7 @@ return {
 		["type"] = {
 			type = "string",
 			readOnly = true,
-			description = "The type of crime that was committed.",
+			description = "The type of crime that was committed. The type can be \"attack\", \"killing\", \"stealing\", \"pickpocket\", \"theft\", \"trespass\", and \"werewolf\". Crime \"theft\" is raised when picking up owned items. Crime \"trespass\" is raised when lockpicking, probing or sleeping in owned beds."
 		},
 		["position"] = {
 			type = "tes3vector3",

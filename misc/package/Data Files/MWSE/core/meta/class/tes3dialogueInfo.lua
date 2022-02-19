@@ -18,7 +18,7 @@
 --- @field pcFaction number *Read-only*. The player's joined faction that the info is filtered for.
 --- @field pcRank number *Read-only*. The player's rank required rank in the speaker's faction.
 --- @field text string *Read-only*. String contents for the info. This is not kept in memory, and must be loaded from files for each call.
---- @field type number *Read-only*. The type of the info.
+--- @field type number *Read-only*. The type of the info. Maps to values in [`tes3.dialogueType`](https://mwse.github.io/MWSE/references/dialogue-types/) namespace.
 tes3dialogueInfo = {}
 
 --- This method filters the associated dialogue info for given arguments and returns true if the dialogue info filtering passes. This method rises [`infoFilter`](https://mwse.github.io/MWSE/events/infoFilter/) event.

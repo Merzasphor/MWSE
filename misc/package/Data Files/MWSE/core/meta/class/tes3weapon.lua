@@ -23,7 +23,7 @@
 --- @field reach number The weapon's relative reach. A value of `1.0` is the standard reach. It is multiplied by the GMST `fCombatDistance` to find the attack reach in world units.
 --- @field script tes3script *Read-only*. The script that runs on the object.
 --- @field skill tes3skill Gets the skill data for the attack skill used by the weapon.
---- @field skillId number Gets the skill ID for the attack skill used by the weapon.
+--- @field skillId number Gets the skill ID for the attack skill used by the weapon. Maps to values in [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) namespace.
 --- @field slashMax number Slash damage inflicted at maximum weapon swing.
 --- @field slashMin number Slash damage inflicted at minimum weapon swing.
 --- @field speed number The relative attack speed of the weapon. Controls attack timing and animation speed. Standard speed is `1.0`.

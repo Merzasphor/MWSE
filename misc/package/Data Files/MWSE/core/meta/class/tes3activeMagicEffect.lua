@@ -12,7 +12,7 @@
 --- @field isSummon boolean *Read-only*. No description yet available.
 --- @field magnitude number *Read-only*. The unresisted magnitude of the magic effect, that is the magnitude before resistance attributes are applied. This is always an integer number. To find the actual applied magnitude, you must check the magic effect instance.
 --- @field magnitudeMin number *Read-only*. Deprecated.
---- @field mobile tes3magicSourceInstance *Read-only*. The mobile affected by the magic effect.
+--- @field mobile tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3mobilePlayer *Read-only*. The mobile affected by the magic effect.
 --- @field next tes3activeMagicEffect *Read-only*. Deprecated.
 --- @field previous tes3activeMagicEffect *Read-only*. Deprecated.
 --- @field serial number *Read-only*. The magic source instance serial number. See the `instance` and `effectInstance` properties to easily access the magic and effect instances.

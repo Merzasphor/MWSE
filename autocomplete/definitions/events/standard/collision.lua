@@ -19,17 +19,9 @@ return {
 		},
 	},
 	filter = "reference",
+	examples = {
+		["playerBumpedIntoDoor"] = {
+			title = "Shows a message when the player bumps into the door."
+		}
+	}
 }
-
---[[
--- Add this as an example
-local function onCollision(e)
-	if e.reference == tes3.player and
-		e.target.object.objectType == tes3.objectType.door then
-		if not e.target.destination then
-			tes3.messageBox("I TRY")
-			return false
-		end
-	end
-end
-]]

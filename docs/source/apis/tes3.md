@@ -489,7 +489,7 @@ tes3.adjustSoundVolume({ sound = ..., reference = ..., mixChannel = ..., volume 
 * `params` (table)
 	* `sound` ([tes3sound](../../types/tes3sound), string): The sound object, or id of the sound to look for.
 	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The reference to attach the sound to.
-	* `mixChannel` (number): *Default*: `tes3.audioMixType.effects`. The channel to base volume off of. Maps to [`tes3.audioMixType`](https://mwse.github.io/MWSE/references/audio-mix-types/) constants.
+	* `mixChannel` (number): *Default*: `tes3.soundMix.effects`. The channel to base volume off of. Maps to [`tes3.soundMix`](https://mwse.github.io/MWSE/references/sound-mix-types/) constants.
 	* `volume` (number): *Default*: `1.0`. A value between 0.0 and 1.0 to scale the volume off of.
 
 ***
@@ -2826,7 +2826,7 @@ local executed = tes3.playItemPickupSound({ reference = ..., item = ..., pickup 
 ### `tes3.playSound`
 
 Plays a sound on a given reference. Provides control over volume (including volume channel), pitch, and loop control.
-	
+
 **Note**: MP3 sound files can only be played if they are inside \\Vo\\ folder. The files must conform to the MPEG Layer-3, 64 Kbps 44100 kHz, 16-bit mono specification.
 
 ```lua
@@ -2839,7 +2839,7 @@ local executed = tes3.playSound({ sound = ..., reference = ..., loop = ..., mixC
 	* `sound` ([tes3sound](../../types/tes3sound), string): The sound object, or id of the sound to look for.
 	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The reference to attach the sound to.
 	* `loop` (boolean): If true, the sound will loop.
-	* `mixChannel` (number): *Default*: `tes3.audioMixType.effects`. The channel to base volume off of. Maps to [`tes3.audioMixType`](https://mwse.github.io/MWSE/references/audio-mix-types/) constants.
+	* `mixChannel` (number): *Default*: `tes3.soundMix.effects`. The channel to base volume off of. Maps to [`tes3.soundMix`](https://mwse.github.io/MWSE/references/sound-mix-types/) constants.
 	* `volume` (number): *Default*: `1.0`. A value between 0.0 and 1.0 to scale the volume off of.
 	* `pitch` (number): *Default*: `1.0`. The pitch-shift multiplier. For 22kHz audio (most typical) it can have the range [0.005, 4.5]; for 44kHz audio it can have the range [0.0025, 2.25].
 	* `soundPath` (string): *Optional*. The path to a custom soundfile (useful for playing sounds that are not registered in the Construction Set). Starts in Data Files\Sound.

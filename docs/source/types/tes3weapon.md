@@ -387,11 +387,28 @@ Gets the skill data for the attack skill used by the weapon.
 
 ### `skillId`
 
-Gets the skill ID for the attack skill used by the weapon.
+Gets the skill ID for the attack skill used by the weapon. Maps to values in [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) namespace.
 
 **Returns**:
 
 * `result` (number)
+
+??? example "Example: Print the name of the skill the attacker's weapon uses"
+
+	```lua
+	
+	local function showMessage(e)
+		if e.mobile.readiedWeapon then
+			local id = e.mobile.readiedWeapon.object.skillId
+			local name = tes3.getSkillName(id)
+	
+			tes3.messageBox(name)
+		end
+	end
+	
+	event.register(tes3.event.attackStart, showMessage)
+
+	```
 
 ***
 

@@ -5,7 +5,7 @@
 --- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.
 --- @field position tes3vector3 *Read-only*. The position that the crime ocurred at.
 --- @field realTimestamp number *Read-only*. The timestamp that the crime ocurred at.
---- @field type string *Read-only*. The type of crime that was committed.
+--- @field type string *Read-only*. The type of crime that was committed. The type can be "attack", "killing", "stealing", "pickpocket", "theft", "trespass", and "werewolf". Crime "theft" is raised when picking up owned items. Crime "trespass" is raised when lockpicking, probing or sleeping in owned beds.
 --- @field value number *Read-only*. The bounty value of the crime.
 --- @field witness tes3reference *Read-only*. The reference that witnessed the crime.
 --- @field witnessMobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer *Read-only*. The mobile actor of the reference that witnessed the crime.

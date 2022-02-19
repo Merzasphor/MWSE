@@ -137,7 +137,7 @@ If true, references of this object can store temporary or persistent lua data.
 
 ### `type`
 
-*Read-only*. The type of the dialogue.
+*Read-only*. The type of the dialogue. Maps to values in [`tes3.dialogueType`](https://mwse.github.io/MWSE/references/dialogue-types/) namespace.
 
 **Returns**:
 

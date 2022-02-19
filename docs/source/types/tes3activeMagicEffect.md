@@ -110,7 +110,7 @@ An active magic effect.
 
 **Returns**:
 
-* `result` ([tes3magicSourceInstance](../../types/tes3magicSourceInstance))
+* `result` ([tes3mobileCreature](../../types/tes3mobileCreature), [tes3mobileNPC](../../types/tes3mobileNPC), [tes3mobilePlayer](../../types/tes3mobilePlayer))
 
 ***
 
