@@ -19,12 +19,13 @@ namespace mwse::lua {
 	class ThreadedStateHandle {
 	public:
 		ThreadedStateHandle(LuaManager*);
-		~ThreadedStateHandle();
 
 		// Trigger a thread-safe event.
 		sol::object triggerEvent(event::BaseEvent*);
 
 		sol::state& state;
+
+		std::lock_guard<std::recursive_mutex> lockGuard;
 
 	private:
 		LuaManager* luaManager;
@@ -71,10 +72,6 @@ namespace mwse::lua {
 		void clearTimers();
 		std::shared_ptr<TimerController> getTimerController(TimerType type);
 		TimerType getTimerControllerType(std::shared_ptr<TimerController> controller);
-
-		//
-		void claimLuaThread();
-		void releaseLuaThread();
 
 		bool overrideScript(const char* scriptId, sol::object function);
 		bool clearScriptOverride(const char* scriptId);

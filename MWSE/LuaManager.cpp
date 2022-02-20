@@ -3494,12 +3494,12 @@ namespace mwse::lua {
 	//
 	//
 
-	ThreadedStateHandle::ThreadedStateHandle(LuaManager* manager) : luaManager(manager), state(manager->luaState) {
-		luaManager->claimLuaThread();
-	}
+	ThreadedStateHandle::ThreadedStateHandle(LuaManager* manager) :
+		luaManager(manager),
+		state(manager->luaState),
+		lockGuard(manager->stateThreadMutex)
+	{
 
-	ThreadedStateHandle::~ThreadedStateHandle() {
-		luaManager->releaseLuaThread();
 	}
 
 	sol::object ThreadedStateHandle::triggerEvent(event::BaseEvent* e) {
@@ -5093,13 +5093,5 @@ namespace mwse::lua {
 		}
 
 		throw std::invalid_argument("Controller cannot be mapped to a type.");
-	}
-
-	void LuaManager::claimLuaThread() {
-		stateThreadMutex.lock();
-	}
-
-	void LuaManager::releaseLuaThread() {
-		stateThreadMutex.unlock();
 	}
 }
