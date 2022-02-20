@@ -2235,15 +2235,21 @@ namespace mwse::lua {
 			return;
 		}
 
+		std::array<std::string, 2> disabledMarkers = { ".disabled", ".mohidden" };
+
 		for (auto& p : std::filesystem::recursive_directory_iterator(path, std::filesystem::directory_options::follow_directory_symlink)) {
 			if (p.path().filename() == filename) {
 				// If a parent directory is marked .disabled, ignore files in it.
-				if (p.path().string().find(".disabled\\") != std::string::npos) {
-					log::getLog() << "[LuaManager] Skipping mod initializer in disabled directory: " << p.path().string() << std::endl;
+				auto pathString = p.path().string();
+				auto disabledPathItt = std::find_if(disabledMarkers.begin(), disabledMarkers.end(), [&](const std::string& s) {
+					return pathString.find(s) != std::string::npos;
+				});
+				if (disabledPathItt != disabledMarkers.end()) {
+					log::getLog() << "[LuaManager] Skipping mod initializer in disabled directory: " << pathString << std::endl;
 					continue;
 				}
 
-				sol::protected_function_result result = luaState.safe_script_file(p.path().string(), &sol::script_pass_on_error);
+				sol::protected_function_result result = luaState.safe_script_file(pathString, &sol::script_pass_on_error);
 				if (!result.valid()) {
 					sol::error error = result;
 					log::getLog() << "[LuaManager] ERROR: Failed to run mod initialization script:" << std::endl << error.what() << std::endl;
