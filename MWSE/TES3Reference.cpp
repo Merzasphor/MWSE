@@ -253,7 +253,6 @@ namespace TES3 {
 
 
 	const auto TES3_MobilePlayer_sub566500 = reinterpret_cast<void(__thiscall*)(MobilePlayer*)>(0x566500);
-	const auto TES3_ModelLoader_loadAnimKF = reinterpret_cast<TES3::KeyframeDefinition * (__thiscall*)(void*, const char*, const char*)>(0x4EE200);
 
 	void Reference::setModelPath(const char* path, bool temporary) {
 		auto baseObject = static_cast<TES3::Object*>(getBaseObject());
@@ -315,7 +314,7 @@ namespace TES3 {
 					if (this == firstPersonRef && path != nullptr) {
 						auto animData = getAttachedAnimationData();
 						auto modelLoader = TES3::DataHandler::get()->nonDynamicData->meshData;
-						auto keyframes = TES3_ModelLoader_loadAnimKF(modelLoader, path, "MWSE Anim");
+						auto keyframes = modelLoader->loadKeyFrame(path, "MWSE Anim");
 
 						if (animData && keyframes) {
 							animData->setOverrideLayerKeyframes(keyframes);
