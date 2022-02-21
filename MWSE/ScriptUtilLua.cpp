@@ -796,22 +796,17 @@ namespace mwse::lua {
 			return true;
 		};
 		state["mge"]["setShaderVector4"] = [](sol::optional<sol::table> params) {
-			auto hud = getOptionalParam<std::string>(params, "shader", "");
+			auto shader = getOptionalParam<std::string>(params, "shader", "");
 			auto variable = getOptionalParam<std::string>(params, "variable", "");
 			sol::table values = getOptionalParam<sol::table>(params, "value", sol::nil);
-			if (variable.empty() || values == sol::nil || values.size() != 4) {
+			if (shader.empty() || variable.empty() || values == sol::nil || values.size() != 4) {
 				return false;
 			}
-
-			if (!hud.empty()) {
-				Stack::getInstance().pushString(hud);
-				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEWithHUD);
-			}
-
 			for (int i = 4; i > 0; i--) {
 				Stack::getInstance().pushFloat(values[i]);
 			}
 			Stack::getInstance().pushString(variable);
+			Stack::getInstance().pushString(shader);
 			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEShaderSetVector);
 
 			return true;
