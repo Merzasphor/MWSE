@@ -20,6 +20,8 @@
 
 #include "LuaShowRestWaitMenuEvent.h"
 
+#include "TES3UIManagerLua.h"
+
 namespace TES3 {
 	namespace UI {
 		static bool bSuppressHelpMenu = false;
@@ -721,6 +723,17 @@ namespace TES3 {
 			return {};
 		}
 
+		void __fastcall patchElementDeletion(TES3::UI::Element* self, DWORD _UNUSED_, TES3::UI::PropertyValue* propValue, TES3::UI::Property prop, TES3::UI::PropertyType propType, const TES3::UI::Element* element, bool checkInherited) {
+			// Call overwritten code.
+			auto destroyEvent = reinterpret_cast<void(__cdecl*)(TES3::UI::Element*)>(self->getProperty(propType, prop).ptrValue);
+			if (destroyEvent) {
+				destroyEvent(self);
+			}
+
+			// Clean up any lua event registration.
+			mwse::lua::cleanupEventRegistrations(self);
+		}
+
 		void hook() {
 			// Patch mousewheel event dispatch to not redirect to the top-level element,
 			// allowing mousewheel to apply to more than the first scrollpane in a menu
@@ -734,6 +747,9 @@ namespace TES3 {
 
 			// Patch item selection no items message to allow callbacks and changed text.
 			mwse::genCallEnforced(0x5D37CF, 0x5F90C0, reinterpret_cast<DWORD>(messagePlayerForNoValidItems));
+
+			// Patch element resetting to clear up any custom event handlers.
+			mwse::genCallEnforced(0x578517, 0x581440, reinterpret_cast<DWORD>(patchElementDeletion), 0x578528 - 0x578517);
 
 			// Provide some UI IDs for elements that don't have them:
 			// Tooltips (HelpMenu)
