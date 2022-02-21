@@ -84,6 +84,7 @@ return {
 	["magicEffectsResolved"] = "magicEffectsResolved",
 	["menuEnter"] = "menuEnter",
 	["menuExit"] = "menuExit",
+	["meshLoad"] = "meshLoad",
 	["meshLoaded"] = "meshLoaded",
 	["mobileActivated"] = "mobileActivated",
 	["mobileDeactivated"] = "mobileDeactivated",

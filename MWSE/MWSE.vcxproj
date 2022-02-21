@@ -15,6 +15,7 @@
     <ClInclude Include="BitUtil.h" />
     <ClInclude Include="BSAnimationManager.h" />
     <ClInclude Include="LuaEquipmentReevaluatedEvent.h" />
+    <ClInclude Include="LuaMeshLoadEvent.h" />
     <ClInclude Include="NIQuaternion.h" />
     <ClInclude Include="NIQuaternionLua.h" />
     <ClInclude Include="NIScreenPolygon.h" />
@@ -561,6 +562,7 @@
     <ClCompile Include="LuaMagicCastedEvent.cpp" />
     <ClCompile Include="LuaMenuStateEvent.cpp" />
     <ClCompile Include="LuaMeshLoadedEvent.cpp" />
+    <ClCompile Include="LuaMeshLoadEvent.cpp" />
     <ClCompile Include="LuaMobileActorActivatedEvent.cpp" />
     <ClCompile Include="LuaMobileActorDeactivatedEvent.cpp" />
     <ClCompile Include="LuaMobileObjectWaterImpactEvent.cpp" />

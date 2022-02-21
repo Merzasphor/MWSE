@@ -7,6 +7,7 @@
 #include "LuaAddTempSoundEvent.h"
 #include "LuaLoadedGameEvent.h"
 #include "LuaLoadGameEvent.h"
+#include "LuaMeshLoadEvent.h"
 #include "LuaMeshLoadedEvent.h"
 #include "LuaSavedGameEvent.h"
 #include "LuaSaveGameEvent.h"
@@ -38,13 +39,34 @@ namespace TES3 {
 
 	const auto TES3_MeshData_loadMesh = reinterpret_cast<NI::AVObject * (__thiscall*)(MeshData*, const char*)>(0x4EE0A0);
 	NI::AVObject* MeshData::loadMesh(const char* path) {
+		// Allow changing the desired mesh path.
+		std::string meshPath = path;
+		if (mwse::lua::event::MeshLoadEvent::getEventEnabled()) {
+			auto handle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::table response = handle.triggerEvent(new mwse::lua::event::MeshLoadEvent(path));
+			if (response.valid()) {
+				meshPath = response.get_or("path", path);
+			}
+		}
+		path = meshPath.c_str();
+
+		// Store the loading path for debugging purposes.
 		DataHandler::currentlyLoadingMesh = path;
+
+		// Check the loaded NIF count to see if anything new was loaded.
 		auto countBefore = NIFs->count;
+
+		// Actually load the mesh.
 		auto mesh = TES3_MeshData_loadMesh(this, path);
+
+		// If the loaded mesh count increased, send off an event to 
 		if (mesh && NIFs->count > countBefore && mwse::lua::event::MeshLoadedEvent::getEventEnabled()) {
 			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MeshLoadedEvent(path, mesh));
 		}
+
+		// Clean up debug information.
 		DataHandler::currentlyLoadingMesh = nullptr;
+
 		return mesh;
 	}
 

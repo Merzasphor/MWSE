@@ -80,6 +80,7 @@
 #include "LuaMagicCastedEvent.h"
 #include "LuaMenuStateEvent.h"
 #include "LuaMeshLoadedEvent.h"
+#include "LuaMeshLoadEvent.h"
 #include "LuaMobileActorActivatedEvent.h"
 #include "LuaMobileActorDeactivatedEvent.h"
 #include "LuaMobileObjectCollisionEvent.h"
@@ -225,6 +226,7 @@ namespace mwse::lua::event {
 		usertypeDefinition["menuEnter"] = sol::property(&MenuStateEvent::getEventEnabled, &MenuStateEvent::setEventEnabled);
 		usertypeDefinition["menuExit"] = sol::property(&MenuStateEvent::getEventEnabled, &MenuStateEvent::setEventEnabled);
 		usertypeDefinition["meshLoaded"] = sol::property(&MeshLoadedEvent::getEventEnabled, &MeshLoadedEvent::setEventEnabled);
+		usertypeDefinition["meshLoad"] = sol::property(&MeshLoadEvent::getEventEnabled, &MeshLoadEvent::setEventEnabled);
 		usertypeDefinition["mobileActivated"] = sol::property(&MobileActorActivatedEvent::getEventEnabled, &MobileActorActivatedEvent::setEventEnabled);
 		usertypeDefinition["mobileDeactivated"] = sol::property(&MobileActorDeactivatedEvent::getEventEnabled, &MobileActorDeactivatedEvent::setEventEnabled);
 		usertypeDefinition["mouseAxis"] = sol::property(&MouseAxisEvent::getEventEnabled, &MouseAxisEvent::setEventEnabled);

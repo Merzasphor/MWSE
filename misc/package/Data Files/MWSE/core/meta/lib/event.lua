@@ -85,6 +85,7 @@
 --- @field register fun(eventId: '"magicEffectsResolved"', callback: fun(e: magicEffectsResolvedEventData), options: table)
 --- @field register fun(eventId: '"menuEnter"', callback: fun(e: menuEnterEventData), options: table)
 --- @field register fun(eventId: '"menuExit"', callback: fun(e: menuExitEventData), options: table)
+--- @field register fun(eventId: '"meshLoad"', callback: fun(e: meshLoadEventData), options: table)
 --- @field register fun(eventId: '"meshLoaded"', callback: fun(e: meshLoadedEventData), options: table)
 --- @field register fun(eventId: '"mobileActivated"', callback: fun(e: mobileActivatedEventData), options: table)
 --- @field register fun(eventId: '"mobileDeactivated"', callback: fun(e: mobileDeactivatedEventData), options: table)
