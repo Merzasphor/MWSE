@@ -11,7 +11,6 @@ namespace mwse::lua {
 	bool unregisterUIEvent(TES3::UI::Element* target, TES3::UI::Property eventID);
 	bool eventForwarder(sol::table eventData);
 	void triggerEvent(TES3::UI::Element* target, TES3::UI::Property eventID, int data0, int data1);
-	void cleanupEventRegistrations(TES3::UI::Element* element);
 
 	void bindTES3UIManager();
 }
