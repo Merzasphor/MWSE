@@ -114,11 +114,11 @@ namespace mwse::lua {
 		// Remove from the paused timer list.
 		m_PausedTimers.erase(timer);
 
-		// Add to the active list.
-		insertActiveTimer(timer);
-
 		timer->state = TimerState::Active;
 		timer->timing = timer->timing + m_Clock;
+
+		// Add to the active list.
+		insertActiveTimer(timer);
 
 		return true;
 	}
