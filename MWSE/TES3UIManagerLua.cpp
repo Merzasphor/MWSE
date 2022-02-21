@@ -151,10 +151,18 @@ namespace mwse::lua {
 		}
 
 		// Run our original event if no legacy was used.
-		if (!legacyUsed && eventID != Property::event_destroy) {
-			auto original = originalCallbackMap[target][eventID];
-			if (original) {
-				original(target, eventID, data0, data1, source);
+		if (!legacyUsed) {
+			if (eventID == Property::event_destroy) {
+				auto callback = destroyMap[source];
+				if (callback) {
+					callback(source);
+				}
+			}
+			else {
+				auto original = originalCallbackMap[target][eventID];
+				if (original) {
+					original(target, eventID, data0, data1, source);
+				}
 			}
 		}
 
@@ -206,21 +214,8 @@ namespace mwse::lua {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 		sol::state& state = stateHandle.state;
 
-		// 
+		// Send off our event.
 		eventDispatcher(source, Property::event_destroy, 0, 0, source);
-
-		// Call original destroy callback
-		auto callback = destroyMap[source];
-		if (callback) {
-			callback(source);
-		}
-
-		// Remove event mappings
-		eventCallbacksBefore.erase(source);
-		eventCallbacksAfter.erase(source);
-		legacyEventMap.erase(source);
-		originalCallbackMap.erase(source);
-		destroyMap.erase(source);
 	}
 
 	void registerBeforeUIEvent(TES3::UI::Element* target, TES3::UI::Property eventID, sol::protected_function callback, double priority) {
@@ -235,16 +230,14 @@ namespace mwse::lua {
 		auto pos = std::find_if(callbacks.begin(), callbacks.end(), [priority](auto& s) { return s.priority < priority; });
 		callbacks.insert(pos, { callback, priority });
 
-		// Set a destroy hook the first time an event is added to an Element to allow cleanup
-		// This callback uses PropertyType::Pointer instead of PropertyType::EventCallback
-		if (destroyMap.find(target) == destroyMap.end()) {
-			auto prevDestroy = target->getProperty(PropertyType::Pointer, Property::event_destroy).ptrValue;
-			target->setProperty(Property::event_destroy, static_cast<void*>(&eventDestroyDispatcher));
-			destroyMap[target] = static_cast<void(__cdecl*)(Element*)>(prevDestroy);
-		}
-
 		// Forward the event to our dispatcher.
-		if (eventID != Property::event_destroy) {
+		if (eventID == Property::event_destroy) {
+			auto prevDestroy = static_cast<void(__cdecl*)(Element*)>(target->getProperty(PropertyType::Pointer, Property::event_destroy).ptrValue);
+			if (prevDestroy && prevDestroy != &eventDestroyDispatcher) {
+				destroyMap[target] = prevDestroy;
+			}
+			target->setProperty(Property::event_destroy, static_cast<void*>(&eventDestroyDispatcher));
+		} else {
 			auto prevCallback = target->getProperty(PropertyType::EventCallback, eventID).eventCallback;
 			if (prevCallback != &eventDispatcher) {
 				originalCallbackMap[target][eventID] = prevCallback;
@@ -265,16 +258,14 @@ namespace mwse::lua {
 		auto pos = std::find_if(callbacks.begin(), callbacks.end(), [priority](auto& s) { return s.priority < priority; });
 		callbacks.insert(pos, { callback, priority });
 
-		// Set a destroy hook the first time an event is added to an Element to allow cleanup
-		// This callback uses PropertyType::Pointer instead of PropertyType::EventCallback
-		if (destroyMap.find(target) == destroyMap.end()) {
-			auto prevDestroy = target->getProperty(PropertyType::Pointer, Property::event_destroy).ptrValue;
-			target->setProperty(Property::event_destroy, static_cast<void*>(&eventDestroyDispatcher));
-			destroyMap[target] = static_cast<void(__cdecl*)(Element*)>(prevDestroy);
-		}
-
 		// Forward the event to our dispatcher.
-		if (eventID != Property::event_destroy) {
+		if (eventID == Property::event_destroy) {
+			auto prevDestroy = static_cast<void(__cdecl*)(Element*)>(target->getProperty(PropertyType::Pointer, Property::event_destroy).ptrValue);
+			if (prevDestroy && prevDestroy != &eventDestroyDispatcher) {
+				destroyMap[target] = prevDestroy;
+			}
+			target->setProperty(Property::event_destroy, static_cast<void*>(&eventDestroyDispatcher));
+		} else {
 			auto prevCallback = target->getProperty(PropertyType::EventCallback, eventID).eventCallback;
 			if (prevCallback != &eventDispatcher) {
 				originalCallbackMap[target][eventID] = prevCallback;
@@ -284,23 +275,18 @@ namespace mwse::lua {
 	}
 
 	void registerUIEvent(Element* target, Property eventID, sol::protected_function callback) {
-		// Save original callback, if present
-		auto prevCallback = target->getProperty(PropertyType::EventCallback, eventID).eventCallback;
-		if (prevCallback == eventDispatcher) {
-			return;
-		}
-
-		// Set a destroy hook the first time an event is added to an Element to allow cleanup
-		// This callback uses PropertyType::Pointer instead of PropertyType::EventCallback
-		if (destroyMap.find(target) == destroyMap.end()) {
-			auto prevDestroy = target->getProperty(PropertyType::Pointer, Property::event_destroy).ptrValue;
-			target->setProperty(Property::event_destroy, static_cast<void*>(&eventDestroyDispatcher));
-			destroyMap[target] = static_cast<void(__cdecl*)(Element*)>(prevDestroy);
-		}
-
 		// Forward the event to our dispatcher.
-		if (eventID != Property::event_destroy) {
-			originalCallbackMap[target][eventID] = prevCallback;
+		if (eventID == Property::event_destroy) {
+			auto prevDestroy = static_cast<void(__cdecl*)(Element*)>(target->getProperty(PropertyType::Pointer, Property::event_destroy).ptrValue);
+			if (prevDestroy && prevDestroy != eventDestroyDispatcher) {
+				destroyMap[target] = prevDestroy;
+			}
+			target->setProperty(Property::event_destroy, static_cast<void*>(&eventDestroyDispatcher));
+		} else {
+			auto prevCallback = target->getProperty(PropertyType::EventCallback, eventID).eventCallback;
+			if (prevCallback != &eventDispatcher) {
+				originalCallbackMap[target][eventID] = prevCallback;
+			}
 			target->setProperty(eventID, &eventDispatcher);
 		}
 
@@ -385,6 +371,13 @@ namespace mwse::lua {
 		if (callback) {
 			callback(target, eventID, data0, data1, target);
 		}
+	}
+
+	void cleanupEventRegistrations(TES3::UI::Element* element) {
+		eventCallbacksBefore.erase(element);
+		eventCallbacksAfter.erase(element);
+		legacyEventMap.erase(element);
+		originalCallbackMap.erase(element);
 	}
 
 	void bindTES3UIManager() {
