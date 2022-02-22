@@ -37,7 +37,7 @@ namespace TES3 {
 
 		// Path is relative to Data Files.
 		NI::AVObject* loadMesh(const char* path);
-		KeyframeDefinition* loadKeyFrame(const char* path, const char* animation);
+		KeyframeDefinition* loadKeyframes(const char* path, const char* animation);
 	};
 
 	template <typename OT>

@@ -4558,6 +4558,13 @@ namespace mwse::lua {
 		genCallEnforced(0x54B48F, 0x4EE0A0, *reinterpret_cast<DWORD*>(&meshDataLoadMesh));
 		genCallEnforced(0x57BB39, 0x4EE0A0, *reinterpret_cast<DWORD*>(&meshDataLoadMesh));
 
+		// Keyframes load event.
+		auto meshDataLoadKeyframes = &TES3::MeshData::loadKeyframes;
+		genCallEnforced(0x4C2946, 0x4EE200, *reinterpret_cast<DWORD*>(&meshDataLoadKeyframes));
+		genCallEnforced(0x4C2C74, 0x4EE200, *reinterpret_cast<DWORD*>(&meshDataLoadKeyframes));
+		genCallEnforced(0x4D25DB, 0x4EE200, *reinterpret_cast<DWORD*>(&meshDataLoadKeyframes));
+		genCallEnforced(0x4F086B, 0x4EE200, *reinterpret_cast<DWORD*>(&meshDataLoadKeyframes));
+
 		// Event: CrimeWitnessed
 		genCallEnforced(0x521DB2, 0x522040, reinterpret_cast<DWORD>(OnProcessCrimes));
 		genCallEnforced(0x53184A, 0x51F580, reinterpret_cast<DWORD>(OnCrimeWitnessedEnd));

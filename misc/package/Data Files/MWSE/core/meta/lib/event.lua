@@ -75,6 +75,7 @@
 --- @field register fun(eventId: '"key"', callback: fun(e: keyEventData), options: table)
 --- @field register fun(eventId: '"keyDown"', callback: fun(e: keyDownEventData), options: table)
 --- @field register fun(eventId: '"keyUp"', callback: fun(e: keyUpEventData), options: table)
+--- @field register fun(eventId: '"keyframesLoad"', callback: fun(e: keyframesLoadEventData), options: table)
 --- @field register fun(eventId: '"levelUp"', callback: fun(e: levelUpEventData), options: table)
 --- @field register fun(eventId: '"leveledCreaturePicked"', callback: fun(e: leveledCreaturePickedEventData), options: table)
 --- @field register fun(eventId: '"leveledItemPicked"', callback: fun(e: leveledItemPickedEventData), options: table)

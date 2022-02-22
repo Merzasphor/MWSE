@@ -15,6 +15,7 @@
     <ClInclude Include="BitUtil.h" />
     <ClInclude Include="BSAnimationManager.h" />
     <ClInclude Include="LuaEquipmentReevaluatedEvent.h" />
+    <ClInclude Include="LuaKeyframesLoadEvent.h" />
     <ClInclude Include="LuaMeshLoadEvent.h" />
     <ClInclude Include="NIQuaternion.h" />
     <ClInclude Include="NIQuaternionLua.h" />
@@ -553,6 +554,7 @@
     <ClCompile Include="LuaJournalEvent.cpp" />
     <ClCompile Include="LuaKeyDownEvent.cpp" />
     <ClCompile Include="LuaKeyEvent.cpp" />
+    <ClCompile Include="LuaKeyframesLoadEvent.cpp" />
     <ClCompile Include="LuaKeyUpEvent.cpp" />
     <ClCompile Include="LuaLeveledCreaturePickedEvent.cpp" />
     <ClCompile Include="LuaLeveledItemPickedEvent.cpp" />

@@ -314,7 +314,7 @@ namespace TES3 {
 					if (this == firstPersonRef && path != nullptr) {
 						auto animData = getAttachedAnimationData();
 						auto modelLoader = TES3::DataHandler::get()->nonDynamicData->meshData;
-						auto keyframes = modelLoader->loadKeyFrame(path, "MWSE Anim");
+						auto keyframes = modelLoader->loadKeyframes(path, "MWSE Anim");
 
 						if (animData && keyframes) {
 							animData->setOverrideLayerKeyframes(keyframes);

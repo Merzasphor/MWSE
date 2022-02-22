@@ -5,6 +5,7 @@
 
 #include "LuaAddSoundEvent.h"
 #include "LuaAddTempSoundEvent.h"
+#include "LuaKeyframesLoadEvent.h"
 #include "LuaLoadedGameEvent.h"
 #include "LuaLoadGameEvent.h"
 #include "LuaMeshLoadEvent.h"
@@ -70,9 +71,25 @@ namespace TES3 {
 		return mesh;
 	}
 
-	const auto TES3_MeshData_loadKeyFrame = reinterpret_cast<KeyframeDefinition * (__thiscall*)(MeshData*, const char*, const char*)>(0x4EE200);
-	KeyframeDefinition* MeshData::loadKeyFrame(const char* path, const char* animation) {
-		return TES3_MeshData_loadKeyFrame(this, path, animation);
+	const auto TES3_MeshData_loadKeyframes = reinterpret_cast<KeyframeDefinition * (__thiscall*)(MeshData*, const char*, const char*)>(0x4EE200);
+	KeyframeDefinition* MeshData::loadKeyframes(const char* path, const char* sequenceName) {
+		// Allow changing the desired mesh path.
+		std::string keyframesPath = path;
+		std::string sequenceString = sequenceName;
+
+		if (mwse::lua::event::KeyframesLoadEvent::getEventEnabled()) {
+			auto handle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::table response = handle.triggerEvent(new mwse::lua::event::KeyframesLoadEvent(path, sequenceName));
+			if (response.valid()) {
+				keyframesPath = response.get_or("path", path);
+				sequenceString = response.get_or("sequenceName", path);
+			}
+		}
+
+		path = keyframesPath.c_str();
+		sequenceName = sequenceString.c_str();
+
+		return TES3_MeshData_loadKeyframes(this, path, sequenceName);
 	}
 
 	//
