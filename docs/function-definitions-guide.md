@@ -35,8 +35,15 @@ Each function definition is just a regular Lua table. The following fields are a
 | type  | `string` |  This flag is used when generating syntax highlighting files. The type should always be `"function"` for function definitions. |
 | description | `string` | The description for the function. You can pass a string with `""` or `[[]]`. |
 | arguments | `table` | The arguments the function accepts. |
-| examples | `table` | A table with entries that are the names of the files included as examples. Each entry is a table itself with on available field, `title`. The title will be shown as the title of the example on the documentation page. |
+| examples | `table` | A table with entries that are the names of the files included as examples. Each entry is a table itself with one available field, `title`. The title will be shown as the title of the example on the documentation page. |
 | returns | `table` | The table with return values. |
+
+
+examples table looks like this:
+| Field |   Type  | Description |
+| ----- | ------- | ----------- |
+| entry | `table` | Each entry in examples table should be the file name of the file used as an example. The example file should just be regular Lua code. All the example files need to be inside the folder of the same name as the function these examples are for. Look at the last example in this page for reference. |
+
 
 `returns` table has entries which are nested tables for each of the returned values, with the following fields:
 | Field | Type | Description |
@@ -87,25 +94,30 @@ return {
 Some other functions accept a table called `params`. In that case you can follow this convention (the function definition for `tes3.addItem()`):
 
 ```Lua
--- autocomplete\definitions\global\tes3\addItem.lua
+-- autocomplete\definitions\global\tes3\cast.lua
 return {
 	type = "function",
-	description = [[Adds an item to a given reference's inventory or mobile's inventory.]],
+	description = [[Casts a spell from a given reference to a target reference. Touch effects will hit the target at any range, while target effects will create a projectile. By default, the spell always casts successfully and does not consume magicka. By default, an actor casting will stop and perform its cast animation, but the 'instant' flag can start the cast instantly, and allow more control over the spell.
+
+When the caster is the player, the target parameter is optional; without a target, the player's touch effects will only hit targets in front of them, and target effects will create a projectile in the direction the player is facing. Currently as a limitation, instant must be true to allow the player to cast spells.]],
 	arguments = {{
 		name = "params",
 		type = "table",
 		tableParams = {
-			{ name = "reference", type = "tes3reference|tes3mobileActor|string", description = "Who to give items to." },
-			{ name = "item", type = "tes3item|tes3leveledItem|string", description = "The item to add. If a leveled item is passed, it will be resolved and added." },
-			{ name = "itemData", type = "tes3itemData", optional = true, description = "The item data for the item." },
-			{ name = "soul", type = "tes3creature", optional = true, description = "For creating filled soul gems." },
-			{ name = "count", type = "number", default = "1", description = "The maximum number of items to add." },
-			{ name = "playSound", type = "boolean", default = true, description = "If false, the up/down sound for the item won't be played." },
-			{ name = "limit", type = "boolean", default = false, description = "If false, items can be placed into containers that shouldn't normally be allowed. This includes organic containers, and containers that are full." },
-			{ name = "reevaluateEquipment", type = "boolean", default = true, description = "If true, and the item added is armor, clothing, or a weapon, the actor will reevaluate its equipment choices to see if the new item is worth equipping. This does not affect the player." },
-			{ name = "updateGUI", type = "boolean", default = true, description = "If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though [`tes3ui.forcePlayerInventoryUpdate()`](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uiforceplayerinventoryupdate) must manually be called after all inventory updates are finished." },
+			{ name = "reference", type = "tes3reference|tes3mobileActor|string", description = "The caster reference." },
+			{ name = "target", type = "tes3reference|tes3mobileActor|string", description = "The target reference. Optional only if the caster is the player." },
+			{ name = "spell", type = "tes3spell|string", description = "The spell the caster uses." },
+			{ name = "instant", type = "boolean", default = false, description = "When true, the spell is cast instantly. No animation is performed." },
+			{ name = "alwaysSucceeds", type = "boolean", default = true, description = "When true, the spell cannot fail and does not consume magicka. When false, it is cast using the actor's spell skill, and requires and takes enough magicka to cast. Only applies when 'instant' is true." },
+			{ name = "bypassResistances", type = "boolean", default = false, description = "The spell will bypass the target's resistances. Only applies when 'instant' is true." },
 		},
 	}},
-	returns = {{ name = "addedCount", type = "number" }},
+	returns = {{ name = "executed", type = "boolean" }},
+	examples = {
+		-- autocomplete\definitions\global\tes3\cast\imitateExplodeSpell.lua
+		["imitateExplodeSpell"] = {
+			title = "This is an example of how to use tes3.cast instead of mwscript.explodeSpell",
+		},
+	},
 }
 ```
