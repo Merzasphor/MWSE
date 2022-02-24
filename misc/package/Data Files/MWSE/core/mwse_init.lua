@@ -99,7 +99,7 @@ function include(name)
 		package.noinclude[name] = true
 		return
 	end
-	
+
 	local res = loader(name, param)
 	if res ~= nil then
 		module = res
@@ -656,6 +656,25 @@ function lfs.directoryexists(filepath)
 	return lfs.attributes(filepath, "mode") == "directory"
 end
 
+-- Visit all files in a directory tree (recursively).
+function lfs.walkdir(root)
+    local function iter(dir)
+        dir = dir or root
+        for name in lfs.dir(dir) do
+            if not name:find("%.$") then
+                local path = dir .. name
+                local mode = lfs.attributes(path, "mode")
+                if mode == "file" then
+                    coroutine.yield(path, dir, name)
+                elseif mode == "directory" then
+                    iter(path .. "\\")
+                end
+            end
+        end
+    end
+    return coroutine.wrap(iter)
+end
+
 
 -------------------------------------------------
 -- Extend our base API: json
@@ -913,7 +932,7 @@ if (targetDebugger == "vscode-debuggee") then
 
 	-- Poll every frame.
 	event.register("enterFrame", debuggee.poll, { priority = 9001 })
-	
+
 	-- Start the debugger.
 	local startResult, breakerType = debuggee.start(json, { onError = onError, luaStyleLog = true })
 	mwse.log("[MWSE-Lua] vscode-debuggee start -> Result: %s, Type: %s", startResult, breakerType)

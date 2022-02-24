@@ -273,3 +273,21 @@ local success, error = lfs.unlock(filehandle, mode, start, length)
 
 ***
 
+### `lfs.walkdir`
+
+An iterator that visits all files in a directory tree.
+
+```lua
+local result = lfs.walkdir(path)
+```
+
+**Parameters**:
+
+* `path` (string): The root path of the directory tree.
+
+**Returns**:
+
+* `result` (iterator)
+
+***
+

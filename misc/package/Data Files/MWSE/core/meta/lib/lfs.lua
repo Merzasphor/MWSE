@@ -97,3 +97,8 @@ function lfs.touch(path, accessTime, modifiedTime) end
 --- @return string|nil error In the case of an error, a string describing the issue. In particular, if the lock exists and is not stale it returns the "File exists" message.
 function lfs.unlock(filehandle, mode, start, length) end
 
+--- An iterator that visits all files in a directory tree.
+--- @param path string The root path of the directory tree.
+--- @return iterator result No description yet available.
+function lfs.walkdir(path) end
+
