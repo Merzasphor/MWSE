@@ -3,7 +3,9 @@
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
+#include "TES3Actor.h"
 #include "TES3CrimeEvent.h"
+#include "TES3Faction.h"
 #include "TES3MobileActor.h"
 #include "TES3Reference.h"
 
@@ -32,6 +34,14 @@ namespace mwse::lua::event {
 		eventData["type"] = m_Crime->typeString.c_str;
 		eventData["position"] = m_Crime->position;
 		eventData["realTimestamp"] = m_Crime->timestamp;
+		if (m_Crime->victimBaseActor) {
+			eventData["victim"] = m_Crime->victimBaseActor;
+		}
+		else {
+			eventData["victim"] = m_Crime->victimFaction;
+		}
+		eventData["victimMobile"] = m_Crime->victim;
+		eventData["victimFaction"] = m_Crime->victimFaction;
 		eventData["value"] = m_Crime->penalty;
 		eventData["witness"] = m_Witness->reference;
 		eventData["witnessMobile"] = m_Witness;
