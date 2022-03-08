@@ -319,7 +319,7 @@ namespace NI {
 
 	unsigned int TexturingProperty::getDecalCount() const {
 		auto count = 0;
-		for (unsigned int i = (unsigned int)MapType::DECAL_FIRST; i <= (unsigned int)MapType::DECAL_LAST; i++) {
+		for (auto i = (unsigned int)MapType::DECAL_FIRST; i <= (unsigned int)MapType::DECAL_LAST; i++) {
 			if (i >= maps.size()) {
 				break;
 			}
@@ -332,7 +332,7 @@ namespace NI {
 	}
 
 	bool TexturingProperty::canAddDecalMap() const {
-		return getDecalCount() < 7;
+		return getDecalCount() < MAX_DECAL_COUNT;
 	}
 
 	unsigned int TexturingProperty::addDecalMap(Texture* texture) {
