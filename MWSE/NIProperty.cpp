@@ -362,7 +362,7 @@ namespace NI {
 	}
 
 	bool TexturingProperty::removeDecal(unsigned int index) {
-		if (index < (unsigned int)MapType::DECAL_FIRST || index >(unsigned int)MapType::DECAL_LAST) {
+		if (index < (unsigned int)MapType::DECAL_FIRST || index > (unsigned int)MapType::DECAL_LAST) {
 			throw std::invalid_argument("Invalid map index provided.");
 		}
 
