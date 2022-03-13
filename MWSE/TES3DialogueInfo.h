@@ -86,6 +86,16 @@ namespace TES3 {
 		void runScript(Reference * reference);
 
 		//
+		// Access to associated data.
+		//
+
+		static char* getLastLoadedText();
+		static void setLastLoadedText(const char* text);
+
+		static char* getLastLoadedScript();
+		static void setLastLoadedScript(const char* text);
+
+		//
 		// Custom functions.
 		//
 

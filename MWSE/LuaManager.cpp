@@ -2409,18 +2409,7 @@ namespace mwse::lua {
 				sol::table eventData = eventResult;
 				sol::object text = eventData["text"];
 				if (text.is<const char*>()) {
-					// Create our new buffer.
-					const char* newText = text.as<const char*>();
-					auto length = strlen(newText);
-					char* buffer = reinterpret_cast<char*>(tes3::_new(length + 1));
-
-					// Delete the previous buffer and replace it with this one.
-					tes3::_delete(*reinterpret_cast<char**>(0x7CA5AC));
-					*reinterpret_cast<char**>(0x7CA5AC) = buffer;
-
-					// Copy into the buffer and get out of here.
-					buffer[length] = '\0';
-					strcpy(buffer, newText);
+					TES3::DialogueInfo::setLastLoadedText(text.as<const char*>());
 					return true;
 				}
 			}
