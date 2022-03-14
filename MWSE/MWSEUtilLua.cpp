@@ -9,6 +9,8 @@
 
 #include "LuaTimer.h"
 
+#include "Log.h"
+
 namespace mwse::lua {
 #ifdef APPVEYOR_BUILD_NUMBER
 	constexpr unsigned int buildNumber = APPVEYOR_BUILD_NUMBER;
@@ -34,7 +36,10 @@ namespace mwse::lua {
 		return LuaManager::getInstance().clearScriptOverride(scriptId);
 	}
 
-	sol::object breakpoint() {
+	sol::object breakpoint(sol::optional<const char*> message) {
+		if (message.value_or(nullptr)) {
+			mwse::log::getLog() << "[MWSE] Hit breakpoint: " << message.value() << std::endl;
+		}
 		while (ShowCursor(TRUE) < 0);
 		return sol::nil;
 	}
