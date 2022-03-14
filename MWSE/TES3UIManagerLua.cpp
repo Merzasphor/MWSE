@@ -30,15 +30,10 @@ namespace mwse::lua {
 		double priority;
 	};
 	static std::unordered_map<Element*, std::unordered_map<Property, std::vector<EventLuaCallback>>> eventCallbacksBefore;
+	static std::unordered_map<Element*, std::unordered_map<Property, sol::protected_function>> eventCallbacksLegacy;
 	static std::unordered_map<Element*, std::unordered_map<Property, std::vector<EventLuaCallback>>> eventCallbacksAfter;
 	static std::unordered_map<Element*, std::unordered_map<Property, EventCallback>> originalCallbackMap;
 	static std::unordered_map<Element*, void(__cdecl*)(Element*)> destroyMap;
-
-	struct LegacyEventLuaCallback {
-		Property id;
-		sol::protected_function callback;
-	};
-	static std::unordered_map<Element*, std::vector<LegacyEventLuaCallback>> legacyEventMap;
 
 	bool __cdecl eventDispatcher(Element* owningWidget, Property eventID, int data0, int data1, Element* source) {
 		LuaManager& luaManager = LuaManager::getInstance();
@@ -109,43 +104,41 @@ namespace mwse::lua {
 
 		// Run our legacy event if applicable.
 		bool legacyUsed = false;
-		auto iterElements = legacyEventMap.find(target);
-		if (iterElements != legacyEventMap.end()) {
-			for (const auto& eventLua : iterElements->second) {
-				if (eventLua.id == eventID) {
-					legacyUsed = true;
+		auto iterElements = eventCallbacksLegacy.find(target);
+		if (iterElements != eventCallbacksLegacy.end()) {
+			auto iterCallback = iterElements->second.find(eventID);
+			if (iterCallback != iterElements->second.end()) {
+				legacyUsed = true;
 
-					sol::table eventData = state.create_table();
-					eventData["forwardSource"] = source;
-					eventData["source"] = target;
-					eventData["widget"] = owningWidget;
-					eventData["id"] = eventID;
-					eventData["data0"] = data0;
-					eventData["data1"] = data1;
+				sol::table eventData = state.create_table();
+				eventData["forwardSource"] = source;
+				eventData["source"] = target;
+				eventData["widget"] = owningWidget;
+				eventData["id"] = eventID;
+				eventData["data0"] = data0;
+				eventData["data1"] = data1;
 
-					// For mouse events, convert screen coordinates to element relative coordinates.
-					if (eventID >= Property::event_mouse_leave && eventID <= Property::event_mouse_release) {
-						eventData["relativeX"] = data0 - target->cached_screenX;
-						eventData["relativeY"] = target->cached_screenY - data1;
-					}
+				// For mouse events, convert screen coordinates to element relative coordinates.
+				if (eventID >= Property::event_mouse_leave && eventID <= Property::event_mouse_release) {
+					eventData["relativeX"] = data0 - target->cached_screenX;
+					eventData["relativeY"] = target->cached_screenY - data1;
+				}
 
-					// Note: sol::protected_function needs to be a local, as Lua functions can destroy it when modifying events.
-					sol::protected_function callback = eventLua.callback;
-					sol::protected_function_result result = callback(eventData);
-					if (result.valid()) {
-						// Return boolean results
-						sol::optional<bool> bool_result = result;
-						if (bool_result) {
-							return bool_result.value();
-						}
-						break;
+				// Note: sol::protected_function needs to be a local, as Lua functions can destroy it when modifying events.
+				sol::protected_function callback = iterCallback->second;
+				sol::protected_function_result result = callback(eventData);
+				if (result.valid()) {
+					// Return boolean results
+					sol::optional<bool> bool_result = result;
+					if (bool_result) {
+						return bool_result.value();
 					}
-					else {
-						sol::error error = result;
-						const char* errorSource = target->name.cString ? target->name.cString : "(unnamed)";
-						log::getLog() << "Lua error encountered during UI event from element " << errorSource << ":" << std::endl << error.what() << std::endl;
-						return true;
-					}
+				}
+				else {
+					sol::error error = result;
+					const char* errorSource = target->name.cString ? target->name.cString : "(unnamed)";
+					log::getLog() << "Lua error encountered during UI event from element " << errorSource << ":" << std::endl << error.what() << std::endl;
+					return true;
 				}
 			}
 		}
@@ -239,7 +232,7 @@ namespace mwse::lua {
 			target->setProperty(Property::event_destroy, static_cast<void*>(&eventDestroyDispatcher));
 		} else {
 			auto prevCallback = target->getProperty(PropertyType::EventCallback, eventID).eventCallback;
-			if (prevCallback != &eventDispatcher) {
+			if (prevCallback && prevCallback != &eventDispatcher) {
 				originalCallbackMap[target][eventID] = prevCallback;
 				target->setProperty(eventID, &eventDispatcher);
 			}
@@ -267,7 +260,7 @@ namespace mwse::lua {
 			target->setProperty(Property::event_destroy, static_cast<void*>(&eventDestroyDispatcher));
 		} else {
 			auto prevCallback = target->getProperty(PropertyType::EventCallback, eventID).eventCallback;
-			if (prevCallback != &eventDispatcher) {
+			if (prevCallback && prevCallback != &eventDispatcher) {
 				originalCallbackMap[target][eventID] = prevCallback;
 				target->setProperty(eventID, &eventDispatcher);
 			}
@@ -284,15 +277,14 @@ namespace mwse::lua {
 			target->setProperty(Property::event_destroy, static_cast<void*>(&eventDestroyDispatcher));
 		} else {
 			auto prevCallback = target->getProperty(PropertyType::EventCallback, eventID).eventCallback;
-			if (prevCallback != &eventDispatcher) {
+			if (prevCallback && prevCallback != &eventDispatcher) {
 				originalCallbackMap[target][eventID] = prevCallback;
 			}
 			target->setProperty(eventID, &eventDispatcher);
 		}
 
 		// Add the event.
-		auto& elementEvents = legacyEventMap[target];
-		elementEvents.push_back(LegacyEventLuaCallback{ eventID, callback });
+		eventCallbacksLegacy[target][eventID] = callback;
 	}
 
 	bool unregisterBeforeUIEvent(Element* target, Property eventID, sol::protected_function callback) {
@@ -332,15 +324,9 @@ namespace mwse::lua {
 	}
 
 	bool unregisterUIEvent(Element* target, Property eventID) {
-		auto& elementEvents = legacyEventMap[target];
-
-		// Check for existing event
-		for (auto it = elementEvents.begin(); it != elementEvents.end(); ++it) {
-			if (it->id == eventID) {
-				// Remove event
-				elementEvents.erase(it);
-				return true;
-			}
+		auto iterCallbacks = eventCallbacksLegacy.find(target);
+		if (iterCallbacks != eventCallbacksLegacy.end()) {
+			return iterCallbacks->second.erase(eventID);
 		}
 
 		return false;
@@ -376,7 +362,7 @@ namespace mwse::lua {
 	void cleanupEventRegistrations(TES3::UI::Element* element) {
 		eventCallbacksBefore.erase(element);
 		eventCallbacksAfter.erase(element);
-		legacyEventMap.erase(element);
+		eventCallbacksLegacy.erase(element);
 		originalCallbackMap.erase(element);
 	}
 
