@@ -232,11 +232,8 @@ namespace mwse::lua {
 			target->setProperty(Property::event_destroy, static_cast<void*>(&eventDestroyDispatcher));
 		} else {
 			auto prevCallback = target->getProperty(PropertyType::EventCallback, eventID).eventCallback;
-			if (prevCallback) {
-				originalCallbackMap[target][eventID] = prevCallback;
-			}
-
 			if (prevCallback != &eventDispatcher) {
+				originalCallbackMap[target][eventID] = prevCallback;
 				target->setProperty(eventID, &eventDispatcher);
 			}
 		}
@@ -263,11 +260,8 @@ namespace mwse::lua {
 			target->setProperty(Property::event_destroy, static_cast<void*>(&eventDestroyDispatcher));
 		} else {
 			auto prevCallback = target->getProperty(PropertyType::EventCallback, eventID).eventCallback;
-			if (prevCallback) {
-				originalCallbackMap[target][eventID] = prevCallback;
-			}
-
 			if (prevCallback != &eventDispatcher) {
+				originalCallbackMap[target][eventID] = prevCallback;
 				target->setProperty(eventID, &eventDispatcher);
 			}
 		}
@@ -283,11 +277,8 @@ namespace mwse::lua {
 			target->setProperty(Property::event_destroy, static_cast<void*>(&eventDestroyDispatcher));
 		} else {
 			auto prevCallback = target->getProperty(PropertyType::EventCallback, eventID).eventCallback;
-			if (prevCallback) {
-				originalCallbackMap[target][eventID] = prevCallback;
-			}
-
 			if (prevCallback != &eventDispatcher) {
+				originalCallbackMap[target][eventID] = prevCallback;
 				target->setProperty(eventID, &eventDispatcher);
 			}
 		}
