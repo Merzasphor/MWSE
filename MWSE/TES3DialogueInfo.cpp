@@ -9,6 +9,8 @@
 #include "TES3Race.h"
 #include "TES3Cell.h"
 
+#include "MemoryUtil.h"
+
 #include "BitUtil.h"
 
 namespace TES3 {
@@ -48,6 +50,44 @@ namespace TES3 {
 	const auto TES3_DialogueInfo_runScript = reinterpret_cast<void(__thiscall*)(DialogueInfo*, Reference*)>(0x4B1E40);
 	void DialogueInfo::runScript(Reference * reference) {
 		TES3_DialogueInfo_runScript(this, reference);
+	}
+
+	auto& TES3_DialogueInfo_lastLoadedText = *reinterpret_cast<char**>(0x7CA5AC);
+	char* DialogueInfo::getLastLoadedText() {
+		return TES3_DialogueInfo_lastLoadedText;
+	}
+
+	void DialogueInfo::setLastLoadedText(const char* text) {
+		if (TES3_DialogueInfo_lastLoadedText) {
+			mwse::tes3::_delete(TES3_DialogueInfo_lastLoadedText);
+			TES3_DialogueInfo_lastLoadedText = nullptr;
+		}
+
+		if (text) {
+			auto length = strlen(text);
+			TES3_DialogueInfo_lastLoadedText = reinterpret_cast<char*>(mwse::tes3::_new(length + 1));
+			TES3_DialogueInfo_lastLoadedText[length] = '\0';
+			strcpy(TES3_DialogueInfo_lastLoadedText, text);
+		}
+	}
+
+	auto& TES3_DialogueInfo_lastLoadedScript = *reinterpret_cast<char**>(0x7CA5A8);
+	char* DialogueInfo::getLastLoadedScript() {
+		return TES3_DialogueInfo_lastLoadedScript;
+	}
+
+	void DialogueInfo::setLastLoadedScript(const char* text) {
+		if (TES3_DialogueInfo_lastLoadedScript) {
+			mwse::tes3::_delete(TES3_DialogueInfo_lastLoadedScript);
+			TES3_DialogueInfo_lastLoadedScript = nullptr;
+		}
+
+		if (text) {
+			auto length = strlen(text);
+			TES3_DialogueInfo_lastLoadedScript = reinterpret_cast<char*>(mwse::tes3::_new(length + 1));
+			TES3_DialogueInfo_lastLoadedScript[length] = '\0';
+			strcpy(TES3_DialogueInfo_lastLoadedScript, text);
+		}
 	}
 
 	sol::optional<std::string> DialogueInfo::getID() {

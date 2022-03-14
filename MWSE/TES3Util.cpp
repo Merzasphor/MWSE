@@ -12,6 +12,7 @@
 #include "TES3Enchantment.h"
 #include "TES3GameSetting.h"
 #include "TES3MagicEffectController.h"
+#include "TES3MagicSourceInstance.h"
 #include "TES3Misc.h"
 #include "TES3MobilePlayer.h"
 #include "TES3NPC.h"
@@ -19,7 +20,6 @@
 #include "TES3Skill.h"
 #include "TES3SoulGemData.h"
 #include "TES3Spell.h"
-#include "TES3MagicSourceInstance.h"
 #include "TES3WorldController.h"
 
 #include "TES3UIManager.h"

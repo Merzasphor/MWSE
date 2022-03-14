@@ -675,6 +675,7 @@
     <ClCompile Include="TES3AnimationDataLua.cpp" />
     <ClCompile Include="TES3AnimationGroup.cpp" />
     <ClCompile Include="TES3Apparatus.cpp" />
+    <ClCompile Include="TES3Archive.cpp" />
     <ClCompile Include="TES3Attachment.cpp" />
     <ClCompile Include="TES3AIConfig.cpp" />
     <ClCompile Include="TES3Birthsign.cpp" />

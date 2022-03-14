@@ -9,6 +9,25 @@
 #include "TES3Reference.h"
 
 namespace TES3 {
+	//
+	// BodyPartManager
+	//
+
+	BodyPart* BodyPartManager::ActiveBodyPart::getBodyPart() const {
+		if (bodyPart == INVALID_VALUE) {
+			return nullptr;
+		}
+		return bodyPart;
+	}
+
+	void BodyPartManager::ActiveBodyPart::setBodyPart(BodyPart* value) {
+		bodyPart = value;
+	}
+
+	//
+	// BodyPartManager
+	//
+
 	const auto TES3_BodyPartManager_ctor = reinterpret_cast<BodyPartManager* (__thiscall*)(BodyPartManager*, NI::Node*, Reference*)>(0x472580);
 	BodyPartManager* BodyPartManager::ctor(NI::Node* parentNode, Reference* ref) {
 		TES3_BodyPartManager_ctor(this, parentNode, ref);

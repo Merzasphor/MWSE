@@ -164,13 +164,14 @@ namespace NI {
 			DECAL_4,
 			DECAL_5,
 			DECAL_6,
-			DECAL_7,
 
 			DECAL_FIRST = DECAL_1,
-			DECAL_LAST = DECAL_7,
+			DECAL_LAST = DECAL_6,
 
 			INVALID = UINT32_MAX,
 		};
+
+		static constexpr auto MAX_DECAL_COUNT = (unsigned int)MapType::DECAL_LAST - (unsigned int)MapType::DECAL_FIRST + 1u;
 
 		struct Map {
 			struct VirtualTable {

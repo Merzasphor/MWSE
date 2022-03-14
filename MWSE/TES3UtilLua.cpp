@@ -554,7 +554,7 @@ namespace mwse::lua {
 		sol::state_view state = s;
 		sol::table archives = state.create_table();
 
-		TES3::Archive* archive = **reinterpret_cast<TES3::Archive***>(0x7C9F74);
+		auto archive = TES3::BSALoader::get()->lastLoadedArchive;
 		size_t i = 0;
 		while (archive) {
 			archives[++i] = std::string(archive->path, strnlen_s(archive->path, 128));
@@ -1768,7 +1768,7 @@ namespace mwse::lua {
 			return std::make_tuple("bsa", buffer);
 		}
 
-		return sol::optional<std::tuple<std::string, std::string>>();
+		return {};
 	}
 
 	// Very slow method to get an INFO record by its ID.

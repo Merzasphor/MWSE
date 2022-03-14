@@ -81,6 +81,11 @@ namespace TES3 {
 			BodyPart* bodyPart; // 0x4
 			NI::Pointer<NI::Node> node; // 0x8
 			unsigned int flags; // 0xC
+
+			BodyPart* getBodyPart() const;
+			void setBodyPart(BodyPart* value);
+
+			static constexpr auto INVALID_VALUE = reinterpret_cast<void*>(0xFFFFFFFF);
 		};
 		AttachNode attachNodes[25]; // 0x0
 		int unknown_0x578;

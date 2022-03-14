@@ -420,7 +420,10 @@ namespace TES3 {
 		// Enable simulation for creatures/NPCs.
 		if (baseObject->objectType == TES3::ObjectType::Creature || baseObject->objectType == TES3::ObjectType::NPC) {
 			TES3::WorldController::get()->mobController->addMob(this);
-			getAttachedMobileActor()->enterLeaveSimulationByDistance();
+			auto mobile = getAttachedMobileActor();
+			if (mobile) {
+				mobile->enterLeaveSimulationByDistance();
+			}
 		}
 		// Activators, containers, and statics need collision.
 		else if (baseObject->objectType == TES3::ObjectType::Activator || baseObject->objectType == TES3::ObjectType::Container || baseObject->objectType == TES3::ObjectType::Static) {

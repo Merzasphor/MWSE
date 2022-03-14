@@ -74,7 +74,7 @@ namespace mwse::lua {
 			usertypeDefinition["new"] = sol::no_constructor;
 
 			// Basic property binding.
-			usertypeDefinition["bodyPart"] = &TES3::BodyPartManager::ActiveBodyPart::bodyPart;
+			usertypeDefinition["bodyPart"] = sol::property(&TES3::BodyPartManager::ActiveBodyPart::getBodyPart, &TES3::BodyPartManager::ActiveBodyPart::setBodyPart);
 			usertypeDefinition["flags"] = &TES3::BodyPartManager::ActiveBodyPart::flags;
 			usertypeDefinition["item"] = &TES3::BodyPartManager::ActiveBodyPart::item;
 			usertypeDefinition["node"] = &TES3::BodyPartManager::ActiveBodyPart::node;
