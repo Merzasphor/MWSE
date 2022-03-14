@@ -1,6 +1,6 @@
 # preventRest
 
-This event can be used to prevent player from resting by returning false.
+This event can be used to prevent the player from resting by returning false.
 
 ```lua
 --- @param e preventRestEventData
@@ -20,6 +20,6 @@ event.register(tes3.event.preventRest, preventRestCallback)
 
 ## Event Data
 
-* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. Mobile actor which is preventing the player from resting
-* `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. Mobile’s associated reference.
+* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile actor that is preventing the player from resting.
+* `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. Mobile's associated reference.
 

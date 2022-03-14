@@ -33,10 +33,10 @@
 --- 		1 - Century Sans
 --- 		2 - Daedric
 --- @field height number Element dimensions in pixels. Integer number.
---- @field heightProportional boolean Sets element dimensions using a proportional sizer. The sizer starts with the parent dimension in the flow direction, subtracts any fixed dimension children leaving the proportional sizer space. Each proportionally sized element then gets an equal division of the space, multiplied by this member. Values above 1.0 are permissible.
---- 	
+--- @field heightProportional number Sets element dimensions using a proportional sizer. The sizer starts with the parent dimension in the flow direction, subtracts any fixed dimension children leaving the proportional sizer space. Each proportionally sized element then gets an equal division of the space, multiplied by this member. Values above 1.0 are permissible.
+--- 
 --- 	Bug note: If widthProportional is used without heightProportional, an element may not respond to changes in parent size. It is recommended to set heightProportional, or have a fixed size sibling element if dynamic reflow is required.
---- 	
+--- 
 --- 	Overrides fixed, minimum and maximum sizes unless this value is `nil` (default).
 --- @field id number *Read-only*. The element's ID.  The element can be later accessed by `ancestor:findChild(id)`. Note that multiple elements may have the same ID, such as subparts of a widget, or list items. Therefore, you may think of ids as an element class identifier.
 --- @field imageScaleX number Image scaling multipliers. Only applies to image elements.
@@ -62,10 +62,10 @@
 --- @field visible boolean Controls if the element is visible.
 --- @field widget tes3uiButton|tes3uiFillBar|tes3uiParagraphInput|tes3uiSlider|tes3uiScrollPane|tes3uiTextInput|tes3uiTextSelect|nil Access to element specific properties. This will be `nil` if there are no element specific properties. See the return types and the create* functions for more details.
 --- @field width number Element dimensions in pixels. Integer number.
---- @field widthProportional boolean Sets element dimensions using a proportional sizer. The sizer starts with the parent dimension in the flow direction, subtracts any fixed dimension children leaving the proportional sizer space. Each proportionally sized element then gets an equal division of the space, multiplied by this member. Values above 1.0 are permissible.
---- 	
+--- @field widthProportional number Sets element dimensions using a proportional sizer. The sizer starts with the parent dimension in the flow direction, subtracts any fixed dimension children leaving the proportional sizer space. Each proportionally sized element then gets an equal division of the space, multiplied by this member. Values above 1.0 are permissible.
+--- 
 --- 	Bug note: If widthProportional is used without heightProportional, an element may not respond to changes in parent size. It is recommended to set heightProportional, or have a fixed size sibling element if dynamic reflow is required.
---- 	
+--- 
 --- 	Overrides fixed, minimum and maximum sizes unless this value is `nil` (default).
 --- @field wrapText boolean Controls text wrapping. Setting this to `true` will also set `layoutHeightFraction` to `1.0`, which is required for wrapping text to adjust to its container size.
 tes3uiElement = {}

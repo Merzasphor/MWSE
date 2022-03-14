@@ -39,7 +39,7 @@ Each function definition is just a regular Lua table. The following fields are a
 | returns | `table` | The table with return values. |
 
 
-examples table looks like this:
+`examples` table looks like this:
 | Field |   Type  | Description |
 | ----- | ------- | ----------- |
 | entry | `table` | Each entry in examples table should be the file name of the file used as an example. The example file should just be regular Lua code. All the example files need to be inside the folder of the same name as the function these examples are for. Look at the last example in this page for reference. |

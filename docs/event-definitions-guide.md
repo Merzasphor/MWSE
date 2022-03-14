@@ -19,7 +19,7 @@ eventData table entries can have the following fields:
 | description | `string` | The description for the value. You can pass a string with `""` or `[[]]`. |
 
 
-examples table looks like this:
+`examples` table looks like this:
 | Field |   Type  | Description |
 | ----- | ------- | ----------- |
 | entry | `table` | Each entry in examples table should be the file name of the file used as an example. The example file should just be regular Lua code. All the example files need to be inside the folder of the same name as the event these examples are for. |
