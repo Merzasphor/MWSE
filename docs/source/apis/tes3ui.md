@@ -364,31 +364,26 @@ tes3ui.logToConsole(text, isCommand)
 **Parameters**:
 
 * `text` (string)
-* `isCommand` (boolean)
+* `isCommand` (boolean): Passing `true` will make the text in the console selectable by using up arrow key. If it is a valid command, then pressing enter will call it.
 
-??? example "Example: Print the type of each of the player's skills to the console"
+??? example "Example: This example describes how this function behaves with isCommand = true."
 
 	```lua
 	
-	local function printNames(e)
-		local skillTypeNames = {
-			[0] = "Major",
-			[1] = "Minor",
-			[2] = "Miscellaneous"
-		}
+	local function example()
+		-- This will make "player->ModStrength 10" appear in the console coloured brown.
+		-- It can't be selected by using up arrow key.
+		tes3ui.logToConsole("player->ModStrength 10", false)
 	
-		for _, skillId in pairs(tes3.skill) do
-			local skillStat = tes3.mobilePlayer:getSkillStatistic(skillId)
-			local name = tes3.getSkillName(skillId)
-			local typeName = skillTypeNames[skillStat.type]
-	
-			tes3ui.logToConsole(string.format("%s, type: %s skill", name, typeName), false)
-		end
+		-- This will make "player->ModWillpower 10" appear in the console coloured blue.
+		-- It CAN be selected by using up arrow key, and when the enter is pressed,
+		-- it will call that function.
+		tes3ui.logToConsole("player->ModWillpower 10", true)
 	
 		tes3.messageBox("Done! Open the console to see the result.")
 	end
 	
-	event.register(tes3.event.keyDown, printNames, { filter = tes3.scanCode.u })
+	event.register(tes3.event.keyDown, example, { filter = tes3.scanCode.u })
 
 	```
 

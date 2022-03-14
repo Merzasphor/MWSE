@@ -3,11 +3,11 @@ return {
 	description = [[Logs a message to the console.]],
 	arguments = {
 		{ name = "text", type = "string" },
-		{ name = "isCommand", type = "boolean", default = false },
+		{ name = "isCommand", type = "boolean", default = false, description = "Passing `true` will make the text in the console selectable by using up arrow key. If it is a valid command, then pressing enter will call it." },
 	},
 	examples = {
-		["logPlayerSkillTypes"] = {
-			title = "Print the type of each of the player's skills to the console"
+		["isCommandUse"] = {
+			title = "This example describes how this function behaves with isCommand = true."
 		}
 	}
 }

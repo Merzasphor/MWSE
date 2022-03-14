@@ -134,7 +134,7 @@ function tes3ui.log(message, ...) end
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3ui/#tes3uilogtoconsole).
 --- @param text string No description yet available.
---- @param isCommand boolean No description yet available.
+--- @param isCommand boolean Passing `true` will make the text in the console selectable by using up arrow key. If it is a valid command, then pressing enter will call it.
 function tes3ui.logToConsole(text, isCommand) end
 
 --- 
