@@ -123,6 +123,13 @@ function tes3ui.getViewportSize() end
 --- @return boolean result No description yet available.
 function tes3ui.leaveMenuMode() end
 
+--- Logs a message to the console. The message accepts formatting and additional parameters matching string.format's usage.
+---
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3ui/#tes3uilog).
+--- @param message string No description yet available.
+--- @vararg any *Optional*. No description yet available.
+function tes3ui.log(message, ...) end
+
 --- Logs a message to the console.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3ui/#tes3uilogtoconsole).
