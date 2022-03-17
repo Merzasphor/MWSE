@@ -10,6 +10,6 @@
 --- @field isEquipped boolean If `true`, the tile represents an item that is equipped.
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon *Read-only*. The item the tile represents.
 --- @field itemData tes3itemData *Read-only*. The item data associated with this tile.
---- @field type number *Read-only*. The type of tile represented.
+--- @field type number *Read-only*. The type of tile represented. Maps to values in [`tes3.inventoryTileType`](https://mwse.github.io/MWSE/references/inventory-tile-types/) namespace.
 tes3inventoryTile = {}
 

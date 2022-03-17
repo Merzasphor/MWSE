@@ -86,7 +86,7 @@ If `true`, the tile represents an item that is equipped.
 
 ### `type`
 
-*Read-only*. The type of tile represented.
+*Read-only*. The type of tile represented. Maps to values in [`tes3.inventoryTileType`](https://mwse.github.io/MWSE/references/inventory-tile-types/) namespace.
 
 **Returns**:
 
