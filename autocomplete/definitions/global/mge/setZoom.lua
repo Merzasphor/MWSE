@@ -1,8 +1,12 @@
 return {
 	type = "function",
 	description = [[Wrapper for MGEZoom, or MGESetZoom if set to animate.]],
-	arguments = {
-		{ name = "amount", type = "number" },
-		{ name = "animate", type = "boolean", optional = true },
-	},
+	arguments = {{
+		name = "params",
+		type = "table",
+		tableParams = {
+			{ name = "amount", type = "number" },
+			{ name = "animate", type = "boolean", optional = true, default = false },
+		},
+	}},
 }

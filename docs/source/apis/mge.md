@@ -29,12 +29,13 @@ mge.disableCameraShake()
 Disables a HUD element. If a HUD ID is provided, this is a warpper for MGEDisableHUD, otherwise it is a wrapper for MGENIDDisableHUD.
 
 ```lua
-mge.disableHUD(hud)
+mge.disableHUD({ hud = ... })
 ```
 
 **Parameters**:
 
-* `hud` (string): *Optional*.
+* `params` (table)
+	* `hud` (string): *Optional*.
 
 ***
 
@@ -43,12 +44,13 @@ mge.disableHUD(hud)
 Disables a shader. Wrapper for mwscript's MGEDisableShader.
 
 ```lua
-mge.disableShader(shader)
+mge.disableShader({ shader = ... })
 ```
 
 **Parameters**:
 
-* `shader` (string)
+* `params` (table)
+	* `shader` (string)
 
 ***
 
@@ -67,13 +69,14 @@ mge.disableZoom()
 Enables MGE XE's camera shake effect. Wrapper for mwscript's MGEEnableCameraShake.
 
 ```lua
-mge.enableCameraShake(magnitude, acceleration)
+mge.enableCameraShake({ magnitude = ..., acceleration = ... })
 ```
 
 **Parameters**:
 
-* `magnitude` (number): *Optional*.
-* `acceleration` (number): *Optional*.
+* `params` (table)
+	* `magnitude` (number): *Optional*.
+	* `acceleration` (number): *Optional*.
 
 ***
 
@@ -96,12 +99,13 @@ local enabled = mge.enabled()
 Enables a HUD element. If a HUD ID is provided, this is a warpper for MGEEnableHUD, otherwise it is a wrapper for MGENIDEnableHUD.
 
 ```lua
-mge.enableHUD(hud)
+mge.enableHUD({ hud = ... })
 ```
 
 **Parameters**:
 
-* `hud` (string): *Optional*.
+* `params` (table)
+	* `hud` (string): *Optional*.
 
 ***
 
@@ -110,12 +114,13 @@ mge.enableHUD(hud)
 Enables a shader. Wrapper for mwscript's MGEEnableShader.
 
 ```lua
-mge.enableShader(shader)
+mge.enableShader({ shader = ... })
 ```
 
 **Parameters**:
 
-* `shader` (string)
+* `params` (table)
+	* `shader` (string)
 
 ***
 
@@ -134,12 +139,13 @@ mge.enableZoom()
 Frees a HUD element. If a HUD ID is provided, this is a warpper for MGEFreeHUD, otherwise it is a wrapper for MGENIDFreeHUD.
 
 ```lua
-mge.freeHUD(hud)
+mge.freeHUD({ hud = ... })
 ```
 
 **Parameters**:
 
-* `hud` (string): *Optional*.
+* `params` (table)
+	* `hud` (string): *Optional*.
 
 ***
 
@@ -148,12 +154,13 @@ mge.freeHUD(hud)
 Makes a HUD element fullscreen. If a HUD ID is provided, this is a warpper for MGEFullscreenHUD, otherwise it is a wrapper for MGENIDFullscreenHUD.
 
 ```lua
-mge.fullscreenHUD(hud)
+mge.fullscreenHUD({ hud = ... })
 ```
 
 **Parameters**:
 
-* `hud` (string): *Optional*.
+* `params` (table)
+	* `hud` (string): *Optional*.
 
 ***
 
@@ -277,12 +284,13 @@ mge.log(message)
 Wrapper for MGERotateScreenBy.
 
 ```lua
-mge.modScreenRotation(rotation)
+mge.modScreenRotation({ rotation = ... })
 ```
 
 **Parameters**:
 
-* `rotation` (number)
+* `params` (table)
+	* `rotation` (number)
 
 ***
 
@@ -291,14 +299,15 @@ mge.modScreenRotation(rotation)
 Positions a HUD element. If a HUD ID is provided, this is a warpper for MGEPositionHUD, otherwise it is a wrapper for MGENIDPositionHUD.
 
 ```lua
-mge.positionHUD(hud, x, y)
+mge.positionHUD({ hud = ..., x = ..., y = ... })
 ```
 
 **Parameters**:
 
-* `hud` (string): *Optional*.
-* `x` (number)
-* `y` (number)
+* `params` (table)
+	* `hud` (string): *Optional*.
+	* `x` (number)
+	* `y` (number)
 
 ***
 
@@ -307,14 +316,15 @@ mge.positionHUD(hud, x, y)
 Scales a HUD element. If a HUD ID is provided, this is a warpper for MGEScaleHUD, otherwise it is a wrapper for MGENIDScaleHUD.
 
 ```lua
-mge.scaleHUD(hud, x, y)
+mge.scaleHUD({ hud = ..., x = ..., y = ... })
 ```
 
 **Parameters**:
 
-* `hud` (string): *Optional*.
-* `x` (number)
-* `y` (number)
+* `params` (table)
+	* `hud` (string): *Optional*.
+	* `x` (number)
+	* `y` (number)
 
 ***
 
@@ -323,12 +333,13 @@ mge.scaleHUD(hud, x, y)
 Selects a HUD element, to assume for future HUD calls.
 
 ```lua
-mge.selectHUD(hud)
+mge.selectHUD({ hud = ... })
 ```
 
 **Parameters**:
 
-* `hud` (string)
+* `params` (table)
+	* `hud` (string): *Optional*.
 
 ***
 
@@ -337,12 +348,13 @@ mge.selectHUD(hud)
 Wrapper for MGECameraShakeZoom.
 
 ```lua
-mge.setCameraShakeAcceleration(acceleration)
+mge.setCameraShakeAcceleration({ acceleration = ... })
 ```
 
 **Parameters**:
 
-* `acceleration` (number)
+* `params` (table)
+	* `acceleration` (number)
 
 ***
 
@@ -351,12 +363,13 @@ mge.setCameraShakeAcceleration(acceleration)
 Wrapper for MGESetCameraShakeMagnitude.
 
 ```lua
-mge.setCameraShakeMagnitude(magnitude)
+mge.setCameraShakeMagnitude({ magnitude = ... })
 ```
 
 **Parameters**:
 
-* `magnitude` (number)
+* `params` (table)
+	* `magnitude` (number)
 
 ***
 
@@ -365,13 +378,14 @@ mge.setCameraShakeMagnitude(magnitude)
 Sets the effect for a HUD element. If a HUD ID is provided, this is a warpper for MGEChangeHUDEffect, otherwise it is a wrapper for MGENIDChangeHUDEffect.
 
 ```lua
-mge.setHUDEffect(hud, effect)
+mge.setHUDEffect({ hud = ..., effect = ... })
 ```
 
 **Parameters**:
 
-* `hud` (string): *Optional*.
-* `effect` (string)
+* `params` (table)
+	* `hud` (string): *Optional*.
+	* `effect` (string)
 
 ***
 
@@ -380,14 +394,15 @@ mge.setHUDEffect(hud, effect)
 Sets the effect float variable for a HUD element. This is a wrapper for MGENIDSetHUDEffectFloat.
 
 ```lua
-mge.setHUDEffectFloat(hud, variable, value)
+mge.setHUDEffectFloat({ hud = ..., variable = ..., value = ... })
 ```
 
 **Parameters**:
 
-* `hud` (string): *Optional*.
-* `variable` (string)
-* `value` (number)
+* `params` (table)
+	* `hud` (string): *Optional*.
+	* `variable` (string)
+	* `value` (number)
 
 ***
 
@@ -396,14 +411,15 @@ mge.setHUDEffectFloat(hud, variable, value)
 Sets the effect long variable for a HUD element. This is a wrapper for MGENIDSetHUDEffectLong.
 
 ```lua
-mge.setHUDEffectLong(hud, variable, value)
+mge.setHUDEffectLong({ hud = ..., variable = ..., value = ... })
 ```
 
 **Parameters**:
 
-* `hud` (string): *Optional*.
-* `variable` (string)
-* `value` (number)
+* `params` (table)
+	* `hud` (string): *Optional*.
+	* `variable` (string)
+	* `value` (number)
 
 ***
 
@@ -412,14 +428,15 @@ mge.setHUDEffectLong(hud, variable, value)
 Sets the effect vector variable for a HUD element. This is a wrapper for MGENIDSetHUDEffectVec.
 
 ```lua
-mge.setHUDEffectVector4(hud, variable, value)
+mge.setHUDEffectVector4({ hud = ..., variable = ..., value = ... })
 ```
 
 **Parameters**:
 
-* `hud` (string): *Optional*.
-* `variable` (string)
-* `value` (table): A table of 4 values.
+* `params` (table)
+	* `hud` (string): *Optional*.
+	* `variable` (string)
+	* `value` (table): A table of 4 values.
 
 ***
 
@@ -428,13 +445,14 @@ mge.setHUDEffectVector4(hud, variable, value)
 Sets the texture for a given HUD element. If a HUD ID is provided, this is a warpper for MGEChangeHUDTexture, otherwise it is a wrapper for MGENIDChangeHUDTexture.
 
 ```lua
-mge.setHUDTexture(hud, texture)
+mge.setHUDTexture({ hud = ..., texture = ... })
 ```
 
 **Parameters**:
 
-* `hud` (string)
-* `texture` (string)
+* `params` (table)
+	* `hud` (string)
+	* `texture` (string)
 
 ***
 
@@ -443,12 +461,13 @@ mge.setHUDTexture(hud, texture)
 Wrapper for MGERotateScreen.
 
 ```lua
-mge.setScreenRotation(rotation)
+mge.setScreenRotation({ rotation = ... })
 ```
 
 **Parameters**:
 
-* `rotation` (number)
+* `params` (table)
+	* `rotation` (number)
 
 ***
 
@@ -457,14 +476,15 @@ mge.setScreenRotation(rotation)
 Sets a shader's float variable. Wrapper for mwscript's MGEShaderSetFloat.
 
 ```lua
-mge.setShaderFloat(shader, variable, value)
+mge.setShaderFloat({ shader = ..., variable = ..., value = ... })
 ```
 
 **Parameters**:
 
-* `shader` (string)
-* `variable` (string)
-* `value` (number)
+* `params` (table)
+	* `shader` (string)
+	* `variable` (string)
+	* `value` (number)
 
 ***
 
@@ -473,14 +493,15 @@ mge.setShaderFloat(shader, variable, value)
 Sets a shader's long variable. Wrapper for mwscript's MGEShaderSetLong.
 
 ```lua
-mge.setShaderLong(shader, variable, value)
+mge.setShaderLong({ shader = ..., variable = ..., value = ... })
 ```
 
 **Parameters**:
 
-* `shader` (string)
-* `variable` (string)
-* `value` (number)
+* `params` (table)
+	* `shader` (string)
+	* `variable` (string)
+	* `value` (number)
 
 ***
 
@@ -489,14 +510,15 @@ mge.setShaderLong(shader, variable, value)
 Sets a shader's vector variable. Wrapper for mwscript's MGEShaderSetVector.
 
 ```lua
-mge.setShaderVector4(shader, variable, value)
+mge.setShaderVector4({ shader = ..., variable = ..., value = ... })
 ```
 
 **Parameters**:
 
-* `shader` (string)
-* `variable` (string)
-* `value` (table): A table of 4 values.
+* `params` (table)
+	* `shader` (string)
+	* `variable` (string)
+	* `value` (table): A table of 4 values.
 
 ***
 
@@ -505,13 +527,14 @@ mge.setShaderVector4(shader, variable, value)
 Wrapper for MGEZoom, or MGESetZoom if set to animate.
 
 ```lua
-mge.setZoom(amount, animate)
+mge.setZoom({ amount = ..., animate = ... })
 ```
 
 **Parameters**:
 
-* `amount` (number)
-* `animate` (boolean): *Optional*.
+* `params` (table)
+	* `amount` (number)
+	* `animate` (boolean): *Optional*.
 
 ***
 
@@ -560,12 +583,13 @@ mge.toggleZoom()
 Cancels selection for a HUD element. Wrapper for mwscript's MGECancelWithHUD.
 
 ```lua
-mge.unselectHUD(hud)
+mge.unselectHUD({ hud = ... })
 ```
 
 **Parameters**:
 
-* `hud` (string)
+* `params` (table)
+	* `hud` (string)
 
 ***
 
@@ -574,12 +598,13 @@ mge.unselectHUD(hud)
 Wrapper for MGEZoomIn, or MGEZoomInBy if an amount is provided.
 
 ```lua
-mge.zoomIn(amount)
+mge.zoomIn({ amount = ... })
 ```
 
 **Parameters**:
 
-* `amount` (number): *Optional*.
+* `params` (table)
+	* `amount` (number): *Optional*.
 
 ***
 
@@ -588,12 +613,13 @@ mge.zoomIn(amount)
 Wrapper for MGEZoomOut, or MGEZoomOutBy if an amount is provided.
 
 ```lua
-mge.zoomOut(amount)
+mge.zoomOut({ amount = ... })
 ```
 
 **Parameters**:
 
-* `amount` (number): *Optional*.
+* `params` (table)
+	* `amount` (number): *Optional*.
 
 ***
 

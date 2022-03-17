@@ -1,7 +1,11 @@
 return {
 	type = "function",
 	description = [[Wrapper for MGERotateScreenBy.]],
-	arguments = {
-		{ name = "rotation", type = "number" },
-	},
+	arguments = {{
+		name = "params",
+		type = "table",
+		tableParams = {
+			{ name = "rotation", type = "number" },
+		},
+	}},
 }

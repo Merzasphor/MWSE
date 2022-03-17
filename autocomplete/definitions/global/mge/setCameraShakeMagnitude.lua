@@ -1,7 +1,11 @@
 return {
 	type = "function",
 	description = [[Wrapper for MGESetCameraShakeMagnitude.]],
-	arguments = {
-		{ name = "magnitude", type = "number" },
-	},
+	arguments = {{
+		name = "params",
+		type = "table",
+		tableParams = {
+			{ name = "magnitude", type = "number" },
+		},
+	}},
 }
