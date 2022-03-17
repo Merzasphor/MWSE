@@ -26,7 +26,7 @@ The body part object used for male actors.
 
 ### `type`
 
-No description yet available.
+The type of the wearable part. Maps to [`tes3.activeBodyPart`](https://mwse.github.io/MWSE/references/active-body-parts/) namespace.
 
 **Returns**:
 

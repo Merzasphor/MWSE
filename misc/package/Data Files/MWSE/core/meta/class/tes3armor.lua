@@ -13,7 +13,7 @@
 --- @field name string The player-facing name for the object.
 --- @field parts table *Read-only*. An array-style table of the [`tes3wearablePart`](https://mwse.github.io/MWSE/types/tes3wearablePart/) data on the object.
 --- @field script tes3script The script that runs on the object.
---- @field slot number The slot used by the armor.
+--- @field slot number The slot used by the armor. Maps to [`tes3.armorSlot`](https://mwse.github.io/MWSE/references/armor-slots/) namespace.
 --- @field slotName string *Read-only*. The name of the slot used by the armor.
 --- @field value number The value of the object.
 --- @field weight number The weight of the object.

@@ -287,7 +287,7 @@ The script that runs on the object.
 
 ### `slot`
 
-The slot used by the armor.
+The slot used by the armor. Maps to [`tes3.armorSlot`](https://mwse.github.io/MWSE/references/armor-slots/) namespace.
 
 **Returns**:
 

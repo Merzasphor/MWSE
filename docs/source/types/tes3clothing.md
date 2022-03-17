@@ -257,7 +257,7 @@ The script that runs on the object.
 
 ### `slot`
 
-The slot used by the clothing object.
+The slot used by the clothing object. Maps to values in [`tes3.clothingSlot`](https://mwse.github.io/MWSE/references/clothing-slots/) namespace.
 
 **Returns**:
 
