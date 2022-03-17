@@ -137,7 +137,7 @@ The collection responsible for holding this object.
 
 ### `part`
 
-No description yet available.
+The part of the body occupied. Maps to values in [`tes3.partIndex`](https://mwse.github.io/MWSE/references/part-indices/) namespace.
 
 **Returns**:
 
@@ -147,7 +147,7 @@ No description yet available.
 
 ### `partType`
 
-No description yet available.
+The layer the body part occupies. Maps to values in [`tes3.activeBodyPartLayer`](https://mwse.github.io/MWSE/references/active-body-part-layers/) namespace.
 
 **Returns**:
 
