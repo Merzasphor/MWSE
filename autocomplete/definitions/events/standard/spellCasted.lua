@@ -11,7 +11,7 @@ return {
 		["target"] = {
 			type = "tes3reference",
 			readOnly = true,
-			description = "The target of the spell. For self-targeted spells, this matches caster.",
+			description = "The target of the spell. For self-targeted spells, this matches the caster. Touch spells can also have `target` parameter. On target spells don't have `target` parameter during this event, since it can't have a target until it hits it. Which isn't known when the spell is casted.",
 		},
 		["source"] = {
 			type = "tes3spell",
