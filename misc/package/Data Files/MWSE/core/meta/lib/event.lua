@@ -90,6 +90,7 @@
 --- @field register fun(eventId: '"meshLoaded"', callback: fun(e: meshLoadedEventData), options: table)
 --- @field register fun(eventId: '"mobileActivated"', callback: fun(e: mobileActivatedEventData), options: table)
 --- @field register fun(eventId: '"mobileDeactivated"', callback: fun(e: mobileDeactivatedEventData), options: table)
+--- @field register fun(eventId: '"modConfigReady"', callback: fun(e: modConfigReadyEventData), options: table)
 --- @field register fun(eventId: '"mouseAxis"', callback: fun(e: mouseAxisEventData), options: table)
 --- @field register fun(eventId: '"mouseButtonDown"', callback: fun(e: mouseButtonDownEventData), options: table)
 --- @field register fun(eventId: '"mouseButtonUp"', callback: fun(e: mouseButtonUpEventData), options: table)
