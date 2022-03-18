@@ -44,6 +44,7 @@ soundGenerator        | 1195658835    | SNDG    | Sound Generator
 spell                 | 1279610963    | SPEL    | Spell
 static                | 1413567571    | STAT    | Static
 weapon                | 1346454871    | WEAP    | Weapon
+class                 | 1396788291    |         | Class
 mobileActor           | 1413693773    |         | Mobile Actor
 mobileCreature        | 1380139341    |         | Mobile Creature
 mobileNPC             | 1212367181    |         | Mobile NPC
