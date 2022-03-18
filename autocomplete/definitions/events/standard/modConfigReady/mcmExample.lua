@@ -24,4 +24,4 @@ local function onModConfigReady()
 
 end
 
-event.register("modConfigReady", onModConfigReady)
+event.register(tes3.event.modConfigReady, onModConfigReady)

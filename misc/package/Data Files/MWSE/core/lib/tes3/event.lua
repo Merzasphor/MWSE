@@ -88,6 +88,7 @@ return {
 	["meshLoaded"] = "meshLoaded",
 	["mobileActivated"] = "mobileActivated",
 	["mobileDeactivated"] = "mobileDeactivated",
+	["modConfigReady"] = "modConfigReady",
 	["mouseAxis"] = "mouseAxis",
 	["mouseButtonDown"] = "mouseButtonDown",
 	["mouseButtonUp"] = "mouseButtonUp",
