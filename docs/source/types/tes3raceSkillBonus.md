@@ -16,7 +16,7 @@ The value to modify the skill with.
 
 ### `skill`
 
-The skill id to modify.
+The skill id to modify. Maps to values in [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) namespace.
 
 **Returns**:
 

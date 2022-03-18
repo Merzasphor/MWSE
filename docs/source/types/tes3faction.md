@@ -7,7 +7,7 @@ This type inherits the following: [tes3baseObject](../../types/tes3baseObject)
 
 ### `attributes`
 
-*Read-only*. An array-style table holding the two attributes that govern advancement.
+*Read-only*. An array-style table holding the two attributes that govern advancement. Maps to values in [`tes3.attribute`](https://mwse.github.io/MWSE/references/attributes/) namespace.
 
 **Returns**:
 
@@ -167,7 +167,7 @@ The player's current reputation in the faction.
 
 ### `skills`
 
-*Read-only*. An array-style table holding the seven skills that govern advancement.
+*Read-only*. An array-style table holding the seven skills that govern advancement. Maps to values in [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) namespace.
 
 **Returns**:
 

@@ -7,7 +7,7 @@ This type inherits the following: [tes3baseObject](../../types/tes3baseObject)
 
 ### `attributes`
 
-*Read-only*. An array-style table of the two attribute IDs associated with the class.
+*Read-only*. An array-style table of the two attribute IDs associated with the class. Maps to values in [`tes3.attribute`](https://mwse.github.io/MWSE/references/attributes/) namespace.
 
 **Returns**:
 
@@ -197,7 +197,7 @@ Loads from disk and returns the description of the class.
 
 ### `majorSkills`
 
-*Read-only*. An array-style table of the 5 skills IDs associated with the class' major skills.
+*Read-only*. An array-style table of the 5 skills IDs associated with the class' major skills. Maps to values in [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) namespace.
 
 **Returns**:
 
@@ -207,7 +207,7 @@ Loads from disk and returns the description of the class.
 
 ### `minorSkills`
 
-*Read-only*. An array-style table of the 5 skills IDs associated with the class' minor skills.
+*Read-only*. An array-style table of the 5 skills IDs associated with the class' minor skills. Maps to values in [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) namespace.
 
 **Returns**:
 
@@ -337,7 +337,7 @@ The services offered by the class. This is a bit field, and its values should ty
 
 ### `skills`
 
-*Read-only*. An array-style table of the 10 skills IDs associated with the class. For major or minor skills specifically, use the `majorSkills` and `minorSkills` properties.
+*Read-only*. An array-style table of the 10 skills IDs associated with the class. For major or minor skills specifically, use the `majorSkills` and `minorSkills` properties. Maps to values in [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) namespace.
 
 **Returns**:
 

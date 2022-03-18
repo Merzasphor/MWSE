@@ -2,7 +2,7 @@
 
 --- A core object representing a character class.
 --- @class tes3class : tes3baseObject
---- @field attributes table *Read-only*. An array-style table of the two attribute IDs associated with the class.
+--- @field attributes table *Read-only*. An array-style table of the two attribute IDs associated with the class. Maps to values in [`tes3.attribute`](https://mwse.github.io/MWSE/references/attributes/) namespace.
 --- @field bartersAlchemy boolean If true, the class will barter alchemy items.
 --- @field bartersApparatus boolean If true, the class will barter apparatus items.
 --- @field bartersArmor boolean If true, the class will barter armor items.
@@ -17,8 +17,8 @@
 --- @field bartersRepairTools boolean If true, the class will barter repair items.
 --- @field bartersWeapons boolean If true, the class will barter weapon items.
 --- @field description string Loads from disk and returns the description of the class.
---- @field majorSkills table *Read-only*. An array-style table of the 5 skills IDs associated with the class' major skills.
---- @field minorSkills table *Read-only*. An array-style table of the 5 skills IDs associated with the class' minor skills.
+--- @field majorSkills table *Read-only*. An array-style table of the 5 skills IDs associated with the class' major skills. Maps to values in [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) namespace.
+--- @field minorSkills table *Read-only*. An array-style table of the 5 skills IDs associated with the class' minor skills. Maps to values in [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) namespace.
 --- @field name string The player-facing name for the object.
 --- @field offersEnchanting boolean If true, the class will offer repair services.
 --- @field offersRepairs boolean If true, the class will offer enchanting services.
@@ -27,7 +27,7 @@
 --- @field offersTraining boolean If true, the class will offer training services.
 --- @field playable boolean If true, the class is selectable at character generation.
 --- @field services number The services offered by the class. This is a bit field, and its values should typically be accessed through values such as `bartersAlchemy`.
---- @field skills table *Read-only*. An array-style table of the 10 skills IDs associated with the class. For major or minor skills specifically, use the `majorSkills` and `minorSkills` properties.
+--- @field skills table *Read-only*. An array-style table of the 10 skills IDs associated with the class. For major or minor skills specifically, use the `majorSkills` and `minorSkills` properties. Maps to values in [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) namespace.
 --- @field specialization number The specialization for the class. Maps to the [`tes3.specialization`](https://mwse.github.io/MWSE/references/specialization-types/) constants table.
 tes3class = {}
 
