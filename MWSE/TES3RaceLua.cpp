@@ -53,21 +53,25 @@ namespace mwse::lua {
 			usertypeDefinition["new"] = sol::no_constructor;
 
 			// Basic property binding.
-			usertypeDefinition["head1"] = &TES3::Race::BodyParts::head;
-			usertypeDefinition["hair"] = &TES3::Race::BodyParts::hair;
-			usertypeDefinition["neck"] = &TES3::Race::BodyParts::neck;
-			usertypeDefinition["chest"] = &TES3::Race::BodyParts::chest;
-			usertypeDefinition["groin"] = &TES3::Race::BodyParts::groin;
-			usertypeDefinition["hands"] = &TES3::Race::BodyParts::hands;
-			usertypeDefinition["wrist"] = &TES3::Race::BodyParts::wrist;
-			usertypeDefinition["forearm"] = &TES3::Race::BodyParts::forearm;
-			usertypeDefinition["upperArm"] = &TES3::Race::BodyParts::upperArm;
-			usertypeDefinition["foot"] = &TES3::Race::BodyParts::foot;
 			usertypeDefinition["ankle"] = &TES3::Race::BodyParts::ankle;
-			usertypeDefinition["knee"] = &TES3::Race::BodyParts::knee;
-			usertypeDefinition["upperLeg"] = &TES3::Race::BodyParts::upperLeg;
+			usertypeDefinition["chest"] = &TES3::Race::BodyParts::chest;
 			usertypeDefinition["clavicle"] = &TES3::Race::BodyParts::clavicle;
+			usertypeDefinition["foot"] = &TES3::Race::BodyParts::foot;
+			usertypeDefinition["forearm"] = &TES3::Race::BodyParts::forearm;
+			usertypeDefinition["groin"] = &TES3::Race::BodyParts::groin;
+			usertypeDefinition["hair"] = &TES3::Race::BodyParts::hair;
+			usertypeDefinition["hands"] = &TES3::Race::BodyParts::hands;
+			usertypeDefinition["head"] = &TES3::Race::BodyParts::head;
+			usertypeDefinition["knee"] = &TES3::Race::BodyParts::knee;
+			usertypeDefinition["neck"] = &TES3::Race::BodyParts::neck;
 			usertypeDefinition["tail"] = &TES3::Race::BodyParts::tail;
+			usertypeDefinition["upperArm"] = &TES3::Race::BodyParts::upperArm;
+			usertypeDefinition["upperLeg"] = &TES3::Race::BodyParts::upperLeg;
+			usertypeDefinition["vampireHead"] = &TES3::Race::BodyParts::vampireHead;
+			usertypeDefinition["wrist"] = &TES3::Race::BodyParts::wrist;
+
+			// Legacy bindings.
+			usertypeDefinition["head1"] = &TES3::Race::BodyParts::head;
 			usertypeDefinition["head2"] = &TES3::Race::BodyParts::vampireHead;
 		}
 

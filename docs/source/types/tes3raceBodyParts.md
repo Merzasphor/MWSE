@@ -84,19 +84,9 @@ The hands that an actor of this race and sex will use.
 
 ***
 
-### `head1`
+### `head`
 
-The head that an actor of this race and sex will use.
-
-**Returns**:
-
-* `result` ([tes3bodyPart](../../types/tes3bodyPart))
-
-***
-
-### `head2`
-
-The head that an actor of this race and sex will use, when he/she is a vampire.
+The head that an actor of this race and sex will use. If the actor is a vampire, the `.vampireHead` part will be used instead.
 
 **Returns**:
 
@@ -147,6 +137,16 @@ The upper arm that an actor of this race and sex will use.
 ### `upperLeg`
 
 The upper leg that an actor of this race and sex will use.
+
+**Returns**:
+
+* `result` ([tes3bodyPart](../../types/tes3bodyPart))
+
+***
+
+### `vampireHead`
+
+The head that an actor of this race and sex will use when they are a vampire.
 
 **Returns**:
 
