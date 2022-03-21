@@ -26,6 +26,8 @@ namespace mwse::lua {
 		usertypeDefinition["fileSize"] = sol::readonly_property(&TES3::GameFile::getFileSize);
 		usertypeDefinition["gameHour"] = sol::readonly_property(&TES3::GameFile::getGameHour);
 		usertypeDefinition["highestFormID"] = sol::readonly_property(&TES3::GameFile::highestFormID);
+		usertypeDefinition["masterFileSizes"] = sol::readonly_property(&TES3::GameFile::masterFileSizes);
+		usertypeDefinition["masterNames"] = sol::readonly_property(&TES3::GameFile::masterNames);
 		usertypeDefinition["masters"] = sol::readonly_property(&TES3::GameFile::getMasters);
 		usertypeDefinition["maxHealth"] = sol::readonly_property(&TES3::GameFile::getMaxHealth);
 		usertypeDefinition["modifiedTime"] = sol::readonly_property(&TES3::GameFile::getModifiedTime);

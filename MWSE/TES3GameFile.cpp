@@ -74,7 +74,7 @@ namespace TES3 {
 	}
 
 	bool GameFile::collectActiveMods(bool showMasterErrors) {
-		return TES3_TES3File_collectActiveMods2(this, TES3::DataHandler::get()->nonDynamicData->TESFiles, showMasterErrors);
+		return TES3_TES3File_collectActiveMods2(this, TES3::DataHandler::get()->nonDynamicData->gameFiles, showMasterErrors);
 	}
 
 	bool GameFile::load(int unknown1, bool unknown2) {
@@ -162,15 +162,8 @@ namespace TES3 {
 		return gmdt.playerName;
 	}
 
-	sol::table GameFile::getMasters_lua(sol::this_state ts) const {
-		sol::state_view state = ts;
-
-		sol::table t = state.create_table();
-		TES3::GameFile* master = arrayMasters;
-		for (int i = 1, count = masterNames->size(); i <= count; ++i, ++master) {
-			t[i] = master;
-		}
-		return t;
+	nonstd::span<GameFile*> GameFile::getMasters() {
+		return nonstd::span(arrayMasters, masterNames->size());
 	}
 
 }

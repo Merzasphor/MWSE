@@ -3,7 +3,7 @@
 #include "TES3Defines.h"
 
 #include "TES3IteratedList.h"
-#include "TES3LinkedObjectsList.h"
+#include "TES3StlList.h"
 
 namespace TES3 {
 	struct GameFile {
@@ -57,9 +57,9 @@ namespace TES3 {
 		unsigned int countRecords; // 0x4D4
 		int flags_4D8;
 		int loadIndex; // 0x4DC
-		LinkedObjectList<void>* masterNames; // 0x4E0 // TODO: Something is wrong here.
-		LinkedObjectList<void>* masterFileSizes; // 0x4E4 // TODO: Something is wrong here.
-		GameFile* arrayMasters; // 0x4E8
+		StlList<const char*>* masterNames; // 0x4E0
+		StlList<unsigned int>* masterFileSizes; // 0x4E4
+		GameFile** arrayMasters; // 0x4E8
 		unsigned int highestFormID; // 0x4EC
 		GMDT gmdt; // 0x4F0
 		void* sgSaveImage; // 0x56C
@@ -112,7 +112,7 @@ namespace TES3 {
 		float getDaysPassed() const;
 		const char* getPlayerName() const;
 
-		sol::table getMasters_lua(sol::this_state ts) const;
+		nonstd::span<GameFile*> getMasters();
 
 	};
 	static_assert(sizeof(GameFile) == 0x574, "TES3::GameFile failed size validation");
