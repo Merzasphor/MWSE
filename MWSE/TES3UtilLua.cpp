@@ -511,15 +511,9 @@ namespace mwse::lua {
 			return false;
 		}
 
-		auto ndd = dataHandler->nonDynamicData;
-		for (int i = 0; i < ndd->activeModCount; i++) {
-			TES3::GameFile* gameFile = ndd->activeMods[i];
-			if (gameFile == nullptr) {
-				return false;
-			}
-
-			// Compare mod name with this active mod.
-			if (_stricmp(gameFile->filename, modName) == 0) {
+		auto activeMods = dataHandler->nonDynamicData->getActiveMods();
+		for (auto gameFile : activeMods) {
+			if (_strnicmp(gameFile->filename, modName, sizeof(gameFile->filename)) == 0) {
 				return true;
 			}
 		}
@@ -537,14 +531,10 @@ namespace mwse::lua {
 			return sol::nil;
 		}
 
-		auto ndd = dataHandler->nonDynamicData;
+		auto activeMods = dataHandler->nonDynamicData->getActiveMods();
 		sol::table mods = state.create_table();
-		for (int i = 0; i < ndd->activeModCount; i++) {
-			TES3::GameFile* gameFile = ndd->activeMods[i];
-			if (gameFile == nullptr) {
-				break;
-			}
-			mods[i + 1] = static_cast<const char*>(gameFile->filename);
+		for (auto gameFile : activeMods) {
+			mods.add(gameFile->filename);
 		}
 
 		return mods;

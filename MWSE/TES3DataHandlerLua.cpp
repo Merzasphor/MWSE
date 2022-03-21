@@ -42,6 +42,7 @@ namespace mwse::lua {
 			usertypeDefinition["new"] = sol::no_constructor;
 
 			// Basic property binding.
+			usertypeDefinition["activeMods"] = sol::readonly_property(&TES3::NonDynamicData::getActiveMods);
 			usertypeDefinition["birthsigns"] = sol::readonly_property(&TES3::NonDynamicData::birthsigns);
 			usertypeDefinition["cells"] = sol::readonly_property(&TES3::NonDynamicData::cells);
 			usertypeDefinition["classes"] = sol::readonly_property(&TES3::NonDynamicData::classes);

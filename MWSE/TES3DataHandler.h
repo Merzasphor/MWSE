@@ -111,7 +111,7 @@ namespace TES3 {
 		NI::Pointer<NI::Node> baseBeastSkeletons[3]; // 0x0xAE44
 		KeyframeDefinition* baseBeastAnimations[3]; // 0xAE50
 		NI::Pointer<NI::Property> collisionWireframeProperty; // 0xAE5C
-		StlList<GameFile*>* TESFiles; // 0xAE60 
+		StlList<GameFile*>* gameFiles; // 0xAE60 
 #ifdef MWSE_RAISED_FILE_LIMIT
 		unsigned char freed_0xAE64[0x400]; // Unused space free for plundering.
 #else
@@ -175,6 +175,8 @@ namespace TES3 {
 
 		std::reference_wrapper<Skill[27]> getSkills();
 
+		nonstd::span<GameFile*> getActiveMods();
+
 		sol::table getMagicEffects_lua(sol::this_state ts);
 
 		// Wrapper around resolveObject that enforces type.
@@ -201,7 +203,7 @@ namespace TES3 {
 	static_assert(offsetof(NonDynamicData, GMSTs) == 0x18, "TES3::NonDynamicData failed offset validation");
 	static_assert(offsetof(NonDynamicData, skills) == 0x4C, "TES3::NonDynamicData failed offset validation");
 	static_assert(offsetof(NonDynamicData, magicEffects) == 0x5C8, "TES3::NonDynamicData failed offset validation");
-	static_assert(offsetof(NonDynamicData, TESFiles) == 0xAE60, "TES3::NonDynamicData failed offset validation");
+	static_assert(offsetof(NonDynamicData, gameFiles) == 0xAE60, "TES3::NonDynamicData failed offset validation");
 
 	struct SoundEvent {
 		Reference* reference;

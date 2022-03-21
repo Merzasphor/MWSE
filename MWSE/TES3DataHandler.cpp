@@ -364,6 +364,10 @@ namespace TES3 {
 		return std::ref(skills);
 	}
 
+	nonstd::span<GameFile*> NonDynamicData::getActiveMods() {
+		return nonstd::span(activeMods, activeModCount);
+	}
+
 	sol::table NonDynamicData::getMagicEffects_lua(sol::this_state ts) {
 		sol::state_view state = ts;
 		sol::table results = state.create_table();
