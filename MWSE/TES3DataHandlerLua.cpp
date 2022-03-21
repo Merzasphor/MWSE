@@ -42,13 +42,13 @@ namespace mwse::lua {
 			usertypeDefinition["new"] = sol::no_constructor;
 
 			// Basic property binding.
-			usertypeDefinition["lastLoadedFile"] = sol::readonly_property(&TES3::NonDynamicData::unknown_0x08);
 			usertypeDefinition["birthsigns"] = sol::readonly_property(&TES3::NonDynamicData::birthsigns);
 			usertypeDefinition["cells"] = sol::readonly_property(&TES3::NonDynamicData::cells);
 			usertypeDefinition["classes"] = sol::readonly_property(&TES3::NonDynamicData::classes);
 			usertypeDefinition["dialogues"] = sol::readonly_property(&TES3::NonDynamicData::dialogues);
 			usertypeDefinition["factions"] = sol::readonly_property(&TES3::NonDynamicData::factions);
 			usertypeDefinition["globals"] = sol::readonly_property(&TES3::NonDynamicData::globals);
+			usertypeDefinition["lastLoadedFile"] = sol::readonly_property(&TES3::NonDynamicData::unknown_0x08);
 			usertypeDefinition["mapTexture"] = &TES3::NonDynamicData::mapTexture;
 			usertypeDefinition["objects"] = sol::readonly_property(&TES3::NonDynamicData::list);
 			usertypeDefinition["races"] = sol::readonly_property(&TES3::NonDynamicData::races);
