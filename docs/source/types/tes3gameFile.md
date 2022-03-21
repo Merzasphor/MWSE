@@ -104,6 +104,26 @@ Represents a loaded ESM, ESP, or ESS file.
 
 ***
 
+### `masterFileSizes`
+
+*Read-only*. An array-style table of strings containing the file sizes of masters.
+
+**Returns**:
+
+* `result` (table)
+
+***
+
+### `masterNames`
+
+*Read-only*. An array-style table of strings containing the name of master files.
+
+**Returns**:
+
+* `result` (table)
+
+***
+
 ### `masters`
 
 *Read-only*. An array-style table of the tes3gameFiles that this is dependent upon.

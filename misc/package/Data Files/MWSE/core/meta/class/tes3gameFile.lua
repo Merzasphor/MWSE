@@ -12,6 +12,8 @@
 --- @field fileSize number *Read-only*. The size of the file.
 --- @field gameHour number *Read-only*. The current game hour, from a save game.
 --- @field highestFormID number *Read-only*. No description yet available.
+--- @field masterFileSizes table *Read-only*. An array-style table of strings containing the file sizes of masters.
+--- @field masterNames table *Read-only*. An array-style table of strings containing the name of master files.
 --- @field masters table *Read-only*. An array-style table of the tes3gameFiles that this is dependent upon.
 --- @field maxHealth number *Read-only*. The player's maximum health, from a save game.
 --- @field modifiedTime string *Read-only*. The timestamp that the file was modified.

@@ -4,6 +4,16 @@ A child container from [`tes3dataHandler`](https://mwse.github.io/MWSE/types/tes
 
 ## Properties
 
+### `activeMods`
+
+*Read-only*. A collection of all actively loaded mods.
+
+**Returns**:
+
+* `result` (table)
+
+***
+
 ### `birthsigns`
 
 *Read-only*. A collection of all birthsign objects.

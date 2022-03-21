@@ -2,6 +2,7 @@
 
 --- A child container from [`tes3dataHandler`](https://mwse.github.io/MWSE/types/tes3dataHandler/), where game data is stored.
 --- @class tes3nonDynamicData
+--- @field activeMods table *Read-only*. A collection of all actively loaded mods.
 --- @field birthsigns tes3iterator *Read-only*. A collection of all birthsign objects.
 --- @field cells tes3stlList *Read-only*. A collection of all cell objects.
 --- @field classes tes3iterator *Read-only*. A collection of all class objects.
