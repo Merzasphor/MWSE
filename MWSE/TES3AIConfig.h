@@ -17,6 +17,8 @@ namespace TES3 {
 		// Custom functions.
 		//
 
+		bool tradesItemType(ObjectType::ObjectType objectType) const;
+
 		bool getServiceFlag(unsigned int) const;
 		void setServiceFlag(unsigned int, bool);
 

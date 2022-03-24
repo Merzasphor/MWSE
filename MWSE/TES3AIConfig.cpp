@@ -3,6 +3,37 @@
 #include "TES3Class.h"
 
 namespace TES3 {
+	bool AIConfig::tradesItemType(ObjectType::ObjectType objectType) const {
+		switch (objectType) {
+		case TES3::ObjectType::Alchemy:
+			return (merchantFlags & TES3::ServiceFlag::BartersAlchemy);
+		case TES3::ObjectType::Apparatus:
+			return (merchantFlags & TES3::ServiceFlag::BartersApparatus);
+		case TES3::ObjectType::Armor:
+			return (merchantFlags & TES3::ServiceFlag::BartersArmor);
+		case TES3::ObjectType::Book:
+			return (merchantFlags & TES3::ServiceFlag::BartersBooks);
+		case TES3::ObjectType::Clothing:
+			return (merchantFlags & TES3::ServiceFlag::BartersClothing);
+		case TES3::ObjectType::Ingredient:
+			return (merchantFlags & TES3::ServiceFlag::BartersIngredients);
+		case TES3::ObjectType::Light:
+			return (merchantFlags & TES3::ServiceFlag::BartersLights);
+		case TES3::ObjectType::Lockpick:
+			return (merchantFlags & TES3::ServiceFlag::BartersLockpicks);
+		case TES3::ObjectType::Misc:
+			return (merchantFlags & TES3::ServiceFlag::BartersMiscItems);
+		case TES3::ObjectType::Probe:
+			return (merchantFlags & TES3::ServiceFlag::BartersProbes);
+		case TES3::ObjectType::Repair:
+			return (merchantFlags & TES3::ServiceFlag::BartersRepairTools);
+		case TES3::ObjectType::Weapon:
+		case TES3::ObjectType::Ammo:
+			return (merchantFlags & TES3::ServiceFlag::BartersWeapons);
+		}
+		return false;
+	}
+
 	bool AIConfig::getServiceFlag(unsigned int flag) const {
 		return (merchantFlags & flag) != 0;
 	}

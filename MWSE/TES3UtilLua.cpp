@@ -1627,7 +1627,7 @@ namespace mwse::lua {
 		}
 
 		auto actor = reinterpret_cast<TES3::Actor*>(reference->baseObject);
-		if (!actor->isActor()) {
+		if (!actor->getAIConfig()) {
 			throw std::invalid_argument("Invalid reference parameter provided: Base object must be an actor.");
 		}
 
