@@ -13,19 +13,8 @@ namespace mwse::lua::event {
 		m_EventFilter(filter)
 	{
 		// We always filter on the base-most object.
-		if (m_EventFilter != nullptr) {
-			// Don't register based on reference, use the base object.
-			if (m_EventFilter->objectType == TES3::ObjectType::Reference) {
-				m_EventFilter = static_cast<TES3::Reference*>(m_EventFilter)->baseObject;
-			}
-
-			// If we were given an actor, get the base actor.
-			if (m_EventFilter->objectType == TES3::ObjectType::Container || m_EventFilter->objectType == TES3::ObjectType::Creature || m_EventFilter->objectType == TES3::ObjectType::NPC) {
-				auto asActor = static_cast<TES3::Actor*>(m_EventFilter);
-				if (asActor->isClone()) {
-					m_EventFilter = asActor->getBaseActor();
-				}
-			}
+		if (m_EventFilter) {
+			m_EventFilter = m_EventFilter->getBaseObject();
 		}
 	}
 
