@@ -1,9 +1,5 @@
 
 local function onCollision(e)
-	if e.reference ~= tes3.player then
-		return
-	end
-
 	local target = e.target
 	if not target then
 		return
@@ -14,4 +10,4 @@ local function onCollision(e)
 	end
 end
 
-event.register("collision", onCollision)
+event.register(tes3.event.collision, onCollision, { filter = tes3.player })

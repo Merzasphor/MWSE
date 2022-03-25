@@ -6,7 +6,7 @@ This is an extension of Lua Debug library.
 
 ### `debug.logCache`
 
-An table containing all the output values of `debug.log()`. The table index is `path` with the line number appended, while the table key is the message.
+A table containing all the output values of `debug.log()`. The table index is `path` with the line number appended, while the table key is the message.
 
 **Returns**:
 
