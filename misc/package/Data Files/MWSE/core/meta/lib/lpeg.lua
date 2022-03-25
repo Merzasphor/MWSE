@@ -159,7 +159,7 @@ function lpeg.locale(t) end
 --- either write a loop in Lua or write a pattern that matches anywhere. This second approach is easy 
 --- and quite efficient; see examples in the full documentation for details.
 ---
---- [Examples available in online documentation](https://mwse.github.io/MWSE/types/lpeg/#lpegmatch).
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/lpeg/#lpegmatch).
 --- @param p pattern The pattern to match.
 --- @param subject string The string to match against.
 --- @param init number *Optional*. Start the match at this position in subject.
@@ -197,7 +197,7 @@ function lpeg.P(value) end
 --- 
 --- As an example, the pattern lpeg.R("09") matches any digit, and lpeg.R("az", "AZ") matches any ASCII letter.
 ---
---- [Examples available in online documentation](https://mwse.github.io/MWSE/types/lpeg/#lpegr).
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/lpeg/#lpegr).
 --- @param p pattern The input pattern.
 --- @return pattern result No description yet available.
 function lpeg.R(p) end
