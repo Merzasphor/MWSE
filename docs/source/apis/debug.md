@@ -2,18 +2,6 @@
 
 This is an extension of Lua Debug library.
 
-## Properties
-
-### `debug.logCache`
-
-A table containing all the output values of `debug.log()`. The table index is `path` with the line number appended, while the table key is the message.
-
-**Returns**:
-
-* `result` (table)
-
-***
-
 ## Functions
 
 ### `debug.log`

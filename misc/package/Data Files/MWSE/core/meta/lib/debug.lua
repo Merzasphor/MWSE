@@ -2,7 +2,6 @@
 
 --- This is an extension of Lua Debug library.
 --- @class debuglib
---- @field logCache table A table containing all the output values of `debug.log()`. The table index is `path` with the line number appended, while the table key is the message.
 debug = {}
 
 --- Logs a message to `MWSE.log` file. The output format is `[path] "msg" = msg`, where the `path` is the path and line at which the function was called.
