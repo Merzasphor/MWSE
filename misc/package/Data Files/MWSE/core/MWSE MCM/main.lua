@@ -1,3 +1,6 @@
+-- Removes "Undefined global `mwseConfig`." warnings
+--- @diagnostic disable:undefined-global
+
 local function saveConfig()
 	local values = {}
 	for k, _ in pairs(mwseConfig.getDefaults()) do
