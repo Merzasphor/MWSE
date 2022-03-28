@@ -8,7 +8,7 @@ Dropdown.pressedColor = tes3ui.getPalette("normal_pressed_color")
 function Dropdown:enable()
 	Parent.enable(self)
 	local currentValue = self.variable.value
-	local skillLabel
+	local label
 	for _, option in ipairs(self.options) do
 		if option.value == currentValue then
 			label = option.label

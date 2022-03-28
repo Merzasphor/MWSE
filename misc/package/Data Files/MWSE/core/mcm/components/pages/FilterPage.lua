@@ -59,8 +59,8 @@ function FilterPage:createSearchBar(parentBlock)
 	input:register("keyPress", function(e)
 		-- Prevent tabs/backspacing into nothing
 		local inputController = tes3.worldController.inputController
-		pressedTab = (inputController:isKeyDown(tes3.scanCode.tab))
-		backspacedNothing = ((inputController:isKeyDown(tes3.scanCode.delete) or
+		local pressedTab = (inputController:isKeyDown(tes3.scanCode.tab))
+		local backspacedNothing = ((inputController:isKeyDown(tes3.scanCode.delete) or
 		                    inputController:isKeyDown(tes3.scanCode.backspace)) and input.text == self.placeholderSearchText)
 
 		if pressedTab then
