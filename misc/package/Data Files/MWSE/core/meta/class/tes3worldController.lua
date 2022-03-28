@@ -39,7 +39,7 @@
 --- @field inputController tes3inputController *Read-only*. The controller responsible for player input.
 --- @field instance HINSTANCE *Read-only*. 
 --- @field itemRepairSound tes3sound The sound played when an item is repaired.
---- @field lastFrameTime object *Read-only*. The value of `tes3.worldController.systemTime` at the start of the previous frame. Measured in milliseconds since the program was started.
+--- @field lastFrameTime number *Read-only*. The value of `tes3.worldController.systemTime` at the start of the previous frame. Measured in milliseconds since the program was started.
 --- @field lightArmorHitSound tes3sound The sound played when a light armor piece is hit.
 --- @field mapController tes3mapController *Read-only*. The controller responsible for the world and local maps.
 --- @field maxFPS number Maximum framerate target for the engine's FPS limiter.
@@ -65,7 +65,7 @@
 --- @field parentWindowHandle HWND *Read-only*. Handle to the parent window.
 --- @field projectionDistance number 
 --- @field quests tes3iterator *Read-only*. A list of all available [`tes3quest`](https://mwse.github.io/MWSE/types/tes3quest/)s.
---- @field quickSaveWhenResting object Controls if auto-save on resting or waiting is enabled. Corresponds to the "Auto-save when rest" option in the Options menu.
+--- @field quickSaveWhenResting boolean Controls if auto-save on resting or waiting is enabled. Corresponds to the "Auto-save when rest" option in the Options menu.
 --- @field rechargingItems tes3iterator *Read-only*. A list of enchanted items that are recharging (type [`tes3rechargingItem`](https://mwse.github.io/MWSE/types/tes3rechargingItem/)). Items in the list may not all belong to the player.
 --- @field shaderWaterReflectTerrain boolean If pixel shader water reflection includes terrain. Not functional with MGE enabled.
 --- @field shaderWaterReflectUpdate number Period between reflection updates for pixel shader water. Not functional with MGE enabled.

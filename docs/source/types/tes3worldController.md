@@ -380,7 +380,7 @@ The sound played when an item is repaired.
 
 **Returns**:
 
-* `result` (object)
+* `result` (number)
 
 ***
 
@@ -595,7 +595,7 @@ Controls if auto-save on resting or waiting is enabled. Corresponds to the "Auto
 
 **Returns**:
 
-* `result` (object)
+* `result` (boolean)
 
 ***
 

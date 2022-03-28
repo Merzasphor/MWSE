@@ -70,7 +70,7 @@ niQuaternion:fromAxisAngle(angle, axis)
 
 **Parameters**:
 
-* `angle` (float)
+* `angle` (number)
 * `axis` ([tes3vector3](../../types/tes3vector3))
 
 ***
@@ -118,7 +118,7 @@ local angle, axis = niQuaternion:toAxisAngle()
 
 **Returns**:
 
-* `angle` (float)
+* `angle` (number)
 * `axis` ([tes3vector3](../../types/tes3vector3))
 
 ***

@@ -13,7 +13,7 @@ niQuaternion = {}
 function niQuaternion:copy() end
 
 --- Fill the quaternion by converting an angle-axis rotation. The angle must be within the interval [0, PI] and the axis must be unit length.
---- @param angle float No description yet available.
+--- @param angle number No description yet available.
 --- @param axis tes3vector3 No description yet available.
 function niQuaternion:fromAxisAngle(angle, axis) end
 
@@ -28,7 +28,7 @@ function niQuaternion:fromRotation(matrix) end
 function niQuaternion:slerp(target, transition) end
 
 --- Convert this quaternion into an angle-axis rotation.
---- @return float angle No description yet available.
+--- @return number angle No description yet available.
 --- @return tes3vector3 axis No description yet available.
 function niQuaternion:toAxisAngle() end
 
