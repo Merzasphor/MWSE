@@ -28,6 +28,7 @@ local function eventSorter(a, b)
 	return eventPriorities[a] > eventPriorities[b]
 end
 
+---@diagnostic disable-next-line:undefined-global
 local disableableEvents = mwseDisableableEventManager
 
 function this.register(eventType, callback, options)
