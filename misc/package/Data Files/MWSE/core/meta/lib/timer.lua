@@ -18,14 +18,14 @@ function timer.delayOneFrame(callback, type) end
 
 --- Registers a named timer with a callback to persist between game sessions. Bear in mind that nothing in MWSE is sandboxed, so all the registered timers are in the global namespace. Consider prefixing your timer with mod name or something else to avoid name collisions. For instance, `iceCreamMod:myTimer`.
 ---
---- [Examples available in online documentation](https://mwse.github.io/MWSE/types/timer/#timerregister).
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/timer/#timerregister).
 --- @param name string Name of the registered timer.
 --- @param fn function A callback function for the timer.
 function timer.register(name, fn) end
 
 --- Creates a timer.
 ---
---- [Examples available in online documentation](https://mwse.github.io/MWSE/types/timer/#timerstart).
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/timer/#timerstart).
 --- @param params timer.start.params This table accepts the following values:
 --- 
 --- `type`: number — *Default*: ``timer.simulate``. Type of the timer. This value can be `timer.simulate`, `timer.game` or `timer.real`.

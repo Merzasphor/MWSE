@@ -14,7 +14,7 @@ function tes3ui.acquireTextInput(element) end
 --- 
 --- The capture is always removed when the element is destroyed. The capture may also be removed when the mouse is released, but this is not reliable, as the engine forgets what to do if there is input from any other controller while the mouse is held down.
 ---
---- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3ui/#tes3uicapturemousedrag).
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uicapturemousedrag).
 --- @param capture boolean Turns on mouse capture for the element currently processing a mouse event if true, sending all further mouse events to that element. Turns off capture if false.
 function tes3ui.captureMouseDrag(capture) end
 
@@ -59,7 +59,7 @@ function tes3ui.createMenu(params) end
 
 --- Creates a tooltip menu, which can be an empty menu or an item tooltip. This should be called from within a tooltip event callback. These automatically follow the mouse cursor, and are also destroyed automatically when the mouse leaves the originating element. Creating an item tooltip will invoke the uiObjectTooltip event.
 ---
---- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3ui/#tes3uicreatetooltipmenu).
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uicreatetooltipmenu).
 --- @param params tes3ui.createTooltipMenu.params This table accepts the following values:
 --- 
 --- `item`: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — *Optional*. The item to create a tooltip for. If not specified, the tooltip will be empty.
@@ -125,14 +125,14 @@ function tes3ui.leaveMenuMode() end
 
 --- Logs a message to the console. The message accepts formatting and additional parameters matching string.format's usage.
 ---
---- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3ui/#tes3uilog).
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uilog).
 --- @param message string No description yet available.
 --- @vararg any *Optional*. No description yet available.
 function tes3ui.log(message, ...) end
 
 --- Logs a message to the console.
 ---
---- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3ui/#tes3uilogtoconsole).
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uilogtoconsole).
 --- @param text string No description yet available.
 --- @param isCommand boolean Passing `true` will make the text in the console selectable by using up arrow key. If it is a valid command, then pressing enter will call it.
 function tes3ui.logToConsole(text, isCommand) end

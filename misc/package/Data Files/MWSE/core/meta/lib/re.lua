@@ -27,7 +27,7 @@ function re.compile(s, defs) end
 --- An optional numeric argument init makes the search starts at that position in the subject string.
 --- As usual in Lua libraries, a negative value counts from the end. 
 ---
---- [Examples available in online documentation](https://mwse.github.io/MWSE/types/re/#refind).
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/re/#refind).
 --- @param subject string The string to search.
 --- @param pattern string The pattern to search with.
 --- @param init number *Optional*. Start at this position in the subject string.
@@ -36,7 +36,7 @@ function re.find(subject, pattern, init) end
 
 --- Does a global substitution, replacing all occurrences of pattern in the given subject by replacement.
 ---
---- [Examples available in online documentation](https://mwse.github.io/MWSE/types/re/#regsub).
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/re/#regsub).
 --- @param subject string The string to search.
 --- @param pattern string The pattern to search with.
 --- @param replacement string Replace all matches with this string.
@@ -45,7 +45,7 @@ function re.gsub(subject, pattern, replacement) end
 
 --- Matches the given pattern against the given subject, returning all captures.
 ---
---- [Examples available in online documentation](https://mwse.github.io/MWSE/types/re/#rematch).
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/re/#rematch).
 --- @param subject string The string to search.
 --- @param pattern string The pattern to search with.
 --- @return string result No description yet available.

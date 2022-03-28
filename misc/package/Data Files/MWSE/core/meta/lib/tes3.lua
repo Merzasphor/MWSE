@@ -111,7 +111,7 @@ function tes3.addJournalEntry(params) end
 
 --- This function creates a new custom magic effect. The effect can be scripted through lua. This function should be used inside [`magicEffectsResolved`](https://mwse.github.io/MWSE/events/magicEffectsResolved/) event callback.
 ---
---- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3/#tes3addmagiceffect).
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3/#tes3addmagiceffect).
 --- @param params tes3.addMagicEffect.params This table accepts the following values:
 --- 
 --- `id`: number — Id of the new effect. Maps to newly claimed `tes3.effect` constants with `tes3.claimSpellEffectId()`. If the effect of this id already exists, an error will be thrown.
@@ -311,7 +311,7 @@ function tes3.addMagicEffect(params) end
 
 --- Causes a misc item to be recognized as a soul gem, so that it can be used for soul trapping.
 ---
---- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3/#tes3addsoulgem).
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3/#tes3addsoulgem).
 --- @param params tes3.addSoulGem.params This table accepts the following values:
 --- 
 --- `item`: tes3misc|string — The item to recognize as a soul gem.
@@ -496,7 +496,7 @@ function tes3.canRest(params) end
 --- 
 --- When the caster is the player, the target parameter is optional; without a target, the player's touch effects will only hit targets in front of them, and target effects will create a projectile in the direction the player is facing. Currently as a limitation, instant must be true to allow the player to cast spells.
 ---
---- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3/#tes3cast).
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3/#tes3cast).
 --- @param params tes3.cast.params This table accepts the following values:
 --- 
 --- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — The caster reference.
@@ -553,7 +553,7 @@ function tes3.clearMarkLocation() end
 
 --- Create an object and returns it. The created object will be part of the saved game. Supported object types are those that have their own create function, such as tes3activator for example.
 ---
---- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3/#tes3createobject).
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3/#tes3createobject).
 --- @param params tes3.createObject.params This table accepts the following values:
 --- 
 --- `objectType`: number — Maps to [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) constants. Used to filter object type to create.
@@ -759,7 +759,7 @@ function tes3.findGlobal(id) end
 
 --- Fetches the core game object that represents a game setting. While this function accepts a name, it is recommended to use the [`tes3.GMST`](https://mwse.github.io/MWSE/references/gmst/) constants.
 ---
---- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3/#tes3findgmst).
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3/#tes3findgmst).
 --- @param id number|string No description yet available.
 --- @return tes3gameSetting gameSetting No description yet available.
 function tes3.findGMST(id) end
@@ -885,7 +885,7 @@ function tes3.getDialogueInfo(dialogue, id) end
 
 --- This function returns the total magnitude and total unresisted magnitude of a certain spell effect affecting a reference. It returns a pair of numbers, the first being the post-resistance magnitude (see examples). The unresisted magnitude is the magnitude before the actor's resistances are applied; it is always an integer, so it is used in some UI elements.
 ---
---- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3/#tes3geteffectmagnitude).
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3/#tes3geteffectmagnitude).
 --- @param params tes3.getEffectMagnitude.params This table accepts the following values:
 --- 
 --- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — An associated mobile should exist for this function to be able to work.
@@ -907,7 +907,7 @@ function tes3.getEffectMagnitude(params) end
 
 --- Returns an actor's equipped item stack, provided a given filter
 ---
---- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3/#tes3getequippeditem).
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3/#tes3getequippeditem).
 --- @param params tes3.getEquippedItem.params This table accepts the following values:
 --- 
 --- `actor`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance — No description yet available.
@@ -1392,7 +1392,7 @@ function tes3.messageBox(messageOrParams, ...) end
 
 --- Modifies a statistic on a given actor. This should be used instead of manually setting values on the game structures, to ensure that events and GUI elements are properly handled. Either skill, attribute, or name must be provided.
 ---
---- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3/#tes3modstatistic).
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3/#tes3modstatistic).
 --- @param params tes3.modStatistic.params This table accepts the following values:
 --- 
 --- `reference`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string — No description yet available.
@@ -1586,7 +1586,7 @@ function tes3.random(seed) end
 
 --- Performs a ray test and returns various information related to the result(s). If `findAll` is set, the result will be a table of results, otherwise only the first result is returned.
 ---
---- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3/#tes3raytest).
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3/#tes3raytest).
 --- @param params tes3.rayTest.params This table accepts the following values:
 --- 
 --- `position`: tes3vector3|table — Position of the ray origin.
@@ -1648,7 +1648,7 @@ function tes3.releaseKey(keyCode) end
 
 --- Removes magic effects from a given reference. Requires that either the `effect` or `castType` parameter be provided.
 ---
---- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3/#tes3removeeffects).
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3/#tes3removeeffects).
 --- @param reference tes3reference Target reference to remove effects from.
 --- @param effect number *Optional*. Maps to [`tes3.effect`](https://mwse.github.io/MWSE/references/magic-effects/) constants.
 --- @param castType number *Optional*. Maps to [`tes3.spellType`](https://mwse.github.io/MWSE/references/spell-types/) constants.

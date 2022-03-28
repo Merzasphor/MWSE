@@ -99,7 +99,7 @@ function table.size(t) end
 --- 
 --- Each "node" is an object with a children table of other "nodes", each of which might have their own children. For example, a sceneNode is made up of niNodes, and each niNodes can have a list of niNode children. This is best used for recursive data structures like UI elements and sceneNodes etc.
 ---
---- [Examples available in online documentation](https://mwse.github.io/MWSE/types/table/#tabletraverse).
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/table/#tabletraverse).
 --- @param t table A table to transverse.
 --- @param k unknown *Default*: `children`. The key of a table inside t object.
 --- @return iterator result No description yet available.

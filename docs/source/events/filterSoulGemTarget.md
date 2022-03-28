@@ -25,14 +25,15 @@ event.register(tes3.event.filterSoulGemTarget, filterSoulGemTargetCallback)
 
 	```lua
 	local function onInitialized()
-		tes3.addSoulGem({ item = "vivec_soul_container" })
+		-- This will turn the Dwemer Tube in a soul gem
+		tes3.addSoulGem({ item = "misc_dwrv_artifact60" })
 	end
 	event.register(tes3.event.initialized, onInitialized)
 	
 	local function onFilterSoulGemTarget(e)
 		-- Make it so Vivec can only be trapped by a special container.
 		if (e.reference.baseObject.id:lower() == "vivec") then
-			return e.soulGem.id == "vivec_soul_container"
+			return e.soulGem.id == "misc_dwrv_artifact60"
 		end
 	end
 	event.register(tes3.event.filterSoulGemTarget, onFilterSoulGemTarget)

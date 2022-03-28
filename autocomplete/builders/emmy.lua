@@ -39,7 +39,7 @@ local function getPackageLink(package)
 		local parentType = package.parent.type
 		if (parentType == "lib") then
 			local token = string.gsub("#" .. package.namespace, "%.", "")
-			tokens = { common.urlBase, "types", package.parent.namespace, token:lower() }
+			tokens = { common.urlBase, "apis", package.parent.namespace, token:lower() }
 		elseif (parentType == "class") then
 			tokens = { common.urlBase, "types", package.parent.key, "#" .. package.key }
 		end

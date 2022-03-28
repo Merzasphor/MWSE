@@ -28,10 +28,6 @@ event.register(tes3.event.collision, collisionCallback)
 	```lua
 	
 	local function onCollision(e)
-		if e.reference ~= tes3.player then
-			return
-		end
-	
 		local target = e.target
 		if not target then
 			return
@@ -42,7 +38,7 @@ event.register(tes3.event.collision, collisionCallback)
 		end
 	end
 	
-	event.register("collision", onCollision)
+	event.register(tes3.event.collision, onCollision, { filter = tes3.player })
 
 	```
 
