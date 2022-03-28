@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A simple structure to hold mark/recall data.
 --- @class tes3markData

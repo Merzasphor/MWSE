@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A game object which holds information about body parts.
 --- @class tes3bodyPartManager

@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event fires when a dialogue info object is filtered.
 --- @class infoFilterEventData

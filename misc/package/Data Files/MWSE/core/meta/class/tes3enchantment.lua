@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- An enchantment game object.
 --- @class tes3enchantment : tes3object, tes3baseObject

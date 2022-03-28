@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A core light object. This isn't actually a light in the rendering engine, but something like a lamp or torch.
 --- @class tes3light : tes3item, tes3physicalObject, tes3object, tes3baseObject

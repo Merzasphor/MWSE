@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event is triggered before a keyframes file is loaded. The path can be changed to instead load a different keyframes file.
 --- @class keyframesLoadEventData

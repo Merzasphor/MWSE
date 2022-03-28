@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A structure that contains base weather information shared by inheriting weather structures.
 --- @class tes3weather

@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A core lockpick object.
 --- @class tes3lockpick : tes3item, tes3physicalObject, tes3object, tes3baseObject

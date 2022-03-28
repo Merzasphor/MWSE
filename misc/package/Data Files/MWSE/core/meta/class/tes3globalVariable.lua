@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A global variable game object.
 --- @class tes3globalVariable : tes3baseObject

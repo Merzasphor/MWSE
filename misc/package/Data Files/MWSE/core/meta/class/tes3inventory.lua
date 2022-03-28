@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- An inventory composes of an iterator, and flags caching the state of the inventory.
 --- @class tes3inventory

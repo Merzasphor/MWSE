@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- The timer library provides helper functions for creating delayed executors.
 --- @class timerlib

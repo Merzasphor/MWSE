@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A static game object. A non-animated object like a building or rock.
 --- 

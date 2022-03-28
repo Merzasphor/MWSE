@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A core miscellaneous object.
 --- @class tes3misc : tes3item, tes3physicalObject, tes3object, tes3baseObject

@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event is raised when determining the hit chance for an actor.
 --- @class calcHitChanceEventData

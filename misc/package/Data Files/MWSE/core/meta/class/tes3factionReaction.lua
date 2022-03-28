@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A container mapping a reputation for an associated faction.
 --- @class tes3factionReaction

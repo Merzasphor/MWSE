@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- An attachment-capable structure that maintains dynamic lights.
 --- @class tes3lightNode

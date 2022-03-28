@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A base class representing all rendering properties.
 --- @class niProperty : niObjectNET, niObject

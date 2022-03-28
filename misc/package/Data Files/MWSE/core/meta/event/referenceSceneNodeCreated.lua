@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event fires when a SceneNode is created for a reference.
 --- @class referenceSceneNodeCreatedEventData

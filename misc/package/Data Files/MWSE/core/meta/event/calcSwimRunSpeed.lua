@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- One of the movement events, **calcSwimRunSpeed** is used when calculating the movement speed while in water when running.
 --- 

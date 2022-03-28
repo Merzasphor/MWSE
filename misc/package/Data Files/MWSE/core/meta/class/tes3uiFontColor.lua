@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- Contains color information of a font.
 --- @class tes3uiFontColor

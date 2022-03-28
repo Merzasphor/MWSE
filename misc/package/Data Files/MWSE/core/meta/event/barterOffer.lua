@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event is called when a potentially successful barter offer is made by the player. Potentially successful means both parties have the required funds to make the trade.
 --- @class barterOfferEventData

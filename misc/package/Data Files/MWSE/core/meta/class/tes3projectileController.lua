@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A game structure which holds all active projectiles.
 --- @class tes3projectileController

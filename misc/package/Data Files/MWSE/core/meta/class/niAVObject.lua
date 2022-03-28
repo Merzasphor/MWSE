@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- The typical base type for most NetImmerse scene graph objects.
 --- @class niAVObject : niObjectNET, niObject

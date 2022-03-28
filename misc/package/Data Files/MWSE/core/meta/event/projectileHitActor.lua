@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- The projectileHitActor event fires when a projectile collides with an actor.
 --- @class projectileHitActorEventData

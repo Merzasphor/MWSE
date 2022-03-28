@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- The menuEnter event fires when the player enters menu mode.
 --- @class menuEnterEventData

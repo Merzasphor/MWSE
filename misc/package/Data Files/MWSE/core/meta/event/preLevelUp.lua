@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event is triggered just before the player levels up.
 --- @class preLevelUpEventData

@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event fires when an item in the contents menu is filtered.
 --- @class filterContentsMenuEventData

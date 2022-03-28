@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- Provides pattern-matching based on Parsing Expression Grammars (PEGs).
 --- 	

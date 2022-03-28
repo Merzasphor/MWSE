@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A mobile object for a spell projectile.
 --- @class tes3mobileSpellProjectile : tes3mobileProjectile, tes3mobileObject

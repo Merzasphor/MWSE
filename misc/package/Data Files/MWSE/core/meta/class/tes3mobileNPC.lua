@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A mobile object for an NPC.
 --- @class tes3mobileNPC : tes3mobileActor, tes3mobileObject

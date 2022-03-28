@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- The base object from which all other mobiles (AI/movement using) structures derive.
 --- @class tes3mobileObject

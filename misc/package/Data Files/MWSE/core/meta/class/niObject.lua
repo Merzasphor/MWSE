@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- The base-most object from which almost all NetImmerse structures are derived from.
 --- @class niObject

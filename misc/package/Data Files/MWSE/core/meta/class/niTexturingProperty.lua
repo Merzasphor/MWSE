@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A rendering property that controls the methods used to filter texture pixels, and blend texture colors and vertex colors.
 --- @class niTexturingProperty : niProperty, niObjectNET, niObject

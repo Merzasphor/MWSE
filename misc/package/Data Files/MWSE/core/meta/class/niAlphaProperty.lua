@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A rendering property that manages alpha blending, enabling and disabling it, and setting blending functions. The property affects alpha testing, which can provide a performance boost.
 --- @class niAlphaProperty : niProperty, niObjectNET, niObject

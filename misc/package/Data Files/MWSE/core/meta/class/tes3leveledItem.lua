@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A leveled creature game object.
 --- @class tes3leveledItem : tes3physicalObject, tes3object, tes3baseObject

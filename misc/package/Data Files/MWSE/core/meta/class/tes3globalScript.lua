@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A global script object. Any script (in mwscript) that is not attached to any object is a global script.
 --- @class tes3globalScript

@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A core game controller responsible for controlling temporary graphics.
 --- @class tes3splashController

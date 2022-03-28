@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- The projectileHitObject event fires when a projectile collides with an object.
 --- @class projectileHitObjectEventData

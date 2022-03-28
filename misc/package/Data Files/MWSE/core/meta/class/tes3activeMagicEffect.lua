@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- An active magic effect.
 --- @class tes3activeMagicEffect

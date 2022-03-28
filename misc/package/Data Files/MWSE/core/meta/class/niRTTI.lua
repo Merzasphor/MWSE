@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- Runtime type information for NetImmerse structures.
 --- @class niRTTI

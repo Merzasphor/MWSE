@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A core object representing a character race.
 --- @class tes3race : tes3baseObject

@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A game object which contains information on actor's current and assigned AI packages.
 --- @class tes3aiPlanner

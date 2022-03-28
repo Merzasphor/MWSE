@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A core came structure responsible for managing the input around menu elements.
 --- @class tes3uiMenuInputController

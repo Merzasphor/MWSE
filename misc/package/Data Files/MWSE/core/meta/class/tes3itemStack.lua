@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A complex container that holds a relationship between an item, and zero or more associated item datas.
 --- @class tes3itemStack

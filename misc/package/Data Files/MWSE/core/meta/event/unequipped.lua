@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- The unequipped event fires after an actor has successfully equipped an item.
 --- @class unequippedEventData

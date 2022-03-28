@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event is invoked whenever the player naturally gains a new level a skill. This is typically through exercise, training, or reading books.
 --- @class skillRaisedEventData

@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- An object that represents a RGB color with alpha channel support.
 --- @class niColorA

@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- An AI Follow package game object. Sets an actor to follow another actor at a certain distance.
 --- @class tes3aiPackageFollow : tes3aiPackage

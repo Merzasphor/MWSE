@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A linked list of properties.
 --- @class niPropertyLinkedList

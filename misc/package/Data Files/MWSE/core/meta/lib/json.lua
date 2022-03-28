@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- Provides support for interacting with json data through an extended dkjson module.
 --- @class jsonlib

@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A substructure for a race, storing the used body parts for a given sex.
 --- @class tes3raceBodyParts

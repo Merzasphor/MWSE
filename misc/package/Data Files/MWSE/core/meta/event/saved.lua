@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- The saved event fires after the game has successfully been saved. This event is preceded by the save event.
 --- @class savedEventData

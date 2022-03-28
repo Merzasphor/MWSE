@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- Provides a regular expression style syntax for pattern usage with lpeg.
 --- 	

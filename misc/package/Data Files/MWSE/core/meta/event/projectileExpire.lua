@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- The projectileExpire event fires just prior to a fired projectile expiring.
 --- @class projectileExpireEventData

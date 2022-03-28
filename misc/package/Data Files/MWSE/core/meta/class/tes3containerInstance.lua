@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A container object that has been cloned. Typically represents a container that has been instanced by being opened by the player.
 --- @class tes3containerInstance : tes3actor, tes3physicalObject, tes3object, tes3baseObject

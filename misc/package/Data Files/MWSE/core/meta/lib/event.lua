@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- The event library helps to instruct mwse to call a given function when a specific action is taken in the game.
 --- @class eventlib

@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A core game object used for storing both active and non-dynamic gameplay data.
 --- @class tes3dataHandler

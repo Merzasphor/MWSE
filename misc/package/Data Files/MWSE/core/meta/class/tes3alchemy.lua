@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- An alchemy game object.
 --- @class tes3alchemy : tes3item, tes3physicalObject, tes3object, tes3baseObject

@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- An ingredient game object.
 --- @class tes3ingredient : tes3item, tes3physicalObject, tes3object, tes3baseObject

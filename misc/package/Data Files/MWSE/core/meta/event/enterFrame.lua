@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- The enterFrame event occurs at the start of every frame, including when the game is paused or in menu mode.
 --- @class enterFrameEventData

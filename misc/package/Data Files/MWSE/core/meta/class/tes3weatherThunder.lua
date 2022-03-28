@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A structure that contains weather information for the thunder weather type.
 --- @class tes3weatherThunder : tes3weather

@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A handle to a command excuted using `os.execute` configured to run asynchronously.
 --- @class mwseLuaExecutor

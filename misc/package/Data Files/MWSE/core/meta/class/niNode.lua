@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- Base class that represents the nodes of a scene graph. A node can have any number of child nodes.
 --- @class niNode : niAVObject, niObjectNET, niObject

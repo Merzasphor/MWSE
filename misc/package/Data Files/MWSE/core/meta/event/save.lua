@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- The save event fires when the game is about to save. This event allows scripts to block saving.
 --- @class saveEventData

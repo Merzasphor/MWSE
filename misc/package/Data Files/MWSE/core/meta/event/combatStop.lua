@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- The combatStop event occurs when an actor is about to leave combat. This event allows scripts to prevent combat from stopping.
 --- @class combatStopEventData

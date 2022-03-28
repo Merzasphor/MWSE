@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A clothing game object.
 --- @class tes3clothing : tes3item, tes3physicalObject, tes3object, tes3baseObject

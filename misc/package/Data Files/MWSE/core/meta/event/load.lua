@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- The load event fires when the game is about to load. This event allows scripts to block loading.
 --- @class loadEventData

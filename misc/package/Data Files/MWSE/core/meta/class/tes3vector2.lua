@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A simple pair of floating-point numbers.
 --- @class tes3vector2

@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- Almost anything that can be represented in the Construction Set is based on this structure.
 --- @class tes3physicalObject : tes3object, tes3baseObject

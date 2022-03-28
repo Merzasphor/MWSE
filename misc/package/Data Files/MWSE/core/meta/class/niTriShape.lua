@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- An object that allows the sharing of vertices between triangles to create shapes.
 --- @class niTriShape : niTriBasedGeometry, niGeometry, niAVObject, niObjectNET, niObject

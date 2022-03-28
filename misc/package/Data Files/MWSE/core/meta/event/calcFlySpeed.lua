@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- One of the movement events, **calcFlySpeed** is used when calculating movement speeds when levitating or otherwise flying.
 --- 

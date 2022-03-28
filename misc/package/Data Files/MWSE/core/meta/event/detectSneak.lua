@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event is invoked whenever an actor is checking if they can detect another actor sneaking.
 --- @class detectSneakEventData

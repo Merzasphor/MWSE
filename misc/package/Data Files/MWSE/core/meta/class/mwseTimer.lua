@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A Timer is a class used to keep track of callback that should be invoked at a later time.
 --- @class mwseTimer

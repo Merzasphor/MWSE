@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A structure that contains weather information for the ashstorm weather type.
 --- @class tes3weatherAsh : tes3weather

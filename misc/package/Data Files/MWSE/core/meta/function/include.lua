@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- Loads the given module. This functions identically to `require`, but will return `nil` instead of erroring if the module couldn't be found. If there is another error is found inside the included file, it will still cause an error in the `include`ing file.
 --- 

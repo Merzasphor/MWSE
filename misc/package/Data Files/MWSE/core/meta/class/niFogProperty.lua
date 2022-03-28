@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A rendering property that controls the appearance of fogging.
 --- @class niFogProperty : niProperty, niObjectNET, niObject

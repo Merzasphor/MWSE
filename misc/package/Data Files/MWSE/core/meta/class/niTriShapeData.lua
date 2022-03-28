@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- Contains the geometry data for an `NiTriShape` object.
 --- @class niTriShapeData : niTriBasedGeometryData, niGeometryData, niObject

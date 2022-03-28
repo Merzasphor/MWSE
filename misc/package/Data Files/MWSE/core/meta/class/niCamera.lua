@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- Object that represent a camera. Position and orientation is determined by parent properties.
 --- @class niCamera : niAVObject, niObjectNET, niObject

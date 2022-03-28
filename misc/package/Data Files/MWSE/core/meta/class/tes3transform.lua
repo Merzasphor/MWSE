@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A rotation matrix, translation vector, and scale that marks an object's transformation.
 --- @class tes3transform

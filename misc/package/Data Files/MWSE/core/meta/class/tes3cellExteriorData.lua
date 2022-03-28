@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A structure that contains a cell and its grid coordinates.
 --- @class tes3cellExteriorData

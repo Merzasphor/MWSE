@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- The menuExit event fires when the player leaves menu mode.
 --- @class menuExitEventData

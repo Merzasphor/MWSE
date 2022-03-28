@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A structure that holds (sometimes redundant) information on a soul gem.
 --- @class tes3soulGemData

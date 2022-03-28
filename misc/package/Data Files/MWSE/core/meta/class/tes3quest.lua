@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A representation of a quest, with associated dialogue and info.
 --- @class tes3quest : tes3baseObject

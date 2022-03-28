@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- An activator game object.
 --- @class tes3activator : tes3physicalObject, tes3object, tes3baseObject

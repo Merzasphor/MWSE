@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A nested class of NiPick that stores the results of previous picking operations for use by the game engine.
 --- @class niPickRecord

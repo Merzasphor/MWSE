@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A book game object.
 --- @class tes3book : tes3item, tes3physicalObject, tes3object, tes3baseObject

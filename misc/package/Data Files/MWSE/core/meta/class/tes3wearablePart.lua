@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A container class that maps a body part id to its male and female body parts.
 --- @class tes3wearablePart

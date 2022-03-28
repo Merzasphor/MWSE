@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- An object representing a script which autostarts at the game load.
 --- @class tes3startScript : tes3baseObject

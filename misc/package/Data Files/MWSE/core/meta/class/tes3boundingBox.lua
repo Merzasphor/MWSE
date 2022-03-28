@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A pair of vectors marking a bounding box.
 --- @class tes3boundingBox

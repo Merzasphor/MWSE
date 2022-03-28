@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- The journal event is invoked when a journal state progresses.
 --- @class journalEventData

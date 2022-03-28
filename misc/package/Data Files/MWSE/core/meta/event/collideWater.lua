@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event is triggered when a mobile object collides with water and all the frames during the collision.
 --- @class collideWaterEventData

@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A skill object.
 --- @class tes3skill : tes3baseObject

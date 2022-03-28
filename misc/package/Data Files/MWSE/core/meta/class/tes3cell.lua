@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- An exterior or interior game area.
 --- @class tes3cell : tes3baseObject
