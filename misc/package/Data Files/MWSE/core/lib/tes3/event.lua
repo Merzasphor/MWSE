@@ -2,6 +2,7 @@ return {
 	["absorbedMagic"] = "absorbedMagic",
 	["activate"] = "activate",
 	["activationTargetChanged"] = "activationTargetChanged",
+	["activeMagicEffectIconsUpdated"] = "activeMagicEffectIconsUpdated",
 	["addSound"] = "addSound",
 	["addTempSound"] = "addTempSound",
 	["attack"] = "attack",

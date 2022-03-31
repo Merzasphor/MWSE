@@ -6,6 +6,7 @@
 --- @field register fun(eventId: '"absorbedMagic"', callback: fun(e: absorbedMagicEventData), options: table)
 --- @field register fun(eventId: '"activate"', callback: fun(e: activateEventData), options: table)
 --- @field register fun(eventId: '"activationTargetChanged"', callback: fun(e: activationTargetChangedEventData), options: table)
+--- @field register fun(eventId: '"activeMagicEffectIconsUpdated"', callback: fun(e: activeMagicEffectIconsUpdatedEventData), options: table)
 --- @field register fun(eventId: '"addSound"', callback: fun(e: addSoundEventData), options: table)
 --- @field register fun(eventId: '"addTempSound"', callback: fun(e: addTempSoundEventData), options: table)
 --- @field register fun(eventId: '"attack"', callback: fun(e: attackEventData), options: table)

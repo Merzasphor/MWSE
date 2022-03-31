@@ -171,6 +171,7 @@
 
 #include "LuaAbsorbedMagicEvent.h"
 #include "LuaActivationTargetChangedEvent.h"
+#include "LuaActiveMagicEffectIconsUpdatedEvent.h"
 #include "LuaAddTopicEvent.h"
 #include "LuaAttackEvent.h"
 #include "LuaBarterOfferEvent.h"
@@ -1748,6 +1749,19 @@ namespace mwse::lua {
 		TES3::Reference* currentTarget = TES3::Game::get()->playerTarget;
 		if (TES3::Game::previousPlayerTarget != currentTarget && event::ActivationTargetChangedEvent::getEventEnabled()) {
 			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::ActivationTargetChangedEvent(TES3::Game::previousPlayerTarget, currentTarget));
+		}
+	}
+
+	//
+	// Event: Active magic effect icons updated
+	//
+	const auto TES3_UpdateActiveMagicEffectIcons = reinterpret_cast<void(__cdecl*)()>(0x5E2480);
+	void __cdecl OnActiveMagicEffectIconsUpdated() {
+		TES3_UpdateActiveMagicEffectIcons();
+		if (event::ActiveMagicEffectIconsUpdatedEvent::getEventEnabled()) {
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			stateHandle.triggerEvent(new event::ActiveMagicEffectIconsUpdatedEvent());
 		}
 	}
 
@@ -4075,6 +4089,21 @@ namespace mwse::lua {
 		// Event: Activation Target Changed
 		genCallEnforced(0x41CA64, 0x567990, reinterpret_cast<DWORD>(HookPreFindActivationTarget));
 		genJumpUnprotected(0x41CCF5, reinterpret_cast<DWORD>(HookPostFindActivationTarget));
+
+		// Event: Active magic effect icons updated
+		genCallEnforced(0x5E6394, 0x5E2480, reinterpret_cast<DWORD>(OnActiveMagicEffectIconsUpdated)); // Delete spell
+		genCallEnforced(0x5E150A, 0x5E2480, reinterpret_cast<DWORD>(OnActiveMagicEffectIconsUpdated)); // Toggle magic menu
+		genCallEnforced(0x5E1362, 0x5E2480, reinterpret_cast<DWORD>(OnActiveMagicEffectIconsUpdated)); // Show magic menu
+		genCallEnforced(0x518FE0, 0x5E2480, reinterpret_cast<DWORD>(OnActiveMagicEffectIconsUpdated)); // Magic Source Instance: Spell effect event
+		genCallEnforced(0x517AB3, 0x5E2480, reinterpret_cast<DWORD>(OnActiveMagicEffectIconsUpdated)); // Magic Source Instance: Projectile hit
+		genCallEnforced(0x517581, 0x5E2480, reinterpret_cast<DWORD>(OnActiveMagicEffectIconsUpdated)); // Magic Source Instance: Spell hit
+		genCallEnforced(0x515B14, 0x5E2480, reinterpret_cast<DWORD>(OnActiveMagicEffectIconsUpdated)); // Magic Source Instance: Process
+		genCallEnforced(0x514968, 0x5E2480, reinterpret_cast<DWORD>(OnActiveMagicEffectIconsUpdated)); // Magic Source Instance: Process
+		genCallEnforced(0x512626, 0x5E2480, reinterpret_cast<DWORD>(OnActiveMagicEffectIconsUpdated)); // Magic Source Instance: Destructor
+		genCallEnforced(0x50BDB3, 0x5E2480, reinterpret_cast<DWORD>(OnActiveMagicEffectIconsUpdated)); // Script record
+		genCallEnforced(0x4C5310, 0x5E2480, reinterpret_cast<DWORD>(OnActiveMagicEffectIconsUpdated)); // Records Handler: Load game - Main menu
+		genCallEnforced(0x4C4CFC, 0x5E2480, reinterpret_cast<DWORD>(OnActiveMagicEffectIconsUpdated)); // Records Handler: Load game - Ingame
+		genCallEnforced(0x455856, 0x5E2480, reinterpret_cast<DWORD>(OnActiveMagicEffectIconsUpdated)); // Active Magic Manager: Clear spell by cast type
 
 		// Event: Weather transitions
 		genCallEnforced(0x410294, 0x4E22F0, reinterpret_cast<DWORD>(OnWeatherCycle));
