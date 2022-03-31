@@ -804,6 +804,7 @@ namespace TES3 {
 			mwse::genCallEnforced(0x6229C5, 0x5BFEA0, reinterpret_cast<DWORD>(getSpellmakingServiceActor));
 			mwse::genCallEnforced(0x6229D4, 0x5BFEA0, reinterpret_cast<DWORD>(getSpellmakingServiceActor));
 			mwse::genCallEnforced(0x6229C0, 0x52B480, reinterpret_cast<DWORD>(patchSpellmakingMenuRemoveNoCost));
+			mwse::genCallEnforced(0x621CBB, 0x595370, reinterpret_cast<DWORD>(patchSpellmakingMenuExitMenuModeIfNoDialogMenu));
 			mwse::genCallEnforced(0x622DAA, 0x595370, reinterpret_cast<DWORD>(patchSpellmakingMenuExitMenuModeIfNoDialogMenu));
 			mwse::writeValueEnforced<BYTE>(0x62295A, 0x75, 0x7D);
 
