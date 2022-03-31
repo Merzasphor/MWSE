@@ -3486,7 +3486,7 @@ namespace mwse::lua {
 	ThreadedStateHandle::ThreadedStateHandle(LuaManager* manager) :
 		luaManager(manager),
 		state(manager->luaState),
-		lockGuard(manager->stateThreadMutex)
+		mutexGuard(manager->stateThreadMutex)
 	{
 
 	}

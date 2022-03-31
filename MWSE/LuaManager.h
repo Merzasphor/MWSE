@@ -25,7 +25,7 @@ namespace mwse::lua {
 
 		sol::state& state;
 
-		std::lock_guard<std::recursive_mutex> lockGuard;
+		std::scoped_lock<std::recursive_mutex> mutexGuard;
 
 	private:
 		LuaManager* luaManager;
