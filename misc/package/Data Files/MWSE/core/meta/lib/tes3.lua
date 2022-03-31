@@ -2220,6 +2220,20 @@ function tes3.showRestMenu(params) end
 --- @field resting boolean *Default*: `true`. Should this be a rest?
 --- @field waiting boolean *Optional*. Or, is this a wait?
 
+--- This function opens the spellmaking menu and returns true on success.
+--- @param params tes3.showSpellmakingMenu.params This table accepts the following values:
+--- 
+--- `serviceActor`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer — *Optional*. The actor to use for calculating the service price. If none is provided, an open dialog menu's service actor will be used instead.
+--- 
+--- `useDialogActor`: boolean — *Default*: `true`. If set to false, the dialog menu service actor will be ignored. If false, a serviceActor must be provided.
+--- @return boolean success No description yet available.
+function tes3.showSpellmakingMenu(params) end
+
+---Table parameter definitions for `tes3.showSpellmakingMenu`.
+--- @class tes3.showSpellmakingMenu.params
+--- @field serviceActor tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer *Optional*. The actor to use for calculating the service price. If none is provided, an open dialog menu's service actor will be used instead.
+--- @field useDialogActor boolean *Default*: `true`. If set to false, the dialog menu service actor will be ignored. If false, a serviceActor must be provided.
+
 --- Skips a given reference's animation for a single frame.
 --- @param params tes3.skipAnimationFrame.params This table accepts the following values:
 --- 

@@ -406,6 +406,53 @@ namespace TES3 {
 			showRestMenu(resting.value_or(true));
 		}
 
+		const auto TES3_ShowSpellmakingMenu = reinterpret_cast<void(__cdecl*)()>(0x621450);
+		auto& TES3_HasServiceActor = *reinterpret_cast<bool*>(0x7D69FC);
+		static std::optional<MobileActor*> TES3_SpellmakingMenu_ServiceActorOverride = {};
+		void __cdecl showSpellmakingMenu() {
+			// Clear our override.
+			TES3_SpellmakingMenu_ServiceActorOverride = {};
+
+			TES3_ShowSpellmakingMenu();
+		}
+
+		void showSpellmakingMenuWithOverride(MobileActor* serviceActorOverride) {
+			// Set our override and change the service actor flag.
+			TES3_SpellmakingMenu_ServiceActorOverride = serviceActorOverride;
+			TES3_HasServiceActor = serviceActorOverride != nullptr;
+
+			TES3_ShowSpellmakingMenu();
+		}
+
+		MobileActor* __cdecl patchSpellmakingMenuServiceActorOverride() {
+			// If we have an override, make use of it.
+			if (TES3_SpellmakingMenu_ServiceActorOverride) {
+				return TES3_SpellmakingMenu_ServiceActorOverride.value();
+			}
+
+			// Otherwise use the existing logic.
+			return getServiceActor();
+		}
+
+		const auto TES3_MobileMobile_ModGoldHeld = reinterpret_cast<void(__thiscall*)(MobileActor*, int)>(0x52B480);
+		void __fastcall patchSpellmakingMenuRemoveNoCost(MobileActor* self, DWORD _EDX_, int goldDelta) {
+			if (goldDelta == 0) {
+				return;
+			}
+			TES3_MobileMobile_ModGoldHeld(self, goldDelta);
+		}
+
+		Element* __cdecl patchSpellmakingMenuExitMenuModeIfNoDialogMenu(TES3::UI::UI_ID dialogMenuId) {
+			auto dialogMenu = findMenu(dialogMenuId);
+
+			// If no dialog menu exists, close menu mode.
+			if (!dialogMenu) {
+				leaveMenuMode();
+			}
+
+			return dialogMenu;
+		}
+
 		const auto TES3_UpdateFillBar = reinterpret_cast<void(__cdecl*)(UI_ID, float, float)>(0x6262D0);
 		void updateFillBar(UI_ID id, float current, float max) {
 			TES3_UpdateFillBar(id, current, max);
@@ -750,6 +797,15 @@ namespace TES3 {
 
 			// Patch element resetting to clear up any custom event handlers.
 			mwse::genCallEnforced(0x578517, 0x581440, reinterpret_cast<DWORD>(patchElementDeletion), 0x578528 - 0x578517);
+
+			// Patch SpellmakingMenu to allow service actor overrides.
+			mwse::genCallEnforced(0x5BF5AD, 0x621450, reinterpret_cast<DWORD>(showSpellmakingMenu));
+			mwse::genCallEnforced(0x622337, 0x5BFEA0, reinterpret_cast<DWORD>(patchSpellmakingMenuServiceActorOverride));
+			mwse::genCallEnforced(0x6229C5, 0x5BFEA0, reinterpret_cast<DWORD>(patchSpellmakingMenuServiceActorOverride));
+			mwse::genCallEnforced(0x6229D4, 0x5BFEA0, reinterpret_cast<DWORD>(patchSpellmakingMenuServiceActorOverride));
+			mwse::genCallEnforced(0x6229C0, 0x52B480, reinterpret_cast<DWORD>(patchSpellmakingMenuRemoveNoCost));
+			mwse::genCallEnforced(0x622DAA, 0x595370, reinterpret_cast<DWORD>(patchSpellmakingMenuExitMenuModeIfNoDialogMenu));
+			mwse::writeValueEnforced<BYTE>(0x62295A, 0x75, 0x7D);
 
 			// Provide some UI IDs for elements that don't have them:
 			// Tooltips (HelpMenu)

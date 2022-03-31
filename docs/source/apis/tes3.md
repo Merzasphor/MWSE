@@ -3701,6 +3701,26 @@ local success = tes3.showRestMenu({ checkForEnemies = ..., checkForSolidGround =
 
 ***
 
+### `tes3.showSpellmakingMenu`
+
+This function opens the spellmaking menu and returns true on success.
+
+```lua
+local success = tes3.showSpellmakingMenu({ serviceActor = ..., useDialogActor = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `serviceActor` ([tes3mobileActor](../../types/tes3mobileActor)): *Optional*. The actor to use for calculating the service price. If none is provided, an open dialog menu's service actor will be used instead.
+	* `useDialogActor` (boolean): *Default*: `true`. If set to false, the dialog menu service actor will be ignored. If false, a serviceActor must be provided.
+
+**Returns**:
+
+* `success` (boolean)
+
+***
+
 ### `tes3.skipAnimationFrame`
 
 Skips a given reference's animation for a single frame.

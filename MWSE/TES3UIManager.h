@@ -57,6 +57,9 @@ namespace TES3 {
 		void showRestMenu(bool resting = true, bool scripted = true);
 		void showRestMenu_lua(sol::optional<bool> resting);
 
+		void __cdecl showSpellmakingMenu();
+		void showSpellmakingMenuWithOverride(MobileActor* serviceActorOverride);
+
 		void updateFillBar(UI_ID id, float current, float max);
 		void updateHealthFillBar(float current, float max);
 		void updateMagickaFillBar(float current, float max);

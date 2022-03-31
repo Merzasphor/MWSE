@@ -5099,6 +5099,19 @@ namespace mwse::lua {
 		return true;
 	}
 
+	bool showSpellmakingMenu(sol::optional<sol::table> params) {
+		auto serviceActor = getOptionalParamMobileActor(params, "serviceActor");
+		if (serviceActor == nullptr && getOptionalParam(params, "useDialogActor", true)) {
+			serviceActor = TES3::UI::getServiceActor();
+			if (serviceActor == nullptr) {
+				throw std::runtime_error("No dialog actor can be resolved. Provide a service actor or set useDialogActor to false.");
+			}
+		}
+		TES3::UI::showSpellmakingMenuWithOverride(serviceActor);
+		TES3::UI::enterMenuMode(TES3::UI::registerID("SpellmakingMenu"));
+		return true;
+	}
+
 	bool setPlayerControlState(sol::optional<sol::table> params) {
 		auto worldController = TES3::WorldController::get();
 		if (!worldController) {
@@ -5506,6 +5519,7 @@ namespace mwse::lua {
 		tes3["showAlchemyMenu"] = showAlchemyMenu;
 		tes3["showRepairServiceMenu"] = showRepairServiceMenu;
 		tes3["showRestMenu"] = showRestMenu;
+		tes3["showSpellmakingMenu"] = showSpellmakingMenu;
 		tes3["skipAnimationFrame"] = skipAnimationFrame;
 		tes3["streamMusic"] = streamMusic;
 		tes3["tapKey"] = tapKey;
