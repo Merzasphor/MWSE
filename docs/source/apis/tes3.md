@@ -1026,13 +1026,12 @@ local mobileList = tes3.findActorsInProximity({ reference = ..., position = ...,
 Fetches the core game birthsign object for a given birthsign ID. If the birthsign with a given ID doesn't exist, nil is returned.
 
 ```lua
-local birthsign = tes3.findBirthsign({ id = ... })
+local birthsign = tes3.findBirthsign(id)
 ```
 
 **Parameters**:
 
-* `params` (table)
-	* `id` (string): ID of the birthsign to search for.
+* `id` (string): ID of the birthsign to search for.
 
 **Returns**:
 

@@ -698,15 +698,9 @@ function tes3.findActorsInProximity(params) end
 --- @field range number The distance around the position to search. An actor is included if the centre of their body is in range.
 
 --- Fetches the core game birthsign object for a given birthsign ID. If the birthsign with a given ID doesn't exist, nil is returned.
---- @param params tes3.findBirthsign.params This table accepts the following values:
---- 
---- `id`: string — ID of the birthsign to search for.
+--- @param id string ID of the birthsign to search for.
 --- @return tes3birthsign birthsign No description yet available.
-function tes3.findBirthsign(params) end
-
----Table parameter definitions for `tes3.findBirthsign`.
---- @class tes3.findBirthsign.params
---- @field id string ID of the birthsign to search for.
+function tes3.findBirthsign(id) end
 
 --- Fetches the core game character class object for a given class ID. If the class with a given ID doesn't exist, nil is returned.
 --- @param params tes3.findClass.params This table accepts the following values:
