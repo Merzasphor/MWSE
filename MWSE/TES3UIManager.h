@@ -59,6 +59,7 @@ namespace TES3 {
 
 		void __cdecl showSpellmakingMenu();
 		void showSpellmakingMenuWithOverride(MobileActor* serviceActorOverride);
+		MobileActor* __cdecl getSpellmakingServiceActor();
 
 		void updateFillBar(UI_ID id, float current, float max);
 		void updateHealthFillBar(float current, float max);

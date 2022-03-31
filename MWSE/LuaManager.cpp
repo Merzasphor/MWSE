@@ -181,6 +181,7 @@
 #include "LuaCalcRestInterruptEvent.h"
 #include "LuaCalcSoulValueEvent.h"
 #include "LuaCalcSpellPriceEvent.h"
+#include "LuaCalcSpellmakingPriceEvent.h"
 #include "LuaCalcTrainingPriceEvent.h"
 #include "LuaCalcTravelPriceEvent.h"
 #include "LuaCellChangedEvent.h"
@@ -2007,6 +2008,24 @@ namespace mwse::lua {
 		}
 
 		return price;
+	}
+
+	//
+	// Event: Calculate spellmaking price.
+	//
+	void __fastcall OnCalculateSpellmakingPrice(TES3::UI::Element* self, DWORD _UNUSED_, TES3::UI::Property id, TES3::UI::PropertyValue value, TES3::UI::PropertyType type) {
+		if (event::CalculateSpellmakingPriceEvent::getEventEnabled()) {
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+
+			auto serviceActor = TES3::UI::getSpellmakingServiceActor();
+
+			sol::table result = stateHandle.triggerEvent(new event::CalculateSpellmakingPriceEvent(serviceActor, value.floatValue));
+			if (result.valid()) {
+				value.floatValue = result["price"];
+			}
+		}
+		self->setProperty(id, value, type);
 	}
 
 	//
@@ -4198,6 +4217,9 @@ namespace mwse::lua {
 			// Actually buying a spell.
 			genCallEnforced(0x61671C, 0x52AA50, reinterpret_cast<DWORD>(OnCalculateSpellPrice));
 		}
+
+		// Event: Calculate spell making price.
+		genCallEnforced(0x622332, 0x581F30, reinterpret_cast<DWORD>(OnCalculateSpellmakingPrice));
 
 		// Event: Calculate training price. We have to make sure it works with and without MCP patch #33.
 		if (!genCallEnforced(0x617D0D, 0x736760, reinterpret_cast<DWORD>(OnCalculateTrainingPrice_GetSkillPatched))) {

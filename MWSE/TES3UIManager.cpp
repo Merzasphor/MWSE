@@ -424,7 +424,7 @@ namespace TES3 {
 			TES3_ShowSpellmakingMenu();
 		}
 
-		MobileActor* __cdecl patchSpellmakingMenuServiceActorOverride() {
+		MobileActor* __cdecl getSpellmakingServiceActor() {
 			// If we have an override, make use of it.
 			if (TES3_SpellmakingMenu_ServiceActorOverride) {
 				return TES3_SpellmakingMenu_ServiceActorOverride.value();
@@ -800,9 +800,9 @@ namespace TES3 {
 
 			// Patch SpellmakingMenu to allow service actor overrides.
 			mwse::genCallEnforced(0x5BF5AD, 0x621450, reinterpret_cast<DWORD>(showSpellmakingMenu));
-			mwse::genCallEnforced(0x622337, 0x5BFEA0, reinterpret_cast<DWORD>(patchSpellmakingMenuServiceActorOverride));
-			mwse::genCallEnforced(0x6229C5, 0x5BFEA0, reinterpret_cast<DWORD>(patchSpellmakingMenuServiceActorOverride));
-			mwse::genCallEnforced(0x6229D4, 0x5BFEA0, reinterpret_cast<DWORD>(patchSpellmakingMenuServiceActorOverride));
+			mwse::genCallEnforced(0x622337, 0x5BFEA0, reinterpret_cast<DWORD>(getSpellmakingServiceActor));
+			mwse::genCallEnforced(0x6229C5, 0x5BFEA0, reinterpret_cast<DWORD>(getSpellmakingServiceActor));
+			mwse::genCallEnforced(0x6229D4, 0x5BFEA0, reinterpret_cast<DWORD>(getSpellmakingServiceActor));
 			mwse::genCallEnforced(0x6229C0, 0x52B480, reinterpret_cast<DWORD>(patchSpellmakingMenuRemoveNoCost));
 			mwse::genCallEnforced(0x622DAA, 0x595370, reinterpret_cast<DWORD>(patchSpellmakingMenuExitMenuModeIfNoDialogMenu));
 			mwse::writeValueEnforced<BYTE>(0x62295A, 0x75, 0x7D);

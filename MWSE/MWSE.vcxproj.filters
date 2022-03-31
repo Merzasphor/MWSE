@@ -1581,6 +1581,9 @@
     <ClInclude Include="LuaKeyframesLoadEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
+    <ClInclude Include="LuaCalcSpellmakingPriceEvent.h">
+      <Filter>Source Files\Lua\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -3466,6 +3469,9 @@
     </ClCompile>
     <ClCompile Include="TES3Archive.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaCalcSpellmakingPriceEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
