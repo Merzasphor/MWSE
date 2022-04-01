@@ -479,7 +479,7 @@ Access to the size of a stack, if the reference represents one or more items.
 
 ### `startingOrientation`
 
-*Read-only*. Access to the reference's original orientation. Note that this value is valid for NPCs and creatures.
+*Read-only*. Access to the reference's original orientation. Note that this value is invalid for NPCs and creatures.
 
 **Returns**:
 
@@ -489,7 +489,7 @@ Access to the size of a stack, if the reference represents one or more items.
 
 ### `startingPosition`
 
-*Read-only*. Access to the reference's original position. Note that this value is valid for NPCs and creatures.
+*Read-only*. Access to the reference's original position. Note that this value is invalid for NPCs and creatures.
 
 **Returns**:
 
