@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A class that represents a set of preferences for texture formats. These preferences dictate levels of pixel accuracy.
 --- @class niFormatPrefs

@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A raw DirectInput mouse state.
 --- @class tes3directInputMouseState

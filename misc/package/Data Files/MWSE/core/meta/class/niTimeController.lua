@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- Controls the timing and update functions for animation controllers.
 --- @class niTimeController : niObject

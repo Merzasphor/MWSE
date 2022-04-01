@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A spell game object.
 --- @class tes3spell : tes3object, tes3baseObject

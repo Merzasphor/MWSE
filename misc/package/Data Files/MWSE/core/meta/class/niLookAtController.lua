@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- Orients an axis of the controlled object towards a lookAt target. The axis is selectable.
 --- 

@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event is raised when an item price is being determined when bartering.
 --- @class calcBarterPriceEventData

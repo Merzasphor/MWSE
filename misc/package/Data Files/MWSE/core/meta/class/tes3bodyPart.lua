@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A body part game object.
 --- @class tes3bodyPart : tes3physicalObject, tes3object, tes3baseObject

@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event is triggered just before a spell cast is resolved, at the end of the casting animation. It can control the success chance of the spell cast.
 --- @class spellCastEventData

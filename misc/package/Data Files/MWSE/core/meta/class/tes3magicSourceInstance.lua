@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A game structure that keeps track of a magic source on an object.
 --- @class tes3magicSourceInstance : tes3baseObject

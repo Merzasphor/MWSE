@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event fires when an item is dropped.
 --- @class itemDroppedEventData

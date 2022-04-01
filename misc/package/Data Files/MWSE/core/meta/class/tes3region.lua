@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A structure that contains region information.
 --- @class tes3region : tes3baseObject

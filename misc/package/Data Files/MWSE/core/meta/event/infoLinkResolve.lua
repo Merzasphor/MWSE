@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event fires when a dialogue hyperlink is being resolved to a topic, during UI layout (not on link activation).
 --- @class infoLinkResolveEventData

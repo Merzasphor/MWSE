@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- An object that represents a file lock.
 --- @class lfsLock

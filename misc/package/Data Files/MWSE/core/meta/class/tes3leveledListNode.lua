@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A simple collection that maps an object in a leveled list to a level required for that object to spawn.
 --- @class tes3leveledListNode

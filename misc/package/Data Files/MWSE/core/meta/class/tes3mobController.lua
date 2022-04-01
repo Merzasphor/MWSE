@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- The controller responsible for mobile objects and collision.
 --- @class tes3mobController

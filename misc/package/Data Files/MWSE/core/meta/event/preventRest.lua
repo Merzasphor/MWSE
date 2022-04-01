@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event can be used to prevent the player from resting by returning false.
 --- @class preventRestEventData

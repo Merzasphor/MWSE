@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event is triggered on a collision and all the frames during the collision.
 ---

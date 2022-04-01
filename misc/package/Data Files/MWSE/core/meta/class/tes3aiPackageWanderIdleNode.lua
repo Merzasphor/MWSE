@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- An AI Wander package idle node game object. Contains information on the chance that the actor will wander at that idle node.
 --- @class tes3aiPackageWanderIdleNode

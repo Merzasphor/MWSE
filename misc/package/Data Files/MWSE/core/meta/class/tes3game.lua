@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A core game object used for storing game settings.
 --- @class tes3game

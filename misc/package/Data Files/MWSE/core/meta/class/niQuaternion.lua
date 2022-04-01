@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A rotation in quaternion representation.
 --- @class niQuaternion

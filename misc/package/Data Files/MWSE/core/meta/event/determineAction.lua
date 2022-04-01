@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event fires when an actor determines an action in a combat session.
 --- @class determineActionEventData

@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event is triggered when a sound is played by the game or when `tes3.playSound()` is called.
 --- @class addSoundEventData

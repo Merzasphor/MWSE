@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A script object.
 --- @class tes3script : tes3baseObject

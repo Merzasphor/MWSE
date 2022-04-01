@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event fires when an inventory filter has been selected for an item.
 --- @class filterInventorySelectEventData

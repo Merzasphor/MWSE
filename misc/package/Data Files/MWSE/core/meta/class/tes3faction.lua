@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A faction game object.
 --- @class tes3faction : tes3baseObject

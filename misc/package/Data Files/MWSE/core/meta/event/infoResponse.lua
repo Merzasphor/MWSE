@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event fires when a dialogue response is triggered.
 --- @class infoResponseEventData

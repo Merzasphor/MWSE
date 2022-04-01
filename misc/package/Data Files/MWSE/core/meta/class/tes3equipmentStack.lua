@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A simple container that holds a relationship between an item, and any associated item data.
 --- @class tes3equipmentStack

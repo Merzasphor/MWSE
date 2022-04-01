@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A core object representing a character class.
 --- @class tes3class : tes3baseObject

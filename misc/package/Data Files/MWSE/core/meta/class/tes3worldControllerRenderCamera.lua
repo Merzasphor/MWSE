@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A core game object used for storing camera objects.
 --- @class tes3worldControllerRenderCamera

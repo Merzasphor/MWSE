@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event is called when determining the price of traveling, and can be used to modify the given price.
 --- @class calcTravelPriceEventData

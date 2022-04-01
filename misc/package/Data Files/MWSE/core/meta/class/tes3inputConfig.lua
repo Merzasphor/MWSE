@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A structure that represents a configured key binding.
 --- @class tes3inputConfig

@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- The damaged event triggers after an actor has been damaged.
 ---

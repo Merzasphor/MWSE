@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- An AI Escort package game object. Sets an actor to follow another actor to a destination.
 --- @class tes3aiPackageEscort : tes3aiPackage

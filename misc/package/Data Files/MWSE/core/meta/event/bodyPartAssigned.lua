@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- Allows reading and overwriting body part assignments.
 --- @class bodyPartAssignedEventData

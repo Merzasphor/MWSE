@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- An attachment-capable structure that maintains lock and trap data.
 --- @class tes3lockNode

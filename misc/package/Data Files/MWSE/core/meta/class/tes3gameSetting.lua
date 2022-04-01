@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A GMST game object.
 --- @class tes3gameSetting : tes3baseObject

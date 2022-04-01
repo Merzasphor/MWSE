@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A 4 by 4 matrix.
 --- @class tes3matrix44

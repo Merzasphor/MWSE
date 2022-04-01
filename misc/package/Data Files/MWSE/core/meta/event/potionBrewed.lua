@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- The potionBrewed event is raised when the player brews a new potion.
 ---

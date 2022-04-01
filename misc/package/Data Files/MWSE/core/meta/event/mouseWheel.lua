@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- The mouseWheel event fires when the mouse wheel is used, providing a delta value.
 --- @class mouseWheelEventData

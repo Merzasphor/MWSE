@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A game object which holds information about equipment attachments to the actor's skeleton.
 --- @class tes3bodyPartManagerAttachNode

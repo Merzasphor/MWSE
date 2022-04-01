@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A container object that has not been cloned. Typically represents the raw information edited in the construction set.
 --- @class tes3container : tes3actor, tes3physicalObject, tes3object, tes3baseObject

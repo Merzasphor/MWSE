@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event is triggered when a new spell is created using spellmaking services or by a script using `tes3spell.create()`.
 --- @class spellCreatedEventData

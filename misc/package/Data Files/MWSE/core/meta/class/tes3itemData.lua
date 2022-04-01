@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A set of variables that differentiates one item from another.
 --- @class tes3itemData

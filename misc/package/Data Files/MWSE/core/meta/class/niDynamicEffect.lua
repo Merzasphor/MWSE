@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- Base class for dynamic effects such as NiLights or projected textures effects.
 --- @class niDynamicEffect : niAVObject, niObjectNET, niObject

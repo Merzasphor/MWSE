@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A list of spells. Used by actors, birthsigns, and races.
 --- @class tes3spellList

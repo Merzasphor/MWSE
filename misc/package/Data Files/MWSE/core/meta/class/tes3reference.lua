@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A reference is a sort of container structure for objects. It holds a base object, as well as various variables associated with that object that make it unique.
 --- 

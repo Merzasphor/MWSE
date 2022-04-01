@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event is triggered when a mesh is loaded.
 --- @class meshLoadedEventData

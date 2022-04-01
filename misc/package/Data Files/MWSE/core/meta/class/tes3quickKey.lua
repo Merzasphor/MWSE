@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A configuration detailing a quick key.
 --- @class tes3quickKey

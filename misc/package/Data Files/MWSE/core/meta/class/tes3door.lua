@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A door game object. Data specific to a single door is stored on the door reference as destination and lock attachments. See ``tes3reference`` for details.
 --- 

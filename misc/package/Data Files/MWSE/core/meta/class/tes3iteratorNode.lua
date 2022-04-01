@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A node from a collection, which has a link to the previous and next node, as well as its contained data.
 --- @class tes3iteratorNode

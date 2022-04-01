@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A core magic effect definition.
 --- @class tes3magicEffect

@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A data structure, off of the world controller, that handles input.
 --- @class tes3inputController

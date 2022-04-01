@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event is called after any leveled item list is resolved.
 --- @class leveledItemPickedEventData

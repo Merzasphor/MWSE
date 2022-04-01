@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A densely packed structure for single-byte red, green, blue and alpha values.
 --- @class tes3packedColor

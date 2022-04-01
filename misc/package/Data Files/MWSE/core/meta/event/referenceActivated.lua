@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event is triggered when a reference is activated.
 --- @class referenceActivatedEventData

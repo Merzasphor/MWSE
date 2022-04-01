@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- calcSunDamageScalar is used when calculating the amount of damage to apply for the Sun Damage magic effect.
 --- @class calcSunDamageScalarEventData

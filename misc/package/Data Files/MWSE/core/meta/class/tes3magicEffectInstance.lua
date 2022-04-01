@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- Represents an individual instance of a magic effect being applied to a reference.
 --- @class tes3magicEffectInstance

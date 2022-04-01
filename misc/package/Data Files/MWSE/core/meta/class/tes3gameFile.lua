@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- Represents a loaded ESM, ESP, or ESS file.
 --- @class tes3gameFile

@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A simple pair of integers, typically used to define a range.
 --- @class tes3rangeInt

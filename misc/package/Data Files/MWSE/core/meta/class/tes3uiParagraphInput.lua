@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A structure containing properties specific to paragraph inputs.
 --- @class tes3uiParagraphInput

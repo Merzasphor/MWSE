@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- An object that has a name, extra data, and controllers.
 --- @class niObjectNET : niObject

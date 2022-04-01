@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event is raised when the potential activation target for the player changes.
 --- @class activationTargetChangedEventData

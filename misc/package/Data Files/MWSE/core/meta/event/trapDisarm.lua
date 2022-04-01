@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event fires when a trap is being disarmed.
 --- @class trapDisarmEventData

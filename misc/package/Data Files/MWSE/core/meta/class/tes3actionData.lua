@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A substructure of mobile actors that provides information about the current or previous action.
 --- @class tes3actionData

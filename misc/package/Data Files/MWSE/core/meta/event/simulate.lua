@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- The simulate event occurs at the start of every frame, excluding when the game is paused or in menu mode.
 --- @class simulateEventData

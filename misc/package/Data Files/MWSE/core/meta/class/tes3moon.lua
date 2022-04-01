@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A structure that keeps track of information related two the game's two moons.
 --- @class tes3moon

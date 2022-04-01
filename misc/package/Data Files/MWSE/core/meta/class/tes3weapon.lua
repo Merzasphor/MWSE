@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A weapon game object.
 --- @class tes3weapon : tes3item, tes3physicalObject, tes3object, tes3baseObject

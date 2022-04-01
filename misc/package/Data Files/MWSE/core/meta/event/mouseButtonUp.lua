@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- The mouseButtonDown event fires when a button on the mouse is released.
 --- @class mouseButtonUpEventData

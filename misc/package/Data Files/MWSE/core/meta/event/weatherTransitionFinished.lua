@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- The **weatherTransitionFinished** event occurs when the currently simulated weather finished transitioning to a new weather.
 --- 

@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event fires when a crime is witnessed by an actor.
 --- @class crimeWitnessedEventData

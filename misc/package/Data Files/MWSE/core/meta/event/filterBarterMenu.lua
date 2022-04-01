@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event fires when an item in the barter menu is filtered.
 --- @class filterBarterMenuEventData

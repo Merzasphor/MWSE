@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A game object which holds information about an active body part, it's associated item and scene node.
 --- @class tes3bodyPartManagerActiveBodyPart

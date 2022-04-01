@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- The potionBrewFailed event is raised when the player fails a potion brew attempt.
 --- @class potionBrewFailedEventData

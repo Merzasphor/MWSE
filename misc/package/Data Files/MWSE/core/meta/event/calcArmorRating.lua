@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event is fired before an actor's armor rating has been calculated, and can be used to override the armor that the actor is given.
 --- @class calcArmorRatingEventData

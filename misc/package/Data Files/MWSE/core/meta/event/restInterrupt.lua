@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event is invoked when a rest is about to be interrupted. The ambushing spawn can be overridden by changing the creature parameter.
 --- @class restInterruptEventData

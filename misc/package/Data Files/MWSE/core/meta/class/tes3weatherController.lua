@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A data structure that handles the weather.
 --- @class tes3weatherController

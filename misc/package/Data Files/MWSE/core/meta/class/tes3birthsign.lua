@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- An object representing a birthsign.
 --- @class tes3birthsign : tes3baseObject

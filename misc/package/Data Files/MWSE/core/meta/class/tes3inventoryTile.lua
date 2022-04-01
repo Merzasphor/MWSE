@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- An inventory tile, connecting an item, its data, and various related UI elements.
 --- @class tes3inventoryTile

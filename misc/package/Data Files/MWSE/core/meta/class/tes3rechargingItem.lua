@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- Data for a recharging item. Not necessarily an item owned by the player.
 --- @class tes3rechargingItem

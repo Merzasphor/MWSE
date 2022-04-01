@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A collection for references, holding a cell and a linked list of references contained in the cell.
 --- @class tes3referenceList

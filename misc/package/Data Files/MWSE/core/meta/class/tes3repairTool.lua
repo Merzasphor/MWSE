@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A core repair tool object.
 --- @class tes3repairTool : tes3item, tes3physicalObject, tes3object, tes3baseObject

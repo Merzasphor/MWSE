@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- The key event fires when a key is released.
 --- @class keyUpEventData

@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A mobile object for a physical projectile.
 --- @class tes3mobileProjectile : tes3mobileObject

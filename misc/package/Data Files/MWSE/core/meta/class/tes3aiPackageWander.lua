@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- An AI Wander package game object. Sets an actor to wander around a cell at certain points called idle nodes.
 --- @class tes3aiPackageWander : tes3aiPackage

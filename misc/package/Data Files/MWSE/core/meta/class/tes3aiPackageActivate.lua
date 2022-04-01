@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- An AI Activate package game object. Sets an actor to activate a reference.
 --- @class tes3aiPackageActivate : tes3aiPackage

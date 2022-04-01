@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event is raised when an in-world `tes3reference` for an item is about to be converted to fit into a `tes3itemStack`.
 --- @class convertReferenceToItemEventData

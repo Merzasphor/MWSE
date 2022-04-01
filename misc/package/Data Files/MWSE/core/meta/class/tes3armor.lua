@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- An armor game object.
 --- @class tes3armor : tes3item, tes3physicalObject, tes3object, tes3baseObject

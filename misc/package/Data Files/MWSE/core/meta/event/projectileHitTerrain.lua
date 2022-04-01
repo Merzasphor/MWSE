@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- The projectileHitTerrain event fires when a projectile collides with terrain.
 --- @class projectileHitTerrainEventData

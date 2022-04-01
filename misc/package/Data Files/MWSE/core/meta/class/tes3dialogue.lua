@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A parent-level dialogue, such as a topic, voice, greeting, persuasion response, or journal.
 --- @class tes3dialogue : tes3baseObject

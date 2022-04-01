@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- A structure that keeps track of combat session data.
 --- @class tes3combatSession

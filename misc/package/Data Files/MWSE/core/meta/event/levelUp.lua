@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This even is called whenever the player successfully finishes leveling up.
 --- @class levelUpEventData
