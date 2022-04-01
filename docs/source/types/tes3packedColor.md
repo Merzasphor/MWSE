@@ -1,6 +1,6 @@
 # tes3packedColor
 
-A densely packed structure for single-byte red, green, blue and alpha values.
+A densely packed structure for single-byte red, green, blue and alpha values. The values are from 0 to 255.
 
 ## Properties
 

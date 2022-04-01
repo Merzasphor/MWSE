@@ -1,6 +1,6 @@
 # tes3vector2
 
-A simple pair of floating-point numbers.
+A simple pair of floating-point numbers. You can perform following arithmetic with this type: `+`, `-`, and `*`.
 
 ## Properties
 
@@ -51,6 +51,27 @@ local result = tes3vector2:length()
 **Returns**:
 
 * `result` (number)
+
+***
+
+## Functions
+
+### `new`
+
+Creates a new vector. If no parameters are provided, an empty set will be constructed.
+
+```lua
+local vector = tes3vector2.new(x, y)
+```
+
+**Parameters**:
+
+* `x` (number): *Optional*.
+* `y` (number): *Optional*.
+
+**Returns**:
+
+* `vector` ([tes3vector2](../../types/tes3vector2))
 
 ***
 

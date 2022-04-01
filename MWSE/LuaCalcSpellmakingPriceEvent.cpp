@@ -1,14 +1,12 @@
 #include "LuaCalcSpellmakingPriceEvent.h"
 
 #include "LuaManager.h"
-#include "LuaUtil.h"
 
 #include "TES3MobileActor.h"
 #include "TES3Reference.h"
-#include "TES3Spell.h"
 
 namespace mwse::lua::event {
-	CalculateSpellmakingPriceEvent::CalculateSpellmakingPriceEvent(TES3::MobileActor* serviceActor, int price) :
+	CalculateSpellmakingPriceEvent::CalculateSpellmakingPriceEvent(TES3::MobileActor* serviceActor, float price) :
 		ObjectFilteredEvent("calcSpellmakingPrice", serviceActor->reference),
 		m_ServiceActor(serviceActor),
 		m_Price(price)

@@ -4,5 +4,5 @@ return {
 	arguments = {
 		{ name = "reference", type = "tes3reference", description = "The reference to calculate the angle to." },
 	},
-	returns = {{ name = "angle", type = "number", description = "The angle to the given reference." }},
+	returns = {{ name = "angle", type = "number", description = "The angle to the given reference in radians." }},
 }

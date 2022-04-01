@@ -1,6 +1,6 @@
 # tes3matrix33
 
-A 3 by 3 matrix.
+A 3 by 3 matrix. You can perform following arithmetic with this type: `+`, `-`, `*`, and `==`.
 
 ## Properties
 
@@ -259,6 +259,37 @@ local result = tes3matrix33:transpose()
 **Returns**:
 
 * `result` ([tes3matrix33](../../types/tes3matrix33))
+
+***
+
+## Functions
+
+### `new`
+
+Creates a new 3 by 3 matrix from 3 provided vectors, 9 numbers or creates an empty matrix if nothing is provided.
+
+```lua
+local matrix = tes3matrix33.new(x0, y0, z0, x1, y1, z1, x2, y2, z2, x, y, z)
+```
+
+**Parameters**:
+
+* `x0` (number): *Optional*.
+* `y0` (number): *Optional*.
+* `z0` (number): *Optional*.
+* `x1` (number): *Optional*.
+* `y1` (number): *Optional*.
+* `z1` (number): *Optional*.
+* `x2` (number): *Optional*.
+* `y2` (number): *Optional*.
+* `z2` (number): *Optional*.
+* `x` ([tes3vector3](../../types/tes3vector3)): *Optional*.
+* `y` ([tes3vector3](../../types/tes3vector3)): *Optional*.
+* `z` ([tes3vector3](../../types/tes3vector3)): *Optional*.
+
+**Returns**:
+
+* `matrix` ([tes3matrix33](../../types/tes3matrix33))
 
 ***
 

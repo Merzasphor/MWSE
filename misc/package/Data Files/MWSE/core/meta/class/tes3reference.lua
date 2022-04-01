@@ -75,7 +75,7 @@ function tes3reference:enable() end
 
 --- Calculates the angle from this reference's current facing to the target reference.
 --- @param reference tes3reference The reference to calculate the angle to.
---- @return number angle The angle to the given reference.
+--- @return number angle The angle to the given reference in radians.
 function tes3reference:getAngleTo(reference) end
 
 --- Fetches the dynamic light attachment.

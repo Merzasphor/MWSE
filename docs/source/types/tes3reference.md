@@ -671,7 +671,7 @@ local angle = tes3reference:getAngleTo(reference)
 
 **Returns**:
 
-* `angle` (number): The angle to the given reference.
+* `angle` (number): The angle to the given reference in radians.
 
 ***
 

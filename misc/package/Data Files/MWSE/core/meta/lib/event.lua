@@ -30,6 +30,7 @@
 --- @field register fun(eventId: '"calcSoulValue"', callback: fun(e: calcSoulValueEventData), options: table)
 --- @field register fun(eventId: '"calcSpellPrice"', callback: fun(e: calcSpellPriceEventData), options: table)
 --- @field register fun(eventId: '"calcSpellmakingPrice"', callback: fun(e: calcSpellmakingPriceEventData), options: table)
+--- @field register fun(eventId: '"calcSpellmakingSpellPointCost"', callback: fun(e: calcSpellmakingSpellPointCostEventData), options: table)
 --- @field register fun(eventId: '"calcSunDamageScalar"', callback: fun(e: calcSunDamageScalarEventData), options: table)
 --- @field register fun(eventId: '"calcSwimRunSpeed"', callback: fun(e: calcSwimRunSpeedEventData), options: table)
 --- @field register fun(eventId: '"calcSwimSpeed"', callback: fun(e: calcSwimSpeedEventData), options: table)
