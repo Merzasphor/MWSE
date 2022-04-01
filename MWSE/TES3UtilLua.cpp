@@ -5108,7 +5108,7 @@ namespace mwse::lua {
 			}
 		}
 		TES3::UI::showSpellmakingMenuWithOverride(serviceActor);
-		TES3::UI::enterMenuMode(TES3::UI::registerID("SpellmakingMenu"));
+		TES3::UI::enterMenuMode(TES3::UI::registerID("MenuSpellmaking"));
 		return true;
 	}
 
