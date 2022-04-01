@@ -40,8 +40,8 @@ namespace TES3 {
 	}
 
 	bool Sound::play(int playbackFlags, unsigned char volume, float pitch, bool isNot3D) {
-		unsigned int master = TES3::WorldController::get()->audioController->volumeMaster;
-		unsigned int finalVolume = master * volume / 250;
+		auto master = TES3::WorldController::get()->audioController->volumeMaster;
+		auto finalVolume = master * volume / 250;
 		return playRaw(playbackFlags, finalVolume, pitch, isNot3D);
 	}
 
@@ -165,12 +165,11 @@ namespace TES3 {
 	}
 
 	bool Sound::play_lua(sol::optional<sol::table> params) {
-		bool loop = mwse::lua::getOptionalParam<bool>(params, "loop", false);
-		unsigned char volume = mwse::lua::getOptionalParam<double>(params, "volume", 1.0) * 250;
-		float pitch = mwse::lua::getOptionalParam<double>(params, "pitch", 1.0);
+		auto loop = mwse::lua::getOptionalParam(params, "loop", false);
+		auto volume = mwse::lua::getOptionalParam(params, "volume", 1.0f) * 250.0f;
+		auto pitch = mwse::lua::getOptionalParam(params, "pitch", 1.0f);
 		return play(loop ? TES3::SoundPlayFlags::Loop : 0, volume, pitch, true);
 	}
-
 }
 
 MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_TES3(TES3::Sound)
