@@ -2582,7 +2582,7 @@ namespace mwse::lua {
 			nop // ^
 			nop // ^
 			nop // ^
-			mov[ebp + 0x8], eax	// Size: 0x3?
+			mov [ebp + 0x8], eax	// Size: 0x3
 		}
 	}
 	const size_t patchCalculateHitChance_size = 0xD;
@@ -2615,17 +2615,17 @@ namespace mwse::lua {
 
 	__declspec(naked) void patchCalcBlockChance() {
 		__asm {
+			mov edx, ecx	// Size: 0x2
 			mov ecx, edi	// Size: 0x2
-			mov edx, [ebp + 0x8]	// Size: 0x3
 			nop // Replaced with a call generation. Can't do so here, because offsets aren't accurate.
 			nop // ^
 			nop // ^
 			nop // ^
 			nop // ^
-			mov[ebp + 0x8], eax	// Size: 0x3?
+			mov [ebp + 0x8], eax	// Size: 0x3
 		}
 	}
-	const size_t patchCalcBlockChance_size = 0xD;
+	const size_t patchCalcBlockChance_size = 0xC;
 
 	//
 	// Event: Filters created. 
@@ -4387,9 +4387,9 @@ namespace mwse::lua {
 		genCallUnprotected(0x5554A0, reinterpret_cast<DWORD>(OnCalculateHitChance));
 
 		// Event: Calculate block chance.
-		genNOPUnprotected(0x555AC3, 0x52);
+		genNOPUnprotected(0x555AC3, 0x555B15 - 0x555AC3);
 		writePatchCodeUnprotected(0x555AC3, (BYTE*)&patchCalcBlockChance, patchCalcBlockChance_size);
-		genCallUnprotected(0x555AC7, reinterpret_cast<DWORD>(OnCalcBlockChance));
+		genCallUnprotected(0x555AC3 + 0x4, reinterpret_cast<DWORD>(OnCalcBlockChance));
 
 		// Event: Created filters.
 		genCallEnforced(0x418A10, 0x411400, reinterpret_cast<DWORD>(CreateFilters));
