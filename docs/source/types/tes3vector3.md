@@ -1,6 +1,6 @@
 # tes3vector3
 
-A simple trio of floating-point numbers.
+A simple trio of floating-point numbers. You can perform following arithmetic with this type: `+`, `-`, and `*`.
 
 ## Properties
 
@@ -281,6 +281,28 @@ local result = tes3vector3:toColor()
 **Returns**:
 
 * `result` ([niColor](../../types/niColor))
+
+***
+
+## Functions
+
+### `new`
+
+Creates a new vector. If no parameters are provided, an empty set will be constructed.
+
+```lua
+local vector = tes3vector3.new(x, y, z)
+```
+
+**Parameters**:
+
+* `x` (number): *Optional*.
+* `y` (number): *Optional*.
+* `z` (number): *Optional*.
+
+**Returns**:
+
+* `vector` ([tes3vector3](../../types/tes3vector3))
 
 ***
 

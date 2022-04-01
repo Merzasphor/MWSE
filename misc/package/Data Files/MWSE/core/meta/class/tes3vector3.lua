@@ -1,7 +1,7 @@
 --- @meta
 --- @diagnostic disable:undefined-doc-name
 
---- A simple trio of floating-point numbers.
+--- A simple trio of floating-point numbers. You can perform following arithmetic with this type: `+`, `-`, and `*`.
 --- @class tes3vector3
 --- @field angle number The angle between the vector and the water plane.
 --- @field b number The third value in the vector. An alias for `z`.
@@ -11,6 +11,13 @@
 --- @field y number The second value in the vector.
 --- @field z number The third value in the vector.
 tes3vector3 = {}
+
+--- Creates a new vector. If no parameters are provided, an empty set will be constructed.
+--- @param x number *Optional*. No description yet available.
+--- @param y number *Optional*. No description yet available.
+--- @param z number *Optional*. No description yet available.
+--- @return tes3vector3 vector No description yet available.
+function tes3vector3.new(x, y, z) end
 
 --- Creates a copy of the vector.
 --- @return tes3vector3 result No description yet available.
