@@ -19,6 +19,7 @@
 --- @field register fun(eventId: '"calcArmorPieceHit"', callback: fun(e: calcArmorPieceHitEventData), options: table)
 --- @field register fun(eventId: '"calcArmorRating"', callback: fun(e: calcArmorRatingEventData), options: table)
 --- @field register fun(eventId: '"calcBarterPrice"', callback: fun(e: calcBarterPriceEventData), options: table)
+--- @field register fun(eventId: '"calcBlockChance"', callback: fun(e: calcBlockChanceEventData), options: table)
 --- @field register fun(eventId: '"calcFlySpeed"', callback: fun(e: calcFlySpeedEventData), options: table)
 --- @field register fun(eventId: '"calcHitChance"', callback: fun(e: calcHitChanceEventData), options: table)
 --- @field register fun(eventId: '"calcMoveSpeed"', callback: fun(e: calcMoveSpeedEventData), options: table)
