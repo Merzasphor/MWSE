@@ -477,6 +477,26 @@ Access to the size of a stack, if the reference represents one or more items.
 
 ***
 
+### `startingOrientation`
+
+*Read-only*. Access to the reference's original orientation. Note that this value is valid for NPCs and creatures.
+
+**Returns**:
+
+* `result` ([tes3vector3](../../types/tes3vector3))
+
+***
+
+### `startingPosition`
+
+*Read-only*. Access to the reference's original position. Note that this value is valid for NPCs and creatures.
+
+**Returns**:
+
+* `result` ([tes3vector3](../../types/tes3vector3))
+
+***
+
 ### `supportsLuaData`
 
 If true, this reference can store temporary or persistent lua data.
