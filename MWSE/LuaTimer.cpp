@@ -190,7 +190,7 @@ namespace mwse::lua {
 			// Is this a named callback?
 			sol::protected_function callback;
 			if (timer->callback.get_type() == sol::type::string) {
-				auto& callbackName = timer->callback.as<std::string&>();
+				auto callbackName = timer->callback.as<std::string>();
 				callback = getNamedTimer(callbackName);
 				if (callback == sol::nil) {
 					log::getLog() << "Lua error encountered in timer callback: Named callback \"" << callbackName << "\" is not registered." << std::endl;
@@ -296,7 +296,7 @@ namespace mwse::lua {
 		else if (state == TimerState::Paused) {
 			return timing;
 		}
-		return std::optional<double>();
+		return {};
 	}
 
 	sol::table Timer::toTable(sol::this_state ts) const {
@@ -434,7 +434,7 @@ namespace mwse::lua {
 
 	std::unordered_map<std::string, sol::protected_function> namedTimerMap;
 
-	sol::protected_function getNamedTimer(std::string& name) {
+	sol::protected_function getNamedTimer(const std::string& name) {
 		auto itt = namedTimerMap.find(name);
 		if (itt != namedTimerMap.end()) {
 			return itt->second;
@@ -442,7 +442,7 @@ namespace mwse::lua {
 		return sol::nil;
 	}
 
-	void setNamedTimer(std::string& name, sol::protected_function fn) {
+	void setNamedTimer(const std::string& name, sol::protected_function fn) {
 		namedTimerMap[name] = fn;
 	}
 

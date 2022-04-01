@@ -508,9 +508,8 @@ namespace TES3 {
 				setWidgetText(nullptr);
 			}
 			// If it's a string, just set it normally.
-			else if (value.is<std::string>()) {
-				std::string& text = value.as<std::string&>();
-				setWidgetText(text.c_str());
+			else if (value.is<const char*>()) {
+				setWidgetText(value.as<const char*>());
 			}
 			// Otherwise try to convert it to a string.
 			else {

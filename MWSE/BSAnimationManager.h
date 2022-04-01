@@ -2,7 +2,7 @@
 
 #include "NINode.h"
 
-#include "BSAnimationNode.h"
+#include "NIBSAnimationNode.h"
 
 namespace NI {
 	struct BSAnimationManager : Node {

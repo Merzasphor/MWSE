@@ -273,7 +273,7 @@ namespace TES3 {
 	}
 
 	const auto TES3_TriggerSpellBoundWeaponEvent = reinterpret_cast<void(__cdecl *)(MagicSourceInstance *, float, MagicEffectInstance *, int, const char*)>(0x465B70);
-	void triggerSpellBoundWeaponEvent(sol::table data, std::string& id) {
+	void triggerSpellBoundWeaponEvent(sol::table data, const std::string& id) {
 		MagicSourceInstance * sourceInstance = data["sourceInstance"];
 		float deltaTime = data["deltaTime"];
 		MagicEffectInstance * effectInstance = data["effectInstance"];

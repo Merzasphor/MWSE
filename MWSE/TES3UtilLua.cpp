@@ -232,7 +232,7 @@ namespace mwse::lua {
 		return {};
 	}
 
-	bool setGlobal(std::string& id, double value) {
+	bool setGlobal(const std::string& id, double value) {
 		TES3::DataHandler* dataHandler = TES3::DataHandler::get();
 		if (dataHandler) {
 			TES3::GlobalVariable* global = dataHandler->nonDynamicData->findGlobalVariable(id.c_str());
@@ -244,7 +244,7 @@ namespace mwse::lua {
 		return false;
 	}
 
-	TES3::GlobalVariable* findGlobal(std::string& id) {
+	TES3::GlobalVariable* findGlobal(const std::string& id) {
 		TES3::DataHandler* dataHandler = TES3::DataHandler::get();
 		if (dataHandler) {
 			return dataHandler->nonDynamicData->findGlobalVariable(id.c_str());
@@ -786,21 +786,19 @@ namespace mwse::lua {
 
 	static NI::Pick* rayTestCache = nullptr;
 	static std::vector<NI::AVObject*> rayTestIgnoreRoots;
-	sol::object rayTest(sol::table params) {
-		auto& luaManager = mwse::lua::LuaManager::getInstance();
-		auto stateHandle = luaManager.getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+	sol::object rayTest(sol::table params, sol::this_state this_state) {
+		sol::state_view state = this_state;
 
 		// Make sure we got our required position.
 		sol::optional<TES3::Vector3> position = getOptionalParamVector3(params, "position");
 		if (!position) {
-			return false;
+			return sol::make_object(state, false);
 		}
 
 		// Make sure we got our required direction.
 		sol::optional<TES3::Vector3> direction = getOptionalParamVector3(params, "direction");
 		if (!direction) {
-			return false;
+			return sol::make_object(state, false);
 		}
 
 		// Get optional maximum search distance.
@@ -919,7 +917,8 @@ namespace mwse::lua {
 		}
 
 		// Our pick is configured. Let's run it! (Use normalized direction for skinned mesh fix later.)
-		auto pickSuccess = rayTestCache->pickObjects(&position.value(), &direction.value().normalized(), false, maxDistance);
+		auto directionNormalized = direction.value().normalized();
+		auto pickSuccess = rayTestCache->pickObjects(&position.value(), &directionNormalized, false, maxDistance);
 
 		// Restore previous cull states.
 		for (auto itt = ignoreRestoreList.begin(); itt != ignoreRestoreList.end(); itt++) {
@@ -1752,10 +1751,10 @@ namespace mwse::lua {
 		int result = tes3::resolveAssetPath(path, buffer);
 
 		if (result == 1) {
-			return std::make_tuple("file", buffer);
+			return { std::make_tuple("file", buffer) };
 		}
 		else if (result == 2) {
-			return std::make_tuple("bsa", buffer);
+			return { std::make_tuple("bsa", buffer) };
 		}
 
 		return {};
@@ -2316,15 +2315,15 @@ namespace mwse::lua {
 	sol::optional<std::string> getLanguage() {
 		switch (getLanguageCode()) {
 		case 0:
-			return "eng";
+			return { "eng" };
 		case 1:
-			return "fra";
+			return { "fra" };
 		case 2:
-			return "deu";
+			return { "deu" };
 		case 3:
-			return "rus";
+			return { "rus" };
 		case 4:
-			return "pol";
+			return { "pol" };
 		}
 
 		return sol::optional<std::string>();

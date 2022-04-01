@@ -48,7 +48,7 @@ namespace TES3 {
 	sol::optional<std::string> Class::getOrLoadDescription() {
 		// If the description is already loaded, just return it.
 		if (description) {
-			return description;
+			return { description };
 		}
 
 		// Otherwise we need to load it from disk, then free it.

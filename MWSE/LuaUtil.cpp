@@ -312,7 +312,7 @@ namespace mwse::lua {
 				}
 				// Were we given a table?
 				else if (maybeValue.get_type() == sol::type::table) {
-					return maybeValue.as<sol::table>();
+					return { maybeValue.as<sol::table>() };
 				}
 			}
 		}

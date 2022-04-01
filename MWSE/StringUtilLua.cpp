@@ -36,10 +36,10 @@ namespace mwse::lua {
 
 		state["mwse"]["string"]["get"] = [](double value) -> sol::optional<std::string> {
 			try {
-				return mwse::string::store::get(value).c_str();
+				return { mwse::string::store::get(value).c_str() };
 			}
 			catch (std::exception& e) {
-				return sol::optional<std::string>();
+				return {};
 			}
 		};
 	}

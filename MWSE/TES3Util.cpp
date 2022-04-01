@@ -51,7 +51,7 @@ namespace mwse::tes3 {
 		return nullptr;
 	}
 
-	TES3::Reference* getReference(std::string& id) {
+	TES3::Reference* getReference(const std::string& id) {
 		return getReference(id.c_str());
 	}
 

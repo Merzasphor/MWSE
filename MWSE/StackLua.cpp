@@ -29,7 +29,7 @@ namespace mwse::lua {
 			Stack::getInstance().pushFloat(value);
 		};
 
-		state["mwse"]["stack"]["pushString"] = [](std::string& value) {
+		state["mwse"]["stack"]["pushString"] = [](const std::string& value) {
 			Stack::getInstance().pushString(value);
 		};
 

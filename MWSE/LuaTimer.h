@@ -107,8 +107,8 @@ namespace mwse::lua {
 	};
 
 	// Get/set named timers.
-	sol::protected_function getNamedTimer(std::string& name);
-	void setNamedTimer(std::string& name, sol::protected_function fn);
+	sol::protected_function getNamedTimer(const std::string& name);
+	void setNamedTimer(const std::string& name, sol::protected_function fn);
 
 	// Create all the necessary lua binding for the timer API and the above data types.
 	void bindLuaTimer();
