@@ -1,7 +1,7 @@
 --- @meta
 --- @diagnostic disable:undefined-doc-name
 
---- A densely packed structure for single-byte red, green, blue and alpha values.
+--- A densely packed structure for single-byte red, green, blue and alpha values. The values are from 0 to 255.
 --- @class tes3packedColor
 --- @field a number The alpha color value.
 --- @field alpha number The alpha color value. Another alias for a.
