@@ -1,4 +1,5 @@
 --- @meta
+--- @diagnostic disable:undefined-doc-name
 
 --- This event is called when determining the cost of making a spell. The price can be modified.
 --- @class calcSpellmakingPriceEventData
