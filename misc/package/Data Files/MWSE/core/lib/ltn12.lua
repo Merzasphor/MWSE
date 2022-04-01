@@ -9,12 +9,14 @@
 -----------------------------------------------------------------------------
 local string = require("string")
 local table = require("table")
-local unpack = unpack or table.unpack
+local unpack = unpack or table.unpack	---@diagnostic disable-line:deprecated
 local base = _G
 local select = select
 
 local _M = {}
+---@diagnostic disable-next-line:deprecated
 if module then -- heuristic for exporting a global package table
+	---@diagnostic disable-next-line:lowercase-global
     ltn12 = _M  -- luacheck: ignore
 end
 local filter,source,sink,pump = {},{},{},{}
