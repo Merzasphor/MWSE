@@ -1,11 +1,6 @@
 #include "LuaActiveMagicEffectIconsUpdatedEvent.h"
 
 #include "LuaManager.h"
-#include "LuaUtil.h"
-
-#include "TES3MobilePlayer.h"
-#include "TES3Reference.h"
-#include "TES3WorldController.h"
 
 namespace mwse::lua::event {
 	ActiveMagicEffectIconsUpdatedEvent::ActiveMagicEffectIconsUpdatedEvent() :
