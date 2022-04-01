@@ -18,6 +18,7 @@
 #include "LuaButtonPressedEvent.h"
 #include "LuaCalcArmorRatingEvent.h"
 #include "LuaCalcBarterPriceEvent.h"
+#include "LuaCalcBlockChanceEvent.h"
 #include "LuaCalcHitArmorPieceEvent.h"
 #include "LuaCalcHitChanceEvent.h"
 #include "LuaCalcMovementSpeedEvent.h"
@@ -163,6 +164,7 @@ namespace mwse::lua::event {
 		usertypeDefinition["calcArmorPieceHit"] = sol::property(&CalcHitArmorPiece::getEventEnabled, &CalcHitArmorPiece::setEventEnabled);
 		usertypeDefinition["calcArmorRating"] = sol::property(&CalculateArmorRatingEvent::getEventEnabled, &CalculateArmorRatingEvent::setEventEnabled);
 		usertypeDefinition["calcBarterPrice"] = sol::property(&CalculateBarterPriceEvent::getEventEnabled, &CalculateBarterPriceEvent::setEventEnabled);
+		usertypeDefinition["calcBlockChance"] = sol::property(&CalcBlockChanceEvent::getEventEnabled, &CalcBlockChanceEvent::setEventEnabled);
 		usertypeDefinition["calcFlySpeed"] = sol::property(&CalculateMovementSpeed::getEventEnabled, &CalculateMovementSpeed::setEventEnabled);
 		usertypeDefinition["calcHitChance"] = sol::property(&CalcHitChanceEvent::getEventEnabled, &CalcHitChanceEvent::setEventEnabled);
 		usertypeDefinition["calcMoveSpeed"] = sol::property(&CalculateMovementSpeed::getEventEnabled, &CalculateMovementSpeed::setEventEnabled);
