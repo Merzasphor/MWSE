@@ -176,6 +176,7 @@
 #include "LuaAttackEvent.h"
 #include "LuaBarterOfferEvent.h"
 #include "LuaCalcBarterPriceEvent.h"
+#include "LuaCalcBlockChanceEvent.h"
 #include "LuaCalcHitArmorPieceEvent.h"
 #include "LuaCalcHitChanceEvent.h"
 #include "LuaCalcRepairPriceEvent.h"
@@ -2587,6 +2588,46 @@ namespace mwse::lua {
 	const size_t patchCalculateHitChance_size = 0xD;
 
 	//
+	// Event: Calculate block chance.
+	//
+
+	int __fastcall OnCalcBlockChance(TES3::MobileActor* attacker, int blockChance) {
+		// Allow the event to override the text.
+		if (mwse::lua::event::CalcBlockChanceEvent::getEventEnabled()) {
+			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::object eventResult = stateHandle.triggerEvent(new mwse::lua::event::CalcBlockChanceEvent(attacker, blockChance));
+			if (eventResult.valid()) {
+				sol::table eventData = eventResult;
+				blockChance = getOptionalParam<int>(eventData, "blockChance", blockChance);
+			}
+		}
+
+		// Overwritten code for this hook.
+		if (TES3::WorldController::get()->menuController->unknown_0x24 % 1) {
+			char* buffer = mwse::tes3::getThreadSafeStringBuffer();
+			sprintf(buffer, "Block Chance %d%%, for %s to hit %s", blockChance, attacker->reference->baseObject->getObjectID(), attacker->actionData.hitTarget->reference->baseObject->getObjectID());
+			const auto TES3_ConsoleLogResult = reinterpret_cast<void(__cdecl*)(const char*, bool)>(0x5B2C20);
+			TES3_ConsoleLogResult(buffer, false);
+		}
+
+		return blockChance;
+	}
+
+	__declspec(naked) void patchCalcBlockChance() {
+		__asm {
+			mov ecx, edi	// Size: 0x2
+			mov edx, [ebp + 0x8]	// Size: 0x3
+			nop // Replaced with a call generation. Can't do so here, because offsets aren't accurate.
+			nop // ^
+			nop // ^
+			nop // ^
+			nop // ^
+			mov[ebp + 0x8], eax	// Size: 0x3?
+		}
+	}
+	const size_t patchCalcBlockChance_size = 0xD;
+
+	//
 	// Event: Filters created. 
 	//
 
@@ -4344,6 +4385,11 @@ namespace mwse::lua {
 		genNOPUnprotected(0x55549B, 0x5C);
 		writePatchCodeUnprotected(0x55549B, (BYTE*)&patchCalculateHitChance, patchCalculateHitChance_size);
 		genCallUnprotected(0x5554A0, reinterpret_cast<DWORD>(OnCalculateHitChance));
+
+		// Event: Calculate block chance.
+		genNOPUnprotected(0x555AC3, 0x52);
+		writePatchCodeUnprotected(0x555AC3, (BYTE*)&patchCalcBlockChance, patchCalcBlockChance_size);
+		genCallUnprotected(0x555AC7, reinterpret_cast<DWORD>(OnCalcBlockChance));
 
 		// Event: Created filters.
 		genCallEnforced(0x418A10, 0x411400, reinterpret_cast<DWORD>(CreateFilters));
