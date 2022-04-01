@@ -5,12 +5,18 @@ return {
 		["block"] = {
 			type = "tes3uiElement",
 			readOnly = true,
+			deprecated = true,
 			description = "The UI element that is firing this event.",
 		},
 		["parent"] = {
 			type = "tes3uiElement",
 			readOnly = true,
 			description = "The calling element's parent.",
+		},
+		["source"] = {
+			type = "tes3uiElement",
+			readOnly = true,
+			description = "The UI element that is firing this event.",
 		},
 		["property"] = {
 			type = "number",
@@ -28,5 +34,5 @@ return {
 			description = "One of two undefined variables related to the event.",
 		},
 	},
-	blockable = true, --This line causes warning: Duplicate defined fields `block`
+	blockable = true,
 }
