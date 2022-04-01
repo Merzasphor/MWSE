@@ -6,7 +6,7 @@
 namespace mwse::lua::event {
 	class CalcBlockChanceEvent : public ObjectFilteredEvent, public DisableableEvent<CalcBlockChanceEvent> {
 	public:
-		CalcBlockChanceEvent(TES3::MobileActor* attacker, int hitChance);
+		CalcBlockChanceEvent(TES3::MobileActor* attacker, int blockChance);
 		sol::table createEventTable();
 
 	protected:
