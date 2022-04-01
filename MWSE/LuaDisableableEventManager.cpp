@@ -27,6 +27,7 @@
 #include "LuaCalcSoulValueEvent.h"
 #include "LuaCalcSpellPriceEvent.h"
 #include "LuaCalcSpellmakingPriceEvent.h"
+#include "LuaCalcSpellmakingSpellPointCostEvent.h"
 #include "LuaCalcSunDamageScalarEvent.h"
 #include "LuaCalcTrainingPriceEvent.h"
 #include "LuaCalcTravelPriceEvent.h"
@@ -174,6 +175,7 @@ namespace mwse::lua::event {
 		usertypeDefinition["calcSoulValue"] = sol::property(&CalculateSoulValueEvent::getEventEnabled, &CalculateSoulValueEvent::setEventEnabled);
 		usertypeDefinition["calcSpellPrice"] = sol::property(&CalculateSpellPriceEvent::getEventEnabled, &CalculateSpellPriceEvent::setEventEnabled);
 		usertypeDefinition["calcSpellmakingPrice"] = sol::property(&CalculateSpellmakingPriceEvent::getEventEnabled, &CalculateSpellmakingPriceEvent::setEventEnabled);
+		usertypeDefinition["calcSpellmakingSpellPointCost"] = sol::property(&CalculateSpellmakingSpellPointCostEvent::getEventEnabled, &CalculateSpellmakingSpellPointCostEvent::setEventEnabled);
 		usertypeDefinition["calcSunDamageScalar"] = sol::property(&CalcSunDamageScalarEvent::getEventEnabled, &CalcSunDamageScalarEvent::setEventEnabled);
 		usertypeDefinition["calcSwimRunSpeed"] = sol::property(&CalculateMovementSpeed::getEventEnabled, &CalculateMovementSpeed::setEventEnabled);
 		usertypeDefinition["calcSwimSpeed"] = sol::property(&CalculateMovementSpeed::getEventEnabled, &CalculateMovementSpeed::setEventEnabled);

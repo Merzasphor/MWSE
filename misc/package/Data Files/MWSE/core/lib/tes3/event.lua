@@ -25,6 +25,7 @@ return {
 	["calcSoulValue"] = "calcSoulValue",
 	["calcSpellPrice"] = "calcSpellPrice",
 	["calcSpellmakingPrice"] = "calcSpellmakingPrice",
+	["calcSpellmakingSpellPointCost"] = "calcSpellmakingSpellPointCost",
 	["calcSunDamageScalar"] = "calcSunDamageScalar",
 	["calcSwimRunSpeed"] = "calcSwimRunSpeed",
 	["calcSwimSpeed"] = "calcSwimSpeed",
