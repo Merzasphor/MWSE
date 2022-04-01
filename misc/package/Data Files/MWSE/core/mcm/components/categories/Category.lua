@@ -68,7 +68,7 @@ function Category:checkDisabled()
 				isDisabled = false
 			end
 		elseif component.componentType == "Category" then
-			componentDisabled = component:checkDisabled()
+			local componentDisabled = component:checkDisabled()
 			isDisabled = component:checkDisabled()
 			if componentDisabled then
 				hasSettings = true
@@ -78,7 +78,7 @@ function Category:checkDisabled()
 	return (hasSettings and not tes3.player and isDisabled)
 end
 
--- UI METHODS 
+-- UI METHODS
 
 function Category:createSubcomponentsContainer(parentBlock)
 	local subcomponentsContainer = parentBlock:createBlock({ id = tes3ui.registerID("Category_ContentsContainer") })

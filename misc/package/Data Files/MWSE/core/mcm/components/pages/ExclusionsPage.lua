@@ -237,8 +237,8 @@ function ExclusionsPage:createSearchBar(parentBlock, listName)
 	-- Set up the events to control text input control.
 	input:register("keyPress", function(e)
 		local inputController = tes3.worldController.inputController
-		pressedTab = (inputController:isKeyDown(tes3.scanCode.tab))
-		backspacedNothing = ((inputController:isKeyDown(tes3.scanCode.delete) or
+		local pressedTab = (inputController:isKeyDown(tes3.scanCode.tab))
+		local backspacedNothing = ((inputController:isKeyDown(tes3.scanCode.delete) or
 		                    inputController:isKeyDown(tes3.scanCode.backspace)) and input.text == placeholderText)
 
 		if pressedTab then
@@ -368,7 +368,7 @@ function ExclusionsPage:createList(parentBlock, listId)
 	self:createSearchBar(block, listId)
 
 	-- Create actual list
-	list = block:createVerticalScrollPane{}
+	local list = block:createVerticalScrollPane{}
 	list.widthProportional = 1.0
 	list.heightProportional = 1.0
 	list.paddingLeft = 8

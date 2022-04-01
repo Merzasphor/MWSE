@@ -76,7 +76,7 @@ function Component:getComponent(componentData)
 		end
 	end
 	if component then
-		data = self:prepareData(componentData)
+		self:prepareData(componentData)
 		return component:new(componentData)
 	else
 		mwse.log("Error: class %s not found", componentData.class)
@@ -150,7 +150,7 @@ function Component:createLabel(parentBlock)
 end
 
 --[[
-	Wraps up the entire component 
+	Wraps up the entire component
 ]]
 function Component:createOuterContainer(parentBlock)
 	local outerContainer
