@@ -849,8 +849,27 @@ namespace TES3 {
 			pushNewUIID(0x591614, "HelpMenu_trapped");
 
 			// Spellmaking Menu (MenuSpellmaking)
+			pushNewUIID(0x620C0A, "MenuSpellmaking_TopLayout");
+			pushNewUIID(0x620C50, "MenuSpellmaking_TopLeftLayout");
+			pushNewUIID(0x620C90, "MenuSpellmaking_SpellNameLayout");
+			pushNewUIID(0x620CDD, "MenuSpellmaking_SpellNameLabel");
+			pushNewUIID(0x620D2F, "MenuSpellmaking_SpellNameBorder");
+			pushNewUIID(0x620DFC, "MenuSpellmaking_TopRightLayout");
+			pushNewUIID(0x620E44, "MenuSpellmaking_SpellPointCostLayout");
+			pushNewUIID(0x620E9C, "MenuSpellmaking_SpellPointCostLabel");
+			pushNewUIID(0x620F04, "MenuSpellmaking_SpellChanceLayout");
+			pushNewUIID(0x620F5C, "MenuSpellmaking_SpellChanceLabel");
+			pushNewUIID(0x620FC2, "MenuSpellmaking_CenterLayout");
+			pushNewUIID(0x620FD0, "MenuSpellmaking_EffectsLayout");
+			pushNewUIID(0x621037, "MenuSpellmaking_EffectsLabel");
+			pushNewUIID(0x6210BB, "MenuSpellmaking_SpellEffectsLayout");
+			pushNewUIID(0x62110F, "MenuSpellmaking_SpellEffectsLabel");
+			pushNewUIID(0x6211B1, "MenuSpellmaking_BottomLayout");
+			pushNewUIID(0x6211F3, "MenuSpellmaking_BottomSpacer");
+			pushNewUIID(0x621233, "MenuSpellmaking_PriceLayout");
 			pushNewUIID(0x621280, "MenuSpellmaking_PriceLabel");
 			pushNewUIID(0x6212D9, "MenuSpellmaking_PriceValueLabel");
+			pushNewUIID(0x621329, "MenuSpellmaking_ButtonLayout");
 
 			// Enchantment Menu (MenuEnchantment)
 			pushNewUIID(0x5C1A89, "MenuEnchantment_topRow");
