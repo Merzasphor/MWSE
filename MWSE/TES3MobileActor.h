@@ -248,6 +248,7 @@ namespace TES3 {
 		void onDeath();
 		bool applyHealthDamage(float damage, bool isPlayerAttack, bool scaleWithDifficulty, bool doNotChangeHealth);
 		float applyFatigueDamage(float damage, float swing, bool alwaysPlayHitVoice = false);
+		void applyJumpFatigueCost() const;
 		float applyDamage_lua(sol::table params);
 		float calcEffectiveDamage_lua(sol::table params);
 		bool hasFreeAction() const;

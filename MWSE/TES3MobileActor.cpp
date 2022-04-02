@@ -410,6 +410,11 @@ namespace TES3 {
 		return result;
 	}
 
+	const auto TES3_MobileActor_applyJumpFatigueCost = reinterpret_cast<float(__thiscall*)(const MobileActor*)>(0x527A60);
+	void MobileActor::applyJumpFatigueCost() const {
+		TES3_MobileActor_applyJumpFatigueCost(this);
+	}
+
 	const auto TES3_MobileActor_hasFreeAction = reinterpret_cast<bool(__thiscall*)(const MobileActor*)>(0x527580);
 	bool MobileActor::hasFreeAction() const {
 		return TES3_MobileActor_hasFreeAction(this);
