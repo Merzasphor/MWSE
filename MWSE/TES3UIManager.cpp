@@ -848,6 +848,10 @@ namespace TES3 {
 			pushNewUIID(0x5915E6, "HelpMenu_locked");
 			pushNewUIID(0x591614, "HelpMenu_trapped");
 
+			// Spellmaking Menu (MenuSpellmaking)
+			pushNewUIID(0x621280, "MenuSpellmaking_priceLabel");
+			pushNewUIID(0x6212D9, "MenuSpellmaking_priceValueLabel");
+
 			// Enchantment Menu (MenuEnchantment)
 			pushNewUIID(0x5C1A89, "MenuEnchantment_topRow");
 			pushNewUIID(0x5C1AC5, "MenuEnchantment_selectablesContainer");
