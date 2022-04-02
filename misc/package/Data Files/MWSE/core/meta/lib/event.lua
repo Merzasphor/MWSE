@@ -77,6 +77,7 @@
 --- @field register fun(eventId: '"itemDropped"', callback: fun(e: itemDroppedEventData), options: table)
 --- @field register fun(eventId: '"itemTileUpdated"', callback: fun(e: itemTileUpdatedEventData), options: table)
 --- @field register fun(eventId: '"journal"', callback: fun(e: journalEventData), options: table)
+--- @field register fun(eventId: '"jump"', callback: fun(e: jumpEventData), options: table)
 --- @field register fun(eventId: '"key"', callback: fun(e: keyEventData), options: table)
 --- @field register fun(eventId: '"keyDown"', callback: fun(e: keyDownEventData), options: table)
 --- @field register fun(eventId: '"keyUp"', callback: fun(e: keyUpEventData), options: table)
