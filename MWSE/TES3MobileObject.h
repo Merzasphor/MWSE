@@ -125,7 +125,7 @@ namespace TES3 {
 		void * setCrouching; // 0x58
 		void * setWalking; // 0x5C
 		void * setRunning; // 0x60
-		void * setJumping; // 0x64
+		void (__thiscall* setJumping)(MobileObject*, bool); // 0x64
 		void * unknown_0x68;
 		void * waterImpact; // 0x6C
 		void (__thiscall * enterLeaveSimulation)(MobileObject*, bool); // 0x70
@@ -274,6 +274,8 @@ namespace TES3 {
 		//
 
 		void setFootPoint(const Vector3* point);
+		void setInstantVelocity(const Vector3* velocity);
+		void updateConstantVelocity(const Vector3* velocity);
 
 		void enterLeaveSimulationByDistance();
 		IteratedList<ItemStack*>* getInventory() const;

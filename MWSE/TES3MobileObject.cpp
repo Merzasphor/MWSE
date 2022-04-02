@@ -144,6 +144,16 @@ namespace TES3 {
 		TES3_MobileObject_setFootPoint(this, point);
 	}
 
+	const auto TES3_MobileObject_setInstantVelocity = reinterpret_cast<void(__thiscall*)(MobileObject*, const Vector3*)>(0x55EBA0);
+	void MobileObject::setInstantVelocity(const Vector3* velocity) {
+		TES3_MobileObject_setInstantVelocity(this, velocity);
+	}
+
+	const auto TES3_MobileObject_updateConstantVelocity = reinterpret_cast<void(__thiscall*)(MobileObject*, const Vector3*)>(0x55E7A0);
+	void MobileObject::updateConstantVelocity(const Vector3* velocity) {
+		TES3_MobileObject_updateConstantVelocity(this, velocity);
+	}
+
 	const auto TES3_MobileObject_enterLeaveSimulationByDistance = reinterpret_cast<void(__thiscall *)(MobileObject*)>(0x55FFC0);
 	void MobileObject::enterLeaveSimulationByDistance() {
 		// Store previous AI state information.
