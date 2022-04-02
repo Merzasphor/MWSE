@@ -18,5 +18,19 @@ return {
 		},
 	},
 	filter = "reference",
-	blockable = true
+	blockable = true,
+	examples = {
+		["doubleJumpHeight"] = {
+			title = "Double jump height",
+			description = "Double the height of every jump.",
+		},
+		["forcePlayerJumpHeight"] = {
+			title = "Force player jump height",
+			description = "Forces the jump height of the player to a fixed value, not taking into account attributes, skills, fatigue, encumbrance and other factors.",
+		},
+		["disableJumpingWhileEncumbered"] = {
+			title = "Disable jumping while encumbered",
+			description = "Disables jumping for the player if their current encumbrance is over 50%.",
+		}
+	}
 }
