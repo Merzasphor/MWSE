@@ -99,14 +99,14 @@ namespace TES3 {
 		return {};
 	}
 
-	float NPC::getWeight() {
-		auto weight = this->getRace()->weight;
-		return this->getIsFemale() ? weight.female : weight.male;
+	float NPC::getWeight() const {
+		const auto& weight = getRace()->weight;
+		return getIsFemale() ? weight.female : weight.male;
 	}
 
-	float NPC::getHeight() {
-		auto height = this->getRace()->height;
-		return this->getIsFemale() ? height.female : height.male;
+	float NPC::getHeight() const {
+		const auto& height = getRace()->height;
+		return getIsFemale() ? height.female : height.male;
 	}
 
 	//

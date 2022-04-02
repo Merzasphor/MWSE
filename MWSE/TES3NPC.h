@@ -87,8 +87,8 @@ namespace TES3 {
 
 		sol::optional<int> getSoulValue();
 
-		float getWeight();
-		float getHeight();
+		float getWeight() const;
+		float getHeight() const;
 	};
 	static_assert(sizeof(NPC) == 0xF0, "TES3::NPC failed size validation");
 
