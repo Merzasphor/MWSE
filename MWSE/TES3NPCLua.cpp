@@ -59,6 +59,8 @@ namespace mwse::lua {
 			usertypeDefinition["mesh"] = sol::property(&TES3::NPC::getModelPath, &TES3::NPC::setModelPath);
 			usertypeDefinition["name"] = sol::property(&TES3::NPC::getName, &TES3::NPC::setName);
 			usertypeDefinition["spells"] = sol::readonly_property(&TES3::NPC::spellList);
+			usertypeDefinition["weight"] = sol::readonly_property(&TES3::NPC::getWeight);
+			usertypeDefinition["height"] = sol::readonly_property(&TES3::NPC::getHeight);
 
 			// Easy access to actor flags.
 			usertypeDefinition["female"] = sol::property(&TES3::NPC::getIsFemale, &TES3::NPC::setIsFemale);
