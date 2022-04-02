@@ -75,6 +75,7 @@ return {
 	["itemDropped"] = "itemDropped",
 	["itemTileUpdated"] = "itemTileUpdated",
 	["journal"] = "journal",
+	["jump"] = "jump",
 	["key"] = "key",
 	["keyDown"] = "keyDown",
 	["keyUp"] = "keyUp",

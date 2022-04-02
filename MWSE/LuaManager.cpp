@@ -209,6 +209,7 @@
 #include "LuaInfoResponseEvent.h"
 #include "LuaItemDroppedEvent.h"
 #include "LuaItemTileUpdatedEvent.h"
+#include "LuaJumpEvent.h"
 #include "LuaKeyDownEvent.h"
 #include "LuaKeyUpEvent.h"
 #include "LuaLeveledCreaturePickedEvent.h"
@@ -2647,6 +2648,44 @@ namespace mwse::lua {
 	const size_t patchCalcBlockChance_size = 0xD;
 
 	//
+	// Event: Jump.
+	//
+
+	void __fastcall OnJump(TES3::MobileActor* mobile, TES3::Vector3* velocity) {
+		// Allow the event to override the text.
+		if (mwse::lua::event::JumpEvent::getEventEnabled()) {
+			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::object eventResult = stateHandle.triggerEvent(new mwse::lua::event::JumpEvent(mobile, *velocity));
+			if (eventResult.valid()) {
+				sol::table eventData = eventResult;
+				if (eventData.get_or("block", false)) {
+					return;
+				}
+				velocity = &getOptionalParam<TES3::Vector3>(eventData, "velocity", *velocity);
+			}
+		}
+
+		// Overwritten code for this hook.
+		mobile->setInstantVelocity(&TES3::Vector3());
+		mobile->updateConstantVelocity(velocity);
+		mobile->vTable.mobileActor->setJumping(mobile, true);
+		mobile->applyJumpFatigueCost();
+	}
+
+	__declspec(naked) void patchJump() {
+		__asm {
+			mov ecx, [esi + 0x38]	// Size: 0x3
+			lea edx, [esp + 0x34 - 0x24]	// Size: 0x4
+			nop // Replaced with a call generation. Can't do so here, because offsets aren't accurate.
+			nop // ^
+			nop // ^
+			nop // ^
+			nop // ^
+		}
+	}
+	const size_t patchJump_size = 0xC;
+
+	//
 	// Event: Filters created. 
 	//
 
@@ -4412,6 +4451,11 @@ namespace mwse::lua {
 		genNOPUnprotected(0x555AC3, 0x555B15 - 0x555AC3);
 		writePatchCodeUnprotected(0x555AC3, (BYTE*)&patchCalcBlockChance, patchCalcBlockChance_size);
 		genCallUnprotected(0x555AC3 + 0x5, reinterpret_cast<DWORD>(OnCalcBlockChance));
+
+		// Event: Jump.
+		genNOPUnprotected(0x541FF5, 0x54201E - 0x541FF5);
+		writePatchCodeUnprotected(0x541FF5, (BYTE*)&patchJump, patchJump_size);
+		genCallUnprotected(0x541FF5 + 0x7, reinterpret_cast<DWORD>(OnJump));
 
 		// Event: Created filters.
 		genCallEnforced(0x418A10, 0x411400, reinterpret_cast<DWORD>(CreateFilters));
