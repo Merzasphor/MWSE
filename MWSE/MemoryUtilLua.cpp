@@ -520,6 +520,7 @@ namespace mwse::lua {
 		convertTo["tes3inventoryTile"] = convertArgTo<TES3::UI::InventoryTile*>;
 		convertTo["tes3itemData"] = convertArgTo<TES3::ItemData*>;
 		convertTo["tes3itemStack"] = convertArgTo<TES3::ItemStack*>;
+		convertTo["tes3magicEffect"] = convertArgTo<TES3::MagicEffect*>;
 		convertTo["tes3magicEffectInstance"] = convertArgTo<TES3::MagicEffectInstance*>;
 		convertTo["tes3mobileObject"] = convertArgTo<TES3::MobileObject*>;
 		convertTo["tes3object"] = convertArgTo<TES3::BaseObject*>;
