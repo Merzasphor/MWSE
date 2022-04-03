@@ -54,13 +54,13 @@ namespace mwse::lua {
 			// Functions exposed as properties.
 			usertypeDefinition["aiConfig"] = sol::readonly_property(&TES3::NPC::getAIConfig);
 			usertypeDefinition["isGuard"] = sol::readonly_property(&TES3::NPC::isGuard);
+			usertypeDefinition["height"] = sol::readonly_property(&TES3::NPC::getHeight);
 			usertypeDefinition["isEssential"] = sol::readonly_property(&TES3::NPC::isEssential);
 			usertypeDefinition["isRespawn"] = sol::readonly_property(&TES3::NPC::isRespawn);
 			usertypeDefinition["mesh"] = sol::property(&TES3::NPC::getModelPath, &TES3::NPC::setModelPath);
 			usertypeDefinition["name"] = sol::property(&TES3::NPC::getName, &TES3::NPC::setName);
 			usertypeDefinition["spells"] = sol::readonly_property(&TES3::NPC::spellList);
 			usertypeDefinition["weight"] = sol::readonly_property(&TES3::NPC::getWeight);
-			usertypeDefinition["height"] = sol::readonly_property(&TES3::NPC::getHeight);
 
 			// Easy access to actor flags.
 			usertypeDefinition["female"] = sol::property(&TES3::NPC::getIsFemale, &TES3::NPC::setIsFemale);
@@ -113,12 +113,14 @@ namespace mwse::lua {
 			usertypeDefinition["magicka"] = sol::readonly_property(&TES3::NPCInstance::getMagicka);
 			usertypeDefinition["fatigue"] = sol::readonly_property(&TES3::NPCInstance::getFatigue);
 			usertypeDefinition["isGuard"] = sol::readonly_property(&TES3::NPCInstance::isGuard);
+			usertypeDefinition["height"] = sol::readonly_property(&TES3::NPCInstance::getHeight);
 			usertypeDefinition["isEssential"] = sol::readonly_property(&TES3::NPCInstance::isEssential);
 			usertypeDefinition["isRespawn"] = sol::readonly_property(&TES3::NPCInstance::isRespawn);
 			usertypeDefinition["level"] = sol::readonly_property(&TES3::NPCInstance::getLevel);
 			usertypeDefinition["mesh"] = sol::property(&TES3::NPCInstance::getModelPath, &TES3::NPCInstance::setModelPath);
 			usertypeDefinition["name"] = sol::property(&TES3::NPCInstance::getName, &TES3::NPCInstance::setName);
 			usertypeDefinition["spells"] = sol::readonly_property(&TES3::NPCInstance::getBaseSpellList);
+			usertypeDefinition["weight"] = sol::readonly_property(&TES3::NPCInstance::getWeight);
 
 			// Easy access to actor flags.
 			usertypeDefinition["female"] = sol::property(&TES3::NPCInstance::getIsFemale, &TES3::NPCInstance::setIsFemale);

@@ -185,6 +185,16 @@ No description yet available.
 
 ***
 
+### `height`
+
+*Read-only*. Convenience access to the NPCs (race) height.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
 ### `id`
 
 *Read-only*. The unique identifier for the object.
@@ -502,6 +512,16 @@ If true, references of this object can store temporary or persistent lua data.
 **Returns**:
 
 * `result` (boolean)
+
+***
+
+### `weight`
+
+*Read-only*. Convenience access to the NPCs (race) weight.
+
+**Returns**:
+
+* `result` (number)
 
 ***
 
