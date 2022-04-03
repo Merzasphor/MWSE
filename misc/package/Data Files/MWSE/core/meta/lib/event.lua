@@ -156,6 +156,13 @@ event = {}
 --- @param options table *Optional*. No description yet available.
 function event.clear(eventId, options) end
 
+--- Returns true for a function previously registered to an event with `event.register()`.
+--- @param eventId string No description yet available.
+--- @param callback function No description yet available.
+--- @param options table *Optional*. No description yet available.
+--- @return boolean result No description yet available.
+function event.isRegistered(eventId, callback, options) end
+
 --- Registers a function to be called when an event is raised.
 --- @param eventId string No description yet available.
 --- @param callback function No description yet available.

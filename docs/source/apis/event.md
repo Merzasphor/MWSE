@@ -19,6 +19,26 @@ event.clear(eventId, options)
 
 ***
 
+### `event.isRegistered`
+
+Returns true for a function previously registered to an event with `event.register()`.
+
+```lua
+local result = event.isRegistered(eventId, callback, options)
+```
+
+**Parameters**:
+
+* `eventId` (string)
+* `callback` (function)
+* `options` (table): *Optional*.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
 ### `event.register`
 
 Registers a function to be called when an event is raised.
