@@ -1,5 +1,5 @@
 return {
-	type = "function",
+	type = "method",
 	description = [[This function performs a check whether a detector can detect another actor sneaking.]],
 	arguments = {{
 		name = "params",

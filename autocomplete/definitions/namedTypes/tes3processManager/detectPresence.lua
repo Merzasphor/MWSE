@@ -1,5 +1,5 @@
 return {
-	type = "function",
+	type = "method",
 	description = [[This function performs a check for presence of a given mobile actor.]],
 	arguments = {{
 		name = "params",
