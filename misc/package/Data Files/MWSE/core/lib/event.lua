@@ -125,12 +125,12 @@ end
 function this.isRegistered(eventType, callback, options)
 	-- Validate event type.
 	if (type(eventType) ~= "string" or eventType == "") then
-		return error("event.unregister: Event type must be a valid string.")
+		return error("event.isRegistered: Event type must be a valid string.")
 	end
 
 	-- Validate callback.
 	if (type(callback) ~= "function") then
-		return error("event.unregister: Event callback must be a valid function.")
+		return error("event.isRegistered: Event callback must be a valid function.")
 	end
 
 	-- Make sure options is an empty table if nothing else.
