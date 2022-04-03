@@ -366,14 +366,13 @@ local string = tes3baseObject:__tojson()
 Checks if the actor has provided item equipped.
 
 ```lua
-local result = tes3actor:hasItemEquipped({ item = ..., itemData = ... })
+local result = tes3actor:hasItemEquipped(item, itemData)
 ```
 
 **Parameters**:
 
-* `params` (table)
-	* `item` ([tes3item](../../types/tes3item), string): The item to perform a check for.
-	* `itemData` ([tes3itemData](../../types/tes3itemData)): *Optional*.
+* `item` ([tes3item](../../types/tes3item), string): The item to perform a check for.
+* `itemData` ([tes3itemData](../../types/tes3itemData)): *Optional*.
 
 **Returns**:
 
