@@ -1408,7 +1408,7 @@ namespace mwse::lua {
 		}
 
 		return nullptr;
-	};
+	}
 
 	NI::Pointer<NI::SourceTexture> loadSourceTexture(const char* relativePath, sol::optional<bool> useCached) {
 		std::string path = "Textures\\";

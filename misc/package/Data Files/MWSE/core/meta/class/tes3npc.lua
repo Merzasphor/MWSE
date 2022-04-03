@@ -16,6 +16,7 @@
 --- @field hair tes3bodyPart The hair body part that the NPC will use.
 --- @field head tes3bodyPart The head body part that the NPC will use.
 --- @field health number The actor's max health.
+--- @field height number *Read-only*. Convenience access to the NPCs (race) height.
 --- @field isAttacked boolean *Read-only*. If true, the actor's attacked flag is set.
 --- @field isEssential boolean *Read-only*. If true, the actor's essential flag is set.
 --- @field isInstance boolean Always returns false.
@@ -30,5 +31,6 @@
 --- @field skills table A table of twenty seven numbers, representing the base values for the NPC's skills.
 --- @field soul number|nil The soul value for this NPC. This is typically `nil`, unless the `calcSouLValue` event provides one for this actor.
 --- @field spells tes3spellList *Read-only*. A list of spells that the actor has access to. It is a `tes3spellList`, which is a list wrapper with helper functions. The actual list is accessed with `.iterator`. e.g. `for _, spell in pairs(npc.spells.iterator) do print(spell.name) end`
+--- @field weight number *Read-only*. Convenience access to the NPCs (race) weight.
 tes3npc = {}
 

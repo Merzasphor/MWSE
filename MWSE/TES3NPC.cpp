@@ -6,6 +6,7 @@
 
 #include "TES3MobileNPC.h"
 #include "TES3UIElement.h"
+#include "TES3Race.h"
 
 #include "LuaManager.h"
 
@@ -72,6 +73,16 @@ namespace TES3 {
 		BIT_SET(actorFlags, ActorFlagNPC::RespawnBit, value);
 	}
 
+	float NPCBase::getWeight() const {
+		const auto& weight = getRace()->weight;
+		return getIsFemale() ? weight.female : weight.male;
+	}
+
+	float NPCBase::getHeight() const {
+		const auto& height = getRace()->height;
+		return getIsFemale() ? height.female : height.male;
+	}
+
 	//
 	// NPC
 	//
@@ -97,6 +108,7 @@ namespace TES3 {
 
 		return {};
 	}
+
 	//
 	// NPC Instance
 	//

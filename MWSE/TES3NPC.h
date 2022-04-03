@@ -50,6 +50,9 @@ namespace TES3 {
 		bool getRespawns_legacy() const;
 		void setRespawns_legacy(bool value);
 
+		float getWeight() const;
+		float getHeight() const;
+
 	};
 
 	struct NPC : NPCBase {
@@ -86,7 +89,6 @@ namespace TES3 {
 		std::reference_wrapper<unsigned char[27]> getSkills();
 
 		sol::optional<int> getSoulValue();
-
 	};
 	static_assert(sizeof(NPC) == 0xF0, "TES3::NPC failed size validation");
 

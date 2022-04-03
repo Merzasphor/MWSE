@@ -24,3 +24,58 @@ event.register(tes3.event.jump, jumpCallback)
 * `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. Mobile's related reference.
 * `velocity` ([tes3vector3](../../types/tes3vector3)): The velocity of the jump.
 
+## Examples
+
+!!! example "Example: Disable jumping while encumbered"
+
+	```lua
+	local function onJump(e)
+		-- Check if the actor that is trying to jump is the player.
+		if e.mobile == tes3.mobilePlayer then
+			-- Define the threshold at which we no longer want to be able to jump.
+			-- This is set to 50% of the player's maximum encumbrance.
+			local encumbranceThreshold = e.mobile.encumbrance.base * 0.5
+	
+			-- Check if the current encumbrance is higher than our defined threshold and prevent jumping.
+			if e.mobile.encumbrance.current > encumbranceThreshold then
+				-- Show a message to the player to inform them that jumping is not possible.
+				tes3.messageBox("You are unable to jump.")
+	
+				-- Block the vanilla jump logic and prevent other jump events from being triggered.
+				return false
+			end
+		end
+	end
+	event.register(tes3.event.jump, onJump)
+
+	```
+
+!!! example "Example: Double jump height"
+
+	```lua
+	local function onJump(e)
+		-- Multiply the velocity on the Z-Axis (Up/Down) by 2.
+		e.velocity.z = e.velocity.z * 2
+	end
+	event.register(tes3.event.jump, onJump)
+
+	```
+
+!!! example "Example: Force player jump height"
+
+	```lua
+	local function onJump(e)
+		-- Check if the actor that is trying to jump is the player.
+		if e.mobile == tes3.mobilePlayer then
+			-- Define the fixed height of the jump.
+			local jumpHeight = 300
+	
+			-- Multiply the normalized direction vector of the jump by the fixed jump height.
+			-- This will make jumps initiated during movement behave like they normally do.
+			e.velocity = e.velocity:normalized() * jumpHeight
+		end
+	end
+	event.register(tes3.event.jump, onJump)
+
+	```
+

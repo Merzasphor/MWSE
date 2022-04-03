@@ -2,6 +2,8 @@
 --- @diagnostic disable:undefined-doc-name
 
 --- This event is called when an actor tries to jump. The velocity can be modified.
+---
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/events/jump).
 --- @class jumpEventData
 --- @field block boolean If set to `true`, vanilla logic will be suppressed. Returning `false` will set this to `true`.
 --- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.
