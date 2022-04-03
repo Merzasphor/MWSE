@@ -53,9 +53,9 @@ namespace mwse::lua {
 
 			// Functions exposed as properties.
 			usertypeDefinition["aiConfig"] = sol::readonly_property(&TES3::NPC::getAIConfig);
-			usertypeDefinition["isGuard"] = sol::readonly_property(&TES3::NPC::isGuard);
 			usertypeDefinition["height"] = sol::readonly_property(&TES3::NPC::getHeight);
 			usertypeDefinition["isEssential"] = sol::readonly_property(&TES3::NPC::isEssential);
+			usertypeDefinition["isGuard"] = sol::readonly_property(&TES3::NPC::isGuard);
 			usertypeDefinition["isRespawn"] = sol::readonly_property(&TES3::NPC::isRespawn);
 			usertypeDefinition["mesh"] = sol::property(&TES3::NPC::getModelPath, &TES3::NPC::setModelPath);
 			usertypeDefinition["name"] = sol::property(&TES3::NPC::getName, &TES3::NPC::setName);
@@ -109,14 +109,14 @@ namespace mwse::lua {
 			// Functions exposed as properties.
 			usertypeDefinition["aiConfig"] = sol::readonly_property(&TES3::NPCInstance::getAIConfig);
 			usertypeDefinition["barterGold"] = sol::property(&TES3::NPCInstance::getBaseBarterGold, &TES3::NPCInstance::setBaseBarterGold);
-			usertypeDefinition["health"] = sol::readonly_property(&TES3::NPCInstance::getDurability);
-			usertypeDefinition["magicka"] = sol::readonly_property(&TES3::NPCInstance::getMagicka);
 			usertypeDefinition["fatigue"] = sol::readonly_property(&TES3::NPCInstance::getFatigue);
-			usertypeDefinition["isGuard"] = sol::readonly_property(&TES3::NPCInstance::isGuard);
+			usertypeDefinition["health"] = sol::readonly_property(&TES3::NPCInstance::getDurability);
 			usertypeDefinition["height"] = sol::readonly_property(&TES3::NPCInstance::getHeight);
 			usertypeDefinition["isEssential"] = sol::readonly_property(&TES3::NPCInstance::isEssential);
+			usertypeDefinition["isGuard"] = sol::readonly_property(&TES3::NPCInstance::isGuard);
 			usertypeDefinition["isRespawn"] = sol::readonly_property(&TES3::NPCInstance::isRespawn);
 			usertypeDefinition["level"] = sol::readonly_property(&TES3::NPCInstance::getLevel);
+			usertypeDefinition["magicka"] = sol::readonly_property(&TES3::NPCInstance::getMagicka);
 			usertypeDefinition["mesh"] = sol::property(&TES3::NPCInstance::getModelPath, &TES3::NPCInstance::setModelPath);
 			usertypeDefinition["name"] = sol::property(&TES3::NPCInstance::getName, &TES3::NPCInstance::setName);
 			usertypeDefinition["spells"] = sol::readonly_property(&TES3::NPCInstance::getBaseSpellList);
