@@ -122,6 +122,25 @@ function this.unregister(eventType, callback, options)
 	end
 end
 
+function this.isRegistered(eventType, callback, options)
+	-- Validate event type.
+	if (type(eventType) ~= "string" or eventType == "") then
+		return error("event.unregister: Event type must be a valid string.")
+	end
+
+	-- Validate callback.
+	if (type(callback) ~= "function") then
+		return error("event.unregister: Event callback must be a valid function.")
+	end
+
+	-- Make sure options is an empty table if nothing else.
+	local options = options or {}
+
+	local callbacks = getEventTable(eventType, options.filter)
+	local found = table.find(callbacks, callback)
+	return found ~= nil
+end
+
 function this.clear(eventType, filter)
 	if (filter == nil) then
 		-- Clear out general events of this type.
