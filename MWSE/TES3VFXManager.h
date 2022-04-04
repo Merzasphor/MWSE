@@ -35,13 +35,13 @@ namespace TES3 {
 		NI::Pointer<NI::Node> worldVFXRoot; // 0x8
 		NI::Pointer<NI::AVObject> unknown_0xC;
 
-		VFX* createForMagicEffect(int effect, Reference* reference, float lifespan = 1.0f);
-		VFX* createForSource(MagicSourceInstance* source, Reference* reference, float lifespan = 1.5f);
+		VFX* createForMagicEffect(int effect, Reference* reference, float lifespan);
+		VFX* createForSource(MagicSourceInstance* source, Reference* reference, float lifespan);
 		VFX* createForEffect(unsigned int serial, PhysicalObject* effect, int unknown, float lifespan, float scale, float verticalOffset);
 
-		VFX* createForReference(unsigned int serial, PhysicalObject* effect, Reference* reference, int unknown, float lifespan, float scale = 1.5f, float verticalOffset = 0.0f);
-		VFX* createAtPosition(unsigned int serial, PhysicalObject* effect, Vector3* position, int unknown, float lifespan, float scale = 1.5f, float verticalOffset = 0.0f);
-		VFX* createForAVObject(unsigned int serial, PhysicalObject* effect, NI::AVObject* avObject, int unknown, float lifespan, float scale = 1.5f, float verticalOffset = 0.0f);
+		VFX* createForReference(unsigned int serial, PhysicalObject* effect, Reference* reference, int repeatCount, float lifespan, float scale, float verticalOffset);
+		VFX* createAtPosition(unsigned int serial, PhysicalObject* effect, Vector3* position, int unknown, float lifespan, float scale, float verticalOffset);
+		VFX* createForAVObject(unsigned int serial, PhysicalObject* effect, NI::AVObject* avObject, int unknown, float lifespan, float scale, float verticalOffset);
 
 		void remove(VFX* vfx);
 		void removeForReference(Reference* reference);
