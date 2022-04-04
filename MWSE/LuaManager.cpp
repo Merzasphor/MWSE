@@ -45,6 +45,7 @@
 #include "TES3MagicEffect.h"
 #include "TES3MagicEffectController.h"
 #include "TES3MagicEffectInstance.h"
+#include "TES3MagicInstanceController.h"
 #include "TES3Misc.h"
 #include "TES3MobController.h"
 #include "TES3MobileActor.h"
@@ -217,6 +218,7 @@
 #include "LuaLevelUpEvent.h"
 #include "LuaLoadedGameEvent.h"
 #include "LuaMagicCastedEvent.h"
+#include "LuaMagicEffectRemovedEvent.h"
 #include "LuaMenuStateEvent.h"
 #include "LuaMouseAxisEvent.h"
 #include "LuaMouseButtonDownEvent.h"
@@ -1501,6 +1503,41 @@ namespace mwse::lua {
 			// Resume normal execution.
 			jmp postSpellCastFailure
 		}
+	}
+
+	//
+	// Event: Magic effect removed
+	//
+
+	bool __fastcall OnMagicEffectRemoved(TES3::Deque<TES3::ActiveMagicEffect>* activeMagicEffects, DWORD _UNUSED_, int serial, int effectIndex) {
+		// Overwritten code from 0x55C9D0.
+		if (!activeMagicEffects->count) {
+			return false;
+		}
+		TES3::Deque<TES3::ActiveMagicEffect>::Node* sentinel = activeMagicEffects->sentinel;
+		TES3::Deque<TES3::ActiveMagicEffect>::Node* next = sentinel->next;
+		if (sentinel->next == sentinel) {
+			return false;
+		}
+		while (next->data.magicInstanceSerial != serial || next->data.magicInstanceEffectIndex != effectIndex) {
+			next = next->next;
+			if (next == sentinel)
+			{
+				return false;
+			}
+		}
+
+		// Dispatch the event.
+		TES3::MagicSourceInstance* magicSourceInstance = TES3::WorldController::get()->magicInstanceController->getInstanceFromSerial(serial);
+		TES3::MobileActor* mobileActor = reinterpret_cast<TES3::MobileActor*>(reinterpret_cast<BYTE*>(activeMagicEffects) - offsetof(TES3::MobileActor, activeMagicEffects));
+
+		if (event::MagicEffectRemovedEvent::getEventEnabled()) {
+			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::MagicEffectRemovedEvent(mobileActor, magicSourceInstance, effectIndex));
+		}
+
+		// Overwritten code from 0x55C9D0.
+		delete(next);
+		return true;
 	}
 
 	//
@@ -3965,6 +4002,12 @@ namespace mwse::lua {
 
 		// Event: Spell Resist
 		genCallEnforced(0x518616, 0x517E40, reinterpret_cast<DWORD>(OnSpellResist));
+
+		// Event: Magic effect removed
+		genCallEnforced(0x5125F9, 0x55C9D0, reinterpret_cast<DWORD>(OnMagicEffectRemoved)); // Magic Source Instance: Destructor
+		genCallEnforced(0x512A17, 0x55C9D0, reinterpret_cast<DWORD>(OnMagicEffectRemoved)); // Magic Source Instance: Retire Effects
+		genCallEnforced(0x515AEF, 0x55C9D0, reinterpret_cast<DWORD>(OnMagicEffectRemoved)); // Magic Source Instance: Process
+		genCallEnforced(0x518FCC, 0x55C9D0, reinterpret_cast<DWORD>(OnMagicEffectRemoved)); // Magic Source Instance: Spell Effect Event
 
 		// Event: Absorb magic
 		auto onAbsorbedMagic = &TES3::MagicSourceInstance::onAbsorbedMagic;

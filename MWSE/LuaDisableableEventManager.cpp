@@ -84,6 +84,7 @@
 #include "LuaLoadedGameEvent.h"
 #include "LuaLoadGameEvent.h"
 #include "LuaMagicCastedEvent.h"
+#include "LuaMagicEffectRemovedEvent.h"
 #include "LuaMenuStateEvent.h"
 #include "LuaMeshLoadedEvent.h"
 #include "LuaMeshLoadEvent.h"
@@ -235,6 +236,7 @@ namespace mwse::lua::event {
 		usertypeDefinition["loaded"] = sol::property(&LoadedGameEvent::getEventEnabled, &LoadedGameEvent::setEventEnabled);
 		usertypeDefinition["lockPick"] = sol::property(&PickLockEvent::getEventEnabled, &PickLockEvent::setEventEnabled);
 		usertypeDefinition["magicCasted"] = sol::property(&MagicCastedEvent::getEventEnabled, &MagicCastedEvent::setEventEnabled);
+		usertypeDefinition["magicEffectRemoved"] = sol::property(&MagicEffectRemovedEvent::getEventEnabled, &MagicEffectRemovedEvent::setEventEnabled);
 		usertypeDefinition["menuEnter"] = sol::property(&MenuStateEvent::getEventEnabled, &MenuStateEvent::setEventEnabled);
 		usertypeDefinition["menuExit"] = sol::property(&MenuStateEvent::getEventEnabled, &MenuStateEvent::setEventEnabled);
 		usertypeDefinition["meshLoaded"] = sol::property(&MeshLoadedEvent::getEventEnabled, &MeshLoadedEvent::setEventEnabled);

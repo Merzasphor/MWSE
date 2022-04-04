@@ -21,6 +21,7 @@
     <ClInclude Include="LuaCalcSpellmakingSpellPointCostEvent.h" />
     <ClInclude Include="LuaEquipmentReevaluatedEvent.h" />
     <ClInclude Include="LuaKeyframesLoadEvent.h" />
+    <ClInclude Include="LuaMagicEffectRemovedEvent.h" />
     <ClInclude Include="LuaMeshLoadEvent.h" />
     <ClInclude Include="NIQuaternion.h" />
     <ClInclude Include="NIQuaternionLua.h" />
@@ -572,6 +573,7 @@
     <ClCompile Include="LuaLoadedGameEvent.cpp" />
     <ClCompile Include="LuaLoadGameEvent.cpp" />
     <ClCompile Include="LuaMagicCastedEvent.cpp" />
+    <ClCompile Include="LuaMagicEffectRemovedEvent.cpp" />
     <ClCompile Include="LuaMenuStateEvent.cpp" />
     <ClCompile Include="LuaMeshLoadedEvent.cpp" />
     <ClCompile Include="LuaMeshLoadEvent.cpp" />
