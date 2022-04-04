@@ -36,11 +36,16 @@ namespace mwse::lua {
 		return LuaManager::getInstance().clearScriptOverride(scriptId);
 	}
 
+	void forceCursorOn() {
+		TES3::WorldController::get()->inputController->mouse->SetCooperativeLevel(GetActiveWindow(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
+		TES3::WorldController::get()->inputController->keyboard->SetCooperativeLevel(GetActiveWindow(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
+		while (ShowCursor(TRUE) < 0);
+	}
+
 	sol::object breakpoint(sol::optional<const char*> message) {
 		if (message.value_or(nullptr)) {
 			mwse::log::getLog() << "[MWSE] Hit breakpoint: " << message.value() << std::endl;
 		}
-		while (ShowCursor(TRUE) < 0);
 		return sol::nil;
 	}
 
@@ -65,6 +70,7 @@ namespace mwse::lua {
 		// Basic function binding.
 		lua_mwse["breakpoint"] = breakpoint;
 		lua_mwse["crash"] = crash;
+		lua_mwse["forceCursorOn"] = forceCursorOn;
 		lua_mwse["getVersion"] = getVersion;
 		lua_mwse["getVirtualMemoryUsage"] = getVirtualMemoryUsage;
 		lua_mwse["iconv"] = iconv;
