@@ -89,6 +89,7 @@
 --- @field register fun(eventId: '"loaded"', callback: fun(e: loadedEventData), options: table)
 --- @field register fun(eventId: '"lockPick"', callback: fun(e: lockPickEventData), options: table)
 --- @field register fun(eventId: '"magicCasted"', callback: fun(e: magicCastedEventData), options: table)
+--- @field register fun(eventId: '"magicEffectRemoved"', callback: fun(e: magicEffectRemovedEventData), options: table)
 --- @field register fun(eventId: '"magicEffectsResolved"', callback: fun(e: magicEffectsResolvedEventData), options: table)
 --- @field register fun(eventId: '"menuEnter"', callback: fun(e: menuEnterEventData), options: table)
 --- @field register fun(eventId: '"menuExit"', callback: fun(e: menuExitEventData), options: table)
