@@ -86,6 +86,7 @@ return {
 	["loaded"] = "loaded",
 	["lockPick"] = "lockPick",
 	["magicCasted"] = "magicCasted",
+	["magicEffectRemoved"] = "magicEffectRemoved",
 	["magicEffectsResolved"] = "magicEffectsResolved",
 	["menuEnter"] = "menuEnter",
 	["menuExit"] = "menuExit",
