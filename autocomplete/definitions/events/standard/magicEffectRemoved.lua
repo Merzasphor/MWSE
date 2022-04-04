@@ -1,6 +1,6 @@
 return {
 	type = "event",
-	description = "This event triggers when a magic effect has been removed from an actor. This includes magic effects that have been resisted.",
+	description = "This event triggers when a magic effect has been removed from an actor. This includes magic effects that have been resisted or are part of abilities like racial passives and diseases.",
 	eventData = {
 		["mobile"] = {
 			type = "tes3mobileActor",
@@ -35,13 +35,19 @@ return {
 		["effect"] = {
 			type = "tes3effect",
 			readOnly = true,
-			description = "The specific magic effect that triggered the event. This is equal to `e.source.effects[effectIndex]`. Can be `nil`.",
+			description = "The specific effect that triggered the event. This is equal to `e.source.effects[effectIndex]`. Can be `nil`.",
 		},
 		["effectIndex"] = {
 			type = "number",
 			readOnly = true,
-			description = "The index of the magic effect in the magic source's effects list.",
+			description = "The index of the effect in the magic source's effects list.",
 		},
 	},
-	filter = "reference"
+	filter = "reference",
+	examples = {
+		["showRemovedEffect"] = {
+			title = "Show removed effect",
+			description = "Show the name of the magic effect and spell/enchantment/alchemy that has been removed from the player.",
+		}
+	}
 }
