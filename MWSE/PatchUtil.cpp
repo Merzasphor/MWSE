@@ -20,6 +20,7 @@
 #include "TES3Script.h"
 #include "TES3UIElement.h"
 #include "TES3UIInventoryTile.h"
+#include "TES3VFXManager.h"
 #include "TES3WorldController.h"
 
 #include "NIFlipController.h"
@@ -525,6 +526,22 @@ namespace mwse::patch {
 	constexpr auto PatchSwapJournalUpdateCheckForSpeakerOrder_size = (0x4B2FF1u - 0x4B2FD7u);
 
 	//
+	// Patch: Fix issue when serializing no effects.
+	//
+
+	const auto TES3_SaveVisualEffects = reinterpret_cast<void(__thiscall*)(TES3::VFXManager*, TES3::GameFile*)>(0x469CC0);
+	void __fastcall PatchSaveVisualEffects(TES3::VFXManager* vfxManager, DWORD _EDX_, TES3::GameFile* file) {
+		// Ensure that we have serializable VFXs.
+		for (const auto& vfx : vfxManager->vfxNodes) {
+			if (vfx->effectObject && !vfx->createdFromNode && !vfx->expired) {
+				// Call original code.
+				TES3_SaveVisualEffects(vfxManager, file);
+				return;
+			}
+		}
+	}
+
+	//
 	// Install all the patches.
 	//
 
@@ -767,6 +784,9 @@ namespace mwse::patch {
 		// Patch: Slight journal update optimization.
 		writePatchCodeUnprotected(0x4B2FD7, (BYTE*)&PatchSwapJournalUpdateCheckForSpeakerOrder, PatchSwapJournalUpdateCheckForSpeakerOrder_size);
 		genCallUnprotected(0x4B2FD7 + 0xD, 0x4B1B80);
+
+		// Patch: Don't save no valid visual effects.
+		genCallEnforced(0x4BD149, 0x469CC0, reinterpret_cast<DWORD>(PatchSaveVisualEffects));
 	}
 
 	void installPostLuaPatches() {
