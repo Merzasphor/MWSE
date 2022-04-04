@@ -250,7 +250,7 @@ namespace TES3 {
 		SplashController * splashController; // 0x68
 		IteratedList<Quest*> * journalController; // 0x6C
 		MagicInstanceController * magicInstanceController; // 0x70
-		void * vfxManager; // 0x74
+		VFXManager * vfxManager; // 0x74
 		int viewWidth; // 0x78
 		int viewHeight; // 0x7C
 		int bitDepth; // 0x80

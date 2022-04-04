@@ -10,7 +10,7 @@ namespace TES3 {
 		float timeActive; // 0xC
 		float cumulativeMagnitude; // 0x10
 		int state; // 0x14
-		void * visual; // 0x18
+		VFX * visual; // 0x18
 		EquipmentStack * createdData; // 0x1C
 		int unknown_0x20;
 		Weapon * lastUsedWeapon; // 0x24

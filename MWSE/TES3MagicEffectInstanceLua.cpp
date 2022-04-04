@@ -8,6 +8,7 @@
 #include "TES3Light.h"
 #include "TES3MagicEffectInstance.h"
 #include "TES3Reference.h"
+#include "TES3VFXManager.h"
 #include "TES3Weapon.h"
 
 namespace mwse::lua {

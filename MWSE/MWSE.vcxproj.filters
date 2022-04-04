@@ -1599,6 +1599,9 @@
     <ClInclude Include="LuaMagicEffectRemovedEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
+    <ClInclude Include="TES3VFXManager.h">
+      <Filter>Header Files\DataAdapters\TES3\Magic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -3502,6 +3505,9 @@
     </ClCompile>
     <ClCompile Include="LuaMagicEffectRemovedEvent.cpp">
       <Filter>Source Files\Lua\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3VFXManager.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
