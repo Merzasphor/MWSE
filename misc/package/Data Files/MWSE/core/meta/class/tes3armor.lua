@@ -4,7 +4,7 @@
 --- An armor game object.
 --- @class tes3armor : tes3item, tes3physicalObject, tes3object, tes3baseObject
 --- @field armorRating number The armor's defensive rating.
---- @field armorScalar number *Read-only*. No description yet available.
+--- @field armorScalar number *Read-only*. This is the maximal contribution to actor's total Armor Rating for this piece of armor. For vanilla armors, this is slot based. Cuirasses have `armorScalar = 0.3`, helmets, pauldrons, greaves, boots and shields have `0.1`, while gauntlets and bracers have `armorScalar = 0.05`.
 --- @field enchantCapacity number The object's enchantment capacity.
 --- @field enchantment tes3enchantment The enchantment used by the object.
 --- @field icon string The path to the object's icon.

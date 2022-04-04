@@ -17,11 +17,11 @@
 --- @field day tes3globalVariable *Read-only*. The `Day` global variable, indicating the current day. Day numbering starts at `1` for the first day of a month.
 --- @field daysPassed tes3globalVariable *Read-only*. The `DaysPassed` global variable, indicating the days passed since the game started for this character.
 --- @field deadFloatScale number 
---- @field defaultLandSound tes3sound 
---- @field defaultLandWaterSound tes3sound 
+--- @field defaultLandSound tes3sound This it the default sound played when the player lands, after a jump or a fall.
+--- @field defaultLandWaterSound tes3sound This it the default sound played when the player lands in the water, after a jump or a fall.
 --- @field deltaTime number The time interval (in seconds) between this frame and the last frame. Useful for calculations that involve movement or damage over a period of time.
 --- @field difficulty number A number in the range [-1, 1]. Corresponds to the "Difficulty" option in the Options menu.
---- @field drowingDamageSound tes3sound The sound played when an actor takes health damage while drowning. It plays instead of the normal health damage sound.
+--- @field drowningDamageSound tes3sound The sound played when an actor takes health damage while drowning. It plays instead of the normal health damage sound.
 --- @field drownSound tes3sound The sound played when an actor is losing health by drowning.
 --- @field enchantedItemEffect niTextureEffect *Read-only*. The animated texture effect that is applied onto equipped enchanted items.
 --- @field enchantedItemEffectCreated boolean *Read-only*. If the enchantedItemEffect is available.

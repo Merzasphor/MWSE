@@ -146,7 +146,7 @@ If the target crosshair is disabled. Corresponds to the "Crosshair" option in th
 
 ### `defaultLandSound`
 
-
+This it the default sound played when the player lands, after a jump or a fall.
 
 **Returns**:
 
@@ -156,7 +156,7 @@ If the target crosshair is disabled. Corresponds to the "Crosshair" option in th
 
 ### `defaultLandWaterSound`
 
-
+This it the default sound played when the player lands in the water, after a jump or a fall.
 
 **Returns**:
 
@@ -184,7 +184,7 @@ A number in the range [-1, 1]. Corresponds to the "Difficulty" option in the Opt
 
 ***
 
-### `drowingDamageSound`
+### `drowningDamageSound`
 
 The sound played when an actor takes health damage while drowning. It plays instead of the normal health damage sound.
 
