@@ -35,7 +35,7 @@ return {
 		["effect"] = {
 			type = "tes3effect",
 			readOnly = true,
-			description = "The specific effect that triggered the event. This is equal to `e.source.effects[effectIndex]`. Can be `nil`.",
+			description = "The specific effect that triggered the event. This is equal to `e.source.effects[e.effectIndex]`. Can be `nil`.",
 		},
 		["effectIndex"] = {
 			type = "number",

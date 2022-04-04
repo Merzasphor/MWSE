@@ -18,7 +18,7 @@ event.register(tes3.event.magicEffectRemoved, magicEffectRemovedCallback)
 ## Event Data
 
 * `caster` ([tes3reference](../../types/tes3reference)): *Read-only*. The caster of the magic source that contained the magic effect. Can be `nil`.
-* `effect` ([tes3effect](../../types/tes3effect)): *Read-only*. The specific effect that triggered the event. This is equal to `e.source.effects[effectIndex]`. Can be `nil`.
+* `effect` ([tes3effect](../../types/tes3effect)): *Read-only*. The specific effect that triggered the event. This is equal to `e.source.effects[e.effectIndex]`. Can be `nil`.
 * `effectIndex` (number): *Read-only*. The index of the effect in the magic source's effects list.
 * `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile actor the magic effect is removed from.
 * `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. The reference of the mobile actor the magic effect is removed from.
