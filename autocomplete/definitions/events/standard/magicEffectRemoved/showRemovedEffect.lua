@@ -8,7 +8,7 @@ local function onMagicEffectRemoved(e)
 		local sourceName = e.source.name
 
 		-- Show a message containing the effect and spell/enchantment/alchemy names to the player.
-		tes3.messageBox(string.format("Effect '%s' from '%s' has been removed.", effectName, sourceName))
+		tes3.messageBox("Effect '%s' from '%s' has been removed.", effectName, sourceName)
 	end
 end
 event.register(tes3.event.magicEffectRemoved, onMagicEffectRemoved)
