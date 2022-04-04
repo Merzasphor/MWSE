@@ -11,6 +11,9 @@
 
 #include "Log.h"
 
+#include "TES3WorldController.h"
+#include "TES3InputController.h"
+
 namespace mwse::lua {
 #ifdef APPVEYOR_BUILD_NUMBER
 	constexpr unsigned int buildNumber = APPVEYOR_BUILD_NUMBER;
