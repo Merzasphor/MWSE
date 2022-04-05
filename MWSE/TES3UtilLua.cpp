@@ -72,6 +72,7 @@
 #include "TES3UIInventoryTile.h"
 #include "TES3UIManager.h"
 #include "TES3UIMenuController.h"
+#include "TES3VFXManager.h"
 #include "TES3Weather.h"
 #include "TES3WeatherController.h"
 #include "TES3WorldController.h"
@@ -5346,6 +5347,92 @@ namespace mwse::lua {
 		return price;
 	}
 
+	TES3::VFX* createVisualEffect(sol::table params) {
+		auto worldController = TES3::WorldController::get();
+		if (!worldController) {
+			throw std::runtime_error("This function cannot be called before the world controller is created.");
+		}
+
+		auto vfxManager = worldController->vfxManager;
+		if (!vfxManager) {
+			throw std::runtime_error("This function cannot be called before the VFX manager is created.");
+		}
+
+		auto effectObject = getOptionalParamObject<TES3::PhysicalObject>(params, "effect");
+		if (effectObject) {
+			auto serial = getOptionalParam(params, "serial", 0u);
+			auto reference = getOptionalParamReference(params, "reference");
+			auto repeatCount = getOptionalParam(params, "repeatCount", 0);
+			auto lifespan = getOptionalParam(params, "lifespan", repeatCount ? 0.0f : TES3::VFX::AGE_INFINITE);
+			auto scale = getOptionalParam(params, "scale", 1.5f);
+			auto verticalOffset = getOptionalParam(params, "verticalOffset", 0.0f);
+
+			// First see if we want to make it at a position.
+			auto position = getOptionalParamVector3(params, "position");
+			if (position) {
+				return vfxManager->createAtPosition(serial, effectObject, &position.value(), repeatCount, lifespan, scale, verticalOffset);
+			}
+
+			// Then see if we want to attach it to an AVObject.
+			auto avObject = getOptionalParam<NI::AVObject*>(params, "avObject");
+			if (avObject) {
+				return vfxManager->createForAVObject(serial, effectObject, avObject.value(), repeatCount, lifespan, scale, verticalOffset);
+			}
+
+			return vfxManager->createForReference(serial, effectObject, reference, repeatCount, lifespan, scale, verticalOffset);
+		}
+
+		auto enchantEffect = getOptionalParam<int>(params, "enchantment");
+		if (enchantEffect) {
+			if (!TES3::DataHandler::get()->nonDynamicData->getMagicEffect(enchantEffect.value())) {
+				throw std::invalid_argument("Effect of the given index does not exist.");
+			}
+			auto reference = getOptionalParamReference(params, "reference");
+			auto lifespan = getOptionalParam(params, "lifespan", TES3::VFX::AGE_INFINITE);
+			return vfxManager->createForMagicEffect(enchantEffect.value(), reference, lifespan);
+		}
+
+		return nullptr;
+	}
+
+	int removeVisualEffect(sol::table params) {
+		auto worldController = TES3::WorldController::get();
+		if (!worldController) {
+			throw std::runtime_error("This function cannot be called before the world controller is created.");
+		}
+
+		auto vfxManager = worldController->vfxManager;
+		if (!vfxManager) {
+			throw std::runtime_error("This function cannot be called before the VFX manager is created.");
+		}
+
+		const auto countBefore = vfxManager->vfxNodes.size();
+
+		auto vfx = getOptionalParam<TES3::VFX*>(params, "vfx", nullptr);
+		if (vfx) {
+			vfxManager->remove(vfx);
+		}
+
+		auto avObject = getOptionalParam<NI::AVObject*>(params, "avObject", nullptr);
+		if (avObject) {
+			vfxManager->removeFromAVObject(avObject);
+		}
+		else {
+			auto reference = getOptionalParamReference(params, "reference");
+			if (reference) {
+				auto serial = getOptionalParam<unsigned int>(params, "serial");
+				if (serial) {
+					vfxManager->removeForSerialForReference(serial.value(), reference);
+				}
+				else {
+					vfxManager->removeForReference(reference);
+				}
+			}
+		}
+
+		return countBefore - vfxManager->vfxNodes.size();
+	}
+
 	void bindTES3Util() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 		sol::state& state = stateHandle.state;
@@ -5377,6 +5464,7 @@ namespace mwse::lua {
 		tes3["createCell"] = createCell;
 		tes3["createObject"] = createObject;
 		tes3["createReference"] = createReference;
+		tes3["createVisualEffect"] = createVisualEffect;
 		tes3["decrementKillCount"] = decrementKillCount;
 		tes3["deleteObject"] = deleteObject;
 		tes3["disableKey"] = disableKey;
@@ -5490,6 +5578,7 @@ namespace mwse::lua {
 		tes3["removeItemData"] = removeItemData;
 		tes3["removeSound"] = removeSound;
 		tes3["removeSpell"] = removeSpell;
+		tes3["removeVisualEffect"] = removeVisualEffect;
 		tes3["runLegacyScript"] = runLegacyScript;
 		tes3["saveGame"] = saveGame;
 		tes3["say"] = say;

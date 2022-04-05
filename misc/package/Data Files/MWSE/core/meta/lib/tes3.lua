@@ -591,6 +591,41 @@ function tes3.createReference(params) end
 --- @field cell tes3cell|string|table *Optional*. The cell to create the reference in. This is only needed for interior cells.
 --- @field scale number *Default*: `1`. A scale for the reference.
 
+--- Creates a tracked visual effect. Most VFX assignments are persistent, and only expire when their lifespan expires, an associated reference is destroyed, or a given spell serial is retired.
+--- @param params tes3.createVisualEffect.params This table accepts the following values:
+--- 
+--- `effect`: tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon|string — *Optional*. The physical object to use as the VFX. To use an enchantment-style VFX, supply the enchantment parameter instead.
+--- 
+--- `serial`: number — *Optional*. An associated tes3magicSourceInstance serial. If a serial is assigned to the VFX, the effect expiring will also remove the VFX. This is not used when creating an enchantment-style VFX.
+--- 
+--- `repeatCount`: number — *Optional*. A repeat count for the VFX. If provided, the key timing for the associated effect will be used, multiplied by this value, to determine the total lifespan of the VFX. This is not used when creating an enchantment-style VFX.
+--- 
+--- `lifespan`: number — *Optional*. The desired lifespan for the VFX. If not provided, the VFX will die of old age.
+--- 
+--- `scale`: number — *Default*: `1.5`. The scale used to resize the given VFX. The default value will match the size used by most magical effect logic. This is not used when creating an enchantment-style VFX.
+--- 
+--- `verticalOffset`: number — *Default*: `0`. This offset will be used to position it above its anchor reference. This is not used when creating an enchantment-style VFX.
+--- 
+--- `position`: tes3vector3|table — *Optional*. If provided the VFX will be attached relative to a position, and not follow a reference.
+--- 
+--- `avObject`: niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niGeometry|niLight|niNode|niPointLight|niSpotLight|niSwitchNode|niTriBasedGeometry|niTriShape — *Optional*. 
+--- 
+--- `enchantment`: number — *Optional*. The magic effect ID to use to create an enchantment wrapper VFX. This will use most of the same VFX logic, but cannot be applied to a position or specific niAVObject.
+--- @return tes3vfx vfx A handle to the VFX that was created. This can be passed to `tes3.removeVisualEffect` to remove it from the reference.
+function tes3.createVisualEffect(params) end
+
+---Table parameter definitions for `tes3.createVisualEffect`.
+--- @class tes3.createVisualEffect.params
+--- @field effect tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon|string *Optional*. The physical object to use as the VFX. To use an enchantment-style VFX, supply the enchantment parameter instead.
+--- @field serial number *Optional*. An associated tes3magicSourceInstance serial. If a serial is assigned to the VFX, the effect expiring will also remove the VFX. This is not used when creating an enchantment-style VFX.
+--- @field repeatCount number *Optional*. A repeat count for the VFX. If provided, the key timing for the associated effect will be used, multiplied by this value, to determine the total lifespan of the VFX. This is not used when creating an enchantment-style VFX.
+--- @field lifespan number *Optional*. The desired lifespan for the VFX. If not provided, the VFX will die of old age.
+--- @field scale number *Default*: `1.5`. The scale used to resize the given VFX. The default value will match the size used by most magical effect logic. This is not used when creating an enchantment-style VFX.
+--- @field verticalOffset number *Default*: `0`. This offset will be used to position it above its anchor reference. This is not used when creating an enchantment-style VFX.
+--- @field position tes3vector3|table *Optional*. If provided the VFX will be attached relative to a position, and not follow a reference.
+--- @field avObject niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niGeometry|niLight|niNode|niPointLight|niSpotLight|niSwitchNode|niTriBasedGeometry|niTriShape *Optional*. 
+--- @field enchantment number *Optional*. The magic effect ID to use to create an enchantment wrapper VFX. This will use most of the same VFX logic, but cannot be applied to a position or specific niAVObject.
+
 --- Decreases player's kill count of a certain type of actor by one.
 --- @param params tes3.decrementKillCount.params This table accepts the following values:
 --- 
@@ -1741,6 +1776,26 @@ function tes3.removeSpell(params) end
 --- @field actor tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance|string Who to remove the spell from. Providing a base actor can be done before a save has been loaded, but may not correctly update effects for instanced versions of that actor in an active save.
 --- @field spell tes3spell|string The spell to remove.
 --- @field updateGUI boolean *Default*: `true`. If true, the GUI will be updated respecting the removal of the spell. This can be useful to disable when batch-removing many spells. The batch should be ended with [`tes3.updateMagicGUI`](https://mwse.github.io/MWSE/apis/tes3/#tes3updatemagicgui) to reflect the changes.
+
+--- Removes one or more visual effects created either through magical effects or `tes3.createVisualEffect()`.
+--- @param params tes3.removeVisualEffect.params This table accepts the following values:
+--- 
+--- `vfx`: tes3vfx — *Optional*. If provided, the specific VFX handle will be deleted.
+--- 
+--- `avObject`: niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niGeometry|niLight|niNode|niPointLight|niSpotLight|niSwitchNode|niTriBasedGeometry|niTriShape — *Optional*. If provided, any VFXs associated with the given niAVObject will be deleted.
+--- 
+--- `serial`: number — *Optional*. The magic source instance serial number to remove effects for. This must be paired with a reference as well.
+--- 
+--- `reference`: tes3reference|string — *Optional*. The reference to remove all visual effects from. A serial may also be provided.
+--- @return number removedCount The amount of VFX removed by this function call.
+function tes3.removeVisualEffect(params) end
+
+---Table parameter definitions for `tes3.removeVisualEffect`.
+--- @class tes3.removeVisualEffect.params
+--- @field vfx tes3vfx *Optional*. If provided, the specific VFX handle will be deleted.
+--- @field avObject niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niGeometry|niLight|niNode|niPointLight|niSpotLight|niSwitchNode|niTriBasedGeometry|niTriShape *Optional*. If provided, any VFXs associated with the given niAVObject will be deleted.
+--- @field serial number *Optional*. The magic source instance serial number to remove effects for. This must be paired with a reference as well.
+--- @field reference tes3reference|string *Optional*. The reference to remove all visual effects from. A serial may also be provided.
 
 --- This function will compile and run a mwscript chunk of code. This is not ideal to use, but can be used for features not yet exposed to lua.
 --- @param params tes3.runLegacyScript.params This table accepts the following values:

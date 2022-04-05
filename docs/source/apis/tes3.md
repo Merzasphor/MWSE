@@ -870,6 +870,33 @@ local newReference = tes3.createReference({ object = ..., position = ..., orient
 
 ***
 
+### `tes3.createVisualEffect`
+
+Creates a tracked visual effect. Most VFX assignments are persistent, and only expire when their lifespan expires, an associated reference is destroyed, or a given spell serial is retired.
+
+```lua
+local vfx = tes3.createVisualEffect({ effect = ..., serial = ..., repeatCount = ..., lifespan = ..., scale = ..., verticalOffset = ..., position = ..., avObject = ..., enchantment = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `effect` ([tes3physicalObject](../../types/tes3physicalObject), string): *Optional*. The physical object to use as the VFX. To use an enchantment-style VFX, supply the enchantment parameter instead.
+	* `serial` (number): *Optional*. An associated tes3magicSourceInstance serial. If a serial is assigned to the VFX, the effect expiring will also remove the VFX. This is not used when creating an enchantment-style VFX.
+	* `repeatCount` (number): *Optional*. A repeat count for the VFX. If provided, the key timing for the associated effect will be used, multiplied by this value, to determine the total lifespan of the VFX. This is not used when creating an enchantment-style VFX.
+	* `lifespan` (number): *Optional*. The desired lifespan for the VFX. If not provided, the VFX will die of old age.
+	* `scale` (number): *Default*: `1.5`. The scale used to resize the given VFX. The default value will match the size used by most magical effect logic. This is not used when creating an enchantment-style VFX.
+	* `verticalOffset` (number): *Default*: `0`. This offset will be used to position it above its anchor reference. This is not used when creating an enchantment-style VFX.
+	* `position` ([tes3vector3](../../types/tes3vector3), table): *Optional*. If provided the VFX will be attached relative to a position, and not follow a reference.
+	* `avObject` ([niAVObject](../../types/niAVObject)): *Optional*. 
+	* `enchantment` (number): *Optional*. The magic effect ID to use to create an enchantment wrapper VFX. This will use most of the same VFX logic, but cannot be applied to a position or specific niAVObject.
+
+**Returns**:
+
+* `vfx` (tes3vfx): A handle to the VFX that was created. This can be passed to `tes3.removeVisualEffect` to remove it from the reference.
+
+***
+
 ### `tes3.decrementKillCount`
 
 Decreases player's kill count of a certain type of actor by one.
@@ -3170,6 +3197,28 @@ local wasRemoved = tes3.removeSpell({ reference = ..., actor = ..., spell = ...,
 **Returns**:
 
 * `wasRemoved` (boolean): True if the spell was successfully removed. This can be false if the spell comes from a race or birthsign.
+
+***
+
+### `tes3.removeVisualEffect`
+
+Removes one or more visual effects created either through magical effects or `tes3.createVisualEffect()`.
+
+```lua
+local removedCount = tes3.removeVisualEffect({ vfx = ..., avObject = ..., serial = ..., reference = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `vfx` (tes3vfx): *Optional*. If provided, the specific VFX handle will be deleted.
+	* `avObject` ([niAVObject](../../types/niAVObject)): *Optional*. If provided, any VFXs associated with the given niAVObject will be deleted.
+	* `serial` (number): *Optional*. The magic source instance serial number to remove effects for. This must be paired with a reference as well.
+	* `reference` ([tes3reference](../../types/tes3reference), string): *Optional*. The reference to remove all visual effects from. A serial may also be provided.
+
+**Returns**:
+
+* `removedCount` (number): The amount of VFX removed by this function call.
 
 ***
 
