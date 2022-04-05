@@ -263,6 +263,9 @@ function tes3mobileActor:hasUsedPower(power) end
 --- @return boolean result No description yet available.
 function tes3mobileActor:isAffectedByObject(object) end
 
+--- Kills the actor by setting its health to 0.
+function tes3mobileActor:kill() end
+
 --- Makes a power immediately available for casting again.
 --- @param power tes3spell The spell object for the power.
 --- @return number result No description yet available.

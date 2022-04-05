@@ -1603,6 +1603,16 @@ local result = tes3mobileActor:isAffectedByObject(object)
 
 ***
 
+### `kill`
+
+Kills the actor by setting its health to 0.
+
+```lua
+tes3mobileActor:kill()
+```
+
+***
+
 ### `rechargePower`
 
 Makes a power immediately available for casting again.

@@ -2305,6 +2305,16 @@ local result = tes3mobileActor:isAffectedByObject(object)
 
 ***
 
+### `kill`
+
+Kills the actor by setting its health to 0.
+
+```lua
+tes3mobileActor:kill()
+```
+
+***
+
 ### `progressSkillLevelIfRequirementsMet`
 
 Checks to see if a skill is ready to be leveled up, and performs any levelup logic.

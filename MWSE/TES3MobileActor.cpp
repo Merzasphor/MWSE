@@ -277,6 +277,10 @@ namespace TES3 {
 		}
 	}
 
+	void MobileActor::kill() {
+		health.setCurrentCapped(0.0f, false);
+	}
+
 	const auto TES3_MobileActor_applyHealthDamage = reinterpret_cast<bool(__thiscall*)(MobileActor*, float, bool, bool, bool)>(0x557CF0);
 	bool MobileActor::applyHealthDamage(float damage, bool isPlayerAttack, bool scaleWithDifficulty, bool doNotChangeHealth) {
 		// Invoke our pre-damage event and check if it is blocked.

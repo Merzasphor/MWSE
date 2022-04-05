@@ -246,6 +246,7 @@ namespace TES3 {
 		void stopCombat_lua(sol::optional<bool>);
 		bool isDead() const;
 		void onDeath();
+		void kill();
 		bool applyHealthDamage(float damage, bool isPlayerAttack, bool scaleWithDifficulty, bool doNotChangeHealth);
 		float applyFatigueDamage(float damage, float swing, bool alwaysPlayHitVoice = false);
 		void applyJumpFatigueCost() const;
