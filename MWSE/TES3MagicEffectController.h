@@ -74,5 +74,13 @@ namespace TES3 {
 		static unsigned int effectNameGMSTs[MAX_EFFECT_COUNT];
 		static unsigned int effectFlags[MAX_EFFECT_COUNT];
 		static unsigned int effectCounters[MAX_EFFECT_COUNT][5];
+
+		// Spell effect event related.
+		typedef bool(__cdecl* spellEffectEventResistTestFunction)(MagicSourceInstance*, MagicEffectInstance*, int);
+		static bool spellEffectEvent(MagicSourceInstance* sourceInstance, float deltaTime, MagicEffectInstance* effectInstance, int effectIndex, bool negateOnExpiry, bool isUncapped, void* attributeVariant, void* attributeTypeInfo, unsigned int resistAttribute, spellEffectEventResistTestFunction resistFunction);
+		static MagicSourceInstance* lastUsedSpellEffectSourceInstance;
+		static MagicEffectInstance* lastUsedSpellEffectEffectInstance;
+		static int lastUsedSpellEffectEffectIndex;
+		static unsigned int lastUsedSpellEffectResistAttribute;
 	};
 }
