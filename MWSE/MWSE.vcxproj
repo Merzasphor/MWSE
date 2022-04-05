@@ -23,6 +23,7 @@
     <ClInclude Include="LuaKeyframesLoadEvent.h" />
     <ClInclude Include="LuaMagicEffectRemovedEvent.h" />
     <ClInclude Include="LuaMeshLoadEvent.h" />
+    <ClInclude Include="MathUtil.h" />
     <ClInclude Include="NIQuaternion.h" />
     <ClInclude Include="NIQuaternionLua.h" />
     <ClInclude Include="NIScreenPolygon.h" />

@@ -49,11 +49,6 @@
 #include <dsound.h>
 #undef PlaySound
 
-// We mostly want PI definitions here.
-// TODO: Do this better with constexprs.
-#define _USE_MATH_DEFINES
-#include <math.h>
-
 // Evil devil-spawn legacy boost requirements.
 #include <boost/regex.hpp>
 
