@@ -1515,14 +1515,13 @@ namespace mwse::lua {
 			return false;
 		}
 		TES3::Deque<TES3::ActiveMagicEffect>::Node* sentinel = activeMagicEffects->sentinel;
-		TES3::Deque<TES3::ActiveMagicEffect>::Node* next = sentinel->next;
+		TES3::Deque<TES3::ActiveMagicEffect>::Node* node = sentinel->next;
 		if (sentinel->next == sentinel) {
 			return false;
 		}
-		while (next->data.magicInstanceSerial != serial || next->data.magicInstanceEffectIndex != effectIndex) {
-			next = next->next;
-			if (next == sentinel)
-			{
+		while (node->data.magicInstanceSerial != serial || node->data.magicInstanceEffectIndex != effectIndex) {
+			node = node->next;
+			if (node == sentinel) {
 				return false;
 			}
 		}
@@ -1536,7 +1535,10 @@ namespace mwse::lua {
 		}
 
 		// Overwritten code from 0x55C9D0.
-		delete(next);
+		node->previous->next = node->next;
+		node->next->previous = node->previous;
+		delete(node);
+		activeMagicEffects->count--;
 		return true;
 	}
 
