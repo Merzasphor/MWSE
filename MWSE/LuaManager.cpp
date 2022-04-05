@@ -1511,14 +1511,22 @@ namespace mwse::lua {
 	//
 
 	void __stdcall OnSpellResisted() {
+		// Get cached spellEffectEvent function parameters.
+		TES3::MagicSourceInstance* sourceInstance = TES3::MagicEffectController::cachedSpellEffectEventSourceInstance;
+		TES3::MagicEffectInstance* effectInstance = TES3::MagicEffectController::cachedSpellEffectEventEffectInstance;
+		int effectIndex = TES3::MagicEffectController::cachedSpellEffectEventEffectIndex;
 
+		// Overwritten code from 0x51880F.
+		effectInstance->state = int(TES3::SpellEffectState::Retired);
+
+		// Trigger the event.
+		if (event::SpellResistedEvent::getEventEnabled()) {
+			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::SpellResistedEvent(sourceInstance, effectInstance, effectIndex));
+		}
 	}
 
 	void __declspec(naked) OnSpellResistedWrapper() {
 		__asm {
-			// Overwritten code.
-			mov dword ptr[esi + 0x14], 7
-
 			// Call our resisted function safely.
 			push eax
 			push ecx

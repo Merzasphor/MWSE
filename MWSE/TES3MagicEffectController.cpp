@@ -28,10 +28,10 @@ namespace TES3 {
 	unsigned int MagicEffectController::effectNameGMSTs[MAX_EFFECT_COUNT] = {};
 	unsigned int MagicEffectController::effectFlags[MAX_EFFECT_COUNT] = {};
 	unsigned int MagicEffectController::effectCounters[MAX_EFFECT_COUNT][5] = {};
-	MagicSourceInstance* MagicEffectController::lastUsedSpellEffectSourceInstance = {};
-	MagicEffectInstance* MagicEffectController::lastUsedSpellEffectEffectInstance = {};
-	int MagicEffectController::lastUsedSpellEffectEffectIndex = {};
-	unsigned int MagicEffectController::lastUsedSpellEffectResistAttribute = {};
+	MagicSourceInstance* MagicEffectController::cachedSpellEffectEventSourceInstance = {};
+	MagicEffectInstance* MagicEffectController::cachedSpellEffectEventEffectInstance = {};
+	int MagicEffectController::cachedSpellEffectEventEffectIndex = {};
+	unsigned int MagicEffectController::cachedSpellEffectEventResistAttribute = {};
 
 	MagicEffectController::MagicEffectController() {
 
@@ -304,10 +304,10 @@ namespace TES3 {
 	const auto TES3_MagicSourceInstance_SpellEffectEvent = reinterpret_cast<bool(__cdecl*)(MagicSourceInstance*, float, MagicEffectInstance*, int, bool, bool, void*, DWORD, unsigned int, bool(__cdecl*)(MagicSourceInstance*, MagicEffectInstance*, int))>(0x518460);
 	bool __cdecl MagicEffectController::spellEffectEvent(MagicSourceInstance* sourceInstance, float deltaTime, MagicEffectInstance* effectInstance, int effectIndex, bool negateOnExpiry, bool isUncapped, void* attribute, DWORD attributeTypeInfo, unsigned int resistAttribute, MagicEffectController::spellEffectEventResistTestFunction resistFunction) {
 		// Cache the parameters of the spell effect event.
-		MagicEffectController::lastUsedSpellEffectSourceInstance = sourceInstance;
-		MagicEffectController::lastUsedSpellEffectEffectInstance = effectInstance;
-		MagicEffectController::lastUsedSpellEffectEffectIndex = effectIndex;
-		MagicEffectController::lastUsedSpellEffectResistAttribute = resistAttribute;
+		MagicEffectController::cachedSpellEffectEventSourceInstance = sourceInstance;
+		MagicEffectController::cachedSpellEffectEventEffectInstance = effectInstance;
+		MagicEffectController::cachedSpellEffectEventEffectIndex = effectIndex;
+		MagicEffectController::cachedSpellEffectEventResistAttribute = resistAttribute;
 
 		// Call the original function.
 		return TES3_MagicSourceInstance_SpellEffectEvent(sourceInstance, deltaTime, effectInstance, effectIndex, negateOnExpiry, isUncapped, attribute, attributeTypeInfo, resistAttribute, resistFunction);
