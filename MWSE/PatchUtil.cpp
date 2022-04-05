@@ -306,7 +306,7 @@ namespace mwse::patch {
 
 		void __fastcall SaveFormId(TES3::GameFile* file, DWORD edx, unsigned int tag, DWORD* movedRefId, size_t size) {
 			// Split out the bitmasked field.
-			SerializedFormId data;
+			SerializedFormId data = {};
 			data.modIndex = *movedRefId >> FormBitsMWSE;
 			data.formId = *movedRefId & FormMaskMWSE;
 
@@ -965,13 +965,13 @@ namespace mwse::patch {
 
 		if ((hFile != NULL) && (hFile != INVALID_HANDLE_VALUE)) {
 			// Create the minidump.
-			MINIDUMP_EXCEPTION_INFORMATION mdei;
+			MINIDUMP_EXCEPTION_INFORMATION mdei = {};
 
 			mdei.ThreadId = GetCurrentThreadId();
 			mdei.ExceptionPointers = pep;
 			mdei.ClientPointers = FALSE;
 
-			MINIDUMP_CALLBACK_INFORMATION mci;
+			MINIDUMP_CALLBACK_INFORMATION mci = {};
 
 			mci.CallbackRoutine = (MINIDUMP_CALLBACK_ROUTINE)miniDumpCallback;
 			mci.CallbackParam = 0;
