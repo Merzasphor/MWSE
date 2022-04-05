@@ -23,6 +23,7 @@
     <ClInclude Include="LuaKeyframesLoadEvent.h" />
     <ClInclude Include="LuaMagicEffectRemovedEvent.h" />
     <ClInclude Include="LuaMeshLoadEvent.h" />
+    <ClInclude Include="LuaSpellResistedEvent.h" />
     <ClInclude Include="MathUtil.h" />
     <ClInclude Include="NIQuaternion.h" />
     <ClInclude Include="NIQuaternionLua.h" />
@@ -623,6 +624,7 @@
     <ClCompile Include="LuaSpellCastEvent.cpp" />
     <ClCompile Include="LuaSpellCreatedEvent.cpp" />
     <ClCompile Include="LuaSpellMagickaUseEvent.cpp" />
+    <ClCompile Include="LuaSpellResistedEvent.cpp" />
     <ClCompile Include="LuaSpellResistEvent.cpp" />
     <ClCompile Include="LuaSpellTickEvent.cpp" />
     <ClCompile Include="LuaAddTempSound.cpp" />

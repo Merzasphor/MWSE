@@ -242,6 +242,7 @@
 #include "LuaSpellCreatedEvent.h"
 #include "LuaSpellMagickaUseEvent.h"
 #include "LuaSpellResistEvent.h"
+#include "LuaSpellResistedEvent.h"
 #include "LuaSpellTickEvent.h"
 #include "LuaUiRefreshedEvent.h"
 #include "LuaUiSpellTooltipEvent.h"
@@ -1503,6 +1504,14 @@ namespace mwse::lua {
 			// Resume normal execution.
 			jmp postSpellCastFailure
 		}
+	}
+
+	//
+	// Event: Spell resisted
+	//
+
+	void __fastcall OnSpellResisted() {
+
 	}
 
 	//
@@ -4002,6 +4011,9 @@ namespace mwse::lua {
 
 		// Event: Spell Resist
 		genCallEnforced(0x518616, 0x517E40, reinterpret_cast<DWORD>(OnSpellResist));
+
+		// Event: Spell Resisted
+		genCallUnprotected(0x51880F, reinterpret_cast<DWORD>(OnSpellResisted), 0x518816 - 0x51880F);
 
 		// Event: Magic effect removed
 		genCallEnforced(0x5125F9, 0x55C9D0, reinterpret_cast<DWORD>(OnMagicEffectRemoved)); // Magic Source Instance: Destructor
