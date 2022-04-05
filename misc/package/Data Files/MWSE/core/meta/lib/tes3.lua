@@ -600,9 +600,9 @@ function tes3.createReference(params) end
 --- 
 --- `repeatCount`: number — *Optional*. A repeat count for the VFX. If provided, the key timing for the associated effect will be used, multiplied by this value, to determine the total lifespan of the VFX. This is not used when creating an enchantment-style VFX.
 --- 
---- `lifespan`: number — *Optional*. The desired lifespan for the VFX. If not provided, the VFX will die of old age.
+--- `lifespan`: number — *Optional*. The desired lifespan for the VFX. If not provided, the VFX will never die of old age.
 --- 
---- `scale`: number — *Default*: `1.5`. The scale used to resize the given VFX. The default value will match the size used by most magical effect logic. This is not used when creating an enchantment-style VFX.
+--- `scale`: number — *Default*: `1`. The scale used to resize the given VFX. The default value will match the size used by most magical effect logic. This is not used when creating an enchantment-style VFX.
 --- 
 --- `verticalOffset`: number — *Default*: `0`. This offset will be used to position it above its anchor reference. This is not used when creating an enchantment-style VFX.
 --- 
@@ -619,8 +619,8 @@ function tes3.createVisualEffect(params) end
 --- @field effect tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon|string *Optional*. The physical object to use as the VFX. To use an enchantment-style VFX, supply the enchantment parameter instead.
 --- @field serial number *Optional*. An associated tes3magicSourceInstance serial. If a serial is assigned to the VFX, the effect expiring will also remove the VFX. This is not used when creating an enchantment-style VFX.
 --- @field repeatCount number *Optional*. A repeat count for the VFX. If provided, the key timing for the associated effect will be used, multiplied by this value, to determine the total lifespan of the VFX. This is not used when creating an enchantment-style VFX.
---- @field lifespan number *Optional*. The desired lifespan for the VFX. If not provided, the VFX will die of old age.
---- @field scale number *Default*: `1.5`. The scale used to resize the given VFX. The default value will match the size used by most magical effect logic. This is not used when creating an enchantment-style VFX.
+--- @field lifespan number *Optional*. The desired lifespan for the VFX. If not provided, the VFX will never die of old age.
+--- @field scale number *Default*: `1`. The scale used to resize the given VFX. The default value will match the size used by most magical effect logic. This is not used when creating an enchantment-style VFX.
 --- @field verticalOffset number *Default*: `0`. This offset will be used to position it above its anchor reference. This is not used when creating an enchantment-style VFX.
 --- @field position tes3vector3|table *Optional*. If provided the VFX will be attached relative to a position, and not follow a reference.
 --- @field avObject niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niGeometry|niLight|niNode|niPointLight|niSpotLight|niSwitchNode|niTriBasedGeometry|niTriShape *Optional*. 

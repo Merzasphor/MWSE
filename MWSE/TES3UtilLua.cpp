@@ -5363,8 +5363,8 @@ namespace mwse::lua {
 			auto serial = getOptionalParam(params, "serial", 0u);
 			auto reference = getOptionalParamReference(params, "reference");
 			auto repeatCount = getOptionalParam(params, "repeatCount", 0);
-			auto lifespan = getOptionalParam(params, "lifespan", repeatCount ? 0.0f : TES3::VFX::AGE_INFINITE);
-			auto scale = getOptionalParam(params, "scale", 1.5f);
+			auto lifespan = getOptionalParam(params, "lifespan", TES3::VFX::AGE_INFINITE);
+			auto scale = getOptionalParam(params, "scale", 1.0f);
 			auto verticalOffset = getOptionalParam(params, "verticalOffset", 0.0f);
 
 			// First see if we want to make it at a position.
