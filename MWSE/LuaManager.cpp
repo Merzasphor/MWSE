@@ -1510,8 +1510,23 @@ namespace mwse::lua {
 	// Event: Spell resisted
 	//
 
-	void __fastcall OnSpellResisted() {
+	void __stdcall OnSpellResisted() {
 
+	}
+
+	void __declspec(naked) OnSpellResistedWrapper() {
+		__asm {
+			// Overwritten code.
+			mov dword ptr[esi + 0x14], 7
+
+			// Call our resisted function safely.
+			push eax
+			push ecx
+			call OnSpellResisted
+			pop ecx
+			pop eax
+			ret
+		}
 	}
 
 	//
@@ -4013,7 +4028,7 @@ namespace mwse::lua {
 		genCallEnforced(0x518616, 0x517E40, reinterpret_cast<DWORD>(OnSpellResist));
 
 		// Event: Spell Resisted
-		genCallUnprotected(0x51880F, reinterpret_cast<DWORD>(OnSpellResisted), 0x518816 - 0x51880F);
+		genCallUnprotected(0x51880F, reinterpret_cast<DWORD>(OnSpellResistedWrapper), 0x518816 - 0x51880F);
 
 		// Event: Magic effect removed
 		genCallEnforced(0x5125F9, 0x55C9D0, reinterpret_cast<DWORD>(OnMagicEffectRemoved)); // Magic Source Instance: Destructor
