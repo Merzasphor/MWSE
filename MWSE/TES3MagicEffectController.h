@@ -77,7 +77,7 @@ namespace TES3 {
 
 		// Spell effect event related.
 		typedef bool(__cdecl* spellEffectEventResistTestFunction)(MagicSourceInstance*, MagicEffectInstance*, int);
-		static bool spellEffectEvent(MagicSourceInstance* sourceInstance, float deltaTime, MagicEffectInstance* effectInstance, int effectIndex, bool negateOnExpiry, bool isUncapped, void* attributeVariant, void* attributeTypeInfo, unsigned int resistAttribute, spellEffectEventResistTestFunction resistFunction);
+		static bool __cdecl spellEffectEvent(MagicSourceInstance* sourceInstance, float deltaTime, MagicEffectInstance* effectInstance, int effectIndex, bool negateOnExpiry, bool isUncapped, void* attributeVariant, void* attributeTypeInfo, unsigned int resistAttribute, spellEffectEventResistTestFunction resistFunction);
 		static MagicSourceInstance* lastUsedSpellEffectSourceInstance;
 		static MagicEffectInstance* lastUsedSpellEffectEffectInstance;
 		static int lastUsedSpellEffectEffectIndex;
