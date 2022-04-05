@@ -1605,6 +1605,9 @@
     <ClInclude Include="MathUtil.h">
       <Filter>Header Files\Utility</Filter>
     </ClInclude>
+    <ClInclude Include="LuaSpellResistedEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -3511,6 +3514,9 @@
     </ClCompile>
     <ClCompile Include="TES3VFXManager.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaSpellResistedEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

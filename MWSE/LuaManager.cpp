@@ -242,6 +242,7 @@
 #include "LuaSpellCreatedEvent.h"
 #include "LuaSpellMagickaUseEvent.h"
 #include "LuaSpellResistEvent.h"
+#include "LuaSpellResistedEvent.h"
 #include "LuaSpellTickEvent.h"
 #include "LuaUiRefreshedEvent.h"
 #include "LuaUiSpellTooltipEvent.h"
@@ -1502,6 +1503,37 @@ namespace mwse::lua {
 
 			// Resume normal execution.
 			jmp postSpellCastFailure
+		}
+	}
+
+	//
+	// Event: Spell resisted
+	//
+
+	void __stdcall OnSpellResisted() {
+		// Get cached spellEffectEvent function parameters.
+		TES3::MagicSourceInstance* sourceInstance = TES3::MagicEffectController::cachedSpellEffectEventSourceInstance;
+		TES3::MagicEffectInstance* effectInstance = TES3::MagicEffectController::cachedSpellEffectEventEffectInstance;
+		int effectIndex = TES3::MagicEffectController::cachedSpellEffectEventEffectIndex;
+
+		// Overwritten code from 0x51880F.
+		effectInstance->state = int(TES3::SpellEffectState::Retired);
+
+		// Trigger the event.
+		if (event::SpellResistedEvent::getEventEnabled()) {
+			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::SpellResistedEvent(sourceInstance, effectInstance, effectIndex));
+		}
+	}
+
+	void __declspec(naked) OnSpellResistedWrapper() {
+		__asm {
+			// Call our resisted function safely.
+			push eax
+			push ecx
+			call OnSpellResisted
+			pop ecx
+			pop eax
+			ret
 		}
 	}
 
@@ -4004,6 +4036,9 @@ namespace mwse::lua {
 
 		// Event: Spell Resist
 		genCallEnforced(0x518616, 0x517E40, reinterpret_cast<DWORD>(OnSpellResist));
+
+		// Event: Spell Resisted
+		genCallUnprotected(0x51880F, reinterpret_cast<DWORD>(OnSpellResistedWrapper), 0x518816 - 0x51880F);
 
 		// Event: Magic effect removed
 		genCallEnforced(0x5125F9, 0x55C9D0, reinterpret_cast<DWORD>(OnMagicEffectRemoved)); // Magic Source Instance: Destructor

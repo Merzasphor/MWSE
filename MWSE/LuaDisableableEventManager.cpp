@@ -128,6 +128,7 @@
 #include "LuaSpellCreatedEvent.h"
 #include "LuaSpellMagickaUseEvent.h"
 #include "LuaSpellResistEvent.h"
+#include "LuaSpellResistedEvent.h"
 #include "LuaSpellTickEvent.h"
 #include "LuaUiObjectTooltipEvent.h"
 #include "LuaUiRefreshedEvent.h"
@@ -277,6 +278,7 @@ namespace mwse::lua::event {
 		usertypeDefinition["spellCreated"] = sol::property(&SpellCreatedEvent::getEventEnabled, &SpellCreatedEvent::setEventEnabled);
 		usertypeDefinition["spellMagickaUse"] = sol::property(&SpellMagickaUseEvent::getEventEnabled, &SpellMagickaUseEvent::setEventEnabled);
 		usertypeDefinition["spellResist"] = sol::property(&SpellResistEvent::getEventEnabled, &SpellResistEvent::setEventEnabled);
+		usertypeDefinition["spellResisted"] = sol::property(&SpellResistedEvent::getEventEnabled, &SpellResistedEvent::setEventEnabled);
 		usertypeDefinition["spellTick"] = sol::property(&SpellTickEvent::getEventEnabled, &SpellTickEvent::setEventEnabled);
 		usertypeDefinition["topicAdded"] = sol::property(&AddTopicEvent::getEventEnabled, &AddTopicEvent::setEventEnabled);
 		usertypeDefinition["trapDisarm"] = sol::property(&DisarmTrapEvent::getEventEnabled, &DisarmTrapEvent::setEventEnabled);

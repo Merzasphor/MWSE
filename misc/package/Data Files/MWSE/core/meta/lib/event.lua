@@ -132,6 +132,7 @@
 --- @field register fun(eventId: '"spellCreated"', callback: fun(e: spellCreatedEventData), options: table)
 --- @field register fun(eventId: '"spellMagickaUse"', callback: fun(e: spellMagickaUseEventData), options: table)
 --- @field register fun(eventId: '"spellResist"', callback: fun(e: spellResistEventData), options: table)
+--- @field register fun(eventId: '"spellResisted"', callback: fun(e: spellResistedEventData), options: table)
 --- @field register fun(eventId: '"spellTick"', callback: fun(e: spellTickEventData), options: table)
 --- @field register fun(eventId: '"topicAdded"', callback: fun(e: topicAddedEventData), options: table)
 --- @field register fun(eventId: '"trapDisarm"', callback: fun(e: trapDisarmEventData), options: table)

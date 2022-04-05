@@ -130,6 +130,7 @@ return {
 	["spellCreated"] = "spellCreated",
 	["spellMagickaUse"] = "spellMagickaUse",
 	["spellResist"] = "spellResist",
+	["spellResisted"] = "spellResisted",
 	["spellTick"] = "spellTick",
 	["topicAdded"] = "topicAdded",
 	["trapDisarm"] = "trapDisarm",
