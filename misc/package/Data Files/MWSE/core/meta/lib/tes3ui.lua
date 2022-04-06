@@ -184,33 +184,79 @@ function tes3ui.showDialogueMessage(params) end
 --- @field style number *Default*: `0`. 
 --- @field answerIndex number *Default*: `0`. 
 
---- 
+--- This function opens the inventory select menu which lets the player select items from an inventory. These items can be selected from any actor's inventory and can be filtered with the `filter` callback. The selected item can be retrieved in the function assigned to `callback`.
 --- @param params tes3ui.showInventorySelectMenu.params This table accepts the following values:
 --- 
---- `actorRef`: tes3reference — *Default*: `tes3player`. 
+--- `reference`: tes3reference — *Default*: `tes3player`. The reference of a `tes3actor` whose inventory will be used.
 --- 
---- `callback`: function — *Optional*. 
+--- `title`: string — The text used for the title of the inventory select menu.
 --- 
---- `filter`: function|string — *Optional*. 
+--- `leaveMenuMode`: boolean — *Optional*. Determines if menu mode should be exited after closing the inventory select menu. By default, it will be in the state it was in before this function was called.
 --- 
---- `title`: string — 
+--- `noResultsText`: string — *Optional*. The text used for the message that gets shown to the player if no items have been found in the inventory.
 --- 
---- `noResultsText`: string — *Optional*. 
+--- `noResultsCallback`: function — *Optional*. A function which is called when no items have been found in the inventory, right before the message containing `noResultsText` is shown.
 --- 
---- `noResultsCallback`: function — *Optional*. 
+--- `filter`: function|string — *Optional*. This determines which items should be shown in the inventory select menu. Accepts either a string or a function.
+--- --- 
+--- --- 		If assigning a string it has to be one of the following values:
+--- --- 		- `alembic`: Only ([tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/)) items of type `tes3.apparatusType.alembic` will be shown. 
+--- --- 		- `calcinator`: Only ([tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/)) items of type `tes3.apparatusType.calcinator` will be shown. 
+--- --- 		- `enchanted`: Only enchanted items will be shown. 
+--- --- 		- `ingredients`: Only ([tes3ingredient](https://mwse.github.io/MWSE/types/tes3ingredient/)) items will be shown. 
+--- --- 		- `mortar`: Only ([tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/)) items of type `tes3.apparatusType.mortarAndPestle` will be shown. 
+--- --- 		- `quickUse`: Only items available for quick use will be shown.
+--- --- 		- `retort`: Only ([tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/)) items of type `tes3.apparatusType.retort` will be shown. 
+--- --- 		- `soulgemFilled`: Only filled soulgems will be shown.
+--- --- 
+--- --- 		If assigning a function it will be called when determining if an item should be added to the inventory select menu. A table `filterParams` will be passed to this function. Returning `true` from this function will add the item to the inventory select menu, whereas returning `false` will prevent it from being added.
+--- --- 		- `filterParams` (table)
+--- --- 			- `item` ([tes3item](https://mwse.github.io/MWSE/types/tes3item/)): The item that is being filtered.
+--- --- 			- `itemData` ([tes3itemData](https://mwse.github.io/MWSE/types/tes3itemData/)): The item data of the item that is being filtered. Can be `nil`.
+--- --- 
 --- 
---- `leaveMenuMode`: boolean — *Optional*. Is the menu going to be closed or open after closing Inventory Select Menu. By default, it will be in the state before this function was called.
+--- `callback`: function — *Optional*. A function which will be called once the inventory select menu has been closed, including when no item has been selected. A table `callbackParams` will be passed to this function.
+--- --- 		- `callbackParams` (table)
+--- --- 			- `item` ([tes3item](https://mwse.github.io/MWSE/types/tes3item/)): The item that has been selected. Can be `nil`.
+--- --- 			- `itemData` ([tes3itemData](https://mwse.github.io/MWSE/types/tes3itemData/)): The item data of the item that has been selected. Can be `nil`.
+--- --- 			- `count` (number): The number of items that have been selected. Only valid if `item` is not `nil`.
+--- --- 			- `inventory` ([tes3inventory](https://mwse.github.io/MWSE/types/tes3inventory/)): The inventory containing the items.
+--- --- 			- `actor` ([tes3actor](https://mwse.github.io/MWSE/types/tes3actor/)): The actor containing the inventory.
+--- --- 
 function tes3ui.showInventorySelectMenu(params) end
 
 ---Table parameter definitions for `tes3ui.showInventorySelectMenu`.
 --- @class tes3ui.showInventorySelectMenu.params
---- @field actorRef tes3reference *Default*: `tes3player`. 
---- @field callback function *Optional*. 
---- @field filter function|string *Optional*. 
---- @field title string 
---- @field noResultsText string *Optional*. 
---- @field noResultsCallback function *Optional*. 
---- @field leaveMenuMode boolean *Optional*. Is the menu going to be closed or open after closing Inventory Select Menu. By default, it will be in the state before this function was called.
+--- @field reference tes3reference *Default*: `tes3player`. The reference of a `tes3actor` whose inventory will be used.
+--- @field title string The text used for the title of the inventory select menu.
+--- @field leaveMenuMode boolean *Optional*. Determines if menu mode should be exited after closing the inventory select menu. By default, it will be in the state it was in before this function was called.
+--- @field noResultsText string *Optional*. The text used for the message that gets shown to the player if no items have been found in the inventory.
+--- @field noResultsCallback function *Optional*. A function which is called when no items have been found in the inventory, right before the message containing `noResultsText` is shown.
+--- @field filter function|string *Optional*. This determines which items should be shown in the inventory select menu. Accepts either a string or a function.
+--- 
+--- 		If assigning a string it has to be one of the following values:
+--- 		- `alembic`: Only ([tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/)) items of type `tes3.apparatusType.alembic` will be shown. 
+--- 		- `calcinator`: Only ([tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/)) items of type `tes3.apparatusType.calcinator` will be shown. 
+--- 		- `enchanted`: Only enchanted items will be shown. 
+--- 		- `ingredients`: Only ([tes3ingredient](https://mwse.github.io/MWSE/types/tes3ingredient/)) items will be shown. 
+--- 		- `mortar`: Only ([tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/)) items of type `tes3.apparatusType.mortarAndPestle` will be shown. 
+--- 		- `quickUse`: Only items available for quick use will be shown.
+--- 		- `retort`: Only ([tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/)) items of type `tes3.apparatusType.retort` will be shown. 
+--- 		- `soulgemFilled`: Only filled soulgems will be shown.
+--- 
+--- 		If assigning a function it will be called when determining if an item should be added to the inventory select menu. A table `filterParams` will be passed to this function. Returning `true` from this function will add the item to the inventory select menu, whereas returning `false` will prevent it from being added.
+--- 		- `filterParams` (table)
+--- 			- `item` ([tes3item](https://mwse.github.io/MWSE/types/tes3item/)): The item that is being filtered.
+--- 			- `itemData` ([tes3itemData](https://mwse.github.io/MWSE/types/tes3itemData/)): The item data of the item that is being filtered. Can be `nil`.
+--- 
+--- @field callback function *Optional*. A function which will be called once the inventory select menu has been closed, including when no item has been selected. A table `callbackParams` will be passed to this function.
+--- 		- `callbackParams` (table)
+--- 			- `item` ([tes3item](https://mwse.github.io/MWSE/types/tes3item/)): The item that has been selected. Can be `nil`.
+--- 			- `itemData` ([tes3itemData](https://mwse.github.io/MWSE/types/tes3itemData/)): The item data of the item that has been selected. Can be `nil`.
+--- 			- `count` (number): The number of items that have been selected. Only valid if `item` is not `nil`.
+--- 			- `inventory` ([tes3inventory](https://mwse.github.io/MWSE/types/tes3inventory/)): The inventory containing the items.
+--- 			- `actor` ([tes3actor](https://mwse.github.io/MWSE/types/tes3actor/)): The actor containing the inventory.
+--- 
 
 --- Displays the scroll menu with arbitrary text. It needs to follow book text conventions as in the Construction Set. In essence, it uses HTML syntax. Important: every book needs to end with a `<BR>` statement to be displayed properly. See [`bookGetText`](https://mwse.github.io/MWSE/events/bookGetText/#examples) for an example of properly formatted scroll text.
 --- @param text string No description yet available.
