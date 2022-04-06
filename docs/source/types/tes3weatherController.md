@@ -46,7 +46,7 @@ Each weather's ambiental color has one color for day and night states each. The 
 
 ### `currentFogColor`
 
-The current fog color.
+The current fog color. The values can range from 0 to 1.
 
 **Returns**:
 
@@ -56,7 +56,7 @@ The current fog color.
 
 ### `currentSkyColor`
 
-The current sky color.
+The current sky color. The values can range from 0 to 1.
 
 **Returns**:
 
@@ -316,7 +316,7 @@ The sky has one color for day and night states each. The day color will be used 
 
 ### `starsFadingDuration`
 
-The stars will fade in `starsPostSunsetStart` hours after the sunset. They fade out `starsPreSunriseFinish` hours before sunrise. This value represents the duration of the fadeing. This corresponds to the setting of the same name in Morrowind.ini file.
+The stars will fade in `starsPostSunsetStart` hours after the sunset. They fade out `starsPreSunriseFinish` hours before sunrise. This value represents the duration of the fading. This corresponds to the setting of the same name in Morrowind.ini file.
 
 **Returns**:
 
@@ -356,7 +356,7 @@ The sunglare fader maximum angle.
 
 ### `sunglareFaderColor`
 
-The sunglare fader color.
+The sunglare fader color. The values can range from 0 to 1.
 
 **Returns**:
 
@@ -476,7 +476,7 @@ The scalar transition.
 
 ### `underwaterColor`
 
-The underwater color, represented as a vector.
+The underwater color, represented as a vector. The values can range from 0 to 1.
 
 **Returns**:
 
@@ -546,11 +546,11 @@ The underwater sunset fog value.
 
 ### `weathers`
 
-*Read-only*. Array-style table for the different weather types. Each object in the table is a tes3weather.
+*Read-only*. Array-style table for the different weather types. Each object in the table is a [tes3weather](https://mwse.github.io/MWSE/types/tes3weather/). The indexes in the table correspond to the [`tes3.weather`](https://mwse.github.io/MWSE/references/weather-types/) enumeration.
 
 **Returns**:
 
-* `result` (table)
+* `result` (table<number, tes3weather>)
 
 ***
 
@@ -603,7 +603,7 @@ tes3weatherController:switchImmediate(weatherId)
 
 **Parameters**:
 
-* `weatherId` (number)
+* `weatherId` (number): Maps to values in [`tes3.weather`](https://mwse.github.io/MWSE/references/weather-types/) namespace.
 
 ***
 
@@ -617,7 +617,7 @@ tes3weatherController:switchTransition(weatherId)
 
 **Parameters**:
 
-* `weatherId` (number)
+* `weatherId` (number): Maps to values in [`tes3.weather`](https://mwse.github.io/MWSE/references/weather-types/) namespace.
 
 ***
 

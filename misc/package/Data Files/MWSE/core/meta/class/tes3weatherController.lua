@@ -7,8 +7,8 @@
 --- @field ambientPostSunsetTime number Each weather's ambiental color has one color for day and night states each. The night color will be used when the game hour is between `ambientPostSunsetTime` and `ambientPreSunriseTime`. This corresponds to the setting of the same name in Morrowind.ini file.
 --- @field ambientPreSunriseTime number Each weather's ambiental color has one color for day and night states each. The night color will be used when the game hour is between `ambientPostSunsetTime` and `ambientPreSunriseTime`. This corresponds to the setting of the same name in Morrowind.ini file.
 --- @field ambientPreSunsetTime number Each weather's ambiental color has one color for day and night states each. The day color will be used when the game hour is between `ambientPostSunriseTime` and `ambientPreSunsetTime`. This corresponds to the setting of the same name in Morrowind.ini file.
---- @field currentFogColor tes3vector3 The current fog color.
---- @field currentSkyColor tes3vector3 The current sky color.
+--- @field currentFogColor tes3vector3 The current fog color. The values can range from 0 to 1.
+--- @field currentSkyColor tes3vector3 The current sky color. The values can range from 0 to 1.
 --- @field currentWeather tes3weatherAsh|tes3weatherBlight|tes3weatherBlizzard|tes3weatherClear|tes3weatherCloudy|tes3weatherFoggy|tes3weatherOvercast|tes3weatherRain|tes3weatherSnow|tes3weatherThunder *Read-only*. The current weather.
 --- @field daysRemaining number The days remaining for the current weather.
 --- @field fogDepthChangeSpeed number Controls the speed of how fast the fog comes in. This corresponds to the setting of the same name in Morrowind.ini file.
@@ -34,11 +34,11 @@
 --- @field skyPostSunsetTime number The sky has one color for day and night states each. The night color will be used when the game hour is between `skyPostSunsetTime` and `skyPreSunriseTime`. This corresponds to the setting of the same name in Morrowind.ini file.
 --- @field skyPreSunriseTime number The sky has one color for day and night states each. The night color will be used when the game hour is between `skyPostSunsetTime` and `skyPreSunriseTime`. This corresponds to the setting of the same name in Morrowind.ini file.
 --- @field skyPreSunsetTime number The sky has one color for day and night states each. The day color will be used when the game hour is between `skyPostSunriseTime` and `skyPreSunsetTime`. This corresponds to the setting of the same name in Morrowind.ini file.
---- @field starsFadingDuration number The stars will fade in `starsPostSunsetStart` hours after the sunset. They fade out `starsPreSunriseFinish` hours before sunrise. This value represents the duration of the fadeing. This corresponds to the setting of the same name in Morrowind.ini file.
+--- @field starsFadingDuration number The stars will fade in `starsPostSunsetStart` hours after the sunset. They fade out `starsPreSunriseFinish` hours before sunrise. This value represents the duration of the fading. This corresponds to the setting of the same name in Morrowind.ini file.
 --- @field starsPostSunsetStart number The stars will start to fade in (appear) `starsPostSunsetStart` hours before sunrise. This corresponds to the setting of the same name in Morrowind.ini file.
 --- @field starsPreSunriseFinish number The stars will start to fade out (disappear) `starsPreSunriseFinish` hours before sunrise. This corresponds to the setting of the same name in Morrowind.ini file.
 --- @field sunglareFaderAngleMax number The sunglare fader maximum angle.
---- @field sunglareFaderColor tes3vector3 The sunglare fader color.
+--- @field sunglareFaderColor tes3vector3 The sunglare fader color. The values can range from 0 to 1.
 --- @field sunglareFaderMax number The sunglare fader maximum.
 --- @field sunPostSunriseTime number The Sun has one color for day and night states each. The day color will be used when the game hour is between `sunPostSunriseTime` and `sunPreSunsetTime`. This corresponds to the setting of the same name in Morrowind.ini file.
 --- @field sunPostSunsetTime number The Sun has one color for day and night states each. The night color will be used when the game hour is between `sunPostSunsetTime` and `sunPreSunriseTime`. This corresponds to the setting of the same name in Morrowind.ini file.
@@ -50,14 +50,14 @@
 --- @field sunsetHour number The sunset hour.
 --- @field timescaleClouds string The timescale for clouds.
 --- @field transitionScalar number The scalar transition.
---- @field underwaterColor tes3vector3 The underwater color, represented as a vector.
+--- @field underwaterColor tes3vector3 The underwater color, represented as a vector. The values can range from 0 to 1.
 --- @field underwaterColorWeight number The underwater color weight.
 --- @field underwaterDayFog number The underwater day fog value.
 --- @field underwaterIndoorFog number The underwater indoor fog value.
 --- @field underwaterNightFog number The underwater night fog value.
 --- @field underwaterSunriseFog number The underwater sunrise fog value.
 --- @field underwaterSunsetFog number The underwater sunset fog value.
---- @field weathers table *Read-only*. Array-style table for the different weather types. Each object in the table is a tes3weather.
+--- @field weathers table<number, tes3weather> *Read-only*. Array-style table for the different weather types. Each object in the table is a [tes3weather](https://mwse.github.io/MWSE/types/tes3weather/). The indexes in the table correspond to the [`tes3.weather`](https://mwse.github.io/MWSE/references/weather-types/) enumeration.
 --- @field windVelocityCurrWeather tes3vector3 The wind velocity for the current weather.
 --- @field windVelocityNextWeather tes3vector3 The wind velocity for the next weather.
 tes3weatherController = {}
@@ -67,11 +67,11 @@ tes3weatherController = {}
 function tes3weatherController:calcSunDamageScalar() end
 
 --- Immediately switches the weather to the provided weather parameter.
---- @param weatherId number No description yet available.
+--- @param weatherId number Maps to values in [`tes3.weather`](https://mwse.github.io/MWSE/references/weather-types/) namespace.
 function tes3weatherController:switchImmediate(weatherId) end
 
 --- Transitions the weather to the provided weather parameter based on the weather controller settings.
---- @param weatherId number No description yet available.
+--- @param weatherId number Maps to values in [`tes3.weather`](https://mwse.github.io/MWSE/references/weather-types/) namespace.
 function tes3weatherController:switchTransition(weatherId) end
 
 --- Updates the weather controller visuals. This should be called after any weather transitions.
