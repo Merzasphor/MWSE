@@ -33,7 +33,7 @@ Another build task is available in vscode to live test the docs locally.
 
 ## Developing Tips
 
-When writing the examples, always use `tes3.*` constants when available. Also, consider suggesting when a certain function accepts values from `tes3.*` namespace. Note that some older areas of the documentation might not follow the conventions established in the guides above. Those can be updated if editing the affected definitions.
+When writing the examples, always use `tes3.*` constants when available. Also, consider suggesting when a certain function accepts values from `tes3.*` namespace. If writing about color properties, mention the color range, e.g. (0 - 1) or (0 - 255). Note that some older areas of the documentation might not follow the conventions established in the guides above. Those can be updated if editing the affected definitions.
 
 Some parts of the documentation are written by hand. Namely, those in:
 - docs\source\references

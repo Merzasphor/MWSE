@@ -6,12 +6,12 @@ Function definitions can be found in autocomplete\definitions\global. Some funct
 ## Library Definitions
 
 Each library definition is just a regular Lua table. The following fields are available:
-| Field | Type | Description |
-| ----- | ---- | ----------- |
-| type  | `string` |  This flag is used when generating syntax highlighting files. The type should always be `"lib"` for library definitions. |
-| deprecated | `boolean` | Passing `true` here will mark all the functions and values exposed by the library as deprecated in a IDE and the documentation page. |
-| description | `string` | The description for the library. You can pass a string with `""` or `[[]]`. |
-| link | `string` | If present, the generated autocomplete files will allow the IDEs to provide the link to the documentation for that library. |
+| Field       | Type      | Description |
+| ----------- | --------- | ----------- |
+| type        | `string`  |  This flag is used when generating syntax highlighting files. The type should always be `"lib"` for library definitions. |
+| deprecated  | `boolean` | Passing `true` here will mark all the functions and values exposed by the library as deprecated in a IDE and the documentation page. |
+| description | `string`  | The description for the library. You can pass a string with `""` or `[[]]`. |
+| link        | `string`  | If present, the generated autocomplete files will allow the IDEs to provide the link to the documentation for that library. |
 
 For example, the table library definition looks like this:
 
@@ -30,14 +30,13 @@ All the function definitions of a certain library are found in the folder of the
 ## Function Definitions
 
 Each function definition is just a regular Lua table. The following fields are available:
-| Field | Type | Description |
-| ----- | ---- | ----------- |
-| type  | `string` |  This flag is used when generating syntax highlighting files. The type should always be `"function"` for function definitions. |
+| Field       | Type     | Description |
+| ----------- | -------- | ----------- |
+| type        | `string` |  This flag is used when generating syntax highlighting files. The type should always be `"function"` for function definitions. |
 | description | `string` | The description for the function. You can pass a string with `""` or `[[]]`. |
-| arguments | `table` | The arguments the function accepts. |
-| examples | `table` | A table with entries that are the names of the files included as examples. Each entry is a table itself with one available field, `title`. The title will be shown as the title of the example on the documentation page. |
-| returns | `table` | The table with return values. |
-
+| arguments   | `table`  | The arguments the function accepts. |
+| examples    | `table`  | A table with entries that are the names of the files included as examples. Each entry is a table itself with one available field, `title`. The title will be shown as the title of the example on the documentation page. |
+| returns     | `table`  | The table with return values. |
 
 `examples` table looks like this:
 | Field |   Type  | Description |
@@ -46,13 +45,14 @@ Each function definition is just a regular Lua table. The following fields are a
 
 
 `returns` table has entries which are nested tables for each of the returned values, with the following fields:
-| Field | Type | Description |
-| ----- | ---- | ----------- |
-| name  | `string` | The name of the argument. |
-| type  | `string` | This allows to specify the type of the value in evenData. You can put string names for basic Lua types: `number`, `boolean` and `string`, or objects exposed by MWSE, such as `tes3reference`. If the value can be of two or more types, then you should pass all the types split by `|`. For example, `tes3mobileCreature|tes3mobileNPC|nil`. |
+| Field       | Type     | Description |
+| ----------- | -------- | ----------- |
+| name        | `string` | The name of the argument. |
+| type        | `string` | This allows to specify the type of the value in evenData. You can put string names for basic Lua types: `number`, `boolean` and `string`, or objects exposed by MWSE, such as `tes3reference`. If the value can be of two or more types, then you should pass all the types split by `|`. For example, `tes3mobileCreature|tes3mobileNPC|nil`. |
 | description | `string` | The description for the argument. |
 
 An example of a function with multiple return values is `tes3.checkMerchantOffersService()`. Its definition looks like this:
+
 ```Lua
 -- autocomplete\definitions\global\tes3\checkMerchantOffersService.lua
 return {
@@ -71,10 +71,10 @@ return {
 
 
 Some functions accept multiple arguments. In that case the arguments table should have a nested table for each argument.
-| Field | Type | Description |
-| ----- | ---- | ----------- |
-| name  | `string` | The name of the argument. |
-| type  | `string` | This allows to specify the type of the value in evenData. You can put string names for basic Lua types: `number`, `boolean` and `string`, or objects exposed by MWSE, such as `tes3reference`. If the value can be of two or more types, then you should pass all the types split by `|`. For example, `tes3mobileCreature|tes3mobileNPC|nil`. |
+| Field       | Type     | Description |
+| ----------- | -------- | ----------- |
+| name        | `string` | The name of the argument. |
+| type        | `string` | This allows to specify the type of the value in evenData. You can put string names for basic Lua types: `number`, `boolean` and `string`, or objects exposed by MWSE, such as `tes3reference`. If the value can be of two or more types, then you should pass all the types split by `|`. For example, `tes3mobileCreature|tes3mobileNPC|nil`. |
 | description | `string` | The description for the argument. |
 
 An example of such function is `tes3.claimSpellEffectId()`. This is the definition for that function:
