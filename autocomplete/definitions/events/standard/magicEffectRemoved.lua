@@ -43,7 +43,7 @@ return {
 			description = "The index of the effect in the magic source's effects list.",
 		},
 		["effectInstance"] = {
-			type = "tes3effect",
+			type = "tes3magicEffectInstance",
 			readOnly = true,
 			description = "The effect instance of the effect.",
 		},
