@@ -4899,7 +4899,7 @@ namespace mwse::lua {
 
 		auto itemData = reference->getAttachedItemData();
 		if (itemData == nullptr || itemData->owner == nullptr) {
-			return std::make_tuple<sol::object, sol::object>(sol::nil, sol::nil);
+			return {};
 		}
 
 		if (itemData->owner->objectType == TES3::ObjectType::NPC) {

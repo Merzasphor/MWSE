@@ -1972,16 +1972,18 @@ local object = tes3.getObject(id)
 Returns the object's owner, or nil if the object is unowned.
 
 ```lua
-local object = tes3.getOwner(reference)
+local owner, requirement = tes3.getOwner({ reference = ... })
 ```
 
 **Parameters**:
 
-* `reference` ([tes3reference](../../types/tes3reference))
+* `params` (table)
+	* `reference` ([tes3reference](../../types/tes3reference))
 
 **Returns**:
 
-* `object` ([tes3object](../../types/tes3object))
+* `owner` ([tes3faction](../../types/tes3faction), [tes3npc](../../types/tes3npc), nil)
+* `requirement` (number, [tes3globalVariable](../../types/tes3globalVariable), nil): The faction rank required if the owner is a faction, or the global variable needing to be set if the owner is an NPC.
 
 ***
 

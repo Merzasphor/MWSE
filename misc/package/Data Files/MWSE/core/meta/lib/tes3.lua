@@ -1108,9 +1108,16 @@ function tes3.getModList() end
 function tes3.getObject(id) end
 
 --- Returns the object's owner, or nil if the object is unowned.
---- @param reference tes3reference No description yet available.
---- @return tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3enchantment|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3reference|tes3repairTool|tes3spell|tes3static|tes3weapon object No description yet available.
-function tes3.getOwner(reference) end
+--- @param params tes3.getOwner.params This table accepts the following values:
+--- 
+--- `reference`: tes3reference — No description yet available.
+--- @return tes3faction|tes3npc|nil owner No description yet available.
+--- @return number|tes3globalVariable|nil requirement The faction rank required if the owner is a faction, or the global variable needing to be set if the owner is an NPC.
+function tes3.getOwner(params) end
+
+---Table parameter definitions for `tes3.getOwner`.
+--- @class tes3.getOwner.params
+--- @field reference tes3reference No description yet available.
 
 --- This function returns the distance that the player can activate objects with. This is a sum of the iMaxActivateDist GMST value and the player's telekinesis strength.
 --- @return number result No description yet available.
