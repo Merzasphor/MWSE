@@ -114,6 +114,20 @@ function mge.getUIScale() end
 --- @return number result No description yet available.
 function mge.getVersion() end
 
+--- Gets distant land fog parameters for a specific weather. See [`mge.setWeatherDLFog()`](https://mwse.github.io/MWSE/apis/mge/#mgesetweatherdlfog).
+--- @param weatherID number Maps to values in [`tes3.weather`](https://mwse.github.io/MWSE/references/weather-types/) enumeration.
+--- @return table parameters An array-style table with `fogDistMultiplier` and `fogOffsetPercent` parameters.
+function mge.getWeatherDLFog(weatherID) end
+
+--- Gets per-pixel lighting parameters for a specific weather. See [`mge.setWeatherPPLLight()`](https://mwse.github.io/MWSE/apis/mge/#mgesetweatherppllight).
+--- @param weatherID number Maps to values in [`tes3.weather`](https://mwse.github.io/MWSE/references/weather-types/) enumeration.
+--- @return table parameters An array-style table with `sunMultiplier` and `ambientMultiplier` parameters.
+function mge.getWeatherPPLLight(weatherID) end
+
+--- Returns an array-style table with 3 distant land atmospheric scattering colours.
+--- @return table scattering No description yet available.
+function mge.getWeatherScattering() end
+
 --- Wrapper for MGEGetZoom.
 --- @return number result No description yet available.
 function mge.getZoom() end
@@ -341,6 +355,36 @@ function mge.setShaderVector4(params) end
 --- @field shader string No description yet available.
 --- @field variable string No description yet available.
 --- @field value table A table of 4 values.
+
+--- Sets distant land fog parameters for a specific weather. `fogDistMultiplier` is multiplied by the "Above water fog" distance to get the fog distance for that weather. It has a range of [0, 2]. `fogOffsetPercent` is the percentage of fog applied at zero distance from the camera. It has a range of [0, 90].
+--- 
+--- Note: "Above water fog" is a setting specific to MGE XE. It can be found on the Distant Land page, under Fog category.
+--- @param weatherID number Maps to values in [`tes3.weather`](https://mwse.github.io/MWSE/references/weather-types/) enumeration.
+--- @param fogDistMultiplier number No description yet available.
+--- @param fogOffsetPercent number No description yet available.
+--- @return number result No description yet available.
+function mge.setWeatherDLFog(weatherID, fogDistMultiplier, fogOffsetPercent) end
+
+--- Sets light multipliers used in per-pixel lighting for a specific weather. `sunMultiplier` affects sunlight, while `ambientMultiplier` affects ambient lighting.
+--- @param weatherID number Maps to values in [`tes3.weather`](https://mwse.github.io/MWSE/references/weather-types/) enumeration.
+--- @param sunMultiplier number No description yet available.
+--- @param ambientMultiplier number No description yet available.
+--- @return number result No description yet available.
+function mge.setWeatherPPLLight(weatherID, sunMultiplier, ambientMultiplier) end
+
+--- Sets distant land atmospheric scattering colours.
+--- @param params mge.setWeatherScattering.params This table accepts the following values:
+--- 
+--- `outscatter`: table — An array-style table with 3 numbers for red, green and blue color channels. The values can range from 0 to 1.
+--- 
+--- `inscatter`: table — An array-style table with 3 numbers for red, green and blue color channels. The values can range from 0 to 1.
+--- @return boolean success No description yet available.
+function mge.setWeatherScattering(params) end
+
+---Table parameter definitions for `mge.setWeatherScattering`.
+--- @class mge.setWeatherScattering.params
+--- @field outscatter table An array-style table with 3 numbers for red, green and blue color channels. The values can range from 0 to 1.
+--- @field inscatter table An array-style table with 3 numbers for red, green and blue color channels. The values can range from 0 to 1.
 
 --- Wrapper for MGEZoom, or MGESetZoom if set to animate.
 --- @param params mge.setZoom.params This table accepts the following values:

@@ -234,6 +234,56 @@ local result = mge.getVersion()
 
 ***
 
+### `mge.getWeatherDLFog`
+
+Gets distant land fog parameters for a specific weather. See [`mge.setWeatherDLFog()`](https://mwse.github.io/MWSE/apis/mge/#mgesetweatherdlfog).
+
+```lua
+local parameters = mge.getWeatherDLFog(weatherID)
+```
+
+**Parameters**:
+
+* `weatherID` (number): Maps to values in [`tes3.weather`](https://mwse.github.io/MWSE/references/weather-types/) enumeration.
+
+**Returns**:
+
+* `parameters` (table): An array-style table with `fogDistMultiplier` and `fogOffsetPercent` parameters.
+
+***
+
+### `mge.getWeatherPPLLight`
+
+Gets per-pixel lighting parameters for a specific weather. See [`mge.setWeatherPPLLight()`](https://mwse.github.io/MWSE/apis/mge/#mgesetweatherppllight).
+
+```lua
+local parameters = mge.getWeatherPPLLight(weatherID)
+```
+
+**Parameters**:
+
+* `weatherID` (number): Maps to values in [`tes3.weather`](https://mwse.github.io/MWSE/references/weather-types/) enumeration.
+
+**Returns**:
+
+* `parameters` (table): An array-style table with `sunMultiplier` and `ambientMultiplier` parameters.
+
+***
+
+### `mge.getWeatherScattering`
+
+Returns an array-style table with 3 distant land atmospheric scattering colours.
+
+```lua
+local scattering = mge.getWeatherScattering()
+```
+
+**Returns**:
+
+* `scattering` (table)
+
+***
+
 ### `mge.getZoom`
 
 Wrapper for MGEGetZoom.
@@ -519,6 +569,68 @@ mge.setShaderVector4({ shader = ..., variable = ..., value = ... })
 	* `shader` (string)
 	* `variable` (string)
 	* `value` (table): A table of 4 values.
+
+***
+
+### `mge.setWeatherDLFog`
+
+Sets distant land fog parameters for a specific weather. `fogDistMultiplier` is multiplied by the "Above water fog" distance to get the fog distance for that weather. It has a range of [0, 2]. `fogOffsetPercent` is the percentage of fog applied at zero distance from the camera. It has a range of [0, 90].
+
+Note: "Above water fog" is a setting specific to MGE XE. It can be found on the Distant Land page, under Fog category.
+
+```lua
+local result = mge.setWeatherDLFog(weatherID, fogDistMultiplier, fogOffsetPercent)
+```
+
+**Parameters**:
+
+* `weatherID` (number): Maps to values in [`tes3.weather`](https://mwse.github.io/MWSE/references/weather-types/) enumeration.
+* `fogDistMultiplier` (number)
+* `fogOffsetPercent` (number)
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `mge.setWeatherPPLLight`
+
+Sets light multipliers used in per-pixel lighting for a specific weather. `sunMultiplier` affects sunlight, while `ambientMultiplier` affects ambient lighting.
+
+```lua
+local result = mge.setWeatherPPLLight(weatherID, sunMultiplier, ambientMultiplier)
+```
+
+**Parameters**:
+
+* `weatherID` (number): Maps to values in [`tes3.weather`](https://mwse.github.io/MWSE/references/weather-types/) enumeration.
+* `sunMultiplier` (number)
+* `ambientMultiplier` (number)
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `mge.setWeatherScattering`
+
+Sets distant land atmospheric scattering colours.
+
+```lua
+local success = mge.setWeatherScattering({ outscatter = ..., inscatter = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `outscatter` (table): An array-style table with 3 numbers for red, green and blue color channels. The values can range from 0 to 1.
+	* `inscatter` (table): An array-style table with 3 numbers for red, green and blue color channels. The values can range from 0 to 1.
+
+**Returns**:
+
+* `success` (boolean)
 
 ***
 
