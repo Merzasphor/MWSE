@@ -24,6 +24,16 @@ No description yet available.
 
 ***
 
+### `effectiveMagnitude`
+
+The effective magnitude of the effect, after all resistances are applied.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
 ### `lastUsedArmor`
 
 *Read-only*. No description yet available.
@@ -76,7 +86,7 @@ No description yet available.
 
 ### `magnitude`
 
-No description yet available.
+The magnitude of the effect, before any resistances are applied.
 
 **Returns**:
 
@@ -86,7 +96,7 @@ No description yet available.
 
 ### `resistedPercent`
 
-No description yet available.
+The percentage of the magic effect that has been resisted. A value of `100` indicates that the magic effect has been completely resisted, whereas a value of `0` indicates it has not been resisted and is applied with its full magnitude. Values over `100` cause the magic effect to heal the actor instead of harming it, if it is a damaging magic effect.
 
 **Returns**:
 
@@ -96,7 +106,7 @@ No description yet available.
 
 ### `state`
 
-No description yet available.
+The state of this magic effect. Maps to [`tes3.spellState`](https://mwse.github.io/MWSE/references/spell-states/) constants.
 
 **Returns**:
 
