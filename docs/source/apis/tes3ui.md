@@ -516,7 +516,7 @@ tes3ui.showInventorySelectMenu({ reference = ..., title = ..., leaveMenuMode = .
 	* `reference` ([tes3reference](../../types/tes3reference)): *Default*: `tes3player`. The reference of a `tes3actor` whose inventory will be used.
 	* `title` (string): The text used for the title of the inventory select menu.
 	* `leaveMenuMode` (boolean): *Optional*. Determines if menu mode should be exited after closing the inventory select menu. By default, it will be in the state it was in before this function was called.
-	* `noResultsText` (string): *Optional*. The text used for the message that gets shown to the player if no items have been found in the inventory.
+	* `noResultsText` (string): *Optional*. The text used for the message that gets shown to the player if no items have been found in the inventory. The default text is equivalent to the `sInventorySelectNoItems` GMST value, unless `"ingredients"` or `"soulgemFilled"` has been assigned to `filter`, in which case the default text is equivalent to either the `sInventorySelectNoIngredients` or `sInventorySelectNoSoul` GMST value respectively.
 	* `noResultsCallback` (function): *Optional*. A function which is called when no items have been found in the inventory, right before the message containing `noResultsText` is shown.
 	* `filter` (function, string): *Optional*. This determines which items should be shown in the inventory select menu. Accepts either a string or a function.
 

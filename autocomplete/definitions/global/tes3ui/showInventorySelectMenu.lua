@@ -27,7 +27,7 @@ return {
 				name = "noResultsText",
 				type = "string",
 				optional = true,
-				description = "The text used for the message that gets shown to the player if no items have been found in the inventory."
+				description = "The text used for the message that gets shown to the player if no items have been found in the inventory. The default text is equivalent to the `sInventorySelectNoItems` GMST value, unless `\"ingredients\"` or `\"soulgemFilled\"` has been assigned to `filter`, in which case the default text is equivalent to either the `sInventorySelectNoIngredients` or `sInventorySelectNoSoul` GMST value respectively."
 			},
 			{
 				name = "noResultsCallback",
