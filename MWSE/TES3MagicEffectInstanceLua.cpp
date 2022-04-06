@@ -35,5 +35,8 @@ namespace mwse::lua {
 		usertypeDefinition["target"] = &TES3::MagicEffectInstance::target;
 		usertypeDefinition["timeActive"] = &TES3::MagicEffectInstance::timeActive;
 		usertypeDefinition["visual"] = &TES3::MagicEffectInstance::visual;
+
+		// Expose functions as properties.
+		usertypeDefinition["effectiveMagnitude"] = sol::readonly_property(&TES3::MagicEffectInstance::getEffectiveMagnitude);
 	}
 }

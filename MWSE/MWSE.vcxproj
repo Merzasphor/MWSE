@@ -765,6 +765,7 @@
     <ClCompile Include="TES3Item.cpp" />
     <ClCompile Include="TES3ItemData.cpp" />
     <ClCompile Include="TES3MagicEffect.cpp" />
+    <ClCompile Include="TES3MagicEffectInstance.cpp" />
     <ClCompile Include="TES3Misc.cpp" />
     <ClCompile Include="TES3MobControllerLua.cpp" />
     <ClCompile Include="TES3MobileActorLua.cpp" />
