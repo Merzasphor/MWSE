@@ -4477,8 +4477,8 @@ namespace mwse::lua {
 
 		auto magicInstanceController = TES3::WorldController::get()->magicInstanceController;
 		auto referenceID = reference->getObjectID();
-		unsigned int unresistedMagnitude = 0;
-		float magnitude = 0;
+		unsigned int magnitude = 0;
+		float effectiveMagnitude = 0;
 
 		for (auto& activeEffect : mact->activeMagicEffects) {
 			if (activeEffect.magicEffectID == effectId && (!skillOrAttributeID || activeEffect.skillOrAttributeID == skillOrAttributeID)) {
@@ -4486,13 +4486,13 @@ namespace mwse::lua {
 				if (instance) {
 					auto effectInstance = instance->effects[activeEffect.magicInstanceEffectIndex].getNode(referenceID);
 					if (effectInstance) {
-						unresistedMagnitude += effectInstance->value.magnitude;
-						magnitude += effectInstance->value.magnitude * (1.0f - effectInstance->value.resistedPercent / 100.0f);
+						magnitude += effectInstance->value.magnitude;
+						effectiveMagnitude += effectInstance->value.getEffectiveMagnitude();
 					}
 				}
 			}
 		}
-		return std::make_pair(magnitude, unresistedMagnitude);
+		return std::make_pair(effectiveMagnitude, magnitude);
 	}
 
 	TES3::MagicEffect* addMagicEffect(sol::table params) {

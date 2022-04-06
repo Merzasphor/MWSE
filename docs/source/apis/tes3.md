@@ -1545,10 +1545,10 @@ local dialogueInfo = tes3.getDialogueInfo(dialogue, id)
 
 ### `tes3.getEffectMagnitude`
 
-This function returns the total magnitude and total unresisted magnitude of a certain spell effect affecting a reference. It returns a pair of numbers, the first being the post-resistance magnitude (see examples). The unresisted magnitude is the magnitude before the actor's resistances are applied; it is always an integer, so it is used in some UI elements.
+This function returns the total effective magnitude and total base magnitude of a certain magic effect affecting a reference. It returns a pair of numbers, the first being the effective magnitude after all the actor's resistances are applied (see examples). The second number is the magnitude before any of the actor's resistances are applied; it is always an integer, so it is used in some UI elements.
 
 ```lua
-local magnitude, unresistedMagnitude = tes3.getEffectMagnitude({ reference = ..., effect = ..., skill = ..., attribute = ... })
+local effectiveMagnitude, magnitude = tes3.getEffectMagnitude({ reference = ..., effect = ..., skill = ..., attribute = ... })
 ```
 
 **Parameters**:
@@ -1561,13 +1561,13 @@ local magnitude, unresistedMagnitude = tes3.getEffectMagnitude({ reference = ...
 
 **Returns**:
 
-* `magnitude, unresistedMagnitude` (number, number)
+* `effectiveMagnitude, magnitude` (number, number)
 
 ??? example "Example: Get both magnitudes."
 
 	```lua
-	local magnitude, unresistedMagnitude = tes3.getEffectMagnitude{reference = tes3.player, effect = tes3.effect.fireDamage}
-	tes3.messageBox(string.format("fortify speed: %f (%f)", magnitude, unresistedMagnitude))
+	local effectiveMagnitude, magnitude = tes3.getEffectMagnitude{reference = tes3.player, effect = tes3.effect.fireDamage}
+	tes3.messageBox(string.format("fortify speed: %f (%f)", effectiveMagnitude, magnitude))
 
 	```
 
@@ -1576,8 +1576,8 @@ local magnitude, unresistedMagnitude = tes3.getEffectMagnitude({ reference = ...
 	You can treat the function as if it returns a single value.
 
 	```lua
-	local magnitude = tes3.getEffectMagnitude{reference = tes3.player, effect = tes3.effect.fortifyAttribute, attribute = tes3.attribute.speed}
-	tes3.messageBox(string.format("fortify speed: %f", magnitude))
+	local effectiveMagnitude = tes3.getEffectMagnitude{reference = tes3.player, effect = tes3.effect.fortifyAttribute, attribute = tes3.attribute.speed}
+	tes3.messageBox(string.format("fortify speed: %f", effectiveMagnitude))
 
 	```
 

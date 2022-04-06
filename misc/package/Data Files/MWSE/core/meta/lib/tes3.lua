@@ -913,7 +913,7 @@ function tes3.getDaysInMonth(month) end
 --- @return tes3dialogueInfo dialogueInfo No description yet available.
 function tes3.getDialogueInfo(dialogue, id) end
 
---- This function returns the total magnitude and total unresisted magnitude of a certain spell effect affecting a reference. It returns a pair of numbers, the first being the post-resistance magnitude (see examples). The unresisted magnitude is the magnitude before the actor's resistances are applied; it is always an integer, so it is used in some UI elements.
+--- This function returns the total effective magnitude and total base magnitude of a certain magic effect affecting a reference. It returns a pair of numbers, the first being the effective magnitude after all the actor's resistances are applied (see examples). The second number is the magnitude before any of the actor's resistances are applied; it is always an integer, so it is used in some UI elements.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3/#tes3geteffectmagnitude).
 --- @param params tes3.getEffectMagnitude.params This table accepts the following values:
@@ -925,7 +925,7 @@ function tes3.getDialogueInfo(dialogue, id) end
 --- `skill`: number — *Default*: `-1`. If effect parameter specified is: Absorb, Damage, Drain, Fortify or Restore Skill, a skill should be provided. This also applies to any custom spell effect which operates on a certain skill. This value maps to [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) constants.
 --- 
 --- `attribute`: number — *Default*: `-1`. If effect parameter specified is: Absorb, Damage, Drain, Fortify or Restore Attribute, an attribute should be provided. This also applies to any custom spell effect which operates on a certain attribute. This value maps to [`tes3.attribute`](https://mwse.github.io/MWSE/references/attributes/) constants.
---- @return number, number magnitude, unresistedMagnitude No description yet available.
+--- @return number, number effectiveMagnitude, magnitude No description yet available.
 function tes3.getEffectMagnitude(params) end
 
 ---Table parameter definitions for `tes3.getEffectMagnitude`.
