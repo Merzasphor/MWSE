@@ -28,6 +28,8 @@ event.register(tes3.event.jump, jumpCallback)
 
 !!! example "Example: Disable jumping while encumbered"
 
+	Disables jumping for the player if their current encumbrance is over 50%.
+
 	```lua
 	local function onJump(e)
 		-- Check if the actor that is trying to jump is the player.
@@ -52,6 +54,8 @@ event.register(tes3.event.jump, jumpCallback)
 
 !!! example "Example: Double jump height"
 
+	Double the height of every jump.
+
 	```lua
 	local function onJump(e)
 		-- Multiply the velocity on the Z-Axis (Up/Down) by 2.
@@ -62,6 +66,8 @@ event.register(tes3.event.jump, jumpCallback)
 	```
 
 !!! example "Example: Force player jump height"
+
+	Forces the jump height of the player to a fixed value, not taking into account attributes, skills, fatigue, encumbrance and other factors.
 
 	```lua
 	local function onJump(e)

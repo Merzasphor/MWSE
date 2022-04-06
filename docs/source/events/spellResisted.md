@@ -30,6 +30,8 @@ event.register(tes3.event.spellResisted, spellResistedCallback)
 
 !!! example "Example: Learn resisted spells"
 
+	Makes actors learn the spell they resisted.
+
 	```lua
 	local function onSpellResisted(e)
 		-- We only want this to apply to spells. This event can also trigger for other sources like potions/enchantments.

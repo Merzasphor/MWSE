@@ -42,6 +42,11 @@ return {
 			readOnly = true,
 			description = "The index of the effect in the magic source's effects list.",
 		},
+		["effectInstance"] = {
+			type = "tes3effect",
+			readOnly = true,
+			description = "The effect instance of the effect.",
+		},
 	},
 	filter = "reference",
 	examples = {

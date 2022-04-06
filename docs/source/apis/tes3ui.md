@@ -36,6 +36,8 @@ tes3ui.captureMouseDrag(capture)
 
 ??? example "Example: Basic Usage"
 
+	Using the UI event system, cause a given element to capture the mouse drag.
+
 	```lua
 	element:register("mouseDown", function(e)
 		-- Capture must be inside a mouse event.
@@ -129,6 +131,8 @@ local result = tes3ui.createTooltipMenu({ item = ..., itemData = ... })
 * `result` ([tes3uiElement](../../types/tes3uiElement))
 
 ??? example "Example: Add an item tooltip to a new element"
+
+	This demonstrates adding an item tooltip to a button using the help event.
 
 	```lua
 	local button = menu:createButton{text = "- Item -"}
@@ -516,11 +520,12 @@ tes3ui.showInventorySelectMenu({ reference = ..., title = ..., leaveMenuMode = .
 	* `reference` ([tes3reference](../../types/tes3reference)): *Default*: `tes3player`. The reference of a `tes3actor` whose inventory will be used.
 	* `title` (string): The text used for the title of the inventory select menu.
 	* `leaveMenuMode` (boolean): *Optional*. Determines if menu mode should be exited after closing the inventory select menu. By default, it will be in the state it was in before this function was called.
-	* `noResultsText` (string): *Optional*. The text used for the message that gets shown to the player if no items have been found in the inventory.
+	* `noResultsText` (string): *Optional*. The text used for the message that gets shown to the player if no items have been found in the inventory. The default text is equivalent to the `sInventorySelectNoItems` GMST value, unless `"ingredients"` or `"soulgemFilled"` has been assigned to `filter`, in which case the default text is equivalent to either the `sInventorySelectNoIngredients` or `sInventorySelectNoSoul` GMST value respectively.
 	* `noResultsCallback` (function): *Optional*. A function which is called when no items have been found in the inventory, right before the message containing `noResultsText` is shown.
 	* `filter` (function, string): *Optional*. This determines which items should be shown in the inventory select menu. Accepts either a string or a function.
 
 		If assigning a string it has to be one of the following values:
+
 		- `alembic`: Only ([tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/)) items of type `tes3.apparatusType.alembic` will be shown. 
 		- `calcinator`: Only ([tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/)) items of type `tes3.apparatusType.calcinator` will be shown. 
 		- `enchanted`: Only enchanted items will be shown. 
@@ -531,6 +536,7 @@ tes3ui.showInventorySelectMenu({ reference = ..., title = ..., leaveMenuMode = .
 		- `soulgemFilled`: Only filled soulgems will be shown.
 
 		If assigning a function it will be called when determining if an item should be added to the inventory select menu. A table `filterParams` will be passed to this function. Returning `true` from this function will add the item to the inventory select menu, whereas returning `false` will prevent it from being added.
+
 		- `filterParams` (table)
 			- `item` ([tes3item](https://mwse.github.io/MWSE/types/tes3item/)): The item that is being filtered.
 			- `itemData` ([tes3itemData](https://mwse.github.io/MWSE/types/tes3itemData/)): The item data of the item that is being filtered. Can be `nil`.

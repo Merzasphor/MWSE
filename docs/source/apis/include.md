@@ -20,6 +20,8 @@ local result = include(modname)
 
 ??? example "Example: Example"
 
+	How to check whether a user has an optional module installed.
+
 	```lua
 	
 	local optionalModule = include("optionalModule.file")

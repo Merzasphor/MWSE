@@ -24,6 +24,8 @@ event.register(tes3.event.bookGetText, bookGetTextCallback)
 
 !!! example "Example: Change the text of a book"
 
+	This will make every book read Sweetroll.
+
 	```lua
 	
 	local newText = [[

@@ -5,6 +5,7 @@
 #include "TES3MobileActor.h"
 #include "TES3Reference.h"
 #include "TES3MagicSourceInstance.h"
+#include "TES3MagicEffectInstance.h"
 
 namespace mwse::lua::event {
 	MagicEffectRemovedEvent::MagicEffectRemovedEvent(TES3::MobileActor* mobileActor, TES3::MagicSourceInstance* magicSourceInstance, int effectIndex) :
@@ -28,6 +29,7 @@ namespace mwse::lua::event {
 		eventData["source"] = m_MagicSourceInstance->sourceCombo.source.asGeneric;
 		eventData["sourceInstance"] = m_MagicSourceInstance;
 		eventData["effectIndex"] = m_EffectIndex;
+		eventData["effectInstance"] = m_MagicSourceInstance->getEffectInstance(m_EffectIndex, m_MobileActor->reference);
 
 		// Get the specific effect on the source.
 		TES3::Effect* effects = m_MagicSourceInstance->sourceCombo.getSourceEffects();

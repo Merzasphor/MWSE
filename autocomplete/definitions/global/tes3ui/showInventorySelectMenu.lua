@@ -27,7 +27,7 @@ return {
 				name = "noResultsText",
 				type = "string",
 				optional = true,
-				description = "The text used for the message that gets shown to the player if no items have been found in the inventory."
+				description = "The text used for the message that gets shown to the player if no items have been found in the inventory. The default text is equivalent to the `sInventorySelectNoItems` GMST value, unless `\"ingredients\"` or `\"soulgemFilled\"` has been assigned to `filter`, in which case the default text is equivalent to either the `sInventorySelectNoIngredients` or `sInventorySelectNoSoul` GMST value respectively."
 			},
 			{
 				name = "noResultsCallback",
@@ -42,6 +42,7 @@ return {
 				description = [[This determines which items should be shown in the inventory select menu. Accepts either a string or a function.
 
 		If assigning a string it has to be one of the following values:
+
 		- `alembic`: Only ([tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/)) items of type `tes3.apparatusType.alembic` will be shown. 
 		- `calcinator`: Only ([tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/)) items of type `tes3.apparatusType.calcinator` will be shown. 
 		- `enchanted`: Only enchanted items will be shown. 
@@ -52,6 +53,7 @@ return {
 		- `soulgemFilled`: Only filled soulgems will be shown.
 
 		If assigning a function it will be called when determining if an item should be added to the inventory select menu. A table `filterParams` will be passed to this function. Returning `true` from this function will add the item to the inventory select menu, whereas returning `false` will prevent it from being added.
+
 		- `filterParams` (table)
 			- `item` ([tes3item](https://mwse.github.io/MWSE/types/tes3item/)): The item that is being filtered.
 			- `itemData` ([tes3itemData](https://mwse.github.io/MWSE/types/tes3itemData/)): The item data of the item that is being filtered. Can be `nil`.
