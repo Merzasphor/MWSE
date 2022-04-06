@@ -7,7 +7,7 @@ This type inherits the following: [tes3weather](../../types/tes3weather)
 
 ### `ambientDayColor`
 
-*Read-only*. The weather's ambient day color.
+*Read-only*. The weather's ambient day color. The values can range from 0 to 1.
 
 **Returns**:
 
@@ -37,7 +37,7 @@ The weather's ambient looping sound ID.
 
 ### `ambientNightColor`
 
-*Read-only*. The weather's ambient night color.
+*Read-only*. The weather's ambient night color. The values can range from 0 to 1.
 
 **Returns**:
 
@@ -57,7 +57,7 @@ The weather's ambient looping sound ID.
 
 ### `ambientSunriseColor`
 
-*Read-only*. The weather's ambient sunrise color.
+*Read-only*. The weather's ambient sunrise color. The values can range from 0 to 1.
 
 **Returns**:
 
@@ -67,7 +67,7 @@ The weather's ambient looping sound ID.
 
 ### `ambientSunsetColor`
 
-*Read-only*. The weather's ambient sunset color.
+*Read-only*. The weather's ambient sunset color. The values can range from 0 to 1.
 
 **Returns**:
 
@@ -117,7 +117,7 @@ The weather's cloud texture path.
 
 ### `fogDayColor`
 
-*Read-only*. The weather's fog day color.
+*Read-only*. The weather's fog day color. The values can range from 0 to 1.
 
 **Returns**:
 
@@ -127,7 +127,7 @@ The weather's cloud texture path.
 
 ### `fogNightColor`
 
-*Read-only*. The weather's fog night color.
+*Read-only*. The weather's fog night color. The values can range from 0 to 1.
 
 **Returns**:
 
@@ -137,7 +137,7 @@ The weather's cloud texture path.
 
 ### `fogSunriseColor`
 
-*Read-only*. The weather's fog sunrise color.
+*Read-only*. The weather's fog sunrise color. The values can range from 0 to 1.
 
 **Returns**:
 
@@ -147,7 +147,7 @@ The weather's cloud texture path.
 
 ### `fogSunsetColor`
 
-*Read-only*. The weather's fog sunset color.
+*Read-only*. The weather's fog sunset color. The values can range from 0 to 1.
 
 **Returns**:
 
@@ -167,7 +167,7 @@ The weather's glare view.
 
 ### `index`
 
-*Read-only*. The weather's index ID.
+*Read-only*. The weather's index ID. Maps to values in [`tes3.weather`](https://mwse.github.io/MWSE/references/weather-types/) namespace.
 
 **Returns**:
 
@@ -277,7 +277,7 @@ The weather's rain loop sound ID.
 
 ### `skyDayColor`
 
-*Read-only*. The weather's sky day color.
+*Read-only*. The weather's sky day color. The values can range from 0 to 1.
 
 **Returns**:
 
@@ -287,7 +287,7 @@ The weather's rain loop sound ID.
 
 ### `skyNightColor`
 
-*Read-only*. The weather's sky night color.
+*Read-only*. The weather's sky night color. The values can range from 0 to 1.
 
 **Returns**:
 
@@ -297,7 +297,7 @@ The weather's rain loop sound ID.
 
 ### `skySunriseColor`
 
-*Read-only*. The weather's sky sunrise color.
+*Read-only*. The weather's sky sunrise color. The values can range from 0 to 1.
 
 **Returns**:
 
@@ -307,7 +307,7 @@ The weather's rain loop sound ID.
 
 ### `skySunsetColor`
 
-*Read-only*. The weather's sky sunset color.
+*Read-only*. The weather's sky sunset color. The values can range from 0 to 1.
 
 **Returns**:
 
@@ -317,7 +317,7 @@ The weather's rain loop sound ID.
 
 ### `sunDayColor`
 
-*Read-only*. The weather's sun day color.
+*Read-only*. The weather's sun day color. The values can range from 0 to 1.
 
 **Returns**:
 
@@ -327,7 +327,7 @@ The weather's rain loop sound ID.
 
 ### `sundiscSunsetColor`
 
-*Read-only*. The weather's sundisc sunset color.
+*Read-only*. The weather's sundisc sunset color. The values can range from 0 to 1.
 
 **Returns**:
 
@@ -337,7 +337,7 @@ The weather's rain loop sound ID.
 
 ### `sunNightColor`
 
-*Read-only*. The weather's sun night color.
+*Read-only*. The weather's sun night color. The values can range from 0 to 1.
 
 **Returns**:
 
@@ -347,7 +347,7 @@ The weather's rain loop sound ID.
 
 ### `sunSunriseColor`
 
-*Read-only*. The weather's sun sunrise color.
+*Read-only*. The weather's sun sunrise color. The values can range from 0 to 1.
 
 **Returns**:
 
@@ -357,7 +357,7 @@ The weather's rain loop sound ID.
 
 ### `sunSunsetColor`
 
-*Read-only*. The weather's sun sunset color.
+*Read-only*. The weather's sun sunset color. The values can range from 0 to 1.
 
 **Returns**:
 
@@ -387,7 +387,7 @@ The weather's transition delta.
 
 ### `underwaterSoundState`
 
-*Read-only*. The weather's underwater sound state flag.
+*Read-only*. The weather's underwater sound state flag. This value will be `true`, while the player is underwater.
 
 **Returns**:
 

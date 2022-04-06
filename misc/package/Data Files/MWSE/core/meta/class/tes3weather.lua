@@ -3,36 +3,36 @@
 
 --- A structure that contains base weather information shared by inheriting weather structures.
 --- @class tes3weather
---- @field ambientDayColor tes3vector3 *Read-only*. The weather's ambient day color.
+--- @field ambientDayColor tes3vector3 *Read-only*. The weather's ambient day color. The values can range from 0 to 1.
 --- @field ambientLoopSound tes3sound *Read-only*. The weather's ambient looping sound.
 --- @field ambientLoopSoundId string The weather's ambient looping sound ID.
---- @field ambientNightColor tes3vector3 *Read-only*. The weather's ambient night color.
+--- @field ambientNightColor tes3vector3 *Read-only*. The weather's ambient night color. The values can range from 0 to 1.
 --- @field ambientPlaying boolean *Read-only*. The weather's ambient playing flag.
---- @field ambientSunriseColor tes3vector3 *Read-only*. The weather's ambient sunrise color.
---- @field ambientSunsetColor tes3vector3 *Read-only*. The weather's ambient sunset color.
+--- @field ambientSunriseColor tes3vector3 *Read-only*. The weather's ambient sunrise color. The values can range from 0 to 1.
+--- @field ambientSunsetColor tes3vector3 *Read-only*. The weather's ambient sunset color. The values can range from 0 to 1.
 --- @field cloudsMaxPercent number The weather's cloud maximum percentage.
 --- @field cloudsSpeed number The weather's cloud speed.
 --- @field cloudTexture string The weather's cloud texture path.
 --- @field controller tes3weatherController *Read-only*. The weather's weather controller.
---- @field fogDayColor tes3vector3 *Read-only*. The weather's fog day color.
---- @field fogNightColor tes3vector3 *Read-only*. The weather's fog night color.
---- @field fogSunriseColor tes3vector3 *Read-only*. The weather's fog sunrise color.
---- @field fogSunsetColor tes3vector3 *Read-only*. The weather's fog sunset color.
+--- @field fogDayColor tes3vector3 *Read-only*. The weather's fog day color. The values can range from 0 to 1.
+--- @field fogNightColor tes3vector3 *Read-only*. The weather's fog night color. The values can range from 0 to 1.
+--- @field fogSunriseColor tes3vector3 *Read-only*. The weather's fog sunrise color. The values can range from 0 to 1.
+--- @field fogSunsetColor tes3vector3 *Read-only*. The weather's fog sunset color. The values can range from 0 to 1.
 --- @field glareView number The weather's glare view.
---- @field index number *Read-only*. The weather's index ID.
+--- @field index number *Read-only*. The weather's index ID. Maps to values in [`tes3.weather`](https://mwse.github.io/MWSE/references/weather-types/) namespace.
 --- @field landFogDayDepth number The weather's land fog day depth value.
 --- @field landFogNightDepth number The weather's land fog night depth value.
---- @field skyDayColor tes3vector3 *Read-only*. The weather's sky day color.
---- @field skyNightColor tes3vector3 *Read-only*. The weather's sky night color.
---- @field skySunriseColor tes3vector3 *Read-only*. The weather's sky sunrise color.
---- @field skySunsetColor tes3vector3 *Read-only*. The weather's sky sunset color.
---- @field sunDayColor tes3vector3 *Read-only*. The weather's sun day color.
---- @field sundiscSunsetColor tes3vector3 *Read-only*. The weather's sundisc sunset color.
---- @field sunNightColor tes3vector3 *Read-only*. The weather's sun night color.
---- @field sunSunriseColor tes3vector3 *Read-only*. The weather's sun sunrise color.
---- @field sunSunsetColor tes3vector3 *Read-only*. The weather's sun sunset color.
+--- @field skyDayColor tes3vector3 *Read-only*. The weather's sky day color. The values can range from 0 to 1.
+--- @field skyNightColor tes3vector3 *Read-only*. The weather's sky night color. The values can range from 0 to 1.
+--- @field skySunriseColor tes3vector3 *Read-only*. The weather's sky sunrise color. The values can range from 0 to 1.
+--- @field skySunsetColor tes3vector3 *Read-only*. The weather's sky sunset color. The values can range from 0 to 1.
+--- @field sunDayColor tes3vector3 *Read-only*. The weather's sun day color. The values can range from 0 to 1.
+--- @field sundiscSunsetColor tes3vector3 *Read-only*. The weather's sundisc sunset color. The values can range from 0 to 1.
+--- @field sunNightColor tes3vector3 *Read-only*. The weather's sun night color. The values can range from 0 to 1.
+--- @field sunSunriseColor tes3vector3 *Read-only*. The weather's sun sunrise color. The values can range from 0 to 1.
+--- @field sunSunsetColor tes3vector3 *Read-only*. The weather's sun sunset color. The values can range from 0 to 1.
 --- @field transitionDelta number The weather's transition delta.
---- @field underwaterSoundState boolean *Read-only*. The weather's underwater sound state flag.
+--- @field underwaterSoundState boolean *Read-only*. The weather's underwater sound state flag. This value will be `true`, while the player is underwater.
 --- @field windSpeed number The weather's wind speed.
 tes3weather = {}
 
