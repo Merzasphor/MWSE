@@ -574,8 +574,8 @@ local executed = mwscript.removeItem({ reference = ..., item = ..., count = ... 
 
 * `params` (table)
 	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
-	* `item` ([tes3item](../../types/tes3item), string): The item to be added.
-	* `count` (number): *Default*: `1`. The number of items to be added.
+	* `item` ([tes3item](../../types/tes3item), string): The item to be removed.
+	* `count` (number): *Default*: `1`. The number of items to be removed.
 
 **Returns**:
 
