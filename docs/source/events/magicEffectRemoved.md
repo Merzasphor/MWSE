@@ -31,6 +31,8 @@ event.register(tes3.event.magicEffectRemoved, magicEffectRemovedCallback)
 
 !!! example "Example: Show removed effect"
 
+	Show the name of the magic effect and spell/enchantment/alchemy that has been removed from the player.
+
 	```lua
 	local function onMagicEffectRemoved(e)
 		-- Make sure we are only showing messages for effects that are applied to the player.

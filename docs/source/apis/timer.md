@@ -76,6 +76,8 @@ timer.register(name, fn)
 
 ??? example "Example: Show a Message After 1 Day"
 
+	The timer registered in the example is registered and persistent. That renders starting the timer on every loaded event unnecessary. Its state is saved, and it continues where it stopped after loading a save.
+
 	```lua
 	
 	local function showMessage()
@@ -118,6 +120,8 @@ local timer = timer.start({ type = ..., duration = ..., callback = ..., iteratio
 * `timer` ([mwseTimer](../../types/mwseTimer))
 
 ??? example "Example: Show a Countdown Message"
+
+	In this example, whenever the player activates an item they will be shown a 10 second countdown. Because it is a simulation timer, it will not tick down while the menu is open, nor is it sensitive to the game timescale/clock.
 
 	```lua
 	local timeLeft = 0;

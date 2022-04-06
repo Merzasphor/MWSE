@@ -52,6 +52,8 @@ local result = tes3iterator:size()
 
 ??? example "Example: Iterating Lists"
 
+	In this example, a list is iterated using the pairs iterator function. The node can be used directly.
+
 	```lua
 	-- Check player equipment. Equipment list contains only equipped items.
 	for _, stack in pairs(tes3.player.object.equipment) do

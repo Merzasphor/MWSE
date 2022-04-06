@@ -272,6 +272,9 @@ local function writePackageDetails(file, package)
 		for _, name in ipairs(exampleKeys) do
 			local example = package.examples[name]
 			file:write(string.format("%s example \"Example: %s\"\n\n", exampleType, example.title or name))
+			if (example.description) then
+				file:write(string.format("\t%s\n\n", string.gsub(example.description, "\n\n", "\n\n\t")))
+			end
 			file:write(string.format("\t```lua\n"))
 
 			local path = nil

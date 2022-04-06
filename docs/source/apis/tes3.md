@@ -44,6 +44,8 @@ This table is used to convert numerical magic school IDs to their respective ski
 
 ??? example "Example: Convert magic school from event data to a respective skill"
 
+	The example below gives the player 100 experience for failing to cast a spell. Here we can see how tes3.magicSchoolSkill is used.
+
 	```lua
 	local function OnSpellFailed(e)
 	
@@ -288,6 +290,8 @@ local effect = tes3.addMagicEffect({ id = ..., name = ..., baseCost = ..., schoo
 * `effect` ([tes3effect](../../types/tes3effect))
 
 ??? example "Example: Fire Damage effect"
+
+	An implementation of the vanilla Fire Damage effect. Also, three spells are constructed with newly created magic effect, which are added to the player. You can test this in-game.
 
 	```lua
 	-- Claiming an ID is needed before actually
@@ -774,6 +778,8 @@ local createdObject = tes3.createObject({ objectType = ..., getIfExists = ... })
 
 ??? example "Example: Creates a tes3misc object"
 
+	The example below create a misc item object that could be used to create a placeable reference later on.
+
 	```lua
 	local miscItemId = "create_misc_item_id"
 	local miscItemName = "create_misc_item_name"
@@ -810,6 +816,8 @@ local createdObject = tes3.createObject({ objectType = ..., getIfExists = ... })
 	```
 
 ??? example "Example: Creates a tes3static object"
+
+	The example below create a static object that could be used to create a placeable reference later on.
 
 	```lua
 	local staticId = "create_static_id"
@@ -1164,6 +1172,8 @@ local gameSetting = tes3.findGMST(id)
 
 ??? example "Example: Document all GMST Default Values"
 
+	This example reads the default values of all GMSTs, and writes them to a markdown file for users to read.
+
 	```lua
 	-- Converter table for a GMST's type to something more user-friendly.
 	local typeNames = {
@@ -1206,6 +1216,8 @@ local gameSetting = tes3.findGMST(id)
 	```
 
 ??? example "Example: Retrieve value of a GMST"
+
+	This example shows how to read a value of a GMST and how to change it.
 
 	```lua
 	local oldGMST = tes3.findGMST("sServiceTrainingTitle").value
@@ -1561,6 +1573,8 @@ local magnitude, unresistedMagnitude = tes3.getEffectMagnitude({ reference = ...
 
 ??? example "Example: Get magnitude after resistances are applied."
 
+	You can treat the function as if it returns a single value.
+
 	```lua
 	local magnitude = tes3.getEffectMagnitude{reference = tes3.player, effect = tes3.effect.fortifyAttribute, attribute = tes3.attribute.speed}
 	tes3.messageBox(string.format("fortify speed: %f", magnitude))
@@ -1592,6 +1606,8 @@ local stack = tes3.getEquippedItem({ actor = ..., enchanted = ..., objectType = 
 
 ??? example "Example: Get Player’s Equipped Light"
 
+	In this example, we print the object ID of the player’s equipped light source.
+
 	```lua
 	local equippedLightStack = tes3.getEquippedItem({ actor = tes3.player, objectType = tes3.objectType.light })
 	if (equippedLightStack) then
@@ -1603,6 +1619,8 @@ local stack = tes3.getEquippedItem({ actor = ..., enchanted = ..., objectType = 
 	```
 
 ??? example "Example: Get Player’s Shield"
+
+	This example shows the player’s shield.
 
 	```lua
 	local equippedShieldStack = tes3.getEquippedItem({ actor = tes3.player, objectType = tes3.objectType.armor, slot = tes3.armorSlot.shield })
@@ -2736,6 +2754,8 @@ tes3.modStatistic({ reference = ..., name = ..., attribute = ..., skill = ..., b
 
 ??? example "Example: Decrease Health of an Actor"
 
+	In this simple example, the current health of an actor, the player, is decreased by 10. To simulate actual combat damage, you should use tes3mobileActor.applyDamage.
+
 	```lua
 	tes3.modStatistic({
 		reference = tes3.mobilePlayer,
@@ -2746,6 +2766,8 @@ tes3.modStatistic({ reference = ..., name = ..., attribute = ..., skill = ..., b
 	```
 
 ??? example "Example: Restore Magicka without Overflowing"
+
+	Magicka is restored without exceeding the magicka pool using the limitToBase flag.
 
 	```lua
 	tes3.modStatistic({
@@ -2985,6 +3007,8 @@ local result = tes3.rayTest({ position = ..., direction = ..., findAll = ..., ma
 
 ??? example "Example: Get Activation Target"
 
+	This example performs a ray test to match the normal activation target test. Unlike `tes3.getPlayerTarget()` this will return objects not normally available for activation.
+
 	```lua
 	local hitResult = tes3.rayTest({ position = tes3.getPlayerEyePosition(), direction = tes3.getPlayerEyeVector() })
 	local hitReference = hitResult and hitResult.reference
@@ -2997,6 +3021,8 @@ local result = tes3.rayTest({ position = ..., direction = ..., findAll = ..., ma
 	```
 
 ??? example "Example: Get Camera Target"
+
+	This example performs a ray test to see what the camera is currently looking at.
 
 	```lua
 	local hitResult = tes3.rayTest({ position = tes3.getCameraPosition(), direction = tes3.getCameraVector() })
@@ -3011,6 +3037,8 @@ local result = tes3.rayTest({ position = ..., direction = ..., findAll = ..., ma
 
 ??? example "Example: Multiple Results"
 
+	This example performs a ray test and displays all results in the entire ray test, rather than ending at the first object hit.
+
 	```lua
 	local results = tes3.rayTest{ tes3.getCameraPosition(), direction = tes3.getCameraVector(), findAll = true }
 	if results then
@@ -3022,6 +3050,8 @@ local result = tes3.rayTest({ position = ..., direction = ..., findAll = ..., ma
 	```
 
 ??? example "Example: Save rayTest result for use at a later point"
+
+	If you plan to use the results of rayTest, you should make sure it still exists. For example, an object which was in a list of results of rayTest can get unloaded when the player changes cells and become invalid, so it shouldn't be accessed.
 
 	```lua
 	local result = tes3.rayTest{ -- result can get invalidated
@@ -3077,6 +3107,8 @@ tes3.removeEffects(reference, effect, castType, chance, removeSpell)
 * `removeSpell` (boolean): *Optional*. If removing by cast type, determines if the spell should be removed from the target's spell list. Defaults to true if `castType` is not `tes3.spellType.spell.` This causes diseases and curses to be removed when dispelled.
 
 ??? example "Example: Simulating a Dispel"
+
+	In this example there is a 50 % chance that any Water Breathing magic effects will be removed from the player when he/she is underwater.
 
 	```lua
 	local function example(e)

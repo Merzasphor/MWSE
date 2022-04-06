@@ -58,6 +58,8 @@ local result = re.find(subject, pattern, init)
 
 ??? example "Example: Simple Find"
 
+	Use re.find to get the position of the first numeral in a string.
+
 	```lua
 	local re = require("re")
 	
@@ -94,6 +96,8 @@ local result = re.gsub(subject, pattern, replacement)
 
 ??? example "Example: Simple Substitution"
 
+	Use re.gsub to replace all vowels in a string with '.'.
+
 	```lua
 	local re = require("re")
 	
@@ -129,6 +133,8 @@ local result = re.match(subject, pattern)
 * `result` (string)
 
 ??? example "Example: Simple Match"
+
+	Use re.match to find all the words in a string, then find the first numeral.
 
 	```lua
 	local re = require("re")

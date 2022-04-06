@@ -330,6 +330,8 @@ local result = lpeg.match(p, subject, init)
 
 ??? example "Example: Simple Match"
 
+	Create a pattern that matches a word followed by the end of the string, and use it to match strings.
+
 	```lua
 	local lpeg = require("lpeg")
 	
@@ -409,6 +411,8 @@ local result = lpeg.R(p)
 * `result` (pattern)
 
 ??? example "Example: Simple Match"
+
+	Create a pattern using lpeg.R that matches a word followed by the end of the string.
 
 	```lua
 	local lpeg = require("lpeg")

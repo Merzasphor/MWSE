@@ -28,6 +28,8 @@ event.register(tes3.event.key, keyCallback)
 
 !!! example "Example: Show a Message when Ctrl-Z is Pressed"
 
+	Displays a simple message when Z is pressed while control is held.
+
 	```lua
 	local function myOnKeyCallback(e)
 		if( e.pressed and e.isControlDown ) then
