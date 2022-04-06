@@ -66,7 +66,7 @@
 --- @field isTurningRight boolean Direct access to the actor's current movement flags, showing if the actor is turning right.
 --- @field isWalking boolean Direct access to the actor's current movement flags, showing if the actor is walking.
 --- @field jump number Direct access to the actor's jump effect attribute.
---- @field lastGroundZ number No description yet available.
+--- @field lastGroundZ number This has a large negative value if the actor is on the ground. When the actor jumps, this will have a positive value. During `jump` event this value is still negative. A split second after, it will have the value of the `.z` coordinate when the actor was on the ground. Beware that this value changes after some amount of time while the actors is in the air.
 --- @field levitate number Direct access to the actor's levitate effect attribute.
 --- @field luck tes3statistic|tes3statisticSkill *Read-only*. Direct access to the actor's luck attribute statistic.
 --- @field magicka tes3statistic|tes3statisticSkill *Read-only*. Access to the actor's magicka statistic.
