@@ -4,6 +4,6 @@ return {
 	arguments = {
 		{ name = "object", type = "tes3object", description = "An object to make a safe handle for." }
 	},
-	returns = "object",
+	returns = "safeObjectHandle",
 	valuetype = "mwseSafeObjectHandle",
 }

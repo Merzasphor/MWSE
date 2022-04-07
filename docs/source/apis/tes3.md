@@ -2681,7 +2681,7 @@ local iterationFunction = tes3.loopTArray(tarray)
 Returns a safe handle for the object. To get the object use `:getObject()`. To check if it still exists use `:valid()`.
 
 ```lua
-local object = tes3.makeSafeObjectHandle(object)
+local safeObjectHandle = tes3.makeSafeObjectHandle(object)
 ```
 
 **Parameters**:
@@ -2690,7 +2690,7 @@ local object = tes3.makeSafeObjectHandle(object)
 
 **Returns**:
 
-* `object` ([mwseSafeObjectHandle](../../types/mwseSafeObjectHandle))
+* `safeObjectHandle` ([mwseSafeObjectHandle](../../types/mwseSafeObjectHandle))
 
 ***
 
