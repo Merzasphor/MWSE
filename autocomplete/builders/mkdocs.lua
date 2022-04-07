@@ -55,11 +55,29 @@ end
 
 local function breakoutTypeLinks(type)
 	local types = {}
-	for _, t in ipairs(string.split(type, "|")) do
-		if (classes[t]) then
-			table.insert(types, string.format("[%s](../../types/%s)", t, t))
+
+	---@param type string
+	local function getTypeLink(type)
+		if classes[type] then
+			return string.format("[%s](../../types/%s)", type, type)
 		else
-			table.insert(types, t)
+			return type
+		end
+	end
+	-- Support "table<x, y>" as type, by converting it to "table (x, y)"
+	if string.find(type, 'table<') then
+		type = string.gsub(type, " ", "")
+		type = string.gsub(type, "table<", "")
+		type = string.gsub(type, ">", "")
+		type = string.split(type, ",")
+
+		local keyType = getTypeLink(type[1])
+		local valueType = getTypeLink(type[2])
+
+		table.insert(types, string.format("table (%s, %s)", keyType, valueType))
+	else
+		for _, t in ipairs(string.split(type, "|")) do
+			table.insert(types, getTypeLink(t))
 		end
 	end
 	return table.concat(types, ", ")
