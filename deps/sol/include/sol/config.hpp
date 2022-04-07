@@ -35,6 +35,9 @@
 // Ensure that userdata and functions have their param types checked.
 #define SOL_SAFE_USERTYPE 1
 
+// Opt out of floating point/integer precision checks.
+#define SOL_NO_CHECK_NUMBER_PRECISION 1
+
 // It's _not_ wanted to propagate exceptions through Lua
 #define SOL_EXCEPTIONS_SAFE_PROPAGATION 0
 
