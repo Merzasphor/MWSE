@@ -147,7 +147,7 @@ The soruceless flag of the object.
 
 ### `specialization`
 
-The specialization in which the skill belongs. Maps to [`tes3.specialization`](https://mwse.github.io/MWSE/references/specialization-types/) constants.
+The specialization in which the skill belongs. Maps to values in the [`tes3.specialization`](https://mwse.github.io/MWSE/references/specializations/) table.
 
 **Returns**:
 

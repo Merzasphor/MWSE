@@ -6,34 +6,34 @@ hide:
 # Skills
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.skill.*` namespace. For example, `tes3.skill.heavyArmor` has a value of `3`.
+	These values are available in Lua by their index in the `tes3.skill` table. For example, `tes3.skill.alchemy` has a value of `16`.
 
-ID | Skill
--- | ------------
-0  | Block
-1  | Armorer
-2  | Medium Armor
-3  | Heavy Armor
-4  | Blunt Weapon
-5  | Long Blade
-6  | Axe
-7  | Spear
-8  | Athletics
-9  | Enchant
-10 | Destruction
-11 | Alteration
-12 | Illusion
-13 | Conjuration
-14 | Mysticism
-15 | Restoration
-16 | Alchemy
-17 | Unarmored
-18 | Security
-19 | Sneak
-20 | Acrobatics
-21 | Light Armor
-22 | Short Blade
-23 | Marksman
-24 | Mercantile
-25 | Speechcraft
-26 | Hand to Hand
+Index       | Value
+----------- | -----
+block       | `0`
+armorer     | `1`
+mediumArmor | `2`
+heavyArmor  | `3`
+bluntWeapon | `4`
+longBlade   | `5`
+axe         | `6`
+spear       | `7`
+athletics   | `8`
+enchant     | `9`
+destruction | `10`
+alteration  | `11`
+illusion    | `12`
+conjuration | `13`
+mysticism   | `14`
+restoration | `15`
+alchemy     | `16`
+unarmored   | `17`
+security    | `18`
+sneak       | `19`
+acrobatics  | `20`
+lightArmor  | `21`
+shortBlade  | `22`
+marksman    | `23`
+mercantile  | `24`
+speechcraft | `25`
+handToHand  | `26`

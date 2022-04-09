@@ -6,11 +6,11 @@ hide:
 # Creature Types
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.creatureType.*` namespace. For example, `tes3.creatureType.undead` has a value of `2`.
+	These values are available in Lua by their index in the `tes3.creatureType` table. For example, `tes3.creatureType.normal` has a value of `0`.
 
-ID | Creature Type
--- | -----------------
-0  | Normal
-1  | Daedra
-2  | Undead
-3  | Humanoid
+Index    | Value
+-------- | -----
+normal   | `0`
+daedra   | `1`
+undead   | `2`
+humanoid | `3`

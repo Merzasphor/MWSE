@@ -6,82 +6,156 @@ hide:
 # Events
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.event.*` namespace. For example, `tes3.event.calcRepairPrice` has a value of `calcRepairPrice`.
+	These values are available in Lua by their index in the `tes3.event` table. For example, `tes3.event.uiShowRestMenu` has a value of `"uiShowRestMenu"`.
 
-ID                         | Event
--------------------------- | -----------------------------
-activate                   | Activate 
-activationTargetChanged    | Activation Target Changed 
-attack                     | Attack 
-buttonPressed              | Button Pressed 
-calcBarterPrice            | Calc Barter Price 
-calcFlySpeed               | Calc Fly Speed 
-calcMoveSpeed              | Calc Move Speed 
-calcRepairPrice            | Calc Repair Price 
-calcRestInterrupt          | Calc Rest Interrupt 
-calcRunSpeed               | Calc Run Speed 
-calcSpellPrice             | Calc Spell Price 
-calcSwimRunSpeed           | Calc Swim Run Speed 
-calcSwimSpeed              | Calc Swim Speed 
-calcTrainingPrice          | Calc Training Price 
-calcTravelPrice            | Calc Travel Price 
-calcWalkSpeed              | Calc Walk Speed 
-cellChanged                | Cell Changed 
-combatStart                | Combat Start 
-combatStarted              | Combat Started 
-combatStop                 | Combat Stop 
-combatStopped              | Combat Stopped 
-damage                     | Damage 
-damaged                    | Damaged 
-death                      | Death 
-enterFrame                 | Enter Frame 
-equip                      | Equip 
-equipped                   | Equipped 
-exerciseSkill              | Exercise Skill 
-initialized                | Initialized 
-journal                    | Journal 
-key                        | Key 
-keyDown                    | Key Down 
-keyUp                      | Key Up 
-levelUp                    | Level Up 
-leveledCreaturePicked      | Leveled Creature Picked 
-leveledItemPicked          | Leveled Item Picked 
-load                       | Load 
-loaded                     | Loaded 
-magicCasted                | Magic Casted 
-menuEnter                  | Menu Enter 
-menuExit                   | Menu Exit 
-mobileActivated            | Mobile Activated 
-mobileDeactivated          | Mobile Deactivated 
-mouseAxis                  | Mouse Axis 
-mouseButtonDown            | Mouse Button Down 
-mouseButtonUp              | Mouse Button Up 
-mouseWheel                 | Mouse Wheel 
-musicSelectTrack           | Music Select Track 
-potionBrewed               | Potion Brewed 
-projectileExpire           | Projectile Expire 
-projectileHitActor         | Projectile Hit Actor 
-restInterrupt              | Rest Interrupt 
-save                       | Save 
-saved                      | Saved 
-simulate                   | Simulate 
-skillRaised                | Skill Raised 
-spellCast                  | Spell Cast 
-spellCasted                | Spell Casted 
-spellCastedFailure         | Spell Casted Failure 
-spellResist                | Spell Resist 
-spellTick                  | Spell Tick 
-topicAdded                 | Topic Added 
-uiActivated                | Ui Activated 
-uiEvent                    | Ui Event 
-uiObjectTooltip            | Ui Object Tooltip 
-uiPreEvent                 | Ui Pre Event 
-uiRefreshed                | Ui Refreshed 
-uiShowRestMenu             | Ui Show Rest Menu 
-unequipped                 | Unequipped 
-weaponReadied              | Weapon Readied 
-weaponUnreadied            | Weapon Unreadied 
-weatherChangedImmediate    | Weather Changed Immediate 
-weatherCycled              | Weather Cycled 
-weatherTransitionFinished  | Weather Transition Finished 
-weatherTransitionStarted   | Weather Transition Started
+Index                         | Value                             | Event
+----------------------------- | --------------------------------- | ---------------------------------------------------------------------------------------------------
+absorbedMagic                 | `"absorbedMagic"`                 | [`absorbedMagic`](https://mwse.github.io/MWSE/events/absorbedMagic)
+activate                      | `"activate"`                      | [`activate`](https://mwse.github.io/MWSE/events/activate)
+activationTargetChanged       | `"activationTargetChanged"`       | [`activationTargetChanged`](https://mwse.github.io/MWSE/events/activationTargetChanged)
+activeMagicEffectIconsUpdated | `"activeMagicEffectIconsUpdated"` | [`activeMagicEffectIconsUpdated`](https://mwse.github.io/MWSE/events/activeMagicEffectIconsUpdated)
+addSound                      | `"addSound"`                      | [`addSound`](https://mwse.github.io/MWSE/events/addSound)
+addTempSound                  | `"addTempSound"`                  | [`addTempSound`](https://mwse.github.io/MWSE/events/addTempSound)
+attack                        | `"attack"`                        | [`attack`](https://mwse.github.io/MWSE/events/attack)
+attackStart                   | `"attackStart"`                   | [`attackStart`](https://mwse.github.io/MWSE/events/attackStart)
+barterOffer                   | `"barterOffer"`                   | [`barterOffer`](https://mwse.github.io/MWSE/events/barterOffer)
+bodyPartAssigned              | `"bodyPartAssigned"`              | [`bodyPartAssigned`](https://mwse.github.io/MWSE/events/bodyPartAssigned)
+bodyPartsUpdated              | `"bodyPartsUpdated"`              | [`bodyPartsUpdated`](https://mwse.github.io/MWSE/events/bodyPartsUpdated)
+bookGetText                   | `"bookGetText"`                   | [`bookGetText`](https://mwse.github.io/MWSE/events/bookGetText)
+buttonPressed                 | `"buttonPressed"`                 | [`buttonPressed`](https://mwse.github.io/MWSE/events/buttonPressed)
+calcArmorPieceHit             | `"calcArmorPieceHit"`             | [`calcArmorPieceHit`](https://mwse.github.io/MWSE/events/calcArmorPieceHit)
+calcArmorRating               | `"calcArmorRating"`               | [`calcArmorRating`](https://mwse.github.io/MWSE/events/calcArmorRating)
+calcBarterPrice               | `"calcBarterPrice"`               | [`calcBarterPrice`](https://mwse.github.io/MWSE/events/calcBarterPrice)
+calcBlockChance               | `"calcBlockChance"`               | [`calcBlockChance`](https://mwse.github.io/MWSE/events/calcBlockChance)
+calcFlySpeed                  | `"calcFlySpeed"`                  | [`calcFlySpeed`](https://mwse.github.io/MWSE/events/calcFlySpeed)
+calcHitChance                 | `"calcHitChance"`                 | [`calcHitChance`](https://mwse.github.io/MWSE/events/calcHitChance)
+calcMoveSpeed                 | `"calcMoveSpeed"`                 | [`calcMoveSpeed`](https://mwse.github.io/MWSE/events/calcMoveSpeed)
+calcRepairPrice               | `"calcRepairPrice"`               | [`calcRepairPrice`](https://mwse.github.io/MWSE/events/calcRepairPrice)
+calcRestInterrupt             | `"calcRestInterrupt"`             | [`calcRestInterrupt`](https://mwse.github.io/MWSE/events/calcRestInterrupt)
+calcRunSpeed                  | `"calcRunSpeed"`                  | [`calcRunSpeed`](https://mwse.github.io/MWSE/events/calcRunSpeed)
+calcSoulValue                 | `"calcSoulValue"`                 | [`calcSoulValue`](https://mwse.github.io/MWSE/events/calcSoulValue)
+calcSpellmakingPrice          | `"calcSpellmakingPrice"`          | [`calcSpellmakingPrice`](https://mwse.github.io/MWSE/events/calcSpellmakingPrice)
+calcSpellmakingSpellPointCost | `"calcSpellmakingSpellPointCost"` | [`calcSpellmakingSpellPointCost`](https://mwse.github.io/MWSE/events/calcSpellmakingSpellPointCost)
+calcSpellPrice                | `"calcSpellPrice"`                | [`calcSpellPrice`](https://mwse.github.io/MWSE/events/calcSpellPrice)
+calcSunDamageScalar           | `"calcSunDamageScalar"`           | [`calcSunDamageScalar`](https://mwse.github.io/MWSE/events/calcSunDamageScalar)
+calcSwimRunSpeed              | `"calcSwimRunSpeed"`              | [`calcSwimRunSpeed`](https://mwse.github.io/MWSE/events/calcSwimRunSpeed)
+calcSwimSpeed                 | `"calcSwimSpeed"`                 | [`calcSwimSpeed`](https://mwse.github.io/MWSE/events/calcSwimSpeed)
+calcTrainingPrice             | `"calcTrainingPrice"`             | [`calcTrainingPrice`](https://mwse.github.io/MWSE/events/calcTrainingPrice)
+calcTravelPrice               | `"calcTravelPrice"`               | [`calcTravelPrice`](https://mwse.github.io/MWSE/events/calcTravelPrice)
+calcWalkSpeed                 | `"calcWalkSpeed"`                 | [`calcWalkSpeed`](https://mwse.github.io/MWSE/events/calcWalkSpeed)
+cellActivated                 | `"cellActivated"`                 | [`cellActivated`](https://mwse.github.io/MWSE/events/cellActivated)
+cellChanged                   | `"cellChanged"`                   | [`cellChanged`](https://mwse.github.io/MWSE/events/cellChanged)
+cellDeactivated               | `"cellDeactivated"`               | [`cellDeactivated`](https://mwse.github.io/MWSE/events/cellDeactivated)
+collideWater                  | `"collideWater"`                  | [`collideWater`](https://mwse.github.io/MWSE/events/collideWater)
+collision                     | `"collision"`                     | [`collision`](https://mwse.github.io/MWSE/events/collision)
+combatStart                   | `"combatStart"`                   | [`combatStart`](https://mwse.github.io/MWSE/events/combatStart)
+combatStarted                 | `"combatStarted"`                 | [`combatStarted`](https://mwse.github.io/MWSE/events/combatStarted)
+combatStop                    | `"combatStop"`                    | [`combatStop`](https://mwse.github.io/MWSE/events/combatStop)
+combatStopped                 | `"combatStopped"`                 | [`combatStopped`](https://mwse.github.io/MWSE/events/combatStopped)
+containerClosed               | `"containerClosed"`               | [`containerClosed`](https://mwse.github.io/MWSE/events/containerClosed)
+convertReferenceToItem        | `"convertReferenceToItem"`        | [`convertReferenceToItem`](https://mwse.github.io/MWSE/events/convertReferenceToItem)
+crimeWitnessed                | `"crimeWitnessed"`                | [`crimeWitnessed`](https://mwse.github.io/MWSE/events/crimeWitnessed)
+damage                        | `"damage"`                        | [`damage`](https://mwse.github.io/MWSE/events/damage)
+damaged                       | `"damaged"`                       | [`damaged`](https://mwse.github.io/MWSE/events/damaged)
+damagedHandToHand             | `"damagedHandToHand"`             | [`damagedHandToHand`](https://mwse.github.io/MWSE/events/damagedHandToHand)
+damageHandToHand              | `"damageHandToHand"`              | [`damageHandToHand`](https://mwse.github.io/MWSE/events/damageHandToHand)
+death                         | `"death"`                         | [`death`](https://mwse.github.io/MWSE/events/death)
+detectSneak                   | `"detectSneak"`                   | [`detectSneak`](https://mwse.github.io/MWSE/events/detectSneak)
+determineAction               | `"determineAction"`               | [`determineAction`](https://mwse.github.io/MWSE/events/determineAction)
+determinedAction              | `"determinedAction"`              | [`determinedAction`](https://mwse.github.io/MWSE/events/determinedAction)
+enchantChargeUse              | `"enchantChargeUse"`              | [`enchantChargeUse`](https://mwse.github.io/MWSE/events/enchantChargeUse)
+enchantedItemCreated          | `"enchantedItemCreated"`          | [`enchantedItemCreated`](https://mwse.github.io/MWSE/events/enchantedItemCreated)
+enchantedItemCreateFailed     | `"enchantedItemCreateFailed"`     | [`enchantedItemCreateFailed`](https://mwse.github.io/MWSE/events/enchantedItemCreateFailed)
+enterFrame                    | `"enterFrame"`                    | [`enterFrame`](https://mwse.github.io/MWSE/events/enterFrame)
+equip                         | `"equip"`                         | [`equip`](https://mwse.github.io/MWSE/events/equip)
+equipmentReevaluated          | `"equipmentReevaluated"`          | [`equipmentReevaluated`](https://mwse.github.io/MWSE/events/equipmentReevaluated)
+equipped                      | `"equipped"`                      | [`equipped`](https://mwse.github.io/MWSE/events/equipped)
+exerciseSkill                 | `"exerciseSkill"`                 | [`exerciseSkill`](https://mwse.github.io/MWSE/events/exerciseSkill)
+fadersCreated                 | `"fadersCreated"`                 | [`fadersCreated`](https://mwse.github.io/MWSE/events/fadersCreated)
+filterBarterMenu              | `"filterBarterMenu"`              | [`filterBarterMenu`](https://mwse.github.io/MWSE/events/filterBarterMenu)
+filterContentsMenu            | `"filterContentsMenu"`            | [`filterContentsMenu`](https://mwse.github.io/MWSE/events/filterContentsMenu)
+filterInventory               | `"filterInventory"`               | [`filterInventory`](https://mwse.github.io/MWSE/events/filterInventory)
+filterInventorySelect         | `"filterInventorySelect"`         | [`filterInventorySelect`](https://mwse.github.io/MWSE/events/filterInventorySelect)
+filterSoulGemTarget           | `"filterSoulGemTarget"`           | [`filterSoulGemTarget`](https://mwse.github.io/MWSE/events/filterSoulGemTarget)
+infoFilter                    | `"infoFilter"`                    | [`infoFilter`](https://mwse.github.io/MWSE/events/infoFilter)
+infoGetText                   | `"infoGetText"`                   | [`infoGetText`](https://mwse.github.io/MWSE/events/infoGetText)
+infoLinkResolve               | `"infoLinkResolve"`               | [`infoLinkResolve`](https://mwse.github.io/MWSE/events/infoLinkResolve)
+infoResponse                  | `"infoResponse"`                  | [`infoResponse`](https://mwse.github.io/MWSE/events/infoResponse)
+initialized                   | `"initialized"`                   | [`initialized`](https://mwse.github.io/MWSE/events/initialized)
+isGuard                       | `"isGuard"`                       | [`isGuard`](https://mwse.github.io/MWSE/events/isGuard)
+itemDropped                   | `"itemDropped"`                   | [`itemDropped`](https://mwse.github.io/MWSE/events/itemDropped)
+itemTileUpdated               | `"itemTileUpdated"`               | [`itemTileUpdated`](https://mwse.github.io/MWSE/events/itemTileUpdated)
+journal                       | `"journal"`                       | [`journal`](https://mwse.github.io/MWSE/events/journal)
+jump                          | `"jump"`                          | [`jump`](https://mwse.github.io/MWSE/events/jump)
+key                           | `"key"`                           | [`key`](https://mwse.github.io/MWSE/events/key)
+keyDown                       | `"keyDown"`                       | [`keyDown`](https://mwse.github.io/MWSE/events/keyDown)
+keyUp                         | `"keyUp"`                         | [`keyUp`](https://mwse.github.io/MWSE/events/keyUp)
+leveledCreaturePicked         | `"leveledCreaturePicked"`         | [`leveledCreaturePicked`](https://mwse.github.io/MWSE/events/leveledCreaturePicked)
+leveledItemPicked             | `"leveledItemPicked"`             | [`leveledItemPicked`](https://mwse.github.io/MWSE/events/leveledItemPicked)
+levelUp                       | `"levelUp"`                       | [`levelUp`](https://mwse.github.io/MWSE/events/levelUp)
+load                          | `"load"`                          | [`load`](https://mwse.github.io/MWSE/events/load)
+loaded                        | `"loaded"`                        | [`loaded`](https://mwse.github.io/MWSE/events/loaded)
+lockPick                      | `"lockPick"`                      | [`lockPick`](https://mwse.github.io/MWSE/events/lockPick)
+magicCasted                   | `"magicCasted"`                   | [`magicCasted`](https://mwse.github.io/MWSE/events/magicCasted)
+magicEffectRemoved            | `"magicEffectRemoved"`            | [`magicEffectRemoved`](https://mwse.github.io/MWSE/events/magicEffectRemoved)
+magicEffectsResolved          | `"magicEffectsResolved"`          | [`magicEffectsResolved`](https://mwse.github.io/MWSE/events/magicEffectsResolved)
+menuEnter                     | `"menuEnter"`                     | [`menuEnter`](https://mwse.github.io/MWSE/events/menuEnter)
+menuExit                      | `"menuExit"`                      | [`menuExit`](https://mwse.github.io/MWSE/events/menuExit)
+meshLoad                      | `"meshLoad"`                      | [`meshLoad`](https://mwse.github.io/MWSE/events/meshLoad)
+meshLoaded                    | `"meshLoaded"`                    | [`meshLoaded`](https://mwse.github.io/MWSE/events/meshLoaded)
+mobileActivated               | `"mobileActivated"`               | [`mobileActivated`](https://mwse.github.io/MWSE/events/mobileActivated)
+mobileDeactivated             | `"mobileDeactivated"`             | [`mobileDeactivated`](https://mwse.github.io/MWSE/events/mobileDeactivated)
+modConfigReady                | `"modConfigReady"`                | [`modConfigReady`](https://mwse.github.io/MWSE/events/modConfigReady)
+mouseAxis                     | `"mouseAxis"`                     | [`mouseAxis`](https://mwse.github.io/MWSE/events/mouseAxis)
+mouseButtonDown               | `"mouseButtonDown"`               | [`mouseButtonDown`](https://mwse.github.io/MWSE/events/mouseButtonDown)
+mouseButtonUp                 | `"mouseButtonUp"`                 | [`mouseButtonUp`](https://mwse.github.io/MWSE/events/mouseButtonUp)
+mouseWheel                    | `"mouseWheel"`                    | [`mouseWheel`](https://mwse.github.io/MWSE/events/mouseWheel)
+musicSelectTrack              | `"musicSelectTrack"`              | [`musicSelectTrack`](https://mwse.github.io/MWSE/events/musicSelectTrack)
+objectInvalidated             | `"objectInvalidated"`             | [`objectInvalidated`](https://mwse.github.io/MWSE/events/objectInvalidated)
+playGroup                     | `"playGroup"`                     | [`playGroup`](https://mwse.github.io/MWSE/events/playGroup)
+playItemSound                 | `"playItemSound"`                 | [`playItemSound`](https://mwse.github.io/MWSE/events/playItemSound)
+postInfoResponse              | `"postInfoResponse"`              | [`postInfoResponse`](https://mwse.github.io/MWSE/events/postInfoResponse)
+potionBrewed                  | `"potionBrewed"`                  | [`potionBrewed`](https://mwse.github.io/MWSE/events/potionBrewed)
+potionBrewFailed              | `"potionBrewFailed"`              | [`potionBrewFailed`](https://mwse.github.io/MWSE/events/potionBrewFailed)
+potionBrewSkillCheck          | `"potionBrewSkillCheck"`          | [`potionBrewSkillCheck`](https://mwse.github.io/MWSE/events/potionBrewSkillCheck)
+powerRecharged                | `"powerRecharged"`                | [`powerRecharged`](https://mwse.github.io/MWSE/events/powerRecharged)
+preLevelUp                    | `"preLevelUp"`                    | [`preLevelUp`](https://mwse.github.io/MWSE/events/preLevelUp)
+preventRest                   | `"preventRest"`                   | [`preventRest`](https://mwse.github.io/MWSE/events/preventRest)
+processAI                     | `"processAI"`                     | [`processAI`](https://mwse.github.io/MWSE/events/processAI)
+projectileExpire              | `"projectileExpire"`              | [`projectileExpire`](https://mwse.github.io/MWSE/events/projectileExpire)
+projectileHitActor            | `"projectileHitActor"`            | [`projectileHitActor`](https://mwse.github.io/MWSE/events/projectileHitActor)
+projectileHitObject           | `"projectileHitObject"`           | [`projectileHitObject`](https://mwse.github.io/MWSE/events/projectileHitObject)
+projectileHitTerrain          | `"projectileHitTerrain"`          | [`projectileHitTerrain`](https://mwse.github.io/MWSE/events/projectileHitTerrain)
+referenceActivated            | `"referenceActivated"`            | [`referenceActivated`](https://mwse.github.io/MWSE/events/referenceActivated)
+referenceDeactivated          | `"referenceDeactivated"`          | [`referenceDeactivated`](https://mwse.github.io/MWSE/events/referenceDeactivated)
+referenceSceneNodeCreated     | `"referenceSceneNodeCreated"`     | [`referenceSceneNodeCreated`](https://mwse.github.io/MWSE/events/referenceSceneNodeCreated)
+restInterrupt                 | `"restInterrupt"`                 | [`restInterrupt`](https://mwse.github.io/MWSE/events/restInterrupt)
+save                          | `"save"`                          | [`save`](https://mwse.github.io/MWSE/events/save)
+saved                         | `"saved"`                         | [`saved`](https://mwse.github.io/MWSE/events/saved)
+simulate                      | `"simulate"`                      | [`simulate`](https://mwse.github.io/MWSE/events/simulate)
+skillRaised                   | `"skillRaised"`                   | [`skillRaised`](https://mwse.github.io/MWSE/events/skillRaised)
+soundObjectPlay               | `"soundObjectPlay"`               | [`soundObjectPlay`](https://mwse.github.io/MWSE/events/soundObjectPlay)
+spellCast                     | `"spellCast"`                     | [`spellCast`](https://mwse.github.io/MWSE/events/spellCast)
+spellCasted                   | `"spellCasted"`                   | [`spellCasted`](https://mwse.github.io/MWSE/events/spellCasted)
+spellCastedFailure            | `"spellCastedFailure"`            | [`spellCastedFailure`](https://mwse.github.io/MWSE/events/spellCastedFailure)
+spellCreated                  | `"spellCreated"`                  | [`spellCreated`](https://mwse.github.io/MWSE/events/spellCreated)
+spellMagickaUse               | `"spellMagickaUse"`               | [`spellMagickaUse`](https://mwse.github.io/MWSE/events/spellMagickaUse)
+spellResist                   | `"spellResist"`                   | [`spellResist`](https://mwse.github.io/MWSE/events/spellResist)
+spellResisted                 | `"spellResisted"`                 | [`spellResisted`](https://mwse.github.io/MWSE/events/spellResisted)
+spellTick                     | `"spellTick"`                     | [`spellTick`](https://mwse.github.io/MWSE/events/spellTick)
+topicAdded                    | `"topicAdded"`                    | [`topicAdded`](https://mwse.github.io/MWSE/events/topicAdded)
+trapDisarm                    | `"trapDisarm"`                    | [`trapDisarm`](https://mwse.github.io/MWSE/events/trapDisarm)
+uiActivated                   | `"uiActivated"`                   | [`uiActivated`](https://mwse.github.io/MWSE/events/uiActivated)
+uiEvent                       | `"uiEvent"`                       | [`uiEvent`](https://mwse.github.io/MWSE/events/uiEvent)
+uiObjectTooltip               | `"uiObjectTooltip"`               | [`uiObjectTooltip`](https://mwse.github.io/MWSE/events/uiObjectTooltip)
+uiPreEvent                    | `"uiPreEvent"`                    | [`uiPreEvent`](https://mwse.github.io/MWSE/events/uiPreEvent)
+uiRefreshed                   | `"uiRefreshed"`                   | [`uiRefreshed`](https://mwse.github.io/MWSE/events/uiRefreshed)
+uiShowRestMenu                | `"uiShowRestMenu"`                | [`uiShowRestMenu`](https://mwse.github.io/MWSE/events/uiShowRestMenu)
+uiSpellTooltip                | `"uiSpellTooltip"`                | [`uiSpellTooltip`](https://mwse.github.io/MWSE/events/uiSpellTooltip)
+unequipped                    | `"unequipped"`                    | [`unequipped`](https://mwse.github.io/MWSE/events/unequipped)
+weaponReadied                 | `"weaponReadied"`                 | [`weaponReadied`](https://mwse.github.io/MWSE/events/weaponReadied)
+weaponUnreadied               | `"weaponUnreadied"`               | [`weaponUnreadied`](https://mwse.github.io/MWSE/events/weaponUnreadied)
+weatherChangedImmediate       | `"weatherChangedImmediate"`       | [`weatherChangedImmediate`](https://mwse.github.io/MWSE/events/weatherChangedImmediate)
+weatherCycled                 | `"weatherCycled"`                 | [`weatherCycled`](https://mwse.github.io/MWSE/events/weatherCycled)
+weatherTransitionFinished     | `"weatherTransitionFinished"`     | [`weatherTransitionFinished`](https://mwse.github.io/MWSE/events/weatherTransitionFinished)
+weatherTransitionStarted      | `"weatherTransitionStarted"`      | [`weatherTransitionStarted`](https://mwse.github.io/MWSE/events/weatherTransitionStarted)

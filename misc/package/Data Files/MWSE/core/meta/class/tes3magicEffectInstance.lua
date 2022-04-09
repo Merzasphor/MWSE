@@ -13,7 +13,7 @@
 --- @field lastUsedWeapon tes3weapon *Read-only*. No description yet available.
 --- @field magnitude number The magnitude of the effect, before any resistances are applied.
 --- @field resistedPercent number The percentage of the magic effect that has been resisted. A value of `100` indicates that the magic effect has been completely resisted, whereas a value of `0` indicates it has not been resisted and is applied with its full magnitude. Values over `100` cause the magic effect to heal the actor instead of harming it, if it is a damaging magic effect.
---- @field state number The state of this magic effect. Maps to [`tes3.spellState`](https://mwse.github.io/MWSE/references/spell-states/) constants.
+--- @field state number The state of this magic effect instance. Maps to [`tes3.spellState`](https://mwse.github.io/MWSE/references/spell-states/) constants.
 --- @field target tes3reference No description yet available.
 --- @field timeActive number No description yet available.
 --- @field visual number No description yet available.

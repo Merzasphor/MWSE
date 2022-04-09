@@ -6,26 +6,26 @@ hide:
 # Animation States
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.animationState.*` namespace. For example, `tes3.animationState.swingHit` has a value of `4`.
+	These values are available in Lua by their index in the `tes3.animationState` table. For example, `tes3.animationState.readyingWeap` has a value of `8`.
 
-ID  | State
---- | ----------------------
-0   | Idle
-1   | Ready
-2   | Swing Up
-3   | Swing Down
-4   | Swing Hit
-5   | Swing Follow Light
-6   | Swing Follow Medium
-7   | Swing Follow Heavy
-8   | Readying Weapon
-9   | Unready Weapon
-10  | Casting
-11  | Casting 2
-12  | Readying Magic
-13  | Unready Magic
-14  | Knockdown
-15  | Knocked Out
-16  | Picking Probing
-18  | Dying
-19  | Dead
+Index            | Value
+---------------- | -----
+idle             | `0`
+ready            | `1`
+swingUp          | `2`
+swingDown        | `3`
+swingHit         | `4`
+swingFollowLight | `5`
+swingFollowMed   | `6`
+swingFollowHeavy | `7`
+readyingWeap     | `8`
+unreadyWeap      | `9`
+casting          | `10`
+casting2         | `11`
+readyingMagic    | `12`
+unreadyMagic     | `13`
+knockdown        | `14`
+knockedOut       | `15`
+pickingProbing   | `16`
+dying            | `18`
+dead             | `19`

@@ -6,36 +6,36 @@ hide:
 # Effect Attributes
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.effectAttribute.*` namespace. For example, `tes3.effectAttribute.resistBlightDisease` has a value of `7`.
+	These values are available in Lua by their index in the `tes3.effectAttribute` table. For example, `tes3.effectAttribute.swiftSwim` has a value of `15`.
 
-ID  | Effect Attribute
---- | ----------------------
-0   | Attack Bonus 
-1   | Sanctuary 
-2   | Resist Magicka 
-3   | Resist Fire 
-4   | Resist Frost 
-5   | Resist Shock 
-6   | Resist Common Disease 
-7   | Resist Blight Disease 
-8   | Resist Corprus 
-9   | Resist Poison 
-10  | Resist Paralysis 
-11  | Chameleon 
-12  | Resist Normal Weapons 
-13  | Water Breathing 
-14  | Water Walking 
-15  | Swift Swim 
-16  | Jump 
-17  | Levitate 
-18  | Shield 
-19  | Sound 
-20  | Silence 
-21  | Blind 
-22  | Paralyze 
-23  | Invisibility 
-24  | Fight 
-25  | Flee 
-26  | Hello 
-27  | Alarm 
-28  | Non Resistable 
+Index               | Value
+------------------- | -----
+attackBonus         | `0`
+sanctuary           | `1`
+resistMagicka       | `2`
+resistFire          | `3`
+resistFrost         | `4`
+resistShock         | `5`
+resistCommonDisease | `6`
+resistBlightDisease | `7`
+resistCorprus       | `8`
+resistPoison        | `9`
+resistParalysis     | `10`
+chameleon           | `11`
+resistNormalWeapons | `12`
+waterBreathing      | `13`
+waterWalking        | `14`
+swiftSwim           | `15`
+jump                | `16`
+levitate            | `17`
+shield              | `18`
+sound               | `19`
+silence             | `20`
+blind               | `21`
+paralyze            | `22`
+invisibility        | `23`
+fight               | `24`
+flee                | `25`
+hello               | `26`
+alarm               | `27`
+nonResistable       | `28`

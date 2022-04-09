@@ -6,10 +6,10 @@ hide:
 # Music Situations
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.musicSituation.*` namespace. For example, `tes3.musicSituation.uninterruptible` has a value of `2`.
+	These values are available in Lua by their index in the `tes3.musicSituation` table. For example, `tes3.musicSituation.explore` has a value of `0`.
 
-ID | Music Situation
--- | ---------------
-0  | Explore
-1  | Combat
-2  | Uninterruptible
+Index           | Value
+--------------- | -----
+explore         | `0`
+combat          | `1`
+uninterruptible | `2`

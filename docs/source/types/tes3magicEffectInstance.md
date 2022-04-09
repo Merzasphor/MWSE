@@ -106,7 +106,7 @@ The percentage of the magic effect that has been resisted. A value of `100` indi
 
 ### `state`
 
-The state of this magic effect. Maps to [`tes3.spellState`](https://mwse.github.io/MWSE/references/spell-states/) constants.
+The state of this magic effect instance. Maps to [`tes3.spellState`](https://mwse.github.io/MWSE/references/spell-states/) constants.
 
 **Returns**:
 

@@ -6,28 +6,28 @@ hide:
 # UI Events
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.uiEvent.*` namespace. For example, `tes3.uiEvent.partScrollBarChanged` has a value of `PartScrollBar_changed`.
+	These values are available in Lua by their index in the `tes3.uiEvent` table. For example, `tes3.uiEvent.focus` has a value of `"focus"`.
 
-ID                         | UI Event
--------------------------- | -----------------------------
-mouseLeave                 | mouseLeave 
-mouseOver                  | mouseOver 
-mouseDown                  | mouseDown 
-mouseClick                 | mouseClick
-mouseScrollUp              | mouseScrollUp
-mouseScrollDown            | mouseScrollDown
-mouseDoubleClick           | mouseDoubleClick
-mouseStillIdle             | mouseStillIdle
-mouseStillOver             | mouseStillOver
-mouseStillPressed          | mouseStillPressed
-mouseStillPressedOutside   | mouseStillPressedOutside
-mouseRelease               | mouseRelease
-keyPress                   | keyPress
-keyEnter                   | keyEnter
-help                       | help
-focus                      | focus
-unfocus                    | unfocus
-preUpdate                  | preUpdate
-update                     | update
-destroy                    | destroy
-partScrollBarChanged       | PartScrollBar_changed
+Index                    | Value
+------------------------ | ----------------------------
+destroy                  | `"destroy"`
+focus                    | `"focus"`
+help                     | `"help"`
+keyEnter                 | `"keyEnter"`
+keyPress                 | `"keyPress"`
+mouseClick               | `"mouseClick"`
+mouseDoubleClick         | `"mouseDoubleClick"`
+mouseDown                | `"mouseDown"`
+mouseLeave               | `"mouseLeave"`
+mouseOver                | `"mouseOver"`
+mouseRelease             | `"mouseRelease"`
+mouseScrollDown          | `"mouseScrollDown"`
+mouseScrollUp            | `"mouseScrollUp"`
+mouseStillIdle           | `"mouseStillIdle"`
+mouseStillOver           | `"mouseStillOver"`
+mouseStillPressed        | `"mouseStillPressed"`
+mouseStillPressedOutside | `"mouseStillPressedOutside"`
+partScrollBarChanged     | `"PartScrollBar_changed"`
+preUpdate                | `"preUpdate"`
+unfocus                  | `"unfocus"`
+update                   | `"update"`

@@ -29,6 +29,6 @@
 --- @field playable boolean If true, the class is selectable at character generation.
 --- @field services number The services offered by the class. This is a bit field, and its values should typically be accessed through values such as `bartersAlchemy`.
 --- @field skills table *Read-only*. An array-style table of the 10 skills IDs associated with the class. For major or minor skills specifically, use the `majorSkills` and `minorSkills` properties. Maps to values in [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) namespace.
---- @field specialization number The specialization for the class. Maps to the [`tes3.specialization`](https://mwse.github.io/MWSE/references/specialization-types/) constants table.
+--- @field specialization number The specialization for the class. Maps to values in the [`tes3.specialization`](https://mwse.github.io/MWSE/references/specializations/) table.
 tes3class = {}
 

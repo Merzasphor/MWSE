@@ -3,24 +3,21 @@ hide:
   - toc
 ---
 
-# Armor Types
+# Armor Slots
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.armorSlot.*` namespace. For example, `tes3.armorSlot.leftGauntlet` has a value of `6`.
+	These values are available in Lua by their index in the `tes3.armorSlot` table. For example, `tes3.armorSlot.boots` has a value of `5`.
 
-!!! note
-	MWSE-mwscript's `xEquipmentList` returns this value as the subtype for armor objects. These values are **increased by one** by that function.
-
-ID  | Armor Type
---- | ---------------------------------------------
-0   | Helmet
-1   | Cuirass
-2   | Left Pauldron
-3   | Right Pauldron
-4   | Greaves
-5   | Boots
-6   | Left Gauntlet
-7   | Right Gauntlet
-8   | Shield
-9   | Left Bracer
-10  | Right Bracer
+Index         | Value
+------------- | -----
+helmet        | `0`
+cuirass       | `1`
+leftPauldron  | `2`
+rightPauldron | `3`
+greaves       | `4`
+boots         | `5`
+leftGauntlet  | `6`
+rightGauntlet | `7`
+shield        | `8`
+leftBracer    | `9`
+rightBracer   | `10`

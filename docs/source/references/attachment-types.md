@@ -6,11 +6,11 @@ hide:
 # Attachment Types
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.attachmentType.*` namespace. For example, `tes3.attachmentType.activator` has a value of `9`.
+	These values are available in Lua by their index in the `tes3.attachmentType` table. For example, `tes3.attachmentType.activator` has a value of `9`.
 
-ID | Attachment Type
--- | ---------------
-3  | Lock
-6  | Variable
-8  | Actor
-9  | Activator
+Index     | Value
+--------- | -----
+lock      | `3`
+variable  | `6`
+actor     | `8`
+activator | `9`

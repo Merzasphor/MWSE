@@ -6,32 +6,32 @@ hide:
 # Body Part Attachments
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.bodyPartAttachment.*` namespace. For example, `tes3.bodyPartAttachment.rightForearm2` has a value of `9`.
+	These values are available in Lua by their index in the `tes3.bodyPartAttachment` table. For example, `tes3.bodyPartAttachment.root` has a value of `0`.
 
-ID | Attachment
--- | -----------------
-0  | Root
-1  | Head
-2  | Neck
-3  | Spine
-4  | Pelvis
-5  | Right Hand
-6  | Left Hand
-7  | Right Forearm 1
-8  | Left Forearm 1
-9  | Right Forearm 2
-10 | Left Forearm 2
-11 | Right Upper Arm
-12 | Left Upper Arm
-13 | Right Foot
-14 | Left Foot
-15 | Right Calf 1
-16 | Left Calf 1
-17 | Right Calf 2
-18 | Left Calf 2
-19 | Right Thigh
-20 | Left Thigh
-21 | Right Clavicle
-22 | Left Clavicle
-23 | Weapon
-24 | Shield
+Index         | Value
+------------- | -----
+root          | `0`
+head          | `1`
+neck          | `2`
+spine         | `3`
+pelvis        | `4`
+rightHand     | `5`
+leftHand      | `6`
+rightForearm1 | `7`
+leftForearm1  | `8`
+rightForearm2 | `9`
+leftForearm2  | `10`
+rightUpperArm | `11`
+leftUpperArm  | `12`
+rightFoot     | `13`
+leftFoot      | `14`
+rightCalf1    | `15`
+leftCalf1     | `16`
+rightCalf2    | `17`
+leftCalf2     | `18`
+rightThigh    | `19`
+leftThigh     | `20`
+rightClavicle | `21`
+leftClavicle  | `22`
+weapon        | `23`
+shield        | `24`

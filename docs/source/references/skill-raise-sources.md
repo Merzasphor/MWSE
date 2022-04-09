@@ -6,10 +6,10 @@ hide:
 # Skill Raise Sources
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.skillRaiseSource.*` namespace. For example, `tes3.skillRaiseSource.book` has a value of `book`.
+	These values are available in Lua by their index in the `tes3.skillRaiseSource` table. For example, `tes3.skillRaiseSource.progress` has a value of `"progress"`.
 
-ID        | Skill Raise Source
---------- | ------------------
-book      | Book
-progress  | Progress
-training  | Training
+Index    | Value
+-------- | ------------
+book     | `"book"`
+progress | `"progress"`
+training | `"training"`

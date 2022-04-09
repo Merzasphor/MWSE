@@ -6,13 +6,13 @@ hide:
 # Damage Sources
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.damageSource.*` namespace. For example, `tes3.damageSource.shield` has a value of `shield`.
+	These values are available in Lua by their index in the `tes3.damageSource` table. For example, `tes3.damageSource.magic` has a value of `"magic"`.
 
-ID           | Damage Source
------------- | ---------------
-script       | Script
-fall         | Fall
-suffocation  | Suffocation
-attack       | Attack
-magic        | Magic
-shield       | Shield
+Index       | Value
+----------- | ---------------
+attack      | `"attack"`
+fall        | `"fall"`
+magic       | `"magic"`
+script      | `"script"`
+shield      | `"shield"`
+suffocation | `"suffocation"`

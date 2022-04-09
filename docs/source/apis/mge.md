@@ -244,7 +244,7 @@ local parameters = mge.getWeatherDLFog(weatherID)
 
 **Parameters**:
 
-* `weatherID` (number): Maps to values in [`tes3.weather`](https://mwse.github.io/MWSE/references/weather-types/) enumeration.
+* `weatherID` (number): Maps to values in the [`tes3.weather`](https://mwse.github.io/MWSE/references/weathers/) table.
 
 **Returns**:
 
@@ -262,7 +262,7 @@ local parameters = mge.getWeatherPPLLight(weatherID)
 
 **Parameters**:
 
-* `weatherID` (number): Maps to values in [`tes3.weather`](https://mwse.github.io/MWSE/references/weather-types/) enumeration.
+* `weatherID` (number): Maps to values in the [`tes3.weather`](https://mwse.github.io/MWSE/references/weathers/) table.
 
 **Returns**:
 
@@ -584,7 +584,7 @@ local result = mge.setWeatherDLFog(weatherID, fogDistMultiplier, fogOffsetPercen
 
 **Parameters**:
 
-* `weatherID` (number): Maps to values in [`tes3.weather`](https://mwse.github.io/MWSE/references/weather-types/) enumeration.
+* `weatherID` (number): Maps to values in the [`tes3.weather`](https://mwse.github.io/MWSE/references/weathers/) table.
 * `fogDistMultiplier` (number)
 * `fogOffsetPercent` (number)
 
@@ -604,7 +604,7 @@ local result = mge.setWeatherPPLLight(weatherID, sunMultiplier, ambientMultiplie
 
 **Parameters**:
 
-* `weatherID` (number): Maps to values in [`tes3.weather`](https://mwse.github.io/MWSE/references/weather-types/) enumeration.
+* `weatherID` (number): Maps to values in the [`tes3.weather`](https://mwse.github.io/MWSE/references/weathers/) table.
 * `sunMultiplier` (number)
 * `ambientMultiplier` (number)
 

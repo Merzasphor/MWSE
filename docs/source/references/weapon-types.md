@@ -6,24 +6,21 @@ hide:
 # Weapon Types
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.weaponType.*` namespace. For example, `tes3.weaponType.longBladeTwoClose` has a value of `2`.
+	These values are available in Lua by their index in the `tes3.weaponType` table. For example, `tes3.weaponType.bluntOneHand` has a value of `3`.
 
-!!! note
-	MWSE-mwscript's `xEquipmentList` returns this value as the subtype for weapon objects. These values are **increased by one** by that function.
-
-ID | Weapon Type
--- | ---------------------
-0  | Short Blade One Hand
-1  | Long Blade One Hand
-2  | Long Blade Two Close
-3  | Blunt One Hand
-4  | Blunt Two Close
-5  | Blunt Two Wide
-6  | Spear Two Wide
-7  | Axe One Hand
-8  | Axe Two Hand
-9  | Marksman Bow
-10 | Marksman Crossbow
-11 | Marksman Thrown
-12 | Arrow
-13 | Bolt
+Index             | Value | Description
+----------------- | ----- | -------------------------------------
+shortBladeOneHand | `0`   | Short Blade, One Handed
+longBladeOneHand  | `1`   | Long Blade, One Handed
+longBladeTwoClose | `2`   | Lon Blade, Two Handed
+bluntOneHand      | `3`   | Blunt Weapon, One Handed
+bluntTwoClose     | `4`   | Blunt Weapon, Two Handed (Warhammers)
+bluntTwoWide      | `5`   | Blunt Weapon, Two Handed (Staffs)
+spearTwoWide      | `6`   | Spear, Two Handed
+axeOneHand        | `7`   | Axe, One Handed
+axeTwoHand        | `8`   | Axe, Two Handed
+marksmanBow       | `9`   | Marksman, Bow
+marksmanCrossbow  | `10`  | Marksman, Crossbow
+marksmanThrown    | `11`  | Marksman, Thrown
+arrow             | `12`  | Arrows
+bolt              | `13`  | Bolts

@@ -42,7 +42,7 @@
 --- @field id number *Read-only*. The element's ID.  The element can be later accessed by `ancestor:findChild(id)`. Note that multiple elements may have the same ID, such as subparts of a widget, or list items. Therefore, you may think of ids as an element class identifier.
 --- @field imageScaleX number Image scaling multipliers. Only applies to image elements.
 --- @field imageScaleY number Image scaling multipliers. Only applies to image elements.
---- @field justifyText string Can have values `"left"`, `"center"`, or `"right"`. Controls text justification. These values are available as [`tes3.justifyText`](https://mwse.github.io/MWSE/references/justify-text/) enumeration. To work correctly for center/right justification,  `wrapText` must be `true`.
+--- @field justifyText string Can have values `"left"`, `"center"`, or `"right"`. Controls text justification. Maps to values in the [`tes3.justifyText`](https://mwse.github.io/MWSE/references/justify-text/) table. To work correctly for center/right justification, `wrapText` must be `true`.
 --- @field maxHeight number Maximum dimensions for auto-size layout and resizable frames. Integer number.
 --- @field maxWidth number Maximum dimensions for auto-size layout and resizable frames. Integer number.
 --- @field minHeight number Minimum dimensions for auto-size layout and resizable frames. Integer number.

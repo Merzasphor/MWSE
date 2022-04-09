@@ -322,7 +322,7 @@ local result = tes3actor:offersService(service)
 
 **Parameters**:
 
-* `service` (number): Use one of the [`tes3.merchantService.*`](https://mwse.github.io/MWSE/references/merchant-service-types/) constants.
+* `service` (number): Use one of the values in the [`tes3.merchantService.*`](https://mwse.github.io/MWSE/references/merchant-services/) table.
 
 **Returns**:
 

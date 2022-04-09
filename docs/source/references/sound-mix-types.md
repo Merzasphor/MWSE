@@ -6,12 +6,12 @@ hide:
 # Sound Mix Types
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.soundMix.*` namespace. For example, `tes3.soundMix.footsteps` has a value of `3`.
+	These values are available in Lua by their index in the `tes3.soundMix` table. For example, `tes3.soundMix.voice` has a value of `1`.
 
-ID | Sound Mix Type
--- | ---------------------
-0  | Master
-1  | Voice
-2  | Effects
-3  | Footsteps
-4  | Music
+Index     | Value
+--------- | -----
+master    | `0`
+voice     | `1`
+effects   | `2`
+footsteps | `3`
+music     | `4`

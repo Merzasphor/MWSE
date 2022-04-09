@@ -6,16 +6,16 @@ hide:
 # Action Flags
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.actionFlag.*` namespace. For example, `tes3.actionFlag.onDeath` has a value of `0x10`.
+	These values are available in Lua by their index in the `tes3.actionFlag` table. For example, `tes3.actionFlag.onMurder` has a value of `64`.
 
-ID     | Action Flag
------- | ------------------
-0x1    | Use Enabled
-0x2    | On Activate
-0x10   | On Death
-0x20   | On Knockout
-0x40   | On Murder
-0x100  | Door Opening
-0x200  | Door Closing
-0x400  | Door Jammed Opening
-0x800  | Door Jammed Closing
+Index             | Value
+----------------- | ------
+useEnabled        | `1`
+onActivate        | `2`
+onDeath           | `16`
+onKnockout        | `32`
+onMurder          | `64`
+doorOpening       | `256`
+doorClosing       | `512`
+doorJammedOpening | `1024`
+doorJammedClosing | `2048`

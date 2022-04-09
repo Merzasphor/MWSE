@@ -6,11 +6,11 @@ hide:
 # Enchantment Types
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.enchantmentType.*` namespace. For example, `tes3.enchantmentType.constant` has a value of `3`.
+	These values are available in Lua by their index in the `tes3.enchantmentType` table. For example, `tes3.enchantmentType.castOnce` has a value of `0`.
 
-ID | Enchantment Type
--- | -----------------
-0  | Cast Once
-1  | On Strike
-2  | On Use
-3  | Constant
+Index    | Value
+-------- | -----
+castOnce | `0`
+onStrike | `1`
+onUse    | `2`
+constant | `3`

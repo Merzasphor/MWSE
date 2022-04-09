@@ -6,10 +6,10 @@ hide:
 # Effect Ranges
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.effectRange.*` namespace. For example, `tes3.effectRange.target` has a value of `2`.
+	These values are available in Lua by their index in the `tes3.effectRange` table. For example, `tes3.effectRange.self` has a value of `0`.
 
-ID | Effect Range
--- | -----------------
-0  | Self
-1  | Touch
-2  | Target
+Index  | Value
+------ | -----
+self   | `0`
+touch  | `1`
+target | `2`

@@ -4,7 +4,7 @@ return {
 
 Note: "Above water fog" is a setting specific to MGE XE. It can be found on the Distant Land page, under Fog category.]],
 	arguments = {
-		{ name = "weatherID", type = "number", description = "Maps to values in [`tes3.weather`](https://mwse.github.io/MWSE/references/weather-types/) enumeration." },
+		{ name = "weatherID", type = "number", description = "Maps to values in the [`tes3.weather`](https://mwse.github.io/MWSE/references/weathers/) table." },
 		{ name = "fogDistMultiplier", type = "number" },
 		{ name = "fogOffsetPercent", type = "number" }
 	},

@@ -6,10 +6,10 @@ hide:
 # Armor Weight Classes
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.armorWeightClass.*` namespace. For example, `tes3.armorWeightClass.medium` has a value of `1`.
+	These values are available in Lua by their index in the `tes3.armorWeightClass` table. For example, `tes3.armorWeightClass.heavy` has a value of `2`.
 
-ID | Weight Class
--- | ---------------
-0  | Light
-1  | Medium
-2  | Heavy
+Index  | Value
+------ | -----
+light  | `0`
+medium | `1`
+heavy  | `2`

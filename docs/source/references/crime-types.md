@@ -6,14 +6,14 @@ hide:
 # Crime Types
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.crimeType.*` namespace. For example, `tes3.crimeType.theft` has a value of `5`.
+	These values are available in Lua by their index in the `tes3.crimeType` table. For example, `tes3.crimeType.werewolf` has a value of `7`.
 
-ID | Crime Type
--- | -----------------
-1  | attack
-2  | killing
-3  | stealing
-4  | pickpocket
-5  | theft
-6  | trespass
-7  | werewolf
+Index      | Value
+---------- | -----
+attack     | `1`
+killing    | `2`
+stealing   | `3`
+pickpocket | `4`
+theft      | `5`
+trespass   | `6`
+werewolf   | `7`

@@ -704,7 +704,7 @@ local offersService, refusalReply = tes3.checkMerchantOffersService(reference, s
 **Parameters**:
 
 * `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string)
-* `service` (number): *Optional*. The specific service to check for availability. Uses the [`tes3.merchantService`](https://mwse.github.io/MWSE/references/merchant-service-types/) constants.
+* `service` (number): *Optional*. The specific service to check for availability. Maps to values in the [`tes3.merchantService`](https://mwse.github.io/MWSE/references/merchant-services/) table.
 
 **Returns**:
 
@@ -1817,29 +1817,29 @@ local killMap = tes3.getKillCounts()
 
 ### `tes3.getLanguage`
 
-Gets the language as an ISO string (e.g. "eng"), determined by the language entry in Morrowind.ini and the detected executable.
+Gets the language as an ISO string (e.g. "eng"), determined by the language entry in Morrowind.ini and the detected executable. Maps to values in the [`tes3.language`](https://mwse.github.io/MWSE/references/languages/) table.
 
 ```lua
-local code = tes3.getLanguage()
+local result = tes3.getLanguage()
 ```
 
 **Returns**:
 
-* `code` (string)
+* `result` (string)
 
 ***
 
 ### `tes3.getLanguageCode`
 
-Gets the language code, determined by the language entry in Morrowind.ini and the detected executable.
+Gets the language code, determined by the language entry in Morrowind.ini and the detected executable. Maps to values in the [`tes3.languageCode`](https://mwse.github.io/MWSE/references/language-codes/) table.
 
 ```lua
-local code = tes3.getLanguageCode()
+local result = tes3.getLanguageCode()
 ```
 
 **Returns**:
 
-* `code` (number)
+* `result` (number)
 
 ***
 

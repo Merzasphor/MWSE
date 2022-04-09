@@ -6,1528 +6,1534 @@ hide:
 # Game Settings (GMSTs)
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.gmst.*` namespace. For example, `tes3.gmst.sMonthMorningstar` has a value of `0`.
+	These values are available in Lua by their index in the `tes3.gmst` table. For example, `tes3.gmst.sLevelUpMsg` has a value of `682`.
 
-Index | Type    | Identifier                       | Default Value
------ | ------- | -------------------------------- | --------------------------------------------
-0     | string  | sMonthMorningstar                | `"sMonthMorningstar"`
-1     | string  | sMonthSunsdawn                   | `"sMonthSunsdawn"`
-2     | string  | sMonthFirstseed                  | `"sMonthFirstseed"`
-3     | string  | sMonthRainshand                  | `"sMonthRainshand"`
-4     | string  | sMonthSecondseed                 | `"sMonthSecondseed"`
-5     | string  | sMonthMidyear                    | `"sMonthMidyear"`
-6     | string  | sMonthSunsheight                 | `"sMonthSunsheight"`
-7     | string  | sMonthLastseed                   | `"sMonthLastseed"`
-8     | string  | sMonthHeartfire                  | `"sMonthHeartfire"`
-9     | string  | sMonthFrostfall                  | `"sMonthFrostfall"`
-10    | string  | sMonthSunsdusk                   | `"sMonthSunsdusk"`
-11    | string  | sMonthEveningstar                | `"sMonthEveningstar"`
-12    | string  | sSpecialization                  | `"sSpecialization"`
-13    | string  | sSpecializationCombat            | `"sCombat"`
-14    | string  | sSpecializationMagic             | `"sMagic"`
-15    | string  | sSpecializationStealth           | `"sStealth"`
-16    | string  | sSkillClassMajor                 | `"sSkillClassMajor"`
-17    | string  | sSkillClassMinor                 | `"sSkillClassMinor"`
-18    | string  | sSkillClassMisc                  | `"sSkillClassMisc"`
-19    | string  | sRacialTraits                    | `"sRacialTraits"`
-20    | string  | sHealthPerHourOfRest             | `"sHealthPerHourOfRest"`
-21    | string  | sHealthPerLevel                  | `"sHealthPerLevel"`
-22    | string  | sGoverningAttribute              | `"sGoverningAttribute"`
-23    | string  | sClass                           | `"sClass"`
-24    | string  | sTraits                          | `"sTraits"`
-25    | string  | sJournal                         | `"sJournal"`
-26    | string  | sOK                              | `"sOK"`
-27    | string  | sClose                           | `"Close"`
-28    | string  | sPrev                            | `"Prev"`
-29    | string  | sNext                            | `"Next"`
-30    | string  | sTake                            | `"Take"`
-31    | string  | sWeaponTab                       | `"sWeaponTab"`
-32    | string  | sApparelTab                      | `"sApparelTab"`
-33    | string  | sMagicTab                        | `"sMagicTab"`
-34    | string  | sMiscTab                         | `"sMiscTab"`
-35    | string  | sWornTab                         | `"Worn"`
-36    | string  | sAllTab                          | `"All"`
-37    | string  | sAttack                          | `"Attack"`
-38    | string  | sUses                            | `"Uses"`
-39    | string  | sQuality                         | `"Quality:"`
-40    | string  | sCharges                         | `"Charge"`
-41    | string  | sArmorRating                     | `"sArmorRating"`
-42    | string  | sSlash                           | `"sSlash"`
-43    | string  | sThrust                          | `"sThrust"`
-44    | string  | sChop                            | `"sChop"`
-45    | string  | sEncumbrance                     | `"sEncumbrance"`
-46    | string  | sCondition                       | `"sCondition"`
-47    | string  | sWeight                          | `"sWeight"`
-48    | string  | sValue                           | `"sValue"`
-49    | string  | sLight                           | `"sLight"`
-50    | string  | sMedium                          | `"sMedium"`
-51    | string  | sHeavy                           | `"sHeavy"`
-52    | string  | sCancel                          | `"sCancel"`
-53    | string  | sTakeAll                         | `"Take All"`
-54    | string  | sUntilHealed                     | `"Until Healed"`
-55    | string  | sRest                            | `"sRest"`
-56    | string  | sWait                            | `"sWait"`
-57    | string  | sRestIllegal                     | `"sRestIllegal"`
-58    | string  | sGold                            | `"sGold"`
-59    | string  | sMove                            | `"sMove"`
-60    | string  | sTo                              | `"to"`
-61    | string  | sActorInCombat                   | `"This character is in combat."`
-62    | string  | sArmor                           | `"Armor"`
-63    | string  | sTopics                          | `"Topics"`
-64    | string  | sService                         | `"Service"`
-65    | string  | sPersuasion                      | `"Persuasion"`
-66    | string  | sBye                             | `"Bye"`
-67    | string  | sGoodbye                         | `"Goodbye"`
-68    | string  | sYes                             | `"Yes"`
-69    | string  | sNo                              | `"No"`
-70    | string  | sOn                              | `"On"`
-71    | string  | sOff                             | `"Off"`
-72    | string  | sFull                            | `"Full"`
-73    | string  | sWorld                           | `"World"`
-74    | string  | sExpelled                        | `"EXPELLED"`
-75    | string  | sExpelledMessage                 | `"You have been expelled from "`
-76    | string  | sFavoriteSkills                  | `"Favorite Skills"`
-77    | string  | sGame                            | `"Game"`
-78    | string  | sVideo                           | `"Video"`
-79    | string  | sAudio                           | `"Audio"`
-80    | string  | sControls                        | `"Controls"`
-81    | string  | sPrefs                           | `"Prefs"`
-82    | string  | sPreferences                     | `"Preferences"`
-83    | string  | sNewGame                         | `"New Game"`
-84    | string  | sExitGame                        | `"Exit Game"`
-85    | string  | sOptions                         | `"Options Menu"`
-86    | string  | sSaveGame                        | `"Save Game"`
-87    | string  | sLoadGame                        | `"Load Game"`
-88    | string  | sDeleteGame                      | `"Delete Game"`
-89    | string  | sSaveGameDenied                  | `"You can not save your game right now."`
-90    | string  | sSaveGameFailed                  | `"An error was encountered while saving the game."`
-91    | string  | sSaveGameTooBig                  | `"There is not enough space to save this game. Free up at least %i blocks and try again."`
-92    | string  | sSaveGameNoMemory                | `"Unable to create Save Game. Free up 100 blocks and try again."`
-93    | string  | sMaximumSaveGameMessage          | `"You have reached the limit of Morrowind saved games. Please delete a Morrowind saved game and try again."`
-94    | string  | sRender_Distance                 | `"Render Distance"`
-95    | string  | sNear                            | `"Near"`
-96    | string  | sFar                             | `"Far"`
-97    | string  | sGamma_Correction                | `"Gamma Correction"`
-98    | string  | sLight_Gamma                     | `"Light"`
-99    | string  | sDark_Gamma                      | `"Dark"`
-100   | string  | sSeldom                          | `"Seldom"`
-101   | string  | sAlways                          | `"Always"`
-102   | string  | sWaterTerrainReflect             | `"Reflect Terrain"`
-103   | string  | sWaterReflectUpdate              | `"Reflection Updating"`
-104   | float   | fWaterReflectUpdateAlways        | `0.0000`
-105   | float   | fWaterReflectUpdateSeldom        | `10.0000`
-106   | string  | sMaster                          | `"Master"`
-107   | string  | sVoice                           | `"Voice"`
-108   | string  | sEffects                         | `"Effect"`
-109   | string  | sFootsteps                       | `"Footsteps"`
-110   | string  | sMusic                           | `"Music"`
-111   | string  | sTransparency_Menu               | `"Transparency Menu"`
-112   | string  | sMenu_Help_Delay                 | `"Menu Help Delay"`
-113   | string  | sAIDistance                      | `"AI Distance"`
-114   | string  | sHigh                            | `"High"`
-115   | string  | sLow                             | `"Low"`
-116   | string  | sDetail_Level                    | `"Detail Level"`
-117   | string  | sMenus                           | `"Menus"`
-118   | string  | sStrip                           | `"Strip"`
-119   | string  | sReturnToGame                    | `"Return To Game"`
-120   | string  | sForward                         | `"Forward"`
-121   | string  | sBack                            | `"Back"`
-122   | string  | sLeft                            | `"Left"`
-123   | string  | sRight                           | `"Right"`
-124   | string  | sUse                             | `"Use"`
-125   | string  | sActivate                        | `"Activate"`
-126   | string  | sReady_Weapon                    | `"Ready Weapon"`
-127   | string  | sReady_Magic                     | `"Ready Magic"`
-128   | string  | sCrouch_Sneak                    | `"Crouch/Sneak"`
-129   | string  | sRun                             | `"Run"`
-130   | string  | sAlways_Run                      | `"Always Run"`
-131   | string  | sAuto_Run                        | `"Auto Run"`
-132   | string  | sJump                            | `"Jump"`
-133   | string  | sNextWeapon                      | `"NextWeapon"`
-134   | string  | sPrevWeapon                      | `"PrevWeapon"`
-135   | string  | sNextSpell                       | `"NextSpell"`
-136   | string  | sPrevSpell                       | `"PrevSpell"`
-137   | string  | sTogglePOVCmd                    | `"Toggle POV"`
-138   | string  | sMenu_Mode                       | `"Menu Mode"`
-139   | string  | sJournalCmd                      | `"Journal"`
-140   | string  | sRestKey                         | `"Rest Menu"`
-141   | string  | sQuickMenu                       | `"Quick Menu"`
-142   | string  | sQuick1Cmd                       | `"Quick 1"`
-143   | string  | sQuick2Cmd                       | `"Quick 2"`
-144   | string  | sQuick3Cmd                       | `"Quick 3"`
-145   | string  | sQuick4Cmd                       | `"Quick 4"`
-146   | string  | sQuick5Cmd                       | `"Quick 5"`
-147   | string  | sQuick6Cmd                       | `"Quick 6"`
-148   | string  | sQuick7Cmd                       | `"Quick 7"`
-149   | string  | sQuick8Cmd                       | `"Quick 8"`
-150   | string  | sQuick9Cmd                       | `"Quick 9"`
-151   | string  | sQuick10Cmd                      | `"Quick 10"`
-152   | string  | sQuickSaveCmd                    | `"Quick Save"`
-153   | string  | sQuickLoadCmd                    | `"Quick Load"`
-154   | string  | sKeyName_00                      | `""`
-155   | string  | sKeyName_01                      | `"ESC"`
-156   | string  | sKeyName_02                      | `"1"`
-157   | string  | sKeyName_03                      | `"2"`
-158   | string  | sKeyName_04                      | `"3"`
-159   | string  | sKeyName_05                      | `"4"`
-160   | string  | sKeyName_06                      | `"5"`
-161   | string  | sKeyName_07                      | `"6"`
-162   | string  | sKeyName_08                      | `"7"`
-163   | string  | sKeyName_09                      | `"8"`
-164   | string  | sKeyName_0A                      | `"9"`
-165   | string  | sKeyName_0B                      | `"0"`
-166   | string  | sKeyName_0C                      | `"-"`
-167   | string  | sKeyName_0D                      | `"="`
-168   | string  | sKeyName_0E                      | `"Back Space"`
-169   | string  | sKeyName_0F                      | `"Tab"`
-170   | string  | sKeyName_10                      | `"Q"`
-171   | string  | sKeyName_11                      | `"W"`
-172   | string  | sKeyName_12                      | `"E"`
-173   | string  | sKeyName_13                      | `"R"`
-174   | string  | sKeyName_14                      | `"T"`
-175   | string  | sKeyName_15                      | `"Y"`
-176   | string  | sKeyName_16                      | `"U"`
-177   | string  | sKeyName_17                      | `"I"`
-178   | string  | sKeyName_18                      | `"O"`
-179   | string  | sKeyName_19                      | `"P"`
-180   | string  | sKeyName_1A                      | `"["`
-181   | string  | sKeyName_1B                      | `"]"`
-182   | string  | sKeyName_1C                      | `"Return"`
-183   | string  | sKeyName_1D                      | `"Left Ctrl"`
-184   | string  | sKeyName_1E                      | `"A"`
-185   | string  | sKeyName_1F                      | `"S"`
-186   | string  | sKeyName_20                      | `"D"`
-187   | string  | sKeyName_21                      | `"F"`
-188   | string  | sKeyName_22                      | `"G"`
-189   | string  | sKeyName_23                      | `"H"`
-190   | string  | sKeyName_24                      | `"J"`
-191   | string  | sKeyName_25                      | `"K"`
-192   | string  | sKeyName_26                      | `"L"`
-193   | string  | sKeyName_27                      | `";"`
-194   | string  | sKeyName_28                      | `"'"`
-195   | string  | sKeyName_29                      | `"Grave"`
-196   | string  | sKeyName_2A                      | `"Left Shift"`
-197   | string  | sKeyName_2B                      | `"\"`
-198   | string  | sKeyName_2C                      | `"Z"`
-199   | string  | sKeyName_2D                      | `"X"`
-200   | string  | sKeyName_2E                      | `"C"`
-201   | string  | sKeyName_2F                      | `"V"`
-202   | string  | sKeyName_30                      | `"B"`
-203   | string  | sKeyName_31                      | `"N"`
-204   | string  | sKeyName_32                      | `"M"`
-205   | string  | sKeyName_33                      | `","`
-206   | string  | sKeyName_34                      | `"."`
-207   | string  | sKeyName_35                      | `"/"`
-208   | string  | sKeyName_36                      | `"Right Shift"`
-209   | string  | sKeyName_37                      | `"Numpad *"`
-210   | string  | sKeyName_38                      | `"Left Alt"`
-211   | string  | sKeyName_39                      | `"Space"`
-212   | string  | sKeyName_3A                      | `"Caps Lock"`
-213   | string  | sKeyName_3B                      | `"F1"`
-214   | string  | sKeyName_3C                      | `"F2"`
-215   | string  | sKeyName_3D                      | `"F3"`
-216   | string  | sKeyName_3E                      | `"F4"`
-217   | string  | sKeyName_3F                      | `"F5"`
-218   | string  | sKeyName_40                      | `"F6"`
-219   | string  | sKeyName_41                      | `"F7"`
-220   | string  | sKeyName_42                      | `"F8"`
-221   | string  | sKeyName_43                      | `"F9"`
-222   | string  | sKeyName_44                      | `"F10"`
-223   | string  | sKeyName_45                      | `"Num Lock"`
-224   | string  | sKeyName_46                      | `"Scroll Lock"`
-225   | string  | sKeyName_47                      | `"Numpad 7"`
-226   | string  | sKeyName_48                      | `"Numpad 8"`
-227   | string  | sKeyName_49                      | `"Numpad 9"`
-228   | string  | sKeyName_4A                      | `"Numpad -"`
-229   | string  | sKeyName_4B                      | `"Numpad 4"`
-230   | string  | sKeyName_4C                      | `"Numpad 5"`
-231   | string  | sKeyName_4D                      | `"Numpad 6"`
-232   | string  | sKeyName_4E                      | `"Numpad +"`
-233   | string  | sKeyName_4F                      | `"Numpad 1"`
-234   | string  | sKeyName_50                      | `"Numpad 2"`
-235   | string  | sKeyName_51                      | `"Numpad 3"`
-236   | string  | sKeyName_52                      | `"Numpad 0"`
-237   | string  | sKeyName_53                      | `"Decimal"`
-238   | string  | sKeyName_54                      | `""`
-239   | string  | sKeyName_55                      | `""`
-240   | string  | sKeyName_56                      | `"OEM 102"`
-241   | string  | sKeyName_57                      | `"F11"`
-242   | string  | sKeyName_58                      | `"F12"`
-243   | string  | sKeyName_59                      | `""`
-244   | string  | sKeyName_5A                      | `""`
-245   | string  | sKeyName_5B                      | `""`
-246   | string  | sKeyName_5C                      | `""`
-247   | string  | sKeyName_5D                      | `""`
-248   | string  | sKeyName_5E                      | `""`
-249   | string  | sKeyName_5F                      | `""`
-250   | string  | sKeyName_60                      | `""`
-251   | string  | sKeyName_61                      | `""`
-252   | string  | sKeyName_62                      | `""`
-253   | string  | sKeyName_63                      | `""`
-254   | string  | sKeyName_64                      | `"F13"`
-255   | string  | sKeyName_65                      | `"F14"`
-256   | string  | sKeyName_66                      | `"F15"`
-257   | string  | sKeyName_67                      | `""`
-258   | string  | sKeyName_68                      | `""`
-259   | string  | sKeyName_69                      | `""`
-260   | string  | sKeyName_6A                      | `""`
-261   | string  | sKeyName_6B                      | `""`
-262   | string  | sKeyName_6C                      | `""`
-263   | string  | sKeyName_6D                      | `""`
-264   | string  | sKeyName_6E                      | `""`
-265   | string  | sKeyName_6F                      | `""`
-266   | string  | sKeyName_70                      | `"Kana"`
-267   | string  | sKeyName_71                      | `""`
-268   | string  | sKeyName_72                      | `""`
-269   | string  | sKeyName_73                      | `"Abnt C1"`
-270   | string  | sKeyName_74                      | `""`
-271   | string  | sKeyName_75                      | `""`
-272   | string  | sKeyName_76                      | `""`
-273   | string  | sKeyName_77                      | `""`
-274   | string  | sKeyName_78                      | `""`
-275   | string  | sKeyName_79                      | `"Cnvrt"`
-276   | string  | sKeyName_7A                      | `""`
-277   | string  | sKeyName_7B                      | `"No Cnvrt"`
-278   | string  | sKeyName_7C                      | `""`
-279   | string  | sKeyName_7D                      | `"Yen"`
-280   | string  | sKeyName_7E                      | `"Abnt C2"`
-281   | string  | sKeyName_7F                      | `""`
-282   | string  | sKeyName_80                      | `""`
-283   | string  | sKeyName_81                      | `""`
-284   | string  | sKeyName_82                      | `""`
-285   | string  | sKeyName_83                      | `""`
-286   | string  | sKeyName_84                      | `""`
-287   | string  | sKeyName_85                      | `""`
-288   | string  | sKeyName_86                      | `""`
-289   | string  | sKeyName_87                      | `""`
-290   | string  | sKeyName_88                      | `""`
-291   | string  | sKeyName_89                      | `""`
-292   | string  | sKeyName_8A                      | `""`
-293   | string  | sKeyName_8B                      | `""`
-294   | string  | sKeyName_8C                      | `""`
-295   | string  | sKeyName_8D                      | `"Np Equals"`
-296   | string  | sKeyName_8E                      | `""`
-297   | string  | sKeyName_8F                      | `""`
-298   | string  | sKeyName_90                      | `"PrvTrk"`
-299   | string  | sKeyName_91                      | `"AT"`
-300   | string  | sKeyName_92                      | `":"`
-301   | string  | sKeyName_93                      | `"_"`
-302   | string  | sKeyName_94                      | `"Kanji"`
-303   | string  | sKeyName_95                      | `"Stop"`
-304   | string  | sKeyName_96                      | `"Ax"`
-305   | string  | sKeyName_97                      | `"Unlabeled"`
-306   | string  | sKeyName_98                      | `""`
-307   | string  | sKeyName_99                      | `"NxtTrk"`
-308   | string  | sKeyName_9A                      | `""`
-309   | string  | sKeyName_9B                      | `""`
-310   | string  | sKeyName_9C                      | `"Right Enter"`
-311   | string  | sKeyName_9D                      | `"Right Ctrl"`
-312   | string  | sKeyName_9E                      | `""`
-313   | string  | sKeyName_9F                      | `""`
-314   | string  | sKeyName_A0                      | `"Mute"`
-315   | string  | sKeyName_A1                      | `"Calc"`
-316   | string  | sKeyName_A2                      | `"Play Pause"`
-317   | string  | sKeyName_A3                      | `""`
-318   | string  | sKeyName_A4                      | `"Media Stop"`
-319   | string  | sKeyName_A5                      | `""`
-320   | string  | sKeyName_A6                      | `""`
-321   | string  | sKeyName_A7                      | `""`
-322   | string  | sKeyName_A8                      | `""`
-323   | string  | sKeyName_A9                      | `""`
-324   | string  | sKeyName_AA                      | `""`
-325   | string  | sKeyName_AB                      | `""`
-326   | string  | sKeyName_AC                      | `""`
-327   | string  | sKeyName_AD                      | `""`
-328   | string  | sKeyName_AE                      | `"Volume Down"`
-329   | string  | sKeyName_AF                      | `""`
-330   | string  | sKeyName_B0                      | `"Volume Up"`
-331   | string  | sKeyName_B1                      | `""`
-332   | string  | sKeyName_B2                      | `"Web Home"`
-333   | string  | sKeyName_B3                      | `"Numpad ,"`
-334   | string  | sKeyName_B4                      | `""`
-335   | string  | sKeyName_B5                      | `"Numpad /"`
-336   | string  | sKeyName_B6                      | `""`
-337   | string  | sKeyName_B7                      | `"SysRq"`
-338   | string  | sKeyName_B8                      | `"Right Alt"`
-339   | string  | sKeyName_B9                      | `""`
-340   | string  | sKeyName_BA                      | `""`
-341   | string  | sKeyName_BB                      | `""`
-342   | string  | sKeyName_BC                      | `""`
-343   | string  | sKeyName_BD                      | `""`
-344   | string  | sKeyName_BE                      | `""`
-345   | string  | sKeyName_BF                      | `""`
-346   | string  | sKeyName_C0                      | `""`
-347   | string  | sKeyName_C1                      | `""`
-348   | string  | sKeyName_C2                      | `""`
-349   | string  | sKeyName_C3                      | `""`
-350   | string  | sKeyName_C4                      | `""`
-351   | string  | sKeyName_C5                      | `"Pause"`
-352   | string  | sKeyName_C6                      | `""`
-353   | string  | sKeyName_C7                      | `"Home"`
-354   | string  | sKeyName_C8                      | `"Up"`
-355   | string  | sKeyName_C9                      | `"Page Up"`
-356   | string  | sKeyName_CA                      | `""`
-357   | string  | sKeyName_CB                      | `"Left"`
-358   | string  | sKeyName_CC                      | `""`
-359   | string  | sKeyName_CD                      | `"Right"`
-360   | string  | sKeyName_CE                      | `""`
-361   | string  | sKeyName_CF                      | `"End"`
-362   | string  | sKeyName_D0                      | `"Down"`
-363   | string  | sKeyName_D1                      | `"Page Down"`
-364   | string  | sKeyName_D2                      | `"Insert"`
-365   | string  | sKeyName_D3                      | `"Delete"`
-366   | string  | sKeyName_D4                      | `""`
-367   | string  | sKeyName_D5                      | `""`
-368   | string  | sKeyName_D6                      | `""`
-369   | string  | sKeyName_D7                      | `""`
-370   | string  | sKeyName_D8                      | `""`
-371   | string  | sKeyName_D9                      | `""`
-372   | string  | sKeyName_DA                      | `""`
-373   | string  | sKeyName_DB                      | `"Left Win"`
-374   | string  | sKeyName_DC                      | `"Right Win"`
-375   | string  | sKeyName_DD                      | `"Apps"`
-376   | string  | sKeyName_DE                      | `"Power"`
-377   | string  | sKeyName_DF                      | `"Sleep"`
-378   | string  | sKeyName_E0                      | `""`
-379   | string  | sKeyName_E1                      | `""`
-380   | string  | sKeyName_E2                      | `""`
-381   | string  | sKeyName_E3                      | `"Wake"`
-382   | string  | sKeyName_E4                      | `""`
-383   | string  | sKeyName_E5                      | `"Web Search"`
-384   | string  | sKeyName_E6                      | `"Web Favs"`
-385   | string  | sKeyName_E7                      | `"Web Ref"`
-386   | string  | sKeyName_E8                      | `"Web Stop"`
-387   | string  | sKeyName_E9                      | `"Web Fwd"`
-388   | string  | sKeyName_EA                      | `"Web Back"`
-389   | string  | sKeyName_EB                      | `"My Comp"`
-390   | string  | sKeyName_EC                      | `""`
-391   | string  | sKeyName_ED                      | `""`
-392   | string  | sKeyName_EE                      | `""`
-393   | string  | sKeyName_EF                      | `""`
-394   | string  | sKeyName_F0                      | `""`
-395   | string  | sKeyName_F1                      | `""`
-396   | string  | sKeyName_F2                      | `""`
-397   | string  | sKeyName_F3                      | `""`
-398   | string  | sKeyName_F4                      | `""`
-399   | string  | sKeyName_F5                      | `""`
-400   | string  | sKeyName_F6                      | `""`
-401   | string  | sKeyName_F7                      | `""`
-402   | string  | sKeyName_F8                      | `""`
-403   | string  | sKeyName_F9                      | `""`
-404   | string  | sKeyName_FA                      | `""`
-405   | string  | sKeyName_FB                      | `""`
-406   | string  | sKeyName_FC                      | `""`
-407   | string  | sKeyName_FD                      | `""`
-408   | string  | sKeyName_FE                      | `""`
-409   | string  | sKeyName_FF                      | `""`
-410   | string  | sForwardXbox                     | `"Move Forward"`
-411   | string  | sBackXbox                        | `"Move Backward"`
-412   | string  | sSlideLeftXbox                   | `"Slide Left"`
-413   | string  | sSlideRightXbox                  | `"Slide Right"`
-414   | string  | sMenuModeXbox                    | `"Menu Mode"`
-415   | string  | sActivateXbox                    | `"Activate"`
-416   | string  | sUseXbox                         | `"Use"`
-417   | string  | sReadyItemXbox                   | `"Ready Item"`
-418   | string  | sReadyMagicXbox                  | `"Ready Magic"`
-419   | string  | sCrouchXbox                      | `"Crouch"`
-420   | string  | sRunXbox                         | `"Run"`
-421   | string  | sToggleRunXbox                   | `"Toggle Run"`
-422   | string  | sJumpXbox                        | `"Jump"`
-423   | string  | sTogglePOVXbox                   | `"Toggle P.O.V."`
-424   | string  | sMenuNextXbox                    | `"Next Menu"`
-425   | string  | sMenuPrevXbox                    | `"Previous Menu"`
-426   | string  | sJournalXbox                     | `"Journal"`
-427   | string  | sQuick4Xbox                      | `"sQuick4Xbox"`
-428   | string  | sQuick5Xbox                      | `"sQuick5Xbox"`
-429   | string  | sQuick6Xbox                      | `"sQuick6Xbox"`
-430   | string  | sQuick7Xbox                      | `"sQuick7Xbox"`
-431   | string  | sQuick8Xbox                      | `"sQuick8Xbox"`
-432   | string  | sQuick9Xbox                      | `"sQuick9Xbox"`
-433   | string  | sQuick0Xbox                      | `"sQuick0Xbox"`
-434   | string  | sOptionsMenuXbox                 | `"Options Menu"`
-435   | string  | sSystemMenuXbox                  | `"System Menu"`
-436   | string  | sRestMenuXbox                    | `"Rest/Wait"`
-437   | string  | sQuickSaveXbox                   | `"Quick Save"`
-438   | string  | sQuickLoadXbox                   | `"Quick Load"`
-439   | string  | sMoveUpXbox                      | `"Move Up"`
-440   | string  | sMoveDownXbox                    | `"Move Down"`
-441   | string  | sLookUpXbox                      | `"Look Up"`
-442   | string  | sLookDownXbox                    | `"Look Down"`
-443   | string  | sTurnLeftXbox                    | `"Turn Left"`
-444   | string  | sTurnRightXbox                   | `"Turn Right"`
-445   | string  | sNextWeaponXbox                  | `"Next Weapon"`
-446   | string  | sPrevWeaponXbox                  | `"Previous Weapon"`
-447   | string  | sNextSpellXbox                   | `"Next Spell"`
-448   | string  | sPrevSpellXbox                   | `"Previous Spell"`
-449   | string  | sDialogText1Xbox                 | `"PUSH"`
-450   | string  | sDialogText2Xbox                 | `"TO GO BACK"`
-451   | string  | sDialogText3Xbox                 | `"TO READ MORE"`
-452   | string  | sQuick_Save                      | `"Quick-Save when Rest"`
-453   | string  | sShadowText                      | `"Real-time Shadows"`
-454   | string  | sLockSuccess                     | `"Lock pick success!"`
-455   | string  | sLockFail                        | `"Lock pick failed."`
-456   | string  | sLockImpossible                  | `"Lock too complex, your chance to pick it is zero"`
-457   | string  | sTrapSuccess                     | `"Disarm trap success!"`
-458   | string  | sTrapFail                        | `"Disarm trap failed."`
-459   | string  | sTrapImpossible                  | `"Trap too complex, your chance to disarm it is zero"`
-460   | string  | sTrapped                         | `"Trapped"`
-461   | string  | sLockLevel                       | `"Lock Level"`
-462   | string  | sKeyUsed                         | `"used to open lock."`
-463   | string  | sUnlocked                        | `"Unlocked"`
-464   | float   | fRepairMult                      | `1.0000`
-465   | float   | fRepairAmountMult                | `0.5000`
-466   | float   | fSpellValueMult                  | `10.0000`
-467   | float   | fSpellMakingValueMult            | `1.0000`
-468   | float   | fEnchantmentValueMult            | `1.0000`
-469   | float   | fTravelMult                      | `200.0000`
-470   | float   | fTravelTimeMult                  | `2667.0000`
-471   | float   | fMagesGuildTravel                | `10.0000`
-472   | string  | sBarter                          | `"Barter"`
-473   | string  | sRepair                          | `"Repair"`
-474   | string  | sSpells                          | `"Spells"`
-475   | string  | sTraining                        | `"Training"`
-476   | string  | sTravel                          | `"Travel"`
-477   | string  | sSpellmaking                     | `"Spellmaking"`
-478   | string  | sEnchanting                      | `"Enchanting"`
-479   | string  | sJoystickNotFound                | `"Joystick not found."`
-480   | string  | sJournalEntry                    | `"Your journal has been updated."`
-481   | string  | sDay                             | `"Day"`
-482   | string  | sCreate                          | `"Create"`
-483   | string  | sIngredients                     | `"Ingredients"`
-484   | string  | sApparatus                       | `"Apparatus"`
-485   | string  | sCreatedEffects                  | `"Created Effects"`
-486   | string  | sOnetypeEffectMessage            | `"This effect has already been added."`
-487   | string  | sName                            | `"Name"`
-488   | string  | sNameTitle                       | `"Name"`
-489   | string  | sSelect                          | `"Select"`
-490   | string  | sBuy                             | `"Buy"`
-491   | string  | sInfo                            | `"Info"`
-492   | string  | sMagicEffects                    | `"Magic Effects"`
-493   | string  | sOnce                            | `"Once"`
-494   | string  | sCostCharge                      | `"Cost/Charge"`
-495   | string  | sCostChance                      | `"Cost/Chance"`
-496   | string  | sAttributesMenu1                 | `"Choose an Attribute "`
-497   | string  | sBirthsignmenu1                  | `"Abilities"`
-498   | string  | sBirthsignmenu2                  | `"Spells"`
-499   | string  | sChooseClassMenu1                | `"Specilization:"`
-500   | string  | sChooseClassMenu2                | `"Favorite Attributes:"`
-501   | string  | sChooseClassMenu3                | `"Major Skills:"`
-502   | string  | sChooseClassMenu4                | `"Minor Skills:"`
-503   | string  | sCreateClassMenuWarning          | `"Reselect your class?"`
-504   | string  | sClassChoiceMenu1                | `"(1) Answer Questions (Generates Class)"`
-505   | string  | sClassChoiceMenu2                | `"(2) Give him the info. (Pick from Class List)"`
-506   | string  | sClassChoiceMenu3                | `"(3) Fill out yourself. (Create Custom Class)"`
-507   | string  | sNotifyMessage1                  | `"You can't rest when in water or flying."`
-508   | string  | sNotifyMessage2                  | `"You can't rest here enemies are nearby."`
-509   | string  | sNotifyMessage3                  | `"You can't sleep when dreaming."`
-510   | string  | sNotifyMessage4                  | `"Saving..."`
-511   | string  | sNotifyMessage4XBOX              | `"Saving Game. Please don't turn off your Xbox console."`
-512   | string  | sNotifyMessage5                  | `"You must place the object you are holding into a container before exiting menus."`
-513   | string  | sNotifyMessage6                  | `"Only one of each ingredient can be used to make a potion."`
-514   | string  | sNotifyMessage6a                 | `"At least two ingredients are needed to make a potion."`
-515   | string  | sNotifyMessage7                  | `"Only eight ingredients can be used in a potion."`
-516   | string  | sNotifyMessage8                  | `"Your potion failed."`
-517   | string  | sNotifyMessage9                  | `"Your offer is refused."`
-518   | string  | sNotifyMessage10                 | `"You have to type a name."`
-519   | string  | sNotifyMessage11                 | `"You have to have an item to enchant."`
-520   | string  | sNotifyMessage12                 | `"You don't have enough money to buy this spell."`
-521   | string  | sNotifyMessage13                 | `"Beast races can not wear full helmets."`
-522   | string  | sNotifyMessage14                 | `"Beast races can not wear boots."`
-523   | string  | sNotifyMessage15                 | `"Beast races can not wear shoes."`
-524   | string  | sNotifyMessage16                 | `"You can only wear one clothing item at a time."`
-525   | string  | sNotifyMessage16_a               | `"You can only equip one item  of that type at a time."`
-526   | string  | sNotifyMessage17                 | `"Can't raise the skill above the attribute."`
-527   | string  | sNotifyMessage18                 | `"You don't have enough money to buy this spell."`
-528   | string  | sNotifyMessage19                 | `"Only one apparatus can be placed in each slot of the alchemy menu."`
-529   | string  | sNotifyMessage20                 | `"Please remove the object already in the morter and pestal slot."`
-530   | string  | sNotifyMessage21                 | `"Please remove the object already in the alembic slot."`
-531   | string  | sNotifyMessage22                 | `"Please remove the object already in the calcinator slot."`
-532   | string  | sNotifyMessage23                 | `"Please remove the object already in the retort slot."`
-533   | string  | sNotifyMessage24                 | `"You need to assign all the major and minor skill slots."`
-534   | string  | sNotifyMessage25                 | `"You need to pick two favorite attributes."`
-535   | string  | sNotifyMessage26                 | `"You need to pick a specilization."`
-536   | string  | sNotifyMessage27                 | `"You need to assign all the major and minor skill slots."`
-537   | string  | sNotifyMessage28                 | `"You can only add eight effects to a spell."`
-538   | string  | sNotifyMessage29                 | `"You can not add more enchantment to an object then it can hold."`
-539   | string  | sNotifyMessage30                 | `"You have to add at least one effect to a spell."`
-540   | string  | sNotifyMessage31                 | `"Items already enchanted can not have another enchanment added."`
-541   | string  | sNotifyMessage32                 | `"Only soul gems with a soul can be put in the soulgem slot."`
-542   | string  | sNotifyMessage33                 | `"Only soul gems  put in the soulgem slot."`
-543   | string  | sNotifyMessage34                 | `"The enchantment failed and your object is distroyed."`
-544   | string  | sNotifyMessage35                 | `"Only one item of this type can be equipped at a time."`
-545   | string  | sNotifyMessage36                 | `"You have to distribute all you points before exiting the levelup menu."`
-546   | string  | sNotifyMessage37                 | `"You need to type in a name."`
-547   | string  | sNotifyMessage38                 | `"Skill Increase:"`
-548   | string  | sNotifyMessage39                 | `"\nYour %s skill increased to %d."`
-549   | string  | sNotifyMessage40                 | `"Skill Maximum Reached."`
-550   | string  | sNotifyMessage41                 | `"Your %s skill has reached the limit of your %s.\n"`
-551   | string  | sNotifyMessage42                 | `"You have been released after %d day.\r\nA skill has been effected by your time in prison.\n "`
-552   | string  | sNotifyMessage43                 | `"You have been released after %d days.\r\nYour skills have been effected by your time in prison.\n "`
-553   | string  | sNotifyMessage44                 | `"\nYour %s skill decreased to %d."`
-554   | string  | sNotifyMessage45                 | `"You need a Mortar and Pestle to use"`
-555   | string  | sNotifyMessage46                 | `"You need a Alembic to use"`
-556   | string  | sNotifyMessage47                 | `"You need a Calcinator to use"`
-557   | string  | sNotifyMessage48                 | `"You need a Retort to use"`
-558   | string  | sNotifyMessage49                 | `"That %s is mine."`
-559   | string  | sNotifyMessage50                 | `"%s has no effect on you."`
-560   | string  | sNotifyMessage51                 | `"The %s has been used up and disappears."`
-561   | string  | sNotifyMessage52                 | `"You must have a soulgem with a soul to make an Enchanted Item"`
-562   | string  | sNotifyMessage53                 | `"Your menu sizes and positions have been saved for exploring mode."`
-563   | string  | sNotifyMessage54                 | `"Do you want to start a new game and lose your current game?"`
-564   | string  | sNotifyMessage55                 | `"Please reconnect the controller and press START to continue."`
-565   | string  | sNotifyMessage56                 | `"The disc you are using may be dirty or damaged.\nPress A to continue."`
-566   | string  | sNotifyMessage57                 | `"Please press START to begin."`
-567   | string  | sNotifyMessage58                 | `"Your Xbox Hard Disk doesn't have enough free blocks to save games. \nPress A to continue without saving \nor B to free more blocks."`
-568   | string  | sNotifyMessage59                 | `"You are over-encumbered."`
-569   | string  | sNotifyMessage60                 | `"%s has been added to your inventory."`
-570   | string  | sNotifyMessage61                 | `"%d %s has been added to your inventory."`
-571   | string  | sNotifyMessage62                 | `"%s has been removed from your inventory."`
-572   | string  | sNotifyMessage63                 | `"%d %s has been removed from your inventory."`
-573   | string  | sNotifyMessage64                 | `"You can't sleep in someone else's bed!"`
-574   | string  | sNotifyMessage65                 | `"You can't save a game with no name!"`
-575   | string  | sNotifyMessage66                 | `"This will reset all controls to the default settings.  Do you wish to continue?"`
-576   | string  | sNotifyMessage67                 | `"This will immediately change your resolution.  Do you want to continue?"`
-577   | string  | sTeleportDisabled                | `"Teleportation magic does not work here."`
-578   | string  | sLevitateDisabled                | `"Levitation magic does not work here."`
-579   | string  | sInPrisonTitle                   | `"Serving time..."`
-580   | string  | sInfoRefusal                     | `"Info Refusal"`
-581   | string  | sAdmireSuccess                   | `"Admire Success"`
-582   | string  | sAdmireFail                      | `"Admire Fail"`
-583   | string  | sIntimidateSuccess               | `"Intimidate Success"`
-584   | string  | sIntimidateFail                  | `"Intimidate Fail"`
-585   | string  | sTauntSuccess                    | `"Taunt Success"`
-586   | string  | sTauntFail                       | `"Taunt Fail"`
-587   | string  | sServiceRefusal                  | `"Service Refusal"`
-588   | string  | sBribeSuccess                    | `"Bribe Success"`
-589   | string  | sBribeFail                       | `"Bribe Fail"`
-590   | string  | sWerewolfRefusal                 | `"You cannot do this as a werewolf."`
-591   | string  | sWerewolfPopup                   | `"Werewolf"`
-592   | string  | sWerewolfRestMessage             | `"You cannot rest in werewolf form."`
-593   | string  | sWerewolfAlarmMessage            | `"You have been detected changing from a werewolf state."`
-594   | string  | sBookSkillMessage                | `"You have gained knowledge from this book."`
-595   | string  | sLoadingMessage1                 | `"Loading Master/Plugin Files"`
-596   | string  | sLoadingMessage2                 | `"Loading Interior"`
-597   | string  | sLoadingMessage3                 | `"Loading Exterior"`
-598   | string  | sLoadingMessage4                 | `"Initializing Loaded Data..."`
-599   | string  | sLoadingMessage5                 | `"Parsing Quests..."`
-600   | string  | sLoadingMessage9                 | `"Clearing Altered Data..."`
-601   | string  | sLoadingMessage14                | `"Loading Save Game (%s)"`
-602   | string  | sLoadingMessage15                | `"Loading File (%s)"`
-603   | string  | sInvalidSaveGameMsg              | `"This file is an invalid Save Game."`
-604   | string  | sInvalidSaveGameMsgXBOX          | `"Unable to load saved game. Press A to continue."`
-605   | string  | sLoadingErrorsMsg                | `"Errors were encountered loading from file '%s'."`
-606   | string  | sMissingMastersMsg               | `"The currently selected master files and plugins do not match the ones used by this save game. Errors may occur during load or game play.\nDo you wish to continue?"`
-607   | string  | sChangedMastersMsg               | `"The selected master files and plugins may have changed since this save game was created. Errors may occur during load or game play.\nDo you wish to continue?"`
-608   | string  | sMastPlugMismatchMsg             | `"One of the files that "%s" is dependent on has changed since the last save.\r\nThis may result in errors. Saving again will clear this message\r\nbut not necessarily fix any errors.\r\n"`
-609   | string  | sGeneralMastPlugMismatchMsg      | `"One or more plugins could not find the correct versions of the master files they depend on. Errors may occur during load or game play. Check the "Warnings.txt" file for more information."`
-610   | string  | sLoadLastSaveMsg                 | `"The most recent Save Game is '%s'. \nWould you like to load it?"`
-611   | string  | sMessage1                        | `"Do you want to Load a save game and lose your current game?"`
-612   | string  | sMessage2                        | `"Quit Morrowind?"`
-613   | string  | sMessage3                        | `"Are you sure you want to delete this Save Game?"`
-614   | string  | sMessage4                        | `"Are you sure you want to overwrite this Save Game?"`
-615   | string  | sMessage5                        | `"Do you wish to quit your current game? \nAll unsaved progress will be lost."`
-616   | string  | sMessageQuestionAnswer1          | `"Your personality and past reflect that of a:"`
-617   | string  | sMessageQuestionAnswer2          | `"Accept this Class"`
-618   | string  | sMessageQuestionAnswer3          | `"Choose Another Class"`
-619   | string  | sBarterDialog1                   | `"You can not afford this transaction."`
-620   | string  | sBarterDialog2                   | `"I can not afford this transaction."`
-621   | string  | sBarterDialog3                   | `"This is to heavy for you to carry.	"`
-622   | string  | sBarterDialog4                   | `"I don't buy that item."`
-623   | string  | sBarterDialog5                   | `"Thank you, Please Come Again."`
-624   | string  | sBarterDialog6                   | `"You need to place the bartered item before existing Barter Menu!"`
-625   | string  | sBarterDialog7                   | `"Price"`
-626   | string  | sBarterDialog8                   | `"Offer"`
-627   | string  | sBarterDialog9                   | `"You can not sell summoned items!"`
-628   | string  | sBarterDialog10                  | `"You can't buy summoned items!"`
-629   | string  | sBarterDialog11                  | `"You need to trade items before making an offer."`
-630   | string  | sBarterDialog12                  | `"You can not drop summoned items!"`
-631   | string  | sInventoryMessage1               | `"You can not equip objects whose health is less then one!"`
-632   | string  | sInventoryMessage2               | `"You can not repair items duing battle!"`
-633   | string  | sInventoryMessage3               | `"You can not make potions during battle!"`
-634   | string  | sInventoryMessage4               | `"You can not read duing battle!"`
-635   | string  | sInventoryMessage5               | `"You can not use soul gems duing battle!"`
-636   | string  | sContentsMessage1                | `"You can't remove summoned items from their container."`
-637   | string  | sContentsMessage2                | `"You can't store objects in organic containers."`
-638   | string  | sContentsMessage3                | `"This container can not hold that item."`
-639   | string  | sAttributeListTitle              | `"Attribute List"`
-640   | string  | sConsoleTitle                    | `"Console"`
-641   | string  | sCreateClassMenu1                | `"Class Description"`
-642   | string  | sCreateClassMenu2                | `"Close the Description menu before leaving Class Creation"`
-643   | string  | sCreateClassMenu3                | `"The class needs a description."`
-644   | string  | sCreateClassMenuHelp1            | `"You'll get +5 to all skills of your specialization. They'll also be easier to increase."`
-645   | string  | sCreateClassMenuHelp2            | `"You'll get +10 to each of your favored attributes."`
-646   | string  | sControlsMenu1                   | `"Reset Controls"`
-647   | string  | sControlsMenu2                   | `"Mouse Sensitivity"`
-648   | string  | sControlsMenu3                   | `"Press a key or push a button to set this command."`
-649   | string  | sControlsMenu4                   | `"Vertical Sensitivity"`
-650   | string  | sControlsMenu5                   | `"Horizontal Sensitivity"`
-651   | string  | sControlsMenu6                   | `"Push a button to set this command."`
-652   | string  | sGameWithoutLauncherXbox         | `"The game was started without the launcher.  Press START to continue."`
-653   | string  | sDialogMenu1                     | `"Final Disposition: "`
-654   | string  | sEnchantmentMenu1                | `"Enchantment Menu"`
-655   | string  | sEnchantmentMenu2                | `"Name"`
-656   | string  | sEnchantmentMenu3                | `"Enchantment"`
-657   | string  | sEnchantmentMenu4                | `"Point Cost"`
-658   | string  | sEnchantmentMenu5                | `"Buy"`
-659   | string  | sEnchantmentMenu6                | `"Chance"`
-660   | string  | sEnchantmentMenu7                | `"Please remove the current soulgem before placing a different soulgem."`
-661   | string  | sEnchantmentMenu8                | `"You can't buy a spell that has a zero point cost."`
-662   | string  | sEnchantmentMenu9                | `"You can not enchant more then one item of that type at a time."`
-663   | string  | sEnchantmentMenu10               | `"The cast cost can not exceed the charge amount put into the time"`
-664   | string  | sEnchantmentMenu11               | `"You must add at least one effect to an enchantment"`
-665   | string  | sEnchantmentMenu12               | `"You have successfully created an enchanted item"`
-666   | string  | sEnchantmentHelp1                | `"Slot for item to enchant. Only weapons, armor, scrolls and clothing that are not already enchanted can be enchanted."`
-667   | string  | sEnchantmentHelp2                | `"Slot for the soul gem used to enchant an item. Only soul gems filled with a soul can be used. The soul amount is the total charge placed into the item."`
-668   | string  | sEnchantmentHelp3                | `"The first number is the total amount the enchantment would cost to cast. The second number is the total enchantment cost that can be placed on this type of item."`
-669   | string  | sEnchantmentHelp4                | `"The amount of charge points needed each time this enchantment is cast. This number is modified by your enchant skill."`
-670   | string  | sEnchantmentHelp5                | `"The amount of soul in the soulgem in the soulgem slot"`
-671   | string  | sEnchantmentHelp6                | `"Amount of gold to buy this enchantment"`
-672   | string  | sEnchantmentHelp7                | `"Type of cast for the enchantment."`
-673   | string  | sEnchantmentHelp8                | `"Name you give the spell."`
-674   | string  | sEnchantmentHelp9                | `"Magic effects you know that you can add to an item"`
-675   | string  | sEnchantmentHelp10               | `"Current effects on the item"`
-676   | string  | sInputMenu1                      | `"Enter"`
-677   | string  | sInventoryMenu1                  | `"You can't equip items being bartered!"`
-678   | string  | sLevelUpMenu1                    | `"You have ascended to Level "`
-679   | string  | sLevelUpMenu2                    | `"It's all suddenly obvious to you. You just have to concentrate. All the energy and time you've wasted it's a sin but without the experience you've gained, taking risks, taking responsibility for failure how could you have understood?"`
-680   | string  | sLevelUpMenu3                    | `"x2"`
-681   | string  | sLevelUpMenu4                    | `"x3"`
-682   | string  | sLevelUpMsg                      | `"Your are ready for your next Level Up!"`
-683   | string  | sLevelUp                         | `"Level Up"`
-684   | string  | sRange                           | `"Range"`
-685   | string  | sArea                            | `"Area"`
-686   | string  | sMagnitude                       | `"Magnitude"`
-687   | string  | sDuration                        | `"Duration"`
-688   | string  | sDrain                           | `"Drain"`
-689   | string  | sAbsorb                          | `"Absorb"`
-690   | string  | sFortify                         | `"Fortify"`
-691   | string  | sRestore                         | `"Restore"`
-692   | string  | sDamage                          | `"Damage"`
-693   | string  | spoint                           | `"point"`
-694   | string  | spoints                          | `"points"`
-695   | string  | spercent                         | `"percent"`
-696   | string  | sfor                             | `"for"`
-697   | string  | ssecond                          | `"second"`
-698   | string  | sseconds                         | `"seconds"`
-699   | string  | sin                              | `"in"`
-700   | string  | sfootarea                        | `"foot"`
-701   | string  | sfeet                            | `"feet"`
-702   | string  | sXTimes                          | `"x"`
-703   | string  | sXTimesINT                       | `"x INT"`
-704   | string  | sonword                          | `"on"`
-705   | string  | sNone                            | `"None"`
-706   | string  | sDone                            | `"Done"`
-707   | string  | sStartCell                       | `"Imperial Prison Ship"`
-708   | string  | sStartError                      | `"Cannot start in an empty interior cell!"`
-709   | string  | sStartCellError                  | `"Starting interior cell "Imperial Prison Ship" not found!"`
-710   | string  | sAdmire                          | `"Admire"`
-711   | string  | sIntimidate                      | `"Intimidate"`
-712   | string  | sTaunt                           | `"Taunt"`
-713   | string  | sBribe 10 Gold                   | `"Bribe 10 Gold"`
-714   | string  | sBribe 100 Gold                  | `"Bribe 100 Gold"`
-715   | string  | sBribe 1000 Gold                 | `"Bribe 1000 Gold"`
-716   | string  | sPersuasionMenuTitle             | `"Persuasion Menu"`
-717   | string  | sFast                            | `"Fast"`
-718   | string  | sSlow                            | `"Slow"`
-719   | string  | sBestAttack                      | `"Always Use Best Attack"`
-720   | string  | sSubtitles                       | `"Subtitles"`
-721   | string  | sMouseFlip                       | `"Mouse Flip Y"`
-722   | string  | sCursorOff                       | `"Cursor Off"`
-723   | string  | sEnableJoystick                  | `"Enable Joystick"`
-724   | string  | sXStrafe                         | `"X-Axis Movement"`
-725   | string  | sStrafe                          | `"Strafe"`
-726   | string  | sTurn                            | `"Turn"`
-727   | string  | sMouseWheelUpShort               | `"MWheel Up"`
-728   | string  | sMouseWheelDownShort             | `"MWheel Down"`
-729   | string  | sMouse                           | `"Mouse"`
-730   | string  | sJoystickShort                   | `"Joy"`
-731   | string  | sJoystickHatShort                | `"JHat"`
-732   | string  | sPickUp                          | `"Pick Up"`
-733   | string  | sItemName                        | `"Item Name"`
-734   | string  | sNoName                          | `"NO NAME GIVEN!"`
-735   | string  | sItem                            | `"Item"`
-736   | string  | sRaceMenu1                       | `"Appearance"`
-737   | string  | sRaceMenu2                       | `"Change Sex"`
-738   | string  | sRaceMenu3                       | `"Change Face"`
-739   | string  | sRaceMenu4                       | `"Change Hair"`
-740   | string  | sRaceMenu5                       | `"Select Race"`
-741   | string  | sRaceMenu6                       | `"Race Description"`
-742   | string  | sRaceMenu7                       | `"Specials"`
-743   | string  | sRestMenu1                       | `"How many hours ?"`
-744   | string  | sRestMenu2                       | `"Hours"`
-745   | string  | sRestMenu3                       | `"REST"`
-746   | string  | sRestMenu4                       | `"You can't rest right now."`
-747   | float   | fRestMagicMult                   | `0.0500`
-748   | string  | sSaveMenu1                       | `"NewSaveGame"`
-749   | string  | sServiceRepairTitle              | `"Repair Service Menu"`
-750   | string  | sServiceTravelTitle              | `"Travel Service Menu"`
-751   | string  | sServiceTrainingTitle            | `"Training Service Menu"`
-752   | string  | sServiceTrainingWords            | `"I can teach nothing more about that skill"`
-753   | string  | sServiceSpellsTitle              | `"Spells Service Menu"`
-754   | string  | sSkillsMenu1                     | `"Choose a Skill"`
-755   | string  | sBonusSkillTitle                 | `"Bonus Skills"`
-756   | string  | sSpecializationMenu1             | `"Choose a Specialization"`
-757   | string  | sSpellmakingMenuTitle            | `"SpellMaking Menu"`
-758   | string  | sSpellmakingMenu1                | `"Spell Chance"`
-759   | string  | sSpellmakingHelp1                | `"Name you give the spell."`
-760   | string  | sSpellmakingHelp2                | `"Amount of Magika one cast of the spell will cost"`
-761   | string  | sSpellmakingHelp3                | `"The chance you have to cast the spell at your current skill level"`
-762   | string  | sSpellmakingHelp4                | `"How much gold the spell will cost you."`
-763   | string  | sSpellmakingHelp5                | `"Magic effects you know that you can add to a spell"`
-764   | string  | sSpellmakingHelp6                | `"Current effects on the spell"`
-765   | string  | sKilledEssential                 | `"Oh no you've killed somebody important!"`
-766   | string  | sCrimeMessage                    | `"Your crime has been reported!"`
-767   | string  | sPotionSuccess                   | `"You created a potion"`
-768   | string  | sMagicItem                       | `"Magic Item(s)"`
-769   | string  | sMagnitudeDes                    | `"The range  of a spells power"`
-770   | string  | sAreaDes                         | `"The radius the spell attempt to affect"`
-771   | string  | sDurationDes                     | `"The length a spell lasts"`
-772   | string  | sRangeDes                        | `"What the spell is directed at such as yourself, a target or who you touch"`
-773   | string  | sCrimeHelp                       | `"The penalty you must pay for your crimes, if caught."`
-774   | string  | sSoulGem                         | `"Soul"`
-775   | string  | sCastCost                        | `"Cast Cost"`
-776   | string  | sTravelServiceTitle              | `"Click on Place name to travel"`
-777   | string  | sSpellServiceTitle               | `"Click on Spell name to buy Spell"`
-778   | string  | sRepairServiceTitle              | `"Click on item name to repair"`
-779   | string  | sTrainingServiceTitle            | `"Click on skill to train"`
-780   | string  | sMortar                          | `"Mortar"`
-781   | string  | sCalcinator                      | `"Calcinator"`
-782   | string  | sAlembic                         | `"Alembic"`
-783   | string  | sRetort                          | `"Retort"`
-784   | string  | sQuestionMark                    | `"?"`
-785   | string  | s3dAudio                         | `"3D Audio"`
-786   | string  | s3dHardware                      | `"Hardware Accelerated"`
-787   | string  | s3dSoftware                      | `"Software Mode"`
-788   | string  | sYourGold                        | `"YOUR GOLD"`
-789   | string  | sSellerGold                      | `"SELLER GOLD"`
-790   | string  | sMaxSale                         | `"Max Sale"`
-791   | string  | sTotalCost                       | `"TOTAL COST"`
-792   | string  | sTotalSold                       | `"TOTAL SOLD"`
-793   | string  | sOffer                           | `"Offer"`
-794   | string  | sLess                            | `"Less"`
-795   | string  | sMore                            | `"More"`
-796   | string  | sInventory                       | `"Inventory"`
-797   | string  | sBookPageOne                     | `"1"`
-798   | string  | sBookPageTwo                     | `"2"`
-799   | string  | sDisposeofCorpse                 | `"Dispose of Corpse"`
-800   | string  | sCaughtStealingMessage           | `"Hey he stealing my stuff!"`
-801   | string  | sUserDefinedClass                | `"User Defined Class"`
-802   | string  | sAsk                             | `"Ask"`
-803   | string  | sEnchantItems                    | `"Items to Enchant"`
-804   | string  | sSoulGemsWithSouls               | `"SoulGems with Souls"`
-805   | string  | sDoYouWantTo                     | `"Do you want to "`
-806   | string  | sRechargeEnchantment             | `"Recharge Enchanted Item "`
-807   | string  | sMake Enchantment                | `"Make an Enchanted Item "`
-808   | string  | sSell                            | `"Sell"`
-809   | string  | sEquip                           | `"Equip"`
-810   | string  | sDrop                            | `"Drop"`
-811   | string  | sContainer                       | `"Container "`
-812   | string  | sStats                           | `"Stats "`
-813   | string  | sMap                             | `"Map "`
-814   | string  | sCenter                          | `"Center "`
-815   | string  | sSaveMenuHelp01                  | `"th of"`
-816   | string  | sSaveMenuHelp02                  | `"month"`
-817   | string  | sSaveMenuHelp03                  | `"day"`
-818   | string  | sSaveMenuHelp04                  | `"a.m."`
-819   | string  | sSaveMenuHelp05                  | `"p.m."`
-820   | string  | sSaveMenuHelp06                  | `"Delete Game?"`
-821   | string  | sDeleteNote                      | `"Delete Note?"`
-822   | string  | sEditNote                        | `"Edit Note"`
-823   | string  | sBlocks                          | `"Blocks"`
-824   | string  | sFileSize                        | `"File Size"`
-825   | string  | sSave                            | `"Save"`
-826   | string  | sDeleteSpell                     | `"Delete Spell"`
-827   | string  | sQuestionDeleteSpell             | `"Are you sure you wish to delete %s?"`
-828   | string  | sDeleteSpellError                | `"You can not delete this item from the Magic Menu"`
-829   | string  | sLocal                           | `"Local"`
-830   | string  | sLoadFailedMessage               | `"Your last load failed. You must load another game or start a new game."`
-831   | string  | sShadows                         | `"Shadows"`
-832   | string  | sControlerVibration              | `"Controller Vibration"`
-833   | string  | sQuanityMenuMessage01            | `"Amount to Sell"`
-834   | string  | sQuanityMenuMessage02            | `"Amount to Buy"`
-835   | string  | sSex                             | `"Sex"`
-836   | string  | sHair                            | `"Hair"`
-837   | string  | sFace                            | `"Face"`
-838   | string  | sRepairFailed                    | `"Your repair failed!"`
-839   | string  | sRepairSuccess                   | `"Your repair succeeded!"`
-840   | string  | sHeal                            | `"Heal"`
-841   | string  | sgp                              | `"gp"`
-842   | string  | sSetValueMessage01               | `"The maximum magnitude can not be less then the minimum magnitude!"`
-843   | string  | sDelete                          | `"Delete"`
-844   | string  | sVideoWarning                    | `"MenuVideo Warning Video Resolution does not allow shadows."`
-845   | string  | sResChangeWarning                | `"Desired resolution not supported by video card."`
-846   | string  | sShift                           | `"Shift"`
-847   | string  | sBackspace                       | `"Backspace"`
-848   | string  | sCustomClassName                 | `"Custom Class"`
-849   | string  | sSpace                           | `"Space"`
-850   | string  | sInventorySelectNoItems          | `"You have no items to fill this slot."`
-851   | string  | sInventorySelectNoSoul           | `"You have no filled Soul Gems"`
-852   | string  | sInventorySelectNoIngredients    | `"You have no ingredients"`
-853   | string  | sDisposeCorpseFail               | `"You can not remove this corpse"`
-854   | string  | sQuickMenuTitle                  | `"QUICK KEY MENU"`
-855   | string  | sQuickMenuInstruc                | `"Click on quick key slot to add a spell, magic item or inventory item"`
-856   | string  | sQuickMenu1                      | `"MenuItem to QuickKey"`
-857   | string  | sQuickMenu2                      | `"Inventory Menu Item"`
-858   | string  | sQuickMenu3                      | `"Magic Menu Item"`
-859   | string  | sQuickMenu4                      | `"Delete QuickKey Item"`
-860   | string  | sQuickMenu5                      | `"You no longer have"`
-861   | string  | sQuickMenu6                      | `"Inventory Items to Quick key"`
-862   | string  | sMagicSelectTitle                | `"Select a magic to Quick key."`
-863   | string  | sNextRank                        | `"Next Rank:"`
-864   | string  | sNeedOneSkill                    | `"Need one skill at"`
-865   | string  | sNeedTwoSkills                   | `"Need two skills at"`
-866   | string  | sand                             | `"and"`
-867   | string  | sOneHanded                       | `"One Handed"`
-868   | string  | sTwoHanded                       | `"Two Handed"`
-869   | string  | sType                            | `"Type:"`
-870   | string  | sAt                              | `"At"`
-871   | string  | sUnequip                         | `"Unequip"`
-872   | string  | sScrolldown                      | `"Scroll Down"`
-873   | string  | sScrollup                        | `"Scroll Up"`
-874   | string  | sSleepInterrupt                  | `"Your rest has been intruppted"`
-875   | string  | sSoultrapSuccess                 | `"Your have trapped a soul"`
-876   | string  | sCantEquipWeapWarning            | `"Finish your current attack before equipping a new weapon"`
-877   | string  | sOfferMenuTitle                  | `"Offer Menu"`
-878   | string  | sPowers                          | `"Powers"`
-879   | string  | sBreath                          | `"Breath"`
-880   | string  | sDifficulty                      | `"Difficulty"`
-881   | string  | sEasy                            | `"Easy"`
-882   | string  | sHard                            | `"Hard"`
-883   | string  | sProfitValue                     | `"Profit Value"`
-884   | string  | sCompanionShare                  | `"Companion Share"`
-885   | string  | sCompanionWarningMessage         | `"Your mercenary is poorer now than when he contracted with you.  Your mercenary will quit if you do not give him gold or goods to bring his Profit Value to a positive value."`
-886   | string  | sCompanionWarningButtonOne       | `"Let the mercenary quit."`
-887   | string  | sCompanionWarningButtonTwo       | `"Return to Companion Share display."`
-888   | string  | sAttributeStrength               | `"sAttributeStrength"`
-889   | string  | sAttributeIntelligence           | `"sAttributeIntelligence"`
-890   | string  | sAttributeWillpower              | `"sAttributeWillpower"`
-891   | string  | sAttributeAgility                | `"sAttributeAgility"`
-892   | string  | sAttributeSpeed                  | `"sAttributeSpeed"`
-893   | string  | sAttributeEndurance              | `"sAttributeEndurance"`
-894   | string  | sAttributePersonality            | `"sAttributePersonality"`
-895   | string  | sAttributeLuck                   | `"sAttributeLuck"`
-896   | string  | sSkillBlock                      | `"Block"`
-897   | string  | sSkillArmorer                    | `"Armorer"`
-898   | string  | sSkillMediumarmor                | `"Mediumarmor"`
-899   | string  | sSkillHeavyarmor                 | `"Heavyarmor"`
-900   | string  | sSkillBluntweapon                | `"Bluntweapon"`
-901   | string  | sSkillLongblade                  | `"Longblade"`
-902   | string  | sSkillAxe                        | `"Axe"`
-903   | string  | sSkillSpear                      | `"Spear"`
-904   | string  | sSkillAthletics                  | `"Athletics"`
-905   | string  | sSkillEnchant                    | `"Enchant"`
-906   | string  | sSkillDestruction                | `"Destruction"`
-907   | string  | sSkillAlteration                 | `"Alteration"`
-908   | string  | sSkillIllusion                   | `"Illusion"`
-909   | string  | sSkillConjuration                | `"Conjuration"`
-910   | string  | sSkillMysticism                  | `"Mysticism"`
-911   | string  | sSkillRestoration                | `"Restoration"`
-912   | string  | sSkillAlchemy                    | `"Alchemy"`
-913   | string  | sSkillUnarmored                  | `"Unarmored"`
-914   | string  | sSkillSecurity                   | `"Security"`
-915   | string  | sSkillSneak                      | `"Sneak"`
-916   | string  | sSkillAcrobatics                 | `"Acrobatics"`
-917   | string  | sSkillLightarmor                 | `"Lightarmor"`
-918   | string  | sSkillShortblade                 | `"Shortblade"`
-919   | string  | sSkillMarksman                   | `"Marksman"`
-920   | string  | sSkillMercantile                 | `"Mercantile"`
-921   | string  | sSkillSpeechcraft                | `"Speechcraft"`
-922   | string  | sSkillHandtohand                 | `"Handtohand"`
-923   | string  | sHealth                          | `"Health"`
-924   | string  | sRace                            | `"Race"`
-925   | string  | sLevel                           | `"Level"`
-926   | string  | sLevels                          | `"Levels"`
-927   | string  | sFaction                         | `"Faction"`
-928   | string  | sBirthSign                       | `"Birth Sign"`
-929   | string  | sBounty                          | `"Bounty"`
-930   | string  | sReputation                      | `"Reputation"`
-931   | string  | sSchool                          | `"School"`
-932   | string  | sSkill                           | `"Skill"`
-933   | string  | sSkillProgress                   | `"sSkillProgress"`
-934   | string  | sSkillMaxReached                 | `"Maximum proficiency has been reached."`
-935   | string  | sLevelProgress                   | `"sLevelProgress"`
-936   | string  | sMagic                           | `"sMagic"`
-937   | string  | sMagicMenu                       | `"Magic"`
-938   | string  | sFatigue                         | `"sFatigue"`
-939   | string  | sSkillsMenuReputationHelp        | `"Your fame rating in the world of Morrowind"`
-940   | string  | sStrDesc                         | `"sStrDesc"`
-941   | string  | sIntDesc                         | `"sIntDesc"`
-942   | string  | sWilDesc                         | `"sWilDesc"`
-943   | string  | sAgiDesc                         | `"sAgiDesc"`
-944   | string  | sSpdDesc                         | `"sSpdDesc"`
-945   | string  | sEndDesc                         | `"sEndDesc"`
-946   | string  | sPerDesc                         | `"sPerDesc"`
-947   | string  | sLucDesc                         | `"sLucDesc"`
-948   | string  | sFatDesc                         | `"sFatDesc"`
-949   | string  | sHealthDesc                      | `"sHealthDesc"`
-950   | string  | sMagDesc                         | `"sMagDesc"`
-951   | float   | fWortChanceValue                 | `15.0000`
-952   | string  | sDefaultCellname                 | `"Wilderness"`
-953   | float   | fMinWalkSpeed                    | `150.0000`
-954   | float   | fMaxWalkSpeed                    | `300.0000`
-955   | float   | fMinWalkSpeedCreature            | `5.0000`
-956   | float   | fMaxWalkSpeedCreature            | `300.0000`
-957   | float   | fEncumberedMoveEffect            | `0.7500`
-958   | float   | fBaseRunMultiplier               | `1.5000`
-959   | float   | fAthleticsRunBonus               | `1.5000`
-960   | float   | fJumpAcrobaticsBase              | `128.0000`
-961   | float   | fJumpAcroMultiplier              | `4.0000`
-962   | float   | fJumpEncumbranceBase             | `0.5000`
-963   | float   | fJumpEncumbranceMultiplier       | `1.0000`
-964   | float   | fJumpRunMultiplier               | `1.2000`
-965   | float   | fJumpMoveBase                    | `0.5000`
-966   | float   | fJumpMoveMult                    | `0.5000`
-967   | float   | fSwimWalkBase                    | `0.5000`
-968   | float   | fSwimRunBase                     | `0.5000`
-969   | float   | fSwimWalkAthleticsMult           | `0.0200`
-970   | float   | fSwimRunAthleticsMult            | `0.1000`
-971   | float   | fSwimHeightScale                 | `0.9000`
-972   | float   | fHoldBreathTime                  | `20.0000`
-973   | float   | fHoldBreathEndMult               | `0.5000`
-974   | float   | fSuffocationDamage               | `3.0000`
-975   | float   | fMinFlySpeed                     | `5.0000`
-976   | float   | fMaxFlySpeed                     | `300.0000`
-977   | float   | fStromWindSpeed                  | `0.7000`
-978   | float   | fStromWalkMult                   | `0.2000`
-979   | float   | fFallDamageDistanceMin           | `300.0000`
-980   | float   | fFallDistanceBase                | `0.0000`
-981   | float   | fFallDistanceMult                | `0.1000`
-982   | float   | fFallAcroBase                    | `0.2500`
-983   | float   | fFallAcroMult                    | `0.0100`
-984   | integer | iMaxActivateDist                 | `128`
-985   | integer | iMaxInfoDist                     | `128`
-986   | float   | fVanityDelay                     | `30.0000`
-987   | float   | fMaxHeadTrackDistance            | `400.0000`
-988   | float   | fInteriorHeadTrackMult           | `0.5000`
-989   | integer | iHelmWeight                      | `5`
-990   | integer | iPauldronWeight                  | `10`
-991   | integer | iCuirassWeight                   | `30`
-992   | integer | iGauntletWeight                  | `5`
-993   | integer | iGreavesWeight                   | `15`
-994   | integer | iBootsWeight                     | `20`
-995   | integer | iShieldWeight                    | `15`
-996   | float   | fLightMaxMod                     | `0.6000`
-997   | float   | fMedMaxMod                       | `0.9000`
-998   | float   | fUnarmoredBase1                  | `0.0500`
-999   | float   | fUnarmoredBase2                  | `0.1000`
-1000  | integer | iBaseArmorSkill                  | `30`
-1001  | float   | fBlockStillBonus                 | `1.2500`
-1002  | float   | fDamageStrengthBase              | `0.5000`
-1003  | float   | fDamageStrengthMult              | `0.1000`
-1004  | float   | fSwingBlockBase                  | `0.5000`
-1005  | float   | fSwingBlockMult                  | `0.5000`
-1006  | float   | fFatigueBase                     | `1.0000`
-1007  | float   | fFatigueMult                     | `1.0000`
-1008  | float   | fFatigueReturnBase               | `1.5000`
-1009  | float   | fFatigueReturnMult               | `1.0000`
-1010  | float   | fEndFatigueMult                  | `0.0100`
-1011  | float   | fFatigueAttackBase               | `1.0000`
-1012  | float   | fFatigueAttackMult               | `1.0000`
-1013  | float   | fWeaponFatigueMult               | `0.2000`
-1014  | float   | fFatigueBlockBase                | `1.0000`
-1015  | float   | fFatigueBlockMult                | `1.0000`
-1016  | float   | fWeaponFatigueBlockMult          | `0.2000`
-1017  | float   | fFatigueRunBase                  | `1.5000`
-1018  | float   | fFatigueRunMult                  | `1.5000`
-1019  | float   | fFatigueJumpBase                 | `3.0000`
-1020  | float   | fFatigueJumpMult                 | `10.0000`
-1021  | float   | fFatigueSwimWalkBase             | `0.5000`
-1022  | float   | fFatigueSwimRunBase              | `1.5000`
-1023  | float   | fFatigueSwimWalkMult             | `0.5000`
-1024  | float   | fFatigueSwimRunMult              | `1.5000`
-1025  | float   | fFatigueSneakBase                | `1.5000`
-1026  | float   | fFatigueSneakMult                | `1.5000`
-1027  | float   | fMinHandToHandMult               | `0.5000`
-1028  | float   | fMaxHandToHandMult               | `1.0000`
-1029  | float   | fHandtoHandHealthPer             | `0.1000`
-1030  | float   | fCombatInvisoMult                | `0.2000`
-1031  | float   | fCombatKODamageMult              | `2.0000`
-1032  | float   | fCombatCriticalStrikeMult        | `4.0000`
-1033  | integer | iBlockMinChance                  | `5`
-1034  | integer | iBlockMaxChance                  | `50`
-1035  | float   | fLevelUpHealthEndMult            | `0.1000`
-1036  | float   | fSoulGemMult                     | `3.0000`
-1037  | float   | fEffectCostMult                  | `0.5000`
-1038  | float   | fSpellPriceMult                  | `1.0000`
-1039  | float   | fFatigueSpellBase                | `1.0000`
-1040  | float   | fFatigueSpellMult                | `1.0000`
-1041  | float   | fFatigueSpellCostMult            | `1.0000`
-1042  | float   | fPotionStrengthMult              | `0.5000`
-1043  | float   | fPotionT1MagMult                 | `3.0000`
-1044  | float   | fPotionT1DurMult                 | `2.0000`
-1045  | float   | fPotionMinUsefulDuration         | `20.0000`
-1046  | float   | fPotionT4BaseStrengthMult        | `20.0000`
-1047  | float   | fPotionT4EquipStrengthMult       | `12.0000`
-1048  | float   | fIngredientMult                  | `1.0000`
-1049  | float   | fMagicItemCostMult               | `1.0000`
-1050  | float   | fMagicItemPriceMult              | `1.0000`
-1051  | float   | fMagicItemOnceMult               | `1.0000`
-1052  | float   | fMagicItemUsedMult               | `1.0000`
-1053  | float   | fMagicItemStrikeMult             | `1.0000`
-1054  | float   | fMagicItemConstantMult           | `1.0000`
-1055  | float   | fEnchantmentMult                 | `1.0000`
-1056  | float   | fEnchantmentChanceMult           | `3.0000`
-1057  | float   | fPCbaseMagickaMult               | `1.0000`
-1058  | float   | fNPCbaseMagickaMult              | `2.0000`
-1059  | float   | fAutoSpellChance                 | `50.0000`
-1060  | float   | fAutoPCSpellChance               | `75.0000`
-1061  | integer | iAutoSpellTimesCanCast           | `3`
-1062  | integer | iAutoSpellAttSkillMin            | `70`
-1063  | integer | iAutoSpellAlterationMax          | `5`
-1064  | integer | iAutoSpellConjurationMax         | `5`
-1065  | integer | iAutoSpellDestructionMax         | `5`
-1066  | integer | iAutoSpellIllusionMax            | `5`
-1067  | integer | iAutoSpellMysticismMax           | `5`
-1068  | integer | iAutoSpellRestorationMax         | `5`
-1069  | integer | iAutoPCSpellMax                  | `100`
-1070  | integer | iAutoRepFacMod                   | `2`
-1071  | integer | iAutoRepLevMod                   | `0`
-1072  | integer | iMagicItemChargeOnce             | `1`
-1073  | integer | iMagicItemChargeConst            | `10`
-1074  | integer | iMagicItemChargeUse              | `5`
-1075  | integer | iMagicItemChargeStrike           | `10`
-1076  | integer | iMonthsToRespawn                 | `4`
-1077  | float   | fCorpseClearDelay                | `6.0000`
-1078  | float   | fCorpseRespawnDelay              | `6.0000`
-1079  | float   | fBarterGoldResetDelay            | `24.0000`
-1080  | float   | fEncumbranceStrMult              | `5.0000`
-1081  | float   | fPickLockMult                    | `-10.0000`
-1082  | float   | fTrapCostMult                    | `-0.5000`
-1083  | float   | fMessageTimePerChar              | `0.1000`
-1084  | float   | fMagicItemRechargePerSecond      | `0.0028`
-1085  | integer | i1stPersonSneakDelta             | `10`
-1086  | integer | iBarterSuccessDisposition        | `1`
-1087  | integer | iBarterFailDisposition           | `-1`
-1088  | integer | iLevelupTotal                    | `10`
-1089  | integer | iLevelupMajorMult                | `2`
-1090  | integer | iLevelupMinorMult                | `1`
-1091  | integer | iLevelupMajorMultAttribute       | `1`
-1092  | integer | iLevelupMinorMultAttribute       | `1`
-1093  | integer | iLevelupMiscMultAttriubte        | `1`
-1094  | integer | iLevelupSpecialization           | `1`
-1095  | integer | iLevelUp01Mult                   | `1`
-1096  | integer | iLevelUp02Mult                   | `2`
-1097  | integer | iLevelUp03Mult                   | `3`
-1098  | integer | iLevelUp04Mult                   | `4`
-1099  | integer | iLevelUp05Mult                   | `5`
-1100  | integer | iLevelUp06Mult                   | `6`
-1101  | integer | iLevelUp07Mult                   | `7`
-1102  | integer | iLevelUp08Mult                   | `8`
-1103  | integer | iLevelUp09Mult                   | `9`
-1104  | integer | iLevelUp10Mult                   | `10`
-1105  | integer | iSoulAmountForConstantEffect     | `400`
-1106  | float   | fConstantEffectMult              | `15.0000`
-1107  | float   | fEnchantmentConstantDurationMult | `100.0000`
-1108  | float   | fEnchantmentConstantChanceMult   | `0.5000`
-1109  | float   | fWeaponDamageMult                | `0.1000`
-1110  | float   | fSeriousWoundMult                | `0.2500`
-1111  | float   | fKnockDownMult                   | `0.5000`
-1112  | integer | iKnockDownOddsBase               | `25`
-1113  | integer | iKnockDownOddsMult               | `25`
-1114  | float   | fCombatArmorMinMult              | `0.2500`
-1115  | float   | fHandToHandReach                 | `0.7000`
-1116  | float   | fVoiceIdleOdds                   | `100.0000`
-1117  | integer | iVoiceAttackOdds                 | `30`
-1118  | integer | iVoiceHitOdds                    | `30`
-1119  | float   | fProjectileMinSpeed              | `400.0000`
-1120  | float   | fProjectileMaxSpeed              | `1000.0000`
-1121  | float   | fThrownWeaponMinSpeed            | `100.0000`
-1122  | float   | fThrownWeaponMaxSpeed            | `500.0000`
-1123  | float   | fTargetSpellMaxSpeed             | `1000.0000`
-1124  | float   | fProjectileThrownStoreChance     | `75.0000`
-1125  | integer | iPickMinChance                   | `5`
-1126  | integer | iPickMaxChance                   | `75`
-1127  | float   | fDispRaceMod                     | `5.0000`
-1128  | float   | fDispPersonalityMult             | `0.5000`
-1129  | float   | fDispPersonalityBase             | `50.0000`
-1130  | float   | fDispFactionMod                  | `5.0000`
-1131  | float   | fDispFactionRankBase             | `0.5000`
-1132  | float   | fDispFactionRankMult             | `0.5000`
-1133  | float   | fDispCrimeMod                    | `0.0100`
-1134  | float   | fDispDiseaseMod                  | `-10.0000`
-1135  | integer | iDispAttackMod                   | `-20`
-1136  | float   | fDispWeaponDrawn                 | `-5.0000`
-1137  | float   | fDispBargainSuccessMod           | `1.0000`
-1138  | float   | fDispBargainFailMod              | `-1.0000`
-1139  | float   | fDispPickPocketMod               | `-25.0000`
-1140  | integer | iDaysinPrisonMod                 | `100`
-1141  | float   | fDispAttacking                   | `-10.0000`
-1142  | float   | fDispStealing                    | `-0.1000`
-1143  | integer | iDispTresspass                   | `-20`
-1144  | integer | iDispKilling                     | `-50`
-1145  | integer | iTrainingMod                     | `10`
-1146  | integer | iAlchemyMod                      | `10`
-1147  | float   | fBargainOfferBase                | `50.0000`
-1148  | float   | fBargainOfferMulti               | `-4.0000`
-1149  | float   | fDispositionMod                  | `1.0000`
-1150  | float   | fPersonalityMod                  | `5.0000`
-1151  | float   | fLuckMod                         | `10.0000`
-1152  | float   | fReputationMod                   | `1.0000`
-1153  | float   | fLevelMod                        | `5.0000`
-1154  | float   | fBribe10Mod                      | `25.0000`
-1155  | float   | fBribe100Mod                     | `50.0000`
-1156  | float   | fBribe1000Mod                    | `100.0000`
-1157  | float   | fPerDieRollMult                  | `0.2000`
-1158  | float   | fPerTempMult                     | `2.0000`
-1159  | integer | iPerMinChance                    | `5`
-1160  | integer | iPerMinChange                    | `10`
-1161  | float   | fSpecialSkillBonus               | `0.8000`
-1162  | float   | fMajorSkillBonus                 | `0.7500`
-1163  | float   | fMinorSkillBonus                 | `1.0000`
-1164  | float   | fMiscSkillBonus                  | `1.2500`
-1165  | integer | iAlarmKilling                    | `90`
-1166  | integer | iAlarmAttack                     | `50`
-1167  | integer | iAlarmStealing                   | `1`
-1168  | integer | iAlarmPickPocket                 | `20`
-1169  | integer | iAlarmTresspass                  | `5`
-1170  | float   | fAlarmRadius                     | `4096.0000`
-1171  | integer | iCrimeKilling                    | `1000`
-1172  | integer | iCrimeAttack                     | `40`
-1173  | float   | fCrimeStealing                   | `1.0000`
-1174  | integer | iCrimePickPocket                 | `25`
-1175  | integer | iCrimeTresspass                  | `5`
-1176  | integer | iCrimeThreshold                  | `100`
-1177  | integer | iCrimeThresholdMultiplier        | `10`
-1178  | float   | fCrimeGoldDiscountMult           | `0.3000`
-1179  | float   | fCrimeGoldTurnInMult             | `0.9000`
-1180  | integer | iFightAttack                     | `100`
-1181  | integer | iFightAttacking                  | `50`
-1182  | integer | iFightDistanceBase               | `20`
-1183  | float   | fFightDistanceMultiplier         | `0.0050`
-1184  | integer | iFightAlarmMult                  | `1`
-1185  | float   | fFightDispMult                   | `1.0000`
-1186  | float   | fFightStealing                   | `0.1000`
-1187  | integer | iFightPickpocket                 | `25`
-1188  | integer | iFightTrespass                   | `25`
-1189  | integer | iFightKilling                    | `50`
-1190  | integer | iFlee                            | `0`
-1191  | integer | iGreetDistanceMultiplier         | `10`
-1192  | integer | iGreetDuration                   | `3`
-1193  | float   | fGreetDistanceReset              | `512.0000`
-1194  | float   | fIdleChanceMultiplier            | `1.0000`
-1195  | float   | fSneakUseDist                    | `512.0000`
-1196  | float   | fSneakUseDelay                   | `2.0000`
-1197  | float   | fSneakDistanceBase               | `0.5000`
-1198  | float   | fSneakDistanceMultiplier         | `0.0005`
-1199  | float   | fSneakSpeedMultiplier            | `0.5000`
-1200  | float   | fSneakViewMult                   | `1.5000`
-1201  | float   | fSneakNoViewMult                 | `0.5000`
-1202  | float   | fSneakSkillMult                  | `1.0000`
-1203  | float   | fSneakBootMult                   | `-0.5000`
-1204  | float   | fCombatDistance                  | `128.0000`
-1205  | float   | fCombatAngleXY                   | `60.0000`
-1206  | float   | fCombatAngleZ                    | `60.0000`
-1207  | float   | fCombatForceSideAngle            | `30.0000`
-1208  | float   | fCombatTorsoSideAngle            | `45.0000`
-1209  | float   | fCombatTorsoStartPercent         | `0.3000`
-1210  | float   | fCombatTorsoStopPercent          | `0.7000`
-1211  | float   | fCombatBlockLeftAngle            | `-90.0000`
-1212  | float   | fCombatBlockRightAngle           | `30.0000`
-1213  | float   | fCombatDelayCreature             | `0.1000`
-1214  | float   | fCombatDelayNPC                  | `0.1000`
-1215  | string  | sTargetCriticalStrike            | `"%s is hit by a critical strike!"`
-1216  | float   | fAIMeleeWeaponMult               | `2.0000`
-1217  | float   | fAIRangeMeleeWeaponMult          | `5.0000`
-1218  | float   | fAIMagicSpellMult                | `3.0000`
-1219  | float   | fAIRangeMagicSpellMult           | `5.0000`
-1220  | float   | fAIMeleeArmorMult                | `1.0000`
-1221  | float   | fAIMeleeSummWeaponMult           | `1.0000`
-1222  | float   | fAIFleeHealthMult                | `10.0000`
-1223  | float   | fAIFleeFleeMult                  | `1.0000`
-1224  | float   | fPickPocketMod                   | `0.5000`
-1225  | float   | fSleepRandMod                    | `0.5000`
-1226  | float   | fSleepRestMod                    | `0.3000`
-1227  | integer | iNumberCreatures                 | `3`
-1228  | float   | fAudioDefaultMinDistance         | `5.0000`
-1229  | float   | fAudioDefaultMaxDistance         | `40.0000`
-1230  | float   | fAudioVoiceDefaultMinDistance    | `10.0000`
-1231  | float   | fAudioVoiceDefaultMaxDistance    | `60.0000`
-1232  | float   | fAudioMinDistanceMult            | `20.0000`
-1233  | float   | fAudioMaxDistanceMult            | `50.0000`
-1234  | float   | fNPCHealthBarTime                | `3.0000`
-1235  | float   | fNPCHealthBarFade                | `0.5000`
-1236  | float   | fDifficultyMult                  | `5.0000`
-1237  | float   | fWereWolfRunMult                 | `1.5000`
-1238  | float   | fWereWolfSilverWeaponDamageMult  | `1.5000`
-1239  | integer | iWereWolfBounty                  | `10000`
-1240  | float   | fWereWolfStrength                | `150.0000`
-1241  | float   | fWereWolfAgility                 | `150.0000`
-1242  | float   | fWereWolfEndurance               | `150.0000`
-1243  | float   | fWereWolfSpeed                   | `150.0000`
-1244  | float   | fWereWolfHandtoHand              | `100.0000`
-1245  | float   | fWereWolfUnarmored               | `100.0000`
-1246  | integer | iWereWolfLevelToAttack           | `20`
-1247  | integer | iWereWolfFightMod                | `100`
-1248  | integer | iWereWolfFleeMod                 | `100`
-1249  | float   | fWereWolfAthletics               | `150.0000`
-1250  | float   | fWereWolfAcrobatics              | `150.0000`
-1251  | float   | fWereWolfHealth                  | `2.0000`
-1252  | float   | fWereWolfFatigue                 | `400.0000`
-1253  | float   | fWereWolfMagicka                 | `100.0000`
-1254  | float   | fWereWolfIntellegence            | `1.0000`
-1255  | float   | fWereWolfWillPower               | `1.0000`
-1256  | float   | fWereWolfPersonality             | `1.0000`
-1257  | float   | fWereWolfLuck                    | `1.0000`
-1258  | float   | fWereWolfBlock                   | `1.0000`
-1259  | float   | fWereWolfArmorer                 | `1.0000`
-1260  | float   | fWereWolfMediumArmor             | `1.0000`
-1261  | float   | fWereWolfHeavyArmor              | `1.0000`
-1262  | float   | fWereWolfBluntWeapon             | `1.0000`
-1263  | float   | fWereWolfLongBlade               | `1.0000`
-1264  | float   | fWereWolfAxe                     | `1.0000`
-1265  | float   | fWereWolfSpear                   | `1.0000`
-1266  | float   | fWereWolfDestruction             | `1.0000`
-1267  | float   | fWereWolfAlteration              | `1.0000`
-1268  | float   | fWereWolfIllusion                | `1.0000`
-1269  | float   | fWereWolfConjuration             | `1.0000`
-1270  | float   | fWereWolfMysticism               | `1.0000`
-1271  | float   | fWereWolfRestoration             | `1.0000`
-1272  | float   | fWereWolfEnchant                 | `1.0000`
-1273  | float   | fWereWolfAlchemy                 | `1.0000`
-1274  | float   | fWereWolfSecurity                | `1.0000`
-1275  | float   | fWereWolfSneak                   | `1.0000`
-1276  | float   | fWereWolfLightArmor              | `1.0000`
-1277  | float   | fWereWolfShortBlade              | `1.0000`
-1278  | float   | fWereWolfMarksman                | `1.0000`
-1279  | float   | fWereWolfMerchantile             | `1.0000`
-1280  | float   | fWereWolfSpeechcraft             | `1.0000`
-1281  | float   | fCombatDistanceWerewolfMod       | `0.3000`
-1282  | float   | fFleeDistance                    | `3000.0000`
-1283  | string  | sEffectWaterBreathing            | `"sEffectWaterBreathing"`
-1284  | string  | sEffectSwiftSwim                 | `"sEffectSwiftSwim"`
-1285  | string  | sEffectWaterWalking              | `"sEffectWaterWalking"`
-1286  | string  | sEffectShield                    | `"sEffectShield"`
-1287  | string  | sEffectFireShield                | `"sEffectFireShield"`
-1288  | string  | sEffectLightningShield           | `"sEffectLightningShield"`
-1289  | string  | sEffectFrostShield               | `"sEffectFrostShield"`
-1290  | string  | sEffectBurden                    | `"sEffectBurden"`
-1291  | string  | sEffectFeather                   | `"sEffectFeather"`
-1292  | string  | sEffectJump                      | `"sEffectJump"`
-1293  | string  | sEffectLevitate                  | `"sEffectLevitate"`
-1294  | string  | sEffectSlowFall                  | `"sEffectSlowFall"`
-1295  | string  | sEffectLock                      | `"sEffectLock"`
-1296  | string  | sEffectOpen                      | `"sEffectOpen"`
-1297  | string  | sEffectFireDamage                | `"sEffectFireDamage"`
-1298  | string  | sEffectShockDamage               | `"sEffectShockDamage"`
-1299  | string  | sEffectFrostDamage               | `"sEffectFrostDamage"`
-1300  | string  | sEffectDrainAttribute            | `"sEffectDrainAttribute"`
-1301  | string  | sEffectDrainHealth               | `"sEffectDrainHealth"`
-1302  | string  | sEffectDrainSpellpoints          | `"sEffectDrainSpellpoints"`
-1303  | string  | sEffectDrainFatigue              | `"sEffectDrainFatigue"`
-1304  | string  | sEffectDrainSkill                | `"sEffectDrainSkill"`
-1305  | string  | sEffectDamageAttribute           | `"sEffectDamageAttribute"`
-1306  | string  | sEffectDamageHealth              | `"sEffectDamageHealth"`
-1307  | string  | sEffectDamageMagicka             | `"sEffectDamageMagicka"`
-1308  | string  | sEffectDamageFatigue             | `"sEffectDamageFatigue"`
-1309  | string  | sEffectDamageSkill               | `"sEffectDamageSkill"`
-1310  | string  | sEffectPoison                    | `"sEffectPoison"`
-1311  | string  | sEffectWeaknessToFire            | `"sEffectWeaknessToFire"`
-1312  | string  | sEffectWeaknessToFrost           | `"sEffectWeaknessToFrost"`
-1313  | string  | sEffectWeaknessToShock           | `"sEffectWeaknessToShock"`
-1314  | string  | sEffectWeaknessToMagicka         | `"sEffectWeaknessToMagicka"`
-1315  | string  | sEffectWeaknessToCommonDisease   | `"sEffectWeaknessToCommonDisease"`
-1316  | string  | sEffectWeaknessToBlightDisease   | `"sEffectWeaknessToBlightDisease"`
-1317  | string  | sEffectWeaknessToCorprusDisease  | `"sEffectWeaknessToCorprusDisease"`
-1318  | string  | sEffectWeaknessToPoison          | `"sEffectWeaknessToPoison"`
-1319  | string  | sEffectWeaknessToNormalWeapons   | `"sEffectWeaknessToNormalWeapons"`
-1320  | string  | sEffectDisintegrateWeapon        | `"sEffectDisintegrateWeapon"`
-1321  | string  | sEffectDisintegrateArmor         | `"sEffectDisintegrateArmor"`
-1322  | string  | sEffectInvisibility              | `"sEffectInvisibility"`
-1323  | string  | sEffectChameleon                 | `"sEffectChameleon"`
-1324  | string  | sEffectLight                     | `"sEffectLight"`
-1325  | string  | sEffectSanctuary                 | `"sEffectSanctuary"`
-1326  | string  | sEffectNightEye                  | `"sEffectNightEye"`
-1327  | string  | sEffectCharm                     | `"sEffectCharm"`
-1328  | string  | sEffectParalyze                  | `"sEffectParalyze"`
-1329  | string  | sEffectSilence                   | `"sEffectSilence"`
-1330  | string  | sEffectBlind                     | `"sEffectBlind"`
-1331  | string  | sEffectSound                     | `"sEffectSound"`
-1332  | string  | sEffectCalmHumanoid              | `"sEffectCalmHumanoid"`
-1333  | string  | sEffectCalmCreature              | `"sEffectCalmCreature"`
-1334  | string  | sEffectFrenzyHumanoid            | `"sEffectFrenzyHumanoid"`
-1335  | string  | sEffectFrenzyCreature            | `"sEffectFrenzyCreature"`
-1336  | string  | sEffectDemoralizeHumanoid        | `"sEffectDemoralizeHumanoid"`
-1337  | string  | sEffectDemoralizeCreature        | `"sEffectDemoralizeCreature"`
-1338  | string  | sEffectRallyHumanoid             | `"sEffectRallyHumanoid"`
-1339  | string  | sEffectRallyCreature             | `"sEffectRallyCreature"`
-1340  | string  | sEffectDispel                    | `"sEffectDispel"`
-1341  | string  | sEffectSoultrap                  | `"sEffectSoultrap"`
-1342  | string  | sEffectTelekinesis               | `"sEffectTelekinesis"`
-1343  | string  | sEffectMark                      | `"sEffectMark"`
-1344  | string  | sEffectRecall                    | `"sEffectRecall"`
-1345  | string  | sEffectDivineIntervention        | `"sEffectDivineIntervention"`
-1346  | string  | sEffectAlmsiviIntervention       | `"sEffectAlmsiviIntervention"`
-1347  | string  | sEffectDetectAnimal              | `"sEffectDetectAnimal"`
-1348  | string  | sEffectDetectEnchantment         | `"sEffectDetectEnchantment"`
-1349  | string  | sEffectDetectKey                 | `"sEffectDetectKey"`
-1350  | string  | sEffectSpellAbsorption           | `"sEffectSpellAbsorption"`
-1351  | string  | sEffectReflect                   | `"sEffectReflect"`
-1352  | string  | sEffectCureCommonDisease         | `"sEffectCureCommonDisease"`
-1353  | string  | sEffectCureBlightDisease         | `"sEffectCureBlightDisease"`
-1354  | string  | sEffectCureCorprusDisease        | `"sEffectCureCorprusDisease"`
-1355  | string  | sEffectCurePoison                | `"sEffectCurePoison"`
-1356  | string  | sEffectCureParalyzation          | `"sEffectCureParalyzation"`
-1357  | string  | sEffectRestoreAttribute          | `"sEffectRestoreAttribute"`
-1358  | string  | sEffectRestoreHealth             | `"sEffectRestoreHealth"`
-1359  | string  | sEffectRestoreSpellPoints        | `"sEffectRestoreSpellPoints"`
-1360  | string  | sEffectRestoreFatigue            | `"sEffectRestoreFatigue"`
-1361  | string  | sEffectRestoreSkill              | `"sEffectRestoreSkill"`
-1362  | string  | sEffectFortifyAttribute          | `"sEffectFortifyAttribute"`
-1363  | string  | sEffectFortifyHealth             | `"sEffectFortifyHealth"`
-1364  | string  | sEffectFortifySpellpoints        | `"sEffectFortifySpellpoints"`
-1365  | string  | sEffectFortifyFatigue            | `"sEffectFortifyFatigue"`
-1366  | string  | sEffectFortifySkill              | `"sEffectFortifySkill"`
-1367  | string  | sEffectFortifyMagickaMultiplier  | `"sEffectFortifyMagickaMultiplier"`
-1368  | string  | sEffectAbsorbAttribute           | `"sEffectAbsorbAttribute"`
-1369  | string  | sEffectAbsorbHealth              | `"sEffectAbsorbHealth"`
-1370  | string  | sEffectAbsorbSpellPoints         | `"sEffectAbsorbSpellPoints"`
-1371  | string  | sEffectAbsorbFatigue             | `"sEffectAbsorbFatigue"`
-1372  | string  | sEffectAbsorbSkill               | `"sEffectAbsorbSkill"`
-1373  | string  | sEffectResistFire                | `"sEffectResistFire"`
-1374  | string  | sEffectResistFrost               | `"sEffectResistFrost"`
-1375  | string  | sEffectResistShock               | `"sEffectResistShock"`
-1376  | string  | sEffectResistMagicka             | `"sEffectResistMagicka"`
-1377  | string  | sEffectResistCommonDisease       | `"sEffectResistCommonDisease"`
-1378  | string  | sEffectResistBlightDisease       | `"sEffectResistBlightDisease"`
-1379  | string  | sEffectResistCorprusDisease      | `"sEffectResistCorprusDisease"`
-1380  | string  | sEffectResistPoison              | `"sEffectResistPoison"`
-1381  | string  | sEffectResistNormalWeapons       | `"sEffectResistNormalWeapons"`
-1382  | string  | sEffectResistParalysis           | `"sEffectResistParalysis"`
-1383  | string  | sEffectRemoveCurse               | `"sEffectRemoveCurse"`
-1384  | string  | sEffectTurnUndead                | `"sEffectTurnUndead"`
-1385  | string  | sEffectSummonScamp               | `"sEffectSummonScamp"`
-1386  | string  | sEffectSummonClannfear           | `"sEffectSummonClannfear"`
-1387  | string  | sEffectSummonDaedroth            | `"sEffectSummonDaedroth"`
-1388  | string  | sEffectSummonDremora             | `"sEffectSummonDremora"`
-1389  | string  | sEffectSummonAncestralGhost      | `"sEffectSummonAncestralGhost"`
-1390  | string  | sEffectSummonSkeletalMinion      | `"sEffectSummonSkeletalMinion"`
-1391  | string  | sEffectSummonLeastBonewalker     | `"sEffectSummonLeastBonewalker"`
-1392  | string  | sEffectSummonGreaterBonewalker   | `"sEffectSummonGreaterBonewalker"`
-1393  | string  | sEffectSummonBonelord            | `"sEffectSummonBonelord"`
-1394  | string  | sEffectSummonWingedTwilight      | `"sEffectSummonWingedTwilight"`
-1395  | string  | sEffectSummonHunger              | `"sEffectSummonHunger"`
-1396  | string  | sEffectSummonGoldensaint         | `"sEffectSummonGoldensaint"`
-1397  | string  | sEffectSummonFlameAtronach       | `"sEffectSummonFlameAtronach"`
-1398  | string  | sEffectSummonFrostAtronach       | `"sEffectSummonFrostAtronach"`
-1399  | string  | sEffectSummonStormAtronach       | `"sEffectSummonStormAtronach"`
-1400  | string  | sEffectFortifyAttackBonus        | `"sEffectFortifyAttackBonus"`
-1401  | string  | sEffectCommandCreatures          | `"sEffectCommandCreatures"`
-1402  | string  | sEffectCommandHumanoids          | `"sEffectCommandHumanoids"`
-1403  | string  | sEffectBoundDagger               | `"sEffectBoundDagger"`
-1404  | string  | sEffectBoundLongsword            | `"sEffectBoundLongsword"`
-1405  | string  | sEffectBoundMace                 | `"sEffectBoundMace"`
-1406  | string  | sEffectBoundBattleAxe            | `"sEffectBoundBattleAxe"`
-1407  | string  | sEffectBoundSpear                | `"sEffectBoundSpear"`
-1408  | string  | sEffectBoundLongbow              | `"sEffectBoundLongbow"`
-1409  | string  | sEffectExtraSpell                | `"sEffectExtraSpell"`
-1410  | string  | sEffectBoundCuirass              | `"sEffectBoundCuirass"`
-1411  | string  | sEffectBoundHelm                 | `"sEffectBoundHelm"`
-1412  | string  | sEffectBoundBoots                | `"sEffectBoundBoots"`
-1413  | string  | sEffectBoundShield               | `"sEffectBoundShield"`
-1414  | string  | sEffectBoundGloves               | `"sEffectBoundGloves"`
-1415  | string  | sEffectCorpus                    | `"sEffectCorpus"`
-1416  | string  | sEffectVampirism                 | `"sEffectVampirism"`
-1417  | string  | sEffectSummonCenturionSphere     | `"sEffectSummonCenturionSphere"`
-1418  | string  | sEffectSunDamage                 | `"sEffectSunDamage"`
-1419  | string  | sEffectStuntedMagicka            | `"sEffectStuntedMagicka"`
-1420  | string  | sEffectSummonFabricant           | `"sEffectSummonFabricant"`
-1421  | string  | sEffectSummonCreature01          | `"sEffectSummonCreature01"`
-1422  | string  | sEffectSummonCreature02          | `"sEffectSummonCreature02"`
-1423  | string  | sEffectSummonCreature03          | `"sEffectSummonCreature03"`
-1424  | string  | sEffectSummonCreature04          | `"sEffectSummonCreature04"`
-1425  | string  | sEffectSummonCreature05          | `"sEffectSummonCreature05"`
-1426  | string  | sSchoolAlteration                | `"sSchoolAlteration"`
-1427  | string  | sSchoolConjuration               | `"sSchoolConjuration"`
-1428  | string  | sSchoolDestruction               | `"sSchoolDestruction"`
-1429  | string  | sSchoolIllusion                  | `"sSchoolIllusion"`
-1430  | string  | sSchoolMysticism                 | `"sSchoolMysticism"`
-1431  | string  | sSchoolRestoration               | `"sSchoolRestoration"`
-1432  | string  | sTypeSpell                       | `"sTypeSpell"`
-1433  | string  | sTypeAbility                     | `"sTypeAbility"`
-1434  | string  | sTypeBlightDisease               | `"sTypeBlightDisease"`
-1435  | string  | sTypeDisease                     | `"sTypeDisease"`
-1436  | string  | sTypeCurse                       | `"sTypeCurse"`
-1437  | string  | sTypePower                       | `"sTypePower"`
-1438  | string  | sItemCastOnce                    | `"sItemCastOnce"`
-1439  | string  | sItemCastWhenStrikes             | `"sItemCastWhenStrikes"`
-1440  | string  | sItemCastWhenUsed                | `"sItemCastWhenUsed"`
-1441  | string  | sItemCastConstant                | `"sItemCastConstant"`
-1442  | string  | sRangeSelf                       | `"sRangeSelf"`
-1443  | string  | sRangeTouch                      | `"sRangeTouch"`
-1444  | string  | sRangeTarget                     | `"sRangeTarget"`
-1445  | string  | sMagicSkillFail                  | `"sMagicSkillFail"`
-1446  | string  | sMagicInsufficientSP             | `"sMagicInsufficientSP"`
-1447  | string  | sMagicInsufficientCharge         | `"sMagicInsufficientCharge"`
-1448  | string  | sPowerAlreadyUsed                | `"sPowerAlreadyUsed"`
-1449  | string  | sMagicInvalidTarget              | `"sMagicInvalidTarget"`
-1450  | string  | sMagicLockSuccess                | `"sMagicLockSuccess"`
-1451  | string  | sMagicOpenSuccess                | `"sMagicOpenSuccess"`
-1452  | string  | sMagicTargetResistsWeapons       | `"sMagicTargetResistsWeapons"`
-1453  | string  | sMagicContractDisease            | `"You have contracted %s"`
-1454  | float   | fMagicDetectRefreshRate          | `0.0167`
-1455  | float   | fMagicStartIconBlink             | `3.0000`
-1456  | float   | fMagicCreatureCastDelay          | `1.5000`
-1457  | string  | sMagicScampID                    | `"Scamp"`
-1458  | string  | sMagicClannfearID                | `"Clannfear"`
-1459  | string  | sMagicDaedrothID                 | `"Daedroth"`
-1460  | string  | sMagicDremoraID                  | `"Dremora"`
-1461  | string  | sMagicAncestralGhostID           | `"Ancestor_Ghost"`
-1462  | string  | sMagicSkeletalMinionID           | `"Skeleton"`
-1463  | string  | sMagicLeastBonewalkerID          | `"Bonewalker"`
-1464  | string  | sMagicGreaterBonewalkerID        | `"Bonewalker_Greater"`
-1465  | string  | sMagicBonelordID                 | `"Bonelord"`
-1466  | string  | sMagicWingedTwilightID           | `"Winged Twilight"`
-1467  | string  | sMagicHungerID                   | `"Hunger"`
-1468  | string  | sMagicGoldenSaintID              | `"Golden Saint"`
-1469  | string  | sMagicFlameAtronachID            | `"Atronach_Flame"`
-1470  | string  | sMagicFrostAtronachID            | `"Atronach_Frost"`
-1471  | string  | sMagicStormAtronachID            | `"Atronach_Storm"`
-1472  | string  | sMagicCenturionSphereID          | `"centurion_sphere"`
-1473  | string  | sMagicFabricantID                | `"Fabricant"`
-1474  | string  | sMagicCreature01ID               | `"sMagicCreature01ID"`
-1475  | string  | sMagicCreature02ID               | `"sMagicCreature02ID"`
-1476  | string  | sMagicCreature03ID               | `"sMagicCreature03ID"`
-1477  | string  | sMagicCreature04ID               | `"sMagicCreature04ID"`
-1478  | string  | sMagicCreature05ID               | `"sMagicCreature05ID"`
-1479  | string  | sMagicBoundDaggerID              | `"Bound_Dagger"`
-1480  | string  | sMagicBoundLongswordID           | `"Bound_Longsword"`
-1481  | string  | sMagicBoundMaceID                | `"Bound_Mace"`
-1482  | string  | sMagicBoundBattleAxeID           | `"Bound_Battle_Axe"`
-1483  | string  | sMagicBoundSpearID               | `"Bound_Spear"`
-1484  | string  | sMagicBoundLongbowID             | `"Bound_Longbow"`
-1485  | string  | sMagicBoundCuirassID             | `"Bound_Cuirass"`
-1486  | string  | sMagicBoundHelmID                | `"Bound_Helm"`
-1487  | string  | sMagicBoundBootsID               | `"Bound_Boots"`
-1488  | string  | sMagicBoundShieldID              | `"Bound_Shield"`
-1489  | string  | sMagicBoundLeftGauntletID        | `"Bound_Gauntlet_Left"`
-1490  | string  | sMagicBoundRightGauntletID       | `"Bound_Gauntlet_Right"`
-1491  | float   | fDiseaseXferChance               | `5.0000`
-1492  | float   | fElementalShieldMult             | `0.1000`
-1493  | string  | sMagicCorprusWorsens             | `"Your case of Corprus has worsened."`
-1494  | string  | sMagicCannotRecast               | `"You cannot re-cast this spell while it is still in effect."`
-1495  | float   | fMagicSunBlockedMult             | `0.5000`
-1496  | string  | sMagicPCResisted                 | `"You resisted magic."`
-1497  | string  | sMagicTargetResisted             | `"Target resisted magic."`
-1498  | string  | sMagicInvalidEffect              | `"You cannot cast this effect right now."`
-1499  | string  | sAcrobat                         | `"Acrobat"`
-1500  | string  | sAgent                           | `"Agent"`
-1501  | string  | sArcher                          | `"Archer"`
-1502  | string  | sAssassin                        | `"Assassin"`
-1503  | string  | sBarbarian                       | `"Barbarian"`
-1504  | string  | sBard                            | `"Bard"`
-1505  | string  | sBattlemage                      | `"Battlemage"`
-1506  | string  | sCrusader                        | `"Crusader"`
-1507  | string  | sCustom                          | `"Custom"`
-1508  | string  | sHealer                          | `"Healer"`
-1509  | string  | sKnight                          | `"Knight"`
-1510  | string  | sMage                            | `"Mage"`
-1511  | string  | sMonk                            | `"Monk"`
-1512  | string  | sNightblade                      | `"Nightblade"`
-1513  | string  | sPilgrim                         | `"Pilgrim"`
-1514  | string  | sRogue                           | `"Rogue"`
-1515  | string  | sScout                           | `"Scout"`
-1516  | string  | sSorceror                        | `"Sorceror"`
-1517  | string  | sSpellsword                      | `"Spellsword"`
-1518  | string  | sThief                           | `"Thief"`
-1519  | string  | sWarrior                         | `"Warrior"`
-1520  | string  | sWitchhunter                     | `"Witchhunter"`
+!!! tip
+	The value of a GMST can be retrieved by using the [`tes3.findGMST()`](https://mwse.github.io/MWSE/apis/tes3/#tes3findgmst) function. For example, `tes3.findGMST(tes3.gmst.sMonthMorningstar).value` has a value of `"Morning Star"` in an unmodded english installation of Morrowind.
+
+Index                            | Value  | Type    | Default GMST Value
+-------------------------------- | ------ | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+sMonthMorningstar                | `0`    | string  | `"Morning Star"`
+sMonthSunsdawn                   | `1`    | string  | `"Sun's Dawn"`
+sMonthFirstseed                  | `2`    | string  | `"First Seed"`
+sMonthRainshand                  | `3`    | string  | `"Rain's Hand"`
+sMonthSecondseed                 | `4`    | string  | `"Second Seed"`
+sMonthMidyear                    | `5`    | string  | `"Mid Year"`
+sMonthSunsheight                 | `6`    | string  | `"Sun's Height"`
+sMonthLastseed                   | `7`    | string  | `"Last Seed"`
+sMonthHeartfire                  | `8`    | string  | `"Heartfire"`
+sMonthFrostfall                  | `9`    | string  | `"Frost Fall"`
+sMonthSunsdusk                   | `10`   | string  | `"Sun's Dusk"`
+sMonthEveningstar                | `11`   | string  | `"Evening Star"`
+sSpecialization                  | `12`   | string  | `"Specialization"`
+sSpecializationCombat            | `13`   | string  | `"Combat"`
+sSpecializationMagic             | `14`   | string  | `"Magic"`
+sSpecializationStealth           | `15`   | string  | `"Stealth"`
+sSkillClassMajor                 | `16`   | string  | `"Major Skills"`
+sSkillClassMinor                 | `17`   | string  | `"Minor Skills"`
+sSkillClassMisc                  | `18`   | string  | `"Misc Skills"`
+sRacialTraits                    | `19`   | string  | `"Racial Traits"`
+sHealthPerHourOfRest             | `20`   | string  | `"Health per hour of rest"`
+sHealthPerLevel                  | `21`   | string  | `"Health per level"`
+sGoverningAttribute              | `22`   | string  | `"Governing Attribute"`
+sClass                           | `23`   | string  | `"Class"`
+sTraits                          | `24`   | string  | `"Traits"`
+sJournal                         | `25`   | string  | `"Journal"`
+sOK                              | `26`   | string  | `"OK"`
+sClose                           | `27`   | string  | `"Close"`
+sPrev                            | `28`   | string  | `"Prev"`
+sNext                            | `29`   | string  | `"Next"`
+sTake                            | `30`   | string  | `"Take"`
+sWeaponTab                       | `31`   | string  | `"Weapon"`
+sApparelTab                      | `32`   | string  | `"Apparel"`
+sMagicTab                        | `33`   | string  | `"Magic"`
+sMiscTab                         | `34`   | string  | `"Misc"`
+sWornTab                         | `35`   | string  | `"Worn"`
+sAllTab                          | `36`   | string  | `"All"`
+sAttack                          | `37`   | string  | `"Attack"`
+sUses                            | `38`   | string  | `"Uses"`
+sQuality                         | `39`   | string  | `"Quality"`
+sCharges                         | `40`   | string  | `"Charge:"`
+sArmorRating                     | `41`   | string  | `"Armor Rating"`
+sSlash                           | `42`   | string  | `"Slash"`
+sThrust                          | `43`   | string  | `"Thrust"`
+sChop                            | `44`   | string  | `"Chop"`
+sEncumbrance                     | `45`   | string  | `"Encumbrance"`
+sCondition                       | `46`   | string  | `"Condition"`
+sWeight                          | `47`   | string  | `"Weight"`
+sValue                           | `48`   | string  | `"Value"`
+sLight                           | `49`   | string  | `"Light"`
+sMedium                          | `50`   | string  | `"Medium"`
+sHeavy                           | `51`   | string  | `"Heavy"`
+sCancel                          | `52`   | string  | `"Cancel"`
+sTakeAll                         | `53`   | string  | `"Take All"`
+sUntilHealed                     | `54`   | string  | `"Until Healed"`
+sRest                            | `55`   | string  | `"Rest"`
+sWait                            | `56`   | string  | `"Wait"`
+sRestIllegal                     | `57`   | string  | `"Resting here is illegal. You'll need to find a bed."`
+sGold                            | `58`   | string  | `"Gold"`
+sMove                            | `59`   | string  | `"Move"`
+sTo                              | `60`   | string  | `"to"`
+sActorInCombat                   | `61`   | string  | `"This character is in combat."`
+sArmor                           | `62`   | string  | `"Armor"`
+sTopics                          | `63`   | string  | `"Topics"`
+sService                         | `64`   | string  | `"Service"`
+sPersuasion                      | `65`   | string  | `"Persuasion"`
+sBye                             | `66`   | string  | `"Bye"`
+sGoodbye                         | `67`   | string  | `"Goodbye"`
+sYes                             | `68`   | string  | `"Yes"`
+sNo                              | `69`   | string  | `"No"`
+sOn                              | `70`   | string  | `"On"`
+sOff                             | `71`   | string  | `"Off"`
+sFull                            | `72`   | string  | `"Full"`
+sWorld                           | `73`   | string  | `"World"`
+sExpelled                        | `74`   | string  | `"EXPELLED"`
+sExpelledMessage                 | `75`   | string  | `"You have been expelled from"`
+sFavoriteSkills                  | `76`   | string  | `"Favorite Skills"`
+sGame                            | `77`   | string  | `"Game"`
+sVideo                           | `78`   | string  | `"Video"`
+sAudio                           | `79`   | string  | `"Audio"`
+sControls                        | `80`   | string  | `"Controls"`
+sPrefs                           | `81`   | string  | `"Prefs"`
+sPreferences                     | `82`   | string  | `"Preferences"`
+sNewGame                         | `83`   | string  | `"New Game"`
+sExitGame                        | `84`   | string  | `"Exit Game"`
+sOptions                         | `85`   | string  | `"Options Menu"`
+sSaveGame                        | `86`   | string  | `"Save Game"`
+sLoadGame                        | `87`   | string  | `"Load Game"`
+sDeleteGame                      | `88`   | string  | `"Delete Game"`
+sSaveGameDenied                  | `89`   | string  | `"You cannot save your game right now."`
+sSaveGameFailed                  | `90`   | string  | `"An error was encountered while saving the game."`
+sSaveGameTooBig                  | `91`   | string  | `"There is not enough space to save this game. Free up at least %i blocks and try again."`
+sSaveGameNoMemory                | `92`   | string  | `"Unable to create Save Game. Free up 100 blocks and try again."`
+sMaximumSaveGameMessage          | `93`   | string  | `"You have reached the limit of Morrowind saved games. Please delete a Morrowind saved game and try again."`
+sRender_Distance                 | `94`   | string  | `"View Distance"`
+sNear                            | `95`   | string  | `"Near"`
+sFar                             | `96`   | string  | `"Far"`
+sGamma_Correction                | `97`   | string  | `"Gamma Correction"`
+sLight_Gamma                     | `98`   | string  | `"Light"`
+sDark_Gamma                      | `99`   | string  | `"Dark"`
+sSeldom                          | `100`  | string  | `"Seldom"`
+sAlways                          | `101`  | string  | `"Always"`
+sWaterTerrainReflect             | `102`  | string  | `"Reflect Terrain"`
+sWaterReflectUpdate              | `103`  | string  | `"Reflection Updating"`
+fWaterReflectUpdateAlways        | `104`  | float   | `0`
+fWaterReflectUpdateSeldom        | `105`  | float   | `10`
+sMaster                          | `106`  | string  | `"Master"`
+sVoice                           | `107`  | string  | `"Voice"`
+sEffects                         | `108`  | string  | `"Effects"`
+sFootsteps                       | `109`  | string  | `"Footsteps"`
+sMusic                           | `110`  | string  | `"Music"`
+sTransparency_Menu               | `111`  | string  | `"Menu Transparency"`
+sMenu_Help_Delay                 | `112`  | string  | `"Menu Help Delay"`
+sAIDistance                      | `113`  | string  | `"AI Distance"`
+sHigh                            | `114`  | string  | `"High"`
+sLow                             | `115`  | string  | `"Low"`
+sDetail_Level                    | `116`  | string  | `"Detail Level"`
+sMenus                           | `117`  | string  | `"Menus"`
+sStrip                           | `118`  | string  | `"Strip"`
+sReturnToGame                    | `119`  | string  | `"Return To Game"`
+sForward                         | `120`  | string  | `"Forward"`
+sBack                            | `121`  | string  | `"Back"`
+sLeft                            | `122`  | string  | `"Left"`
+sRight                           | `123`  | string  | `"Right"`
+sUse                             | `124`  | string  | `"Use"`
+sActivate                        | `125`  | string  | `"Activate"`
+sReady_Weapon                    | `126`  | string  | `"Ready Weapon"`
+sReady_Magic                     | `127`  | string  | `"Ready Magic"`
+sCrouch_Sneak                    | `128`  | string  | `"Sneak"`
+sRun                             | `129`  | string  | `"Run"`
+sAlways_Run                      | `130`  | string  | `"Always Run"`
+sAuto_Run                        | `131`  | string  | `"Auto Run"`
+sJump                            | `132`  | string  | `"Jump"`
+sNextWeapon                      | `133`  | string  | `"Next Weapon"`
+sPrevWeapon                      | `134`  | string  | `"Previous Weapon"`
+sNextSpell                       | `135`  | string  | `"Next Spell"`
+sPrevSpell                       | `136`  | string  | `"Previous Spell"`
+sTogglePOVCmd                    | `137`  | string  | `"Toggle POV"`
+sMenu_Mode                       | `138`  | string  | `"Menu Mode"`
+sJournalCmd                      | `139`  | string  | `"Journal"`
+sRestKey                         | `140`  | string  | `"Rest"`
+sQuickMenu                       | `141`  | string  | `"Quick Menu"`
+sQuick1Cmd                       | `142`  | string  | `"Quick 1"`
+sQuick2Cmd                       | `143`  | string  | `"Quick 2"`
+sQuick3Cmd                       | `144`  | string  | `"Quick 3"`
+sQuick4Cmd                       | `145`  | string  | `"Quick 4"`
+sQuick5Cmd                       | `146`  | string  | `"Quick 5"`
+sQuick6Cmd                       | `147`  | string  | `"Quick 6"`
+sQuick7Cmd                       | `148`  | string  | `"Quick 7"`
+sQuick8Cmd                       | `149`  | string  | `"Quick 8"`
+sQuick9Cmd                       | `150`  | string  | `"Quick 9"`
+sQuick10Cmd                      | `151`  | string  | `"Quick 10"`
+sQuickSaveCmd                    | `152`  | string  | `"Quick Save"`
+sQuickLoadCmd                    | `153`  | string  | `"Quick Load"`
+sKeyName_00                      | `154`  | string  | `""`
+sKeyName_01                      | `155`  | string  | `"ESC"`
+sKeyName_02                      | `156`  | string  | `"1"`
+sKeyName_03                      | `157`  | string  | `"2"`
+sKeyName_04                      | `158`  | string  | `"3"`
+sKeyName_05                      | `159`  | string  | `"4"`
+sKeyName_06                      | `160`  | string  | `"5"`
+sKeyName_07                      | `161`  | string  | `"6"`
+sKeyName_08                      | `162`  | string  | `"7"`
+sKeyName_09                      | `163`  | string  | `"8"`
+sKeyName_0A                      | `164`  | string  | `"9"`
+sKeyName_0B                      | `165`  | string  | `"0"`
+sKeyName_0C                      | `166`  | string  | `"-"`
+sKeyName_0D                      | `167`  | string  | `"="`
+sKeyName_0E                      | `168`  | string  | `"Back Space"`
+sKeyName_0F                      | `169`  | string  | `"Tab"`
+sKeyName_10                      | `170`  | string  | `"Q"`
+sKeyName_11                      | `171`  | string  | `"W"`
+sKeyName_12                      | `172`  | string  | `"E"`
+sKeyName_13                      | `173`  | string  | `"R"`
+sKeyName_14                      | `174`  | string  | `"T"`
+sKeyName_15                      | `175`  | string  | `"Y"`
+sKeyName_16                      | `176`  | string  | `"U"`
+sKeyName_17                      | `177`  | string  | `"I"`
+sKeyName_18                      | `178`  | string  | `"O"`
+sKeyName_19                      | `179`  | string  | `"P"`
+sKeyName_1A                      | `180`  | string  | `"["`
+sKeyName_1B                      | `181`  | string  | `"]"`
+sKeyName_1C                      | `182`  | string  | `"Return"`
+sKeyName_1D                      | `183`  | string  | `"Left Ctrl"`
+sKeyName_1E                      | `184`  | string  | `"A"`
+sKeyName_1F                      | `185`  | string  | `"S"`
+sKeyName_20                      | `186`  | string  | `"D"`
+sKeyName_21                      | `187`  | string  | `"F"`
+sKeyName_22                      | `188`  | string  | `"G"`
+sKeyName_23                      | `189`  | string  | `"H"`
+sKeyName_24                      | `190`  | string  | `"J"`
+sKeyName_25                      | `191`  | string  | `"K"`
+sKeyName_26                      | `192`  | string  | `"L"`
+sKeyName_27                      | `193`  | string  | `";"`
+sKeyName_28                      | `194`  | string  | `"'"`
+sKeyName_29                      | `195`  | string  | `"Grave"`
+sKeyName_2A                      | `196`  | string  | `"Left Shift"`
+sKeyName_2B                      | `197`  | string  | `"\"`
+sKeyName_2C                      | `198`  | string  | `"Z"`
+sKeyName_2D                      | `199`  | string  | `"X"`
+sKeyName_2E                      | `200`  | string  | `"C"`
+sKeyName_2F                      | `201`  | string  | `"V"`
+sKeyName_30                      | `202`  | string  | `"B"`
+sKeyName_31                      | `203`  | string  | `"N"`
+sKeyName_32                      | `204`  | string  | `"M"`
+sKeyName_33                      | `205`  | string  | `","`
+sKeyName_34                      | `206`  | string  | `"."`
+sKeyName_35                      | `207`  | string  | `"/"`
+sKeyName_36                      | `208`  | string  | `"Right Shift"`
+sKeyName_37                      | `209`  | string  | `"Numpad *"`
+sKeyName_38                      | `210`  | string  | `"Left Alt"`
+sKeyName_39                      | `211`  | string  | `"SPACEBAR"`
+sKeyName_3A                      | `212`  | string  | `"Caps Lock"`
+sKeyName_3B                      | `213`  | string  | `"F1"`
+sKeyName_3C                      | `214`  | string  | `"F2"`
+sKeyName_3D                      | `215`  | string  | `"F3"`
+sKeyName_3E                      | `216`  | string  | `"F4"`
+sKeyName_3F                      | `217`  | string  | `"F5"`
+sKeyName_40                      | `218`  | string  | `"F6"`
+sKeyName_41                      | `219`  | string  | `"F7"`
+sKeyName_42                      | `220`  | string  | `"F8"`
+sKeyName_43                      | `221`  | string  | `"F9"`
+sKeyName_44                      | `222`  | string  | `"F10"`
+sKeyName_45                      | `223`  | string  | `"Num Lock"`
+sKeyName_46                      | `224`  | string  | `"Scroll Lock"`
+sKeyName_47                      | `225`  | string  | `"Numpad 7"`
+sKeyName_48                      | `226`  | string  | `"Numpad 8"`
+sKeyName_49                      | `227`  | string  | `"Numpad 9"`
+sKeyName_4A                      | `228`  | string  | `"Numpad -"`
+sKeyName_4B                      | `229`  | string  | `"Numpad 4"`
+sKeyName_4C                      | `230`  | string  | `"Numpad 5"`
+sKeyName_4D                      | `231`  | string  | `"Numpad 6"`
+sKeyName_4E                      | `232`  | string  | `"Numpad +"`
+sKeyName_4F                      | `233`  | string  | `"Numpad 1"`
+sKeyName_50                      | `234`  | string  | `"Numpad 2"`
+sKeyName_51                      | `235`  | string  | `"Numpad 3"`
+sKeyName_52                      | `236`  | string  | `"Numpad 0"`
+sKeyName_53                      | `237`  | string  | `"Decimal"`
+sKeyName_54                      | `238`  | string  | `""`
+sKeyName_55                      | `239`  | string  | `""`
+sKeyName_56                      | `240`  | string  | `"OEM 102"`
+sKeyName_57                      | `241`  | string  | `"F11"`
+sKeyName_58                      | `242`  | string  | `"F12"`
+sKeyName_59                      | `243`  | string  | `""`
+sKeyName_5A                      | `244`  | string  | `""`
+sKeyName_5B                      | `245`  | string  | `""`
+sKeyName_5C                      | `246`  | string  | `""`
+sKeyName_5D                      | `247`  | string  | `""`
+sKeyName_5E                      | `248`  | string  | `""`
+sKeyName_5F                      | `249`  | string  | `""`
+sKeyName_60                      | `250`  | string  | `""`
+sKeyName_61                      | `251`  | string  | `""`
+sKeyName_62                      | `252`  | string  | `""`
+sKeyName_63                      | `253`  | string  | `""`
+sKeyName_64                      | `254`  | string  | `"F13"`
+sKeyName_65                      | `255`  | string  | `"F14"`
+sKeyName_66                      | `256`  | string  | `"F15"`
+sKeyName_67                      | `257`  | string  | `""`
+sKeyName_68                      | `258`  | string  | `""`
+sKeyName_69                      | `259`  | string  | `""`
+sKeyName_6A                      | `260`  | string  | `""`
+sKeyName_6B                      | `261`  | string  | `""`
+sKeyName_6C                      | `262`  | string  | `""`
+sKeyName_6D                      | `263`  | string  | `""`
+sKeyName_6E                      | `264`  | string  | `""`
+sKeyName_6F                      | `265`  | string  | `""`
+sKeyName_70                      | `266`  | string  | `"Kana"`
+sKeyName_71                      | `267`  | string  | `""`
+sKeyName_72                      | `268`  | string  | `""`
+sKeyName_73                      | `269`  | string  | `"Abnt C1"`
+sKeyName_74                      | `270`  | string  | `""`
+sKeyName_75                      | `271`  | string  | `""`
+sKeyName_76                      | `272`  | string  | `""`
+sKeyName_77                      | `273`  | string  | `""`
+sKeyName_78                      | `274`  | string  | `""`
+sKeyName_79                      | `275`  | string  | `"Cnvrt"`
+sKeyName_7A                      | `276`  | string  | `""`
+sKeyName_7B                      | `277`  | string  | `"No Cnvrt"`
+sKeyName_7C                      | `278`  | string  | `""`
+sKeyName_7D                      | `279`  | string  | `"Yen"`
+sKeyName_7E                      | `280`  | string  | `"Abnt C2"`
+sKeyName_7F                      | `281`  | string  | `""`
+sKeyName_80                      | `282`  | string  | `""`
+sKeyName_81                      | `283`  | string  | `""`
+sKeyName_82                      | `284`  | string  | `""`
+sKeyName_83                      | `285`  | string  | `""`
+sKeyName_84                      | `286`  | string  | `""`
+sKeyName_85                      | `287`  | string  | `""`
+sKeyName_86                      | `288`  | string  | `""`
+sKeyName_87                      | `289`  | string  | `""`
+sKeyName_88                      | `290`  | string  | `""`
+sKeyName_89                      | `291`  | string  | `""`
+sKeyName_8A                      | `292`  | string  | `""`
+sKeyName_8B                      | `293`  | string  | `""`
+sKeyName_8C                      | `294`  | string  | `""`
+sKeyName_8D                      | `295`  | string  | `"Np Equals"`
+sKeyName_8E                      | `296`  | string  | `""`
+sKeyName_8F                      | `297`  | string  | `""`
+sKeyName_90                      | `298`  | string  | `"PrvTrk"`
+sKeyName_91                      | `299`  | string  | `"AT"`
+sKeyName_92                      | `300`  | string  | `":"`
+sKeyName_93                      | `301`  | string  | `"_"`
+sKeyName_94                      | `302`  | string  | `"Kanji"`
+sKeyName_95                      | `303`  | string  | `"Stop"`
+sKeyName_96                      | `304`  | string  | `"Ax"`
+sKeyName_97                      | `305`  | string  | `"Unlabeled"`
+sKeyName_98                      | `306`  | string  | `""`
+sKeyName_99                      | `307`  | string  | `"NxtTrk"`
+sKeyName_9A                      | `308`  | string  | `""`
+sKeyName_9B                      | `309`  | string  | `""`
+sKeyName_9C                      | `310`  | string  | `"Right Enter"`
+sKeyName_9D                      | `311`  | string  | `"Right Ctrl"`
+sKeyName_9E                      | `312`  | string  | `""`
+sKeyName_9F                      | `313`  | string  | `""`
+sKeyName_A0                      | `314`  | string  | `"Mute"`
+sKeyName_A1                      | `315`  | string  | `"Calc"`
+sKeyName_A2                      | `316`  | string  | `"Play Pause"`
+sKeyName_A3                      | `317`  | string  | `""`
+sKeyName_A4                      | `318`  | string  | `"Media Stop"`
+sKeyName_A5                      | `319`  | string  | `""`
+sKeyName_A6                      | `320`  | string  | `""`
+sKeyName_A7                      | `321`  | string  | `""`
+sKeyName_A8                      | `322`  | string  | `""`
+sKeyName_A9                      | `323`  | string  | `""`
+sKeyName_AA                      | `324`  | string  | `""`
+sKeyName_AB                      | `325`  | string  | `""`
+sKeyName_AC                      | `326`  | string  | `""`
+sKeyName_AD                      | `327`  | string  | `""`
+sKeyName_AE                      | `328`  | string  | `"Volume Down"`
+sKeyName_AF                      | `329`  | string  | `""`
+sKeyName_B0                      | `330`  | string  | `"Volume Up"`
+sKeyName_B1                      | `331`  | string  | `""`
+sKeyName_B2                      | `332`  | string  | `"Web Home"`
+sKeyName_B3                      | `333`  | string  | `"Numpad ,"`
+sKeyName_B4                      | `334`  | string  | `""`
+sKeyName_B5                      | `335`  | string  | `"Numpad /"`
+sKeyName_B6                      | `336`  | string  | `""`
+sKeyName_B7                      | `337`  | string  | `"SysRq"`
+sKeyName_B8                      | `338`  | string  | `"Right Alt"`
+sKeyName_B9                      | `339`  | string  | `""`
+sKeyName_BA                      | `340`  | string  | `""`
+sKeyName_BB                      | `341`  | string  | `""`
+sKeyName_BC                      | `342`  | string  | `""`
+sKeyName_BD                      | `343`  | string  | `""`
+sKeyName_BE                      | `344`  | string  | `""`
+sKeyName_BF                      | `345`  | string  | `""`
+sKeyName_C0                      | `346`  | string  | `""`
+sKeyName_C1                      | `347`  | string  | `""`
+sKeyName_C2                      | `348`  | string  | `""`
+sKeyName_C3                      | `349`  | string  | `""`
+sKeyName_C4                      | `350`  | string  | `""`
+sKeyName_C5                      | `351`  | string  | `"Pause"`
+sKeyName_C6                      | `352`  | string  | `""`
+sKeyName_C7                      | `353`  | string  | `"Home"`
+sKeyName_C8                      | `354`  | string  | `"Up"`
+sKeyName_C9                      | `355`  | string  | `"Page Up"`
+sKeyName_CA                      | `356`  | string  | `""`
+sKeyName_CB                      | `357`  | string  | `"Left"`
+sKeyName_CC                      | `358`  | string  | `""`
+sKeyName_CD                      | `359`  | string  | `"Right"`
+sKeyName_CE                      | `360`  | string  | `""`
+sKeyName_CF                      | `361`  | string  | `"End"`
+sKeyName_D0                      | `362`  | string  | `"Down"`
+sKeyName_D1                      | `363`  | string  | `"Page Down"`
+sKeyName_D2                      | `364`  | string  | `"Insert"`
+sKeyName_D3                      | `365`  | string  | `"Delete"`
+sKeyName_D4                      | `366`  | string  | `""`
+sKeyName_D5                      | `367`  | string  | `""`
+sKeyName_D6                      | `368`  | string  | `""`
+sKeyName_D7                      | `369`  | string  | `""`
+sKeyName_D8                      | `370`  | string  | `""`
+sKeyName_D9                      | `371`  | string  | `""`
+sKeyName_DA                      | `372`  | string  | `""`
+sKeyName_DB                      | `373`  | string  | `"Left Win"`
+sKeyName_DC                      | `374`  | string  | `"Right Win"`
+sKeyName_DD                      | `375`  | string  | `"Apps"`
+sKeyName_DE                      | `376`  | string  | `"Power"`
+sKeyName_DF                      | `377`  | string  | `"Sleep"`
+sKeyName_E0                      | `378`  | string  | `""`
+sKeyName_E1                      | `379`  | string  | `""`
+sKeyName_E2                      | `380`  | string  | `""`
+sKeyName_E3                      | `381`  | string  | `"Wake"`
+sKeyName_E4                      | `382`  | string  | `""`
+sKeyName_E5                      | `383`  | string  | `"Web Search"`
+sKeyName_E6                      | `384`  | string  | `"Web Favs"`
+sKeyName_E7                      | `385`  | string  | `"Web Ref"`
+sKeyName_E8                      | `386`  | string  | `"Web Stop"`
+sKeyName_E9                      | `387`  | string  | `"Web Fwd"`
+sKeyName_EA                      | `388`  | string  | `"Web Back"`
+sKeyName_EB                      | `389`  | string  | `"My Comp"`
+sKeyName_EC                      | `390`  | string  | `""`
+sKeyName_ED                      | `391`  | string  | `""`
+sKeyName_EE                      | `392`  | string  | `""`
+sKeyName_EF                      | `393`  | string  | `""`
+sKeyName_F0                      | `394`  | string  | `""`
+sKeyName_F1                      | `395`  | string  | `""`
+sKeyName_F2                      | `396`  | string  | `""`
+sKeyName_F3                      | `397`  | string  | `""`
+sKeyName_F4                      | `398`  | string  | `""`
+sKeyName_F5                      | `399`  | string  | `""`
+sKeyName_F6                      | `400`  | string  | `""`
+sKeyName_F7                      | `401`  | string  | `""`
+sKeyName_F8                      | `402`  | string  | `""`
+sKeyName_F9                      | `403`  | string  | `""`
+sKeyName_FA                      | `404`  | string  | `""`
+sKeyName_FB                      | `405`  | string  | `""`
+sKeyName_FC                      | `406`  | string  | `""`
+sKeyName_FD                      | `407`  | string  | `""`
+sKeyName_FE                      | `408`  | string  | `""`
+sKeyName_FF                      | `409`  | string  | `""`
+sForwardXbox                     | `410`  | string  | `"Move Forward"`
+sBackXbox                        | `411`  | string  | `"Move Backward"`
+sSlideLeftXbox                   | `412`  | string  | `"Slide Left"`
+sSlideRightXbox                  | `413`  | string  | `"Slide Right"`
+sMenuModeXbox                    | `414`  | string  | `"Menu Mode"`
+sActivateXbox                    | `415`  | string  | `"Activate"`
+sUseXbox                         | `416`  | string  | `"Use"`
+sReadyItemXbox                   | `417`  | string  | `"Ready Item"`
+sReadyMagicXbox                  | `418`  | string  | `"Ready Magic"`
+sCrouchXbox                      | `419`  | string  | `"Sneak"`
+sRunXbox                         | `420`  | string  | `"Run"`
+sToggleRunXbox                   | `421`  | string  | `"Toggle Run"`
+sJumpXbox                        | `422`  | string  | `"Jump"`
+sTogglePOVXbox                   | `423`  | string  | `"Toggle View"`
+sMenuNextXbox                    | `424`  | string  | `"Next Menu"`
+sMenuPrevXbox                    | `425`  | string  | `"Previous Menu"`
+sJournalXbox                     | `426`  | string  | `"Journal"`
+sQuick4Xbox                      | `427`  | string  | `"sQuick4Xbox"`
+sQuick5Xbox                      | `428`  | string  | `"sQuick5Xbox"`
+sQuick6Xbox                      | `429`  | string  | `"sQuick6Xbox"`
+sQuick7Xbox                      | `430`  | string  | `"sQuick7Xbox"`
+sQuick8Xbox                      | `431`  | string  | `"sQuick8Xbox"`
+sQuick9Xbox                      | `432`  | string  | `"sQuick9Xbox"`
+sQuick0Xbox                      | `433`  | string  | `"sQuick0Xbox"`
+sOptionsMenuXbox                 | `434`  | string  | `"Options Menu"`
+sSystemMenuXbox                  | `435`  | string  | `"System Menu"`
+sRestMenuXbox                    | `436`  | string  | `"Rest/Wait"`
+sQuickSaveXbox                   | `437`  | string  | `"Quick Save"`
+sQuickLoadXbox                   | `438`  | string  | `"Quick Load"`
+sMoveUpXbox                      | `439`  | string  | `"Move Up"`
+sMoveDownXbox                    | `440`  | string  | `"Move Down"`
+sLookUpXbox                      | `441`  | string  | `"Look Up"`
+sLookDownXbox                    | `442`  | string  | `"Look Down"`
+sTurnLeftXbox                    | `443`  | string  | `"Turn Left"`
+sTurnRightXbox                   | `444`  | string  | `"Turn Right"`
+sNextWeaponXbox                  | `445`  | string  | `"Next Weapon"`
+sPrevWeaponXbox                  | `446`  | string  | `"Previous Weapon"`
+sNextSpellXbox                   | `447`  | string  | `"Next Spell"`
+sPrevSpellXbox                   | `448`  | string  | `"Previous Spell"`
+sDialogText1Xbox                 | `449`  | string  | `"PUSH"`
+sDialogText2Xbox                 | `450`  | string  | `"TO GO BACK"`
+sDialogText3Xbox                 | `451`  | string  | `"TO READ MORE"`
+sQuick_Save                      | `452`  | string  | `"Auto-Save when Rest"`
+sShadowText                      | `453`  | string  | `"Real-time Shadows"`
+sLockSuccess                     | `454`  | string  | `"Lock pick success!"`
+sLockFail                        | `455`  | string  | `"Lock pick failed."`
+sLockImpossible                  | `456`  | string  | `"Lock too complex."`
+sTrapSuccess                     | `457`  | string  | `"Trap disarmed!"`
+sTrapFail                        | `458`  | string  | `"Disarm trap failed."`
+sTrapImpossible                  | `459`  | string  | `"Trap too complex, your chance to disarm it is zero"`
+sTrapped                         | `460`  | string  | `"Trapped"`
+sLockLevel                       | `461`  | string  | `"Lock Level"`
+sKeyUsed                         | `462`  | string  | `"used to open lock"`
+sUnlocked                        | `463`  | string  | `"Unlocked"`
+fRepairMult                      | `464`  | float   | `1`
+fRepairAmountMult                | `465`  | float   | `3`
+fSpellValueMult                  | `466`  | float   | `10`
+fSpellMakingValueMult            | `467`  | float   | `7`
+fEnchantmentValueMult            | `468`  | float   | `1000`
+fTravelMult                      | `469`  | float   | `4000`
+fTravelTimeMult                  | `470`  | float   | `16000`
+fMagesGuildTravel                | `471`  | float   | `10`
+sBarter                          | `472`  | string  | `"Barter"`
+sRepair                          | `473`  | string  | `"Repair"`
+sSpells                          | `474`  | string  | `"Spells"`
+sTraining                        | `475`  | string  | `"Training"`
+sTravel                          | `476`  | string  | `"Travel"`
+sSpellmaking                     | `477`  | string  | `"Spellmaking"`
+sEnchanting                      | `478`  | string  | `"Enchanting"`
+sJoystickNotFound                | `479`  | string  | `"Joystick not found."`
+sJournalEntry                    | `480`  | string  | `"Your journal has been updated."`
+sDay                             | `481`  | string  | `"Day"`
+sCreate                          | `482`  | string  | `"Create"`
+sIngredients                     | `483`  | string  | `"Ingredients"`
+sApparatus                       | `484`  | string  | `"Apparatus"`
+sCreatedEffects                  | `485`  | string  | `"Created Effects"`
+sOnetypeEffectMessage            | `486`  | string  | `"This effect has already been added."`
+sName                            | `487`  | string  | `"Name"`
+sNameTitle                       | `488`  | string  | `"Name"`
+sSelect                          | `489`  | string  | `"Select"`
+sBuy                             | `490`  | string  | `"Buy"`
+sInfo                            | `491`  | string  | `"Info"`
+sMagicEffects                    | `492`  | string  | `"Magic Effects"`
+sOnce                            | `493`  | string  | `"Once"`
+sCostCharge                      | `494`  | string  | `"Cost/Charge"`
+sCostChance                      | `495`  | string  | `"Cost/Chance"`
+sAttributesMenu1                 | `496`  | string  | `"Choose an Attribute"`
+sBirthsignmenu1                  | `497`  | string  | `"Abilities:"`
+sBirthsignmenu2                  | `498`  | string  | `"Spells:"`
+sChooseClassMenu1                | `499`  | string  | `"Specialization:"`
+sChooseClassMenu2                | `500`  | string  | `"Favorite Attributes:"`
+sChooseClassMenu3                | `501`  | string  | `"Major Skills:"`
+sChooseClassMenu4                | `502`  | string  | `"Minor Skills:"`
+sCreateClassMenuWarning          | `503`  | string  | `"Reselect your class?"`
+sClassChoiceMenu1                | `504`  | string  | `"Answer his questions (Generates Class)"`
+sClassChoiceMenu2                | `505`  | string  | `"Give him the info (Pick from Class List)"`
+sClassChoiceMenu3                | `506`  | string  | `"Fill out forms yourself (Create Custom Class)"`
+sNotifyMessage1                  | `507`  | string  | `"You can only rest on solid ground."`
+sNotifyMessage2                  | `508`  | string  | `"You can't rest here enemies are nearby."`
+sNotifyMessage3                  | `509`  | string  | `"You cannot sleep when dreaming."`
+sNotifyMessage4                  | `510`  | string  | `"Saving..."`
+sNotifyMessage4XBOX              | `511`  | string  | `"Saving. Please don't turn off your Xbox console."`
+sNotifyMessage5                  | `512`  | string  | `"You must place the object you are holding into a container before exiting menus."`
+sNotifyMessage6                  | `513`  | string  | `"Only one of each ingredient can be used to make a potion."`
+sNotifyMessage6a                 | `514`  | string  | `"At least two ingredients are needed to make a potion."`
+sNotifyMessage7                  | `515`  | string  | `"Only four ingredients can be used in a potion."`
+sNotifyMessage8                  | `516`  | string  | `"Your potion failed."`
+sNotifyMessage9                  | `517`  | string  | `"Your offer is refused."`
+sNotifyMessage10                 | `518`  | string  | `"You have to name the spell before buying it."`
+sNotifyMessage11                 | `519`  | string  | `"You have to have an item to enchant."`
+sNotifyMessage12                 | `520`  | string  | `"You don't have enough gold to buy this spell."`
+sNotifyMessage13                 | `521`  | string  | `"Beast races cannot wear full helmets."`
+sNotifyMessage14                 | `522`  | string  | `"Beast races cannot wear boots."`
+sNotifyMessage15                 | `523`  | string  | `"Beast races cannot wear shoes."`
+sNotifyMessage16                 | `524`  | string  | `"You can only wear one clothing item at a time."`
+sNotifyMessage16_a               | `525`  | string  | `"You can only equip one item of that type at a time."`
+sNotifyMessage17                 | `526`  | string  | `"You cannot train a skill above its governing attribute."`
+sNotifyMessage18                 | `527`  | string  | `"You don't have enough gold to buy this spell."`
+sNotifyMessage19                 | `528`  | string  | `"Only one apparatus can be placed in each slot of the alchemy menu."`
+sNotifyMessage20                 | `529`  | string  | `"Please remove the object already in the mortar and pestle slot."`
+sNotifyMessage21                 | `530`  | string  | `"Please remove the object already in the alembic slot."`
+sNotifyMessage22                 | `531`  | string  | `"Please remove the object already in the calcinator slot."`
+sNotifyMessage23                 | `532`  | string  | `"Please remove the object already in the retort slot."`
+sNotifyMessage24                 | `533`  | string  | `"You need to assign all the major and minor skill slots."`
+sNotifyMessage25                 | `534`  | string  | `"You need to pick two favorite attributes."`
+sNotifyMessage26                 | `535`  | string  | `"You need to pick a specialization."`
+sNotifyMessage27                 | `536`  | string  | `"You need to assign all the major and minor skill slots."`
+sNotifyMessage28                 | `537`  | string  | `"You can only add eight effects to a spell."`
+sNotifyMessage29                 | `538`  | string  | `"You cannot add more enchantment to an object then it can hold."`
+sNotifyMessage30                 | `539`  | string  | `"You have to add at least one effect to a spell."`
+sNotifyMessage31                 | `540`  | string  | `"Items already enchanted cannot have another enchantment added."`
+sNotifyMessage32                 | `541`  | string  | `"Only soul gems with a soul can be put in the soul gem slot."`
+sNotifyMessage33                 | `542`  | string  | `"Only soul gems put in the soul gem slot."`
+sNotifyMessage34                 | `543`  | string  | `"The enchantment failed and your gem is destroyed."`
+sNotifyMessage35                 | `544`  | string  | `"Only one apparatus item can be equipped at a time."`
+sNotifyMessage36                 | `545`  | string  | `"You have to distribute all you points before exiting."`
+sNotifyMessage37                 | `546`  | string  | `"You need to type in your name."`
+sNotifyMessage38                 | `547`  | string  | `"Skill Increase:"`
+sNotifyMessage39                 | `548`  | string  | `"Your %s skill increased to %d."`
+sNotifyMessage40                 | `549`  | string  | `"Skill Maximum Reached."`
+sNotifyMessage41                 | `550`  | string  | `"Your %s skill has reached the limit of your %s."`
+sNotifyMessage42                 | `551`  | string  | `"You have been released after %d day. A skill has been affected by your time in prison."`
+sNotifyMessage43                 | `552`  | string  | `"You have been released after %d days. Your skills have been affected by your time in prison."`
+sNotifyMessage44                 | `553`  | string  | `"Your %s skill decreased to %d."`
+sNotifyMessage45                 | `554`  | string  | `"You need a Mortar and Pestle to use"`
+sNotifyMessage46                 | `555`  | string  | `"You need a Alembic to use"`
+sNotifyMessage47                 | `556`  | string  | `"You need a Calcinator to use"`
+sNotifyMessage48                 | `557`  | string  | `"You need a Retort to use"`
+sNotifyMessage49                 | `558`  | string  | `"That %s is mine."`
+sNotifyMessage50                 | `559`  | string  | `"%s has no effect on you."`
+sNotifyMessage51                 | `560`  | string  | `"The %s has been used up."`
+sNotifyMessage52                 | `561`  | string  | `"You must have a soul gem with a soul to make an Enchanted Item"`
+sNotifyMessage53                 | `562`  | string  | `"Your menu sizes and positions have been saved for exploring mode."`
+sNotifyMessage54                 | `563`  | string  | `"Do you want to start a new game and lose your current game?"`
+sNotifyMessage55                 | `564`  | string  | `"Please reconnect the controller and press START to continue."`
+sNotifyMessage56                 | `565`  | string  | `"There's a problem with the disc you're using. It may be dirty or damaged.  Press A to continue."`
+sNotifyMessage57                 | `566`  | string  | `"Please press START to begin."`
+sNotifyMessage58                 | `567`  | string  | `"Your Xbox Hard Disk doesn't have enough free blocks to save games.  Press A to continue without saving  or B to free more blocks."`
+sNotifyMessage59                 | `568`  | string  | `"You are over-encumbered."`
+sNotifyMessage60                 | `569`  | string  | `"%s has been added to your inventory."`
+sNotifyMessage61                 | `570`  | string  | `"%d %s has been added to your inventory."`
+sNotifyMessage62                 | `571`  | string  | `"%s has been removed from your inventory."`
+sNotifyMessage63                 | `572`  | string  | `"%d %s has been removed from your inventory."`
+sNotifyMessage64                 | `573`  | string  | `"You can't sleep in someone else's bed!"`
+sNotifyMessage65                 | `574`  | string  | `"You can't save a game with no name!"`
+sNotifyMessage66                 | `575`  | string  | `"This will reset all controls to the default settings.  Do you wish to continue?"`
+sNotifyMessage67                 | `576`  | string  | `"This will immediately change your resolution.  Do you want to continue?"`
+sTeleportDisabled                | `577`  | string  | `"Teleportation magic does not work here."`
+sLevitateDisabled                | `578`  | string  | `"Levitation magic does not work here."`
+sInPrisonTitle                   | `579`  | string  | `"Serving time..."`
+sInfoRefusal                     | `580`  | string  | `"Info Refusal"`
+sAdmireSuccess                   | `581`  | string  | `"Admire Success"`
+sAdmireFail                      | `582`  | string  | `"Admire Fail"`
+sIntimidateSuccess               | `583`  | string  | `"Intimidate Success"`
+sIntimidateFail                  | `584`  | string  | `"Intimidate Fail"`
+sTauntSuccess                    | `585`  | string  | `"Taunt Success"`
+sTauntFail                       | `586`  | string  | `"Taunt Fail"`
+sServiceRefusal                  | `587`  | string  | `"Service Refusal"`
+sBribeSuccess                    | `588`  | string  | `"Bribe Success"`
+sBribeFail                       | `589`  | string  | `"Bribe Fail"`
+sWerewolfRefusal                 | `590`  | string  | `"You cannot do this as a werewolf."`
+sWerewolfPopup                   | `591`  | string  | `"Werewolf"`
+sWerewolfRestMessage             | `592`  | string  | `"You cannot rest in werewolf form."`
+sWerewolfAlarmMessage            | `593`  | string  | `"You have been detected as a known werewolf."`
+sBookSkillMessage                | `594`  | string  | `"You have gained knowledge from this book."`
+sLoadingMessage1                 | `595`  | string  | `"Loading Master/Plugin Files"`
+sLoadingMessage2                 | `596`  | string  | `"Loading Area"`
+sLoadingMessage3                 | `597`  | string  | `"Loading Area"`
+sLoadingMessage4                 | `598`  | string  | `"Initializing Data..."`
+sLoadingMessage5                 | `599`  | string  | `"Parsing Quests (this may take a while) Re-save when done."`
+sLoadingMessage9                 | `600`  | string  | `"Clearing Data..."`
+sLoadingMessage14                | `601`  | string  | `"Loading Save Game"`
+sLoadingMessage15                | `602`  | string  | `"Loading (%s)"`
+sInvalidSaveGameMsg              | `603`  | string  | `"This file is an invalid Save Game."`
+sInvalidSaveGameMsgXBOX          | `604`  | string  | `"Unable to load saved game. Press A to continue."`
+sLoadingErrorsMsg                | `605`  | string  | `"Errors were encountered loading from file '%s'."`
+sMissingMastersMsg               | `606`  | string  | `"The currently selected master files and plugins do not match the ones used by this save game. Errors may occur during load or game play. Do you wish to continue?"`
+sChangedMastersMsg               | `607`  | string  | `"The selected master files and plugins may have changed since this save game was created. Errors may occur during load or game play. Do you wish to continue?"`
+sMastPlugMismatchMsg             | `608`  | string  | `"One of the files that "%s" is dependent on has changed since the last save.  This may result in errors. Saving again will clear this message  but not necessarily fix any errors."`
+sGeneralMastPlugMismatchMsg      | `609`  | string  | `"One or more plugins could not find the correct versions of the master files they depend on. Errors may occur during load or game play. Check the "Warnings.txt" file for more information."`
+sLoadLastSaveMsg                 | `610`  | string  | `"The most recent Save Game is '%s'.  Would you like to load it?"`
+sMessage1                        | `611`  | string  | `"Do you want to Load a save game and lose your current game?"`
+sMessage2                        | `612`  | string  | `"Quit Morrowind?"`
+sMessage3                        | `613`  | string  | `"Are you sure you want to delete this Save Game?"`
+sMessage4                        | `614`  | string  | `"Are you sure you want to overwrite this Save Game?"`
+sMessage5                        | `615`  | string  | `"Do you wish to quit your current game?  All unsaved progress will be lost."`
+sMessageQuestionAnswer1          | `616`  | string  | `"Your personality and past reflect a:"`
+sMessageQuestionAnswer2          | `617`  | string  | `"Accept this Class"`
+sMessageQuestionAnswer3          | `618`  | string  | `"Choose Another Class"`
+sBarterDialog1                   | `619`  | string  | `"You cannot afford this transaction."`
+sBarterDialog2                   | `620`  | string  | `"I cannot afford this transaction."`
+sBarterDialog3                   | `621`  | string  | `"This is to heavy for you to carry."`
+sBarterDialog4                   | `622`  | string  | `"I don't buy that item."`
+sBarterDialog5                   | `623`  | string  | `"Thank you, Please Come Again."`
+sBarterDialog6                   | `624`  | string  | `"You need to place the bartered item before existing Barter Menu!"`
+sBarterDialog7                   | `625`  | string  | `"Price"`
+sBarterDialog8                   | `626`  | string  | `"Offer"`
+sBarterDialog9                   | `627`  | string  | `"You cannot sell summoned items!"`
+sBarterDialog10                  | `628`  | string  | `"You cannot buy summoned items!"`
+sBarterDialog11                  | `629`  | string  | `"You need to trade items before making an offer."`
+sBarterDialog12                  | `630`  | string  | `"You cannot drop summoned items!"`
+sInventoryMessage1               | `631`  | string  | `"This object is broken and cannot be equipped until fixed."`
+sInventoryMessage2               | `632`  | string  | `"You cannot repair items during battle."`
+sInventoryMessage3               | `633`  | string  | `"You cannot make potions during battle."`
+sInventoryMessage4               | `634`  | string  | `"You cannot read during battle."`
+sInventoryMessage5               | `635`  | string  | `"You cannot use soul gems during battle."`
+sContentsMessage1                | `636`  | string  | `"You cannot remove summoned items from their container."`
+sContentsMessage2                | `637`  | string  | `"You cannot place items in this container."`
+sContentsMessage3                | `638`  | string  | `"The item will not fit."`
+sAttributeListTitle              | `639`  | string  | `"Attribute List"`
+sConsoleTitle                    | `640`  | string  | `"Console"`
+sCreateClassMenu1                | `641`  | string  | `"Class Description"`
+sCreateClassMenu2                | `642`  | string  | `"Close the Description menu before leaving Class Creation"`
+sCreateClassMenu3                | `643`  | string  | `"The class needs a description."`
+sCreateClassMenuHelp1            | `644`  | string  | `"You'll get +5 to all skills of your specialization. They'll also be easier to increase."`
+sCreateClassMenuHelp2            | `645`  | string  | `"You'll get +10 to each of your favored attributes."`
+sControlsMenu1                   | `646`  | string  | `"Reset Controls"`
+sControlsMenu2                   | `647`  | string  | `"Mouse Sensitivity"`
+sControlsMenu3                   | `648`  | string  | `"Press a key or push a button to set this command."`
+sControlsMenu4                   | `649`  | string  | `"Vertical Sensitivity"`
+sControlsMenu5                   | `650`  | string  | `"Horizontal Sensitivity"`
+sControlsMenu6                   | `651`  | string  | `"Push a button to set this command."`
+sGameWithoutLauncherXbox         | `652`  | string  | `"The game was started without the launcher.  Press START to continue."`
+sDialogMenu1                     | `653`  | string  | `"Final Disposition:"`
+sEnchantmentMenu1                | `654`  | string  | `"Enchantment Menu"`
+sEnchantmentMenu2                | `655`  | string  | `"Enchantment Name"`
+sEnchantmentMenu3                | `656`  | string  | `"Enchantment"`
+sEnchantmentMenu4                | `657`  | string  | `"Point Cost"`
+sEnchantmentMenu5                | `658`  | string  | `"Buy"`
+sEnchantmentMenu6                | `659`  | string  | `"Chance"`
+sEnchantmentMenu7                | `660`  | string  | `"Please remove the current soul gem before placing a different soul gem."`
+sEnchantmentMenu8                | `661`  | string  | `"You cannot buy a spell that has a zero point cost."`
+sEnchantmentMenu9                | `662`  | string  | `"You cannot enchant more then one item of that type at a time."`
+sEnchantmentMenu10               | `663`  | string  | `"The cast cost cannot exceed the charge amount put into the time"`
+sEnchantmentMenu11               | `664`  | string  | `"You must add at least one effect to an enchantment"`
+sEnchantmentMenu12               | `665`  | string  | `"You have successfully created an enchanted item"`
+sEnchantmentHelp1                | `666`  | string  | `"Slot for item to enchant. Only weapons, armor, scrolls and clothing that are not already enchanted can be enchanted."`
+sEnchantmentHelp2                | `667`  | string  | `"Slot for the soul gem used to enchant an item. Only soul gems filled with a soul can be used. The soul amount is the total charge placed into the item."`
+sEnchantmentHelp3                | `668`  | string  | `"The first number is the total amount the enchantment would cost to cast. The second number is the total enchantment cost that can be placed on this type of item."`
+sEnchantmentHelp4                | `669`  | string  | `"The amount of charge points needed each time this enchantment is cast. This number is modified by your enchant skill."`
+sEnchantmentHelp5                | `670`  | string  | `"The amount of soul in the soul gem in the soul gem slot"`
+sEnchantmentHelp6                | `671`  | string  | `"Amount of gold to buy this enchantment"`
+sEnchantmentHelp7                | `672`  | string  | `"Type of cast for the enchantment."`
+sEnchantmentHelp8                | `673`  | string  | `"Name you give the spell."`
+sEnchantmentHelp9                | `674`  | string  | `"Magic effects you know that you can add to an item"`
+sEnchantmentHelp10               | `675`  | string  | `"Current effects on the item"`
+sInputMenu1                      | `676`  | string  | `"Enter"`
+sInventoryMenu1                  | `677`  | string  | `"You cannot equip items being bartered."`
+sLevelUpMenu1                    | `678`  | string  | `"You have ascended to Level"`
+sLevelUpMenu2                    | `679`  | string  | `"It's all suddenly obvious to you. You just have to concentrate. All the energy and time you've wasted is a sin, but without the experience you've gained, taking risks, taking responsibility for failure how could you have understood?"`
+sLevelUpMenu3                    | `680`  | string  | `"x2"`
+sLevelUpMenu4                    | `681`  | string  | `"x3"`
+sLevelUpMsg                      | `682`  | string  | `"You should rest and meditate on what you've learned."`
+sLevelUp                         | `683`  | string  | `"Level Up"`
+sRange                           | `684`  | string  | `"Range"`
+sArea                            | `685`  | string  | `"Area"`
+sMagnitude                       | `686`  | string  | `"Magnitude"`
+sDuration                        | `687`  | string  | `"Duration"`
+sDrain                           | `688`  | string  | `"Drain"`
+sAbsorb                          | `689`  | string  | `"Absorb"`
+sFortify                         | `690`  | string  | `"Fortify"`
+sRestore                         | `691`  | string  | `"Restore"`
+sDamage                          | `692`  | string  | `"Damage"`
+spoint                           | `693`  | string  | `"pt"`
+spoints                          | `694`  | string  | `"pts"`
+spercent                         | `695`  | string  | `"%"`
+sfor                             | `696`  | string  | `"for"`
+ssecond                          | `697`  | string  | `"sec"`
+sseconds                         | `698`  | string  | `"secs"`
+sin                              | `699`  | string  | `"in"`
+sfootarea                        | `700`  | string  | `"ft"`
+sfeet                            | `701`  | string  | `"ft"`
+sXTimes                          | `702`  | string  | `"x"`
+sXTimesINT                       | `703`  | string  | `"x INT"`
+sonword                          | `704`  | string  | `"on"`
+sNone                            | `705`  | string  | `"None"`
+sDone                            | `706`  | string  | `"Done"`
+sStartCell                       | `707`  | string  | `"Cavern of the Incarnate"`
+sStartError                      | `708`  | string  | `"Cannot start in an empty interior cell!"`
+sStartCellError                  | `709`  | string  | `"Starting interior cell "Cavern of the Incarnate" not found!"`
+sAdmire                          | `710`  | string  | `"Admire"`
+sIntimidate                      | `711`  | string  | `"Intimidate"`
+sTaunt                           | `712`  | string  | `"Taunt"`
+sBribe 10 Gold                   | `713`  | string  | `"Bribe 10 Gold"`
+sBribe10Gold                     | `713`  | string  | `"Bribe 10 Gold"`
+sBribe100Gold                    | `714`  | string  | `"Bribe 100 Gold"`
+sBribe 100 Gold                  | `714`  | string  | `"Bribe 100 Gold"`
+sBribe1000Gold                   | `715`  | string  | `"Bribe 1000 Gold"`
+sBribe 1000 Gold                 | `715`  | string  | `"Bribe 1000 Gold"`
+sPersuasionMenuTitle             | `716`  | string  | `"Persuasion"`
+sFast                            | `717`  | string  | `"Fast"`
+sSlow                            | `718`  | string  | `"Slow"`
+sBestAttack                      | `719`  | string  | `"Always Use Best Attack"`
+sSubtitles                       | `720`  | string  | `"Subtitles"`
+sMouseFlip                       | `721`  | string  | `"Invert Y Axis"`
+sCursorOff                       | `722`  | string  | `"Crosshair"`
+sEnableJoystick                  | `723`  | string  | `"Enable Joystick"`
+sXStrafe                         | `724`  | string  | `"X-Axis Movement"`
+sStrafe                          | `725`  | string  | `"Strafe"`
+sTurn                            | `726`  | string  | `"Turn"`
+sMouseWheelUpShort               | `727`  | string  | `"MWheel Up"`
+sMouseWheelDownShort             | `728`  | string  | `"MWheel Down"`
+sMouse                           | `729`  | string  | `"Mouse"`
+sJoystickShort                   | `730`  | string  | `"Joy"`
+sJoystickHatShort                | `731`  | string  | `"JHat"`
+sPickUp                          | `732`  | string  | `"Take"`
+sItemName                        | `733`  | string  | `"Item Name"`
+sNoName                          | `734`  | string  | `"NO NAME GIVEN!"`
+sItem                            | `735`  | string  | `"Item"`
+sRaceMenu1                       | `736`  | string  | `"Appearance"`
+sRaceMenu2                       | `737`  | string  | `"Change Sex"`
+sRaceMenu3                       | `738`  | string  | `"Change Face"`
+sRaceMenu4                       | `739`  | string  | `"Change Hair"`
+sRaceMenu5                       | `740`  | string  | `"Race"`
+sRaceMenu6                       | `741`  | string  | `"Race Description"`
+sRaceMenu7                       | `742`  | string  | `"Specials"`
+sRestMenu1                       | `743`  | string  | `"How many hours?"`
+sRestMenu2                       | `744`  | string  | `"Hours"`
+sRestMenu3                       | `745`  | string  | `"REST"`
+sRestMenu4                       | `746`  | string  | `"You can't rest right now."`
+fRestMagicMult                   | `747`  | float   | `0.15`
+sSaveMenu1                       | `748`  | string  | `"New Save Game"`
+sServiceRepairTitle              | `749`  | string  | `"Repair Service Menu"`
+sServiceTravelTitle              | `750`  | string  | `"Travel"`
+sServiceTrainingTitle            | `751`  | string  | `"Training"`
+sServiceTrainingWords            | `752`  | string  | `"I can teach nothing more about that skill"`
+sServiceSpellsTitle              | `753`  | string  | `"Spells"`
+sSkillsMenu1                     | `754`  | string  | `"Choose a Skill"`
+sBonusSkillTitle                 | `755`  | string  | `"Skill Bonus"`
+sSpecializationMenu1             | `756`  | string  | `"Choose a Specialization"`
+sSpellmakingMenuTitle            | `757`  | string  | `"Spellmaking"`
+sSpellmakingMenu1                | `758`  | string  | `"Spell Chance"`
+sSpellmakingHelp1                | `759`  | string  | `"Name you give the spell."`
+sSpellmakingHelp2                | `760`  | string  | `"Amount of Magika one cast of the spell will cost"`
+sSpellmakingHelp3                | `761`  | string  | `"The chance you have to cast the spell at your current skill level"`
+sSpellmakingHelp4                | `762`  | string  | `"How much gold the spell will cost you."`
+sSpellmakingHelp5                | `763`  | string  | `"Magic effects you know that you can add to a spell"`
+sSpellmakingHelp6                | `764`  | string  | `"Current effects on the spell"`
+sKilledEssential                 | `765`  | string  | `"With this character's death, the thread of prophecy is severed. Restore a saved game to restore the weave of fate, or persist in the doomed world you have created."`
+sCrimeMessage                    | `766`  | string  | `"Your crime has been reported!"`
+sPotionSuccess                   | `767`  | string  | `"You created a potion"`
+sMagicItem                       | `768`  | string  | `"Magic Items"`
+sMagnitudeDes                    | `769`  | string  | `"The range of a spells power"`
+sAreaDes                         | `770`  | string  | `"The radius the spell attempt to affect"`
+sDurationDes                     | `771`  | string  | `"The length a spell lasts"`
+sRangeDes                        | `772`  | string  | `"What the spell is directed at such as yourself, a target or who you touch"`
+sCrimeHelp                       | `773`  | string  | `"The penalty you must pay for your crimes, if caught."`
+sSoulGem                         | `774`  | string  | `"Soul"`
+sCastCost                        | `775`  | string  | `"Cast Cost"`
+sTravelServiceTitle              | `776`  | string  | `"Select destination"`
+sSpellServiceTitle               | `777`  | string  | `"Select spell to buy"`
+sRepairServiceTitle              | `778`  | string  | `"Select item to repair"`
+sTrainingServiceTitle            | `779`  | string  | `"Select skill to train"`
+sMortar                          | `780`  | string  | `"Mortar"`
+sCalcinator                      | `781`  | string  | `"Calcinator"`
+sAlembic                         | `782`  | string  | `"Alembic"`
+sRetort                          | `783`  | string  | `"Retort"`
+sQuestionMark                    | `784`  | string  | `"?"`
+s3dAudio                         | `785`  | string  | `"3D Audio"`
+s3dHardware                      | `786`  | string  | `"Hardware Accelerated"`
+s3dSoftware                      | `787`  | string  | `"Software Mode"`
+sYourGold                        | `788`  | string  | `"YOUR GOLD"`
+sSellerGold                      | `789`  | string  | `"SELLER GOLD"`
+sMaxSale                         | `790`  | string  | `"Max Sale"`
+sTotalCost                       | `791`  | string  | `"TOTAL COST"`
+sTotalSold                       | `792`  | string  | `"TOTAL SOLD"`
+sOffer                           | `793`  | string  | `"Offer"`
+sLess                            | `794`  | string  | `"Less"`
+sMore                            | `795`  | string  | `"More"`
+sInventory                       | `796`  | string  | `"Inventory"`
+sBookPageOne                     | `797`  | string  | `"1"`
+sBookPageTwo                     | `798`  | string  | `"2"`
+sDisposeofCorpse                 | `799`  | string  | `"Dispose of Corpse"`
+sCaughtStealingMessage           | `800`  | string  | `"Hey he's stealing my stuff!"`
+sUserDefinedClass                | `801`  | string  | `"User Defined Class"`
+sAsk                             | `802`  | string  | `"Ask"`
+sEnchantItems                    | `803`  | string  | `"Items to Enchant"`
+sSoulGemsWithSouls               | `804`  | string  | `"Soul Gems with Souls"`
+sDoYouWantTo                     | `805`  | string  | `"Do you want to"`
+sRechargeEnchantment             | `806`  | string  | `"Recharge Enchanted Item"`
+sMake                            | `807`  | string  | `"Make an Enchanted Item"`
+sSell                            | `808`  | string  | `"Sell"`
+sEquip                           | `809`  | string  | `"Equip"`
+sDrop                            | `810`  | string  | `"Drop"`
+sContainer                       | `811`  | string  | `"Container"`
+sStats                           | `812`  | string  | `"Stats"`
+sMap                             | `813`  | string  | `"Map"`
+sCenter                          | `814`  | string  | `"Center"`
+sSaveMenuHelp01                  | `815`  | string  | `"th of"`
+sSaveMenuHelp02                  | `816`  | string  | `"month"`
+sSaveMenuHelp03                  | `817`  | string  | `"day"`
+sSaveMenuHelp04                  | `818`  | string  | `"a.m."`
+sSaveMenuHelp05                  | `819`  | string  | `"p.m."`
+sSaveMenuHelp06                  | `820`  | string  | `"Delete Game?"`
+sDeleteNote                      | `821`  | string  | `"Delete Note?"`
+sEditNote                        | `822`  | string  | `"Edit Note"`
+sBlocks                          | `823`  | string  | `"Blocks"`
+sFileSize                        | `824`  | string  | `"File Size"`
+sSave                            | `825`  | string  | `"Save"`
+sDeleteSpell                     | `826`  | string  | `"Delete Spell"`
+sQuestionDeleteSpell             | `827`  | string  | `"Are you sure you wish to delete %s?"`
+sDeleteSpellError                | `828`  | string  | `"You cannot delete this item from the Magic Menu"`
+sLocal                           | `829`  | string  | `"Local"`
+sLoadFailedMessage               | `830`  | string  | `"Your last load failed. You must load another game or start a new game."`
+sShadows                         | `831`  | string  | `"Shadows"`
+sControlerVibration              | `832`  | string  | `"Controller Vibration"`
+sQuanityMenuMessage01            | `833`  | string  | `"Amount to Sell"`
+sQuanityMenuMessage02            | `834`  | string  | `"Amount to Buy"`
+sSex                             | `835`  | string  | `"Sex"`
+sHair                            | `836`  | string  | `"Hair"`
+sFace                            | `837`  | string  | `"Face"`
+sRepairFailed                    | `838`  | string  | `"Your repair failed!"`
+sRepairSuccess                   | `839`  | string  | `"Your repair succeeded!"`
+sHeal                            | `840`  | string  | `"Heal"`
+sgp                              | `841`  | string  | `"gp"`
+sSetValueMessage01               | `842`  | string  | `"The maximum magnitude cannot be less then the minimum magnitude!"`
+sDelete                          | `843`  | string  | `"Delete"`
+sVideoWarning                    | `844`  | string  | `"Warning: Video Resolution does not allow shadows."`
+sResChangeWarning                | `845`  | string  | `"Desired resolution not supported by video card."`
+sShift                           | `846`  | string  | `"Shift"`
+sBackspace                       | `847`  | string  | `"Backspace"`
+sCustomClassName                 | `848`  | string  | `"Adventurer"`
+sSpace                           | `849`  | string  | `"Space"`
+sInventorySelectNoItems          | `850`  | string  | `"You have no items to fill this slot."`
+sInventorySelectNoSoul           | `851`  | string  | `"You have no filled Soul Gems"`
+sInventorySelectNoIngredients    | `852`  | string  | `"You have no ingredients"`
+sDisposeCorpseFail               | `853`  | string  | `"You can not remove this corpse"`
+sQuickMenuTitle                  | `854`  | string  | `"Quick Keys"`
+sQuickMenuInstruc                | `855`  | string  | `"Click on quick key slot to add a spell, magic item or inventory item"`
+sQuickMenu1                      | `856`  | string  | `"Item to QuickKey"`
+sQuickMenu2                      | `857`  | string  | `"Inventory Menu Item"`
+sQuickMenu3                      | `858`  | string  | `"Magic Menu Item"`
+sQuickMenu4                      | `859`  | string  | `"Delete QuickKey Item"`
+sQuickMenu5                      | `860`  | string  | `"You no longer have"`
+sQuickMenu6                      | `861`  | string  | `"Inventory Items to Quick key"`
+sMagicSelectTitle                | `862`  | string  | `"Select a magic to Quick key."`
+sNextRank                        | `863`  | string  | `"Next Rank:"`
+sNeedOneSkill                    | `864`  | string  | `"Need one skill at"`
+sNeedTwoSkills                   | `865`  | string  | `"Need two skills at"`
+sand                             | `866`  | string  | `"and"`
+sOneHanded                       | `867`  | string  | `"One Handed"`
+sTwoHanded                       | `868`  | string  | `"Two Handed"`
+sType                            | `869`  | string  | `"Type:"`
+sAt                              | `870`  | string  | `"At"`
+sUnequip                         | `871`  | string  | `"Unequip"`
+sScrolldown                      | `872`  | string  | `"Scroll Down"`
+sScrollup                        | `873`  | string  | `"Scroll Up"`
+sSleepInterrupt                  | `874`  | string  | `"Your rest has been interrupted."`
+sSoultrapSuccess                 | `875`  | string  | `"Your have trapped a soul"`
+sCantEquipWeapWarning            | `876`  | string  | `"Finish your current attack before equipping a new weapon"`
+sOfferMenuTitle                  | `877`  | string  | `"Offer Menu"`
+sPowers                          | `878`  | string  | `"Powers"`
+sBreath                          | `879`  | string  | `"Breath"`
+sDifficulty                      | `880`  | string  | `"Difficulty"`
+sEasy                            | `881`  | string  | `"Easy"`
+sHard                            | `882`  | string  | `"Hard"`
+sProfitValue                     | `883`  | string  | `"Profit Value"`
+sCompanionShare                  | `884`  | string  | `"Companion Share"`
+sCompanionWarningMessage         | `885`  | string  | `"Your mercenary is poorer now than when he contracted with you.  Your mercenary will quit if you do not give him gold or goods to bring his Profit Value to a positive value."`
+sCompanionWarningButtonOne       | `886`  | string  | `"Let the mercenary quit."`
+sCompanionWarningButtonTwo       | `887`  | string  | `"Return to Companion Share display."`
+sAttributeStrength               | `888`  | string  | `"Strength"`
+sAttributeIntelligence           | `889`  | string  | `"Intelligence"`
+sAttributeWillpower              | `890`  | string  | `"Willpower"`
+sAttributeAgility                | `891`  | string  | `"Agility"`
+sAttributeSpeed                  | `892`  | string  | `"Speed"`
+sAttributeEndurance              | `893`  | string  | `"Endurance"`
+sAttributePersonality            | `894`  | string  | `"Personality"`
+sAttributeLuck                   | `895`  | string  | `"Luck"`
+sSkillBlock                      | `896`  | string  | `"Block"`
+sSkillArmorer                    | `897`  | string  | `"Armorer"`
+sSkillMediumarmor                | `898`  | string  | `"Medium Armor"`
+sSkillHeavyarmor                 | `899`  | string  | `"Heavy Armor"`
+sSkillBluntweapon                | `900`  | string  | `"Blunt Weapon"`
+sSkillLongblade                  | `901`  | string  | `"Long Blade"`
+sSkillAxe                        | `902`  | string  | `"Axe"`
+sSkillSpear                      | `903`  | string  | `"Spear"`
+sSkillAthletics                  | `904`  | string  | `"Athletics"`
+sSkillEnchant                    | `905`  | string  | `"Enchant"`
+sSkillDestruction                | `906`  | string  | `"Destruction"`
+sSkillAlteration                 | `907`  | string  | `"Alteration"`
+sSkillIllusion                   | `908`  | string  | `"Illusion"`
+sSkillConjuration                | `909`  | string  | `"Conjuration"`
+sSkillMysticism                  | `910`  | string  | `"Mysticism"`
+sSkillRestoration                | `911`  | string  | `"Restoration"`
+sSkillAlchemy                    | `912`  | string  | `"Alchemy"`
+sSkillUnarmored                  | `913`  | string  | `"Unarmored"`
+sSkillSecurity                   | `914`  | string  | `"Security"`
+sSkillSneak                      | `915`  | string  | `"Sneak"`
+sSkillAcrobatics                 | `916`  | string  | `"Acrobatics"`
+sSkillLightarmor                 | `917`  | string  | `"Light Armor"`
+sSkillShortblade                 | `918`  | string  | `"Short Blade"`
+sSkillMarksman                   | `919`  | string  | `"Marksman"`
+sSkillMercantile                 | `920`  | string  | `"Mercantile"`
+sSkillSpeechcraft                | `921`  | string  | `"Speechcraft"`
+sSkillHandtohand                 | `922`  | string  | `"Hand-to-hand"`
+sHealth                          | `923`  | string  | `"Health"`
+sRace                            | `924`  | string  | `"Race"`
+sLevel                           | `925`  | string  | `"Level"`
+sLevels                          | `926`  | string  | `"Levels"`
+sFaction                         | `927`  | string  | `"Faction"`
+sBirthSign                       | `928`  | string  | `"Sign"`
+sBounty                          | `929`  | string  | `"Bounty"`
+sReputation                      | `930`  | string  | `"Reputation"`
+sSchool                          | `931`  | string  | `"School"`
+sSkill                           | `932`  | string  | `"Skill"`
+sSkillProgress                   | `933`  | string  | `"Progress towards skill increase"`
+sSkillMaxReached                 | `934`  | string  | `"Maximum proficiency has been reached."`
+sLevelProgress                   | `935`  | string  | `"Progress towards level increase"`
+sMagic                           | `936`  | string  | `"Magicka"`
+sMagicMenu                       | `937`  | string  | `"Magic"`
+sFatigue                         | `938`  | string  | `"Fatigue"`
+sSkillsMenuReputationHelp        | `939`  | string  | `"Your fame rating in the world of Morrowind."`
+sStrDesc                         | `940`  | string  | `"Affects your starting Health, how much you can carry, your maximum Fatigue, and how much damage you do in melee."`
+sIntDesc                         | `941`  | string  | `"Determines your maximum amount of Magicka."`
+sWilDesc                         | `942`  | string  | `"Affects your ability to resist magic, and your maximum Fatigue."`
+sAgiDesc                         | `943`  | string  | `"Affects your ability to dodge and hit targets in melee as well as your maximum Fatigue."`
+sSpdDesc                         | `944`  | string  | `"Determines how fast you can move."`
+sEndDesc                         | `945`  | string  | `"Affects your starting Health, your Health gain per level, and your maximum Fatigue."`
+sPerDesc                         | `946`  | string  | `"Affects your ability to deal with other characters and how much they like you."`
+sLucDesc                         | `947`  | string  | `"Affects every action you do in a small way."`
+sFatDesc                         | `948`  | string  | `"How tired you are. Low fatigue makes it harder to successfully perform actions."`
+sHealthDesc                      | `949`  | string  | `"The amount of damage you can take before you die. Increases every time you gain a level."`
+sMagDesc                         | `950`  | string  | `"Used to cast spells. Magicka is naturally restored by resting."`
+fWortChanceValue                 | `951`  | float   | `15`
+sDefaultCellname                 | `952`  | string  | `"Wilderness"`
+fMinWalkSpeed                    | `953`  | float   | `100`
+fMaxWalkSpeed                    | `954`  | float   | `200`
+fMinWalkSpeedCreature            | `955`  | float   | `5`
+fMaxWalkSpeedCreature            | `956`  | float   | `300`
+fEncumberedMoveEffect            | `957`  | float   | `0.3`
+fBaseRunMultiplier               | `958`  | float   | `1.75`
+fAthleticsRunBonus               | `959`  | float   | `1`
+fJumpAcrobaticsBase              | `960`  | float   | `128`
+fJumpAcroMultiplier              | `961`  | float   | `4`
+fJumpEncumbranceBase             | `962`  | float   | `0.5`
+fJumpEncumbranceMultiplier       | `963`  | float   | `1`
+fJumpRunMultiplier               | `964`  | float   | `1`
+fJumpMoveBase                    | `965`  | float   | `0.5`
+fJumpMoveMult                    | `966`  | float   | `0.5`
+fSwimWalkBase                    | `967`  | float   | `0.5`
+fSwimRunBase                     | `968`  | float   | `0.5`
+fSwimWalkAthleticsMult           | `969`  | float   | `0.02`
+fSwimRunAthleticsMult            | `970`  | float   | `0.1`
+fSwimHeightScale                 | `971`  | float   | `0.9`
+fHoldBreathTime                  | `972`  | float   | `20`
+fHoldBreathEndMult               | `973`  | float   | `0.5`
+fSuffocationDamage               | `974`  | float   | `3`
+fMinFlySpeed                     | `975`  | float   | `5`
+fMaxFlySpeed                     | `976`  | float   | `300`
+fStromWindSpeed                  | `977`  | float   | `0.7`
+fStromWalkMult                   | `978`  | float   | `0.25`
+fFallDamageDistanceMin           | `979`  | float   | `400`
+fFallDistanceBase                | `980`  | float   | `0`
+fFallDistanceMult                | `981`  | float   | `0.07`
+fFallAcroBase                    | `982`  | float   | `0.25`
+fFallAcroMult                    | `983`  | float   | `0.01`
+iMaxActivateDist                 | `984`  | integer | `192`
+iMaxInfoDist                     | `985`  | integer | `192`
+fVanityDelay                     | `986`  | float   | `30`
+fMaxHeadTrackDistance            | `987`  | float   | `400`
+fInteriorHeadTrackMult           | `988`  | float   | `0.5`
+iHelmWeight                      | `989`  | integer | `5`
+iPauldronWeight                  | `990`  | integer | `10`
+iCuirassWeight                   | `991`  | integer | `30`
+iGauntletWeight                  | `992`  | integer | `5`
+iGreavesWeight                   | `993`  | integer | `15`
+iBootsWeight                     | `994`  | integer | `20`
+iShieldWeight                    | `995`  | integer | `15`
+fLightMaxMod                     | `996`  | float   | `0.6`
+fMedMaxMod                       | `997`  | float   | `0.9`
+fUnarmoredBase1                  | `998`  | float   | `0.1`
+fUnarmoredBase2                  | `999`  | float   | `0.065`
+iBaseArmorSkill                  | `1000` | integer | `30`
+fBlockStillBonus                 | `1001` | float   | `1.25`
+fDamageStrengthBase              | `1002` | float   | `0.5`
+fDamageStrengthMult              | `1003` | float   | `0.1`
+fSwingBlockBase                  | `1004` | float   | `1`
+fSwingBlockMult                  | `1005` | float   | `1`
+fFatigueBase                     | `1006` | float   | `1.25`
+fFatigueMult                     | `1007` | float   | `0.5`
+fFatigueReturnBase               | `1008` | float   | `2.5`
+fFatigueReturnMult               | `1009` | float   | `0.02`
+fEndFatigueMult                  | `1010` | float   | `0.04`
+fFatigueAttackBase               | `1011` | float   | `2`
+fFatigueAttackMult               | `1012` | float   | `0`
+fWeaponFatigueMult               | `1013` | float   | `0.25`
+fFatigueBlockBase                | `1014` | float   | `4`
+fFatigueBlockMult                | `1015` | float   | `0`
+fWeaponFatigueBlockMult          | `1016` | float   | `1`
+fFatigueRunBase                  | `1017` | float   | `5`
+fFatigueRunMult                  | `1018` | float   | `2`
+fFatigueJumpBase                 | `1019` | float   | `5`
+fFatigueJumpMult                 | `1020` | float   | `0`
+fFatigueSwimWalkBase             | `1021` | float   | `2.5`
+fFatigueSwimRunBase              | `1022` | float   | `7`
+fFatigueSwimWalkMult             | `1023` | float   | `0`
+fFatigueSwimRunMult              | `1024` | float   | `0`
+fFatigueSneakBase                | `1025` | float   | `1.5`
+fFatigueSneakMult                | `1026` | float   | `1.5`
+fMinHandToHandMult               | `1027` | float   | `0.1`
+fMaxHandToHandMult               | `1028` | float   | `0.5`
+fHandtoHandHealthPer             | `1029` | float   | `0.1`
+fCombatInvisoMult                | `1030` | float   | `0.2`
+fCombatKODamageMult              | `1031` | float   | `1.5`
+fCombatCriticalStrikeMult        | `1032` | float   | `4`
+iBlockMinChance                  | `1033` | integer | `10`
+iBlockMaxChance                  | `1034` | integer | `50`
+fLevelUpHealthEndMult            | `1035` | float   | `0.1`
+fSoulGemMult                     | `1036` | float   | `3`
+fEffectCostMult                  | `1037` | float   | `0.5`
+fSpellPriceMult                  | `1038` | float   | `2`
+fFatigueSpellBase                | `1039` | float   | `0`
+fFatigueSpellMult                | `1040` | float   | `0`
+fFatigueSpellCostMult            | `1041` | float   | `0`
+fPotionStrengthMult              | `1042` | float   | `0.5`
+fPotionT1MagMult                 | `1043` | float   | `1.5`
+fPotionT1DurMult                 | `1044` | float   | `0.5`
+fPotionMinUsefulDuration         | `1045` | float   | `20`
+fPotionT4BaseStrengthMult        | `1046` | float   | `20`
+fPotionT4EquipStrengthMult       | `1047` | float   | `12`
+fIngredientMult                  | `1048` | float   | `1`
+fMagicItemCostMult               | `1049` | float   | `1`
+fMagicItemPriceMult              | `1050` | float   | `1`
+fMagicItemOnceMult               | `1051` | float   | `1`
+fMagicItemUsedMult               | `1052` | float   | `1`
+fMagicItemStrikeMult             | `1053` | float   | `1`
+fMagicItemConstantMult           | `1054` | float   | `1`
+fEnchantmentMult                 | `1055` | float   | `0.1`
+fEnchantmentChanceMult           | `1056` | float   | `3`
+fPCbaseMagickaMult               | `1057` | float   | `1`
+fNPCbaseMagickaMult              | `1058` | float   | `2`
+fAutoSpellChance                 | `1059` | float   | `80`
+fAutoPCSpellChance               | `1060` | float   | `50`
+iAutoSpellTimesCanCast           | `1061` | integer | `3`
+iAutoSpellAttSkillMin            | `1062` | integer | `70`
+iAutoSpellAlterationMax          | `1063` | integer | `5`
+iAutoSpellConjurationMax         | `1064` | integer | `2`
+iAutoSpellDestructionMax         | `1065` | integer | `5`
+iAutoSpellIllusionMax            | `1066` | integer | `5`
+iAutoSpellMysticismMax           | `1067` | integer | `5`
+iAutoSpellRestorationMax         | `1068` | integer | `5`
+iAutoPCSpellMax                  | `1069` | integer | `100`
+iAutoRepFacMod                   | `1070` | integer | `2`
+iAutoRepLevMod                   | `1071` | integer | `0`
+iMagicItemChargeOnce             | `1072` | integer | `1`
+iMagicItemChargeConst            | `1073` | integer | `10`
+iMagicItemChargeUse              | `1074` | integer | `5`
+iMagicItemChargeStrike           | `1075` | integer | `10`
+iMonthsToRespawn                 | `1076` | integer | `4`
+fCorpseClearDelay                | `1077` | float   | `72`
+fCorpseRespawnDelay              | `1078` | float   | `72`
+fBarterGoldResetDelay            | `1079` | float   | `24`
+fEncumbranceStrMult              | `1080` | float   | `5`
+fPickLockMult                    | `1081` | float   | `-1`
+fTrapCostMult                    | `1082` | float   | `0`
+fMessageTimePerChar              | `1083` | float   | `0.1`
+fMagicItemRechargePerSecond      | `1084` | float   | `0.05`
+i1stPersonSneakDelta             | `1085` | integer | `10`
+iBarterSuccessDisposition        | `1086` | integer | `1`
+iBarterFailDisposition           | `1087` | integer | `-1`
+iLevelupTotal                    | `1088` | integer | `10`
+iLevelupMajorMult                | `1089` | integer | `1`
+iLevelupMinorMult                | `1090` | integer | `1`
+iLevelupMajorMultAttribute       | `1091` | integer | `1`
+iLevelupMinorMultAttribute       | `1092` | integer | `1`
+iLevelupMiscMultAttriubte        | `1093` | integer | `1`
+iLevelupSpecialization           | `1094` | integer | `1`
+iLevelUp01Mult                   | `1095` | integer | `2`
+iLevelUp02Mult                   | `1096` | integer | `2`
+iLevelUp03Mult                   | `1097` | integer | `2`
+iLevelUp04Mult                   | `1098` | integer | `2`
+iLevelUp05Mult                   | `1099` | integer | `3`
+iLevelUp06Mult                   | `1100` | integer | `3`
+iLevelUp07Mult                   | `1101` | integer | `3`
+iLevelUp08Mult                   | `1102` | integer | `4`
+iLevelUp09Mult                   | `1103` | integer | `4`
+iLevelUp10Mult                   | `1104` | integer | `5`
+iSoulAmountForConstantEffect     | `1105` | integer | `400`
+fConstantEffectMult              | `1106` | float   | `15`
+fEnchantmentConstantDurationMult | `1107` | float   | `100`
+fEnchantmentConstantChanceMult   | `1108` | float   | `0.5`
+fWeaponDamageMult                | `1109` | float   | `0.1`
+fSeriousWoundMult                | `1110` | float   | `0`
+fKnockDownMult                   | `1111` | float   | `0.5`
+iKnockDownOddsBase               | `1112` | integer | `50`
+iKnockDownOddsMult               | `1113` | integer | `50`
+fCombatArmorMinMult              | `1114` | float   | `0.25`
+fHandToHandReach                 | `1115` | float   | `1`
+fVoiceIdleOdds                   | `1116` | float   | `10`
+iVoiceAttackOdds                 | `1117` | integer | `10`
+iVoiceHitOdds                    | `1118` | integer | `30`
+fProjectileMinSpeed              | `1119` | float   | `400`
+fProjectileMaxSpeed              | `1120` | float   | `3000`
+fThrownWeaponMinSpeed            | `1121` | float   | `300`
+fThrownWeaponMaxSpeed            | `1122` | float   | `1000`
+fTargetSpellMaxSpeed             | `1123` | float   | `1000`
+fProjectileThrownStoreChance     | `1124` | float   | `25`
+iPickMinChance                   | `1125` | integer | `5`
+iPickMaxChance                   | `1126` | integer | `75`
+fDispRaceMod                     | `1127` | float   | `5`
+fDispPersonalityMult             | `1128` | float   | `0.5`
+fDispPersonalityBase             | `1129` | float   | `50`
+fDispFactionMod                  | `1130` | float   | `3`
+fDispFactionRankBase             | `1131` | float   | `1`
+fDispFactionRankMult             | `1132` | float   | `0.5`
+fDispCrimeMod                    | `1133` | float   | `0`
+fDispDiseaseMod                  | `1134` | float   | `-10`
+iDispAttackMod                   | `1135` | integer | `-50`
+fDispWeaponDrawn                 | `1136` | float   | `-5`
+fDispBargainSuccessMod           | `1137` | float   | `1`
+fDispBargainFailMod              | `1138` | float   | `-1`
+fDispPickPocketMod               | `1139` | float   | `-25`
+iDaysinPrisonMod                 | `1140` | integer | `100`
+fDispAttacking                   | `1141` | float   | `-10`
+fDispStealing                    | `1142` | float   | `-0.5`
+iDispTresspass                   | `1143` | integer | `-20`
+iDispKilling                     | `1144` | integer | `-50`
+iTrainingMod                     | `1145` | integer | `10`
+iAlchemyMod                      | `1146` | integer | `2`
+fBargainOfferBase                | `1147` | float   | `50`
+fBargainOfferMulti               | `1148` | float   | `-4`
+fDispositionMod                  | `1149` | float   | `1`
+fPersonalityMod                  | `1150` | float   | `5`
+fLuckMod                         | `1151` | float   | `10`
+fReputationMod                   | `1152` | float   | `1`
+fLevelMod                        | `1153` | float   | `5`
+fBribe10Mod                      | `1154` | float   | `35`
+fBribe100Mod                     | `1155` | float   | `75`
+fBribe1000Mod                    | `1156` | float   | `150`
+fPerDieRollMult                  | `1157` | float   | `0.3`
+fPerTempMult                     | `1158` | float   | `1`
+iPerMinChance                    | `1159` | integer | `5`
+iPerMinChange                    | `1160` | integer | `10`
+fSpecialSkillBonus               | `1161` | float   | `0.8`
+fMajorSkillBonus                 | `1162` | float   | `0.75`
+fMinorSkillBonus                 | `1163` | float   | `1`
+fMiscSkillBonus                  | `1164` | float   | `1.25`
+iAlarmKilling                    | `1165` | integer | `90`
+iAlarmAttack                     | `1166` | integer | `50`
+iAlarmStealing                   | `1167` | integer | `1`
+iAlarmPickPocket                 | `1168` | integer | `20`
+iAlarmTresspass                  | `1169` | integer | `5`
+fAlarmRadius                     | `1170` | float   | `2000`
+iCrimeKilling                    | `1171` | integer | `1000`
+iCrimeAttack                     | `1172` | integer | `40`
+fCrimeStealing                   | `1173` | float   | `1`
+iCrimePickPocket                 | `1174` | integer | `25`
+iCrimeTresspass                  | `1175` | integer | `5`
+iCrimeThreshold                  | `1176` | integer | `1000`
+iCrimeThresholdMultiplier        | `1177` | integer | `10`
+fCrimeGoldDiscountMult           | `1178` | float   | `0.5`
+fCrimeGoldTurnInMult             | `1179` | float   | `0.9`
+iFightAttack                     | `1180` | integer | `100`
+iFightAttacking                  | `1181` | integer | `50`
+iFightDistanceBase               | `1182` | integer | `20`
+fFightDistanceMultiplier         | `1183` | float   | `0.005`
+iFightAlarmMult                  | `1184` | integer | `1`
+fFightDispMult                   | `1185` | float   | `0.2`
+fFightStealing                   | `1186` | float   | `50`
+iFightPickpocket                 | `1187` | integer | `25`
+iFightTrespass                   | `1188` | integer | `25`
+iFightKilling                    | `1189` | integer | `50`
+iFlee                            | `1190` | integer | `0`
+iGreetDistanceMultiplier         | `1191` | integer | `6`
+iGreetDuration                   | `1192` | integer | `4`
+fGreetDistanceReset              | `1193` | float   | `512`
+fIdleChanceMultiplier            | `1194` | float   | `0.75`
+fSneakUseDist                    | `1195` | float   | `500`
+fSneakUseDelay                   | `1196` | float   | `1`
+fSneakDistanceBase               | `1197` | float   | `0.5`
+fSneakDistanceMultiplier         | `1198` | float   | `0.002`
+fSneakSpeedMultiplier            | `1199` | float   | `0.75`
+fSneakViewMult                   | `1200` | float   | `1.5`
+fSneakNoViewMult                 | `1201` | float   | `0.5`
+fSneakSkillMult                  | `1202` | float   | `1`
+fSneakBootMult                   | `1203` | float   | `-1`
+fCombatDistance                  | `1204` | float   | `128`
+fCombatAngleXY                   | `1205` | float   | `0.6666667`
+fCombatAngleZ                    | `1206` | float   | `0.6666667`
+fCombatForceSideAngle            | `1207` | float   | `0.3333333`
+fCombatTorsoSideAngle            | `1208` | float   | `0.5`
+fCombatTorsoStartPercent         | `1209` | float   | `0.3`
+fCombatTorsoStopPercent          | `1210` | float   | `0.8`
+fCombatBlockLeftAngle            | `1211` | float   | `-1`
+fCombatBlockRightAngle           | `1212` | float   | `0.3333333`
+fCombatDelayCreature             | `1213` | float   | `0.1`
+fCombatDelayNPC                  | `1214` | float   | `0.1`
+sTargetCriticalStrike            | `1215` | string  | `"Critical Damage!"`
+fAIMeleeWeaponMult               | `1216` | float   | `2`
+fAIRangeMeleeWeaponMult          | `1217` | float   | `5`
+fAIMagicSpellMult                | `1218` | float   | `3`
+fAIRangeMagicSpellMult           | `1219` | float   | `5`
+fAIMeleeArmorMult                | `1220` | float   | `1`
+fAIMeleeSummWeaponMult           | `1221` | float   | `1`
+fAIFleeHealthMult                | `1222` | float   | `7`
+fAIFleeFleeMult                  | `1223` | float   | `0.3`
+fPickPocketMod                   | `1224` | float   | `0.3`
+fSleepRandMod                    | `1225` | float   | `0.25`
+fSleepRestMod                    | `1226` | float   | `0.3`
+iNumberCreatures                 | `1227` | integer | `1`
+fAudioDefaultMinDistance         | `1228` | float   | `5`
+fAudioDefaultMaxDistance         | `1229` | float   | `40`
+fAudioVoiceDefaultMinDistance    | `1230` | float   | `10`
+fAudioVoiceDefaultMaxDistance    | `1231` | float   | `60`
+fAudioMinDistanceMult            | `1232` | float   | `20`
+fAudioMaxDistanceMult            | `1233` | float   | `50`
+fNPCHealthBarTime                | `1234` | float   | `3`
+fNPCHealthBarFade                | `1235` | float   | `0.5`
+fDifficultyMult                  | `1236` | float   | `5`
+fWereWolfRunMult                 | `1237` | float   | `1.3`
+fWereWolfSilverWeaponDamageMult  | `1238` | float   | `2`
+iWereWolfBounty                  | `1239` | integer | `1000`
+fWereWolfStrength                | `1240` | float   | `150`
+fWereWolfAgility                 | `1241` | float   | `150`
+fWereWolfEndurance               | `1242` | float   | `150`
+fWereWolfSpeed                   | `1243` | float   | `90`
+fWereWolfHandtoHand              | `1244` | float   | `100`
+fWereWolfUnarmored               | `1245` | float   | `100`
+iWereWolfLevelToAttack           | `1246` | integer | `20`
+iWereWolfFightMod                | `1247` | integer | `100`
+iWereWolfFleeMod                 | `1248` | integer | `100`
+fWereWolfAthletics               | `1249` | float   | `50`
+fWereWolfAcrobatics              | `1250` | float   | `80`
+fWereWolfHealth                  | `1251` | float   | `2`
+fWereWolfFatigue                 | `1252` | float   | `400`
+fWereWolfMagicka                 | `1253` | float   | `100`
+fWereWolfIntellegence            | `1254` | float   | `0`
+fWereWolfWillPower               | `1255` | float   | `0`
+fWereWolfPersonality             | `1256` | float   | `0`
+fWereWolfLuck                    | `1257` | float   | `25`
+fWereWolfBlock                   | `1258` | float   | `0`
+fWereWolfArmorer                 | `1259` | float   | `0`
+fWereWolfMediumArmor             | `1260` | float   | `0`
+fWereWolfHeavyArmor              | `1261` | float   | `0`
+fWereWolfBluntWeapon             | `1262` | float   | `0`
+fWereWolfLongBlade               | `1263` | float   | `0`
+fWereWolfAxe                     | `1264` | float   | `0`
+fWereWolfSpear                   | `1265` | float   | `0`
+fWereWolfDestruction             | `1266` | float   | `0`
+fWereWolfAlteration              | `1267` | float   | `0`
+fWereWolfIllusion                | `1268` | float   | `0`
+fWereWolfConjuration             | `1269` | float   | `0`
+fWereWolfMysticism               | `1270` | float   | `0`
+fWereWolfRestoration             | `1271` | float   | `0`
+fWereWolfEnchant                 | `1272` | float   | `0`
+fWereWolfAlchemy                 | `1273` | float   | `0`
+fWereWolfSecurity                | `1274` | float   | `0`
+fWereWolfSneak                   | `1275` | float   | `95`
+fWereWolfLightArmor              | `1276` | float   | `0`
+fWereWolfShortBlade              | `1277` | float   | `0`
+fWereWolfMarksman                | `1278` | float   | `0`
+fWereWolfMerchantile             | `1279` | float   | `0`
+fWereWolfSpeechcraft             | `1280` | float   | `0`
+fCombatDistanceWerewolfMod       | `1281` | float   | `0.3`
+fFleeDistance                    | `1282` | float   | `3000`
+sEffectWaterBreathing            | `1283` | string  | `"Water Breathing"`
+sEffectSwiftSwim                 | `1284` | string  | `"Swift Swim"`
+sEffectWaterWalking              | `1285` | string  | `"Water Walking"`
+sEffectShield                    | `1286` | string  | `"Shield"`
+sEffectFireShield                | `1287` | string  | `"Fire Shield"`
+sEffectLightningShield           | `1288` | string  | `"Lightning Shield"`
+sEffectFrostShield               | `1289` | string  | `"Frost Shield"`
+sEffectBurden                    | `1290` | string  | `"Burden"`
+sEffectFeather                   | `1291` | string  | `"Feather"`
+sEffectJump                      | `1292` | string  | `"Jump"`
+sEffectLevitate                  | `1293` | string  | `"Levitate"`
+sEffectSlowFall                  | `1294` | string  | `"SlowFall"`
+sEffectLock                      | `1295` | string  | `"Lock"`
+sEffectOpen                      | `1296` | string  | `"Open"`
+sEffectFireDamage                | `1297` | string  | `"Fire Damage"`
+sEffectShockDamage               | `1298` | string  | `"Shock Damage"`
+sEffectFrostDamage               | `1299` | string  | `"Frost Damage"`
+sEffectDrainAttribute            | `1300` | string  | `"Drain Attribute"`
+sEffectDrainHealth               | `1301` | string  | `"Drain Health"`
+sEffectDrainSpellpoints          | `1302` | string  | `"Drain Magicka"`
+sEffectDrainFatigue              | `1303` | string  | `"Drain Fatigue"`
+sEffectDrainSkill                | `1304` | string  | `"Drain Skill"`
+sEffectDamageAttribute           | `1305` | string  | `"Damage Attribute"`
+sEffectDamageHealth              | `1306` | string  | `"Damage Health"`
+sEffectDamageMagicka             | `1307` | string  | `"Damage Magicka"`
+sEffectDamageFatigue             | `1308` | string  | `"Damage Fatigue"`
+sEffectDamageSkill               | `1309` | string  | `"Damage Skill"`
+sEffectPoison                    | `1310` | string  | `"Poison"`
+sEffectWeaknessToFire            | `1311` | string  | `"Weakness to Fire"`
+sEffectWeaknessToFrost           | `1312` | string  | `"Weakness to Frost"`
+sEffectWeaknessToShock           | `1313` | string  | `"Weakness to Shock"`
+sEffectWeaknessToMagicka         | `1314` | string  | `"Weakness to Magicka"`
+sEffectWeaknessToCommonDisease   | `1315` | string  | `"Weakness to Common Disease"`
+sEffectWeaknessToBlightDisease   | `1316` | string  | `"Weakness to Blight Disease"`
+sEffectWeaknessToCorprusDisease  | `1317` | string  | `"Weakness to Corprus Disease"`
+sEffectWeaknessToPoison          | `1318` | string  | `"Weakness to Poison"`
+sEffectWeaknessToNormalWeapons   | `1319` | string  | `"Weakness to Normal Weapons"`
+sEffectDisintegrateWeapon        | `1320` | string  | `"Disintegrate Weapon"`
+sEffectDisintegrateArmor         | `1321` | string  | `"Disintegrate Armor"`
+sEffectInvisibility              | `1322` | string  | `"Invisibility"`
+sEffectChameleon                 | `1323` | string  | `"Chameleon"`
+sEffectLight                     | `1324` | string  | `"Light"`
+sEffectSanctuary                 | `1325` | string  | `"Sanctuary"`
+sEffectNightEye                  | `1326` | string  | `"Night Eye"`
+sEffectCharm                     | `1327` | string  | `"Charm"`
+sEffectParalyze                  | `1328` | string  | `"Paralyze"`
+sEffectSilence                   | `1329` | string  | `"Silence"`
+sEffectBlind                     | `1330` | string  | `"Blind"`
+sEffectSound                     | `1331` | string  | `"Sound"`
+sEffectCalmHumanoid              | `1332` | string  | `"Calm Humanoid"`
+sEffectCalmCreature              | `1333` | string  | `"Calm Creature"`
+sEffectFrenzyHumanoid            | `1334` | string  | `"Frenzy Humanoid"`
+sEffectFrenzyCreature            | `1335` | string  | `"Frenzy Creature"`
+sEffectDemoralizeHumanoid        | `1336` | string  | `"Demoralize Humanoid"`
+sEffectDemoralizeCreature        | `1337` | string  | `"Demoralize Creature"`
+sEffectRallyHumanoid             | `1338` | string  | `"Rally Humanoid"`
+sEffectRallyCreature             | `1339` | string  | `"Rally Creature"`
+sEffectDispel                    | `1340` | string  | `"Dispel"`
+sEffectSoultrap                  | `1341` | string  | `"Soultrap"`
+sEffectTelekinesis               | `1342` | string  | `"Telekinesis"`
+sEffectMark                      | `1343` | string  | `"Mark"`
+sEffectRecall                    | `1344` | string  | `"Recall"`
+sEffectDivineIntervention        | `1345` | string  | `"Divine Intervention"`
+sEffectAlmsiviIntervention       | `1346` | string  | `"Almsivi Intervention"`
+sEffectDetectAnimal              | `1347` | string  | `"Detect Animal"`
+sEffectDetectEnchantment         | `1348` | string  | `"Detect Enchantment"`
+sEffectDetectKey                 | `1349` | string  | `"Detect Key"`
+sEffectSpellAbsorption           | `1350` | string  | `"Spell Absorption"`
+sEffectReflect                   | `1351` | string  | `"Reflect"`
+sEffectCureCommonDisease         | `1352` | string  | `"Cure Common Disease"`
+sEffectCureBlightDisease         | `1353` | string  | `"Cure Blight Disease"`
+sEffectCureCorprusDisease        | `1354` | string  | `"Cure Corprus Disease"`
+sEffectCurePoison                | `1355` | string  | `"Cure Poison"`
+sEffectCureParalyzation          | `1356` | string  | `"Cure Paralyzation"`
+sEffectRestoreAttribute          | `1357` | string  | `"Restore Attribute"`
+sEffectRestoreHealth             | `1358` | string  | `"Restore Health"`
+sEffectRestoreSpellPoints        | `1359` | string  | `"Restore Magicka"`
+sEffectRestoreFatigue            | `1360` | string  | `"Restore Fatigue"`
+sEffectRestoreSkill              | `1361` | string  | `"Restore Skill"`
+sEffectFortifyAttribute          | `1362` | string  | `"Fortify Attribute"`
+sEffectFortifyHealth             | `1363` | string  | `"Fortify Health"`
+sEffectFortifySpellpoints        | `1364` | string  | `"Fortify Magicka"`
+sEffectFortifyFatigue            | `1365` | string  | `"Fortify Fatigue"`
+sEffectFortifySkill              | `1366` | string  | `"Fortify Skill"`
+sEffectFortifyMagickaMultiplier  | `1367` | string  | `"Fortify Maximum Magicka"`
+sEffectAbsorbAttribute           | `1368` | string  | `"Absorb Attribute"`
+sEffectAbsorbHealth              | `1369` | string  | `"Absorb Health"`
+sEffectAbsorbSpellPoints         | `1370` | string  | `"Absorb Magicka"`
+sEffectAbsorbFatigue             | `1371` | string  | `"Absorb Fatigue"`
+sEffectAbsorbSkill               | `1372` | string  | `"Absorb Skill"`
+sEffectResistFire                | `1373` | string  | `"Resist Fire"`
+sEffectResistFrost               | `1374` | string  | `"Resist Frost"`
+sEffectResistShock               | `1375` | string  | `"Resist Shock"`
+sEffectResistMagicka             | `1376` | string  | `"Resist Magicka"`
+sEffectResistCommonDisease       | `1377` | string  | `"Resist Common Disease"`
+sEffectResistBlightDisease       | `1378` | string  | `"Resist Blight Disease"`
+sEffectResistCorprusDisease      | `1379` | string  | `"Resist Corprus Disease"`
+sEffectResistPoison              | `1380` | string  | `"Resist Poison"`
+sEffectResistNormalWeapons       | `1381` | string  | `"Resist Normal Weapons"`
+sEffectResistParalysis           | `1382` | string  | `"Resist Paralysis"`
+sEffectRemoveCurse               | `1383` | string  | `"Remove Curse"`
+sEffectTurnUndead                | `1384` | string  | `"Turn Undead"`
+sEffectSummonScamp               | `1385` | string  | `"Summon Scamp"`
+sEffectSummonClannfear           | `1386` | string  | `"Summon Clannfear"`
+sEffectSummonDaedroth            | `1387` | string  | `"Summon Daedroth"`
+sEffectSummonDremora             | `1388` | string  | `"Summon Dremora"`
+sEffectSummonAncestralGhost      | `1389` | string  | `"Summon Ancestral Ghost"`
+sEffectSummonSkeletalMinion      | `1390` | string  | `"Summon Skeletal Minion"`
+sEffectSummonLeastBonewalker     | `1391` | string  | `"Summon Bonewalker"`
+sEffectSummonGreaterBonewalker   | `1392` | string  | `"Summon Greater Bonewalker"`
+sEffectSummonBonelord            | `1393` | string  | `"Summon Bonelord"`
+sEffectSummonWingedTwilight      | `1394` | string  | `"Summon Winged Twilight"`
+sEffectSummonHunger              | `1395` | string  | `"Summon Hunger"`
+sEffectSummonGoldensaint         | `1396` | string  | `"Summon Golden Saint"`
+sEffectSummonFlameAtronach       | `1397` | string  | `"Summon Flame Atronach"`
+sEffectSummonFrostAtronach       | `1398` | string  | `"Summon Frost Atronach"`
+sEffectSummonStormAtronach       | `1399` | string  | `"Summon Storm Atronach"`
+sEffectFortifyAttackBonus        | `1400` | string  | `"Fortify Attack"`
+sEffectCommandCreatures          | `1401` | string  | `"Command Creature"`
+sEffectCommandHumanoids          | `1402` | string  | `"Command Humanoid"`
+sEffectBoundDagger               | `1403` | string  | `"Bound Dagger"`
+sEffectBoundLongsword            | `1404` | string  | `"Bound Longsword"`
+sEffectBoundMace                 | `1405` | string  | `"Bound Mace"`
+sEffectBoundBattleAxe            | `1406` | string  | `"Bound Battle Axe"`
+sEffectBoundSpear                | `1407` | string  | `"Bound Spear"`
+sEffectBoundLongbow              | `1408` | string  | `"Bound Longbow"`
+sEffectExtraSpell                | `1409` | string  | `"EXTRA SPELL"`
+sEffectBoundCuirass              | `1410` | string  | `"Bound Cuirass"`
+sEffectBoundHelm                 | `1411` | string  | `"Bound Helm"`
+sEffectBoundBoots                | `1412` | string  | `"Bound Boots"`
+sEffectBoundShield               | `1413` | string  | `"Bound Shield"`
+sEffectBoundGloves               | `1414` | string  | `"Bound Gloves"`
+sEffectCorpus                    | `1415` | string  | `"Corprus"`
+sEffectVampirism                 | `1416` | string  | `"Vampirism"`
+sEffectSummonCenturionSphere     | `1417` | string  | `"Summon Centurion Sphere"`
+sEffectSunDamage                 | `1418` | string  | `"Sun Damage"`
+sEffectStuntedMagicka            | `1419` | string  | `"Stunted Magicka"`
+sEffectSummonFabricant           | `1420` | string  | `"Summon Fabricant"`
+sEffectSummonCreature01          | `1421` | string  | `"Call Wolf"`
+sEffectSummonCreature02          | `1422` | string  | `"Call Bear"`
+sEffectSummonCreature03          | `1423` | string  | `"Summon Bonewolf"`
+sEffectSummonCreature04          | `1424` | string  | `"sEffectSummonCreature04"`
+sEffectSummonCreature05          | `1425` | string  | `"sEffectSummonCreature05"`
+sSchoolAlteration                | `1426` | string  | `"Alteration"`
+sSchoolConjuration               | `1427` | string  | `"Conjuration"`
+sSchoolDestruction               | `1428` | string  | `"Destruction"`
+sSchoolIllusion                  | `1429` | string  | `"Illusion"`
+sSchoolMysticism                 | `1430` | string  | `"Mysticism"`
+sSchoolRestoration               | `1431` | string  | `"Restoration"`
+sTypeSpell                       | `1432` | string  | `"Spells"`
+sTypeAbility                     | `1433` | string  | `"Abilities"`
+sTypeBlightDisease               | `1434` | string  | `"Blight Disease"`
+sTypeDisease                     | `1435` | string  | `"Disease"`
+sTypeCurse                       | `1436` | string  | `"Curse"`
+sTypePower                       | `1437` | string  | `"Powers"`
+sItemCastOnce                    | `1438` | string  | `"Cast Once"`
+sItemCastWhenStrikes             | `1439` | string  | `"Cast When Strikes"`
+sItemCastWhenUsed                | `1440` | string  | `"Cast When Used"`
+sItemCastConstant                | `1441` | string  | `"Constant Effect"`
+sRangeSelf                       | `1442` | string  | `"Self"`
+sRangeTouch                      | `1443` | string  | `"Touch"`
+sRangeTarget                     | `1444` | string  | `"Target"`
+sMagicSkillFail                  | `1445` | string  | `"You failed casting the spell."`
+sMagicInsufficientSP             | `1446` | string  | `"You do not have enough Magicka to cast the spell."`
+sMagicInsufficientCharge         | `1447` | string  | `"Item does not have enough charge."`
+sPowerAlreadyUsed                | `1448` | string  | `"You already used that power today."`
+sMagicInvalidTarget              | `1449` | string  | `"Your spell did not get a target."`
+sMagicLockSuccess                | `1450` | string  | `"Your spell has locked its target."`
+sMagicOpenSuccess                | `1451` | string  | `"Your spell has unlocked its target."`
+sMagicTargetResistsWeapons       | `1452` | string  | `"Your weapon has no effect."`
+sMagicContractDisease            | `1453` | string  | `"You have contracted %s"`
+fMagicDetectRefreshRate          | `1454` | float   | `0.5`
+fMagicStartIconBlink             | `1455` | float   | `3`
+fMagicCreatureCastDelay          | `1456` | float   | `1.5`
+sMagicScampID                    | `1457` | string  | `"Scamp_summon"`
+sMagicClannfearID                | `1458` | string  | `"Clannfear_summon"`
+sMagicDaedrothID                 | `1459` | string  | `"Daedroth_summon"`
+sMagicDremoraID                  | `1460` | string  | `"Dremora_summon"`
+sMagicAncestralGhostID           | `1461` | string  | `"Ancestor_Ghost_summon"`
+sMagicSkeletalMinionID           | `1462` | string  | `"Skeleton_summon"`
+sMagicLeastBonewalkerID          | `1463` | string  | `"Bonewalker_summon"`
+sMagicGreaterBonewalkerID        | `1464` | string  | `"Bonewalker_Greater_summ"`
+sMagicBonelordID                 | `1465` | string  | `"Bonelord_summon"`
+sMagicWingedTwilightID           | `1466` | string  | `"Winged Twilight_summon"`
+sMagicHungerID                   | `1467` | string  | `"Hunger_summon"`
+sMagicGoldenSaintID              | `1468` | string  | `"Golden Saint_summon"`
+sMagicFlameAtronachID            | `1469` | string  | `"Atronach_Flame_summon"`
+sMagicFrostAtronachID            | `1470` | string  | `"Atronach_Frost_summon"`
+sMagicStormAtronachID            | `1471` | string  | `"Atronach_Storm_summon"`
+sMagicCenturionSphereID          | `1472` | string  | `"centurion_sphere_summon"`
+sMagicFabricantID                | `1473` | string  | `"Fabricant_summon"`
+sMagicCreature01ID               | `1474` | string  | `"BM_wolf_grey_summon"`
+sMagicCreature02ID               | `1475` | string  | `"BM_bear_black_summon"`
+sMagicCreature03ID               | `1476` | string  | `"BM_wolf_bone_summon"`
+sMagicCreature04ID               | `1477` | string  | `"sMagicCreature04ID"`
+sMagicCreature05ID               | `1478` | string  | `"sMagicCreature05ID"`
+sMagicBoundDaggerID              | `1479` | string  | `"Bound_Dagger"`
+sMagicBoundLongswordID           | `1480` | string  | `"Bound_Longsword"`
+sMagicBoundMaceID                | `1481` | string  | `"Bound_Mace"`
+sMagicBoundBattleAxeID           | `1482` | string  | `"Bound_Battle_Axe"`
+sMagicBoundSpearID               | `1483` | string  | `"Bound_Spear"`
+sMagicBoundLongbowID             | `1484` | string  | `"Bound_Longbow"`
+sMagicBoundCuirassID             | `1485` | string  | `"Bound_Cuirass"`
+sMagicBoundHelmID                | `1486` | string  | `"Bound_Helm"`
+sMagicBoundBootsID               | `1487` | string  | `"Bound_Boots"`
+sMagicBoundShieldID              | `1488` | string  | `"Bound_Shield"`
+sMagicBoundLeftGauntletID        | `1489` | string  | `"Bound_Gauntlet_Left"`
+sMagicBoundRightGauntletID       | `1490` | string  | `"Bound_Gauntlet_Right"`
+fDiseaseXferChance               | `1491` | float   | `2.5`
+fElementalShieldMult             | `1492` | float   | `0.1`
+sMagicCorprusWorsens             | `1493` | string  | `"Your case of Corprus has worsened."`
+sMagicCannotRecast               | `1494` | string  | `"You cannot re-cast this spell while it is still in effect."`
+fMagicSunBlockedMult             | `1495` | float   | `0.5`
+sMagicPCResisted                 | `1496` | string  | `"You resisted magic."`
+sMagicTargetResisted             | `1497` | string  | `"Target resisted magic."`
+sMagicInvalidEffect              | `1498` | string  | `"You cannot cast this effect right now."`
+sAcrobat                         | `1499` | string  | `"Acrobat"`
+sAgent                           | `1500` | string  | `"Agent"`
+sArcher                          | `1501` | string  | `"Archer"`
+sAssassin                        | `1502` | string  | `"Assassin"`
+sBarbarian                       | `1503` | string  | `"Barbarian"`
+sBard                            | `1504` | string  | `"Bard"`
+sBattlemage                      | `1505` | string  | `"Battlemage"`
+sCrusader                        | `1506` | string  | `"Crusader"`
+sCustom                          | `1507` | string  | `"Custom"`
+sHealer                          | `1508` | string  | `"Healer"`
+sKnight                          | `1509` | string  | `"Knight"`
+sMage                            | `1510` | string  | `"Mage"`
+sMonk                            | `1511` | string  | `"Monk"`
+sNightblade                      | `1512` | string  | `"Nightblade"`
+sPilgrim                         | `1513` | string  | `"Pilgrim"`
+sRogue                           | `1514` | string  | `"Rogue"`
+sScout                           | `1515` | string  | `"Scout"`
+sSorceror                        | `1516` | string  | `"Sorcerer"`
+sSpellsword                      | `1517` | string  | `"Spellsword"`
+sThief                           | `1518` | string  | `"Thief"`
+sWarrior                         | `1519` | string  | `"Warrior"`
+sWitchhunter                     | `1520` | string  | `"Witchhunter"`

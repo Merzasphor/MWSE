@@ -6,9 +6,9 @@ hide:
 # Spell Sources
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.spellSource.*` namespace. For example, `tes3.spellSource.service` has a value of `service`.
+	These values are available in Lua by their index in the `tes3.spellSource` table. For example, `tes3.spellSource.script` has a value of `"script"`.
 
-ID         | Spell Source
----------- | -------------
-service    | Service
-script     | Script
+Index   | Value
+------- | -----------
+script  | `"script"`
+service | `"service"`

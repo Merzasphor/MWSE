@@ -6,15 +6,15 @@ hide:
 # Spell States
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.spellState.*` namespace. For example, `tes3.spellState.working` has a value of `5`.
+	These values are available in Lua by their index in the `tes3.spellState` table. For example, `tes3.spellState.retired` has a value of `7`.
 
-ID | Spell State
--- | ---------------------
-0  | Pre-cast
-1  | Cast
-4  | Beginning
-5  | Working
-6  | Ending
-7  | Retired
-8  | Working, Fortify
-9  | Ending, Fortify
+Index          | Value | Description
+-------------- | ----- | -----------------------------------
+preCast        | `0`   | Has not been cast yet
+cast           | `1`   | Has just been casted
+beginning      | `4`   | Has just been applied to a target
+working        | `5`   | Is applying its effects each frame
+ending         | `6`   | Is ending and being cleaned up
+retired        | `7`   | Has ended and will be deleted
+workingFortify | `8`   | Same as working for fortify effects
+endingFortify  | `9`   | Same as ending for fortify effects

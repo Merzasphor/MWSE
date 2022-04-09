@@ -3,18 +3,18 @@ hide:
   - toc
 ---
 
-# Sound Generator Types
+# Sound Gen Types
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.soundGenType.*` namespace. For example, `tes3.soundGenType.roar` has a value of `1`.
+	These values are available in Lua by their index in the `tes3.soundGenType` table. For example, `tes3.soundGenType.roar` has a value of `5`.
 
-ID | Sound Generator Type
--- | ---------------------
-0  | Left Foot
-1  | Right Foot
-2  | Swim Left
-3  | Swim Right
-4  | Moan
-5  | Roar
-6  | Scream
-7  | Land
+Index     | Value
+--------- | -----
+leftFoot  | `0`
+rightFoot | `1`
+swimLeft  | `2`
+swimRight | `3`
+moan      | `4`
+roar      | `5`
+scream    | `6`
+land      | `7`

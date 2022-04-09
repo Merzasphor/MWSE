@@ -6,12 +6,12 @@ hide:
 # Content Types
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.contentType.*` namespace. For example, `tes3.contentType.layout` has a value of `layout`.
+	These values are available in Lua by their index in the `tes3.contentType` table. For example, `tes3.contentType.image` has a value of `"image"`.
 
-ID       | Content Type
--------- | --------------
-layout   | layout
-model    | model
-rect     | rect
-image    | image
-text     | text
+Index  | Value
+------ | ----------
+image  | `"image"`
+layout | `"layout"`
+model  | `"model"`
+rect   | `"rect"`
+text   | `"text"`

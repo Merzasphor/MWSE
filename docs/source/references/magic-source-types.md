@@ -6,10 +6,10 @@ hide:
 # Magic Source Types
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.magicSourceType.*` namespace. For example, `tes3.magicSourceType.alchemy` has a value of `3`.
+	These values are available in Lua by their index in the `tes3.magicSourceType` table. For example, `tes3.magicSourceType.spell` has a value of `1`.
 
-ID | Magic Source Type
--- | -----------------
-1  | Spell
-2  | Enchantment
-3  | Alchemy
+Index       | Value
+----------- | -----
+spell       | `1`
+enchantment | `2`
+alchemy     | `3`

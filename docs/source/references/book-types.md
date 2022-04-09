@@ -6,9 +6,9 @@ hide:
 # Book Types
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.bookType.*` namespace. For example, `tes3.bookType.scroll` has a value of `1`.
+	These values are available in Lua by their index in the `tes3.bookType` table. For example, `tes3.bookType.book` has a value of `0`.
 
-ID | Type
--- | -----------------
-0  | Book
-1  | Scroll
+Index  | Value
+------ | -----
+book   | `0`
+scroll | `1`

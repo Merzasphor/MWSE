@@ -6,10 +6,10 @@ hide:
 # Animation Start Flags
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.animationStartFlag.*` namespace. For example, `tes3.animationStartFlag.immediateLoop` has a value of `2`.
+	These values are available in Lua by their index in the `tes3.animationStartFlag` table. For example, `tes3.animationStartFlag.normal` has a value of `0`.
 
-ID | Flag
--- | ---------------
-0  | Normal
-1  | Immediate
-2  | Immediate Loop
+Index         | Value
+------------- | -----
+normal        | `0`
+immediate     | `1`
+immediateLoop | `2`

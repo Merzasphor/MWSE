@@ -3,23 +3,20 @@ hide:
   - toc
 ---
 
-# Clothing Types
+# Clothing Slots
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.clothingSlot.*` namespace. For example, `tes3.clothingSlot.rightGlove` has a value of `5`.
+	These values are available in Lua by their index in the `tes3.clothingSlot` table. For example, `tes3.clothingSlot.leftGlove` has a value of `6`.
 
-!!! note
-	MWSE-mwscript's `xEquipmentList` returns this value as the subtype for clothing objects. These values are **increased by one** by that function.
-
-ID  | Type
---- | ---------------------------------------------
-0   | Pants
-1   | Shoes
-2   | Shirt
-3   | Belt
-4   | Robe
-5   | Right Glove
-6   | Left Glove
-7   | Skirt
-8   | Ring
-9   | Amulet
+Index      | Value
+---------- | -----
+pants      | `0`
+shoes      | `1`
+shirt      | `2`
+belt       | `3`
+robe       | `4`
+rightGlove | `5`
+leftGlove  | `6`
+skirt      | `7`
+ring       | `8`
+amulet     | `9`

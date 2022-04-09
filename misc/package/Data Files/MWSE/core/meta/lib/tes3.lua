@@ -525,7 +525,7 @@ function tes3.cast(params) end
 
 --- Checks if a merchant will offer a service to you, including dialogue checks like disposition and faction membership. A specific service can be checked, or if no service is given, a generic dialogue check is made. If the service is refused, the dialogue reply for the refusal may also be returned (it may be nil, as there may not always be a reply available).
 --- @param reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string No description yet available.
---- @param service number *Optional*. The specific service to check for availability. Uses the [`tes3.merchantService`](https://mwse.github.io/MWSE/references/merchant-service-types/) constants.
+--- @param service number *Optional*. The specific service to check for availability. Maps to values in the [`tes3.merchantService`](https://mwse.github.io/MWSE/references/merchant-services/) table.
 --- @return boolean offersService No description yet available.
 --- @return tes3dialogueInfo refusalReply No description yet available.
 function tes3.checkMerchantOffersService(reference, service) end
@@ -1031,12 +1031,12 @@ function tes3.getKillCount(params) end
 --- @return table killMap No description yet available.
 function tes3.getKillCounts() end
 
---- Gets the language as an ISO string (e.g. "eng"), determined by the language entry in Morrowind.ini and the detected executable.
---- @return string code No description yet available.
+--- Gets the language as an ISO string (e.g. "eng"), determined by the language entry in Morrowind.ini and the detected executable. Maps to values in the [`tes3.language`](https://mwse.github.io/MWSE/references/languages/) table.
+--- @return string result No description yet available.
 function tes3.getLanguage() end
 
---- Gets the language code, determined by the language entry in Morrowind.ini and the detected executable.
---- @return number code No description yet available.
+--- Gets the language code, determined by the language entry in Morrowind.ini and the detected executable. Maps to values in the [`tes3.languageCode`](https://mwse.github.io/MWSE/references/language-codes/) table.
+--- @return number result No description yet available.
 function tes3.getLanguageCode() end
 
 --- Returns the last exterior position of the player.

@@ -3,20 +3,20 @@ hide:
   - toc
 ---
 
-# Weather Types
+# Weathers
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.weather.*` namespace. For example, `tes3.weather.rain` has a value of `4`.
+	These values are available in Lua by their index in the `tes3.weather` table. For example, `tes3.weather.snow` has a value of `8`.
 
-ID | Weather
--- | ---------------------
-0  | Clear
-1  | Cloudy
-2  | Foggy
-3  | Overcast
-4  | Rain
-5  | Thunder
-6  | Ash
-7  | Blight
-8  | Snow
-9  | Blizzard
+Index    | Value
+-------- | -----
+clear    | `0`
+cloudy   | `1`
+foggy    | `2`
+overcast | `3`
+rain     | `4`
+thunder  | `5`
+ash      | `6`
+blight   | `7`
+snow     | `8`
+blizzard | `9`

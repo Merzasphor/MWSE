@@ -6,34 +6,34 @@ hide:
 # Active Body Parts
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.activeBodyPart.*` namespace. For example, `tes3.activeBodyPart.rightAnkle` has a value of `17`.
+	These values are available in Lua by their index in the `tes3.activeBodyPart` table. For example, `tes3.activeBodyPart.hair` has a value of `1`.
 
-ID | Body Part
--- | ---------------
-0  | Head
-1  | Hair
-2  | Neck
-3  | Chest
-4  | Groin
-5  | Skirt
-6  | Right Hand
-7  | Left Hand
-8  | Right Wrist
-9  | Left Wrist
-10 | Shield
-11 | Right Forearm
-12 | Left Forearm
-13 | Right Upper Arm
-14 | Left Upper Arm
-15 | Right Foot
-16 | Left Foot
-17 | Right Ankle
-18 | Left Ankle
-19 | Right Knee
-20 | Left Knee
-21 | Right Upper Leg
-22 | Left Upper Leg
-23 | Right Pauldron
-24 | Left Pauldron
-25 | Weapon
-26 | Tail
+Index         | Value
+------------- | -----
+head          | `0`
+hair          | `1`
+neck          | `2`
+chest         | `3`
+groin         | `4`
+skirt         | `5`
+rightHand     | `6`
+leftHand      | `7`
+rightWrist    | `8`
+leftWrist     | `9`
+shield        | `10`
+rightForearm  | `11`
+leftForearm   | `12`
+rightUpperArm | `13`
+leftUpperArm  | `14`
+rightFoot     | `15`
+leftFoot      | `16`
+rightAnkle    | `17`
+leftAnkle     | `18`
+rightKnee     | `19`
+leftKnee      | `20`
+rightUpperLeg | `21`
+leftUpperLeg  | `22`
+rightPauldron | `23`
+leftPauldron  | `24`
+weapon        | `25`
+tail          | `26`

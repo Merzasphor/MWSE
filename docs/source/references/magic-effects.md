@@ -6,153 +6,153 @@ hide:
 # Magic Effects
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.effect.*` namespace. For example, `tes3.effect.slowFall` has a value of `11`.
+	These values are available in Lua by their index in the `tes3.effect` table. For example, `tes3.effect.fortifySkill` has a value of `83`.
 
 !!! note
 	Custom effects can be added, expanding this list. See the [Magicka Expanded](https://www.nexusmods.com/morrowind/mods/47111) article on [Claiming a Spell Effect ID](https://www.nexusmods.com/morrowind/articles/137) for more information.
 
-ID  | Effect
---- | ---------------------------------------------
-0   | Water Breathing
-1   | Swift Swim
-2   | Water Walking
-3   | Shield
-4   | Fire Shield
-5   | Lightning Shield
-6   | Frost Shield
-7   | Burden
-8   | Feather
-9   | Jump
-10  | Levitate
-11  | Slow Fall
-12  | Lock
-13  | Open
-14  | Fire Damage
-15  | Shock Damage
-16  | Frost Damage
-17  | Drain Attribute
-18  | Drain Health
-19  | Drain Magicka
-20  | Drain Fatigue
-21  | Drain Skill
-22  | Damage Attribute
-23  | Damage Health
-24  | Damage Magicka
-25  | Damage Fatigue
-26  | Damage Skill
-27  | Poison
-28  | Weakness to Fire
-29  | Weakness to Frost
-30  | Weakness to Shock
-31  | Weakness to Magicka
-32  | Weakness to Common Disease
-33  | Weakness to Blight Disease
-34  | Weakness to Corprus Disease
-35  | Weakness to Poison
-36  | Weakness to Normal Weapons
-37  | Disintegrate Weapon
-38  | Disintegrate Armor
-39  | Invisibility
-40  | Chameleon
-41  | Light
-42  | Sanctuary
-43  | NightEye
-44  | Charm
-45  | Paralyze
-46  | Silence
-47  | Blind
-48  | Sound
-49  | Calm Humanoid
-50  | Calm Creature
-51  | Frenzy Humanoid
-52  | Frenzy Creature
-53  | Demoralize Humanoid
-54  | Demoralize Creature
-55  | Rally Humanoid
-56  | Rally Creature
-57  | Dispel
-58  | Soultrap
-59  | Telekinesis
-60  | Mark
-61  | Recall
-62  | Divine Intervention
-63  | Almsivi Intervention
-64  | Detect Animal
-65  | Detect Enchantment
-66  | Detect Key
-67  | Spell Absorption
-68  | Reflect
-69  | Cure Common Disease
-70  | Cure Blight Disease
-71  | Cure Corprus Disease
-72  | Cure Poison
-73  | Cure Paralyzation
-74  | Restore Attribute
-75  | Restore Health
-76  | Restore Magicka
-77  | Restore Fatigue
-78  | Restore Skill
-79  | Fortify Attribute
-80  | Fortify Health
-81  | Fortify Magicka
-82  | Fortify Fatigue
-83  | Fortify Skill
-84  | Fortify MaximumMagicka
-85  | Absorb Attribute
-86  | Absorb Health
-87  | Absorb Magicka
-88  | Absorb Fatigue
-89  | Absorb Skill
-90  | Resist Fire
-91  | Resist Frost
-92  | Resist Shock
-93  | Resist Magicka
-94  | Resist Common Disease
-95  | Resist Blight Disease
-96  | Resist Corprus Disease
-97  | Resist Poison
-98  | Resist Normal Weapons
-99  | Resist Paralysis
-100 | Remove Curse
-101 | Turn Undead
-102 | Summon Scamp
-103 | Summon Clannfear
-104 | Summon Daedroth
-105 | Summon Dremora
-106 | Summon AncestralGhost
-107 | Summon SkeletalMinion
-108 | Summon Bonewalker
-109 | Summon GreaterBonewalker
-110 | Summon Bonelord
-111 | Summon WingedTwilight
-112 | Summon Hunger
-113 | Summon GoldenSaint
-114 | Summon FlameAtronach
-115 | Summon FrostAtronach
-116 | Summon StormAtronach
-117 | Fortify Attack
-118 | Command Creature
-119 | Command Humanoid
-120 | Bound Dagger
-121 | Bound Longsword
-122 | Bound Mace
-123 | Bound BattleAxe
-124 | Bound Spear
-125 | Bound Longbow
-126 | EXTRASPELL
-127 | Bound Cuirass
-128 | Bound Helm
-129 | Bound Boots
-130 | Bound Shield
-131 | Bound Gloves
-132 | Corprus
-133 | Vampirism
-134 | Summon Centurion Sphere
-135 | Sun Damage
-136 | Stunted Magicka
-137 | Summon Fabricant
-138 | Call Wolf
-139 | Call Bear
-140 | Summon Bonewolf
-141 | sEffectSummonCreature04
-142 | sEffectSummonCreature05
+Index                    | Value
+------------------------ | -----
+waterBreathing           | `0`
+swiftSwim                | `1`
+waterWalking             | `2`
+shield                   | `3`
+fireShield               | `4`
+lightningShield          | `5`
+frostShield              | `6`
+burden                   | `7`
+feather                  | `8`
+jump                     | `9`
+levitate                 | `10`
+slowFall                 | `11`
+lock                     | `12`
+open                     | `13`
+fireDamage               | `14`
+shockDamage              | `15`
+frostDamage              | `16`
+drainAttribute           | `17`
+drainHealth              | `18`
+drainMagicka             | `19`
+drainFatigue             | `20`
+drainSkill               | `21`
+damageAttribute          | `22`
+damageHealth             | `23`
+damageMagicka            | `24`
+damageFatigue            | `25`
+damageSkill              | `26`
+poison                   | `27`
+weaknesstoFire           | `28`
+weaknesstoFrost          | `29`
+weaknesstoShock          | `30`
+weaknesstoMagicka        | `31`
+weaknesstoCommonDisease  | `32`
+weaknesstoBlightDisease  | `33`
+weaknesstoCorprusDisease | `34`
+weaknesstoPoison         | `35`
+weaknesstoNormalWeapons  | `36`
+disintegrateWeapon       | `37`
+disintegrateArmor        | `38`
+invisibility             | `39`
+chameleon                | `40`
+light                    | `41`
+sanctuary                | `42`
+nightEye                 | `43`
+charm                    | `44`
+paralyze                 | `45`
+silence                  | `46`
+blind                    | `47`
+sound                    | `48`
+calmHumanoid             | `49`
+calmCreature             | `50`
+frenzyHumanoid           | `51`
+frenzyCreature           | `52`
+demoralizeHumanoid       | `53`
+demoralizeCreature       | `54`
+rallyHumanoid            | `55`
+rallyCreature            | `56`
+dispel                   | `57`
+soultrap                 | `58`
+telekinesis              | `59`
+mark                     | `60`
+recall                   | `61`
+divineIntervention       | `62`
+almsiviIntervention      | `63`
+detectAnimal             | `64`
+detectEnchantment        | `65`
+detectKey                | `66`
+spellAbsorption          | `67`
+reflect                  | `68`
+cureCommonDisease        | `69`
+cureBlightDisease        | `70`
+cureCorprusDisease       | `71`
+curePoison               | `72`
+cureParalyzation         | `73`
+restoreAttribute         | `74`
+restoreHealth            | `75`
+restoreMagicka           | `76`
+restoreFatigue           | `77`
+restoreSkill             | `78`
+fortifyAttribute         | `79`
+fortifyHealth            | `80`
+fortifyMagicka           | `81`
+fortifyFatigue           | `82`
+fortifySkill             | `83`
+fortifyMaximumMagicka    | `84`
+absorbAttribute          | `85`
+absorbHealth             | `86`
+absorbMagicka            | `87`
+absorbFatigue            | `88`
+absorbSkill              | `89`
+resistFire               | `90`
+resistFrost              | `91`
+resistShock              | `92`
+resistMagicka            | `93`
+resistCommonDisease      | `94`
+resistBlightDisease      | `95`
+resistCorprusDisease     | `96`
+resistPoison             | `97`
+resistNormalWeapons      | `98`
+resistParalysis          | `99`
+removeCurse              | `100`
+turnUndead               | `101`
+summonScamp              | `102`
+summonClannfear          | `103`
+summonDaedroth           | `104`
+summonDremora            | `105`
+summonAncestralGhost     | `106`
+summonSkeletalMinion     | `107`
+summonBonewalker         | `108`
+summonGreaterBonewalker  | `109`
+summonBonelord           | `110`
+summonWingedTwilight     | `111`
+summonHunger             | `112`
+summonGoldenSaint        | `113`
+summonFlameAtronach      | `114`
+summonFrostAtronach      | `115`
+summonStormAtronach      | `116`
+fortifyAttack            | `117`
+commandCreature          | `118`
+commandHumanoid          | `119`
+boundDagger              | `120`
+boundLongsword           | `121`
+boundMace                | `122`
+boundBattleAxe           | `123`
+boundSpear               | `124`
+boundLongbow             | `125`
+eXTRASPELL               | `126`
+boundCuirass             | `127`
+boundHelm                | `128`
+boundBoots               | `129`
+boundShield              | `130`
+boundGloves              | `131`
+corprus                  | `132`
+vampirism                | `133`
+summonCenturionSphere    | `134`
+sunDamage                | `135`
+stuntedMagicka           | `136`
+summonFabricant          | `137`
+callWolf                 | `138`
+callBear                 | `139`
+summonBonewolf           | `140`
+sEffectSummonCreature04  | `141`
+sEffectSummonCreature05  | `142`

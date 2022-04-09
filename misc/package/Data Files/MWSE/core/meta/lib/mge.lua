@@ -115,12 +115,12 @@ function mge.getUIScale() end
 function mge.getVersion() end
 
 --- Gets distant land fog parameters for a specific weather. See [`mge.setWeatherDLFog()`](https://mwse.github.io/MWSE/apis/mge/#mgesetweatherdlfog).
---- @param weatherID number Maps to values in [`tes3.weather`](https://mwse.github.io/MWSE/references/weather-types/) enumeration.
+--- @param weatherID number Maps to values in the [`tes3.weather`](https://mwse.github.io/MWSE/references/weathers/) table.
 --- @return table parameters An array-style table with `fogDistMultiplier` and `fogOffsetPercent` parameters.
 function mge.getWeatherDLFog(weatherID) end
 
 --- Gets per-pixel lighting parameters for a specific weather. See [`mge.setWeatherPPLLight()`](https://mwse.github.io/MWSE/apis/mge/#mgesetweatherppllight).
---- @param weatherID number Maps to values in [`tes3.weather`](https://mwse.github.io/MWSE/references/weather-types/) enumeration.
+--- @param weatherID number Maps to values in the [`tes3.weather`](https://mwse.github.io/MWSE/references/weathers/) table.
 --- @return table parameters An array-style table with `sunMultiplier` and `ambientMultiplier` parameters.
 function mge.getWeatherPPLLight(weatherID) end
 
@@ -359,14 +359,14 @@ function mge.setShaderVector4(params) end
 --- Sets distant land fog parameters for a specific weather. `fogDistMultiplier` is multiplied by the "Above water fog" distance to get the fog distance for that weather. It has a range of [0, 2]. `fogOffsetPercent` is the percentage of fog applied at zero distance from the camera. It has a range of [0, 90].
 --- 
 --- Note: "Above water fog" is a setting specific to MGE XE. It can be found on the Distant Land page, under Fog category.
---- @param weatherID number Maps to values in [`tes3.weather`](https://mwse.github.io/MWSE/references/weather-types/) enumeration.
+--- @param weatherID number Maps to values in the [`tes3.weather`](https://mwse.github.io/MWSE/references/weathers/) table.
 --- @param fogDistMultiplier number No description yet available.
 --- @param fogOffsetPercent number No description yet available.
 --- @return number result No description yet available.
 function mge.setWeatherDLFog(weatherID, fogDistMultiplier, fogOffsetPercent) end
 
 --- Sets light multipliers used in per-pixel lighting for a specific weather. `sunMultiplier` affects sunlight, while `ambientMultiplier` affects ambient lighting.
---- @param weatherID number Maps to values in [`tes3.weather`](https://mwse.github.io/MWSE/references/weather-types/) enumeration.
+--- @param weatherID number Maps to values in the [`tes3.weather`](https://mwse.github.io/MWSE/references/weathers/) table.
 --- @param sunMultiplier number No description yet available.
 --- @param ambientMultiplier number No description yet available.
 --- @return number result No description yet available.

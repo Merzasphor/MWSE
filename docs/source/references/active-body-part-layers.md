@@ -6,10 +6,10 @@ hide:
 # Active Body Part Layers
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.activeBodyPartLayer.*` namespace. For example, `tes3.activeBodyPartLayer.clothing` has a value of `1`.
+	These values are available in Lua by their index in the `tes3.activeBodyPartLayer` table. For example, `tes3.activeBodyPartLayer.base` has a value of `0`.
 
-ID | Layer
--- | ---------------
-0  | Base
-1  | Clothing
-2  | Armor
+Index    | Value
+-------- | -----
+base     | `0`
+clothing | `1`
+armor    | `2`

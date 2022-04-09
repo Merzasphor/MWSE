@@ -6,13 +6,13 @@ hide:
 # Spell Types
 
 !!! tip
-	These values are available in Lua by their identifier in the `tes3.spellType.*` namespace. For example, `tes3.spellType.curse` has a value of `4`.
+	These values are available in Lua by their index in the `tes3.spellType` table. For example, `tes3.spellType.disease` has a value of `3`.
 
-ID | Spell Type
--- | ---------------------
-0  | Spell
-1  | Ability
-2  | Blight
-3  | Disease
-4  | Curse
-5  | Power
+Index   | Value
+------- | -----
+spell   | `0`
+ability | `1`
+blight  | `2`
+disease | `3`
+curse   | `4`
+power   | `5`
