@@ -60,6 +60,10 @@ namespace TES3 {
 		return Vector2(x * scalar, y * scalar);
 	}
 
+	Vector2 Vector2::operator/(const float scalar) const {
+		return { x / scalar, y / scalar };
+	}
+
 	std::ostream& operator<<(std::ostream& str, const Vector2& vector) {
 		str << "(" << vector.x << "," << vector.y << ")";
 		return str;
@@ -176,6 +180,10 @@ namespace TES3 {
 
 	Vector3 Vector3::operator*(const float scalar) const {
 		return Vector3(x * scalar, y * scalar, z * scalar);
+	}
+
+	Vector3 Vector3::operator/(const float scalar) const {
+		return Vector3(x / scalar, y / scalar, z / scalar);
 	}
 
 	std::ostream& operator<<(std::ostream& str, const Vector3& vector) {
@@ -319,8 +327,12 @@ namespace TES3 {
 		return Vector4(w * other.w, x * other.x, y * other.y, z * other.z);
 	}
 
-	Vector4 Vector4::operator*(float scalar) const {
+	Vector4 Vector4::operator*(const float scalar) const {
 		return Vector4(w * scalar, x * scalar, y * scalar, z * scalar);
+	}
+
+	Vector4 Vector4::operator/(const float scalar) const {
+		return Vector4(w / scalar, x / scalar, y / scalar, z / scalar);
 	}
 
 	std::ostream& operator<<(std::ostream& str, const Vector4& vector) {

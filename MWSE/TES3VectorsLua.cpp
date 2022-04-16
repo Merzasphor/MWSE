@@ -37,6 +37,7 @@ namespace mwse::lua {
 				sol::resolve<TES3::Vector2(const TES3::Vector2&) const>(&TES3::Vector2::operator*),
 				sol::resolve<TES3::Vector2(const float) const>(&TES3::Vector2::operator*)
 			);
+			usertypeDefinition[sol::meta_function::division] = &TES3::Vector2::operator/;
 			usertypeDefinition[sol::meta_function::length] = &TES3::Vector2::length;
 			usertypeDefinition[sol::meta_function::to_string] = &TES3::Vector2::toString;
 
@@ -65,6 +66,7 @@ namespace mwse::lua {
 				sol::resolve<TES3::Vector3(const TES3::Vector3&) const>(&TES3::Vector3::operator*),
 				sol::resolve<TES3::Vector3(const float) const>(&TES3::Vector3::operator*)
 			);
+			usertypeDefinition[sol::meta_function::division] = &TES3::Vector3::operator/;
 			usertypeDefinition[sol::meta_function::length] = &TES3::Vector3::length;
 			usertypeDefinition[sol::meta_function::to_string] = &TES3::Vector3::toString;
 
@@ -113,6 +115,7 @@ namespace mwse::lua {
 				sol::resolve<TES3::Vector4(const TES3::Vector4&) const>(&TES3::Vector4::operator*),
 				sol::resolve<TES3::Vector4(const float) const>(&TES3::Vector4::operator*)
 			);
+			usertypeDefinition[sol::meta_function::division] = &TES3::Vector4::operator/;
 			usertypeDefinition[sol::meta_function::length] = &TES3::Vector4::length;
 			usertypeDefinition[sol::meta_function::to_string] = &TES3::Vector4::toString;
 			usertypeDefinition["__tojson"] = &TES3::Vector4::toJson;
