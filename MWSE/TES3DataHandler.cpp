@@ -239,11 +239,12 @@ namespace TES3 {
 	}
 
 	Spell* NonDynamicData::getSpellById(const char* id) {
-		auto spell = spellsList->front();
-		while (spell != NULL && _stricmp(id, spell->objectID) != 0) {
-			spell = reinterpret_cast<TES3::Spell*>(spell->nextInCollection);
+		for (const auto spell : *spellsList) {
+			if (_stricmp(id, spell->objectID) == 0) {
+				return spell;
+			}
 		}
-		return spell;
+		return nullptr;
 	}
 
 	const auto TES3_NonDynamicData_findScriptByName = reinterpret_cast<Script * (__thiscall*)(NonDynamicData*, const char*)>(0x4BA700);
