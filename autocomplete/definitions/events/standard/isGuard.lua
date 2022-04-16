@@ -9,7 +9,7 @@ return {
 		},
 		isGuard = {
 			type = "boolean",
-			readonly = false,
+			readOnly =false,
 			description = "The previously calculated guard status.",
 		},
 	},

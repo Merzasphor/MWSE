@@ -1,6 +1,6 @@
 return {
 	type = "value",
 	description = [[The item being recharged.]],
-	readonly = true,
+	readOnly =true,
 	valuetype = "tes3item",
 }

@@ -39,12 +39,12 @@ return {
 		},
 		magicSourceInstance = {
 			type = "tes3magicSourceInstance",
-			readonly = true ,
+			readOnly =true ,
 			description = "A `tes3magicSourceInstance` object of a spell that will cause the damage. Can be `nil`.",
 		},
 		magicEffectInstance = {
 			type = "tes3magicEffectInstance",
-			readonly = true ,
+			readOnly =true ,
 			description = "An instance of the magic effect in the spell that will cause the damage. Can be `nil`.",
 		},
 		source = {

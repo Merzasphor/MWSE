@@ -4,7 +4,7 @@ return {
 	eventData = {
 		["damage"] = {
 			type = "number",
-			readonly = false,
+			readOnly =false,
 			description = "The previously calculated sun damage.",
 		},
 	},
