@@ -2,3 +2,25 @@
 
 A manager for VFX lifetime and rendering. VFXs can be created through script with `tes3.createVisualEffect` and destroyed with `tes3.removeVisualEffect`.
 
+## Properties
+
+### `data`
+
+A collection of active managed visual effects.
+
+**Returns**:
+
+* `result` (table)
+
+***
+
+### `worldVFXRoot`
+
+The root node that general VFXs are attached to.
+
+**Returns**:
+
+* `result` ([niNode](../../types/niNode))
+
+***
+
