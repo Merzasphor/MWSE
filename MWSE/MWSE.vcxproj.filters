@@ -1608,6 +1608,9 @@
     <ClInclude Include="LuaSpellResistedEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
+    <ClInclude Include="TES3VFXManagerLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -3520,6 +3523,9 @@
     </ClCompile>
     <ClCompile Include="TES3MagicEffectInstance.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3VFXManagerLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

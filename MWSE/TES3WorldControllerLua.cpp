@@ -20,6 +20,7 @@
 #include "TES3Script.h"
 #include "TES3Sound.h"
 #include "TES3UIMenuController.h"
+#include "TES3VFXManager.h"
 #include "TES3WeatherController.h"
 #include "TES3WorldController.h"
 
@@ -181,6 +182,7 @@ namespace mwse::lua {
 			usertypeDefinition["timescale"] = sol::readonly_property(&TES3::WorldController::gvarTimescale);
 			usertypeDefinition["transitionFader"] = sol::readonly_property(&TES3::WorldController::transitionFader);
 			usertypeDefinition["useBestAttack"] = &TES3::WorldController::useBestAttack;
+			usertypeDefinition["vfxManager"] = sol::readonly_property(&TES3::WorldController::vfxManager);
 			usertypeDefinition["viewHeight"] = &TES3::WorldController::viewHeight;
 			usertypeDefinition["viewWidth"] = &TES3::WorldController::viewWidth;
 			usertypeDefinition["weaponSwishSound"] = &TES3::WorldController::soundWeaponSwish;

@@ -458,6 +458,7 @@
     <ClInclude Include="TES3UtilLua.h" />
     <ClInclude Include="TES3Vectors.h" />
     <ClInclude Include="TES3VectorsLua.h" />
+    <ClInclude Include="TES3VFXManagerLua.h" />
     <ClInclude Include="TES3Weapon.h" />
     <ClInclude Include="TES3WeaponLua.h" />
     <ClInclude Include="TES3WearablePart.h" />
@@ -885,6 +886,7 @@
     <ClCompile Include="TES3Vectors.cpp" />
     <ClCompile Include="TES3VectorsLua.cpp" />
     <ClCompile Include="TES3VFXManager.cpp" />
+    <ClCompile Include="TES3VFXManagerLua.cpp" />
     <ClCompile Include="TES3Weapon.cpp" />
     <ClCompile Include="TES3WeaponLua.cpp" />
     <ClCompile Include="TES3Weather.cpp" />
