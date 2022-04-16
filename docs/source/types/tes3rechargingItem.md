@@ -6,7 +6,7 @@ Data for a recharging item. Not necessarily an item owned by the player.
 
 ### `enchantment`
 
-The enchantment of the recharging item.
+*Read-only*. The enchantment of the recharging item.
 
 **Returns**:
 
@@ -16,7 +16,7 @@ The enchantment of the recharging item.
 
 ### `itemData`
 
-The specific item data being recharged.
+*Read-only*. The specific item data being recharged.
 
 **Returns**:
 
@@ -26,7 +26,7 @@ The specific item data being recharged.
 
 ### `object`
 
-The item being recharged.
+*Read-only*. The item being recharged.
 
 **Returns**:
 

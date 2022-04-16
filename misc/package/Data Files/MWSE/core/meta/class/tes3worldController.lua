@@ -82,6 +82,7 @@
 --- @field timescale tes3globalVariable *Read-only*. The `timescale` global variable. Used to convert real time to in-game time.
 --- @field transitionFader tes3fader *Read-only*. Screen overlay fader for cell transitions.
 --- @field useBestAttack boolean Automatically choose the best attack direction for attacks. Corresponds to the "Always use best attack" option in the Options menu.
+--- @field vfxManager tes3vfxManager *Read-only*. Access to the VFX manager.
 --- @field viewHeight number *Read-only*. The height of the UI viewport in pixels. Affected by UI scaling. For screen resolution, use [`tes3.getViewportSize()`](https://mwse.github.io/MWSE/apis/tes3/#tes3getviewportsize).
 --- @field viewWidth number *Read-only*. The width of the UI viewport in pixels. Affected by UI scaling. For screen resolution, use [`tes3.getViewportSize()`](https://mwse.github.io/MWSE/apis/tes3/#tes3getviewportsize).
 --- @field weaponSwishSound tes3sound The sound played when an attack with a melee weapon is performed. It always plays when a melee attack is released, irrespective of hit or miss.

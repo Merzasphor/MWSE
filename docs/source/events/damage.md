@@ -21,8 +21,8 @@ event.register(tes3.event.damage, damageCallback)
 * `attacker` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile actor dealing the damage. Can be `nil`.
 * `attackerReference` ([tes3reference](../../types/tes3reference)): *Read-only*. The attacker mobile's associated reference. Can be `nil`.
 * `damage` (number): The amount of damage done.
-* `magicEffectInstance` ([tes3magicEffectInstance](../../types/tes3magicEffectInstance)): An instance of the magic effect in the spell that will cause the damage. Can be `nil`.
-* `magicSourceInstance` ([tes3magicSourceInstance](../../types/tes3magicSourceInstance)): A `tes3magicSourceInstance` object of a spell that will cause the damage. Can be `nil`.
+* `magicEffectInstance` ([tes3magicEffectInstance](../../types/tes3magicEffectInstance)): *Read-only*. An instance of the magic effect in the spell that will cause the damage. Can be `nil`.
+* `magicSourceInstance` ([tes3magicSourceInstance](../../types/tes3magicSourceInstance)): *Read-only*. A `tes3magicSourceInstance` object of a spell that will cause the damage. Can be `nil`.
 * `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile actor that is taking damage.
 * `projectile` ([tes3mobileProjectile](../../types/tes3mobileProjectile)): *Read-only*. Projectile that will deal the damage. Can be `nil`.
 * `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. The mobile’s associated reference.

@@ -901,7 +901,7 @@ local vfx = tes3.createVisualEffect({ effect = ..., serial = ..., repeatCount = 
 
 **Returns**:
 
-* `vfx` (tes3vfx): A handle to the VFX that was created. This can be passed to `tes3.removeVisualEffect` to remove it from the reference.
+* `vfx` ([tes3vfx](../../types/tes3vfx)): A handle to the VFX that was created. This can be passed to `tes3.removeVisualEffect` to remove it from the reference.
 
 ***
 
@@ -3246,7 +3246,7 @@ local removedCount = tes3.removeVisualEffect({ vfx = ..., avObject = ..., serial
 **Parameters**:
 
 * `params` (table)
-	* `vfx` (tes3vfx): *Optional*. If provided, the specific VFX handle will be deleted.
+	* `vfx` ([tes3vfx](../../types/tes3vfx)): *Optional*. If provided, the specific VFX handle will be deleted.
 	* `avObject` ([niAVObject](../../types/niAVObject)): *Optional*. If provided, any VFXs associated with the given niAVObject will be deleted.
 	* `serial` (number): *Optional*. The magic source instance serial number to remove effects for. This must be paired with a reference as well.
 	* `reference` ([tes3reference](../../types/tes3reference), string): *Optional*. The reference to remove all visual effects from. A serial may also be provided.

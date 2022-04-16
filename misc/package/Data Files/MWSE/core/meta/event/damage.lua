@@ -11,8 +11,8 @@
 --- @field attacker tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer *Read-only*. The mobile actor dealing the damage. Can be `nil`.
 --- @field attackerReference tes3reference *Read-only*. The attacker mobile's associated reference. Can be `nil`.
 --- @field damage number The amount of damage done.
---- @field magicEffectInstance tes3magicEffectInstance An instance of the magic effect in the spell that will cause the damage. Can be `nil`.
---- @field magicSourceInstance tes3magicSourceInstance A `tes3magicSourceInstance` object of a spell that will cause the damage. Can be `nil`.
+--- @field magicEffectInstance tes3magicEffectInstance *Read-only*. An instance of the magic effect in the spell that will cause the damage. Can be `nil`.
+--- @field magicSourceInstance tes3magicSourceInstance *Read-only*. A `tes3magicSourceInstance` object of a spell that will cause the damage. Can be `nil`.
 --- @field mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer *Read-only*. The mobile actor that is taking damage.
 --- @field projectile tes3mobileProjectile|tes3mobileSpellProjectile *Read-only*. Projectile that will deal the damage. Can be `nil`.
 --- @field reference tes3reference *Read-only*. The mobile’s associated reference.

@@ -41,7 +41,7 @@
 --- @field sizeCap number The maximum possible size of the spell projectile with this effect.
 --- @field skill number *Read-only*. The skill for the associated school that the effect is associated with.
 --- @field speed number No description yet available.
---- @field spellFailureSoundEffect tes3sound The sound effect that plays when a spell fails to cast, and when magic is resisted. This is determined only by the spell school.
+--- @field spellFailureSoundEffect tes3sound *Read-only*. The sound effect that plays when a spell fails to cast, and when magic is resisted. This is determined only by the spell school.
 --- @field targetsAttributes boolean Access to the base flag that determines if this effect makes use of attributes.
 --- @field targetsSkills boolean Access to the base flag that determines if this effect makes use of skills.
 --- @field unreflectable boolean Access to the base flag that determines if this effect can't be reflected.

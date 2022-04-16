@@ -749,6 +749,16 @@ Automatically choose the best attack direction for attacks. Corresponds to the "
 
 ***
 
+### `vfxManager`
+
+*Read-only*. Access to the VFX manager.
+
+**Returns**:
+
+* `result` ([tes3vfxManager](../../types/tes3vfxManager))
+
+***
+
 ### `viewHeight`
 
 *Read-only*. The height of the UI viewport in pixels. Affected by UI scaling. For screen resolution, use [`tes3.getViewportSize()`](https://mwse.github.io/MWSE/apis/tes3/#tes3getviewportsize).

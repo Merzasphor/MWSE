@@ -386,7 +386,7 @@ No description yet available.
 
 ### `spellFailureSoundEffect`
 
-The sound effect that plays when a spell fails to cast, and when magic is resisted. This is determined only by the spell school.
+*Read-only*. The sound effect that plays when a spell fails to cast, and when magic is resisted. This is determined only by the spell school.
 
 **Returns**:
 
