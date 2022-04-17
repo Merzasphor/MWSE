@@ -526,13 +526,13 @@ tes3ui.showInventorySelectMenu({ reference = ..., title = ..., leaveMenuMode = .
 
 		If assigning a string it has to be one of the following values:
 
-		- `alembic`: Only ([tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/)) items of type `tes3.apparatusType.alembic` will be shown. 
-		- `calcinator`: Only ([tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/)) items of type `tes3.apparatusType.calcinator` will be shown. 
+		- `alembic`: Only [tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/) items of type `tes3.apparatusType.alembic` will be shown. 
+		- `calcinator`: Only [tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/) items of type `tes3.apparatusType.calcinator` will be shown. 
 		- `enchanted`: Only enchanted items will be shown. 
-		- `ingredients`: Only ([tes3ingredient](https://mwse.github.io/MWSE/types/tes3ingredient/)) items will be shown. 
-		- `mortar`: Only ([tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/)) items of type `tes3.apparatusType.mortarAndPestle` will be shown. 
+		- `ingredients`: Only [tes3ingredient](https://mwse.github.io/MWSE/types/tes3ingredient/) items will be shown. 
+		- `mortar`: Only [tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/) items of type `tes3.apparatusType.mortarAndPestle` will be shown. 
 		- `quickUse`: Only items available for quick use will be shown.
-		- `retort`: Only ([tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/)) items of type `tes3.apparatusType.retort` will be shown. 
+		- `retort`: Only [tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/) items of type `tes3.apparatusType.retort` will be shown. 
 		- `soulgemFilled`: Only filled soulgems will be shown.
 
 		If assigning a function it will be called when determining if an item should be added to the inventory select menu. A table `filterParams` will be passed to this function. Returning `true` from this function will add the item to the inventory select menu, whereas returning `false` will prevent it from being added.
