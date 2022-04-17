@@ -45,7 +45,7 @@ namespace TES3 {
 		else if (object->isItem()) {
 			auto objectAsItem = static_cast<Item*>(object);
 			auto enchantment = objectAsItem->getEnchantment();
-			if (enchantment == nullptr || enchantment->castType != EnchantmentCastType::OnUse) {
+			if (enchantment == nullptr || (enchantment->castType != EnchantmentCastType::OnUse && enchantment->castType != EnchantmentCastType::Once)) {
 				throw std::invalid_argument("Could not assign object to a castable quickslot. Item is missing a castable enchantment.");
 			}
 
