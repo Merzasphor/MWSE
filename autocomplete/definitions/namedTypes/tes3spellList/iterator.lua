@@ -1,6 +1,8 @@
 return {
 	type = "value",
-	description = [[A collection of spells. Can be iterated over using *pairs*.]],
+	description = [[Deprecated. Use `for index, spell in pairs(spellList)` to iterate over spells.
+	
+Direct access to the spells in this list.]],
 	readOnly = true,
 	valuetype = "tes3iterator",
 }
