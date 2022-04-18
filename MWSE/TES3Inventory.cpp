@@ -109,8 +109,19 @@ namespace TES3 {
 	//
 
 	const auto TES3_Inventory_findItemStack = reinterpret_cast<ItemStack* (__thiscall*)(Inventory*, Object*)>(0x49A6C0);
-	ItemStack* Inventory::findItemStack(Object* item) {
-		return TES3_Inventory_findItemStack(this, item);
+	ItemStack* Inventory::findItemStack(Object* item, ItemData* itemData) {
+		ItemStack* stack = TES3_Inventory_findItemStack(this, item);
+
+		if (stack && itemData) {
+			if (stack->variables && stack->variables->contains(itemData)) {
+				return stack;
+			}
+			else {
+				return nullptr;
+			}
+		}
+
+		return stack;
 	}
 
 	const auto TES3_Inventory_AddItem = reinterpret_cast<int(__thiscall*)(Inventory*, MobileActor *, Item *, int, bool, ItemData **)>(0x498530);
@@ -159,21 +170,7 @@ namespace TES3 {
 	}
 
 	bool Inventory::containsItem(Item * item, ItemData * data) {
-		ItemStack * stack = findItemStack(item);
-		if (stack == nullptr) {
-			return false;
-		}
-
-		if (data) {
-			if (stack->variables) {
-				return stack->variables->contains(data);
-			}
-			else {
-				return false;
-			}
-		}
-
-		return true;
+		return findItemStack(item, data) != nullptr;
 	}
 
 	const auto TES3_Inventory_calculateContainedWeight = reinterpret_cast<float(__thiscall*)(const Inventory*)>(0x49A080);
@@ -222,6 +219,22 @@ namespace TES3 {
 			}
 		}
 		return false;
+	}
+
+	ItemStack* Inventory::findItemStack_lua(sol::object itemOrItemId, sol::optional<TES3::ItemData*> itemData) {
+		if (itemOrItemId.is<TES3::Item*>()) {
+			auto item = itemOrItemId.as<TES3::Item*>();
+			return findItemStack(item, itemData.value_or(nullptr));
+		}
+		else if (itemOrItemId.is<const char*>()) {
+			TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+			if (dataHandler) {
+				auto itemId = itemOrItemId.as<const char*>();
+				auto item = dataHandler->nonDynamicData->resolveObjectByType<TES3::Item>(itemId);
+				return findItemStack(item, itemData.value_or(nullptr));
+			}
+		}
+		return nullptr;
 	}
 
 	void Inventory::resolveLeveledLists_lua(sol::optional<MobileActor*> mobile) {

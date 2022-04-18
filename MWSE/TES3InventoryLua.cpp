@@ -106,7 +106,7 @@ namespace mwse::lua {
 			usertypeDefinition["contains"] = &TES3::Inventory::contains_lua;
 			usertypeDefinition["dropItem"] = &TES3::Inventory::dropItem;
 			usertypeDefinition["calculateWeight"] = &TES3::Inventory::calculateContainedWeight;
-			usertypeDefinition["findItemStack"] = &TES3::Inventory::findItemStack;
+			usertypeDefinition["findItemStack"] = &TES3::Inventory::findItemStack_lua;
 			usertypeDefinition["removeItem"] = &TES3::Inventory::removeItem_lua;
 			usertypeDefinition["resolveLeveledItems"] = &TES3::Inventory::resolveLeveledLists_lua;
 

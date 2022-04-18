@@ -61,7 +61,8 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
-		ItemStack* findItemStack(Object* item);
+		ItemStack* findItemStack(Object* item, ItemData* itemData = nullptr);
+
 
 		int addItem(MobileActor * mobile, Item * item, int count, bool overwriteCount, ItemData ** itemDataRef);
 		int addItemWithoutData(MobileActor * mobile, Item * item, int count, bool something);
@@ -89,6 +90,7 @@ namespace TES3 {
 		int addItem_lua(sol::table params);
 		void removeItem_lua(sol::table params);
 		bool contains_lua(sol::object itemOrItemId, sol::optional<TES3::ItemData*> itemData);
+		ItemStack* findItemStack_lua(sol::object itemOrItemId, sol::optional<TES3::ItemData*> itemData);
 		void resolveLeveledLists_lua(sol::optional<MobileActor*> mobile);
 
 		//

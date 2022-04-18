@@ -114,12 +114,13 @@ tes3inventory:dropItem(mobile, item, itemData, count, position, orientation, ign
 Searches for an item stack in the inventory.
 
 ```lua
-local result = tes3inventory:findItemStack(item)
+local result = tes3inventory:findItemStack(item, itemData)
 ```
 
 **Parameters**:
 
-* `item` ([tes3item](../../types/tes3item)): The item to search for.
+* `item` ([tes3item](../../types/tes3item), string): The item to search for.
+* `itemData` ([tes3itemData](../../types/tes3itemData)): *Optional*. If provided, it will check for the specific data as well.
 
 **Returns**:
 
