@@ -1,6 +1,6 @@
 # mouseButtonUp
 
-The mouseButtonDown event fires when a button on the mouse is released.
+This event fires when a button on the mouse is released.
 
 ```lua
 --- @param e mouseButtonUpEventData

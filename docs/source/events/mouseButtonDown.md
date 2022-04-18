@@ -1,6 +1,6 @@
 # mouseButtonDown
 
-The mouseButtonDown event fires when a button on the mouse is pressed.
+This event fires when a button on the mouse is pressed.
 
 ```lua
 --- @param e mouseButtonDownEventData

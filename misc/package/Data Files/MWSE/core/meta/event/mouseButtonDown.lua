@@ -1,7 +1,7 @@
 --- @meta
 --- @diagnostic disable:undefined-doc-name
 
---- The mouseButtonDown event fires when a button on the mouse is pressed.
+--- This event fires when a button on the mouse is pressed.
 --- @class mouseButtonDownEventData
 --- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.
 --- @field button number *Read-only*. The button index that was pressed.
