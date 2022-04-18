@@ -52,6 +52,7 @@ namespace TES3 {
 		path = meshPath.c_str();
 
 		// Store the loading path for debugging purposes.
+		auto previouslyLoadingMesh = DataHandler::currentlyLoadingMesh;
 		DataHandler::currentlyLoadingMesh = path;
 
 		// Check the loaded NIF count to see if anything new was loaded.
@@ -66,7 +67,7 @@ namespace TES3 {
 		}
 
 		// Clean up debug information.
-		DataHandler::currentlyLoadingMesh = nullptr;
+		DataHandler::currentlyLoadingMesh = previouslyLoadingMesh;
 
 		return mesh;
 	}
