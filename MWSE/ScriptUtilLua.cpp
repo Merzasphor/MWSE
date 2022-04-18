@@ -15,6 +15,7 @@
 #include "TES3Reference.h"
 #include "TES3Script.h"
 #include "TES3Spell.h"
+#include "TES3WorldController.h"
 
 #include "BitUtil.h"
 #include "InstructionStore.h"
@@ -402,7 +403,7 @@ namespace mwse::lua {
 				return false;
 			}
 
-			return mwscript::ScriptRunning(script, targetScript);
+			return TES3::WorldController::get()->isGlobalScriptRunning(targetScript);
 		};
 		// Obsolete. Do not document.
 		state["mwscript"]["setDelete"] = [](sol::optional<sol::table> params) {
@@ -444,7 +445,7 @@ namespace mwse::lua {
 				return false;
 			}
 
-			mwscript::StartScript(script, reference, targetScript);
+			TES3::WorldController::get()->startGlobalScript(targetScript, reference);
 			return true;
 		};
 		state["mwscript"]["stopCombat"] = [](sol::optional<sol::table> params) {
@@ -466,7 +467,7 @@ namespace mwse::lua {
 			}
 
 			if (targetScript) {
-				mwscript::StopScript(script, targetScript);
+				TES3::WorldController::get()->stopGlobalScript(targetScript);
 				return true;
 			}
 

@@ -8,6 +8,7 @@
 
 #include "TES3DataHandler.h"
 #include "TES3Script.h"
+#include "TES3WorldController.h"
 
 namespace mwse {
 	class xStopScript : InstructionInterface_t {
@@ -42,7 +43,9 @@ namespace mwse {
 
 		// Call the original function.
 		TES3::Script* script = virtualMachine.getScript();
-		mwse::mwscript::StopScript(script, targetScript);
+		if (script) {
+			TES3::WorldController::get()->stopGlobalScript(targetScript);
+		}
 
 		return 0.0f;
 	}

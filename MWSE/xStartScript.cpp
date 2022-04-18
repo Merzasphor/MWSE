@@ -7,6 +7,7 @@
 #include "ScriptUtil.h"
 
 #include "TES3DataHandler.h"
+#include "TES3WorldController.h"
 
 namespace mwse {
 	class xStartScript : InstructionInterface_t {
@@ -35,7 +36,9 @@ namespace mwse {
 		// Call the original function.
 		TES3::Reference* reference = virtualMachine.getReference();
 		TES3::Script* script = virtualMachine.getScript();
-		mwse::mwscript::StartScript(script, reference, targetScript);
+		if (targetScript) {
+			TES3::WorldController::get()->startGlobalScript(targetScript, reference);
+		}
 
 		return 0.0f;
 	}

@@ -578,12 +578,12 @@ namespace mwse::lua {
 			if (!result.valid()) {
 				sol::error error = result;
 				log::getLog() << "Lua error encountered when override of script '" << script->name << "':" << std::endl << error.what() << std::endl;
-				mwscript::StopScript(script, script);
+				TES3::WorldController::get()->stopGlobalScript(script);
 			}
 		}
 		else {
 			log::getLog() << "No execute function found for script override of '" << script->name << "'. Script execution stopped." << std::endl;
-			mwscript::StopScript(script, script);
+			TES3::WorldController::get()->stopGlobalScript(script);
 		}
 
 		manager.setCurrentReference(nullptr);
