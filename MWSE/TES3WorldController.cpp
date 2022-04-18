@@ -291,7 +291,7 @@ namespace TES3 {
 		}
 
 		// Create the record header.
-		BaseObject recordHolder;
+		BaseObject recordHolder = {};
 		recordHolder.objectType = (ObjectType::ObjectType)'TSLK';
 		recordHolder.writeFileHeader(file);
 
