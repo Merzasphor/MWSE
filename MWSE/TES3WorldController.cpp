@@ -291,7 +291,7 @@ namespace TES3 {
 		}
 
 		// Create the record header.
-		BaseObject recordHolder;
+		BaseObject recordHolder = {};
 		recordHolder.objectType = (ObjectType::ObjectType)'TSLK';
 		recordHolder.writeFileHeader(file);
 
@@ -465,6 +465,21 @@ namespace TES3 {
 	const auto TES3_WorldController_processGlobalScripts = reinterpret_cast<void(__thiscall*)(WorldController*)>(0x40FBE0);
 	void WorldController::processGlobalScripts() {
 		TES3_WorldController_processGlobalScripts(this);
+	}
+
+	const auto TES3_WorldController_addGlobalScript = reinterpret_cast<void(__thiscall*)(WorldController*, Script*, const Reference*)>(0x40FA80);
+	void WorldController::startGlobalScript(Script* script, const Reference* reference) {
+		TES3_WorldController_addGlobalScript(this, script, reference);
+	}
+
+	const auto TES3_WorldController_removeGlobalScript = reinterpret_cast<void(__thiscall*)(WorldController*, Script*)>(0x40FB00);
+	void WorldController::stopGlobalScript(Script* script) {
+		TES3_WorldController_removeGlobalScript(this, script);
+	}
+
+	const auto TES3_WorldController_isGlobalScriptRunning = reinterpret_cast<bool(__thiscall*)(const WorldController*, const Script*)>(0x40FB90);
+	bool WorldController::isGlobalScriptRunning(const Script* script) const {
+		return TES3_WorldController_isGlobalScriptRunning(this, script);
 	}
 
 	const auto TES3_Data_daysInMonth = reinterpret_cast<unsigned short*>(0x775E40);

@@ -552,6 +552,7 @@ namespace TES3 {
 		removeAllAttachments();
 		setScale(1.0f);
 		setDeleted(true);
+		setObjectModified(true);
 	}
 
 	Vector3 * Reference::getPosition() {

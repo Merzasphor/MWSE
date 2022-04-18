@@ -5,6 +5,7 @@
 #include "mwAdapter.h"
 #include "VirtualMachine.h"
 #include "ScriptUtil.h"
+#include "TES3WorldController.h"
 
 #include "TES3DataHandler.h"
 
@@ -35,9 +36,13 @@ namespace mwse {
 
 		// Call the original function.
 		TES3::Script* script = virtualMachine.getScript();
-		bool result = mwse::mwscript::ScriptRunning(script, targetScript);
-
-		mwse::Stack::getInstance().pushLong(result);
+		if (script) {
+			bool isRunning = TES3::WorldController::get()->isGlobalScriptRunning(targetScript);
+			mwse::Stack::getInstance().pushLong(isRunning);
+		}
+		else {
+			mwse::Stack::getInstance().pushLong(false);
+		}
 
 		return 0.0f;
 	}
