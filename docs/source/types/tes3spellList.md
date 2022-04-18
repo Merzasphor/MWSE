@@ -6,7 +6,9 @@ A list of spells. Used by actors, birthsigns, and races.
 
 ### `iterator`
 
-*Read-only*. A collection of spells. Can be iterated over using *pairs*.
+*Read-only*. Deprecated. Use `for index, spell in pairs(spellList)` to iterate over spells.
+	
+Direct access to the spells in this list.
 
 **Returns**:
 
