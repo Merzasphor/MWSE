@@ -72,6 +72,53 @@ namespace TES3 {
 		return mesh;
 	}
 
+	struct LoadTempMeshNode {
+		const char* path;
+		NI::Pointer<NI::AVObject> mesh;
+		LoadTempMeshNode* nextNode;
+
+		LoadTempMeshNode(const char* path) {
+			const auto ctor = reinterpret_cast<void(__thiscall*)(LoadTempMeshNode*, const char*)>(0x4ED6C0);
+			ctor(this, path);
+		}
+
+		~LoadTempMeshNode() {
+			const auto dtor = reinterpret_cast<void(__thiscall*)(LoadTempMeshNode*)>(0x4EDB70);
+			dtor(this);
+		}
+	};
+	static_assert(sizeof(LoadTempMeshNode) == sizeof(TES3::HashMap<char*, NI::Pointer<NI::AVObject>>::Node), "Temp mesh load node size mismatch!");
+
+	NI::Pointer<NI::AVObject> MeshData::loadMeshUncached(const char* path) {
+		// Allow changing the desired mesh path.
+		std::string meshPath = path;
+		if (mwse::lua::event::MeshLoadEvent::getEventEnabled()) {
+			auto handle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::table response = handle.triggerEvent(new mwse::lua::event::MeshLoadEvent(path));
+			if (response.valid()) {
+				meshPath = response.get_or("path", path);
+			}
+		}
+		path = meshPath.c_str();
+
+		// Store the loading path for debugging purposes.
+		auto previouslyLoadingMesh = DataHandler::currentlyLoadingMesh;
+		DataHandler::currentlyLoadingMesh = path;
+
+		// Actually load the mesh.
+		auto mesh = LoadTempMeshNode(path).mesh;
+
+		// If the loaded mesh count increased, send off an event to 
+		if (mesh && mwse::lua::event::MeshLoadedEvent::getEventEnabled()) {
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MeshLoadedEvent(path, mesh));
+		}
+
+		// Clean up debug information.
+		DataHandler::currentlyLoadingMesh = previouslyLoadingMesh;
+
+		return mesh;
+	}
+
 	const auto TES3_MeshData_loadKeyframes = reinterpret_cast<KeyframeDefinition * (__thiscall*)(MeshData*, const char*, const char*)>(0x4EE200);
 	KeyframeDefinition* MeshData::loadKeyframes(const char* path, const char* sequenceName) {
 		// Allow changing the desired mesh path.

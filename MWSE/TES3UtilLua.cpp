@@ -1388,24 +1388,13 @@ namespace mwse::lua {
 		std::string path = "Meshes\\";
 		path += relativePath;
 
+		auto meshData = TES3::DataHandler::get()->nonDynamicData->meshData;
 		if (useCached.value_or(true)) {
-			return TES3::DataHandler::get()->nonDynamicData->meshData->loadMesh(path.c_str());
+			return meshData->loadMesh(path.c_str());
 		}
 		else {
 			// Create a non-cached version by calling the constructors manually without the usual checking.
-			using NodeType = TES3::HashMap<char*, NI::Object*>::Node;
-			const auto node_ctor = reinterpret_cast<void(__thiscall*)(NodeType*, const char*)>(0x4ED6C0);
-			const auto node_dtor = reinterpret_cast<void(__thiscall*)(NodeType*)>(0x4EDB70);
-
-			auto node = new NodeType();
-			node_ctor(node, path.c_str());
-
-			NI::Pointer<NI::Object> result = node->value;
-
-			node_dtor(node);
-			delete node;
-
-			return result;
+			return meshData->loadMeshUncached(path.c_str());
 		}
 
 		return nullptr;
