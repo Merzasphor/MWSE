@@ -1733,18 +1733,18 @@ namespace mwse::lua {
 	}
 
 	bool getFileExists(const char* path) {
-		return tes3::resolveAssetPath(path) != 0;
+		return tes3::resolveAssetPath(path) != TES3::FileLoadSource::Missing;
 	}
 
 	sol::optional<std::tuple<std::string, std::string>> getFileSource(const char* path) {
 		char buffer[512];
 		int result = tes3::resolveAssetPath(path, buffer);
 
-		if (result == 1) {
-			return { std::make_tuple("file", buffer) };
-		}
-		else if (result == 2) {
-			return { std::make_tuple("bsa", buffer) };
+		switch (result) {
+		case TES3::FileLoadSource::File:
+			return { { "file", buffer } };
+		case TES3::FileLoadSource::BSA:
+			return { { "bsa", buffer } };
 		}
 
 		return {};
