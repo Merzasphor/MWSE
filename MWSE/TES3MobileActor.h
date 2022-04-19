@@ -223,7 +223,9 @@ namespace TES3 {
 		float getArmorRating_lua() const;
 		void applyPhysicalHit(MobileActor* attacker, MobileActor* defender, float damage, float swing, MobileProjectile* projectile = nullptr, bool alwaysPlayHitVoice = false);
 
-		void setCurrentSpell(const Spell* spell);
+		void setCurrentMagicFromSpell(Spell* spell);
+		void setCurrentMagicFromSourceCombo(MagicSourceCombo sourceCombo);
+		void setCurrentMagicFromEquipmentStack(EquipmentStack* equipmentStack);
 
 		//
 		// Other related this-call functions.
@@ -274,7 +276,6 @@ namespace TES3 {
 		IteratedList<Spell*> * getCombatSpellList();
 
 		bool isActive();
-		void setCurrentMagicSourceFiltered(Object * magic);
 		void forceSpellCast(MobileActor * target);
 
 		void dropItem(Object * item, ItemData * itemData = nullptr, int count = 1, bool ignoreItemData = true);
@@ -301,6 +302,10 @@ namespace TES3 {
 		bool equipItem(Object* item, ItemData * itemData = nullptr, bool addItem = false, bool selectBestCondition = false, bool selectWorstCondition = false);
 		bool equip_lua(sol::object arg);
 		bool unequip_lua(sol::table args);
+		bool equipMagic(Object* source, ItemData* itemData = nullptr, bool equipItem = false, bool updateGUI = true);
+		bool equipMagic_lua(sol::table params);
+		void unequipMagic(bool unequipItem = false, bool updateGUI = true);
+		void unequipMagic_lua(sol::optional<sol::table> params);
 
 		bool getWeaponReady() const;
 		void setWeaponReady(bool value);

@@ -65,9 +65,14 @@ namespace TES3 {
 		void updateHealthFillBar(float current, float max);
 		void updateMagickaFillBar(float current, float max);
 		void updateFatigueFillBar(float current, float max);
+		void updateCurrentMagicFillBar(float current, float max);
+		void updateCurrentMagicFromSpell(char* iconPath, const char* spellName, Spell* spell);
+		void updateCurrentMagicFromEquipmentStack(EquipmentStack* equipmentStack);
 		void updateEncumbranceBar();
 		void updatePlayerAttribute(float current, int attributeId);
 		void updateStatsPane();
+		void updateMagicMenuEnchantedItemSelection();
+		void updateMagicMenuSelection();
 		void updateSpellmakingMenu();
 		void updateEnchantingMenu();
 
@@ -78,6 +83,7 @@ namespace TES3 {
 		int updateSelectInventoryTiles();
 		sol::optional<int> updateInventorySelectTiles_lua();
 		void forcePlayerInventoryUpdate();
+		void updateInventoryWindowTitle();
 		void updateInventoryCharacterImage();
 
 		bool isInMenuMode();

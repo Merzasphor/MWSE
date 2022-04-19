@@ -482,7 +482,7 @@ local wasAdded = tes3.addSpell({ reference = ..., actor = ..., spell = ..., upda
 	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): Who to give the spell to. To manipulate an actor without specifying any particular reference, use `actor` instead.
 	* `actor` ([tes3actor](../../types/tes3actor), string): Who to give the spell to. Providing a base actor can be done before a save has been loaded, but may not correctly update effects for instanced versions of that actor in an active save.
 	* `spell` ([tes3spell](../../types/tes3spell), string): The spell to add.
-	* `updateGUI` (boolean): *Default*: `true`. If true, the GUI will be updated respsecting the adding of the spell. This can be useful to disable when batch-adding many spells. The batch should be ended with [`tes3.updateMagicGUI`](https://mwse.github.io/MWSE/apis/tes3/#tes3updatemagicgui) to reflect the changes.
+	* `updateGUI` (boolean): *Default*: `true`. If true, the GUI will be updated respecting the adding of the spell. This can be useful to disable when batch-adding many spells. The batch should be ended with [`tes3.updateMagicGUI`](https://mwse.github.io/MWSE/apis/tes3/#tes3updatemagicgui) to reflect the changes.
 
 **Returns**:
 

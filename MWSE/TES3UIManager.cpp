@@ -473,6 +473,21 @@ namespace TES3 {
 			TES3_UpdateFatigueFillBar(current, max);
 		}
 
+		const auto TES3_UI_UpdateCurrentMagicFillBar = reinterpret_cast<void(__cdecl*)(float, float)>(0x5F5500);
+		void updateCurrentMagicFillBar(float current, float max) {
+			TES3_UI_UpdateCurrentMagicFillBar(current, max);
+		}
+
+		const auto TES3_UI_UpdateCurrentMagicFromSpell = reinterpret_cast<void(__cdecl*)(char*, const char*, Spell*)>(0x5F4E70);
+		void updateCurrentMagicFromSpell(char* iconPath, const char* spellName, Spell* spell) {
+			TES3_UI_UpdateCurrentMagicFromSpell(iconPath, spellName, spell);
+		}
+
+		const auto TES3_UI_UpdateCurrentMagicFromEquipmentStack = reinterpret_cast<void(__cdecl*)(char*, const char*, EquipmentStack*)>(0x5F4DB0);
+		void updateCurrentMagicFromEquipmentStack(EquipmentStack* equipmentStack) {
+			TES3_UI_UpdateCurrentMagicFromEquipmentStack(nullptr, nullptr, equipmentStack);
+		}
+
 		const auto TES3_UpdateEncumbrance = reinterpret_cast<void(__cdecl*)()>(0x5CD1B0);
 		void updateEncumbranceBar() {
 			TES3_UpdateEncumbrance();
@@ -486,6 +501,31 @@ namespace TES3 {
 		const auto TES3_UpdateStatsPane = reinterpret_cast<void(__cdecl*)()>(0x6266D0);
 		void updateStatsPane() {
 			TES3_UpdateStatsPane();
+		}
+
+		const auto TES3_UI_MagicMenu_UpdateEnchantedItemSelection = reinterpret_cast<void(__cdecl*)()>(0x5E2E80);
+		void updateMagicMenuEnchantedItemSelection() {
+			TES3_UI_MagicMenu_UpdateEnchantedItemSelection();
+		}
+
+		const auto& TES3_UI_ID_MenuMagic = *reinterpret_cast<TES3::UI::UI_ID*>(0x7D431E);
+		const auto& TES3_UI_ID_MenuMagic_ActiveItem = *reinterpret_cast<TES3::UI::Property*>(0x7D4448);
+		const auto TES3_UI_MagicMenu_UpdateSpellSelection = reinterpret_cast<void(__cdecl*)(Element*)>(0x5E1AB0);
+		const auto TES3_UI_MenuMagic_GetItemFromCurrentMagic = reinterpret_cast<Element*(__cdecl*)(PropertyValue*)>(0x5E16A0);
+		void updateMagicMenuSelection() {
+			UI::Element* magicMenu = UI::findMenu(TES3_UI_ID_MenuMagic);
+			if (magicMenu) {
+				Element* item = TES3_UI_MenuMagic_GetItemFromCurrentMagic(0);
+				TES3_UI_MagicMenu_UpdateSpellSelection(item);
+				updateMagicMenuEnchantedItemSelection();
+				if (item) {
+					magicMenu->setText(item->getText());
+				}
+				else {
+					magicMenu->setText(TES3::DataHandler::get()->nonDynamicData->GMSTs[TES3::GMST::sNone]->value.asString);
+				}
+				magicMenu->setProperty(TES3_UI_ID_MenuMagic_ActiveItem, item);
+			}
 		}
 
 		const auto TES3_UI_UpdateSpellmakingMenu = reinterpret_cast<void(__cdecl*)()>(0x622020);
@@ -545,6 +585,11 @@ namespace TES3 {
 			worldController->inventoryData->clearIcons(2);
 			worldController->inventoryData->addInventoryItems(&playerMobile->npcInstance->inventory, 2);
 			TES3::UI::updateInventoryMenuTiles();
+		}
+
+		const auto TES3_UI_UpdateInventoryWindowTitle = reinterpret_cast<void(__cdecl*)()>(0x5CE080);
+		void updateInventoryWindowTitle() {
+			TES3_UI_UpdateInventoryWindowTitle();
 		}
 
 		void updateInventoryCharacterImage() {

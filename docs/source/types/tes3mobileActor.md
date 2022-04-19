@@ -1285,6 +1285,33 @@ local itemEquipped = tes3mobileActor:equip({ item = ..., itemData = ..., addItem
 
 ***
 
+### `equipMagic`
+
+Equips a spell or enchantment, optionally equipping the enchanted item if needed. Returns `false` if the item could not be equipped.
+
+```lua
+local result = tes3mobileActor:equipMagic({ source = ..., itemData = ..., equipItem = ..., updateGUI = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `source` ([tes3spell](../../types/tes3spell), [tes3item](../../types/tes3item), string): The source of the magic to equip.
+
+		Spells must be castable. Castable spells have a `castType` of `tes3.spellType.spell` or `tes3.spellType.power`.
+
+		Items must have a castable enchantment. Castable enchantments have a `castType` of `tes3.enchantmentType.onUse` or `tes3.enchantmentType.castOnce`.
+
+	* `itemData` ([tes3itemData](../../types/tes3itemData)): *Optional*. Only valid if an item has been assigned to `source`. The item data of the specific item to equip.
+	* `equipItem` (boolean): Only valid if an item has been assigned to `source`. If `true`, the item assigned to `source` will be equipped. If `false`, `itemData` must not be nil.
+	* `updateGUI` (boolean): *Default*: `true`. Only valid if this actor is the player. If `false`, the player GUI will not be updated to reflect the change to equipped magic.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
 ### `getActiveMagicEffects`
 
 Fetches a filtered list of the active magic effects on the actor. Returns a table with [`tes3activeMagicEffect`](https://mwse.github.io/MWSE/types/tes3activeMagicEffect/) items.
@@ -1593,6 +1620,22 @@ local itemUnequipped = tes3mobileActor:unequip({ item = ..., type = ..., armorSl
 **Returns**:
 
 * `itemUnequipped` (boolean)
+
+***
+
+### `unequipMagic`
+
+Unequips the currently equipped magic, optionally unequipping the enchanted item if needed.
+
+```lua
+tes3mobileActor:unequipMagic({ unequipItem = ..., updateGUI = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `unequipItem` (boolean): Only valid if the currently equipped magic is from an equippable item enchantment. If `true`, the item containing the enchantment will be unequipped.
+	* `updateGUI` (boolean): *Default*: `true`. Only valid if this actor is the player. If `false`, the player GUI will not be updated to reflect the change to equipped magic.
 
 ***
 
