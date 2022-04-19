@@ -184,17 +184,24 @@ namespace TES3 {
 	}
 
 	bool MobileActor::equipMagic(Object* source, ItemData* itemData, bool equipItem, bool updateGUI) {
-		if (source == nullptr) {
-			throw std::invalid_argument("Invalid source parameter provided. Must not be nil.");
+		if (!source) {
+			throw std::invalid_argument("Invalid 'source' parameter provided. Must not be nil.");
 		}
 
-		updateGUI = actorType == MobileActorType::Player && updateGUI;
+		updateGUI = updateGUI && actorType == MobileActorType::Player;
 
 		// Reset currently set spell and enchanted item first.
-		unequipMagic(updateGUI);
+		unequipMagic(false, updateGUI);
 
 		if (source->objectType == ObjectType::Spell) {
 			Spell* spell = static_cast<Spell*>(source);
+
+			// Ignore spell that can not be casted.
+			if (spell->castType != SpellCastType::Spell && spell->castType != SpellCastType::Power) {
+				throw std::invalid_argument("Invalid 'source' parameter provided. Spell must be castable.");
+			}
+
+			// Equip the spell.
 			setCurrentMagicFromSpell(spell);
 
 			if (updateGUI) {
@@ -202,13 +209,13 @@ namespace TES3 {
 				char* iconPath = "";
 				Effect* effects = spell->effects;
 				if (effects) {
-					TES3::MagicEffect* effect = TES3::DataHandler::get()->nonDynamicData->getMagicEffect(effects[0].effectID);
+					TES3::MagicEffect* effect = DataHandler::get()->nonDynamicData->getMagicEffect(effects[0].effectID);
 					if (effect) {
 						iconPath = effect->icon;
 					}
 				}
 
-				// Update the HUD.
+				// Update the GUI.
 				UI::updateCurrentMagicFromSpell(iconPath, spell->getName(), spell);
 				UI::updateMagicMenuSelection();
 			}
@@ -219,45 +226,62 @@ namespace TES3 {
 
 			// Ignore items without enchantments that can be casted.
 			auto enchantment = item->getEnchantment();
-			if (enchantment == nullptr || (enchantment->castType != EnchantmentCastType::OnUse && enchantment->castType != EnchantmentCastType::Once)) {
-				throw std::invalid_argument("Invalid source parameter provided. Item must have a castable enchantment.");
+			if (!enchantment || (enchantment->castType != EnchantmentCastType::OnUse && enchantment->castType != EnchantmentCastType::Once)) {
+				throw std::invalid_argument("Invalid 'source' parameter provided. Item must have a castable enchantment.");
 			}
-
-			// Create an equipment stack for enchanted scrolls.
+	
 			if (item->objectType == ObjectType::Book)
 			{
+				// Create a basic equipment stack for enchanted scrolls.
 				equipmentStack = new EquipmentStack();
 				equipmentStack->object = source;
 			}
 			else {
 				if (equipItem) {
-					// Get the equipment stack from the actor or equip the item if needed.
 					Actor* actor = static_cast<Actor*>(reference->baseObject);
-					equipmentStack = actor->getEquippedItemExact(item, itemData);
-					if (equipmentStack == nullptr) {
-						this->equipItem(item, itemData);
+
+					// Check if the actor possesses the desired item.
+					ItemStack* stack = actor->inventory.findItemStack(item);
+					if (!stack) {
+						throw std::runtime_error("Actor must possess item if 'equipItem' is true.");
+					}
+
+					// Get the equipment stack from the actor.
+					if (itemData) {
+						equipmentStack = actor->getEquippedItemExact(item, itemData);
+					}
+					else {
 						equipmentStack = actor->getEquippedItem(item);
 					}
 
-					// Return if the item could not be equipped.
-					if (equipmentStack == nullptr) {
-						return false;
+
+					if (!equipmentStack) {
+						// Equip the item if desired.
+						this->equipItem(item, itemData);
+						equipmentStack = actor->getEquippedItem(item);
+
+						// Return if the item could not be equipped.
+						if (!equipmentStack) {
+							return false;
+						}
 					}
 				}
 				else {
-					if (itemData == nullptr) {
-						throw std::invalid_argument("Invalid itemData parameter provided. Must not be nil for enchanted items that are not equipped.");
+					if (!itemData) {
+						throw std::invalid_argument("Invalid 'itemData' parameter provided. Must not be nil for equippable items if 'equipItem' is false.");
 					}
 
-					// Create an equipment stack for items that do not need to be equipped.
+					// Create an equipment stack for items that should not be equipped automatically.
 					equipmentStack = new EquipmentStack();
 					equipmentStack->object = source;
 					equipmentStack->itemData = itemData;
 				}
 			}
+
+			// Equip the item enchantment.
 			setCurrentMagicFromEquipmentStack(equipmentStack);
 
-			// Update the HUD if desired.
+			// Update the GUI if desired.
 			if (updateGUI) {
 				UI::updateCurrentMagicFromEquipmentStack(equipmentStack);
 				UI::updateMagicMenuSelection();
@@ -270,9 +294,21 @@ namespace TES3 {
 		return true;
 	}
 
-	void MobileActor::unequipMagic(bool updateGUI) {
+	void MobileActor::unequipMagic(bool unequipItem, bool updateGUI) {
+		// Unequip the item of the currently equipped magic if desired.
+		if (unequipItem && currentEnchantedItem.object) {
+			Actor* actor = static_cast<Actor*>(reference->baseObject);
+			if (actor->getEquippedItem(currentEnchantedItem.object)) {
+				actor->unequipItem(currentEnchantedItem.object, true, this, false, currentEnchantedItem.itemData);
+				actor->postUnequipUIRefresh(this);
+			}
+		}
+
+		// Remove currently set spell and enchanted item.
 		setCurrentMagicFromSourceCombo(nullptr);
 		setCurrentMagicFromEquipmentStack(nullptr);
+
+		// Update the GUI if desired.
 		if (updateGUI && actorType == MobileActorType::Player) {
 			UI::updateCurrentMagicFromSpell("", "", nullptr);
 			UI::updateMagicMenuSelection();
@@ -905,9 +941,10 @@ namespace TES3 {
 		return equipMagic(object, itemData, equipItem, updateGUI);
 	}
 
-	void MobileActor::unequipMagic_lua(sol::table params) {
+	void MobileActor::unequipMagic_lua(sol::optional<sol::table> params) {
+		bool unequipItem = mwse::lua::getOptionalParam(params, "unequipItem", false);
 		bool updateGUI = mwse::lua::getOptionalParam(params, "updateGUI", true);
-		unequipMagic(updateGUI);
+		unequipMagic(unequipItem, updateGUI);
 	}
 
 	bool MobileActor::getWeaponReady() const {

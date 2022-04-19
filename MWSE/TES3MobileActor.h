@@ -304,8 +304,8 @@ namespace TES3 {
 		bool unequip_lua(sol::table args);
 		bool equipMagic(Object* source, ItemData* itemData = nullptr, bool equipItem = false, bool updateGUI = true);
 		bool equipMagic_lua(sol::table params);
-		void unequipMagic(bool updateGUI = true);
-		void unequipMagic_lua(sol::table params);
+		void unequipMagic(bool unequipItem = false, bool updateGUI = true);
+		void unequipMagic_lua(sol::optional<sol::table> params);
 
 		bool getWeaponReady() const;
 		void setWeaponReady(bool value);
