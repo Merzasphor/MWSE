@@ -38,8 +38,8 @@ namespace TES3 {
 	// MeshData
 	//
 
-	const auto TES3_MeshData_loadMesh = reinterpret_cast<NI::AVObject * (__thiscall*)(MeshData*, const char*)>(0x4EE0A0);
-	NI::AVObject* MeshData::loadMesh(const char* path) {
+	const auto TES3_MeshData_loadMesh = reinterpret_cast<NI::Node * (__thiscall*)(MeshData*, const char*)>(0x4EE0A0);
+	NI::Node* MeshData::loadMesh(const char* path) {
 		// Allow changing the desired mesh path.
 		std::string meshPath = path;
 		if (mwse::lua::event::MeshLoadEvent::getEventEnabled()) {
@@ -74,7 +74,7 @@ namespace TES3 {
 
 	struct LoadTempMeshNode {
 		const char* path;
-		NI::Pointer<NI::AVObject> mesh;
+		NI::Pointer<NI::Node> mesh;
 		LoadTempMeshNode* nextNode;
 
 		LoadTempMeshNode(const char* path) {
@@ -89,7 +89,7 @@ namespace TES3 {
 	};
 	static_assert(sizeof(LoadTempMeshNode) == sizeof(TES3::HashMap<char*, NI::Pointer<NI::AVObject>>::Node), "Temp mesh load node size mismatch!");
 
-	NI::Pointer<NI::AVObject> MeshData::loadMeshUncached(const char* path) {
+	NI::Pointer<NI::Node> MeshData::loadMeshUncached(const char* path) {
 		// Allow changing the desired mesh path.
 		std::string meshPath = path;
 		if (mwse::lua::event::MeshLoadEvent::getEventEnabled()) {

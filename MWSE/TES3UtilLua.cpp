@@ -1380,7 +1380,7 @@ namespace mwse::lua {
 		return true;
 	}
 
-	NI::Pointer<NI::Object> loadMesh(const char* relativePath, sol::optional<bool> useCached) {
+	NI::Pointer<NI::Node> loadMesh(const char* relativePath, sol::optional<bool> useCached) {
 		if (relativePath == nullptr) {
 			throw std::invalid_argument("No path provided. Pass the path relative to the Meshes folder as the first parameter.");
 		}
