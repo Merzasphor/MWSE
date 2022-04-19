@@ -646,7 +646,7 @@ mge.setZoom({ amount = ..., animate = ... })
 
 * `params` (table)
 	* `amount` (number)
-	* `animate` (boolean): *Optional*.
+	* `animate` (boolean): *Default*: `false`.
 
 ***
 

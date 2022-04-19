@@ -391,13 +391,13 @@ function mge.setWeatherScattering(params) end
 --- 
 --- `amount`: number — No description yet available.
 --- 
---- `animate`: boolean — *Optional*. No description yet available.
+--- `animate`: boolean — *Default*: `false`. No description yet available.
 function mge.setZoom(params) end
 
 ---Table parameter definitions for `mge.setZoom`.
 --- @class mge.setZoom.params
 --- @field amount number No description yet available.
---- @field animate boolean *Optional*. No description yet available.
+--- @field animate boolean *Default*: `false`. No description yet available.
 
 --- Enables MGE XE's screen spin effect. Wrapper for mwscript's MGEScreenSpin.
 function mge.startScreenRotation() end

@@ -143,7 +143,7 @@ tes3inventory:removeItem({ mobile = ..., item = ..., itemData = ..., count = ...
 	* `item` ([tes3item](../../types/tes3item)): The item to add.
 	* `itemData` ([tes3itemData](../../types/tes3itemData)): *Optional*. Any associated item data to add.
 	* `count` (number): *Default*: `1`. The number of items to add.
-	* `deleteItemData` (boolean): If set, the itemData will be deleted after being removed.
+	* `deleteItemData` (boolean): *Default*: `false`. If set, the itemData will be deleted after being removed.
 
 ***
 

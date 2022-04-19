@@ -274,7 +274,7 @@ function common.getDescriptionString(package, useDefault)
 		table.insert(descriptionBits, "*Read-only*.")
 	end
 
-	if (package.default) then
+	if (package.default ~= nil) then
 		table.insert(descriptionBits, string.format("*Default*: `%s`.", tostring(package.default)))
 	elseif (package.optional) then
 		table.insert(descriptionBits, "*Optional*.")

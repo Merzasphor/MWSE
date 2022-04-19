@@ -102,8 +102,8 @@ local result = tes3ui.createMenu({ id = ..., dragFrame = ..., fixedFrame = ..., 
 
 * `params` (table)
 	* `id` (string, number): The menu’s ID. The menu can be later accessed by tes3ui.findMenu(id).
-	* `dragFrame` (boolean): Constructs a draggable and resizeable frame and background for the menu. It is similar to the stats, inventory, magic and map menus in the standard UI. After construction, position and minimum dimensions should be set.
-	* `fixedFrame` (boolean): Constructs a fixed (non-draggable) frame and background for the menu. The layout system should automatically centre and size it to fit whatever is added to the menu.
+	* `dragFrame` (boolean): *Default*: `false`. Constructs a draggable and resizeable frame and background for the menu. It is similar to the stats, inventory, magic and map menus in the standard UI. After construction, position and minimum dimensions should be set.
+	* `fixedFrame` (boolean): *Default*: `false`. Constructs a fixed (non-draggable) frame and background for the menu. The layout system should automatically centre and size it to fit whatever is added to the menu.
 	* `loadable` (boolean): *Default*: `true`. If set to false, calls to loadMenuPosition will fail.
 
 **Returns**:
@@ -368,7 +368,7 @@ tes3ui.logToConsole(text, isCommand)
 **Parameters**:
 
 * `text` (string)
-* `isCommand` (boolean): Passing `true` will make the text in the console selectable by using up arrow key. If it is a valid command, then pressing enter will call it.
+* `isCommand` (boolean): *Default*: `false`. Passing `true` will make the text in the console selectable by using up arrow key. If it is a valid command, then pressing enter will call it.
 
 ??? example "Example: This example describes how this function behaves with isCommand = true."
 

@@ -1275,9 +1275,9 @@ local itemEquipped = tes3mobileActor:equip({ item = ..., itemData = ..., addItem
 * `params` (table)
 	* `item` ([tes3item](../../types/tes3item), string): The item to equip.
 	* `itemData` ([tes3itemData](../../types/tes3itemData)): *Optional*. The item data of the specific item to equip.
-	* `addItem` (boolean): If `true`, the item will be added to the actor's inventory if needed.
-	* `selectBestCondition` (boolean): If `true`, the item in the inventory with the best condition and best charge will be selected.
-	* `selectWorstCondition` (boolean): If `true`, the item in the inventory with the worst condition and worst charge will be selected. Can be useful for selecting tools.
+	* `addItem` (boolean): *Default*: `false`. If `true`, the item will be added to the actor's inventory if needed.
+	* `selectBestCondition` (boolean): *Default*: `false`. If `true`, the item in the inventory with the best condition and best charge will be selected.
+	* `selectWorstCondition` (boolean): *Default*: `false`. If `true`, the item in the inventory with the worst condition and worst charge will be selected. Can be useful for selecting tools.
 
 **Returns**:
 
@@ -1303,7 +1303,7 @@ local result = tes3mobileActor:equipMagic({ source = ..., itemData = ..., equipI
 		Items must have a castable enchantment. Castable enchantments have a `castType` of `tes3.enchantmentType.onUse` or `tes3.enchantmentType.castOnce`. The actor is not required to have this item in their inventory, unless `equipItem` is `true`.
 
 	* `itemData` ([tes3itemData](../../types/tes3itemData)): *Optional*. Only valid if an item has been assigned to `source`. The item data of the specific item to equip.
-	* `equipItem` (boolean): *Optional*. Only valid if an item has been assigned to `source`. If `true`, the item assigned to `source` will be equipped. Requires the actor to have the item in their inventory. If `false`, `itemData` must not be nil.
+	* `equipItem` (boolean): *Default*: `false`. Only valid if an item has been assigned to `source`. If `true`, the item assigned to `source` will be equipped. Requires the actor to have the item in their inventory. If `false`, `itemData` must not be nil.
 	* `updateGUI` (boolean): *Default*: `true`. Only valid if this actor is the player. If `false`, the player GUI will not be updated to reflect the change to equipped magic.
 
 **Returns**:
@@ -1634,7 +1634,7 @@ tes3mobileActor:unequipMagic({ unequipItem = ..., updateGUI = ... })
 **Parameters**:
 
 * `params` (table)
-	* `unequipItem` (boolean): *Optional*. Only valid if the currently equipped magic is from an equippable item enchantment. If `true`, the item containing the enchantment will be unequipped.
+	* `unequipItem` (boolean): *Default*: `false`. Only valid if the currently equipped magic is from an equippable item enchantment. If `true`, the item containing the enchantment will be unequipped.
 	* `updateGUI` (boolean): *Default*: `true`. Only valid if this actor is the player. If `false`, the player GUI will not be updated to reflect the change to equipped magic.
 
 ***

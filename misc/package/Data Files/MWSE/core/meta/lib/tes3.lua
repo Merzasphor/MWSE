@@ -61,7 +61,7 @@ function tes3.addClothingSlot(params) end
 --- 
 --- `playSound`: boolean — *Default*: `true`. If false, the up/down sound for the item won't be played.
 --- 
---- `limit`: boolean — If false, items can be placed into containers that shouldn't normally be allowed. This includes organic containers, and containers that are full.
+--- `limit`: boolean — *Default*: `false`. If false, items can be placed into containers that shouldn't normally be allowed. This includes organic containers, and containers that are full.
 --- 
 --- `reevaluateEquipment`: boolean — *Default*: `true`. If true, and the item added is armor, clothing, or a weapon, the actor will reevaluate its equipment choices to see if the new item is worth equipping. This does not affect the player.
 --- 
@@ -77,7 +77,7 @@ function tes3.addItem(params) end
 --- @field soul tes3creature|tes3npc *Optional*. For creating filled soul gems.
 --- @field count number *Default*: `1`. The maximum number of items to add.
 --- @field playSound boolean *Default*: `true`. If false, the up/down sound for the item won't be played.
---- @field limit boolean If false, items can be placed into containers that shouldn't normally be allowed. This includes organic containers, and containers that are full.
+--- @field limit boolean *Default*: `false`. If false, items can be placed into containers that shouldn't normally be allowed. This includes organic containers, and containers that are full.
 --- @field reevaluateEquipment boolean *Default*: `true`. If true, and the item added is armor, clothing, or a weapon, the actor will reevaluate its equipment choices to see if the new item is worth equipping. This does not affect the player.
 --- @field updateGUI boolean *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though [`tes3ui.forcePlayerInventoryUpdate()`](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uiforceplayerinventoryupdate) must manually be called after all inventory updates are finished.
 
@@ -368,7 +368,7 @@ function tes3.adjustSoundVolume(params) end
 --- 
 --- `hours`: number — How many hours to progress.
 --- 
---- `resting`: boolean — *Optional*. Should advancing time count as resting? If set to true invokes usual sleeping mechanics: health, fatigue and magicka restoration, and possible rest interruption. The length of the rest will be equal to hours parameter, rounded down to nearest natural number.
+--- `resting`: boolean — *Default*: `false`. Should advancing time count as resting? If set to true invokes usual sleeping mechanics: health, fatigue and magicka restoration, and possible rest interruption. The length of the rest will be equal to hours parameter, rounded down to nearest natural number.
 --- 
 --- `updateEnvironment`: boolean — *Default*: `true`. Controls if the weather system is updated for each hour passed.
 --- @return number hoursPassed No description yet available.
@@ -377,7 +377,7 @@ function tes3.advanceTime(params) end
 ---Table parameter definitions for `tes3.advanceTime`.
 --- @class tes3.advanceTime.params
 --- @field hours number How many hours to progress.
---- @field resting boolean *Optional*. Should advancing time count as resting? If set to true invokes usual sleeping mechanics: health, fatigue and magicka restoration, and possible rest interruption. The length of the rest will be equal to hours parameter, rounded down to nearest natural number.
+--- @field resting boolean *Default*: `false`. Should advancing time count as resting? If set to true invokes usual sleeping mechanics: health, fatigue and magicka restoration, and possible rest interruption. The length of the rest will be equal to hours parameter, rounded down to nearest natural number.
 --- @field updateEnvironment boolean *Default*: `true`. Controls if the weather system is updated for each hour passed.
 
 --- 
@@ -391,7 +391,7 @@ function tes3.advanceTime(params) end
 --- 
 --- `effects`: table — *Optional*. A table of custom effects to apply as a potion. Maximal number of effects is 8.
 --- 
---- `createCopy`: boolean — *Optional*. This parameter controls whether the function will return the original magic source or a copy of the magic source. This parameter is only used if source is alchemy.
+--- `createCopy`: boolean — *Default*: `false`. This parameter controls whether the function will return the original magic source or a copy of the magic source. This parameter is only used if source is alchemy.
 --- 
 --- `fromStack`: tes3equipmentStack — *Optional*. The piece of equipment this magic source is coming from. The fromStack has to be an already equipped item from tes3actor.equipment. This will probably change in the future.
 --- 
@@ -399,7 +399,7 @@ function tes3.advanceTime(params) end
 --- 
 --- `target`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The target of the magic.
 --- 
---- `bypassResistances`: boolean — *Optional*. Is this effect going to bypass magic resistance?
+--- `bypassResistances`: boolean — *Default*: `false`. Is this effect going to bypass magic resistance?
 --- @return tes3magicSourceInstance instance No description yet available.
 function tes3.applyMagicSource(params) end
 
@@ -409,11 +409,11 @@ function tes3.applyMagicSource(params) end
 --- @field source tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3enchantment|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3reference|tes3repairTool|tes3spell|tes3static|tes3weapon *Optional*. A magic source to apply.
 --- @field name string *Optional*. If applying alchemy as a source, you can specifiy a name for the magic source.
 --- @field effects table *Optional*. A table of custom effects to apply as a potion. Maximal number of effects is 8.
---- @field createCopy boolean *Optional*. This parameter controls whether the function will return the original magic source or a copy of the magic source. This parameter is only used if source is alchemy.
+--- @field createCopy boolean *Default*: `false`. This parameter controls whether the function will return the original magic source or a copy of the magic source. This parameter is only used if source is alchemy.
 --- @field fromStack tes3equipmentStack *Optional*. The piece of equipment this magic source is coming from. The fromStack has to be an already equipped item from tes3actor.equipment. This will probably change in the future.
 --- @field castChance number *Optional*. This parameter allows overriding the casting chance of the magic source.
 --- @field target tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The target of the magic.
---- @field bypassResistances boolean *Optional*. Is this effect going to bypass magic resistance?
+--- @field bypassResistances boolean *Default*: `false`. Is this effect going to bypass magic resistance?
 
 --- Changes a reference to werewolf form. This function works only on a reference infected with Lycanthropy, be it the player or any other reference. Returns true if successful.
 --- @param params tes3.beginTransform.params This table accepts the following values:
@@ -435,15 +435,15 @@ function tes3.beginTransform(params) end
 --- 
 --- `buying`: boolean — *Default*: `true`. If `true`, uses the logic for buying a service/item. This is exclusive with `selling`.
 --- 
---- `selling`: boolean — If `true`, uses the logic for selling an item. This is exclusive with `buying`.
+--- `selling`: boolean — *Default*: `false`. If `true`, uses the logic for selling an item. This is exclusive with `buying`.
 --- 
 --- `merchant`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer — The merchant to use for calculating the price.
 --- 
---- `bartering`: boolean — If `true`, a [calcBarterPrice](https://mwse.github.io/MWSE/events/calcBarterPrice) or [calcRepairPrice](https://mwse.github.io/MWSE/events/calcRepairPrice) event will be triggered.
+--- `bartering`: boolean — *Default*: `false`. If `true`, a [calcBarterPrice](https://mwse.github.io/MWSE/events/calcBarterPrice) or [calcRepairPrice](https://mwse.github.io/MWSE/events/calcRepairPrice) event will be triggered.
 --- 
---- `repairing`: boolean — If `true`, a [calcRepairPrice](https://mwse.github.io/MWSE/events/calcRepairPrice) event will be triggered.
+--- `repairing`: boolean — *Default*: `false`. If `true`, a [calcRepairPrice](https://mwse.github.io/MWSE/events/calcRepairPrice) event will be triggered.
 --- 
---- `training`: boolean — If `true`, a [calcTrainingPrice](https://mwse.github.io/MWSE/events/calcTrainingPrice) event will be triggered, passing the given `skill` ID.
+--- `training`: boolean — *Default*: `false`. If `true`, a [calcTrainingPrice](https://mwse.github.io/MWSE/events/calcTrainingPrice) event will be triggered, passing the given `skill` ID.
 --- 
 --- `count`: number — *Default*: `1`. If `bartering`, the count passed to the [calcBarterPrice](https://mwse.github.io/MWSE/events/calcBarterPrice) event.
 --- 
@@ -458,11 +458,11 @@ function tes3.calculatePrice(params) end
 --- @field object tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3enchantment|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3reference|tes3repairTool|tes3spell|tes3static|tes3weapon *Optional*. The object to calculate the price for. If not provided, `basePrice` is required.
 --- @field basePrice number *Optional*. The base price to calculate the end price for. This defaults to the `object` param's `value`, if provided. This parameter is required if `object` is not provided.
 --- @field buying boolean *Default*: `true`. If `true`, uses the logic for buying a service/item. This is exclusive with `selling`.
---- @field selling boolean If `true`, uses the logic for selling an item. This is exclusive with `buying`.
+--- @field selling boolean *Default*: `false`. If `true`, uses the logic for selling an item. This is exclusive with `buying`.
 --- @field merchant tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer The merchant to use for calculating the price.
---- @field bartering boolean If `true`, a [calcBarterPrice](https://mwse.github.io/MWSE/events/calcBarterPrice) or [calcRepairPrice](https://mwse.github.io/MWSE/events/calcRepairPrice) event will be triggered.
---- @field repairing boolean If `true`, a [calcRepairPrice](https://mwse.github.io/MWSE/events/calcRepairPrice) event will be triggered.
---- @field training boolean If `true`, a [calcTrainingPrice](https://mwse.github.io/MWSE/events/calcTrainingPrice) event will be triggered, passing the given `skill` ID.
+--- @field bartering boolean *Default*: `false`. If `true`, a [calcBarterPrice](https://mwse.github.io/MWSE/events/calcBarterPrice) or [calcRepairPrice](https://mwse.github.io/MWSE/events/calcRepairPrice) event will be triggered.
+--- @field repairing boolean *Default*: `false`. If `true`, a [calcRepairPrice](https://mwse.github.io/MWSE/events/calcRepairPrice) event will be triggered.
+--- @field training boolean *Default*: `false`. If `true`, a [calcTrainingPrice](https://mwse.github.io/MWSE/events/calcTrainingPrice) event will be triggered, passing the given `skill` ID.
 --- @field count number *Default*: `1`. If `bartering`, the count passed to the [calcBarterPrice](https://mwse.github.io/MWSE/events/calcBarterPrice) event.
 --- @field itemData tes3itemData *Optional*. If `bartering` or `repairing`, the item data passed to the [calcBarterPrice](https://mwse.github.io/MWSE/events/calcBarterPrice) or [calcRepairPrice](https://mwse.github.io/MWSE/events/calcRepairPrice) event.
 --- @field skill number If `training`, the skill ID passed to the [calcTrainingPrice](https://mwse.github.io/MWSE/events/calcTrainingPrice) event.
@@ -484,7 +484,7 @@ function tes3.cancelAnimationLoop(params) end
 --- 
 --- `checkForSolidGround`: boolean — *Default*: `true`. Perform a check if the player is underwater. If underwater, false is returned.
 --- 
---- `showMessage`: boolean — If true, a messagebox will be shown if the player can't rest because some condition isn't met.
+--- `showMessage`: boolean — *Default*: `false`. If true, a messagebox will be shown if the player can't rest because some condition isn't met.
 --- @return boolean canRest No description yet available.
 function tes3.canRest(params) end
 
@@ -492,7 +492,7 @@ function tes3.canRest(params) end
 --- @class tes3.canRest.params
 --- @field checkForEnemies boolean *Default*: `true`. Perform a check whether there are enemies nearby before opening rest menu. If there are, false is returned.
 --- @field checkForSolidGround boolean *Default*: `true`. Perform a check if the player is underwater. If underwater, false is returned.
---- @field showMessage boolean If true, a messagebox will be shown if the player can't rest because some condition isn't met.
+--- @field showMessage boolean *Default*: `false`. If true, a messagebox will be shown if the player can't rest because some condition isn't met.
 
 --- Casts a spell from a given reference to a target reference. Touch effects will hit the target at any range, while target effects will create a projectile. By default, the spell always casts successfully and does not consume magicka. By default, an actor casting will stop and perform its cast animation, but the 'instant' flag can start the cast instantly, and allow more control over the spell.
 --- 
@@ -507,11 +507,11 @@ function tes3.canRest(params) end
 --- 
 --- `spell`: tes3spell|string — The spell the caster uses.
 --- 
---- `instant`: boolean — When true, the spell is cast instantly. No animation is performed.
+--- `instant`: boolean — *Default*: `false`. When true, the spell is cast instantly. No animation is performed.
 --- 
 --- `alwaysSucceeds`: boolean — *Default*: `true`. When true, the spell cannot fail and does not consume magicka. When false, it is cast using the actor's spell skill, and requires and takes enough magicka to cast. Only applies when 'instant' is true.
 --- 
---- `bypassResistances`: boolean — The spell will bypass the target's resistances. Only applies when 'instant' is true.
+--- `bypassResistances`: boolean — *Default*: `false`. The spell will bypass the target's resistances. Only applies when 'instant' is true.
 --- @return boolean executed No description yet available.
 function tes3.cast(params) end
 
@@ -520,9 +520,9 @@ function tes3.cast(params) end
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string The caster reference.
 --- @field target tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string The target reference. Optional only if the caster is the player.
 --- @field spell tes3spell|string The spell the caster uses.
---- @field instant boolean When true, the spell is cast instantly. No animation is performed.
+--- @field instant boolean *Default*: `false`. When true, the spell is cast instantly. No animation is performed.
 --- @field alwaysSucceeds boolean *Default*: `true`. When true, the spell cannot fail and does not consume magicka. When false, it is cast using the actor's spell skill, and requires and takes enough magicka to cast. Only applies when 'instant' is true.
---- @field bypassResistances boolean The spell will bypass the target's resistances. Only applies when 'instant' is true.
+--- @field bypassResistances boolean *Default*: `false`. The spell will bypass the target's resistances. Only applies when 'instant' is true.
 
 --- Checks if a merchant will offer a service to you, including dialogue checks like disposition and faction membership. A specific service can be checked, or if no service is given, a generic dialogue check is made. If the service is refused, the dialogue reply for the refusal may also be returned (it may be nil, as there may not always be a reply available).
 --- @param reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string No description yet available.
@@ -654,7 +654,7 @@ function tes3.disableKey(keyCode) end
 --- 
 --- `itemData`: tes3itemData — *Optional*. The item data of the specific item to drop. Without this, the first matching item in the inventory will drop.
 --- 
---- `matchNoItemData`: boolean — If true, matches an item without item data. This can be used when you want to drop an item that isn't equipped (equipped items always have item data).
+--- `matchNoItemData`: boolean — *Default*: `false`. If true, matches an item without item data. This can be used when you want to drop an item that isn't equipped (equipped items always have item data).
 --- 
 --- `count`: number — *Default*: `1`. The number of items to drop.
 --- 
@@ -667,7 +667,7 @@ function tes3.dropItem(params) end
 --- @field reference tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string The reference whose inventory will be modified.
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string The item to drop.
 --- @field itemData tes3itemData *Optional*. The item data of the specific item to drop. Without this, the first matching item in the inventory will drop.
---- @field matchNoItemData boolean If true, matches an item without item data. This can be used when you want to drop an item that isn't equipped (equipped items always have item data).
+--- @field matchNoItemData boolean *Default*: `false`. If true, matches an item without item data. This can be used when you want to drop an item that isn't equipped (equipped items always have item data).
 --- @field count number *Default*: `1`. The number of items to drop.
 --- @field updateGUI boolean *Default*: `true`. If false, the player or contents menu won't be updated.
 
@@ -1155,7 +1155,7 @@ function tes3.getQuickKey(params) end
 function tes3.getReference(id) end
 
 --- Gets the current region the player is in. This checks the player's current cell first, but will fall back to the last exterior cell.
---- @param useDoors boolean *Optional*. No description yet available.
+--- @param useDoors boolean *Default*: `false`. No description yet available.
 --- @return tes3region region No description yet available.
 function tes3.getRegion(useDoors) end
 
@@ -1449,9 +1449,9 @@ function tes3.messageBox(messageOrParams, ...) end
 --- 
 --- `value`: number — *Optional*. If set, both the base and current value will be modified.
 --- 
---- `limit`: boolean — If set, the attribute won't rise above 100 or fall below 0.
+--- `limit`: boolean — *Default*: `false`. If set, the attribute won't rise above 100 or fall below 0.
 --- 
---- `limitToBase`: boolean — If set, the attribute's current value won't rise above its base value. Useful for health, magicka, and fatigue.
+--- `limitToBase`: boolean — *Default*: `false`. If set, the attribute's current value won't rise above its base value. Useful for health, magicka, and fatigue.
 function tes3.modStatistic(params) end
 
 ---Table parameter definitions for `tes3.modStatistic`.
@@ -1463,8 +1463,8 @@ function tes3.modStatistic(params) end
 --- @field base number *Optional*. If set, the base value will be modified.
 --- @field current number *Optional*. If set, the current value will be modified.
 --- @field value number *Optional*. If set, both the base and current value will be modified.
---- @field limit boolean If set, the attribute won't rise above 100 or fall below 0.
---- @field limitToBase boolean If set, the attribute's current value won't rise above its base value. Useful for health, magicka, and fatigue.
+--- @field limit boolean *Default*: `false`. If set, the attribute won't rise above 100 or fall below 0.
+--- @field limitToBase boolean *Default*: `false`. If set, the attribute's current value won't rise above its base value. Useful for health, magicka, and fatigue.
 
 --- Starts a new game.
 function tes3.newGame() end
@@ -1551,7 +1551,7 @@ function tes3.playItemPickupSound(params) end
 --- 
 --- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — *Optional*. The reference to attach the sound to.
 --- 
---- `loop`: boolean — If true, the sound will loop.
+--- `loop`: boolean — *Default*: `false`. If true, the sound will loop.
 --- 
 --- `mixChannel`: number — *Default*: `tes3.soundMix.effects`. The channel to base volume off of. Maps to [`tes3.soundMix`](https://mwse.github.io/MWSE/references/sound-mix-types/) constants.
 --- 
@@ -1567,7 +1567,7 @@ function tes3.playSound(params) end
 --- @class tes3.playSound.params
 --- @field sound tes3sound|string The sound object, or id of the sound to look for.
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string *Optional*. The reference to attach the sound to.
---- @field loop boolean If true, the sound will loop.
+--- @field loop boolean *Default*: `false`. If true, the sound will loop.
 --- @field mixChannel number *Default*: `tes3.soundMix.effects`. The channel to base volume off of. Maps to [`tes3.soundMix`](https://mwse.github.io/MWSE/references/sound-mix-types/) constants.
 --- @field volume number *Default*: `1.0`. A value between 0.0 and 1.0 to scale the volume off of.
 --- @field pitch number *Default*: `1.0`. The pitch-shift multiplier. For 22kHz audio (most typical) it can have the range [0.005, 4.5]; for 44kHz audio it can have the range [0.0025, 2.25].
@@ -1598,9 +1598,9 @@ function tes3.playVoiceover(params) end
 --- 
 --- `orientation`: tes3vector3|table — *Optional*. The new orientation of the reference.
 --- 
---- `forceCellChange`: boolean — *Optional*. When true, forces the game to update a reference that has moved within a single cell, as if it was moved into a new cell.
+--- `forceCellChange`: boolean — *Default*: `false`. When true, forces the game to update a reference that has moved within a single cell, as if it was moved into a new cell.
 --- 
---- `suppressFader`: boolean — *Optional*. When moving the player, can be used to prevent the fade in and out visual effect.
+--- `suppressFader`: boolean — *Default*: `false`. When moving the player, can be used to prevent the fade in and out visual effect.
 --- 
 --- `teleportCompanions`: boolean — *Default*: `true`. If used on the player, determines if companions should also be teleported.
 --- @return boolean executed No description yet available.
@@ -1612,8 +1612,8 @@ function tes3.positionCell(params) end
 --- @field cell tes3cell *Optional*. The cell to move the reference to. If not provided, the reference will be moved to a cell in the exterior worldspace at the position provided.
 --- @field position tes3vector3|table The position to move the reference to.
 --- @field orientation tes3vector3|table *Optional*. The new orientation of the reference.
---- @field forceCellChange boolean *Optional*. When true, forces the game to update a reference that has moved within a single cell, as if it was moved into a new cell.
---- @field suppressFader boolean *Optional*. When moving the player, can be used to prevent the fade in and out visual effect.
+--- @field forceCellChange boolean *Default*: `false`. When true, forces the game to update a reference that has moved within a single cell, as if it was moved into a new cell.
+--- @field suppressFader boolean *Default*: `false`. When moving the player, can be used to prevent the fade in and out visual effect.
 --- @field teleportCompanions boolean *Default*: `true`. If used on the player, determines if companions should also be teleported.
 
 --- Simulates pushing a keyboard key.
@@ -1633,31 +1633,31 @@ function tes3.random(seed) end
 --- 
 --- `direction`: tes3vector3|table — Direction of the ray. Does not have to be unit length.
 --- 
---- `findAll`: boolean — If true, the ray test won't stop after the first result.
+--- `findAll`: boolean — *Default*: `false`. If true, the ray test won't stop after the first result.
 --- 
 --- `maxDistance`: number — *Optional*. The maximum distance that the test will run.
 --- 
 --- `sort`: boolean — *Default*: `true`. If true, the results will be sorted by distance from the origin position.
 --- 
---- `useModelBounds`: boolean — If true, model bounds will be tested for intersection. Otherwise triangles will be used.
+--- `useModelBounds`: boolean — *Default*: `false`. If true, model bounds will be tested for intersection. Otherwise triangles will be used.
 --- 
---- `useModelCoordinates`: boolean — If true, model coordinates will be used instead of world coordinates.
+--- `useModelCoordinates`: boolean — *Default*: `false`. If true, model coordinates will be used instead of world coordinates.
 --- 
---- `useBackTriangles`: boolean — Include intersections with back-facing triangles.
+--- `useBackTriangles`: boolean — *Default*: `false`. Include intersections with back-facing triangles.
 --- 
 --- `observeAppCullFlag`: boolean — *Default*: `true`. Ignore intersections with culled (hidden) models.
 --- 
 --- `root`: node* — *Default*: `tes3.game.worldSceneGraphRoot`. Node pointer to node scene.
 --- 
---- `ignoreSkinned`: boolean — Ignore results from skinned objects.
+--- `ignoreSkinned`: boolean — *Default*: `false`. Ignore results from skinned objects.
 --- 
---- `returnColor`: boolean — Calculate and return the vertex color at intersections.
+--- `returnColor`: boolean — *Default*: `false`. Calculate and return the vertex color at intersections.
 --- 
 --- `returnNormal`: boolean — *Default*: `true`. Calculate and return the vertex normal at intersections.
 --- 
---- `returnSmoothNormal`: boolean — Use normal interpolation for calculating vertex normals.
+--- `returnSmoothNormal`: boolean — *Default*: `false`. Use normal interpolation for calculating vertex normals.
 --- 
---- `returnTexture`: boolean — Calculate and return the texture coordinate at intersections.
+--- `returnTexture`: boolean — *Default*: `false`. Calculate and return the texture coordinate at intersections.
 --- 
 --- `ignore`: table — *Optional*. An array of references and/or scene graph nodes to cull from the result(s).
 --- @return niPickRecord|table result No description yet available.
@@ -1667,19 +1667,19 @@ function tes3.rayTest(params) end
 --- @class tes3.rayTest.params
 --- @field position tes3vector3|table Position of the ray origin.
 --- @field direction tes3vector3|table Direction of the ray. Does not have to be unit length.
---- @field findAll boolean If true, the ray test won't stop after the first result.
+--- @field findAll boolean *Default*: `false`. If true, the ray test won't stop after the first result.
 --- @field maxDistance number *Optional*. The maximum distance that the test will run.
 --- @field sort boolean *Default*: `true`. If true, the results will be sorted by distance from the origin position.
---- @field useModelBounds boolean If true, model bounds will be tested for intersection. Otherwise triangles will be used.
---- @field useModelCoordinates boolean If true, model coordinates will be used instead of world coordinates.
---- @field useBackTriangles boolean Include intersections with back-facing triangles.
+--- @field useModelBounds boolean *Default*: `false`. If true, model bounds will be tested for intersection. Otherwise triangles will be used.
+--- @field useModelCoordinates boolean *Default*: `false`. If true, model coordinates will be used instead of world coordinates.
+--- @field useBackTriangles boolean *Default*: `false`. Include intersections with back-facing triangles.
 --- @field observeAppCullFlag boolean *Default*: `true`. Ignore intersections with culled (hidden) models.
 --- @field root node* *Default*: `tes3.game.worldSceneGraphRoot`. Node pointer to node scene.
---- @field ignoreSkinned boolean Ignore results from skinned objects.
---- @field returnColor boolean Calculate and return the vertex color at intersections.
+--- @field ignoreSkinned boolean *Default*: `false`. Ignore results from skinned objects.
+--- @field returnColor boolean *Default*: `false`. Calculate and return the vertex color at intersections.
 --- @field returnNormal boolean *Default*: `true`. Calculate and return the vertex normal at intersections.
---- @field returnSmoothNormal boolean Use normal interpolation for calculating vertex normals.
---- @field returnTexture boolean Calculate and return the texture coordinate at intersections.
+--- @field returnSmoothNormal boolean *Default*: `false`. Use normal interpolation for calculating vertex normals.
+--- @field returnTexture boolean *Default*: `false`. Calculate and return the texture coordinate at intersections.
 --- @field ignore table *Optional*. An array of references and/or scene graph nodes to cull from the result(s).
 
 --- Simulates releasing a keyboard key.
@@ -1737,7 +1737,7 @@ function tes3.removeItem(params) end
 --- 
 --- `itemData`: tes3itemData — *Optional*. The exact item data to remove. If no itemData is provided, the itemData from the reference itself will be removed.
 --- 
---- `force`: boolean — If true, no checks are made to see if the item data should be deleted. It will always be purged.
+--- `force`: boolean — *Default*: `false`. If true, no checks are made to see if the item data should be deleted. It will always be purged.
 --- 
 --- `ignoreOwnership`: boolean — *Default*: `true`. If `force` is false, a check will be made to see if the item data is empty and can be deleted. By default this ignores any ownership data. Setting this to false will override that behavior.
 --- 
@@ -1750,7 +1750,7 @@ function tes3.removeItemData(params) end
 --- @field from tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string The reference or mobile whose inventory will be modified.
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string The item to remove item data for.
 --- @field itemData tes3itemData *Optional*. The exact item data to remove. If no itemData is provided, the itemData from the reference itself will be removed.
---- @field force boolean If true, no checks are made to see if the item data should be deleted. It will always be purged.
+--- @field force boolean *Default*: `false`. If true, no checks are made to see if the item data should be deleted. It will always be purged.
 --- @field ignoreOwnership boolean *Default*: `true`. If `force` is false, a check will be made to see if the item data is empty and can be deleted. By default this ignores any ownership data. Setting this to false will override that behavior.
 --- @field updateGUI boolean *Default*: `true`. If false, the player or contents menu won't be updated.
 
@@ -1863,7 +1863,7 @@ function tes3.saveGame(params) end
 --- 
 --- `volume`: number — *Default*: `1`. The volume to play the sound at, relative to the voice mix channel.
 --- 
---- `forceSubtitle`: boolean — If true a subtitle will be shown, even if subtitles are disabled.
+--- `forceSubtitle`: boolean — *Default*: `false`. If true a subtitle will be shown, even if subtitles are disabled.
 --- 
 --- `subtitle`: string — *Optional*. The subtitle to show if subtitles are enabled, or if forceSubtitle is set.
 function tes3.say(params) end
@@ -1874,7 +1874,7 @@ function tes3.say(params) end
 --- @field soundPath string A path to a valid sound file.
 --- @field pitch number *Default*: `1`. A pitch shift to adjust the sound with.
 --- @field volume number *Default*: `1`. The volume to play the sound at, relative to the voice mix channel.
---- @field forceSubtitle boolean If true a subtitle will be shown, even if subtitles are disabled.
+--- @field forceSubtitle boolean *Default*: `false`. If true a subtitle will be shown, even if subtitles are disabled.
 --- @field subtitle string *Optional*. The subtitle to show if subtitles are enabled, or if forceSubtitle is set.
 
 --- Changes the 3rd person camera's offset from the player's head.
@@ -2027,7 +2027,7 @@ function tes3.setDestination(params) end
 --- 
 --- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — The reference to enable/disable.
 --- 
---- `toggle`: boolean — If true, the enabled state will be toggled.
+--- `toggle`: boolean — *Default*: `false`. If true, the enabled state will be toggled.
 --- 
 --- `enabled`: boolean — *Default*: `true`. If not toggling, setting `enabled` to true will enable the reference or to false will disable the reference.
 --- @return boolean success No description yet available.
@@ -2036,7 +2036,7 @@ function tes3.setEnabled(params) end
 ---Table parameter definitions for `tes3.setEnabled`.
 --- @class tes3.setEnabled.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string The reference to enable/disable.
---- @field toggle boolean If true, the enabled state will be toggled.
+--- @field toggle boolean *Default*: `false`. If true, the enabled state will be toggled.
 --- @field enabled boolean *Default*: `true`. If not toggling, setting `enabled` to true will enable the reference or to false will disable the reference.
 
 --- Sets the value of a global value. If the global could not be found, the function returns false.
@@ -2060,7 +2060,7 @@ function tes3.setItemIsStolen(item, from, stolen) end
 --- 
 --- `speaker`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string — No description yet available.
 --- 
---- `showMessage`: boolean — If set, a message may be shown to the player.
+--- `showMessage`: boolean — *Default*: `false`. If set, a message may be shown to the player.
 --- @return boolean wasSet No description yet available.
 function tes3.setJournalIndex(params) end
 
@@ -2069,7 +2069,7 @@ function tes3.setJournalIndex(params) end
 --- @field id tes3dialogue|string No description yet available.
 --- @field index number No description yet available.
 --- @field speaker tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string No description yet available.
---- @field showMessage boolean If set, a message may be shown to the player.
+--- @field showMessage boolean *Default*: `false`. If set, a message may be shown to the player.
 
 --- Sets player's kill count of a certain type of actor.
 --- @param params tes3.setKillCount.params This table accepts the following values:
@@ -2119,7 +2119,7 @@ function tes3.setMarkLocation(params) end
 --- 
 --- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — A reference whose owner to set.
 --- 
---- `remove`: boolean — *Optional*. If this parameter is set to true, reference's owner field will be removed.
+--- `remove`: boolean — *Default*: `false`. If this parameter is set to true, reference's owner field will be removed.
 --- 
 --- `owner`: tes3npc|tes3faction|string — Assigns this NPC or a faction as the owner of the reference.
 --- 
@@ -2131,7 +2131,7 @@ function tes3.setOwner(params) end
 ---Table parameter definitions for `tes3.setOwner`.
 --- @class tes3.setOwner.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string A reference whose owner to set.
---- @field remove boolean *Optional*. If this parameter is set to true, reference's owner field will be removed.
+--- @field remove boolean *Default*: `false`. If this parameter is set to true, reference's owner field will be removed.
 --- @field owner tes3npc|tes3faction|string Assigns this NPC or a faction as the owner of the reference.
 --- @field requiredGlobal tes3globalVariable *Optional*. If `owner` is set to NPC, `requiredGlobal` variable can be set.
 --- @field requiredRank number *Default*: `0`. If `owner` is set to faction, `requitedRank` variable controls minimal rank in faction the player has to have to be able to freely take the reference.
@@ -2139,28 +2139,28 @@ function tes3.setOwner(params) end
 --- Enables or disables player's controls state.
 --- @param params tes3.setPlayerControlState.params This table accepts the following values:
 --- 
---- `enabled`: boolean — *Optional*. Setting this to false will disable any kind of control.
+--- `enabled`: boolean — *Default*: `false`. Setting this to false will disable any kind of control.
 --- 
---- `attack`: boolean — *Optional*. If this is false, it will block player from attacking.
+--- `attack`: boolean — *Default*: `false`. If this is false, it will block player from attacking.
 --- 
---- `jumping`: boolean — *Optional*. If this is false, it will block player from jumping.
+--- `jumping`: boolean — *Default*: `false`. If this is false, it will block player from jumping.
 --- 
---- `magic`: boolean — *Optional*. If this is false, it will block player from using magic.
+--- `magic`: boolean — *Default*: `false`. If this is false, it will block player from using magic.
 --- 
---- `vanity`: boolean — *Optional*. If this is false, it will block player from going to vanity mode.
+--- `vanity`: boolean — *Default*: `false`. If this is false, it will block player from going to vanity mode.
 --- 
---- `viewSwitch`: boolean — *Optional*. If this is false, it will block player changing view mod from 1st to 3rd person camera and vice versa.
+--- `viewSwitch`: boolean — *Default*: `false`. If this is false, it will block player changing view mod from 1st to 3rd person camera and vice versa.
 --- @return boolean changedControlState No description yet available.
 function tes3.setPlayerControlState(params) end
 
 ---Table parameter definitions for `tes3.setPlayerControlState`.
 --- @class tes3.setPlayerControlState.params
---- @field enabled boolean *Optional*. Setting this to false will disable any kind of control.
---- @field attack boolean *Optional*. If this is false, it will block player from attacking.
---- @field jumping boolean *Optional*. If this is false, it will block player from jumping.
---- @field magic boolean *Optional*. If this is false, it will block player from using magic.
---- @field vanity boolean *Optional*. If this is false, it will block player from going to vanity mode.
---- @field viewSwitch boolean *Optional*. If this is false, it will block player changing view mod from 1st to 3rd person camera and vice versa.
+--- @field enabled boolean *Default*: `false`. Setting this to false will disable any kind of control.
+--- @field attack boolean *Default*: `false`. If this is false, it will block player from attacking.
+--- @field jumping boolean *Default*: `false`. If this is false, it will block player from jumping.
+--- @field magic boolean *Default*: `false`. If this is false, it will block player from using magic.
+--- @field vanity boolean *Default*: `false`. If this is false, it will block player from going to vanity mode.
+--- @field viewSwitch boolean *Default*: `false`. If this is false, it will block player changing view mod from 1st to 3rd person camera and vice versa.
 
 --- Sets an object (of any kind) to be sourceless, which are objects the game does not store in savegames. This can be useful for mod-created temporary objects which are not necessary to save.
 --- @param params tes3.setSourceless.params This table accepts the following values:
@@ -2184,7 +2184,7 @@ function tes3.setSourceless(params) end
 --- 
 --- `current`: number — *Optional*. If set, the current value will be set.
 --- 
---- `limit`: boolean — If set, the attribute won't rise above 100 or fall below 0.
+--- `limit`: boolean — *Default*: `false`. If set, the attribute won't rise above 100 or fall below 0.
 --- 
 --- `name`: string — *Optional*. A generic name of an attribute to set.
 --- 
@@ -2200,7 +2200,7 @@ function tes3.setStatistic(params) end
 --- @field attribute number *Optional*. The attribute to set.
 --- @field base number *Optional*. If set, the base value will be set.
 --- @field current number *Optional*. If set, the current value will be set.
---- @field limit boolean If set, the attribute won't rise above 100 or fall below 0.
+--- @field limit boolean *Default*: `false`. If set, the attribute won't rise above 100 or fall below 0.
 --- @field name string *Optional*. A generic name of an attribute to set.
 --- @field reference tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string No description yet available.
 --- @field skill number *Optional*. The skill to set.
@@ -2229,7 +2229,7 @@ function tes3.setTrap(params) end
 --- 
 --- `checkVanityDisabled`: boolean — *Default*: `true`. This will prevent changing vanity mode according to vanityDisabled flag on tes3.mobilePlayer.
 --- 
---- `toggle`: boolean — *Optional*. When this flag is set to true. The vanity mode will be toggled. If the player was in vanity mode, this will make the player leave vanity mode. Conversly, if the player wasn't in the vanity mode, this will turn on the vanity mode.
+--- `toggle`: boolean — *Default*: `false`. When this flag is set to true. The vanity mode will be toggled. If the player was in vanity mode, this will make the player leave vanity mode. Conversly, if the player wasn't in the vanity mode, this will turn on the vanity mode.
 --- @return boolean changedVanityMode No description yet available.
 function tes3.setVanityMode(params) end
 
@@ -2237,7 +2237,7 @@ function tes3.setVanityMode(params) end
 --- @class tes3.setVanityMode.params
 --- @field enabled boolean *Default*: `true`. This flag sets the vanity mode as enabled or disabled.
 --- @field checkVanityDisabled boolean *Default*: `true`. This will prevent changing vanity mode according to vanityDisabled flag on tes3.mobilePlayer.
---- @field toggle boolean *Optional*. When this flag is set to true. The vanity mode will be toggled. If the player was in vanity mode, this will make the player leave vanity mode. Conversly, if the player wasn't in the vanity mode, this will turn on the vanity mode.
+--- @field toggle boolean *Default*: `false`. When this flag is set to true. The vanity mode will be toggled. If the player was in vanity mode, this will make the player leave vanity mode. Conversly, if the player wasn't in the vanity mode, this will turn on the vanity mode.
 
 --- Sets player's kill count as a werewolf.
 --- @param params tes3.setWerewolfKillCount.params This table accepts the following values:
@@ -2272,7 +2272,7 @@ function tes3.showRepairServiceMenu() end
 --- 
 --- `resting`: boolean — *Default*: `true`. Should this be a rest?
 --- 
---- `waiting`: boolean — *Optional*. Or, is this a wait?
+--- `waiting`: boolean — *Default*: `false`. Or, is this a wait?
 --- @return boolean success No description yet available.
 function tes3.showRestMenu(params) end
 
@@ -2284,7 +2284,7 @@ function tes3.showRestMenu(params) end
 --- @field checkIsWerewolf boolean *Default*: `true`. Perform a check if the player is Werewolf. If they are, then the player will be prompted to wait instead of rest.
 --- @field showMessage boolean *Default*: `true`. Should a messagebox be shown if the player can't open resting menu because some condition isn't met.
 --- @field resting boolean *Default*: `true`. Should this be a rest?
---- @field waiting boolean *Optional*. Or, is this a wait?
+--- @field waiting boolean *Default*: `false`. Or, is this a wait?
 
 --- This function opens the spellmaking menu and returns true on success.
 --- @param params tes3.showSpellmakingMenu.params This table accepts the following values:
@@ -2406,7 +2406,7 @@ function tes3.transferItem(params) end
 --- 
 --- `criminal`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string — *Default*: `tes3.mobilePlayer`. No description yet available.
 --- 
---- `forceDetection`: boolean — Can be set to true to ignore normal detection checks.
+--- `forceDetection`: boolean — *Default*: `false`. Can be set to true to ignore normal detection checks.
 --- 
 --- `type`: number — *Default*: `tes3.crimeType.stealing`. Maps to [`tes3.crimeType`](https://mwse.github.io/MWSE/references/crime-types/) constants.
 --- 
@@ -2419,7 +2419,7 @@ function tes3.triggerCrime(params) end
 ---Table parameter definitions for `tes3.triggerCrime`.
 --- @class tes3.triggerCrime.params
 --- @field criminal tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string *Default*: `tes3.mobilePlayer`. No description yet available.
---- @field forceDetection boolean Can be set to true to ignore normal detection checks.
+--- @field forceDetection boolean *Default*: `false`. Can be set to true to ignore normal detection checks.
 --- @field type number *Default*: `tes3.crimeType.stealing`. Maps to [`tes3.crimeType`](https://mwse.github.io/MWSE/references/crime-types/) constants.
 --- @field value number Penalty for the crime. Defaults to 25 for pickpocketing.
 --- @field victim tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string *Default*: `tes3.mobilePlayer`. No description yet available.
@@ -2467,7 +2467,7 @@ function tes3.updateInventoryGUI(params) end
 --- 
 --- `index`: number — No description yet available.
 --- 
---- `showMessage`: boolean — If set, a message may be shown to the player.
+--- `showMessage`: boolean — *Default*: `false`. If set, a message may be shown to the player.
 --- @return boolean wasSet No description yet available.
 function tes3.updateJournal(params) end
 
@@ -2475,7 +2475,7 @@ function tes3.updateJournal(params) end
 --- @class tes3.updateJournal.params
 --- @field id tes3dialogue|string No description yet available.
 --- @field index number No description yet available.
---- @field showMessage boolean If set, a message may be shown to the player.
+--- @field showMessage boolean *Default*: `false`. If set, a message may be shown to the player.
 
 --- Forces the GUI to update magic-relevant elements for a given reference. This can be used after many calls to magic- or magic item-manipulating functions while passing updateGUI as false to resync inventory tiles, container weights, and companion data.
 --- @param params tes3.updateMagicGUI.params This table accepts the following values:

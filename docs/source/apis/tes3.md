@@ -157,7 +157,7 @@ local addedCount = tes3.addItem({ reference = ..., item = ..., itemData = ..., s
 	* `soul` ([tes3creature](../../types/tes3creature), [tes3npc](../../types/tes3npc)): *Optional*. For creating filled soul gems.
 	* `count` (number): *Default*: `1`. The maximum number of items to add.
 	* `playSound` (boolean): *Default*: `true`. If false, the up/down sound for the item won't be played.
-	* `limit` (boolean): If false, items can be placed into containers that shouldn't normally be allowed. This includes organic containers, and containers that are full.
+	* `limit` (boolean): *Default*: `false`. If false, items can be placed into containers that shouldn't normally be allowed. This includes organic containers, and containers that are full.
 	* `reevaluateEquipment` (boolean): *Default*: `true`. If true, and the item added is armor, clothing, or a weapon, the actor will reevaluate its equipment choices to see if the new item is worth equipping. This does not affect the player.
 	* `updateGUI` (boolean): *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though [`tes3ui.forcePlayerInventoryUpdate()`](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uiforceplayerinventoryupdate) must manually be called after all inventory updates are finished.
 
@@ -520,7 +520,7 @@ local hoursPassed = tes3.advanceTime({ hours = ..., resting = ..., updateEnviron
 
 * `params` (table)
 	* `hours` (number): How many hours to progress.
-	* `resting` (boolean): *Optional*. Should advancing time count as resting? If set to true invokes usual sleeping mechanics: health, fatigue and magicka restoration, and possible rest interruption. The length of the rest will be equal to hours parameter, rounded down to nearest natural number.
+	* `resting` (boolean): *Default*: `false`. Should advancing time count as resting? If set to true invokes usual sleeping mechanics: health, fatigue and magicka restoration, and possible rest interruption. The length of the rest will be equal to hours parameter, rounded down to nearest natural number.
 	* `updateEnvironment` (boolean): *Default*: `true`. Controls if the weather system is updated for each hour passed.
 
 **Returns**:
@@ -552,11 +552,11 @@ local instance = tes3.applyMagicSource({ reference = ..., source = ..., name = .
 		* `duration` (number): *Default*: `0`. Number of seconds the effect is going to be active.
 		* `min` (number): *Default*: `0`. The minimal magintude of the effect per tick.
 		* `max` (number): *Default*: `0`. The maximal magnitude of the effect per tick.
-	* `createCopy` (boolean): *Optional*. This parameter controls whether the function will return the original magic source or a copy of the magic source. This parameter is only used if source is alchemy.
+	* `createCopy` (boolean): *Default*: `false`. This parameter controls whether the function will return the original magic source or a copy of the magic source. This parameter is only used if source is alchemy.
 	* `fromStack` ([tes3equipmentStack](../../types/tes3equipmentStack)): *Optional*. The piece of equipment this magic source is coming from. The fromStack has to be an already equipped item from tes3actor.equipment. This will probably change in the future.
 	* `castChance` (number): *Optional*. This parameter allows overriding the casting chance of the magic source.
 	* `target` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target of the magic.
-	* `bypassResistances` (boolean): *Optional*. Is this effect going to bypass magic resistance?
+	* `bypassResistances` (boolean): *Default*: `false`. Is this effect going to bypass magic resistance?
 
 **Returns**:
 
@@ -597,11 +597,11 @@ local price = tes3.calculatePrice({ object = ..., basePrice = ..., buying = ...,
 	* `object` ([tes3object](../../types/tes3object)): *Optional*. The object to calculate the price for. If not provided, `basePrice` is required.
 	* `basePrice` (number): *Optional*. The base price to calculate the end price for. This defaults to the `object` param's `value`, if provided. This parameter is required if `object` is not provided.
 	* `buying` (boolean): *Default*: `true`. If `true`, uses the logic for buying a service/item. This is exclusive with `selling`.
-	* `selling` (boolean): If `true`, uses the logic for selling an item. This is exclusive with `buying`.
+	* `selling` (boolean): *Default*: `false`. If `true`, uses the logic for selling an item. This is exclusive with `buying`.
 	* `merchant` ([tes3mobileActor](../../types/tes3mobileActor)): The merchant to use for calculating the price.
-	* `bartering` (boolean): If `true`, a [calcBarterPrice](https://mwse.github.io/MWSE/events/calcBarterPrice) or [calcRepairPrice](https://mwse.github.io/MWSE/events/calcRepairPrice) event will be triggered.
-	* `repairing` (boolean): If `true`, a [calcRepairPrice](https://mwse.github.io/MWSE/events/calcRepairPrice) event will be triggered.
-	* `training` (boolean): If `true`, a [calcTrainingPrice](https://mwse.github.io/MWSE/events/calcTrainingPrice) event will be triggered, passing the given `skill` ID.
+	* `bartering` (boolean): *Default*: `false`. If `true`, a [calcBarterPrice](https://mwse.github.io/MWSE/events/calcBarterPrice) or [calcRepairPrice](https://mwse.github.io/MWSE/events/calcRepairPrice) event will be triggered.
+	* `repairing` (boolean): *Default*: `false`. If `true`, a [calcRepairPrice](https://mwse.github.io/MWSE/events/calcRepairPrice) event will be triggered.
+	* `training` (boolean): *Default*: `false`. If `true`, a [calcTrainingPrice](https://mwse.github.io/MWSE/events/calcTrainingPrice) event will be triggered, passing the given `skill` ID.
 	* `count` (number): *Default*: `1`. If `bartering`, the count passed to the [calcBarterPrice](https://mwse.github.io/MWSE/events/calcBarterPrice) event.
 	* `itemData` ([tes3itemData](../../types/tes3itemData)): *Optional*. If `bartering` or `repairing`, the item data passed to the [calcBarterPrice](https://mwse.github.io/MWSE/events/calcBarterPrice) or [calcRepairPrice](https://mwse.github.io/MWSE/events/calcRepairPrice) event.
 	* `skill` (number): If `training`, the skill ID passed to the [calcTrainingPrice](https://mwse.github.io/MWSE/events/calcTrainingPrice) event.
@@ -640,7 +640,7 @@ local canRest = tes3.canRest({ checkForEnemies = ..., checkForSolidGround = ...,
 * `params` (table)
 	* `checkForEnemies` (boolean): *Default*: `true`. Perform a check whether there are enemies nearby before opening rest menu. If there are, false is returned.
 	* `checkForSolidGround` (boolean): *Default*: `true`. Perform a check if the player is underwater. If underwater, false is returned.
-	* `showMessage` (boolean): If true, a messagebox will be shown if the player can't rest because some condition isn't met.
+	* `showMessage` (boolean): *Default*: `false`. If true, a messagebox will be shown if the player can't rest because some condition isn't met.
 
 **Returns**:
 
@@ -664,9 +664,9 @@ local executed = tes3.cast({ reference = ..., target = ..., spell = ..., instant
 	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The caster reference.
 	* `target` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The target reference. Optional only if the caster is the player.
 	* `spell` ([tes3spell](../../types/tes3spell), string): The spell the caster uses.
-	* `instant` (boolean): When true, the spell is cast instantly. No animation is performed.
+	* `instant` (boolean): *Default*: `false`. When true, the spell is cast instantly. No animation is performed.
 	* `alwaysSucceeds` (boolean): *Default*: `true`. When true, the spell cannot fail and does not consume magicka. When false, it is cast using the actor's spell skill, and requires and takes enough magicka to cast. Only applies when 'instant' is true.
-	* `bypassResistances` (boolean): The spell will bypass the target's resistances. Only applies when 'instant' is true.
+	* `bypassResistances` (boolean): *Default*: `false`. The spell will bypass the target's resistances. Only applies when 'instant' is true.
 
 **Returns**:
 
@@ -972,7 +972,7 @@ local createdReference = tes3.dropItem({ reference = ..., item = ..., itemData =
 	* `reference` ([tes3mobileActor](../../types/tes3mobileActor), [tes3reference](../../types/tes3reference), string): The reference whose inventory will be modified.
 	* `item` ([tes3item](../../types/tes3item), string): The item to drop.
 	* `itemData` ([tes3itemData](../../types/tes3itemData)): *Optional*. The item data of the specific item to drop. Without this, the first matching item in the inventory will drop.
-	* `matchNoItemData` (boolean): If true, matches an item without item data. This can be used when you want to drop an item that isn't equipped (equipped items always have item data).
+	* `matchNoItemData` (boolean): *Default*: `false`. If true, matches an item without item data. This can be used when you want to drop an item that isn't equipped (equipped items always have item data).
 	* `count` (number): *Default*: `1`. The number of items to drop.
 	* `updateGUI` (boolean): *Default*: `true`. If false, the player or contents menu won't be updated.
 
@@ -2145,7 +2145,7 @@ local region = tes3.getRegion(useDoors)
 
 **Parameters**:
 
-* `useDoors` (boolean): *Optional*.
+* `useDoors` (boolean): *Default*: `false`.
 
 **Returns**:
 
@@ -2501,17 +2501,17 @@ local equal = tes3.isKeyEqual({ actual = ..., expected = ... })
 
 * `params` (table)
 	* `actual` (table): The key object that is being compared.
-		* `keyCode` (number): Value of the actual key scan code, such as the letter `p`. Maps to [`tes3.scanCode.*`](https://mwse.github.io/MWSE/references/scan-codes/).
-		* `isShiftDown` (boolean): Value of whether the shift key is pressed.
-		* `isControlDown` (boolean): Value of whether the control key is pressed.
-		* `isAltDown` (boolean): Value of whether the alt key is pressed.
-		* `isSuperDown` (boolean): Value of whether the super (Windows key) key is pressed.
+		* `keyCode` (number): *Default*: `false`. Value of the actual key scan code, such as the letter `p`. Maps to [`tes3.scanCode.*`](https://mwse.github.io/MWSE/references/scan-codes/).
+		* `isShiftDown` (boolean): *Default*: `false`. Value of whether the shift key is pressed.
+		* `isControlDown` (boolean): *Default*: `false`. Value of whether the control key is pressed.
+		* `isAltDown` (boolean): *Default*: `false`. Value of whether the alt key is pressed.
+		* `isSuperDown` (boolean): *Default*: `false`. Value of whether the super (Windows key) key is pressed.
 	* `expected` (table): The key object that is being compared against.
-		* `keyCode` (number): Value of the expected key scan code, such as the letter `p`. Maps to [`tes3.scanCode.*`](https://mwse.github.io/MWSE/references/scan-codes/).
-		* `isShiftDown` (boolean): Value of whether the shift key is expected to be pressed.
-		* `isControlDown` (boolean): Value of whether the control key is expected to be pressed.
-		* `isAltDown` (boolean): Value of whether the alt key is expected to be pressed.
-		* `isSuperDown` (boolean): Value of whether the super (Windows key) key is pressed.
+		* `keyCode` (number): *Default*: `false`. Value of the expected key scan code, such as the letter `p`. Maps to [`tes3.scanCode.*`](https://mwse.github.io/MWSE/references/scan-codes/).
+		* `isShiftDown` (boolean): *Default*: `false`. Value of whether the shift key is expected to be pressed.
+		* `isControlDown` (boolean): *Default*: `false`. Value of whether the control key is expected to be pressed.
+		* `isAltDown` (boolean): *Default*: `false`. Value of whether the alt key is expected to be pressed.
+		* `isSuperDown` (boolean): *Default*: `false`. Value of whether the super (Windows key) key is pressed.
 
 **Returns**:
 
@@ -2788,8 +2788,8 @@ tes3.modStatistic({ reference = ..., name = ..., attribute = ..., skill = ..., b
 	* `base` (number): *Optional*. If set, the base value will be modified.
 	* `current` (number): *Optional*. If set, the current value will be modified.
 	* `value` (number): *Optional*. If set, both the base and current value will be modified.
-	* `limit` (boolean): If set, the attribute won't rise above 100 or fall below 0.
-	* `limitToBase` (boolean): If set, the attribute's current value won't rise above its base value. Useful for health, magicka, and fatigue.
+	* `limit` (boolean): *Default*: `false`. If set, the attribute won't rise above 100 or fall below 0.
+	* `limitToBase` (boolean): *Default*: `false`. If set, the attribute's current value won't rise above its base value. Useful for health, magicka, and fatigue.
 
 ??? example "Example: Decrease Health of an Actor"
 
@@ -2927,7 +2927,7 @@ local executed = tes3.playSound({ sound = ..., reference = ..., loop = ..., mixC
 * `params` (table)
 	* `sound` ([tes3sound](../../types/tes3sound), string): The sound object, or id of the sound to look for.
 	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The reference to attach the sound to.
-	* `loop` (boolean): If true, the sound will loop.
+	* `loop` (boolean): *Default*: `false`. If true, the sound will loop.
 	* `mixChannel` (number): *Default*: `tes3.soundMix.effects`. The channel to base volume off of. Maps to [`tes3.soundMix`](https://mwse.github.io/MWSE/references/sound-mix-types/) constants.
 	* `volume` (number): *Default*: `1.0`. A value between 0.0 and 1.0 to scale the volume off of.
 	* `pitch` (number): *Default*: `1.0`. The pitch-shift multiplier. For 22kHz audio (most typical) it can have the range [0.005, 4.5]; for 44kHz audio it can have the range [0.0025, 2.25].
@@ -2974,8 +2974,8 @@ local executed = tes3.positionCell({ reference = ..., cell = ..., position = ...
 	* `cell` ([tes3cell](../../types/tes3cell)): *Optional*. The cell to move the reference to. If not provided, the reference will be moved to a cell in the exterior worldspace at the position provided.
 	* `position` ([tes3vector3](../../types/tes3vector3), table): The position to move the reference to.
 	* `orientation` ([tes3vector3](../../types/tes3vector3), table): *Optional*. The new orientation of the reference.
-	* `forceCellChange` (boolean): *Optional*. When true, forces the game to update a reference that has moved within a single cell, as if it was moved into a new cell.
-	* `suppressFader` (boolean): *Optional*. When moving the player, can be used to prevent the fade in and out visual effect.
+	* `forceCellChange` (boolean): *Default*: `false`. When true, forces the game to update a reference that has moved within a single cell, as if it was moved into a new cell.
+	* `suppressFader` (boolean): *Default*: `false`. When moving the player, can be used to prevent the fade in and out visual effect.
 	* `teleportCompanions` (boolean): *Default*: `true`. If used on the player, determines if companions should also be teleported.
 
 **Returns**:
@@ -3025,19 +3025,19 @@ local result = tes3.rayTest({ position = ..., direction = ..., findAll = ..., ma
 * `params` (table)
 	* `position` ([tes3vector3](../../types/tes3vector3), table): Position of the ray origin.
 	* `direction` ([tes3vector3](../../types/tes3vector3), table): Direction of the ray. Does not have to be unit length.
-	* `findAll` (boolean): If true, the ray test won't stop after the first result.
+	* `findAll` (boolean): *Default*: `false`. If true, the ray test won't stop after the first result.
 	* `maxDistance` (number): *Optional*. The maximum distance that the test will run.
 	* `sort` (boolean): *Default*: `true`. If true, the results will be sorted by distance from the origin position.
-	* `useModelBounds` (boolean): If true, model bounds will be tested for intersection. Otherwise triangles will be used.
-	* `useModelCoordinates` (boolean): If true, model coordinates will be used instead of world coordinates.
-	* `useBackTriangles` (boolean): Include intersections with back-facing triangles.
+	* `useModelBounds` (boolean): *Default*: `false`. If true, model bounds will be tested for intersection. Otherwise triangles will be used.
+	* `useModelCoordinates` (boolean): *Default*: `false`. If true, model coordinates will be used instead of world coordinates.
+	* `useBackTriangles` (boolean): *Default*: `false`. Include intersections with back-facing triangles.
 	* `observeAppCullFlag` (boolean): *Default*: `true`. Ignore intersections with culled (hidden) models.
 	* `root` (node*): *Default*: `tes3.game.worldSceneGraphRoot`. Node pointer to node scene.
-	* `ignoreSkinned` (boolean): Ignore results from skinned objects.
-	* `returnColor` (boolean): Calculate and return the vertex color at intersections.
+	* `ignoreSkinned` (boolean): *Default*: `false`. Ignore results from skinned objects.
+	* `returnColor` (boolean): *Default*: `false`. Calculate and return the vertex color at intersections.
 	* `returnNormal` (boolean): *Default*: `true`. Calculate and return the vertex normal at intersections.
-	* `returnSmoothNormal` (boolean): Use normal interpolation for calculating vertex normals.
-	* `returnTexture` (boolean): Calculate and return the texture coordinate at intersections.
+	* `returnSmoothNormal` (boolean): *Default*: `false`. Use normal interpolation for calculating vertex normals.
+	* `returnTexture` (boolean): *Default*: `false`. Calculate and return the texture coordinate at intersections.
 	* `ignore` (table): *Optional*. An array of references and/or scene graph nodes to cull from the result(s).
 
 **Returns**:
@@ -3225,7 +3225,7 @@ local wasRemoved = tes3.removeItemData({ from = ..., item = ..., itemData = ...,
 	* `from` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The reference or mobile whose inventory will be modified.
 	* `item` ([tes3item](../../types/tes3item), string): The item to remove item data for.
 	* `itemData` ([tes3itemData](../../types/tes3itemData)): *Optional*. The exact item data to remove. If no itemData is provided, the itemData from the reference itself will be removed.
-	* `force` (boolean): If true, no checks are made to see if the item data should be deleted. It will always be purged.
+	* `force` (boolean): *Default*: `false`. If true, no checks are made to see if the item data should be deleted. It will always be purged.
 	* `ignoreOwnership` (boolean): *Default*: `true`. If `force` is false, a check will be made to see if the item data is empty and can be deleted. By default this ignores any ownership data. Setting this to false will override that behavior.
 	* `updateGUI` (boolean): *Default*: `true`. If false, the player or contents menu won't be updated.
 
@@ -3357,7 +3357,7 @@ tes3.say({ reference = ..., soundPath = ..., pitch = ..., volume = ..., forceSub
 	* `soundPath` (string): A path to a valid sound file.
 	* `pitch` (number): *Default*: `1`. A pitch shift to adjust the sound with.
 	* `volume` (number): *Default*: `1`. The volume to play the sound at, relative to the voice mix channel.
-	* `forceSubtitle` (boolean): If true a subtitle will be shown, even if subtitles are disabled.
+	* `forceSubtitle` (boolean): *Default*: `false`. If true a subtitle will be shown, even if subtitles are disabled.
 	* `subtitle` (string): *Optional*. The subtitle to show if subtitles are enabled, or if forceSubtitle is set.
 
 ***
@@ -3518,7 +3518,7 @@ local success = tes3.setEnabled({ reference = ..., toggle = ..., enabled = ... }
 
 * `params` (table)
 	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The reference to enable/disable.
-	* `toggle` (boolean): If true, the enabled state will be toggled.
+	* `toggle` (boolean): *Default*: `false`. If true, the enabled state will be toggled.
 	* `enabled` (boolean): *Default*: `true`. If not toggling, setting `enabled` to true will enable the reference or to false will disable the reference.
 
 **Returns**:
@@ -3576,7 +3576,7 @@ local wasSet = tes3.setJournalIndex({ id = ..., index = ..., speaker = ..., show
 	* `id` ([tes3dialogue](../../types/tes3dialogue), string)
 	* `index` (number)
 	* `speaker` ([tes3mobileActor](../../types/tes3mobileActor), [tes3reference](../../types/tes3reference), string)
-	* `showMessage` (boolean): If set, a message may be shown to the player.
+	* `showMessage` (boolean): *Default*: `false`. If set, a message may be shown to the player.
 
 **Returns**:
 
@@ -3649,7 +3649,7 @@ tes3.setOwner({ reference = ..., remove = ..., owner = ..., requiredGlobal = ...
 
 * `params` (table)
 	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): A reference whose owner to set.
-	* `remove` (boolean): *Optional*. If this parameter is set to true, reference's owner field will be removed.
+	* `remove` (boolean): *Default*: `false`. If this parameter is set to true, reference's owner field will be removed.
 	* `owner` ([tes3npc](../../types/tes3npc), [tes3faction](../../types/tes3faction), string): Assigns this NPC or a faction as the owner of the reference.
 	* `requiredGlobal` ([tes3globalVariable](../../types/tes3globalVariable)): *Optional*. If `owner` is set to NPC, `requiredGlobal` variable can be set.
 	* `requiredRank` (number): *Default*: `0`. If `owner` is set to faction, `requitedRank` variable controls minimal rank in faction the player has to have to be able to freely take the reference.
@@ -3667,12 +3667,12 @@ local changedControlState = tes3.setPlayerControlState({ enabled = ..., attack =
 **Parameters**:
 
 * `params` (table)
-	* `enabled` (boolean): *Optional*. Setting this to false will disable any kind of control.
-	* `attack` (boolean): *Optional*. If this is false, it will block player from attacking.
-	* `jumping` (boolean): *Optional*. If this is false, it will block player from jumping.
-	* `magic` (boolean): *Optional*. If this is false, it will block player from using magic.
-	* `vanity` (boolean): *Optional*. If this is false, it will block player from going to vanity mode.
-	* `viewSwitch` (boolean): *Optional*. If this is false, it will block player changing view mod from 1st to 3rd person camera and vice versa.
+	* `enabled` (boolean): *Default*: `false`. Setting this to false will disable any kind of control.
+	* `attack` (boolean): *Default*: `false`. If this is false, it will block player from attacking.
+	* `jumping` (boolean): *Default*: `false`. If this is false, it will block player from jumping.
+	* `magic` (boolean): *Default*: `false`. If this is false, it will block player from using magic.
+	* `vanity` (boolean): *Default*: `false`. If this is false, it will block player from going to vanity mode.
+	* `viewSwitch` (boolean): *Default*: `false`. If this is false, it will block player changing view mod from 1st to 3rd person camera and vice versa.
 
 **Returns**:
 
@@ -3710,7 +3710,7 @@ tes3.setStatistic({ attribute = ..., base = ..., current = ..., limit = ..., nam
 	* `attribute` (number): *Optional*. The attribute to set.
 	* `base` (number): *Optional*. If set, the base value will be set.
 	* `current` (number): *Optional*. If set, the current value will be set.
-	* `limit` (boolean): If set, the attribute won't rise above 100 or fall below 0.
+	* `limit` (boolean): *Default*: `false`. If set, the attribute won't rise above 100 or fall below 0.
 	* `name` (string): *Optional*. A generic name of an attribute to set.
 	* `reference` ([tes3mobileActor](../../types/tes3mobileActor), [tes3reference](../../types/tes3reference), string)
 	* `skill` (number): *Optional*. The skill to set.
@@ -3753,7 +3753,7 @@ local changedVanityMode = tes3.setVanityMode({ enabled = ..., checkVanityDisable
 * `params` (table)
 	* `enabled` (boolean): *Default*: `true`. This flag sets the vanity mode as enabled or disabled.
 	* `checkVanityDisabled` (boolean): *Default*: `true`. This will prevent changing vanity mode according to vanityDisabled flag on tes3.mobilePlayer.
-	* `toggle` (boolean): *Optional*. When this flag is set to true. The vanity mode will be toggled. If the player was in vanity mode, this will make the player leave vanity mode. Conversly, if the player wasn't in the vanity mode, this will turn on the vanity mode.
+	* `toggle` (boolean): *Default*: `false`. When this flag is set to true. The vanity mode will be toggled. If the player was in vanity mode, this will make the player leave vanity mode. Conversly, if the player wasn't in the vanity mode, this will turn on the vanity mode.
 
 **Returns**:
 
@@ -3815,7 +3815,7 @@ local success = tes3.showRestMenu({ checkForEnemies = ..., checkForSolidGround =
 	* `checkIsWerewolf` (boolean): *Default*: `true`. Perform a check if the player is Werewolf. If they are, then the player will be prompted to wait instead of rest.
 	* `showMessage` (boolean): *Default*: `true`. Should a messagebox be shown if the player can't open resting menu because some condition isn't met.
 	* `resting` (boolean): *Default*: `true`. Should this be a rest?
-	* `waiting` (boolean): *Optional*. Or, is this a wait?
+	* `waiting` (boolean): *Default*: `false`. Or, is this a wait?
 
 **Returns**:
 
@@ -3975,7 +3975,7 @@ local executed = tes3.triggerCrime({ criminal = ..., forceDetection = ..., type 
 
 * `params` (table)
 	* `criminal` ([tes3mobileActor](../../types/tes3mobileActor), [tes3reference](../../types/tes3reference), string): *Default*: `tes3.mobilePlayer`.
-	* `forceDetection` (boolean): Can be set to true to ignore normal detection checks.
+	* `forceDetection` (boolean): *Default*: `false`. Can be set to true to ignore normal detection checks.
 	* `type` (number): *Default*: `tes3.crimeType.stealing`. Maps to [`tes3.crimeType`](https://mwse.github.io/MWSE/references/crime-types/) constants.
 	* `value` (number): Penalty for the crime. Defaults to 25 for pickpocketing.
 	* `victim` ([tes3mobileActor](../../types/tes3mobileActor), [tes3reference](../../types/tes3reference), string): *Default*: `tes3.mobilePlayer`.
@@ -4066,7 +4066,7 @@ local wasSet = tes3.updateJournal({ id = ..., index = ..., showMessage = ... })
 * `params` (table)
 	* `id` ([tes3dialogue](../../types/tes3dialogue), string)
 	* `index` (number)
-	* `showMessage` (boolean): If set, a message may be shown to the player.
+	* `showMessage` (boolean): *Default*: `false`. If set, a message may be shown to the player.
 
 **Returns**:
 

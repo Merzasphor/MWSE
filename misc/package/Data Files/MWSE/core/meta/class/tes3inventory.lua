@@ -66,7 +66,7 @@ function tes3inventory:findItemStack(item, itemData) end
 --- 
 --- `count`: number — *Default*: `1`. The number of items to add.
 --- 
---- `deleteItemData`: boolean — If set, the itemData will be deleted after being removed.
+--- `deleteItemData`: boolean — *Default*: `false`. If set, the itemData will be deleted after being removed.
 function tes3inventory:removeItem(params) end
 
 ---Table parameter definitions for `tes3inventory.removeItem`.
@@ -75,7 +75,7 @@ function tes3inventory:removeItem(params) end
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon The item to add.
 --- @field itemData tes3itemData *Optional*. Any associated item data to add.
 --- @field count number *Default*: `1`. The number of items to add.
---- @field deleteItemData boolean If set, the itemData will be deleted after being removed.
+--- @field deleteItemData boolean *Default*: `false`. If set, the itemData will be deleted after being removed.
 
 --- Resolves all contained leveled lists and adds the randomized items to the inventory. This should generally not be called directly.
 --- @param mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer *Optional*. The mobile actor whose stats will be updated.

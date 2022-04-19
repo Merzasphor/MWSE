@@ -99,7 +99,7 @@ end
 
 local function getArgumentDescription(argument)
 	local prefix = ""
-	if (argument.default) then
+	if (argument.default ~= nil) then
 		prefix = prefix .. string.format("Default: ``%s``. ", tostring(argument.default))
 	elseif (argument.optional) then
 		prefix = prefix .. "Optional. "

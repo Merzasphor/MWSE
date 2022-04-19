@@ -180,11 +180,11 @@ function tes3mobileActor:calcEffectiveDamage(params) end
 --- 
 --- `itemData`: tes3itemData — *Optional*. The item data of the specific item to equip.
 --- 
---- `addItem`: boolean — If `true`, the item will be added to the actor's inventory if needed.
+--- `addItem`: boolean — *Default*: `false`. If `true`, the item will be added to the actor's inventory if needed.
 --- 
---- `selectBestCondition`: boolean — If `true`, the item in the inventory with the best condition and best charge will be selected.
+--- `selectBestCondition`: boolean — *Default*: `false`. If `true`, the item in the inventory with the best condition and best charge will be selected.
 --- 
---- `selectWorstCondition`: boolean — If `true`, the item in the inventory with the worst condition and worst charge will be selected. Can be useful for selecting tools.
+--- `selectWorstCondition`: boolean — *Default*: `false`. If `true`, the item in the inventory with the worst condition and worst charge will be selected. Can be useful for selecting tools.
 --- @return boolean itemEquipped No description yet available.
 function tes3mobileActor:equip(params) end
 
@@ -192,9 +192,9 @@ function tes3mobileActor:equip(params) end
 --- @class tes3mobileActor.equip.params
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string The item to equip.
 --- @field itemData tes3itemData *Optional*. The item data of the specific item to equip.
---- @field addItem boolean If `true`, the item will be added to the actor's inventory if needed.
---- @field selectBestCondition boolean If `true`, the item in the inventory with the best condition and best charge will be selected.
---- @field selectWorstCondition boolean If `true`, the item in the inventory with the worst condition and worst charge will be selected. Can be useful for selecting tools.
+--- @field addItem boolean *Default*: `false`. If `true`, the item will be added to the actor's inventory if needed.
+--- @field selectBestCondition boolean *Default*: `false`. If `true`, the item in the inventory with the best condition and best charge will be selected.
+--- @field selectWorstCondition boolean *Default*: `false`. If `true`, the item in the inventory with the worst condition and worst charge will be selected. Can be useful for selecting tools.
 
 --- Equips a spell or enchantment, optionally equipping the enchanted item if needed. Returns `false` if the item could not be equipped.
 --- @param params tes3mobileActor.equipMagic.params This table accepts the following values:
@@ -208,7 +208,7 @@ function tes3mobileActor:equip(params) end
 --- 
 --- `itemData`: tes3itemData — *Optional*. Only valid if an item has been assigned to `source`. The item data of the specific item to equip.
 --- 
---- `equipItem`: boolean — *Optional*. Only valid if an item has been assigned to `source`. If `true`, the item assigned to `source` will be equipped. Requires the actor to have the item in their inventory. If `false`, `itemData` must not be nil.
+--- `equipItem`: boolean — *Default*: `false`. Only valid if an item has been assigned to `source`. If `true`, the item assigned to `source` will be equipped. Requires the actor to have the item in their inventory. If `false`, `itemData` must not be nil.
 --- 
 --- `updateGUI`: boolean — *Default*: `true`. Only valid if this actor is the player. If `false`, the player GUI will not be updated to reflect the change to equipped magic.
 --- @return boolean result No description yet available.
@@ -223,7 +223,7 @@ function tes3mobileActor:equipMagic(params) end
 --- 		Items must have a castable enchantment. Castable enchantments have a `castType` of `tes3.enchantmentType.onUse` or `tes3.enchantmentType.castOnce`. The actor is not required to have this item in their inventory, unless `equipItem` is `true`.
 --- 
 --- @field itemData tes3itemData *Optional*. Only valid if an item has been assigned to `source`. The item data of the specific item to equip.
---- @field equipItem boolean *Optional*. Only valid if an item has been assigned to `source`. If `true`, the item assigned to `source` will be equipped. Requires the actor to have the item in their inventory. If `false`, `itemData` must not be nil.
+--- @field equipItem boolean *Default*: `false`. Only valid if an item has been assigned to `source`. If `true`, the item assigned to `source` will be equipped. Requires the actor to have the item in their inventory. If `false`, `itemData` must not be nil.
 --- @field updateGUI boolean *Default*: `true`. Only valid if this actor is the player. If `false`, the player GUI will not be updated to reflect the change to equipped magic.
 
 --- Fetches a filtered list of the active magic effects on the actor. Returns a table with [`tes3activeMagicEffect`](https://mwse.github.io/MWSE/types/tes3activeMagicEffect/) items.
@@ -340,14 +340,14 @@ function tes3mobileActor:unequip(params) end
 --- Unequips the currently equipped magic, optionally unequipping the enchanted item if needed.
 --- @param params tes3mobileActor.unequipMagic.params This table accepts the following values:
 --- 
---- `unequipItem`: boolean — *Optional*. Only valid if the currently equipped magic is from an equippable item enchantment. If `true`, the item containing the enchantment will be unequipped.
+--- `unequipItem`: boolean — *Default*: `false`. Only valid if the currently equipped magic is from an equippable item enchantment. If `true`, the item containing the enchantment will be unequipped.
 --- 
 --- `updateGUI`: boolean — *Default*: `true`. Only valid if this actor is the player. If `false`, the player GUI will not be updated to reflect the change to equipped magic.
 function tes3mobileActor:unequipMagic(params) end
 
 ---Table parameter definitions for `tes3mobileActor.unequipMagic`.
 --- @class tes3mobileActor.unequipMagic.params
---- @field unequipItem boolean *Optional*. Only valid if the currently equipped magic is from an equippable item enchantment. If `true`, the item containing the enchantment will be unequipped.
+--- @field unequipItem boolean *Default*: `false`. Only valid if the currently equipped magic is from an equippable item enchantment. If `true`, the item containing the enchantment will be unequipped.
 --- @field updateGUI boolean *Default*: `true`. Only valid if this actor is the player. If `false`, the player GUI will not be updated to reflect the change to equipped magic.
 
 --- Updates statistics derived from attributes, which are magicka, fatigue, and encumbrance. Will also update the UI if used on the player. Normally handled automatically when you use `tes3.modStatistic()`.

@@ -52,7 +52,7 @@ function string.insert(s1, s2, position) end
 --- @param s string The string to perform finds on.
 --- @param pattern table An array-style table that contains pattern strings.
 --- @param index number *Default*: `1`. Start index of the find.
---- @param plain boolean If true, a normal search instead of a pattern search will be performed.
+--- @param plain boolean *Default*: `false`. If true, a normal search instead of a pattern search will be performed.
 function string.multifind(s, pattern, index, plain) end
 
 --- Returns an array-style table with `str` split by `sep`. The `sep`erator is not part of the results. By default the `sep`erator is `%s`, splitting the given `str`ing by spaces.

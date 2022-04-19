@@ -99,7 +99,7 @@ string.multifind(s, pattern, index, plain)
 * `s` (string): The string to perform finds on.
 * `pattern` (table): An array-style table that contains pattern strings.
 * `index` (number): *Default*: `1`. Start index of the find.
-* `plain` (boolean): If true, a normal search instead of a pattern search will be performed.
+* `plain` (boolean): *Default*: `false`. If true, a normal search instead of a pattern search will be performed.
 
 ***
 
