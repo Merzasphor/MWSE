@@ -1408,12 +1408,12 @@ local result = tes3mobileActor:equipMagic({ source = ..., itemData = ..., equipI
 * `params` (table)
 	* `source` ([tes3spell](../../types/tes3spell), [tes3item](../../types/tes3item), string): The source of the magic to equip.
 
-		Spells must be castable. Castable spells have a `castType` of `tes3.spellType.spell` or `tes3.spellType.power`.
+		Spells must be castable. Castable spells have a `castType` of `tes3.spellType.spell` or `tes3.spellType.power`. The actor is not required to know this spell.
 
-		Items must have a castable enchantment. Castable enchantments have a `castType` of `tes3.enchantmentType.onUse` or `tes3.enchantmentType.castOnce`.
+		Items must have a castable enchantment. Castable enchantments have a `castType` of `tes3.enchantmentType.onUse` or `tes3.enchantmentType.castOnce`. The actor is not required to have this item in their inventory, unless `equipItem` is `true`.
 
 	* `itemData` ([tes3itemData](../../types/tes3itemData)): *Optional*. Only valid if an item has been assigned to `source`. The item data of the specific item to equip.
-	* `equipItem` (boolean): *Optional*. Only valid if an item has been assigned to `source`. If `true`, the item assigned to `source` will be equipped. If `false`, `itemData` must not be nil.
+	* `equipItem` (boolean): *Optional*. Only valid if an item has been assigned to `source`. If `true`, the item assigned to `source` will be equipped. Requires the actor to have the item in their inventory. If `false`, `itemData` must not be nil.
 	* `updateGUI` (boolean): *Default*: `true`. Only valid if this actor is the player. If `false`, the player GUI will not be updated to reflect the change to equipped magic.
 
 **Returns**:

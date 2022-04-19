@@ -201,14 +201,14 @@ function tes3mobileActor:equip(params) end
 --- 
 --- `source`: tes3spell|tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — The source of the magic to equip.
 --- --- 
---- --- 		Spells must be castable. Castable spells have a `castType` of `tes3.spellType.spell` or `tes3.spellType.power`.
+--- --- 		Spells must be castable. Castable spells have a `castType` of `tes3.spellType.spell` or `tes3.spellType.power`. The actor is not required to know this spell.
 --- --- 
---- --- 		Items must have a castable enchantment. Castable enchantments have a `castType` of `tes3.enchantmentType.onUse` or `tes3.enchantmentType.castOnce`.
+--- --- 		Items must have a castable enchantment. Castable enchantments have a `castType` of `tes3.enchantmentType.onUse` or `tes3.enchantmentType.castOnce`. The actor is not required to have this item in their inventory, unless `equipItem` is `true`.
 --- --- 
 --- 
 --- `itemData`: tes3itemData — *Optional*. Only valid if an item has been assigned to `source`. The item data of the specific item to equip.
 --- 
---- `equipItem`: boolean — *Optional*. Only valid if an item has been assigned to `source`. If `true`, the item assigned to `source` will be equipped. If `false`, `itemData` must not be nil.
+--- `equipItem`: boolean — *Optional*. Only valid if an item has been assigned to `source`. If `true`, the item assigned to `source` will be equipped. Requires the actor to have the item in their inventory. If `false`, `itemData` must not be nil.
 --- 
 --- `updateGUI`: boolean — *Default*: `true`. Only valid if this actor is the player. If `false`, the player GUI will not be updated to reflect the change to equipped magic.
 --- @return boolean result No description yet available.
@@ -218,12 +218,12 @@ function tes3mobileActor:equipMagic(params) end
 --- @class tes3mobileActor.equipMagic.params
 --- @field source tes3spell|tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string The source of the magic to equip.
 --- 
---- 		Spells must be castable. Castable spells have a `castType` of `tes3.spellType.spell` or `tes3.spellType.power`.
+--- 		Spells must be castable. Castable spells have a `castType` of `tes3.spellType.spell` or `tes3.spellType.power`. The actor is not required to know this spell.
 --- 
---- 		Items must have a castable enchantment. Castable enchantments have a `castType` of `tes3.enchantmentType.onUse` or `tes3.enchantmentType.castOnce`.
+--- 		Items must have a castable enchantment. Castable enchantments have a `castType` of `tes3.enchantmentType.onUse` or `tes3.enchantmentType.castOnce`. The actor is not required to have this item in their inventory, unless `equipItem` is `true`.
 --- 
 --- @field itemData tes3itemData *Optional*. Only valid if an item has been assigned to `source`. The item data of the specific item to equip.
---- @field equipItem boolean *Optional*. Only valid if an item has been assigned to `source`. If `true`, the item assigned to `source` will be equipped. If `false`, `itemData` must not be nil.
+--- @field equipItem boolean *Optional*. Only valid if an item has been assigned to `source`. If `true`, the item assigned to `source` will be equipped. Requires the actor to have the item in their inventory. If `false`, `itemData` must not be nil.
 --- @field updateGUI boolean *Default*: `true`. Only valid if this actor is the player. If `false`, the player GUI will not be updated to reflect the change to equipped magic.
 
 --- Fetches a filtered list of the active magic effects on the actor. Returns a table with [`tes3activeMagicEffect`](https://mwse.github.io/MWSE/types/tes3activeMagicEffect/) items.
