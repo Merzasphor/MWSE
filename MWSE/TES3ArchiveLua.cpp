@@ -41,8 +41,8 @@ namespace mwse::lua {
 
 			// Property bindings.
 			usertypeDefinition["fileCount"] = sol::readonly_property(&TES3::Archive::fileCount);
-			usertypeDefinition["hashes"] = sol::readonly_property(&TES3::Archive::getFileHashesSpan);
 			usertypeDefinition["nextArchive"] = sol::readonly_property(&TES3::Archive::nextArchive);
+			usertypeDefinition["offsetToFileNameHashes"] = sol::readonly_property(&TES3::Archive::offsetToFileNameHashes);
 			usertypeDefinition["path"] = sol::readonly_property(&TES3::Archive::path);
 			usertypeDefinition["sizesAndOffsets"] = sol::readonly_property(&TES3::Archive::getFileOffsetSizeDataSpan);
 
