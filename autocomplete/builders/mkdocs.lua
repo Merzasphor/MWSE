@@ -66,13 +66,9 @@ local function breakoutTypeLinks(type)
 	end
 	-- Support "table<x, y>" as type, by converting it to "table (x, y)"
 	if string.find(type, 'table<') then
-		type = string.gsub(type, " ", "")
-		type = string.gsub(type, "table<", "")
-		type = string.gsub(type, ">", "")
-		type = string.split(type, ",")
-
-		local keyType = getTypeLink(type[1])
-		local valueType = getTypeLink(type[2])
+		local keyType, valueType = type:match("table<(%w+), (%w+)>")
+		keyType = getTypeLink(keyType)
+		valueType = getTypeLink(valueType)
 
 		table.insert(types, string.format("table (%s, %s)", keyType, valueType))
 	else
