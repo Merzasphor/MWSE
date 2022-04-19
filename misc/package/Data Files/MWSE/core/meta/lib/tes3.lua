@@ -333,7 +333,7 @@ function tes3.addSoulGem(params) end
 --- 
 --- `spell`: tes3spell|string — The spell to add.
 --- 
---- `updateGUI`: boolean — *Default*: `true`. If true, the GUI will be updated respsecting the adding of the spell. This can be useful to disable when batch-adding many spells. The batch should be ended with [`tes3.updateMagicGUI`](https://mwse.github.io/MWSE/apis/tes3/#tes3updatemagicgui) to reflect the changes.
+--- `updateGUI`: boolean — *Default*: `true`. If true, the GUI will be updated respecting the adding of the spell. This can be useful to disable when batch-adding many spells. The batch should be ended with [`tes3.updateMagicGUI`](https://mwse.github.io/MWSE/apis/tes3/#tes3updatemagicgui) to reflect the changes.
 --- @return boolean wasAdded True if the spell was successfully added. This can be false if the actor's race or birthsign already contains the spell.
 function tes3.addSpell(params) end
 
@@ -342,7 +342,7 @@ function tes3.addSpell(params) end
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string Who to give the spell to. To manipulate an actor without specifying any particular reference, use `actor` instead.
 --- @field actor tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance|string Who to give the spell to. Providing a base actor can be done before a save has been loaded, but may not correctly update effects for instanced versions of that actor in an active save.
 --- @field spell tes3spell|string The spell to add.
---- @field updateGUI boolean *Default*: `true`. If true, the GUI will be updated respsecting the adding of the spell. This can be useful to disable when batch-adding many spells. The batch should be ended with [`tes3.updateMagicGUI`](https://mwse.github.io/MWSE/apis/tes3/#tes3updatemagicgui) to reflect the changes.
+--- @field updateGUI boolean *Default*: `true`. If true, the GUI will be updated respecting the adding of the spell. This can be useful to disable when batch-adding many spells. The batch should be ended with [`tes3.updateMagicGUI`](https://mwse.github.io/MWSE/apis/tes3/#tes3updatemagicgui) to reflect the changes.
 
 --- Changes the volume of a sound that is playing on a given reference.
 --- @param params tes3.adjustSoundVolume.params This table accepts the following values:

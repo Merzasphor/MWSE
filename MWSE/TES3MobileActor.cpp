@@ -288,7 +288,7 @@ namespace TES3 {
 			}
 		}
 		else {
-			throw std::invalid_argument("Invalid source parameter provided. Must be a spell or item.");
+			throw std::invalid_argument("Invalid 'source' parameter provided. Must be a spell or item.");
 		}
 
 		return true;
