@@ -7,6 +7,12 @@
 #include "TES3CriticalSection.h"
 
 namespace TES3 {
+	enum FileLoadSource : int {
+		Missing,
+		File,
+		BSA,
+	};
+
 	struct BSALoader {
 		Archive* lastLoadedArchive; // 0x0
 		Archive* archiveIterator; // 0x4
@@ -26,10 +32,13 @@ namespace TES3 {
 		};
 		char path[128]; // 0xB0
 		int unknown_0x130;
-		int unknown_0x134;
+		unsigned int unknown_0x134;
 		int unknown_0x138;
 		void* niFile; // 0x13C
-		TES3::HashMap<CaseInsensitiveFileHash, void*> containedFiles; // 0x140
+		int unknown_0x140;
+		int unknown_0x144;
+		const char** unknown_0x148;
+		int unknown_0x14C;
 		Archive* nextArchive; // 0x150
 		CriticalSection criticalSection; // 0x154
 
