@@ -235,11 +235,7 @@ end
 -------------------------------------------------
 
 -- Seed random number generator.
--- There are reports that the first few results aren't random enough. Try and likely fail to make people happy.
 math.randomseed(os.time())
-for i = 1, 10 do
-	math.random()
-end
 
 function math.lerp(v0, v1, t)
 	return (1 - t) * v0 + t * v1;
