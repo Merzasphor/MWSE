@@ -64,6 +64,7 @@ The following individuals have contributed to the Morrowind Script Extender.
 - [Michael Wallar (NullCascade)](https://github.com/NullCascade)
 - [OperatorJack](https://github.com/OperatorJack)
 - [Pete Goodfellow (Petethegoat)](https://github.com/Petethegoat)
+- [Pierre Steeg](https://github.com/pierresteeg)
 - [Sebastien Levy (MetaBarj0)](https://github.com/MetaBarj0)
 - Tim Peters
 - Timeslip

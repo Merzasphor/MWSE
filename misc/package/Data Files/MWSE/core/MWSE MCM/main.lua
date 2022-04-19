@@ -111,6 +111,7 @@ Merzasphor
 Michael Wallar (NullCascade)
 OperatorJack
 Pete Goodfellow (Petethegoat)
+Pierre Steeg
 Sebastien Levy (MetaBarj0)
 Tim Peters
 Timeslip]],
