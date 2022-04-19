@@ -236,6 +236,23 @@ local function build(package)
 		end
 	end
 
+	-- Special hack: Require in tes3.* files.
+	if (package.type == "lib" and package.key == "tes3") then
+		local fileBlacklist = {
+			["init"] = true,
+		}
+		local tes3libDirectory = lfs.join(common.pathAutocomplete, "..", "misc", "package", "Data Files", "MWSE", "core", "lib", "tes3")
+		for entry in lfs.dir(tes3libDirectory) do
+			local extension = entry:match("[^.]+$")
+			if (extension == "lua") then
+				local filename = entry:match("[^/]+$"):sub(1, -1 * (#extension + 2))
+				if (not fileBlacklist[filename]) then
+					file:write(string.format('%s.%s = require("%s.%s")\n', package.key, filename, package.key, filename))
+				end
+			end
+		end
+	end
+
 	-- Close up shop.
 	file:close()
 end
