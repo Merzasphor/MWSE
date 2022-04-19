@@ -31,6 +31,7 @@
 #include "TES3Spell.h"
 #include "TES3Reference.h"
 #include "TES3WorldController.h"
+#include "TES3UIManager.h"
 
 #include "TES3Util.h"
 
@@ -167,9 +168,115 @@ namespace TES3 {
 		mwse::lua::event::DamageEvent::m_Projectile = nullptr;
 	}
 
-	const auto TES3_MobileActor_setCurrentSpell = reinterpret_cast<void(__thiscall*)(MobileActor*, const Spell*)>(0x52B390);
-	void MobileActor::setCurrentSpell(const Spell* spell) {
-		TES3_MobileActor_setCurrentSpell(this, spell);
+	const auto TES3_MobileActor_setCurrentMagicFromSpell = reinterpret_cast<void(__thiscall*)(MobileActor*, Spell*)>(0x52B390);
+	void MobileActor::setCurrentMagicFromSpell(Spell* spell) {
+		TES3_MobileActor_setCurrentMagicFromSpell(this, spell);
+	}
+
+	const auto TES3_MobileActor_setCurrentMagicFromSourceCombo = reinterpret_cast<void(__thiscall*)(MobileActor*, MagicSourceCombo)>(0x52B220);
+	void MobileActor::setCurrentMagicFromSourceCombo(MagicSourceCombo sourceCombo) {
+		TES3_MobileActor_setCurrentMagicFromSourceCombo(this, sourceCombo);
+	}
+
+	const auto TES3_MobileActor_setCurrentMagicFromEquipmentStack = reinterpret_cast<void(__thiscall*)(MobileActor*, EquipmentStack*)>(0x52B2A0);
+	void MobileActor::setCurrentMagicFromEquipmentStack(EquipmentStack* equipmentStack) {
+		TES3_MobileActor_setCurrentMagicFromEquipmentStack(this, equipmentStack);
+	}
+
+	bool MobileActor::equipMagic(Object* source, ItemData* itemData, bool equipItem, bool updateGUI) {
+		if (source == nullptr) {
+			throw std::invalid_argument("Invalid source parameter provided. Must not be nil.");
+		}
+
+		updateGUI = actorType == MobileActorType::Player && updateGUI;
+
+		// Reset currently set spell and enchanted item first.
+		unequipMagic(updateGUI);
+
+		if (source->objectType == ObjectType::Spell) {
+			Spell* spell = static_cast<Spell*>(source);
+			setCurrentMagicFromSpell(spell);
+
+			if (updateGUI) {
+				// Get the icon path of the spell's first effect.
+				char* iconPath = "";
+				Effect* effects = spell->effects;
+				if (effects) {
+					TES3::MagicEffect* effect = TES3::DataHandler::get()->nonDynamicData->getMagicEffect(effects[0].effectID);
+					if (effect) {
+						iconPath = effect->icon;
+					}
+				}
+
+				// Update the HUD.
+				UI::updateCurrentMagicFromSpell(iconPath, spell->getName(), spell);
+				UI::updateMagicMenuSelection();
+			}
+		}
+		else if (source->isItem()) {
+			auto item = static_cast<Item*>(source);
+			EquipmentStack* equipmentStack = nullptr;
+
+			// Ignore items without enchantments that can be casted.
+			auto enchantment = item->getEnchantment();
+			if (enchantment == nullptr || (enchantment->castType != EnchantmentCastType::OnUse && enchantment->castType != EnchantmentCastType::Once)) {
+				throw std::invalid_argument("Invalid source parameter provided. Item must have a castable enchantment.");
+			}
+
+			// Create an equipment stack for enchanted scrolls.
+			if (item->objectType == ObjectType::Book)
+			{
+				equipmentStack = new EquipmentStack();
+				equipmentStack->object = source;
+			}
+			else {
+				if (equipItem) {
+					// Get the equipment stack from the actor or equip the item if needed.
+					Actor* actor = static_cast<Actor*>(reference->baseObject);
+					equipmentStack = actor->getEquippedItemExact(item, itemData);
+					if (equipmentStack == nullptr) {
+						this->equipItem(item, itemData);
+						equipmentStack = actor->getEquippedItem(item);
+					}
+
+					// Return if the item could not be equipped.
+					if (equipmentStack == nullptr) {
+						return false;
+					}
+				}
+				else {
+					if (itemData == nullptr) {
+						throw std::invalid_argument("Invalid itemData parameter provided. Must not be nil for enchanted items that are not equipped.");
+					}
+
+					// Create an equipment stack for items that do not need to be equipped.
+					equipmentStack = new EquipmentStack();
+					equipmentStack->object = source;
+					equipmentStack->itemData = itemData;
+				}
+			}
+			setCurrentMagicFromEquipmentStack(equipmentStack);
+
+			// Update the HUD if desired.
+			if (updateGUI) {
+				UI::updateCurrentMagicFromEquipmentStack(equipmentStack);
+				UI::updateMagicMenuSelection();
+			}
+		}
+		else {
+			throw std::invalid_argument("Invalid source parameter provided. Must be a spell or item.");
+		}
+
+		return true;
+	}
+
+	void MobileActor::unequipMagic(bool updateGUI) {
+		setCurrentMagicFromSourceCombo(nullptr);
+		setCurrentMagicFromEquipmentStack(nullptr);
+		if (updateGUI && actorType == MobileActorType::Player) {
+			UI::updateCurrentMagicFromSpell("", "", nullptr);
+			UI::updateMagicMenuSelection();
+		}
 	}
 
 	const auto TES3_MobileActor_getCell = reinterpret_cast<Cell* (__thiscall*)(const MobileActor*)>(0x521630);
@@ -553,11 +660,6 @@ namespace TES3 {
 		return TES3_MobileActor_isActive(this);
 	}
 
-	const auto TES3_MobileActor_setCurrentMagicSourceFiltered = reinterpret_cast<bool(__thiscall*)(MobileActor*, Object*, int)>(0x52B220);
-	void MobileActor::setCurrentMagicSourceFiltered(Object * magic) {
-		TES3_MobileActor_setCurrentMagicSourceFiltered(this, magic, 0);
-	}
-
 	const auto TES3_MobileActor_forceSpellCast = reinterpret_cast<bool(__thiscall*)(MobileActor*, MobileActor*)>(0x52F790);
 	void MobileActor::forceSpellCast(MobileActor * target) {
 		TES3_MobileActor_forceSpellCast(this, target);
@@ -793,6 +895,19 @@ namespace TES3 {
 			actor->postUnequipUIRefresh(this);
 		}
 		return bool(s);
+	}
+
+	bool MobileActor::equipMagic_lua(sol::table params) {
+		Object* object = mwse::lua::getOptionalParamObject<Object>(params, "source");
+		ItemData* itemData = mwse::lua::getOptionalParam<ItemData*>(params, "itemData", nullptr);
+		bool equipItem = mwse::lua::getOptionalParam(params, "equipItem", false);
+		bool updateGUI = mwse::lua::getOptionalParam(params, "updateGUI", true);
+		return equipMagic(object, itemData, equipItem, updateGUI);
+	}
+
+	void MobileActor::unequipMagic_lua(sol::table params) {
+		bool updateGUI = mwse::lua::getOptionalParam(params, "updateGUI", true);
+		unequipMagic(updateGUI);
 	}
 
 	bool MobileActor::getWeaponReady() const {

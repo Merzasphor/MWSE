@@ -2785,7 +2785,7 @@ namespace mwse::lua {
 		if (casterMobile && !instant) {
 			// Request AI to cast chosen spell.
 			if (casterMobile->isActive() && target != nullptr) {
-				casterMobile->setCurrentMagicSourceFiltered(spell);
+				casterMobile->setCurrentMagicFromSpell(spell);
 				casterMobile->forceSpellCast(target->getAttachedMobileActor());
 				return true;
 			}
