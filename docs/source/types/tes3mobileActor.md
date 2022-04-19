@@ -1303,7 +1303,7 @@ local result = tes3mobileActor:equipMagic({ source = ..., itemData = ..., equipI
 		Items must have a castable enchantment. Castable enchantments have a `castType` of `tes3.enchantmentType.onUse` or `tes3.enchantmentType.castOnce`.
 
 	* `itemData` ([tes3itemData](../../types/tes3itemData)): *Optional*. Only valid if an item has been assigned to `source`. The item data of the specific item to equip.
-	* `equipItem` (boolean): Only valid if an item has been assigned to `source`. If `true`, the item assigned to `source` will be equipped. If `false`, `itemData` must not be nil.
+	* `equipItem` (boolean): *Optional*. Only valid if an item has been assigned to `source`. If `true`, the item assigned to `source` will be equipped. If `false`, `itemData` must not be nil.
 	* `updateGUI` (boolean): *Default*: `true`. Only valid if this actor is the player. If `false`, the player GUI will not be updated to reflect the change to equipped magic.
 
 **Returns**:
@@ -1634,7 +1634,7 @@ tes3mobileActor:unequipMagic({ unequipItem = ..., updateGUI = ... })
 **Parameters**:
 
 * `params` (table)
-	* `unequipItem` (boolean): Only valid if the currently equipped magic is from an equippable item enchantment. If `true`, the item containing the enchantment will be unequipped.
+	* `unequipItem` (boolean): *Optional*. Only valid if the currently equipped magic is from an equippable item enchantment. If `true`, the item containing the enchantment will be unequipped.
 	* `updateGUI` (boolean): *Default*: `true`. Only valid if this actor is the player. If `false`, the player GUI will not be updated to reflect the change to equipped magic.
 
 ***

@@ -208,7 +208,7 @@ function tes3mobileActor:equip(params) end
 --- 
 --- `itemData`: tes3itemData — *Optional*. Only valid if an item has been assigned to `source`. The item data of the specific item to equip.
 --- 
---- `equipItem`: boolean — Only valid if an item has been assigned to `source`. If `true`, the item assigned to `source` will be equipped. If `false`, `itemData` must not be nil.
+--- `equipItem`: boolean — *Optional*. Only valid if an item has been assigned to `source`. If `true`, the item assigned to `source` will be equipped. If `false`, `itemData` must not be nil.
 --- 
 --- `updateGUI`: boolean — *Default*: `true`. Only valid if this actor is the player. If `false`, the player GUI will not be updated to reflect the change to equipped magic.
 --- @return boolean result No description yet available.
@@ -223,7 +223,7 @@ function tes3mobileActor:equipMagic(params) end
 --- 		Items must have a castable enchantment. Castable enchantments have a `castType` of `tes3.enchantmentType.onUse` or `tes3.enchantmentType.castOnce`.
 --- 
 --- @field itemData tes3itemData *Optional*. Only valid if an item has been assigned to `source`. The item data of the specific item to equip.
---- @field equipItem boolean Only valid if an item has been assigned to `source`. If `true`, the item assigned to `source` will be equipped. If `false`, `itemData` must not be nil.
+--- @field equipItem boolean *Optional*. Only valid if an item has been assigned to `source`. If `true`, the item assigned to `source` will be equipped. If `false`, `itemData` must not be nil.
 --- @field updateGUI boolean *Default*: `true`. Only valid if this actor is the player. If `false`, the player GUI will not be updated to reflect the change to equipped magic.
 
 --- Fetches a filtered list of the active magic effects on the actor. Returns a table with [`tes3activeMagicEffect`](https://mwse.github.io/MWSE/types/tes3activeMagicEffect/) items.
@@ -340,14 +340,14 @@ function tes3mobileActor:unequip(params) end
 --- Unequips the currently equipped magic, optionally unequipping the enchanted item if needed.
 --- @param params tes3mobileActor.unequipMagic.params This table accepts the following values:
 --- 
---- `unequipItem`: boolean — Only valid if the currently equipped magic is from an equippable item enchantment. If `true`, the item containing the enchantment will be unequipped.
+--- `unequipItem`: boolean — *Optional*. Only valid if the currently equipped magic is from an equippable item enchantment. If `true`, the item containing the enchantment will be unequipped.
 --- 
 --- `updateGUI`: boolean — *Default*: `true`. Only valid if this actor is the player. If `false`, the player GUI will not be updated to reflect the change to equipped magic.
 function tes3mobileActor:unequipMagic(params) end
 
 ---Table parameter definitions for `tes3mobileActor.unequipMagic`.
 --- @class tes3mobileActor.unequipMagic.params
---- @field unequipItem boolean Only valid if the currently equipped magic is from an equippable item enchantment. If `true`, the item containing the enchantment will be unequipped.
+--- @field unequipItem boolean *Optional*. Only valid if the currently equipped magic is from an equippable item enchantment. If `true`, the item containing the enchantment will be unequipped.
 --- @field updateGUI boolean *Default*: `true`. Only valid if this actor is the player. If `false`, the player GUI will not be updated to reflect the change to equipped magic.
 
 --- Updates statistics derived from attributes, which are magicka, fatigue, and encumbrance. Will also update the UI if used on the player. Normally handled automatically when you use `tes3.modStatistic()`.

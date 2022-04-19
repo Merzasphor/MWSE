@@ -13,8 +13,8 @@ return {
 ]]
 			},
 			{ name = "itemData", type = "tes3itemData", optional = true, description = "Only valid if an item has been assigned to `source`. The item data of the specific item to equip." },
-			{ name = "equipItem", type = "boolean", default = false, description = "Only valid if an item has been assigned to `source`. If `true`, the item assigned to `source` will be equipped. If `false`, `itemData` must not be nil." },
-			{ name = "updateGUI", type = "boolean", default = true, description = "Only valid if this actor is the player. If `false`, the player GUI will not be updated to reflect the change to equipped magic." },
+			{ name = "equipItem", type = "boolean", optional = true, default = false, description = "Only valid if an item has been assigned to `source`. If `true`, the item assigned to `source` will be equipped. If `false`, `itemData` must not be nil." },
+			{ name = "updateGUI", type = "boolean", optional = true, default = true, description = "Only valid if this actor is the player. If `false`, the player GUI will not be updated to reflect the change to equipped magic." },
 		}
 	}},
 	valuetype = "boolean",
