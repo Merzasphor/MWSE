@@ -1089,13 +1089,12 @@ local birthsign = tes3.findBirthsign(id)
 Fetches the core game character class object for a given class ID. If the class with a given ID doesn't exist, nil is returned.
 
 ```lua
-local class = tes3.findClass({ id = ... })
+local class = tes3.findClass(id)
 ```
 
 **Parameters**:
 
-* `params` (table)
-	* `id` (string): ID of the class to search for.
+* `id` (string): ID of the class to search for.
 
 **Returns**:
 

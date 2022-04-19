@@ -740,15 +740,9 @@ function tes3.findActorsInProximity(params) end
 function tes3.findBirthsign(id) end
 
 --- Fetches the core game character class object for a given class ID. If the class with a given ID doesn't exist, nil is returned.
---- @param params tes3.findClass.params This table accepts the following values:
---- 
---- `id`: string — ID of the class to search for.
+--- @param id string ID of the class to search for.
 --- @return tes3class class No description yet available.
-function tes3.findClass(params) end
-
----Table parameter definitions for `tes3.findClass`.
---- @class tes3.findClass.params
---- @field id string ID of the class to search for.
+function tes3.findClass(id) end
 
 --- Using the same engine function used by the vanilla intervention spells, locations the first reference of a given object in the exterior world.
 --- @param params tes3.findClosestExteriorReferenceOfObject.params This table accepts the following values:
