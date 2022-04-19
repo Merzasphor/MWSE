@@ -545,11 +545,8 @@ namespace mwse::lua {
 		sol::state_view state = s;
 		sol::table archives = state.create_table();
 
-		auto archive = TES3::BSALoader::get()->lastLoadedArchive;
-		size_t i = 0;
-		while (archive) {
-			archives[++i] = std::string(archive->path, strnlen_s(archive->path, 128));
-			archive = archive->nextArchive;
+		for (auto archive = TES3::BSALoader::get()->lastLoadedArchive; archive; archive = archive->nextArchive) {
+			archives.add(std::string(archive->path, strnlen_s(archive->path, 128)));
 		}
 
 		return archives;

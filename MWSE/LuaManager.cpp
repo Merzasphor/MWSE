@@ -23,6 +23,7 @@
 #include "TES3ActorAnimationController.h"
 #include "TES3Alchemy.h"
 #include "TES3Apparatus.h"
+#include "TES3Archive.h"
 #include "TES3Book.h"
 #include "TES3BodyPartManager.h"
 #include "TES3CombatSession.h"
@@ -82,6 +83,7 @@
 #include "TES3AlchemyLua.h"
 #include "TES3AnimationDataLua.h"
 #include "TES3ApparatusLua.h"
+#include "TES3ArchiveLua.h"
 #include "TES3ArmorLua.h"
 #include "TES3AttachmentLua.h"
 #include "TES3AudioControllerLua.h"
@@ -444,6 +446,7 @@ namespace mwse::lua {
 		bindTES3Alchemy();
 		bindTES3AnimationData();
 		bindTES3Apparatus();
+		bindTES3Archive();
 		bindTES3Armor();
 		bindTES3Attachment();
 		bindTES3AudioController();
@@ -665,6 +668,7 @@ namespace mwse::lua {
 		state["tes3"]["dataHandler"] = TES3::DataHandler::get();
 		state["tes3"]["worldController"] = TES3::WorldController::get();
 		state["tes3"]["game"] = TES3::Game::get();
+		state["tes3"]["bsaLoader"] = TES3::BSALoader::get();
 
 		stateHandle.triggerEvent(new event::GenericEvent("initialized"));
 	}

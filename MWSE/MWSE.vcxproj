@@ -29,6 +29,7 @@
     <ClInclude Include="NIQuaternionLua.h" />
     <ClInclude Include="NIScreenPolygon.h" />
     <ClInclude Include="TES3AnimationDataLua.h" />
+    <ClInclude Include="TES3ArchiveLua.h" />
     <ClInclude Include="TES3CutscenePlayer.h" />
     <ClInclude Include="TES3LoadScreenManager.h" />
     <ClInclude Include="LuaAbsorbedMagicEvent.h" />
@@ -693,6 +694,7 @@
     <ClCompile Include="TES3AnimationGroup.cpp" />
     <ClCompile Include="TES3Apparatus.cpp" />
     <ClCompile Include="TES3Archive.cpp" />
+    <ClCompile Include="TES3ArchiveLua.cpp" />
     <ClCompile Include="TES3Attachment.cpp" />
     <ClCompile Include="TES3AIConfig.cpp" />
     <ClCompile Include="TES3Birthsign.cpp" />

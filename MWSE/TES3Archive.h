@@ -17,9 +17,19 @@ namespace TES3 {
 		Archive* lastLoadedArchive; // 0x0
 		Archive* archiveIterator; // 0x4
 
-		static BSALoader* get();
+		bool findFile(const char* path, unsigned int* out_index = nullptr);
 
-		bool findFile(const char* path, int* out_thing = nullptr);
+		//
+		// Custom functions.
+		//
+
+		// A custom findFile that allows retrieving the found archive.
+		bool findFile(const char* path, unsigned int& out_index, Archive** out_archive);
+
+		sol::table getArchives(sol::this_state ts) const;
+		sol::optional<std::tuple<Archive*, unsigned int>> findFile_lua(const char* path);
+
+		static BSALoader* get();
 	};
 	static_assert(sizeof(BSALoader) >= 0x8, "TES3::BSALoader failed size validation");
 
@@ -30,19 +40,32 @@ namespace TES3 {
 
 			CaseInsensitiveFileHash(const char* path);
 		};
+		struct OffsetSizeData {
+			unsigned int fileSize; // 0x0
+			unsigned int offsetInArchive; // 0x4
+		};
 		char path[128]; // 0xB0
-		int unknown_0x130;
-		unsigned int unknown_0x134;
-		int unknown_0x138;
+		unsigned int offsetToFileNameHashes; // 0x130
+		unsigned int fileCount; // 0x134
+		unsigned int lastFoundFileIndex; // 0x138
 		void* niFile; // 0x13C
-		int unknown_0x140;
-		int unknown_0x144;
-		const char** unknown_0x148;
-		int unknown_0x14C;
+		OffsetSizeData* fileOffsetSizeData; // 0x140
+		CaseInsensitiveFileHash* fileHashes; // 0x144
+		const char** unknown_0x148; // Typically deleted after initial load to preserve memory.
+		const char** unknown_0x14C; // Typically deleted after initial load to preserve memory.
 		Archive* nextArchive; // 0x150
 		CriticalSection criticalSection; // 0x154
 
-		bool findFileHash(CaseInsensitiveFileHash& hash, int* out_result, const char* validationPath = nullptr);
+		bool findFileHash(CaseInsensitiveFileHash& hash, unsigned int& out_result, const char* validationPath = nullptr);
+
+		//
+		// Custom functions.
+		//
+
+		sol::optional<unsigned int> findFileIndex_lua(const char* path);
+
+		nonstd::span<OffsetSizeData> getFileOffsetSizeDataSpan() const;
+		nonstd::span<CaseInsensitiveFileHash> getFileHashesSpan() const;
 	};
 	static_assert(sizeof(Archive) >= 0x178, "TES3::Archive failed size validation");
 	static_assert(sizeof(Archive::CaseInsensitiveFileHash) >= 0x8, "TES3::Archive::FileHash failed size validation");

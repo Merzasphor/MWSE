@@ -3,6 +3,7 @@
 
 --- The tes3 library provides the majority of the functions for interacting with the game system.
 --- @class tes3lib
+--- @field bsaLoader tes3bsaLoader One of the core game objects, responsible for loaded BSA files.
 --- @field dataHandler tes3dataHandler One of the core game objects.
 --- @field game tes3game One of the core game objects.
 --- @field installDirectory string The currently executed root Morrowind installation path.

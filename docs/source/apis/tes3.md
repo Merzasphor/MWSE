@@ -4,6 +4,16 @@ The tes3 library provides the majority of the functions for interacting with the
 
 ## Properties
 
+### `tes3.bsaLoader`
+
+One of the core game objects, responsible for loaded BSA files.
+
+**Returns**:
+
+* `result` ([tes3bsaLoader](../../types/tes3bsaLoader))
+
+***
+
 ### `tes3.dataHandler`
 
 One of the core game objects.
