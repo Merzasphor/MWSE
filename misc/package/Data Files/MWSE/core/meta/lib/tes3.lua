@@ -1327,6 +1327,13 @@ function tes3.isKeyEqual(params) end
 --- @field actual table The key object that is being compared.
 --- @field expected table The key object that is being compared against.
 
+--- Determines if the player has a given lua mod active. The key passed to this function is the path to where its main.lua file is, relative to the MWSE\\mods folder. Slashes are automatically replaced with periods, and the key is case-insensitive.
+---
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3/#tes3isluamodactive).
+--- @param key string The key to check..
+--- @return boolean isActive True if the mod is active, otherwise false.
+function tes3.isLuaModActive(key) end
+
 --- Determines if the player has a given ESP or ESM file active.
 --- @param filename string The filename of the mod to find, including the extension.
 --- @return boolean result No description yet available.

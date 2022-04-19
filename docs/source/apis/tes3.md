@@ -2520,6 +2520,35 @@ local equal = tes3.isKeyEqual({ actual = ..., expected = ... })
 
 ***
 
+### `tes3.isLuaModActive`
+
+Determines if the player has a given lua mod active. The key passed to this function is the path to where its main.lua file is, relative to the MWSE\\mods folder. Slashes are automatically replaced with periods, and the key is case-insensitive.
+
+```lua
+local isActive = tes3.isLuaModActive(key)
+```
+
+**Parameters**:
+
+* `key` (string): The key to check..
+
+**Returns**:
+
+* `isActive` (boolean): True if the mod is active, otherwise false.
+
+??? example "Example: Determine if a Specific Lua Mod is Active"
+
+	In this example, we determine if [Chameleon](https://www.nexusmods.com/morrowind/mods/47996) is active. The mod provides no interop files to try to `include`, and is a simple main.lua file. This makes it hard to otherwise detect.
+
+	```lua
+	if (tes3.isLuaModActive("Danae.Chameleon")) then
+		-- Perform some compatibility actions here.
+	end
+
+	```
+
+***
+
 ### `tes3.isModActive`
 
 Determines if the player has a given ESP or ESM file active.

@@ -2366,6 +2366,13 @@ namespace mwse::lua {
 			return;
 		}
 
+		// Do some precomputing for storing and calculating active lua mods.
+		sol::table luaMWSE = luaState["mwse"];
+		auto activeLuaMods = luaMWSE.create_named("activeLuaMods");
+		auto luaDirectoryLength = strnlen_s(path, 260);
+		auto luaFilenameLength = strnlen_s(filename, 260);
+
+		// Parent folder suffixes that we'll skip.
 		std::array<std::string, 2> disabledMarkers = { ".disabled", ".mohidden" };
 
 		for (auto& p : std::filesystem::recursive_directory_iterator(path, std::filesystem::directory_options::follow_directory_symlink)) {
@@ -2380,11 +2387,18 @@ namespace mwse::lua {
 					continue;
 				}
 
+				// Execute the script.
 				sol::protected_function_result result = luaState.safe_script_file(pathString, &sol::script_pass_on_error);
 				if (!result.valid()) {
 					sol::error error = result;
 					log::getLog() << "[LuaManager] ERROR: Failed to run mod initialization script:" << std::endl << error.what() << std::endl;
+					continue;
 				}
+
+				// Store a version of its path as a key to be checked with tes3.isLuaModActive.
+				auto luaModKey = pathString.substr(luaDirectoryLength + 1, pathString.length() - luaDirectoryLength - luaFilenameLength - 2);
+				std::replace(luaModKey.begin(), luaModKey.end(), '\\', '.');
+				activeLuaMods[luaModKey] = true;
 			}
 		}
 	}

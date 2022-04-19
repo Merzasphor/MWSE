@@ -191,4 +191,9 @@ function tes3.onMainMenu()
 	return tes3.worldController.charGenState.value == 0
 end
 
+-- Checks to see if a lua mod is active.
+function tes3.isLuaModActive(key)
+	return mwse.activeLuaMods[key:gsub("[/\\]", "."):lower()] == true
+end
+
 return tes3
