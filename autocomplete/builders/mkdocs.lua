@@ -17,7 +17,7 @@ lfs.remakedir(lfs.join(docsSourceFolder, "events"))
 local globals = {}
 local classes = {}
 local events = {}
-
+local typeLinks = {}
 
 --
 -- Utility functions.
@@ -58,14 +58,20 @@ local function breakoutTypeLinks(type)
 
 	---@param type string Supports array annotation. For example: "tes3weather[]".
 	local function getTypeLink(type)
+		if typeLinks[type] then
+			return typeLinks[type]
+		end
+
 		local isArray = string.find(type, "%[") and true
 		local valueType = type:match("%w+")
 
 		if classes[valueType] then
-			return string.format("[%s%s](../../types/%s)", valueType, isArray and "[]" or "", valueType)
+			typeLinks[type] = string.format("[%s%s](../../types/%s)", valueType, isArray and "[]" or "", valueType)
 		else
-			return type
+			typeLinks[type] = type
 		end
+
+		return typeLinks[type]
 	end
 	-- Support "table<x, y>" as type, in HTML < and > signs have a special meaning.
 	-- Use "&lt;" and "&gt;" instead.
