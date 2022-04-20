@@ -29,25 +29,25 @@ namespace NI {
 		return SourceTexture::createFromPixelData(this, &prefs);
 	}
 
-	unsigned int PixelData::getHeight(unsigned int mipMapLevel) {
+	unsigned int PixelData::getHeight(unsigned int mipMapLevel) const {
 		if (mipMapLevel < 0 || mipMapLevel >= mipMapLevels) {
 			return 0;
 		}
 		return heights[mipMapLevel];
 	}
 
-	unsigned int PixelData::getWidth(unsigned int mipMapLevel) {
+	unsigned int PixelData::getWidth(unsigned int mipMapLevel) const {
 		if (mipMapLevel < 0 || mipMapLevel >= mipMapLevels) {
 			return 0;
 		}
 		return widths[mipMapLevel];
 	}
 
-	unsigned int PixelData::getHeight_lua(sol::optional<unsigned int> mipMapLevel) {
+	unsigned int PixelData::getHeight_lua(sol::optional<unsigned int> mipMapLevel) const {
 		return getHeight(mipMapLevel.value_or(1) - 1);
 	}
 
-	unsigned int PixelData::getWidth_lua(sol::optional<unsigned int> mipMapLevel) {
+	unsigned int PixelData::getWidth_lua(sol::optional<unsigned int> mipMapLevel) const {
 		return getWidth(mipMapLevel.value_or(1) - 1);
 	}
 

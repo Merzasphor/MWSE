@@ -27,11 +27,11 @@ namespace NI {
 
 		Pointer<SourceTexture> createSourceTexture();
 
-		unsigned int getHeight(unsigned int mipMapLevel = 0);
-		unsigned int getWidth(unsigned int mipMapLevel = 0);
+		unsigned int getHeight(unsigned int mipMapLevel = 0) const;
+		unsigned int getWidth(unsigned int mipMapLevel = 0) const;
 
-		unsigned int getHeight_lua(sol::optional<unsigned int> mipMapLevel);
-		unsigned int getWidth_lua(sol::optional<unsigned int> mipMapLevel);
+		unsigned int getHeight_lua(sol::optional<unsigned int> mipMapLevel) const;
+		unsigned int getWidth_lua(sol::optional<unsigned int> mipMapLevel) const;
 		void setPixelsByte_lua(sol::table data, sol::optional<unsigned int> mipMapLevel);
 		void setPixelsFloat_lua(sol::table data, sol::optional<unsigned int> mipMapLevel);
 		void fill_lua(sol::table data, sol::optional<unsigned int> mipMapLevel);
