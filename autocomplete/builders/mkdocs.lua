@@ -56,21 +56,25 @@ end
 local function breakoutTypeLinks(type)
 	local types = {}
 
-	---@param type string
+	---@param type string Supports array annotation. For example: "tes3weather[]".
 	local function getTypeLink(type)
-		if classes[type] then
-			return string.format("[%s](../../types/%s)", type, type)
+		local isArray = string.find(type, "%[") and true
+		local valueType = type:match("%w+")
+
+		if classes[valueType] then
+			return string.format("[%s%s](../../types/%s)", valueType, isArray and "[]" or "", valueType)
 		else
 			return type
 		end
 	end
-	-- Support "table<x, y>" as type, by converting it to "table (x, y)"
-	if string.find(type, 'table<') then
+	-- Support "table<x, y>" as type, in HTML < and > signs have a special meaning.
+	-- Use "&lt;" and "&gt;" instead.
+	if string.find(type, "table<") then
 		local keyType, valueType = type:match("table<(%w+), (%w+)>")
 		keyType = getTypeLink(keyType)
 		valueType = getTypeLink(valueType)
 
-		table.insert(types, string.format("table (%s, %s)", keyType, valueType))
+		table.insert(types, string.format("table&lt;%s, %s&gt;", keyType, valueType))
 	else
 		for _, t in ipairs(string.split(type, "|")) do
 			table.insert(types, getTypeLink(t))
