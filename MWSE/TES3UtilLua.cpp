@@ -5127,6 +5127,21 @@ namespace mwse::lua {
 		return true;
 	}
 
+	const auto TES3_UI_closeSpellmakingMenu = reinterpret_cast<char(__cdecl*)(TES3::UI::Element*)>(0x621C60);
+	const auto TES3_UI_closeMenuSetValues = reinterpret_cast<char(__cdecl*)(TES3::UI::Element*)>(0x61B870);
+	void closeSpellmakingMenu() {
+		TES3::UI::Element* menuSpellmaking = TES3::UI::findMenu(TES3::UI::registerID("MenuSpellmaking"));
+		if (menuSpellmaking) {
+			TES3::UI::Element* menuSetValues = TES3::UI::findMenu(TES3::UI::registerID("MenuSetValues"));
+			if (menuSetValues) {
+				TES3::UI::Element* menuSetValuesCancelButton = menuSetValues->findChild(TES3::UI::registerID("MenuSetValues_Cancelbutton"));
+				TES3_UI_closeMenuSetValues(menuSetValuesCancelButton);
+			}
+			TES3::UI::Element* menuSpellmakingCancelButton = menuSpellmaking->findChild(TES3::UI::registerID("MenuSpellmaking_Cancelbutton"));
+			TES3_UI_closeSpellmakingMenu(menuSpellmakingCancelButton);
+		}
+	}
+
 	bool setPlayerControlState(sol::optional<sol::table> params) {
 		auto worldController = TES3::WorldController::get();
 		if (!worldController) {
@@ -5479,6 +5494,7 @@ namespace mwse::lua {
 		tes3["closeAlchemyMenu"] = closeAlchemyMenu;
 		tes3["closeRepairServiceMenu"] = closeRepairServiceMenu;
 		tes3["closeRestMenu"] = closeRestMenu;
+		tes3["closeSpellmakingMenu"] = closeSpellmakingMenu;
 		tes3["createCell"] = createCell;
 		tes3["createObject"] = createObject;
 		tes3["createReference"] = createReference;

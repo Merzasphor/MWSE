@@ -562,6 +562,9 @@ function tes3.closeRepairServiceMenu() end
 --- This function closes the resting menu.
 function tes3.closeRestMenu() end
 
+--- This function closes the spellmaking menu.
+function tes3.closeSpellmakingMenu() end
+
 --- Create an object and returns it. The created object will be part of the saved game. Supported object types are those that have their own create function, such as tes3activator for example.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3/#tes3createobject).
