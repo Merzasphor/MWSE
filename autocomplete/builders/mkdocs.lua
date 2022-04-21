@@ -59,11 +59,11 @@ local function getTypeLink(type)
 		return typeLinks[type]
 	end
 
-	local isArray = string.find(type, "%[") and true
+	local isArray = type:endswith("[]")
 	local valueType = type:match("%w+")
 
 	if classes[valueType] then
-		typeLinks[type] = string.format("[%s%s](../../types/%s)", valueType, isArray and "[]" or "", valueType)
+		typeLinks[type] = string.format("[%s](../../types/%s)%s", valueType, valueType, isArray and "[]" or "")
 	else
 		typeLinks[type] = type
 	end
@@ -71,15 +71,15 @@ local function getTypeLink(type)
 	return typeLinks[type]
 end
 
-local function breakoutTypeLinks(type, nested)
+local function breakoutTypeLinks(type)
 	local types = {}
 
 	-- Support "table<x, y>" as type, in HTML < and > signs have a special meaning.
 	-- Use "&lt;" and "&gt;" instead.
-	if string.find(type, "table<") then
-		local keyType, valueType = type:match("table<(.+), (.+)>")
-		keyType = breakoutTypeLinks(keyType, true)
-		valueType = breakoutTypeLinks(valueType, true)
+	if type:endswith("table<") then
+		local keyType, valueType = type:match("table<(%w+), (%w+)>")
+		keyType = getTypeLink(keyType)
+		valueType = getTypeLink(valueType)
 
 		table.insert(types, string.format("table&lt;%s, %s&gt;", keyType, valueType))
 	else
@@ -87,7 +87,7 @@ local function breakoutTypeLinks(type, nested)
 			table.insert(types, getTypeLink(t))
 		end
 	end
-	return table.concat(types, nested and "|" or ", ")
+	return table.concat(types, ", ")
 end
 
 --- comment
