@@ -5106,6 +5106,14 @@ namespace mwse::lua {
 		return true;
 	}
 
+	const auto TES3_UI_closeRestMenu = reinterpret_cast<char(__cdecl*)()>(0x610420);
+	void closeRestMenu() {
+		TES3::UI::Element* menuRest = TES3::UI::findMenu(TES3::UI::registerID("MenuRestWait"));
+		if (menuRest) {
+			TES3_UI_closeRestMenu();
+		}
+	}
+
 	bool showSpellmakingMenu(sol::optional<sol::table> params) {
 		auto serviceActor = getOptionalParamMobileActor(params, "serviceActor");
 		if (serviceActor == nullptr && getOptionalParam(params, "useDialogActor", true)) {
@@ -5470,6 +5478,7 @@ namespace mwse::lua {
 		tes3["clearMarkLocation"] = clearMarkLocation;
 		tes3["closeAlchemyMenu"] = closeAlchemyMenu;
 		tes3["closeRepairServiceMenu"] = closeRepairServiceMenu;
+		tes3["closeRestMenu"] = closeRestMenu;
 		tes3["createCell"] = createCell;
 		tes3["createObject"] = createObject;
 		tes3["createReference"] = createReference;

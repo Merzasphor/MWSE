@@ -788,6 +788,16 @@ tes3.closeRepairServiceMenu()
 
 ***
 
+### `tes3.closeRestMenu`
+
+This function closes the resting menu.
+
+```lua
+tes3.closeRestMenu()
+```
+
+***
+
 ### `tes3.createObject`
 
 Create an object and returns it. The created object will be part of the saved game. Supported object types are those that have their own create function, such as tes3activator for example.
