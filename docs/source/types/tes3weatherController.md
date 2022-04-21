@@ -550,7 +550,7 @@ The underwater sunset fog value.
 
 **Returns**:
 
-* `result` (table (number, [tes3weather](../../types/tes3weather)))
+* `result` (table&lt;number, [tes3weather](../../types/tes3weather)&gt;)
 
 ***
 
