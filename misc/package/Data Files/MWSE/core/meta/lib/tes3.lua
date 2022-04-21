@@ -556,6 +556,9 @@ function tes3.clearMarkLocation() end
 --- This function closes the alchemy menu.
 function tes3.closeAlchemyMenu() end
 
+--- This function closes the repair service menu.
+function tes3.closeRepairServiceMenu() end
+
 --- Create an object and returns it. The created object will be part of the saved game. Supported object types are those that have their own create function, such as tes3activator for example.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3/#tes3createobject).

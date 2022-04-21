@@ -2970,6 +2970,14 @@ namespace mwse::lua {
 		TES3::UI::enterMenuMode(TES3::UI::registerID("MenuServiceRepair"));
 	}
 
+	const auto TES3_UI_closeRepairServiceMenu = reinterpret_cast<char(__cdecl*)()>(0x615520);
+	void closeRepairServiceMenu() {
+		TES3::UI::Element* menuRepairService = TES3::UI::findMenu(TES3::UI::registerID("MenuServiceRepair"));
+		if (menuRepairService) {
+			TES3_UI_closeRepairServiceMenu();
+		}
+	}
+
 	void updateInventoryGUI_internal(TES3::Reference* reference, std::optional<float> containerWeight = {}) {
 		auto worldController = TES3::WorldController::get();
 		auto macp = worldController->getMobilePlayer();
@@ -5461,6 +5469,7 @@ namespace mwse::lua {
 		tes3["checkMerchantTradesItem"] = checkMerchantTradesItem;
 		tes3["clearMarkLocation"] = clearMarkLocation;
 		tes3["closeAlchemyMenu"] = closeAlchemyMenu;
+		tes3["closeRepairServiceMenu"] = closeRepairServiceMenu;
 		tes3["createCell"] = createCell;
 		tes3["createObject"] = createObject;
 		tes3["createReference"] = createReference;

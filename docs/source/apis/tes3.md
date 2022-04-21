@@ -778,6 +778,16 @@ tes3.closeAlchemyMenu()
 
 ***
 
+### `tes3.closeRepairServiceMenu`
+
+This function closes the repair service menu.
+
+```lua
+tes3.closeRepairServiceMenu()
+```
+
+***
+
 ### `tes3.createObject`
 
 Create an object and returns it. The created object will be part of the saved game. Supported object types are those that have their own create function, such as tes3activator for example.
