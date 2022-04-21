@@ -1,4 +1,4 @@
 return {
 	type = "function",
-	description = [[This function opens alchemy menu.]],
+	description = [[This function opens the alchemy menu.]],
 }

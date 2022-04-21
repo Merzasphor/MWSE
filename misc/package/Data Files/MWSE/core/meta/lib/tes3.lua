@@ -553,6 +553,9 @@ function tes3.claimSpellEffectId(name, id) end
 --- This function deletes the player's mark location.
 function tes3.clearMarkLocation() end
 
+--- This function closes the alchemy menu.
+function tes3.closeAlchemyMenu() end
+
 --- Create an object and returns it. The created object will be part of the saved game. Supported object types are those that have their own create function, such as tes3activator for example.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3/#tes3createobject).
@@ -2249,7 +2252,7 @@ function tes3.setWerewolfKillCount(params) end
 --- @class tes3.setWerewolfKillCount.params
 --- @field count number Number of kills.
 
---- This function opens alchemy menu.
+--- This function opens the alchemy menu.
 function tes3.showAlchemyMenu() end
 
 --- Opens the service repair menu.

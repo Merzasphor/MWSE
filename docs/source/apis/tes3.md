@@ -768,6 +768,16 @@ tes3.clearMarkLocation()
 
 ***
 
+### `tes3.closeAlchemyMenu`
+
+This function closes the alchemy menu.
+
+```lua
+tes3.closeAlchemyMenu()
+```
+
+***
+
 ### `tes3.createObject`
 
 Create an object and returns it. The created object will be part of the saved game. Supported object types are those that have their own create function, such as tes3activator for example.
@@ -3778,7 +3788,7 @@ tes3.setWerewolfKillCount({ count = ... })
 
 ### `tes3.showAlchemyMenu`
 
-This function opens alchemy menu.
+This function opens the alchemy menu.
 
 ```lua
 tes3.showAlchemyMenu()

@@ -2952,6 +2952,14 @@ namespace mwse::lua {
 		TES3_UI_showAlchemyMenu();
 	}
 
+	const auto TES3_UI_closeAlchemyMenu = reinterpret_cast<char(__cdecl*)()>(0x59B9F0);
+	void closeAlchemyMenu() {
+		TES3::UI::Element* menuAlchemy = TES3::UI::findMenu(*reinterpret_cast<TES3::UI::UI_ID*>(0x7D225C));
+		if (menuAlchemy) {
+			TES3_UI_closeAlchemyMenu();
+		}
+	}
+
 	const auto TES3_UI_showRepairServiceMenu = reinterpret_cast<void(__cdecl*)(TES3::MobileActor*)>(0x615160);
 	void showRepairServiceMenu() {
 		TES3_UI_showRepairServiceMenu(TES3::WorldController::get()->getMobilePlayer());
@@ -5447,6 +5455,7 @@ namespace mwse::lua {
 		tes3["checkMerchantOffersService"] = checkMerchantOffersService;
 		tes3["checkMerchantTradesItem"] = checkMerchantTradesItem;
 		tes3["clearMarkLocation"] = clearMarkLocation;
+		tes3["closeAlchemyMenu"] = closeAlchemyMenu;
 		tes3["createCell"] = createCell;
 		tes3["createObject"] = createObject;
 		tes3["createReference"] = createReference;
