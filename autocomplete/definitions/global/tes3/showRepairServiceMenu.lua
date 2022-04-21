@@ -5,7 +5,7 @@ return {
 		name = "params",
 		type = "table",
 		tableParams = {
-			{ name = "serviceActor", type = "tes3mobileActor|tes3reference", optional = true, description = "The actor to use for calculating the service price." },
+			{ name = "serviceActor", type = "tes3mobileActor|tes3reference|string", optional = true, description = "The actor to use for calculating the service price." },
 		},
 	}},
 }

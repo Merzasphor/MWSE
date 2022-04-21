@@ -3837,7 +3837,7 @@ tes3.showRepairServiceMenu({ serviceActor = ... })
 **Parameters**:
 
 * `params` (table)
-	* `serviceActor` ([tes3mobileActor](../../types/tes3mobileActor), [tes3reference](../../types/tes3reference)): *Optional*. The actor to use for calculating the service price.
+	* `serviceActor` ([tes3mobileActor](../../types/tes3mobileActor), [tes3reference](../../types/tes3reference), string): *Optional*. The actor to use for calculating the service price.
 
 ***
 
@@ -3879,7 +3879,7 @@ local success = tes3.showSpellmakingMenu({ serviceActor = ..., useDialogActor = 
 **Parameters**:
 
 * `params` (table)
-	* `serviceActor` ([tes3mobileActor](../../types/tes3mobileActor)): *Optional*. The actor to use for calculating the service price. If none is provided, an open dialog menu's service actor will be used instead.
+	* `serviceActor` ([tes3mobileActor](../../types/tes3mobileActor), [tes3reference](../../types/tes3reference), string): *Optional*. The actor to use for calculating the service price. If none is provided, an open dialog menu's service actor will be used instead.
 	* `useDialogActor` (boolean): *Default*: `true`. If set to false, the dialog menu service actor will be ignored. If false, a serviceActor must be provided.
 
 **Returns**:

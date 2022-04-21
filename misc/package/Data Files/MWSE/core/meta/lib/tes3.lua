@@ -2267,12 +2267,12 @@ function tes3.showAlchemyMenu() end
 --- This function opens the repair service menu.
 --- @param params tes3.showRepairServiceMenu.params This table accepts the following values:
 --- 
---- `serviceActor`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference — *Optional*. The actor to use for calculating the service price.
+--- `serviceActor`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string — *Optional*. The actor to use for calculating the service price.
 function tes3.showRepairServiceMenu(params) end
 
 ---Table parameter definitions for `tes3.showRepairServiceMenu`.
 --- @class tes3.showRepairServiceMenu.params
---- @field serviceActor tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference *Optional*. The actor to use for calculating the service price.
+--- @field serviceActor tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string *Optional*. The actor to use for calculating the service price.
 
 --- This function opens the resting menu and returns true on success. If the player can't rest currently, it returns false.
 --- 
@@ -2308,7 +2308,7 @@ function tes3.showRestMenu(params) end
 --- This function opens the spellmaking menu and returns true on success.
 --- @param params tes3.showSpellmakingMenu.params This table accepts the following values:
 --- 
---- `serviceActor`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer — *Optional*. The actor to use for calculating the service price. If none is provided, an open dialog menu's service actor will be used instead.
+--- `serviceActor`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string — *Optional*. The actor to use for calculating the service price. If none is provided, an open dialog menu's service actor will be used instead.
 --- 
 --- `useDialogActor`: boolean — *Default*: `true`. If set to false, the dialog menu service actor will be ignored. If false, a serviceActor must be provided.
 --- @return boolean success No description yet available.
@@ -2316,7 +2316,7 @@ function tes3.showSpellmakingMenu(params) end
 
 ---Table parameter definitions for `tes3.showSpellmakingMenu`.
 --- @class tes3.showSpellmakingMenu.params
---- @field serviceActor tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer *Optional*. The actor to use for calculating the service price. If none is provided, an open dialog menu's service actor will be used instead.
+--- @field serviceActor tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string *Optional*. The actor to use for calculating the service price. If none is provided, an open dialog menu's service actor will be used instead.
 --- @field useDialogActor boolean *Default*: `true`. If set to false, the dialog menu service actor will be ignored. If false, a serviceActor must be provided.
 
 --- Skips a given reference's animation for a single frame.
