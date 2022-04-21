@@ -2961,8 +2961,13 @@ namespace mwse::lua {
 	}
 
 	const auto TES3_UI_showRepairServiceMenu = reinterpret_cast<void(__cdecl*)(TES3::MobileActor*)>(0x615160);
-	void showRepairServiceMenu() {
-		TES3_UI_showRepairServiceMenu(TES3::WorldController::get()->getMobilePlayer());
+	void showRepairServiceMenu(sol::optional<sol::table> params) {
+		TES3::MobileActor* serviceActor = getOptionalParamMobileActor(params, "serviceActor");
+		if (!serviceActor) {
+			serviceActor = TES3::WorldController::get()->getMobilePlayer();
+		}
+		TES3_UI_showRepairServiceMenu(serviceActor);
+		TES3::UI::enterMenuMode(TES3::UI::registerID("MenuServiceRepair"));
 	}
 
 	void updateInventoryGUI_internal(TES3::Reference* reference, std::optional<float> containerWeight = {}) {

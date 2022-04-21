@@ -3798,11 +3798,16 @@ tes3.showAlchemyMenu()
 
 ### `tes3.showRepairServiceMenu`
 
-Opens the service repair menu.
+This function opens the repair service menu.
 
 ```lua
-tes3.showRepairServiceMenu()
+tes3.showRepairServiceMenu({ serviceActor = ... })
 ```
+
+**Parameters**:
+
+* `params` (table)
+	* `serviceActor` ([tes3mobileActor](../../types/tes3mobileActor), [tes3reference](../../types/tes3reference)): *Optional*. The actor to use for calculating the service price.
 
 ***
 

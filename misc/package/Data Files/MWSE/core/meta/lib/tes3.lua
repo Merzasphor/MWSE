@@ -2255,8 +2255,15 @@ function tes3.setWerewolfKillCount(params) end
 --- This function opens the alchemy menu.
 function tes3.showAlchemyMenu() end
 
---- Opens the service repair menu.
-function tes3.showRepairServiceMenu() end
+--- This function opens the repair service menu.
+--- @param params tes3.showRepairServiceMenu.params This table accepts the following values:
+--- 
+--- `serviceActor`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference — *Optional*. The actor to use for calculating the service price.
+function tes3.showRepairServiceMenu(params) end
+
+---Table parameter definitions for `tes3.showRepairServiceMenu`.
+--- @class tes3.showRepairServiceMenu.params
+--- @field serviceActor tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference *Optional*. The actor to use for calculating the service price.
 
 --- This function opens the resting menu and returns true on success. If the player can't rest currently, it returns false.
 --- 
