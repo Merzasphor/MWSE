@@ -82,6 +82,7 @@ namespace TES3 {
 		float getOpacity();
 		void setOpacity(float value);
 
+		void startCastAnimation();
 		void startAttackAnimation(float swing);
 
 		//

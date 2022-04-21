@@ -37,6 +37,11 @@ namespace TES3 {
 		TES3_ActorAnimationController_setOpacity(this, value);
 	}
 
+	const auto TES3_ActorAnimController_startCastAnimation = reinterpret_cast<void(__thiscall*)(ActorAnimationController*)>(0x541A90);
+	void ActorAnimationController::startCastAnimation() {
+		TES3_ActorAnimController_startCastAnimation(this);
+	}
+
 	const auto TES3_ActorAnimController_startAttackAnimation = reinterpret_cast<void(__thiscall*)(ActorAnimationController*, float)>(0x5411C0);
 	void ActorAnimationController::startAttackAnimation(float swing) {
 		sol::optional<float> speed;
