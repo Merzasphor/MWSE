@@ -71,15 +71,15 @@ local function getTypeLink(type)
 	return typeLinks[type]
 end
 
-local function breakoutTypeLinks(type)
+local function breakoutTypeLinks(type, nested)
 	local types = {}
 
 	-- Support "table<x, y>" as type, in HTML < and > signs have a special meaning.
 	-- Use "&lt;" and "&gt;" instead.
 	if type:endswith("table<") then
-		local keyType, valueType = type:match("table<(%w+), (%w+)>")
-		keyType = getTypeLink(keyType)
-		valueType = getTypeLink(valueType)
+		local keyType, valueType = type:match("table<(.+), (.+)>")
+		keyType = breakoutTypeLinks(keyType, true)
+		valueType = breakoutTypeLinks(valueType, true)
 
 		table.insert(types, string.format("table&lt;%s, %s&gt;", keyType, valueType))
 	else
@@ -87,7 +87,7 @@ local function breakoutTypeLinks(type)
 			table.insert(types, getTypeLink(t))
 		end
 	end
-	return table.concat(types, ", ")
+	return table.concat(types, nested and "|" or ", ")
 end
 
 --- comment
