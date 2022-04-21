@@ -17,7 +17,7 @@ lfs.remakedir(lfs.join(docsSourceFolder, "events"))
 local globals = {}
 local classes = {}
 local events = {}
-
+local typeLinks = {}
 
 --
 -- Utility functions.
@@ -53,16 +53,41 @@ local function buildParentChain(className)
 	return ret
 end
 
-local function breakoutTypeLinks(type)
+---@param type string Supports array annotation. For example: "tes3weather[]".
+local function getTypeLink(type)
+	if typeLinks[type] then
+		return typeLinks[type]
+	end
+
+	local isArray = type:endswith("[]")
+	local valueType = type:match("%w+")
+
+	if classes[valueType] then
+		typeLinks[type] = string.format("[%s](../../types/%s)%s", valueType, valueType, isArray and "[]" or "")
+	else
+		typeLinks[type] = type
+	end
+
+	return typeLinks[type]
+end
+
+local function breakoutTypeLinks(type, nested)
 	local types = {}
-	for _, t in ipairs(string.split(type, "|")) do
-		if (classes[t]) then
-			table.insert(types, string.format("[%s](../../types/%s)", t, t))
-		else
-			table.insert(types, t)
+
+	-- Support "table<x, y>" as type, in HTML < and > signs have a special meaning.
+	-- Use "&lt;" and "&gt;" instead.
+	if type:endswith("table<") then
+		local keyType, valueType = type:match("table<(.+), (.+)>")
+		keyType = breakoutTypeLinks(keyType, true)
+		valueType = breakoutTypeLinks(valueType, true)
+
+		table.insert(types, string.format("table&lt;%s, %s&gt;", keyType, valueType))
+	else
+		for _, t in ipairs(string.split(type, "|")) do
+			table.insert(types, getTypeLink(t))
 		end
 	end
-	return table.concat(types, ", ")
+	return table.concat(types, nested and "|" or ", ")
 end
 
 --- comment

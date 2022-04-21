@@ -3,7 +3,7 @@
 
 --- A class responsible for handling the loading of BSA files.
 --- @class tes3bsaLoader
---- @field archives table<number, tes3archive> *Read-only*. An array-style table of archive files.
+--- @field archives tes3archive[] *Read-only*. An array-style table of archive files.
 --- @field firstArchive tes3archive *Read-only*. The start of the list of loaded archives. This is the last loaded archive, meaning first in priority.
 tes3bsaLoader = {}
 

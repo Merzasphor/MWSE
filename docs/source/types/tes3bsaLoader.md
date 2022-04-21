@@ -10,7 +10,7 @@ A class responsible for handling the loading of BSA files.
 
 **Returns**:
 
-* `result` (table<number, tes3archive>)
+* `result` ([tes3archive](../../types/tes3archive)[])
 
 ***
 

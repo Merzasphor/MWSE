@@ -25,12 +25,32 @@ function string.split(str, sep)
 	end
 	return t
 end
+getmetatable("").split = string.split
 
 --- @param s string
 --- @return string
 function string.trim(s)
 	return string.match(s, '^()%s*$') and '' or string.match(s, '^%s*(.*%S)')
 end
+getmetatable("").trim = string.trim
+
+--- Returns true if the string starts with a given substring.
+--- @param haystack string The string to check.
+--- @param needle string The starting value to check.
+--- @return boolean
+function string.startswith(haystack, needle)
+	return string.sub(haystack, 1, string.len(needle)) == needle
+end
+getmetatable("").startswith = string.startswith
+
+--- Returns true if the string ends with a given substring.
+--- @param haystack string The string to check.
+--- @param needle string The ending value to check.
+--- @return boolean
+function string.endswith(haystack, needle)
+	return needle == '' or string.sub(haystack, -string.len(needle)) == needle
+end
+getmetatable("").endswith = string.endswith
 
 
 --

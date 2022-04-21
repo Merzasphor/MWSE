@@ -50,7 +50,7 @@ Loaded data from a BSA file.
 
 **Returns**:
 
-* `result` (table<number, tes3archiveOffsetSizeData>)
+* `result` ([tes3archiveOffsetSizeData](../../types/tes3archiveOffsetSizeData)[])
 
 ***
 
