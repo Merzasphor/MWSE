@@ -162,11 +162,11 @@ See childOffsetX.
 
 ### `color`
 
-Element RGB colour, an array of 3 floats with value range [0.0, 1.0]. For menus and rects, it sets the background colour. For text, it sets the text colour. For images, it multiplies the image by the colour.
+The RGB color of the element. An array of 3 numbers with values ranging from `0.0` to `1.0`. For menus and rects, it sets the background colour. For text, it sets the text colour. For images, it multiplies the image by the colour.
 
 **Returns**:
 
-* `result` (table)
+* `result` (number[])
 
 ***
 
