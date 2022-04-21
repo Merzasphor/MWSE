@@ -7,7 +7,7 @@
 --- @field nextArchive tes3archive *Read-only*. The next archive to access after this one.
 --- @field offsetToFileNameHashes number *Read-only*. The offset in the BSA file where file name hashes can be found.
 --- @field path string *Read-only*. The full path to the BSA, relative to the Morrowind installation directory.
---- @field sizesAndOffsets table<number, tes3archiveOffsetSizeData> *Read-only*. An array of sizes and offsets for entries in the archive.
+--- @field sizesAndOffsets tes3archiveOffsetSizeData[] *Read-only*. An array of sizes and offsets for entries in the archive.
 tes3archive = {}
 
 --- Searches for a file in the archive, and returns the index that it can be found in.

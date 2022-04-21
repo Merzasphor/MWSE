@@ -57,7 +57,7 @@
 --- @field underwaterNightFog number The underwater night fog value.
 --- @field underwaterSunriseFog number The underwater sunrise fog value.
 --- @field underwaterSunsetFog number The underwater sunset fog value.
---- @field weathers table<number, tes3weather> *Read-only*. Array-style table for the different weather types. Each object in the table is a [tes3weather](https://mwse.github.io/MWSE/types/tes3weather/). The indices in the table map to the values in the [`tes3.weather`](https://mwse.github.io/MWSE/references/weathers/) table.
+--- @field weathers tes3weather[] *Read-only*. Array-style table for the different weather types. Each object in the table is a [tes3weather](https://mwse.github.io/MWSE/types/tes3weather/). The indices in the table map to the values in the [`tes3.weather`](https://mwse.github.io/MWSE/references/weathers/) table.
 --- @field windVelocityCurrWeather tes3vector3 The wind velocity for the current weather.
 --- @field windVelocityNextWeather tes3vector3 The wind velocity for the next weather.
 tes3weatherController = {}
