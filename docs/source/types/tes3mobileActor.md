@@ -180,6 +180,16 @@ A vector that shows the size of the bounding box in X and Y directions. `boundSi
 
 ***
 
+### `canAct`
+
+*Read-only*. If true, the actor is able to freely execute actions like attacking or casting magic. This is equal to checking if the actor is not dead, knocked down, stunned, paralyzed, drawing/sheathing their weapon, attacking, casting magic or using a lockpick or probe.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
 ### `cell`
 
 *Read-only*. Fetches the cell that the actor is in.
@@ -380,6 +390,16 @@ No description yet available.
 
 ***
 
+### `hasFreeAction`
+
+*Read-only*. If true, the actor isn't knocked down or stunned.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
 ### `health`
 
 *Read-only*. Access to the actor's health statistic.
@@ -480,6 +500,16 @@ Direct access to the actor's invisibility effect attribute.
 
 ***
 
+### `isAttackingOrCasting`
+
+*Read-only*. If true, the actor is attacking, casting magic or using a lockpick or probe.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
 ### `isCrittable`
 
 *Read-only*. Friendly access to the actor's flag that controls if the actor can be critically hit.
@@ -570,6 +600,16 @@ Direct access to the actor's current movement flags, showing if the actor is mov
 
 ***
 
+### `isParalyzed`
+
+*Read-only*. If true, the actor is affected by the magic effect paralyze.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
 ### `isPlayerDetected`
 
 Direct access to the actor's flag showing the player was detected on the last detection check.
@@ -583,6 +623,16 @@ Direct access to the actor's flag showing the player was detected on the last de
 ### `isPlayerHidden`
 
 Direct access to the actor's flag showing the player was hidden on the last detection check.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
+### `isReadyingWeapon`
+
+*Read-only*. If true, the actor is drawing or sheathing their weapon.
 
 **Returns**:
 
@@ -1467,20 +1517,6 @@ local result = tes3mobileActor:getWeaponSpeed()
 **Returns**:
 
 * `result` (number)
-
-***
-
-### `hasFreeAction`
-
-If true, the actor isn't paralyzed, dead, stunned, or otherwise unable to take action.
-
-```lua
-local result = tes3mobileActor:hasFreeAction()
-```
-
-**Returns**:
-
-* `result` (boolean)
 
 ***
 

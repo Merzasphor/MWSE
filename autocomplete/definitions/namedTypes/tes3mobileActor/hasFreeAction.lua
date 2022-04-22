@@ -1,5 +1,6 @@
 return {
-	type = "method",
-	description = [[If true, the actor isn't paralyzed, dead, stunned, or otherwise unable to take action.]],
+	type = "value",
+	description = [[If true, the actor isn't knocked down or stunned.]],
+	readOnly = true,
 	valuetype = "boolean",
 }
