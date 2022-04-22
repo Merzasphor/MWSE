@@ -157,8 +157,12 @@ namespace mwse::lua {
 
 		// Functions exposed as properties.
 		usertypeDefinition["armorRating"] = sol::property(&TES3::MobileActor::getArmorRating_lua);
+		usertypeDefinition["canAct"] = sol::readonly_property(&TES3::MobileActor::canAct);
 		usertypeDefinition["cell"] = sol::property(&TES3::MobileActor::getCell);
-		usertypeDefinition["hasFreeAction"] = sol::property(&TES3::MobileActor::hasFreeAction);
+		usertypeDefinition["hasFreeAction"] = sol::readonly_property(&TES3::MobileActor::isNotKnockedDown);
+		usertypeDefinition["isAttackingOrCasting"] = sol::readonly_property(&TES3::MobileActor::isAttackingOrCasting);
+		usertypeDefinition["isParalyzed"] = sol::readonly_property(&TES3::MobileActor::isParalyzed);
+		usertypeDefinition["isReadyingWeapon"] = sol::readonly_property(&TES3::MobileActor::isReadyingWeapon);
 		usertypeDefinition["mobToMobCollision"] = sol::property(&TES3::MobileActor::getMobToMobCollision, &TES3::MobileActor::setMobToMobCollision);
 		usertypeDefinition["weaponReady"] = sol::property(&TES3::MobileActor::getWeaponReady, &TES3::MobileActor::setWeaponReady);
 

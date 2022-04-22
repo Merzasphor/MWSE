@@ -254,7 +254,11 @@ namespace TES3 {
 		void applyJumpFatigueCost() const;
 		float applyDamage_lua(sol::table params);
 		float calcEffectiveDamage_lua(sol::table params);
-		bool hasFreeAction() const;
+		bool isNotKnockedDown() const;
+		bool isReadyingWeapon() const;
+		bool isParalyzed() const;
+		bool isAttackingOrCasting() const;
+		bool canAct() const;
 		float calculateRunSpeed();
 		float calculateSwimSpeed();
 		float calculateSwimRunSpeed();

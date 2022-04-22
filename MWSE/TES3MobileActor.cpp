@@ -50,7 +50,7 @@ namespace TES3 {
 		return &node->next->data;
 	}
 
-	MagicEffectInstance * ActiveMagicEffectLua::getEffectInstance() const {
+	MagicEffectInstance* ActiveMagicEffectLua::getEffectInstance() const {
 		auto magicInstance = getInstance();
 		if (magicInstance) {
 			return magicInstance->getEffectInstance(magicInstanceEffectIndex, mobile->reference);
@@ -134,7 +134,7 @@ namespace TES3 {
 		return result;
 	}
 
-	SkillStatistic * MobileActor::getSkillStatistic(int skillId) {
+	SkillStatistic* MobileActor::getSkillStatistic(int skillId) {
 		return vTable.mobileActor->getSkillStatistic(this, skillId);
 	}
 
@@ -146,7 +146,7 @@ namespace TES3 {
 		return vTable.mobileActor->applyArmorRating(this, damage, swing, damageEquipment);
 	}
 
-	float MobileActor::calculateArmorRating(int * armorItemCount) const {
+	float MobileActor::calculateArmorRating(int* armorItemCount) const {
 		return vTable.mobileActor->calculateArmorRating(this, armorItemCount);
 	}
 
@@ -154,8 +154,8 @@ namespace TES3 {
 		return calculateArmorRating(nullptr);
 	}
 
-	const auto TES3_MobileActor_applyPhysicalHit = reinterpret_cast<void(__thiscall *)(MobileActor*, MobileActor*, MobileActor*, float, float, MobileProjectile*, bool)>(0x5568F0);
-	void MobileActor::applyPhysicalHit(MobileActor * attacker, MobileActor * defender, float damage, float swing, MobileProjectile * projectile, bool alwaysPlayHitVoice) {
+	const auto TES3_MobileActor_applyPhysicalHit = reinterpret_cast<void(__thiscall*)(MobileActor*, MobileActor*, MobileActor*, float, float, MobileProjectile*, bool)>(0x5568F0);
+	void MobileActor::applyPhysicalHit(MobileActor* attacker, MobileActor* defender, float damage, float swing, MobileProjectile* projectile, bool alwaysPlayHitVoice) {
 		// Setup damage event data.
 		mwse::lua::event::DamageEvent::m_Attacker = attacker;
 		mwse::lua::event::DamageEvent::m_Projectile = projectile;
@@ -229,7 +229,7 @@ namespace TES3 {
 			if (!enchantment || (enchantment->castType != EnchantmentCastType::OnUse && enchantment->castType != EnchantmentCastType::Once)) {
 				throw std::invalid_argument("Invalid 'source' parameter provided. Item must have a castable enchantment.");
 			}
-	
+
 			if (item->objectType == ObjectType::Book)
 			{
 				// Create a basic equipment stack for enchanted scrolls.
@@ -320,7 +320,7 @@ namespace TES3 {
 		return TES3_MobileActor_getCell(this);
 	}
 
-	const auto TES3_MobileActor_getFatigueTerm = reinterpret_cast<float(__thiscall *)(const MobileActor*)>(0x527610);
+	const auto TES3_MobileActor_getFatigueTerm = reinterpret_cast<float(__thiscall*)(const MobileActor*)>(0x527610);
 	float MobileActor::getFatigueTerm() const {
 		return TES3_MobileActor_getFatigueTerm(this);
 	}
@@ -562,9 +562,26 @@ namespace TES3 {
 		TES3_MobileActor_applyJumpFatigueCost(this);
 	}
 
-	const auto TES3_MobileActor_hasFreeAction = reinterpret_cast<bool(__thiscall*)(const MobileActor*)>(0x527580);
-	bool MobileActor::hasFreeAction() const {
-		return TES3_MobileActor_hasFreeAction(this);
+	const auto TES3_MobileActor_isNotKnockedDown = reinterpret_cast<bool(__thiscall*)(const MobileActor*)>(0x527580);
+	bool MobileActor::isNotKnockedDown() const {
+		return TES3_MobileActor_isNotKnockedDown(this);
+	}
+
+	const auto TES3_MobileActor_isAttackingOrCasting = reinterpret_cast<bool(__thiscall*)(const MobileActor*)>(0x5567D0);
+	bool MobileActor::isAttackingOrCasting() const {
+		return TES3_MobileActor_isAttackingOrCasting(this);
+	}
+
+	bool MobileActor::isReadyingWeapon() const {
+		return actionData.animStateAttack == AttackAnimationState::ReadyingWeap || actionData.animStateAttack == AttackAnimationState::UnreadyWeap;
+	}
+
+	bool MobileActor::isParalyzed() const {
+		return getEffectAttributeParalyze() > 0;
+	}
+
+	bool MobileActor::canAct() const {
+		return !isDead() && isNotKnockedDown() && !isAttackingOrCasting() && !isParalyzed() && !isReadyingWeapon();
 	}
 
 	const auto TES3_MobileActor_calculateRunSpeed = reinterpret_cast<float(__thiscall*)(MobileActor*)>(0x527050);
@@ -754,13 +771,12 @@ namespace TES3 {
 		}
 	}
 
-	const auto TES3_MobileActor_isInAttackAnim = reinterpret_cast<bool(__thiscall*)(const MobileActor*)>(0x5567D0);
 	const auto TES3_MobileActor_wearItem = reinterpret_cast<void(__thiscall*)(MobileActor*, Object*, ItemData*, bool, bool)>(0x52C770);
 	bool MobileActor::equipItem(Object* item, ItemData* itemData, bool addItem, bool selectBestCondition, bool selectWorstCondition) {
 		Actor* actor = static_cast<Actor*>(reference->baseObject);
 
 		// Equipping weapons while they are in use breaks animations and AI.
-		if (item->objectType == ObjectType::Weapon && TES3_MobileActor_isInAttackAnim(this)) {
+		if (item->objectType == ObjectType::Weapon && isAttackingOrCasting()) {
 			return false;
 		}
 
