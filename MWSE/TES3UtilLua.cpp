@@ -2782,9 +2782,59 @@ namespace mwse::lua {
 		}
 
 		bool instant = getOptionalParam<bool>(params, "instant", false);
+		bool bypassResistances = getOptionalParam<bool>(params, "bypassResistances", false);
+		bool alwaysSucceeds = getOptionalParam<bool>(params, "alwaysSucceeds", true);
+
 		if (casterMobile && !instant) {
+			// Let the player cast the spell, if possible.
+			if (casterMobile->actorType == TES3::MobileActorType::Player) {
+				if (!casterMobile->canAct()) {
+					return false;
+				}
+
+				// Equip the spell to be casted temporarily since animations depend on it.
+				TES3::Object* previousMagicSource = casterMobile->currentSpell.source.asGeneric;
+				TES3::EquipmentStack previousEnchantedItem = casterMobile->currentEnchantedItem;
+				casterMobile->equipMagic(spell, nullptr, false, false);
+
+				// Activate the spell.
+				TES3::MagicInstanceController* magicInstanceController = TES3::WorldController::get()->magicInstanceController;
+				TES3::MagicSourceCombo* sourceCombo = &TES3::MagicSourceCombo(spell);
+				unsigned int serialNumber = magicInstanceController->activateSpell(casterMobile->reference, nullptr, sourceCombo);
+				if (serialNumber) {
+					// Set lua parameters on the spell instance.
+					TES3::MagicSourceInstance* spellInstance = magicInstanceController->getInstanceFromSerial(serialNumber);
+					spellInstance->target = target;
+					spellInstance->bypassResistances = bypassResistances;
+					if (alwaysSucceeds) {
+						spellInstance->overrideCastChance = 100.0f;
+					}
+
+					// Play the cast animation.
+					TES3::PlayerAnimationController* animationController = casterMobile->animationController.asPlayer;
+					if (sourceCombo->sourceType == TES3::MagicSourceType::Spell) {
+						animationController->animationData->timing[1] = 0.0;
+					}
+					animationController->startCastAnimation();
+				}
+
+				// Reset the equipped magic.
+				if (previousMagicSource) {
+					if (previousMagicSource->objectType == TES3::ObjectType::Enchantment) {
+						casterMobile->equipMagic(previousEnchantedItem.object, previousEnchantedItem.itemData, false, false);
+					}
+					else {
+						casterMobile->equipMagic(previousMagicSource, nullptr, false, false);
+					}
+				}
+				else {
+					casterMobile->unequipMagic();
+				}
+
+				return true;
+			}
 			// Request AI to cast chosen spell.
-			if (casterMobile->isActive() && target != nullptr) {
+			else if (casterMobile->isActive() && target != nullptr) {
 				casterMobile->setCurrentMagicFromSpell(spell);
 				casterMobile->forceSpellCast(target->getAttachedMobileActor());
 				return true;
@@ -2797,11 +2847,11 @@ namespace mwse::lua {
 			auto serial = magicInstanceController->activateSpell(reference, nullptr, &sourceCombo);
 			auto spellInstance = magicInstanceController->getInstanceFromSerial(serial);
 
-			if (getOptionalParam<bool>(params, "alwaysSucceeds", true)) {
+			if (alwaysSucceeds) {
 				spellInstance->overrideCastChance = 100.0f;
 			}
 			spellInstance->target = target;
-			spellInstance->bypassResistances = getOptionalParam<bool>(params, "bypassResistances", false);
+			spellInstance->bypassResistances = bypassResistances;
 
 			// Trigger spells to progress from pre-cast to targetting state. This state is automatically reset by active AI.
 			if (casterMobile) {

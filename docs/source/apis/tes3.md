@@ -650,12 +650,12 @@ local canRest = tes3.canRest({ checkForEnemies = ..., checkForSolidGround = ...,
 
 ### `tes3.cast`
 
-Casts a spell from a given reference to a target reference. Touch effects will hit the target at any range, while target effects will create a projectile. By default, the spell always casts successfully and does not consume magicka. By default, an actor casting will stop and perform its cast animation, but the 'instant' flag can start the cast instantly, and allow more control over the spell.
+Casts a spell from a given reference to a target reference. Touch effects will hit the target at any range, while target effects will create a projectile. By default, the spell always casts successfully and does not consume magicka. By default, an actor casting will stop and perform its cast animation, but the 'instant' flag can start the cast instantly and allows more control over the spell for NPCs.
 
-When the caster is the player, the target parameter is optional; without a target, the player's touch effects will only hit targets in front of them, and target effects will create a projectile in the direction the player is facing. Currently as a limitation, instant must be true to allow the player to cast spells.
+If the caster is the player, the target parameter is optional; without a target, the player's touch effects will only hit targets in front of them, and target effects will create a projectile in the direction the player is facing.
 
 ```lua
-local executed = tes3.cast({ reference = ..., target = ..., spell = ..., instant = ..., alwaysSucceeds = ..., bypassResistances = ... })
+local success = tes3.cast({ reference = ..., target = ..., spell = ..., instant = ..., alwaysSucceeds = ..., bypassResistances = ... })
 ```
 
 **Parameters**:
@@ -664,13 +664,13 @@ local executed = tes3.cast({ reference = ..., target = ..., spell = ..., instant
 	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The caster reference.
 	* `target` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The target reference. Optional only if the caster is the player.
 	* `spell` ([tes3spell](../../types/tes3spell), string): The spell the caster uses.
-	* `instant` (boolean): *Default*: `false`. When true, the spell is cast instantly. No animation is performed.
-	* `alwaysSucceeds` (boolean): *Default*: `true`. When true, the spell cannot fail and does not consume magicka. When false, it is cast using the actor's spell skill, and requires and takes enough magicka to cast. Only applies when 'instant' is true.
-	* `bypassResistances` (boolean): *Default*: `false`. The spell will bypass the target's resistances. Only applies when 'instant' is true.
+	* `instant` (boolean): *Default*: `false`. If `true`, the spell is cast instantly. No animation is performed.
+	* `alwaysSucceeds` (boolean): *Default*: `true`. If `true`, the spell cannot fail and does not consume magicka. If `false`, it is cast using the actor's spell skill, and requires and takes enough magicka to cast. For NPCs, this only applies if `instant` is `true`.
+	* `bypassResistances` (boolean): *Default*: `false`. If `true`, the spell will bypass the target's resistances. For NPCs, this only applies if `instant` is `true`.
 
 **Returns**:
 
-* `executed` (boolean)
+* `success` (boolean): Returns `true` if the spell was cast successfully. Returns `false` if `instant` is `false` and the player is trying to cast the spell, while being unable to cast spells under normal circumstances.
 
 ??? example "Example: This is an example of how to use tes3.cast instead of mwscript.explodeSpell"
 

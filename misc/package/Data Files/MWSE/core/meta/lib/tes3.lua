@@ -494,9 +494,9 @@ function tes3.canRest(params) end
 --- @field checkForSolidGround boolean *Default*: `true`. Perform a check if the player is underwater. If underwater, false is returned.
 --- @field showMessage boolean *Default*: `false`. If true, a messagebox will be shown if the player can't rest because some condition isn't met.
 
---- Casts a spell from a given reference to a target reference. Touch effects will hit the target at any range, while target effects will create a projectile. By default, the spell always casts successfully and does not consume magicka. By default, an actor casting will stop and perform its cast animation, but the 'instant' flag can start the cast instantly, and allow more control over the spell.
+--- Casts a spell from a given reference to a target reference. Touch effects will hit the target at any range, while target effects will create a projectile. By default, the spell always casts successfully and does not consume magicka. By default, an actor casting will stop and perform its cast animation, but the 'instant' flag can start the cast instantly and allows more control over the spell for NPCs.
 --- 
---- When the caster is the player, the target parameter is optional; without a target, the player's touch effects will only hit targets in front of them, and target effects will create a projectile in the direction the player is facing. Currently as a limitation, instant must be true to allow the player to cast spells.
+--- If the caster is the player, the target parameter is optional; without a target, the player's touch effects will only hit targets in front of them, and target effects will create a projectile in the direction the player is facing.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3/#tes3cast).
 --- @param params tes3.cast.params This table accepts the following values:
@@ -507,12 +507,12 @@ function tes3.canRest(params) end
 --- 
 --- `spell`: tes3spell|string — The spell the caster uses.
 --- 
---- `instant`: boolean — *Default*: `false`. When true, the spell is cast instantly. No animation is performed.
+--- `instant`: boolean — *Default*: `false`. If `true`, the spell is cast instantly. No animation is performed.
 --- 
---- `alwaysSucceeds`: boolean — *Default*: `true`. When true, the spell cannot fail and does not consume magicka. When false, it is cast using the actor's spell skill, and requires and takes enough magicka to cast. Only applies when 'instant' is true.
+--- `alwaysSucceeds`: boolean — *Default*: `true`. If `true`, the spell cannot fail and does not consume magicka. If `false`, it is cast using the actor's spell skill, and requires and takes enough magicka to cast. For NPCs, this only applies if `instant` is `true`.
 --- 
---- `bypassResistances`: boolean — *Default*: `false`. The spell will bypass the target's resistances. Only applies when 'instant' is true.
---- @return boolean executed No description yet available.
+--- `bypassResistances`: boolean — *Default*: `false`. If `true`, the spell will bypass the target's resistances. For NPCs, this only applies if `instant` is `true`.
+--- @return boolean success Returns `true` if the spell was cast successfully. Returns `false` if `instant` is `false` and the player is trying to cast the spell, while being unable to cast spells under normal circumstances.
 function tes3.cast(params) end
 
 ---Table parameter definitions for `tes3.cast`.
@@ -520,9 +520,9 @@ function tes3.cast(params) end
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string The caster reference.
 --- @field target tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string The target reference. Optional only if the caster is the player.
 --- @field spell tes3spell|string The spell the caster uses.
---- @field instant boolean *Default*: `false`. When true, the spell is cast instantly. No animation is performed.
---- @field alwaysSucceeds boolean *Default*: `true`. When true, the spell cannot fail and does not consume magicka. When false, it is cast using the actor's spell skill, and requires and takes enough magicka to cast. Only applies when 'instant' is true.
---- @field bypassResistances boolean *Default*: `false`. The spell will bypass the target's resistances. Only applies when 'instant' is true.
+--- @field instant boolean *Default*: `false`. If `true`, the spell is cast instantly. No animation is performed.
+--- @field alwaysSucceeds boolean *Default*: `true`. If `true`, the spell cannot fail and does not consume magicka. If `false`, it is cast using the actor's spell skill, and requires and takes enough magicka to cast. For NPCs, this only applies if `instant` is `true`.
+--- @field bypassResistances boolean *Default*: `false`. If `true`, the spell will bypass the target's resistances. For NPCs, this only applies if `instant` is `true`.
 
 --- Checks if a merchant will offer a service to you, including dialogue checks like disposition and faction membership. A specific service can be checked, or if no service is given, a generic dialogue check is made. If the service is refused, the dialogue reply for the refusal may also be returned (it may be nil, as there may not always be a reply available).
 --- @param reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string No description yet available.
