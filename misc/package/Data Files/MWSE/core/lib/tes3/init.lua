@@ -149,15 +149,15 @@ end
 
 -- Function to compare two keybind objects for equality. Useful in key events.
 function tes3.isKeyEqual(params)
-    if (params.actual.keyCode ~= params.expected.keyCode
-        or (params.actual.isShiftDown or false) ~= (params.expected.isShiftDown or false)
-        or (params.actual.isControlDown or false) ~= (params.expected.isControlDown or false)
-        or (params.actual.isAltDown or false) ~= (params.expected.isAltDown or false)
-        or (params.actual.isSuperDown or false) ~= (params.expected.isSuperDown or false)) then
-        return false
-    end
+	if (params.actual.keyCode ~= params.expected.keyCode
+		or (params.actual.isShiftDown or false) ~= (params.expected.isShiftDown or false)
+		or (params.actual.isControlDown or false) ~= (params.expected.isControlDown or false)
+		or (params.actual.isAltDown or false) ~= (params.expected.isAltDown or false)
+		or (params.actual.isSuperDown or false) ~= (params.expected.isSuperDown or false)) then
+		return false
+	end
 
-    return true
+	return true
 end
 
 -- Iterator to use TES3::Iterator in a for loop.

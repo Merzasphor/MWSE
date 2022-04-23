@@ -656,21 +656,21 @@ end
 
 -- Visit all files in a directory tree (recursively).
 function lfs.walkdir(root)
-    local function iter(dir)
-        dir = dir or root
-        for name in lfs.dir(dir) do
-            if not name:find("%.$") then
-                local path = dir .. name
-                local mode = lfs.attributes(path, "mode")
-                if mode == "file" then
-                    coroutine.yield(path, dir, name)
-                elseif mode == "directory" then
-                    iter(path .. "\\")
-                end
-            end
-        end
-    end
-    return coroutine.wrap(iter)
+	local function iter(dir)
+		dir = dir or root
+		for name in lfs.dir(dir) do
+			if not name:find("%.$") then
+				local path = dir .. name
+				local mode = lfs.attributes(path, "mode")
+				if mode == "file" then
+					coroutine.yield(path, dir, name)
+				elseif mode == "directory" then
+					iter(path .. "\\")
+				end
+			end
+		end
+	end
+	return coroutine.wrap(iter)
 end
 
 
