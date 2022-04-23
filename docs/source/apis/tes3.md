@@ -1861,7 +1861,7 @@ local killMap = tes3.getKillCounts()
 
 **Returns**:
 
-* `killMap` (table<tes3actor, number>)
+* `killMap` (table&lt;[tes3actor](../../types/tes3actor), number&gt;)
 
 ***
 
