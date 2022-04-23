@@ -10,6 +10,16 @@
 #include "Log.h"
 
 namespace TES3 {
+	const auto TES3_Book_ctor = reinterpret_cast<void(__thiscall*)(Book*)>(0x4A1E90);
+	Book::Book() {
+		TES3_Book_ctor(this);
+	}
+
+	const auto TES3_Book_dtor = reinterpret_cast<void(__thiscall*)(Book*)>(0x4A1F70);
+	Book::~Book() {
+		TES3_Book_dtor(this);
+	}
+
 	const auto TES3_Book_loadBookText = reinterpret_cast<const char*(__thiscall*)(const Book*)>(0x4A2A90);
 	const char* Book::getBookText() {
 		// Allow the event to override the text.

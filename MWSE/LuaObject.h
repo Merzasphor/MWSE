@@ -12,6 +12,7 @@
 #include "TES3Static.h"
 #include "TES3Enchantment.h"
 #include "TES3Weapon.h"
+#include "TES3Book.h"
 #include "TES3WorldController.h"
 
 #include "LuaManager.h"
@@ -573,6 +574,81 @@ namespace mwse::lua {
 			}
 
 			return enchantment;
+		}
+	};
+
+	template<>
+	class ObjectCreator<TES3::Book> : public ObjectCreatorBase {
+	public:
+		TES3::BaseObject* create(sol::table params, bool getIfExists) const override {
+			std::string id = getOptionalParam<std::string>(params, "id", {});
+
+			if (id.size() > 31)
+				throw std::invalid_argument{ "tes3.createObject: 'id' parameter must be less than 32 character long." };
+
+			auto existingObject = TES3::DataHandler::get()->nonDynamicData->resolveObject(id.c_str());
+			if (existingObject) {
+				if (existingObject->objectType == TES3::ObjectType::Book) {
+					return existingObject;
+				}
+				else {
+					throw std::invalid_argument{ "tes3.createObject: 'id' parameter already assigned to an existing object that is not a book." };
+				}
+			}
+
+			std::string name = getOptionalParam<std::string>(params, "name", "Book");
+			if (name.size() > 31)
+				throw std::invalid_argument{ "tes3.createObject: 'name' parameter must be less than 32 character long." };
+
+			std::string mesh = getOptionalParam<std::string>(params, "mesh", {});
+			if (mesh.size() > 31)
+				throw std::invalid_argument{ "tes3.createObject: 'mesh' parameter must be less than 32 character long." };
+
+			auto book = new TES3::Book();
+
+			book->setID(id.c_str());
+			book->setName(name.c_str());
+			book->setModelPath(mesh.c_str());
+
+			auto script = getOptionalParamScript(params, "script");
+
+			if (script != nullptr)
+				book->script = script;
+
+			auto enchantment = getOptionalParamObject<TES3::Enchantment>(params, "enchantment");
+			auto enchantCapacity = getOptionalParam<unsigned short>(params, "enchantCapacity", 0);
+			auto bookType = getOptionalParam<unsigned char>(params, "type", 0);
+			if (enchantment && enchantment->objectType == TES3::ObjectType::Enchantment) {
+				book->enchantment = enchantment;
+			}
+			else if (enchantCapacity > 0 && bookType == 1)
+				// Prevent creation of books that the player could enchant.
+				// The game crashes if trying to enchant books that aren't from an esp/esm plugin.
+				throw std::invalid_argument{ "tes3.createObject: 'enchantCapacity' parameter must be zero if creating an unenchanted scroll (the game will crash if player tries to enchant it)." };
+
+			std::string icon = getOptionalParam<std::string>(params, "icon", {});
+
+			if (!icon.empty() && icon.size() < 31)
+				tes3::setDataString(&book->icon, icon.c_str());
+
+			book->objectFlags = getOptionalParam<unsigned int>(params, "objectFlags", 0);
+			book->weight = getOptionalParam<float>(params, "weight", 0.0f);
+			book->value = getOptionalParam<int>(params, "value", 0);
+			book->bookType = bookType;
+			book->skillToRaise = getOptionalParam<signed char>(params, "skill", -1);
+			book->enchantCapacity = enchantCapacity;
+
+			book->objectFlags |= TES3::ObjectFlag::Modified;
+
+			if (!TES3::DataHandler::get()->nonDynamicData->addNewObject(book))
+				throw std::runtime_error("tes3.createObject: could not add the newly created book in its proper collection.");
+
+			// If created outside of a save game, mark the object as sourceless.
+			if (getOptionalParam<bool>(params, "sourceless", false) || TES3::WorldController::get()->getMobilePlayer() == nullptr) {
+				TES3::BaseObject::setSourcelessObject(book);
+			}
+
+			return book;
 		}
 	};
 

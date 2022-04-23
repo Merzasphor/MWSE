@@ -20,6 +20,9 @@ namespace TES3 {
 		Enchantment * enchantment;
 		int unknown_0x6C;
 
+		Book();
+		~Book();
+
 		static constexpr auto BOOK_TEXT_CACHE = reinterpret_cast<char**>(0x7CA44C);
 
 		//
