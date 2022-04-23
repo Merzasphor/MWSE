@@ -1729,13 +1729,19 @@ namespace mwse::lua {
 		}
 	}
 
-	bool getFileExists(const char* path) {
-		return tes3::resolveAssetPath(path) != TES3::FileLoadSource::Missing;
+	bool getFileExists(std::string path) {
+		// Sanitize path.
+		std::replace(path.begin(), path.end(), '/', '\\');
+
+		return tes3::resolveAssetPath(path.c_str()) != TES3::FileLoadSource::Missing;
 	}
 
-	sol::optional<std::tuple<std::string, std::string>> getFileSource(const char* path) {
+	sol::optional<std::tuple<std::string, std::string>> getFileSource(std::string path) {
+		// Sanitize path.
+		std::replace(path.begin(), path.end(), '/', '\\');
+
 		char buffer[512];
-		int result = tes3::resolveAssetPath(path, buffer);
+		int result = tes3::resolveAssetPath(path.c_str(), buffer);
 
 		switch (result) {
 		case TES3::FileLoadSource::File:
