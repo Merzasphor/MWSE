@@ -301,7 +301,7 @@ namespace mwse::lua {
 	}
 
 	sol::table Timer::toTable(sol::this_state ts) const {
-		if (!isPersistent || state == TimerState::Expired || callback.is<std::string>()) {
+		if (!isPersistent || state == TimerState::Expired || !callback.is<std::string>()) {
 			return sol::nil;
 		}
 
