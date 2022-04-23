@@ -146,12 +146,13 @@ local result = table.deepcopy(t)
 Returns true if the table is empty, otherwise, it returns false.
 
 ```lua
-local result = table.empty(t)
+local result = table.empty(t, deepCheck)
 ```
 
 **Parameters**:
 
 * `t` (table)
+* `deepCheck` (boolean): *Default*: `false`. If true, subtables will also be checked to see if they are empty.
 
 **Returns**:
 

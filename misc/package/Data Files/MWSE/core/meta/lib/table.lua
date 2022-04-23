@@ -59,8 +59,9 @@ function table.deepcopy(t) end
 
 --- Returns true if the table is empty, otherwise, it returns false.
 --- @param t table No description yet available.
+--- @param deepCheck boolean *Default*: `false`. If true, subtables will also be checked to see if they are empty.
 --- @return boolean result No description yet available.
-function table.empty(t) end
+function table.empty(t, deepCheck) end
 
 --- Returns the key for a given value, or nil if the table does not contain the value.
 --- @param t table No description yet available.
