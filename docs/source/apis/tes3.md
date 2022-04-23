@@ -1353,7 +1353,7 @@ local cells = tes3.getActiveCells()
 
 **Returns**:
 
-* `cells` (table)
+* `cells` ([tes3cell](../../types/tes3cell)[])
 
 ***
 
@@ -1372,7 +1372,7 @@ local animData = tes3.getAnimationGroups({ reference = ... })
 
 **Returns**:
 
-* `animData` (table)
+* `animData` (number[])
 
 ***
 
@@ -1391,7 +1391,7 @@ local result = tes3.getAnimationTiming({ reference = ... })
 
 **Returns**:
 
-* `result` (table)
+* `result` (number[])
 
 ***
 
@@ -1405,7 +1405,7 @@ local archives = tes3.getArchiveList()
 
 **Returns**:
 
-* `archives` (table)
+* `archives` ([tes3archive](../../types/tes3archive)[])
 
 ***
 
@@ -1546,12 +1546,12 @@ local weather = tes3.getCurrentWeather()
 Returns a table with values x and y that contain the current cursor position.
 
 ```lua
-local table = tes3.getCursorPosition()
+local position = tes3.getCursorPosition()
 ```
 
 **Returns**:
 
-* `table` (table)
+* `position` ([tes3vector2](../../types/tes3vector2))
 
 ***
 
@@ -1861,7 +1861,7 @@ local killMap = tes3.getKillCounts()
 
 **Returns**:
 
-* `killMap` (table)
+* `killMap` (table<tes3actor, number>)
 
 ***
 
@@ -2013,7 +2013,7 @@ local modList = tes3.getModList()
 
 **Returns**:
 
-* `modList` (table)
+* `modList` (string[])
 
 ***
 

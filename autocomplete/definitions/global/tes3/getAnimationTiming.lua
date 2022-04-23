@@ -9,5 +9,5 @@ return {
 		},
 	}},
 	returns = "result",
-	valuetype = "table",
+	valuetype = "number[]",
 }
