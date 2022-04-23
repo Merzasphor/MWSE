@@ -668,7 +668,6 @@ namespace mwse::lua {
 		state["tes3"]["dataHandler"] = TES3::DataHandler::get();
 		state["tes3"]["worldController"] = TES3::WorldController::get();
 		state["tes3"]["game"] = TES3::Game::get();
-		state["tes3"]["bsaLoader"] = TES3::BSALoader::get();
 
 		stateHandle.triggerEvent(new event::GenericEvent("initialized"));
 	}
@@ -3778,6 +3777,9 @@ namespace mwse::lua {
 		fnTableEmpty = luaState["table"]["empty"];
 		fnEncodeForSave = luaState["mwse"]["encodeForSave"];
 		fnDecodeFromSave = luaState["json"]["decode"];
+
+		// Grab early-load data.
+		luaState["tes3"]["bsaLoader"] = TES3::BSALoader::get();
 
 		// Hook the RunScript function so we can intercept Lua scripts and invoke Lua code if needed.
 		genJumpUnprotected(TES3_HOOK_RUNSCRIPT_LUACHECK, reinterpret_cast<DWORD>(HookRunScript), TES3_HOOK_RUNSCRIPT_LUACHECK_SIZE);
