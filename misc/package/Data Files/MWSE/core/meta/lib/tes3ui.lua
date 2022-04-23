@@ -101,10 +101,8 @@ function tes3ui.getInventorySelectType() end
 function tes3ui.getMenuOnTop() end
 
 --- Gets a standard palette color. Returns an array containing the RGB color values, in the range [0.0, 1.0].
---- 
---- **Standard Color Names**: `active_color`, `active_over_color`, `active_pressed_color`, `answer_color`, `answer_over_color`, `answer_pressed_color`, `background_color`, `big_answer_color`, `big_answer_over_color`, `big_answer_pressed_color`, `big_header_color`, `big_link_color`, `big_link_over_color`, `big_link_pressed_color`, `big_normal_color`, `big_normal_over_color`, `big_normal_pressed_color`, `big_notify_color`, `black_color`, `count_color`, `disabled_color`, `disabled_over_color`, `disabled_pressed_color`, `fatigue_color`, `focus_color`, `header_color`, `health_color`, `health_npc_color`, `journal_finished_quest_color`, `journal_finished_quest_over_color`, `journal_finished_quest_pressed_color`, `journal_link_color`, `journal_link_over_color`, `journal_link_pressed_color`, `journal_topic_color`, `journal_topic_over_color`, `journal_topic_pressed_color`, `link_color`, `link_over_color`, `link_pressed_color`, `magic_color`, `magic_fill_color`, `misc_color`, `negative_color`, `normal_color`, `normal_over_color`, `normal_pressed_color`, `notify_color`, `positive_color`, `weapon_fill_color`, `white_color`
---- @param name string The name of the palette color.
---- @return table result No description yet available.
+--- @param name string The name of the palette color. Maps to values in [`tes3.palette`](https://mwse.github.io/MWSE/references/palettes/) enumeration.
+--- @return number[] palette An array containing the RGB color values, in the range [0.0, 1.0].
 function tes3ui.getPalette(name) end
 
 --- Returns the mobile actor currently providing services to the player.
