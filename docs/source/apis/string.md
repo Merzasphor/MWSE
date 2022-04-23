@@ -50,13 +50,13 @@ Specifier | Output												  | Example
 `%%`	  | The literal `%` character.							  | %
 
 ```lua
-local result = string.format(format, unknown)
+local result = string.format(format, values)
 ```
 
 **Parameters**:
 
 * `format` (string): The format string to use for the output.
-* `unnamed` (values): *Optional*. Values to format into the given string.
+* `values` (any): *Optional*. Values to format into the given string.
 
 **Returns**:
 

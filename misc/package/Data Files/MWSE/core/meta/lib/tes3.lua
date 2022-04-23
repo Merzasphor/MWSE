@@ -932,7 +932,8 @@ function tes3.getDialogueInfo(dialogue, id) end
 --- `skill`: number — *Default*: `-1`. If effect parameter specified is: Absorb, Damage, Drain, Fortify or Restore Skill, a skill should be provided. This also applies to any custom spell effect which operates on a certain skill. This value maps to [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) constants.
 --- 
 --- `attribute`: number — *Default*: `-1`. If effect parameter specified is: Absorb, Damage, Drain, Fortify or Restore Attribute, an attribute should be provided. This also applies to any custom spell effect which operates on a certain attribute. This value maps to [`tes3.attribute`](https://mwse.github.io/MWSE/references/attributes/) constants.
---- @return number, number effectiveMagnitude, magnitude No description yet available.
+--- @return number effectiveMagnitude The effective magnitude after all the actor's resistances are applied.
+--- @return number magnitude The magnitude before any of the actor's resistances are applied.
 function tes3.getEffectMagnitude(params) end
 
 ---Table parameter definitions for `tes3.getEffectMagnitude`.
@@ -1336,7 +1337,7 @@ function tes3.isKeyEqual(params) end
 --- Determines if the player has a given lua mod active. The key passed to this function is the path to where its main.lua file is, relative to the MWSE\\mods folder. Slashes are automatically replaced with periods, and the key is case-insensitive.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3/#tes3isluamodactive).
---- @param key string The key to check..
+--- @param key string The key to check.
 --- @return boolean isActive True if the mod is active, otherwise false.
 function tes3.isLuaModActive(key) end
 
@@ -1659,7 +1660,7 @@ function tes3.random(seed) end
 --- 
 --- `observeAppCullFlag`: boolean — *Default*: `true`. Ignore intersections with culled (hidden) models.
 --- 
---- `root`: node* — *Default*: `tes3.game.worldSceneGraphRoot`. Node pointer to node scene.
+--- `root`: niBillboardNode|niCollisionSwitch|niNode|niSwitchNode — *Default*: `tes3.game.worldSceneGraphRoot`. Node pointer to node scene.
 --- 
 --- `ignoreSkinned`: boolean — *Default*: `false`. Ignore results from skinned objects.
 --- 
@@ -1686,7 +1687,7 @@ function tes3.rayTest(params) end
 --- @field useModelCoordinates boolean *Default*: `false`. If true, model coordinates will be used instead of world coordinates.
 --- @field useBackTriangles boolean *Default*: `false`. Include intersections with back-facing triangles.
 --- @field observeAppCullFlag boolean *Default*: `true`. Ignore intersections with culled (hidden) models.
---- @field root node* *Default*: `tes3.game.worldSceneGraphRoot`. Node pointer to node scene.
+--- @field root niBillboardNode|niCollisionSwitch|niNode|niSwitchNode *Default*: `tes3.game.worldSceneGraphRoot`. Node pointer to node scene.
 --- @field ignoreSkinned boolean *Default*: `false`. Ignore results from skinned objects.
 --- @field returnColor boolean *Default*: `false`. Calculate and return the vertex color at intersections.
 --- @field returnNormal boolean *Default*: `true`. Calculate and return the vertex normal at intersections.

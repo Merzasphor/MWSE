@@ -11,8 +11,10 @@ return {
 			{ name = "attribute", optional = true, default = -1, type = "number", description = "If effect parameter specified is: Absorb, Damage, Drain, Fortify or Restore Attribute, an attribute should be provided. This also applies to any custom spell effect which operates on a certain attribute. This value maps to [`tes3.attribute`](https://mwse.github.io/MWSE/references/attributes/) constants." },
 		},
 	}},
-	returns = "effectiveMagnitude, magnitude",
-	valuetype = "number, number",
+	returns = {
+		{ name = "effectiveMagnitude", type = "number", description = "The effective magnitude after all the actor's resistances are applied." },
+		{ name = "magnitude", type = "number", description = "The magnitude before any of the actor's resistances are applied." },
+	},
 	examples = {
 		["getOneMagnitude"] = {
 			title = "Get magnitude after resistances are applied.",

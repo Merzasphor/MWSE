@@ -1610,7 +1610,8 @@ local effectiveMagnitude, magnitude = tes3.getEffectMagnitude({ reference = ...,
 
 **Returns**:
 
-* `effectiveMagnitude, magnitude` (number, number)
+* `effectiveMagnitude` (number): The effective magnitude after all the actor's resistances are applied.
+* `magnitude` (number): The magnitude before any of the actor's resistances are applied.
 
 ??? example "Example: Get both magnitudes."
 
@@ -2569,7 +2570,7 @@ local isActive = tes3.isLuaModActive(key)
 
 **Parameters**:
 
-* `key` (string): The key to check..
+* `key` (string): The key to check.
 
 **Returns**:
 
@@ -3072,7 +3073,7 @@ local result = tes3.rayTest({ position = ..., direction = ..., findAll = ..., ma
 	* `useModelCoordinates` (boolean): *Default*: `false`. If true, model coordinates will be used instead of world coordinates.
 	* `useBackTriangles` (boolean): *Default*: `false`. Include intersections with back-facing triangles.
 	* `observeAppCullFlag` (boolean): *Default*: `true`. Ignore intersections with culled (hidden) models.
-	* `root` (node*): *Default*: `tes3.game.worldSceneGraphRoot`. Node pointer to node scene.
+	* `root` ([niNode](../../types/niNode)): *Default*: `tes3.game.worldSceneGraphRoot`. Node pointer to node scene.
 	* `ignoreSkinned` (boolean): *Default*: `false`. Ignore results from skinned objects.
 	* `returnColor` (boolean): *Default*: `false`. Calculate and return the vertex color at intersections.
 	* `returnNormal` (boolean): *Default*: `true`. Calculate and return the vertex normal at intersections.
