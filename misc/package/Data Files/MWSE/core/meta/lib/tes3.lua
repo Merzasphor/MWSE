@@ -737,7 +737,7 @@ function tes3.fadeTo(params) end
 --- `position`: tes3vector3 — *Optional*. The position to search from.
 --- 
 --- `range`: number — The distance around the position to search. An actor is included if the centre of their body is in range.
---- @return table mobileList No description yet available.
+--- @return tes3mobileActor[] mobileList No description yet available.
 function tes3.findActorsInProximity(params) end
 
 ---Table parameter definitions for `tes3.findActorsInProximity`.
@@ -1424,7 +1424,7 @@ function tes3.menuMode() end
 --- 
 --- `message`: string — No description yet available.
 --- 
---- `buttons`: table — *Optional*. An array of strings to use for buttons.
+--- `buttons`: string[] — *Optional*. An array of strings to use for buttons.
 --- 
 --- `callback`: function — No description yet available.
 --- 
@@ -1438,7 +1438,7 @@ function tes3.messageBox(messageOrParams, ...) end
 ---Table parameter definitions for `tes3.messageBox`.
 --- @class tes3.messageBox.params
 --- @field message string No description yet available.
---- @field buttons table *Optional*. An array of strings to use for buttons.
+--- @field buttons string[] *Optional*. An array of strings to use for buttons.
 --- @field callback function No description yet available.
 --- @field showInDialog boolean *Default*: `true`. Specifying showInDialog = false forces the toast-style message, which is not shown in the dialog menu.
 --- @field duration number *Optional*. Overrides how long the toast-style message remains visible.
@@ -1672,7 +1672,7 @@ function tes3.random(seed) end
 --- 
 --- `returnTexture`: boolean — *Default*: `false`. Calculate and return the texture coordinate at intersections.
 --- 
---- `ignore`: table — *Optional*. An array of references and/or scene graph nodes to cull from the result(s).
+--- `ignore`: tes3reference[]|niNode[] — *Optional*. An array of references and/or scene graph nodes to cull from the result(s).
 --- @return niPickRecord|table result No description yet available.
 function tes3.rayTest(params) end
 
@@ -1693,7 +1693,7 @@ function tes3.rayTest(params) end
 --- @field returnNormal boolean *Default*: `true`. Calculate and return the vertex normal at intersections.
 --- @field returnSmoothNormal boolean *Default*: `false`. Use normal interpolation for calculating vertex normals.
 --- @field returnTexture boolean *Default*: `false`. Calculate and return the texture coordinate at intersections.
---- @field ignore table *Optional*. An array of references and/or scene graph nodes to cull from the result(s).
+--- @field ignore tes3reference[]|niNode[] *Optional*. An array of references and/or scene graph nodes to cull from the result(s).
 
 --- Simulates releasing a keyboard key.
 --- @param keyCode number Maps to values in [`tes3.scanCode`](https://mwse.github.io/MWSE/references/scan-codes/) namespace.
@@ -1983,7 +1983,7 @@ function tes3.setAITravel(params) end
 --- 
 --- `reference`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference — No description yet available.
 --- 
---- `idles`: table — No description yet available.
+--- `idles`: number[] — No description yet available.
 --- 
 --- `range`: number — *Optional*. No description yet available.
 --- 
@@ -1997,7 +1997,7 @@ function tes3.setAIWander(params) end
 ---Table parameter definitions for `tes3.setAIWander`.
 --- @class tes3.setAIWander.params
 --- @field reference tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference No description yet available.
---- @field idles table No description yet available.
+--- @field idles number[] No description yet available.
 --- @field range number *Optional*. No description yet available.
 --- @field duration number *Optional*. No description yet available.
 --- @field time number *Optional*. No description yet available.

@@ -20,7 +20,7 @@ return {
 			{ name = "returnNormal", type = "boolean", default = true, description = "Calculate and return the vertex normal at intersections." },
 			{ name = "returnSmoothNormal", type = "boolean", default = false, description = "Use normal interpolation for calculating vertex normals." },
 			{ name = "returnTexture", type = "boolean", default = false, description = "Calculate and return the texture coordinate at intersections." },
-			{ name = "ignore", type = "table", description = "An array of references and/or scene graph nodes to cull from the result(s).", optional = true },
+			{ name = "ignore", type = "tes3reference[]|niNode[]", description = "An array of references and/or scene graph nodes to cull from the result(s).", optional = true },
 		},
 	}},
 	examples = {

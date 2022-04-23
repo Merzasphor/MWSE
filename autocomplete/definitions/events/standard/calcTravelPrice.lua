@@ -27,9 +27,9 @@ return {
 			description = "The travel marker that marks the destination.",
 		},
 		["companions"] = {
-			type = "table",
+			type = "tes3reference[]|nil",
 			readOnly = true,
-			description = "A table of companions (`tes3reference`s) that will travel with the player, or `nil` if no companions are present."
+			description = "Companions that will travel with the player, or `nil` if no companions are present."
 		},
 	},
 }

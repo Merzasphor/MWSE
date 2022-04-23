@@ -10,5 +10,5 @@ return {
 			{ name = "range", type = "number", description = "The distance around the position to search. An actor is included if the centre of their body is in range." },
 		},
 	}},
-	returns = {{ name = "mobileList", type = "table" }},
+	returns = {{ name = "mobileList", type = "tes3mobileActor[]" }},
 }

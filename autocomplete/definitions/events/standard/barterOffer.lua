@@ -22,14 +22,14 @@ return {
 			description = "Offered gold amount.",
 		},
 		["selling"] = {
-			type = "table",
+			type = "tes3inventoryTile[]",
 			readOnly = true,
-			description = "Table of [`tes3inventoryTile`](https://mwse.github.io/MWSE/types/tes3inventoryTile/) objects being sold. These items will be transfered to bartender's inventory on a successful bartering event.",
+			description = "The objects being sold. These items will be transfered to bartender's inventory on a successful bartering event.",
 		},
 		["buying"] = {
-			type = "table",
+			type = "tes3inventoryTile[]",
 			readOnly = true,
-			description = "Table of [`tes3inventoryTile`](https://mwse.github.io/MWSE/types/tes3inventoryTile/) objects being bought. These items will be transfered to player's inventory on a successful bartering event.",
+			description = "The objects being bought. These items will be transfered to player's inventory on a successful bartering event.",
 		},
 	},
 	blockable = true,

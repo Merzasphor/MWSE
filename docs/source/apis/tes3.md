@@ -1102,7 +1102,7 @@ local mobileList = tes3.findActorsInProximity({ reference = ..., position = ...,
 
 **Returns**:
 
-* `mobileList` (table)
+* `mobileList` ([tes3mobileActor](../../types/tes3mobileActor)[])
 
 ***
 
@@ -2799,7 +2799,7 @@ local element = tes3.messageBox({ message = ..., buttons = ..., callback = ..., 
 
 * `messageOrParams` (string, table)
 	* `message` (string)
-	* `buttons` (table): *Optional*. An array of strings to use for buttons.
+	* `buttons` (string[]): *Optional*. An array of strings to use for buttons.
 	* `callback` (function)
 	* `showInDialog` (boolean): *Default*: `true`. Specifying showInDialog = false forces the toast-style message, which is not shown in the dialog menu.
 	* `duration` (number): *Optional*. Overrides how long the toast-style message remains visible.
@@ -3079,7 +3079,7 @@ local result = tes3.rayTest({ position = ..., direction = ..., findAll = ..., ma
 	* `returnNormal` (boolean): *Default*: `true`. Calculate and return the vertex normal at intersections.
 	* `returnSmoothNormal` (boolean): *Default*: `false`. Use normal interpolation for calculating vertex normals.
 	* `returnTexture` (boolean): *Default*: `false`. Calculate and return the texture coordinate at intersections.
-	* `ignore` (table): *Optional*. An array of references and/or scene graph nodes to cull from the result(s).
+	* `ignore` ([tes3reference](../../types/tes3reference)[], [niNode](../../types/niNode)[]): *Optional*. An array of references and/or scene graph nodes to cull from the result(s).
 
 **Returns**:
 
@@ -3505,7 +3505,7 @@ tes3.setAIWander({ reference = ..., idles = ..., range = ..., duration = ..., ti
 
 * `params` (table)
 	* `reference` ([tes3mobileActor](../../types/tes3mobileActor), [tes3reference](../../types/tes3reference))
-	* `idles` (table)
+	* `idles` (number[])
 	* `range` (number): *Optional*.
 	* `duration` (number): *Optional*.
 	* `time` (number): *Optional*.
