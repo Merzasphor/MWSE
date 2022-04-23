@@ -524,7 +524,7 @@ namespace mwse::lua {
 
 			auto existingObject = TES3::DataHandler::get()->nonDynamicData->resolveObject(id.c_str());
 			if (existingObject) {
-				if (existingObject->objectType == TES3::ObjectType::Enchantment) {
+				if (getIfExists && existingObject->objectType == TES3::ObjectType::Enchantment) {
 					return existingObject;
 				}
 				else {
@@ -588,7 +588,7 @@ namespace mwse::lua {
 
 			auto existingObject = TES3::DataHandler::get()->nonDynamicData->resolveObject(id.c_str());
 			if (existingObject) {
-				if (existingObject->objectType == TES3::ObjectType::Book) {
+				if (getIfExists && existingObject->objectType == TES3::ObjectType::Book) {
 					return existingObject;
 				}
 				else {
