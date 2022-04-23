@@ -9,5 +9,5 @@ return {
 		},
 	}},
 	returns = "animData",
-	valuetype = "table",
+	valuetype = "number[]",
 }

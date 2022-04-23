@@ -827,14 +827,14 @@ function tes3.force3rdPerson() end
 function tes3.get3rdPersonCameraOffset() end
 
 --- Returns a table of active cells. If indoors, the table will have only one entry. If outdoors, the 9 surrounding cells will be provided.
---- @return table cells No description yet available.
+--- @return tes3cell[] cells No description yet available.
 function tes3.getActiveCells() end
 
 --- This function fetches a reference's attached animation groups.
 --- @param params tes3.getAnimationGroups.params This table accepts the following values:
 --- 
 --- `reference`: tes3reference — A reference whose animation groups to fetch.
---- @return table animData No description yet available.
+--- @return number[] animData No description yet available.
 function tes3.getAnimationGroups(params) end
 
 ---Table parameter definitions for `tes3.getAnimationGroups`.
@@ -845,7 +845,7 @@ function tes3.getAnimationGroups(params) end
 --- @param params tes3.getAnimationTiming.params This table accepts the following values:
 --- 
 --- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — A reference whose animation groups' timings to fetch.
---- @return table result No description yet available.
+--- @return number[] result No description yet available.
 function tes3.getAnimationTiming(params) end
 
 ---Table parameter definitions for `tes3.getAnimationTiming`.
@@ -853,7 +853,7 @@ function tes3.getAnimationTiming(params) end
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string A reference whose animation groups' timings to fetch.
 
 --- Returns a 1-indexed table of active archives.
---- @return table archives No description yet available.
+--- @return tes3archive[] archives No description yet available.
 function tes3.getArchiveList() end
 
 --- Fetches an attachment with a given type.
@@ -906,7 +906,7 @@ function tes3.getCurrentAIPackageId(reference) end
 function tes3.getCurrentWeather() end
 
 --- Returns a table with values x and y that contain the current cursor position.
---- @return table table No description yet available.
+--- @return tes3vector2 position No description yet available.
 function tes3.getCursorPosition() end
 
 --- Returns the number of days in a given month. This may be altered if a Morrowind Code Patch feature was installed.
@@ -1036,7 +1036,7 @@ function tes3.getKillCount(params) end
 --- @field actor tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance|string *Optional*. The actor (or their ID) for whom to retrieve player's kill count.
 
 --- Returns a table with complete player kill counts. The table returned is formated so actor IDs are table keys and kill count of that type of actor is value.
---- @return table killMap No description yet available.
+--- @return table<tes3actor, number> killMap No description yet available.
 function tes3.getKillCounts() end
 
 --- Gets the language as an ISO string (e.g. "eng"), determined by the language entry in Morrowind.ini and the detected executable. Maps to values in the [`tes3.language`](https://mwse.github.io/MWSE/references/languages/) table.
@@ -1107,7 +1107,7 @@ function tes3.getMagicSourceInstanceBySerial(params) end
 --- @field serialNumber number No description yet available.
 
 --- Fetches the list of the active ESM and ESP files.
---- @return table modList No description yet available.
+--- @return string[] modList No description yet available.
 function tes3.getModList() end
 
 --- Fetches the core game object for a given object ID.

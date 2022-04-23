@@ -100,7 +100,7 @@ namespace mwse::lua {
 					return existingObject;
 				}
 
-				throw std::invalid_argument{ "tes3.createObject: 'id' parameter already assigned to an existing object that is not a weapon item." };
+				throw std::invalid_argument{ "tes3.createObject: 'id' parameter already assigned to an existing object that is not an alchemy item." };
 			}
 
 			std::string name = getOptionalParam<std::string>(params, "name", {});
@@ -170,7 +170,7 @@ namespace mwse::lua {
 			if (auto existingObject = TES3::DataHandler::get()->nonDynamicData->resolveObject(id.c_str()); existingObject != nullptr) {
 				return (getIfExists && existingObject->objectType == TES3::ObjectType::Container) ?
 					existingObject :
-					throw std::invalid_argument{ "tes3.createObject: 'id' parameter already assigned to an existing object that is not a misc item." };
+					throw std::invalid_argument{ "tes3.createObject: 'id' parameter already assigned to an existing object that is not a container." };
 			}
 
 			std::string name = getOptionalParam<std::string>(params, "name", "Container");
@@ -286,7 +286,7 @@ namespace mwse::lua {
 					return existingObject;
 				}
 
-				throw std::invalid_argument{ "tes3.createObject: 'id' parameter already assigned to an existing object that is not a weapon item." };
+				throw std::invalid_argument{ "tes3.createObject: 'id' parameter already assigned to an existing object that is not a sound." };
 			}
 
 			std::string filename = getOptionalParam<std::string>(params, "filename", {});
@@ -332,7 +332,7 @@ namespace mwse::lua {
 					return existingObject;
 				}
 
-				throw std::invalid_argument{ "tes3.createObject: 'id' parameter already assigned to an existing object that is not a weapon item." };
+				throw std::invalid_argument{ "tes3.createObject: 'id' parameter already assigned to an existing object that is not a spell." };
 			}
 
 			std::string name = getOptionalParam<std::string>(params, "name", {});
@@ -398,7 +398,7 @@ namespace mwse::lua {
 					return existingObject;
 				}
 
-				throw std::invalid_argument{ "tes3.createObject: 'id' parameter already assigned to an existing object that is not a weapon item." };
+				throw std::invalid_argument{ "tes3.createObject: 'id' parameter already assigned to an existing object that is not a static." };
 			}
 
 			std::string mesh = getOptionalParam<std::string>(params, "mesh", {});
@@ -441,7 +441,7 @@ namespace mwse::lua {
 					return existingObject;
 				}
 
-				throw std::invalid_argument{ "tes3.createObject: 'id' parameter already assigned to an existing object of a different type." };
+				throw std::invalid_argument{ "tes3.createObject: 'id' parameter already assigned to an existing object that is not a weapon item." };
 			}
 
 			std::string name = getOptionalParam<std::string>(params, "name", "Miscellaneous item");
@@ -522,14 +522,12 @@ namespace mwse::lua {
 			if (id.size() > 31)
 				throw std::invalid_argument{ "tes3.createObject: 'id' parameter must be less than 32 character long." };
 
-			auto existingObject = TES3::DataHandler::get()->nonDynamicData->resolveObject(id.c_str());
-			if (existingObject) {
+			if (auto existingObject = TES3::DataHandler::get()->nonDynamicData->resolveObject(id.c_str()); existingObject != nullptr) {
 				if (getIfExists && existingObject->objectType == TES3::ObjectType::Enchantment) {
 					return existingObject;
 				}
-				else {
-					throw std::invalid_argument{ "tes3.createObject: 'id' parameter already assigned to an existing object that is not an enchantment." };
-				}
+
+				throw std::invalid_argument{ "tes3.createObject: 'id' parameter already assigned to an existing object that is not an enchantment." };
 			}
 
 			auto castType = getOptionalParam(params, "castType", TES3::EnchantmentCastType::Invalid);

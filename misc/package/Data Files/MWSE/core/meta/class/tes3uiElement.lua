@@ -23,7 +23,7 @@
 --- @field childAlignY number See childAlignX.
 --- @field childOffsetX number Integer number. View offset in pixels, applied to the position of child nodes. Used in scroll panes.
 --- @field childOffsetY number See childOffsetX.
---- @field children table *Read-only*. A table containing references to child elements. This is a copy that does not track changes.
+--- @field children tes3uiElement[] *Read-only*. The child elements of this element. This is a copy that does not track changes.
 --- @field color number[] The RGB color of the element. An array of 3 numbers with values ranging from `0.0` to `1.0`. For menus and rects, it sets the background colour. For text, it sets the text colour. For images, it multiplies the image by the colour.
 --- @field consumeMouseEvents boolean When `true`, mouse events over this element are sent to event handlers, or discarded if there is no handler. When `false`, mouse events go upwards to the first ancestor that can consume mouse events. Useful to set on widget sub-elements. `true` by default.
 --- @field contentType string *Read-only*. The type of content this `tes3uiElement` represents. Maps to values in [`tes3.contentType`](https://mwse.github.io/MWSE/references/content-types/).

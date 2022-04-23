@@ -152,11 +152,11 @@ See childOffsetX.
 
 ### `children`
 
-*Read-only*. A table containing references to child elements. This is a copy that does not track changes.
+*Read-only*. The child elements of this element. This is a copy that does not track changes.
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3uiElement](../../types/tes3uiElement)[])
 
 ***
 
