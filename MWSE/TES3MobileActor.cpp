@@ -778,13 +778,17 @@ namespace TES3 {
 		// Equipping weapons while they are in use breaks animations and AI.
 		if (item->objectType == ObjectType::Weapon && isAttackingOrCasting()) {
 			return false;
-		}
+		}		
 
 		// Check if item exists in the inventory.
 		ItemStack* s = actor->inventory.findItemStack(item);
 		if (!s) {
 			if (addItem) {
-				TES3_MobileActor_wearItem(this, item, itemData, addItem, false);
+				actor->addItem(static_cast<Item*>(item), 1);
+				if (actorType == MobileActorType::Player) {
+					UI::forcePlayerInventoryUpdate();
+				}
+				TES3_MobileActor_wearItem(this, item, itemData, false, false);
 				return true;
 			}
 			return false;
