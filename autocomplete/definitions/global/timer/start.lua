@@ -10,6 +10,7 @@ return {
 			{ name = "callback", type = "function", description = "The callback function that will execute when the timer expires." },
 			{ name = "iterations", type = "number", optional = true, default = 1, description = "The number of iterations to run. Use `-1` for infinite looping." },
 			{ name = "persist", type = "boolean", optional = true, default = true, description = "Registering a timer with persist flag set to `true` will serialize the callback string in the save to persist between sessions. Only a registered timer will persist between sessions. See `timer.register()`." },
+			{ name = "data", type = "table", optional = true, description = "Data to be attached to the timer. If this is a persistent timer, the data must be json-serializable, matching the same limitations as data stored on references." },
 		}
 	}},
 	returns = "timer",

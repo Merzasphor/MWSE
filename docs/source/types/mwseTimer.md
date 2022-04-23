@@ -6,7 +6,7 @@ A Timer is a class used to keep track of callback that should be invoked at a la
 
 ### `callback`
 
-The callback that will be invoked when the timer elapses.
+*Read-only*. The callback that will be invoked when the timer elapses.
 
 **Returns**:
 
@@ -14,9 +14,19 @@ The callback that will be invoked when the timer elapses.
 
 ***
 
+### `data`
+
+Arbitrary json-serializable data stored in the timer. This defaults to `nil`, but can be set at the time of timer creation, or changed later.
+
+**Returns**:
+
+* `result` (table, nil)
+
+***
+
 ### `duration`
 
-The amount of time left on the timer.
+*Read-only*. The amount of time left on the timer.
 
 **Returns**:
 
@@ -26,7 +36,7 @@ The amount of time left on the timer.
 
 ### `iterations`
 
-The amount of iterations left for the timer.
+*Read-only*. The amount of iterations left for the timer.
 
 **Returns**:
 
@@ -36,7 +46,7 @@ The amount of iterations left for the timer.
 
 ### `state`
 
-The state of the timer, matching `timer.active`, `timer.paused`, or `timer.expired`.
+*Read-only*. The state of the timer, matching `timer.active`, `timer.paused`, or `timer.expired`.
 
 **Returns**:
 
@@ -46,7 +56,7 @@ The state of the timer, matching `timer.active`, `timer.paused`, or `timer.expir
 
 ### `timeLeft`
 
-The amount of time left before this timer will complete.
+*Read-only*. The amount of time left before this timer will complete.
 
 **Returns**:
 
@@ -56,7 +66,7 @@ The amount of time left before this timer will complete.
 
 ### `timing`
 
-When this timer ends, or the time remaining if the timer is paused.
+*Read-only*. When this timer ends, or the time remaining if the timer is paused.
 
 **Returns**:
 

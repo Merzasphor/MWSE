@@ -46,7 +46,7 @@ namespace mwse::lua {
 		return m_Clock;
 	}
 
-	std::shared_ptr<Timer> TimerController::createTimer(double duration, sol::object callback, int iterations, bool persist) {
+	std::shared_ptr<Timer> TimerController::createTimer(double duration, sol::object callback, int iterations, bool persist, sol::table data) {
 		// Validate parameters.
 		if (callback == sol::nil) {
 			throw std::invalid_argument("Could not create timer: Callback function is nil.");
@@ -75,6 +75,7 @@ namespace mwse::lua {
 		timer->iterationCount = iterations;
 		timer->callback = callback;
 		timer->isPersistent = persist;
+		timer->data = data;
 
 		// Find the position in the list to add this timer, and add it.
 		insertActiveTimer(timer);
@@ -300,15 +301,29 @@ namespace mwse::lua {
 	}
 
 	sol::table Timer::toTable(sol::this_state ts) const {
-		sol::state_view sv = ts;
-		sol::table t = sv.create_table();
+		if (!isPersistent || state == TimerState::Expired || callback.is<std::string>()) {
+			return sol::nil;
+		}
+
+		sol::state_view lua = ts;
+		sol::table t = lua.create_table();
+
 		t["c"] = LuaManager::getInstance().getTimerControllerType(controller.lock());
-		t["s"] = state;
+		if (state != TimerState::Active) {
+			t["s"] = state;
+		}
 		t["d"] = duration;
 		t["t"] = timing;
-		t["i"] = iterations;
+		if (iterations != -1) {
+			t["i"] = iterations;
+		}
 		t["x"] = callback;
-		t["p"] = isPersistent;
+
+		static sol::protected_function table_empty = lua["table"]["empty"];
+		if (data != sol::nil && !table_empty(data, true)) {
+			t["j"] = data;
+		}
+
 		return t;
 	}
 
@@ -316,12 +331,13 @@ namespace mwse::lua {
 		auto timer = std::make_shared<Timer>();
 
 		timer->controller = LuaManager::getInstance().getTimerController(t["c"]);
-		timer->state = t["s"];
+		timer->state = t.get_or("c", TimerState::Active);
 		timer->duration = t["d"];
 		timer->timing = t["t"];
-		timer->iterations = t["i"];
+		timer->iterations = t.get_or("i", -1);
 		timer->callback = t["x"];
-		timer->isPersistent = t["p"];
+		timer->isPersistent = true;
+		timer->data = t.get_or<sol::table>("j", sol::nil);
 
 		auto controller = timer->controller.lock();
 
@@ -342,9 +358,10 @@ namespace mwse::lua {
 	// Create and return a timer given a controller and a table of parameters.
 	std::shared_ptr<Timer> startTimer(TimerController* controller, sol::table params) {
 		// Get the timer variables.
-		double duration = getOptionalParam<double>(params, "duration", 0.0);
-		int iterations = getOptionalParam<int>(params, "iterations", 1);
-		bool persists = getOptionalParam<bool>(params, "persist", true);
+		auto duration = getOptionalParam<double>(params, "duration", 0.0);
+		auto iterations = getOptionalParam<int>(params, "iterations", 1);
+		auto persists = getOptionalParam<bool>(params, "persist", true);
+		auto data = getOptionalParam<sol::table>(params, "data", sol::nil);
 
 		// Allow infinite repeat.
 		if (iterations <= 0) {
@@ -352,7 +369,7 @@ namespace mwse::lua {
 		}
 
 		// Create the timer.
-		return controller->createTimer(duration, params["callback"], iterations, persists);
+		return controller->createTimer(duration, params["callback"], iterations, persists, data);
 	}
 
 	// Create a timer, as above, but get the controller from params.type.
@@ -479,6 +496,7 @@ namespace mwse::lua {
 			usertypeDefinition["new"] = sol::no_constructor;
 
 			// Basic property binding.
+			usertypeDefinition["data"] = &Timer::data;
 			usertypeDefinition["duration"] = sol::readonly_property(&Timer::duration);
 			usertypeDefinition["iterations"] = sol::readonly_property(&Timer::iterations);
 			usertypeDefinition["state"] = sol::readonly_property(&Timer::state);

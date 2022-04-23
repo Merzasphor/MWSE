@@ -21,7 +21,7 @@ The current clock time for this timer controller.
 Creates a timer for the given Timer Controller.
 
 ```lua
-local timer = mwseTimerController:create({ type = ..., duration = ..., callback = ..., iterations = ... })
+local timer = mwseTimerController:create({ type = ..., duration = ..., callback = ..., iterations = ..., data = ... })
 ```
 
 **Parameters**:
@@ -31,6 +31,7 @@ local timer = mwseTimerController:create({ type = ..., duration = ..., callback 
 	* `duration` (number)
 	* `callback` (function)
 	* `iterations` (number): *Optional*.
+	* `data` (table, nil)
 
 **Returns**:
 

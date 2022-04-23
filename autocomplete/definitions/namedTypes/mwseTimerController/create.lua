@@ -9,6 +9,7 @@ return {
 			{ name = "duration", type = "number" },
 			{ name = "callback", type = "function" },
 			{ name = "iterations", type = "number", optional = true },
+			{ name = "data", type = "table|nil" },
 		}
 	}},
 	returns = "timer",

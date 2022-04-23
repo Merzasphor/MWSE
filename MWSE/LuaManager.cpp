@@ -5264,16 +5264,14 @@ namespace mwse::lua {
 		std::vector<std::shared_ptr<TimerController>> timers = { gameTimers, simulateTimers, realTimers };
 		for (auto& controller : timers) {
 			for (auto& timer : controller->m_ActiveTimers) {
-				if (timer->isPersistent) {
-					auto t = timer->toTable(luaState.lua_state());
-					t["p"] = sol::nil;
+				auto t = timer->toTable(luaState.lua_state());
+				if (t != sol::nil) {
 					list.add(t);
 				}
 			}
 			for (auto& timer : controller->m_PausedTimers) {
-				if (timer->isPersistent) {
-					auto t = timer->toTable(luaState.lua_state());
-					t["p"] = sol::nil;
+				auto t = timer->toTable(luaState.lua_state());
+				if (t != sol::nil) {
 					list.add(t);
 				}
 			}
