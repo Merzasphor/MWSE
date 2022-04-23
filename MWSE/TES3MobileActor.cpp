@@ -778,7 +778,7 @@ namespace TES3 {
 		// Equipping weapons while they are in use breaks animations and AI.
 		if (item->objectType == ObjectType::Weapon && isAttackingOrCasting()) {
 			return false;
-		}		
+		}
 
 		// Check if item exists in the inventory.
 		ItemStack* s = actor->inventory.findItemStack(item);
