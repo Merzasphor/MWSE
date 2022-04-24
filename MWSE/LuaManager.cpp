@@ -2397,6 +2397,7 @@ namespace mwse::lua {
 				// Store a version of its path as a key to be checked with tes3.isLuaModActive.
 				auto luaModKey = pathString.substr(luaDirectoryLength + 1, pathString.length() - luaDirectoryLength - luaFilenameLength - 2);
 				std::replace(luaModKey.begin(), luaModKey.end(), '\\', '.');
+				string::to_lower(luaModKey);
 				activeLuaMods[luaModKey] = true;
 			}
 		}

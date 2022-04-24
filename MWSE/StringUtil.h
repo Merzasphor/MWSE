@@ -100,4 +100,8 @@ namespace mwse::string {
 		trim(s);
 		return s;
 	}
+
+	static inline void to_lower(std::string& s) {
+		std::transform(s.begin(), s.end(), s.begin(), [](unsigned char c) { return std::tolower(c); });
+	}
 }
