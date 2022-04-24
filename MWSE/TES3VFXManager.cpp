@@ -10,6 +10,9 @@ namespace TES3 {
 	//
 
 	MagicSourceInstance* VFX::getSourceInstance() const {
+		if (sourceInstanceSerial == 0) {
+			return nullptr;
+		}
 		return TES3::WorldController::get()->magicInstanceController->getInstanceFromSerial(sourceInstanceSerial);
 	}
 
