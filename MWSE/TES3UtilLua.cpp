@@ -3542,19 +3542,19 @@ namespace mwse::lua {
 
 				// Then transfer over items with data.
 				while (itemsLeftToTransfer > 0) {
-					TES3::ItemData** itemDataRef = nullptr;
+					TES3::ItemData* itemDataRef = nullptr;
 
 					if (fromStack->variables) {
 						// We need to unequip the item first.
 						auto removedEquipStack = fromActor->unequipItem(item, false, fromMobile, false, fromStack->variables->at(0));
 						if (removedEquipStack == nullptr) {
 							// If nothing was returned then the item wasn't equipped. So transfer using the first data.
-							itemDataRef = &fromStack->variables->at(0);
+							itemDataRef = fromStack->variables->at(0);
 						}
 						else {
 							// Item was unequipped, but remains the first item? Preserve the item data.
 							if (fromStack->variables && fromStack->variables->at(0) == removedEquipStack->itemData) {
-								itemDataRef = &fromStack->variables->at(0);
+								itemDataRef = fromStack->variables->at(0);
 							}
 
 							// Clean up after our check and manually delete.
@@ -3565,12 +3565,12 @@ namespace mwse::lua {
 						}
 					}
 
-					toActor->inventory.addItem(toMobile, item, 1, false, itemDataRef);
-					fromActor->inventory.removeItemWithData(fromMobile, item, itemDataRef ? *itemDataRef : nullptr, 1, false);
+					toActor->inventory.addItem(toMobile, item, 1, false, &itemDataRef);
+					fromActor->inventory.removeItemWithData(fromMobile, item, itemDataRef, 1, false);
 
 					// Set this item's OnPCAdd notification script variable if it exists.
-					if (onPCAdd && itemDataRef && *itemDataRef && (*itemDataRef)->script) {
-						(*itemDataRef)->setScriptShortValue("OnPCAdd", 1);
+					if (onPCAdd && itemDataRef != nullptr && itemDataRef->script) {
+						(itemDataRef)->setScriptShortValue("OnPCAdd", 1);
 					}
 
 					fulfilledCount++;
