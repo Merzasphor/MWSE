@@ -24,6 +24,7 @@
     <ClInclude Include="LuaMagicEffectRemovedEvent.h" />
     <ClInclude Include="LuaMeshLoadEvent.h" />
     <ClInclude Include="LuaSpellResistedEvent.h" />
+    <ClInclude Include="LuaVFXCreatedEvent.h" />
     <ClInclude Include="MathUtil.h" />
     <ClInclude Include="NIQuaternion.h" />
     <ClInclude Include="NIQuaternionLua.h" />
@@ -636,6 +637,7 @@
     <ClCompile Include="LuaUiSpellTooltipEvent.cpp" />
     <ClCompile Include="LuaUnequippedEvent.cpp" />
     <ClCompile Include="LuaUtil.cpp" />
+    <ClCompile Include="LuaVFXCreatedEvent.cpp" />
     <ClCompile Include="LuaWeaponReadiedEvent.cpp" />
     <ClCompile Include="LuaWeaponUnreadiedEvent.cpp" />
     <ClCompile Include="LuaWeatherChangedImmediateEvent.cpp" />

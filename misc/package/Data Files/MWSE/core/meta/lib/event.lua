@@ -144,6 +144,7 @@
 --- @field register fun(eventId: '"uiShowRestMenu"', callback: fun(e: uiShowRestMenuEventData), options: table)
 --- @field register fun(eventId: '"uiSpellTooltip"', callback: fun(e: uiSpellTooltipEventData), options: table)
 --- @field register fun(eventId: '"unequipped"', callback: fun(e: unequippedEventData), options: table)
+--- @field register fun(eventId: '"vfxCreated"', callback: fun(e: vfxCreatedEventData), options: table)
 --- @field register fun(eventId: '"weaponReadied"', callback: fun(e: weaponReadiedEventData), options: table)
 --- @field register fun(eventId: '"weaponUnreadied"', callback: fun(e: weaponUnreadiedEventData), options: table)
 --- @field register fun(eventId: '"weatherChangedImmediate"', callback: fun(e: weatherChangedImmediateEventData), options: table)

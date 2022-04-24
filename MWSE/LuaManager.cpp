@@ -66,6 +66,7 @@
 #include "TES3UIInventoryTile.h"
 #include "TES3UIManager.h"
 #include "TES3UIMenuController.h"
+#include "TES3VFXManager.h"
 #include "TES3Weather.h"
 #include "TES3WeatherController.h"
 #include "TES3WorldController.h"
@@ -5120,6 +5121,19 @@ namespace mwse::lua {
 		auto NPCInstance_reevaluateEquipment = &TES3::NPCInstance::reevaluateEquipment;
 		overrideVirtualTableEnforced(TES3::VirtualTableAddress::NPCInstance, offsetof(TES3::ObjectVirtualTable, reevaluateEquipment), 0x4D9A20, *reinterpret_cast<DWORD*>(&NPCInstance_reevaluateEquipment));
 		genCallEnforced(0x4D83AB, 0x4D9A20, *reinterpret_cast<DWORD*>(&NPCInstance_reevaluateEquipment));
+
+		// Event:: vfxCreated
+		auto TES3_VFXManager_createForMagicEffect = &TES3::VFXManager::createForMagicEffect;
+		genCallEnforced(0x41CCB0, 0x4696A0, *reinterpret_cast<DWORD*>(&TES3_VFXManager_createForMagicEffect));
+		auto TES3_VFXManager_createForSource = &TES3::VFXManager::createForSource;
+		genCallEnforced(0x514D32, 0x469570, *reinterpret_cast<DWORD*>(&TES3_VFXManager_createForSource));
+		genCallEnforced(0x518B0A, 0x469570, *reinterpret_cast<DWORD*>(&TES3_VFXManager_createForSource));
+		auto TES3_VFXManager_createForReference = &TES3::VFXManager::createForReference;
+		genCallEnforced(0x516093, 0x468370, *reinterpret_cast<DWORD*>(&TES3_VFXManager_createForReference));
+		auto TES3_VFXManager_createAtPosition = &TES3::VFXManager::createAtPosition;
+		genCallEnforced(0x516093, 0x468470, *reinterpret_cast<DWORD*>(&TES3_VFXManager_createAtPosition));
+		auto TES3_VFXManager_createForAVObject = &TES3::VFXManager::createForAVObject;
+		genCallEnforced(0x516227, 0x468560, *reinterpret_cast<DWORD*>(&TES3_VFXManager_createForAVObject));
 
 		// UI framework hooks
 		TES3::UI::hook();
