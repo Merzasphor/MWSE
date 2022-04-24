@@ -6,6 +6,11 @@
 #include "TES3IteratedList.h"
 
 namespace TES3 {
+	enum class BookType {
+		Book = 0,
+		Scroll = 1
+	};
+
 	struct Book : Item {
 		IteratedList<TES3::BaseObject*> stolenList; // 0x30
 		char * name; // 0x44
@@ -14,7 +19,7 @@ namespace TES3 {
 		char * icon; // 0x50
 		float weight; // 0x54
 		long value; // 0x58
-		int bookType;
+		BookType bookType;
 		int skillToRaise;
 		int enchantCapacity;
 		Enchantment * enchantment;

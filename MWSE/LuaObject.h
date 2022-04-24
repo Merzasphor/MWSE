@@ -615,11 +615,11 @@ namespace mwse::lua {
 
 			auto enchantment = getOptionalParamObject<TES3::Enchantment>(params, "enchantment");
 			auto enchantCapacity = getOptionalParam<unsigned short>(params, "enchantCapacity", 0);
-			auto bookType = getOptionalParam<unsigned char>(params, "type", 0);
+			auto bookType = getOptionalParam<TES3::BookType>(params, "type", TES3::BookType::Book);
 			if (enchantment && enchantment->objectType == TES3::ObjectType::Enchantment) {
 				book->enchantment = enchantment;
 			}
-			else if (enchantCapacity > 0 && bookType == 1)
+			else if (enchantCapacity > 0 && bookType == TES3::BookType::Scroll)
 				// Prevent creation of books that the player could enchant.
 				// The game crashes if trying to enchant books that aren't from an esp/esm plugin.
 				throw std::invalid_argument{ "tes3.createObject: 'enchantCapacity' parameter must be zero if creating an unenchanted scroll (the game will crash if player tries to enchant it)." };
