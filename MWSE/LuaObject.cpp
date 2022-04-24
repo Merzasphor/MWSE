@@ -9,6 +9,8 @@ namespace mwse::lua {
 			return std::make_unique<ObjectCreator<TES3::Alchemy>>();
 		case TES3::ObjectType::Ammo:
 			return std::make_unique<ObjectCreator<TES3::Weapon>>();
+		case TES3::ObjectType::Book:
+			return std::make_unique<ObjectCreator<TES3::Book>>();
 		case TES3::ObjectType::Container:
 			return std::make_unique<ObjectCreator<TES3::Container>>();
 		case TES3::ObjectType::Misc:
@@ -23,8 +25,6 @@ namespace mwse::lua {
 			return std::make_unique<ObjectCreator<TES3::Enchantment>>();
 		case TES3::ObjectType::Weapon:
 			return std::make_unique<ObjectCreator<TES3::Weapon>>();
-		case TES3::ObjectType::Book:
-			return std::make_unique<ObjectCreator<TES3::Book>>();
 		default:
 			return std::make_unique<InvalidObjectCreator>();
 		}
