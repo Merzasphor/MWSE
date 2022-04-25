@@ -69,7 +69,7 @@ namespace TES3 {
 	const auto TES3_Reference_activate = reinterpret_cast<void(__thiscall*)(Reference*, Reference*, int)>(0x4E9610);
 	void Reference::activate(Reference* activator, int unknown) {
 		// If our event data says to block, don't let the object activate.
-		if (mwse::lua::event::ActivateEvent::getEventEnabled()) {
+		if (mwse::lua::event::ActivateEvent::getEventEnabled() && !isTemporaryInventoryScriptReference()) {
 			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::object response = stateHandle.triggerEvent(new mwse::lua::event::ActivateEvent(activator, this));
 			if (response.get_type() == sol::type::table) {
@@ -885,6 +885,11 @@ namespace TES3 {
 		}
 
 		return {};
+	}
+
+	bool Reference::isTemporaryInventoryScriptReference() const {
+		const auto TES3_Inventory_temporaryReference = reinterpret_cast<Reference*>(0x7CA098);
+		return this == TES3_Inventory_temporaryReference;
 	}
 
 	Inventory * Reference::getInventory() {
