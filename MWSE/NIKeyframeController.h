@@ -15,14 +15,13 @@ namespace NI {
 
 	struct AnimationKey {
 		float timing; // 0x0
-		unsigned char size; // 0x4
 	};
-	static_assert(sizeof(AnimationKey) == 0x8, "TES3::AnimationKey failed size validation");
+	static_assert(sizeof(AnimationKey) == 0x4, "TES3::AnimationKey failed size validation");
 
 	struct FloatKey : AnimationKey {
 		float value; // 0x8
 	};
-	static_assert(sizeof(FloatKey) == 0xC, "TES3::FloatKey failed size validation");
+	static_assert(sizeof(FloatKey) == 0x8, "TES3::FloatKey failed size validation");
 
 	struct KeyframeData : Object {
 		unsigned int rotationKeyCount; // 0x8
