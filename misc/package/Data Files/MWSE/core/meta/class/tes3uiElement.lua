@@ -74,51 +74,51 @@
 tes3uiElement = {}
 
 --- Creates an empty block container inside the element. Used to group and layout elements.
---- @param id string|number *Optional*. An identifier to help find this element later.
+--- @param id string|number|nil *Optional*. An identifier to help find this element later.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createBlock(id) end
 
 --- Creates a clickable button. Register the `mouseClick` event to capture a button press.
 --- 
 --- Button specific properties can be accessed through the `widget` property. The widget type for buttons is [`tes3uiButton`](https://mwse.github.io/MWSE/types/tes3uiButton/).
---- @param id string|number *Optional*. An identifier to help find this element later.
+--- @param id string|number|nil *Optional*. An identifier to help find this element later.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createButton(id) end
 
 --- Creates a textured horizontal divider line, as used in the magic and stat menus. Scales automatically to the container width.
---- @param id string|number *Optional*. An identifier to help find this element later.
+--- @param id string|number|nil *Optional*. An identifier to help find this element later.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createDivider(id) end
 
 --- Creates a horizontal quantity indicator bar.
 --- 
 --- Fillbar specific properties can be accessed through the `widget` property. The widget type for fillbars is [`tes3uiFillBar`](https://mwse.github.io/MWSE/types/tes3uiFillBar/).
---- @param id string|number *Optional*. An identifier to help find this element later.
---- @param current number *Optional*. The current value of the fillbar.
---- @param max number *Optional*. The maximum value of the fillbar.
+--- @param id string|number|nil *Optional*. An identifier to help find this element later.
+--- @param current number? *Optional*. The current value of the fillbar.
+--- @param max number? *Optional*. The maximum value of the fillbar.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createFillBar(id, current, max) end
 
 --- Creates a horizontally scrolling pane.
 --- 
 --- Scroll pane specific properties can be accessed through the `widget` property. The widget type for scroll panes is [`tes3uiScrollPane`](https://mwse.github.io/MWSE/types/tes3uiScrollPane/).
---- @param id string|number *Optional*. An identifier to help find this element later.
+--- @param id string|number|nil *Optional*. An identifier to help find this element later.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createHorizontalScrollPane(id) end
 
 --- Creates a text area with clickable words as links. Usage is still under research.
---- @param id string|number *Optional*. An identifier to help find this element later.
+--- @param id string|number|nil *Optional*. An identifier to help find this element later.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createHypertext(id) end
 
 --- Creates an image element from a texture file. The texture must have power-of-2 dimensions (i.e. 16, 32, 64, 128, 256, 512, 1024); the final display size can be trimmed by setting width and height.
---- @param id string|number *Optional*. An identifier to help find this element later.
+--- @param id string|number|nil *Optional*. An identifier to help find this element later.
 --- @param path string An image path. This path is relative to `Data Files`.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createImage(id, path) end
 
 --- Creates an interactive button composed of images for the **idle**, **over**, and **pressed** states. The texture must have power-of-2 dimensions (i.e. 16, 32, 64, 128, 256, 512, 1024); the final display size can be trimmed by setting width and height.
---- @param id string|number *Optional*. An identifier to help find this element later.
+--- @param id string|number|nil *Optional*. An identifier to help find this element later.
 --- @param idle string The path to the idle image. This path is relative to `Data Files`.
 --- @param over string The path to the mouse hover image. This path is relative to `Data Files`.
 --- @param path string The path to the mouse pressed image. This path is relative to `Data Files`.
@@ -126,13 +126,13 @@ function tes3uiElement:createImage(id, path) end
 function tes3uiElement:createImageButton(id, idle, over, path) end
 
 --- Creates a text label. It defaults to displaying all text on a single line. To get a multi-line label, set `wrap_text` to `true`. The element is created with `autoWidth` and `autoHeight` turned on.
---- @param id string|number *Optional*. An identifier to help find this element later.
+--- @param id string|number|nil *Optional*. An identifier to help find this element later.
 --- @param text string The text to display.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createLabel(id, text) end
 
 --- Creates a NIF model from a file. Still under research.
---- @param id string|number *Optional*. An identifier to help find this element later.
+--- @param id string|number|nil *Optional*. An identifier to help find this element later.
 --- @param text string A model path. This path is relative to `Data Files`.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createNif(id, text) end
@@ -140,63 +140,63 @@ function tes3uiElement:createNif(id, text) end
 --- Creates a multi-line text input element, with line wrapping on. To receive input the keyboard must be captured with `tes3ui.acquireTextInput(element)`. Read the input with the `text` property. Write an initial value to edit by setting the `text` property.
 --- 
 --- Paragraph input specific properties can be accessed through the `widget` property. The widget type for paragraph inputs is [`tes3uiParagraphInput`](https://mwse.github.io/MWSE/types/tes3uiParagraphInput/).
---- @param id string|number *Optional*. An identifier to help find this element later.
+--- @param id string|number|nil *Optional*. An identifier to help find this element later.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createParagraphInput(id) end
 
 --- Creates a filled rectangle. The rectangle is displayed as filled with the element's colour. It supports alpha compositing.
---- @param id string|number *Optional*. An identifier to help find this element later.
---- @param color table *Optional*. The fill colour for the element.
+--- @param id string|number|nil *Optional*. An identifier to help find this element later.
+--- @param color table? *Optional*. The fill colour for the element.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createRect(id, color) end
 
 --- Creates a horizontal slider.
 --- 
 --- Slider specific properties can be accessed through the `widget` property. The widget type for sliders is [`tes3uiSlider`](https://mwse.github.io/MWSE/types/tes3uiSlider/).
---- @param id string|number *Optional*. An identifier to help find this element later.
+--- @param id string|number|nil *Optional*. An identifier to help find this element later.
 --- @param current number The current value of the slider.
 --- @param max number The maximum value of the slider.
---- @param step number *Default*: `1`. The change in value when clicking the left and right arrow buttons.
---- @param jump number *Default*: `5`. The change in value when clicking into the empty areas next to the slider handle.
+--- @param step number? *Default*: `1`. The change in value when clicking the left and right arrow buttons.
+--- @param jump number? *Default*: `5`. The change in value when clicking into the empty areas next to the slider handle.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createSlider(id, current, max, step, jump) end
 
 --- Creates a vertical slider.
 --- 
 --- Slider specific properties can be accessed through the `widget` property. The widget type for sliders is [`tes3uiSlider`](https://mwse.github.io/MWSE/types/tes3uiSlider/).
---- @param id string|number *Optional*. An identifier to help find this element later.
+--- @param id string|number|nil *Optional*. An identifier to help find this element later.
 --- @param current number The current value of the slider.
 --- @param max number The maximum value of the slider.
---- @param step number *Default*: `1`. The change in value when clicking the left and right arrow buttons.
---- @param jump number *Default*: `5`. The change in value when clicking into the empty areas next to the slider handle.
+--- @param step number? *Default*: `1`. The change in value when clicking the left and right arrow buttons.
+--- @param jump number? *Default*: `5`. The change in value when clicking into the empty areas next to the slider handle.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createSliderVertical(id, current, max, step, jump) end
 
 --- Creates a single line text input element. To receive input the keyboard must be captured with `tes3ui.acquireTextInput(element)`. Read the input with the `text` property. Write an initial value to display by setting the `text` property; that value will be cleared on the first keypress.
 --- 
 --- Text input specific properties can be accessed through the `widget` property. The widget type for text inputs is [`tes3uiTextInput`](https://mwse.github.io/MWSE/types/tes3uiTextInput/).
---- @param id string|number *Optional*. An identifier to help find this element later.
+--- @param id string|number|nil *Optional*. An identifier to help find this element later.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createTextInput(id) end
 
 --- Creates a selectable line of text, with configurable hover, click, and disabled colours. Can be used to create a list box by placing them in a ScrollPane.
 --- 	
 --- Text select specific properties can be accessed through the `widget` property. The widget type for text selects is [`tes3uiTextSelect`](https://mwse.github.io/MWSE/types/tes3uiTextSelect/).
---- @param id string|number *Optional*. An identifier to help find this element later.
---- @param text string *Optional*. The text to display.
---- @param state number *Default*: `tes3.uiState.normal`. The initial interaction state.
+--- @param id string|number|nil *Optional*. An identifier to help find this element later.
+--- @param text string? *Optional*. The text to display.
+--- @param state number? *Default*: `tes3.uiState.normal`. The initial interaction state.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createTextSelect(id, text, state) end
 
 --- Creates a styled thin border element. Any content should be created as children of this border.
---- @param id string|number *Optional*. An identifier to help find this element later.
+--- @param id string|number|nil *Optional*. An identifier to help find this element later.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createThinBorder(id) end
 
 --- Creates a vertically scrolling pane. Useful as a list box.
 --- 
 --- Scroll pane specific properties can be accessed through the `widget` property. The widget type for scroll panes is [`tes3uiScrollPane`](https://mwse.github.io/MWSE/types/tes3uiScrollPane/).
---- @param id string|number *Optional*. An identifier to help find this element later.
+--- @param id string|number|nil *Optional*. An identifier to help find this element later.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createVerticalScrollPane(id) end
 
@@ -247,7 +247,7 @@ function tes3uiElement:getPropertyInt(propName) end
 --- 	
 --- 	This is required because there is no identifying type information stored with the pointer. If the usertype is incorrect, there are no safety checks keeping the game from crashing.
 --- @param propName string The property name.
---- @param expectedUsertype string *Optional*. A Lua usertype name, if expecting a non-standard object type.
+--- @param expectedUsertype string? *Optional*. A Lua usertype name, if expecting a non-standard object type.
 --- @return tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3birthsign|tes3bodyPart|tes3book|tes3cell|tes3class|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3dialogue|tes3dialogueInfo|tes3door|tes3enchantment|tes3faction|tes3gameSetting|tes3globalVariable|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3magicSourceInstance|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3quest|tes3race|tes3reference|tes3region|tes3repairTool|tes3script|tes3skill|tes3sound|tes3soundGenerator|tes3spell|tes3startScript|tes3static|tes3weapon|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3mobileProjectile|tes3mobileSpellProjectile|any result No description yet available.
 function tes3uiElement:getPropertyObject(propName, expectedUsertype) end
 

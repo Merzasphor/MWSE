@@ -9,18 +9,18 @@
 tes3matrix33 = {}
 
 --- Creates a new 3 by 3 matrix from 3 provided vectors, 9 numbers or creates an empty matrix if nothing is provided.
---- @param x0 number *Optional*. No description yet available.
---- @param y0 number *Optional*. No description yet available.
---- @param z0 number *Optional*. No description yet available.
---- @param x1 number *Optional*. No description yet available.
---- @param y1 number *Optional*. No description yet available.
---- @param z1 number *Optional*. No description yet available.
---- @param x2 number *Optional*. No description yet available.
---- @param y2 number *Optional*. No description yet available.
---- @param z2 number *Optional*. No description yet available.
---- @param x tes3vector3 *Optional*. No description yet available.
---- @param y tes3vector3 *Optional*. No description yet available.
---- @param z tes3vector3 *Optional*. No description yet available.
+--- @param x0 number? *Optional*. No description yet available.
+--- @param y0 number? *Optional*. No description yet available.
+--- @param z0 number? *Optional*. No description yet available.
+--- @param x1 number? *Optional*. No description yet available.
+--- @param y1 number? *Optional*. No description yet available.
+--- @param z1 number? *Optional*. No description yet available.
+--- @param x2 number? *Optional*. No description yet available.
+--- @param y2 number? *Optional*. No description yet available.
+--- @param z2 number? *Optional*. No description yet available.
+--- @param x tes3vector3? *Optional*. No description yet available.
+--- @param y tes3vector3? *Optional*. No description yet available.
+--- @param z tes3vector3? *Optional*. No description yet available.
 --- @return tes3matrix33 matrix No description yet available.
 function tes3matrix33.new(x0, y0, z0, x1, y1, z1, x2, y2, z2, x, y, z) end
 

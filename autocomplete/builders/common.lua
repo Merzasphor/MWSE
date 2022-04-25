@@ -67,6 +67,17 @@ function table.empty(t)
 end
 
 --- @param t table
+--- @param value any
+--- @return any
+function table.find(t, value)
+	for i, v in pairs(t) do
+		if (v == value) then
+			return i
+		end
+	end
+end
+
+--- @param t table
 --- @param sort boolean|function|nil
 --- @return table
 function table.keys(t, sort)

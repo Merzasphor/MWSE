@@ -62,7 +62,7 @@ local function formatDescription(description)
 	return "--- " .. formatLineBreaks(description)
 end
 
-local function getAllPossibleVariationsOfType(type)
+local function getAllPossibleVariationsOfType(type, package)
 	if (not type) then
 		return nil
 	end
@@ -71,9 +71,29 @@ local function getAllPossibleVariationsOfType(type)
 	for _, t in ipairs(string.split(type, "|")) do
 		local class = classes[t]
 		if (class) then
-			table.insert(types, class.allDescendentKeys or t)
+			if (class.allDescendentKeys) then
+				for _, descendentType in ipairs(string.split(class.allDescendentKeys, "|")) do
+					table.insert(types, descendentType)
+				end
+			else
+				table.insert(types, t)
+			end
 		else
 			table.insert(types, t)
+		end
+	end
+
+	if (package.optional or package.default ~= nil) then
+		-- If we only have one type, just add ? to it.
+		if (#types == 1) then
+			if (not types[1]:endswith("?")) then
+				types[1] = types[1] .. "?"
+			end
+		else
+			-- Otherwise add `nil` to the list if it isn't already there.
+			if (not table.find(types, "nil")) then
+				table.insert(types, "nil")
+			end
 		end
 	end
 
@@ -107,18 +127,18 @@ local function writeFunction(package, file, namespaceOverride)
 			type = package.namespace .. ".params"
 			description = "This table accepts the following values:"
 			for _, tableArgument in ipairs(argument.tableParams) do
-				description = description .. string.format("\n\n`%s`: %s — %s", tableArgument.name or "unknown", getAllPossibleVariationsOfType(tableArgument.type) or "any", formatLineBreaks(common.getDescriptionString(tableArgument)))
+				description = description .. string.format("\n\n`%s`: %s — %s", tableArgument.name or "unknown", getAllPossibleVariationsOfType(tableArgument.type, tableArgument) or "any", formatLineBreaks(common.getDescriptionString(tableArgument)))
 			end
 		end
 		if (argument.type == "variadic") then
-			file:write(string.format("--- @vararg %s %s\n", getAllPossibleVariationsOfType(argument.variadicType) or "any", formatLineBreaks(description)))
+			file:write(string.format("--- @vararg %s %s\n", getAllPossibleVariationsOfType(argument.variadicType, argument) or "any", formatLineBreaks(description)))
 		else
-			file:write(string.format("--- @param %s %s %s\n", argument.name or "unknown", getAllPossibleVariationsOfType(type), formatLineBreaks(description)))
+			file:write(string.format("--- @param %s %s %s\n", argument.name or "unknown", getAllPossibleVariationsOfType(type, argument), formatLineBreaks(description)))
 		end
 	end
 
 	for _, returnPackage in ipairs(common.getConsistentReturnValues(package) or {}) do
-		file:write(string.format("--- @return %s %s %s\n", getAllPossibleVariationsOfType(returnPackage.type) or "any", returnPackage.name or "result", formatLineBreaks(common.getDescriptionString(returnPackage))))
+		file:write(string.format("--- @return %s %s %s\n", getAllPossibleVariationsOfType(returnPackage.type, returnPackage) or "any", returnPackage.name or "result", formatLineBreaks(common.getDescriptionString(returnPackage))))
 	end
 
 	file:write(string.format("function %s(%s) end\n\n", namespaceOverride or package.namespace, table.concat(getParamNames(package), ", ")))
@@ -127,7 +147,7 @@ local function writeFunction(package, file, namespaceOverride)
 		file:write(string.format("---Table parameter definitions for `%s`.\n", package.namespace))
 		file:write(string.format("--- @class %s.params\n", package.namespace))
 		for _, param in ipairs(package.arguments[1].tableParams) do
-			file:write(string.format("--- @field %s %s %s\n", param.name, getAllPossibleVariationsOfType(param.type), formatLineBreaks(common.getDescriptionString(param))))
+			file:write(string.format("--- @field %s %s %s\n", param.name, getAllPossibleVariationsOfType(param.type, param), formatLineBreaks(common.getDescriptionString(param))))
 		end
 		file:write("\n")
 	end
@@ -188,7 +208,7 @@ local function build(package)
 	-- Write out fields.
 	for _, value in ipairs(package.values or {}) do
 		if (not value.deprecated) then
-			file:write(string.format("--- @field %s %s %s\n", value.key, getAllPossibleVariationsOfType(value.valuetype) or "any", formatLineBreaks(common.getDescriptionString(value))))
+			file:write(string.format("--- @field %s %s %s\n", value.key, getAllPossibleVariationsOfType(value.valuetype, value) or "any", formatLineBreaks(common.getDescriptionString(value))))
 		end
 	end
 
@@ -214,7 +234,7 @@ local function build(package)
 		for _, key in ipairs(eventDataKeys) do
 			local data = eventData[key]
 			if (not data.deprecated) then
-				file:write(string.format("--- @field %s %s %s\n", key, getAllPossibleVariationsOfType(data.type) or "any", formatLineBreaks(common.getDescriptionString(data))))
+				file:write(string.format("--- @field %s %s %s\n", key, getAllPossibleVariationsOfType(data.type, data) or "any", formatLineBreaks(common.getDescriptionString(data))))
 			end
 		end
 	end

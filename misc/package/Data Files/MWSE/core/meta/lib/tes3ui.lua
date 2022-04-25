@@ -8,7 +8,7 @@ tes3ui = {}
 --- Sends all text input to the specified element.  Calling this function with a nil argument will release text input and allow keybinds to work. Suppresses most keybinds while active, except the Journal open/close keybind (it's up to the individual menu implementation).
 --- 
 --- Only one element can have control of input, and there is no automatic restoration of control if one element takes control from another. Be careful of conflicts with other users of this function.
---- @param element tes3uiElement *Optional*. No description yet available.
+--- @param element tes3uiElement? *Optional*. No description yet available.
 function tes3ui.acquireTextInput(element) end
 
 --- When used in a mouse event, causes the element to capture further mouse events even when the cursor goes outside the element. Setting mouse capture should always be accompanied by releasing it on a complementary event. This is commonly used for dragging, so that it can continue even if the mouse moves slightly outside the element.
@@ -43,36 +43,36 @@ function tes3ui.createHelpLayerMenu(params) end
 --- 
 --- `id`: string|number — The menu’s ID. The menu can be later accessed by tes3ui.findMenu(id).
 --- 
---- `dragFrame`: boolean — *Default*: `false`. Constructs a draggable and resizeable frame and background for the menu. It is similar to the stats, inventory, magic and map menus in the standard UI. After construction, position and minimum dimensions should be set.
+--- `dragFrame`: boolean? — *Default*: `false`. Constructs a draggable and resizeable frame and background for the menu. It is similar to the stats, inventory, magic and map menus in the standard UI. After construction, position and minimum dimensions should be set.
 --- 
---- `fixedFrame`: boolean — *Default*: `false`. Constructs a fixed (non-draggable) frame and background for the menu. The layout system should automatically centre and size it to fit whatever is added to the menu.
+--- `fixedFrame`: boolean? — *Default*: `false`. Constructs a fixed (non-draggable) frame and background for the menu. The layout system should automatically centre and size it to fit whatever is added to the menu.
 --- 
---- `loadable`: boolean — *Default*: `true`. If set to false, calls to loadMenuPosition will fail.
+--- `loadable`: boolean? — *Default*: `true`. If set to false, calls to loadMenuPosition will fail.
 --- @return tes3uiElement result No description yet available.
 function tes3ui.createMenu(params) end
 
 ---Table parameter definitions for `tes3ui.createMenu`.
 --- @class tes3ui.createMenu.params
 --- @field id string|number The menu’s ID. The menu can be later accessed by tes3ui.findMenu(id).
---- @field dragFrame boolean *Default*: `false`. Constructs a draggable and resizeable frame and background for the menu. It is similar to the stats, inventory, magic and map menus in the standard UI. After construction, position and minimum dimensions should be set.
---- @field fixedFrame boolean *Default*: `false`. Constructs a fixed (non-draggable) frame and background for the menu. The layout system should automatically centre and size it to fit whatever is added to the menu.
---- @field loadable boolean *Default*: `true`. If set to false, calls to loadMenuPosition will fail.
+--- @field dragFrame boolean? *Default*: `false`. Constructs a draggable and resizeable frame and background for the menu. It is similar to the stats, inventory, magic and map menus in the standard UI. After construction, position and minimum dimensions should be set.
+--- @field fixedFrame boolean? *Default*: `false`. Constructs a fixed (non-draggable) frame and background for the menu. The layout system should automatically centre and size it to fit whatever is added to the menu.
+--- @field loadable boolean? *Default*: `true`. If set to false, calls to loadMenuPosition will fail.
 
 --- Creates a tooltip menu, which can be an empty menu or an item tooltip. This should be called from within a tooltip event callback. These automatically follow the mouse cursor, and are also destroyed automatically when the mouse leaves the originating element. Creating an item tooltip will invoke the uiObjectTooltip event.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uicreatetooltipmenu).
 --- @param params tes3ui.createTooltipMenu.params This table accepts the following values:
 --- 
---- `item`: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — *Optional*. The item to create a tooltip for. If not specified, the tooltip will be empty.
+--- `item`: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string|nil — *Optional*. The item to create a tooltip for. If not specified, the tooltip will be empty.
 --- 
---- `itemData`: tes3itemData — *Optional*. The item data for the item.
+--- `itemData`: tes3itemData? — *Optional*. The item data for the item.
 --- @return tes3uiElement result No description yet available.
 function tes3ui.createTooltipMenu(params) end
 
 ---Table parameter definitions for `tes3ui.createTooltipMenu`.
 --- @class tes3ui.createTooltipMenu.params
---- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string *Optional*. The item to create a tooltip for. If not specified, the tooltip will be empty.
---- @field itemData tes3itemData *Optional*. The item data for the item.
+--- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string|nil *Optional*. The item to create a tooltip for. If not specified, the tooltip will be empty.
+--- @field itemData tes3itemData? *Optional*. The item data for the item.
 
 --- Requests menu mode be activated on a menu with a given id.
 --- @param id string|number No description yet available.
@@ -133,7 +133,7 @@ function tes3ui.log(message, ...) end
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uilogtoconsole).
 --- @param text string No description yet available.
---- @param isCommand boolean *Default*: `false`. Passing `true` will make the text in the console selectable by using up arrow key. If it is a valid command, then pressing enter will call it.
+--- @param isCommand boolean? *Default*: `false`. Passing `true` will make the text in the console selectable by using up arrow key. If it is a valid command, then pressing enter will call it.
 function tes3ui.logToConsole(text, isCommand) end
 
 --- 
@@ -169,33 +169,33 @@ function tes3ui.showBookMenu(text) end
 --- 
 --- @param params tes3ui.showDialogueMessage.params This table accepts the following values:
 --- 
---- `text`: string — *Default*: ``. The text of the shown message.
+--- `text`: string? — *Default*: ``. The text of the shown message.
 --- 
---- `style`: number — *Default*: `0`. 
+--- `style`: number? — *Default*: `0`. 
 --- 
---- `answerIndex`: number — *Default*: `0`. 
+--- `answerIndex`: number? — *Default*: `0`. 
 function tes3ui.showDialogueMessage(params) end
 
 ---Table parameter definitions for `tes3ui.showDialogueMessage`.
 --- @class tes3ui.showDialogueMessage.params
---- @field text string *Default*: ``. The text of the shown message.
---- @field style number *Default*: `0`. 
---- @field answerIndex number *Default*: `0`. 
+--- @field text string? *Default*: ``. The text of the shown message.
+--- @field style number? *Default*: `0`. 
+--- @field answerIndex number? *Default*: `0`. 
 
 --- This function opens the inventory select menu which lets the player select items from an inventory. These items can be selected from any actor's inventory and can be filtered with the `filter` callback. The selected item can be retrieved in the function assigned to `callback`.
 --- @param params tes3ui.showInventorySelectMenu.params This table accepts the following values:
 --- 
---- `reference`: tes3reference — *Default*: `tes3player`. The reference of a `tes3actor` whose inventory will be used.
+--- `reference`: tes3reference? — *Default*: `tes3player`. The reference of a `tes3actor` whose inventory will be used.
 --- 
 --- `title`: string — The text used for the title of the inventory select menu.
 --- 
---- `leaveMenuMode`: boolean — *Optional*. Determines if menu mode should be exited after closing the inventory select menu. By default, it will be in the state it was in before this function was called.
+--- `leaveMenuMode`: boolean? — *Optional*. Determines if menu mode should be exited after closing the inventory select menu. By default, it will be in the state it was in before this function was called.
 --- 
---- `noResultsText`: string — *Optional*. The text used for the message that gets shown to the player if no items have been found in the inventory. The default text is equivalent to the `sInventorySelectNoItems` GMST value, unless `"ingredients"` or `"soulgemFilled"` has been assigned to `filter`, in which case the default text is equivalent to either the `sInventorySelectNoIngredients` or `sInventorySelectNoSoul` GMST value respectively.
+--- `noResultsText`: string? — *Optional*. The text used for the message that gets shown to the player if no items have been found in the inventory. The default text is equivalent to the `sInventorySelectNoItems` GMST value, unless `"ingredients"` or `"soulgemFilled"` has been assigned to `filter`, in which case the default text is equivalent to either the `sInventorySelectNoIngredients` or `sInventorySelectNoSoul` GMST value respectively.
 --- 
---- `noResultsCallback`: function — *Optional*. A function which is called when no items have been found in the inventory, right before the message containing `noResultsText` is shown.
+--- `noResultsCallback`: function? — *Optional*. A function which is called when no items have been found in the inventory, right before the message containing `noResultsText` is shown.
 --- 
---- `filter`: function|string — *Optional*. This determines which items should be shown in the inventory select menu. Accepts either a string or a function.
+--- `filter`: function|string|nil — *Optional*. This determines which items should be shown in the inventory select menu. Accepts either a string or a function.
 --- --- 
 --- --- 		If assigning a string it has to be one of the following values:
 --- --- 
@@ -215,7 +215,7 @@ function tes3ui.showDialogueMessage(params) end
 --- --- 			- `itemData` ([tes3itemData](https://mwse.github.io/MWSE/types/tes3itemData/)): The item data of the item that is being filtered. Can be `nil`.
 --- --- 
 --- 
---- `callback`: function — *Optional*. A function which will be called once the inventory select menu has been closed, including when no item has been selected. A table `callbackParams` will be passed to this function.
+--- `callback`: function? — *Optional*. A function which will be called once the inventory select menu has been closed, including when no item has been selected. A table `callbackParams` will be passed to this function.
 --- --- 		- `callbackParams` (table)
 --- --- 			- `item` ([tes3item](https://mwse.github.io/MWSE/types/tes3item/)): The item that has been selected. Can be `nil`.
 --- --- 			- `itemData` ([tes3itemData](https://mwse.github.io/MWSE/types/tes3itemData/)): The item data of the item that has been selected. Can be `nil`.
@@ -227,12 +227,12 @@ function tes3ui.showInventorySelectMenu(params) end
 
 ---Table parameter definitions for `tes3ui.showInventorySelectMenu`.
 --- @class tes3ui.showInventorySelectMenu.params
---- @field reference tes3reference *Default*: `tes3player`. The reference of a `tes3actor` whose inventory will be used.
+--- @field reference tes3reference? *Default*: `tes3player`. The reference of a `tes3actor` whose inventory will be used.
 --- @field title string The text used for the title of the inventory select menu.
---- @field leaveMenuMode boolean *Optional*. Determines if menu mode should be exited after closing the inventory select menu. By default, it will be in the state it was in before this function was called.
---- @field noResultsText string *Optional*. The text used for the message that gets shown to the player if no items have been found in the inventory. The default text is equivalent to the `sInventorySelectNoItems` GMST value, unless `"ingredients"` or `"soulgemFilled"` has been assigned to `filter`, in which case the default text is equivalent to either the `sInventorySelectNoIngredients` or `sInventorySelectNoSoul` GMST value respectively.
---- @field noResultsCallback function *Optional*. A function which is called when no items have been found in the inventory, right before the message containing `noResultsText` is shown.
---- @field filter function|string *Optional*. This determines which items should be shown in the inventory select menu. Accepts either a string or a function.
+--- @field leaveMenuMode boolean? *Optional*. Determines if menu mode should be exited after closing the inventory select menu. By default, it will be in the state it was in before this function was called.
+--- @field noResultsText string? *Optional*. The text used for the message that gets shown to the player if no items have been found in the inventory. The default text is equivalent to the `sInventorySelectNoItems` GMST value, unless `"ingredients"` or `"soulgemFilled"` has been assigned to `filter`, in which case the default text is equivalent to either the `sInventorySelectNoIngredients` or `sInventorySelectNoSoul` GMST value respectively.
+--- @field noResultsCallback function? *Optional*. A function which is called when no items have been found in the inventory, right before the message containing `noResultsText` is shown.
+--- @field filter function|string|nil *Optional*. This determines which items should be shown in the inventory select menu. Accepts either a string or a function.
 --- 
 --- 		If assigning a string it has to be one of the following values:
 --- 
@@ -251,7 +251,7 @@ function tes3ui.showInventorySelectMenu(params) end
 --- 			- `item` ([tes3item](https://mwse.github.io/MWSE/types/tes3item/)): The item that is being filtered.
 --- 			- `itemData` ([tes3itemData](https://mwse.github.io/MWSE/types/tes3itemData/)): The item data of the item that is being filtered. Can be `nil`.
 --- 
---- @field callback function *Optional*. A function which will be called once the inventory select menu has been closed, including when no item has been selected. A table `callbackParams` will be passed to this function.
+--- @field callback function? *Optional*. A function which will be called once the inventory select menu has been closed, including when no item has been selected. A table `callbackParams` will be passed to this function.
 --- 		- `callbackParams` (table)
 --- 			- `item` ([tes3item](https://mwse.github.io/MWSE/types/tes3item/)): The item that has been selected. Can be `nil`.
 --- 			- `itemData` ([tes3itemData](https://mwse.github.io/MWSE/types/tes3itemData/)): The item data of the item that has been selected. Can be `nil`.

@@ -32,22 +32,22 @@ function tes3bodyPartManager:removeEquippedLayers() end
 --- The method sets a niNode derived object as active body part at a given layer and position.
 --- @param layer number A value from [`tes3.activeBodyPartLayer`](https://mwse.github.io/MWSE/references/active-body-part-layers/) namespace.
 --- @param index number A value from [`tes3.activeBodyPart`](https://mwse.github.io/MWSE/references/active-body-parts/) namespace.
---- @param overwriteData boolean *Default*: `true`. A flag which controls whether the current data should be overwritten.
---- @param node niBillboardNode|niCollisionSwitch|niNode|niSwitchNode *Default*: `nil`. 
+--- @param overwriteData boolean? *Default*: `true`. A flag which controls whether the current data should be overwritten.
+--- @param node niBillboardNode|niCollisionSwitch|niNode|niSwitchNode|nil *Default*: `nil`. 
 function tes3bodyPartManager:setActivePartData(layer, index, overwriteData, node) end
 
 --- The method sets a new body part for a given object.
 --- @param object tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon An object whose body part to set.
 --- @param index number A value from [`tes3.activeBodyPart`](https://mwse.github.io/MWSE/references/active-body-parts/) namespace.
 --- @param bodyPartId string The unique ID of the `tes3bodyPart` object to set as a new body part for given object.
---- @param isFirstPerson boolean *Default*: `false`. A flag which controls whether the body part is used in first person.
+--- @param isFirstPerson boolean? *Default*: `false`. A flag which controls whether the body part is used in first person.
 function tes3bodyPartManager:setBodyPartByIdForObject(object, index, bodyPartId, isFirstPerson) end
 
 --- The method sets a new body part for a given object.
 --- @param object tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon An object whose body part to set.
 --- @param index number A value from [`tes3.activeBodyPart`](https://mwse.github.io/MWSE/references/active-body-parts/) namespace.
 --- @param bodyPart tes3bodyPart The `tes3bodyPart` object to set as a new body part for given object.
---- @param isFirstPerson boolean *Default*: `false`. A flag which controls whether the body part is used in first person.
+--- @param isFirstPerson boolean? *Default*: `false`. A flag which controls whether the body part is used in first person.
 function tes3bodyPartManager:setBodyPartForObject(object, index, bodyPart, isFirstPerson) end
 
 --- The method updates all body parts for a given reference.

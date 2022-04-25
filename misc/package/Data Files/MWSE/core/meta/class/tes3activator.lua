@@ -12,22 +12,22 @@ tes3activator = {}
 --- @deprecated
 --- @param params tes3activator.create.params This table accepts the following values:
 --- 
---- `id`: string — *Optional*. The new object's ID. Must be unique if provided.
+--- `id`: string? — *Optional*. The new object's ID. Must be unique if provided.
 --- 
---- `name`: string — *Default*: `Activator`. The new object's name.
+--- `name`: string? — *Default*: `Activator`. The new object's name.
 --- 
---- `script`: tes3script — *Optional*. A script to attach to the object.
+--- `script`: tes3script? — *Optional*. A script to attach to the object.
 --- 
---- `mesh`: string — *Default*: ``. The mesh to use for the object.
+--- `mesh`: string? — *Default*: ``. The mesh to use for the object.
 --- 
---- `objectFlags`: number — *Default*: `0`. The object flags initially set. Force set as modified.
+--- `objectFlags`: number? — *Default*: `0`. The object flags initially set. Force set as modified.
 function tes3activator.create(params) end
 
 ---Table parameter definitions for `tes3activator.create`.
 --- @class tes3activator.create.params
---- @field id string *Optional*. The new object's ID. Must be unique if provided.
---- @field name string *Default*: `Activator`. The new object's name.
---- @field script tes3script *Optional*. A script to attach to the object.
---- @field mesh string *Default*: ``. The mesh to use for the object.
---- @field objectFlags number *Default*: `0`. The object flags initially set. Force set as modified.
+--- @field id string? *Optional*. The new object's ID. Must be unique if provided.
+--- @field name string? *Default*: `Activator`. The new object's name.
+--- @field script tes3script? *Optional*. A script to attach to the object.
+--- @field mesh string? *Default*: ``. The mesh to use for the object.
+--- @field objectFlags number? *Default*: `0`. The object flags initially set. Force set as modified.
 

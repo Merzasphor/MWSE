@@ -123,31 +123,31 @@ tes3mobileActor = {}
 --- 
 --- `damage`: number — The amount of damage to apply.
 --- 
---- `applyArmor`: boolean — *Optional*. If armor should mitigate the incoming damage. If the player is the target, armor experience will be gained.
+--- `applyArmor`: boolean? — *Optional*. If armor should mitigate the incoming damage. If the player is the target, armor experience will be gained.
 --- 
---- `resistAttribute`: number — *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
+--- `resistAttribute`: number? — *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
 --- 
---- `applyDifficulty`: boolean — *Optional*. If the game difficulty modifier should be applied. Must be used with the `playerAttack` argument to apply the correct modifier.
+--- `applyDifficulty`: boolean? — *Optional*. If the game difficulty modifier should be applied. Must be used with the `playerAttack` argument to apply the correct modifier.
 --- 
---- `playerAttack`: boolean — *Optional*. If the attack came from the player. Used for difficulty calculation.
+--- `playerAttack`: boolean? — *Optional*. If the attack came from the player. Used for difficulty calculation.
 --- 
---- `doNotChangeHealth`: boolean — *Optional*. If all armor effects except the health change should be applied. These include hit sounds, armor condition damage, and player experience gain from being hit.
+--- `doNotChangeHealth`: boolean? — *Optional*. If all armor effects except the health change should be applied. These include hit sounds, armor condition damage, and player experience gain from being hit.
 --- @return number result No description yet available.
 function tes3mobileActor:applyDamage(params) end
 
 ---Table parameter definitions for `tes3mobileActor.applyDamage`.
 --- @class tes3mobileActor.applyDamage.params
 --- @field damage number The amount of damage to apply.
---- @field applyArmor boolean *Optional*. If armor should mitigate the incoming damage. If the player is the target, armor experience will be gained.
---- @field resistAttribute number *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
---- @field applyDifficulty boolean *Optional*. If the game difficulty modifier should be applied. Must be used with the `playerAttack` argument to apply the correct modifier.
---- @field playerAttack boolean *Optional*. If the attack came from the player. Used for difficulty calculation.
---- @field doNotChangeHealth boolean *Optional*. If all armor effects except the health change should be applied. These include hit sounds, armor condition damage, and player experience gain from being hit.
+--- @field applyArmor boolean? *Optional*. If armor should mitigate the incoming damage. If the player is the target, armor experience will be gained.
+--- @field resistAttribute number? *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
+--- @field applyDifficulty boolean? *Optional*. If the game difficulty modifier should be applied. Must be used with the `playerAttack` argument to apply the correct modifier.
+--- @field playerAttack boolean? *Optional*. If the attack came from the player. Used for difficulty calculation.
+--- @field doNotChangeHealth boolean? *Optional*. If all armor effects except the health change should be applied. These include hit sounds, armor condition damage, and player experience gain from being hit.
 
 --- Damages the actor's fatigue, with accompanying reaction from the reciever. Invokes the [`damageHandToHand`](https://mwse.github.io/MWSE/events/damageHandToHand/) and [`damagedHandToHand`](https://mwse.github.io/MWSE/events/damagedHandToHand/) events, with `tes3.damageSource.script` source. Returns the actual fatigue damage done.
 --- @param fatigueDamage number The amount of fatigue damage to apply.
---- @param swing number *Optional*. The attack swing magnitude, range 0-1. Only modifies hit volume.
---- @param alwaysPlayHitVoice boolean *Optional*. Always play the hit reaction voiceover.
+--- @param swing number? *Optional*. The attack swing magnitude, range 0-1. Only modifies hit volume.
+--- @param alwaysPlayHitVoice boolean? *Optional*. Always play the hit reaction voiceover.
 --- @return number result No description yet available.
 function tes3mobileActor:applyFatigueDamage(fatigueDamage, swing, alwaysPlayHitVoice) end
 
@@ -166,40 +166,40 @@ function tes3mobileActor:applyHealthDamage(damage, isPlayerAttack, scaleWithDiff
 --- 
 --- `damage`: number — The amount of damage to apply.
 --- 
---- `applyArmor`: boolean — *Optional*. If armor should mitigate the incoming damage.
+--- `applyArmor`: boolean? — *Optional*. If armor should mitigate the incoming damage.
 --- 
---- `resistAttribute`: number — *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
+--- `resistAttribute`: number? — *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
 --- @return number result No description yet available.
 function tes3mobileActor:calcEffectiveDamage(params) end
 
 ---Table parameter definitions for `tes3mobileActor.calcEffectiveDamage`.
 --- @class tes3mobileActor.calcEffectiveDamage.params
 --- @field damage number The amount of damage to apply.
---- @field applyArmor boolean *Optional*. If armor should mitigate the incoming damage.
---- @field resistAttribute number *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
+--- @field applyArmor boolean? *Optional*. If armor should mitigate the incoming damage.
+--- @field resistAttribute number? *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
 
 --- Equips an item, optionally adding the item if needed. If the best match is already equipped, it does not perform an unequip-equip cycle, but does return `true`.
 --- @param params tes3mobileActor.equip.params This table accepts the following values:
 --- 
 --- `item`: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — The item to equip.
 --- 
---- `itemData`: tes3itemData — *Optional*. The item data of the specific item to equip.
+--- `itemData`: tes3itemData? — *Optional*. The item data of the specific item to equip.
 --- 
---- `addItem`: boolean — *Default*: `false`. If `true`, the item will be added to the actor's inventory if needed.
+--- `addItem`: boolean? — *Default*: `false`. If `true`, the item will be added to the actor's inventory if needed.
 --- 
---- `selectBestCondition`: boolean — *Default*: `false`. If `true`, the item in the inventory with the best condition and best charge will be selected.
+--- `selectBestCondition`: boolean? — *Default*: `false`. If `true`, the item in the inventory with the best condition and best charge will be selected.
 --- 
---- `selectWorstCondition`: boolean — *Default*: `false`. If `true`, the item in the inventory with the worst condition and worst charge will be selected. Can be useful for selecting tools.
+--- `selectWorstCondition`: boolean? — *Default*: `false`. If `true`, the item in the inventory with the worst condition and worst charge will be selected. Can be useful for selecting tools.
 --- @return boolean itemEquipped No description yet available.
 function tes3mobileActor:equip(params) end
 
 ---Table parameter definitions for `tes3mobileActor.equip`.
 --- @class tes3mobileActor.equip.params
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string The item to equip.
---- @field itemData tes3itemData *Optional*. The item data of the specific item to equip.
---- @field addItem boolean *Default*: `false`. If `true`, the item will be added to the actor's inventory if needed.
---- @field selectBestCondition boolean *Default*: `false`. If `true`, the item in the inventory with the best condition and best charge will be selected.
---- @field selectWorstCondition boolean *Default*: `false`. If `true`, the item in the inventory with the worst condition and worst charge will be selected. Can be useful for selecting tools.
+--- @field itemData tes3itemData? *Optional*. The item data of the specific item to equip.
+--- @field addItem boolean? *Default*: `false`. If `true`, the item will be added to the actor's inventory if needed.
+--- @field selectBestCondition boolean? *Default*: `false`. If `true`, the item in the inventory with the best condition and best charge will be selected.
+--- @field selectWorstCondition boolean? *Default*: `false`. If `true`, the item in the inventory with the worst condition and worst charge will be selected. Can be useful for selecting tools.
 
 --- Equips a spell or enchantment, optionally equipping the enchanted item if needed. Returns `false` if the item could not be equipped.
 --- @param params tes3mobileActor.equipMagic.params This table accepts the following values:
@@ -211,11 +211,11 @@ function tes3mobileActor:equip(params) end
 --- --- 		Items must have a castable enchantment. Castable enchantments have a `castType` of `tes3.enchantmentType.onUse` or `tes3.enchantmentType.castOnce`. The actor is not required to have this item in their inventory, unless `equipItem` is `true`.
 --- --- 
 --- 
---- `itemData`: tes3itemData — *Optional*. Only valid if an item has been assigned to `source`. The item data of the specific item to equip.
+--- `itemData`: tes3itemData? — *Optional*. Only valid if an item has been assigned to `source`. The item data of the specific item to equip.
 --- 
---- `equipItem`: boolean — *Default*: `false`. Only valid if an item has been assigned to `source`. If `true`, the item assigned to `source` will be equipped. Requires the actor to have the item in their inventory. If `false`, `itemData` must not be nil.
+--- `equipItem`: boolean? — *Default*: `false`. Only valid if an item has been assigned to `source`. If `true`, the item assigned to `source` will be equipped. Requires the actor to have the item in their inventory. If `false`, `itemData` must not be nil.
 --- 
---- `updateGUI`: boolean — *Default*: `true`. Only valid if this actor is the player. If `false`, the player GUI will not be updated to reflect the change to equipped magic.
+--- `updateGUI`: boolean? — *Default*: `true`. Only valid if this actor is the player. If `false`, the player GUI will not be updated to reflect the change to equipped magic.
 --- @return boolean result No description yet available.
 function tes3mobileActor:equipMagic(params) end
 
@@ -227,23 +227,23 @@ function tes3mobileActor:equipMagic(params) end
 --- 
 --- 		Items must have a castable enchantment. Castable enchantments have a `castType` of `tes3.enchantmentType.onUse` or `tes3.enchantmentType.castOnce`. The actor is not required to have this item in their inventory, unless `equipItem` is `true`.
 --- 
---- @field itemData tes3itemData *Optional*. Only valid if an item has been assigned to `source`. The item data of the specific item to equip.
---- @field equipItem boolean *Default*: `false`. Only valid if an item has been assigned to `source`. If `true`, the item assigned to `source` will be equipped. Requires the actor to have the item in their inventory. If `false`, `itemData` must not be nil.
---- @field updateGUI boolean *Default*: `true`. Only valid if this actor is the player. If `false`, the player GUI will not be updated to reflect the change to equipped magic.
+--- @field itemData tes3itemData? *Optional*. Only valid if an item has been assigned to `source`. The item data of the specific item to equip.
+--- @field equipItem boolean? *Default*: `false`. Only valid if an item has been assigned to `source`. If `true`, the item assigned to `source` will be equipped. Requires the actor to have the item in their inventory. If `false`, `itemData` must not be nil.
+--- @field updateGUI boolean? *Default*: `true`. Only valid if this actor is the player. If `false`, the player GUI will not be updated to reflect the change to equipped magic.
 
 --- Fetches a filtered list of the active magic effects on the actor. Returns a table with [`tes3activeMagicEffect`](https://mwse.github.io/MWSE/types/tes3activeMagicEffect/) items.
---- @param params tes3mobileActor.getActiveMagicEffects.params This table accepts the following values:
+--- @param params tes3mobileActor.getActiveMagicEffects.params? This table accepts the following values:
 --- 
---- `effect`: number — *Optional*. The magic effect ID to search for.
+--- `effect`: number? — *Optional*. The magic effect ID to search for.
 --- 
---- `serial`: number — *Optional*. The magic instance serial to search for.
+--- `serial`: number? — *Optional*. The magic instance serial to search for.
 --- @return table result No description yet available.
 function tes3mobileActor:getActiveMagicEffects(params) end
 
 ---Table parameter definitions for `tes3mobileActor.getActiveMagicEffects`.
 --- @class tes3mobileActor.getActiveMagicEffects.params
---- @field effect number *Optional*. The magic effect ID to search for.
---- @field serial number *Optional*. The magic instance serial to search for.
+--- @field effect number? *Optional*. The magic effect ID to search for.
+--- @field serial number? *Optional*. The magic instance serial to search for.
 
 --- *Read-only*. Gets the weight of the boots equipped on the actor, or 0 if no boots are equipped.
 --- @return number result No description yet available.
@@ -321,38 +321,38 @@ function tes3mobileActor:stopCombat(force) end
 --- Unequips one or more items from the actor.
 --- @param params tes3mobileActor.unequip.params This table accepts the following values:
 --- 
---- `item`: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string — *Optional*. The item to unequip.
+--- `item`: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string|nil — *Optional*. The item to unequip.
 --- 
---- `type`: number — *Optional*. The item type to unequip. Only used if no other parameter is provided. Only values pertaining to equipment from [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) can be passed here.
+--- `type`: number? — *Optional*. The item type to unequip. Only used if no other parameter is provided. Only values pertaining to equipment from [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) can be passed here.
 --- 
---- `armorSlot`: number — *Optional*. The armor slot to unequip. Maps to values in [`tes3.armorSlot`](https://mwse.github.io/MWSE/references/armor-slots/) namespace.
+--- `armorSlot`: number? — *Optional*. The armor slot to unequip. Maps to values in [`tes3.armorSlot`](https://mwse.github.io/MWSE/references/armor-slots/) namespace.
 --- 
---- `clothingSlot`: number — *Optional*. The clothing slot to unequip. Maps to values in [`tes3.clothingSlot`](https://mwse.github.io/MWSE/references/clothing-slots/) namespace
+--- `clothingSlot`: number? — *Optional*. The clothing slot to unequip. Maps to values in [`tes3.clothingSlot`](https://mwse.github.io/MWSE/references/clothing-slots/) namespace
 --- @return boolean itemUnequipped No description yet available.
 function tes3mobileActor:unequip(params) end
 
 ---Table parameter definitions for `tes3mobileActor.unequip`.
 --- @class tes3mobileActor.unequip.params
---- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string *Optional*. The item to unequip.
---- @field type number *Optional*. The item type to unequip. Only used if no other parameter is provided. Only values pertaining to equipment from [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) can be passed here.
---- @field armorSlot number *Optional*. The armor slot to unequip. Maps to values in [`tes3.armorSlot`](https://mwse.github.io/MWSE/references/armor-slots/) namespace.
---- @field clothingSlot number *Optional*. The clothing slot to unequip. Maps to values in [`tes3.clothingSlot`](https://mwse.github.io/MWSE/references/clothing-slots/) namespace
+--- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string|nil *Optional*. The item to unequip.
+--- @field type number? *Optional*. The item type to unequip. Only used if no other parameter is provided. Only values pertaining to equipment from [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) can be passed here.
+--- @field armorSlot number? *Optional*. The armor slot to unequip. Maps to values in [`tes3.armorSlot`](https://mwse.github.io/MWSE/references/armor-slots/) namespace.
+--- @field clothingSlot number? *Optional*. The clothing slot to unequip. Maps to values in [`tes3.clothingSlot`](https://mwse.github.io/MWSE/references/clothing-slots/) namespace
 
 --- Unequips the currently equipped magic, optionally unequipping the enchanted item if needed.
 --- @param params tes3mobileActor.unequipMagic.params This table accepts the following values:
 --- 
---- `unequipItem`: boolean — *Default*: `false`. Only valid if the currently equipped magic is from an equippable item enchantment. If `true`, the item containing the enchantment will be unequipped.
+--- `unequipItem`: boolean? — *Default*: `false`. Only valid if the currently equipped magic is from an equippable item enchantment. If `true`, the item containing the enchantment will be unequipped.
 --- 
---- `updateGUI`: boolean — *Default*: `true`. Only valid if this actor is the player. If `false`, the player GUI will not be updated to reflect the change to equipped magic.
+--- `updateGUI`: boolean? — *Default*: `true`. Only valid if this actor is the player. If `false`, the player GUI will not be updated to reflect the change to equipped magic.
 function tes3mobileActor:unequipMagic(params) end
 
 ---Table parameter definitions for `tes3mobileActor.unequipMagic`.
 --- @class tes3mobileActor.unequipMagic.params
---- @field unequipItem boolean *Default*: `false`. Only valid if the currently equipped magic is from an equippable item enchantment. If `true`, the item containing the enchantment will be unequipped.
---- @field updateGUI boolean *Default*: `true`. Only valid if this actor is the player. If `false`, the player GUI will not be updated to reflect the change to equipped magic.
+--- @field unequipItem boolean? *Default*: `false`. Only valid if the currently equipped magic is from an equippable item enchantment. If `true`, the item containing the enchantment will be unequipped.
+--- @field updateGUI boolean? *Default*: `true`. Only valid if this actor is the player. If `false`, the player GUI will not be updated to reflect the change to equipped magic.
 
 --- Updates statistics derived from attributes, which are magicka, fatigue, and encumbrance. Will also update the UI if used on the player. Normally handled automatically when you use `tes3.modStatistic()`.
---- @param attribute tes3statistic|tes3statisticSkill *Optional*. Limits the update to statistics derived from this attribute.  e.g. `mobile:updateDerivedStatistics(mobile.strength)`. If not present, all derived statistics will be updated.
+--- @param attribute tes3statistic|tes3statisticSkill|nil *Optional*. Limits the update to statistics derived from this attribute.  e.g. `mobile:updateDerivedStatistics(mobile.strength)`. If not present, all derived statistics will be updated.
 function tes3mobileActor:updateDerivedStatistics(attribute) end
 
 --- Updates the actor's visual opacity. Used after modifying applied chameleon or invisiblity effects.

@@ -19,13 +19,13 @@ tes3spell = {}
 --- Use [`tes3.createObject()`](https://mwse.github.io/MWSE/apis/tes3/#tes3createobject) instead. This function created a new spell object, which will be stored as part of the current saved game.
 --- @deprecated
 --- @param id string The new object's ID. Must be unique.
---- @param name string *Optional*. The new object's name.
+--- @param name string? *Optional*. The new object's name.
 function tes3spell.create(id, name) end
 
 --- Calculates the chance that a caster can cast a given spell.
 --- @param params tes3spell.calculateCastChance.params This table accepts the following values:
 --- 
---- `checkMagicka`: boolean — *Optional*. Determines if the caster's magicka should be taken into account during the calculation.
+--- `checkMagicka`: boolean? — *Optional*. Determines if the caster's magicka should be taken into account during the calculation.
 --- 
 --- `caster`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer — The caster to perform the calculation against.
 --- @return number result No description yet available.
@@ -33,7 +33,7 @@ function tes3spell:calculateCastChance(params) end
 
 ---Table parameter definitions for `tes3spell.calculateCastChance`.
 --- @class tes3spell.calculateCastChance.params
---- @field checkMagicka boolean *Optional*. Determines if the caster's magicka should be taken into account during the calculation.
+--- @field checkMagicka boolean? *Optional*. Determines if the caster's magicka should be taken into account during the calculation.
 --- @field caster tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer The caster to perform the calculation against.
 
 --- Gets the number of active effects in the spell effect table.
