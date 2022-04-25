@@ -445,7 +445,7 @@ end
 --- comment
 --- @param path string
 --- @param owningCollection table<string, package>
---- @param acceptedType string
+--- @param acceptedType string?
 function common.compilePath(path, owningCollection, acceptedType)
 	for entry in lfs.dir(path) do
 		local extension = entry:match("[^.]+$")
