@@ -1,6 +1,7 @@
 #pragma once
 
 #include "NIObject.h"
+#include "NIColorData.h"
 
 #include "TES3Vectors.h"
 
@@ -49,7 +50,7 @@ namespace NI {
 	static_assert(sizeof(ParticleBomb) == 0x40, "NI::ParticleBomb failed size validation");
 
 	struct ParticleColorModifier : ParticleModifier {
-		Pointer<Object> colorData; // 0x10
+		Pointer<ColorData> colorData; // 0x10
 	};
 	static_assert(sizeof(ParticleColorModifier) == 0x14, "NI::ParticleColorModifier failed size validation");
 
@@ -90,13 +91,8 @@ namespace NI {
 		float radiusSquared; // 0x2C
 		TES3::Vector3 position; // 0x30
 
-		float getRadius() const {
-			return radius;
-		}
-		void setRadius(float r) {
-			radius = r;
-			radiusSquared = r * r;
-		}
+		float getRadius() const;
+		void setRadius(float r);
 	};
 	static_assert(sizeof(SphericalCollider) == 0x3C, "NI::SphericalCollider failed size validation");
 }
