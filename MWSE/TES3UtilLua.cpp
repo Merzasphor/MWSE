@@ -1716,15 +1716,15 @@ namespace mwse::lua {
 			throw std::runtime_error("No current journal data exists.");
 		}
 
-		const char* text = getOptionalParam<const char*>(params, "text", nullptr);
+		auto text = getOptionalParam<const char*>(params, "text", nullptr);
 		if (text == nullptr) {
 			throw std::invalid_argument("Invalid 'text' parameter provided.");
 		}
 
 		journalHTML->writeTimestampedEntry(text);
 
-		sol::optional<bool> showMessage = params["showMessage"];
-		if (showMessage.value_or(true)) {
+		auto showMessage = getOptionalParam(params, "showMessage", true);
+		if (showMessage) {
 			journalHTML->showJournalUpdateNotification();
 		}
 	}
