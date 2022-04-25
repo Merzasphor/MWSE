@@ -3,7 +3,11 @@
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
+#include "NIObjectLua.h"
+
 #include "NIColor.h"
+#include "NIColorData.h"
+#include "NIColorKey.h"
 
 namespace mwse::lua {
 	void bindNIColor() {
@@ -92,6 +96,35 @@ namespace mwse::lua {
 			// Basic function binding.
 			usertypeDefinition["copy"] = &NI::ColorA::copy;
 			usertypeDefinition["lerp"] = &NI::ColorA::lerp;
+		}
+
+		// NiColorData
+		{
+			// Start our usertype.
+			auto usertypeDefinition = state.new_usertype<NI::ColorData>("niColorData");
+
+			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+			usertypeDefinition[sol::base_classes] = sol::bases<NI::Object>();
+			setUserdataForNIObject(usertypeDefinition);
+
+			// Basic property binding.
+			usertypeDefinition["keyCount"] = &NI::ColorData::keyCount;
+			usertypeDefinition["keys"] = sol::readonly_property(&NI::ColorData::getKeys);
+			usertypeDefinition["keyType"] = &NI::ColorData::keyType;
+		}
+
+		// NiColorKey
+		// TODO: Update this when the AnimationKey defines are in.
+		{
+			// Start our usertype.
+			auto usertypeDefinition = state.new_usertype<NI::ColorKey>("niColorKey");
+
+			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+			usertypeDefinition[sol::base_classes] = sol::bases<NI::AnimationKey>();
+			usertypeDefinition["timing"] = &NI::ColorKey::timing;
+
+			// Basic property binding.
+			usertypeDefinition["color"] = &NI::ColorKey::color;
 		}
 	}
 }

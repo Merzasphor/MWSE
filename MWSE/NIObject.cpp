@@ -11,6 +11,7 @@
 #include "NIAVObject.h"
 #include "NIBillboardNode.h"
 #include "NICamera.h"
+#include "NIColorData.h"
 #include "NICollisionSwitch.h"
 #include "NIDirectionalLight.h"
 #include "NIExtraData.h"
@@ -149,6 +150,9 @@ namespace NI {
 				break;
 			case RTTIStaticPtr::NiCollisionSwitch:
 				ref = sol::make_object_userdata(L, Pointer(static_cast<CollisionSwitch*>(this)));
+				break;
+			case RTTIStaticPtr::NiColorData:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<ColorData*>(this)));
 				break;
 			case RTTIStaticPtr::NiDirectionalLight:
 				ref = sol::make_object_userdata(L, Pointer(static_cast<DirectionalLight*>(this)));

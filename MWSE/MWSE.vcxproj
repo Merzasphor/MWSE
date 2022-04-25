@@ -26,6 +26,8 @@
     <ClInclude Include="LuaSpellResistedEvent.h" />
     <ClInclude Include="LuaVFXCreatedEvent.h" />
     <ClInclude Include="MathUtil.h" />
+    <ClInclude Include="NIColorData.h" />
+    <ClInclude Include="NIColorKey.h" />
     <ClInclude Include="NIQuaternion.h" />
     <ClInclude Include="NIQuaternionLua.h" />
     <ClInclude Include="NIScreenPolygon.h" />
@@ -652,6 +654,7 @@
     <ClCompile Include="NICamera.cpp" />
     <ClCompile Include="NICollisionGroup.cpp" />
     <ClCompile Include="NICollisionSwitch.cpp" />
+    <ClCompile Include="NIColorData.cpp" />
     <ClCompile Include="NIDirectionalLight.cpp" />
     <ClCompile Include="NIDynamicEffectLua.cpp" />
     <ClCompile Include="NIExtraData.cpp" />
