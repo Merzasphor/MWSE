@@ -192,6 +192,55 @@ namespace mwse::lua {
 				usertypeDefinition["intermediateB"] = &NI::TCBPosKey::intermediateB;
 				usertypeDefinition["tension"] = &NI::TCBPosKey::tension;
 			}
+
+			// Bind NI::ScaleKey
+			{
+				// Start our usertype.
+				auto usertypeDefinition = state.new_usertype<NI::ScaleKey>("niScaleKey");
+				usertypeDefinition["new"] = sol::no_constructor;
+
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition[sol::base_classes] = sol::bases<NI::AnimationKey>();
+				usertypeDefinition["timing"] = &NI::ScaleKey::timing;
+
+				// Basic property binding.
+				usertypeDefinition["value"] = &NI::ScaleKey::value;
+			}
+
+			// Bind NI::BezScaleKey
+			{
+				// Start our usertype.
+				auto usertypeDefinition = state.new_usertype<NI::BezScaleKey>("niBezScaleKey");
+				usertypeDefinition["new"] = sol::no_constructor;
+
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition[sol::base_classes] = sol::bases<NI::ScaleKey, NI::AnimationKey>();
+				usertypeDefinition["timing"] = &NI::BezScaleKey::timing;
+				usertypeDefinition["value"] = &NI::BezScaleKey::value;
+
+				// Basic property binding.
+				usertypeDefinition["inTangent"] = &NI::BezScaleKey::inTangent;
+				usertypeDefinition["outTangent"] = &NI::BezScaleKey::outTangent;
+			}
+
+			// Bind NI::TCBScaleKey
+			{
+				// Start our usertype.
+				auto usertypeDefinition = state.new_usertype<NI::TCBScaleKey>("niTCBScaleKey");
+				usertypeDefinition["new"] = sol::no_constructor;
+
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition[sol::base_classes] = sol::bases<NI::ScaleKey, NI::AnimationKey>();
+				usertypeDefinition["timing"] = &NI::TCBScaleKey::timing;
+				usertypeDefinition["value"] = &NI::TCBScaleKey::value;
+
+				// Basic property binding.
+				usertypeDefinition["bias"] = &NI::TCBScaleKey::bias;
+				usertypeDefinition["continuity"] = &NI::TCBScaleKey::continuity;
+				usertypeDefinition["derivedA"] = &NI::TCBScaleKey::derivedA;
+				usertypeDefinition["derivedB"] = &NI::TCBScaleKey::derivedB;
+				usertypeDefinition["tension"] = &NI::TCBScaleKey::tension;
+			}
 		}
 
 		// Bind NI::KeyframeData
@@ -212,7 +261,7 @@ namespace mwse::lua {
 			usertypeDefinition["rotationKeys"] = sol::readonly_property(&NI::KeyframeData::getRotationKeys_lua);
 			usertypeDefinition["rotationType"] = sol::readonly_property(&NI::KeyframeData::rotationType);
 			usertypeDefinition["scaleKeyCount"] = sol::readonly_property(&NI::KeyframeData::scaleKeyCount);
-			usertypeDefinition["scaleKeys"] = sol::readonly_property(&NI::KeyframeData::getScaleKeys);
+			usertypeDefinition["scaleKeys"] = sol::readonly_property(&NI::KeyframeData::getScaleKeys_lua);
 			usertypeDefinition["scaleType"] = sol::readonly_property(&NI::KeyframeData::scaleType);
 		}
 

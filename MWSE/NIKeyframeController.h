@@ -22,7 +22,7 @@ namespace NI {
 	static_assert(AnimationKey::Type::COUNT == 5, "NI::AnimationKey::Type failed enum count validation");
 
 	struct FloatKey : AnimationKey {
-		float value; // 0x8
+		float value; // 0x4
 	};
 	static_assert(sizeof(FloatKey) == 0x8, "NI::FloatKey failed size validation");
 
@@ -83,6 +83,33 @@ namespace NI {
 	};
 	static_assert(sizeof(AmbiguousPosKeyPtr) == sizeof(void*), "NI::AmbiguousPosKeyPtr failed size validation");
 
+	struct ScaleKey : FloatKey {
+
+	};
+	static_assert(sizeof(ScaleKey) == 0x8, "NI::ScaleKey failed size validation");
+
+	struct BezScaleKey : ScaleKey {
+		float inTangent; // 0x8
+		float outTangent; // 0xC
+	};
+	static_assert(sizeof(BezScaleKey) == 0x10, "NI::BezScaleKey failed size validation");
+
+	struct TCBScaleKey : ScaleKey {
+		float tension; // 0x8
+		float continuity; // 0xC
+		float bias; // 0x10
+		float derivedA; // 0x14
+		float derivedB; // 0x18
+	};
+	static_assert(sizeof(TCBScaleKey) == 0x1C, "NI::TCBScaleKey failed size validation");
+
+	union AmbiguousScaleKeyPtr {
+		ScaleKey* asScaleKey;
+		BezScaleKey* asBezScaleKey;
+		TCBScaleKey* asTCBScaleKey;
+	};
+	static_assert(sizeof(AmbiguousScaleKeyPtr) == sizeof(void*), "NI::AmbiguousScaleKeyPtr failed size validation");
+
 	struct KeyframeData : Object {
 		unsigned int rotationKeyCount; // 0x8
 		AmbiguousRotKeyPtr rotationKeys; // 0xC
@@ -91,12 +118,12 @@ namespace NI {
 		AmbiguousPosKeyPtr positionKeys; // 0x18
 		AnimationKey::Type positionType; // 0x1C
 		unsigned int scaleKeyCount; // 0x20
-		FloatKey* scaleKeys; // 0x24
+		AmbiguousScaleKeyPtr scaleKeys; // 0x24
 		AnimationKey::Type scaleType; // 0x28
 
 		sol::object getRotationKeys_lua(sol::this_state L);
 		sol::object getPositionKeys_lua(sol::this_state L);
-		nonstd::span<FloatKey> getScaleKeys();
+		sol::object getScaleKeys_lua(sol::this_state L);
 
 	};
 	static_assert(sizeof(KeyframeData) == 0x2C, "NI::KeyframeData failed size validation");
