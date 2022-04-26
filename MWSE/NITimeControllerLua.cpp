@@ -6,6 +6,7 @@
 #include "LuaUtil.h"
 
 #include "NILookAtController.h"
+#include "NIKeyframeController.h"
 #include "NITimeController.h"
 
 namespace mwse::lua {
@@ -63,6 +64,115 @@ namespace mwse::lua {
 			usertypeDefinition["axis"] = sol::property(&NI::LookAtController::getAxis, &NI::LookAtController::setAxis);
 			usertypeDefinition["flip"] = sol::property(&NI::LookAtController::getFlip, &NI::LookAtController::setFlip);
 			usertypeDefinition["lookAt"] = sol::property(&NI::LookAtController::getLookAt, &NI::LookAtController::setLookAt);
+		}
+
+		// Bind various keyframe data types.
+		{
+			// Bind NI::AnimationKey
+			{
+				// Start our usertype.
+				auto usertypeDefinition = state.new_usertype<NI::AnimationKey>("niAnimationKey");
+				usertypeDefinition["new"] = sol::no_constructor;
+
+				// Basic property binding.
+				usertypeDefinition["timing"] = &NI::AnimationKey::timing;
+			}
+
+			// Bind NI::FloatKey
+			{
+				// Start our usertype.
+				auto usertypeDefinition = state.new_usertype<NI::FloatKey>("niFloatKey");
+				usertypeDefinition["new"] = sol::no_constructor;
+
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition[sol::base_classes] = sol::bases<NI::AnimationKey>();
+				usertypeDefinition["timing"] = &NI::FloatKey::timing;
+
+				// Basic property binding.
+				usertypeDefinition["value"] = &NI::FloatKey::value;
+			}
+
+			// Bind NI::PosKey
+			{
+				// Start our usertype.
+				auto usertypeDefinition = state.new_usertype<NI::PosKey>("niPosKey");
+				usertypeDefinition["new"] = sol::no_constructor;
+
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition[sol::base_classes] = sol::bases<NI::AnimationKey>();
+				usertypeDefinition["timing"] = &NI::PosKey::timing;
+
+				// Basic property binding.
+				usertypeDefinition["value"] = &NI::PosKey::value;
+			}
+
+			// Bind NI::BezPosKey
+			{
+				// Start our usertype.
+				auto usertypeDefinition = state.new_usertype<NI::BezPosKey>("niBezPosKey");
+				usertypeDefinition["new"] = sol::no_constructor;
+
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition[sol::base_classes] = sol::bases<NI::PosKey, NI::AnimationKey>();
+				usertypeDefinition["timing"] = &NI::BezPosKey::timing;
+				usertypeDefinition["value"] = &NI::BezPosKey::value;
+
+				// Basic property binding.
+				usertypeDefinition["inTangent"] = &NI::BezPosKey::inTangent;
+				usertypeDefinition["outTangent"] = &NI::BezPosKey::outTangent;
+			}
+
+			// Bind NI::TCBPosKey
+			{
+				// Start our usertype.
+				auto usertypeDefinition = state.new_usertype<NI::TCBPosKey>("niTCBPosKey");
+				usertypeDefinition["new"] = sol::no_constructor;
+
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition[sol::base_classes] = sol::bases<NI::PosKey, NI::AnimationKey>();
+				usertypeDefinition["timing"] = &NI::TCBPosKey::timing;
+				usertypeDefinition["value"] = &NI::TCBPosKey::value;
+
+				// Basic property binding.
+				usertypeDefinition["tcb"] = sol::readonly_property(&NI::TCBPosKey::getTCB);
+			}
+		}
+
+		// Bind NI::KeyframeData
+		{
+			// Start our usertype.
+			auto usertypeDefinition = state.new_usertype<NI::KeyframeData>("niKeyframeData");
+			usertypeDefinition["new"] = sol::no_constructor;
+
+			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+			usertypeDefinition[sol::base_classes] = sol::bases<NI::Object>();
+			setUserdataForNIObject(usertypeDefinition);
+
+			// Basic property binding.
+			usertypeDefinition["positionKeyCount"] = sol::readonly_property(&NI::KeyframeData::positionKeyCount);
+			usertypeDefinition["positionKeys"] = sol::readonly_property(&NI::KeyframeData::getPositionKeys_lua);
+			usertypeDefinition["positionType"] = sol::readonly_property(&NI::KeyframeData::positionType);
+			usertypeDefinition["rotationKeyCount"] = sol::readonly_property(&NI::KeyframeData::rotationKeyCount);
+			usertypeDefinition["rotationType"] = sol::readonly_property(&NI::KeyframeData::rotationType);
+			usertypeDefinition["scaleKeyCount"] = sol::readonly_property(&NI::KeyframeData::scaleKeyCount);
+			usertypeDefinition["scaleType"] = sol::readonly_property(&NI::KeyframeData::scaleType);
+		}
+
+		// Bind NI::KeyframeController
+		{
+			// Start our usertype.
+			auto usertypeDefinition = state.new_usertype<NI::KeyframeController>("niKeyframeController");
+			usertypeDefinition["new"] = sol::no_constructor;
+
+			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+			usertypeDefinition[sol::base_classes] = sol::bases<NI::TimeController, NI::Object>();
+			setUserdataForNITimeController(usertypeDefinition);
+
+			// Basic property binding.
+			usertypeDefinition["data"] = sol::readonly_property(&NI::KeyframeController::keyframeData);
+			usertypeDefinition["lastUsedPositionIndex"] = &NI::KeyframeController::lastPosIndex;
+			usertypeDefinition["lastUsedRotationIndex"] = &NI::KeyframeController::lastRotIndex;
+			usertypeDefinition["lastUsedScaleIndex"] = &NI::KeyframeController::lastScaleIndex;
 		}
 	}
 }

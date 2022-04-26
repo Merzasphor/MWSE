@@ -28,6 +28,7 @@
     <ClInclude Include="MathUtil.h" />
     <ClInclude Include="NIColorData.h" />
     <ClInclude Include="NIColorKey.h" />
+    <ClInclude Include="NIPosData.h" />
     <ClInclude Include="NIQuaternion.h" />
     <ClInclude Include="NIQuaternionLua.h" />
     <ClInclude Include="NIScreenPolygon.h" />
@@ -663,6 +664,7 @@
     <ClCompile Include="NIGeometry.cpp" />
     <ClCompile Include="NIGeometryData.cpp" />
     <ClCompile Include="NIGeometryDataLua.cpp" />
+    <ClCompile Include="NIKeyframeController.cpp" />
     <ClCompile Include="NIKeyframeManager.cpp" />
     <ClCompile Include="NILinesData.cpp" />
     <ClCompile Include="NILookAtController.cpp" />
@@ -670,6 +672,7 @@
     <ClCompile Include="NIParticles.cpp" />
     <ClCompile Include="NIParticlesLua.cpp" />
     <ClCompile Include="NIParticleSystemController.cpp" />
+    <ClCompile Include="NIPosData.cpp" />
     <ClCompile Include="NIProperty.cpp" />
     <ClCompile Include="NIQuaternion.cpp" />
     <ClCompile Include="NIQuaternionLua.cpp" />

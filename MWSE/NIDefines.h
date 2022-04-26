@@ -43,6 +43,7 @@ namespace NI {
 	struct PixelFormat;
 	struct PlanarCollider;
 	struct PointLight;
+	struct PosData;
 	struct Property;
 	struct Quaternion;
 	struct RenderedTexture;
