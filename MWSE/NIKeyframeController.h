@@ -4,21 +4,21 @@
 #include "TES3Vectors.h"
 
 namespace NI {
-	enum AnimationKeyType : unsigned int {
-		NoInterp,
-		Linear,
-		Bezier,
-		TCB,
-		Euler,
-
-		COUNT,
-	};
-	static_assert(AnimationKeyType::COUNT == 5, "NI::AnimationKeyType failed enum count validation");
-
 	struct AnimationKey {
+		enum Type : unsigned int {
+			NoInterp,
+			Linear,
+			Bezier,
+			TCB,
+			Euler,
+
+			COUNT,
+		};
+
 		float timing; // 0x0
 	};
 	static_assert(sizeof(AnimationKey) == 0x4, "NI::AnimationKey failed size validation");
+	static_assert(AnimationKey::Type::COUNT == 5, "NI::AnimationKey::Type failed enum count validation");
 
 	struct FloatKey : AnimationKey {
 		float value; // 0x8
@@ -53,13 +53,13 @@ namespace NI {
 	struct KeyframeData : Object {
 		unsigned int rotationKeyCount; // 0x8
 		AnimationKey* rotationKeys; // 0xC
-		AnimationKeyType rotationType; // 0x10
+		AnimationKey::Type rotationType; // 0x10
 		unsigned int positionKeyCount; // 0x14
 		AmbiguousPosKeyPtr positionKeys; // 0x18
-		AnimationKeyType positionType; // 0x1C
+		AnimationKey::Type positionType; // 0x1C
 		unsigned int scaleKeyCount; // 0x20
 		AnimationKey* scaleKeys; // 0x24
-		AnimationKeyType scaleType; // 0x28
+		AnimationKey::Type scaleType; // 0x28
 
 		sol::object getPositionKeys_lua(sol::this_state L) const;
 	};

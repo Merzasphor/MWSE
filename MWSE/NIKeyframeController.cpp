@@ -10,12 +10,12 @@ namespace NI {
 		L = sol::main_thread(L);
 
 		switch (positionType) {
-		case AnimationKeyType::NoInterp:
-		case AnimationKeyType::Linear:
+		case AnimationKey::Type::NoInterp:
+		case AnimationKey::Type::Linear:
 			return sol::make_object(L, nonstd::span(positionKeys.asPosKey, positionKeyCount));
-		case AnimationKeyType::Bezier:
+		case AnimationKey::Type::Bezier:
 			return sol::make_object(L, nonstd::span(positionKeys.asBezPosKey, positionKeyCount));
-		case AnimationKeyType::TCB:
+		case AnimationKey::Type::TCB:
 			return sol::make_object(L, nonstd::span(positionKeys.asTCBPosKey, positionKeyCount));
 		default:
 			throw std::runtime_error("Invalid position type found. Report to MWSE developers.");
