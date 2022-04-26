@@ -41,7 +41,7 @@ namespace NI {
 
 		std::reference_wrapper<float[3]> getTCB();
 	};
-	static_assert(sizeof(TCBRotsKey) == 0x20, "NI::TCBRotsKey failed size validation");
+	static_assert(sizeof(TCBRotKey) == 0x20, "NI::TCBRotKey failed size validation");
 
 	union AmbiguousRotKeyPtr {
 		RotKey* asRotKey;

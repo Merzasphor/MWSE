@@ -44,6 +44,6 @@ namespace NI {
 	}
 
 	nonstd::span<FloatKey> KeyframeData::getScaleKeys() {
-		return { scaleKeys, scaleKeyCount };
+		return nonstd::span(scaleKeys, scaleKeyCount);
 	}
 }
