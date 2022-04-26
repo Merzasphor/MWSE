@@ -737,7 +737,7 @@ function tes3.fadeTo(params) end
 --- `position`: tes3vector3? — *Optional*. The position to search from.
 --- 
 --- `range`: number — The distance around the position to search. An actor is included if the centre of their body is in range.
---- @return tes3mobileActor[] mobileList No description yet available.
+--- @return tes3mobileActor[]|tes3mobileCreature[]|tes3mobileNPC[]|tes3mobilePlayer[] mobileList No description yet available.
 function tes3.findActorsInProximity(params) end
 
 ---Table parameter definitions for `tes3.findActorsInProximity`.
@@ -1672,7 +1672,7 @@ function tes3.random(seed) end
 --- 
 --- `returnTexture`: boolean? — *Default*: `false`. Calculate and return the texture coordinate at intersections.
 --- 
---- `ignore`: tes3reference[]|niNode[]|nil — *Optional*. An array of references and/or scene graph nodes to cull from the result(s).
+--- `ignore`: tes3reference[]|niBillboardNode[]|niCollisionSwitch[]|niNode[]|niSwitchNode[]|nil — *Optional*. An array of references and/or scene graph nodes to cull from the result(s).
 --- @return niPickRecord|table result No description yet available.
 function tes3.rayTest(params) end
 
@@ -1693,7 +1693,7 @@ function tes3.rayTest(params) end
 --- @field returnNormal boolean? *Default*: `true`. Calculate and return the vertex normal at intersections.
 --- @field returnSmoothNormal boolean? *Default*: `false`. Use normal interpolation for calculating vertex normals.
 --- @field returnTexture boolean? *Default*: `false`. Calculate and return the texture coordinate at intersections.
---- @field ignore tes3reference[]|niNode[]|nil *Optional*. An array of references and/or scene graph nodes to cull from the result(s).
+--- @field ignore tes3reference[]|niBillboardNode[]|niCollisionSwitch[]|niNode[]|niSwitchNode[]|nil *Optional*. An array of references and/or scene graph nodes to cull from the result(s).
 
 --- Simulates releasing a keyboard key.
 --- @param keyCode number Maps to values in [`tes3.scanCode`](https://mwse.github.io/MWSE/references/scan-codes/) namespace.

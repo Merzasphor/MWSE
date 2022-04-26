@@ -322,6 +322,51 @@ function common.getDescriptionString(package, useDefault)
 	end
 end
 
+--
+-- Complex type helpers
+--
+
+--- @class complexType
+--- @field input string The string originally fed to the complex type.
+--- @field type string The underlying type.
+--- @field isArray boolean If true, the type is a boolean.
+--- @field isOptional boolean If true, the type is optional.
+
+local complexType = {}
+
+function complexType:toTypeString()
+	return common.makeTypeString(self.type, self.isOptional, self.isArray)
+end
+
+
+--- comment
+--- @param input string
+--- @return complexType
+function common.makeComplexType(input)
+	local complex = setmetatable({ input = input, type = input }, complexType)
+
+	while (true) do
+		local isOptional = complex.type:endswith("?")
+		local isArray = complex.type:endswith("[]")
+
+		if (isOptional) then
+			complex.type = string.sub(complex.type, 1, -2)
+			complex.isOptional = true
+		elseif (isArray) then
+			complex.type = string.sub(complex.type, 1, -3)
+			complex.isArray = true
+		else
+			break
+		end
+	end
+
+	return complex
+end
+
+function common.makeTypeString(type, isOptional, isArray)
+	return string.format("%s%s%s", type, isOptional and "?" or "", isArray and "[]" or "")
+end
+
 
 --
 -- Package compilation
@@ -329,7 +374,7 @@ end
 
 --- @class package
 --- @field key package The name of the file that generated this package.
---- @field type string The type definitionf or the package.
+--- @field type string The type definition for the package.
 --- @field folder string The folder that the package was created from.
 --- @field parent package The package this package is a child of.
 --- @field namespace string The full namespace of the package.

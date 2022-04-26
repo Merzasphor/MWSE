@@ -69,11 +69,12 @@ local function getAllPossibleVariationsOfType(type, package)
 
 	local types = {}
 	for _, t in ipairs(string.split(type, "|")) do
-		local class = classes[t]
+		local strippedType = common.makeComplexType(t)
+		local class = classes[strippedType.type]
 		if (class) then
 			if (class.allDescendentKeys) then
 				for _, descendentType in ipairs(string.split(class.allDescendentKeys, "|")) do
-					table.insert(types, descendentType)
+					table.insert(types, common.makeTypeString(descendentType, strippedType.isOptional, strippedType.isArray))
 				end
 			else
 				table.insert(types, t)
