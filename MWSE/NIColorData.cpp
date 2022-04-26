@@ -6,5 +6,3 @@ namespace NI {
 		return nonstd::span(keys, keyCount);
 	};
 }
-
-MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_NI(NI::ColorData)
