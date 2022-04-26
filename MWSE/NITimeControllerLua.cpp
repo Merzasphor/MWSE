@@ -92,6 +92,47 @@ namespace mwse::lua {
 				usertypeDefinition["value"] = &NI::FloatKey::value;
 			}
 
+			// Bind NI::RotKey
+			{
+				// Start our usertype.
+				auto usertypeDefinition = state.new_usertype<NI::RotKey>("niRotKey");
+				usertypeDefinition["new"] = sol::no_constructor;
+
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition[sol::base_classes] = sol::bases<NI::AnimationKey>();
+				usertypeDefinition["timing"] = &NI::RotKey::timing;
+
+				// Basic property binding.
+				usertypeDefinition["value"] = &NI::RotKey::value;
+			}
+
+			// Bind NI::BezRotKey
+			{
+				// Start our usertype.
+				auto usertypeDefinition = state.new_usertype<NI::BezRotKey>("niBezRotKey");
+				usertypeDefinition["new"] = sol::no_constructor;
+
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition[sol::base_classes] = sol::bases<NI::RotKey, NI::AnimationKey>();
+				usertypeDefinition["timing"] = &NI::BezRotKey::timing;
+				usertypeDefinition["value"] = &NI::BezRotKey::value;
+			}
+
+			// Bind NI::TCBRotKey
+			{
+				// Start our usertype.
+				auto usertypeDefinition = state.new_usertype<NI::TCBRotKey>("niTCBRotKey");
+				usertypeDefinition["new"] = sol::no_constructor;
+
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition[sol::base_classes] = sol::bases<NI::RotKey, NI::AnimationKey>();
+				usertypeDefinition["timing"] = &NI::TCBRotKey::timing;
+				usertypeDefinition["value"] = &NI::TCBRotKey::value;
+
+				// Basic property binding.
+				usertypeDefinition["tcb"] = sol::readonly_property(&NI::TCBRotKey::getTCB);
+			}
+
 			// Bind NI::PosKey
 			{
 				// Start our usertype.
@@ -153,6 +194,7 @@ namespace mwse::lua {
 			usertypeDefinition["positionKeys"] = sol::readonly_property(&NI::KeyframeData::getPositionKeys_lua);
 			usertypeDefinition["positionType"] = sol::readonly_property(&NI::KeyframeData::positionType);
 			usertypeDefinition["rotationKeyCount"] = sol::readonly_property(&NI::KeyframeData::rotationKeyCount);
+			usertypeDefinition["rotationKeys"] = sol::readonly_property(&NI::KeyframeData::getRotationKeys_lua);
 			usertypeDefinition["rotationType"] = sol::readonly_property(&NI::KeyframeData::rotationType);
 			usertypeDefinition["scaleKeyCount"] = sol::readonly_property(&NI::KeyframeData::scaleKeyCount);
 			usertypeDefinition["scaleType"] = sol::readonly_property(&NI::KeyframeData::scaleType);

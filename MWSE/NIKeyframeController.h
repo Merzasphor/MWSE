@@ -1,6 +1,7 @@
 #pragma once
 
 #include "NITimeController.h"
+#include "NIQuaternion.h"
 #include "TES3Vectors.h"
 
 namespace NI {
@@ -24,6 +25,30 @@ namespace NI {
 		float value; // 0x8
 	};
 	static_assert(sizeof(FloatKey) == 0x8, "NI::FloatKey failed size validation");
+
+	struct RotKey : AnimationKey {
+		Quaternion value; // 0x4
+	};
+	static_assert(sizeof(RotKey) == 0x14, "NI::RotKey failed size validation");
+
+	struct BezRotKey : RotKey {
+
+	};
+	static_assert(sizeof(BezRotKey) == 0x14, "NI::BezRotKey failed size validation");
+
+	struct TCBRotKey : RotKey {
+		float tcb[3]; // 0x10
+
+		std::reference_wrapper<float[3]> getTCB();
+	};
+	static_assert(sizeof(TCBRotsKey) == 0x20, "NI::TCBRotsKey failed size validation");
+
+	union AmbiguousRotKeyPtr {
+		RotKey* asRotKey;
+		BezRotKey* asBezRotKey;
+		TCBRotKey* asTCBRotKey;
+	};
+	static_assert(sizeof(AmbiguousRotKeyPtr) == sizeof(void*), "NI::AmbiguousRotKeyPtr failed size validation");
 
 	struct PosKey : AnimationKey {
 		TES3::Vector3 value; // 0x4
@@ -52,16 +77,19 @@ namespace NI {
 
 	struct KeyframeData : Object {
 		unsigned int rotationKeyCount; // 0x8
-		AnimationKey* rotationKeys; // 0xC
+		AmbiguousRotKeyPtr rotationKeys; // 0xC
 		AnimationKey::Type rotationType; // 0x10
 		unsigned int positionKeyCount; // 0x14
 		AmbiguousPosKeyPtr positionKeys; // 0x18
 		AnimationKey::Type positionType; // 0x1C
 		unsigned int scaleKeyCount; // 0x20
-		AnimationKey* scaleKeys; // 0x24
+		FloatKey* scaleKeys; // 0x24
 		AnimationKey::Type scaleType; // 0x28
 
-		sol::object getPositionKeys_lua(sol::this_state L) const;
+		sol::object getRotationKeys_lua(sol::this_state L);
+		sol::object getPositionKeys_lua(sol::this_state L);
+		nonstd::span<FloatKey> getScaleKeys();
+
 	};
 	static_assert(sizeof(KeyframeData) == 0x2C, "NI::KeyframeData failed size validation");
 
