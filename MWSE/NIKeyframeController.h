@@ -32,16 +32,18 @@ namespace NI {
 	static_assert(sizeof(RotKey) == 0x14, "NI::RotKey failed size validation");
 
 	struct BezRotKey : RotKey {
-
+		Quaternion intermediate; // 0x14 // Intermediate value/angle used for interpolation.
 	};
-	static_assert(sizeof(BezRotKey) == 0x14, "NI::BezRotKey failed size validation");
+	static_assert(sizeof(BezRotKey) == 0x24, "NI::BezRotKey failed size validation");
 
 	struct TCBRotKey : RotKey {
-		float tcb[3]; // 0x10
-
-		std::reference_wrapper<float[3]> getTCB();
+		float tension; // 0x14
+		float continuity; // 0x18
+		float bias; // 0x1C
+		Quaternion intermediateA; // 0x20 // Intermediate value/angle used for interpolation.
+		Quaternion intermediateB; // 0x30 // Intermediate value/angle used for interpolation.
 	};
-	static_assert(sizeof(TCBRotKey) == 0x20, "NI::TCBRotKey failed size validation");
+	static_assert(sizeof(TCBRotKey) == 0x40, "NI::TCBRotKey failed size validation");
 
 	union AmbiguousRotKeyPtr {
 		RotKey* asRotKey;
@@ -58,15 +60,21 @@ namespace NI {
 	struct BezPosKey : PosKey {
 		TES3::Vector3 inTangent; // 0x10
 		TES3::Vector3 outTangent; // 0x1C
+		TES3::Vector3 intermediateA; // 0x28 // Intermediate value/angle used for interpolation.
+		TES3::Vector3 intermediateB; // 0x34 // Intermediate value/angle used for interpolation.
 	};
-	static_assert(sizeof(BezPosKey) == 0x28, "NI::BezPosKey failed size validation");
+	static_assert(sizeof(BezPosKey) == 0x40, "NI::BezPosKey failed size validation");
 
 	struct TCBPosKey : PosKey {
-		float tcb[3]; // 0x10
-
-		std::reference_wrapper<float[3]> getTCB();
+		float tension; // 0x10
+		float continuity; // 0x14
+		float bias; // 0x18
+		TES3::Vector3 derivedA; // 0x1C // Intermediate value/angle derived from main parameters.
+		TES3::Vector3 derivedB; // 0x28 // Intermediate value/angle derived from main parameters.
+		TES3::Vector3 intermediateA; // 0x28 // Intermediate value/angle used for interpolation.
+		TES3::Vector3 intermediateB; // 0x28 // Intermediate value/angle used for interpolation.
 	};
-	static_assert(sizeof(TCBPosKey) == 0x1C, "NI::TCBPosKey failed size validation");
+	static_assert(sizeof(TCBPosKey) == 0x4C, "NI::TCBPosKey failed size validation");
 
 	union AmbiguousPosKeyPtr {
 		PosKey* asPosKey;

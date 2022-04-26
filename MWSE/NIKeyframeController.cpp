@@ -1,14 +1,6 @@
 #include "NIKeyframeController.h"
 
 namespace NI {
-	std::reference_wrapper<float[3]> TCBRotKey::getTCB() {
-		return tcb;
-	}
-
-	std::reference_wrapper<float[3]> TCBPosKey::getTCB() {
-		return tcb;
-	}
-
 	sol::object KeyframeData::getRotationKeys_lua(sol::this_state L) {
 		// Make sure we're looking at the main state.
 		L = sol::main_thread(L);

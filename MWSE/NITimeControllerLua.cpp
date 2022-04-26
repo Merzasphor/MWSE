@@ -116,6 +116,9 @@ namespace mwse::lua {
 				usertypeDefinition[sol::base_classes] = sol::bases<NI::RotKey, NI::AnimationKey>();
 				usertypeDefinition["timing"] = &NI::BezRotKey::timing;
 				usertypeDefinition["value"] = &NI::BezRotKey::value;
+
+				// Basic property binding.
+				usertypeDefinition["intermediate"] = &NI::BezRotKey::intermediate;
 			}
 
 			// Bind NI::TCBRotKey
@@ -130,7 +133,11 @@ namespace mwse::lua {
 				usertypeDefinition["value"] = &NI::TCBRotKey::value;
 
 				// Basic property binding.
-				usertypeDefinition["tcb"] = sol::readonly_property(&NI::TCBRotKey::getTCB);
+				usertypeDefinition["bias"] = &NI::TCBRotKey::bias;
+				usertypeDefinition["continuity"] = &NI::TCBRotKey::continuity;
+				usertypeDefinition["intermediateA"] = &NI::TCBRotKey::intermediateA;
+				usertypeDefinition["intermediateB"] = &NI::TCBRotKey::intermediateB;
+				usertypeDefinition["tension"] = &NI::TCBRotKey::tension;
 			}
 
 			// Bind NI::PosKey
@@ -160,6 +167,8 @@ namespace mwse::lua {
 
 				// Basic property binding.
 				usertypeDefinition["inTangent"] = &NI::BezPosKey::inTangent;
+				usertypeDefinition["intermediateA"] = &NI::BezPosKey::intermediateA;
+				usertypeDefinition["intermediateB"] = &NI::BezPosKey::intermediateB;
 				usertypeDefinition["outTangent"] = &NI::BezPosKey::outTangent;
 			}
 
@@ -175,7 +184,13 @@ namespace mwse::lua {
 				usertypeDefinition["value"] = &NI::TCBPosKey::value;
 
 				// Basic property binding.
-				usertypeDefinition["tcb"] = sol::readonly_property(&NI::TCBPosKey::getTCB);
+				usertypeDefinition["bias"] = &NI::TCBPosKey::bias;
+				usertypeDefinition["continuity"] = &NI::TCBPosKey::continuity;
+				usertypeDefinition["derivedA"] = &NI::TCBPosKey::derivedA;
+				usertypeDefinition["derivedB"] = &NI::TCBPosKey::derivedB;
+				usertypeDefinition["intermediateA"] = &NI::TCBPosKey::intermediateA;
+				usertypeDefinition["intermediateB"] = &NI::TCBPosKey::intermediateB;
+				usertypeDefinition["tension"] = &NI::TCBPosKey::tension;
 			}
 		}
 
