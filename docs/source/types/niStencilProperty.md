@@ -5,6 +5,16 @@ A rendering property that controls the use of a stencil buffer when rendering. I
 This type inherits the following: [niProperty](../../types/niProperty), [niObjectNET](../../types/niObjectNET), [niObject](../../types/niObject)
 ## Properties
 
+### `controller`
+
+*Read-only*. The first controller available on the object.
+
+**Returns**:
+
+* `result` ([niTimeController](../../types/niTimeController))
+
+***
+
 ### `drawMode`
 
 The drawing mode used to draw the object.

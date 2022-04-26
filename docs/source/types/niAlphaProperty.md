@@ -15,6 +15,16 @@ No description.
 
 ***
 
+### `controller`
+
+*Read-only*. The first controller available on the object.
+
+**Returns**:
+
+* `result` ([niTimeController](../../types/niTimeController))
+
+***
+
 ### `name`
 
 The human-facing name of the given object.

@@ -25,6 +25,16 @@ A flag indicating if this object is culled. When culled, it will not render, and
 
 ***
 
+### `controller`
+
+*Read-only*. The first controller available on the object.
+
+**Returns**:
+
+* `result` ([niTimeController](../../types/niTimeController))
+
+***
+
 ### `data`
 
 The NiTriShapeData of the object. Manipulation should not be done directly. Instead, consider copying the data and assigning it to this shape.

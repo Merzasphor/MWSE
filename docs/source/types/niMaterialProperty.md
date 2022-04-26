@@ -25,6 +25,16 @@ The ambient material color.
 
 ***
 
+### `controller`
+
+*Read-only*. The first controller available on the object.
+
+**Returns**:
+
+* `result` ([niTimeController](../../types/niTimeController))
+
+***
+
 ### `diffuse`
 
 The diffuse material color.

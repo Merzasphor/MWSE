@@ -45,6 +45,16 @@ The enabled state of collision on the collision switch.
 
 ***
 
+### `controller`
+
+*Read-only*. The first controller available on the object.
+
+**Returns**:
+
+* `result` ([niTimeController](../../types/niTimeController))
+
+***
+
 ### `effectList`
 
 *Read-only*. The effect list of the node.

@@ -45,6 +45,16 @@ A flag indicating if this object is culled. When culled, it will not render, and
 
 ***
 
+### `controller`
+
+*Read-only*. The first controller available on the object.
+
+**Returns**:
+
+* `result` ([niTimeController](../../types/niTimeController))
+
+***
+
 ### `diffuse`
 
 The defuse settings for the light.
