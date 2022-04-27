@@ -2821,6 +2821,12 @@ namespace mwse::lua {
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			sol::table payload = stateHandle.triggerEvent(new lua::event::FilterSoulGemTargetEvent(item, mact));
 			if (payload.valid()) {
+				// Allow event blocking.
+				if (payload.get_or("block", false)) {
+					return false;
+				}
+
+				// Allow filter setting.
 				sol::object filter = payload["filter"];
 				if (filter.is<bool>()) {
 					return filter.as<bool>();

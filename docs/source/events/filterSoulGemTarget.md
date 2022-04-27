@@ -33,7 +33,7 @@ event.register(tes3.event.filterSoulGemTarget, filterSoulGemTargetCallback)
 	local function onFilterSoulGemTarget(e)
 		-- Make it so Vivec can only be trapped by a special container.
 		if (e.reference.baseObject.id:lower() == "vivec") then
-			return e.soulGem.id == "misc_dwrv_artifact60"
+			e.filter = (e.soulGem.id == "misc_dwrv_artifact60")
 		end
 	end
 	event.register(tes3.event.filterSoulGemTarget, onFilterSoulGemTarget)
