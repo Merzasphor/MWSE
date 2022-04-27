@@ -5478,7 +5478,7 @@ namespace mwse::lua {
 			return vfxManager->createForMagicEffect(enchantEffect.value(), reference, lifespan);
 		}
 
-		return nullptr;
+		throw std::invalid_argument("No valid effect parameters defined.");
 	}
 
 	int removeVisualEffect(sol::table params) {
