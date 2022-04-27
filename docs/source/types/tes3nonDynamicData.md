@@ -74,6 +74,16 @@ A child container from [`tes3dataHandler`](https://mwse.github.io/MWSE/types/tes
 
 ***
 
+### `isSavingOrLoading`
+
+*Read-only*. True when in the process of saving or loading the game.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
 ### `magicEffects`
 
 *Read-only*. A table of references to all 143 magic effects.
