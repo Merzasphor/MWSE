@@ -134,6 +134,7 @@
 #include "LuaUiRefreshedEvent.h"
 #include "LuaUiSpellTooltipEvent.h"
 #include "LuaUnequippedEvent.h"
+#include "LuaVFXCreatedEvent.h"
 #include "LuaWeaponReadiedEvent.h"
 #include "LuaWeaponUnreadiedEvent.h"
 #include "LuaWeatherChangedImmediateEvent.h"
@@ -290,6 +291,7 @@ namespace mwse::lua::event {
 		usertypeDefinition["uiShowRestMenu"] = sol::property(&ShowRestWaitMenuEvent::getEventEnabled, &ShowRestWaitMenuEvent::setEventEnabled);
 		usertypeDefinition["uiSpellTooltip"] = sol::property(&UiSpellTooltipEvent::getEventEnabled, &UiSpellTooltipEvent::setEventEnabled);
 		usertypeDefinition["unequipped"] = sol::property(&UnequippedEvent::getEventEnabled, &UnequippedEvent::setEventEnabled);
+		usertypeDefinition["vfxCreated"] = sol::property(&VFXCreatedEvent::getEventEnabled, &VFXCreatedEvent::setEventEnabled);
 		usertypeDefinition["weaponReadied"] = sol::property(&WeaponReadiedEvent::getEventEnabled, &WeaponReadiedEvent::setEventEnabled);
 		usertypeDefinition["weaponUnreadied"] = sol::property(&WeaponUnreadiedEvent::getEventEnabled, &WeaponUnreadiedEvent::setEventEnabled);
 		usertypeDefinition["weatherChangedImmediate"] = sol::property(&WeatherChangedImmediateEvent::getEventEnabled, &WeatherChangedImmediateEvent::setEventEnabled);

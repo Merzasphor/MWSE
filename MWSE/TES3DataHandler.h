@@ -123,7 +123,7 @@ namespace TES3 {
 		ObjectMapContainer<Dialogue>* allDialoguesById; // 0xB26C
 		char dataFilesPath[260]; // 0xB270
 		char unknown_0xB374;
-		bool isSaving; // 0xB375
+		bool isSavingOrLoading; // 0xB375
 		bool isModifyingMasters; // 0xB376
 		char unknown_0xB377;
 		char unknown_0xB378;

@@ -17,22 +17,22 @@ function niPixelData.new(width, height) end
 function niPixelData:createSourceTexture() end
 
 --- Returns the height of the mipmap level at the given index, where level 1 is the largest.
---- @param mipMapLevel number *Optional*. Default value: 1
+--- @param mipMapLevel number? *Optional*. Default value: 1
 --- @return number result No description yet available.
 function niPixelData:getHeight(mipMapLevel) end
 
 --- Returns the width of the mipmap level at the given index, where level 1 is the largest.
---- @param mipMapLevel number *Optional*. Default value: 1
+--- @param mipMapLevel number? *Optional*. Default value: 1
 --- @return number result No description yet available.
 function niPixelData:getWidth(mipMapLevel) end
 
 --- Sets the pixel data from byte data.
 --- @param data table The byte data to be set to.
---- @param mipMapLevel number *Optional*. Default value: 1
+--- @param mipMapLevel number? *Optional*. Default value: 1
 function niPixelData:setPixelsByte(data, mipMapLevel) end
 
 --- Sets the pixel data from float data.
 --- @param data table The float data to be set to.
---- @param mipMapLevel number *Optional*. Default value: 1
+--- @param mipMapLevel number? *Optional*. Default value: 1
 function niPixelData:setPixelsFloat(data, mipMapLevel) end
 

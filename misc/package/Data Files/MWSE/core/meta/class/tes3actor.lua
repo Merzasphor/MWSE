@@ -15,7 +15,7 @@ tes3actor = {}
 
 --- Checks if the actor has provided item equipped.
 --- @param item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string The item to perform a check for.
---- @param itemData tes3itemData *Optional*. No description yet available.
+--- @param itemData tes3itemData? *Optional*. No description yet available.
 --- @return boolean result No description yet available.
 function tes3actor:hasItemEquipped(item, itemData) end
 

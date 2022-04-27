@@ -26,16 +26,16 @@ tes3audioController = {}
 --- 
 --- `filename`: string — File name of the new music track.
 --- 
---- `crossfade`: number — *Default*: `1000`. Duration of the crossfading between music tracks. Measured in miliseconds.
+--- `crossfade`: number? — *Default*: `1000`. Duration of the crossfading between music tracks. Measured in miliseconds.
 --- 
---- `volume`: number — *Default*: `1`. Allows changing the volume of the music track.
+--- `volume`: number? — *Default*: `1`. Allows changing the volume of the music track.
 function tes3audioController:changeMusicTrack(params) end
 
 ---Table parameter definitions for `tes3audioController.changeMusicTrack`.
 --- @class tes3audioController.changeMusicTrack.params
 --- @field filename string File name of the new music track.
---- @field crossfade number *Default*: `1000`. Duration of the crossfading between music tracks. Measured in miliseconds.
---- @field volume number *Default*: `1`. Allows changing the volume of the music track.
+--- @field crossfade number? *Default*: `1000`. Duration of the crossfading between music tracks. Measured in miliseconds.
+--- @field volume number? *Default*: `1`. Allows changing the volume of the music track.
 
 --- Final volume of a provided type of audio, after master volume and its own volume adjustments. Music volume is an exception since it isn't affected by master volume.
 --- @param mix number The type of sound mix to perform a check for. Accepts values from [`tes3.soundMix`](https://mwse.github.io/MWSE/references/sound-mix-types/) namespace.

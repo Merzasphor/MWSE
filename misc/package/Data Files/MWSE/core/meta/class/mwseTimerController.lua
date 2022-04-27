@@ -7,7 +7,7 @@
 mwseTimerController = {}
 
 --- Creates a new Timer Controller. Its initial clock is zero, unless a start time is provided.
---- @param startTime number *Optional*. No description yet available.
+--- @param startTime number? *Optional*. No description yet available.
 --- @return mwseTimerController result No description yet available.
 function mwseTimerController.new(startTime) end
 
@@ -20,7 +20,7 @@ function mwseTimerController.new(startTime) end
 --- 
 --- `callback`: function — No description yet available.
 --- 
---- `iterations`: number — *Optional*. No description yet available.
+--- `iterations`: number? — *Optional*. No description yet available.
 --- 
 --- `data`: table|nil — No description yet available.
 --- @return mwseTimer timer No description yet available.
@@ -31,6 +31,6 @@ function mwseTimerController:create(params) end
 --- @field type number No description yet available.
 --- @field duration number No description yet available.
 --- @field callback function No description yet available.
---- @field iterations number *Optional*. No description yet available.
+--- @field iterations number? *Optional*. No description yet available.
 --- @field data table|nil No description yet available.
 

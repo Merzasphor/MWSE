@@ -5,6 +5,16 @@ A base class representing all rendering properties.
 This type inherits the following: [niObjectNET](../../types/niObjectNET), [niObject](../../types/niObject)
 ## Properties
 
+### `controller`
+
+*Read-only*. The first controller available on the object.
+
+**Returns**:
+
+* `result` ([niTimeController](../../types/niTimeController))
+
+***
+
 ### `name`
 
 The human-facing name of the given object.

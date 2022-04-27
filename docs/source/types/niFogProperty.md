@@ -15,6 +15,16 @@ This type inherits the following: [niProperty](../../types/niProperty), [niObjec
 
 ***
 
+### `controller`
+
+*Read-only*. The first controller available on the object.
+
+**Returns**:
+
+* `result` ([niTimeController](../../types/niTimeController))
+
+***
+
 ### `density`
 
 The fog density.

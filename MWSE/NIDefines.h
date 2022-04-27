@@ -11,6 +11,7 @@ namespace NI {
 	struct CollisionSwitch;
 	struct Color;
 	struct ColorA;
+	struct ColorData;
 	struct DirectionalLight;
 	struct DynamicEffect;
 	struct ExtraData;
@@ -42,6 +43,7 @@ namespace NI {
 	struct PixelFormat;
 	struct PlanarCollider;
 	struct PointLight;
+	struct PosData;
 	struct Property;
 	struct Quaternion;
 	struct RenderedTexture;

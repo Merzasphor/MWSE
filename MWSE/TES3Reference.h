@@ -156,6 +156,8 @@ namespace TES3 {
 
 		sol::optional<bool> isDead() const;
 
+		bool isTemporaryInventoryScriptReference() const;
+
 		//
 		// Lua interface functions.
 		//

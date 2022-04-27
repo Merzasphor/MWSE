@@ -14,14 +14,14 @@ function os.clock() end
 --- 
 --- `command`: string — The command to run.
 --- 
---- `async`: boolean — *Default*: `true`. If set to false, Morrowind will halt execution until the program finishes.
+--- `async`: boolean? — *Default*: `true`. If set to false, Morrowind will halt execution until the program finishes.
 --- @return mwseLuaExecutor executor A handle to the executor. This can be used to check if the program has errored, finished, and to get the program's output.
 function os.createProcess(params) end
 
 ---Table parameter definitions for `os.createProcess`.
 --- @class os.createProcess.params
 --- @field command string The command to run.
---- @field async boolean *Default*: `true`. If set to false, Morrowind will halt execution until the program finishes.
+--- @field async boolean? *Default*: `true`. If set to false, Morrowind will halt execution until the program finishes.
 
 --- Passes command to be executed by an operating system shell. To open a program to run in the background and monitor its output, use `os.createProcess`.
 --- @param command string The command to run.

@@ -5,6 +5,16 @@ Represents all texture objects that are created from a file or a block of in-mem
 This type inherits the following: [niObjectNET](../../types/niObjectNET), [niObject](../../types/niObject)
 ## Properties
 
+### `controller`
+
+*Read-only*. The first controller available on the object.
+
+**Returns**:
+
+* `result` ([niTimeController](../../types/niTimeController))
+
+***
+
 ### `fileName`
 
 *Read-only*. The platform-independent version of the filename from which the image was created, or NULL if the image was created from pixel data.

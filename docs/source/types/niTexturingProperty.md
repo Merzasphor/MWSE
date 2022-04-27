@@ -45,6 +45,16 @@ Gets or set the bump map. Can be set to nil to delete it. Note that doing so wil
 
 ***
 
+### `controller`
+
+*Read-only*. The first controller available on the object.
+
+**Returns**:
+
+* `result` ([niTimeController](../../types/niTimeController))
+
+***
+
 ### `darkMap`
 
 Gets or set the dark map. Can be set to nil to delete it. Note that doing so will free the memory of the map, causing all existing handles to it to become invalid.

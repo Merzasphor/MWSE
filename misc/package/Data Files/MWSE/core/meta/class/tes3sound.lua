@@ -18,10 +18,10 @@ function tes3sound:isLooping() end
 function tes3sound:isPlaying() end
 
 --- This method plays the sound.
---- @param playbackFlags number *Optional*. These match low-level DirectSound flags. Most mods don't need to modify this, though a value of `1` to loop may be useful. The rest of the flags can be read in the IDirectSoundBuffer8::Play documentation: https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ee418074(v=vs.85).
---- @param volume number *Optional*. No description yet available.
---- @param pitch number *Optional*. No description yet available.
---- @param isNot3D boolean *Optional*. No description yet available.
+--- @param playbackFlags number? *Optional*. These match low-level DirectSound flags. Most mods don't need to modify this, though a value of `1` to loop may be useful. The rest of the flags can be read in the IDirectSoundBuffer8::Play documentation: https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ee418074(v=vs.85).
+--- @param volume number? *Optional*. No description yet available.
+--- @param pitch number? *Optional*. No description yet available.
+--- @param isNot3D boolean? *Optional*. No description yet available.
 function tes3sound:play(playbackFlags, volume, pitch, isNot3D) end
 
 --- This stops playing the sound.

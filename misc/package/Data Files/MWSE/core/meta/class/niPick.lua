@@ -26,7 +26,7 @@ function niPick:clearResults() end
 --- Performs the picking operation.
 --- @param origin tes3vector3 No description yet available.
 --- @param distance tes3vector3 No description yet available.
---- @param append boolean *Optional*. Default value: false
---- @param maxDistance number *Optional*. Default value: 0.0F
+--- @param append boolean? *Optional*. Default value: false
+--- @param maxDistance number? *Optional*. Default value: 0.0F
 function niPick:pickObjects(origin, distance, append, maxDistance) end
 

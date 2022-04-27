@@ -141,6 +141,7 @@ return {
 	["uiRefreshed"] = "uiRefreshed",
 	["uiShowRestMenu"] = "uiShowRestMenu",
 	["uiSpellTooltip"] = "uiSpellTooltip",
+	["vfxCreated"] = "vfxCreated",
 	["unequipped"] = "unequipped",
 	["weaponReadied"] = "weaponReadied",
 	["weaponUnreadied"] = "weaponUnreadied",

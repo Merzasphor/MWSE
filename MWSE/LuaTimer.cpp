@@ -331,7 +331,7 @@ namespace mwse::lua {
 		auto timer = std::make_shared<Timer>();
 
 		timer->controller = LuaManager::getInstance().getTimerController(t["c"]);
-		timer->state = t.get_or("c", TimerState::Active);
+		timer->state = t.get_or("s", TimerState::Active);
 		timer->duration = t["d"];
 		timer->timing = t["t"];
 		timer->iterations = t.get_or("i", -1);

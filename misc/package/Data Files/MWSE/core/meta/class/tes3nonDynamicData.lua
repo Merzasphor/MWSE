@@ -10,6 +10,7 @@
 --- @field dialogues tes3iterator *Read-only*. A collection of all dialogue objects.
 --- @field factions tes3iterator *Read-only*. A collection of all faction objects.
 --- @field globals tes3iterator *Read-only*. A collection of all global variable objects.
+--- @field isSavingOrLoading boolean *Read-only*. True when in the process of saving or loading the game.
 --- @field magicEffects table *Read-only*. A table of references to all 143 magic effects.
 --- @field objects tes3linkedList *Read-only*. A collection of all other game objects.
 --- @field races tes3iterator *Read-only*. A collection of all race objects.

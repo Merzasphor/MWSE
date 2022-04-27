@@ -17,8 +17,8 @@ function math.clamp(value, min, max) end
 --- This function compares `a` and `b` and returns true if they are close together. This can be useful when comparing floating-point numbers with some degree of tolerance.
 --- @param a number First value.
 --- @param b number Second value.
---- @param absoluteTolerance number *Default*: `math.epsilon`. The absolute difference allowed between the two numbers. A value of 0.01 will only allow the values to differ by 0.01.
---- @param relativeTolerance number *Default*: `1e-09`. The relative difference allowed between the two numbers. A value of 0.01 will only allow the values to differ by 1%.
+--- @param absoluteTolerance number? *Default*: `math.epsilon`. The absolute difference allowed between the two numbers. A value of 0.01 will only allow the values to differ by 0.01.
+--- @param relativeTolerance number? *Default*: `1e-09`. The relative difference allowed between the two numbers. A value of 0.01 will only allow the values to differ by 1%.
 --- @return number result No description yet available.
 function math.isclose(a, b, absoluteTolerance, relativeTolerance) end
 

@@ -1614,6 +1614,18 @@
     <ClInclude Include="TES3ArchiveLua.h">
       <Filter>Header Files\Lua\Bindings\TES3</Filter>
     </ClInclude>
+    <ClInclude Include="LuaVFXCreatedEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="NIColorData.h">
+      <Filter>Header Files\DataAdapters\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="NIColorKey.h">
+      <Filter>Header Files\DataAdapters\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="NIPosData.h">
+      <Filter>Header Files\DataAdapters\NI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -3532,6 +3544,18 @@
     </ClCompile>
     <ClCompile Include="TES3ArchiveLua.cpp">
       <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaVFXCreatedEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="NIColorData.cpp">
+      <Filter>Source Files\DataAdapters\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="NIPosData.cpp">
+      <Filter>Source Files\DataAdapters\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="NIKeyframeController.cpp">
+      <Filter>Source Files\DataAdapters\NI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

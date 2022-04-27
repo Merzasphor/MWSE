@@ -29,16 +29,16 @@ tes3dataHandler = {}
 --- No description yet available.
 --- @param params tes3dataHandler.updateCollisionGroupsForActiveCells.params This table accepts the following values:
 --- 
---- `force`: boolean — *Default*: `true`. No description yet available.
+--- `force`: boolean? — *Default*: `true`. No description yet available.
 --- 
---- `isResettingData`: boolean — *Default*: `false`. No description yet available.
+--- `isResettingData`: boolean? — *Default*: `false`. No description yet available.
 --- 
---- `resetCollisionGroups`: boolean — *Default*: `true`. No description yet available.
+--- `resetCollisionGroups`: boolean? — *Default*: `true`. No description yet available.
 function tes3dataHandler:updateCollisionGroupsForActiveCells(params) end
 
 ---Table parameter definitions for `tes3dataHandler.updateCollisionGroupsForActiveCells`.
 --- @class tes3dataHandler.updateCollisionGroupsForActiveCells.params
---- @field force boolean *Default*: `true`. No description yet available.
---- @field isResettingData boolean *Default*: `false`. No description yet available.
---- @field resetCollisionGroups boolean *Default*: `true`. No description yet available.
+--- @field force boolean? *Default*: `true`. No description yet available.
+--- @field isResettingData boolean? *Default*: `false`. No description yet available.
+--- @field resetCollisionGroups boolean? *Default*: `true`. No description yet available.
 

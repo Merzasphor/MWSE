@@ -33,7 +33,7 @@ function mwse.getVirtualMemoryUsage() end
 --- 	
 --- If the default values table is passed, empty keys in the config will be filled in using its values. Additionally, if no file exists, the function will return the default table.
 --- @param fileName string The non-extensioned name of the config file.
---- @param defaults table *Optional*. A table of default values.
+--- @param defaults table? *Optional*. A table of default values.
 --- @return table result No description yet available.
 function mwse.loadConfig(fileName, defaults) end
 
@@ -63,7 +63,7 @@ function mwse.overrideScript(scriptId, callback) end
 --- Saves a config table to Data Files\\MWSE\\config\\{fileName}.json.
 --- @param fileName string No description yet available.
 --- @param object unknown No description yet available.
---- @param config table *Optional*. No description yet available.
+--- @param config table? *Optional*. No description yet available.
 --- @return table result No description yet available.
 function mwse.saveConfig(fileName, object, config) end
 
