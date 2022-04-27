@@ -5478,7 +5478,7 @@ namespace mwse::lua {
 			return vfxManager->createForMagicEffect(enchantEffect.value(), reference, lifespan);
 		}
 
-		throw std::invalid_argument("No valid effect parameters defined.");
+		throw std::invalid_argument("No valid parameters defined. No operation performed.");
 	}
 
 	int removeVisualEffect(sol::table params) {
@@ -5495,25 +5495,27 @@ namespace mwse::lua {
 		const auto countBefore = vfxManager->vfxNodes.size();
 
 		auto vfx = getOptionalParam<TES3::VFX*>(params, "vfx", nullptr);
+		auto avObject = getOptionalParam<NI::AVObject*>(params, "avObject", nullptr);
+		auto reference = getOptionalParamReference(params, "reference");
+		auto serial = getOptionalParam<unsigned int>(params, "serial");
+
 		if (vfx) {
 			vfxManager->remove(vfx);
 		}
 
-		auto avObject = getOptionalParam<NI::AVObject*>(params, "avObject", nullptr);
-		if (avObject) {
+		else if (avObject) {
 			vfxManager->removeFromAVObject(avObject);
 		}
+
+		else if (serial && reference) {
+			vfxManager->removeForSerialForReference(serial.value(), reference);
+		}
+
+		else if (reference) {
+			vfxManager->removeForReference(reference);
+		}
 		else {
-			auto reference = getOptionalParamReference(params, "reference");
-			if (reference) {
-				auto serial = getOptionalParam<unsigned int>(params, "serial");
-				if (serial) {
-					vfxManager->removeForSerialForReference(serial.value(), reference);
-				}
-				else {
-					vfxManager->removeForReference(reference);
-				}
-			}
+			throw std::invalid_argument("No valid parameters defined. No operation performed.");
 		}
 
 		return countBefore - vfxManager->vfxNodes.size();
