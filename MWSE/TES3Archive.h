@@ -7,11 +7,13 @@
 #include "TES3CriticalSection.h"
 
 namespace TES3 {
-	enum FileLoadSource : int {
-		Missing,
-		File,
-		BSA,
-	};
+	namespace FileLoadSource {
+		enum FileLoadSource : int {
+			Missing,
+			File,
+			BSA,
+		};
+	}
 
 	struct BSALoader {
 		Archive* lastLoadedArchive; // 0x0
