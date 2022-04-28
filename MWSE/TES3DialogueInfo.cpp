@@ -91,13 +91,19 @@ namespace TES3 {
 	}
 
 	sol::optional<std::string> DialogueInfo::getID() {
+		// If we're already loaded for some reason, don't reload.
+		if (loadLinkNode) {
+			return loadLinkNode->name;
+		}
+
+		// Hit the IO to find it...
 		if (loadId()) {
 			std::string id = loadLinkNode->name;
 			unloadId();
 			return std::move(id);
 		}
 
-		return sol::optional<std::string>();
+		return {};
 	}
 
 	sol::optional<int> DialogueInfo::getJournalIndex_lua() const {
