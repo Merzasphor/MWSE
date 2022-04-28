@@ -29,12 +29,14 @@ namespace TES3 {
 			QuestName = 0x40,
 			QuestFinished = 0x100,
 			QuestRestart = 0x200,
+			HasResultText = 0x2000,
 		};
 
 		enum DialogueInfoFlagBit {
 			QuestNameBit = 6,
 			QuestFinishedBit = 8,
 			QuestRestartBit = 9,
+			HasResultTextBit = 13,
 		};
 	}
 
