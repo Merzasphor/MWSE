@@ -62,6 +62,7 @@
 --- @field text string The element's text. Text input can be read by accessing this property.
 --- 
 --- 	tip: If your element's text is a number, you need to manually convert it to string using `tostring()`.
+--- @field type string *Read-only*. The type of content this `tes3uiElement` represents. This is an expanded set of the options available from the `contentType` property. Maps to values in [`tes3.uiElementType`](https://mwse.github.io/MWSE/references/tes3uiElement-types/).
 --- @field visible boolean Controls if the element is visible.
 --- @field widget tes3uiButton|tes3uiFillBar|tes3uiParagraphInput|tes3uiSlider|tes3uiScrollPane|tes3uiTextInput|tes3uiTextSelect|nil Access to element specific properties. This will be `nil` if there are no element specific properties. See the return types and the create* functions for more details.
 --- @field width number Element dimensions in pixels. Integer number.

@@ -392,7 +392,7 @@ namespace TES3 {
 			return result;
 		}
 
-		std::string Element::getContentTypeString() const {
+		const char* Element::getContentTypeString() const {
 			switch (contentType) {
 			case TES3::UI::Property::model:
 				return "model";
@@ -426,6 +426,35 @@ namespace TES3 {
 				uiidParagraphInputText = registerID("PartParagraphInput_text_input");
 				init = true;
 			}
+		}
+
+		const char* Element::getGeneralTypeString() const {
+			deferredPropInit();
+
+			Property part = getProperty(PropertyType::Property, Property::is_part).propertyValue;
+			if (part == propButton) {
+				return "button";
+			}
+			else if (part == propFillbar) {
+				return "fillbar";
+			}
+			else if (part == propParagraphInput) {
+				return "paragraphInput";
+			}
+			else if (part == propScrollBar) {
+				return "scrollBar";
+			}
+			else if (part == propScrollPaneH || part == propScrollPaneV) {
+				return "scrollPane";
+			}
+			else if (part == propTextInput) {
+				return "textInput";
+			}
+			else if (part == propTextSelect) {
+				return "textSelect";
+			}
+
+			return getContentTypeString();
 		}
 
 		sol::object Element::makeWidget(sol::this_state ts) {

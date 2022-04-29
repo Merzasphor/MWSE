@@ -46,6 +46,7 @@ namespace mwse::lua {
 		usertypeDefinition["parent"] = sol::readonly_property(&Element::parent);
 		usertypeDefinition["properties"] = sol::readonly_property(&Element::getProperties_lua);
 		usertypeDefinition["sceneNode"] = sol::readonly_property(&Element::sceneNode);
+		usertypeDefinition["type"] = sol::readonly_property(&Element::getGeneralTypeString);
 		usertypeDefinition["widget"] = sol::readonly_property(&Element::makeWidget);
 
 		// Read-write property bindings.
