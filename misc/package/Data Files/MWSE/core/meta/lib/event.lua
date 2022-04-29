@@ -58,6 +58,8 @@
 --- @field register fun(eventId: '"determineAction"', callback: fun(e: determineActionEventData), options: table?)
 --- @field register fun(eventId: '"determinedAction"', callback: fun(e: determinedActionEventData), options: table?)
 --- @field register fun(eventId: '"enchantChargeUse"', callback: fun(e: enchantChargeUseEventData), options: table?)
+--- @field register fun(eventId: '"enchantedItemCreateFailed"', callback: fun(e: enchantedItemCreateFailedEventData), options: table?)
+--- @field register fun(eventId: '"enchantedItemCreated"', callback: fun(e: enchantedItemCreatedEventData), options: table?)
 --- @field register fun(eventId: '"enterFrame"', callback: fun(e: enterFrameEventData), options: table?)
 --- @field register fun(eventId: '"equip"', callback: fun(e: equipEventData), options: table?)
 --- @field register fun(eventId: '"equipmentReevaluated"', callback: fun(e: equipmentReevaluatedEventData), options: table?)
