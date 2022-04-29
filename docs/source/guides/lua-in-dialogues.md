@@ -23,6 +23,9 @@ To write lines with lua, prefix them with a mwscript comment starting with `;lua
 	goodbye
 	```
 
+!!! note
+	All lua logic is contained to a single line. This a limitation of the approach to keep things as compatible as possible.
+
 
 ## Environment
 
@@ -79,4 +82,26 @@ The environment variables are not inherited with `dofile`. To pass the data, it 
 	```lua
 	;lua myDialogueModule = require("myMod.myDialogueModule")
 	;lua myDialogueModule.myFunction(reference, dialogue, info)
+	```
+
+
+## Preventing Default Scripts
+
+For better compatibility with OpenMW, it can be useful to prevent any vanilla result behavior from happening. This can be done by setting the environment variable `noMorrowindScript`.
+
+
+!!! example "Example: Preventing Morrowind Script"
+
+	```lua
+	;lua noMorrowindScript = true
+	```
+
+This will not prevent other associated events, but will prevent the mwscript from the result box from being executed. This can be done conditionally as well.
+
+!!! example "Example: Sometimes Preventing Morrowind Script"
+
+	```lua
+	;lua myDialogueModule = require("myMod.myDialogueModule")
+	;lua myDialogueModule.myFunction(reference, dialogue, info)
+	;lua if (myDialogueModule.wasSuccessful()) then noMorrowindScript = true end
 	```

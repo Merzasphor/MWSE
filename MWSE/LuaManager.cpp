@@ -2636,6 +2636,7 @@ namespace mwse::lua {
 		}
 
 		// Do we have any lua commands?
+		bool noMorrowindScript = false;
 		std::string_view commandView = command;
 		auto posStart = commandView.find(";lua ", 0);
 		if (posStart != std::string_view::npos) {
@@ -2676,9 +2677,14 @@ namespace mwse::lua {
 					continue;
 				}
 			}
+
+			// Check for if we will block mwscript.
+			noMorrowindScript = env.get_or("noMorrowindScript", noMorrowindScript);
 		}
 
-		script->doCommand(compiler, command, source, reference, variables, info, dialogue);
+		if (!noMorrowindScript) {
+			script->doCommand(compiler, command, source, reference, variables, info, dialogue);
+		}
 
 		if (mwse::lua::event::PostInfoResponseEvent::getEventEnabled()) {
 			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::PostInfoResponseEvent(command, reference, variables, dialogue, info));
