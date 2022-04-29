@@ -93,6 +93,7 @@ namespace mwse::lua {
 			// Basic function binding.
 			usertypeDefinition["runScript"] = &TES3::DialogueInfo::runScript;
 			usertypeDefinition["filter"] = &TES3::DialogueInfo::filter;
+			usertypeDefinition["findDialogue"] = &TES3::DialogueInfo::findDialogue;
 		}
 
 		// Binding for TES3::Quest

@@ -5,6 +5,7 @@
 
 #include "TES3Actor.h"
 #include "TES3Class.h"
+#include "TES3DataHandler.h"
 #include "TES3Faction.h"
 #include "TES3Race.h"
 #include "TES3Cell.h"
@@ -190,6 +191,19 @@ namespace TES3 {
 		}
 
 		return BIT_TEST(objectFlags, TES3::ObjectFlag::QuestRestartBit);
+	}
+
+	Dialogue* DialogueInfo::findDialogue() const {
+		for (const auto& dialogue : *TES3::DataHandler::get()->nonDynamicData->dialogues) {
+			if (dialogue->type == type) {
+				for (const auto& info : dialogue->info) {
+					if (info == this) {
+						return dialogue;
+					}
+				}
+			}
+		}
+		return nullptr;
 	}
 
 	std::string DialogueInfo::getLongIDFromFile() {

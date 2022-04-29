@@ -322,6 +322,20 @@ local result = tes3dialogueInfo:filter(actor, reference, source, dialogue)
 
 ***
 
+### `findDialogue`
+
+This method searches for the dialogue that this info belongs to.
+
+```lua
+local dialogue = tes3dialogueInfo:findDialogue()
+```
+
+**Returns**:
+
+* `dialogue` ([tes3dialogue](../../types/tes3dialogue))
+
+***
+
 ### `runScript`
 
 This method runs the dialogue info's associated script on a given reference.

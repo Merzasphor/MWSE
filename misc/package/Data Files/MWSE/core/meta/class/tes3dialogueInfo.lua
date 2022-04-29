@@ -30,6 +30,10 @@ tes3dialogueInfo = {}
 --- @return boolean result No description yet available.
 function tes3dialogueInfo:filter(actor, reference, source, dialogue) end
 
+--- This method searches for the dialogue that this info belongs to.
+--- @return tes3dialogue dialogue No description yet available.
+function tes3dialogueInfo:findDialogue() end
+
 --- This method runs the dialogue info's associated script on a given reference.
 --- @param reference tes3reference The reference on which to run the script on.
 function tes3dialogueInfo:runScript(reference) end

@@ -119,6 +119,8 @@ namespace TES3 {
 		sol::optional<bool> isQuestFinished() const;
 		sol::optional<bool> isQuestRestart() const;
 
+		Dialogue* findDialogue() const;
+
 		// Loads the string of numbers from disk and returns them.
 		std::string getLongIDFromFile();
 
