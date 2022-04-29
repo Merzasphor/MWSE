@@ -61,13 +61,17 @@ The environment variables are not inherited with `dofile`. To pass the data, it 
 	Define your module with a function to be called:
 
 	```lua
-	local myModule = {}
+	local myDialogueModule = {}
 
-	function myModule.myFunction(reference, dialogue, info)
+	--- A function designed to be called from a dialogue result.
+	--- @param reference tes3reference The reference the dialogue is running on.
+	--- @param dialogue tes3dialogue The parent dialogue for our info.
+	--- @param info tes3dialogueInfo The specific INFO object that is being executed.
+	function myDialogueModule.myFunction(reference, dialogue, info)
 		tes3.messageBox("Reference: %s; Dialogue/INFO: %s/%s;", reference, dialogue, info.id)
 	end
 
-	return myModule
+	return myDialogueModule
 	```
 
 	Call your module from the dialogue result:
