@@ -415,6 +415,20 @@ function tes3.applyMagicSource(params) end
 --- @field target tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string|nil *Optional*. The target of the magic.
 --- @field bypassResistances boolean? *Default*: `false`. Is this effect going to bypass magic resistance?
 
+--- Returns a string with all the [text defines](https://en.uesp.net/wiki/Morrowind_Mod:Text_Defines) replaced in the input string. This can be used to replicate the behavior of book and dialogue text.
+--- @param params tes3.applyTextDefines.params This table accepts the following values:
+--- 
+--- `text`: string — The input string to do text replacements for.
+--- 
+--- `actor`: tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance — The actor to use for replacements like `%Name` and `%Faction`.
+--- @return string result No description yet available.
+function tes3.applyTextDefines(params) end
+
+---Table parameter definitions for `tes3.applyTextDefines`.
+--- @class tes3.applyTextDefines.params
+--- @field text string The input string to do text replacements for.
+--- @field actor tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance The actor to use for replacements like `%Name` and `%Faction`.
+
 --- Changes a reference to werewolf form. This function works only on a reference infected with Lycanthropy, be it the player or any other reference. Returns true if successful.
 --- @param params tes3.beginTransform.params This table accepts the following values:
 --- 

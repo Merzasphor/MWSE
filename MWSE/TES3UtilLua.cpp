@@ -5521,6 +5521,30 @@ namespace mwse::lua {
 		return countBefore - vfxManager->vfxNodes.size();
 	}
 
+	const char* applyTextDefines(sol::table params) {
+		auto worldController = TES3::WorldController::get();
+		if (!worldController) {
+			throw std::runtime_error("This function cannot be called before the world controller is created.");
+		}
+
+		if (!worldController->getMobilePlayer()) {
+			throw std::runtime_error("This function cannot be called before the player is created.");
+		}
+
+		auto text = getOptionalParam<const char*>(params, "text", nullptr);
+		if (!text) {
+			throw std::invalid_argument("Invalid 'text' parameter provided.");
+		}
+
+		const auto actor = static_cast<TES3::Actor*>(getOptionalParamBaseObject(params, "actor"));
+		if (!actor->isActor()) {
+			throw std::invalid_argument("Invalid 'actor' parameter provided.");
+		}
+
+		worldController->fonts[0]->substituteTextMacros(actor, text);
+		return worldController->fonts[0]->getSubstituteResult();
+	}
+
 	void bindTES3Util() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 		sol::state& state = stateHandle.state;
@@ -5541,6 +5565,7 @@ namespace mwse::lua {
 		tes3["adjustSoundVolume"] = adjustSoundVolume;
 		tes3["advanceTime"] = advanceTime;
 		tes3["applyMagicSource"] = applyMagicSource;
+		tes3["applyTextDefines"] = applyTextDefines;
 		tes3["beginTransform"] = beginTransform;
 		tes3["calculatePrice"] = calculatePrice;
 		tes3["cancelAnimationLoop"] = cancelAnimationLoop;

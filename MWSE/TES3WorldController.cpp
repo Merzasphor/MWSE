@@ -339,6 +339,19 @@ namespace TES3 {
 	}
 
 	//
+	// Font
+	//
+
+	const auto TES3_Font_substituteTextMacros = reinterpret_cast<void(__thiscall*)(const Font*, const Actor*, const char*)>(0x40BE50);
+	void Font::substituteTextMacros(const Actor* actor, const char* text) const {
+		TES3_Font_substituteTextMacros(this, actor, text);
+	}
+
+	char* Font::getSubstituteResult() const {
+		return *reinterpret_cast<char**>(0x7C6568);
+	}
+
+	//
 	// JournalHTML
 	//
 

@@ -167,6 +167,10 @@ namespace TES3 {
 		int unknown_0x2C;
 		int unknown_0x30;
 		void* rawFontData; // 0x34 // The raw .fnt file contents.
+
+		void substituteTextMacros(const Actor* actor, const char* text) const;
+
+		char* getSubstituteResult() const;
 	};
 	static_assert(sizeof(Font) == 0x38, "TES3::Font failed size validation");
 
