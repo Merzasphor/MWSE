@@ -2,29 +2,13 @@
 
 It is possible to use lua inside the mwscript results pane in the dialogue menu of the Construction Set.
 
+Additional functions are available to extend the usefulness of this feature, including `tes3ui.choice`.
+
 !!! note
 	The execution order of the Results pane is not mixed. All lua commands will be executed before the mwscript is parsed and executed.
 
 !!! tip
 	The keyboard shortcut Control+A does not work in the Construction Set. Right-clicking still allows selecting all text for quick replacement.
-
-
-## Basic Usage
-
-To write lines with lua, prefix them with a mwscript comment starting with `;lua `. This allows the lua commands to be backwards-compatible for users that do not have MWSE, including users of OpenMW.
-
-!!! example "Example: Goodbye with a Message"
-
-	```
-	; The next line will execute lua.
-	;lua tes3.messageBox("This will run as lua!")
-
-	; The next line will just be normal mwscript.
-	goodbye
-	```
-
-!!! note
-	All lua logic is contained to a single line. This a limitation of the approach to keep things as compatible as possible.
 
 
 ## Environment
@@ -47,7 +31,27 @@ Additionally, some information has been provided in the environment. These value
 	```
 
 
-## Executing a Lua File
+## Usage
+
+## Basics
+
+To write lines with lua, prefix them with a mwscript comment starting with `;lua `. This allows the lua commands to be backwards-compatible for users that do not have MWSE, including users of OpenMW.
+
+!!! example "Example: Goodbye with a Message"
+
+	```
+	; The next line will execute lua.
+	;lua tes3.messageBox("This will run as lua!")
+
+	; The next line will just be normal mwscript.
+	goodbye
+	```
+
+!!! note
+	All lua logic is contained to a single line. This a limitation of the approach to keep things as compatible as possible.
+
+
+### Executing a Lua File
 
 It may be useful to move the majority of your script logic to an actual .lua file, and use `dofile`.
 

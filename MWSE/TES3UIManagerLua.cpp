@@ -373,9 +373,11 @@ namespace mwse::lua {
 
 		tes3ui["acquireTextInput"] = TES3::UI::acquireTextInput;
 		tes3ui["captureMouseDrag"] = TES3::UI::captureMouseDrag;
+		tes3ui["choice"] = TES3::UI::choice;
 		tes3ui["closeJournal"] = TES3::UI::closeJournal;
 		tes3ui["createHelpLayerMenu"] = TES3::UI::createHelpLayerMenu_lua;
 		tes3ui["createMenu"] = TES3::UI::createMenu_lua;
+		tes3ui["createResponseText"] = TES3::UI::createResponseText_lua;
 		tes3ui["createTooltipMenu"] = TES3::UI::createTooltipMenu_lua;
 		tes3ui["enterMenuMode"] = TES3::UI::enterMenuMode_lua;
 		tes3ui["findHelpLayerMenu"] = TES3::UI::findHelpLayerMenu_lua;
@@ -385,8 +387,8 @@ namespace mwse::lua {
 		tes3ui["getMenuOnTop"] = TES3::UI::getMenuOnTop;
 		tes3ui["getPalette"] = TES3::UI::getPalette_lua;
 		tes3ui["getServiceActor"] = TES3::UI::getServiceActor;
-		tes3ui["getViewportSize"] = TES3::UI::getViewportSize_lua;
 		tes3ui["getViewportScale"] = TES3::UI::getViewportScale;
+		tes3ui["getViewportSize"] = TES3::UI::getViewportSize_lua;
 		tes3ui["leaveMenuMode"] = TES3::UI::leaveMenuMode;
 		tes3ui["logToConsole"] = TES3::UI::logToConsole_lua;
 		tes3ui["lookupID"] = TES3::UI::lookupID;

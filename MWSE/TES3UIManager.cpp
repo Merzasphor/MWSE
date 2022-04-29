@@ -771,6 +771,27 @@ namespace TES3 {
 			}
 		}
 
+		const auto TES3_UI_createResponseText = reinterpret_cast<void(__cdecl*)(Element*, const char*, int, int)>(0x5C00D0);
+		void createResponseText(Element* parent, const char* text, int type, int answerIndex) {
+			TES3_UI_createResponseText(parent, text, type, answerIndex);
+		}
+
+		void createResponseText_lua(sol::table params) {
+			sol::optional<std::string> text = params["text"];
+			auto type = mwse::lua::getOptionalParam(params, "type", 2);
+			auto index = mwse::lua::getOptionalParam(params, "index", -1);
+
+			if (!text) {
+				throw std::invalid_argument("Invalid 'text' parameter provided.");
+			}
+
+			createResponseText(nullptr, text.value().c_str(), type, index);
+		}
+
+		void choice(const char* text, int index) {
+			createResponseText(nullptr, text, 2, index);
+		}
+
 		void pushNewUIID(DWORD address, const char* name) {
 			DWORD id = registerID(name);
 			mwse::genPushEnforced(address, id);

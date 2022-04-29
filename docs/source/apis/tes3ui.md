@@ -53,6 +53,21 @@ tes3ui.captureMouseDrag(capture)
 
 ***
 
+### `tes3ui.choice`
+
+Creates a simple dialogue choice, as per the `Choice` mwscript function.
+
+```lua
+tes3ui.choice(text, index)
+```
+
+**Parameters**:
+
+* `text` (string): The text to display for the choice.
+* `index` (number): The choice index associated with the given text.
+
+***
+
 ### `tes3ui.closeJournal`
 
 Closes the Journal.
@@ -109,6 +124,23 @@ local result = tes3ui.createMenu({ id = ..., dragFrame = ..., fixedFrame = ..., 
 **Returns**:
 
 * `result` ([tes3uiElement](../../types/tes3uiElement))
+
+***
+
+### `tes3ui.createResponseText`
+
+Creates a respond text. This function is used for the mwscript `Choice` function.
+
+```lua
+tes3ui.createResponseText({ text = ..., type = ..., index = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `text` (string): The text to display.
+	* `type` (number): *Optional*. The type for the response. Defaults to `choice` responses.
+	* `index` (number): *Optional*. The answer index for the response. Only used for `choice` responses.
 
 ***
 
