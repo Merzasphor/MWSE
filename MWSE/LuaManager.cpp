@@ -2622,7 +2622,14 @@ namespace mwse::lua {
 	}
 	const size_t PatchOnSetDialogueInfoHasCommand_Size = 0x4;
 
+	static bool OnRunDialogueCommand_UseMCP = false;
+
 	void __fastcall OnRunDialogueCommand(TES3::Script* script, DWORD _UNUSUED_, TES3::ScriptCompiler* compiler, const char* command, int source, TES3::Reference* reference, TES3::ScriptVariables* variables, TES3::DialogueInfo* info, TES3::Dialogue* dialogue) {
+		// Redo MCP code that we overwrite if needed.
+		if (OnRunDialogueCommand_UseMCP && *reinterpret_cast<DWORD*>(0x7CEC14)) {
+			script = &script[1];
+		}
+
 		// Allow the event to override the text.
 		if (mwse::lua::event::InfoResponseEvent::getEventEnabled()) {
 			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
@@ -4639,7 +4646,9 @@ namespace mwse::lua {
 
 		// Event: Execute lua from dialogue response.
 		genCallEnforced(0x4B1FB2, 0x50E5A0, reinterpret_cast<DWORD>(OnRunDialogueCommand)); // Vanilla function.
-		genJumpEnforced(0x50E594, 0x50E5A0, reinterpret_cast<DWORD>(OnRunDialogueCommand)); // MCP-added function.
+		if (genCallEnforced(0x4B1FB2, 0x50E588, reinterpret_cast<DWORD>(OnRunDialogueCommand))) { // MCP added functionality.
+			OnRunDialogueCommand_UseMCP = true;
+		}
 
 		// Allow `;lua ` to flag a dialog as having a valid script.
 		genNOPUnprotected(0x4AF5EF, 0x4AF692 - 0x4AF5EF);
