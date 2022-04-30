@@ -61,7 +61,7 @@ The bounding box for the object.
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3effect](../../types/tes3effect)[])
 
 ***
 

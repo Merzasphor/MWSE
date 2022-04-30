@@ -10,7 +10,7 @@ A raw DirectInput mouse state.
 
 **Returns**:
 
-* `result` (table)
+* `result` (number[])
 
 ***
 

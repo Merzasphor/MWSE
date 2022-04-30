@@ -61,7 +61,7 @@ The cost of using the enchantment.
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3effect](../../types/tes3effect)[])
 
 ***
 

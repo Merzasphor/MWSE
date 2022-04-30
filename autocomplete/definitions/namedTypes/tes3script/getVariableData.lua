@@ -1,7 +1,7 @@
 return {
 	type = "method",
 	description = [[This method fetches all of the script's variables as a table.]],
-	returns = {{ 
+	returns = {{
 		name = "results",
 		type = "table",
 		description = [[The table with all of script's variable names as keys. Each entry has the following fields:

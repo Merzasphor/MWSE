@@ -10,7 +10,7 @@ A game object which holds information about body parts.
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3bodyPartManagerActiveBodyPart](../../types/tes3bodyPartManagerActiveBodyPart)[])
 
 ***
 
@@ -30,7 +30,7 @@ A game object which holds information about body parts.
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3bodyPartManagerAttachNode](../../types/tes3bodyPartManagerAttachNode)[])
 
 ***
 

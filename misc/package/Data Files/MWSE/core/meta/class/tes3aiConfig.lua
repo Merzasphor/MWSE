@@ -20,12 +20,12 @@
 --- @field fight number Friendly access to actor's fight value.
 --- @field flee number Friendly access to actor's flee value.
 --- @field hello number Friendly access to actor's hello value.
---- @field merchantFlags table A table access to all merchant flags. Shouldn't be used directly.
+--- @field merchantFlags number Numeric access to all merchant flags. Shouldn't be used directly.
 --- @field offersEnchanting boolean Friendly access to a flag that controls whether the actor offers enchanting services.
 --- @field offersRepairs boolean Friendly access to a flag that controls whether the actor offers item repairs service.
 --- @field offersSpellmaking boolean Friendly access to a flag that controls whether the actor offers spellmaking service.
 --- @field offersSpells boolean Friendly access to a flag that controls whether the actor sells spells.
 --- @field offersTraining boolean Friendly access to a flag that controls whether the actor offers training services.
---- @field travelDestinations table A table access to all [`tes3travelDestinationNode`](https://mwse.github.io/MWSE/types/tes3travelDestinationNode/) objects this actor can take the player to.
+--- @field travelDestinations tes3travelDestinationNode[] A table access to all [`tes3travelDestinationNode`](https://mwse.github.io/MWSE/types/tes3travelDestinationNode/) objects this actor can take the player to.
 tes3aiConfig = {}
 

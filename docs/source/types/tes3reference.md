@@ -23,7 +23,7 @@ The current reference, if any, that this reference will activate.
 
 **Returns**:
 
-* `result` (table)
+* `result` (table&lt;string, [tes3bodyPartManager](../../types/tes3bodyPartManager)|[tes3itemData](../../types/tes3itemData)|[tes3lightNode](../../types/tes3lightNode)|[tes3lockNode](../../types/tes3lockNode)|[tes3mobileActor](../../types/tes3mobileActor)|[tes3reference](../../types/tes3reference)|[tes3travelDestinationNode](../../types/tes3travelDestinationNode)&gt;)
 
 ***
 

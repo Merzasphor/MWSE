@@ -121,7 +121,7 @@ True if this object is an editor marker for a gameplay location. These include t
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([tes3leveledListNode](../../types/tes3leveledListNode)[])
 
 ***
 

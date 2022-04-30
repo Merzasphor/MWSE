@@ -1,6 +1,6 @@
 return {
 	type = "value",
-	description = [[A table of references to all 143 magic effects.]],
+	description = [[A table of references to all magic effects. This is a dictionary, as the effect list may have gaps.]],
 	readOnly = true,
-	valuetype = "table",
+	valuetype = "table<number, tes3magicEffect>",
 }

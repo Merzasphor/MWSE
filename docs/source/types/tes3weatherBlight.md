@@ -91,7 +91,7 @@ The weather's blight chance value.
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3spell](../../types/tes3spell)[])
 
 ***
 

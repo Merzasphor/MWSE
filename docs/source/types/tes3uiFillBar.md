@@ -30,7 +30,7 @@ The RGB color of the filled portion. An array of 3 floats with value range [0.0,
 
 **Returns**:
 
-* `result` (table)
+* `result` ([niColor](../../types/niColor))
 
 ***
 

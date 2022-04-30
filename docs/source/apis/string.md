@@ -118,7 +118,7 @@ local split = string.split(str, sep)
 
 **Returns**:
 
-* `split` (table)
+* `split` (string[])
 
 ***
 

@@ -111,7 +111,7 @@ The persistent flag of the object.
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3regionSound](../../types/tes3regionSound)[])
 
 ***
 
@@ -241,7 +241,7 @@ The chance the Rain weather-type will be used. Must be an integer between 0 - 10
 
 **Returns**:
 
-* `result` (table)
+* `result` (number[])
 
 ***
 

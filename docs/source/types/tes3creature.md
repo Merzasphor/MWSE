@@ -31,7 +31,7 @@ A table of three attacks, represented by a trio of [`tes3rangeInt`](https://mwse
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3rangeInt](../../types/tes3rangeInt)[])
 
 ***
 
@@ -41,7 +41,7 @@ A table of eight numbers, representing the base values for the actor's attribute
 
 **Returns**:
 
-* `result` (table)
+* `result` (number[])
 
 ***
 
@@ -411,7 +411,7 @@ A table of three numbers, representing the base values for the creature's combat
 
 **Returns**:
 
-* `result` (table)
+* `result` (number[])
 
 ***
 

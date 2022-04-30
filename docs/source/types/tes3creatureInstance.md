@@ -31,7 +31,7 @@ Simplified access to the base creature's attacks. A table of three attacks, repr
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3rangeInt](../../types/tes3rangeInt)[])
 
 ***
 
@@ -41,7 +41,7 @@ Simplified access to the base creature's attributes. A table of eight numbers, r
 
 **Returns**:
 
-* `result` (table)
+* `result` (number[])
 
 ***
 
@@ -441,7 +441,7 @@ Simplified access to the base creature's skills. A table of three numbers, repre
 
 **Returns**:
 
-* `result` (table)
+* `result` (number[])
 
 ***
 

@@ -12,7 +12,7 @@ Namely: `normal`, `normal_over`, `normal_pressed`, `active`, `active_over`, `act
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3uiFontColor](../../types/tes3uiFontColor)[])
 
 ***
 

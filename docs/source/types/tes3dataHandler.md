@@ -110,7 +110,7 @@ Access to dontThreadLoad setting.
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3cellExteriorData](../../types/tes3cellExteriorData)[])
 
 ***
 

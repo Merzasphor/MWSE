@@ -31,7 +31,7 @@ Quick access to the base NPC's attributes.
 
 **Returns**:
 
-* `result` (table)
+* `result` (number[])
 
 ***
 
@@ -511,7 +511,7 @@ Quick access to the base NPC's skills.
 
 **Returns**:
 
-* `result` (table)
+* `result` (number[])
 
 ***
 

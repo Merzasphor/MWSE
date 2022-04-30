@@ -51,7 +51,7 @@ The bounding box for the object.
 
 **Returns**:
 
-* `result` (table)
+* `result` (number[])
 
 ***
 
@@ -61,7 +61,7 @@ The bounding box for the object.
 
 **Returns**:
 
-* `result` (table)
+* `result` (number[])
 
 ***
 
@@ -71,7 +71,7 @@ The bounding box for the object.
 
 **Returns**:
 
-* `result` (table)
+* `result` (number[])
 
 ***
 

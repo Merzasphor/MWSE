@@ -10,7 +10,7 @@ The RGB color of the text when `state` is set to `normal`. An array of 3 floats 
 
 **Returns**:
 
-* `result` (table)
+* `result` ([niColor](../../types/niColor))
 
 ***
 
@@ -20,7 +20,7 @@ The RGB color of the text when `state` is set to `active`. An array of 3 floats 
 
 **Returns**:
 
-* `result` (table)
+* `result` ([niColor](../../types/niColor))
 
 ***
 
@@ -30,7 +30,7 @@ The RGB color of the text when `state` is set to `disabled`. An array of 3 float
 
 **Returns**:
 
-* `result` (table)
+* `result` ([niColor](../../types/niColor))
 
 ***
 
@@ -40,7 +40,7 @@ The RGB color of the text when the text select is selected and `state` is set to
 
 **Returns**:
 
-* `result` (table)
+* `result` ([niColor](../../types/niColor))
 
 ***
 
@@ -50,7 +50,7 @@ The RGB color of the text when the text select is selected and `state` is set to
 
 **Returns**:
 
-* `result` (table)
+* `result` ([niColor](../../types/niColor))
 
 ***
 
@@ -60,7 +60,7 @@ The RGB color of the text when the text select is selected and `state` is set to
 
 **Returns**:
 
-* `result` (table)
+* `result` ([niColor](../../types/niColor))
 
 ***
 
@@ -70,7 +70,7 @@ The RGB color of the text when the text select is pressed and `state` is set to 
 
 **Returns**:
 
-* `result` (table)
+* `result` ([niColor](../../types/niColor))
 
 ***
 
@@ -80,7 +80,7 @@ The RGB color of the text when the text select is pressed and `state` is set to 
 
 **Returns**:
 
-* `result` (table)
+* `result` ([niColor](../../types/niColor))
 
 ***
 
@@ -90,7 +90,7 @@ The RGB color of the text when the text select is pressed and `state` is set to 
 
 **Returns**:
 
-* `result` (table)
+* `result` ([niColor](../../types/niColor))
 
 ***
 

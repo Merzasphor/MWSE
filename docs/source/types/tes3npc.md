@@ -31,7 +31,7 @@ A table of eight numbers, representing the base values for the actor's attribute
 
 **Returns**:
 
-* `result` (table)
+* `result` (number[])
 
 ***
 
@@ -491,7 +491,7 @@ A table of twenty seven numbers, representing the base values for the NPC's skil
 
 **Returns**:
 
-* `result` (table)
+* `result` (number[])
 
 ***
 

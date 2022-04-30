@@ -6,6 +6,6 @@ return {
 		{ name = "sep", type = "string", default = [["%s"]], description = "The token to split the string by." },
 	},
 	returns = {
-		{ name = "split", type = "table" },
+		{ name = "split", type = "string[]" },
 	},
 }

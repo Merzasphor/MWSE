@@ -211,7 +211,7 @@ The collection responsible for holding this object.
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3wearablePart](../../types/tes3wearablePart)[])
 
 ***
 

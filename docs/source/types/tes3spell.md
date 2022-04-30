@@ -81,7 +81,7 @@ The spell's cast type. Maps to [`tes3.spellType`](https://mwse.github.io/MWSE/re
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3effect](../../types/tes3effect)[])
 
 ***
 

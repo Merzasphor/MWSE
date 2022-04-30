@@ -176,11 +176,11 @@ Friendly access to actor's hello value.
 
 ### `merchantFlags`
 
-A table access to all merchant flags. Shouldn't be used directly.
+Numeric access to all merchant flags. Shouldn't be used directly.
 
 **Returns**:
 
-* `result` (table)
+* `result` (number)
 
 ***
 
@@ -240,7 +240,7 @@ A table access to all [`tes3travelDestinationNode`](https://mwse.github.io/MWSE/
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3travelDestinationNode](../../types/tes3travelDestinationNode)[])
 
 ***
 

@@ -41,7 +41,7 @@ Access to the light's flags, determining if the light can be carried.
 
 **Returns**:
 
-* `result` (table)
+* `result` (number[])
 
 ***
 

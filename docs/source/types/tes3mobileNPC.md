@@ -51,7 +51,7 @@ Friendly access to the actor's flag that controls if AI is active.
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3activeMagicEffect](../../types/tes3activeMagicEffect)[])
 
 ***
 
@@ -186,7 +186,7 @@ Direct access to the actor's attack bonus effect attribute.
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3statistic](../../types/tes3statistic)[])
 
 ***
 
@@ -386,7 +386,7 @@ This is the time measured in hours from the beginning of the game when the actor
 
 **Returns**:
 
-* `result` (table)
+* `result` (number[])
 
 ***
 
@@ -1378,7 +1378,7 @@ Direct access to the actor's silence effect attribute.
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3statisticSkill](../../types/tes3statisticSkill)[])
 
 ***
 
@@ -1768,7 +1768,7 @@ local result = tes3mobileActor:getActiveMagicEffects({ effect = ..., serial = ..
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3activeMagicEffect](../../types/tes3activeMagicEffect)[])
 
 ***
 

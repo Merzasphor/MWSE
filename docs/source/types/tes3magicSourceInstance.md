@@ -191,7 +191,7 @@ The persistent flag of the object.
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3effect](../../types/tes3effect)[])
 
 ***
 

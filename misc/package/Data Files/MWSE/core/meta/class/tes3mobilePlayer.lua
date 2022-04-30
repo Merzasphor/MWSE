@@ -25,14 +25,14 @@
 --- @field lastUsedCalcinator tes3apparatus *Read-only*. The last used alchemy calcinator.
 --- @field lastUsedMortar tes3apparatus *Read-only*. The last used alchemy mortar.
 --- @field lastUsedRetort tes3apparatus *Read-only*. The last used alchemy retort.
---- @field levelupPerSpecialization table *Read-only*. Array-style table access to how many skill levels there have been for each of the 3 specializations.
+--- @field levelupPerSpecialization number[] *Read-only*. Array-style table access to how many skill levels there have been for each of the 3 specializations.
 --- @field levelUpProgress number The progress the player has made towards leveling up.
---- @field levelupsPerAttribute table *Read-only*. Array-style table access to how many skill levels there have been for each of the 8 attributes.
+--- @field levelupsPerAttribute number[] *Read-only*. Array-style table access to how many skill levels there have been for each of the 8 attributes.
 --- @field magicDisabled boolean Toggle flag for if the player can use magic.
 --- @field markLocation tes3markData *Read-only*. Access to the structure that holds the player's current mark/recall location.
 --- @field mouseLookDisabled boolean Toggle flag for if the player's mouse look controls are disabled.
 --- @field restHoursRemaining number How many hours are left while resting.
---- @field skillProgress table *Read-only*. Array-style table access to skill progress for each of the 27 skills.
+--- @field skillProgress number[] *Read-only*. Array-style table access to skill progress for each of the 27 skills.
 --- @field sleeping boolean Toggle flag for if the player is currently sleeping.
 --- @field telekinesis number Direct access to the player's telekinesis effect attribute.
 --- @field traveling boolean Toggle flag for if the player is currently travelling.

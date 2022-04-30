@@ -21,7 +21,7 @@ This type inherits the following: [tes3baseObject](../../types/tes3baseObject)
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3raceBaseAttribute](../../types/tes3raceBaseAttribute)[])
 
 ***
 
@@ -191,7 +191,7 @@ The persistent flag of the object.
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3raceSkillBonus](../../types/tes3raceSkillBonus)[])
 
 ***
 

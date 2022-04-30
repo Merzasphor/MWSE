@@ -20,7 +20,7 @@ A data structure, off of the world controller, that handles input.
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3inputConfig](../../types/tes3inputConfig)[])
 
 ***
 
@@ -30,7 +30,7 @@ A data structure, off of the world controller, that handles input.
 
 **Returns**:
 
-* `result` (table)
+* `result` (number[])
 
 ***
 
@@ -50,7 +50,7 @@ A data structure, off of the world controller, that handles input.
 
 **Returns**:
 
-* `result` (table)
+* `result` (number[])
 
 ***
 

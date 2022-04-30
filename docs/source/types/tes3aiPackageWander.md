@@ -21,7 +21,7 @@ This type inherits the following: [tes3aiPackage](../../types/tes3aiPackage)
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3aiPackageWanderIdleNode](../../types/tes3aiPackageWanderIdleNode)[])
 
 ***
 

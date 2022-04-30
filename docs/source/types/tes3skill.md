@@ -11,7 +11,7 @@ This type inherits the following: [tes3baseObject](../../types/tes3baseObject)
 
 **Returns**:
 
-* `result` (table)
+* `result` (number[])
 
 ***
 

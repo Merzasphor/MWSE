@@ -41,7 +41,7 @@ The culling planes of the camera.
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3vector4](../../types/tes3vector4)[])
 
 ***
 

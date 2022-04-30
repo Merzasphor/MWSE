@@ -40,7 +40,7 @@ The access to mobile actor this `tes3aiPlanner` object works on.
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3aiPackage](../../types/tes3aiPackage)[])
 
 ***
 

@@ -181,7 +181,7 @@ An array-style table of the [`tes3wearablePart`](https://mwse.github.io/MWSE/typ
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3wearablePart](../../types/tes3wearablePart)[])
 
 ***
 

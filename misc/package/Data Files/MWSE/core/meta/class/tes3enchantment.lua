@@ -5,7 +5,7 @@
 --- @class tes3enchantment : tes3object, tes3baseObject
 --- @field castType number The enchantment's cast type. Maps to [`tes3.enchantmentType`](https://mwse.github.io/MWSE/references/enchantment-types/) constants.
 --- @field chargeCost number The cost of using the enchantment.
---- @field effects table *Read-only*. An array-style table of the [`tes3effect`](https://mwse.github.io/MWSE/types/tes3effect/) data on the object.
+--- @field effects tes3effect[] *Read-only*. An array-style table of the [`tes3effect`](https://mwse.github.io/MWSE/types/tes3effect/) data on the object.
 --- @field flags number A bit field for the enchantment's flags.
 --- @field maxCharge number The maximum charge for the associated enchantment.
 tes3enchantment = {}

@@ -10,7 +10,7 @@ A collection of active managed visual effects.
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3vfx](../../types/tes3vfx)[])
 
 ***
 

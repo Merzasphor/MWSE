@@ -10,7 +10,7 @@ A child container from [`tes3dataHandler`](https://mwse.github.io/MWSE/types/tes
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3gameFile](../../types/tes3gameFile)[])
 
 ***
 
@@ -86,11 +86,11 @@ A child container from [`tes3dataHandler`](https://mwse.github.io/MWSE/types/tes
 
 ### `magicEffects`
 
-*Read-only*. A table of references to all 143 magic effects.
+*Read-only*. A table of references to all magic effects. This is a dictionary, as the effect list may have gaps.
 
 **Returns**:
 
-* `result` (table)
+* `result` (table&lt;number, [tes3magicEffect](../../types/tes3magicEffect)&gt;)
 
 ***
 
@@ -140,7 +140,7 @@ A child container from [`tes3dataHandler`](https://mwse.github.io/MWSE/types/tes
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3skill](../../types/tes3skill)[])
 
 ***
 

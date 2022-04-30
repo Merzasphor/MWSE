@@ -13,7 +13,7 @@
 --- @field currentCell tes3cell *Read-only*. Access to the cell that the player is currently in.
 --- @field currentInteriorCell tes3cell *Read-only*. Access to the current interior cell, if the player is in an interior.
 --- @field dontThreadLoad boolean Access to dontThreadLoad setting.
---- @field exteriorCells table *Read-only*. A table of nine [`tes3cellExteriorData`](https://mwse.github.io/MWSE/types/tes3cellExteriorData/) objects for all loaded exterior cells.
+--- @field exteriorCells tes3cellExteriorData[] *Read-only*. A table of nine [`tes3cellExteriorData`](https://mwse.github.io/MWSE/types/tes3cellExteriorData/) objects for all loaded exterior cells.
 --- @field lastExteriorCell tes3cell *Read-only*. Access to the last visited exterior cell.
 --- @field mainThread number *Read-only*. A Windows handle to the main execution thread.
 --- @field mainThreadId number *Read-only*. The thread ID for the main execution thread.

@@ -7,7 +7,7 @@
 --- @field chanceForNothing number The percent chance, from `0` to `100`, for no object to be chosen.
 --- @field count number *Read-only*. The number of possible options in the leveled object container.
 --- @field flags number A numerical representation of bit flags for the object.
---- @field list tes3iterator *Read-only*. The collection that contains [`tes3leveledListNode`](https://mwse.github.io/MWSE/types/tes3leveledListNode/)s.
+--- @field list tes3leveledListNode[] *Read-only*. The collection that contains [`tes3leveledListNode`](https://mwse.github.io/MWSE/types/tes3leveledListNode/)s.
 tes3leveledCreature = {}
 
 --- This function inserts given creature in the creature leveled list. Returns `true` if the operation was successful.

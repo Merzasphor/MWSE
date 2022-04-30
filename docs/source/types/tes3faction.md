@@ -11,7 +11,7 @@ This type inherits the following: [tes3baseObject](../../types/tes3baseObject)
 
 **Returns**:
 
-* `result` (table)
+* `result` (number[])
 
 ***
 
@@ -151,7 +151,7 @@ The player's current reputation in the faction.
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3factionRank](../../types/tes3factionRank)[])
 
 ***
 
@@ -161,7 +161,7 @@ The player's current reputation in the faction.
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([tes3factionReaction](../../types/tes3factionReaction)[])
 
 ***
 
@@ -171,7 +171,7 @@ The player's current reputation in the faction.
 
 **Returns**:
 
-* `result` (table)
+* `result` (number[])
 
 ***
 
