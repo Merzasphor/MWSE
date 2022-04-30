@@ -122,7 +122,7 @@ local result = math.round(value, digits)
 **Parameters**:
 
 * `value` (number)
-* `digits` (number)
+* `digits` (number): *Default*: `0`.
 
 **Returns**:
 

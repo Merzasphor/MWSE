@@ -530,12 +530,13 @@ Controls text wrapping. Setting this to `true` will also set `layoutHeightFracti
 Creates an empty block container inside the element. Used to group and layout elements.
 
 ```lua
-local result = tes3uiElement:createBlock(id)
+local result = tes3uiElement:createBlock({ id = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
 
 **Returns**:
 
@@ -550,12 +551,13 @@ Creates a clickable button. Register the `mouseClick` event to capture a button 
 Button specific properties can be accessed through the `widget` property. The widget type for buttons is [`tes3uiButton`](https://mwse.github.io/MWSE/types/tes3uiButton/).
 
 ```lua
-local result = tes3uiElement:createButton(id)
+local result = tes3uiElement:createButton({ id = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
 
 **Returns**:
 
@@ -568,12 +570,13 @@ local result = tes3uiElement:createButton(id)
 Creates a textured horizontal divider line, as used in the magic and stat menus. Scales automatically to the container width.
 
 ```lua
-local result = tes3uiElement:createDivider(id)
+local result = tes3uiElement:createDivider({ id = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
 
 **Returns**:
 
@@ -588,14 +591,15 @@ Creates a horizontal quantity indicator bar.
 Fillbar specific properties can be accessed through the `widget` property. The widget type for fillbars is [`tes3uiFillBar`](https://mwse.github.io/MWSE/types/tes3uiFillBar/).
 
 ```lua
-local result = tes3uiElement:createFillBar(id, current, max)
+local result = tes3uiElement:createFillBar({ id = ..., current = ..., max = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
-* `current` (number): *Optional*. The current value of the fillbar.
-* `max` (number): *Optional*. The maximum value of the fillbar.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
+	* `current` (number): *Optional*. The current value of the fillbar.
+	* `max` (number): *Optional*. The maximum value of the fillbar.
 
 **Returns**:
 
@@ -610,12 +614,13 @@ Creates a horizontally scrolling pane.
 Scroll pane specific properties can be accessed through the `widget` property. The widget type for scroll panes is [`tes3uiScrollPane`](https://mwse.github.io/MWSE/types/tes3uiScrollPane/).
 
 ```lua
-local result = tes3uiElement:createHorizontalScrollPane(id)
+local result = tes3uiElement:createHorizontalScrollPane({ id = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
 
 **Returns**:
 
@@ -628,12 +633,13 @@ local result = tes3uiElement:createHorizontalScrollPane(id)
 Creates a text area with clickable words as links. Usage is still under research.
 
 ```lua
-local result = tes3uiElement:createHypertext(id)
+local result = tes3uiElement:createHypertext({ id = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
 
 **Returns**:
 
@@ -646,13 +652,14 @@ local result = tes3uiElement:createHypertext(id)
 Creates an image element from a texture file. The texture must have power-of-2 dimensions (i.e. 16, 32, 64, 128, 256, 512, 1024); the final display size can be trimmed by setting width and height.
 
 ```lua
-local result = tes3uiElement:createImage(id, path)
+local result = tes3uiElement:createImage({ id = ..., path = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
-* `path` (string): An image path. This path is relative to `Data Files`.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
+	* `path` (string): An image path. This path is relative to `Data Files`.
 
 **Returns**:
 
@@ -665,15 +672,16 @@ local result = tes3uiElement:createImage(id, path)
 Creates an interactive button composed of images for the **idle**, **over**, and **pressed** states. The texture must have power-of-2 dimensions (i.e. 16, 32, 64, 128, 256, 512, 1024); the final display size can be trimmed by setting width and height.
 
 ```lua
-local result = tes3uiElement:createImageButton(id, idle, over, path)
+local result = tes3uiElement:createImageButton({ id = ..., idle = ..., over = ..., path = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
-* `idle` (string): The path to the idle image. This path is relative to `Data Files`.
-* `over` (string): The path to the mouse hover image. This path is relative to `Data Files`.
-* `path` (string): The path to the mouse pressed image. This path is relative to `Data Files`.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
+	* `idle` (string): The path to the idle image. This path is relative to `Data Files`.
+	* `over` (string): The path to the mouse hover image. This path is relative to `Data Files`.
+	* `path` (string): The path to the mouse pressed image. This path is relative to `Data Files`.
 
 **Returns**:
 
@@ -686,13 +694,14 @@ local result = tes3uiElement:createImageButton(id, idle, over, path)
 Creates a text label. It defaults to displaying all text on a single line. To get a multi-line label, set `wrap_text` to `true`. The element is created with `autoWidth` and `autoHeight` turned on.
 
 ```lua
-local result = tes3uiElement:createLabel(id, text)
+local result = tes3uiElement:createLabel({ id = ..., text = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
-* `text` (string): The text to display.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
+	* `text` (string): *Default*: `(nil)`. The text to display.
 
 **Returns**:
 
@@ -705,13 +714,14 @@ local result = tes3uiElement:createLabel(id, text)
 Creates a NIF model from a file. Still under research.
 
 ```lua
-local result = tes3uiElement:createNif(id, text)
+local result = tes3uiElement:createNif({ id = ..., text = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
-* `text` (string): A model path. This path is relative to `Data Files`.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
+	* `text` (string): A model path. This path is relative to `Data Files`.
 
 **Returns**:
 
@@ -726,12 +736,13 @@ Creates a multi-line text input element, with line wrapping on. To receive input
 Paragraph input specific properties can be accessed through the `widget` property. The widget type for paragraph inputs is [`tes3uiParagraphInput`](https://mwse.github.io/MWSE/types/tes3uiParagraphInput/).
 
 ```lua
-local result = tes3uiElement:createParagraphInput(id)
+local result = tes3uiElement:createParagraphInput({ id = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
 
 **Returns**:
 
@@ -744,13 +755,15 @@ local result = tes3uiElement:createParagraphInput(id)
 Creates a filled rectangle. The rectangle is displayed as filled with the element's colour. It supports alpha compositing.
 
 ```lua
-local result = tes3uiElement:createRect(id, color)
+local result = tes3uiElement:createRect({ id = ..., color = ..., randomizeColor = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
-* `color` (table): *Optional*. The fill colour for the element.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
+	* `color` ([tes3vector3](../../types/tes3vector3), table): *Optional*. The fill color for the element.
+	* `randomizeColor` (boolean): *Default*: `false`. If true, the creation color will be randomized.
 
 **Returns**:
 
@@ -765,16 +778,17 @@ Creates a horizontal slider.
 Slider specific properties can be accessed through the `widget` property. The widget type for sliders is [`tes3uiSlider`](https://mwse.github.io/MWSE/types/tes3uiSlider/).
 
 ```lua
-local result = tes3uiElement:createSlider(id, current, max, step, jump)
+local result = tes3uiElement:createSlider({ id = ..., current = ..., max = ..., step = ..., jump = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
-* `current` (number): The current value of the slider.
-* `max` (number): The maximum value of the slider.
-* `step` (number): *Default*: `1`. The change in value when clicking the left and right arrow buttons.
-* `jump` (number): *Default*: `5`. The change in value when clicking into the empty areas next to the slider handle.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
+	* `current` (number): The current value of the slider.
+	* `max` (number): The maximum value of the slider.
+	* `step` (number): *Default*: `1`. The change in value when clicking the left and right arrow buttons.
+	* `jump` (number): *Default*: `5`. The change in value when clicking into the empty areas next to the slider handle.
 
 **Returns**:
 
@@ -789,16 +803,17 @@ Creates a vertical slider.
 Slider specific properties can be accessed through the `widget` property. The widget type for sliders is [`tes3uiSlider`](https://mwse.github.io/MWSE/types/tes3uiSlider/).
 
 ```lua
-local result = tes3uiElement:createSliderVertical(id, current, max, step, jump)
+local result = tes3uiElement:createSliderVertical({ id = ..., current = ..., max = ..., step = ..., jump = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
-* `current` (number): The current value of the slider.
-* `max` (number): The maximum value of the slider.
-* `step` (number): *Default*: `1`. The change in value when clicking the left and right arrow buttons.
-* `jump` (number): *Default*: `5`. The change in value when clicking into the empty areas next to the slider handle.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
+	* `current` (number): The current value of the slider.
+	* `max` (number): The maximum value of the slider.
+	* `step` (number): *Default*: `1`. The change in value when clicking the left and right arrow buttons.
+	* `jump` (number): *Default*: `5`. The change in value when clicking into the empty areas next to the slider handle.
 
 **Returns**:
 
@@ -813,12 +828,13 @@ Creates a single line text input element. To receive input the keyboard must be 
 Text input specific properties can be accessed through the `widget` property. The widget type for text inputs is [`tes3uiTextInput`](https://mwse.github.io/MWSE/types/tes3uiTextInput/).
 
 ```lua
-local result = tes3uiElement:createTextInput(id)
+local result = tes3uiElement:createTextInput({ id = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
 
 **Returns**:
 
@@ -829,18 +845,19 @@ local result = tes3uiElement:createTextInput(id)
 ### `createTextSelect`
 
 Creates a selectable line of text, with configurable hover, click, and disabled colours. Can be used to create a list box by placing them in a ScrollPane.
-	
+
 Text select specific properties can be accessed through the `widget` property. The widget type for text selects is [`tes3uiTextSelect`](https://mwse.github.io/MWSE/types/tes3uiTextSelect/).
 
 ```lua
-local result = tes3uiElement:createTextSelect(id, text, state)
+local result = tes3uiElement:createTextSelect({ id = ..., text = ..., state = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
-* `text` (string): *Optional*. The text to display.
-* `state` (number): *Default*: `tes3.uiState.normal`. The initial interaction state.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
+	* `text` (string): *Optional*. The text to display.
+	* `state` (number): *Default*: `tes3.uiState.normal`. The initial interaction state.
 
 **Returns**:
 
@@ -853,12 +870,13 @@ local result = tes3uiElement:createTextSelect(id, text, state)
 Creates a styled thin border element. Any content should be created as children of this border.
 
 ```lua
-local result = tes3uiElement:createThinBorder(id)
+local result = tes3uiElement:createThinBorder({ id = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
 
 **Returns**:
 
@@ -873,12 +891,13 @@ Creates a vertically scrolling pane. Useful as a list box.
 Scroll pane specific properties can be accessed through the `widget` property. The widget type for scroll panes is [`tes3uiScrollPane`](https://mwse.github.io/MWSE/types/tes3uiScrollPane/).
 
 ```lua
-local result = tes3uiElement:createVerticalScrollPane(id)
+local result = tes3uiElement:createVerticalScrollPane({ id = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
 
 **Returns**:
 

@@ -42,7 +42,7 @@ function math.remap(value, lowIn, highIn, lowOut, highOut) end
 
 --- Rounds a number to a given count of digits.
 --- @param value number No description yet available.
---- @param digits number No description yet available.
+--- @param digits number? *Default*: `0`. No description yet available.
 --- @return number result No description yet available.
 function math.round(value, digits) end
 
