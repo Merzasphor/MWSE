@@ -94,16 +94,8 @@
 tes3worldController = {}
 
 --- This function applies an enchantment's effects to a scene node.
---- @param params tes3worldController.applyEnchantEffect.params This table accepts the following values:
---- 
---- `node`: niBillboardNode|niCollisionSwitch|niNode|niSwitchNode — A scene node to which to apply the enchantment's effects.
---- 
---- `enchantment`: tes3enchantment — The enchantment's effects to apply.
+--- @param node niBillboardNode|niCollisionSwitch|niNode|niSwitchNode A scene node to which to apply the enchantment's effects.
+--- @param enchantment tes3enchantment The enchantment's effects to apply.
 --- @return boolean result No description yet available.
-function tes3worldController.applyEnchantEffect(params) end
-
----Table parameter definitions for `tes3worldController.applyEnchantEffect`.
---- @class tes3worldController.applyEnchantEffect.params
---- @field node niBillboardNode|niCollisionSwitch|niNode|niSwitchNode A scene node to which to apply the enchantment's effects.
---- @field enchantment tes3enchantment The enchantment's effects to apply.
+function tes3worldController.applyEnchantEffect(node, enchantment) end
 
