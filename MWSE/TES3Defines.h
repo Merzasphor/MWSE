@@ -35,7 +35,6 @@ namespace TES3 {
 	struct Book;
 	struct BoundingBox;
 	struct Cell;
-	struct CellExteriorData;
 	struct Class;
 	struct Clothing;
 	struct ClothingSlotData;
