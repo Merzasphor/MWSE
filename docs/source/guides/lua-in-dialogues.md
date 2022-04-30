@@ -30,6 +30,35 @@ Additionally, some information has been provided in the environment. These value
 	;lua tes3.messageBox("Reference: %s; Dialogue/INFO: %s/%s;", reference, dialogue, info.id)
 	```
 
+The environment can also be extended through the [`dialogueEnvironmentCreated`](https://mwse.github.io/MWSE/events/dialogueEnvironmentCreated/) event. This allows libraries to extend what functionality is available to dialogue scripters more easily.
+
+!!! example "Example: Extending the Dialogue Environment"
+
+	In your library's main.lua file, create the event hook:
+
+	```lua
+	local function onDialogueEnvironmentCreated(e)
+		-- Cache the environment variables outside the function for easier access.
+		-- Dialogue scripters shouldn't have to constantly pass these to the functions anyway.
+		local env = e.environment
+		local reference = env.reference
+		local dialogue = env.dialogue
+		local info = env.info
+
+		-- Define the "global" function.
+		function env.DisplayDialogueContext()
+			tes3.messageBox("Reference: %s; Dialogue/INFO: %s/%s;", reference, dialogue, info.id)
+		end
+	end
+	event.register(tes3.event.dialogueEnvironmentCreated, onDialogueEnvironmentCreated)
+	```
+
+	Then, any dialogue scripts can make use of the new function:
+
+	```lua
+	;lua DisplayDialogueContext()
+	```
+
 
 ## Usage
 

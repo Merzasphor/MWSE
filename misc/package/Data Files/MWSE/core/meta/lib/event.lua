@@ -57,6 +57,7 @@
 --- @field register fun(eventId: '"detectSneak"', callback: fun(e: detectSneakEventData), options: table?)
 --- @field register fun(eventId: '"determineAction"', callback: fun(e: determineActionEventData), options: table?)
 --- @field register fun(eventId: '"determinedAction"', callback: fun(e: determinedActionEventData), options: table?)
+--- @field register fun(eventId: '"dialogueEnvironmentCreated"', callback: fun(e: dialogueEnvironmentCreatedEventData), options: table?)
 --- @field register fun(eventId: '"enchantChargeUse"', callback: fun(e: enchantChargeUseEventData), options: table?)
 --- @field register fun(eventId: '"enchantedItemCreateFailed"', callback: fun(e: enchantedItemCreateFailedEventData), options: table?)
 --- @field register fun(eventId: '"enchantedItemCreated"', callback: fun(e: enchantedItemCreatedEventData), options: table?)

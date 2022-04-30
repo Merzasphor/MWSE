@@ -16,6 +16,7 @@
     <ClInclude Include="BSAnimationManager.h" />
     <ClInclude Include="LuaActiveMagicEffectIconsUpdatedEvent.h" />
     <ClInclude Include="LuaCalcBlockChanceEvent.h" />
+    <ClInclude Include="LuaDialogueEnvironmentCreatedEvent.h" />
     <ClInclude Include="LuaJumpEvent.h" />
     <ClInclude Include="LuaCalcSpellmakingPriceEvent.h" />
     <ClInclude Include="LuaCalcSpellmakingSpellPointCostEvent.h" />
@@ -543,6 +544,7 @@
     <ClCompile Include="LuaDetectSneakEvent.cpp" />
     <ClCompile Include="LuaDetermineActionEvent.cpp" />
     <ClCompile Include="LuaDeterminedActionEvent.cpp" />
+    <ClCompile Include="LuaDialogueEnvironmentCreatedEvent.cpp" />
     <ClCompile Include="LuaDisableableEventManager.cpp" />
     <ClCompile Include="LuaDisarmTrapEvent.cpp" />
     <ClCompile Include="LuaEnchantedItemCreatedEvent.cpp" />

@@ -196,6 +196,7 @@
 #include "LuaCrimeWitnessedEvent.h"
 #include "LuaDamageEvent.h"
 #include "LuaDamageHandToHandEvent.h"
+#include "LuaDialogueEnvironmentCreatedEvent.h"
 #include "LuaEnchantChargeUseEvent.h"
 #include "LuaEnchantedItemCreatedEvent.h"
 #include "LuaEnchantedItemCreateFailedEvent.h"
@@ -2646,6 +2647,10 @@ namespace mwse::lua {
 			env["reference"] = reference;
 			env["dialogue"] = dialogue;
 			env["info"] = info;
+
+			if (mwse::lua::event::DialogueEnvironmentCreatedEvent::getEventEnabled()) {
+				handle.triggerEvent(new mwse::lua::event::DialogueEnvironmentCreatedEvent(env));
+			}
 
 			// Allow running lua in comments.
 			for (; posStart != std::string_view::npos; posStart = commandView.find("\r\n;lua ", posStart)) {
