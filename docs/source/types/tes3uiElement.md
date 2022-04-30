@@ -459,6 +459,16 @@ The element's text. Text input can be read by accessing this property.
 
 ***
 
+### `texture`
+
+The underlying texture for the element. This assumes that the element is of an element type. Setting this value will change the element to an image type.
+
+**Returns**:
+
+* `result` ([niSourceTexture](../../types/niSourceTexture))
+
+***
+
 ### `type`
 
 *Read-only*. The type of content this `tes3uiElement` represents. This is an expanded set of the options available from the `contentType` property. Maps to values in [`tes3.uiElementType`](https://mwse.github.io/MWSE/references/tes3uiElement-types/).

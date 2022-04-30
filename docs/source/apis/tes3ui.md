@@ -154,7 +154,7 @@ local result = tes3ui.createTooltipMenu({ item = ..., itemData = ... })
 
 **Parameters**:
 
-* `params` (table)
+* `params` (table): *Optional*.
 	* `item` ([tes3item](../../types/tes3item), string): *Optional*. The item to create a tooltip for. If not specified, the tooltip will be empty.
 	* `itemData` ([tes3itemData](../../types/tes3itemData)): *Optional*. The item data for the item.
 

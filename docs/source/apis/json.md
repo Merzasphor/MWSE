@@ -57,7 +57,7 @@ local result = json.encode(object, state)
 **Parameters**:
 
 * `object` (table)
-* `state` (table)
+* `state` (table?)
 
 **Returns**:
 

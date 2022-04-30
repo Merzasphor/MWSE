@@ -82,7 +82,7 @@ function tes3ui.createResponseText(params) end
 --- Creates a tooltip menu, which can be an empty menu or an item tooltip. This should be called from within a tooltip event callback. These automatically follow the mouse cursor, and are also destroyed automatically when the mouse leaves the originating element. Creating an item tooltip will invoke the uiObjectTooltip event.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uicreatetooltipmenu).
---- @param params tes3ui.createTooltipMenu.params This table accepts the following values:
+--- @param params tes3ui.createTooltipMenu.params? This table accepts the following values:
 --- 
 --- `item`: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string|nil — *Optional*. The item to create a tooltip for. If not specified, the tooltip will be empty.
 --- 
