@@ -19,8 +19,23 @@ namespace mwse::lua::event {
 		sol::table eventData = state.create_table();
 
 		eventData["book"] = m_Book;
+		eventData["loadOriginalText"] = getOriginalText;
 
 		return eventData;
+	}
+
+	const char* BookGetTextEvent::getOriginalText(sol::table self) {
+		// Did we already find the text?
+		sol::optional<const char*> cacheHit = self["_loadedOriginalText"];
+		if (cacheHit) {
+			return cacheHit.value();
+		}
+
+		setEventEnabled(false);
+		auto text = self.get<TES3::Book*>("book")->getBookText();
+		self["_loadedOriginalText"] = text;
+		setEventEnabled(true);
+		return text;
 	}
 
 	bool BookGetTextEvent::m_EventEnabled = false;

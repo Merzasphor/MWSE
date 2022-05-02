@@ -9,6 +9,8 @@ namespace mwse::lua::event {
 		BookGetTextEvent(TES3::Book* book);
 		sol::table createEventTable();
 
+		static const char* getOriginalText(sol::table self);
+
 	protected:
 		TES3::Book* m_Book;
 	};
