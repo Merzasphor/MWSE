@@ -206,6 +206,7 @@ namespace mwse::lua::event {
 		usertypeDefinition["detectSneak"] = sol::property(&DetectSneakEvent::getEventEnabled, &DetectSneakEvent::setEventEnabled);
 		usertypeDefinition["determineAction"] = sol::property(&DetermineActionEvent::getEventEnabled, &DetermineActionEvent::setEventEnabled);
 		usertypeDefinition["determinedAction"] = sol::property(&DeterminedActionEvent::getEventEnabled, &DeterminedActionEvent::setEventEnabled);
+		usertypeDefinition["dialogueEnvironmentCreated"] = sol::property(&DialogueEnvironmentCreatedEvent::getEventEnabled, &DialogueEnvironmentCreatedEvent::setEventEnabled);
 		usertypeDefinition["enchantChargeUse"] = sol::property(&EnchantChargeUseEvent::getEventEnabled, &EnchantChargeUseEvent::setEventEnabled);
 		usertypeDefinition["enchantedItemCreated"] = sol::property(&EnchantedItemCreatedEvent::getEventEnabled, &EnchantedItemCreatedEvent::setEventEnabled);
 		usertypeDefinition["enchantedItemCreateFailed"] = sol::property(&EnchantedItemCreateFailedEvent::getEventEnabled, &EnchantedItemCreateFailedEvent::setEventEnabled);

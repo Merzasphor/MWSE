@@ -2,9 +2,10 @@ local function onDialogueEnvironmentCreated(e)
 	-- Cache the environment variables outside the function for easier access.
 	-- Dialogue scripters shouldn't have to constantly pass these to the functions anyway.
 	local env = e.environment
-	local reference = env.reference
-	local dialogue = env.dialogue
-	local info = env.info
+	local reference = env.reference --- @type tes3reference
+	local mobile = reference.mobile --- @type tes3mobileActor
+	local dialogue = env.dialogue --- @type tes3dialogue
+	local info = env.info --- @type tes3dialogueInfo
 
 	-- These are default environment functions available to dialogue scripters.
 	-- They should be designed in a way that is easy for them to be called.
@@ -13,11 +14,11 @@ local function onDialogueEnvironmentCreated(e)
 		error("Not yet implemented.")
 	end
 
-	function env.NPCFollowMe()
+	function env.FollowPlayer()
 		error("Not yet implemented.")
 	end
 
-	function env.NPCWaitHere()
+	function env.WaitHere()
 		error("Not yet implemented.")
 	end
 
