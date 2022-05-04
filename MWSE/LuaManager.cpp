@@ -2600,7 +2600,7 @@ namespace mwse::lua {
 			}
 
 			// Allow lua commands.
-			if (inComment && strncmp(&command[i], ";lua ", sizeof(";lua ") - 1) == 0) {
+			if (inComment && strncmp(&command[i], ";lua ", sizeof(";lua ") - 1) == 0 && (i == 0 || command[i - 1] == '\n')) {
 				info->objectFlags |= TES3::ObjectFlag::HasResultText;
 				break;
 			}
@@ -2639,8 +2639,7 @@ namespace mwse::lua {
 		// Do we have any lua commands?
 		bool noMorrowindScript = false;
 		std::string_view commandView = command;
-		auto posStart = commandView.find(";lua ", 0);
-		if (posStart != std::string_view::npos) {
+		if (commandView.find(";lua ", 0) != std::string_view::npos) {
 			auto handle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::environment env(handle.state, sol::create, handle.state.globals());
 
@@ -2653,16 +2652,17 @@ namespace mwse::lua {
 			}
 
 			// Allow running lua in comments.
-			for (; posStart != std::string_view::npos; posStart = commandView.find("\r\n;lua ", posStart)) {
-				// Jump up above the lua.
-				if (posStart == 0) {
-					posStart += sizeof(";lua ") - 1;
-				}
-				else {
-					posStart += sizeof("\r\n;lua ") - 1;
+			for (auto posStart = commandView.find(";lua "); posStart != std::string_view::npos; posStart = commandView.find(";lua ", posStart)) {
+				// If we aren't at the start of the line, skip.
+				if (posStart != 0 && commandView[posStart - 1] != '\n') {
+					posStart = commandView.find("\r\n");
+					continue;
 				}
 
-				// Find where our comamnd ends.
+				// Jump up above the lua prefix.
+				posStart += sizeof(";lua ") - 1;
+
+				// Find where our command ends.
 				auto posEnd = commandView.find("\r\n", posStart);
 				if (posEnd == std::string_view::npos) {
 					posEnd = commandView.length();
@@ -2674,13 +2674,16 @@ namespace mwse::lua {
 				}
 
 				// Execute the command.
-				auto luaCommand = std::string_view(command).substr(posStart, posEnd - posStart);
+				auto luaCommand = commandView.substr(posStart, posEnd - posStart);
 				sol::protected_function_result result = handle.state.safe_script(luaCommand, env, &sol::script_pass_on_error);
 				if (!result.valid()) {
 					sol::error error = result;
 					log::getLog() << "[LuaManager] ERROR: Failed to run mod dialogue script:" << std::endl << error.what() << std::endl;
+					posStart = posEnd;
 					continue;
 				}
+
+				posStart = posEnd;
 			}
 
 			// Check for if we will block mwscript.
