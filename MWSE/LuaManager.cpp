@@ -2678,7 +2678,14 @@ namespace mwse::lua {
 				sol::protected_function_result result = handle.state.safe_script(luaCommand, env, &sol::script_pass_on_error);
 				if (!result.valid()) {
 					sol::error error = result;
-					log::getLog() << "[LuaManager] ERROR: Failed to run mod dialogue script:" << std::endl << error.what() << std::endl;
+					std::stringstream ss;
+					ss << "Failed to run mod dialogue lua script:" << std::endl << error.what();
+
+					auto message = ss.str();
+					log::getLog() << "[LuaManager] ERROR: " << message << std::endl;
+
+					reinterpret_cast<void(__cdecl*)(const char*)>(0x477400)(message.c_str());
+
 					posStart = posEnd;
 					continue;
 				}
