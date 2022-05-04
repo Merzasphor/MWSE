@@ -121,9 +121,6 @@ namespace TES3 {
 
 		Dialogue* findDialogue() const;
 
-		// Loads the string of numbers from disk and returns them.
-		std::string getLongIDFromFile();
-
 		std::string toJson();
 
 	};

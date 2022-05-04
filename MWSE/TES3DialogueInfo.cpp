@@ -206,18 +206,9 @@ namespace TES3 {
 		return nullptr;
 	}
 
-	std::string DialogueInfo::getLongIDFromFile() {
-		if (loadId()) {
-			std::string id = loadLinkNode->name;
-			unloadId();
-			return id;
-		}
-		return "";
-	}
-
 	std::string DialogueInfo::toJson() {
 		std::ostringstream ss;
-		ss << "\"tes3dialogueInfo:" << getLongIDFromFile() << "\"";
+		ss << "\"tes3dialogueInfo:" << getID().value_or("<invalid>") << "\"";
 		return std::move(ss.str());
 	}
 }
