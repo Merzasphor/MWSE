@@ -586,6 +586,33 @@ end
 
 debug.logCache = {}
 
+function debug.clearLogCacheForFile(file)
+	if (file == nil) then
+		local info = debug.getinfo(2, "Sl")
+
+		if not info.source:find("^@") then
+			error("'debug.log' called from invalid source")
+		end
+
+		-- strip the '@' tag
+		file = info.source:sub(2):lower():gsub("data files\\mwse\\", "")
+	else
+		file = file:lower():lower():gsub("data files\\mwse\\", "")
+	end
+
+	local toRemove = {}
+	for entry in pairs(debug.logCache) do
+		local cachedFile, cachedLine = entry:match("^(.+):(%d+)$")
+		if (cachedFile == file) then
+			table.insert(toRemove, entry)
+		end
+	end
+
+	for _, remove in ipairs(toRemove) do
+		debug.logCache[remove] = nil
+	end
+end
+
 function debug.log(value)
 	local info = debug.getinfo(2, "Sl")
 
