@@ -8,7 +8,7 @@
 niObject = {}
 
 --- Creates a copy of this object.
---- @return niAlphaProperty|niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niFogProperty|niGeometry|niGeometryData|niKeyframeController|niKeyframeData|niLight|niLookAtController|niMaterialProperty|niNode|niPixelData|niPointLight|niSourceTexture|niSpotLight|niStencilProperty|niSwitchNode|niTexturingProperty|niTimeController|niTriBasedGeometry|niTriBasedGeometryData|niTriShape|niTriShapeData|niVertexColorProperty result No description yet available.
+--- @return niAlphaProperty|niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niFogProperty|niGeometry|niGeometryData|niKeyframeController|niKeyframeData|niLight|niLookAtController|niMaterialProperty|niNode|niPixelData|niPointLight|niSourceTexture|niSpotLight|niStencilProperty|niSwitchNode|niTexture|niTexturingProperty|niTimeController|niTriBasedGeometry|niTriBasedGeometryData|niTriShape|niTriShapeData|niVertexColorProperty result No description yet available.
 function niObject:clone() end
 
 --- Determines if the object is of a given type, or of a type derived from the given type. Types can be found in the tes3.niType table.

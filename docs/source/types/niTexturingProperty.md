@@ -167,7 +167,7 @@ local map, index = niTexturingProperty:addDecalMap(texture)
 
 **Parameters**:
 
-* `texture` (niTexture): *Optional*. The texture to assign to the new decal.
+* `texture` ([niTexture](../../types/niTexture)): *Optional*. The texture to assign to the new decal.
 
 **Returns**:
 

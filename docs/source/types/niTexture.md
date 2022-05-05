@@ -1,8 +1,8 @@
-# niSourceTexture
+# niTexture
 
-A texture that represent both static and dynamic content, as NiSourceTexture data objects can have their pixel data modified on the fly to implement dynamic texture behavior.
+Represents all texture objects that are created from a file or a block of in-memory pixel data.
 
-This type inherits the following: [niTexture](../../types/niTexture), [niObjectNET](../../types/niObjectNET), [niObject](../../types/niObject)
+This type inherits the following: [niObjectNET](../../types/niObjectNET), [niObject](../../types/niObject)
 ## Properties
 
 ### `controller`
@@ -12,16 +12,6 @@ This type inherits the following: [niTexture](../../types/niTexture), [niObjectN
 **Returns**:
 
 * `result` ([niTimeController](../../types/niTimeController))
-
-***
-
-### `fileName`
-
-*Read-only*. The platform-independent version of the filename from which the image was created, or NULL if the image was created from pixel data.
-
-**Returns**:
-
-* `result` (string)
 
 ***
 
@@ -45,39 +35,9 @@ The `NiFormatPrefs` of the texture.
 
 ***
 
-### `isStatic`
-
-The static flag.
-
-**Returns**:
-
-* `result` (boolean)
-
-***
-
 ### `name`
 
 The human-facing name of the given object.
-
-**Returns**:
-
-* `result` (string)
-
-***
-
-### `pixelData`
-
-The app-level pixel data.
-
-**Returns**:
-
-* `result` ([niPixelData](../../types/niPixelData))
-
-***
-
-### `platformFilename`
-
-*Read-only*. The platform-specific version of the filename.
 
 **Returns**:
 
@@ -116,16 +76,6 @@ The runtime type information for this object.
 ***
 
 ## Methods
-
-### `clearPixelData`
-
-Detaches any pixel data associated with this texture. Any render-specific data will be maintained, and remain in the GPU's memory.
-
-```lua
-niSourceTexture:clearPixelData()
-```
-
-***
 
 ### `clone`
 
@@ -177,16 +127,6 @@ local result = niObject:isOfType(type)
 
 ***
 
-### `loadPixelDataFromFile`
-
-Loads the file associated with the texture into memory, and makes it accessible from the pixelData property.
-
-```lua
-niSourceTexture:loadPixelDataFromFile()
-```
-
-***
-
 ### `prependController`
 
 Add a controller to the object as the first controller.
@@ -222,23 +162,6 @@ niObjectNET:removeController(type)
 **Parameters**:
 
 * `type` ([niTimeController](../../types/niTimeController))
-
-***
-
-## Functions
-
-### `createFromPath`
-
-Creates an NiSourceTexture from the given filepath.
-
-```lua
-niSourceTexture.createFromPath(path, useCached)
-```
-
-**Parameters**:
-
-* `path` (string): The filepath of the texture to load.
-* `useCached` (boolean): *Default*: `true`. If true, the texture will be stored in the normal texture source cache, so that multiple calls to the same path will return the same object. This behavior can be disabled if necessary.
 
 ***
 

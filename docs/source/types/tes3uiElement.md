@@ -447,6 +447,16 @@ When set to `true` on image and NIF elements, they are scaled to fit `width` and
 
 ***
 
+### `sceneNode`
+
+*Read-only*. Underlying access to the scene graph responsible for this element.
+
+**Returns**:
+
+* `result` ([niNode](../../types/niNode))
+
+***
+
 ### `text`
 
 The element's text. Text input can be read by accessing this property.

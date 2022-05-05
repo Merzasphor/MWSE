@@ -16,7 +16,7 @@
 niTexturingProperty = {}
 
 --- Attempts to create a new decal map. If successful, it returns both the new map and the index it was created in.
---- @param texture niTexture? *Optional*. The texture to assign to the new decal.
+--- @param texture niSourceTexture|niTexture|nil *Optional*. The texture to assign to the new decal.
 --- @return niTexturingPropertyMap|nil map A newly created decal map.
 --- @return number|nil index The index of the newly added decal map.
 function niTexturingProperty:addDecalMap(texture) end
