@@ -25,6 +25,16 @@ This type inherits the following: [niObject](../../types/niObject)
 
 ***
 
+### `refCount`
+
+*Read-only*. The number of references that exist for this object. When this value reaches zero, the object will be deleted.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
 ### `references`
 
 *Read-only*. The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
@@ -35,9 +45,19 @@ This type inherits the following: [niObject](../../types/niObject)
 
 ***
 
+### `RTTI`
+
+*Read-only*. The runtime type information for this object. This is an alias for the `.runTimeTypeInformation` property.
+
+**Returns**:
+
+* `result` ([niRTTI](../../types/niRTTI))
+
+***
+
 ### `runTimeTypeInformation`
 
-The runtime type information for this object.
+*Read-only*. The runtime type information for this object.
 
 **Returns**:
 
@@ -144,6 +164,24 @@ local result = niObject:isOfType(type)
 **Returns**:
 
 * `result` (boolean)
+
+***
+
+### `saveBinary`
+
+Serializes the object, and writes it to the given file.
+
+```lua
+local success = niObject:saveBinary(path)
+```
+
+**Parameters**:
+
+* `path` (string): The path to write the file at, relative to the Morrowind installation folder.
+
+**Returns**:
+
+* `success` (boolean): If true the object was successfully serialized.
 
 ***
 

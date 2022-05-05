@@ -15,6 +15,16 @@ This type inherits the following: [niObjectNET](../../types/niObjectNET), [niObj
 
 ***
 
+### `extraData`
+
+*Read-only*. The first extra data available on the object.
+
+**Returns**:
+
+* `result` (niExtraData)
+
+***
+
 ### `name`
 
 The human-facing name of the given object.
@@ -22,6 +32,16 @@ The human-facing name of the given object.
 **Returns**:
 
 * `result` (string)
+
+***
+
+### `refCount`
+
+*Read-only*. The number of references that exist for this object. When this value reaches zero, the object will be deleted.
+
+**Returns**:
+
+* `result` (number)
 
 ***
 
@@ -35,9 +55,19 @@ The human-facing name of the given object.
 
 ***
 
+### `RTTI`
+
+*Read-only*. The runtime type information for this object. This is an alias for the `.runTimeTypeInformation` property.
+
+**Returns**:
+
+* `result` ([niRTTI](../../types/niRTTI))
+
+***
+
 ### `runTimeTypeInformation`
 
-The runtime type information for this object.
+*Read-only*. The runtime type information for this object.
 
 **Returns**:
 
@@ -68,6 +98,24 @@ local result = niObject:clone()
 **Returns**:
 
 * `result` ([niObject](../../types/niObject))
+
+***
+
+### `getGameReference`
+
+Searches for an niExtraData on this object to see if it has one that holds a related reference.
+
+```lua
+local reference = niObjectNET:getGameReference(searchParents)
+```
+
+**Parameters**:
+
+* `searchParents` (boolean): *Default*: `false`. If true, all parent objects (if applicable) are also searched.
+
+**Returns**:
+
+* `reference` ([tes3reference](../../types/tes3reference))
 
 ***
 
@@ -136,12 +184,45 @@ niObjectNET:removeAllControllers()
 Removes a controller from the object.
 
 ```lua
-niObjectNET:removeController(type)
+niObjectNET:removeController(controller)
 ```
 
 **Parameters**:
 
-* `type` ([niTimeController](../../types/niTimeController))
+* `controller` ([niTimeController](../../types/niTimeController))
+
+***
+
+### `saveBinary`
+
+Serializes the object, and writes it to the given file.
+
+```lua
+local success = niObject:saveBinary(path)
+```
+
+**Parameters**:
+
+* `path` (string): The path to write the file at, relative to the Morrowind installation folder.
+
+**Returns**:
+
+* `success` (boolean): If true the object was successfully serialized.
+
+***
+
+### `setFlag`
+
+Sets a given flag in the niObjectNET flag data. The specifics use of the flag is dependent on the real underlying type.
+
+```lua
+niObjectNET:setFlag(state, index)
+```
+
+**Parameters**:
+
+* `state` (boolean)
+* `index` (number)
 
 ***
 

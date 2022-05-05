@@ -3,8 +3,10 @@
 
 --- The base-most object from which almost all NetImmerse structures are derived from.
 --- @class niObject
+--- @field refCount number *Read-only*. The number of references that exist for this object. When this value reaches zero, the object will be deleted.
 --- @field references string *Read-only*. The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
---- @field runTimeTypeInformation niRTTI The runtime type information for this object.
+--- @field RTTI niRTTI *Read-only*. The runtime type information for this object. This is an alias for the `.runTimeTypeInformation` property.
+--- @field runTimeTypeInformation niRTTI *Read-only*. The runtime type information for this object.
 niObject = {}
 
 --- Creates a copy of this object.
@@ -20,4 +22,9 @@ function niObject:isInstanceOfType(type) end
 --- @param type number No description yet available.
 --- @return boolean result No description yet available.
 function niObject:isOfType(type) end
+
+--- Serializes the object, and writes it to the given file.
+--- @param path string The path to write the file at, relative to the Morrowind installation folder.
+--- @return boolean success If true the object was successfully serialized.
+function niObject:saveBinary(path) end
 
