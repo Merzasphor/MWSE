@@ -1050,7 +1050,7 @@ function tes3.getKillCount(params) end
 --- @field actor tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance|string|nil *Optional*. The actor (or their ID) for whom to retrieve player's kill count.
 
 --- Returns a table with complete player kill counts. The table returned is formated so actor IDs are table keys and kill count of that type of actor is value.
---- @return table<tes3actor, number> killMap No description yet available.
+--- @return table<tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance, number> killMap No description yet available.
 function tes3.getKillCounts() end
 
 --- Gets the language as an ISO string (e.g. "eng"), determined by the language entry in Morrowind.ini and the detected executable. Maps to values in the [`tes3.language`](https://mwse.github.io/MWSE/references/languages/) table.

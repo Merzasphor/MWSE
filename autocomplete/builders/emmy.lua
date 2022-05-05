@@ -67,6 +67,11 @@ local function getAllPossibleVariationsOfType(type, package)
 		return nil
 	end
 
+	if (type:startswith("table<")) then
+		local keyType, valueType = type:match("table<(.+), (.+)>")
+		return string.format("table<%s, %s>", getAllPossibleVariationsOfType(keyType, package), getAllPossibleVariationsOfType(valueType, package))
+	end
+
 	local types = {}
 	for _, t in ipairs(string.split(type, "|")) do
 		local strippedType = common.makeComplexType(t)
