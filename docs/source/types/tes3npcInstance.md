@@ -361,7 +361,7 @@ Quick access to the base NPC's name.
 
 **Returns**:
 
-* `result` (number)
+* `result` (string)
 
 ***
 
