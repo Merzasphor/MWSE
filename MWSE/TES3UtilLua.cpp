@@ -1665,7 +1665,7 @@ namespace mwse::lua {
 			return false;
 		}
 
-		if (!journal->setJournalIndex(index.value())) {
+		if (!journal->setJournalIndexAndMarkModified(index.value())) {
 			return false;
 		}
 

@@ -80,6 +80,14 @@ namespace TES3 {
 		return true;
 	}
 
+	bool Dialogue::setJournalIndexAndMarkModified(int index) {
+		if (setJournalIndex(index)) {
+			setObjectModified(true);
+			return true;
+		}
+		return false;
+	}
+
 	DialogueInfo* Dialogue::getJournalInfoForIndex(int index) const {
 		if (type == DialogueType::Journal) {
 			for (auto i : info) {

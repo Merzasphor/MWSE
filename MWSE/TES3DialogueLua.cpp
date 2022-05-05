@@ -41,7 +41,7 @@ namespace mwse::lua {
 
 			// Basic property binding.
 			usertypeDefinition["info"] = sol::readonly_property(&TES3::Dialogue::info);
-			usertypeDefinition["journalIndex"] = sol::property(&TES3::Dialogue::getJournalIndex, &TES3::Dialogue::setJournalIndex);
+			usertypeDefinition["journalIndex"] = sol::property(&TES3::Dialogue::getJournalIndex, &TES3::Dialogue::setJournalIndexAndMarkModified);
 			usertypeDefinition["type"] = sol::readonly_property(&TES3::Dialogue::type);
 
 			// Basic property binding.
