@@ -2870,7 +2870,7 @@ namespace mwse::lua {
 		return false;
 	}
 
-	static TES3::EquipmentStack tempApplyMagicSourceStack = { nullptr, nullptr };
+	static TES3::EquipmentStack tempApplyMagicSourceStack;
 	TES3::MagicSourceInstance* applyMagicSource(sol::table params) {
 		// Get who we're adding the magic effect to.
 		auto reference = getOptionalParamExecutionReference(params);

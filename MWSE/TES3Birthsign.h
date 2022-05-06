@@ -13,6 +13,9 @@ namespace TES3 {
 		char * description;					// 0x38
 		TES3::SpellList spellList;			// 0x3C
 		unsigned int descriptionFileOffset; // 0x54
+
+		Birthsign() = delete;
+		~Birthsign() = delete;
 		
 		char * getName();
 		char * getDescription();

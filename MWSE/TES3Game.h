@@ -118,6 +118,9 @@ namespace TES3 {
 		char unknown_0x10C;
 		char unknown_0x10D[3]; // Padding.
 
+		Game() = delete;
+		~Game() = delete;
+
 		//
 		// Extra static data fields.
 		//

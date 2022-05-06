@@ -341,10 +341,6 @@ namespace TES3 {
 			TES3_ui_setIcon(this, path);
 		}
 
-		void Element::setIcon(String path) {
-			TES3_ui_setIconString(this, path);
-		}
-
 		void Element::updateSceneGraph() {
 			TES3_ui_updateSceneGraph(this);
 		}

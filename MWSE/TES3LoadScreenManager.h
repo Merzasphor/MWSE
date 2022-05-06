@@ -9,6 +9,9 @@ namespace TES3 {
 		struct Path {
 			char path[48];
 			char unknown_30;
+
+			Path() = delete;
+			~Path() = delete;
 		};
 		int state; // 0x0
 		CutscenePlayer* cutscenePlayer; // 0x4
@@ -23,6 +26,9 @@ namespace TES3 {
 		char unknown_0x28;
 		char unknown_0x29;
 		Path* paths; // 0x2C
+
+		LoadScreenManager() = delete;
+		~LoadScreenManager() = delete;
 	};
 	static_assert(sizeof(LoadScreenManager) == 0x30, "TES3::LoadScreenManager failed size validation");
 	static_assert(sizeof(LoadScreenManager::Path) == 0x31, "TES3::LoadScreenManager::Path failed size validation");

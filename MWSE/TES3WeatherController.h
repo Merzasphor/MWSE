@@ -121,6 +121,9 @@ namespace TES3 {
 		int unknown_0x1E8;
 		int unknown_0x1EC;
 
+		WeatherController() = delete;
+		~WeatherController() = delete;
+
 		//
 		// Other related this-call functions.
 		//

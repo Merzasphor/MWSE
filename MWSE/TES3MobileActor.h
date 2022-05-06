@@ -206,6 +206,9 @@ namespace TES3 {
 		int unknown_0x3A0;
 		Vector3 unknown_0x3A4;
 
+		MobileActor() = delete;
+		~MobileActor() = delete;
+
 		//
 		// vTable accessor functions.
 		//

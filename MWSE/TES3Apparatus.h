@@ -24,6 +24,9 @@ namespace TES3 {
 		float weight; // 0xB0
 		long value; // 0xB4
 
+		Apparatus() = delete;
+		~Apparatus() = delete;
+
 		//
 		// Custom functions.
 		//

@@ -10,6 +10,9 @@ namespace TES3 {
 			void * root;
 			char unknown_8;
 			size_t itemCount;
+
+			StlMap() = delete;
+			~StlMap() = delete;
 		};
 
 		NI::Node * worldSpellRoot;
@@ -17,6 +20,9 @@ namespace TES3 {
 		StlMap mapSerialToMagicSourceInstance;
 		StlMap mapItemDataToSerial;
 		StlMap mapReferenceToSerial;
+
+		MagicInstanceController() = delete;
+		~MagicInstanceController() = delete;
 
 		//
 		// Other related this-call functions.

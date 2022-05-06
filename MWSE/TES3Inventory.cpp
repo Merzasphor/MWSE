@@ -99,6 +99,19 @@ namespace TES3 {
 	// EquipmentStack
 	//
 
+	void* EquipmentStack::operator new(size_t size) {
+		return mwse::tes3::_new(size);
+	}
+
+	void EquipmentStack::operator delete(void* block) {
+		mwse::tes3::_delete(block);
+	}
+
+	EquipmentStack::EquipmentStack() {
+		object = nullptr;
+		itemData = nullptr;
+	}
+
 	const auto TES3_EquipmentStack_CalculateBarterItemValue = reinterpret_cast<int(__cdecl*)(const TES3::EquipmentStack*)>(0x5A46E0);
 	int EquipmentStack::getAdjustedValue() {
 		return TES3_EquipmentStack_CalculateBarterItemValue(this);

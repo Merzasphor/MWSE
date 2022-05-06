@@ -54,6 +54,9 @@ namespace TES3 {
 			const char* scriptText;
 			DialogueConditional* conditional;
 		};
+
+		DialogueInfoFilterNode() = delete;
+		~DialogueInfoFilterNode() = delete;
 	};
 
 	struct DialogueInfo : BaseObject {
@@ -74,6 +77,9 @@ namespace TES3 {
 		DialogueInfoFilterNode* conditions; // 0x20
 		long espFileOffset; // 0x24
 		Actor* firstHeardFrom; // 0x28
+
+		DialogueInfo() = delete;
+		~DialogueInfo() = delete;
 
 		//
 		// Other related this-call functions.

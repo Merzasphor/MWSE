@@ -12,6 +12,9 @@ namespace TES3 {
 		Script * script; // 0x74
 		Sound * openSound; // 0x78
 		Sound * closeSound; // 0x7C
+
+		Door() = delete;
+		~Door() = delete;
 	};
 	static_assert(sizeof(Door) == 0x80, "TES3::Door failed size validation");
 }

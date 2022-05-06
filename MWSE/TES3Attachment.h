@@ -24,12 +24,18 @@ namespace TES3 {
 	struct Attachment {
 		AttachmentType::AttachmentType type;
 		Attachment * next;
+
+		Attachment() = delete;
+		~Attachment() = delete;
 	};
 	static_assert(sizeof(Attachment) == 0x8, "TES3::Attachment failed size validation");
 
 	template <typename T>
 	struct AttachmentWithNode : Attachment {
 		T * data;
+
+		AttachmentWithNode() = delete;
+		~AttachmentWithNode() = delete;
 	};
 	static_assert(sizeof(AttachmentWithNode<void>) == 0xC, "TES3::AttachmentWithNode failed size validation");
 
@@ -52,6 +58,9 @@ namespace TES3 {
 	struct LightAttachmentNode {
 		NI::Pointer<NI::Light> light; // 0x0
 		float flickerPhase; // 0x4
+
+		LightAttachmentNode() = delete;
+		~LightAttachmentNode() = delete;
 	};
 	static_assert(sizeof(LightAttachmentNode) == 0x8, "TES3::LightAttachmentNode failed size validation");
 
@@ -66,6 +75,9 @@ namespace TES3 {
 		Misc * key; // 0x04
 		Spell * trap; // 0x08
 		bool locked; // 0x0C
+
+		LockAttachmentNode() = delete;
+		~LockAttachmentNode() = delete;
 
 		//
 		// Custom functions.
@@ -93,6 +105,9 @@ namespace TES3 {
 		Cell * cell; // 0x0
 		char * cellName; // 0x4
 		Reference * destination; // 0x8
+
+		TravelDestination() = delete;
+		~TravelDestination() = delete;
 	};
 	static_assert(sizeof(TravelDestination) == 0xC, "TES3::TravelDestination failed size validation");
 
@@ -115,6 +130,9 @@ namespace TES3 {
 			long rank;
 			void * variable;
 		} rankVar; // 0x08
+
+		OwnershipAttachmentNode() = delete;
+		~OwnershipAttachmentNode() = delete;
 	};
 	static_assert(sizeof(OwnershipAttachmentNode) == 0x0C, "TES3::OwnershipAttachmentNode failed size validation");
 
@@ -149,6 +167,9 @@ namespace TES3 {
 	struct ActionAttachment : Attachment {
 		unsigned int flags;
 		Reference * reference;
+
+		ActionAttachment() = delete;
+		~ActionAttachment() = delete;
 	};
 	static_assert(sizeof(ActionAttachment) == 0x10, "TES3::ActionAttachment failed size validation");
 	
@@ -159,6 +180,9 @@ namespace TES3 {
 	struct NewOrientationAttachment : Attachment {
 		Vector3 position;
 		Vector3 orientation;
+
+		NewOrientationAttachment() = delete;
+		~NewOrientationAttachment() = delete;
 	};
 	static_assert(sizeof(NewOrientationAttachment) == 0x20, "TES3::NewOrientationAttachment failed size validation");
 }

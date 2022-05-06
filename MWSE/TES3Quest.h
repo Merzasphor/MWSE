@@ -10,6 +10,9 @@ namespace TES3 {
 		IteratedList<Dialogue*> dialogue; // 0x14
 		IteratedList<DialogueInfo*> activeInfo; // 0x28
 
+		Quest() = delete;
+		~Quest() = delete;
+
 		//
 		// Virtual table overrides.
 		//

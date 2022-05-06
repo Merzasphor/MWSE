@@ -18,6 +18,9 @@ namespace TES3 {
 		short unknown_0xB2;
 		float quality; // 0xB4
 
+		RepairTool() = delete;
+		~RepairTool() = delete;
+
 		//
 		// Custom functions.
 		//

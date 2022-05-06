@@ -5,6 +5,16 @@
 #include "TES3Misc.h"
 
 namespace TES3 {
+	SoulGemData::SoulGemData(const Misc* from) {
+		item = from;
+		id = from->objectID;
+		name = from->name;
+		mesh = from->model;
+		texture = from->icon;
+		value = from->value;
+		weight = from->weight;
+	}
+
 	std::string SoulGemData::toString() const{
 		return id;
 	}

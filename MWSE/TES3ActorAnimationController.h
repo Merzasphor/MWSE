@@ -15,6 +15,9 @@ namespace TES3 {
 		AnimationGroup* animationGroup; // 0x10
 		unsigned short groupCount; // 0x14
 		unsigned short refCount; // 0x16
+
+		KeyframeDefinition() = delete;
+		~KeyframeDefinition() = delete;
 	};
 	static_assert(sizeof(KeyframeDefinition) == 0x18, "TES3::KeyframeDefinition failed size validation");
 
@@ -36,6 +39,9 @@ namespace TES3 {
 			int playbackTypeEnum;
 			float timing_8;
 			int loopCount;
+
+			Layer() = delete;
+			~Layer() = delete;
 		};
 		static_assert(sizeof(ActorAnimationController::Layer) == 0x10, "TES3::ActorAnimationController::Layer failed size validation");
 
@@ -72,6 +78,9 @@ namespace TES3 {
 		Layer layerLowerBody; // 0xA4
 		Layer layerUpperBody; // 0xB4
 		Layer layerShieldArm; // 0xC4
+
+		ActorAnimationController() = delete;
+		~ActorAnimationController() = delete;
 
 		//
 		// Other related this-call functions.

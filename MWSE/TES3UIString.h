@@ -9,6 +9,9 @@ namespace TES3 {
 			char * cString;
 			size_t length;
 			size_t storageSize;
+
+			String() = delete;
+			~String() = delete;
 		};
 		static_assert(sizeof(String) == 0x10, "TES3::UI::String failed size validation");
 	}

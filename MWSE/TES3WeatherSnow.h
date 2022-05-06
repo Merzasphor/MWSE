@@ -10,6 +10,9 @@ namespace TES3 {
 		float snowThreshold; // 0x324
 		float snowEntranceSpeed; // 0x328
 		float snowflakesMax; // 0x32C
+
+		WeatherSnow() = delete;
+		~WeatherSnow() = delete;
 	};
 	static_assert(sizeof(WeatherSnow) == 0x330, "TES3::WeatherSnow failed size validation");
 }

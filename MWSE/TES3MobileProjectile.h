@@ -20,6 +20,9 @@ namespace TES3 {
 		float damage; // 0xA4
 		float animTime; // 0xA8
 
+		MobileProjectile() = delete;
+		~MobileProjectile() = delete;
+
 		//
 		// vTable accessor functions.
 		//

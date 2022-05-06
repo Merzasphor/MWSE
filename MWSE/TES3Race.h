@@ -96,6 +96,9 @@ namespace TES3 {
 			BodyPart* bodyParts[int(PartIndex::COUNT) * 2 * 2]; // 0xE8 // Body parts for both sexes and each vampirism state.
 		};
 
+		Race() = delete;
+		~Race() = delete;
+
 		//
 		// Virtual table overrides.
 		//

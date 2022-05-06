@@ -59,6 +59,9 @@ namespace TES3 {
 		char soundIDAmbientLoop[260]; // 0x20E
 		Sound * soundAmbientLoop; // 0x314
 
+		Weather() = delete;
+		~Weather() = delete;
+
 		//
 		// Custom functions.
 		//

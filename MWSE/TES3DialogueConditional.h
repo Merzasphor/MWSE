@@ -129,6 +129,9 @@ namespace TES3 {
 		short localVarIndex;
 		DialogueConditionalComparator compareOperator;
 		float compareValue;
+
+		DialogueConditional() = delete;
+		~DialogueConditional() = delete;
 	};
 	static_assert(sizeof(DialogueConditional) == 0x10, "TES3::DialogueConditional failed size validation");
 }

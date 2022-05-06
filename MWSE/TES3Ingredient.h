@@ -18,6 +18,9 @@ namespace TES3 {
 		int effectSkillIds[4]; // 0xC0
 		int effectAttributeIds[4]; // 0xD0
 
+		Ingredient() = delete;
+		~Ingredient() = delete;
+
 		//
 		// Custom functions.
 		//

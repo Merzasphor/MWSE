@@ -10,7 +10,10 @@ namespace TES3 {
 		const char * texture; // 0xC
 		int value; // 0x10
 		float weight; // 0x14
-		Misc * item; // 0x18
+		const Misc * item; // 0x18
+
+		SoulGemData(const Misc* item);
+		~SoulGemData() = delete;
 
 		//
 		// Custom functions

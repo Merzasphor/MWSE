@@ -13,6 +13,9 @@ namespace TES3 {
 		int currentPackageIndex; // 0x90
 		float unknown_0x94;
 
+		AIPlanner() = delete;
+		~AIPlanner() = delete;
+
 		//
 		// Other related this-call functions.
 		//

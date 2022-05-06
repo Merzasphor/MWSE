@@ -22,6 +22,9 @@ namespace TES3 {
 		CreatureInstance * creatureInstance; // 0x3B0
 		Statistic skills[3]; // 0x3B4
 
+		MobileCreature() = delete;
+		~MobileCreature() = delete;
+
 		//
 		// Other related this-call functions.
 		//

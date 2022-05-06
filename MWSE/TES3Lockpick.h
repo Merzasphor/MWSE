@@ -18,6 +18,9 @@ namespace TES3 {
 		unsigned short maxCondition; // 0xB4
 		short unknown_0xB6;
 
+		Lockpick() = delete;
+		~Lockpick() = delete;
+
 		//
 		// Custom functions.
 		//

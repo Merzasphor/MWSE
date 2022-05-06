@@ -72,6 +72,9 @@ namespace TES3 {
 			String rawText;
 			String contentPath;
 
+			Element() = delete;
+			~Element() = delete;
+
 			//
 			// Widget creation/destruction methods
 			//
@@ -136,7 +139,6 @@ namespace TES3 {
 			void setProperty(Property prop, PropertyAccessCallback value);
 			void setText(const char *);
 			void setIcon(const char *);
-			void setIcon(String);
 
 			//
 			// Other related this-call functions.

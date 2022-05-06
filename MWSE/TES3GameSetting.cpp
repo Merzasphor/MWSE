@@ -11,6 +11,19 @@ namespace TES3 {
 		return GameSettingInfo::get(index);
 	}
 
+	GameSetting::GameSetting() {
+		vTable.base = reinterpret_cast<BaseObjectVirtualTable*>(0x749868);
+		objectFlags = 0;
+		sourceMod = nullptr;
+		value.asLong = 0;
+		index = -1;
+	}
+
+	const auto TES3_GameSetting_dtor = reinterpret_cast<void(__thiscall*)(GameSetting*)>(0x4B6E80);
+	GameSetting::~GameSetting() {
+		TES3_GameSetting_dtor(this);
+	}
+
 	char * GameSetting::getObjectID() const {
 		return getInfo()->name;
 	}

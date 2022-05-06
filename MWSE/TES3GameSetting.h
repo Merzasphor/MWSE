@@ -1539,6 +1539,9 @@ namespace TES3 {
 		float defaultFloatValue; // 0xC
 		int type; // 0x10
 
+		GameSettingInfo() = delete;
+		~GameSettingInfo() = delete;
+
 		//
 		// Custom functions.
 		//
@@ -1555,6 +1558,9 @@ namespace TES3 {
 			char * asString;
 		} value; // 0x10
 		long index; // 0x14 // Array index of this GMST
+
+		GameSetting();
+		~GameSetting();
 
 		//
 		// Virtual table overrides.

@@ -19,6 +19,9 @@ namespace TES3 {
 		int gridY; // 0x234
 		float unknown_0x238;
 		float unknown_0x23C;
+
+		Land() = delete;
+		~Land() = delete;
 	};
 	static_assert(sizeof(Land) == 0x240, "TES3::Land failed size validation");
 }

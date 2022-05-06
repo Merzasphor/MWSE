@@ -7,9 +7,6 @@
 
 namespace TES3 {
 	struct Misc : Item {
-		Misc();
-		~Misc();
-
 		IteratedList<TES3::BaseObject*> stolenList; // 0x30
 		char * name; // 0x44
 		Script * script; // 0x48
@@ -18,6 +15,9 @@ namespace TES3 {
 		float weight; // 0x54
 		long value; // 0x58
 		unsigned int flags; // 0x5C
+
+		Misc();
+		~Misc();
 
 		//
 		// Other related this-call functions.

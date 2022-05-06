@@ -25,6 +25,9 @@ namespace TES3 {
 		unsigned char volume; // 0x4C
 		int minDistance; // 0x50
 		int maxDistance; // 0x58
+
+		SoundBuffer() = delete;
+		~SoundBuffer() = delete;
 	};
 	static_assert(sizeof(SoundBuffer) == 0x58, "TES3::SoundBuffer failed size validation");
 	static_assert(sizeof(DSBUFFERDESC) == 0x24, "DSBUFFERDESC failed size validation");

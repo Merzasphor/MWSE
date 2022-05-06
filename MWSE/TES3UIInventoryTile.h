@@ -30,6 +30,9 @@ namespace TES3 {
 			Reference * reference; // 0x8
 			int unknown_0xC; // Count of some kind?
 			int unknown_0x10; // Count of some kind?
+
+			InventoryTile_Struct0x8() = delete;
+			~InventoryTile_Struct0x8() = delete;
 		};
 		static_assert(sizeof(InventoryTile_Struct0x8) == 0x14, "TES3::UI::InventoryTile_Struct0x8 failed size validation");
 
@@ -45,6 +48,9 @@ namespace TES3 {
 			char itemId[32]; // 0x1C
 			unsigned int tileType; // 0x3C
 			bool isBoundItem; // 0x40
+
+			InventoryTile() = delete;
+			~InventoryTile() = delete;
 
 			//
 			// Custom functions.

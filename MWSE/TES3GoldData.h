@@ -8,6 +8,9 @@ namespace TES3 {
 		int value; // 0x4
 		Misc* object; // 0x8
 
+		GoldData() = delete;
+		~GoldData() = delete;
+
 		//
 		// Relevant static addresses.
 		//

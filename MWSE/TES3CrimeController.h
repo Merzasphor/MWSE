@@ -8,6 +8,9 @@ namespace TES3 {
 		CrimeEventList * events; // 0x4
 		int eventCount; // 0x8
 
+		CrimeController() = delete;
+		~CrimeController() = delete;
+
 		//
 		// Other related this-call functions.
 		//

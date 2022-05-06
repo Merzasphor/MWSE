@@ -555,7 +555,7 @@ namespace TES3 {
 		TES3_UI_SortSpellmakingMenu();
 	}
 
-	GameSetting temporaryNameGMST;
+	static GameSetting temporaryNameGMST;
 	GameSetting * __fastcall getSpellNameGMST(DataHandler * dataHandler, DWORD EDX, int gmstId) {
 		if (gmstId < 0) {
 			temporaryNameGMST.value.asString = (char*)dataHandler->nonDynamicData->magicEffects->effectCustomNames[gmstId * -1].c_str();

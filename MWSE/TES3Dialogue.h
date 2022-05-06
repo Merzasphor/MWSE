@@ -19,6 +19,9 @@ namespace TES3 {
 		IteratedList<DialogueInfo*> info;
 		int journalIndex;
 
+		Dialogue() = delete;
+		~Dialogue() = delete;
+
 		//
 		// Virtual table overrides.
 		//

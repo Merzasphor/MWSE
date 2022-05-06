@@ -11,6 +11,9 @@ namespace TES3 {
 		float diseaseChance; // 0x334
 		int unknown_0x338;
 		float stormThreshold; // 0x33C
+
+		WeatherBlight() = delete;
+		~WeatherBlight() = delete;
 	};
 	static_assert(sizeof(WeatherBlight) == 0x340, "TES3::WeatherBlight failed size validation");
 }

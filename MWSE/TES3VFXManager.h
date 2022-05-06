@@ -26,6 +26,9 @@ namespace TES3 {
 
 		static constexpr auto AGE_INFINITE = 0.0f;
 
+		VFX() = delete;
+		~VFX() = delete;
+
 		MagicSourceInstance* getSourceInstance() const;
 	};
 	static_assert(sizeof(VFX) == 0x40, "TES3::VFX failed size validation");
@@ -34,6 +37,9 @@ namespace TES3 {
 		Deque<VFX*> vfxNodes; // 0x0
 		NI::Pointer<NI::Node> worldVFXRoot; // 0x8
 		NI::Pointer<NI::AVObject> unknown_0xC;
+
+		VFXManager() = delete;
+		~VFXManager() = delete;
 
 		VFX* createForMagicEffect(int effect, Reference* reference, float lifespan);
 		VFX* createForSource(MagicSourceInstance* source, Reference* reference, float lifespan);

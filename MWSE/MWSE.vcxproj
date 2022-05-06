@@ -901,6 +901,7 @@
     <ClCompile Include="TES3VFXManagerLua.cpp" />
     <ClCompile Include="TES3Weapon.cpp" />
     <ClCompile Include="TES3WeaponLua.cpp" />
+    <ClCompile Include="TES3WearablePart.cpp" />
     <ClCompile Include="TES3Weather.cpp" />
     <ClCompile Include="TES3WeatherController.cpp" />
     <ClCompile Include="TES3WeatherControllerLua.cpp" />

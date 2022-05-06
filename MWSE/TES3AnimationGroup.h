@@ -10,6 +10,9 @@ namespace TES3 {
 			unsigned char volume; // 0x8
 			float pitch; // 0xC
 			Sound* sound; // 0x10
+
+			Node() = delete;
+			~Node() = delete;
 		};
 		unsigned char groupId; // 0x10
 		unsigned int frameCount; // 0x14
@@ -18,6 +21,9 @@ namespace TES3 {
 		AnimationGroup* nextGroup; // 0x20
 		unsigned int nodeCount; // 0x24
 		Node* nodes; // 0x28
+
+		AnimationGroup() = delete;
+		~AnimationGroup() = delete;
 	};
 	static_assert(sizeof(AnimationGroup) == 0x2C, "TES3::AnimationAttachment failed size validation");
 	static_assert(sizeof(AnimationGroup::Node) == 0x14, "TES3::AnimationAttachment::Node failed size validation");
