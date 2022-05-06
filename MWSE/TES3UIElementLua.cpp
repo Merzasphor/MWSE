@@ -115,7 +115,7 @@ namespace mwse::lua {
 
 		// Custom property accessor functions.
 		usertypeDefinition["hasProperty"] = &Element::hasProperty_lua;
-		usertypeDefinition["getPropertyType"] = &Element::getPropertyType_lua;;
+		usertypeDefinition["getPropertyType"] = &Element::getPropertyType_lua;
 		usertypeDefinition["getPropertyBool"] = &Element::getPropertyBool_lua;
 		usertypeDefinition["getPropertyFloat"] = &Element::getPropertyFloat_lua;
 		usertypeDefinition["getPropertyInt"] = &Element::getPropertyInt_lua;
