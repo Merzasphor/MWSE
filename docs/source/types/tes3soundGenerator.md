@@ -142,7 +142,7 @@ If true, references of this object can store temporary or persistent lua data.
 Serializes the object to json.
 
 ```lua
-local result = tes3soundGenerator:__tojson()
+local result = myObject:__tojson()
 ```
 
 **Returns**:

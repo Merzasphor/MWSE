@@ -352,7 +352,7 @@ The water level in the cell. Only available on interior cells.
 Serializes the object to json.
 
 ```lua
-local string = tes3baseObject:__tojson()
+local string = myObject:__tojson()
 ```
 
 **Returns**:
@@ -366,7 +366,7 @@ local string = tes3baseObject:__tojson()
 Determines if a given X/Y coordinate falls in the given cell. This will always be true for interior cells.
 
 ```lua
-local inCell = tes3cell:isPointInCell(x, y)
+local inCell = myObject:isPointInCell(x, y)
 ```
 
 **Parameters**:
@@ -385,7 +385,7 @@ local inCell = tes3cell:isPointInCell(x, y)
 Used in a for loop, iterates over objects in the cell.
 
 ```lua
-tes3cell:iterateReferences(filter)
+myObject:iterateReferences(filter)
 ```
 
 **Parameters**:

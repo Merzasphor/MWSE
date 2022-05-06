@@ -592,7 +592,7 @@ If true, references of this object can store temporary or persistent lua data.
 Serializes the object to json.
 
 ```lua
-local string = tes3baseObject:__tojson()
+local string = myObject:__tojson()
 ```
 
 **Returns**:
@@ -606,7 +606,7 @@ local string = tes3baseObject:__tojson()
 Checks if the actor has provided item equipped.
 
 ```lua
-local result = tes3actor:hasItemEquipped(item, itemData)
+local result = myObject:hasItemEquipped(item, itemData)
 ```
 
 **Parameters**:
@@ -625,7 +625,7 @@ local result = tes3actor:hasItemEquipped(item, itemData)
 Checks if the actor will offer a service in dialogue. This an offer and may still be refused by dialogue checks. To also get the result of dialogue checks, use [`tes3.checkMerchantOffersService()`](https://mwse.github.io/MWSE/apis/tes3/#tes3checkmerchantoffersservice).
 
 ```lua
-local result = tes3actor:offersService(service)
+local result = myObject:offersService(service)
 ```
 
 **Parameters**:
@@ -643,7 +643,7 @@ local result = tes3actor:offersService(service)
 A callback function invoked when an inventory is closed. Typically not used outside of specific purposes. You may find `tes3.reference`'s `onCloseInventory()` to be more convenient to use.
 
 ```lua
-tes3actor:onInventoryClose(reference)
+myObject:onInventoryClose(reference)
 ```
 
 **Parameters**:
@@ -657,7 +657,7 @@ tes3actor:onInventoryClose(reference)
 Causes the NPC to reevaluate his/hers equipment choices and equip the best available.
 
 ```lua
-tes3npcInstance:reevaluateEquipment()
+myObject:reevaluateEquipment()
 ```
 
 ***
@@ -667,7 +667,7 @@ tes3npcInstance:reevaluateEquipment()
 Checks if the actor will buy and sell items of a given object type. e.g. `actor:tradesItemType(tes3.objectType.repairItem)`
 
 ```lua
-local result = tes3actor:tradesItemType(objectType)
+local result = myObject:tradesItemType(objectType)
 ```
 
 **Parameters**:

@@ -81,7 +81,7 @@ Arbitrary json-serializable data stored in the timer. This defaults to `nil`, bu
 Cancels the timer.
 
 ```lua
-mwseTimer:cancel()
+myObject:cancel()
 ```
 
 ***
@@ -91,7 +91,7 @@ mwseTimer:cancel()
 Pauses the timer.
 
 ```lua
-mwseTimer:pause()
+myObject:pause()
 ```
 
 ***
@@ -101,7 +101,7 @@ mwseTimer:pause()
 Resets the timer completion time, as if it elapsed. Only works if the timer is active.
 
 ```lua
-mwseTimer:reset()
+myObject:reset()
 ```
 
 ***
@@ -111,7 +111,7 @@ mwseTimer:reset()
 Resumes a paused timer.
 
 ```lua
-mwseTimer:resume()
+myObject:resume()
 ```
 
 ***

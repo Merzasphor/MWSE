@@ -51,7 +51,7 @@ If true, the program is no longer running and output can be read.
 Reads the current output of the program, and clears the output buffer.
 
 ```lua
-local output = mwseLuaExecutor:getOutput()
+local output = myObject:getOutput()
 ```
 
 **Returns**:
@@ -65,7 +65,7 @@ local output = mwseLuaExecutor:getOutput()
 Pauses the main thread, locking up the program until the program has finished.
 
 ```lua
-mwseLuaExecutor:wait()
+myObject:wait()
 ```
 
 ***

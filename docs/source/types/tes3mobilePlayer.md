@@ -2008,7 +2008,7 @@ A flag for if the player has a weapon ready or being readied (visible and held i
 Damages the actor, with options to control mitigation and difficulty scaling. Invokes the [`damage`](https://mwse.github.io/MWSE/events/damage/) and [`damaged`](https://mwse.github.io/MWSE/events/damaged/) events, with `tes3.damageSource.script` source. Returns the actual damage done after armor mitigation and resistance, but before difficulty scaling.
 
 ```lua
-local result = tes3mobileActor:applyDamage({ damage = ..., applyArmor = ..., resistAttribute = ..., applyDifficulty = ..., playerAttack = ..., doNotChangeHealth = ... })
+local result = myObject:applyDamage({ damage = ..., applyArmor = ..., resistAttribute = ..., applyDifficulty = ..., playerAttack = ..., doNotChangeHealth = ... })
 ```
 
 **Parameters**:
@@ -2032,7 +2032,7 @@ local result = tes3mobileActor:applyDamage({ damage = ..., applyArmor = ..., res
 Damages the actor's fatigue, with accompanying reaction from the reciever. Invokes the [`damageHandToHand`](https://mwse.github.io/MWSE/events/damageHandToHand/) and [`damagedHandToHand`](https://mwse.github.io/MWSE/events/damagedHandToHand/) events, with `tes3.damageSource.script` source. Returns the actual fatigue damage done.
 
 ```lua
-local result = tes3mobileActor:applyFatigueDamage(fatigueDamage, swing, alwaysPlayHitVoice)
+local result = myObject:applyFatigueDamage(fatigueDamage, swing, alwaysPlayHitVoice)
 ```
 
 **Parameters**:
@@ -2054,7 +2054,7 @@ local result = tes3mobileActor:applyFatigueDamage(fatigueDamage, swing, alwaysPl
 Damages the actor.
 
 ```lua
-local result = tes3mobileActor:applyHealthDamage(damage, isPlayerAttack, scaleWithDifficulty, doNotChangeHealth)
+local result = myObject:applyHealthDamage(damage, isPlayerAttack, scaleWithDifficulty, doNotChangeHealth)
 ```
 
 **Parameters**:
@@ -2075,7 +2075,7 @@ local result = tes3mobileActor:applyHealthDamage(damage, isPlayerAttack, scaleWi
 Calculates the damage that would be inflicted to an actor after armor and/or resistance. Returns the actual damage done after armor mitigation and resistance, but before difficulty scaling.
 
 ```lua
-local result = tes3mobileActor:calcEffectiveDamage({ damage = ..., applyArmor = ..., resistAttribute = ... })
+local result = myObject:calcEffectiveDamage({ damage = ..., applyArmor = ..., resistAttribute = ... })
 ```
 
 **Parameters**:
@@ -2096,7 +2096,7 @@ local result = tes3mobileActor:calcEffectiveDamage({ damage = ..., applyArmor = 
 Equips an item, optionally adding the item if needed. If the best match is already equipped, it does not perform an unequip-equip cycle, but does return `true`.
 
 ```lua
-local itemEquipped = tes3mobileActor:equip({ item = ..., itemData = ..., addItem = ..., selectBestCondition = ..., selectWorstCondition = ... })
+local itemEquipped = myObject:equip({ item = ..., itemData = ..., addItem = ..., selectBestCondition = ..., selectWorstCondition = ... })
 ```
 
 **Parameters**:
@@ -2119,7 +2119,7 @@ local itemEquipped = tes3mobileActor:equip({ item = ..., itemData = ..., addItem
 Equips a spell or enchantment, optionally equipping the enchanted item if needed. Returns `false` if the item could not be equipped.
 
 ```lua
-local result = tes3mobileActor:equipMagic({ source = ..., itemData = ..., equipItem = ..., updateGUI = ... })
+local result = myObject:equipMagic({ source = ..., itemData = ..., equipItem = ..., updateGUI = ... })
 ```
 
 **Parameters**:
@@ -2146,7 +2146,7 @@ local result = tes3mobileActor:equipMagic({ source = ..., itemData = ..., equipI
 Exercises a skill, providing experience in it.
 
 ```lua
-tes3mobilePlayer:exerciseSkill(skill, progress)
+myObject:exerciseSkill(skill, progress)
 ```
 
 **Parameters**:
@@ -2161,7 +2161,7 @@ tes3mobilePlayer:exerciseSkill(skill, progress)
 Fetches a filtered list of the active magic effects on the actor. Returns a table with [`tes3activeMagicEffect`](https://mwse.github.io/MWSE/types/tes3activeMagicEffect/) items.
 
 ```lua
-local result = tes3mobileActor:getActiveMagicEffects({ effect = ..., serial = ... })
+local result = myObject:getActiveMagicEffects({ effect = ..., serial = ... })
 ```
 
 **Parameters**:
@@ -2181,7 +2181,7 @@ local result = tes3mobileActor:getActiveMagicEffects({ effect = ..., serial = ..
 *Read-only*. Gets the weight of the boots equipped on the actor, or 0 if no boots are equipped.
 
 ```lua
-local result = tes3mobileActor:getBootsWeight()
+local result = myObject:getBootsWeight()
 ```
 
 **Returns**:
@@ -2195,7 +2195,7 @@ local result = tes3mobileActor:getBootsWeight()
 Gets the fatigue-based skill scaling term used by many game mechanics, based on the actor's current and maximum fatigue. It is equal to `max(0, fFatigueBase - fFatigueMult * max(0, 1 - fatigue.current/fatigue.base))`
 
 ```lua
-local result = tes3mobileActor:getFatigueTerm()
+local result = myObject:getFatigueTerm()
 ```
 
 **Returns**:
@@ -2209,7 +2209,7 @@ local result = tes3mobileActor:getFatigueTerm()
 Finds the timestamp a recharging power was used. Powers recharge 24 hours after this timestamp. The timestamp units are hours. The current time as a timestamp can be accessed at [`tes3.getSimulationTimestamp()`](https://mwse.github.io/MWSE/apis/tes3/#tes3getsimulationtimestamp).
 
 ```lua
-local timestamp = tes3mobileActor:getPowerUseTimestamp(power)
+local timestamp = myObject:getPowerUseTimestamp(power)
 ```
 
 **Parameters**:
@@ -2227,7 +2227,7 @@ local timestamp = tes3mobileActor:getPowerUseTimestamp(power)
 Returns the total progress needed to progress the skill to the next level.
 
 ```lua
-local progressNeeded = tes3mobilePlayer:getSkillProgressRequirement(skill)
+local progressNeeded = myObject:getSkillProgressRequirement(skill)
 ```
 
 **Parameters**:
@@ -2245,7 +2245,7 @@ local progressNeeded = tes3mobilePlayer:getSkillProgressRequirement(skill)
 Fetches the statistic object of a skill with a given index. This is the way to access skills for any type of actor, as creatures have a limited version of the skill system. Note that creatures share a statistic between multiple skills (they only have combat, magic, and stealth stats), so many values will be the same.
 
 ```lua
-local result = tes3mobileActor:getSkillStatistic(skillId)
+local result = myObject:getSkillStatistic(skillId)
 ```
 
 **Parameters**:
@@ -2263,7 +2263,7 @@ local result = tes3mobileActor:getSkillStatistic(skillId)
 Fetches the current value of a skill with a given index. This is the way to access skills for any type of actor, as creatures have a limited version of the skill system. Note that creatures share a statistic between multiple skills (they only have combat, magic, and stealth stats), so many values will be the same.
 
 ```lua
-local result = tes3mobileActor:getSkillValue(skillId)
+local result = myObject:getSkillValue(skillId)
 ```
 
 **Parameters**:
@@ -2281,7 +2281,7 @@ local result = tes3mobileActor:getSkillValue(skillId)
 No description yet available.
 
 ```lua
-local result = tes3mobileActor:getViewToActor()
+local result = myObject:getViewToActor()
 ```
 
 **Returns**:
@@ -2295,7 +2295,7 @@ local result = tes3mobileActor:getViewToActor()
 No description yet available.
 
 ```lua
-local result = tes3mobileActor:getViewToPoint()
+local result = myObject:getViewToPoint()
 ```
 
 **Returns**:
@@ -2309,7 +2309,7 @@ local result = tes3mobileActor:getViewToPoint()
 No description yet available.
 
 ```lua
-local result = tes3mobileActor:getViewToPointWithFacing()
+local result = myObject:getViewToPointWithFacing()
 ```
 
 **Returns**:
@@ -2323,7 +2323,7 @@ local result = tes3mobileActor:getViewToPointWithFacing()
 Fetches the weapon speed of the actor's currently equipped weapon, or `1.0` if no weapon is equipped.
 
 ```lua
-local result = tes3mobileActor:getWeaponSpeed()
+local result = myObject:getWeaponSpeed()
 ```
 
 **Returns**:
@@ -2337,7 +2337,7 @@ local result = tes3mobileActor:getWeaponSpeed()
 Check if a power has been used and is recharging.
 
 ```lua
-local result = tes3mobileActor:hasUsedPower(power)
+local result = myObject:hasUsedPower(power)
 ```
 
 **Parameters**:
@@ -2355,7 +2355,7 @@ local result = tes3mobileActor:hasUsedPower(power)
 Determines if the actor is currently being affected by a given alchemy, enchantment, or spell.
 
 ```lua
-local result = tes3mobileActor:isAffectedByObject(object)
+local result = myObject:isAffectedByObject(object)
 ```
 
 **Parameters**:
@@ -2373,7 +2373,7 @@ local result = tes3mobileActor:isAffectedByObject(object)
 Kills the actor by setting its health to 0.
 
 ```lua
-tes3mobileActor:kill()
+myObject:kill()
 ```
 
 ***
@@ -2383,7 +2383,7 @@ tes3mobileActor:kill()
 Checks to see if a skill is ready to be leveled up, and performs any levelup logic.
 
 ```lua
-tes3mobilePlayer:progressSkillLevelIfRequirementsMet(skill)
+myObject:progressSkillLevelIfRequirementsMet(skill)
 ```
 
 **Parameters**:
@@ -2397,7 +2397,7 @@ tes3mobilePlayer:progressSkillLevelIfRequirementsMet(skill)
 Increments the player's skill to the next level, while respecting all level up mechanics.
 
 ```lua
-local newLevel = tes3mobilePlayer:progressSkillToNextLevel(skill)
+local newLevel = myObject:progressSkillToNextLevel(skill)
 ```
 
 **Parameters**:
@@ -2415,7 +2415,7 @@ local newLevel = tes3mobilePlayer:progressSkillToNextLevel(skill)
 Makes a power immediately available for casting again.
 
 ```lua
-local result = tes3mobileActor:rechargePower(power)
+local result = myObject:rechargePower(power)
 ```
 
 **Parameters**:
@@ -2433,7 +2433,7 @@ local result = tes3mobileActor:rechargePower(power)
 Sets the timestamp a recharging power was used. Powers recharge 24 hours after this timestamp.
 
 ```lua
-tes3mobileActor:setPowerUseTimestamp(power, timestamp)
+myObject:setPowerUseTimestamp(power, timestamp)
 ```
 
 **Parameters**:
@@ -2448,7 +2448,7 @@ tes3mobileActor:setPowerUseTimestamp(power, timestamp)
 Forces the actor into combat with another actor.
 
 ```lua
-tes3mobileActor:startCombat(target)
+myObject:startCombat(target)
 ```
 
 **Parameters**:
@@ -2462,7 +2462,7 @@ tes3mobileActor:startCombat(target)
 Starts dialogue with this actor for the player.
 
 ```lua
-tes3mobileActor:startDialogue()
+myObject:startDialogue()
 ```
 
 ***
@@ -2472,7 +2472,7 @@ tes3mobileActor:startDialogue()
 Ends combat for the actor.
 
 ```lua
-tes3mobileActor:stopCombat(force)
+myObject:stopCombat(force)
 ```
 
 **Parameters**:
@@ -2486,7 +2486,7 @@ tes3mobileActor:stopCombat(force)
 Unequips one or more items from the actor.
 
 ```lua
-local itemUnequipped = tes3mobileActor:unequip({ item = ..., type = ..., armorSlot = ..., clothingSlot = ... })
+local itemUnequipped = myObject:unequip({ item = ..., type = ..., armorSlot = ..., clothingSlot = ... })
 ```
 
 **Parameters**:
@@ -2508,7 +2508,7 @@ local itemUnequipped = tes3mobileActor:unequip({ item = ..., type = ..., armorSl
 Unequips the currently equipped magic, optionally unequipping the enchanted item if needed.
 
 ```lua
-tes3mobileActor:unequipMagic({ unequipItem = ..., updateGUI = ... })
+myObject:unequipMagic({ unequipItem = ..., updateGUI = ... })
 ```
 
 **Parameters**:
@@ -2524,7 +2524,7 @@ tes3mobileActor:unequipMagic({ unequipItem = ..., updateGUI = ... })
 Updates statistics derived from attributes, which are magicka, fatigue, and encumbrance. Will also update the UI if used on the player. Normally handled automatically when you use `tes3.modStatistic()`.
 
 ```lua
-tes3mobileActor:updateDerivedStatistics(attribute)
+myObject:updateDerivedStatistics(attribute)
 ```
 
 **Parameters**:
@@ -2538,7 +2538,7 @@ tes3mobileActor:updateDerivedStatistics(attribute)
 Updates the actor's visual opacity. Used after modifying applied chameleon or invisiblity effects.
 
 ```lua
-tes3mobileActor:updateOpacity()
+myObject:updateOpacity()
 ```
 
 ***

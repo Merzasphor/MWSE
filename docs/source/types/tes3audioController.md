@@ -171,7 +171,7 @@ Approximated yaw axis in radians.
 Changes currently playing music track according to provided parameters.
 
 ```lua
-tes3audioController:changeMusicTrack({ filename = ..., crossfade = ..., volume = ... })
+myObject:changeMusicTrack({ filename = ..., crossfade = ..., volume = ... })
 ```
 
 **Parameters**:
@@ -188,7 +188,7 @@ tes3audioController:changeMusicTrack({ filename = ..., crossfade = ..., volume =
 Final volume of a provided type of audio, after master volume and its own volume adjustments. Music volume is an exception since it isn't affected by master volume.
 
 ```lua
-local volume = tes3audioController:getMixVolume(mix)
+local volume = myObject:getMixVolume(mix)
 ```
 
 **Parameters**:

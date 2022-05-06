@@ -71,7 +71,7 @@ Alias for the red value of the color.
 Clamps the color object.
 
 ```lua
-niColor:clamp()
+myObject:clamp()
 ```
 
 ***
@@ -81,7 +81,7 @@ niColor:clamp()
 Creates a copy of the color object.
 
 ```lua
-local result = niColor:copy()
+local result = myObject:copy()
 ```
 
 **Returns**:
@@ -95,7 +95,7 @@ local result = niColor:copy()
 Calculates the interpolated color between this color and another, given a transition.
 
 ```lua
-local lerpedcolor = niColor:lerp(tocolor, transition)
+local lerpedcolor = myObject:lerp(tocolor, transition)
 ```
 
 **Parameters**:
@@ -114,7 +114,7 @@ local lerpedcolor = niColor:lerp(tocolor, transition)
 Creates a vector3 of the color object.
 
 ```lua
-local result = niColor:toVector3()
+local result = myObject:toVector3()
 ```
 
 **Returns**:

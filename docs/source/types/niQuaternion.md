@@ -51,7 +51,7 @@ The Z component of the quaternion.
 Creates a copy of the quaternion.
 
 ```lua
-local result = niQuaternion:copy()
+local result = myObject:copy()
 ```
 
 **Returns**:
@@ -65,7 +65,7 @@ local result = niQuaternion:copy()
 Fill the quaternion by converting an angle-axis rotation. The angle must be within the interval [0, PI] and the axis must be unit length.
 
 ```lua
-niQuaternion:fromAxisAngle(angle, axis)
+myObject:fromAxisAngle(angle, axis)
 ```
 
 **Parameters**:
@@ -80,7 +80,7 @@ niQuaternion:fromAxisAngle(angle, axis)
 Fill the quaternion by converting a rotation matrix.
 
 ```lua
-niQuaternion:fromRotation(matrix)
+myObject:fromRotation(matrix)
 ```
 
 **Parameters**:
@@ -94,7 +94,7 @@ niQuaternion:fromRotation(matrix)
 Calculates the spherical linear interpolate between this quaternion and another.
 
 ```lua
-local result = niQuaternion:slerp(target, transition)
+local result = myObject:slerp(target, transition)
 ```
 
 **Parameters**:
@@ -113,7 +113,7 @@ local result = niQuaternion:slerp(target, transition)
 Convert this quaternion into an angle-axis rotation.
 
 ```lua
-local angle, axis = niQuaternion:toAxisAngle()
+local angle, axis = myObject:toAxisAngle()
 ```
 
 **Returns**:
@@ -128,7 +128,7 @@ local angle, axis = niQuaternion:toAxisAngle()
 Convert this quaternion into a rotation matrix.
 
 ```lua
-local result = niQuaternion:toRotation()
+local result = myObject:toRotation()
 ```
 
 **Returns**:

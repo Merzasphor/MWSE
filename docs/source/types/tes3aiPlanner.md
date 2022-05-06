@@ -51,7 +51,7 @@ The access to mobile actor this `tes3aiPlanner` object works on.
 Fetches currently active AI package.
 
 ```lua
-local result = tes3aiPlanner:getActivePackage()
+local result = myObject:getActivePackage()
 ```
 
 **Returns**:

@@ -544,7 +544,7 @@ As with the `data` field, a generic lua table that data can be written to. No in
 Serializes the object to json.
 
 ```lua
-local string = tes3baseObject:__tojson()
+local string = myObject:__tojson()
 ```
 
 **Returns**:
@@ -558,7 +558,7 @@ local string = tes3baseObject:__tojson()
 Causes this reference to activate another. This will lead them to go through doors, pick up items, etc.
 
 ```lua
-tes3reference:activate(reference)
+myObject:activate(reference)
 ```
 
 **Parameters**:
@@ -572,7 +572,7 @@ tes3reference:activate(reference)
 Unsets a bit in the reference's action data attachment
 
 ```lua
-tes3reference:clearActionFlag(flagIndex)
+myObject:clearActionFlag(flagIndex)
 ```
 
 **Parameters**:
@@ -586,7 +586,7 @@ tes3reference:clearActionFlag(flagIndex)
 Clones a reference for a base actor into a reference to an instance of that actor. For example, this will force a container to resolve its leveled items and have its own unique inventory.
 
 ```lua
-local result = tes3reference:clone()
+local result = myObject:clone()
 ```
 
 **Returns**:
@@ -600,7 +600,7 @@ local result = tes3reference:clone()
 Disables the reference, removes all its attachments, resets its scale, and sets the reference to be deleted.
 
 ```lua
-tes3reference:delete()
+myObject:delete()
 ```
 
 ***
@@ -610,7 +610,7 @@ tes3reference:delete()
 Deletes the dynamic light attachment, if it exists. This will automatically detach the dynamic light from affected nodes.
 
 ```lua
-tes3reference:deleteDynamicLightAttachment(removeLightFromParent)
+myObject:deleteDynamicLightAttachment(removeLightFromParent)
 ```
 
 **Parameters**:
@@ -624,7 +624,7 @@ tes3reference:deleteDynamicLightAttachment(removeLightFromParent)
 Removes the dynamic light from any affected scene graph nodes, but will not delete the associated attachment.
 
 ```lua
-tes3reference:detachDynamicLightFromAffectedNodes()
+myObject:detachDynamicLightFromAffectedNodes()
 ```
 
 ***
@@ -634,7 +634,7 @@ tes3reference:detachDynamicLightFromAffectedNodes()
 Hides the reference, detaches all dynamic lights and sounds, and stops any mobile simulation. Sets the reference as modified implicitly.
 
 ```lua
-local success = tes3reference:disable()
+local success = myObject:disable()
 ```
 
 **Returns**:
@@ -648,7 +648,7 @@ local success = tes3reference:disable()
 Shows the reference, reattaches all dynamic lights and sounds, and restarts any mobile simulation if the player is close enough. Sets the reference as modified implicitly.
 
 ```lua
-local success = tes3reference:enable()
+local success = myObject:enable()
 ```
 
 **Returns**:
@@ -662,7 +662,7 @@ local success = tes3reference:enable()
 Calculates the angle from this reference's current facing to the target reference.
 
 ```lua
-local angle = tes3reference:getAngleTo(reference)
+local angle = myObject:getAngleTo(reference)
 ```
 
 **Parameters**:
@@ -680,7 +680,7 @@ local angle = tes3reference:getAngleTo(reference)
 Fetches the dynamic light attachment.
 
 ```lua
-local result = tes3reference:getAttachedDynamicLight()
+local result = myObject:getAttachedDynamicLight()
 ```
 
 **Returns**:
@@ -698,7 +698,7 @@ If no light is supplied as an argument, a point light of radius 512 will be auto
 If the light is not attached to any part of the scene graph yet, the point light will be placed as a child of the "attachLight" subnode of the model, or a child of the model if "attachLight" is not found.
 
 ```lua
-local result = tes3reference:getOrCreateAttachedDynamicLight(light, phase)
+local result = myObject:getOrCreateAttachedDynamicLight(light, phase)
 ```
 
 **Parameters**:
@@ -717,7 +717,7 @@ local result = tes3reference:getOrCreateAttachedDynamicLight(light, phase)
 A function that tells the game that an inventory has been closed, if you are simulating inventory operations. It has the capability of un-cloning an inventory if it has not been modified. Typically not used outside of specific purposes.
 
 ```lua
-local result = tes3reference:onCloseInventory()
+local result = myObject:onCloseInventory()
 ```
 
 **Returns**:
@@ -731,7 +731,7 @@ local result = tes3reference:onCloseInventory()
 Sets a bit in the reference's action data attachment
 
 ```lua
-tes3reference:setActionFlag(flagIndex)
+myObject:setActionFlag(flagIndex)
 ```
 
 **Parameters**:
@@ -745,7 +745,7 @@ tes3reference:setActionFlag(flagIndex)
 Sets the dynamic lighting state of the reference using the global data handler.
 
 ```lua
-tes3reference:setDynamicLighting()
+myObject:setDynamicLighting()
 ```
 
 ***
@@ -755,7 +755,7 @@ tes3reference:setDynamicLighting()
 Sets if this reference has active collision. This is preferable to changing the `hasNoCollision` property, if you are manipulating multiple objects at once and do not want to constantly recalculate collision groups.
 
 ```lua
-tes3reference:setNoCollisionFlag(hasNoCollision, updateCollisions)
+myObject:setNoCollisionFlag(hasNoCollision, updateCollisions)
 ```
 
 **Parameters**:
@@ -770,7 +770,7 @@ tes3reference:setNoCollisionFlag(hasNoCollision, updateCollisions)
 Returns the flag's value in the reference's action data attachment.
 
 ```lua
-local result = tes3reference:testActionFlag(flagIndex)
+local result = myObject:testActionFlag(flagIndex)
 ```
 
 **Parameters**:
@@ -788,7 +788,7 @@ local result = tes3reference:testActionFlag(flagIndex)
 Causes the reference, if of an actor, to update the reference's bodyparts with the currently equipped ones.
 
 ```lua
-tes3reference:updateEquipment()
+myObject:updateEquipment()
 ```
 
 ***
@@ -798,7 +798,7 @@ tes3reference:updateEquipment()
 Updates the lighting of the reference using the global data handler.
 
 ```lua
-tes3reference:updateLighting()
+myObject:updateLighting()
 ```
 
 ***
@@ -808,7 +808,7 @@ tes3reference:updateLighting()
 Updates the reference's local rotation matrix, propagates position changes to the scene graph, and sets the reference's modified flag. You need to call this if the orientation or position was manually modified.
 
 ```lua
-tes3reference:updateSceneGraph()
+myObject:updateSceneGraph()
 ```
 
 ***

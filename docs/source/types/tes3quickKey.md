@@ -51,7 +51,7 @@ A configuration detailing a quick key.
 Unbinds the quick key, removing any data in it.
 
 ```lua
-tes3quickKey:clear()
+myObject:clear()
 ```
 
 ***
@@ -61,7 +61,7 @@ tes3quickKey:clear()
 Gets the item associated with the given quick key. If the quick key is not marked as an item, this will return `nil`. This is equivalent to fetching the `item` and `itemData` properties, after checking to make sure the `type` is set to item.
 
 ```lua
-local source, data = tes3quickKey:getItem()
+local source, data = myObject:getItem()
 ```
 
 **Returns**:
@@ -76,7 +76,7 @@ local source, data = tes3quickKey:getItem()
 Gets the magic associated with the given quick key. If the quick key is not marked as magic, this will return `nil`. This is equivalent to fetching either the `spell` or `item` properties and the `itemData` property, after checking to make sure the `type` is set to magic.
 
 ```lua
-local source, data = tes3quickKey:getMagic()
+local source, data = myObject:getMagic()
 ```
 
 **Returns**:
@@ -91,7 +91,7 @@ local source, data = tes3quickKey:getMagic()
 Sets the binding of the quick key to a given item source.
 
 ```lua
-tes3quickKey:setItem(source, data)
+myObject:setItem(source, data)
 ```
 
 **Parameters**:
@@ -106,7 +106,7 @@ tes3quickKey:setItem(source, data)
 Sets the binding of the quick key to a given magic source. This must be a spell, or an item with an on-use enchantment.
 
 ```lua
-tes3quickKey:setMagic(source, data)
+myObject:setMagic(source, data)
 ```
 
 **Parameters**:

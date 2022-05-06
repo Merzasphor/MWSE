@@ -412,7 +412,7 @@ The weight of the object.
 Serializes the object to json.
 
 ```lua
-local string = tes3baseObject:__tojson()
+local string = myObject:__tojson()
 ```
 
 **Returns**:
@@ -426,7 +426,7 @@ local string = tes3baseObject:__tojson()
 Gets the time remaining for a light, given a `tes3itemData`, `tes3reference`, or `tes3equipmentStack`.
 
 ```lua
-local result = tes3light:getTimeLeft(data)
+local result = myObject:getTimeLeft(data)
 ```
 
 **Parameters**:

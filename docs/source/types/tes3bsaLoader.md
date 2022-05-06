@@ -31,7 +31,7 @@ A class responsible for handling the loading of BSA files.
 Searches for a file in the archive list, and returns the archive and index that it can be found in.
 
 ```lua
-local archive, index = tes3bsaLoader:findFile(path)
+local archive, index = myObject:findFile(path)
 ```
 
 **Parameters**:

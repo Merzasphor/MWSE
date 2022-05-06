@@ -272,7 +272,7 @@ No description yet available.
 Serializes the object to json.
 
 ```lua
-local string = tes3baseObject:__tojson()
+local string = myObject:__tojson()
 ```
 
 **Returns**:
@@ -286,7 +286,7 @@ local string = tes3baseObject:__tojson()
 Gets the magic effect instance for a given effect index and target reference. Effect instances may not all be active on a target, due to reflect, absorption, dispels, different durations and other factors.
 
 ```lua
-local result = tes3magicSourceInstance:getEffectInstance(index, target)
+local result = myObject:getEffectInstance(index, target)
 ```
 
 **Parameters**:
@@ -305,7 +305,7 @@ local result = tes3magicSourceInstance:getEffectInstance(index, target)
 Gets the magnitude from the casting source for a given effect index.
 
 ```lua
-local result = tes3magicSourceInstance:getMagnitudeForIndex(index)
+local result = myObject:getMagnitudeForIndex(index)
 ```
 
 **Parameters**:
@@ -323,7 +323,7 @@ local result = tes3magicSourceInstance:getMagnitudeForIndex(index)
 This function plays an animation for an effect from the `tes3magicSourceInstance` object.
 
 ```lua
-tes3magicSourceInstance:playVisualEffect({ effectIndex = ..., position = ..., visual = ..., scale = ..., reference = ... })
+myObject:playVisualEffect({ effectIndex = ..., position = ..., visual = ..., scale = ..., reference = ... })
 ```
 
 **Parameters**:

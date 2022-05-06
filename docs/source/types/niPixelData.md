@@ -72,7 +72,7 @@ This type inherits the following: [niObject](../../types/niObject)
 Creates a copy of this object.
 
 ```lua
-local result = niObject:clone()
+local result = myObject:clone()
 ```
 
 **Returns**:
@@ -86,7 +86,7 @@ local result = niObject:clone()
 Creates a source texture from the current NiPixelData object.
 
 ```lua
-local result = niPixelData:createSourceTexture()
+local result = myObject:createSourceTexture()
 ```
 
 **Returns**:
@@ -100,7 +100,7 @@ local result = niPixelData:createSourceTexture()
 Returns the height of the mipmap level at the given index, where level 1 is the largest.
 
 ```lua
-local result = niPixelData:getHeight(mipMapLevel)
+local result = myObject:getHeight(mipMapLevel)
 ```
 
 **Parameters**:
@@ -118,7 +118,7 @@ local result = niPixelData:getHeight(mipMapLevel)
 Returns the width of the mipmap level at the given index, where level 1 is the largest.
 
 ```lua
-local result = niPixelData:getWidth(mipMapLevel)
+local result = myObject:getWidth(mipMapLevel)
 ```
 
 **Parameters**:
@@ -136,7 +136,7 @@ local result = niPixelData:getWidth(mipMapLevel)
 Determines if the object is of a given type, or of a type derived from the given type. Types can be found in the tes3.niType table.
 
 ```lua
-local result = niObject:isInstanceOfType(type)
+local result = myObject:isInstanceOfType(type)
 ```
 
 **Parameters**:
@@ -154,7 +154,7 @@ local result = niObject:isInstanceOfType(type)
 Determines if the object is of a given type. Types can be found in the tes3.niType table.
 
 ```lua
-local result = niObject:isOfType(type)
+local result = myObject:isOfType(type)
 ```
 
 **Parameters**:
@@ -172,7 +172,7 @@ local result = niObject:isOfType(type)
 Serializes the object, and writes it to the given file.
 
 ```lua
-local success = niObject:saveBinary(path)
+local success = myObject:saveBinary(path)
 ```
 
 **Parameters**:
@@ -190,7 +190,7 @@ local success = niObject:saveBinary(path)
 Sets the pixel data from byte data.
 
 ```lua
-niPixelData:setPixelsByte(data, mipMapLevel)
+myObject:setPixelsByte(data, mipMapLevel)
 ```
 
 **Parameters**:
@@ -205,7 +205,7 @@ niPixelData:setPixelsByte(data, mipMapLevel)
 Sets the pixel data from float data.
 
 ```lua
-niPixelData:setPixelsFloat(data, mipMapLevel)
+myObject:setPixelsFloat(data, mipMapLevel)
 ```
 
 **Parameters**:

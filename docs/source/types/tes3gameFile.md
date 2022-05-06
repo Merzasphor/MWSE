@@ -201,7 +201,7 @@ Represents a loaded ESM, ESP, or ESS file.
 Deletes the file.
 
 ```lua
-tes3gameFile:deleteFile()
+myObject:deleteFile()
 ```
 
 ***

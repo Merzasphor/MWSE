@@ -43,7 +43,7 @@ Direct access to the container that holds the inventory's items.
 Adds an item into the inventory directly. This should not be used, in favor of the [`tes3.addItem()`](https://mwse.github.io/MWSE/apis/tes3/#tes3additem) function.
 
 ```lua
-tes3inventory:addItem({ mobile = ..., item = ..., itemData = ..., count = ... })
+myObject:addItem({ mobile = ..., item = ..., itemData = ..., count = ... })
 ```
 
 **Parameters**:
@@ -61,7 +61,7 @@ tes3inventory:addItem({ mobile = ..., item = ..., itemData = ..., count = ... })
 Calculates the weight of all items in the container.
 
 ```lua
-local result = tes3inventory:calculateWeight()
+local result = myObject:calculateWeight()
 ```
 
 **Returns**:
@@ -75,7 +75,7 @@ local result = tes3inventory:calculateWeight()
 Checks to see if the inventory contains an item.
 
 ```lua
-local result = tes3inventory:contains(item, itemData)
+local result = myObject:contains(item, itemData)
 ```
 
 **Parameters**:
@@ -94,7 +94,7 @@ local result = tes3inventory:contains(item, itemData)
 Checks to see if the inventory contains an item. This should not be used, instead use the [`tes3.dropItem()`](https://mwse.github.io/MWSE/apis/tes3/#tes3dropitem) function.
 
 ```lua
-tes3inventory:dropItem(mobile, item, itemData, count, position, orientation, ignoreItemData)
+myObject:dropItem(mobile, item, itemData, count, position, orientation, ignoreItemData)
 ```
 
 **Parameters**:
@@ -114,7 +114,7 @@ tes3inventory:dropItem(mobile, item, itemData, count, position, orientation, ign
 Searches for an item stack in the inventory.
 
 ```lua
-local result = tes3inventory:findItemStack(item, itemData)
+local result = myObject:findItemStack(item, itemData)
 ```
 
 **Parameters**:
@@ -133,7 +133,7 @@ local result = tes3inventory:findItemStack(item, itemData)
 Removes an item from the inventory directly. This should not be used, in favor of the [`tes3.removeItem()`](https://mwse.github.io/MWSE/apis/tes3/#tes3removeitem) function.
 
 ```lua
-tes3inventory:removeItem({ mobile = ..., item = ..., itemData = ..., count = ..., deleteItemData = ... })
+myObject:removeItem({ mobile = ..., item = ..., itemData = ..., count = ..., deleteItemData = ... })
 ```
 
 **Parameters**:
@@ -152,7 +152,7 @@ tes3inventory:removeItem({ mobile = ..., item = ..., itemData = ..., count = ...
 Resolves all contained leveled lists and adds the randomized items to the inventory. This should generally not be called directly.
 
 ```lua
-tes3inventory:resolveLeveledItems(mobile)
+myObject:resolveLeveledItems(mobile)
 ```
 
 **Parameters**:

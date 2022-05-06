@@ -143,7 +143,7 @@ The sort type for the object.
 Clears the results of any previous picking operation.
 
 ```lua
-niPick:clearResults()
+myObject:clearResults()
 ```
 
 ***
@@ -153,7 +153,7 @@ niPick:clearResults()
 Performs the picking operation.
 
 ```lua
-niPick:pickObjects(origin, distance, append, maxDistance)
+myObject:pickObjects(origin, distance, append, maxDistance)
 ```
 
 **Parameters**:

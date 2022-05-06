@@ -9,7 +9,7 @@ An object that represents a file lock.
 Frees the lock, so that another lock can be made. Deletes the associated lock file.
 
 ```lua
-lfsLock:free()
+myObject:free()
 ```
 
 ***

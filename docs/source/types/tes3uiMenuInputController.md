@@ -41,7 +41,7 @@ The element that is currently focused for text input.
 Clears the current text input. If no text has been passed to the current text focus, this will prevent it from doing so.
 
 ```lua
-tes3uiMenuInputController:flushBufferedTextEvents()
+myObject:flushBufferedTextEvents()
 ```
 
 ***

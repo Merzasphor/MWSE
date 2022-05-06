@@ -212,7 +212,7 @@ The scene graph object that this animation controller is to animate.
 Creates a copy of this object.
 
 ```lua
-local result = niObject:clone()
+local result = myObject:clone()
 ```
 
 **Returns**:
@@ -226,7 +226,7 @@ local result = niObject:clone()
 Determines if the object is of a given type, or of a type derived from the given type. Types can be found in the tes3.niType table.
 
 ```lua
-local result = niObject:isInstanceOfType(type)
+local result = myObject:isInstanceOfType(type)
 ```
 
 **Parameters**:
@@ -244,7 +244,7 @@ local result = niObject:isInstanceOfType(type)
 Determines if the object is of a given type. Types can be found in the tes3.niType table.
 
 ```lua
-local result = niObject:isOfType(type)
+local result = myObject:isOfType(type)
 ```
 
 **Parameters**:
@@ -262,7 +262,7 @@ local result = niObject:isOfType(type)
 Serializes the object, and writes it to the given file.
 
 ```lua
-local success = niObject:saveBinary(path)
+local success = myObject:saveBinary(path)
 ```
 
 **Parameters**:
@@ -280,7 +280,7 @@ local success = niObject:saveBinary(path)
 Starts the controller at the specified time.
 
 ```lua
-niTimeController:start(time)
+myObject:start(time)
 ```
 
 **Parameters**:
@@ -294,7 +294,7 @@ niTimeController:start(time)
 Stops the controller. If you only want to pause the controller, use the `update` property.
 
 ```lua
-niTimeController:stop()
+myObject:stop()
 ```
 
 ***

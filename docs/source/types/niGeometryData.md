@@ -142,7 +142,7 @@ A unique ID for this model, assigned at model creation.
 Creates a copy of this object.
 
 ```lua
-local result = niObject:clone()
+local result = myObject:clone()
 ```
 
 **Returns**:
@@ -156,7 +156,7 @@ local result = niObject:clone()
 Determines if the object is of a given type, or of a type derived from the given type. Types can be found in the tes3.niType table.
 
 ```lua
-local result = niObject:isInstanceOfType(type)
+local result = myObject:isInstanceOfType(type)
 ```
 
 **Parameters**:
@@ -174,7 +174,7 @@ local result = niObject:isInstanceOfType(type)
 Determines if the object is of a given type. Types can be found in the tes3.niType table.
 
 ```lua
-local result = niObject:isOfType(type)
+local result = myObject:isOfType(type)
 ```
 
 **Parameters**:
@@ -194,7 +194,7 @@ Tells the renderer that the object has changed. Should be called after you have 
 If you have altered vertex positions, you may need to also call `updateModelBound`_. You should call it if vertices have been moved outside the bounds of the original model.
 
 ```lua
-niGeometryData:markAsChanged()
+myObject:markAsChanged()
 ```
 
 ***
@@ -204,7 +204,7 @@ niGeometryData:markAsChanged()
 Serializes the object, and writes it to the given file.
 
 ```lua
-local success = niObject:saveBinary(path)
+local success = myObject:saveBinary(path)
 ```
 
 **Parameters**:
@@ -224,7 +224,7 @@ Updates the geometry bounds to match the vertex data. You should call it if vert
 If you already know the effective radius of the vertex data, you could more efficiently set the bounds directly instead of calling this function.
 
 ```lua
-niGeometryData:updateModelBound()
+myObject:updateModelBound()
 ```
 
 ***

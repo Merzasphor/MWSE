@@ -234,7 +234,7 @@ If true, references of this object can store temporary or persistent lua data.
 Serializes the object to json.
 
 ```lua
-local string = tes3baseObject:__tojson()
+local string = myObject:__tojson()
 ```
 
 **Returns**:
@@ -248,7 +248,7 @@ local string = tes3baseObject:__tojson()
 Creates a copy of this object.
 
 ```lua
-local newObject = tes3static:createCopy({ id = ..., addToObjectList = ..., sourceless = ... })
+local newObject = myObject:createCopy({ id = ..., addToObjectList = ..., sourceless = ... })
 ```
 
 **Parameters**:

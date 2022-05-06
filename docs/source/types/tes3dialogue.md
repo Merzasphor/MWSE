@@ -152,7 +152,7 @@ If true, references of this object can store temporary or persistent lua data.
 Serializes the object to json.
 
 ```lua
-local string = tes3baseObject:__tojson()
+local string = myObject:__tojson()
 ```
 
 **Returns**:
@@ -166,7 +166,7 @@ local string = tes3baseObject:__tojson()
 Adds the dialogue to the player's journal, if applicable, at a given index.
 
 ```lua
-local result = tes3dialogue:addToJournal({ index = ..., actor = ... })
+local result = myObject:addToJournal({ index = ..., actor = ... })
 ```
 
 **Parameters**:
@@ -186,7 +186,7 @@ local result = tes3dialogue:addToJournal({ index = ..., actor = ... })
 Fetches the info that a given actor would produce for the dialogue.
 
 ```lua
-local result = tes3dialogue:getInfo({ actor = ... })
+local result = myObject:getInfo({ actor = ... })
 ```
 
 **Parameters**:
@@ -205,7 +205,7 @@ local result = tes3dialogue:getInfo({ actor = ... })
 Retrieves the info object for a journal. By default this will return the info for the player's current journal index for this dialogue. An index can be provided to fetch a specific index's related info.
 
 ```lua
-local journalInfo = tes3dialogue:getJournalInfo(index)
+local journalInfo = myObject:getJournalInfo(index)
 ```
 
 **Parameters**:
@@ -223,7 +223,7 @@ local journalInfo = tes3dialogue:getJournalInfo(index)
 This method finds the info that contains the quest name, then loads and returns its text. This method accesses the disk, and may be slow to operate. For dialogues that aren't journal-based, this will be `nil`.
 
 ```lua
-local questName = tes3dialogue:loadQuestName()
+local questName = myObject:loadQuestName()
 ```
 
 **Returns**:

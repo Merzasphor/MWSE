@@ -95,30 +95,6 @@ end
 --- @param field any
 --- @param results any
 --- @return table
-local function getPackageComponentsDictionary(package, field, results)
-	results = results or {}
-
-	local onThis = package[field]
-	if (onThis) then
-		for k, v in pairs(onThis) do
-			if (results[k] == nil) then
-				results[k] = v
-			end
-		end
-	end
-
-	if (package.inherits and classes[package.inherits]) then
-		return getPackageComponentsDictionary(classes[package.inherits], field, results)
-	end
-
-	return results
-end
-
---- comment
---- @param package table
---- @param field any
---- @param results any
---- @return table
 local function getPackageComponentsArray(package, field, results)
 	results = results or {}
 
@@ -241,7 +217,11 @@ local function writePackageDetails(file, package)
 			file:write(string.format("local %s = ", table.concat(returnNames, ", ")))
 		end
 		if (package.parent) then
-			file:write(string.format("%s%s%s(", package.parent.namespace, package.type == "method" and ":" or ".", package.key))
+			if (package.type == "method") then
+				file:write(string.format("%s:%s(", "myObject", package.key))
+			else
+				file:write(string.format("%s.%s(", package.parent.namespace, package.key))
+			end
 		else
 			file:write(string.format("%s(", package.key))
 		end

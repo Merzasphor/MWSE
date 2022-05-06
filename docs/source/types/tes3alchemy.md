@@ -312,7 +312,7 @@ The weight of the object.
 Serializes the object to json.
 
 ```lua
-local string = tes3baseObject:__tojson()
+local string = myObject:__tojson()
 ```
 
 **Returns**:
@@ -326,7 +326,7 @@ local string = tes3baseObject:__tojson()
 Creates a copy of this object.
 
 ```lua
-local newObject = tes3alchemy:createCopy({ id = ..., addToObjectList = ..., sourceless = ... })
+local newObject = myObject:createCopy({ id = ..., addToObjectList = ..., sourceless = ... })
 ```
 
 **Parameters**:
@@ -347,7 +347,7 @@ local newObject = tes3alchemy:createCopy({ id = ..., addToObjectList = ..., sour
 Returns the amount of effects the tes3alchemy object has.
 
 ```lua
-local count = tes3alchemy:getActiveEffectCount()
+local count = myObject:getActiveEffectCount()
 ```
 
 **Returns**:
@@ -361,7 +361,7 @@ local count = tes3alchemy:getActiveEffectCount()
 Returns the index of a first effect of a given effectId in the parent tes3alchemy object.
 
 ```lua
-local index = tes3alchemy:getFirstIndexOfEffect(effectId)
+local index = myObject:getFirstIndexOfEffect(effectId)
 ```
 
 **Parameters**:

@@ -112,7 +112,7 @@ The human-facing name of the given object.
 Creates a copy of this object.
 
 ```lua
-local result = niObject:clone()
+local result = myObject:clone()
 ```
 
 **Returns**:
@@ -126,7 +126,7 @@ local result = niObject:clone()
 Searches for an niExtraData on this object to see if it has one that holds a related reference.
 
 ```lua
-local reference = niObjectNET:getGameReference(searchParents)
+local reference = myObject:getGameReference(searchParents)
 ```
 
 **Parameters**:
@@ -144,7 +144,7 @@ local reference = niObjectNET:getGameReference(searchParents)
 Determines if the object is of a given type, or of a type derived from the given type. Types can be found in the tes3.niType table.
 
 ```lua
-local result = niObject:isInstanceOfType(type)
+local result = myObject:isInstanceOfType(type)
 ```
 
 **Parameters**:
@@ -162,7 +162,7 @@ local result = niObject:isInstanceOfType(type)
 Determines if the object is of a given type. Types can be found in the tes3.niType table.
 
 ```lua
-local result = niObject:isOfType(type)
+local result = myObject:isOfType(type)
 ```
 
 **Parameters**:
@@ -180,7 +180,7 @@ local result = niObject:isOfType(type)
 Add a controller to the object as the first controller.
 
 ```lua
-niObjectNET:prependController(type)
+myObject:prependController(type)
 ```
 
 **Parameters**:
@@ -194,7 +194,7 @@ niObjectNET:prependController(type)
 Removes all controllers.
 
 ```lua
-niObjectNET:removeAllControllers()
+myObject:removeAllControllers()
 ```
 
 ***
@@ -204,7 +204,7 @@ niObjectNET:removeAllControllers()
 Removes a controller from the object.
 
 ```lua
-niObjectNET:removeController(controller)
+myObject:removeController(controller)
 ```
 
 **Parameters**:
@@ -218,7 +218,7 @@ niObjectNET:removeController(controller)
 Serializes the object, and writes it to the given file.
 
 ```lua
-local success = niObject:saveBinary(path)
+local success = myObject:saveBinary(path)
 ```
 
 **Parameters**:
@@ -236,7 +236,7 @@ local success = niObject:saveBinary(path)
 Sets a given flag in the niObjectNET flag data. The specifics use of the flag is dependent on the real underlying type.
 
 ```lua
-niObjectNET:setFlag(state, index)
+myObject:setFlag(state, index)
 ```
 
 **Parameters**:

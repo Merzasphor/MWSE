@@ -312,7 +312,7 @@ If true, references of this object can store temporary or persistent lua data.
 Serializes the object to json.
 
 ```lua
-local string = tes3baseObject:__tojson()
+local string = myObject:__tojson()
 ```
 
 **Returns**:
@@ -326,7 +326,7 @@ local string = tes3baseObject:__tojson()
 Calculates the chance that a caster can cast a given spell.
 
 ```lua
-local result = tes3spell:calculateCastChance({ checkMagicka = ..., caster = ... })
+local result = myObject:calculateCastChance({ checkMagicka = ..., caster = ... })
 ```
 
 **Parameters**:
@@ -346,7 +346,7 @@ local result = tes3spell:calculateCastChance({ checkMagicka = ..., caster = ... 
 Creates a copy of this object.
 
 ```lua
-local newObject = tes3spell:createCopy({ id = ..., addToObjectList = ..., sourceless = ... })
+local newObject = myObject:createCopy({ id = ..., addToObjectList = ..., sourceless = ... })
 ```
 
 **Parameters**:
@@ -367,7 +367,7 @@ local newObject = tes3spell:createCopy({ id = ..., addToObjectList = ..., source
 Gets the number of active effects in the spell effect table.
 
 ```lua
-local result = tes3spell:getActiveEffectCount()
+local result = myObject:getActiveEffectCount()
 ```
 
 **Returns**:
@@ -381,7 +381,7 @@ local result = tes3spell:getActiveEffectCount()
 Gets the first index of an effect ID in the spell effect table.
 
 ```lua
-local result = tes3spell:getFirstIndexOfEffect(effectId)
+local result = myObject:getFirstIndexOfEffect(effectId)
 ```
 
 **Parameters**:
@@ -399,7 +399,7 @@ local result = tes3spell:getFirstIndexOfEffect(effectId)
 Returns the effect of the spell that a given actor is least proficient with.
 
 ```lua
-local effect = tes3spell:getLeastProficientEffect(actor)
+local effect = myObject:getLeastProficientEffect(actor)
 ```
 
 **Parameters**:
@@ -417,7 +417,7 @@ local effect = tes3spell:getLeastProficientEffect(actor)
 Returns the school of the least proficient effect on the spell, for a given actor.
 
 ```lua
-local schoolID = tes3spell:getLeastProficientSchool(actor)
+local schoolID = myObject:getLeastProficientSchool(actor)
 ```
 
 **Parameters**:

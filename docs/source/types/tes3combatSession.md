@@ -137,7 +137,7 @@ No description yet available.
 This method equips an item to the mobile in this combat sesion.
 
 ```lua
-tes3combatSession:changeEquipment(equipmentStack)
+myObject:changeEquipment(equipmentStack)
 ```
 
 **Parameters**:
@@ -151,7 +151,7 @@ tes3combatSession:changeEquipment(equipmentStack)
 Selects the alchemy item with the greatest value, for a given effect ID and loads it into the `selectedAlchemy` property.
 
 ```lua
-local result = tes3combatSession:selectAlchemyWithEffect(id)
+local result = myObject:selectAlchemyWithEffect(id)
 ```
 
 **Parameters**:

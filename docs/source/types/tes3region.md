@@ -272,7 +272,7 @@ The chance the Thunder weather-type will be used. Must be an integer between 0 -
 Serializes the object to json.
 
 ```lua
-local string = tes3baseObject:__tojson()
+local string = myObject:__tojson()
 ```
 
 **Returns**:
@@ -286,7 +286,7 @@ local string = tes3baseObject:__tojson()
 Changes the current weather for the region to the provided weather-type parameter.
 
 ```lua
-tes3region:changeWeather(weatherId)
+myObject:changeWeather(weatherId)
 ```
 
 **Parameters**:
@@ -300,7 +300,7 @@ tes3region:changeWeather(weatherId)
 Changes the weather to a random weather type.
 
 ```lua
-tes3region:randomizeWeather()
+myObject:randomizeWeather()
 ```
 
 **Parameters**:

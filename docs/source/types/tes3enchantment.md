@@ -252,7 +252,7 @@ If true, references of this object can store temporary or persistent lua data.
 Serializes the object to json.
 
 ```lua
-local string = tes3baseObject:__tojson()
+local string = myObject:__tojson()
 ```
 
 **Returns**:
@@ -266,7 +266,7 @@ local string = tes3baseObject:__tojson()
 Creates a copy of this object.
 
 ```lua
-local newObject = tes3enchantment:createCopy({ id = ..., addToObjectList = ..., sourceless = ... })
+local newObject = myObject:createCopy({ id = ..., addToObjectList = ..., sourceless = ... })
 ```
 
 **Parameters**:
@@ -287,7 +287,7 @@ local newObject = tes3enchantment:createCopy({ id = ..., addToObjectList = ..., 
 Returns the amount of effects the `tes3enchantment` object has.
 
 ```lua
-local count = tes3enchantment:getActiveEffectCount()
+local count = myObject:getActiveEffectCount()
 ```
 
 **Returns**:
@@ -301,7 +301,7 @@ local count = tes3enchantment:getActiveEffectCount()
 Returns the index of a first effect of a given effectId in the parent `tes3enchantment` object.
 
 ```lua
-local index = tes3enchantment:getFirstIndexOfEffect(effectId)
+local index = myObject:getFirstIndexOfEffect(effectId)
 ```
 
 **Parameters**:

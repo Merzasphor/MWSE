@@ -61,7 +61,7 @@ Loaded data from a BSA file.
 Searches for a file in the archive, and returns the index that it can be found in.
 
 ```lua
-local index = tes3archive:findFileIndex(path)
+local index = myObject:findFileIndex(path)
 ```
 
 **Parameters**:

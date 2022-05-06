@@ -382,7 +382,7 @@ The weight of the object.
 Serializes the object to json.
 
 ```lua
-local string = tes3baseObject:__tojson()
+local string = myObject:__tojson()
 ```
 
 **Returns**:
@@ -396,7 +396,7 @@ local string = tes3baseObject:__tojson()
 Calculates what armor rating is provided for a given mobile actor.
 
 ```lua
-tes3armor:calculateArmorRating(mobile)
+myObject:calculateArmorRating(mobile)
 ```
 
 **Parameters**:
@@ -410,7 +410,7 @@ tes3armor:calculateArmorRating(mobile)
 Creates a copy of this object.
 
 ```lua
-local newObject = tes3armor:createCopy({ id = ..., addToObjectList = ..., sourceless = ... })
+local newObject = myObject:createCopy({ id = ..., addToObjectList = ..., sourceless = ... })
 ```
 
 **Parameters**:

@@ -31,7 +31,7 @@ A value which controls how far the game AI is processed. Corresponds to AI Dista
 
 
 ```lua
-tes3processManager:checkAlarmRadius({ actor = ..., container = ... })
+myObject:checkAlarmRadius({ actor = ..., container = ... })
 ```
 
 **Parameters**:
@@ -47,7 +47,7 @@ tes3processManager:checkAlarmRadius({ actor = ..., container = ... })
 Performs a check whether any potential nearby enemies allow the player to rest.
 
 ```lua
-local result = tes3processManager:checkNearbyEnemiesAllowRest()
+local result = myObject:checkNearbyEnemiesAllowRest()
 ```
 
 **Returns**:
@@ -61,7 +61,7 @@ local result = tes3processManager:checkNearbyEnemiesAllowRest()
 Forces a new distance check for actor AI behaviour.
 
 ```lua
-tes3processManager:checkPlayerDistance()
+myObject:checkPlayerDistance()
 ```
 
 ***
@@ -71,7 +71,7 @@ tes3processManager:checkPlayerDistance()
 This function performs a check for presence of a given mobile actor.
 
 ```lua
-tes3processManager:detectPresence({ actor = ..., unknown = ... })
+myObject:detectPresence({ actor = ..., unknown = ... })
 ```
 
 **Parameters**:
@@ -87,7 +87,7 @@ tes3processManager:detectPresence({ actor = ..., unknown = ... })
 This function performs a check whether a detector can detect another actor sneaking.
 
 ```lua
-local isDetected = tes3processManager:detectSneak({ detector = ..., target = ..., unknown = ... })
+local isDetected = myObject:detectSneak({ detector = ..., target = ..., unknown = ... })
 ```
 
 **Parameters**:

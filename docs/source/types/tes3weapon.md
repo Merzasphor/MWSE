@@ -549,7 +549,7 @@ The weight of the object.
 Serializes the object to json.
 
 ```lua
-local string = tes3baseObject:__tojson()
+local string = myObject:__tojson()
 ```
 
 **Returns**:
@@ -563,7 +563,7 @@ local string = tes3baseObject:__tojson()
 Creates a copy of this object.
 
 ```lua
-local newObject = tes3weapon:createCopy({ id = ..., addToObjectList = ..., sourceless = ... })
+local newObject = myObject:createCopy({ id = ..., addToObjectList = ..., sourceless = ... })
 ```
 
 **Parameters**:
@@ -584,7 +584,7 @@ local newObject = tes3weapon:createCopy({ id = ..., addToObjectList = ..., sourc
 Access to the material flag bitfield. Known material flags can be accessed via other weapon properties.
 
 ```lua
-local result = tes3weapon:getMaterialFlag(flagBit)
+local result = myObject:getMaterialFlag(flagBit)
 ```
 
 **Parameters**:
@@ -602,7 +602,7 @@ local result = tes3weapon:getMaterialFlag(flagBit)
 Access to the material flag bitfield. Known material flags can be accessed via other weapon properties.
 
 ```lua
-tes3weapon:setMaterialFlag(flagBit, value)
+myObject:setMaterialFlag(flagBit, value)
 ```
 
 **Parameters**:

@@ -23,7 +23,7 @@ Direct access to the spells in this list.
 Adds a spell to the list.
 
 ```lua
-local result = tes3spellList:add(spell)
+local result = myObject:add(spell)
 ```
 
 **Parameters**:
@@ -41,7 +41,7 @@ local result = tes3spellList:add(spell)
 Checks if the specified spell is contained in the spell list.
 
 ```lua
-local result = tes3spellList:contains(spell)
+local result = myObject:contains(spell)
 ```
 
 **Parameters**:
@@ -59,7 +59,7 @@ local result = tes3spellList:contains(spell)
 Finds the first spell with the type provided.
 
 ```lua
-local result = tes3spellList:containsType(spellType)
+local result = myObject:containsType(spellType)
 ```
 
 **Parameters**:
@@ -77,7 +77,7 @@ local result = tes3spellList:containsType(spellType)
 Finds the castable spell in the list with the lowest casting cost.
 
 ```lua
-local result = tes3spellList:getCheapest()
+local result = myObject:getCheapest()
 ```
 
 **Returns**:
@@ -91,7 +91,7 @@ local result = tes3spellList:getCheapest()
 Removes a spell from the list.
 
 ```lua
-local result = tes3spellList:remove(spell)
+local result = myObject:remove(spell)
 ```
 
 **Parameters**:

@@ -71,7 +71,7 @@ A data structure, off of the world controller, that handles input.
 Returns true if either alt modifier key is pressed.
 
 ```lua
-local isPressed = tes3inputController:isAltDown()
+local isPressed = myObject:isAltDown()
 ```
 
 **Returns**:
@@ -85,7 +85,7 @@ local isPressed = tes3inputController:isAltDown()
 Returns true if the caps lock mode is active.
 
 ```lua
-local isPressed = tes3inputController:isCapsLockActive()
+local isPressed = myObject:isCapsLockActive()
 ```
 
 **Returns**:
@@ -99,7 +99,7 @@ local isPressed = tes3inputController:isCapsLockActive()
 Returns true if either control modifier key is pressed.
 
 ```lua
-local isPressed = tes3inputController:isControlDown()
+local isPressed = myObject:isControlDown()
 ```
 
 **Returns**:
@@ -113,7 +113,7 @@ local isPressed = tes3inputController:isControlDown()
 Performs a key down test for a given scan key code.
 
 ```lua
-local result = tes3inputController:isKeyDown(key)
+local result = myObject:isKeyDown(key)
 ```
 
 **Parameters**:
@@ -131,7 +131,7 @@ local result = tes3inputController:isKeyDown(key)
 Checks to see if a given scan code is pressed, and wasn't pressed last frame.
 
 ```lua
-local result = tes3inputController:isKeyPressedThisFrame(key)
+local result = myObject:isKeyPressedThisFrame(key)
 ```
 
 **Parameters**:
@@ -149,7 +149,7 @@ local result = tes3inputController:isKeyPressedThisFrame(key)
 Checks to see if a given scan code is released, and was pressed last frame.
 
 ```lua
-local result = tes3inputController:isKeyReleasedThisFrame(key)
+local result = myObject:isKeyReleasedThisFrame(key)
 ```
 
 **Parameters**:
@@ -167,7 +167,7 @@ local result = tes3inputController:isKeyReleasedThisFrame(key)
 Returns the mouse down state for a given mouse button.
 
 ```lua
-local result = tes3inputController:isMouseButtonDown(button)
+local result = myObject:isMouseButtonDown(button)
 ```
 
 **Parameters**:
@@ -185,7 +185,7 @@ local result = tes3inputController:isMouseButtonDown(button)
 Returns true if a mouse button was up last frame, and down this frame.
 
 ```lua
-local result = tes3inputController:isMouseButtonPressedThisFrame(button)
+local result = myObject:isMouseButtonPressedThisFrame(button)
 ```
 
 **Parameters**:
@@ -203,7 +203,7 @@ local result = tes3inputController:isMouseButtonPressedThisFrame(button)
 Returns true if a mouse button was down last frame, and up this frame.
 
 ```lua
-local result = tes3inputController:isMouseButtonReleasedThisFrame(button)
+local result = myObject:isMouseButtonReleasedThisFrame(button)
 ```
 
 **Parameters**:
@@ -221,7 +221,7 @@ local result = tes3inputController:isMouseButtonReleasedThisFrame(button)
 Returns true if either shift modifier key is pressed. It does not take into account caps lock.
 
 ```lua
-local isPressed = tes3inputController:isShiftDown()
+local isPressed = myObject:isShiftDown()
 ```
 
 **Returns**:
@@ -235,7 +235,7 @@ local isPressed = tes3inputController:isShiftDown()
 Returns true if either super/windows modifier key is pressed.
 
 ```lua
-local isPressed = tes3inputController:isSuperDown()
+local isPressed = myObject:isSuperDown()
 ```
 
 **Returns**:
@@ -249,7 +249,7 @@ local isPressed = tes3inputController:isSuperDown()
 Performs a test for a given keybind, and optionally a transition state.
 
 ```lua
-local result = tes3inputController:keybindTest(key, transition)
+local result = myObject:keybindTest(key, transition)
 ```
 
 **Parameters**:

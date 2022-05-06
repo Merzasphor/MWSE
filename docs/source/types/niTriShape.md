@@ -252,7 +252,7 @@ Convenient access to this object's z-buffer property. Setting this value to be n
 Attach a property to this object.
 
 ```lua
-niAVObject:attachProperty(property)
+myObject:attachProperty(property)
 ```
 
 **Parameters**:
@@ -266,7 +266,7 @@ niAVObject:attachProperty(property)
 Resets the object's local transform.
 
 ```lua
-niAVObject:clearTransforms()
+myObject:clearTransforms()
 ```
 
 ***
@@ -276,7 +276,7 @@ niAVObject:clearTransforms()
 Creates a copy of this object.
 
 ```lua
-local result = niObject:clone()
+local result = myObject:clone()
 ```
 
 **Returns**:
@@ -290,7 +290,7 @@ local result = niObject:clone()
 Detaches and returns a property from the object which matches the given property type.
 
 ```lua
-local result = niAVObject:detachProperty(type)
+local result = myObject:detachProperty(type)
 ```
 
 **Parameters**:
@@ -308,7 +308,7 @@ local result = niAVObject:detachProperty(type)
 Searches for an niExtraData on this object to see if it has one that holds a related reference.
 
 ```lua
-local reference = niObjectNET:getGameReference(searchParents)
+local reference = myObject:getGameReference(searchParents)
 ```
 
 **Parameters**:
@@ -326,7 +326,7 @@ local reference = niObjectNET:getGameReference(searchParents)
 Searches this node and all child nodes recursively for a node with a name that matches the argument.
 
 ```lua
-local result = niAVObject:getObjectByName(name)
+local result = myObject:getObjectByName(name)
 ```
 
 **Parameters**:
@@ -344,7 +344,7 @@ local result = niAVObject:getObjectByName(name)
 Gets an attached property by property type.
 
 ```lua
-local result = niAVObject:getProperty(type)
+local result = myObject:getProperty(type)
 ```
 
 **Parameters**:
@@ -362,7 +362,7 @@ local result = niAVObject:getProperty(type)
 Determines if the object is of a given type, or of a type derived from the given type. Types can be found in the tes3.niType table.
 
 ```lua
-local result = niObject:isInstanceOfType(type)
+local result = myObject:isInstanceOfType(type)
 ```
 
 **Parameters**:
@@ -380,7 +380,7 @@ local result = niObject:isInstanceOfType(type)
 Determines if the object is of a given type. Types can be found in the tes3.niType table.
 
 ```lua
-local result = niObject:isOfType(type)
+local result = myObject:isOfType(type)
 ```
 
 **Parameters**:
@@ -398,7 +398,7 @@ local result = niObject:isOfType(type)
 Add a controller to the object as the first controller.
 
 ```lua
-niObjectNET:prependController(type)
+myObject:prependController(type)
 ```
 
 **Parameters**:
@@ -412,7 +412,7 @@ niObjectNET:prependController(type)
 Removes all controllers.
 
 ```lua
-niObjectNET:removeAllControllers()
+myObject:removeAllControllers()
 ```
 
 ***
@@ -422,7 +422,7 @@ niObjectNET:removeAllControllers()
 Removes a controller from the object.
 
 ```lua
-niObjectNET:removeController(controller)
+myObject:removeController(controller)
 ```
 
 **Parameters**:
@@ -436,7 +436,7 @@ niObjectNET:removeController(controller)
 Serializes the object, and writes it to the given file.
 
 ```lua
-local success = niObject:saveBinary(path)
+local success = myObject:saveBinary(path)
 ```
 
 **Parameters**:
@@ -454,7 +454,7 @@ local success = niObject:saveBinary(path)
 Sets a given flag in the niObjectNET flag data. The specifics use of the flag is dependent on the real underlying type.
 
 ```lua
-niObjectNET:setFlag(state, index)
+myObject:setFlag(state, index)
 ```
 
 **Parameters**:
@@ -469,7 +469,7 @@ niObjectNET:setFlag(state, index)
 Updates the world transforms of this node and its children, which makes changes visible for rendering. Use after changing any local rotation, translation, scale, or bounds.
 
 ```lua
-niAVObject:update()
+myObject:update()
 ```
 
 ***
@@ -479,7 +479,7 @@ niAVObject:update()
 Update all attached effects.
 
 ```lua
-niAVObject:updateEffects()
+myObject:updateEffects()
 ```
 
 ***
@@ -489,7 +489,7 @@ niAVObject:updateEffects()
 Update all attached properties.
 
 ```lua
-niAVObject:updateProperties()
+myObject:updateProperties()
 ```
 
 ***

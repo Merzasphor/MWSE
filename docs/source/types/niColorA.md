@@ -91,7 +91,7 @@ Alias for the red value of the color.
 Creates a copy of the color object.
 
 ```lua
-local result = niColorA:copy()
+local result = myObject:copy()
 ```
 
 **Returns**:
@@ -105,7 +105,7 @@ local result = niColorA:copy()
 Calculates the interpolated color between this color and another, given a transition.
 
 ```lua
-local lerpedcolor = niColorA:lerp(tocolor, transition)
+local lerpedcolor = myObject:lerp(tocolor, transition)
 ```
 
 **Parameters**:
