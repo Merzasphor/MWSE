@@ -15,13 +15,3 @@ The timing of the animation key.
 
 ***
 
-### `value`
-
-The scale value of the animation key.
-
-**Returns**:
-
-* `result` (number)
-
-***
-

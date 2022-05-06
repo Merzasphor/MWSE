@@ -42,11 +42,11 @@ namespace NI {
 		switch (scaleType) {
 		case AnimationKey::Type::NoInterp:
 		case AnimationKey::Type::Linear:
-			return sol::make_object(L, nonstd::span(scaleKeys.asScaleKey, scaleKeyCount));
+			return sol::make_object(L, nonstd::span(scaleKeys.asFloatKey, scaleKeyCount));
 		case AnimationKey::Type::Bezier:
-			return sol::make_object(L, nonstd::span(scaleKeys.asBezScaleKey, scaleKeyCount));
+			return sol::make_object(L, nonstd::span(scaleKeys.asBezFloatKey, scaleKeyCount));
 		case AnimationKey::Type::TCB:
-			return sol::make_object(L, nonstd::span(scaleKeys.asTCBScaleKey, scaleKeyCount));
+			return sol::make_object(L, nonstd::span(scaleKeys.asTCBFloatKey, scaleKeyCount));
 		default:
 			throw std::runtime_error("Invalid position type found. Report to MWSE developers.");
 		}

@@ -1,8 +1,8 @@
-# niBezScaleKey
+# niBezFloatKey
 
-An animation key for bezier curved scaling.
+An animation key for bezier curved values.
 
-This type inherits the following: [niScaleKey](../../types/niScaleKey), [niFloatKey](../../types/niFloatKey), [niAnimationKey](../../types/niAnimationKey)
+This type inherits the following: [niFloatKey](../../types/niFloatKey), [niAnimationKey](../../types/niAnimationKey)
 ## Properties
 
 ### `inTangent`
@@ -28,16 +28,6 @@ The outbound tangent for the bezier curve.
 ### `timing`
 
 The timing of the animation key.
-
-**Returns**:
-
-* `result` (number)
-
-***
-
-### `value`
-
-The scale value of the animation key.
 
 **Returns**:
 
