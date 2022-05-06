@@ -59,6 +59,9 @@ namespace TES3 {
 		int armorRating; // 0xBC
 		Enchantment * enchantment; // 0xC0
 
+		Armor();
+		~Armor();
+
 		//
 		// Other related this-call functions.
 		//

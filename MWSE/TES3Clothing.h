@@ -40,6 +40,9 @@ namespace TES3 {
 		unsigned short enchantCapacity; // 0xB2
 		Enchantment * enchantment; // 0xB4
 
+		Clothing();
+		~Clothing();
+
 		//
 		// Custom functions.
 		//
