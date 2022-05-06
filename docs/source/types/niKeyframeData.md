@@ -121,7 +121,7 @@ This type inherits the following: [niObject](../../types/niObject)
 
 **Returns**:
 
-* `result` ([niScaleKey](../../types/niScaleKey)[])
+* `result` ([niFloatKey](../../types/niFloatKey)[])
 
 ***
 

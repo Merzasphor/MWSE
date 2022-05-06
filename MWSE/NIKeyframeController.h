@@ -67,10 +67,38 @@ namespace NI {
 	};
 	static_assert(sizeof(TCBRotKey) == 0x40, "NI::TCBRotKey failed size validation");
 
+	struct EulerRotKey : RotKey {
+		enum Order : unsigned int {
+			ORDER_XYZ,
+			ORDER_XZY,
+			ORDER_YZX,
+			ORDER_YXZ,
+			ORDER_ZXY,
+			ORDER_ZYX,
+			ORDER_XYX,
+			ORDER_YZY,
+			ORDER_ZXZ,
+
+			ORDER_COUNT,
+		};
+		unsigned int numKeys[3]; // 0x14
+		Type keyTypes[3]; // 0x20
+		Order order; // 0x2C;
+		AmbiguousFloatKeyPtr keys[3]; // 0x30
+		unsigned int lastIndices[3]; // 0x38
+
+		std::reference_wrapper<decltype(numKeys)> getNumKeys_lua();
+		std::reference_wrapper<decltype(keyTypes)> getKeyTypes_lua();
+		sol::table getKeys_lua(sol::this_state ts);
+		std::reference_wrapper<decltype(lastIndices)> getLastIndices_lua();
+	};
+	static_assert(sizeof(EulerRotKey) == 0x48, "NI::EulerRotKey failed size validation");
+
 	union AmbiguousRotKeyPtr {
 		RotKey* asRotKey;
 		BezRotKey* asBezRotKey;
 		TCBRotKey* asTCBRotKey;
+		EulerRotKey* asEulerRotKey;
 	};
 	static_assert(sizeof(AmbiguousRotKeyPtr) == sizeof(void*), "NI::AmbiguousRotKeyPtr failed size validation");
 

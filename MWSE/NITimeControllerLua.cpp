@@ -175,6 +175,25 @@ namespace mwse::lua {
 				usertypeDefinition["tension"] = &NI::TCBRotKey::tension;
 			}
 
+			// Bind NI::EulerRotKey
+			{
+				// Start our usertype.
+				auto usertypeDefinition = state.new_usertype<NI::EulerRotKey>("niEulerRotKey");
+				usertypeDefinition["new"] = sol::no_constructor;
+
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition[sol::base_classes] = sol::bases<NI::RotKey, NI::AnimationKey>();
+				usertypeDefinition["timing"] = &NI::EulerRotKey::timing;
+				usertypeDefinition["value"] = &NI::EulerRotKey::value;
+
+				// Basic property binding.
+				usertypeDefinition["keyOrder"] = &NI::EulerRotKey::order;
+				usertypeDefinition["keys"] = sol::readonly_property(&NI::EulerRotKey::getKeys_lua);
+				usertypeDefinition["keyTypes"] = sol::readonly_property(&NI::EulerRotKey::getKeyTypes_lua);
+				usertypeDefinition["lastIndices"] = sol::readonly_property(&NI::EulerRotKey::getLastIndices_lua);
+				usertypeDefinition["numKeys"] = sol::readonly_property(&NI::EulerRotKey::getNumKeys_lua);
+			}
+
 			// Bind NI::PosKey
 			{
 				// Start our usertype.

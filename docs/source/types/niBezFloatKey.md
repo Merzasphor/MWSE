@@ -35,3 +35,13 @@ The timing of the animation key.
 
 ***
 
+### `value`
+
+The arbitrary value of the NiFloatKey.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
