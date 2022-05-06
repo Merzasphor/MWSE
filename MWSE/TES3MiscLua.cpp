@@ -74,6 +74,7 @@ namespace mwse::lua {
 
 			// utility function bindings
 			usertypeDefinition["create"] = &createMiscItem;
+			usertypeDefinition["createCopy"] = &TES3::Misc::createCopy_lua<TES3::Misc>;
 		}
 	}
 }

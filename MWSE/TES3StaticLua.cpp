@@ -32,5 +32,6 @@ namespace mwse::lua {
 
 		// utility function bindings
 		usertypeDefinition["create"] = &createStatic;
+		usertypeDefinition["createCopy"] = &TES3::Static::createCopy_lua<TES3::Static>;
 	}
 }

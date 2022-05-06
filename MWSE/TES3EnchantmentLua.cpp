@@ -40,5 +40,6 @@ namespace mwse::lua {
 
 		// utility function bindings
 		usertypeDefinition["create"] = &createEnchantment;
+		usertypeDefinition["createCopy"] = &TES3::Enchantment::createCopy_lua<TES3::Enchantment>;
 	}
 }

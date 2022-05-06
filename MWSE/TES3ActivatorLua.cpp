@@ -36,5 +36,6 @@ namespace mwse::lua {
 
 		// utility function bindings
 		usertypeDefinition["create"] = createActivator;
+		usertypeDefinition["createCopy"] = &TES3::Activator::createCopy_lua<TES3::Activator>;
 	}
 }

@@ -2,12 +2,14 @@
 
 #include "LuaManager.h"
 #include "TES3ObjectLua.h"
+#include "LuaUtil.h"
 
 #include "TES3Armor.h"
 #include "TES3BodyPart.h"
 #include "TES3Enchantment.h"
 #include "TES3MobileActor.h"
 #include "TES3Script.h"
+#include "TES3WorldController.h"
 
 namespace mwse::lua {
 	void bindTES3Armor() {
@@ -45,6 +47,7 @@ namespace mwse::lua {
 
 		// Basic function binding.
 		usertypeDefinition["calculateArmorRating"] = &TES3::Armor::calculateArmorRating_lua;
+		usertypeDefinition["createCopy"] = &TES3::Armor::createCopy_lua<TES3::Armor>;
 
 		// TODO: Deprecated. Remove before 2.1-stable.
 		usertypeDefinition["health"] = sol::property(&TES3::Armor::getDurability, &TES3::Armor::setDurability);

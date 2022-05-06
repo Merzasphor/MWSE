@@ -6,6 +6,7 @@
 #include "TES3MobileActor.h"
 #include "TES3Reference.h"
 #include "TES3Spell.h"
+#include "TES3WorldController.h"
 
 #include "MemoryUtil.h"
 
@@ -84,8 +85,9 @@ namespace mwse::lua {
 		usertypeDefinition["value"] = sol::readonly_property(&TES3::Spell::getValue);
 
 		// Basic function binding.
-		usertypeDefinition["create"] = &createSpell;
 		usertypeDefinition["calculateCastChance"] = &TES3::Spell::calculateCastChance_lua;
+		usertypeDefinition["create"] = &createSpell;
+		usertypeDefinition["createCopy"] = &TES3::Spell::createCopy_lua<TES3::Spell>;
 		usertypeDefinition["getActiveEffectCount"] = &TES3::Spell::getActiveEffectCount;
 		usertypeDefinition["getFirstIndexOfEffect"] = &TES3::Spell::getFirstIndexOfEffect;
 		usertypeDefinition["getLeastProficientEffect"] = &TES3::Spell::getLeastProficientEffect_lua;

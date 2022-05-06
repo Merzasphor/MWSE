@@ -357,6 +357,31 @@ namespace TES3 {
 		// Custom functions.
 		//
 
+		template <typename T>
+		T* createCopy_lua(sol::optional<sol::table> params) const {
+			auto created = new T();
+			created->copy(this);
+
+			// Set provided or generated ID.
+			auto id = mwse::lua::getOptionalParam<const char*>(params, "id", nullptr);
+			if (id) {
+				created->setID(id);
+			}
+			else {
+				created->setID("");
+			}
+
+			if (mwse::lua::getOptionalParam(params, "addToObjectList", true)) {
+				TES3::DataHandler::get()->nonDynamicData->addNewObject(created);
+			}
+
+			if (mwse::lua::getOptionalParam(params, "sourceless", false) || TES3::WorldController::get()->getMobilePlayer() == nullptr) {
+				setSourceless(true);
+			}
+
+			return created;
+		}
+
 		Object * skipDeletedObjects();
 		ReferenceList* getOwningCollection();
 
