@@ -2733,6 +2733,9 @@ namespace mwse::lua {
 
 	TES3::BaseObject* createObject(sol::table params) {
 		auto objectType = getOptionalParam(params, "objectType", TES3::ObjectType::Invalid);
+		if (objectType == TES3::ObjectType::Invalid) {
+			throw std::invalid_argument("Invalid 'objectType' parameter provided.");
+		}
 		auto getIfExists = getOptionalParam(params, "getIfExists", true);
 		return makeObjectCreator(objectType)->create(params, getIfExists);
 	}
