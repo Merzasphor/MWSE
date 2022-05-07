@@ -324,7 +324,7 @@ namespace mwse::lua {
 			}
 
 			unsigned short maxCharge = getOptionalParam<unsigned short>(params, "maxCharge", 0);
-			if (maxCharge == 0) {
+			if (castType != TES3::EnchantmentCastType::Constant && maxCharge == 0) {
 				throw std::invalid_argument{ "tes3.createObject: 'maxCharge' parameter must be greater than 0." };
 			}
 
@@ -340,7 +340,7 @@ namespace mwse::lua {
 
 			auto maybeEffects = getOptionalParam<sol::table>(params, "effects");
 			if (maybeEffects) {
-				auto effects = maybeEffects.value();
+				auto& effects = maybeEffects.value();
 				for (int i = 0; i < 8; i++) {
 					sol::optional<sol::table> maybeEffect = effects[i + 1];
 					if (maybeEffect) {
