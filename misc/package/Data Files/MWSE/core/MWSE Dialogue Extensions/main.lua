@@ -1,3 +1,4 @@
+--- @param e dialogueEnvironmentCreatedEventData
 local function onDialogueEnvironmentCreated(e)
 	-- Cache the environment variables outside the function for easier access.
 	-- Dialogue scripters shouldn't have to constantly pass these to the functions anyway.

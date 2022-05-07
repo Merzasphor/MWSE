@@ -5,6 +5,21 @@
 #include "LuaUtil.h"
 
 namespace NI {
+	const auto NI_Camera_ctor = reinterpret_cast<void(__thiscall*)(Camera*)>(0x6CC200);
+	Camera::Camera() {
+		NI_Camera_ctor(this);
+	}
+
+	const auto NI_Camera_dtor = reinterpret_cast<void(__thiscall*)(Camera*)>(0x6CC510);
+	Camera::~Camera() {
+		NI_Camera_dtor(this);
+	}
+
+	const auto NI_Camera_clear = reinterpret_cast<void(__thiscall*)(Camera*, Renderer::ClearFlags)>(0x6CC780);
+	void Camera::clear(Renderer::ClearFlags flags) {
+		NI_Camera_clear(this, flags);
+	}
+
 	const auto NI_Camera_click = reinterpret_cast<void (__thiscall*)(Camera*, bool)>(0x6CC7B0);
 	void Camera::click(bool something) {
 		NI_Camera_click(this, something);

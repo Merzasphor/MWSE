@@ -34,6 +34,8 @@ namespace NI {
 			MipFlag mipMapped; // 0x4
 			AlphaFormat alphaFormat; // 0x8
 
+			FormatPrefs();
+
 			static constexpr auto DEFAULT_PREFS = reinterpret_cast<FormatPrefs*>(0x6FC710);
 		};
 		static_assert(sizeof(Texture::FormatPrefs) == 0xC, "NI::Texture::FormatPrefs failed size validation");
