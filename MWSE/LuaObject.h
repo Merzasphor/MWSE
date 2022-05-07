@@ -301,8 +301,9 @@ namespace mwse::lua {
 		TES3::BaseObject* create(sol::table params, bool getIfExists) const override {
 			std::string id = getOptionalParam<std::string>(params, "id", {});
 
-			if (id.size() > 31)
+			if (id.size() > 31) {
 				throw std::invalid_argument{ "tes3.createObject: 'id' parameter must be less than 32 character long." };
+			}
 
 			if (auto existingObject = TES3::DataHandler::get()->nonDynamicData->resolveObject(id.c_str()); existingObject != nullptr) {
 				if (getIfExists && existingObject->objectType == TES3::ObjectType::Enchantment) {
@@ -313,16 +314,19 @@ namespace mwse::lua {
 			}
 
 			auto castType = getOptionalParam(params, "castType", TES3::EnchantmentCastType::Invalid);
-			if (castType >= TES3::EnchantmentCastType::Invalid)
+			if (castType >= TES3::EnchantmentCastType::Invalid) {
 				throw std::invalid_argument{ "tes3.createObject: 'castType' parameter as an incorrect value. Use values in tes3.enchantmentType" };
+			}
 
 			unsigned short chargeCost = getOptionalParam<unsigned short>(params, "chargeCost", 0);
-			if (chargeCost == 0)
+			if (castType != TES3::EnchantmentCastType::Constant && chargeCost == 0) {
 				throw std::invalid_argument{ "tes3.createObject: 'chargeCost' parameter must be greater than 0." };
+			}
 
 			unsigned short maxCharge = getOptionalParam<unsigned short>(params, "maxCharge", 0);
-			if (maxCharge == 0)
+			if (maxCharge == 0) {
 				throw std::invalid_argument{ "tes3.createObject: 'maxCharge' parameter must be greater than 0." };
+			}
 
 			auto enchantment = new TES3::Enchantment();
 
@@ -345,8 +349,9 @@ namespace mwse::lua {
 				}
 			}
 
-			if (!TES3::DataHandler::get()->nonDynamicData->addNewObject(enchantment))
+			if (!TES3::DataHandler::get()->nonDynamicData->addNewObject(enchantment)) {
 				throw std::runtime_error("tes3.createObject: could not add the newly created enchantment in its proper collection.");
+			}
 
 			// If created outside of a save game, mark the object as sourceless.
 			if (getOptionalParam<bool>(params, "sourceless", false) || TES3::WorldController::get()->getMobilePlayer() == nullptr) {
