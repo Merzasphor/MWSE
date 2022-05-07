@@ -135,7 +135,7 @@ namespace mwse::lua {
 
 			auto maybeEffects = getOptionalParam<sol::table>(params, "effects");
 			if (maybeEffects) {
-				auto effects = maybeEffects.value();
+				auto& effects = maybeEffects.value();
 				for (int i = 0; i < 8; i++) {
 					sol::optional<sol::table> maybeEffect = effects[i + 1];
 					if (maybeEffect) {
@@ -561,7 +561,7 @@ namespace mwse::lua {
 
 			auto maybeEffects = getOptionalParam<sol::table>(params, "effects");
 			if (maybeEffects) {
-				auto effects = maybeEffects.value();
+				auto& effects = maybeEffects.value();
 				for (int i = 0; i < 8; i++) {
 					sol::optional<sol::table> maybeEffect = effects[i + 1];
 					if (maybeEffect) {
