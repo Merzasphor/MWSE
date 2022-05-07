@@ -36,6 +36,7 @@
 #include <wtypes.h>
 #include <psapi.h>
 #include <dbghelp.h>
+#include <d3d.h>
 
 // 3rd party library: span-lite
 // URL: https://github.com/martinmoene/span-lite
@@ -47,10 +48,14 @@
 #include <strmif.h>
 #include <dinput.h>
 #include <dsound.h>
-#undef PlaySound
 
 // Evil devil-spawn legacy boost requirements.
 #include <boost/regex.hpp>
 
 // Core lua binding library.
 #include <sol/sol.hpp>
+
+// Undefine anything we don't care about otherwise.
+#undef far
+#undef near
+#undef PlaySound

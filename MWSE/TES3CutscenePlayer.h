@@ -2,8 +2,6 @@
 
 #include "TES3CriticalSection.h"
 
-#include <d3d.h>
-
 namespace TES3 {
 	struct BinkVideo {
 		int width; // 0x0
