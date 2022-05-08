@@ -4,6 +4,7 @@ return {
 	arguments = {{
 		name = "params",
 		type = "table",
+		optional = true,
 		tableParams = {
 			{ name = "item", type = "tes3item|string", optional = true, description = "The item to create a tooltip for. If not specified, the tooltip will be empty." },
 			{ name = "itemData", type = "tes3itemData", optional = true, description = "The item data for the item." },

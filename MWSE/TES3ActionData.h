@@ -72,6 +72,9 @@ namespace TES3 {
 		Vector3 walkDestination; // 0x58
 		int unknown_0x6C;
 
+		ActionData() = delete;
+		~ActionData() = delete;
+
 	};
 	static_assert(sizeof(ActionData) == 0x70, "TES3::ActionData failed size validation");
 }

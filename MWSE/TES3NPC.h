@@ -34,6 +34,9 @@ namespace TES3 {
 	struct NPCBase : Actor {
 		// No data, this is only used for shared functions.
 
+		NPCBase() = delete;
+		~NPCBase() = delete;
+
 		//
 		// Related this-call functions.
 		//
@@ -81,6 +84,9 @@ namespace TES3 {
 		void * aiPackageList; // 0xDC
 		AIConfig aiConfig; // 0xE0
 
+		NPC() = delete;
+		~NPC() = delete;
+
 		//
 		// Custom functions.
 		//
@@ -98,6 +104,9 @@ namespace TES3 {
 		unsigned char reputation; // 0x72
 		char unknown_0x73; // Padding.
 		AIPackageConfig * aiPackageConfig; // 0x74
+
+		NPCInstance() = delete;
+		~NPCInstance() = delete;
 
 		//
 		// Related this-call functions.

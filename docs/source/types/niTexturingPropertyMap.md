@@ -40,7 +40,7 @@ The texture for the Map.
 
 **Returns**:
 
-* `result` (niTexture)
+* `result` ([niTexture](../../types/niTexture))
 
 ***
 
@@ -57,7 +57,7 @@ local map = niTexturingPropertyMap.new({ texture = ..., clampMode = ..., filterM
 **Parameters**:
 
 * `params` (table)
-	* `texture` (niTexture): *Optional*. If provided, sets the map texture to the given value.
+	* `texture` ([niTexture](../../types/niTexture)): *Optional*. If provided, sets the map texture to the given value.
 	* `clampMode` (number): *Default*: `WRAP_S_WRAP_T`. The clamp mode to set the map to use.
 	* `filterMode` (number): *Default*: `TRILERP`. The filter mode to set the map to use.
 	* `textCoords` (number): *Default*: `0`. The texture coordinates to set the map to use.

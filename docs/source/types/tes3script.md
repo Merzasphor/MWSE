@@ -162,7 +162,7 @@ If true, references of this object can store temporary or persistent lua data.
 Serializes the object to json.
 
 ```lua
-local string = tes3baseObject:__tojson()
+local string = myObject:__tojson()
 ```
 
 **Returns**:
@@ -176,7 +176,7 @@ local string = tes3baseObject:__tojson()
 This method fetches all of the script's variables as a table.
 
 ```lua
-local results = tes3script:getVariableData()
+local results = myObject:getVariableData()
 ```
 
 **Returns**:

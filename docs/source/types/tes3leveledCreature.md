@@ -111,7 +111,7 @@ True if this object is an editor marker for a gameplay location. These include t
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([tes3leveledListNode](../../types/tes3leveledListNode)[])
 
 ***
 
@@ -272,7 +272,7 @@ If true, references of this object can store temporary or persistent lua data.
 Serializes the object to json.
 
 ```lua
-local string = tes3baseObject:__tojson()
+local string = myObject:__tojson()
 ```
 
 **Returns**:
@@ -286,7 +286,7 @@ local string = tes3baseObject:__tojson()
 This function inserts given creature in the creature leveled list. Returns `true` if the operation was successful.
 
 ```lua
-local result = tes3leveledCreature:insert(entry, level)
+local result = myObject:insert(entry, level)
 ```
 
 **Parameters**:
@@ -305,7 +305,7 @@ local result = tes3leveledCreature:insert(entry, level)
 Chooses a random item from the list, based on the player's level.
 
 ```lua
-local result = tes3leveledCreature:pickFrom()
+local result = myObject:pickFrom()
 ```
 
 **Returns**:
@@ -319,7 +319,7 @@ local result = tes3leveledCreature:pickFrom()
 This function removes a creature from the creature leveled list. Returns `true` if the operation was successful.
 
 ```lua
-local result = tes3leveledCreature:remove(entry, level)
+local result = myObject:remove(entry, level)
 ```
 
 **Parameters**:

@@ -81,7 +81,7 @@ The third value in the vector.
 Creates a copy of the vector.
 
 ```lua
-local result = tes3vector3:copy()
+local result = myObject:copy()
 ```
 
 **Returns**:
@@ -95,7 +95,7 @@ local result = tes3vector3:copy()
 Calculates the cross product with another vector.
 
 ```lua
-local result = tes3vector3:cross(vec)
+local result = myObject:cross(vec)
 ```
 
 **Parameters**:
@@ -113,7 +113,7 @@ local result = tes3vector3:cross(vec)
 Calculates the distance to another vector.
 
 ```lua
-local result = tes3vector3:distance(vec)
+local result = myObject:distance(vec)
 ```
 
 **Parameters**:
@@ -131,7 +131,7 @@ local result = tes3vector3:distance(vec)
 Calculates the dot product with another vector.
 
 ```lua
-local result = tes3vector3:dot(vec)
+local result = myObject:dot(vec)
 ```
 
 **Parameters**:
@@ -149,7 +149,7 @@ local result = tes3vector3:dot(vec)
 Calculates the vertical distance to another vector.
 
 ```lua
-local result = tes3vector3:heightDifference(vec)
+local result = myObject:heightDifference(vec)
 ```
 
 **Parameters**:
@@ -167,7 +167,7 @@ local result = tes3vector3:heightDifference(vec)
 Calculates the interpolated position against the target vector using the `distance` parameter.
 
 ```lua
-local result = tes3vector3:interpolate(targetPoint, distance)
+local result = myObject:interpolate(targetPoint, distance)
 ```
 
 **Parameters**:
@@ -186,7 +186,7 @@ local result = tes3vector3:interpolate(targetPoint, distance)
 Calculates the length of the vector.
 
 ```lua
-local result = tes3vector3:length()
+local result = myObject:length()
 ```
 
 **Returns**:
@@ -200,7 +200,7 @@ local result = tes3vector3:length()
 Calculates the interpolated vector between this vector and another, given a transition.
 
 ```lua
-local lerpedVector = tes3vector3:lerp(toVector, transition)
+local lerpedVector = myObject:lerp(toVector, transition)
 ```
 
 **Parameters**:
@@ -219,7 +219,7 @@ local lerpedVector = tes3vector3:lerp(toVector, transition)
 Negates all values in the vector.
 
 ```lua
-tes3vector3:negate()
+myObject:negate()
 ```
 
 ***
@@ -229,7 +229,7 @@ tes3vector3:negate()
 Normalize the vector in-place, or set its components to zero if normalization is not possible. Returns `true` if the vector was successfully normalized.
 
 ```lua
-local result = tes3vector3:normalize()
+local result = myObject:normalize()
 ```
 
 **Returns**:
@@ -243,7 +243,7 @@ local result = tes3vector3:normalize()
 Get a normalized copy of the vector.
 
 ```lua
-local result = tes3vector3:normalized()
+local result = myObject:normalized()
 ```
 
 **Returns**:
@@ -257,7 +257,7 @@ local result = tes3vector3:normalized()
 Calculates the outer product with another vector.
 
 ```lua
-local result = tes3vector3:outerProduct(vec)
+local result = myObject:outerProduct(vec)
 ```
 
 **Parameters**:
@@ -275,7 +275,7 @@ local result = tes3vector3:outerProduct(vec)
 Converts the vector to `niColor` object.
 
 ```lua
-local result = tes3vector3:toColor()
+local result = myObject:toColor()
 ```
 
 **Returns**:

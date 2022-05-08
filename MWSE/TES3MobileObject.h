@@ -254,6 +254,9 @@ namespace TES3 {
 		LightData * lightMagicEffectData; // 0x78
 		unsigned char countCollisionResults; // 0x7C
 
+		MobileObject() = delete;
+		~MobileObject() = delete;
+
 		//
 		// vTable accessor functions.
 		//

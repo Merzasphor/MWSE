@@ -2,13 +2,14 @@
 
 #include "TES3CriticalSection.h"
 
-#include <d3d.h>
-
 namespace TES3 {
 	struct BinkVideo {
 		int width; // 0x0
 		int height; // 0x4
 		// ...
+
+		BinkVideo() = delete;
+		~BinkVideo() = delete;
 	};
 
 	struct CutscenePlayer {
@@ -25,7 +26,8 @@ namespace TES3 {
 		};
 		struct MovieTextures {
 			struct VideoBuffer {
-
+				VideoBuffer() = delete;
+				~VideoBuffer() = delete;
 			};
 			int unknown_0x0;
 			HANDLE unknown_0x4; // 2048x1024 texture handle.
@@ -38,6 +40,9 @@ namespace TES3 {
 			HANDLE unknown_0x20; // 128x32 texture handle.
 			void* d3dDevice; // 0x24
 			VideoBuffer* videoBuffer; // 0x28
+
+			MovieTextures() = delete;
+			~MovieTextures() = delete;
 		};
 		VirtualTable* vTable; // 0x0
 		CriticalSection unknown_0x4;
@@ -67,6 +72,9 @@ namespace TES3 {
 		float height; // 0x98
 		int unknown_0x9C;
 		int unknown_0xA0;
+
+		CutscenePlayer() = delete;
+		~CutscenePlayer() = delete;
 	};
 	static_assert(sizeof(CutscenePlayer) == 0xA4, "TES3::CutscenePlayer failed size validation");
 	static_assert(sizeof(CutscenePlayer::VirtualTable) == 0x24, "TES3::CutscenePlayer::VirtualTable failed size validation");

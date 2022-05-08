@@ -14,18 +14,27 @@ namespace TES3 {
 		struct WeaponHitFlags {
 			Weapon * weapon; // 0x0
 			unsigned char flags; // 0x4 // 0x10 is hit, 0x20 is hit attempt.
+
+			WeaponHitFlags() = delete;
+			~WeaponHitFlags() = delete;
 		};
 		short * shortVarValues; // 0x0
 		long * longVarValues; // 0x4
 		float * floatVarValues; // 0x8
 		int unknown_0xC;
 		IteratedList<WeaponHitFlags*> * hitWeapons; // 0x10
+
+		ScriptVariables() = delete;
+		~ScriptVariables() = delete;
 	};
 	static_assert(sizeof(ScriptVariables) == 0x14, "TES3::ScriptVariables failed size validation");
 
 	struct GlobalScript {
 		Reference * reference; // 0x0
 		Script * script; // 0x4
+
+		GlobalScript() = delete;
+		~GlobalScript() = delete;
 
 		//
 		// Custom functions.
@@ -39,6 +48,9 @@ namespace TES3 {
 	struct StartScript : BaseObject {
 		char id[32]; // 0x10
 		Script * script; // 0x30
+
+		StartScript() = delete;
+		~StartScript() = delete;
 	};
 	static_assert(sizeof(StartScript) == 0x34, "TES3::StartScript failed size validation");
 
@@ -56,6 +68,9 @@ namespace TES3 {
 		int unknown_0x54; // equals zero?
 		void * machineCode; // 0x58
 		ScriptVariables varValues; // 0x5C
+
+		Script() = delete;
+		~Script() = delete;
 
 		//
 		// Other related this-call functions.

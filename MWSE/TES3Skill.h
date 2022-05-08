@@ -67,6 +67,9 @@ namespace TES3 {
 		void * description;
 		float descriptionFileOffset;
 
+		Skill() = delete;
+		~Skill() = delete;
+
 		//
 		// Custom functions
 		//

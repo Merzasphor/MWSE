@@ -11,7 +11,7 @@ This type inherits the following: [tes3baseObject](../../types/tes3baseObject)
 
 **Returns**:
 
-* `result` (table)
+* `result` (number[])
 
 ***
 
@@ -201,7 +201,7 @@ Loads from disk and returns the description of the class.
 
 **Returns**:
 
-* `result` (table)
+* `result` (number[])
 
 ***
 
@@ -211,7 +211,7 @@ Loads from disk and returns the description of the class.
 
 **Returns**:
 
-* `result` (table)
+* `result` (number[])
 
 ***
 
@@ -341,7 +341,7 @@ The services offered by the class. This is a bit field, and its values should ty
 
 **Returns**:
 
-* `result` (table)
+* `result` (number[])
 
 ***
 
@@ -392,7 +392,7 @@ If true, references of this object can store temporary or persistent lua data.
 Serializes the object to json.
 
 ```lua
-local string = tes3baseObject:__tojson()
+local string = myObject:__tojson()
 ```
 
 **Returns**:

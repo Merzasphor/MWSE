@@ -3,7 +3,7 @@
 
 --- Base class that represents the nodes of a scene graph. A node can have any number of child nodes.
 --- @class niNode : niAVObject, niObjectNET, niObject
---- @field children niAVObjectTArray *Read-only*. The children of the node.
+--- @field children niAmbientLight[]|niBillboardNode[]|niCamera[]|niCollisionSwitch[]|niDirectionalLight[]|niDynamicEffect[]|niGeometry[]|niLight[]|niNode[]|niPointLight[]|niSpotLight[]|niSwitchNode[]|niTriBasedGeometry[]|niTriShape[] *Read-only*. The children of the node.
 --- @field effectList niDynamicEffectLinkedList *Read-only*. The effect list of the node.
 niNode = {}
 

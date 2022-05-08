@@ -92,6 +92,41 @@ namespace mwse::lua {
 				usertypeDefinition["value"] = &NI::FloatKey::value;
 			}
 
+			// Bind NI::BezFloatKey
+			{
+				// Start our usertype.
+				auto usertypeDefinition = state.new_usertype<NI::BezFloatKey>("niBezFloatKey");
+				usertypeDefinition["new"] = sol::no_constructor;
+
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition[sol::base_classes] = sol::bases<NI::FloatKey, NI::AnimationKey>();
+				usertypeDefinition["timing"] = &NI::BezFloatKey::timing;
+				usertypeDefinition["value"] = &NI::BezFloatKey::value;
+
+				// Basic property binding.
+				usertypeDefinition["inTangent"] = &NI::BezFloatKey::inTangent;
+				usertypeDefinition["outTangent"] = &NI::BezFloatKey::outTangent;
+			}
+
+			// Bind NI::TCBFloatKey
+			{
+				// Start our usertype.
+				auto usertypeDefinition = state.new_usertype<NI::TCBFloatKey>("niTCBFloatKey");
+				usertypeDefinition["new"] = sol::no_constructor;
+
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition[sol::base_classes] = sol::bases<NI::FloatKey, NI::AnimationKey>();
+				usertypeDefinition["timing"] = &NI::TCBFloatKey::timing;
+				usertypeDefinition["value"] = &NI::TCBFloatKey::value;
+
+				// Basic property binding.
+				usertypeDefinition["bias"] = &NI::TCBFloatKey::bias;
+				usertypeDefinition["continuity"] = &NI::TCBFloatKey::continuity;
+				usertypeDefinition["derivedA"] = &NI::TCBFloatKey::derivedA;
+				usertypeDefinition["derivedB"] = &NI::TCBFloatKey::derivedB;
+				usertypeDefinition["tension"] = &NI::TCBFloatKey::tension;
+			}
+
 			// Bind NI::RotKey
 			{
 				// Start our usertype.
@@ -138,6 +173,25 @@ namespace mwse::lua {
 				usertypeDefinition["intermediateA"] = &NI::TCBRotKey::intermediateA;
 				usertypeDefinition["intermediateB"] = &NI::TCBRotKey::intermediateB;
 				usertypeDefinition["tension"] = &NI::TCBRotKey::tension;
+			}
+
+			// Bind NI::EulerRotKey
+			{
+				// Start our usertype.
+				auto usertypeDefinition = state.new_usertype<NI::EulerRotKey>("niEulerRotKey");
+				usertypeDefinition["new"] = sol::no_constructor;
+
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition[sol::base_classes] = sol::bases<NI::RotKey, NI::AnimationKey>();
+				usertypeDefinition["timing"] = &NI::EulerRotKey::timing;
+				usertypeDefinition["value"] = &NI::EulerRotKey::value;
+
+				// Basic property binding.
+				usertypeDefinition["keyOrder"] = &NI::EulerRotKey::order;
+				usertypeDefinition["keys"] = sol::readonly_property(&NI::EulerRotKey::getKeys_lua);
+				usertypeDefinition["keyTypes"] = sol::readonly_property(&NI::EulerRotKey::getKeyTypes_lua);
+				usertypeDefinition["lastIndices"] = sol::readonly_property(&NI::EulerRotKey::getLastIndices_lua);
+				usertypeDefinition["numKeys"] = sol::readonly_property(&NI::EulerRotKey::getNumKeys_lua);
 			}
 
 			// Bind NI::PosKey
@@ -191,55 +245,6 @@ namespace mwse::lua {
 				usertypeDefinition["intermediateA"] = &NI::TCBPosKey::intermediateA;
 				usertypeDefinition["intermediateB"] = &NI::TCBPosKey::intermediateB;
 				usertypeDefinition["tension"] = &NI::TCBPosKey::tension;
-			}
-
-			// Bind NI::ScaleKey
-			{
-				// Start our usertype.
-				auto usertypeDefinition = state.new_usertype<NI::ScaleKey>("niScaleKey");
-				usertypeDefinition["new"] = sol::no_constructor;
-
-				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
-				usertypeDefinition[sol::base_classes] = sol::bases<NI::AnimationKey>();
-				usertypeDefinition["timing"] = &NI::ScaleKey::timing;
-
-				// Basic property binding.
-				usertypeDefinition["value"] = &NI::ScaleKey::value;
-			}
-
-			// Bind NI::BezScaleKey
-			{
-				// Start our usertype.
-				auto usertypeDefinition = state.new_usertype<NI::BezScaleKey>("niBezScaleKey");
-				usertypeDefinition["new"] = sol::no_constructor;
-
-				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
-				usertypeDefinition[sol::base_classes] = sol::bases<NI::ScaleKey, NI::AnimationKey>();
-				usertypeDefinition["timing"] = &NI::BezScaleKey::timing;
-				usertypeDefinition["value"] = &NI::BezScaleKey::value;
-
-				// Basic property binding.
-				usertypeDefinition["inTangent"] = &NI::BezScaleKey::inTangent;
-				usertypeDefinition["outTangent"] = &NI::BezScaleKey::outTangent;
-			}
-
-			// Bind NI::TCBScaleKey
-			{
-				// Start our usertype.
-				auto usertypeDefinition = state.new_usertype<NI::TCBScaleKey>("niTCBScaleKey");
-				usertypeDefinition["new"] = sol::no_constructor;
-
-				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
-				usertypeDefinition[sol::base_classes] = sol::bases<NI::ScaleKey, NI::AnimationKey>();
-				usertypeDefinition["timing"] = &NI::TCBScaleKey::timing;
-				usertypeDefinition["value"] = &NI::TCBScaleKey::value;
-
-				// Basic property binding.
-				usertypeDefinition["bias"] = &NI::TCBScaleKey::bias;
-				usertypeDefinition["continuity"] = &NI::TCBScaleKey::continuity;
-				usertypeDefinition["derivedA"] = &NI::TCBScaleKey::derivedA;
-				usertypeDefinition["derivedB"] = &NI::TCBScaleKey::derivedB;
-				usertypeDefinition["tension"] = &NI::TCBScaleKey::tension;
 			}
 		}
 

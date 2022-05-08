@@ -12,6 +12,9 @@ namespace TES3 {
 			NI::Sequence* lower;
 			NI::Sequence* upper;
 			NI::Sequence* leftArm;
+
+			SequenceGroup() = delete;
+			~SequenceGroup() = delete;
 		};
 		static_assert(sizeof(SequenceGroup) == 0xC, "TES3::AnimationAttachment::SequenceGroup failed size validation");
 
@@ -21,6 +24,9 @@ namespace TES3 {
 			unsigned char volume;
 			float pitch;
 			Sound* sound;
+
+			SoundGenKey() = delete;
+			~SoundGenKey() = delete;
 		};
 		static_assert(sizeof(SoundGenKey) == 0x14, "TES3::AnimationAttachment::SoundGenKey failed size validation");
 
@@ -63,6 +69,9 @@ namespace TES3 {
 		SoundGenKey** animationGroupSoundgens[150]; // 0x584
 		unsigned char nextAnimGroup; // 0x7DC
 		int nextLoopCounts; // 0x7E0
+
+		AnimationData() = delete;
+		~AnimationData() = delete;
 
 		//
 		// Other related this-call functions.

@@ -51,7 +51,7 @@ The 4th value in the vector.
 Creates a copy of the vector.
 
 ```lua
-local result = tes3vector4:copy()
+local result = myObject:copy()
 ```
 
 **Returns**:
@@ -65,7 +65,7 @@ local result = tes3vector4:copy()
 Calculates the length of the vector.
 
 ```lua
-local result = tes3vector4:length()
+local result = myObject:length()
 ```
 
 **Returns**:

@@ -110,7 +110,7 @@ Access to dontThreadLoad setting.
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3dataHandlerExteriorCellData](../../types/tes3dataHandlerExteriorCellData)[])
 
 ***
 
@@ -221,7 +221,7 @@ An engine flag that controls if there is a fade in/out between cells.
 No description yet available.
 
 ```lua
-tes3dataHandler:updateCollisionGroupsForActiveCells({ force = ..., isResettingData = ..., resetCollisionGroups = ... })
+myObject:updateCollisionGroupsForActiveCells({ force = ..., isResettingData = ..., resetCollisionGroups = ... })
 ```
 
 **Parameters**:

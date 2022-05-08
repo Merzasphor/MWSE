@@ -34,7 +34,7 @@
 --- @field runSpeed number *Read-only*. The calculated run movement speed.
 --- @field security tes3statisticSkill *Read-only*. Direct access to the NPC's security skill statistic.
 --- @field shortBlade tes3statisticSkill *Read-only*. Direct access to the NPC's short blade skill statistic.
---- @field skills table *Read-only*. An array-style table with access to the twenty seven NPC skill statistics ([tes3statisticSkill](https://mwse.github.io/MWSE/types/tes3statisticSkill/)).
+--- @field skills tes3statisticSkill[] *Read-only*. An array-style table with access to the twenty seven NPC skill statistics ([tes3statisticSkill](https://mwse.github.io/MWSE/types/tes3statisticSkill/)).
 --- @field sneak tes3statisticSkill *Read-only*. Direct access to the NPC's sneak skill statistic.
 --- @field spear tes3statisticSkill *Read-only*. Direct access to the NPC's spear skill statistic.
 --- @field speechcraft tes3statisticSkill *Read-only*. Direct access to the NPC's speechcraft skill statistic.

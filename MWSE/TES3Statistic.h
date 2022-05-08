@@ -12,6 +12,9 @@ namespace TES3 {
 		float base;
 		float current;
 
+		Statistic() = delete;
+		~Statistic() = delete;
+
 		//
 		// Virtual table function wrappers.
 		//
@@ -46,6 +49,9 @@ namespace TES3 {
 
 	struct SkillStatistic : Statistic {
 		unsigned int type; // 0xC // Values from TES3::SkillType::SkillType enumeration
+
+		SkillStatistic() = delete;
+		~SkillStatistic() = delete;
 
 		//
 		// Other related this-call functions.

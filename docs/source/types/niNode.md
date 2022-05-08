@@ -31,7 +31,7 @@ A flag indicating if this object is culled. When culled, it will not render, and
 
 **Returns**:
 
-* `result` (niAVObjectTArray)
+* `result` ([niAVObject](../../types/niAVObject)[])
 
 ***
 
@@ -52,6 +52,16 @@ A flag indicating if this object is culled. When culled, it will not render, and
 **Returns**:
 
 * `result` ([niDynamicEffectLinkedList](../../types/niDynamicEffectLinkedList))
+
+***
+
+### `extraData`
+
+*Read-only*. The first extra data available on the object.
+
+**Returns**:
+
+* `result` (niExtraData)
 
 ***
 
@@ -115,6 +125,16 @@ The list of properties attached to this `niAVObject`.
 
 ***
 
+### `refCount`
+
+*Read-only*. The number of references that exist for this object. When this value reaches zero, the object will be deleted.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
 ### `references`
 
 *Read-only*. The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
@@ -135,9 +155,19 @@ The object's local rotation matrix.
 
 ***
 
+### `RTTI`
+
+*Read-only*. The runtime type information for this object. This is an alias for the `.runTimeTypeInformation` property.
+
+**Returns**:
+
+* `result` ([niRTTI](../../types/niRTTI))
+
+***
+
 ### `runTimeTypeInformation`
 
-The runtime type information for this object.
+*Read-only*. The runtime type information for this object.
 
 **Returns**:
 
@@ -212,7 +242,7 @@ Convenient access to this object's z-buffer property. Setting this value to be n
 Attachs the child to the children list of the node.
 
 ```lua
-niNode:attachChild(child, useFirstAvailable)
+myObject:attachChild(child, useFirstAvailable)
 ```
 
 **Parameters**:
@@ -227,7 +257,7 @@ niNode:attachChild(child, useFirstAvailable)
 Attach a property to this object.
 
 ```lua
-niAVObject:attachProperty(property)
+myObject:attachProperty(property)
 ```
 
 **Parameters**:
@@ -241,7 +271,7 @@ niAVObject:attachProperty(property)
 Resets the object's local transform.
 
 ```lua
-niAVObject:clearTransforms()
+myObject:clearTransforms()
 ```
 
 ***
@@ -251,7 +281,7 @@ niAVObject:clearTransforms()
 Creates a copy of this object.
 
 ```lua
-local result = niObject:clone()
+local result = myObject:clone()
 ```
 
 **Returns**:
@@ -265,7 +295,7 @@ local result = niObject:clone()
 Detaches the child from the children list of the node. Returns the detached child.
 
 ```lua
-local result = niNode:detachChild(child)
+local result = myObject:detachChild(child)
 ```
 
 **Parameters**:
@@ -283,7 +313,7 @@ local result = niNode:detachChild(child)
 Detaches the child at the specified index from the children list of the node. Returns the detached child.
 
 ```lua
-local result = niNode:detachChildAt(index)
+local result = myObject:detachChildAt(index)
 ```
 
 **Parameters**:
@@ -301,7 +331,7 @@ local result = niNode:detachChildAt(index)
 Detaches and returns a property from the object which matches the given property type.
 
 ```lua
-local result = niAVObject:detachProperty(type)
+local result = myObject:detachProperty(type)
 ```
 
 **Parameters**:
@@ -319,7 +349,7 @@ local result = niAVObject:detachProperty(type)
 Gets the effect for the given type.
 
 ```lua
-local result = niNode:getEffect(type)
+local result = myObject:getEffect(type)
 ```
 
 **Parameters**:
@@ -332,12 +362,30 @@ local result = niNode:getEffect(type)
 
 ***
 
+### `getGameReference`
+
+Searches for an niExtraData on this object to see if it has one that holds a related reference.
+
+```lua
+local reference = myObject:getGameReference(searchParents)
+```
+
+**Parameters**:
+
+* `searchParents` (boolean): *Default*: `false`. If true, all parent objects (if applicable) are also searched.
+
+**Returns**:
+
+* `reference` ([tes3reference](../../types/tes3reference))
+
+***
+
 ### `getObjectByName`
 
 Searches this node and all child nodes recursively for a node with a name that matches the argument.
 
 ```lua
-local result = niAVObject:getObjectByName(name)
+local result = myObject:getObjectByName(name)
 ```
 
 **Parameters**:
@@ -355,7 +403,7 @@ local result = niAVObject:getObjectByName(name)
 Gets an attached property by property type.
 
 ```lua
-local result = niAVObject:getProperty(type)
+local result = myObject:getProperty(type)
 ```
 
 **Parameters**:
@@ -373,7 +421,7 @@ local result = niAVObject:getProperty(type)
 Determines if the object is of a given type, or of a type derived from the given type. Types can be found in the tes3.niType table.
 
 ```lua
-local result = niObject:isInstanceOfType(type)
+local result = myObject:isInstanceOfType(type)
 ```
 
 **Parameters**:
@@ -391,7 +439,7 @@ local result = niObject:isInstanceOfType(type)
 Determines if the object is of a given type. Types can be found in the tes3.niType table.
 
 ```lua
-local result = niObject:isOfType(type)
+local result = myObject:isOfType(type)
 ```
 
 **Parameters**:
@@ -409,7 +457,7 @@ local result = niObject:isOfType(type)
 Add a controller to the object as the first controller.
 
 ```lua
-niObjectNET:prependController(type)
+myObject:prependController(type)
 ```
 
 **Parameters**:
@@ -423,7 +471,7 @@ niObjectNET:prependController(type)
 Removes all controllers.
 
 ```lua
-niObjectNET:removeAllControllers()
+myObject:removeAllControllers()
 ```
 
 ***
@@ -433,12 +481,45 @@ niObjectNET:removeAllControllers()
 Removes a controller from the object.
 
 ```lua
-niObjectNET:removeController(type)
+myObject:removeController(controller)
 ```
 
 **Parameters**:
 
-* `type` ([niTimeController](../../types/niTimeController))
+* `controller` ([niTimeController](../../types/niTimeController))
+
+***
+
+### `saveBinary`
+
+Serializes the object, and writes it to the given file.
+
+```lua
+local success = myObject:saveBinary(path)
+```
+
+**Parameters**:
+
+* `path` (string): The path to write the file at, relative to the Morrowind installation folder.
+
+**Returns**:
+
+* `success` (boolean): If true the object was successfully serialized.
+
+***
+
+### `setFlag`
+
+Sets a given flag in the niObjectNET flag data. The specifics use of the flag is dependent on the real underlying type.
+
+```lua
+myObject:setFlag(state, index)
+```
+
+**Parameters**:
+
+* `state` (boolean)
+* `index` (number)
 
 ***
 
@@ -447,7 +528,7 @@ niObjectNET:removeController(type)
 Updates the world transforms of this node and its children, which makes changes visible for rendering. Use after changing any local rotation, translation, scale, or bounds.
 
 ```lua
-niAVObject:update()
+myObject:update()
 ```
 
 ***
@@ -457,7 +538,7 @@ niAVObject:update()
 Update all attached effects.
 
 ```lua
-niAVObject:updateEffects()
+myObject:updateEffects()
 ```
 
 ***
@@ -467,7 +548,7 @@ niAVObject:updateEffects()
 Update all attached properties.
 
 ```lua
-niAVObject:updateProperties()
+myObject:updateProperties()
 ```
 
 ***

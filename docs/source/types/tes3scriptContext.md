@@ -9,7 +9,7 @@ A script context object, which allows variables to be get/set using the variable
 This method fetches all of the script's variables as a table.
 
 ```lua
-local results = tes3scriptContext:getVariableData()
+local results = myObject:getVariableData()
 ```
 
 **Returns**:

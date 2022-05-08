@@ -10,5 +10,5 @@ return {
 			{ name = "serial", type = "number", optional = true, description = "The magic instance serial to search for." },
 		},
 	}},
-	valuetype = "table",
+	valuetype = "tes3activeMagicEffect[]",
 }

@@ -1665,7 +1665,7 @@ namespace mwse::lua {
 			return false;
 		}
 
-		if (!journal->setJournalIndex(index.value())) {
+		if (!journal->setJournalIndexAndMarkModified(index.value())) {
 			return false;
 		}
 
@@ -2733,6 +2733,9 @@ namespace mwse::lua {
 
 	TES3::BaseObject* createObject(sol::table params) {
 		auto objectType = getOptionalParam(params, "objectType", TES3::ObjectType::Invalid);
+		if (objectType == TES3::ObjectType::Invalid) {
+			throw std::invalid_argument("Invalid 'objectType' parameter provided.");
+		}
 		auto getIfExists = getOptionalParam(params, "getIfExists", true);
 		return makeObjectCreator(objectType)->create(params, getIfExists);
 	}
@@ -2870,7 +2873,7 @@ namespace mwse::lua {
 		return false;
 	}
 
-	static TES3::EquipmentStack tempApplyMagicSourceStack = { nullptr, nullptr };
+	static TES3::EquipmentStack tempApplyMagicSourceStack;
 	TES3::MagicSourceInstance* applyMagicSource(sol::table params) {
 		// Get who we're adding the magic effect to.
 		auto reference = getOptionalParamExecutionReference(params);
@@ -5478,7 +5481,7 @@ namespace mwse::lua {
 			return vfxManager->createForMagicEffect(enchantEffect.value(), reference, lifespan);
 		}
 
-		return nullptr;
+		throw std::invalid_argument("No valid parameters defined. No operation performed.");
 	}
 
 	int removeVisualEffect(sol::table params) {
@@ -5495,28 +5498,54 @@ namespace mwse::lua {
 		const auto countBefore = vfxManager->vfxNodes.size();
 
 		auto vfx = getOptionalParam<TES3::VFX*>(params, "vfx", nullptr);
+		auto avObject = getOptionalParam<NI::AVObject*>(params, "avObject", nullptr);
+		auto reference = getOptionalParamReference(params, "reference");
+		auto serial = getOptionalParam<unsigned int>(params, "serial");
+
 		if (vfx) {
 			vfxManager->remove(vfx);
 		}
 
-		auto avObject = getOptionalParam<NI::AVObject*>(params, "avObject", nullptr);
-		if (avObject) {
+		else if (avObject) {
 			vfxManager->removeFromAVObject(avObject);
 		}
+
+		else if (serial && reference) {
+			vfxManager->removeForSerialForReference(serial.value(), reference);
+		}
+
+		else if (reference) {
+			vfxManager->removeForReference(reference);
+		}
 		else {
-			auto reference = getOptionalParamReference(params, "reference");
-			if (reference) {
-				auto serial = getOptionalParam<unsigned int>(params, "serial");
-				if (serial) {
-					vfxManager->removeForSerialForReference(serial.value(), reference);
-				}
-				else {
-					vfxManager->removeForReference(reference);
-				}
-			}
+			throw std::invalid_argument("No valid parameters defined. No operation performed.");
 		}
 
 		return countBefore - vfxManager->vfxNodes.size();
+	}
+
+	const char* applyTextDefines(sol::table params) {
+		auto worldController = TES3::WorldController::get();
+		if (!worldController) {
+			throw std::runtime_error("This function cannot be called before the world controller is created.");
+		}
+
+		if (!worldController->getMobilePlayer()) {
+			throw std::runtime_error("This function cannot be called before the player is created.");
+		}
+
+		auto text = getOptionalParam<const char*>(params, "text", nullptr);
+		if (!text) {
+			throw std::invalid_argument("Invalid 'text' parameter provided.");
+		}
+
+		const auto actor = static_cast<TES3::Actor*>(getOptionalParamBaseObject(params, "actor"));
+		if (!actor->isActor()) {
+			throw std::invalid_argument("Invalid 'actor' parameter provided.");
+		}
+
+		worldController->fonts[0]->substituteTextMacros(actor, text);
+		return worldController->fonts[0]->getSubstituteResult();
 	}
 
 	void bindTES3Util() {
@@ -5539,6 +5568,7 @@ namespace mwse::lua {
 		tes3["adjustSoundVolume"] = adjustSoundVolume;
 		tes3["advanceTime"] = advanceTime;
 		tes3["applyMagicSource"] = applyMagicSource;
+		tes3["applyTextDefines"] = applyTextDefines;
 		tes3["beginTransform"] = beginTransform;
 		tes3["calculatePrice"] = calculatePrice;
 		tes3["cancelAnimationLoop"] = cancelAnimationLoop;

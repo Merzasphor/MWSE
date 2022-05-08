@@ -22,6 +22,9 @@ namespace TES3 {
 		signed char partType; // 0x3B
 		NI::Pointer<NI::Node> mirroredNode; // 0x3C // Type: BSMirroredNode.
 
+		BodyPart() = delete;
+		~BodyPart() = delete;
+
 		//
 		// Custom functions.
 		//

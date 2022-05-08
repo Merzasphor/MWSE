@@ -41,7 +41,7 @@ The third row of the matrix.
 Creates a copy of the matrix.
 
 ```lua
-local result = tes3matrix33:copy()
+local result = myObject:copy()
 ```
 
 **Returns**:
@@ -55,7 +55,7 @@ local result = tes3matrix33:copy()
 Fills the matrix with values from euler coordinates.
 
 ```lua
-tes3matrix33:fromEulerXYZ(x, y, z)
+myObject:fromEulerXYZ(x, y, z)
 ```
 
 **Parameters**:
@@ -71,7 +71,7 @@ tes3matrix33:fromEulerXYZ(x, y, z)
 Fills the matrix with values from euler coordinates.
 
 ```lua
-tes3matrix33:fromEulerZYX(z, y, x)
+myObject:fromEulerZYX(z, y, x)
 ```
 
 **Parameters**:
@@ -87,7 +87,7 @@ tes3matrix33:fromEulerZYX(z, y, x)
 Fill the matrix by converting a quaternion.
 
 ```lua
-tes3matrix33:fromQuaternion(quaternion)
+myObject:fromQuaternion(quaternion)
 ```
 
 **Parameters**:
@@ -101,7 +101,7 @@ tes3matrix33:fromQuaternion(quaternion)
 Inverts the matrix.
 
 ```lua
-local matrix, valid = tes3matrix33:invert()
+local matrix, valid = myObject:invert()
 ```
 
 **Returns**:
@@ -116,7 +116,7 @@ local matrix, valid = tes3matrix33:invert()
 Reorthogonalizes the matrix.
 
 ```lua
-local result = tes3matrix33:reorthogonalize()
+local result = myObject:reorthogonalize()
 ```
 
 **Returns**:
@@ -130,7 +130,7 @@ local result = tes3matrix33:reorthogonalize()
 Converts the matrix to a vector with 3 Euler angles.
 
 ```lua
-local isUnique, vector3 = tes3matrix33:toEulerXYZ()
+local isUnique, vector3 = myObject:toEulerXYZ()
 ```
 
 **Returns**:
@@ -145,7 +145,7 @@ local isUnique, vector3 = tes3matrix33:toEulerXYZ()
 Converts the matrix to a vector with 3 Euler angles.
 
 ```lua
-local isUnique, vector3 = tes3matrix33:toEulerZYX()
+local isUnique, vector3 = myObject:toEulerZYX()
 ```
 
 **Returns**:
@@ -160,7 +160,7 @@ local isUnique, vector3 = tes3matrix33:toEulerZYX()
 Converts the matrix to the identity matrix's values.
 
 ```lua
-tes3matrix33:toIdentity()
+myObject:toIdentity()
 ```
 
 ***
@@ -170,7 +170,7 @@ tes3matrix33:toIdentity()
 Convert the matrix into a quaternion.
 
 ```lua
-local result = tes3matrix33:toQuaternion()
+local result = myObject:toQuaternion()
 ```
 
 **Returns**:
@@ -184,7 +184,7 @@ local result = tes3matrix33:toQuaternion()
 No description yet available.
 
 ```lua
-tes3matrix33:toRotation(angle, x, y, z)
+myObject:toRotation(angle, x, y, z)
 ```
 
 **Parameters**:
@@ -201,7 +201,7 @@ tes3matrix33:toRotation(angle, x, y, z)
 No description yet available.
 
 ```lua
-tes3matrix33:toRotationX(x)
+myObject:toRotationX(x)
 ```
 
 **Parameters**:
@@ -215,7 +215,7 @@ tes3matrix33:toRotationX(x)
 No description yet available.
 
 ```lua
-tes3matrix33:toRotationY(y)
+myObject:toRotationY(y)
 ```
 
 **Parameters**:
@@ -229,7 +229,7 @@ tes3matrix33:toRotationY(y)
 No description yet available.
 
 ```lua
-tes3matrix33:toRotationZ(z)
+myObject:toRotationZ(z)
 ```
 
 **Parameters**:
@@ -243,7 +243,7 @@ tes3matrix33:toRotationZ(z)
 Zeroes out all values in the matrix.
 
 ```lua
-tes3matrix33:toZero()
+myObject:toZero()
 ```
 
 ***
@@ -253,7 +253,7 @@ tes3matrix33:toZero()
 No description yet available.
 
 ```lua
-local result = tes3matrix33:transpose()
+local result = myObject:transpose()
 ```
 
 **Returns**:

@@ -10,7 +10,7 @@ The RGB color of the button's text when `state` is set to `normal`.	An array of 
 
 **Returns**:
 
-* `result` (table)
+* `result` ([niColor](../../types/niColor))
 
 ***
 
@@ -20,7 +20,7 @@ The RGB color of the button's text when `state` is set to `active`. An array of 
 
 **Returns**:
 
-* `result` (table)
+* `result` ([niColor](../../types/niColor))
 
 ***
 
@@ -30,7 +30,7 @@ The RGB color of the button's text when `state` is set to `disabled`. An array o
 
 **Returns**:
 
-* `result` (table)
+* `result` ([niColor](../../types/niColor))
 
 ***
 
@@ -40,7 +40,7 @@ The RGB color of the button's text when the button is selected and `state` is se
 
 **Returns**:
 
-* `result` (table)
+* `result` ([niColor](../../types/niColor))
 
 ***
 
@@ -50,7 +50,7 @@ The RGB color of the button's text when the button is selected and `state` is se
 
 **Returns**:
 
-* `result` (table)
+* `result` ([niColor](../../types/niColor))
 
 ***
 
@@ -60,7 +60,7 @@ The RGB color of the button's text when the button is selected and `state` is se
 
 **Returns**:
 
-* `result` (table)
+* `result` ([niColor](../../types/niColor))
 
 ***
 
@@ -70,7 +70,7 @@ The RGB color of the button's text when the button is pressed and `state` is set
 
 **Returns**:
 
-* `result` (table)
+* `result` ([niColor](../../types/niColor))
 
 ***
 
@@ -80,7 +80,7 @@ The RGB color of the button's text when the button is pressed and `state` is set
 
 **Returns**:
 
-* `result` (table)
+* `result` ([niColor](../../types/niColor))
 
 ***
 
@@ -90,7 +90,7 @@ The RGB color of the button's text when the button is pressed and `state` is set
 
 **Returns**:
 
-* `result` (table)
+* `result` ([niColor](../../types/niColor))
 
 ***
 

@@ -7,8 +7,7 @@
 #include "LuaObject.h"
 
 namespace mwse::lua {
-	auto createStatic(sol::table params)
-	{
+	auto createStatic(sol::table params) {
 		return makeObjectCreator(TES3::ObjectType::Static)->create(params, false);
 	}
 
@@ -33,5 +32,6 @@ namespace mwse::lua {
 
 		// utility function bindings
 		usertypeDefinition["create"] = &createStatic;
+		usertypeDefinition["createCopy"] = &TES3::Static::createCopy_lua<TES3::Static>;
 	}
 }

@@ -29,12 +29,14 @@ namespace TES3 {
 			QuestName = 0x40,
 			QuestFinished = 0x100,
 			QuestRestart = 0x200,
+			HasResultText = 0x2000,
 		};
 
 		enum DialogueInfoFlagBit {
 			QuestNameBit = 6,
 			QuestFinishedBit = 8,
 			QuestRestartBit = 9,
+			HasResultTextBit = 13,
 		};
 	}
 
@@ -52,6 +54,9 @@ namespace TES3 {
 			const char* scriptText;
 			DialogueConditional* conditional;
 		};
+
+		DialogueInfoFilterNode() = delete;
+		~DialogueInfoFilterNode() = delete;
 	};
 
 	struct DialogueInfo : BaseObject {
@@ -72,6 +77,9 @@ namespace TES3 {
 		DialogueInfoFilterNode* conditions; // 0x20
 		long espFileOffset; // 0x24
 		Actor* firstHeardFrom; // 0x28
+
+		DialogueInfo() = delete;
+		~DialogueInfo() = delete;
 
 		//
 		// Other related this-call functions.
@@ -117,8 +125,7 @@ namespace TES3 {
 		sol::optional<bool> isQuestFinished() const;
 		sol::optional<bool> isQuestRestart() const;
 
-		// Loads the string of numbers from disk and returns them.
-		std::string getLongIDFromFile();
+		Dialogue* findDialogue() const;
 
 		std::string toJson();
 

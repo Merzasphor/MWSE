@@ -84,6 +84,9 @@ namespace TES3 {
 		int humanStatsBackup; // 0x688
 		GlobalVariable * knownWerewolf; // 0x690
 
+		MobilePlayer() = delete;
+		~MobilePlayer() = delete;
+
 		//
 		// Other related this-call functions.
 		//

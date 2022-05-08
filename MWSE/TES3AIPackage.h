@@ -62,6 +62,9 @@ namespace TES3 {
 		MobileActor * owningActor; // 0x34
 		Cell * destinationCell; // 0x38
 
+		AIPackage() = delete;
+		~AIPackage() = delete;
+
 		//
 		// vTable accessor functions.
 		//
@@ -93,6 +96,9 @@ namespace TES3 {
 	struct AIPackageConfig {
 		AIPackageConfigType type; // 0x0
 
+		AIPackageConfig() = delete;
+		~AIPackageConfig() = delete;
+
 		// Helper function.
 		AIPackageType toPackageType() const;
 	};
@@ -102,11 +108,17 @@ namespace TES3 {
 		struct Config : AIPackageConfig {
 			Vector3 position; // 0x4
 			bool reset; // 0x10
+
+			Config() = delete;
+			~Config() = delete;
 		};
 		Vector3 destination; // 0x3C
 		int unknown_0x48;
 		Vector3 unknown_0x4C;
 		void * pathingData; // 0x58
+
+		AIPackageTravel() = delete;
+		~AIPackageTravel() = delete;
 	};
 	static_assert(sizeof(AIPackageTravel) == 0x5C, "TES3::AIPackageTravel failed size validation");
 	static_assert(sizeof(AIPackageTravel::Config) == 0x14, "TES3::AIPackageTravel::Config failed size validation");
@@ -118,11 +130,17 @@ namespace TES3 {
 			unsigned char time; // 0x7
 			unsigned char idles[8]; // 0x08
 			bool reset; // 0x10
+
+			Config() = delete;
+			~Config() = delete;
 		};
 		struct IdleNode {
 			unsigned char index; // 0x0
 			char pad_1[3];
 			int chance;  // 0x4
+
+			IdleNode() = delete;
+			~IdleNode() = delete;
 		};
 		Vector3 unknown_0x3C;
 		int unknown_0x48;
@@ -132,6 +150,9 @@ namespace TES3 {
 		Reference * activationTarget; // 0x50
 		int unknown_0x54;
 		IdleNode idles[8]; // 0x58
+
+		AIPackageWander() = delete;
+		~AIPackageWander() = delete;
 
 		std::reference_wrapper<IdleNode[8]> getIdles();
 	};
@@ -146,10 +167,16 @@ namespace TES3 {
 			Actor * actor; // 0x14;
 			Cell * cell; // 0x18
 			bool reset; // 0x1C
+
+			Config() = delete;
+			~Config() = delete;
 		};
 		Vector3 destination; // 0x3C
 		int unknown_0x48;
 		int unknown_0x4C;
+
+		AIPackageEscort() = delete;
+		~AIPackageEscort() = delete;
 	};
 	static_assert(sizeof(AIPackageEscort) == 0x50, "TES3::AIPackageEscort failed size validation");
 	static_assert(sizeof(AIPackageEscort::Config) == 0x20, "TES3::AIPackageEscort::Config failed size validation");
@@ -161,6 +188,9 @@ namespace TES3 {
 			Actor * actor; // 0x14;
 			Cell * cell; // 0x18
 			bool reset; // 0x1C
+
+			Config() = delete;
+			~Config() = delete;
 		};
 		Vector3 destination; // 0x3C
 		int unknown_0x48;
@@ -174,6 +204,9 @@ namespace TES3 {
 		int unknown_0x5C;
 		int unknown_0x60;
 		float followDistance; // 0x64
+
+		AIPackageFollow() = delete;
+		~AIPackageFollow() = delete;
 	};
 	static_assert(sizeof(AIPackageFollow) == 0x68, "TES3::AIPackageFollow failed size validation");
 	static_assert(sizeof(AIPackageFollow::Config) == 0x20, "TES3::AIPackageFollow::Config failed size validation");
@@ -182,6 +215,9 @@ namespace TES3 {
 		struct Config : AIPackageConfig {
 			Reference * target; // 0x4
 			bool reset; // 0x8
+
+			Config() = delete;
+			~Config() = delete;
 		};
 		int unknown_0x3C;
 		int unknown_0x40;
@@ -189,6 +225,9 @@ namespace TES3 {
 		int unknown_0x48;
 		int unknown_0x4C;
 		Reference * activateTarget; // 0x50
+
+		AIPackageActivate() = delete;
+		~AIPackageActivate() = delete;
 	};
 	static_assert(sizeof(AIPackageActivate) == 0x54, "TES3::AIPackageActivate failed size validation");
 	static_assert(sizeof(AIPackageActivate::Config) == 0xC, "TES3::AIPackageActivate::Config failed size validation");

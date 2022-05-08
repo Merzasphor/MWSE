@@ -196,6 +196,7 @@
 #include "LuaCrimeWitnessedEvent.h"
 #include "LuaDamageEvent.h"
 #include "LuaDamageHandToHandEvent.h"
+#include "LuaDialogueEnvironmentCreatedEvent.h"
 #include "LuaEnchantChargeUseEvent.h"
 #include "LuaEnchantedItemCreatedEvent.h"
 #include "LuaEnchantedItemCreateFailedEvent.h"
@@ -2568,6 +2569,60 @@ namespace mwse::lua {
 	// Event: Dialogue Info response script
 	//
 
+	void __fastcall OnSetDialogueInfoHasCommand(TES3::DialogueInfo* info, TES3::GameFile* file) {
+		// Clear the flag first.
+		info->objectFlags &= ~TES3::ObjectFlag::HasResultText;
+
+		// Read the command from the file.
+		auto commandLength = file->currentChunkHeader.size;
+		auto command = new char[commandLength + 1];
+		file->readChunkData(command);
+		command[commandLength] = '\0';
+
+		// See if we have any non-comments/non-whitespace.
+		bool hasNonCommentContent = false;
+		bool inComment = false;
+		for (auto i = 0u; i <= commandLength; i++) {
+			auto c = command[i];
+			switch (c) {
+			case '\t':
+			case ' ':
+				break;
+			case '\r':
+			case '\n':
+				inComment = false;
+				break;
+			case ';':
+				inComment = true;
+				break;
+			default:
+				hasNonCommentContent = !inComment;
+			}
+
+			// Allow lua commands.
+			if (inComment && strncmp(&command[i], ";lua ", sizeof(";lua ") - 1) == 0 && (i == 0 || command[i - 1] == '\n')) {
+				info->objectFlags |= TES3::ObjectFlag::HasResultText;
+				break;
+			}
+
+			// If we had non-comment content, we're done. Set the flag.
+			if (hasNonCommentContent) {
+				info->objectFlags |= TES3::ObjectFlag::HasResultText;
+				break;
+			}
+		}
+
+		delete[] command;
+	}
+
+	__declspec(naked) void PatchOnSetDialogueInfoHasCommand() {
+		__asm {
+			mov ecx, edi // Size: 0x2
+			mov edx, esi // Size: 0x2
+		}
+	}
+	const size_t PatchOnSetDialogueInfoHasCommand_Size = 0x4;
+
 	void __fastcall OnRunDialogueCommand(TES3::Script* script, DWORD _UNUSUED_, TES3::ScriptCompiler* compiler, const char* command, int source, TES3::Reference* reference, TES3::ScriptVariables* variables, TES3::DialogueInfo* info, TES3::Dialogue* dialogue) {
 		// Allow the event to override the text.
 		if (mwse::lua::event::InfoResponseEvent::getEventEnabled()) {
@@ -2581,7 +2636,70 @@ namespace mwse::lua {
 			}
 		}
 
-		script->doCommand(compiler, command, source, reference, variables, info, dialogue);
+		// Do we have any lua commands?
+		bool noMorrowindScript = false;
+		std::string_view commandView = command;
+		if (commandView.find(";lua ", 0) != std::string_view::npos) {
+			auto handle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::environment env(handle.state, sol::create, handle.state.globals());
+
+			env["reference"] = reference;
+			env["dialogue"] = dialogue;
+			env["info"] = info;
+
+			if (mwse::lua::event::DialogueEnvironmentCreatedEvent::getEventEnabled()) {
+				handle.triggerEvent(new mwse::lua::event::DialogueEnvironmentCreatedEvent(env));
+			}
+
+			// Allow running lua in comments.
+			for (auto posStart = commandView.find(";lua "); posStart != std::string_view::npos; posStart = commandView.find(";lua ", posStart)) {
+				// If we aren't at the start of the line, skip.
+				if (posStart != 0 && commandView[posStart - 1] != '\n') {
+					posStart = commandView.find("\r\n");
+					continue;
+				}
+
+				// Jump up above the lua prefix.
+				posStart += sizeof(";lua ") - 1;
+
+				// Find where our command ends.
+				auto posEnd = commandView.find("\r\n", posStart);
+				if (posEnd == std::string_view::npos) {
+					posEnd = commandView.length();
+				}
+
+				// Bail if no actual command text was provided.
+				if (posStart == posEnd) {
+					continue;
+				}
+
+				// Execute the command.
+				auto luaCommand = commandView.substr(posStart, posEnd - posStart);
+				sol::protected_function_result result = handle.state.safe_script(luaCommand, env, &sol::script_pass_on_error);
+				if (!result.valid()) {
+					sol::error error = result;
+					std::stringstream ss;
+					ss << "Failed to run mod dialogue lua script:" << std::endl << error.what();
+
+					auto message = ss.str();
+					log::getLog() << "[LuaManager] ERROR: " << message << std::endl;
+
+					reinterpret_cast<void(__cdecl*)(const char*)>(0x477400)(message.c_str());
+
+					posStart = posEnd;
+					continue;
+				}
+
+				posStart = posEnd;
+			}
+
+			// Check for if we will block mwscript.
+			noMorrowindScript = env.get_or("noMorrowindScript", noMorrowindScript);
+		}
+
+		if (!noMorrowindScript) {
+			script->doCommand(compiler, command, source, reference, variables, info, dialogue);
+		}
 
 		if (mwse::lua::event::PostInfoResponseEvent::getEventEnabled()) {
 			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::PostInfoResponseEvent(command, reference, variables, dialogue, info));
@@ -2821,6 +2939,12 @@ namespace mwse::lua {
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			sol::table payload = stateHandle.triggerEvent(new lua::event::FilterSoulGemTargetEvent(item, mact));
 			if (payload.valid()) {
+				// Allow event blocking.
+				if (payload.get_or("block", false)) {
+					return false;
+				}
+
+				// Allow filter setting.
 				sol::object filter = payload["filter"];
 				if (filter.is<bool>()) {
 					return filter.as<bool>();
@@ -4530,7 +4654,12 @@ namespace mwse::lua {
 
 		// Event: Execute lua from dialogue response.
 		genCallEnforced(0x4B1FB2, 0x50E5A0, reinterpret_cast<DWORD>(OnRunDialogueCommand)); // Vanilla function.
-		genJumpEnforced(0x50E594, 0x50E5A0, reinterpret_cast<DWORD>(OnRunDialogueCommand)); // MCP-added function.
+		genJumpEnforced(0x50E594, 0x50E5A0, reinterpret_cast<DWORD>(OnRunDialogueCommand)); // MCP added functionality.
+
+		// Allow `;lua ` to flag a dialog as having a valid script.
+		genNOPUnprotected(0x4AF5EF, 0x4AF692 - 0x4AF5EF);
+		writePatchCodeUnprotected(0x4AF5EF, (BYTE*)PatchOnSetDialogueInfoHasCommand, PatchOnSetDialogueInfoHasCommand_Size);
+		genCallUnprotected(0x4AF5EF + PatchOnSetDialogueInfoHasCommand_Size, reinterpret_cast<DWORD>(OnSetDialogueInfoHasCommand));
 
 		// Event: Dialogue link resolve.
 		genCallEnforced(0x40B89E, 0x4BA8D0, reinterpret_cast<DWORD>(OnInfoLinkResolve));

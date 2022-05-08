@@ -20,6 +20,9 @@ namespace TES3 {
 		NI::Camera * vanityCamera; // 0xFC
 		Matrix33 shadowCameraMatrix; // 0x100
 
+		PlayerAnimationController() = delete;
+		~PlayerAnimationController() = delete;
+
 		//
 		// Custom functions
 		//

@@ -415,6 +415,20 @@ function tes3.applyMagicSource(params) end
 --- @field target tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string|nil *Optional*. The target of the magic.
 --- @field bypassResistances boolean? *Default*: `false`. Is this effect going to bypass magic resistance?
 
+--- Returns a string with all the [text defines](https://en.uesp.net/wiki/Morrowind_Mod:Text_Defines) replaced in the input string. This can be used to replicate the behavior of book and dialogue text.
+--- @param params tes3.applyTextDefines.params This table accepts the following values:
+--- 
+--- `text`: string — The input string to do text replacements for.
+--- 
+--- `actor`: tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance — The actor to use for replacements like `%Name` and `%Faction`.
+--- @return string result No description yet available.
+function tes3.applyTextDefines(params) end
+
+---Table parameter definitions for `tes3.applyTextDefines`.
+--- @class tes3.applyTextDefines.params
+--- @field text string The input string to do text replacements for.
+--- @field actor tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance The actor to use for replacements like `%Name` and `%Faction`.
+
 --- Changes a reference to werewolf form. This function works only on a reference infected with Lycanthropy, be it the player or any other reference. Returns true if successful.
 --- @param params tes3.beginTransform.params This table accepts the following values:
 --- 
@@ -1036,7 +1050,7 @@ function tes3.getKillCount(params) end
 --- @field actor tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance|string|nil *Optional*. The actor (or their ID) for whom to retrieve player's kill count.
 
 --- Returns a table with complete player kill counts. The table returned is formated so actor IDs are table keys and kill count of that type of actor is value.
---- @return table<tes3actor, number> killMap No description yet available.
+--- @return table<tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance, number> killMap No description yet available.
 function tes3.getKillCounts() end
 
 --- Gets the language as an ISO string (e.g. "eng"), determined by the language entry in Morrowind.ini and the detected executable. Maps to values in the [`tes3.language`](https://mwse.github.io/MWSE/references/languages/) table.
@@ -2583,6 +2597,7 @@ tes3.spellSource = require("tes3.spellSource")
 tes3.spellState = require("tes3.spellState")
 tes3.spellType = require("tes3.spellType")
 tes3.texturingPropertyMap = require("tes3.texturingPropertyMap")
+tes3.uiElementType = require("tes3.uiElementType")
 tes3.uiEvent = require("tes3.uiEvent")
 tes3.uiProperty = require("tes3.uiProperty")
 tes3.uiState = require("tes3.uiState")

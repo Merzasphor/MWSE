@@ -40,6 +40,9 @@ namespace TES3 {
 		char * description; // 0x8C
 		unsigned int descriptionOffset; // 0x90
 
+		Class() = delete;
+		~Class() = delete;
+
 		//
 		// Virtual table overrides.
 		//

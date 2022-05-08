@@ -1,8 +1,19 @@
 #pragma once
 
-#include "NIAVObject.h"
+#include "NINode.h"
+#include "NIRenderer.h"
 
 namespace NI {
+	struct Frustrum {
+		float left; // 0x0
+		float right; // 0x4
+		float top; // 0x8
+		float bottom; // 0xC
+		float near; // 0x10
+		float far; // 0x14
+	};
+	static_assert(sizeof(Frustrum) == 0x18, "NI::Frustrum failed size validation");
+
 	struct Camera : AVObject {
 		TES3::Matrix44 worldToCamera; // 0x90
 		float viewDistance; // 0xD0
@@ -11,11 +22,11 @@ namespace NI {
 		TES3::Vector3 worldDirection; // 0xDC
 		TES3::Vector3 worldUp; // 0xE8
 		TES3::Vector3 worldRight; // 0xF4
-		float viewFrustum[6]; // 0x100
+		Frustrum viewFrustum; // 0x100
 		TES3::Vector4 port; // 0x118
-		Object * scene; // 0x128
+		Pointer<Node> scene; // 0x128
 		NI::TArray<void*> unknown_0x12C; // Screen related?
-		Object * renderer; // 0x144
+		Pointer<Renderer> renderer; // 0x144
 		NI::TArray<void*> unknown_0x148; // Multiple cameras?
 		int unknown_0x160;
 		TES3::Vector4 cullingPlanes[6]; // 0x164
@@ -27,9 +38,14 @@ namespace NI {
 		int unknown_0x1D8;
 		float LODAdjust; // 0x1DC
 
+		Camera();
+		~Camera();
+
 		//
 		// Other related this-call functions.
 		//
+
+		void clear(Renderer::ClearFlags flags = Renderer::ClearFlags::ALL);
 
 		void click(bool something = false);
 		void click_lua(sol::optional<bool> something = false);

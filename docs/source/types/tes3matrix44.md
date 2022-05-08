@@ -51,7 +51,7 @@ The 4th row of the matrix.
 Creates a copy of the matrix.
 
 ```lua
-local result = tes3matrix44:copy()
+local result = myObject:copy()
 ```
 
 **Returns**:
@@ -65,7 +65,7 @@ local result = tes3matrix44:copy()
 Zeroes out all values in the matrix.
 
 ```lua
-tes3matrix44:toZero()
+myObject:toZero()
 ```
 
 ***

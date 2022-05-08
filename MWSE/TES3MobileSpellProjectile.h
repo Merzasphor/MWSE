@@ -7,6 +7,9 @@ namespace TES3 {
 		unsigned int spellInstanceSerial; // 0xAC
 		float rotationSpeed; // 0xB0
 
+		MobileSpellProjectile() = delete;
+		~MobileSpellProjectile() = delete;
+
 		//
 		// Custom functions.
 		//

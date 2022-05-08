@@ -292,7 +292,7 @@ A flag that marks this body part as used for vampires.
 Serializes the object to json.
 
 ```lua
-local string = tes3baseObject:__tojson()
+local string = myObject:__tojson()
 ```
 
 **Returns**:

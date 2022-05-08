@@ -99,6 +99,19 @@ namespace TES3 {
 	// EquipmentStack
 	//
 
+	void* EquipmentStack::operator new(size_t size) {
+		return mwse::tes3::_new(size);
+	}
+
+	void EquipmentStack::operator delete(void* block) {
+		mwse::tes3::_delete(block);
+	}
+
+	EquipmentStack::EquipmentStack() {
+		object = nullptr;
+		itemData = nullptr;
+	}
+
 	const auto TES3_EquipmentStack_CalculateBarterItemValue = reinterpret_cast<int(__cdecl*)(const TES3::EquipmentStack*)>(0x5A46E0);
 	int EquipmentStack::getAdjustedValue() {
 		return TES3_EquipmentStack_CalculateBarterItemValue(this);
@@ -191,6 +204,9 @@ namespace TES3 {
 	int Inventory::addItem_lua(sol::table params) {
 		TES3::MobileActor* mact = mwse::lua::getOptionalParamMobileActor(params, "mobile");
 		TES3::Item* item = mwse::lua::getOptionalParamObject<TES3::Item>(params, "item");
+		if (item == nullptr) {
+			throw std::invalid_argument("tes3inventory:addItem: Invalid 'item' parameter provided.");
+		}
 		int count = mwse::lua::getOptionalParam<int>(params, "count", 1);
 		TES3::ItemData* itemData = mwse::lua::getOptionalParam<TES3::ItemData*>(params, "itemData", nullptr);
 		return addItem(mact, item, count, false, itemData ? &itemData : nullptr);

@@ -21,7 +21,7 @@ The activation state for the fader. Setting this effectively calls activate/deac
 Activates a deactivated fader.
 
 ```lua
-tes3fader:activate()
+myObject:activate()
 ```
 
 ***
@@ -31,7 +31,7 @@ tes3fader:activate()
 Deactivates an activated fader.
 
 ```lua
-tes3fader:deactivate()
+myObject:deactivate()
 ```
 
 ***
@@ -41,7 +41,7 @@ tes3fader:deactivate()
 Transitions the fader to a value of `1` over a given duration.
 
 ```lua
-tes3fader:fadeIn({ duration = ... })
+myObject:fadeIn({ duration = ... })
 ```
 
 **Parameters**:
@@ -56,7 +56,7 @@ tes3fader:fadeIn({ duration = ... })
 Transitions the fader to a value of `0` over a given duration.
 
 ```lua
-tes3fader:fadeOut({ duration = ... })
+myObject:fadeOut({ duration = ... })
 ```
 
 **Parameters**:
@@ -71,7 +71,7 @@ tes3fader:fadeOut({ duration = ... })
 Transitions the fader to a value over a given duration.
 
 ```lua
-tes3fader:fadeTo({ value = ..., duration = ... })
+myObject:fadeTo({ value = ..., duration = ... })
 ```
 
 **Parameters**:
@@ -87,7 +87,7 @@ tes3fader:fadeTo({ value = ..., duration = ... })
 Applies a coloring effect to the fader.
 
 ```lua
-local result = tes3fader:setColor({ color = ..., flag = ... })
+local result = myObject:setColor({ color = ..., flag = ... })
 ```
 
 **Parameters**:
@@ -107,7 +107,7 @@ local result = tes3fader:setColor({ color = ..., flag = ... })
 This method allows changing the texture of the fader.
 
 ```lua
-tes3fader:setTexture(path)
+myObject:setTexture(path)
 ```
 
 **Parameters**:
@@ -121,7 +121,7 @@ tes3fader:setTexture(path)
 Updates the fader for the current frame.
 
 ```lua
-tes3fader:update()
+myObject:update()
 ```
 
 ***
@@ -131,7 +131,7 @@ tes3fader:update()
 Updates the fader for the current frame.
 
 ```lua
-tes3fader:updateMaterialProperty(value)
+myObject:updateMaterialProperty(value)
 ```
 
 **Parameters**:

@@ -7,15 +7,20 @@
 #include "TES3CriticalSection.h"
 
 namespace TES3 {
-	enum FileLoadSource : int {
-		Missing,
-		File,
-		BSA,
-	};
+	namespace FileLoadSource {
+		enum FileLoadSource : int {
+			Missing,
+			File,
+			BSA,
+		};
+	}
 
 	struct BSALoader {
 		Archive* lastLoadedArchive; // 0x0
 		Archive* archiveIterator; // 0x4
+
+		BSALoader() = delete;
+		~BSALoader() = delete;
 
 		bool findFile(const char* path, unsigned int* out_index = nullptr);
 
@@ -43,6 +48,9 @@ namespace TES3 {
 		struct OffsetSizeData {
 			unsigned int fileSize; // 0x0
 			unsigned int offsetInArchive; // 0x4
+
+			OffsetSizeData() = delete;
+			~OffsetSizeData() = delete;
 		};
 		char path[128]; // 0xB0
 		unsigned int offsetToFileNameHashes; // 0x130
@@ -55,6 +63,9 @@ namespace TES3 {
 		const char** unknown_0x14C; // Typically deleted after initial load to preserve memory.
 		Archive* nextArchive; // 0x150
 		CriticalSection criticalSection; // 0x154
+
+		Archive() = delete;
+		~Archive() = delete;
 
 		bool findFileHash(CaseInsensitiveFileHash& hash, unsigned int& out_result, const char* validationPath = nullptr);
 

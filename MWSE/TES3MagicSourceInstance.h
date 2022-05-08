@@ -67,6 +67,9 @@ namespace TES3 {
 		int countOnTargetVFX; // 0x124
 		Reference * mcpOriginalTarget; // 0x128
 
+		MagicSourceInstance() = delete;
+		~MagicSourceInstance() = delete;
+
 		//
 		// Other related this-call functions.
 		//

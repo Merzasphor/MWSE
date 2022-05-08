@@ -25,6 +25,16 @@ This type inherits the following: [niObject](../../types/niObject)
 
 ***
 
+### `refCount`
+
+*Read-only*. The number of references that exist for this object. When this value reaches zero, the object will be deleted.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
 ### `references`
 
 *Read-only*. The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
@@ -35,9 +45,19 @@ This type inherits the following: [niObject](../../types/niObject)
 
 ***
 
+### `RTTI`
+
+*Read-only*. The runtime type information for this object. This is an alias for the `.runTimeTypeInformation` property.
+
+**Returns**:
+
+* `result` ([niRTTI](../../types/niRTTI))
+
+***
+
 ### `runTimeTypeInformation`
 
-The runtime type information for this object.
+*Read-only*. The runtime type information for this object.
 
 **Returns**:
 
@@ -52,7 +72,7 @@ The runtime type information for this object.
 Creates a copy of this object.
 
 ```lua
-local result = niObject:clone()
+local result = myObject:clone()
 ```
 
 **Returns**:
@@ -66,7 +86,7 @@ local result = niObject:clone()
 Creates a source texture from the current NiPixelData object.
 
 ```lua
-local result = niPixelData:createSourceTexture()
+local result = myObject:createSourceTexture()
 ```
 
 **Returns**:
@@ -80,7 +100,7 @@ local result = niPixelData:createSourceTexture()
 Returns the height of the mipmap level at the given index, where level 1 is the largest.
 
 ```lua
-local result = niPixelData:getHeight(mipMapLevel)
+local result = myObject:getHeight(mipMapLevel)
 ```
 
 **Parameters**:
@@ -98,7 +118,7 @@ local result = niPixelData:getHeight(mipMapLevel)
 Returns the width of the mipmap level at the given index, where level 1 is the largest.
 
 ```lua
-local result = niPixelData:getWidth(mipMapLevel)
+local result = myObject:getWidth(mipMapLevel)
 ```
 
 **Parameters**:
@@ -116,7 +136,7 @@ local result = niPixelData:getWidth(mipMapLevel)
 Determines if the object is of a given type, or of a type derived from the given type. Types can be found in the tes3.niType table.
 
 ```lua
-local result = niObject:isInstanceOfType(type)
+local result = myObject:isInstanceOfType(type)
 ```
 
 **Parameters**:
@@ -134,7 +154,7 @@ local result = niObject:isInstanceOfType(type)
 Determines if the object is of a given type. Types can be found in the tes3.niType table.
 
 ```lua
-local result = niObject:isOfType(type)
+local result = myObject:isOfType(type)
 ```
 
 **Parameters**:
@@ -147,12 +167,30 @@ local result = niObject:isOfType(type)
 
 ***
 
+### `saveBinary`
+
+Serializes the object, and writes it to the given file.
+
+```lua
+local success = myObject:saveBinary(path)
+```
+
+**Parameters**:
+
+* `path` (string): The path to write the file at, relative to the Morrowind installation folder.
+
+**Returns**:
+
+* `success` (boolean): If true the object was successfully serialized.
+
+***
+
 ### `setPixelsByte`
 
 Sets the pixel data from byte data.
 
 ```lua
-niPixelData:setPixelsByte(data, mipMapLevel)
+myObject:setPixelsByte(data, mipMapLevel)
 ```
 
 **Parameters**:
@@ -167,7 +205,7 @@ niPixelData:setPixelsByte(data, mipMapLevel)
 Sets the pixel data from float data.
 
 ```lua
-niPixelData:setPixelsFloat(data, mipMapLevel)
+myObject:setPixelsFloat(data, mipMapLevel)
 ```
 
 **Parameters**:

@@ -5,6 +5,7 @@
 
 #include "TES3Actor.h"
 #include "TES3Class.h"
+#include "TES3DataHandler.h"
 #include "TES3Faction.h"
 #include "TES3Race.h"
 #include "TES3Cell.h"
@@ -91,13 +92,19 @@ namespace TES3 {
 	}
 
 	sol::optional<std::string> DialogueInfo::getID() {
+		// If we're already loaded for some reason, don't reload.
+		if (loadLinkNode) {
+			return loadLinkNode->name;
+		}
+
+		// Hit the IO to find it...
 		if (loadId()) {
 			std::string id = loadLinkNode->name;
 			unloadId();
 			return std::move(id);
 		}
 
-		return sol::optional<std::string>();
+		return {};
 	}
 
 	sol::optional<int> DialogueInfo::getJournalIndex_lua() const {
@@ -186,18 +193,22 @@ namespace TES3 {
 		return BIT_TEST(objectFlags, TES3::ObjectFlag::QuestRestartBit);
 	}
 
-	std::string DialogueInfo::getLongIDFromFile() {
-		if (loadId()) {
-			std::string id = loadLinkNode->name;
-			unloadId();
-			return id;
+	Dialogue* DialogueInfo::findDialogue() const {
+		for (const auto& dialogue : *TES3::DataHandler::get()->nonDynamicData->dialogues) {
+			if (dialogue->type == type) {
+				for (const auto& info : dialogue->info) {
+					if (info == this) {
+						return dialogue;
+					}
+				}
+			}
 		}
-		return "";
+		return nullptr;
 	}
 
 	std::string DialogueInfo::toJson() {
 		std::ostringstream ss;
-		ss << "\"tes3dialogueInfo:" << getLongIDFromFile() << "\"";
+		ss << "\"tes3dialogueInfo:" << getID().value_or("<invalid>") << "\"";
 		return std::move(ss.str());
 	}
 }

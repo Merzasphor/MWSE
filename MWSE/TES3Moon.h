@@ -33,6 +33,9 @@ namespace TES3 {
 		char texturePath[260];
 		float axisOffset; // 0x158
 
+		Moon() = delete;
+		~Moon() = delete;
+
 		//
 		// Custom functions.
 		//

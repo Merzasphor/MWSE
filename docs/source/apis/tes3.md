@@ -564,6 +564,26 @@ local instance = tes3.applyMagicSource({ reference = ..., source = ..., name = .
 
 ***
 
+### `tes3.applyTextDefines`
+
+Returns a string with all the [text defines](https://en.uesp.net/wiki/Morrowind_Mod:Text_Defines) replaced in the input string. This can be used to replicate the behavior of book and dialogue text.
+
+```lua
+local result = tes3.applyTextDefines({ text = ..., actor = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `text` (string): The input string to do text replacements for.
+	* `actor` ([tes3actor](../../types/tes3actor)): The actor to use for replacements like `%Name` and `%Faction`.
+
+**Returns**:
+
+* `result` (string)
+
+***
+
 ### `tes3.beginTransform`
 
 Changes a reference to werewolf form. This function works only on a reference infected with Lycanthropy, be it the player or any other reference. Returns true if successful.

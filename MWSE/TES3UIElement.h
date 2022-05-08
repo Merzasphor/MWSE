@@ -72,6 +72,9 @@ namespace TES3 {
 			String rawText;
 			String contentPath;
 
+			Element() = delete;
+			~Element() = delete;
+
 			//
 			// Widget creation/destruction methods
 			//
@@ -136,7 +139,6 @@ namespace TES3 {
 			void setProperty(Property prop, PropertyAccessCallback value);
 			void setText(const char *);
 			void setIcon(const char *);
-			void setIcon(String);
 
 			//
 			// Other related this-call functions.
@@ -158,7 +160,8 @@ namespace TES3 {
 			// TODO: Add std collection access to the container so this doesn't need to be copied to a table.
 			sol::table getProperties_lua(sol::this_state ts) const;
 
-			std::string getContentTypeString() const;
+			const char* getContentTypeString() const;
+			const char* getGeneralTypeString() const;
 
 			sol::object makeWidget(sol::this_state ts);
 			std::string getWidgetText() const;

@@ -59,10 +59,13 @@ namespace TES3 {
 		int armorRating; // 0xBC
 		Enchantment * enchantment; // 0xC0
 
+		Armor();
+		~Armor();
+
 		//
 		// Other related this-call functions.
 		//
-
+		
 		float calculateArmorRating(MobileActor * actor);
 		float calculateArmorRatingForNPC(NPC * npc);
 		const char * getSlotName();

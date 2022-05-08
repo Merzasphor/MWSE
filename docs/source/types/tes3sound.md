@@ -162,7 +162,7 @@ Direct access to sound's volume.
 Serializes the object to json.
 
 ```lua
-local result = tes3sound:__tojson()
+local result = myObject:__tojson()
 ```
 
 **Returns**:
@@ -176,7 +176,7 @@ local result = tes3sound:__tojson()
 Returns `true` if the sound is actively looping.
 
 ```lua
-local result = tes3sound:isLooping()
+local result = myObject:isLooping()
 ```
 
 **Returns**:
@@ -190,7 +190,7 @@ local result = tes3sound:isLooping()
 Returns `true` if the sound is actively playing.
 
 ```lua
-local result = tes3sound:isPlaying()
+local result = myObject:isPlaying()
 ```
 
 **Returns**:
@@ -204,7 +204,7 @@ local result = tes3sound:isPlaying()
 This method plays the sound.
 
 ```lua
-tes3sound:play(playbackFlags, volume, pitch, isNot3D)
+myObject:play(playbackFlags, volume, pitch, isNot3D)
 ```
 
 **Parameters**:
@@ -221,7 +221,7 @@ tes3sound:play(playbackFlags, volume, pitch, isNot3D)
 This stops playing the sound.
 
 ```lua
-tes3sound:stop()
+myObject:stop()
 ```
 
 ***

@@ -13,6 +13,9 @@ namespace TES3 {
 		char unknown_0x33;
 		float value; // 0x34
 
+		GlobalVariable() = delete;
+		~GlobalVariable() = delete;
+
 		//
 		// Custom functions
 		//

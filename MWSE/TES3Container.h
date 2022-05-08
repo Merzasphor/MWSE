@@ -48,6 +48,9 @@ namespace TES3 {
 	struct ContainerInstance : ContainerBase {
 		Container * container;
 
+		ContainerInstance() = delete;
+		~ContainerInstance() = delete;
+
 		//
 		// Custom functions.
 		//

@@ -8,6 +8,9 @@ namespace TES3 {
 	struct ReferenceList : LinkedObjectList<Reference> {
 		Cell * cell;
 
+		ReferenceList() = delete;
+		~ReferenceList() = delete;
+
 		//
 		// Other related this-call functions.
 		//

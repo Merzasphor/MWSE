@@ -41,7 +41,7 @@ The transform's translation vector.
 Creates a copy of the transform.
 
 ```lua
-local result = tes3transform:copy()
+local result = myObject:copy()
 ```
 
 **Returns**:

@@ -31,7 +31,7 @@ The minimum bound of the box.
 Creates a copy of the bounding box.
 
 ```lua
-local result = tes3boundingBox:copy()
+local result = myObject:copy()
 ```
 
 **Returns**:

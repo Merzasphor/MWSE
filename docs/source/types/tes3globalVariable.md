@@ -132,7 +132,7 @@ The value of the variable. Unlike GMSTs, globals are always numbers.
 Serializes the object to json.
 
 ```lua
-local string = tes3baseObject:__tojson()
+local string = myObject:__tojson()
 ```
 
 **Returns**:

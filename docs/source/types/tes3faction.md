@@ -11,7 +11,7 @@ This type inherits the following: [tes3baseObject](../../types/tes3baseObject)
 
 **Returns**:
 
-* `result` (table)
+* `result` (number[])
 
 ***
 
@@ -151,7 +151,7 @@ The player's current reputation in the faction.
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3factionRank](../../types/tes3factionRank)[])
 
 ***
 
@@ -161,7 +161,7 @@ The player's current reputation in the faction.
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([tes3factionReaction](../../types/tes3factionReaction)[])
 
 ***
 
@@ -171,7 +171,7 @@ The player's current reputation in the faction.
 
 **Returns**:
 
-* `result` (table)
+* `result` (number[])
 
 ***
 
@@ -212,7 +212,7 @@ If true, references of this object can store temporary or persistent lua data.
 Serializes the object to json.
 
 ```lua
-local string = tes3baseObject:__tojson()
+local string = myObject:__tojson()
 ```
 
 **Returns**:
@@ -226,7 +226,7 @@ local string = tes3baseObject:__tojson()
 This function fetches the player-facing name of a rank in the faction.
 
 ```lua
-local result = tes3faction:getRankName(rank)
+local result = myObject:getRankName(rank)
 ```
 
 **Parameters**:
@@ -244,7 +244,7 @@ local result = tes3faction:getRankName(rank)
 This function changes the player-facing name of a given rank in the faction.
 
 ```lua
-tes3faction:setRankName(rank, name)
+myObject:setRankName(rank, name)
 ```
 
 **Parameters**:

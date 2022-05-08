@@ -10,7 +10,7 @@ A child container from [`tes3dataHandler`](https://mwse.github.io/MWSE/types/tes
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3gameFile](../../types/tes3gameFile)[])
 
 ***
 
@@ -86,11 +86,11 @@ A child container from [`tes3dataHandler`](https://mwse.github.io/MWSE/types/tes
 
 ### `magicEffects`
 
-*Read-only*. A table of references to all 143 magic effects.
+*Read-only*. A table of references to all magic effects. This is a dictionary, as the effect list may have gaps.
 
 **Returns**:
 
-* `result` (table)
+* `result` (table&lt;number, [tes3magicEffect](../../types/tes3magicEffect)&gt;)
 
 ***
 
@@ -140,7 +140,7 @@ A child container from [`tes3dataHandler`](https://mwse.github.io/MWSE/types/tes
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3skill](../../types/tes3skill)[])
 
 ***
 
@@ -191,7 +191,7 @@ A child container from [`tes3dataHandler`](https://mwse.github.io/MWSE/types/tes
 Inserts a newly created object into the proper collections.
 
 ```lua
-local result = tes3nonDynamicData:addNewObject(object)
+local result = myObject:addNewObject(object)
 ```
 
 **Parameters**:
@@ -209,7 +209,7 @@ local result = tes3nonDynamicData:addNewObject(object)
 Removes an object from the proper collections.
 
 ```lua
-tes3nonDynamicData:deleteObject(object)
+myObject:deleteObject(object)
 ```
 
 **Parameters**:
@@ -223,7 +223,7 @@ tes3nonDynamicData:deleteObject(object)
 Draws a map marker box for an exterior cell onto the world map.
 
 ```lua
-tes3nonDynamicData:drawCellMapMarker(cell)
+myObject:drawCellMapMarker(cell)
 ```
 
 **Parameters**:
@@ -237,7 +237,7 @@ tes3nonDynamicData:drawCellMapMarker(cell)
 Locates a dialogue for a given ID.
 
 ```lua
-local result = tes3nonDynamicData:findDialogue(id)
+local result = myObject:findDialogue(id)
 ```
 
 **Parameters**:
@@ -255,7 +255,7 @@ local result = tes3nonDynamicData:findDialogue(id)
 Locates the first reference for a given object ID.
 
 ```lua
-local result = tes3nonDynamicData:findFirstCloneOfActor(id)
+local result = myObject:findFirstCloneOfActor(id)
 ```
 
 **Parameters**:
@@ -273,7 +273,7 @@ local result = tes3nonDynamicData:findFirstCloneOfActor(id)
 Locates a global variable for a given ID.
 
 ```lua
-local result = tes3nonDynamicData:findGlobalVariable(id)
+local result = myObject:findGlobalVariable(id)
 ```
 
 **Parameters**:
@@ -291,7 +291,7 @@ local result = tes3nonDynamicData:findGlobalVariable(id)
 Locates a script for a given ID.
 
 ```lua
-local result = tes3nonDynamicData:findScript(id)
+local result = myObject:findScript(id)
 ```
 
 **Parameters**:
@@ -309,7 +309,7 @@ local result = tes3nonDynamicData:findScript(id)
 Locates a sound for a given ID.
 
 ```lua
-local result = tes3nonDynamicData:findSound(id)
+local result = myObject:findSound(id)
 ```
 
 **Parameters**:
@@ -327,7 +327,7 @@ local result = tes3nonDynamicData:findSound(id)
 Locates a general object for a given ID.
 
 ```lua
-local result = tes3nonDynamicData:resolveObject(id)
+local result = myObject:resolveObject(id)
 ```
 
 **Parameters**:
@@ -345,7 +345,7 @@ local result = tes3nonDynamicData:resolveObject(id)
 Draws map marker boxes onto the world map for all cells with names starting with the prefix. e.g. `showLocationOnMap("Vivec")` draws boxes for all cells in Vivec, because the cell names "Vivec, Arena", "Vivec, Temple", etc. matches.
 
 ```lua
-tes3nonDynamicData:showLocationOnMap(cellNamePrefix)
+myObject:showLocationOnMap(cellNamePrefix)
 ```
 
 **Parameters**:

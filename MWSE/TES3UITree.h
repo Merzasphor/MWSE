@@ -10,6 +10,9 @@ namespace TES3 {
 			PropertyValue value;
 			PropertyType valueType;
 
+			TreeItem() = delete;
+			~TreeItem() = delete;
+
 			//
 			// Custom functions.
 			//
@@ -28,6 +31,9 @@ namespace TES3 {
 			TreeNode * branchGreaterThanOrEqual;
 			TreeItem item;
 			int unknown_18;
+
+			TreeNode() = delete;
+			~TreeNode() = delete;
 		};
 		static_assert(sizeof(TreeNode) == 0x1C, "TES3::UI::TreeNode failed size validation");
 
@@ -36,6 +42,9 @@ namespace TES3 {
 			TreeNode * root;
 			char unknown_8;
 			size_t itemCount;
+
+			Tree() = delete;
+			~Tree() = delete;
 		};
 		static_assert(sizeof(Tree) == 0x10, "TES3::UI::Tree failed size validation");
 	}

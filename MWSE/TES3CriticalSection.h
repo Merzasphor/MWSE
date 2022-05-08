@@ -6,6 +6,9 @@ namespace TES3 {
 		int unknown_0x1C;
 		int unknown_0x20;
 
+		CriticalSection() = delete;
+		~CriticalSection() = delete;
+
 		//
 		// Other related this-call functions.
 		//

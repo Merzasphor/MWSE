@@ -1,6 +1,12 @@
 #include "NITexture.h"
 
 namespace NI {
+	Texture::FormatPrefs::FormatPrefs() {
+		pixelLayout = PixelLayout::PIX_DEFAULT;
+		mipMapped = MipFlag::MIP_DEFAULT;
+		alphaFormat = AlphaFormat::ALPHA_DEFAULT;
+	}
+
 	unsigned int Texture::getWidth() {
 		return vTable.asTexture->getWidth(this);
 	}

@@ -69,6 +69,13 @@ namespace NI {
 	static_assert(sizeof(Renderer_vTable) == 0x10C, "NI::Renderer failed size validation");
 
 	struct Renderer : Object {
+		enum ClearFlags : unsigned int {
+			BACKBUFFER = 0x1,
+			STENCIL = 0x2,
+			ZBUFFER = 0x4,
+
+			ALL = BACKBUFFER | STENCIL | ZBUFFER,
+		};
 		Pointer<Object> accumulator; // 0x8
 		Pointer<Property> currentProperty; // 0xC
 		Pointer<Object> currentEffect; // 0x10

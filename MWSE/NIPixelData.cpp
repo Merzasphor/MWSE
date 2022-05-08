@@ -25,7 +25,7 @@ namespace NI {
 
 	Pointer<SourceTexture> PixelData::createSourceTexture() {
 		using FormatPrefs = Texture::FormatPrefs;
-		FormatPrefs prefs = { FormatPrefs::PixelLayout::PIX_DEFAULT, FormatPrefs::MipFlag::MIP_DEFAULT, FormatPrefs::AlphaFormat::ALPHA_DEFAULT };
+		FormatPrefs prefs;
 		return SourceTexture::createFromPixelData(this, &prefs);
 	}
 

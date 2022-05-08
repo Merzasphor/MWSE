@@ -45,6 +45,9 @@ namespace TES3 {
 		int playerReputation; // 0x298
 		unsigned int playerMembershipFlags; // 0x29C
 
+		Faction() = delete;
+		~Faction() = delete;
+
 		//
 		// Virtual table overrides.
 		//

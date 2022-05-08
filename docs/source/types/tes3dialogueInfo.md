@@ -292,7 +292,7 @@ If true, references of this object can store temporary or persistent lua data.
 Serializes the object to json.
 
 ```lua
-local string = tes3baseObject:__tojson()
+local string = myObject:__tojson()
 ```
 
 **Returns**:
@@ -306,7 +306,7 @@ local string = tes3baseObject:__tojson()
 This method filters the associated dialogue info for given arguments and returns true if the dialogue info filtering passes. This method rises [`infoFilter`](https://mwse.github.io/MWSE/events/infoFilter/) event.
 
 ```lua
-local result = tes3dialogueInfo:filter(actor, reference, source, dialogue)
+local result = myObject:filter(actor, reference, source, dialogue)
 ```
 
 **Parameters**:
@@ -322,12 +322,26 @@ local result = tes3dialogueInfo:filter(actor, reference, source, dialogue)
 
 ***
 
+### `findDialogue`
+
+This method searches for the dialogue that this info belongs to.
+
+```lua
+local dialogue = myObject:findDialogue()
+```
+
+**Returns**:
+
+* `dialogue` ([tes3dialogue](../../types/tes3dialogue))
+
+***
+
 ### `runScript`
 
 This method runs the dialogue info's associated script on a given reference.
 
 ```lua
-tes3dialogueInfo:runScript(reference)
+myObject:runScript(reference)
 ```
 
 **Parameters**:

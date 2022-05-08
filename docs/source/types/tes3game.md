@@ -161,7 +161,7 @@ Mix volumes for music.
 Clears data related to activation, resetting what the player can activate.
 
 ```lua
-tes3game:clearTarget()
+myObject:clearTarget()
 ```
 
 ***

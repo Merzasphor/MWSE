@@ -6,6 +6,7 @@
 #include "TES3Alchemy.h"
 #include "TES3DataHandler.h"
 #include "TES3Script.h"
+#include "TES3WorldController.h"
 
 #include "MemoryUtil.h"
 
@@ -119,6 +120,7 @@ namespace mwse::lua {
 
 		// Basic function binding.
 		usertypeDefinition["create"] = &createAlchemy;
+		usertypeDefinition["createCopy"] = &TES3::Alchemy::createCopy_lua<TES3::Alchemy>;
 		usertypeDefinition["getActiveEffectCount"] = &TES3::Alchemy::getActiveEffectCount;
 		usertypeDefinition["getFirstIndexOfEffect"] = &TES3::Alchemy::getFirstIndexOfEffect;
 

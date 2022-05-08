@@ -1,8 +1,8 @@
 # niSourceTexture
 
-Represents all texture objects that are created from a file or a block of in-memory pixel data. NiSourceTexture objects represent both static and dynamic content, as NiSourceTexture data objects can have their pixel data modified on the fly to implement dynamic texture behavior.
+A texture that represent both static and dynamic content, as NiSourceTexture data objects can have their pixel data modified on the fly to implement dynamic texture behavior.
 
-This type inherits the following: [niObjectNET](../../types/niObjectNET), [niObject](../../types/niObject)
+This type inherits the following: [niTexture](../../types/niTexture), [niObjectNET](../../types/niObjectNET), [niObject](../../types/niObject)
 ## Properties
 
 ### `controller`
@@ -12,6 +12,16 @@ This type inherits the following: [niObjectNET](../../types/niObjectNET), [niObj
 **Returns**:
 
 * `result` ([niTimeController](../../types/niTimeController))
+
+***
+
+### `extraData`
+
+*Read-only*. The first extra data available on the object.
+
+**Returns**:
+
+* `result` (niExtraData)
 
 ***
 
@@ -85,6 +95,16 @@ The app-level pixel data.
 
 ***
 
+### `refCount`
+
+*Read-only*. The number of references that exist for this object. When this value reaches zero, the object will be deleted.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
 ### `references`
 
 *Read-only*. The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
@@ -95,9 +115,19 @@ The app-level pixel data.
 
 ***
 
+### `RTTI`
+
+*Read-only*. The runtime type information for this object. This is an alias for the `.runTimeTypeInformation` property.
+
+**Returns**:
+
+* `result` ([niRTTI](../../types/niRTTI))
+
+***
+
 ### `runTimeTypeInformation`
 
-The runtime type information for this object.
+*Read-only*. The runtime type information for this object.
 
 **Returns**:
 
@@ -122,7 +152,7 @@ The runtime type information for this object.
 Detaches any pixel data associated with this texture. Any render-specific data will be maintained, and remain in the GPU's memory.
 
 ```lua
-niSourceTexture:clearPixelData()
+myObject:clearPixelData()
 ```
 
 ***
@@ -132,7 +162,7 @@ niSourceTexture:clearPixelData()
 Creates a copy of this object.
 
 ```lua
-local result = niObject:clone()
+local result = myObject:clone()
 ```
 
 **Returns**:
@@ -141,12 +171,30 @@ local result = niObject:clone()
 
 ***
 
+### `getGameReference`
+
+Searches for an niExtraData on this object to see if it has one that holds a related reference.
+
+```lua
+local reference = myObject:getGameReference(searchParents)
+```
+
+**Parameters**:
+
+* `searchParents` (boolean): *Default*: `false`. If true, all parent objects (if applicable) are also searched.
+
+**Returns**:
+
+* `reference` ([tes3reference](../../types/tes3reference))
+
+***
+
 ### `isInstanceOfType`
 
 Determines if the object is of a given type, or of a type derived from the given type. Types can be found in the tes3.niType table.
 
 ```lua
-local result = niObject:isInstanceOfType(type)
+local result = myObject:isInstanceOfType(type)
 ```
 
 **Parameters**:
@@ -164,7 +212,7 @@ local result = niObject:isInstanceOfType(type)
 Determines if the object is of a given type. Types can be found in the tes3.niType table.
 
 ```lua
-local result = niObject:isOfType(type)
+local result = myObject:isOfType(type)
 ```
 
 **Parameters**:
@@ -182,7 +230,7 @@ local result = niObject:isOfType(type)
 Loads the file associated with the texture into memory, and makes it accessible from the pixelData property.
 
 ```lua
-niSourceTexture:loadPixelDataFromFile()
+myObject:loadPixelDataFromFile()
 ```
 
 ***
@@ -192,7 +240,7 @@ niSourceTexture:loadPixelDataFromFile()
 Add a controller to the object as the first controller.
 
 ```lua
-niObjectNET:prependController(type)
+myObject:prependController(type)
 ```
 
 **Parameters**:
@@ -206,7 +254,7 @@ niObjectNET:prependController(type)
 Removes all controllers.
 
 ```lua
-niObjectNET:removeAllControllers()
+myObject:removeAllControllers()
 ```
 
 ***
@@ -216,12 +264,45 @@ niObjectNET:removeAllControllers()
 Removes a controller from the object.
 
 ```lua
-niObjectNET:removeController(type)
+myObject:removeController(controller)
 ```
 
 **Parameters**:
 
-* `type` ([niTimeController](../../types/niTimeController))
+* `controller` ([niTimeController](../../types/niTimeController))
+
+***
+
+### `saveBinary`
+
+Serializes the object, and writes it to the given file.
+
+```lua
+local success = myObject:saveBinary(path)
+```
+
+**Parameters**:
+
+* `path` (string): The path to write the file at, relative to the Morrowind installation folder.
+
+**Returns**:
+
+* `success` (boolean): If true the object was successfully serialized.
+
+***
+
+### `setFlag`
+
+Sets a given flag in the niObjectNET flag data. The specifics use of the flag is dependent on the real underlying type.
+
+```lua
+myObject:setFlag(state, index)
+```
+
+**Parameters**:
+
+* `state` (boolean)
+* `index` (number)
 
 ***
 

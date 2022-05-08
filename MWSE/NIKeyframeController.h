@@ -26,6 +26,28 @@ namespace NI {
 	};
 	static_assert(sizeof(FloatKey) == 0x8, "NI::FloatKey failed size validation");
 
+	struct BezFloatKey : FloatKey {
+		float inTangent; // 0x8
+		float outTangent; // 0xC
+	};
+	static_assert(sizeof(BezFloatKey) == 0x10, "NI::BezFloatKey failed size validation");
+
+	struct TCBFloatKey : FloatKey {
+		float tension; // 0x8
+		float continuity; // 0xC
+		float bias; // 0x10
+		float derivedA; // 0x14
+		float derivedB; // 0x18
+	};
+	static_assert(sizeof(TCBFloatKey) == 0x1C, "NI::TCBFloatKey failed size validation");
+
+	union AmbiguousFloatKeyPtr {
+		FloatKey* asFloatKey;
+		BezFloatKey* asBezFloatKey;
+		TCBFloatKey* asTCBFloatKey;
+	};
+	static_assert(sizeof(AmbiguousFloatKeyPtr) == sizeof(void*), "NI::AmbiguousFloatKeyPtr failed size validation");
+
 	struct RotKey : AnimationKey {
 		Quaternion value; // 0x4
 	};
@@ -45,10 +67,38 @@ namespace NI {
 	};
 	static_assert(sizeof(TCBRotKey) == 0x40, "NI::TCBRotKey failed size validation");
 
+	struct EulerRotKey : RotKey {
+		enum Order : unsigned int {
+			ORDER_XYZ,
+			ORDER_XZY,
+			ORDER_YZX,
+			ORDER_YXZ,
+			ORDER_ZXY,
+			ORDER_ZYX,
+			ORDER_XYX,
+			ORDER_YZY,
+			ORDER_ZXZ,
+
+			ORDER_COUNT,
+		};
+		unsigned int numKeys[3]; // 0x14
+		Type keyTypes[3]; // 0x20
+		Order order; // 0x2C;
+		AmbiguousFloatKeyPtr keys[3]; // 0x30
+		unsigned int lastIndices[3]; // 0x38
+
+		std::reference_wrapper<decltype(numKeys)> getNumKeys_lua();
+		std::reference_wrapper<decltype(keyTypes)> getKeyTypes_lua();
+		sol::table getKeys_lua(sol::this_state ts);
+		std::reference_wrapper<decltype(lastIndices)> getLastIndices_lua();
+	};
+	static_assert(sizeof(EulerRotKey) == 0x48, "NI::EulerRotKey failed size validation");
+
 	union AmbiguousRotKeyPtr {
 		RotKey* asRotKey;
 		BezRotKey* asBezRotKey;
 		TCBRotKey* asTCBRotKey;
+		EulerRotKey* asEulerRotKey;
 	};
 	static_assert(sizeof(AmbiguousRotKeyPtr) == sizeof(void*), "NI::AmbiguousRotKeyPtr failed size validation");
 
@@ -83,33 +133,6 @@ namespace NI {
 	};
 	static_assert(sizeof(AmbiguousPosKeyPtr) == sizeof(void*), "NI::AmbiguousPosKeyPtr failed size validation");
 
-	struct ScaleKey : FloatKey {
-
-	};
-	static_assert(sizeof(ScaleKey) == 0x8, "NI::ScaleKey failed size validation");
-
-	struct BezScaleKey : ScaleKey {
-		float inTangent; // 0x8
-		float outTangent; // 0xC
-	};
-	static_assert(sizeof(BezScaleKey) == 0x10, "NI::BezScaleKey failed size validation");
-
-	struct TCBScaleKey : ScaleKey {
-		float tension; // 0x8
-		float continuity; // 0xC
-		float bias; // 0x10
-		float derivedA; // 0x14
-		float derivedB; // 0x18
-	};
-	static_assert(sizeof(TCBScaleKey) == 0x1C, "NI::TCBScaleKey failed size validation");
-
-	union AmbiguousScaleKeyPtr {
-		ScaleKey* asScaleKey;
-		BezScaleKey* asBezScaleKey;
-		TCBScaleKey* asTCBScaleKey;
-	};
-	static_assert(sizeof(AmbiguousScaleKeyPtr) == sizeof(void*), "NI::AmbiguousScaleKeyPtr failed size validation");
-
 	struct KeyframeData : Object {
 		unsigned int rotationKeyCount; // 0x8
 		AmbiguousRotKeyPtr rotationKeys; // 0xC
@@ -118,7 +141,7 @@ namespace NI {
 		AmbiguousPosKeyPtr positionKeys; // 0x18
 		AnimationKey::Type positionType; // 0x1C
 		unsigned int scaleKeyCount; // 0x20
-		AmbiguousScaleKeyPtr scaleKeys; // 0x24
+		AmbiguousFloatKeyPtr scaleKeys; // 0x24
 		AnimationKey::Type scaleType; // 0x28
 
 		sol::object getRotationKeys_lua(sol::this_state L);

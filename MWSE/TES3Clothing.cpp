@@ -3,6 +3,16 @@
 #include "TES3Util.h"
 
 namespace TES3 {
+	const auto TES3_Clothing_ctor = reinterpret_cast<void(__thiscall*)(Clothing*)>(0x4A2C70);
+	Clothing::Clothing() {
+		TES3_Clothing_ctor(this);
+	}
+
+	const auto TES3_Clothing_dtor = reinterpret_cast<void(__thiscall*)(Clothing*)>(0x4A2D60);
+	Clothing::~Clothing() {
+		TES3_Clothing_dtor(this);
+	}
+
 	void Clothing::setIconPath(const char* path) {
 		if (strnlen_s(path, 32) >= 32) {
 			throw std::invalid_argument("Path must not be 32 or more characters.");

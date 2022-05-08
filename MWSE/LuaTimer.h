@@ -1,7 +1,7 @@
 #pragma once
 
 namespace mwse::lua {
-	struct Timer;
+	class Timer;
 	class LuaManager;
 
 	enum class TimerState {
@@ -70,7 +70,8 @@ namespace mwse::lua {
 	};
 
 	// A logicless structure containing timer data.
-	struct Timer : public std::enable_shared_from_this<Timer> {
+	class Timer : public std::enable_shared_from_this<Timer> {
+	public:
 		// A handle back to the associated controller.
 		std::weak_ptr<TimerController> controller;
 

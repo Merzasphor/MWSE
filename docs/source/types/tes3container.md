@@ -352,7 +352,7 @@ If true, references of this object can store temporary or persistent lua data.
 Serializes the object to json.
 
 ```lua
-local string = tes3baseObject:__tojson()
+local string = myObject:__tojson()
 ```
 
 **Returns**:
@@ -361,12 +361,33 @@ local string = tes3baseObject:__tojson()
 
 ***
 
+### `createCopy`
+
+Creates a copy of this object.
+
+```lua
+local newObject = myObject:createCopy({ id = ..., addToObjectList = ..., sourceless = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `id` (string): *Optional*. The new object's ID. If one is not provided, a randomly generated one will be used.
+	* `addToObjectList` (boolean): *Default*: `true`. If true, the object will be added to the data handler. If this is false, the new object may not have a randomly generated ID. Do not use this without knowing the implications.
+	* `sourceless` (boolean): *Default*: `false`. If true, the object will be made sourceless, and will not be serialized to the save game. If the object is copied outside of a save game, the object will **always** be sourceless.
+
+**Returns**:
+
+* `newObject` ([tes3container](../../types/tes3container))
+
+***
+
 ### `hasItemEquipped`
 
 Checks if the actor has provided item equipped.
 
 ```lua
-local result = tes3actor:hasItemEquipped(item, itemData)
+local result = myObject:hasItemEquipped(item, itemData)
 ```
 
 **Parameters**:
@@ -385,7 +406,7 @@ local result = tes3actor:hasItemEquipped(item, itemData)
 Checks if the actor will offer a service in dialogue. This an offer and may still be refused by dialogue checks. To also get the result of dialogue checks, use [`tes3.checkMerchantOffersService()`](https://mwse.github.io/MWSE/apis/tes3/#tes3checkmerchantoffersservice).
 
 ```lua
-local result = tes3actor:offersService(service)
+local result = myObject:offersService(service)
 ```
 
 **Parameters**:
@@ -403,7 +424,7 @@ local result = tes3actor:offersService(service)
 A callback function invoked when an inventory is closed. Typically not used outside of specific purposes. You may find `tes3.reference`'s `onCloseInventory()` to be more convenient to use.
 
 ```lua
-tes3actor:onInventoryClose(reference)
+myObject:onInventoryClose(reference)
 ```
 
 **Parameters**:
@@ -417,7 +438,7 @@ tes3actor:onInventoryClose(reference)
 Checks if the actor will buy and sell items of a given object type. e.g. `actor:tradesItemType(tes3.objectType.repairItem)`
 
 ```lua
-local result = tes3actor:tradesItemType(objectType)
+local result = myObject:tradesItemType(objectType)
 ```
 
 **Parameters**:

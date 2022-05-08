@@ -35,7 +35,6 @@ namespace TES3 {
 	struct Book;
 	struct BoundingBox;
 	struct Cell;
-	struct CellExteriorData;
 	struct Class;
 	struct Clothing;
 	struct ClothingSlotData;
@@ -91,13 +90,13 @@ namespace TES3 {
 	struct Matrix33;
 	struct Misc;
 	struct MobController;
-	struct MobileActor_vTable;
 	struct MobileActor;
+	struct MobileActor_vTable;
 	struct MobileCreature;
-	struct MobileNPC_vTable;
 	struct MobileNPC;
-	struct MobileObject_vTable;
+	struct MobileNPC_vTable;
 	struct MobileObject;
+	struct MobileObject_vTable;
 	struct MobilePlayer;
 	struct MobileProjectile;
 	struct MobileSpellProjectile;

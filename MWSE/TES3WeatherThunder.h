@@ -26,6 +26,9 @@ namespace TES3 {
 		float flashDecrement; // 0x864
 		bool rainPlaying; // 0x868
 
+		WeatherThunder() = delete;
+		~WeatherThunder() = delete;
+
 		//
 		// Custom functions.
 		//

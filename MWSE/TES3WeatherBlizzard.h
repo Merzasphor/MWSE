@@ -5,6 +5,9 @@
 namespace TES3 {
 	struct WeatherBlizzard : Weather {
 		float stormThreshold; // 0x318
+
+		WeatherBlizzard() = delete;
+		~WeatherBlizzard() = delete;
 	};
 	static_assert(sizeof(WeatherBlizzard) == 0x31C, "TES3::WeatherBlizzard failed size validation");
 }

@@ -110,7 +110,7 @@ Represents a loaded ESM, ESP, or ESS file.
 
 **Returns**:
 
-* `result` (table)
+* `result` (number[])
 
 ***
 
@@ -120,7 +120,7 @@ Represents a loaded ESM, ESP, or ESS file.
 
 **Returns**:
 
-* `result` (table)
+* `result` (number[])
 
 ***
 
@@ -130,7 +130,7 @@ Represents a loaded ESM, ESP, or ESS file.
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3gameFile](../../types/tes3gameFile)[])
 
 ***
 
@@ -201,7 +201,7 @@ Represents a loaded ESM, ESP, or ESS file.
 Deletes the file.
 
 ```lua
-tes3gameFile:deleteFile()
+myObject:deleteFile()
 ```
 
 ***

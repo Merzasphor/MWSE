@@ -447,11 +447,41 @@ When set to `true` on image and NIF elements, they are scaled to fit `width` and
 
 ***
 
+### `sceneNode`
+
+*Read-only*. Underlying access to the scene graph responsible for this element.
+
+**Returns**:
+
+* `result` ([niNode](../../types/niNode))
+
+***
+
 ### `text`
 
 The element's text. Text input can be read by accessing this property.
 
 	tip: If your element's text is a number, you need to manually convert it to string using `tostring()`.
+
+**Returns**:
+
+* `result` (string)
+
+***
+
+### `texture`
+
+The underlying texture for the element. This assumes that the element is of an element type. Setting this value will change the element to an image type.
+
+**Returns**:
+
+* `result` ([niSourceTexture](../../types/niSourceTexture))
+
+***
+
+### `type`
+
+*Read-only*. The type of content this `tes3uiElement` represents. This is an expanded set of the options available from the `contentType` property. Maps to values in [`tes3.uiElementType`](https://mwse.github.io/MWSE/references/tes3uiElement-types/).
 
 **Returns**:
 
@@ -520,12 +550,13 @@ Controls text wrapping. Setting this to `true` will also set `layoutHeightFracti
 Creates an empty block container inside the element. Used to group and layout elements.
 
 ```lua
-local result = tes3uiElement:createBlock(id)
+local result = myObject:createBlock({ id = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
 
 **Returns**:
 
@@ -540,12 +571,13 @@ Creates a clickable button. Register the `mouseClick` event to capture a button 
 Button specific properties can be accessed through the `widget` property. The widget type for buttons is [`tes3uiButton`](https://mwse.github.io/MWSE/types/tes3uiButton/).
 
 ```lua
-local result = tes3uiElement:createButton(id)
+local result = myObject:createButton({ id = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
 
 **Returns**:
 
@@ -558,12 +590,13 @@ local result = tes3uiElement:createButton(id)
 Creates a textured horizontal divider line, as used in the magic and stat menus. Scales automatically to the container width.
 
 ```lua
-local result = tes3uiElement:createDivider(id)
+local result = myObject:createDivider({ id = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
 
 **Returns**:
 
@@ -578,14 +611,15 @@ Creates a horizontal quantity indicator bar.
 Fillbar specific properties can be accessed through the `widget` property. The widget type for fillbars is [`tes3uiFillBar`](https://mwse.github.io/MWSE/types/tes3uiFillBar/).
 
 ```lua
-local result = tes3uiElement:createFillBar(id, current, max)
+local result = myObject:createFillBar({ id = ..., current = ..., max = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
-* `current` (number): *Optional*. The current value of the fillbar.
-* `max` (number): *Optional*. The maximum value of the fillbar.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
+	* `current` (number): *Optional*. The current value of the fillbar.
+	* `max` (number): *Optional*. The maximum value of the fillbar.
 
 **Returns**:
 
@@ -600,12 +634,13 @@ Creates a horizontally scrolling pane.
 Scroll pane specific properties can be accessed through the `widget` property. The widget type for scroll panes is [`tes3uiScrollPane`](https://mwse.github.io/MWSE/types/tes3uiScrollPane/).
 
 ```lua
-local result = tes3uiElement:createHorizontalScrollPane(id)
+local result = myObject:createHorizontalScrollPane({ id = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
 
 **Returns**:
 
@@ -618,12 +653,13 @@ local result = tes3uiElement:createHorizontalScrollPane(id)
 Creates a text area with clickable words as links. Usage is still under research.
 
 ```lua
-local result = tes3uiElement:createHypertext(id)
+local result = myObject:createHypertext({ id = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
 
 **Returns**:
 
@@ -636,13 +672,14 @@ local result = tes3uiElement:createHypertext(id)
 Creates an image element from a texture file. The texture must have power-of-2 dimensions (i.e. 16, 32, 64, 128, 256, 512, 1024); the final display size can be trimmed by setting width and height.
 
 ```lua
-local result = tes3uiElement:createImage(id, path)
+local result = myObject:createImage({ id = ..., path = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
-* `path` (string): An image path. This path is relative to `Data Files`.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
+	* `path` (string): An image path. This path is relative to `Data Files`.
 
 **Returns**:
 
@@ -655,15 +692,16 @@ local result = tes3uiElement:createImage(id, path)
 Creates an interactive button composed of images for the **idle**, **over**, and **pressed** states. The texture must have power-of-2 dimensions (i.e. 16, 32, 64, 128, 256, 512, 1024); the final display size can be trimmed by setting width and height.
 
 ```lua
-local result = tes3uiElement:createImageButton(id, idle, over, path)
+local result = myObject:createImageButton({ id = ..., idle = ..., over = ..., path = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
-* `idle` (string): The path to the idle image. This path is relative to `Data Files`.
-* `over` (string): The path to the mouse hover image. This path is relative to `Data Files`.
-* `path` (string): The path to the mouse pressed image. This path is relative to `Data Files`.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
+	* `idle` (string): The path to the idle image. This path is relative to `Data Files`.
+	* `over` (string): The path to the mouse hover image. This path is relative to `Data Files`.
+	* `path` (string): The path to the mouse pressed image. This path is relative to `Data Files`.
 
 **Returns**:
 
@@ -676,13 +714,14 @@ local result = tes3uiElement:createImageButton(id, idle, over, path)
 Creates a text label. It defaults to displaying all text on a single line. To get a multi-line label, set `wrap_text` to `true`. The element is created with `autoWidth` and `autoHeight` turned on.
 
 ```lua
-local result = tes3uiElement:createLabel(id, text)
+local result = myObject:createLabel({ id = ..., text = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
-* `text` (string): The text to display.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
+	* `text` (string): *Default*: `(nil)`. The text to display.
 
 **Returns**:
 
@@ -695,13 +734,14 @@ local result = tes3uiElement:createLabel(id, text)
 Creates a NIF model from a file. Still under research.
 
 ```lua
-local result = tes3uiElement:createNif(id, text)
+local result = myObject:createNif({ id = ..., text = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
-* `text` (string): A model path. This path is relative to `Data Files`.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
+	* `text` (string): A model path. This path is relative to `Data Files`.
 
 **Returns**:
 
@@ -716,12 +756,13 @@ Creates a multi-line text input element, with line wrapping on. To receive input
 Paragraph input specific properties can be accessed through the `widget` property. The widget type for paragraph inputs is [`tes3uiParagraphInput`](https://mwse.github.io/MWSE/types/tes3uiParagraphInput/).
 
 ```lua
-local result = tes3uiElement:createParagraphInput(id)
+local result = myObject:createParagraphInput({ id = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
 
 **Returns**:
 
@@ -734,13 +775,15 @@ local result = tes3uiElement:createParagraphInput(id)
 Creates a filled rectangle. The rectangle is displayed as filled with the element's colour. It supports alpha compositing.
 
 ```lua
-local result = tes3uiElement:createRect(id, color)
+local result = myObject:createRect({ id = ..., color = ..., randomizeColor = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
-* `color` (table): *Optional*. The fill colour for the element.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
+	* `color` ([tes3vector3](../../types/tes3vector3), table): *Optional*. The fill color for the element.
+	* `randomizeColor` (boolean): *Default*: `false`. If true, the creation color will be randomized.
 
 **Returns**:
 
@@ -755,16 +798,17 @@ Creates a horizontal slider.
 Slider specific properties can be accessed through the `widget` property. The widget type for sliders is [`tes3uiSlider`](https://mwse.github.io/MWSE/types/tes3uiSlider/).
 
 ```lua
-local result = tes3uiElement:createSlider(id, current, max, step, jump)
+local result = myObject:createSlider({ id = ..., current = ..., max = ..., step = ..., jump = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
-* `current` (number): The current value of the slider.
-* `max` (number): The maximum value of the slider.
-* `step` (number): *Default*: `1`. The change in value when clicking the left and right arrow buttons.
-* `jump` (number): *Default*: `5`. The change in value when clicking into the empty areas next to the slider handle.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
+	* `current` (number): The current value of the slider.
+	* `max` (number): The maximum value of the slider.
+	* `step` (number): *Default*: `1`. The change in value when clicking the left and right arrow buttons.
+	* `jump` (number): *Default*: `5`. The change in value when clicking into the empty areas next to the slider handle.
 
 **Returns**:
 
@@ -779,16 +823,17 @@ Creates a vertical slider.
 Slider specific properties can be accessed through the `widget` property. The widget type for sliders is [`tes3uiSlider`](https://mwse.github.io/MWSE/types/tes3uiSlider/).
 
 ```lua
-local result = tes3uiElement:createSliderVertical(id, current, max, step, jump)
+local result = myObject:createSliderVertical({ id = ..., current = ..., max = ..., step = ..., jump = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
-* `current` (number): The current value of the slider.
-* `max` (number): The maximum value of the slider.
-* `step` (number): *Default*: `1`. The change in value when clicking the left and right arrow buttons.
-* `jump` (number): *Default*: `5`. The change in value when clicking into the empty areas next to the slider handle.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
+	* `current` (number): The current value of the slider.
+	* `max` (number): The maximum value of the slider.
+	* `step` (number): *Default*: `1`. The change in value when clicking the left and right arrow buttons.
+	* `jump` (number): *Default*: `5`. The change in value when clicking into the empty areas next to the slider handle.
 
 **Returns**:
 
@@ -803,12 +848,13 @@ Creates a single line text input element. To receive input the keyboard must be 
 Text input specific properties can be accessed through the `widget` property. The widget type for text inputs is [`tes3uiTextInput`](https://mwse.github.io/MWSE/types/tes3uiTextInput/).
 
 ```lua
-local result = tes3uiElement:createTextInput(id)
+local result = myObject:createTextInput({ id = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
 
 **Returns**:
 
@@ -819,18 +865,19 @@ local result = tes3uiElement:createTextInput(id)
 ### `createTextSelect`
 
 Creates a selectable line of text, with configurable hover, click, and disabled colours. Can be used to create a list box by placing them in a ScrollPane.
-	
+
 Text select specific properties can be accessed through the `widget` property. The widget type for text selects is [`tes3uiTextSelect`](https://mwse.github.io/MWSE/types/tes3uiTextSelect/).
 
 ```lua
-local result = tes3uiElement:createTextSelect(id, text, state)
+local result = myObject:createTextSelect({ id = ..., text = ..., state = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
-* `text` (string): *Optional*. The text to display.
-* `state` (number): *Default*: `tes3.uiState.normal`. The initial interaction state.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
+	* `text` (string): *Optional*. The text to display.
+	* `state` (number): *Default*: `tes3.uiState.normal`. The initial interaction state.
 
 **Returns**:
 
@@ -843,12 +890,13 @@ local result = tes3uiElement:createTextSelect(id, text, state)
 Creates a styled thin border element. Any content should be created as children of this border.
 
 ```lua
-local result = tes3uiElement:createThinBorder(id)
+local result = myObject:createThinBorder({ id = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
 
 **Returns**:
 
@@ -863,12 +911,13 @@ Creates a vertically scrolling pane. Useful as a list box.
 Scroll pane specific properties can be accessed through the `widget` property. The widget type for scroll panes is [`tes3uiScrollPane`](https://mwse.github.io/MWSE/types/tes3uiScrollPane/).
 
 ```lua
-local result = tes3uiElement:createVerticalScrollPane(id)
+local result = myObject:createVerticalScrollPane({ id = ... })
 ```
 
 **Parameters**:
 
-* `id` (string, number): *Optional*. An identifier to help find this element later.
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
 
 **Returns**:
 
@@ -881,7 +930,7 @@ local result = tes3uiElement:createVerticalScrollPane(id)
 Deletes an element and all its child elements. If any element is bound to text input by `tes3ui.acquireTextInput`_, the input is automatically released.
 
 ```lua
-tes3uiElement:destroy()
+myObject:destroy()
 ```
 
 ***
@@ -891,7 +940,7 @@ tes3uiElement:destroy()
 Deletes all the child elements of this element. If any element is bound to text input by `tes3ui.acquireTextInput`_, the input is automatically released.
 
 ```lua
-tes3uiElement:destroyChildren()
+myObject:destroyChildren()
 ```
 
 ***
@@ -901,7 +950,7 @@ tes3uiElement:destroyChildren()
 Finds a child element matching the `id` argument. Searches children recursively. Returns the first child element with a matching id, or `nil` if no match found.
 
 ```lua
-local result = tes3uiElement:findChild(id)
+local result = myObject:findChild(id)
 ```
 
 **Parameters**:
@@ -919,7 +968,7 @@ local result = tes3uiElement:findChild(id)
 Forwards an event to the original Morrowind event handler, using this element as a source. This may be optionally called at any point in a callback. Note that handler may or may not destroy the event widget or the menu, so you should know how it behaves before accessing any elements after a callback. 
 
 ```lua
-tes3uiElement:forwardEvent(id)
+myObject:forwardEvent(id)
 ```
 
 **Parameters**:
@@ -935,7 +984,7 @@ Returns the descendant element that creation functions used on this element will
 	Some widgets like ScrollPanes are built of multiple layers of elements. When an element is created in a complex widget, it is automatically placed as a child of a content element, but other functions do not access this content element directly. This function finds this content container for any element, so that changing layout and accessing children is possible. For simple elements, the calling element will be returned so that there is always a valid container element.
 
 ```lua
-local result = tes3uiElement:getContentElement()
+local result = myObject:getContentElement()
 ```
 
 **Returns**:
@@ -949,7 +998,7 @@ local result = tes3uiElement:getContentElement()
 Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. Returns `false` if the property key did not have data.
 
 ```lua
-local result = tes3uiElement:getPropertyBool(propName)
+local result = myObject:getPropertyBool(propName)
 ```
 
 **Parameters**:
@@ -967,7 +1016,7 @@ local result = tes3uiElement:getPropertyBool(propName)
 Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. Returns 0 if the property key did not have data.
 
 ```lua
-local result = tes3uiElement:getPropertyFloat(propName)
+local result = myObject:getPropertyFloat(propName)
 ```
 
 **Parameters**:
@@ -985,7 +1034,7 @@ local result = tes3uiElement:getPropertyFloat(propName)
 Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. Returns 0 if the property key did not have data.
 
 ```lua
-local result = tes3uiElement:getPropertyInt(propName)
+local result = myObject:getPropertyInt(propName)
 ```
 
 **Parameters**:
@@ -1012,7 +1061,7 @@ Properties are named variables attached to an element. Gets a property value wit
 	This is required because there is no identifying type information stored with the pointer. If the usertype is incorrect, there are no safety checks keeping the game from crashing.
 
 ```lua
-local result = tes3uiElement:getPropertyObject(propName, expectedUsertype)
+local result = myObject:getPropertyObject(propName, expectedUsertype)
 ```
 
 **Parameters**:
@@ -1031,7 +1080,7 @@ local result = tes3uiElement:getPropertyObject(propName, expectedUsertype)
 Finds the parent menu containing the element. Useful for finding the correct menu to run layout updates on.
 
 ```lua
-local result = tes3uiElement:getTopLevelMenu()
+local result = myObject:getTopLevelMenu()
 ```
 
 **Returns**:
@@ -1045,7 +1094,7 @@ local result = tes3uiElement:getTopLevelMenu()
 Restores the menu's position and size information from the Morrowind.ini file. This may only be called on top-level parents.
 
 ```lua
-tes3uiElement:loadMenuPosition()
+myObject:loadMenuPosition()
 ```
 
 ***
@@ -1153,7 +1202,7 @@ The standard type signature for events.
 				For mouse events only. X and Y coordinates of the pointer relative to the top-left of the element.
 
 ```lua
-tes3uiElement:register(eventID, callback)
+myObject:register(eventID, callback)
 ```
 
 **Parameters**:
@@ -1168,7 +1217,7 @@ tes3uiElement:register(eventID, callback)
 Sets an `event` handler to run after any existing event handler on the element. Can be any event usable with `register`. The callback receives an argument with the event data. See `register` for details.
 
 ```lua
-tes3uiElement:registerAfter(eventID, callback)
+myObject:registerAfter(eventID, callback)
 ```
 
 **Parameters**:
@@ -1183,7 +1232,7 @@ tes3uiElement:registerAfter(eventID, callback)
 Sets an `event` handler to run before any existing event handler on the element. Can be any event usable with `register`. The callback receives an argument with the event data. See `register` for details.
 
 ```lua
-tes3uiElement:registerBefore(eventID, callback)
+myObject:registerBefore(eventID, callback)
 ```
 
 **Parameters**:
@@ -1200,7 +1249,7 @@ tes3uiElement:registerBefore(eventID, callback)
 	Returns `true` if the operation succeeded, or `false` if at least one argument was invalid.
 
 ```lua
-local result = tes3uiElement:reorderChildren(insertBefore, moveFrom, count)
+local result = myObject:reorderChildren(insertBefore, moveFrom, count)
 ```
 
 **Parameters**:
@@ -1220,7 +1269,7 @@ local result = tes3uiElement:reorderChildren(insertBefore, moveFrom, count)
 Saves the menu's position and size information to the Morrowind.ini file. This may only be called on top-level parents. Note that most menus save their position automatically.
 
 ```lua
-tes3uiElement:saveMenuPosition()
+myObject:saveMenuPosition()
 ```
 
 ***
@@ -1230,7 +1279,7 @@ tes3uiElement:saveMenuPosition()
 Sets a property value with `prop` as the property key. Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties.
 
 ```lua
-tes3uiElement:setPropertyBool(propName, value)
+myObject:setPropertyBool(propName, value)
 ```
 
 **Parameters**:
@@ -1245,7 +1294,7 @@ tes3uiElement:setPropertyBool(propName, value)
 Sets a property value with `prop` as the property key. Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties.
 
 ```lua
-tes3uiElement:setPropertyFloat(propName, value)
+myObject:setPropertyFloat(propName, value)
 ```
 
 **Parameters**:
@@ -1260,7 +1309,7 @@ tes3uiElement:setPropertyFloat(propName, value)
 Sets a property value with `prop` as the property key. Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties.
 
 ```lua
-tes3uiElement:setPropertyInt(propName, value)
+myObject:setPropertyInt(propName, value)
 ```
 
 **Parameters**:
@@ -1275,7 +1324,7 @@ tes3uiElement:setPropertyInt(propName, value)
 Sets a property value with `prop` as the property key. Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties.
 
 ```lua
-tes3uiElement:setPropertyObject(propName, value)
+myObject:setPropertyObject(propName, value)
 ```
 
 **Parameters**:
@@ -1290,7 +1339,7 @@ tes3uiElement:setPropertyObject(propName, value)
 Reorders the element's children given a sorting function.
 
 ```lua
-tes3uiElement:sortChildren(sortFunction)
+myObject:sortChildren(sortFunction)
 ```
 
 **Parameters**:
@@ -1304,7 +1353,7 @@ tes3uiElement:sortChildren(sortFunction)
 Triggers a UI event on an element, either using supplied event data, or by constructing new event data using `eventName`. `eventName` is the same as used in `register`.
 
 ```lua
-tes3uiElement:triggerEvent(eventID)
+myObject:triggerEvent(eventID)
 ```
 
 **Parameters**:
@@ -1318,7 +1367,7 @@ tes3uiElement:triggerEvent(eventID)
 Unregisters an `event` handler.
 
 ```lua
-local wasUnregistered = tes3uiElement:unregister(eventID)
+local wasUnregistered = myObject:unregister(eventID)
 ```
 
 **Parameters**:
@@ -1336,7 +1385,7 @@ local wasUnregistered = tes3uiElement:unregister(eventID)
 Unregisters a function previously registered using `:registerAfter`.
 
 ```lua
-local wasUnregistered = tes3uiElement:unregisterAfter(eventID, callback)
+local wasUnregistered = myObject:unregisterAfter(eventID, callback)
 ```
 
 **Parameters**:
@@ -1355,7 +1404,7 @@ local wasUnregistered = tes3uiElement:unregisterAfter(eventID, callback)
 Unregisters a function previously registered using `:registerBefore`.
 
 ```lua
-local wasUnregistered = tes3uiElement:unregisterBefore(eventID, callback)
+local wasUnregistered = myObject:unregisterBefore(eventID, callback)
 ```
 
 **Parameters**:
@@ -1374,7 +1423,7 @@ local wasUnregistered = tes3uiElement:unregisterBefore(eventID, callback)
 Updates a menu's element layout and all child elements. Needs to be called on a top level menu when any elements contained in it are added, moved or resized.
 
 ```lua
-tes3uiElement:updateLayout()
+myObject:updateLayout()
 ```
 
 ***

@@ -9,6 +9,9 @@ namespace TES3 {
 		Sound * sound; // 0x0
 		unsigned char chance; // 0x4
 
+		RegionSound() = delete;
+		~RegionSound() = delete;
+
 		//
 		// Custom functions.
 		//
@@ -26,6 +29,9 @@ namespace TES3 {
 		LeveledCreature * sleepCreature; // 0x5C
 		IteratedList<RegionSound*> sounds; // 0x60
 		int currentWeatherIndex; // 0x74
+
+		Region() = delete;
+		~Region() = delete;
 
 		//
 		// Other related this-call functions.

@@ -20,6 +20,9 @@ namespace TES3 {
 		AIPlanner * planners[500]; // 0x5C
 		float aiDistance; // 0x82C
 
+		ProcessManager() = delete;
+		~ProcessManager() = delete;
+
 		//
 		// Related this-call functions.
 		//
@@ -42,6 +45,9 @@ namespace TES3 {
 		IteratedList<MobileProjectile*> activeProjectiles; // 0x0
 		NI::Pointer<NI::Node> worldProjectileRoot; // 0x14
 		CriticalSection criticalSection; // 0x18
+
+		ProjectileController() = delete;
+		~ProjectileController() = delete;
 
 		//
 		// Custom functions.
@@ -67,6 +73,9 @@ namespace TES3 {
 		IteratedList<Reference*> listPropReferences;
 		CriticalSection criticalSection_Props;
 		CriticalSection criticalSection_Mobs;
+
+		MobController() = delete;
+		~MobController() = delete;
 
 		//
 		// Related this-call functions.

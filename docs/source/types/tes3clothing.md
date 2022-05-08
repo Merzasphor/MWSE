@@ -181,7 +181,7 @@ An array-style table of the [`tes3wearablePart`](https://mwse.github.io/MWSE/typ
 
 **Returns**:
 
-* `result` (table)
+* `result` ([tes3wearablePart](../../types/tes3wearablePart)[])
 
 ***
 
@@ -342,12 +342,33 @@ The weight of the object.
 Serializes the object to json.
 
 ```lua
-local string = tes3baseObject:__tojson()
+local string = myObject:__tojson()
 ```
 
 **Returns**:
 
 * `string` (string)
+
+***
+
+### `createCopy`
+
+Creates a copy of this object.
+
+```lua
+local newObject = myObject:createCopy({ id = ..., addToObjectList = ..., sourceless = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `id` (string): *Optional*. The new object's ID. If one is not provided, a randomly generated one will be used.
+	* `addToObjectList` (boolean): *Default*: `true`. If true, the object will be added to the data handler. If this is false, the new object may not have a randomly generated ID. Do not use this without knowing the implications.
+	* `sourceless` (boolean): *Default*: `false`. If true, the object will be made sourceless, and will not be serialized to the save game. If the object is copied outside of a save game, the object will **always** be sourceless.
+
+**Returns**:
+
+* `newObject` ([tes3clothing](../../types/tes3clothing))
 
 ***
 

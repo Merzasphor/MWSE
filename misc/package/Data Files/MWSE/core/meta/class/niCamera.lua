@@ -3,11 +3,11 @@
 
 --- Object that represent a camera. Position and orientation is determined by parent properties.
 --- @class niCamera : niAVObject, niObjectNET, niObject
---- @field cullingPlanes table The culling planes of the camera.
+--- @field cullingPlanes tes3vector4[] The culling planes of the camera.
 --- @field lodAdjust number The level-of-detail adjustment value for the camera. A higher value will lower the LOD of the objects drawn by the camera.
 --- @field port tes3vector4 The port on the backbuffer of the camera.
---- @field renderer niAlphaProperty|niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niFogProperty|niGeometry|niGeometryData|niKeyframeController|niKeyframeData|niLight|niLookAtController|niMaterialProperty|niNode|niPixelData|niPointLight|niSourceTexture|niSpotLight|niStencilProperty|niSwitchNode|niTexturingProperty|niTimeController|niTriBasedGeometry|niTriBasedGeometryData|niTriShape|niTriShapeData|niVertexColorProperty *Read-only*. The renderer of the camera.
---- @field scene niAlphaProperty|niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niFogProperty|niGeometry|niGeometryData|niKeyframeController|niKeyframeData|niLight|niLookAtController|niMaterialProperty|niNode|niPixelData|niPointLight|niSourceTexture|niSpotLight|niStencilProperty|niSwitchNode|niTexturingProperty|niTimeController|niTriBasedGeometry|niTriBasedGeometryData|niTriShape|niTriShapeData|niVertexColorProperty *Read-only*. The scene of the camera.
+--- @field renderer niAlphaProperty|niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niFogProperty|niGeometry|niGeometryData|niKeyframeController|niKeyframeData|niLight|niLookAtController|niMaterialProperty|niNode|niPixelData|niPointLight|niSourceTexture|niSpotLight|niStencilProperty|niSwitchNode|niTexture|niTexturingProperty|niTimeController|niTriBasedGeometry|niTriBasedGeometryData|niTriShape|niTriShapeData|niVertexColorProperty *Read-only*. The renderer of the camera.
+--- @field scene niAlphaProperty|niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niFogProperty|niGeometry|niGeometryData|niKeyframeController|niKeyframeData|niLight|niLookAtController|niMaterialProperty|niNode|niPixelData|niPointLight|niSourceTexture|niSpotLight|niStencilProperty|niSwitchNode|niTexture|niTexturingProperty|niTimeController|niTriBasedGeometry|niTriBasedGeometryData|niTriShape|niTriShapeData|niVertexColorProperty *Read-only*. The scene of the camera.
 --- @field viewDistance number The view distance of the camera.
 --- @field worldDirection tes3vector3 Defines the X-axis of the camera.
 --- @field worldRight tes3vector3 Defines the Z-axis of the camera.

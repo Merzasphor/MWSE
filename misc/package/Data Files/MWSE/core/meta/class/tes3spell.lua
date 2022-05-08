@@ -7,7 +7,7 @@
 --- @field autoCalc boolean Determines if the magicka cost for the spell is autocalculated, and if the spell may be automatically assigned to NPCs if they are skillful enough to cast it.
 --- @field basePurchaseCost number Calculates the base cost to purchase the spell. This value is not adjusted by mercantile skills.
 --- @field castType number The spell's cast type. Maps to [`tes3.spellType`](https://mwse.github.io/MWSE/references/spell-types/) constants.
---- @field effects table *Read-only*. An array-style table of the [`tes3effect`](https://mwse.github.io/MWSE/types/tes3effect/) data on the object.
+--- @field effects tes3effect[] *Read-only*. An array-style table of the [`tes3effect`](https://mwse.github.io/MWSE/types/tes3effect/) data on the object.
 --- @field flags number A bit field for the spell's flags.
 --- @field isActiveCast boolean *Read-only*. True if the spell is actively cast. If false, the spell's effects are always passively affecting the owner.
 --- @field magickaCost number No description yet available.
@@ -35,6 +35,23 @@ function tes3spell:calculateCastChance(params) end
 --- @class tes3spell.calculateCastChance.params
 --- @field checkMagicka boolean? *Optional*. Determines if the caster's magicka should be taken into account during the calculation.
 --- @field caster tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer The caster to perform the calculation against.
+
+--- Creates a copy of this object.
+--- @param params tes3spell.createCopy.params This table accepts the following values:
+--- 
+--- `id`: string? — *Optional*. The new object's ID. If one is not provided, a randomly generated one will be used.
+--- 
+--- `addToObjectList`: boolean? — *Default*: `true`. If true, the object will be added to the data handler. If this is false, the new object may not have a randomly generated ID. Do not use this without knowing the implications.
+--- 
+--- `sourceless`: boolean? — *Default*: `false`. If true, the object will be made sourceless, and will not be serialized to the save game. If the object is copied outside of a save game, the object will **always** be sourceless.
+--- @return tes3spell newObject No description yet available.
+function tes3spell:createCopy(params) end
+
+---Table parameter definitions for `tes3spell.createCopy`.
+--- @class tes3spell.createCopy.params
+--- @field id string? *Optional*. The new object's ID. If one is not provided, a randomly generated one will be used.
+--- @field addToObjectList boolean? *Default*: `true`. If true, the object will be added to the data handler. If this is false, the new object may not have a randomly generated ID. Do not use this without knowing the implications.
+--- @field sourceless boolean? *Default*: `false`. If true, the object will be made sourceless, and will not be serialized to the save game. If the object is copied outside of a save game, the object will **always** be sourceless.
 
 --- Gets the number of active effects in the spell effect table.
 --- @return number result No description yet available.

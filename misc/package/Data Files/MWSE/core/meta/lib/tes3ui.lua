@@ -19,6 +19,11 @@ function tes3ui.acquireTextInput(element) end
 --- @param capture boolean Turns on mouse capture for the element currently processing a mouse event if true, sending all further mouse events to that element. Turns off capture if false.
 function tes3ui.captureMouseDrag(capture) end
 
+--- Creates a simple dialogue choice, as per the `Choice` mwscript function.
+--- @param text string The text to display for the choice.
+--- @param index number The choice index associated with the given text.
+function tes3ui.choice(text, index) end
+
 --- Closes the Journal.
 --- @return boolean result No description yet available.
 function tes3ui.closeJournal() end
@@ -58,10 +63,26 @@ function tes3ui.createMenu(params) end
 --- @field fixedFrame boolean? *Default*: `false`. Constructs a fixed (non-draggable) frame and background for the menu. The layout system should automatically centre and size it to fit whatever is added to the menu.
 --- @field loadable boolean? *Default*: `true`. If set to false, calls to loadMenuPosition will fail.
 
+--- Creates a respond text. This function is used for the mwscript `Choice` function.
+--- @param params tes3ui.createResponseText.params This table accepts the following values:
+--- 
+--- `text`: string — The text to display.
+--- 
+--- `type`: number? — *Optional*. The type for the response. Defaults to `choice` responses.
+--- 
+--- `index`: number? — *Optional*. The answer index for the response. Only used for `choice` responses.
+function tes3ui.createResponseText(params) end
+
+---Table parameter definitions for `tes3ui.createResponseText`.
+--- @class tes3ui.createResponseText.params
+--- @field text string The text to display.
+--- @field type number? *Optional*. The type for the response. Defaults to `choice` responses.
+--- @field index number? *Optional*. The answer index for the response. Only used for `choice` responses.
+
 --- Creates a tooltip menu, which can be an empty menu or an item tooltip. This should be called from within a tooltip event callback. These automatically follow the mouse cursor, and are also destroyed automatically when the mouse leaves the originating element. Creating an item tooltip will invoke the uiObjectTooltip event.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uicreatetooltipmenu).
---- @param params tes3ui.createTooltipMenu.params This table accepts the following values:
+--- @param params tes3ui.createTooltipMenu.params? This table accepts the following values:
 --- 
 --- `item`: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string|nil — *Optional*. The item to create a tooltip for. If not specified, the tooltip will be empty.
 --- 

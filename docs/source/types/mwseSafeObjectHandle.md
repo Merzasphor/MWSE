@@ -9,7 +9,7 @@ A handle to safely operate on ([tes3object](https://mwse.github.io/MWSE/types/te
 Returns the object of this handle.
 
 ```lua
-local result = mwseSafeObjectHandle:getObject()
+local result = myObject:getObject()
 ```
 
 **Returns**:
@@ -23,7 +23,7 @@ local result = mwseSafeObjectHandle:getObject()
 Returns true if the object of this handle is still valid. Objects that are invalid do no longer exist and cannot be used.
 
 ```lua
-mwseSafeObjectHandle:valid()
+myObject:valid()
 ```
 
 ***

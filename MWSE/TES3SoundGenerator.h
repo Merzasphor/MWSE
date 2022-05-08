@@ -22,6 +22,9 @@ namespace TES3 {
 		Sound* sound;
 		SoundType soundType;
 
+		SoundGenerator() = delete;
+		~SoundGenerator() = delete;
+
 		//
 		// Virtual table overrides.
 		//

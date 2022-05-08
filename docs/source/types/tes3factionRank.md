@@ -10,7 +10,7 @@ A container describing an individual rank inside a faction. In Morrowind, the pl
 
 **Returns**:
 
-* `result` (table)
+* `result` (number[])
 
 ***
 
@@ -30,7 +30,7 @@ The reputation requirement to advance to this rank.
 
 **Returns**:
 
-* `result` (table)
+* `result` (number[])
 
 ***
 

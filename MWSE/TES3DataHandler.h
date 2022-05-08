@@ -35,6 +35,9 @@ namespace TES3 {
 		HashMap<const char*, NI::Node*>* NIFs; // 0x0
 		HashMap<const char*, KeyframeDefinition*>* KFs; // 0x4
 
+		MeshData() = delete;
+		~MeshData() = delete;
+
 		// Path is relative to Data Files.
 		NI::Node* loadMesh(const char* path);
 		NI::Pointer<NI::Node> loadMeshUncached(const char* path);
@@ -134,6 +137,9 @@ namespace TES3 {
 		Reference * playerSaveGame; // 0xB384
 		CriticalSection criticalSection; // 0xB388
 
+		NonDynamicData() = delete;
+		~NonDynamicData() = delete;
+
 		//
 		// Other related this-call functions.
 		//
@@ -211,6 +217,9 @@ namespace TES3 {
 		Sound* sound;
 		SoundBuffer* soundBuffer;
 		unsigned char unknown_0xC;
+
+		SoundEvent() = delete;
+		~SoundEvent() = delete;
 	};
 	static_assert(sizeof(SoundEvent) == 0x10, "TES3::SoundEvent failed size validation");
 
@@ -233,6 +242,9 @@ namespace TES3 {
 			unsigned char loadingFlags;
 			Cell * cell;
 			void * landRenderData;
+
+			ExteriorCellData() = delete;
+			~ExteriorCellData() = delete;
 		};
 
 		NonDynamicData * nonDynamicData; // 0x0
@@ -321,6 +333,9 @@ namespace TES3 {
 		Sound * currentAmbientWaterSound; // 0xB54C
 		int exteriorCellDataBufferSize; // 0xB550
 		void * exteriorCellDataBuffer; // 0xB554
+
+		DataHandler() = delete;
+		~DataHandler() = delete;
 
 		//
 		// Custom static data.

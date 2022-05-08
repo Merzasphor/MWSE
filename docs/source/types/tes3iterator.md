@@ -41,7 +41,7 @@ A collection that can be iterated over Contains items in a simple linked list, a
 *Read-only*. Returns the amount of items in the iterator.
 
 ```lua
-local result = tes3iterator:size()
+local result = myObject:size()
 ```
 
 **Returns**:

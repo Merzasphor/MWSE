@@ -581,7 +581,7 @@ The wind velocity for the next weather.
 Calculates the sun damage based on the current weather.
 
 ```lua
-local result = tes3weatherController:calcSunDamageScalar()
+local result = myObject:calcSunDamageScalar()
 ```
 
 **Parameters**:
@@ -598,7 +598,7 @@ local result = tes3weatherController:calcSunDamageScalar()
 Immediately switches the weather to the provided weather parameter.
 
 ```lua
-tes3weatherController:switchImmediate(weatherId)
+myObject:switchImmediate(weatherId)
 ```
 
 **Parameters**:
@@ -612,7 +612,7 @@ tes3weatherController:switchImmediate(weatherId)
 Transitions the weather to the provided weather parameter based on the weather controller settings.
 
 ```lua
-tes3weatherController:switchTransition(weatherId)
+myObject:switchTransition(weatherId)
 ```
 
 **Parameters**:
@@ -626,7 +626,7 @@ tes3weatherController:switchTransition(weatherId)
 Updates the weather controller visuals. This should be called after any weather transitions.
 
 ```lua
-tes3weatherController:updateVisuals()
+myObject:updateVisuals()
 ```
 
 **Parameters**:

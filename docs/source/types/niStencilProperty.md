@@ -35,6 +35,16 @@ The value of the stencil buffer enable flag.
 
 ***
 
+### `extraData`
+
+*Read-only*. The first extra data available on the object.
+
+**Returns**:
+
+* `result` (niExtraData)
+
+***
+
 ### `failAction`
 
 The action that is taken in the stencil buffer when the stencil test fails.
@@ -75,6 +85,16 @@ The action that is taken in the stencil buffer when the stencil test passes and 
 
 ***
 
+### `refCount`
+
+*Read-only*. The number of references that exist for this object. When this value reaches zero, the object will be deleted.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
 ### `reference`
 
 The stencil reference.
@@ -95,9 +115,19 @@ The stencil reference.
 
 ***
 
+### `RTTI`
+
+*Read-only*. The runtime type information for this object. This is an alias for the `.runTimeTypeInformation` property.
+
+**Returns**:
+
+* `result` ([niRTTI](../../types/niRTTI))
+
+***
+
 ### `runTimeTypeInformation`
 
-The runtime type information for this object.
+*Read-only*. The runtime type information for this object.
 
 **Returns**:
 
@@ -142,7 +172,7 @@ The action that is taken in the stencil buffer when the stencil test passes but 
 Creates a copy of this object.
 
 ```lua
-local result = niObject:clone()
+local result = myObject:clone()
 ```
 
 **Returns**:
@@ -151,12 +181,30 @@ local result = niObject:clone()
 
 ***
 
+### `getGameReference`
+
+Searches for an niExtraData on this object to see if it has one that holds a related reference.
+
+```lua
+local reference = myObject:getGameReference(searchParents)
+```
+
+**Parameters**:
+
+* `searchParents` (boolean): *Default*: `false`. If true, all parent objects (if applicable) are also searched.
+
+**Returns**:
+
+* `reference` ([tes3reference](../../types/tes3reference))
+
+***
+
 ### `isInstanceOfType`
 
 Determines if the object is of a given type, or of a type derived from the given type. Types can be found in the tes3.niType table.
 
 ```lua
-local result = niObject:isInstanceOfType(type)
+local result = myObject:isInstanceOfType(type)
 ```
 
 **Parameters**:
@@ -174,7 +222,7 @@ local result = niObject:isInstanceOfType(type)
 Determines if the object is of a given type. Types can be found in the tes3.niType table.
 
 ```lua
-local result = niObject:isOfType(type)
+local result = myObject:isOfType(type)
 ```
 
 **Parameters**:
@@ -192,7 +240,7 @@ local result = niObject:isOfType(type)
 Add a controller to the object as the first controller.
 
 ```lua
-niObjectNET:prependController(type)
+myObject:prependController(type)
 ```
 
 **Parameters**:
@@ -206,7 +254,7 @@ niObjectNET:prependController(type)
 Removes all controllers.
 
 ```lua
-niObjectNET:removeAllControllers()
+myObject:removeAllControllers()
 ```
 
 ***
@@ -216,12 +264,45 @@ niObjectNET:removeAllControllers()
 Removes a controller from the object.
 
 ```lua
-niObjectNET:removeController(type)
+myObject:removeController(controller)
 ```
 
 **Parameters**:
 
-* `type` ([niTimeController](../../types/niTimeController))
+* `controller` ([niTimeController](../../types/niTimeController))
+
+***
+
+### `saveBinary`
+
+Serializes the object, and writes it to the given file.
+
+```lua
+local success = myObject:saveBinary(path)
+```
+
+**Parameters**:
+
+* `path` (string): The path to write the file at, relative to the Morrowind installation folder.
+
+**Returns**:
+
+* `success` (boolean): If true the object was successfully serialized.
+
+***
+
+### `setFlag`
+
+Sets a given flag in the niObjectNET flag data. The specifics use of the flag is dependent on the real underlying type.
+
+```lua
+myObject:setFlag(state, index)
+```
+
+**Parameters**:
+
+* `state` (boolean)
+* `index` (number)
 
 ***
 

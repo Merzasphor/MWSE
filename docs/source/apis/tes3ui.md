@@ -53,6 +53,21 @@ tes3ui.captureMouseDrag(capture)
 
 ***
 
+### `tes3ui.choice`
+
+Creates a simple dialogue choice, as per the `Choice` mwscript function.
+
+```lua
+tes3ui.choice(text, index)
+```
+
+**Parameters**:
+
+* `text` (string): The text to display for the choice.
+* `index` (number): The choice index associated with the given text.
+
+***
+
 ### `tes3ui.closeJournal`
 
 Closes the Journal.
@@ -112,6 +127,23 @@ local result = tes3ui.createMenu({ id = ..., dragFrame = ..., fixedFrame = ..., 
 
 ***
 
+### `tes3ui.createResponseText`
+
+Creates a respond text. This function is used for the mwscript `Choice` function.
+
+```lua
+tes3ui.createResponseText({ text = ..., type = ..., index = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `text` (string): The text to display.
+	* `type` (number): *Optional*. The type for the response. Defaults to `choice` responses.
+	* `index` (number): *Optional*. The answer index for the response. Only used for `choice` responses.
+
+***
+
 ### `tes3ui.createTooltipMenu`
 
 Creates a tooltip menu, which can be an empty menu or an item tooltip. This should be called from within a tooltip event callback. These automatically follow the mouse cursor, and are also destroyed automatically when the mouse leaves the originating element. Creating an item tooltip will invoke the uiObjectTooltip event.
@@ -122,7 +154,7 @@ local result = tes3ui.createTooltipMenu({ item = ..., itemData = ... })
 
 **Parameters**:
 
-* `params` (table)
+* `params` (table): *Optional*.
 	* `item` ([tes3item](../../types/tes3item), string): *Optional*. The item to create a tooltip for. If not specified, the tooltip will be empty.
 	* `itemData` ([tes3itemData](../../types/tes3itemData)): *Optional*. The item data for the item.
 

@@ -181,6 +181,9 @@ namespace TES3 {
 		int unknown_0x474;
 		int unknown_0x478;
 
+		ScriptCompiler() = delete;
+		~ScriptCompiler() = delete;
+
 		bool compile(char* scriptText);
 		bool compileFunction(int function);
 

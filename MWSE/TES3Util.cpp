@@ -196,15 +196,7 @@ namespace mwse::tes3 {
 			return nullptr;
 		}
 
-		auto data = new TES3::SoulGemData();
-		data->item = const_cast<TES3::Misc*>(item);
-		data->id = item->objectID;
-		data->name = item->name;
-		data->mesh = item->model;
-		data->texture = item->icon;
-		data->value = item->value;
-		data->weight = item->weight;
-
+		auto data = new TES3::SoulGemData(item);
 		customSoulGems[item] = data;
 		return data;
 	}

@@ -14,6 +14,9 @@ namespace TES3 {
 		Sound * rainLoopSound; // 0x434
 		bool rainPlaying;  // 0x438
 
+		WeatherRain() = delete;
+		~WeatherRain() = delete;
+
 		//
 		// Custom functions.
 		//

@@ -162,7 +162,7 @@ Path to the related image representing the birthsign.
 Serializes the object to json.
 
 ```lua
-local string = tes3baseObject:__tojson()
+local string = myObject:__tojson()
 ```
 
 **Returns**:

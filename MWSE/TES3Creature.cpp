@@ -64,6 +64,16 @@ namespace TES3 {
 		BIT_SET(actorFlags, ActorFlagCreature::WalksBit, value);
 	}
 
+	const auto TES3_Creature_ctor = reinterpret_cast<void(__thiscall*)(Creature*)>(0x49C0C0);
+	Creature::Creature() {
+		TES3_Creature_ctor(this);
+	}
+
+	const auto TES3_Creature_dtor = reinterpret_cast<void(__thiscall*)(Creature*)>(0x49C280);
+	Creature::~Creature() {
+		TES3_Creature_dtor(this);
+	}
+
 	std::reference_wrapper<int[8]> Creature::getAttributes() {
 		return std::ref(attributes);
 	}

@@ -92,6 +92,10 @@ namespace TES3 {
 
 		void showInventorySelectMenu_lua(sol::table params);
 
+		void __cdecl createResponseText(Element* parent, const char* text, int type, int answerIndex = -1);
+		void createResponseText_lua(sol::table params);
+		void choice(const char* text, int index);
+
 		//
 		// Helper functions.
 		//
