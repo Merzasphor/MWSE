@@ -32,10 +32,10 @@ namespace mwse::lua::event {
 		std::string thingId = baseId;
 		thingId += "_Thing";
 
-		auto menu = TES3::UI::findMenu(TES3::UI::registerID(baseId));
+		auto menu = TES3::UI::findMenu(baseId);
 		if (menu) {
 			auto thingyProperty = TES3::UI::registerProperty(thingId.c_str());
-			auto contents = static_cast<TES3::UI::WidgetScrollPane*>(menu->findChild(TES3::UI::registerID(scrollpaneId.c_str())))->getContentPane();
+			auto contents = static_cast<TES3::UI::WidgetScrollPane*>(menu->findChild(scrollpaneId.c_str()))->getContentPane();
 			for (auto columnItt = contents->vectorChildren.begin; columnItt != contents->vectorChildren.end; columnItt++) {
 				for (auto tileItt = (*columnItt)->vectorChildren.begin; tileItt != (*columnItt)->vectorChildren.end; tileItt++) {
 					auto tile = reinterpret_cast<TES3::UI::InventoryTile*>((*tileItt)->getProperty(TES3::UI::PropertyType::Pointer, thingyProperty).ptrValue);

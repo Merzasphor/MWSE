@@ -106,6 +106,7 @@ namespace TES3 {
 			//
 
 			Element* findChild(UI_ID id) const;
+			Element* findChild(const char* id) const;
 			Element* findChild_lua(sol::object id) const;
 			int getIndexOfChild(const Element *child) const;
 			Element* getContentElement();

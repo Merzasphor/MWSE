@@ -169,6 +169,10 @@ namespace TES3 {
 			return TES3_ui_findChildElement(this, id);
 		}
 
+		Element* Element::findChild(const char* id) const {
+			return TES3_ui_findChildElement(this, registerID(id));
+		}
+
 		Element* Element::findChild_lua(sol::object id) const {
 			return findChild(mwse::lua::getUIIDFromObject(id));
 		}

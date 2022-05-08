@@ -1198,7 +1198,7 @@ namespace mwse::lua {
 	//
 
 	void __cdecl ReenableMenuDialogue() {
-		TES3::UI::Element* dialog = TES3::UI::findMenu(TES3::UI::registerID("MenuDialog"));
+		TES3::UI::Element* dialog = TES3::UI::findMenu("MenuDialog");
 		if (dialog != nullptr) {
 			// Call the original function
 			reinterpret_cast<void(__cdecl*)()>(0x5C0B60)();

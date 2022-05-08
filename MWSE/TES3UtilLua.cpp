@@ -469,7 +469,7 @@ namespace mwse::lua {
 
 			// Temporary hook into the function that creates message boxes. 
 			reinterpret_cast<void(__cdecl*)(const char*, ...)>(0x5F1AA0)(message.c_str(), buttonTextStruct, NULL);
-			return TES3::UI::findMenu(TES3::UI::registerID("MenuMessage"));
+			return TES3::UI::findMenu("MenuMessage");
 		}
 		else {
 			sol::protected_function_result result = state["tostring"](param);
@@ -3026,12 +3026,12 @@ namespace mwse::lua {
 			serviceActor = TES3::WorldController::get()->getMobilePlayer();
 		}
 		TES3_UI_showRepairServiceMenu(serviceActor);
-		TES3::UI::enterMenuMode(TES3::UI::registerID("MenuServiceRepair"));
+		TES3::UI::enterMenuMode("MenuServiceRepair");
 	}
 
 	const auto TES3_UI_closeRepairServiceMenu = reinterpret_cast<char(__cdecl*)()>(0x615520);
 	void closeRepairServiceMenu() {
-		TES3::UI::Element* menuRepairService = TES3::UI::findMenu(TES3::UI::registerID("MenuServiceRepair"));
+		TES3::UI::Element* menuRepairService = TES3::UI::findMenu("MenuServiceRepair");
 		if (menuRepairService) {
 			TES3_UI_closeRepairServiceMenu();
 		}
@@ -5167,7 +5167,7 @@ namespace mwse::lua {
 
 	const auto TES3_UI_closeRestMenu = reinterpret_cast<char(__cdecl*)()>(0x610420);
 	void closeRestMenu() {
-		TES3::UI::Element* menuRest = TES3::UI::findMenu(TES3::UI::registerID("MenuRestWait"));
+		TES3::UI::Element* menuRest = TES3::UI::findMenu("MenuRestWait");
 		if (menuRest) {
 			TES3_UI_closeRestMenu();
 		}
@@ -5182,21 +5182,21 @@ namespace mwse::lua {
 			}
 		}
 		TES3::UI::showSpellmakingMenuWithOverride(serviceActor);
-		TES3::UI::enterMenuMode(TES3::UI::registerID("MenuSpellmaking"));
+		TES3::UI::enterMenuMode("MenuSpellmaking");
 		return true;
 	}
 
 	const auto TES3_UI_closeSpellmakingMenu = reinterpret_cast<char(__cdecl*)(TES3::UI::Element*)>(0x621C60);
 	const auto TES3_UI_closeMenuSetValues = reinterpret_cast<char(__cdecl*)(TES3::UI::Element*)>(0x61B870);
 	void closeSpellmakingMenu() {
-		TES3::UI::Element* menuSpellmaking = TES3::UI::findMenu(TES3::UI::registerID("MenuSpellmaking"));
+		TES3::UI::Element* menuSpellmaking = TES3::UI::findMenu("MenuSpellmaking");
 		if (menuSpellmaking) {
-			TES3::UI::Element* menuSetValues = TES3::UI::findMenu(TES3::UI::registerID("MenuSetValues"));
+			TES3::UI::Element* menuSetValues = TES3::UI::findMenu("MenuSetValues");
 			if (menuSetValues) {
-				TES3::UI::Element* menuSetValuesCancelButton = menuSetValues->findChild(TES3::UI::registerID("MenuSetValues_Cancelbutton"));
+				TES3::UI::Element* menuSetValuesCancelButton = menuSetValues->findChild("MenuSetValues_Cancelbutton");
 				TES3_UI_closeMenuSetValues(menuSetValuesCancelButton);
 			}
-			TES3::UI::Element* menuSpellmakingCancelButton = menuSpellmaking->findChild(TES3::UI::registerID("MenuSpellmaking_Cancelbutton"));
+			TES3::UI::Element* menuSpellmakingCancelButton = menuSpellmaking->findChild("MenuSpellmaking_Cancelbutton");
 			TES3_UI_closeSpellmakingMenu(menuSpellmakingCancelButton);
 		}
 	}

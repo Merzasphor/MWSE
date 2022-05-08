@@ -147,6 +147,10 @@ namespace TES3 {
 			return TES3_ui_findMenu(id);
 		}
 
+		Element* findMenu(const char* id) {
+			return findMenu(registerID(id));
+		}
+
 		Element* findMenu_lua(sol::object id) {
 			return TES3_ui_findMenu(mwse::lua::getUIIDFromObject(id));
 		}
@@ -165,6 +169,10 @@ namespace TES3 {
 
 		bool enterMenuMode(UI_ID id) {
 			return TES3_ui_requestMenuModeOn(id);
+		}
+
+		bool enterMenuMode(const char* id) {
+			return TES3_ui_requestMenuModeOn(registerID(id));
 		}
 
 		bool enterMenuMode_lua(sol::object id) {
