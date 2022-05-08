@@ -11,6 +11,8 @@ namespace mwse::lua {
 			return std::make_unique<ObjectCreator<TES3::Weapon>>();
 		case TES3::ObjectType::Armor:
 			return std::make_unique<ObjectCreator<TES3::Armor>>();
+		case TES3::ObjectType::Book:
+			return std::make_unique<ObjectCreator<TES3::Book>>();
 		case TES3::ObjectType::Clothing:
 			return std::make_unique<ObjectCreator<TES3::Clothing>>();
 		case TES3::ObjectType::Container:
