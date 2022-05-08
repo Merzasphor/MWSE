@@ -30,9 +30,6 @@ namespace TES3 {
 
 		static constexpr auto BOOK_TEXT_CACHE = reinterpret_cast<char**>(0x7CA44C);
 
-		Book() = delete;
-		~Book() = delete;
-
 		//
 		// Other related this-call functions.
 		//
