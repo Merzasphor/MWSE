@@ -72,6 +72,7 @@ namespace mwse::lua {
 			activator->objectFlags = getOptionalParam<unsigned int>(params, "objectFlags", 0);
 
 			activator->objectFlags |= TES3::ObjectFlag::Modified;
+			activator->objectFlags |= TES3::ObjectFlag::LinksResolved;
 
 			if (!TES3::DataHandler::get()->nonDynamicData->addNewObject(activator))
 				throw std::runtime_error("tes3.createObject: could not add the newly created activator in its proper collection.");
@@ -130,6 +131,7 @@ namespace mwse::lua {
 			alchemy->value = getOptionalParam<unsigned short>(params, "value", 0u);
 			alchemy->objectFlags = getOptionalParam<unsigned int>(params, "objectFlags", 0u);
 			alchemy->objectFlags |= TES3::ObjectFlag::Modified;
+			alchemy->objectFlags |= TES3::ObjectFlag::LinksResolved;
 
 			// Set the first effect just so that there is something? TODO: Why?
 			tes3::setEffect(alchemy->effects, 1, TES3::EffectID::WaterBreathing, TES3::SkillID::Invalid, int(TES3::EffectRange::Self), 0, 1, 0, 0);
@@ -296,6 +298,7 @@ namespace mwse::lua {
 			book->enchantCapacity = enchantCapacity;
 
 			book->objectFlags |= TES3::ObjectFlag::Modified;
+			book->objectFlags |= TES3::ObjectFlag::LinksResolved;
 
 			if (!TES3::DataHandler::get()->nonDynamicData->addNewObject(book)) {
 				throw std::runtime_error("tes3.createObject: could not add the newly created book in its proper collection.");
@@ -420,6 +423,7 @@ namespace mwse::lua {
 			enchantment->flags = getOptionalParam<unsigned int>(params, "flags", 0);
 			enchantment->objectFlags = getOptionalParam<unsigned int>(params, "objectFlags", 0);
 			enchantment->objectFlags |= TES3::ObjectFlag::Modified;
+			enchantment->objectFlags |= TES3::ObjectFlag::LinksResolved;
 
 			auto maybeEffects = getOptionalParam<sol::table>(params, "effects");
 			if (maybeEffects) {
@@ -485,6 +489,7 @@ namespace mwse::lua {
 			container->setRespawns(getOptionalParam(params, "respawns", container->getRespawns()));
 			container->actorFlags = getOptionalParam(params, "actorFlags", 0u);
 			container->objectFlags |= TES3::ObjectFlag::Modified;
+			container->objectFlags |= TES3::ObjectFlag::LinksResolved;
 
 			// Ensure is base actor.
 			container->actorFlags |= TES3::ActorFlag::IsBase;
@@ -545,6 +550,7 @@ namespace mwse::lua {
 			miscItem->flags = getOptionalParam<unsigned int>(params, "flags", 0);
 
 			miscItem->objectFlags |= TES3::ObjectFlag::Modified;
+			miscItem->objectFlags |= TES3::ObjectFlag::LinksResolved;
 
 			if (!TES3::DataHandler::get()->nonDynamicData->addNewObject(miscItem))
 				throw std::runtime_error("tes3.createObject: could not add the newly created misc item in its proper collection.");
@@ -590,6 +596,7 @@ namespace mwse::lua {
 
 			soundObject->objectFlags = getOptionalParam<unsigned int>(params, "objectFlags", 0);
 			soundObject->objectFlags |= TES3::ObjectFlag::Modified;
+			soundObject->objectFlags |= TES3::ObjectFlag::LinksResolved;
 
 			if (!TES3::DataHandler::get()->nonDynamicData->addSound(soundObject)) {
 				throw std::runtime_error("tes3.createObject: Could not add the newly created sound in its proper collection.");
@@ -638,6 +645,7 @@ namespace mwse::lua {
 			spell->setPlayerStart(getOptionalParam<bool>(params, "playerStart", spell->getPlayerStart()));
 			spell->objectFlags = getOptionalParam<unsigned int>(params, "objectFlags", 0u);
 			spell->objectFlags |= TES3::ObjectFlag::Modified;
+			spell->objectFlags |= TES3::ObjectFlag::LinksResolved;
 
 			// Set the first effect just so that there is something? TODO: Why?
 			tes3::setEffect(spell->effects, 1, TES3::EffectID::WaterBreathing, TES3::SkillID::Invalid, int(TES3::EffectRange::Self), 0, 1, 0, 0);
@@ -700,6 +708,7 @@ namespace mwse::lua {
 			staticObject->objectFlags = getOptionalParam<unsigned int>(params, "objectFlags", 0);
 
 			staticObject->objectFlags |= TES3::ObjectFlag::Modified;
+			staticObject->objectFlags |= TES3::ObjectFlag::LinksResolved;
 
 			if (!TES3::DataHandler::get()->nonDynamicData->addNewObject(staticObject))
 				throw std::runtime_error("tes3.createObject: could not add the newly created static in its proper collection.");
@@ -786,6 +795,7 @@ namespace mwse::lua {
 			weapon->setIgnoresNormalWeaponResistance(getOptionalParam<bool>(params, "ignoresNormalWeaponResistance", weapon->getIgnoresNormalWeaponResistance()));
 
 			weapon->objectFlags |= TES3::ObjectFlag::Modified;
+			weapon->objectFlags |= TES3::ObjectFlag::LinksResolved;
 
 			if (!TES3::DataHandler::get()->nonDynamicData->addNewObject(weapon)) {
 				throw std::runtime_error("tes3.createObject: could not add the newly created misc item in its proper collection.");
