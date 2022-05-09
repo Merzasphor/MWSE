@@ -372,7 +372,11 @@ namespace TES3 {
 			}
 
 			if (mwse::lua::getOptionalParam(params, "addToObjectList", true)) {
-				TES3::DataHandler::get()->nonDynamicData->addNewObject(created);
+				if (!TES3::DataHandler::get()->nonDynamicData->addNewObject(created)) {
+					delete created;
+					created = nullptr;
+					throw std::runtime_error("tes3object:createCopy(): Could not add the newly created object to the data handler.");
+				}
 			}
 
 			if (mwse::lua::getOptionalParam(params, "sourceless", false) || TES3::WorldController::get()->getMobilePlayer() == nullptr) {
