@@ -603,6 +603,26 @@ local success = tes3.beginTransform({ reference = ... })
 
 ***
 
+### `tes3.calculateChargeUse`
+
+Calculates the actual charge use of an enchantment by a mobile actor, after skills are applied. Invokes the enchantChargeUse event to account for modded charge usage. Takes into account the MCP charge use rebalance patch, if activated.
+
+```lua
+local chargeUse = tes3.calculateChargeUse({ object = ..., mobile = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `object` ([tes3enchantment](../../types/tes3enchantment)): The enchantment to check.
+	* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): The mobile actor that would be casting the enchantment.
+
+**Returns**:
+
+* `chargeUse` (number): Actual charge use.
+
+***
+
 ### `tes3.calculatePrice`
 
 Calculates a price, given a merchant and associated trading data. This is useful beyond accessing the object's `.value` field in that it raises the appropriate events to let other mods modify the values.

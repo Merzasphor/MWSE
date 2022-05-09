@@ -82,6 +82,7 @@
 #include "LuaCalcSpellPriceEvent.h"
 #include "LuaCalcTrainingPriceEvent.h"
 #include "LuaCalcTravelPriceEvent.h"
+#include "LuaEnchantChargeUseEvent.h"
 
 #include "BitUtil.h"
 #include "MathUtil.h"
@@ -5436,6 +5437,55 @@ namespace mwse::lua {
 		return price;
 	}
 
+	int calculateChargeUse(sol::table params) {
+		auto enchant = getOptionalParam<TES3::Enchantment*>(params, "enchant").value_or(nullptr);
+		auto mobile = getOptionalParamMobileActor(params, "mobile");
+
+		if (!enchant) {
+			throw std::invalid_argument("calculateChargeUse: enchant parameter required.");
+		}
+		if (!mobile) {
+			throw std::invalid_argument("calculateChargeUse: mobile parameter required.");
+		}
+
+		// Cast once items do not use charges.
+		if (enchant->castType == TES3::EnchantmentCastType::Once) {
+			return 0;
+		}
+
+		// Calculate base charge cost.
+		int charge = enchant->chargeCost;
+		int skill = mobile->getSkillValue(TES3::SkillID::Enchant);
+
+		// Check for enchantedItemRebalance patch to select correct charge calculation.
+		if (mcp::getFeatureEnabled(mcp::feature::EnchantedItemRebalance)) {
+			charge = int(charge * (250.0 - skill) * 0.004);
+		}
+		else {
+			charge = int(charge * (110.0 - skill) * 0.01);
+		}
+		charge = std::max(1, charge);
+
+		// Fire off the event.
+		if (event::EnchantChargeUseEvent::getEventEnabled()) {
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			bool isCast = false;
+
+			sol::object eventResult = stateHandle.triggerEvent(new event::EnchantChargeUseEvent(enchant, mobile, charge, isCast));
+
+			// Allow the event to modify charge.
+			if (eventResult.valid()) {
+				sol::table eventData = eventResult;
+				sol::optional<float> newCharge = eventData["charge"];
+				if (newCharge) {
+					charge = newCharge.value();
+				}
+			}
+		}
+
+		return charge;
+	}
+
 	TES3::VFX* createVisualEffect(sol::table params) {
 		auto worldController = TES3::WorldController::get();
 		if (!worldController) {
@@ -5570,6 +5620,7 @@ namespace mwse::lua {
 		tes3["applyMagicSource"] = applyMagicSource;
 		tes3["applyTextDefines"] = applyTextDefines;
 		tes3["beginTransform"] = beginTransform;
+		tes3["calculateChargeUse"] = calculateChargeUse;
 		tes3["calculatePrice"] = calculatePrice;
 		tes3["cancelAnimationLoop"] = cancelAnimationLoop;
 		tes3["canRest"] = canRest;
