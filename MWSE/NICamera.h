@@ -12,7 +12,7 @@ namespace NI {
 		float near; // 0x10
 		float far; // 0x14
 	};
-	static_assert(sizeof(Frustrum) == 0x18, "NI::Frustrum failed size validation");
+	static_assert(sizeof(Frustum) == 0x18, "NI::Frustum failed size validation");
 
 	struct Camera : AVObject {
 		TES3::Matrix44 worldToCamera; // 0x90
