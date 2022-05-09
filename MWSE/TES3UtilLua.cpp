@@ -5438,11 +5438,11 @@ namespace mwse::lua {
 	}
 
 	int calculateChargeUse(sol::table params) {
-		auto enchant = getOptionalParam<TES3::Enchantment*>(params, "enchant").value_or(nullptr);
+		auto enchant = getOptionalParam<TES3::Enchantment*>(params, "enchantment").value_or(nullptr);
 		auto mobile = getOptionalParamMobileActor(params, "mobile");
 
 		if (!enchant) {
-			throw std::invalid_argument("calculateChargeUse: enchant parameter required.");
+			throw std::invalid_argument("calculateChargeUse: enchantment parameter required.");
 		}
 		if (!mobile) {
 			throw std::invalid_argument("calculateChargeUse: mobile parameter required.");
