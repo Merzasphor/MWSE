@@ -1,9 +1,5 @@
 #include "UTF8Convert.h"
 
-#include <string>
-#include <unordered_map>
-
-
 // UTF-8 decoder
 // Copyright (c) 2008-2010 Bjoern Hoehrmann <bjoern@hoehrmann.de>
 // See http://bjoern.hoehrmann.de/utf-8/decoder/dfa/ for details.
