@@ -440,6 +440,20 @@ function tes3.beginTransform(params) end
 --- @class tes3.beginTransform.params
 --- @field reference tes3reference A reference to change to werewolf form.
 
+--- Calculates the actual charge use of an enchantment by a mobile actor, after skills are applied. Invokes the enchantChargeUse event to account for modded charge usage. Takes into account the MCP charge use rebalance patch, if activated.
+--- @param params tes3.calculateChargeUse.params This table accepts the following values:
+--- 
+--- `object`: tes3enchantment — The enchantment to check.
+--- 
+--- `mobile`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer — The mobile actor that would be casting the enchantment.
+--- @return number chargeUse Actual charge use.
+function tes3.calculateChargeUse(params) end
+
+---Table parameter definitions for `tes3.calculateChargeUse`.
+--- @class tes3.calculateChargeUse.params
+--- @field object tes3enchantment The enchantment to check.
+--- @field mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer The mobile actor that would be casting the enchantment.
+
 --- Calculates a price, given a merchant and associated trading data. This is useful beyond accessing the object's `.value` field in that it raises the appropriate events to let other mods modify the values.
 --- @param params tes3.calculatePrice.params This table accepts the following values:
 --- 
@@ -2567,6 +2581,7 @@ tes3.enchantmentType = require("tes3.enchantmentType")
 tes3.event = require("tes3.event")
 tes3.flowDirection = require("tes3.flowDirection")
 tes3.gmst = require("tes3.gmst")
+tes3.inventorySelectFilter = require("tes3.inventorySelectFilter")
 tes3.inventoryTileType = require("tes3.inventoryTileType")
 tes3.justifyText = require("tes3.justifyText")
 tes3.keybind = require("tes3.keybind")
