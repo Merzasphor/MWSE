@@ -4,7 +4,7 @@
 #include "NIRenderer.h"
 
 namespace NI {
-	struct Frustrum {
+	struct Frustum {
 		float left; // 0x0
 		float right; // 0x4
 		float top; // 0x8
@@ -22,7 +22,7 @@ namespace NI {
 		TES3::Vector3 worldDirection; // 0xDC
 		TES3::Vector3 worldUp; // 0xE8
 		TES3::Vector3 worldRight; // 0xF4
-		Frustrum viewFrustum; // 0x100
+		Frustum viewFrustum; // 0x100
 		TES3::Vector4 port; // 0x118
 		Pointer<Node> scene; // 0x128
 		NI::TArray<void*> unknown_0x12C; // Screen related?
