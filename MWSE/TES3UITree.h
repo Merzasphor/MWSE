@@ -11,7 +11,6 @@ namespace TES3 {
 			PropertyType valueType;
 
 			TreeItem() = delete;
-			~TreeItem() = delete;
 
 			//
 			// Custom functions.
