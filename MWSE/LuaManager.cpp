@@ -3303,7 +3303,7 @@ namespace mwse::lua {
 
 	// Data we use to keep track of the currently saving item data record.
 	TES3::IteratedList<TES3::ItemStack*>* currentlySavingInventoryIterator = nullptr;
-	unsigned int currentlySavingInventoyItemDataIndex = 0;
+	unsigned int currentlySavingInventoryItemDataIndex = 0;
 
 	// Get a hold of the inventory we're looking at.
 	TES3::IteratedList<TES3::ItemStack*>::Node* __fastcall GetFirstSavedItemStack(TES3::IteratedList<TES3::ItemStack*>* iterator) {
@@ -3313,7 +3313,7 @@ namespace mwse::lua {
 
 	// Get a hold of the current index in ItemData storage we're looking at.
 	int __fastcall WriteItemDataIndex(TES3::GameFile* gameFile, DWORD _UNUSED_, unsigned int tag, const unsigned int* data, unsigned int size) {
-		currentlySavingInventoyItemDataIndex = *data;
+		currentlySavingInventoryItemDataIndex = *data;
 		return gameFile->writeChunkData(tag, data, size);
 	}
 
@@ -3326,7 +3326,7 @@ namespace mwse::lua {
 		// Overwritten code.
 		int result = gameFile->writeChunkData(tag, data, size);
 
-		TES3::ItemData* itemData = currentlySavingInventoryIterator->current->data->variables->at(currentlySavingInventoyItemDataIndex);
+		TES3::ItemData* itemData = currentlySavingInventoryIterator->current->data->variables->at(currentlySavingInventoryItemDataIndex);
 		if (itemData->luaData) {
 			sol::table table = itemData->luaData->data;
 
