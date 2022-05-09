@@ -785,7 +785,7 @@ namespace mwse::patch {
 		writePatchCodeUnprotected(0x4B2FD7, (BYTE*)&PatchSwapJournalUpdateCheckForSpeakerOrder, PatchSwapJournalUpdateCheckForSpeakerOrder_size);
 		genCallUnprotected(0x4B2FD7 + 0xD, 0x4B1B80);
 
-		// Patch: Don't save no valid visual effects.
+		// Patch: Don't save VFX manager if there are no valid visual effects.
 		genCallEnforced(0x4BD149, 0x469CC0, reinterpret_cast<DWORD>(PatchSaveVisualEffects));
 	}
 
