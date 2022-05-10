@@ -146,10 +146,10 @@ tes3ui.createResponseText({ text = ..., type = ..., index = ... })
 
 ### `tes3ui.createTooltipMenu`
 
-Creates a tooltip menu, which can be an empty menu or an item tooltip. This should be called from within a tooltip event callback. These automatically follow the mouse cursor, and are also destroyed automatically when the mouse leaves the originating element. Creating an item tooltip will invoke the uiObjectTooltip event.
+Creates a tooltip menu, which can be an empty menu, an item tooltip, or a spell tooltip. This should be called from within a tooltip event callback. These automatically follow the mouse cursor, and are also destroyed automatically when the mouse leaves the originating element. Creating an item tooltip will invoke the uiObjectTooltip event.
 
 ```lua
-local result = tes3ui.createTooltipMenu({ item = ..., itemData = ... })
+local result = tes3ui.createTooltipMenu({ item = ..., itemData = ..., spell = ... })
 ```
 
 **Parameters**:
@@ -157,6 +157,7 @@ local result = tes3ui.createTooltipMenu({ item = ..., itemData = ... })
 * `params` (table): *Optional*.
 	* `item` ([tes3item](../../types/tes3item), string): *Optional*. The item to create a tooltip for. If not specified, the tooltip will be empty.
 	* `itemData` ([tes3itemData](../../types/tes3itemData)): *Optional*. The item data for the item.
+	* `spell` ([tes3spell](../../types/tes3spell)): *Optional*. The spell to create a tooltip for.
 
 **Returns**:
 

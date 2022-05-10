@@ -19,6 +19,7 @@
 #include "TES3WorldController.h"
 
 #include "LuaShowRestWaitMenuEvent.h"
+#include "LuaUiSpellTooltipEvent.h"
 
 #include "TES3UIManagerLua.h"
 
@@ -120,7 +121,7 @@ namespace TES3 {
 			using mwse::lua::getOptionalParam;
 			using mwse::lua::getOptionalParamObject;
 
-			auto menu = createTooltipMenu(TES3::UI::UI_ID(TES3::UI::Property::HelpMenu));
+			auto menu = createTooltipMenu(UI_ID(Property::HelpMenu));
 
 			if (!params) {
 				// Empty tooltip creation.
@@ -133,6 +134,28 @@ namespace TES3 {
 				auto count = itemData ? itemData->count : 0;
 
 				WorldController::get()->menuController->menuInputController->displayObjectTooltip(item, itemData, count);
+				return menu;
+			}
+
+			auto spell = getOptionalParamObject<TES3::Spell>(params, "spell");
+			if (spell) {
+				// Set a property on a temp element, where the spell tooltip game function expects to find the spell.
+				const auto ui_id_MagicMenu_Spell = *reinterpret_cast<const Property*>(0x7D431C);
+				Element* tempElement = TES3_ui_createChildElement(*TES3_uiHelpRoot);
+				tempElement->setProperty(ui_id_MagicMenu_Spell, spell);
+
+				// Build the tooltip.
+				const auto TES3_buildSpellTooltip = reinterpret_cast<EventCallback>(0x5E45C0);
+				bool created = TES3_buildSpellTooltip(tempElement, Property(), 0, 0, tempElement);
+
+				// Fire off the related event.
+				if (created && mwse::lua::event::UiSpellTooltipEvent::getEventEnabled()) {
+					mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+					luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::UiSpellTooltipEvent(menu, spell));
+				}
+
+				// Clean up temp element.
+				tempElement->destroy();
 				return menu;
 			}
 
