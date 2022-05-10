@@ -2,6 +2,7 @@
 
 #include "NIDefines.h"
 #include "NITArray.h"
+#include "NIColor.h"
 
 #include "TES3Defines.h"
 #include "TES3Vectors.h"
@@ -65,7 +66,7 @@ namespace NI {
 		unsigned short vertexIndex[3];
 		TES3::Vector2 texture;
 		TES3::Vector3 normal;
-		int color;
+		PackedColor color;
 
 		//
 		// Custom functions.
