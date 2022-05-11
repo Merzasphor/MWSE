@@ -404,6 +404,22 @@ namespace TES3 {
 			TES3_ConsoleLogResult(text, isCommand.value_or(false));
 		}
 
+		const auto TES3_CloseBookMenu = reinterpret_cast<void(__cdecl*)()>(0x5AC7F0);
+		void closeBookMenu() {
+			Element* menuBook = TES3::UI::findMenu("MenuBook");
+			if (menuBook) {
+				TES3_CloseBookMenu();
+			}
+		}
+
+		const auto TES3_CloseScrollMenu = reinterpret_cast<void(__cdecl*)()>(0x613A60);
+		void closeScrollMenu() {
+			Element* menuScroll = TES3::UI::findMenu("MenuScroll");
+			if (menuScroll) {
+				TES3_CloseScrollMenu();
+			}
+		}
+
 		const auto TES3_ShowBookMenu = reinterpret_cast<void(__cdecl*)(const char*)>(0x5AC2A0);
 		void showBookMenu(const char* text) {
 			TES3_ShowBookMenu(text);

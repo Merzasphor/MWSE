@@ -374,7 +374,9 @@ namespace mwse::lua {
 		tes3ui["acquireTextInput"] = TES3::UI::acquireTextInput;
 		tes3ui["captureMouseDrag"] = TES3::UI::captureMouseDrag;
 		tes3ui["choice"] = TES3::UI::choice;
+		tes3ui["closeBookMenu"] = TES3::UI::closeBookMenu;
 		tes3ui["closeJournal"] = TES3::UI::closeJournal;
+		tes3ui["closeScrollMenu"] = TES3::UI::closeScrollMenu;
 		tes3ui["createHelpLayerMenu"] = TES3::UI::createHelpLayerMenu_lua;
 		tes3ui["createMenu"] = TES3::UI::createMenu_lua;
 		tes3ui["createResponseText"] = TES3::UI::createResponseText_lua;

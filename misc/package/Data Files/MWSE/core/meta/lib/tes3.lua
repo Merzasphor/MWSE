@@ -441,18 +441,20 @@ function tes3.beginTransform(params) end
 --- @field reference tes3reference A reference to change to werewolf form.
 
 --- Calculates the actual charge use of an enchantment by a mobile actor, after skills are applied. Invokes the enchantChargeUse event to account for modded charge usage. Takes into account the MCP charge use rebalance patch, if activated.
+---
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3/#tes3calculatechargeuse).
 --- @param params tes3.calculateChargeUse.params This table accepts the following values:
 --- 
---- `object`: tes3enchantment — The enchantment to check.
---- 
 --- `mobile`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer — The mobile actor that would be casting the enchantment.
+--- 
+--- `enchantment`: tes3enchantment — The enchantment to check.
 --- @return number chargeUse Actual charge use.
 function tes3.calculateChargeUse(params) end
 
 ---Table parameter definitions for `tes3.calculateChargeUse`.
 --- @class tes3.calculateChargeUse.params
---- @field object tes3enchantment The enchantment to check.
 --- @field mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer The mobile actor that would be casting the enchantment.
+--- @field enchantment tes3enchantment The enchantment to check.
 
 --- Calculates a price, given a merchant and associated trading data. This is useful beyond accessing the object's `.value` field in that it raises the appropriate events to let other mods modify the values.
 --- @param params tes3.calculatePrice.params This table accepts the following values:

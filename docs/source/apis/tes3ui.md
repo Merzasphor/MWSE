@@ -68,6 +68,16 @@ tes3ui.choice(text, index)
 
 ***
 
+### `tes3ui.closeBookMenu`
+
+This function closes the book menu.
+
+```lua
+tes3ui.closeBookMenu()
+```
+
+***
+
 ### `tes3ui.closeJournal`
 
 Closes the Journal.
@@ -79,6 +89,16 @@ local result = tes3ui.closeJournal()
 **Returns**:
 
 * `result` (boolean)
+
+***
+
+### `tes3ui.closeScrollMenu`
+
+This function closes the scroll menu.
+
+```lua
+tes3ui.closeScrollMenu()
+```
 
 ***
 

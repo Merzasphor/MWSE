@@ -53,9 +53,10 @@ namespace TES3 {
 		void logToConsole(const char* text, bool isCommand = false);
 		void logToConsole_lua(const char* text, sol::optional<bool> isCommand = false);
 
+		void closeBookMenu();
+		void closeScrollMenu();
 		void showBookMenu(const char* text);
 		void showScrollMenu(const char* text);
-
 		void showRestMenu(bool resting = true, bool scripted = true);
 		void showRestMenu_lua(sol::optional<bool> resting);
 
