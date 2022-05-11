@@ -9,6 +9,7 @@
 #include "BuildDate.h"
 
 #include "LuaManager.h"
+#include "MGEApi.h"
 #include "TES3Game.h"
 
 TES3MACHINE* mge_virtual_machine = NULL;
@@ -219,8 +220,18 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {
 // MGE XE exports
 extern "C"
 {
+	__declspec(dllexport) bool MGEInterface(mge::MGEAPI*);
 	__declspec(dllexport) TES3MACHINE* MWSEGetVM();
 	__declspec(dllexport) bool MWSEAddInstruction(OPCODE op, INSTRUCTION* ins);
+}
+
+bool MGEInterface(mge::MGEAPI* api) {
+	if (api->getAPIVersion() >= 1) {
+		mge::api = static_cast<mge::MGEAPIv1*>(api);
+		mge::macros = mge::api->macroFunctions();
+		return true;
+	}
+	return false;
 }
 
 TES3MACHINE* MWSEGetVM()

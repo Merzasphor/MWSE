@@ -73,10 +73,13 @@
 
 // Lua binding files. These are split out rather than kept here to help with compile times.
 #include "MemoryUtilLua.h"
+#include "MGEPostShadersLua.h"
+#include "MGEUtilLua.h"
 #include "StackLua.h"
 #include "ScriptUtilLua.h"
 #include "StringUtilLua.h"
 #include "TES3UtilLua.h"
+
 #include "TES3ActionDataLua.h"
 #include "TES3ActivatorLua.h"
 #include "TES3ActorAnimationControllerLua.h"
@@ -916,7 +919,7 @@ namespace mwse::lua {
 		animController->startAttackAnimation(swing);
 	}
 
-	//
+	//MGE
 	// Collision events: Mobile Actor
 	//
 
@@ -3895,6 +3898,14 @@ namespace mwse::lua {
 		bindScriptUtil();
 		bindStringUtil();
 		bindTES3Util();
+
+		// Bind MGE.
+		if (isMGEAPIAvailable()) {
+			bindMGEPostShaders();
+			bindMGEUtil();
+			// Beta code.
+			log::getLog() << "[LuaManager] MGE API beta is available." << std::endl;
+		}
 
 		// Alter existing libraries.
 		luaState["os"]["exit"] = customOSExit;
