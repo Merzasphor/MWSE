@@ -5405,7 +5405,7 @@ namespace mwse::lua {
 			if (event::CalculateSpellPriceEvent::getEventEnabled() && object && object->objectType == TES3::ObjectType::Spell) {
 				firedEvent = new event::CalculateSpellPriceEvent(merchant, basePrice, price, static_cast<TES3::Spell*>(object));
 			}
-			else if (event::CalculateSpellPriceEvent::getEventEnabled()) {
+			else if (event::CalculateBarterPriceEvent::getEventEnabled()) {
 				auto count = getOptionalParam(params, "count", 1);
 				auto itemData = getOptionalParam<TES3::ItemData*>(params, "itemData", nullptr);
 				firedEvent = new event::CalculateBarterPriceEvent(merchant, basePrice, price, buying, count, object, itemData);
