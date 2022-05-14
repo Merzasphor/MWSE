@@ -89,6 +89,23 @@ namespace mge {
 				}
 			}
 			break;
+		case 'a':
+			{
+				// Array of floats.
+				const size_t max_count = 256;
+				float result[max_count];
+				size_t count = max_count;
+				// Count is set to the actual length, if the call is successful.
+				if (mge::api->shaderGetFloatArray(handle, varName, &result[0], &count)) {
+					auto table = state.create_table(count, 0);
+
+					for (int i = 0; i < count; ++i) {
+						table[i + 1] = result[i];
+					}
+					return table;
+				}
+			}
+			break;
 		case '2':
 		case '3':
 		case '4':
@@ -135,6 +152,20 @@ namespace mge {
 		case 's':
 			mge::api->shaderSetString(handle, varName, value.as<const char*>());
 			break;
+		case 'a':
+			{
+				// Array of floats.
+				auto values = value.as<sol::table>();
+				if (values != sol::nil) {
+					size_t count = values.size();
+					std::vector<float> valueBuffer(count);
+					for (int i = 0; i < count; i++) {
+						valueBuffer[i] = values[i+1];
+					}
+					mge::api->shaderSetFloatArray(handle, varName, valueBuffer.data(), &count);
+				}
+				break;
+			}
 		case '2':
 		case '3':
 		case '4':
