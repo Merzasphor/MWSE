@@ -13,7 +13,7 @@ namespace mwse::lua {
 	// Distant Land config struct.
 	//
 
-	void bindMGEDistantLandConfig() {
+	void bindMGEDistantLandRenderConfig() {
 		// Get our lua state.
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 		sol::state& state = stateHandle.state;
@@ -69,10 +69,6 @@ namespace mwse::lua {
 		}
 
 		mge::api->lightingModeSet(mode);
-	}
-
-	auto mge_getDistantLandRenderConfig() {
-		return mge::api->getDistantLandRenderConfig();
 	}
 
 	auto mge_reloadDistantLand() {
@@ -357,38 +353,59 @@ namespace mwse::lua {
 		lua_mge["getVersion"] = mge_getVersion;
 
 		// Distant land functions.
-		bindMGEDistantLandConfig();
-		lua_mge["distantLandRenderConfig"] = mge_getDistantLandRenderConfig;
+		bindMGEDistantLandRenderConfig();
+		lua_mge["distantLandRenderConfig"] = mge::api->getDistantLandRenderConfig();
 		lua_mge["reloadDistantLand"] = mge_reloadDistantLand;
 
 		lua_mge["getLightingMode"] = mge_getLightingMode;
 		lua_mge["setLightingMode"] = mge_setLightingMode;
 
 		// Shader-related functions.
-		lua_mge["shaders"] = sol::readonly_property(&mge_shaders);
-		// TODO: API to add/remove shaders at runtime.
+		struct MgeShadersConfig {};
+		{
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.new_usertype<MgeShadersConfig>("mgeShadersConfig");
+			usertypeDefinition["new"] = sol::no_constructor;
+
+			// Properties.
+			usertypeDefinition["list"] = sol::readonly_property(&mge_shaders);
+			// TODO: API to add/remove shaders at runtime.
+		}
+		lua_mge["shaders"] = MgeShadersConfig();
 
 		// Camera functions.
-		sol::table lua_cam = state.create_table();
-		lua_mge["camera"] = lua_cam;
+		struct MgeCameraConfig {};
+		{
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.new_usertype<MgeCameraConfig>("mgeCameraConfig");
+			usertypeDefinition["new"] = sol::no_constructor;
 
-		lua_cam["shakeAcceleration"] = sol::property(&mge_getCameraShakeAcceleration, &mge_setCameraShakeAcceleration);
-		lua_cam["shakeEnable"] = sol::property(&mge_getCameraShakeEnabled, &mge_setCameraShakeEnabled);
-		lua_cam["shakeMagnitude"] = sol::property(&mge_getCameraShakeMagnitude, &mge_setCameraShakeMagnitude);
-		lua_cam["stopZoom"] = mge_stopZoom;
-		lua_cam["zoom"] = sol::property(&mge_getZoom, &mge_setZoom);
-		lua_cam["zoomContinuous"] = mge_setZoomContinuous;
-		lua_cam["zoomEnable"] = sol::property(&mge_getZoomEnabled, &mge_setZoomEnabled);
-		lua_cam["zoomIn"] = mge_zoomIn;
-		lua_cam["zoomOut"] = mge_zoomOut;
+			// Properties.
+			usertypeDefinition["shakeAcceleration"] = sol::property(&mge_getCameraShakeAcceleration, &mge_setCameraShakeAcceleration);
+			usertypeDefinition["shakeEnable"] = sol::property(&mge_getCameraShakeEnabled, &mge_setCameraShakeEnabled);
+			usertypeDefinition["shakeMagnitude"] = sol::property(&mge_getCameraShakeMagnitude, &mge_setCameraShakeMagnitude);
+			usertypeDefinition["stopZoom"] = mge_stopZoom;
+			usertypeDefinition["zoom"] = sol::property(&mge_getZoom, &mge_setZoom);
+			usertypeDefinition["zoomContinuous"] = mge_setZoomContinuous;
+			usertypeDefinition["zoomEnable"] = sol::property(&mge_getZoomEnabled, &mge_setZoomEnabled);
+			usertypeDefinition["zoomIn"] = mge_zoomIn;
+			usertypeDefinition["zoomOut"] = mge_zoomOut;
+		}
+		lua_mge["camera"] = MgeCameraConfig();
 
 		// MGE XE weather functions.
-		sol::table lua_weather = state.create_table();
-		lua_mge["weather"] = lua_weather;
+		struct MgeWeatherConfig {};
+		{
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.new_usertype<MgeWeatherConfig>("mgeWeatherConfig");
+			usertypeDefinition["new"] = sol::no_constructor;
 
-		lua_weather["scattering"] = sol::property(&mge_getWeatherScattering, &mge_setWeatherScattering);
-		lua_weather["DLFog"] = sol::property(&mge_getWeatherDLFog, &mge_setWeatherDLFog);
-		lua_weather["PPLLight"] = sol::property(&mge_getWeatherPPLLight, &mge_setWeatherPPLLight);
+			// Properties.
+			usertypeDefinition["distantFog"] = sol::property(&mge_getWeatherDLFog, &mge_setWeatherDLFog);
+			usertypeDefinition["perPixelLighting"] = sol::property(&mge_getWeatherPPLLight, &mge_setWeatherPPLLight);
+			usertypeDefinition["scattering"] = sol::property(&mge_getWeatherScattering, &mge_setWeatherScattering);
+		}
+		lua_mge["weather"] = MgeWeatherConfig();
 
 		// Macro functions with on-screen notifications.
 		sol::table lua_macros = state.create_table();
