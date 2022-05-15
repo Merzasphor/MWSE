@@ -37,6 +37,21 @@ namespace NI {
 		NI_ObjectNET_setFlag(this, state, index);
 	}
 
+	const auto NI_ObjectNET_addExtraData = reinterpret_cast<void(__thiscall*)(ObjectNET*, ExtraData*)>(0x6EA1C0);
+	void ObjectNET::addExtraData(ExtraData* data) {
+		NI_ObjectNET_addExtraData(this, data);
+	}
+
+	const auto NI_ObjectNET_removeExtraData = reinterpret_cast<void(__thiscall*)(ObjectNET*, ExtraData*)>(0x6EA220);
+	void ObjectNET::removeExtraData(ExtraData* data) {
+		NI_ObjectNET_removeExtraData(this, data);
+	}
+
+	const auto NI_ObjectNET_removeAllExtraData = reinterpret_cast<void(__thiscall*)(ObjectNET*)>(0x6EA3B0);
+	void ObjectNET::removeAllExtraData() {
+		NI_ObjectNET_removeAllExtraData(this);
+	}
+
 	Pointer<StringExtraData> ObjectNET::getStringDataWithValue(const char* value) const {
 		if (!value) {
 			return nullptr;
@@ -78,28 +93,6 @@ namespace NI {
 
 	bool ObjectNET::hasStringDataStartingWithValue(const char* value) const {
 		return getStringDataStartingWithValue(value) != nullptr;
-	}
-
-	Pointer<ExtraData> ObjectNET::removeExtraData(ExtraData* data) {
-		auto extra = extraData;
-		ExtraData* previous = nullptr;
-		while (extra && extra != data) {
-			previous = extra;
-			extra = extra->next;
-		}
-
-		if (extra) {
-			if (previous) {
-				previous->next = extra->next;
-			}
-			else {
-				extraData = nullptr;
-			}
-			extra->next = nullptr;
-			return extra;
-		}
-
-		return nullptr;
 	}
 
 	TES3::Reference* ObjectNET::getTes3Reference(bool searchParents) {

@@ -21,7 +21,7 @@ This type inherits the following: [niTexture](../../types/niTexture), [niObjectN
 
 **Returns**:
 
-* `result` (niExtraData)
+* `result` ([niExtraData](../../types/niExtraData))
 
 ***
 
@@ -147,6 +147,20 @@ The app-level pixel data.
 
 ## Methods
 
+### `addExtraData`
+
+Appends an extra data to the object.
+
+```lua
+myObject:addExtraData(extraData)
+```
+
+**Parameters**:
+
+* `extraData` ([niExtraData](../../types/niExtraData))
+
+***
+
 ### `clearPixelData`
 
 Detaches any pixel data associated with this texture. Any render-specific data will be maintained, and remain in the GPU's memory.
@@ -259,6 +273,16 @@ myObject:removeAllControllers()
 
 ***
 
+### `removeAllExtraData`
+
+Removes all extra data.
+
+```lua
+myObject:removeAllExtraData()
+```
+
+***
+
 ### `removeController`
 
 Removes a controller from the object.
@@ -270,6 +294,20 @@ myObject:removeController(controller)
 **Parameters**:
 
 * `controller` ([niTimeController](../../types/niTimeController))
+
+***
+
+### `removeExtraData`
+
+Removes a specific extra data from the object.
+
+```lua
+myObject:removeExtraData(extraData)
+```
+
+**Parameters**:
+
+* `extraData` ([niExtraData](../../types/niExtraData))
 
 ***
 

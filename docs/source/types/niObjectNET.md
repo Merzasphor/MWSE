@@ -21,7 +21,7 @@ This type inherits the following: [niObject](../../types/niObject)
 
 **Returns**:
 
-* `result` (niExtraData)
+* `result` ([niExtraData](../../types/niExtraData))
 
 ***
 
@@ -76,6 +76,20 @@ The human-facing name of the given object.
 ***
 
 ## Methods
+
+### `addExtraData`
+
+Appends an extra data to the object.
+
+```lua
+myObject:addExtraData(extraData)
+```
+
+**Parameters**:
+
+* `extraData` ([niExtraData](../../types/niExtraData))
+
+***
 
 ### `clone`
 
@@ -169,6 +183,16 @@ myObject:removeAllControllers()
 
 ***
 
+### `removeAllExtraData`
+
+Removes all extra data.
+
+```lua
+myObject:removeAllExtraData()
+```
+
+***
+
 ### `removeController`
 
 Removes a controller from the object.
@@ -180,6 +204,20 @@ myObject:removeController(controller)
 **Parameters**:
 
 * `controller` ([niTimeController](../../types/niTimeController))
+
+***
+
+### `removeExtraData`
+
+Removes a specific extra data from the object.
+
+```lua
+myObject:removeExtraData(extraData)
+```
+
+**Parameters**:
+
+* `extraData` ([niExtraData](../../types/niExtraData))
 
 ***
 
