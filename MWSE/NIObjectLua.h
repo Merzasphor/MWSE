@@ -39,6 +39,7 @@ namespace mwse::lua {
 		usertypeDefinition["name"] = sol::property(&NI::ObjectNET::getName, &NI::ObjectNET::setName);
 
 		// Basic function binding.
+		usertypeDefinition["addExtraData"] = &NI::ObjectNET::addExtraData;
 		usertypeDefinition["getGameReference"] = &NI::ObjectNET::getTes3Reference_lua;
 		usertypeDefinition["getStringDataStartingWith"] = &NI::ObjectNET::getStringDataStartingWithValue;
 		usertypeDefinition["getStringDataWith"] = &NI::ObjectNET::getStringDataWithValue;
@@ -46,6 +47,7 @@ namespace mwse::lua {
 		usertypeDefinition["hasStringDataWith"] = &NI::ObjectNET::hasStringDataWithValue;
 		usertypeDefinition["prependController"] = &NI::ObjectNET::prependController;
 		usertypeDefinition["removeAllControllers"] = &NI::ObjectNET::removeAllControllers;
+		usertypeDefinition["removeAllExtraData"] = &NI::ObjectNET::removeAllExtraData;
 		usertypeDefinition["removeController"] = &NI::ObjectNET::removeController;
 		usertypeDefinition["removeExtraData"] = &NI::ObjectNET::removeExtraData;
 		usertypeDefinition["setFlag"] = &NI::ObjectNET::setFlag;

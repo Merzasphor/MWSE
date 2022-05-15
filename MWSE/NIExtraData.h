@@ -25,12 +25,15 @@ namespace NI {
 	struct StringExtraData : ExtraData {
 		char* string; // 0x14
 
+		StringExtraData(const char* str);
+		~StringExtraData();
+
 		//
 		// Custom functions.
 		//
 
 		const char* getString() const;
-		void setString(const char* string);
+		void setString(const char* str);
 
 	};
 	static_assert(sizeof(StringExtraData) == 0x18, "NI::TextKey failed size validation");

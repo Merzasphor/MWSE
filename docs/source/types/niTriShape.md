@@ -51,7 +51,7 @@ The NiTriShapeData of the object. Manipulation should not be done directly. Inst
 
 **Returns**:
 
-* `result` (niExtraData)
+* `result` ([niExtraData](../../types/niExtraData))
 
 ***
 
@@ -247,6 +247,20 @@ Convenient access to this object's z-buffer property. Setting this value to be n
 
 ## Methods
 
+### `addExtraData`
+
+Appends an extra data to the object.
+
+```lua
+myObject:addExtraData(extraData)
+```
+
+**Parameters**:
+
+* `extraData` ([niExtraData](../../types/niExtraData))
+
+***
+
 ### `attachProperty`
 
 Attach a property to this object.
@@ -417,6 +431,16 @@ myObject:removeAllControllers()
 
 ***
 
+### `removeAllExtraData`
+
+Removes all extra data.
+
+```lua
+myObject:removeAllExtraData()
+```
+
+***
+
 ### `removeController`
 
 Removes a controller from the object.
@@ -428,6 +452,20 @@ myObject:removeController(controller)
 **Parameters**:
 
 * `controller` ([niTimeController](../../types/niTimeController))
+
+***
+
+### `removeExtraData`
+
+Removes a specific extra data from the object.
+
+```lua
+myObject:removeExtraData(extraData)
+```
+
+**Parameters**:
+
+* `extraData` ([niExtraData](../../types/niExtraData))
 
 ***
 

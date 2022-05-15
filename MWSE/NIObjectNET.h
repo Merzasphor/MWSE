@@ -32,17 +32,15 @@ namespace NI {
 		// Custom functions.
 		//
 
+		void addExtraData(ExtraData* data);
+		void removeExtraData(ExtraData* data);
+		void removeAllExtraData();
+
 		Pointer<StringExtraData> getStringDataWithValue(const char* value) const;
 		bool hasStringDataWithValue(const char* value) const;
 
 		Pointer<StringExtraData> getStringDataStartingWithValue(const char* value) const;
 		bool hasStringDataStartingWithValue(const char* value) const;
-
-		Pointer<ExtraData> removeExtraData(ExtraData* data);
-
-		//
-		// Custom functions.
-		//
 
 		TES3::Reference* getTes3Reference(bool searchParents = false);
 		TES3::Reference* getTes3Reference_lua(sol::optional<bool> searchParents = false);

@@ -20,12 +20,23 @@ namespace NI {
 		next = n;
 	}
 
+	const auto NI_StringExtraData_ctor = reinterpret_cast<void(__thiscall*)(NI::StringExtraData*, const char*)>(0x6E0EB0);
+	StringExtraData::StringExtraData(const char* str) {
+		NI_StringExtraData_ctor(this, str);
+	}
+
+	const auto NI_StringExtraData_dtor = reinterpret_cast<void(__thiscall*)(NI::StringExtraData*)>(0x6E1530);
+	StringExtraData::~StringExtraData() {
+		NI_StringExtraData_dtor(this);
+	}
+
 	const char* StringExtraData::getString() const {
 		return string;
 	}
 
 	void StringExtraData::setString(const char* str) {
 		mwse::tes3::setDataString(&string, str);
+		genericDataLength = strlen(str) + 4;
 	}
 
 	const char* TextKey::getText() const {
