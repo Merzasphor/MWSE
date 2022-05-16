@@ -600,6 +600,14 @@ function tes3.clearMarkLocation() end
 --- This function closes the alchemy menu.
 function tes3.closeAlchemyMenu() end
 
+--- This function closes the contents menu.
+--- @return boolean wasClosed If true, the menu was previously open, and is now closed.
+function tes3.closeContentsMenu() end
+
+--- This function closes the dialogue menu.
+--- @return boolean wasClosed If true, the menu was previously open, and is now closed.
+function tes3.closeDialogueMenu() end
+
 --- This function closes the repair service menu.
 function tes3.closeRepairServiceMenu() end
 
@@ -2308,6 +2316,34 @@ function tes3.setWerewolfKillCount(params) end
 
 --- This function opens the alchemy menu.
 function tes3.showAlchemyMenu() end
+
+--- This function opens the contents menu. This menu is used for containers, companion inventories, and pickpocket attempts.
+--- @param params tes3.showContentsMenu.params This table accepts the following values:
+--- 
+--- `reference`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string — The reference to open the contents of.
+--- 
+--- `pickpocket`: boolean? — *Default*: `false`. If true, the contents menu will open in the context of an attempted pickpocketing.
+--- @return boolean wasShown If true, the contents menu was successfully shown.
+function tes3.showContentsMenu(params) end
+
+---Table parameter definitions for `tes3.showContentsMenu`.
+--- @class tes3.showContentsMenu.params
+--- @field reference tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string The reference to open the contents of.
+--- @field pickpocket boolean? *Default*: `false`. If true, the contents menu will open in the context of an attempted pickpocketing.
+
+--- This function opens the dialogue menu. This behaves similar to the `ForceGreeting` mwscript command.
+--- @param params tes3.showDialogueMenu.params This table accepts the following values:
+--- 
+--- `reference`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string — The reference to open dialogue with.
+--- 
+--- `checkAllowWerewolfForceGreeting`: boolean? — *Default*: `true`. If true, the `AllowWerewolfForceGreeting` variable must exist on the reference's script to allow opening a dialogue while the player is a werewolf. This can be set to false to override the vanilla behavior.
+--- @return boolean wasShown If true, the dialogue window was successfully shown.
+function tes3.showDialogueMenu(params) end
+
+---Table parameter definitions for `tes3.showDialogueMenu`.
+--- @class tes3.showDialogueMenu.params
+--- @field reference tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string The reference to open dialogue with.
+--- @field checkAllowWerewolfForceGreeting boolean? *Default*: `true`. If true, the `AllowWerewolfForceGreeting` variable must exist on the reference's script to allow opening a dialogue while the player is a werewolf. This can be set to false to override the vanilla behavior.
 
 --- This function opens the repair service menu.
 --- @param params tes3.showRepairServiceMenu.params This table accepts the following values:

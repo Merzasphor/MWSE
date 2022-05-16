@@ -5628,6 +5628,99 @@ namespace mwse::lua {
 		return macp->dialogueList->size() > topicCountBefore;
 	}
 
+	bool showDialogueMenu(sol::optional<sol::table> params) {
+		const auto worldController = TES3::WorldController::get();
+		if (!worldController) {
+			throw std::runtime_error("This function cannot be called before the world controller is initialized.");
+		}
+
+		const auto macp = worldController->getMobilePlayer();
+		if (!macp) {
+			throw std::runtime_error("This function cannot be called before the player is initialized.");
+		}
+
+		auto target = getOptionalParamMobileActor(params, "reference");
+		if (!target) {
+			throw std::runtime_error("Invalid 'reference' parameter provided. The reference must have a valid mobile attached.");
+		}
+
+		// Make werewolf check.
+		if (getOptionalParam<bool>(params, "checkAllowWerewolfForceGreeting", true)) {
+			auto targetScript = target->reference->baseObject->getScript();
+			if (targetScript && macp->getIsWerewolf()) {
+				unsigned int variableIndex = -1;
+				if (!targetScript->getLocalVarIndexAndType("AllowWerewolfForceGreeting", &variableIndex)) {
+					// The actual variable value and type doesn't matter here.
+					return false;
+				}
+			}
+		}
+
+		target->startDialogue();
+		return true;
+	}
+
+	const auto TES3_UI_goodbye = reinterpret_cast<bool(__cdecl*)()>(0x5BF7C0);
+	bool closeDialogueMenu(sol::optional<sol::table> params) {
+		auto menuDialog = TES3::UI::findMenu("MenuDialog");
+		if (!menuDialog) {
+			return false;
+		}
+
+		if (getOptionalParam<bool>(params, "force", true)) {
+			auto answerBlock = menuDialog->findChild("MenuDialog_answer_block");
+			if (answerBlock) {
+				answerBlock->destroy();
+				answerBlock = nullptr;
+				*reinterpret_cast<bool*>(0x7D3568) = 0;
+			}
+		}
+
+		TES3_UI_goodbye();
+
+		return TES3::UI::findMenu("MenuDialog") == nullptr;
+	}
+
+	const auto TES3_UI_showContentsMenu = reinterpret_cast<void(__cdecl*)(TES3::Actor*, TES3::Reference*, TES3::MobileActor*, bool)>(0x5B4220);
+	const auto TES3_UI_closeContentsMenu = reinterpret_cast<void(__cdecl*)()>(0x5B46B0);
+	bool showContentsMenu(sol::optional<sol::table> params) {
+		if (TES3::UI::findMenu("MenuContents")) {
+			TES3_UI_closeContentsMenu();
+			if (TES3::UI::findMenu("MenuContents")) {
+				return false;
+			}
+		}
+
+		auto reference = getOptionalParamReference(params, "reference");
+		if (!reference) {
+			throw std::runtime_error("Invalid 'reference' parameter provided.");
+		}
+		else if (!reference->baseObject->isActor()) {
+			throw std::runtime_error("Invalid 'reference' parameter provided. It does not have an inventory.");
+		}
+
+		// Clone the reference if we need to.
+		reference->clone();
+
+		// Get pickpocket flag. The take all button gets funky if using it with NPCs with pickpocket turned off.
+		auto pickpocket = getOptionalParam<bool>(params, "pickpocket", false);
+
+		auto macp = TES3::WorldController::get()->getMobilePlayer();
+		TES3_UI_showContentsMenu(static_cast<TES3::Actor*>(reference->baseObject), reference, macp, pickpocket);
+
+		return TES3::UI::findMenu("MenuContents") != nullptr;
+	}
+
+	bool closeContentsMenu(sol::optional<sol::table> params) {
+		if (!TES3::UI::findMenu("MenuContents")) {
+			return false;
+		}
+
+		TES3_UI_closeContentsMenu();
+
+		return TES3::UI::findMenu("MenuContents") == nullptr;
+	}
+
 	void bindTES3Util() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 		sol::state& state = stateHandle.state;
@@ -5660,6 +5753,8 @@ namespace mwse::lua {
 		tes3["checkMerchantTradesItem"] = checkMerchantTradesItem;
 		tes3["clearMarkLocation"] = clearMarkLocation;
 		tes3["closeAlchemyMenu"] = closeAlchemyMenu;
+		tes3["closeContentsMenu"] = closeContentsMenu;
+		tes3["closeDialogueMenu"] = closeDialogueMenu;
 		tes3["closeRepairServiceMenu"] = closeRepairServiceMenu;
 		tes3["closeRestMenu"] = closeRestMenu;
 		tes3["closeSpellmakingMenu"] = closeSpellmakingMenu;
@@ -5807,6 +5902,8 @@ namespace mwse::lua {
 		tes3["setVanityMode"] = setVanityMode;
 		tes3["setWerewolfKillCount"] = setWerewolfKillCount;
 		tes3["showAlchemyMenu"] = showAlchemyMenu;
+		tes3["showContentsMenu"] = showContentsMenu;
+		tes3["showDialogueMenu"] = showDialogueMenu;
 		tes3["showRepairServiceMenu"] = showRepairServiceMenu;
 		tes3["showRestMenu"] = showRestMenu;
 		tes3["showSpellmakingMenu"] = showSpellmakingMenu;
