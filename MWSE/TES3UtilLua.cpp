@@ -5682,7 +5682,7 @@ namespace mwse::lua {
 	}
 
 	const auto TES3_UI_showContentsMenu = reinterpret_cast<void(__cdecl*)(TES3::Actor*, TES3::Reference*, TES3::MobileActor*, bool)>(0x5B4220);
-	const auto TES3_UI_closeContentsMenu = reinterpret_cast<void(__cdecl*)()>(0x5B46B0);
+	const auto TES3_UI_closeContentsMenu = reinterpret_cast<void(__cdecl*)()>(0x5B7330);
 	bool showContentsMenu(sol::optional<sol::table> params) {
 		if (TES3::UI::findMenu("MenuContents")) {
 			TES3_UI_closeContentsMenu();
@@ -5707,6 +5707,7 @@ namespace mwse::lua {
 
 		auto macp = TES3::WorldController::get()->getMobilePlayer();
 		TES3_UI_showContentsMenu(static_cast<TES3::Actor*>(reference->baseObject), reference, macp, pickpocket);
+		TES3::UI::enterMenuMode("MenuContents");
 
 		return TES3::UI::findMenu("MenuContents") != nullptr;
 	}
