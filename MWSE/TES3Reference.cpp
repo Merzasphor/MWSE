@@ -1049,14 +1049,13 @@ namespace TES3 {
 
 	bool Reference::clone() {
 		// Check to make sure that the contained object is of the right type.
-		ObjectType::ObjectType baseType = baseObject->objectType;
-		if (baseType != ObjectType::Container && baseType != ObjectType::Creature && baseType != ObjectType::NPC) {
+		if (!baseObject->isActor()) {
 			return false;
 		}
 
 		// Check to see if the base object is not an instance.
-		Actor * actor = reinterpret_cast<Actor*>(baseObject);
-		if (!(actor->actorFlags & TES3::ActorFlag::IsBase)) {
+		auto actor = static_cast<Actor*>(baseObject);
+		if (!actor->isBaseActor()) {
 			return false;
 		}
 
