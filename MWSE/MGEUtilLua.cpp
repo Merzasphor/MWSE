@@ -224,6 +224,23 @@ namespace mwse::lua {
 		return shaders;
 	}
 
+	std::string mge_shadersDebug(sol::this_state ts) {
+		std::string out = "";
+		for (size_t i = 0; true; i++) {
+			auto s = mge::api->shaderListShaders(i);
+			if (s) {
+				char line[256];
+				std::snprintf(line, sizeof(line), "%p %s\n", s, mge::api->shaderGetName(s));
+				out += line;
+			}
+			else {
+				break;
+			}
+		}
+
+		return out;
+	}
+
 	//
 	// Zoom-related functions.
 	//
@@ -369,6 +386,7 @@ namespace mwse::lua {
 
 			// Properties.
 			usertypeDefinition["list"] = sol::readonly_property(&mge_shaders);
+			usertypeDefinition["debug"] = sol::readonly_property(&mge_shadersDebug);
 			// TODO: API to add/remove shaders at runtime.
 		}
 		lua_mge["shaders"] = MgeShadersConfig();
