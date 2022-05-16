@@ -866,8 +866,13 @@ local wasClosed = tes3.closeContentsMenu()
 This function closes the dialogue menu.
 
 ```lua
-local wasClosed = tes3.closeDialogueMenu()
+local wasClosed = tes3.closeDialogueMenu({ force = ... })
 ```
+
+**Parameters**:
+
+* `params` (table)
+	* `force` (boolean): *Default*: `true`. Normally, the menu can't be closed in certain circumstances, such as when the player is making a dialogue choice. If true, these usual restrictions will be ignored.
 
 **Returns**:
 

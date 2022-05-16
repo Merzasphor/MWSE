@@ -605,8 +605,15 @@ function tes3.closeAlchemyMenu() end
 function tes3.closeContentsMenu() end
 
 --- This function closes the dialogue menu.
+--- @param params tes3.closeDialogueMenu.params This table accepts the following values:
+--- 
+--- `force`: boolean? — *Default*: `true`. Normally, the menu can't be closed in certain circumstances, such as when the player is making a dialogue choice. If true, these usual restrictions will be ignored.
 --- @return boolean wasClosed If true, the menu was previously open, and is now closed.
-function tes3.closeDialogueMenu() end
+function tes3.closeDialogueMenu(params) end
+
+---Table parameter definitions for `tes3.closeDialogueMenu`.
+--- @class tes3.closeDialogueMenu.params
+--- @field force boolean? *Default*: `true`. Normally, the menu can't be closed in certain circumstances, such as when the player is making a dialogue choice. If true, these usual restrictions will be ignored.
 
 --- This function closes the repair service menu.
 function tes3.closeRepairServiceMenu() end
