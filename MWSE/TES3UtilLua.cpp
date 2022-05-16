@@ -5668,12 +5668,13 @@ namespace mwse::lua {
 		}
 
 		if (getOptionalParam<bool>(params, "force", true)) {
-			auto answerBlock = menuDialog->findChild("MenuDialog_answer_block");
-			if (answerBlock) {
+			// Destroy any dialogue choices, which goodbye also checks for.
+			while (auto answerBlock = menuDialog->findChild("MenuDialog_answer_block")) {
 				answerBlock->destroy();
-				answerBlock = nullptr;
-				*reinterpret_cast<bool*>(0x7D3568) = 0;
 			}
+
+			// This global controls if we are in an answering mode, and blocks things like the usual goodbye button.
+			*reinterpret_cast<bool*>(0x7D3568) = 0;
 		}
 
 		TES3_UI_goodbye();
