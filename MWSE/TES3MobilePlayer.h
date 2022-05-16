@@ -108,6 +108,8 @@ namespace TES3 {
 		int getVanityState() const;
 		void setVanityState(int state);
 
+		void addTopic(Dialogue* topic);
+
 		//
 		// Custom functions.
 		//

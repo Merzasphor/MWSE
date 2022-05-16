@@ -119,6 +119,11 @@ namespace TES3 {
 		TES3_MobilePlayer_setVanityState(this, state);
 	}
 
+	const auto TES3_MobilePlayer_addTopic = reinterpret_cast<void(__thiscall*)(MobilePlayer*, Dialogue*)>(0x56A470);
+	void MobilePlayer::addTopic(Dialogue* topic) {
+		TES3_MobilePlayer_addTopic(this, topic);
+	}
+
 	int MobilePlayer::progressSkillToNextLevel(int skillId) {
 		auto progressNeeded = getSkillProgressRequirement(skillId);
 		skillProgress[skillId] = progressNeeded;
