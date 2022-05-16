@@ -7,7 +7,7 @@ return {
 		tableParams = {
 			{ name = "reference", type = "tes3reference|tes3mobileActor|string", description = "A reference on which the magic source will be applied." },
 			{ name = "source", type = "tes3object", optional = true, description = "A magic source to apply." },
-			{ name = "name", type = "string", optional = true, description = "If applying alchemy as a source, you can specifiy a name for the magic source." },
+			{ name = "name", type = "string", optional = true, description = "While optional for other uses, if applying alchemy as a source, you must specifiy a name for the magic source." },
 			{
 				name = "effects",
 				optional = true,

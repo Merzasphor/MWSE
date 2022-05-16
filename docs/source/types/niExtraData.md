@@ -7,7 +7,7 @@ This type inherits the following: [niObject](../../types/niObject)
 
 ### `genericData`
 
-*Read-only*. Generic data held in the extra data. This is not used if a subtype of extra data used.
+*Read-only*. Generic data held in the extra data. This is not used if a subtype of extra data is used.
 
 **Returns**:
 
