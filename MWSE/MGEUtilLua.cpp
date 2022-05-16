@@ -377,6 +377,58 @@ namespace mwse::lua {
 		lua_mge["getLightingMode"] = mge_getLightingMode;
 		lua_mge["setLightingMode"] = mge_setLightingMode;
 
+		// Rendering feature functions.
+		struct MgeRenderFeatures {
+			std::unordered_map <std::string, mge::RenderFeature> names;
+
+			MgeRenderFeatures() {
+				names["FPSCounter"] = mge::RenderFeature::FPSCounter;
+				names["DisplayMessages"] = mge::RenderFeature::DisplayMessages;
+				names["PauseRenderingInMenus"] = mge::RenderFeature::PauseRenderingInMenus;
+				names["NoMWMGEBlending"] = mge::RenderFeature::NoMWMGEBlending;
+				names["NoMWSunglare"] = mge::RenderFeature::NoMWSunglare;
+				names["Shaders"] = mge::RenderFeature::Shaders;
+				names["TransparencyAA"] = mge::RenderFeature::TransparencyAA;
+				names["UpdateHDR"] = mge::RenderFeature::UpdateHDR;
+				names["ExponentialFog"] = mge::RenderFeature::ExponentialFog;
+				names["AtmosphericScattering"] = mge::RenderFeature::AtmosphericScattering;
+				names["Grass"] = mge::RenderFeature::Grass;
+				names["Shadows"] = mge::RenderFeature::Shadows;
+				names["DistantWater"] = mge::RenderFeature::DistantWater;
+				names["DistantLand"] = mge::RenderFeature::DistantLand;
+				names["DistantStatics"] = mge::RenderFeature::DistantStatics;
+				names["ReflectiveWater"] = mge::RenderFeature::ReflectiveWater;
+				names["ReflectNear"] = mge::RenderFeature::ReflectNear;
+				names["ReflectInterior"] = mge::RenderFeature::ReflectInterior;
+				names["ReflectSky"] = mge::RenderFeature::ReflectSky;
+				names["BlurReflections"] = mge::RenderFeature::BlurReflections;
+				names["DynamicRipples"] = mge::RenderFeature::DynamicRipples;
+			}
+
+			sol::object get(const std::string& id, sol::this_state ts) const {
+				auto it = names.find(id);
+				if (it == names.end()) { return sol::nil; }
+
+				return sol::make_object(ts, mge::api->featureGetEnabled(it->second));
+			}
+
+			void set(const std::string& id, bool value) const {
+				auto it = names.find(id);
+				if (it == names.end()) { return; }
+
+				mge::api->featureSetEnabled(it->second, value);
+			}
+		};
+		{
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.new_usertype<MgeRenderFeatures>("mgeRenderFeatures");
+			usertypeDefinition["new"] = sol::no_constructor;
+
+			usertypeDefinition[sol::meta_function::index] = &MgeRenderFeatures::get;
+			usertypeDefinition[sol::meta_function::new_index] = &MgeRenderFeatures::set;
+		}
+		lua_mge["render"] = MgeRenderFeatures();
+
 		// Shader-related functions.
 		struct MgeShadersConfig {};
 		{
