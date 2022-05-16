@@ -562,7 +562,7 @@ local instance = tes3.applyMagicSource({ reference = ..., source = ..., name = .
 * `params` (table)
 	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): A reference on which the magic source will be applied.
 	* `source` ([tes3object](../../types/tes3object)): *Optional*. A magic source to apply.
-	* `name` (string): *Optional*. If applying alchemy as a source, you can specifiy a name for the magic source.
+	* `name` (string): *Optional*. While optional for other uses, if applying alchemy as a source, you must specifiy a name for the magic source.
 	* `effects` (table): *Optional*. A table of custom effects to apply as a potion. Maximal number of effects is 8.
 		* `id` (boolean): *Default*: `-1`. ID of the effect.
 		* `skill` (number): *Default*: `-1`. If effect parameter specified is: Absorb, Damage, Drain, Fortify or Restore Skill, a skill should be provided. This also applies to any custom spell effect which operates on a certain skill. This value maps to [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) constants.
