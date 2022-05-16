@@ -5598,6 +5598,36 @@ namespace mwse::lua {
 		return worldController->fonts[0]->getSubstituteResult();
 	}
 
+	const auto TES3_UI_updateTopicsList = reinterpret_cast<void(__cdecl*)()>(0x5BE6C0);
+	bool addTopic(sol::optional<sol::table> params) {
+		const auto worldController = TES3::WorldController::get();
+		if (!worldController) {
+			throw std::runtime_error("This function cannot be called before the world controller is initialized.");
+		}
+
+		const auto macp = worldController->getMobilePlayer();
+		if (!macp) {
+			throw std::runtime_error("This function cannot be called before the player is initialized.");
+		}
+
+		const auto topic = getOptionalParamDialogue(params, "topic");
+		if (!topic) {
+			throw std::invalid_argument("Invalid 'topic' parameter provided.");
+		}
+		else if (topic->type != TES3::DialogueType::Topic) {
+			throw std::invalid_argument("Invalid 'topic' parameter provided. Must be of the the correct dialogue type (topic).");
+		}
+
+		const auto topicCountBefore = macp->dialogueList->size();
+		macp->addTopic(topic);
+
+		if (getOptionalParam<bool>(params, "updateGUI", true)) {
+			TES3_UI_updateTopicsList();
+		}
+
+		return macp->dialogueList->size() > topicCountBefore;
+	}
+
 	void bindTES3Util() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 		sol::state& state = stateHandle.state;
@@ -5615,6 +5645,7 @@ namespace mwse::lua {
 		tes3["addMagicEffect"] = addMagicEffect;
 		tes3["addSoulGem"] = addSoulGem;
 		tes3["addSpell"] = addSpell;
+		tes3["addTopic"] = addTopic;
 		tes3["adjustSoundVolume"] = adjustSoundVolume;
 		tes3["advanceTime"] = advanceTime;
 		tes3["applyMagicSource"] = applyMagicSource;

@@ -344,6 +344,20 @@ function tes3.addSpell(params) end
 --- @field spell tes3spell|string The spell to add.
 --- @field updateGUI boolean? *Default*: `true`. If true, the GUI will be updated respecting the adding of the spell. This can be useful to disable when batch-adding many spells. The batch should be ended with [`tes3.updateMagicGUI`](https://mwse.github.io/MWSE/apis/tes3/#tes3updatemagicgui) to reflect the changes.
 
+--- Adds a topic to the valid topic list for the player. This doesn't create a dynamic new topic.
+--- @param params tes3.addTopic.params This table accepts the following values:
+--- 
+--- `topic`: tes3dialogue|string — The topic to add
+--- 
+--- `updateGUI`: boolean? — *Default*: `true`. If true, the GUI will be updated respecting the adding of the topic.
+--- @return boolean wasAdded True if the topic was successfully added. This can be false if the topic already existed in the player's list.
+function tes3.addTopic(params) end
+
+---Table parameter definitions for `tes3.addTopic`.
+--- @class tes3.addTopic.params
+--- @field topic tes3dialogue|string The topic to add
+--- @field updateGUI boolean? *Default*: `true`. If true, the GUI will be updated respecting the adding of the topic.
+
 --- Changes the volume of a sound that is playing on a given reference.
 --- @param params tes3.adjustSoundVolume.params This table accepts the following values:
 --- 

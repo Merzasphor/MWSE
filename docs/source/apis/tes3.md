@@ -490,6 +490,26 @@ local wasAdded = tes3.addSpell({ reference = ..., actor = ..., spell = ..., upda
 
 ***
 
+### `tes3.addTopic`
+
+Adds a topic to the valid topic list for the player. This doesn't create a dynamic new topic.
+
+```lua
+local wasAdded = tes3.addTopic({ topic = ..., updateGUI = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `topic` ([tes3dialogue](../../types/tes3dialogue), string): The topic to add
+	* `updateGUI` (boolean): *Default*: `true`. If true, the GUI will be updated respecting the adding of the topic.
+
+**Returns**:
+
+* `wasAdded` (boolean): True if the topic was successfully added. This can be false if the topic already existed in the player's list.
+
+***
+
 ### `tes3.adjustSoundVolume`
 
 Changes the volume of a sound that is playing on a given reference.
