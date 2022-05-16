@@ -12,7 +12,7 @@ namespace mge {
 		// Basic utility functions.
 		//
 
-		void reload();
+		bool reload();
 		inline auto getName() const { return name; }
 		inline auto getEnabled() const { return mge::api->shaderGetEnabled(handle); }
 		void setEnabled(bool value) { mge::api->shaderSetEnabled(handle, value); }

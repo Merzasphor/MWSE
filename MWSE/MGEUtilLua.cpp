@@ -241,6 +241,31 @@ namespace mwse::lua {
 		return out;
 	}
 
+	sol::object mge_shaderFind(const char* id, sol::this_state ts) {
+		if (id) {
+			auto handle = mge::api->shaderGetShader(id);
+			if (handle) {
+				return sol::make_object(ts, mge::ShaderHandleLua(handle));
+			}
+		}
+		return sol::nil;
+	}
+
+	sol::object mge_shaderLoad(sol::optional<sol::table> params, sol::this_state ts) {
+		auto id = getOptionalParam<const char*>(params, "shader", nullptr);
+
+		if (id) {
+			auto handle = mge::api->shaderLoad(id);
+			if (handle) {
+				return sol::make_object(ts, mge::ShaderHandleLua(handle));
+			}
+		}
+		else {
+			throw std::invalid_argument("shader argument missing.");
+		}
+		return sol::nil;
+	}
+
 	//
 	// Zoom-related functions.
 	//
@@ -439,7 +464,10 @@ namespace mwse::lua {
 			// Properties.
 			usertypeDefinition["list"] = sol::readonly_property(&mge_shaders);
 			usertypeDefinition["debug"] = sol::readonly_property(&mge_shadersDebug);
-			// TODO: API to add/remove shaders at runtime.
+
+			// Functions.
+			usertypeDefinition["find"] = &mge_shaderFind;
+			usertypeDefinition["load"] = &mge_shaderLoad;
 		}
 		lua_mge["shaders"] = MgeShadersConfig();
 

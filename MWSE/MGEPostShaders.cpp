@@ -20,15 +20,16 @@ namespace mge {
 	ShaderHandleLua::~ShaderHandleLua() {
 	}
 
-	void ShaderHandleLua::reload() {
+	bool ShaderHandleLua::reload() {
 		auto wasEnabled = getEnabled();
 
 		if (mge::api->shaderReload(handle)) {
 			initialize();
 			mge::api->shaderSetEnabled(handle, wasEnabled);
+			return true;
 		}
 		else {
-			throw std::runtime_error("Shader reloading failed.");
+			return false;
 		}
 	}
 

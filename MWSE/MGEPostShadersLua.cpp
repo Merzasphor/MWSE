@@ -25,10 +25,11 @@ namespace mwse::lua {
 
 			// Properties.
 			usertypeDefinition["enabled"] = sol::property(&mge::ShaderHandleLua::getEnabled, &mge::ShaderHandleLua::setEnabled);
-			//usertypeDefinition["legacyFlags"] = sol::readonly_property(&mge::ShaderHandleLua::getLegacyFlags);
 			usertypeDefinition["name"] = sol::readonly_property(&mge::ShaderHandleLua::getName);
-			//usertypeDefinition["timestamp"] = sol::readonly_property(&mge::ShaderHandleLua::getTimestamp);
 			usertypeDefinition["variables"] = sol::readonly_property(&mge::ShaderHandleLua::listVariables);
+
+			// Functions.
+			usertypeDefinition["reload"] = &mge::ShaderHandleLua::reload;
 		}
 	}
 }
