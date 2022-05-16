@@ -847,6 +847,34 @@ tes3.closeAlchemyMenu()
 
 ***
 
+### `tes3.closeContentsMenu`
+
+This function closes the contents menu.
+
+```lua
+local wasClosed = tes3.closeContentsMenu()
+```
+
+**Returns**:
+
+* `wasClosed` (boolean): If true, the menu was previously open, and is now closed.
+
+***
+
+### `tes3.closeDialogueMenu`
+
+This function closes the dialogue menu.
+
+```lua
+local wasClosed = tes3.closeDialogueMenu()
+```
+
+**Returns**:
+
+* `wasClosed` (boolean): If true, the menu was previously open, and is now closed.
+
+***
+
 ### `tes3.closeRepairServiceMenu`
 
 This function closes the repair service menu.
@@ -3893,6 +3921,46 @@ This function opens the alchemy menu.
 ```lua
 tes3.showAlchemyMenu()
 ```
+
+***
+
+### `tes3.showContentsMenu`
+
+This function opens the contents menu. This menu is used for containers, companion inventories, and pickpocket attempts.
+
+```lua
+local wasShown = tes3.showContentsMenu({ reference = ..., pickpocket = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `reference` ([tes3mobileActor](../../types/tes3mobileActor), [tes3reference](../../types/tes3reference), string): The reference to open the contents of.
+	* `pickpocket` (boolean): *Default*: `false`. If true, the contents menu will open in the context of an attempted pickpocketing.
+
+**Returns**:
+
+* `wasShown` (boolean): If true, the contents menu was successfully shown.
+
+***
+
+### `tes3.showDialogueMenu`
+
+This function opens the dialogue menu. This behaves similar to the `ForceGreeting` mwscript command.
+
+```lua
+local wasShown = tes3.showDialogueMenu({ reference = ..., checkAllowWerewolfForceGreeting = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `reference` ([tes3mobileActor](../../types/tes3mobileActor), [tes3reference](../../types/tes3reference), string): The reference to open dialogue with.
+	* `checkAllowWerewolfForceGreeting` (boolean): *Default*: `true`. If true, the `AllowWerewolfForceGreeting` variable must exist on the reference's script to allow opening a dialogue while the player is a werewolf. This can be set to false to override the vanilla behavior.
+
+**Returns**:
+
+* `wasShown` (boolean): If true, the dialogue window was successfully shown.
 
 ***
 
