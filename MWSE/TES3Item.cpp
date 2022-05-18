@@ -16,6 +16,21 @@ namespace TES3 {
 		}
 		return false;
 	}
+
+	sol::table Item::getStolenList_lua(sol::this_state ts) {
+		auto stolenList = getStolenList();
+		if (!stolenList) {
+			return sol::nil;
+		}
+
+		sol::state_view state = ts;
+		auto list = state.create_table();
+		for (const auto& victim : *stolenList) {
+			list.add(victim);
+		}
+
+		return list;
+	}
 }
 
 MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_TES3(TES3::Item)

@@ -4908,43 +4908,55 @@ namespace mwse::lua {
 		return std::abs(stack->count);
 	}
 
-	bool getItemIsStolen(sol::table params) {
+	std::tuple<bool, sol::table> getItemIsStolen(sol::table params) {
 		auto item = getOptionalParamObject<TES3::Item>(params, "item");
-		auto from = getOptionalParamObject<TES3::BaseObject>(params, "from");
 
 		if (item == nullptr) {
 			throw std::invalid_argument("Invalid 'item' parameter provided.");
-		}
-		else if (from == nullptr) {
-			throw std::invalid_argument("Invalid 'from' parameter provided.");
 		}
 		else if (item->getStolenList() == nullptr) {
 			throw std::invalid_argument("Invalid 'item' parameter provided. Does not support a stolen list.");
 		}
 
-		return item->getStolenFlag(from);
+		auto from = getOptionalParamObject<TES3::BaseObject>(params, "from");
+		if (from) {
+			return { item->getStolenFlag(from), item->getStolenList_lua(params.lua_state()) };
+		}
+		else {
+			auto stolenList = item->getStolenList_lua(params.lua_state());
+			return { !stolenList.empty(), stolenList };
+		}
 	}
 
 	void setItemIsStolen(sol::table params) {
 		auto item = getOptionalParamObject<TES3::Item>(params, "item");
-		auto from = getOptionalParamObject<TES3::BaseObject>(params, "from");
 
 		if (item == nullptr) {
 			throw std::invalid_argument("Invalid 'item' parameter provided.");
-		}
-		else if (from == nullptr) {
-			throw std::invalid_argument("Invalid 'from' parameter provided.");
 		}
 		else if (item->getStolenList() == nullptr) {
 			throw std::invalid_argument("Invalid 'item' parameter provided. Does not support a stolen list.");
 		}
 
-		if (getOptionalParam<bool>(params, "stolen", true)) {
-			item->addStolenFlag(from);
+		auto from = getOptionalParamObject<TES3::BaseObject>(params, "from");
+		const auto stolen = getOptionalParam<bool>(params, "stolen", true);
+		if (from) {
+			if (getOptionalParam<bool>(params, "stolen", true)) {
+				item->addStolenFlag(from);
+			}
+			else {
+				item->removeStolenFlag(from);
+			}
 		}
 		else {
-			item->removeStolenFlag(from);
+			if (!stolen) {
+				item->getStolenList()->clear();
+			}
+			else {
+				throw std::invalid_argument("Invalid 'from' parameter provided. An item cannot be set as generically stolen.");
+			}
 		}
+
 	}
 
 	// Legacy tes3.getOwner.

@@ -1901,17 +1901,19 @@ local count = tes3.getItemCount({ reference = ..., item = ... })
 This function checks item's stolen flag.
 
 ```lua
-local isStolen = tes3.getItemIsStolen(item, from)
+local isStolen, stolenFrom = tes3.getItemIsStolen({ item = ..., from = ... })
 ```
 
 **Parameters**:
 
-* `item` ([tes3item](../../types/tes3item)): The item to check.
-* `from` ([tes3baseObject](../../types/tes3baseObject)): Where the item was stolen from.
+* `params` (table)
+	* `item` ([tes3item](../../types/tes3item)): The item to check.
+	* `from` ([tes3creature](../../types/tes3creature), [tes3npc](../../types/tes3npc), [tes3faction](../../types/tes3faction), nil): *Optional*. Where the item was stolen from. If not provided, the function will return true if the item was stolen from anyone.
 
 **Returns**:
 
-* `isStolen` (boolean)
+* `isStolen` (boolean): If true the item is stolen.
+* `stolenFrom` ([tes3creature](../../types/tes3creature)[], [tes3npc](../../types/tes3npc)[], [tes3faction](../../types/tes3faction)[]): A list of who and what the item has been stolen from.
 
 ***
 
@@ -3694,14 +3696,15 @@ local value = tes3.setGlobal(id, value)
 This function changes an item's stolen flag. Morrowind handles stealing by marking the base item (not the inventory stack) with NPCs that you have stolen that item from. The NPC will recognize an item as stolen if they are marked as stolen on the base item.
 
 ```lua
-tes3.setItemIsStolen(item, from, stolen)
+tes3.setItemIsStolen({ item = ..., from = ..., stolen = ... })
 ```
 
 **Parameters**:
 
-* `item` ([tes3item](../../types/tes3item)): The item whose stolen flag to modify.
-* `from` ([tes3baseObject](../../types/tes3baseObject)): The location the item is stolen from.
-* `stolen` (boolean): *Default*: `true`. If this parameter is set to true, the item will be flagged as stolen. Otherwise, the item's stolen flag will be removed.
+* `params` (table)
+	* `item` ([tes3item](../../types/tes3item)): The item whose stolen flag to modify.
+	* `from` ([tes3creature](../../types/tes3creature), [tes3npc](../../types/tes3npc), [tes3faction](../../types/tes3faction), nil): Who or what to set/clear the stolen state for. If not provided, the stolen state can be cleared (but not set) for all objects.
+	* `stolen` (boolean): *Default*: `true`. If this parameter is set to true, the item will be flagged as stolen. Otherwise, the item's stolen flag will be removed.
 
 ***
 
