@@ -24,6 +24,7 @@ namespace mge {
 		auto wasEnabled = getEnabled();
 
 		if (mge::api->shaderReload(handle)) {
+			// Update variables map
 			initialize();
 			mge::api->shaderSetEnabled(handle, wasEnabled);
 			return true;
@@ -196,6 +197,8 @@ namespace mge {
 
 		// Load all variables.
 		mge::ShaderVariableInfo info;
+		variableTypes.clear();
+
 		for (size_t i = 0; true; i++) {
 			if (mge::api->shaderGetVariableInfo(handle, i, &info)) {
 				// Skip variables with unknown type.
