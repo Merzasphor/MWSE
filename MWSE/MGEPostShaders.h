@@ -15,7 +15,9 @@ namespace mge {
 		bool reload();
 		inline auto getName() const { return name; }
 		inline auto getEnabled() const { return mge::api->shaderGetEnabled(handle); }
-		void setEnabled(bool value) { mge::api->shaderSetEnabled(handle, value); }
+		inline void setEnabled(bool value) { mge::api->shaderSetEnabled(handle, value); }
+		inline auto getPriority() const { return mge::api->shaderGetPriority(handle); }
+		inline void setPriority(int value) { mge::api->shaderSetPriority(handle, value); }
 
 		//
 		// Convenience functions for lua.

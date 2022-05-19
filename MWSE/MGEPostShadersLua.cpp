@@ -26,6 +26,7 @@ namespace mwse::lua {
 			// Properties.
 			usertypeDefinition["enabled"] = sol::property(&mge::ShaderHandleLua::getEnabled, &mge::ShaderHandleLua::setEnabled);
 			usertypeDefinition["name"] = sol::readonly_property(&mge::ShaderHandleLua::getName);
+			usertypeDefinition["orderPriority"] = sol::property(&mge::ShaderHandleLua::getPriority, &mge::ShaderHandleLua::setPriority);
 			usertypeDefinition["variables"] = sol::readonly_property(&mge::ShaderHandleLua::listVariables);
 
 			// Functions.
