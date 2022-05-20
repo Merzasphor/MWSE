@@ -1,6 +1,6 @@
 return {
 	type = "value",
-	description = [[Access to the root of the scene graph.]],
+	description = [[Deprecated, please use `tes3.game.worldRoot` instead. Access to the root of the scene graph.]],
 	readOnly = true,
 	valuetype = "niNode",
 }
