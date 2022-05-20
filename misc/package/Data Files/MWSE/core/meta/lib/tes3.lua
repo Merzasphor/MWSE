@@ -624,7 +624,7 @@ function tes3.closeRestMenu() end
 --- This function closes the spellmaking menu.
 function tes3.closeSpellmakingMenu() end
 
---- Create an object and returns it. The created object will be part of the saved game. Supported object types are those that have their own create function, such as tes3activator for example.
+--- Create an object and returns it. The created object will be part of the saved game. Currently supported object types are: `tes3.objectType.activator`, `.alchemy`, `.ammo`, `.container`, `.misc`, `.sound`, `.spell`, `.static`, `.enchantment`, `.weapon`.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3/#tes3createobject).
 --- @param params tes3.createObject.params This table accepts the following values:
@@ -1728,7 +1728,7 @@ function tes3.random(seed) end
 --- 
 --- `observeAppCullFlag`: boolean? — *Default*: `true`. Ignore intersections with culled (hidden) models.
 --- 
---- `root`: niBillboardNode|niCollisionSwitch|niNode|niSwitchNode|nil — *Default*: `tes3.game.worldSceneGraphRoot`. Node pointer to node scene.
+--- `root`: niBillboardNode|niCollisionSwitch|niNode|niSwitchNode|nil — *Default*: `tes3.game.worldRoot`. Node pointer to node scene.
 --- 
 --- `ignoreSkinned`: boolean? — *Default*: `false`. Ignore results from skinned objects.
 --- 
@@ -1755,7 +1755,7 @@ function tes3.rayTest(params) end
 --- @field useModelCoordinates boolean? *Default*: `false`. If true, model coordinates will be used instead of world coordinates.
 --- @field useBackTriangles boolean? *Default*: `false`. Include intersections with back-facing triangles.
 --- @field observeAppCullFlag boolean? *Default*: `true`. Ignore intersections with culled (hidden) models.
---- @field root niBillboardNode|niCollisionSwitch|niNode|niSwitchNode|nil *Default*: `tes3.game.worldSceneGraphRoot`. Node pointer to node scene.
+--- @field root niBillboardNode|niCollisionSwitch|niNode|niSwitchNode|nil *Default*: `tes3.game.worldRoot`. Node pointer to node scene.
 --- @field ignoreSkinned boolean? *Default*: `false`. Ignore results from skinned objects.
 --- @field returnColor boolean? *Default*: `false`. Calculate and return the vertex color at intersections.
 --- @field returnNormal boolean? *Default*: `true`. Calculate and return the vertex normal at intersections.

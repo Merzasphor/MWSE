@@ -128,7 +128,7 @@ local executed = mwscript.addToLevItem({ list = ..., item = ..., level = ... })
 
 ### `mwscript.addTopic`
 
-Wrapper for the `AddTopic` mwscript function.
+Use [`tes3.addTopic()`](https://mwse.github.io/MWSE/apis/tes3/#tes3addtopic) instead. Wrapper for the `AddTopic` mwscript function.
 
 ```lua
 local executed = mwscript.addTopic({ topic = ... })

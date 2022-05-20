@@ -103,7 +103,7 @@ function mwscript.addToLevItem(params) end
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string Item to add to the list.
 --- @field level number? *Default*: `0`. Minimum level for the item to spawn.
 
---- Wrapper for the `AddTopic` mwscript function.
+--- Use [`tes3.addTopic()`](https://mwse.github.io/MWSE/apis/tes3/#tes3addtopic) instead. Wrapper for the `AddTopic` mwscript function.
 --- @deprecated
 --- @param params mwscript.addTopic.params This table accepts the following values:
 --- 

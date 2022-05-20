@@ -912,7 +912,7 @@ tes3.closeSpellmakingMenu()
 
 ### `tes3.createObject`
 
-Create an object and returns it. The created object will be part of the saved game. Supported object types are those that have their own create function, such as tes3activator for example.
+Create an object and returns it. The created object will be part of the saved game. Currently supported object types are: `tes3.objectType.activator`, `.alchemy`, `.ammo`, `.container`, `.misc`, `.sound`, `.spell`, `.static`, `.enchantment`, `.weapon`.
 
 ```lua
 local createdObject = tes3.createObject({ objectType = ..., getIfExists = ... })
@@ -3177,7 +3177,7 @@ local result = tes3.rayTest({ position = ..., direction = ..., findAll = ..., ma
 	* `useModelCoordinates` (boolean): *Default*: `false`. If true, model coordinates will be used instead of world coordinates.
 	* `useBackTriangles` (boolean): *Default*: `false`. Include intersections with back-facing triangles.
 	* `observeAppCullFlag` (boolean): *Default*: `true`. Ignore intersections with culled (hidden) models.
-	* `root` ([niNode](../../types/niNode)): *Default*: `tes3.game.worldSceneGraphRoot`. Node pointer to node scene.
+	* `root` ([niNode](../../types/niNode)): *Default*: `tes3.game.worldRoot`. Node pointer to node scene.
 	* `ignoreSkinned` (boolean): *Default*: `false`. Ignore results from skinned objects.
 	* `returnColor` (boolean): *Default*: `false`. Calculate and return the vertex color at intersections.
 	* `returnNormal` (boolean): *Default*: `true`. Calculate and return the vertex normal at intersections.
@@ -3238,22 +3238,26 @@ local result = tes3.rayTest({ position = ..., direction = ..., findAll = ..., ma
 	If you plan to use the results of rayTest, you should make sure it still exists. For example, an object which was in a list of results of rayTest can get unloaded when the player changes cells and become invalid, so it shouldn't be accessed.
 
 	```lua
-	local result = tes3.rayTest{ -- result can get invalidated
+	local result = tes3.rayTest{ -- the result can get invalidated
 		position = tes3.getPlayerEyePosition(),
 		direction = tes3.getPlayerEyeVector(),
 		ignore = { tes3.player }
 	}
 	
-	local ref
+	local refHandle
 	
 	if result then
-		ref = tes3.makeSafeObjectHandle(result.reference)
+		refHandle = tes3.makeSafeObjectHandle(result.reference)
 	end
 	
-	-- Before using ref, now we can chack if it is valid
-	if ref:valid() then
-		-- Now we can safely do something with ref
+	local function myFunction()
+		-- Before using the reference, we need to check that it's still valid.
+		-- References get unloaded on cell changes etc.
+		if refHandle:valid() then
+			-- Now we can safely do something with our stored reference.
+			local reference = refHandle:getObject()
 	
+		end
 	end
 
 	```
