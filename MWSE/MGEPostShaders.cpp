@@ -1,6 +1,7 @@
 
 #include "MGEPostShaders.h"
 #include "MGEApi.h"
+#include "TES3Vectors.h"
 
 #include "Log.h"
 
@@ -109,19 +110,29 @@ namespace mge {
 			}
 			break;
 		case '2':
+			{
+				// Float vectors of length 2.
+				TES3::Vector2 vec;
+				if (mge::api->shaderGetVector(handle, varName, &vec.x, 2)) {
+					return sol::make_object(state, vec);
+				}
+			}
+			break;
 		case '3':
+			{
+				// Float vectors of length 3.
+				TES3::Vector3 vec;
+				if (mge::api->shaderGetVector(handle, varName, &vec.x, 3)) {
+					return sol::make_object(state, vec);
+				}
+			}
+			break;
 		case '4':
 			{
-				// Float vectors of length 2, 3, 4.
-				auto count = v->second - '0';
-				float result[4];
-				if (mge::api->shaderGetVector(handle, varName, &result[0], count)) {
-					auto table = state.create_table(count, 0);
-
-					for (int i = 0; i < count; ++i) {
-						table[i + 1] = result[i];
-					}
-					return table;
+				// Float vectors of length 4.
+				TES3::Vector4 vec;
+				if (mge::api->shaderGetVector(handle, varName, &vec.x, 4)) {
+					return sol::make_object(state, vec);
 				}
 			}
 			break;
@@ -169,18 +180,56 @@ namespace mge {
 				break;
 			}
 		case '2':
+			{
+				// Float vectors of length 2.
+				TES3::Vector2 vec;
+
+				if (value.is<TES3::Vector2*>()) {
+					vec = *value.as<TES3::Vector2*>();
+					mge::api->shaderSetVector(handle, varName, &vec.x, 2);
+				}
+				else if (value.is<sol::table>()) {
+					auto table = value.as<sol::table>();
+					vec.x = table[1];
+					vec.y = table[2];
+					mge::api->shaderSetVector(handle, varName, &vec.x, 2);
+				}
+			}
+		break;
 		case '3':
+			{
+				// Float vectors of length 3.
+				TES3::Vector3 vec;
+
+				if (value.is<TES3::Vector3*>()) {
+					vec = *value.as<TES3::Vector3*>();
+					mge::api->shaderSetVector(handle, varName, &vec.x, 3);
+				}
+				else if (value.is<sol::table>()) {
+					auto table = value.as<sol::table>();
+					vec.x = table[1];
+					vec.y = table[2];
+					vec.z = table[3];
+					mge::api->shaderSetVector(handle, varName, &vec.x, 3);
+				}
+			}
+		break;
 		case '4':
 			{
-				// Float vectors of length 2, 3, 4.
-				auto count = v->second - '0';
-				auto values = value.as<sol::table>();
-				if (values != sol::nil) {
-					float valueBuffer[4];
-					for (int i = 0; i < count; i++) {
-						valueBuffer[i] = values[i+1];
-					}
-					mge::api->shaderSetVector(handle, varName, valueBuffer, count);
+				// Float vectors of length 4.
+				TES3::Vector4 vec;
+
+				if (value.is<TES3::Vector4*>()) {
+					vec = *value.as<TES3::Vector4*>();
+					mge::api->shaderSetVector(handle, varName, &vec.x, 4);
+				}
+				else if (value.is<sol::table>()) {
+					auto table = value.as<sol::table>();
+					vec.x = table[1];
+					vec.y = table[2];
+					vec.z = table[3];
+					vec.w = table[4];
+					mge::api->shaderSetVector(handle, varName, &vec.x, 4);
 				}
 			}
 			break;
