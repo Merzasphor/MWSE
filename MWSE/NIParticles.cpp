@@ -8,7 +8,7 @@ namespace NI {
 		return {};
 	}
 
-	nonstd::span<TES3::Vector4> RotatingParticlesData::getRotations() {
+	nonstd::span<NI::Quaternion> RotatingParticlesData::getRotations() {
 		if (rotations) {
 			return nonstd::span(rotations, vertexCount);
 		}

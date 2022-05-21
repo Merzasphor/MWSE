@@ -290,53 +290,53 @@ namespace TES3 {
 	//
 
 	Vector4::Vector4() :
-		w(0.0f),
 		x(0.0f),
 		y(0.0f),
-		z(0.0f)
+		z(0.0f),
+		w(0.0f)
 	{
 
 	}
 
-	Vector4::Vector4(float _w, float _x, float _y, float _z) :
-		w(_w),
+	Vector4::Vector4(float _x, float _y, float _z, float _w) :
 		x(_x),
 		y(_y),
-		z(_z)
+		z(_z),
+		w(_w)
 	{
 
 	}
 
 	bool Vector4::operator==(const Vector4& other) const {
-		return w == other.w && x == other.x && y == other.y && z == other.z;
+		return x == other.x && y == other.y && z == other.z && w == other.w;
 	}
 
 	bool Vector4::operator!=(const Vector4& other) const {
-		return w != other.w || x != other.x || y != other.y || z != other.z;
+		return x != other.x || y != other.y || z != other.z || w != other.w;
 	}
 
 	Vector4 Vector4::operator+(const Vector4& other) const {
-		return Vector4(w + other.w, x + other.x, y + other.y, z + other.z);
+		return Vector4(x + other.x, y + other.y, z + other.z, w + other.w);
 	}
 
 	Vector4 Vector4::operator-(const Vector4& other) const {
-		return Vector4(w - other.w, x - other.x, y - other.y, z - other.z);
+		return Vector4(x - other.x, y - other.y, z - other.z, w - other.w);
 	}
 
 	Vector4 Vector4::operator*(const Vector4& other) const {
-		return Vector4(w * other.w, x * other.x, y * other.y, z * other.z);
+		return Vector4(x * other.x, y * other.y, z * other.z, w * other.w);
 	}
 
 	Vector4 Vector4::operator*(const float scalar) const {
-		return Vector4(w * scalar, x * scalar, y * scalar, z * scalar);
+		return Vector4(x * scalar, y * scalar, z * scalar, w * scalar);
 	}
 
 	Vector4 Vector4::operator/(const float scalar) const {
-		return Vector4(w / scalar, x / scalar, y / scalar, z / scalar);
+		return Vector4(x / scalar, y / scalar, z / scalar, w / scalar);
 	}
 
 	std::ostream& operator<<(std::ostream& str, const Vector4& vector) {
-		str << "(" << vector.w << "," << vector.x << "," << vector.y << "," << vector.z << ")";
+		str << "(" << vector.x << "," << vector.y << "," << vector.z << "," << vector.w << ")";
 		return str;
 	}
 
@@ -348,7 +348,7 @@ namespace TES3 {
 
 	std::string Vector4::toJson() const {
 		std::ostringstream ss;
-		ss << "{\"w\":" << w << ",\"x\":" << x << ",\"y\":" << y << ",\"z\":" << z << "}";
+		ss << "{\"x\":" << x << ",\"y\":" << y << ",\"z\":" << z << ",\"w\":" << w << "}";
 		return std::move(ss.str());
 	}
 
@@ -357,7 +357,7 @@ namespace TES3 {
 	}
 
 	float Vector4::length() const {
-		return sqrt(w * w + x * x + y * y + z * z);
+		return sqrt(x * x + y * y + z * z + w * w);
 	}
 
 	//
