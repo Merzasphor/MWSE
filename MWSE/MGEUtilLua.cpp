@@ -2,6 +2,7 @@
 
 #include "MGEApi.h"
 #include "MGEPostShaders.h"
+#include "TES3Game.h"
 
 #include "LuaManager.h"
 #include "LuaUtil.h"
@@ -335,15 +336,17 @@ namespace mwse::lua {
 	//
 
 	auto mge_setWeatherScattering(sol::optional<sol::table> params) {
-		auto outscatter = getOptionalParamVector3(params, "outscatter");
 		auto inscatter = getOptionalParamVector3(params, "inscatter");
+		auto outscatter = getOptionalParamVector3(params, "outscatter");
 
-		if (!outscatter || !inscatter) {
-			return false;
+		if (inscatter && outscatter) {
+			mge::api->weatherScatteringSet(&inscatter.value().x, &outscatter.value().x);
+			return true;
 		}
-
-		mge::api->weatherScatteringSet(&inscatter.value().x, &outscatter.value().x);
-		return true;
+		else {
+			throw std::invalid_argument("inscatter and outscatter must be 3-vectors.");
+		}
+		return false;
 	}
 
 	auto mge_getWeatherScattering(sol::this_state ts) {
@@ -353,8 +356,8 @@ namespace mwse::lua {
 		sol::state_view state = ts;
 		sol::table in = state.create_table_with(1, inscatter[0], 2, inscatter[1], 3, inscatter[2]);
 		sol::table out = state.create_table_with(1, outscatter[0], 2, outscatter[1], 3, outscatter[2]);
-
-		return std::make_tuple(in, out);
+		sol::table scattering = state.create_table_with("inscatter", in, "outscatter", out);
+		return scattering;
 	}
 
 	auto mge_getWeatherDLFog(int weatherID) {
@@ -547,5 +550,15 @@ namespace mwse::lua {
 		lua_macros["toggleStatusText"] = mge::macros->ToggleStatusText;
 		lua_macros["toggleTransparencyAA"] = mge::macros->ToggleTransparencyAA;
 		lua_macros["toggleZoom"] = mge::macros->ToggleZoom;
+
+		// Legacy functions.
+		lua_mge["getScreenHeight"] = []() { return TES3::Game::get()->windowHeight; };
+		lua_mge["getScreenWidth"] = []() { return TES3::Game::get()->windowWidth; };
+		lua_mge["getWeatherScattering"] = &mge_getWeatherScattering;
+		lua_mge["setWeatherScattering"] = &mge_setWeatherScattering;
+		lua_mge["getWeatherDLFog"] = &mge_getWeatherDLFog;
+		lua_mge["setWeatherDLFog"] = &mge_setWeatherDLFog;
+		lua_mge["getWeatherPPLLight"] = &mge_getWeatherPPLLight;
+		lua_mge["setWeatherPPLLight"] = &mge_setWeatherPPLLight;
 	}
 }
