@@ -252,7 +252,7 @@ namespace mwse::lua {
 	}
 
 	sol::object mge_shaderLoad(sol::optional<sol::table> params, sol::this_state ts) {
-		auto id = getOptionalParam<const char*>(params, "shader", nullptr);
+		auto id = getOptionalParam<const char*>(params, "name", nullptr);
 
 		if (id) {
 			auto handle = mge::api->shaderLoad(id);
