@@ -624,7 +624,7 @@ function tes3.closeRestMenu() end
 --- This function closes the spellmaking menu.
 function tes3.closeSpellmakingMenu() end
 
---- Create an object and returns it. The created object will be part of the saved game. Supported object types are those that have their own create function, such as tes3activator for example.
+--- Create an object and returns it. The created object will be part of the saved game. Currently supported object types are: `tes3.objectType.activator`, `.alchemy`, `.ammo`, `.container`, `.misc`, `.sound`, `.spell`, `.static`, `.enchantment`, `.weapon`.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3/#tes3createobject).
 --- @param params tes3.createObject.params This table accepts the following values:
@@ -1067,10 +1067,19 @@ function tes3.getItemCount(params) end
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon|string The item to get the count of.
 
 --- This function checks item's stolen flag.
---- @param item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon The item to check.
---- @param from tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3birthsign|tes3bodyPart|tes3book|tes3cell|tes3class|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3dialogue|tes3dialogueInfo|tes3door|tes3enchantment|tes3faction|tes3gameSetting|tes3globalVariable|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3magicSourceInstance|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3quest|tes3race|tes3reference|tes3region|tes3repairTool|tes3script|tes3skill|tes3sound|tes3soundGenerator|tes3spell|tes3startScript|tes3static|tes3weapon Where the item was stolen from.
---- @return boolean isStolen No description yet available.
-function tes3.getItemIsStolen(item, from) end
+--- @param params tes3.getItemIsStolen.params This table accepts the following values:
+--- 
+--- `item`: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon — The item to check.
+--- 
+--- `from`: tes3creature|tes3npc|tes3faction|nil — *Optional*. Where the item was stolen from. If not provided, the function will return true if the item was stolen from anyone.
+--- @return boolean isStolen If true the item is stolen.
+--- @return tes3creature[]|tes3npc[]|tes3faction[] stolenFrom A list of who and what the item has been stolen from.
+function tes3.getItemIsStolen(params) end
+
+---Table parameter definitions for `tes3.getItemIsStolen`.
+--- @class tes3.getItemIsStolen.params
+--- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon The item to check.
+--- @field from tes3creature|tes3npc|tes3faction|nil *Optional*. Where the item was stolen from. If not provided, the function will return true if the item was stolen from anyone.
 
 --- Gets the index of a given journal, or nil if no valid journal could be found.
 --- @param params tes3.getJournalIndex.params This table accepts the following values:
@@ -1719,7 +1728,7 @@ function tes3.random(seed) end
 --- 
 --- `observeAppCullFlag`: boolean? — *Default*: `true`. Ignore intersections with culled (hidden) models.
 --- 
---- `root`: niBillboardNode|niCollisionSwitch|niNode|niSwitchNode|nil — *Default*: `tes3.game.worldSceneGraphRoot`. Node pointer to node scene.
+--- `root`: niBillboardNode|niCollisionSwitch|niNode|niSwitchNode|nil — *Default*: `tes3.game.worldRoot`. Node pointer to node scene.
 --- 
 --- `ignoreSkinned`: boolean? — *Default*: `false`. Ignore results from skinned objects.
 --- 
@@ -1746,7 +1755,7 @@ function tes3.rayTest(params) end
 --- @field useModelCoordinates boolean? *Default*: `false`. If true, model coordinates will be used instead of world coordinates.
 --- @field useBackTriangles boolean? *Default*: `false`. Include intersections with back-facing triangles.
 --- @field observeAppCullFlag boolean? *Default*: `true`. Ignore intersections with culled (hidden) models.
---- @field root niBillboardNode|niCollisionSwitch|niNode|niSwitchNode|nil *Default*: `tes3.game.worldSceneGraphRoot`. Node pointer to node scene.
+--- @field root niBillboardNode|niCollisionSwitch|niNode|niSwitchNode|nil *Default*: `tes3.game.worldRoot`. Node pointer to node scene.
 --- @field ignoreSkinned boolean? *Default*: `false`. Ignore results from skinned objects.
 --- @field returnColor boolean? *Default*: `false`. Calculate and return the vertex color at intersections.
 --- @field returnNormal boolean? *Default*: `true`. Calculate and return the vertex normal at intersections.
@@ -2118,10 +2127,20 @@ function tes3.setEnabled(params) end
 function tes3.setGlobal(id, value) end
 
 --- This function changes an item's stolen flag. Morrowind handles stealing by marking the base item (not the inventory stack) with NPCs that you have stolen that item from. The NPC will recognize an item as stolen if they are marked as stolen on the base item.
---- @param item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon The item whose stolen flag to modify.
---- @param from tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3birthsign|tes3bodyPart|tes3book|tes3cell|tes3class|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3dialogue|tes3dialogueInfo|tes3door|tes3enchantment|tes3faction|tes3gameSetting|tes3globalVariable|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3magicSourceInstance|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3quest|tes3race|tes3reference|tes3region|tes3repairTool|tes3script|tes3skill|tes3sound|tes3soundGenerator|tes3spell|tes3startScript|tes3static|tes3weapon The location the item is stolen from.
---- @param stolen boolean? *Default*: `true`. If this parameter is set to true, the item will be flagged as stolen. Otherwise, the item's stolen flag will be removed.
-function tes3.setItemIsStolen(item, from, stolen) end
+--- @param params tes3.setItemIsStolen.params This table accepts the following values:
+--- 
+--- `item`: tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon — The item whose stolen flag to modify.
+--- 
+--- `from`: tes3creature|tes3npc|tes3faction|nil — Who or what to set/clear the stolen state for. If not provided, the stolen state can be cleared (but not set) for all objects.
+--- 
+--- `stolen`: boolean? — *Default*: `true`. If this parameter is set to true, the item will be flagged as stolen. Otherwise, the item's stolen flag will be removed.
+function tes3.setItemIsStolen(params) end
+
+---Table parameter definitions for `tes3.setItemIsStolen`.
+--- @class tes3.setItemIsStolen.params
+--- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon The item whose stolen flag to modify.
+--- @field from tes3creature|tes3npc|tes3faction|nil Who or what to set/clear the stolen state for. If not provided, the stolen state can be cleared (but not set) for all objects.
+--- @field stolen boolean? *Default*: `true`. If this parameter is set to true, the item will be flagged as stolen. Otherwise, the item's stolen flag will be removed.
 
 --- Sets the index of a given journal in a way similar to the mwscript function SetJournalIndex.
 --- @param params tes3.setJournalIndex.params This table accepts the following values:

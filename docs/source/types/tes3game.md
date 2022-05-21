@@ -4,6 +4,36 @@ A core game object used for storing game settings.
 
 ## Properties
 
+### `activationAmbientLight`
+
+*Read-only*. No description yet available.
+
+**Returns**:
+
+* `result` ([niAmbientLight](../../types/niAmbientLight))
+
+***
+
+### `debugRoot`
+
+*Read-only*. Access to the root of the scene graph of the Debug menu layer.
+
+**Returns**:
+
+* `result` ([niNode](../../types/niNode))
+
+***
+
+### `fogProperty`
+
+*Read-only*. No description yet available.
+
+**Returns**:
+
+* `result` ([niFogProperty](../../types/niFogProperty))
+
+***
+
 ### `parentWindowHandle`
 
 *Read-only*. The Windows HWND for the parent window.
@@ -31,6 +61,36 @@ The game's rendering distance.
 **Returns**:
 
 * `result` (number)
+
+***
+
+### `sceneGraphCollideString`
+
+*Read-only*. No description yet available.
+
+**Returns**:
+
+* `result` ([niNode](../../types/niNode))
+
+***
+
+### `sceneGraphGridString`
+
+*Read-only*. No description yet available.
+
+**Returns**:
+
+* `result` ([niNode](../../types/niNode))
+
+***
+
+### `sceneGraphTextureString`
+
+*Read-only*. No description yet available.
+
+**Returns**:
+
+* `result` ([niNode](../../types/niNode))
 
 ***
 
@@ -67,16 +127,6 @@ State on if screenshots are enabled.
 ### `soundQuality`
 
 Sound quality level.
-
-**Returns**:
-
-* `result` (number)
-
-***
-
-### `voice`
-
-Mix volumes for voices.
 
 **Returns**:
 
@@ -124,6 +174,16 @@ Mix volumes for music.
 
 ***
 
+### `volumeVoice`
+
+Mix volumes for voices.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
 ### `windowHandle`
 
 *Read-only*. The Windows HWND for the window.
@@ -136,7 +196,7 @@ Mix volumes for music.
 
 ### `wireframeProperty`
 
-*Read-only*. The reused wireframe property, appled when toggling wireframe rendering.
+*Read-only*. The reused wireframe property, applied when toggling wireframe rendering.
 
 **Returns**:
 
@@ -144,9 +204,49 @@ Mix volumes for music.
 
 ***
 
+### `worldLandscapeRoot`
+
+*Read-only*. Access to the root of the scene graph of all the currently loaded terrain.
+
+**Returns**:
+
+* `result` ([niNode](../../types/niNode))
+
+***
+
+### `worldObjectRoot`
+
+*Read-only*. Access to the root of the scene graph containing all the static objects, and lights that can't be picked up.
+
+**Returns**:
+
+* `result` ([niNode](../../types/niNode))
+
+***
+
+### `worldPickRoot`
+
+*Read-only*. Access to the root of the scene graph containing all the objects that can be interacted with (NPCs, items, harvestable plants, activators, doors...), but also some objects that are only rendered in the Construction Set such as sound emmiting activator objects with EditorMarker.NIF mesh.
+
+**Returns**:
+
+* `result` ([niNode](../../types/niNode))
+
+***
+
+### `worldRoot`
+
+*Read-only*. Access to the root of the world scene graph.
+
+**Returns**:
+
+* `result` ([niNode](../../types/niNode))
+
+***
+
 ### `worldSceneGraphRoot`
 
-*Read-only*. Access to the root of the scene graph.
+*Read-only*. Deprecated, please use `tes3.game.worldRoot` instead. Access to the root of the scene graph.
 
 **Returns**:
 
@@ -163,6 +263,20 @@ Clears data related to activation, resetting what the player can activate.
 ```lua
 myObject:clearTarget()
 ```
+
+***
+
+### `setGamma`
+
+This method allows changing gamma correction.
+
+```lua
+myObject:setGamma(value)
+```
+
+**Parameters**:
+
+* `value` (number)
 
 ***
 

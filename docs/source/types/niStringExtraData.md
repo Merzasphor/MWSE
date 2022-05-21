@@ -149,7 +149,7 @@ local success = myObject:saveBinary(path)
 
 ### `new`
 
-Creates an niStringExtraData..
+Creates an niStringExtraData.
 
 ```lua
 local extraData = niStringExtraData.new(string)

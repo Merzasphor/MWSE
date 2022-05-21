@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[Wrapper for the `AddTopic` mwscript function.]],
+	description = [[Use [`tes3.addTopic()`](https://mwse.github.io/MWSE/apis/tes3/#tes3addtopic) instead. Wrapper for the `AddTopic` mwscript function.]],
 	arguments = {{
 		name = "params",
 		type = "table",

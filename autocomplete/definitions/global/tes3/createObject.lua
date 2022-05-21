@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[Create an object and returns it. The created object will be part of the saved game. Supported object types are those that have their own create function, such as tes3activator for example.]],
+	description = [[Create an object and returns it. The created object will be part of the saved game. Currently supported object types are: `tes3.objectType.activator`, `.alchemy`, `.ammo`, `.container`, `.misc`, `.sound`, `.spell`, `.static`, `.enchantment`, `.weapon`.]],
 	arguments = {{
 		name = "params",
 		type = "table",

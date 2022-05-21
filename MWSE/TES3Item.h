@@ -14,6 +14,8 @@ namespace TES3 {
 		ItemData * createItemData();
 		bool promptsEquipmentReevaluation() const;
 
+		sol::table getStolenList_lua(sol::this_state ts);
+
 	};
 	static_assert(sizeof(Item) == 0x30, "TES3::Item failed size validation");
 }
