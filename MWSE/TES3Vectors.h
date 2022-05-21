@@ -92,13 +92,13 @@ namespace TES3 {
 	static_assert(sizeof(Vector3) == 0xC, "TES3::Vector3 failed size validation");
 
 	struct Vector4 {
-		float w;
 		float x;
 		float y;
 		float z;
+		float w;
 
 		Vector4();
-		Vector4(float w, float x, float y, float z);
+		Vector4(float x, float y, float z, float w);
 
 		bool operator==(const Vector4& other) const;
 		bool operator!=(const Vector4& other) const;

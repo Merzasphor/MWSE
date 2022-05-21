@@ -17,13 +17,13 @@ namespace NI {
 	static_assert(sizeof(ParticlesData) == 0x44, "NI::ParticlesData failed size validation");
 
 	struct RotatingParticlesData : ParticlesData {
-		TES3::Vector4* rotations; // 0x48
+		NI::Quaternion* rotations; // 0x48
 
 		//
 		// Accessor methods.
 		//
 
-		nonstd::span<TES3::Vector4> getRotations();
+		nonstd::span<NI::Quaternion> getRotations();
 	};
 	static_assert(sizeof(RotatingParticlesData) == 0x48, "NI::RotatingParticlesData failed size validation");
 
