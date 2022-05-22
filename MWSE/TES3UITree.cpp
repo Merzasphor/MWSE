@@ -29,6 +29,10 @@ namespace TES3::UI {
 			else {
 				return sol::make_object(ts, value.propertyValue);
 			}
+		case TES3::UI::PropertyType::Pointer:
+			return sol::make_object(ts, DWORD(value.ptrValue));
+		case TES3::UI::PropertyType::EventCallback:
+			return sol::make_object(ts, DWORD(value.eventCallback));
 		}
 		return sol::nil;
 	}

@@ -959,6 +959,14 @@ namespace TES3 {
 			setProperty(getPropertyFromObject(key), toBooleanProperty(value));
 		}
 
+		DWORD Element::getPropertyCallback_lua(sol::object key) const {
+			return (DWORD)getProperty(TES3::UI::PropertyType::EventCallback, getPropertyFromObject(key)).eventCallback;
+		}
+
+		void Element::setPropertyCallback_lua(sol::object key, DWORD value) {
+			setProperty(getPropertyFromObject(key), (EventCallback)value);
+		}
+
 		int Element::getPropertyInt_lua(sol::object key) const {
 			return getProperty(TES3::UI::PropertyType::Integer, getPropertyFromObject(key)).integerValue;
 		}
@@ -1017,6 +1025,14 @@ namespace TES3 {
 			else {
 				throw std::invalid_argument("Could not determine type of value to set.");
 			}
+		}
+
+		Property Element::getPropertyProperty_lua(sol::object key) const {
+			return getProperty(TES3::UI::PropertyType::Property, getPropertyFromObject(key)).propertyValue;
+		}
+
+		void Element::setPropertyProperty_lua(sol::object key, Property value) {
+			setProperty(getPropertyFromObject(key), value);
 		}
 
 		void Element::registerBefore_lua(const std::string& eventID, sol::protected_function callback, sol::optional<double> priority) {

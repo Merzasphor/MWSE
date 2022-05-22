@@ -6,7 +6,7 @@
 namespace TES3 {
 	namespace UI {
 		struct TreeItem {
-			short key;
+			Property key;
 			PropertyValue value;
 			PropertyType valueType;
 

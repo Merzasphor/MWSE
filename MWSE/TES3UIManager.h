@@ -7,6 +7,8 @@ namespace TES3 {
 	namespace UI {
 		UI_ID registerID(const char* name);
 		const char* lookupID(UI_ID id);
+		const char* lookupID(Property id);
+		const char* lookupID_lua(sol::object id);
 		Property registerProperty(const char* name);
 		Element* createMenu(UI_ID id);
 		Element* createMenu_lua(sol::table params);

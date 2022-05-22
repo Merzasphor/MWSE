@@ -64,6 +64,24 @@ namespace TES3 {
 			return TES3_ui_lookupID(id);
 		}
 
+		const auto TES3_ui_lookupPropertyID = reinterpret_cast<const char* (__cdecl*)(Property)>(0x57B220);
+		const char* lookupID(Property id) {
+			return TES3_ui_lookupPropertyID(id);
+		}
+
+		const char* lookupID_lua(sol::object id) {
+			if (id.is<TES3::UI::Property>()) {
+				return lookupID(id.as<TES3::UI::Property>());
+			}
+			else if (id.is<TES3::UI::UI_ID>()) {
+				return lookupID(id.as<TES3::UI::UI_ID>());
+			}
+			else if (id.is<short>()) {
+				return lookupID((UI_ID)id.as<short>());
+			}
+			throw std::invalid_argument("ID cannot be interpreted as a valid UI ID or property.");
+		}
+
 		Property registerProperty(const char *name) {
 			return static_cast<Property>(TES3_ui_registerID(name));
 		}

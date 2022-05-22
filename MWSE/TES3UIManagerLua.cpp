@@ -393,7 +393,7 @@ namespace mwse::lua {
 		tes3ui["getViewportSize"] = TES3::UI::getViewportSize_lua;
 		tes3ui["leaveMenuMode"] = TES3::UI::leaveMenuMode;
 		tes3ui["logToConsole"] = TES3::UI::logToConsole_lua;
-		tes3ui["lookupID"] = TES3::UI::lookupID;
+		tes3ui["lookupID"] = TES3::UI::lookupID_lua;
 		tes3ui["menuMode"] = TES3::UI::isInMenuMode;
 		tes3ui["refreshTooltip"] = TES3::UI::refreshTooltip;
 		tes3ui["registerID"] = TES3::UI::registerID;

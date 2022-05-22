@@ -261,12 +261,16 @@ namespace TES3 {
 			PropertyType getPropertyType_lua(sol::object key) const;
 			bool getPropertyBool_lua(sol::object key) const;
 			void setPropertyBool_lua(sol::object key, bool value);
+			DWORD getPropertyCallback_lua(sol::object key) const;
+			void setPropertyCallback_lua(sol::object key, DWORD value);
 			int getPropertyInt_lua(sol::object key) const;
 			void setPropertyInt_lua(sol::object key, int value);
 			float getPropertyFloat_lua(sol::object key) const;
 			void setPropertyFloat_lua(sol::object key, float value);
 			sol::object getPropertyObject_lua(sol::this_state ts, sol::object key, sol::optional<std::string> typeCast) const;
 			void setPropertyObject_lua(sol::object key, sol::object value);
+			Property getPropertyProperty_lua(sol::object key) const;
+			void setPropertyProperty_lua(sol::object key, Property value);
 
 			void registerBefore_lua(const std::string& eventID, sol::protected_function callback, sol::optional<double> priority);
 			void registerAfter_lua(const std::string& eventID, sol::protected_function callback, sol::optional<double> priority);

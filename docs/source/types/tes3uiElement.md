@@ -1011,6 +1011,24 @@ local result = myObject:getPropertyBool(propName)
 
 ***
 
+### `getPropertyCallback`
+
+Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. The callback is an address inside Morrowind.exe that will be called when the appropriate callback is invoked.
+
+```lua
+local result = myObject:getPropertyCallback(propName)
+```
+
+**Parameters**:
+
+* `propName` (string): The property name.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
 ### `getPropertyFloat`
 
 Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. Returns 0 if the property key did not have data.
@@ -1072,6 +1090,24 @@ local result = myObject:getPropertyObject(propName, expectedUsertype)
 **Returns**:
 
 * `result` ([tes3baseObject](../../types/tes3baseObject), [tes3mobileObject](../../types/tes3mobileObject), any)
+
+***
+
+### `getPropertyProperty`
+
+Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. This function gets a property whose value is, itself, a property.
+
+```lua
+local result = myObject:getPropertyProperty(propName)
+```
+
+**Parameters**:
+
+* `propName` (string): The property name.
+
+**Returns**:
+
+* `result` (number)
 
 ***
 
@@ -1289,6 +1325,21 @@ myObject:setPropertyBool(propName, value)
 
 ***
 
+### `setPropertyCallback`
+
+Properties are named variables attached to an element. Sets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. The callback is an address inside Morrowind.exe that will be called when the appropriate callback is invoked.
+
+```lua
+myObject:setPropertyCallback(propName, value)
+```
+
+**Parameters**:
+
+* `propName` (string): The property name.
+* `value` (number): The value to set.
+
+***
+
 ### `setPropertyFloat`
 
 Sets a property value with `prop` as the property key. Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties.
@@ -1331,6 +1382,21 @@ myObject:setPropertyObject(propName, value)
 
 * `propName` (string): The property name.
 * `value` (object): The value to set.
+
+***
+
+### `setPropertyProperty`
+
+Properties are named variables attached to an element. Sets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. This function sets a property whose value is, itself, a property.
+
+```lua
+myObject:setPropertyProperty(propName, value)
+```
+
+**Parameters**:
+
+* `propName` (string): The property name.
+* `value` (number): The value to set.
 
 ***
 
