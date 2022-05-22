@@ -1278,15 +1278,12 @@ namespace TES3 {
 		}
 
 		Element* Element::createNif_lua(sol::optional<sol::table> params) {
+			auto id = mwse::lua::getOptionalUIID(params, "id");
 			std::string path = mwse::lua::getOptionalParam<const char*>(params, "path", "");
-			if (path.empty()) {
-				throw std::invalid_argument("createNif: path argument is required.");
-			}
 
 			// Sanitize path.
 			std::replace(path.begin(), path.end(), '/', '\\');
 
-			auto id = mwse::lua::getOptionalUIID(params, "id");
 			return createNif(id, path.c_str());
 		}
 
