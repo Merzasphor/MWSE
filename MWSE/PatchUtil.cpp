@@ -542,6 +542,20 @@ namespace mwse::patch {
 	}
 
 	//
+	// Patch: Fix crash when releasing a clone of a light with no reference.
+	//
+	// This is mostly useful for creating VFXs using a light object as a base.
+	//
+
+	TES3::Attachment* __fastcall PatchReleaseLightEntityForReference(const TES3::Reference* reference) {
+		if (reference == nullptr) {
+			return nullptr;
+		}
+
+		return reference->getAttachment(TES3::AttachmentType::Light);
+	}
+
+	//
 	// Install all the patches.
 	//
 
@@ -787,6 +801,9 @@ namespace mwse::patch {
 
 		// Patch: Don't save VFX manager if there are no valid visual effects.
 		genCallEnforced(0x4BD149, 0x469CC0, reinterpret_cast<DWORD>(PatchSaveVisualEffects));
+
+		// Patch: Fix crash when releasing a clone of a light with no reference.
+		genCallEnforced(0x4D260C, 0x4E5170, reinterpret_cast<DWORD>(PatchReleaseLightEntityForReference));
 	}
 
 	void installPostLuaPatches() {
