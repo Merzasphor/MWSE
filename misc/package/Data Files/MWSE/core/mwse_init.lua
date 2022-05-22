@@ -875,6 +875,14 @@ end
 -- Usertype Extensions: tes3uiElement
 -------------------------------------------------
 
+--- @param container tes3uiElement
+--- @param index number
+local function setImageButtonToIndex(container, index)
+	for i, imageButton in ipairs(container.children) do
+		imageButton.visible = (i == index)
+	end
+end
+
 -- Create a button composed of images that has a mouse over and mouse pressed state.
 function tes3uiElement:createImageButton(params)
 	-- Get the button block params.
@@ -914,25 +922,17 @@ function tes3uiElement:createImageButton(params)
 	buttonPressed.visible = false
 
 	-- Create the functions to hide/show buttons based on mouse state.
-	buttonBlock:register("mouseOver", function()
-		buttonIdle.visible = false
-		buttonOver.visible = true
-		buttonPressed.visible = false
+	buttonBlock:register("mouseOver", function(e)
+		setImageButtonToIndex(e.source, 2)
 	end)
-	buttonBlock:register("mouseLeave", function()
-		buttonIdle.visible = true
-		buttonOver.visible = false
-		buttonPressed.visible = false
+	buttonBlock:register("mouseLeave", function(e)
+		setImageButtonToIndex(e.source, 1)
 	end)
-	buttonBlock:register("mouseDown", function()
-		buttonIdle.visible = false
-		buttonOver.visible = false
-		buttonPressed.visible = true
+	buttonBlock:register("mouseDown", function(e)
+		setImageButtonToIndex(e.source, 3)
 	end)
-	buttonBlock:register("mouseRelease", function()
-		buttonIdle.visible = false
-		buttonOver.visible = true
-		buttonPressed.visible = false
+	buttonBlock:register("mouseRelease", function(e)
+		setImageButtonToIndex(e.source, 2)
 	end)
 
 	-- Return the created block.
