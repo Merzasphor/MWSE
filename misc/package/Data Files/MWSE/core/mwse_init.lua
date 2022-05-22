@@ -428,6 +428,14 @@ function table.swap(t, key, value)
 	return old
 end
 
+function table.getOr(t, key, default)
+	local value = t[key]
+	if (value == nil) then
+		return default
+	end
+	return value
+end
+
 
 -------------------------------------------------
 -- Extend base table: Add binary search/insert

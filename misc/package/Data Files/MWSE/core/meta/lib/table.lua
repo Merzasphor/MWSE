@@ -69,6 +69,12 @@ function table.empty(t, deepCheck) end
 --- @return unknown result No description yet available.
 function table.find(t, value) end
 
+--- Gets a value in a table. If the key doesn't exist in the table, a specified default value will be returned instead.
+--- @param t table No description yet available.
+--- @param default any The default value if the key didn't exist in the table.
+--- @return any result No description yet available.
+function table.getor(t, default) end
+
 --- Returns a copy of `t` with the keys and values flipped.
 --- @param t table No description yet available.
 --- @return table result No description yet available.
