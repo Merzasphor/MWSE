@@ -366,6 +366,24 @@ namespace mwse::lua {
 		originalCallbackMap.erase(element);
 	}
 
+	void copyLuaCallbacks(TES3::UI::Element* from, TES3::UI::Element* to) {
+		if (auto itt = eventCallbacksBefore.find(from); itt != eventCallbacksBefore.end()) {
+			eventCallbacksBefore[to] = itt->second;
+		}
+		if (auto itt = eventCallbacksLegacy.find(from); itt != eventCallbacksLegacy.end()) {
+			eventCallbacksLegacy[to] = itt->second;
+		}
+		if (auto itt = eventCallbacksAfter.find(from); itt != eventCallbacksAfter.end()) {
+			eventCallbacksAfter[to] = itt->second;
+		}
+		if (auto itt = originalCallbackMap.find(from); itt != originalCallbackMap.end()) {
+			originalCallbackMap[to] = itt->second;
+		}
+		if (auto itt = destroyMap.find(from); itt != destroyMap.end()) {
+			destroyMap[to] = itt->second;
+		}
+	}
+
 	void bindTES3UIManager() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 		sol::state& state = stateHandle.state;
@@ -412,6 +430,9 @@ namespace mwse::lua {
 		tes3ui["updateInventorySelectTiles"] = TES3::UI::updateInventorySelectTiles_lua;
 		tes3ui["updateInventoryTiles"] = TES3::UI::updateInventoryMenuTiles;
 		tes3ui["updateSpellmakingMenu"] = TES3::UI::updateSpellmakingMenu;
+
+		// Internal mwse functions.
+		state["mwse"]["copyLuaCallbacks"] = copyLuaCallbacks;
 
 		// Add binding for TES3::UI::TreeItem type.
 		// TODO: Move this to its own file after TES3::UI::Tree has been made a template.
