@@ -1032,16 +1032,16 @@ local newReference = tes3.createReference({ object = ..., position = ..., orient
 
 ### `tes3.createVisualEffect`
 
-Creates a tracked visual effect. Most VFX assignments are persistent, and only expire when their lifespan expires, an associated reference is destroyed, or a given spell serial is retired.
+Creates an arbitrary and automatically tracked visual effect. Most VFX assignments are persistent, and only expire when their lifespan ends, an associated reference is destroyed, or a given spell serial is retired.
 
 ```lua
-local vfx = tes3.createVisualEffect({ effect = ..., serial = ..., repeatCount = ..., lifespan = ..., scale = ..., verticalOffset = ..., position = ..., avObject = ..., enchantment = ... })
+local vfx = tes3.createVisualEffect({ object = ..., serial = ..., repeatCount = ..., lifespan = ..., scale = ..., verticalOffset = ..., position = ..., avObject = ..., magicEffectId = ... })
 ```
 
 **Parameters**:
 
 * `params` (table)
-	* `effect` ([tes3physicalObject](../../types/tes3physicalObject), string): *Optional*. The physical object to use as the VFX. To use an enchantment-style VFX, supply the enchantment parameter instead.
+	* `object` ([tes3physicalObject](../../types/tes3physicalObject), string): *Optional*. The physical object to use as the VFX. To use an enchantment-style VFX, supply the magicEffectId parameter instead.
 	* `serial` (number): *Optional*. An associated tes3magicSourceInstance serial. If a serial is assigned to the VFX, the effect expiring will also remove the VFX. This is not used when creating an enchantment-style VFX.
 	* `repeatCount` (number): *Optional*. A repeat count for the VFX. If provided, the key timing for the associated effect will be used, multiplied by this value, to determine the total lifespan of the VFX. This is not used when creating an enchantment-style VFX.
 	* `lifespan` (number): *Optional*. The desired lifespan for the VFX. If not provided, the VFX will never die of old age.
@@ -1049,7 +1049,7 @@ local vfx = tes3.createVisualEffect({ effect = ..., serial = ..., repeatCount = 
 	* `verticalOffset` (number): *Default*: `0`. This offset will be used to position it above its anchor reference. This is not used when creating an enchantment-style VFX.
 	* `position` ([tes3vector3](../../types/tes3vector3), table): *Optional*. If provided the VFX will be attached relative to a position, and not follow a reference.
 	* `avObject` ([niAVObject](../../types/niAVObject)): *Optional*. 
-	* `enchantment` (number): *Optional*. The magic effect ID to use to create an enchantment wrapper VFX. This will use most of the same VFX logic, but cannot be applied to a position or specific niAVObject.
+	* `magicEffectId` (number): *Optional*. The magic effect ID to use to create an enchantment-style VFX. This will use most of the same VFX logic, but cannot be applied to a position or specific niAVObject.
 
 **Returns**:
 

@@ -663,10 +663,10 @@ function tes3.createReference(params) end
 --- @field cell tes3cell|string|table|nil *Optional*. The cell to create the reference in. This is only needed for interior cells.
 --- @field scale number? *Default*: `1`. A scale for the reference.
 
---- Creates a tracked visual effect. Most VFX assignments are persistent, and only expire when their lifespan expires, an associated reference is destroyed, or a given spell serial is retired.
+--- Creates an arbitrary and automatically tracked visual effect. Most VFX assignments are persistent, and only expire when their lifespan ends, an associated reference is destroyed, or a given spell serial is retired.
 --- @param params tes3.createVisualEffect.params This table accepts the following values:
 --- 
---- `effect`: tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon|string|nil — *Optional*. The physical object to use as the VFX. To use an enchantment-style VFX, supply the enchantment parameter instead.
+--- `object`: tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon|string|nil — *Optional*. The physical object to use as the VFX. To use an enchantment-style VFX, supply the magicEffectId parameter instead.
 --- 
 --- `serial`: number? — *Optional*. An associated tes3magicSourceInstance serial. If a serial is assigned to the VFX, the effect expiring will also remove the VFX. This is not used when creating an enchantment-style VFX.
 --- 
@@ -682,13 +682,13 @@ function tes3.createReference(params) end
 --- 
 --- `avObject`: niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niGeometry|niLight|niNode|niPointLight|niSpotLight|niSwitchNode|niTriBasedGeometry|niTriShape|nil — *Optional*. 
 --- 
---- `enchantment`: number? — *Optional*. The magic effect ID to use to create an enchantment wrapper VFX. This will use most of the same VFX logic, but cannot be applied to a position or specific niAVObject.
+--- `magicEffectId`: number? — *Optional*. The magic effect ID to use to create an enchantment-style VFX. This will use most of the same VFX logic, but cannot be applied to a position or specific niAVObject.
 --- @return tes3vfx vfx A handle to the VFX that was created. This can be passed to `tes3.removeVisualEffect` to remove it from the reference.
 function tes3.createVisualEffect(params) end
 
 ---Table parameter definitions for `tes3.createVisualEffect`.
 --- @class tes3.createVisualEffect.params
---- @field effect tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon|string|nil *Optional*. The physical object to use as the VFX. To use an enchantment-style VFX, supply the enchantment parameter instead.
+--- @field object tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon|string|nil *Optional*. The physical object to use as the VFX. To use an enchantment-style VFX, supply the magicEffectId parameter instead.
 --- @field serial number? *Optional*. An associated tes3magicSourceInstance serial. If a serial is assigned to the VFX, the effect expiring will also remove the VFX. This is not used when creating an enchantment-style VFX.
 --- @field repeatCount number? *Optional*. A repeat count for the VFX. If provided, the key timing for the associated effect will be used, multiplied by this value, to determine the total lifespan of the VFX. This is not used when creating an enchantment-style VFX.
 --- @field lifespan number? *Optional*. The desired lifespan for the VFX. If not provided, the VFX will never die of old age.
@@ -696,7 +696,7 @@ function tes3.createVisualEffect(params) end
 --- @field verticalOffset number? *Default*: `0`. This offset will be used to position it above its anchor reference. This is not used when creating an enchantment-style VFX.
 --- @field position tes3vector3|table|nil *Optional*. If provided the VFX will be attached relative to a position, and not follow a reference.
 --- @field avObject niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niGeometry|niLight|niNode|niPointLight|niSpotLight|niSwitchNode|niTriBasedGeometry|niTriShape|nil *Optional*. 
---- @field enchantment number? *Optional*. The magic effect ID to use to create an enchantment wrapper VFX. This will use most of the same VFX logic, but cannot be applied to a position or specific niAVObject.
+--- @field magicEffectId number? *Optional*. The magic effect ID to use to create an enchantment-style VFX. This will use most of the same VFX logic, but cannot be applied to a position or specific niAVObject.
 
 --- Decreases player's kill count of a certain type of actor by one.
 --- @param params tes3.decrementKillCount.params This table accepts the following values:

@@ -5509,7 +5509,12 @@ namespace mwse::lua {
 			throw std::runtime_error("This function cannot be called before the VFX manager is created.");
 		}
 
-		auto effectObject = getOptionalParamObject<TES3::PhysicalObject>(params, "effect");
+		// Legacy support for old param names.
+		auto effectObject = getOptionalParamObject<TES3::PhysicalObject>(params, "object");
+		if (!effectObject) {
+			effectObject = getOptionalParamObject<TES3::PhysicalObject>(params, "effect");
+		}
+
 		if (effectObject) {
 			auto serial = getOptionalParam(params, "serial", 0u);
 			auto reference = getOptionalParamReference(params, "reference");
@@ -5533,10 +5538,15 @@ namespace mwse::lua {
 			return vfxManager->createForReference(serial, effectObject, reference, repeatCount, lifespan, scale, verticalOffset);
 		}
 
-		auto enchantEffect = getOptionalParam<int>(params, "enchantment");
+		// Legacy support for old param names.
+		auto enchantEffect = getOptionalParam<int>(params, "magicEffectId");
+		if (!enchantEffect) {
+			enchantEffect = getOptionalParam<int>(params, "enchantment");
+		}
+
 		if (enchantEffect) {
 			if (!TES3::DataHandler::get()->nonDynamicData->getMagicEffect(enchantEffect.value())) {
-				throw std::invalid_argument("Effect of the given index does not exist.");
+				throw std::invalid_argument("Invalid 'magicEffectId' parameter. Effect of the given index does not exist.");
 			}
 			auto reference = getOptionalParamReference(params, "reference");
 			auto lifespan = getOptionalParam(params, "lifespan", TES3::VFX::AGE_INFINITE);
