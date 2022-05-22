@@ -360,6 +360,9 @@ namespace TES3 {
 		}
 
 		nonstd::span<Element*> Element::getChildren_lua() const {
+			if (vectorChildren.begin == nullptr) {
+				return {};
+			}
 			return nonstd::span(vectorChildren.begin, vectorChildren.end);
 		}
 
