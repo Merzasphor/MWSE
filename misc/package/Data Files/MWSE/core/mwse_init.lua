@@ -41,7 +41,7 @@ function require(name)
 
 	local msg = {}
 	local loader, param
-	for _, searcher in ipairs(package.searchers) do
+	for _, searcher in ipairs(package.searchers) do ---@diagnostic disable-line
 		loader, param = searcher(name)
 		if type(loader) == "function" then break end
 		if type(loader) == "string" then
@@ -53,6 +53,7 @@ function require(name)
 
 	if loader == nil then
 		error("module '" .. name .. "' not found: " .. table.concat(msg), 2)
+		return
 	end
 
 	local res = loader(name, param)
@@ -85,7 +86,7 @@ function include(name)
 
 	local msg = {}
 	local loader, param
-	for _, searcher in ipairs(package.searchers) do
+	for _, searcher in ipairs(package.searchers) do ---@diagnostic disable-line
 		loader, param = searcher(name)
 		if type(loader) == "function" then break end
 		if type(loader) == "string" then
@@ -573,6 +574,10 @@ getmetatable("").trim = string.trim
 
 local function getNthLine(fileName, n)
 	local f = io.open(fileName, "r")
+	if (f == nil) then
+		return
+	end
+
 	local i = 1
 	for line in f:lines() do
 		if i == n then
