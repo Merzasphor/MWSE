@@ -73,7 +73,7 @@ function table.find(t, value) end
 --- @param t table No description yet available.
 --- @param default any The default value if the key didn't exist in the table.
 --- @return any result No description yet available.
-function table.getor(t, default) end
+function table.get(t, default) end
 
 --- Returns a copy of `t` with the keys and values flipped.
 --- @param t table No description yet available.

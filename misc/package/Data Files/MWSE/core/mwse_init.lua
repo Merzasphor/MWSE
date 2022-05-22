@@ -428,7 +428,7 @@ function table.swap(t, key, value)
 	return old
 end
 
-function table.getor(t, key, default)
+function table.get(t, key, default)
 	local value = t[key]
 	if (value == nil) then
 		return default
@@ -1034,7 +1034,7 @@ function tes3uiElement:copy(params)
 	end
 
 	-- Copy over children.
-	if (table.getor(params, "copyChildren", true)) then
+	if (table.get(params, "copyChildren", true)) then
 		for _, child in ipairs(params.from.children or {}) do
 			local childParams = table.copy(params)
 			childParams.to = newElement
@@ -1043,7 +1043,7 @@ function tes3uiElement:copy(params)
 	end
 
 	-- Copy UI properties?
-	if (table.getor(params, "copyProperties", true)) then
+	if (table.get(params, "copyProperties", true)) then
 		for _, prop in ipairs(self.properties) do
 			local propDelegate = assert(tes3uiElementCopyPropertyDelegates[prop.type], string.format("No copy function found for element of type %s.", prop.type))
 			propDelegate(newElement, prop)

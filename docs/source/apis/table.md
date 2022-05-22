@@ -179,12 +179,12 @@ local result = table.find(t, value)
 
 ***
 
-### `table.getor`
+### `table.get`
 
 Gets a value in a table. If the key doesn't exist in the table, a specified default value will be returned instead.
 
 ```lua
-local result = table.getor(t, default)
+local result = table.get(t, default)
 ```
 
 **Parameters**:
