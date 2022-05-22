@@ -155,7 +155,8 @@ namespace TES3 {
 
 			std::string toJson() const;
 
-			nonstd::span<Element*> getChildren_lua() const;
+			// This must be kept as a table-creating function for backwards compatibility.
+			sol::table getChildren_lua(sol::this_state ts) const;
 
 			// TODO: Add std collection access to the container so this doesn't need to be copied to a table.
 			sol::table getProperties_lua(sol::this_state ts) const;

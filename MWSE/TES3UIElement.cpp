@@ -359,11 +359,15 @@ namespace TES3 {
 			return std::move(ss.str());
 		}
 
-		nonstd::span<Element*> Element::getChildren_lua() const {
-			if (vectorChildren.begin == nullptr) {
-				return {};
+		sol::table Element::getChildren_lua(sol::this_state ts) const {
+			sol::state_view state = ts;
+			sol::table children = state.create_table();
+			auto it = vectorChildren.begin;
+			auto end = vectorChildren.end;
+			for (int i = 1; it != end; ++it, ++i) {
+				children[i] = *it;
 			}
-			return nonstd::span(vectorChildren.begin, vectorChildren.end);
+			return children;
 		}
 
 		// Helper function to build a table for an element's properties.
