@@ -436,6 +436,16 @@ function table.get(t, key, default)
 	return value
 end
 
+function table.getset(t, key, default)
+	local value = t[key]
+	if (value ~= nil) then
+		return value
+	end
+
+	t[key] = default
+	return default
+end
+
 
 -------------------------------------------------
 -- Extend base table: Add binary search/insert
