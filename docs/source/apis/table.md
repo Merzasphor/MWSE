@@ -184,13 +184,14 @@ local result = table.find(t, value)
 Gets a value in a table. If the key doesn't exist in the table, a specified default value will be returned instead.
 
 ```lua
-local result = table.get(t, default)
+local result = table.get(t, key, defaultValue)
 ```
 
 **Parameters**:
 
 * `t` (table)
-* `default` (any): The default value if the key didn't exist in the table.
+* `key` (any): The key to use to access the table.
+* `defaultValue` (any): The default value if the key didn't exist in the table.
 
 **Returns**:
 

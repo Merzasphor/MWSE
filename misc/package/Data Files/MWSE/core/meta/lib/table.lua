@@ -71,9 +71,10 @@ function table.find(t, value) end
 
 --- Gets a value in a table. If the key doesn't exist in the table, a specified default value will be returned instead.
 --- @param t table No description yet available.
---- @param default any The default value if the key didn't exist in the table.
+--- @param key any The key to use to access the table.
+--- @param defaultValue any The default value if the key didn't exist in the table.
 --- @return any result No description yet available.
-function table.get(t, default) end
+function table.get(t, key, defaultValue) end
 
 --- Returns a copy of `t` with the keys and values flipped.
 --- @param t table No description yet available.
