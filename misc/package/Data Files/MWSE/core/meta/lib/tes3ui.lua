@@ -122,6 +122,10 @@ function tes3ui.findMenu(id) end
 --- Forces the game to update the inventory tile GUI elements. Unlike tes3ui.updateInventoryTiles, this will force-resync the player's inventory to the GUI, rather than updating what is already in the GUI system.
 function tes3ui.forcePlayerInventoryUpdate() end
 
+--- Gets the reference currently selected by the console, or nil if nothing is selected.
+--- @return tes3reference|nil result No description yet available.
+function tes3ui.getConsoleReference() end
+
 --- Determines what sort of search is being done when performing an inventory selection, e.g. "alembic" or "ingredient" or "soulGemFilled".
 --- @return string result No description yet available.
 function tes3ui.getInventorySelectType() end
@@ -191,6 +195,10 @@ function tes3ui.registerID(s) end
 --- @param s string No description yet available.
 --- @return number result No description yet available.
 function tes3ui.registerProperty(s) end
+
+--- Sets the reference currently selected by the console, or deselects if passed `nil`.
+--- @param reference tes3reference|nil No description yet available.
+function tes3ui.setConsoleReference(reference) end
 
 --- Displays the book menu with arbitrary text. Paging is automatically handled. It needs to follow book text conventions as in the Construction Set. In essence, it uses HTML syntax. Important: every book needs to end with a `<BR>` statement to be displayed properly. See [`bookGetText`](https://mwse.github.io/MWSE/events/bookGetText/#examples) for an example of properly formatted book text.
 --- @param text string No description yet available.

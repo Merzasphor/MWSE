@@ -264,6 +264,20 @@ tes3ui.forcePlayerInventoryUpdate()
 
 ***
 
+### `tes3ui.getConsoleReference`
+
+Gets the reference currently selected by the console, or nil if nothing is selected.
+
+```lua
+local result = tes3ui.getConsoleReference()
+```
+
+**Returns**:
+
+* `result` ([tes3reference](../../types/tes3reference), nil)
+
+***
+
 ### `tes3ui.getInventorySelectType`
 
 Determines what sort of search is being done when performing an inventory selection, e.g. "alembic" or "ingredient" or "soulGemFilled".
@@ -523,6 +537,20 @@ local result = tes3ui.registerProperty(s)
 **Returns**:
 
 * `result` (number)
+
+***
+
+### `tes3ui.setConsoleReference`
+
+Sets the reference currently selected by the console, or deselects if passed `nil`.
+
+```lua
+tes3ui.setConsoleReference(reference)
+```
+
+**Parameters**:
+
+* `reference` ([tes3reference](../../types/tes3reference), nil)
 
 ***
 

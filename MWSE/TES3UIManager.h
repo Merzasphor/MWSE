@@ -38,6 +38,9 @@ namespace TES3 {
 		MobileActor* getServiceActor();
 		void updateDialogDisposition();
 
+		Reference* getConsoleReference();
+		void __cdecl setConsoleReference(Reference* reference);
+
 		std::tuple<unsigned int, unsigned int> getViewportSize_lua();
 		float getViewportScale();
 

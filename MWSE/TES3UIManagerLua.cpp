@@ -403,6 +403,7 @@ namespace mwse::lua {
 		tes3ui["findHelpLayerMenu"] = TES3::UI::findHelpLayerMenu_lua;
 		tes3ui["findMenu"] = TES3::UI::findMenu_lua;
 		tes3ui["forcePlayerInventoryUpdate"] = TES3::UI::forcePlayerInventoryUpdate;
+		tes3ui["getConsoleReference"] = TES3::UI::getConsoleReference;
 		tes3ui["getInventorySelectType"] = TES3::UI::getInventorySelectType;
 		tes3ui["getMenuOnTop"] = TES3::UI::getMenuOnTop;
 		tes3ui["getPalette"] = TES3::UI::getPalette_lua;
@@ -416,6 +417,7 @@ namespace mwse::lua {
 		tes3ui["refreshTooltip"] = TES3::UI::refreshTooltip;
 		tes3ui["registerID"] = TES3::UI::registerID;
 		tes3ui["registerProperty"] = TES3::UI::registerProperty;
+		tes3ui["setConsoleReference"] = TES3::UI::setConsoleReference;
 		tes3ui["showBookMenu"] = TES3::UI::showBookMenu;
 		tes3ui["showDialogueMessage"] = TES3::UI::showDialogueMessage_lua;
 		tes3ui["showInventorySelectMenu"] = TES3::UI::showInventorySelectMenu_lua;

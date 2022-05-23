@@ -5251,7 +5251,7 @@ namespace mwse::lua {
 		overrideVirtualTableEnforced(TES3::VirtualTableAddress::NPCInstance, offsetof(TES3::ObjectVirtualTable, reevaluateEquipment), 0x4D9A20, *reinterpret_cast<DWORD*>(&NPCInstance_reevaluateEquipment));
 		genCallEnforced(0x4D83AB, 0x4D9A20, *reinterpret_cast<DWORD*>(&NPCInstance_reevaluateEquipment));
 
-		// Event:: vfxCreated
+		// Event: vfxCreated
 		auto TES3_VFXManager_createForMagicEffect = &TES3::VFXManager::createForMagicEffect;
 		genCallEnforced(0x41CCB0, 0x4696A0, *reinterpret_cast<DWORD*>(&TES3_VFXManager_createForMagicEffect));
 		auto TES3_VFXManager_createForSource = &TES3::VFXManager::createForSource;
@@ -5263,6 +5263,10 @@ namespace mwse::lua {
 		genCallEnforced(0x516093, 0x468470, *reinterpret_cast<DWORD*>(&TES3_VFXManager_createAtPosition));
 		auto TES3_VFXManager_createForAVObject = &TES3::VFXManager::createForAVObject;
 		genCallEnforced(0x516227, 0x468560, *reinterpret_cast<DWORD*>(&TES3_VFXManager_createForAVObject));
+
+		// Event: consoleReferenceChanged
+		genCallEnforced(0x590414, 0x5B2F00, reinterpret_cast<DWORD>(TES3::UI::setConsoleReference));
+		genCallEnforced(0x5B2EEE, 0x5B2F00, reinterpret_cast<DWORD>(TES3::UI::setConsoleReference));
 
 		// UI framework hooks
 		TES3::UI::hook();

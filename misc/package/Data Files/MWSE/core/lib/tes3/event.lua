@@ -41,6 +41,7 @@ return {
 	["combatStarted"] = "combatStarted",
 	["combatStop"] = "combatStop",
 	["combatStopped"] = "combatStopped",
+	["consoleReferenceChanged"] = "consoleReferenceChanged",
 	["containerClosed"] = "containerClosed",
 	["convertReferenceToItem"] = "convertReferenceToItem",
 	["crimeWitnessed"] = "crimeWitnessed",

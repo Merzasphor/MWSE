@@ -16,6 +16,7 @@
     <ClInclude Include="BSAnimationManager.h" />
     <ClInclude Include="LuaActiveMagicEffectIconsUpdatedEvent.h" />
     <ClInclude Include="LuaCalcBlockChanceEvent.h" />
+    <ClInclude Include="LuaConsoleReferenceChangedEvent.h" />
     <ClInclude Include="LuaDialogueEnvironmentCreatedEvent.h" />
     <ClInclude Include="LuaJumpEvent.h" />
     <ClInclude Include="LuaCalcSpellmakingPriceEvent.h" />
@@ -533,6 +534,7 @@
     <ClCompile Include="LuaCombatStartEvent.cpp" />
     <ClCompile Include="LuaCombatStopEvent.cpp" />
     <ClCompile Include="LuaCombatStoppedEvent.cpp" />
+    <ClCompile Include="LuaConsoleReferenceChangedEvent.cpp" />
     <ClCompile Include="LuaContainerClosedEvent.cpp" />
     <ClCompile Include="LuaConvertReferenceToItemEvent.cpp" />
     <ClCompile Include="LuaCrimeWitnessedEvent.cpp" />

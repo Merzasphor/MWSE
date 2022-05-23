@@ -18,6 +18,7 @@
 #include "TES3Reference.h"
 #include "TES3WorldController.h"
 
+#include "LuaConsoleReferenceChangedEvent.h"
 #include "LuaShowRestWaitMenuEvent.h"
 #include "LuaUiSpellTooltipEvent.h"
 
@@ -294,6 +295,31 @@ namespace TES3 {
 
 		void updateDialogDisposition() {
 			TES3_ui_updateDialogDisposition();
+		}
+
+
+		Reference* getConsoleReference() {
+			auto console = findMenu("MenuConsole");
+			if (!console) {
+				return nullptr;
+			}
+
+			return static_cast<Reference*>(console->getProperty(PropertyType::Pointer, registerProperty("MenuConsole_current_ref")).ptrValue);
+		}
+
+		const auto TES3_ui_setConsoleReference = reinterpret_cast<void(__cdecl*)(Reference*)>(0x5B2F00);
+		void __cdecl setConsoleReference(TES3::Reference* reference) {
+			// Store the previous value so we can know if it changed.
+			auto referenceBefore = getConsoleReference();
+
+			// Call the original function.
+			TES3_ui_setConsoleReference(reference);
+
+			// If it changed, fire off an event.
+			auto referenceAfter = getConsoleReference();
+			if (mwse::lua::event::ConsoleReferenceChangedEvent::getEventEnabled() && referenceBefore != referenceAfter) {
+				mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::ConsoleReferenceChangedEvent(referenceAfter));
+			}
 		}
 
 		std::tuple<unsigned int, unsigned int> getViewportSize_lua() {
