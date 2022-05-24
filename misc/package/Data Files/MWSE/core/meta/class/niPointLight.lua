@@ -8,6 +8,10 @@
 --- @field quadraticAttenuation number The quadratic attenuation factor.
 niPointLight = {}
 
+--- Creates a new NiPointLight.
+--- @return niPointLight|niSpotLight light No description yet available.
+function niPointLight.new() end
+
 --- Sets the attenuation for the radius.
 --- @param radius number No description yet available.
 function niPointLight:setAttenuationForRadius(radius) end

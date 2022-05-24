@@ -26,6 +26,10 @@ function niAVObject:attachProperty(property) end
 --- Resets the object's local transform.
 function niAVObject:clearTransforms() end
 
+--- Calculates and creates a bounding box for the object. The existing bounding box, if any, will not be used, a fresh one will always be calculated.
+--- @return tes3boundingBox boundingBox The newly created bounding box.
+function niAVObject:createBoundingBox() end
+
 --- Detaches and returns a property from the object which matches the given property type.
 --- @param type number No description yet available.
 --- @return niAlphaProperty|niFogProperty|niMaterialProperty|niStencilProperty|niTexturingProperty|niVertexColorProperty result No description yet available.
