@@ -692,6 +692,19 @@ namespace TES3 {
 			return TES3::WorldController::get()->flagMenuMode;
 		}
 
+		const auto TES3_ui_moveMenuToFront = reinterpret_cast<void(__cdecl*)(Element*)>(0x595870);
+		void moveMenuToFront(Element* menu) {
+			TES3_ui_moveMenuToFront(menu);
+		}
+
+		void moveMenuToFront_lua(sol::object id) {
+			auto menu = findMenu_lua(id);
+			if (menu == nullptr) {
+				throw std::invalid_argument("Parameter must be an element or a top level menu ID.");
+			}
+			moveMenuToFront(menu);
+		}
+
 		sol::table getPalette_lua(sol::this_state ts, const char* name) {
 			sol::state_view state = ts;
 			auto colour = TES3::UI::getPaletteColour(TES3::UI::registerProperty(name));

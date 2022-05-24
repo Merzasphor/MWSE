@@ -96,6 +96,9 @@ namespace TES3 {
 
 		bool isInMenuMode();
 
+		void moveMenuToFront(Element* menu);
+		void moveMenuToFront_lua(sol::object id);
+
 		sol::table getPalette_lua(sol::this_state ts, const char* name);
 
 		void showInventorySelectMenu_lua(sol::table params);

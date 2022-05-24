@@ -414,6 +414,7 @@ namespace mwse::lua {
 		tes3ui["logToConsole"] = TES3::UI::logToConsole_lua;
 		tes3ui["lookupID"] = TES3::UI::lookupID_lua;
 		tes3ui["menuMode"] = TES3::UI::isInMenuMode;
+		tes3ui["moveMenuToFront"] = TES3::UI::moveMenuToFront_lua;
 		tes3ui["refreshTooltip"] = TES3::UI::refreshTooltip;
 		tes3ui["registerID"] = TES3::UI::registerID;
 		tes3ui["registerProperty"] = TES3::UI::registerProperty;

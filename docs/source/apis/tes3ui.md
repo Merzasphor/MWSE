@@ -490,6 +490,20 @@ local result = tes3ui.menuMode()
 
 ***
 
+### `tes3ui.moveMenuToFront`
+
+Brings a menu forward to be the top-most menu, firing any associated front-related events. The desired element must be a top-level menu.
+
+```lua
+tes3ui.moveMenuToFront(menu)
+```
+
+**Parameters**:
+
+* `menu` (string, number, [tes3uiElement](../../types/tes3uiElement)): The menu to bring to the front.
+
+***
+
 ### `tes3ui.refreshTooltip`
 
 Causes the tooltip to be redisplayed. This will not use a configured delay. This will not function if the help menu does not currently exist, or if it is not currently visible.

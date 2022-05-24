@@ -179,6 +179,10 @@ function tes3ui.lookupID(unknown) end
 --- @return boolean result No description yet available.
 function tes3ui.menuMode() end
 
+--- Brings a menu forward to be the top-most menu, firing any associated front-related events. The desired element must be a top-level menu.
+--- @param menu string|number|tes3uiElement The menu to bring to the front.
+function tes3ui.moveMenuToFront(menu) end
+
 --- Causes the tooltip to be redisplayed. This will not use a configured delay. This will not function if the help menu does not currently exist, or if it is not currently visible.
 function tes3ui.refreshTooltip() end
 
