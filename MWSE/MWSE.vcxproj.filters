@@ -1646,6 +1646,7 @@
     </ClInclude>
     <ClInclude Include="MGEUtilLua.h">
       <Filter>Header Files\Lua\Bindings\MGE</Filter>
+    </ClInclude>
     <ClInclude Include="LuaConsoleReferenceChangedEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
@@ -3594,6 +3595,7 @@
     </ClCompile>
     <ClCompile Include="MGEUtilLua.cpp">
       <Filter>Source Files\MGE Interface</Filter>
+    </ClCompile>
     <ClCompile Include="LuaConsoleReferenceChangedEvent.cpp">
       <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
