@@ -3,6 +3,8 @@
 #include "LuaManager.h"
 #include "LuaObjectInvalidatedEvent.h"
 
+#include "MemoryUtil.h"
+
 namespace TES3 {
 	void AIPackage::simulate() {
 		vTable->simulate(this);
@@ -70,6 +72,22 @@ namespace TES3 {
 		return ref;;
 	}
 
+	void* AIPackageConfig::operator new(size_t size) {
+		return mwse::tes3::_new(size);
+	}
+
+	void AIPackageConfig::operator delete(void* address) {
+		mwse::tes3::_delete(address);
+	}
+
+	AIPackageConfig::AIPackageConfig() {
+		type = AIPackageConfigType::Invalid;
+	}
+
+	AIPackageConfig::~AIPackageConfig() {
+		type = AIPackageConfigType::Invalid;
+	}
+
 	AIPackageType AIPackageConfig::toPackageType() const {
 		switch (type) {
 		case AIPackageConfigType::Travel:
@@ -86,9 +104,48 @@ namespace TES3 {
 		return AIPackageType::Wander;
 	}
 
+	AIPackageTravel::Config::Config() {
+		type = AIPackageConfigType::Travel;
+	}
+
+	AIPackageTravel::Config::~Config() {
+
+	}
+
+	AIPackageWander::Config::Config() {
+		type = AIPackageConfigType::Wander;
+	}
+
+	AIPackageWander::Config::~Config() {
+
+	}
 
 	std::reference_wrapper<AIPackageWander::IdleNode[8]> AIPackageWander::getIdles() {
 		return idles;
+	}
+
+	AIPackageEscort::Config::Config() {
+		type = AIPackageConfigType::Escort;
+	}
+
+	AIPackageEscort::Config::~Config() {
+
+	}
+
+	AIPackageFollow::Config::Config() {
+		type = AIPackageConfigType::Follow;
+	}
+
+	AIPackageFollow::Config::~Config() {
+
+	}
+
+	AIPackageActivate::Config::Config() {
+		type = AIPackageConfigType::Activate;
+	}
+
+	AIPackageActivate::Config::~Config() {
+
 	}
 }
 

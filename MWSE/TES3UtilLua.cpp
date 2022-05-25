@@ -3863,8 +3863,7 @@ namespace mwse::lua {
 			throw std::invalid_argument("Invalid target parameter provided.");
 		}
 
-		auto config = tes3::_new<TES3::AIPackageActivate::Config>();
-		config->type = TES3::AIPackageConfigType::Activate;
+		auto config = new TES3::AIPackageActivate::Config();
 		config->target = target;
 		config->reset = getOptionalParam<bool>(params, "reset", true);
 
@@ -3885,8 +3884,7 @@ namespace mwse::lua {
 
 		auto destination = getOptionalParamVector3(params, "destination");
 
-		auto config = tes3::_new<TES3::AIPackageFollow::Config>();
-		config->type = TES3::AIPackageConfigType::Follow;
+		auto config = new TES3::AIPackageFollow::Config();
 		if (destination) {
 			config->destination = destination.value();
 		}
@@ -3918,8 +3916,7 @@ namespace mwse::lua {
 			throw std::invalid_argument("Destination parameter is missing.");
 		}
 
-		auto config = tes3::_new<TES3::AIPackageEscort::Config>();
-		config->type = TES3::AIPackageConfigType::Escort;
+		auto config = new TES3::AIPackageEscort::Config();
 		config->destination = destination.value();
 		config->duration = getOptionalParam<unsigned char>(params, "duration", 0);
 		config->actor = static_cast<TES3::Actor*>(target->getBaseObject());
@@ -3941,8 +3938,7 @@ namespace mwse::lua {
 			throw std::invalid_argument("Invalid destination parameter provided.");
 		}
 
-		auto config = tes3::_new<TES3::AIPackageTravel::Config>();
-		config->type = TES3::AIPackageConfigType::Travel;
+		auto config = new TES3::AIPackageTravel::Config();
 		config->position = destination.value();
 		config->reset = getOptionalParam<bool>(params, "reset", true);
 
@@ -3961,8 +3957,7 @@ namespace mwse::lua {
 			throw std::invalid_argument("Invalid idles table provided.");
 		}
 
-		auto config = tes3::_new<TES3::AIPackageWander::Config>();
-		config->type = TES3::AIPackageConfigType::Wander;
+		auto config = new TES3::AIPackageWander::Config();
 		config->range = getOptionalParam<unsigned short>(params, "range", 0);
 		config->duration = getOptionalParam<unsigned char>(params, "duration", 0);
 		config->time = getOptionalParam<unsigned char>(params, "time", 0);
