@@ -13,8 +13,8 @@ namespace mwse::lua::event {
 
 	sol::table SimulateEvent::createEventTable() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table eventData = state.create_table();
+		auto& state = stateHandle.state;
+		auto eventData = state.create_table();
 
 		eventData["menuMode"] = false;
 		eventData["delta"] = m_Delta;

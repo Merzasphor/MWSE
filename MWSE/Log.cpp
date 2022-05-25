@@ -84,7 +84,7 @@ namespace mwse::log {
 			log << std::setw(8) << address;
 
 			// Show the hex codes
-			for (unsigned int offset = 0; offset < LINE_WIDTH; offset++) {
+			for (unsigned int offset = 0; offset < LINE_WIDTH; ++offset) {
 				if (address + offset < dataEnd) {
 					log << ' ' << std::setw(2) << unsigned int(*reinterpret_cast<const unsigned char*>(address + offset));
 				}
@@ -95,7 +95,7 @@ namespace mwse::log {
 
 			// Show printable characters
 			log << "  ";
-			for (unsigned int offset = 0; offset < LINE_WIDTH; offset++) {
+			for (unsigned int offset = 0; offset < LINE_WIDTH; ++offset) {
 				if (address + offset < dataEnd) {
 					if (*reinterpret_cast<const unsigned char*>(address + offset) < 32u) log << '.';
 					else log << *reinterpret_cast<const char*>(address + offset);

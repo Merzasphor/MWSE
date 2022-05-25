@@ -23,8 +23,8 @@ namespace mwse::lua::event {
 
 	sol::table EnchantedItemCreateFailedEvent::createEventTable() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table eventData = state.create_table();
+		auto& state = stateHandle.state;
+		auto eventData = state.create_table();
 
 		eventData["baseObject"] = m_EnchantedFrom;
 		eventData["soul"] = m_SoulUsed;

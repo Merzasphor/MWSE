@@ -46,7 +46,7 @@ namespace mwse::string {
 		}
 
 		bool exists(const char* value) {
-			for (StringMap_t::iterator it = store.begin(); it != store.end(); it++) {
+			for (StringMap_t::iterator it = store.begin(); it != store.end(); ++it) {
 				if (it->second.compare(value) == 0) {
 					return true;
 				}
@@ -56,7 +56,7 @@ namespace mwse::string {
 		}
 
 		bool exists(const std::string& value) {
-			for (StringMap_t::iterator it = store.begin(); it != store.end(); it++) {
+			for (StringMap_t::iterator it = store.begin(); it != store.end(); ++it) {
 				if (it->second.compare(value) == 0) {
 					return true;
 				}
@@ -75,7 +75,7 @@ namespace mwse::string {
 		}
 
 		mwseString& get(const std::string& value) {
-			for (StringMap_t::iterator it = store.begin(); it != store.end(); it++) {
+			for (StringMap_t::iterator it = store.begin(); it != store.end(); ++it) {
 				if (it->second.compare(value) == 0) {
 					return it->second;
 				}
@@ -322,7 +322,7 @@ namespace mwse::string {
 		{
 			if (*format != '%')
 			{
-				if (*format++ != *string++)	// if not a literal match, quit
+				if (*format++ != *++string)	// if not a literal match, quit
 					format = 0;
 			}
 			else		// format symbol in format string found
@@ -378,7 +378,7 @@ namespace mwse::string {
 					svalue = svalbuf;
 					*((long*)svalbuf) = 0;
 					stringwidth = 4;
-					while (stringwidth-- && (*svalue++ = *string++));
+					while (stringwidth-- && (*svalue++ = *++string));
 					results[resultcount++] = *((long*)svalbuf);
 				}
 				else if (*format == 'D' || *format == 'd')
@@ -454,9 +454,9 @@ namespace mwse::string {
 				{
 					format++;
 					svalue = svalbuf;
-					while (stringskip-- && *string++);	// skip some characters
+					while (stringskip-- && *++string);	// skip some characters
 					if (stringwidth)	// standard greedy string mode
-						while (stringwidth-- && (*svalue++ = *string++));
+						while (stringwidth-- && (*svalue++ = *++string));
 					else	// non-greedy string can be used like a "search" function
 					{
 						int stopsymbol = *format;

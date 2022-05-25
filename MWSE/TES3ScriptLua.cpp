@@ -12,7 +12,7 @@
 namespace mwse::lua {
 	sol::object ScriptContext::index(std::string key) {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		TES3::ScriptVariables* vars = getScriptVariables();
 
@@ -71,19 +71,19 @@ namespace mwse::lua {
 		sol::table results = state.create_table();
 
 		// Append any short variables.
-		for (int i = 0; i < script->shortCount; i++) {
+		for (int i = 0; i < script->shortCount; ++i) {
 			const char* varName = script->shortVarNamePointers[i];
 			results[varName] = state.create_table_with("type", 's', "index", i, "value", vars->shortVarValues[i]);
 		}
 
 		// Append any long variables.
-		for (int i = 0; i < script->longCount; i++) {
+		for (int i = 0; i < script->longCount; ++i) {
 			const char* varName = script->longVarNamePointers[i];
 			results[varName] = state.create_table_with("type", 'l', "index", i, "value", vars->longVarValues[i]);
 		}
 
 		// Append any float variables.
-		for (int i = 0; i < script->floatCount; i++) {
+		for (int i = 0; i < script->floatCount; ++i) {
 			const char* varName = script->floatVarNamePointers[i];
 			results[varName] = state.create_table_with("type", 'f', "index", i, "value", vars->floatVarValues[i]);
 		}
@@ -114,7 +114,7 @@ namespace mwse::lua {
 	void bindTES3Script() {
 		// Get our lua state.
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		// Binding for ScriptContext.
 		{

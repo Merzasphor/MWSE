@@ -16,7 +16,7 @@ namespace mwse::lua {
 	void bindTES3Activator() {
 		// Get our lua state.
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		// Start our usertype.
 		auto usertypeDefinition = state.new_usertype<TES3::Activator>("tes3activator");

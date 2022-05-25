@@ -369,6 +369,20 @@ local result = myObject:clone()
 
 ***
 
+### `createBoundingBox`
+
+Calculates and creates a bounding box for the object. The existing bounding box, if any, will not be used, a fresh one will always be calculated.
+
+```lua
+local boundingBox = myObject:createBoundingBox()
+```
+
+**Returns**:
+
+* `boundingBox` ([tes3boundingBox](../../types/tes3boundingBox)): The newly created bounding box.
+
+***
+
 ### `detachProperty`
 
 Detaches and returns a property from the object which matches the given property type.
@@ -657,6 +671,20 @@ niDynamicEffect.detachAffectedNode(node)
 **Parameters**:
 
 * `node` ([niNode](../../types/niNode)): The node to remove from the affected nodes list.
+
+***
+
+### `new`
+
+Creates a new NiPointLight.
+
+```lua
+local light = niPointLight.new()
+```
+
+**Returns**:
+
+* `light` ([niPointLight](../../types/niPointLight))
 
 ***
 

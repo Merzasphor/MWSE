@@ -15,7 +15,7 @@ public:
 
 	TEST_METHOD(InsertAtIterator) {
 		TES3::IteratedList<int> container;
-		for (auto i = 0; i < 10; i++) {
+		for (auto i = 0; i < 10; ++i) {
 			container.push_back(rand());
 		}
 
@@ -31,7 +31,7 @@ public:
 
 	TEST_METHOD(InsertAtPosition) {
 		TES3::IteratedList<int> container;
-		for (auto i = 0; i < 10; i++) {
+		for (auto i = 0; i < 10; ++i) {
 			container.push_front(rand());
 		}
 
@@ -50,7 +50,7 @@ public:
 
 	TEST_METHOD(PushFront) {
 		TES3::IteratedList<int> container;
-		for (auto i = 0; i < 10; i++) {
+		for (auto i = 0; i < 10; ++i) {
 			container.push_front(rand());
 		}
 
@@ -63,7 +63,7 @@ public:
 		container.push_back(42);
 		Assert::AreEqual(42, container.back());
 
-		for (auto i = 0; i < 10; i++) {
+		for (auto i = 0; i < 10; ++i) {
 			container.push_front(rand());
 		}
 
@@ -77,7 +77,7 @@ public:
 
 	TEST_METHOD(EraseAtIterator) {
 		TES3::IteratedList<int> container;
-		for (auto i = 0; i < 10; i++) {
+		for (auto i = 0; i < 10; ++i) {
 			container.push_front(rand() % 1000);
 		}
 		const int sumBefore = std::accumulate(container.begin(), container.end(), 0);
@@ -91,7 +91,7 @@ public:
 
 	TEST_METHOD(EraseAtPosition) {
 		TES3::IteratedList<int> container;
-		for (auto i = 0; i < 10; i++) {
+		for (auto i = 0; i < 10; ++i) {
 			container.push_front(rand() % 1000);
 		}
 		const int sumBefore = std::accumulate(container.begin(), container.end(), 0);
@@ -109,7 +109,7 @@ public:
 
 	TEST_METHOD(CachedIteration) {
 		TES3::IteratedList<int> container;
-		for (auto i = 0; i < 10; i++) {
+		for (auto i = 0; i < 10; ++i) {
 			container.push_front(rand() % 1000);
 		}
 
@@ -137,7 +137,7 @@ public:
 
 	TEST_METHOD(StandardForLoop) {
 		TES3::IteratedList<int> container;
-		for (auto i = 0; i < 10; i++) {
+		for (auto i = 0; i < 10; ++i) {
 			container.push_front(3);
 		}
 
@@ -154,7 +154,7 @@ public:
 
 	TEST_METHOD(ReverseForLoop) {
 		TES3::IteratedList<int> container;
-		for (auto i = 0; i < 10; i++) {
+		for (auto i = 0; i < 10; ++i) {
 			container.push_front(rand() % 1000);
 		}
 
@@ -168,7 +168,7 @@ public:
 
 	TEST_METHOD(Accumulate) {
 		TES3::IteratedList<int> container;
-		for (auto i = 0; i < 10; i++) {
+		for (auto i = 0; i < 10; ++i) {
 			container.push_front(5);
 		}
 
@@ -184,7 +184,7 @@ public:
 
 	TEST_METHOD(AccumulateConstant) {
 		TES3::IteratedList<int> container;
-		for (auto i = 0; i < 10; i++) {
+		for (auto i = 0; i < 10; ++i) {
 			container.push_front(5);
 		}
 
@@ -194,7 +194,7 @@ public:
 
 	TEST_METHOD(AccumulateReversed) {
 		TES3::IteratedList<int> container;
-		for (auto i = 0; i < 10; i++) {
+		for (auto i = 0; i < 10; ++i) {
 			container.push_front(5);
 		}
 
@@ -206,7 +206,7 @@ public:
 	// TODO: Figure out why this fails to compile.
 	TEST_METHOD(AccumulateConstantReversed) {
 		TES3::IteratedList<int> container;
-		for (auto i = 0; i < 10; i++) {
+		for (auto i = 0; i < 10; ++i) {
 			container.push_front(5);
 		}
 
@@ -229,7 +229,7 @@ public:
 
 	TEST_METHOD(LuaLength) {
 		TES3::IteratedList<int> container;
-		for (auto i = 0; i < 10; i++) {
+		for (auto i = 0; i < 10; ++i) {
 			container.push_back(rand());
 		}
 
@@ -250,7 +250,7 @@ public:
 
 	TEST_METHOD(LuaIPairs) {
 		TES3::IteratedList<int> container;
-		for (auto i = 0; i < 3; i++) {
+		for (auto i = 0; i < 3; ++i) {
 			container.push_back(5);
 		}
 
@@ -277,7 +277,7 @@ public:
 
 	TEST_METHOD(LuaPairs) {
 		TES3::IteratedList<int> container;
-		for (auto i = 0; i < 3; i++) {
+		for (auto i = 0; i < 3; ++i) {
 			container.push_back(5);
 		}
 

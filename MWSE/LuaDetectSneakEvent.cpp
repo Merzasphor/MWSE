@@ -18,8 +18,8 @@ namespace mwse::lua::event {
 
 	sol::table DetectSneakEvent::createEventTable() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table eventData = state.create_table();
+		auto& state = stateHandle.state;
+		auto eventData = state.create_table();
 
 		eventData["detector"] = m_Detector;
 		eventData["target"] = m_Target;

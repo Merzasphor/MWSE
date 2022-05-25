@@ -34,7 +34,7 @@
 
 namespace mwse::tes3 {
 	TES3::Reference* getReference(const char* id) {
-		TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+		auto dataHandler = TES3::DataHandler::get();
 		if (!dataHandler || !dataHandler->nonDynamicData) {
 			return nullptr;
 		}
@@ -149,9 +149,9 @@ namespace mwse::tes3 {
 	}
 
 	void checkForLevelUp(long progress) {
-		TES3::NonDynamicData* nonDynamicData = TES3::DataHandler::get()->nonDynamicData;
+		auto nonDynamicData = TES3::DataHandler::get()->nonDynamicData;
 		if (progress >= nonDynamicData->GMSTs[TES3::GMST::iLevelupTotal]->value.asLong) {
-			const char* levelUpMessage = nonDynamicData->GMSTs[TES3::GMST::sLevelUpMsg]->value.asString;
+			auto levelUpMessage = nonDynamicData->GMSTs[TES3::GMST::sLevelUpMsg]->value.asString;
 			TES3::UI::showMessageBox(levelUpMessage);
 		}
 	}
@@ -202,8 +202,8 @@ namespace mwse::tes3 {
 	}
 
 	TES3::SoulGemData* getSoulGemData(const TES3::Misc* item) {
-		TES3::SoulGemData* vanillaSoulGems = reinterpret_cast<TES3::SoulGemData*>(0x791C98);
-		for (size_t i = 0; i < 6; i++) {
+		auto vanillaSoulGems = reinterpret_cast<TES3::SoulGemData*>(0x791C98);
+		for (size_t i = 0; i < 6; ++i) {
 			if (vanillaSoulGems[i].item == item) {
 				return &vanillaSoulGems[i];
 			}
@@ -250,7 +250,7 @@ namespace mwse::tes3 {
 	TES3::Reference* exteriorRefs[9] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
 
 	void clearExteriorRefs() {
-		for (size_t i = 0; i < 9; i++) {
+		for (size_t i = 0; i < 9; ++i) {
 			exteriorRefs[i] = NULL;
 		}
 	}
@@ -258,7 +258,7 @@ namespace mwse::tes3 {
 	const auto TES3_newGame = reinterpret_cast<void(__stdcall*)()>(0x5FAEA0);
 	void startNewGame() {
 		// Call our load event.
-		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+		auto& luaManager = mwse::lua::LuaManager::getInstance();
 		if (mwse::lua::event::LoadGameEvent::getEventEnabled()) {
 			luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::LoadGameEvent(NULL, false, true));
 		}

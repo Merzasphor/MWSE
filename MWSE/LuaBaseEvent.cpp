@@ -8,7 +8,7 @@
 namespace mwse::lua::event {
 	sol::object trigger(const char* eventType, sol::table eventData, sol::object eventOptions) {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		// Trigger the function, check for lua errors.
 		static sol::protected_function luaEventTrigger = state["event"]["trigger"];
@@ -26,7 +26,7 @@ namespace mwse::lua::event {
 
 	void clearObjectFilter(sol::object filterObject) {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		static sol::protected_function luaEventClear = state["event"]["clear"];
 		luaEventClear(sol::nil, filterObject);

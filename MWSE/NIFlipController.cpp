@@ -17,7 +17,7 @@ namespace NI {
 		TimeController::_copy(this, to);
 		
 		// Copy textures.
-		for (size_t i = 0; i < textures.endIndex; i++) {
+		for (size_t i = 0; i < textures.endIndex; ++i) {
 			to->setTexture(getTextureAtIndex(i), i);
 		}
 

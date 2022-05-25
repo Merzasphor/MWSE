@@ -20,11 +20,11 @@ namespace mwse {
 
 	// This function changes the script at runtime.
 	float xMessageFix::execute(mwse::VMExecuteInterface& virtualMachine) {
-		unsigned short mboxhdr[2];
+		unsigned short mboxhdr[2] = {};
 
 		// We want to modify the real script SCDT info. We'll keep track of where we're reading/writing with a read/write pointer,
 		// starting at the current instruction pointer in the machine code.
-		unsigned char* scriptRWP = reinterpret_cast<unsigned char*>(virtualMachine.getScript()->machineCode);
+		auto scriptRWP = reinterpret_cast<unsigned char*>(virtualMachine.getScript()->machineCode);
 		scriptRWP += +mwse::mwscript::getInstructionPointer();
 
 		// Must be followed by MessageBox opcode and length.
@@ -46,7 +46,7 @@ namespace mwse {
 		if (format != 0 && !format.empty()) {
 			bool suppressNull = false;
 			std::string badCodes;
-			std::string newString = mwse::string::interpolate(format, virtualMachine, &suppressNull, &badCodes);
+			auto newString = mwse::string::interpolate(format, virtualMachine, &suppressNull, &badCodes);
 			if (badCodes != "") {
 				mwse::log::getLog() << "xMessageFix: Bad format \"" << badCodes << "\" in \"" << format << "\" generating \"" << newString << "\"." << std::endl;
 			}
@@ -75,13 +75,13 @@ namespace mwse {
 		scriptRWP += 1;
 
 		// Next is the number of buttons to replace.
-		unsigned char buttonCount = *scriptRWP;
+		auto buttonCount = *scriptRWP;
 		scriptRWP += 1;
 
 		// For each button, replace it with string from the stack.
-		for (int buttonIndex = 0; buttonIndex < buttonCount; buttonIndex++) {
+		for (auto buttonIndex = 0; buttonIndex < buttonCount; ++buttonIndex) {
 			// Find the amount of space available.
-			unsigned char buttonLength = *scriptRWP;
+			auto buttonLength = *scriptRWP;
 			scriptRWP += 1;
 
 			// Get the replacement string.
@@ -89,7 +89,7 @@ namespace mwse {
 
 			// We can skip the substitution if the string is empty or nonexistant.
 			if (!newButtonText.empty()) {
-				bool suppressNull = false;
+				auto suppressNull = false;
 				std::string badCodes;
 				std::string newString = mwse::string::interpolate(newButtonText, virtualMachine, &suppressNull, &badCodes);
 				if (badCodes != "") {

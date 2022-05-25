@@ -101,7 +101,7 @@ namespace mwse::lua {
 
 		// Prepare the lists we care about.
 		std::queue<TES3::Object*> objectListQueue;
-		bool searchingSpells = desiredTypes.count(TES3::ObjectType::Spell);
+		auto searchingSpells = desiredTypes.count(TES3::ObjectType::Spell) > 0; // TODO: Change in C++20 to .contains.
 		if (searchingSpells) {
 			objectListQueue.push(ndd->spellsList->head);
 		}
@@ -150,9 +150,9 @@ namespace mwse::lua {
 	//
 
 	TES3::Reference* getPlayerRef() {
-		TES3::WorldController* worldController = TES3::WorldController::get();
+		auto worldController = TES3::WorldController::get();
 		if (worldController) {
-			TES3::MobilePlayer* mobilePlayer = worldController->getMobilePlayer();
+			auto mobilePlayer = worldController->getMobilePlayer();
 			if (mobilePlayer) {
 				return mobilePlayer->reference;
 			}
@@ -161,7 +161,7 @@ namespace mwse::lua {
 	}
 
 	TES3::MobilePlayer* getMobilePlayer() {
-		TES3::WorldController* worldController = TES3::WorldController::get();
+		auto worldController = TES3::WorldController::get();
 		if (worldController) {
 			return worldController->getMobilePlayer();
 		}
@@ -169,7 +169,7 @@ namespace mwse::lua {
 	}
 
 	TES3::Cell* getPlayerCell() {
-		TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+		auto dataHandler = TES3::DataHandler::get();
 		if (dataHandler) {
 			return dataHandler->currentCell;
 		}
@@ -177,7 +177,7 @@ namespace mwse::lua {
 	}
 
 	TES3::Reference* getPlayerTarget() {
-		TES3::Game* game = TES3::Game::get();
+		auto game = TES3::Game::get();
 		if (game) {
 			return game->playerTarget;
 		}
@@ -198,7 +198,7 @@ namespace mwse::lua {
 			throw std::invalid_argument("Invalid first parameter provided. Must be a string ID.");
 		}
 
-		TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+		auto dataHandler = TES3::DataHandler::get();
 		if (dataHandler) {
 			return dataHandler->nonDynamicData->resolveObject(id);
 		}
@@ -206,7 +206,7 @@ namespace mwse::lua {
 	}
 
 	bool deleteObject(sol::object maybe) {
-		TES3::BaseObject* object = maybe.as<TES3::BaseObject*>();
+		auto object = maybe.as<TES3::BaseObject*>();
 		if (object) {
 			TES3::DataHandler::get()->nonDynamicData->deleteObject(object);
 			object->vTable.base->destructor(object, true);
@@ -216,7 +216,7 @@ namespace mwse::lua {
 	}
 
 	TES3::Script* getScript(const char* id) {
-		TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+		auto dataHandler = TES3::DataHandler::get();
 		if (dataHandler) {
 			return dataHandler->nonDynamicData->findScriptByName(id);
 		}
@@ -224,7 +224,7 @@ namespace mwse::lua {
 	};
 
 	sol::optional<double> getGlobal(const char* id) {
-		TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+		auto dataHandler = TES3::DataHandler::get();
 		if (dataHandler) {
 			TES3::GlobalVariable* global = dataHandler->nonDynamicData->findGlobalVariable(id);
 			if (global) {
@@ -235,7 +235,7 @@ namespace mwse::lua {
 	}
 
 	bool setGlobal(const std::string& id, double value) {
-		TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+		auto dataHandler = TES3::DataHandler::get();
 		if (dataHandler) {
 			TES3::GlobalVariable* global = dataHandler->nonDynamicData->findGlobalVariable(id.c_str());
 			if (global) {
@@ -247,7 +247,7 @@ namespace mwse::lua {
 	}
 
 	TES3::GlobalVariable* findGlobal(const std::string& id) {
-		TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+		auto dataHandler = TES3::DataHandler::get();
 		if (dataHandler) {
 			return dataHandler->nonDynamicData->findGlobalVariable(id.c_str());
 		}
@@ -255,19 +255,19 @@ namespace mwse::lua {
 	}
 
 	TES3::GameSetting* findGMST(sol::object key) {
-		TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+		auto dataHandler = TES3::DataHandler::get();
 		if (dataHandler == nullptr) {
 			return nullptr;
 		}
 
-		int index = -1;
+		auto index = -1;
 		if (key.is<int>()) {
 			index = key.as<int>();
 		}
 		else if (key.is<const char*>()) {
 			auto& luaManager = mwse::lua::LuaManager::getInstance();
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
-			sol::state& state = stateHandle.state;
+			auto& state = stateHandle.state;
 			sol::object asIndex = state["tes3"]["gmst"][key.as<const char*>()];
 			if (asIndex.is<int>()) {
 				index = asIndex.as<int>();
@@ -284,12 +284,12 @@ namespace mwse::lua {
 	TES3::GameSetting* getGMST(sol::object key) {
 		auto& luaManager = mwse::lua::LuaManager::getInstance();
 		auto stateHandle = luaManager.getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		// Display deprecation warning and traceback.
 		logStackTrace("WARNING: Use of deprecated function tes3.getGMST. Use tes3.findGMST instead.");
 
-		TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+		auto dataHandler = TES3::DataHandler::get();
 		if (dataHandler == nullptr) {
 			return nullptr;
 		}
@@ -303,7 +303,7 @@ namespace mwse::lua {
 		else if (key.is<std::string>()) {
 			int index = -1;
 			std::string keyStr = key.as<std::string>();
-			for (int i = 0; i <= TES3::GMST::sWitchhunter; i++) {
+			for (int i = 0; i <= TES3::GMST::sWitchhunter; ++i) {
 				TES3::GameSettingInfo* info = TES3::GameSettingInfo::get(i);
 				if (strcmp(info->name, keyStr.c_str()) == 0) {
 					index = i;
@@ -418,7 +418,7 @@ namespace mwse::lua {
 	TES3::UI::Element* messageBox(sol::object param, sol::optional<sol::variadic_args> va) {
 		auto& luaManager = mwse::lua::LuaManager::getInstance();
 		auto stateHandle = luaManager.getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		if (param.is<std::string>()) {
 			std::string message = state["string"]["format"](param, va);
@@ -439,7 +439,7 @@ namespace mwse::lua {
 			if (maybeButtons && maybeButtons.value().size() > 0) {
 				sol::table buttons = maybeButtons.value();
 				size_t size = std::min(buttons.size(), size_t(32));
-				for (size_t i = 0; i < size; i++) {
+				for (size_t i = 0; i < size; ++i) {
 					std::string result = buttons[i + 1];
 					if (result.empty()) {
 						break;
@@ -508,7 +508,7 @@ namespace mwse::lua {
 	}
 
 	bool isModActive(const char* modName) {
-		TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+		auto dataHandler = TES3::DataHandler::get();
 		if (dataHandler == nullptr) {
 			return false;
 		}
@@ -526,9 +526,9 @@ namespace mwse::lua {
 	sol::object getModList() {
 		auto& luaManager = mwse::lua::LuaManager::getInstance();
 		auto stateHandle = luaManager.getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
-		TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+		auto dataHandler = TES3::DataHandler::get();
 		if (dataHandler == nullptr) {
 			return sol::nil;
 		}
@@ -597,7 +597,7 @@ namespace mwse::lua {
 	}
 
 	TES3::Sound* getSound(const char* id) {
-		TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+		auto dataHandler = TES3::DataHandler::get();
 		if (dataHandler) {
 			return TES3::DataHandler::get()->nonDynamicData->findSound(id);
 		}
@@ -634,7 +634,7 @@ namespace mwse::lua {
 	}
 
 	TES3::Class* findClass(const char* id) {
-		TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+		auto dataHandler = TES3::DataHandler::get();
 		if (dataHandler) {
 			return dataHandler->nonDynamicData->findClass(id);
 		}
@@ -642,7 +642,7 @@ namespace mwse::lua {
 	}
 
 	TES3::Faction* getFaction(const char* id) {
-		TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+		auto dataHandler = TES3::DataHandler::get();
 		if (dataHandler) {
 			return dataHandler->nonDynamicData->findFaction(id);
 		}
@@ -650,7 +650,7 @@ namespace mwse::lua {
 	}
 
 	TES3::MagicEffect* getMagicEffect(int id) {
-		TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+		auto dataHandler = TES3::DataHandler::get();
 		if (dataHandler) {
 			auto magicEffectsController = dataHandler->nonDynamicData->magicEffects;
 			if (magicEffectsController->getEffectExists(id)) {
@@ -686,7 +686,7 @@ namespace mwse::lua {
 	}
 
 	sol::optional<TES3::Vector3> getCameraPosition() {
-		TES3::WorldController* worldController = TES3::WorldController::get();
+		auto worldController = TES3::WorldController::get();
 		if (worldController) {
 			return worldController->worldCamera.cameraData.camera->worldBoundOrigin;
 		}
@@ -920,7 +920,7 @@ namespace mwse::lua {
 		auto pickSuccess = rayTestCache->pickObjects(&position.value(), &directionNormalized, false, maxDistance);
 
 		// Restore previous cull states.
-		for (auto itt = ignoreRestoreList.begin(); itt != ignoreRestoreList.end(); itt++) {
+		for (auto itt = ignoreRestoreList.begin(); itt != ignoreRestoreList.end(); ++itt) {
 			(*itt)->setAppCulled(false);
 		}
 
@@ -1057,7 +1057,7 @@ namespace mwse::lua {
 	}
 
 	sol::optional<int> getDaysInMonth(int month) {
-		TES3::WorldController* worldController = TES3::WorldController::get();
+		auto worldController = TES3::WorldController::get();
 		if (worldController) {
 			return worldController->getDaysInMonth(month);
 		}
@@ -1065,7 +1065,7 @@ namespace mwse::lua {
 	}
 
 	sol::optional<int> getCumulativeDaysForMonth(int month) {
-		TES3::WorldController* worldController = TES3::WorldController::get();
+		auto worldController = TES3::WorldController::get();
 		if (worldController) {
 			return worldController->getCumulativeDaysForMonth(month);
 		}
@@ -1074,7 +1074,7 @@ namespace mwse::lua {
 
 	double getSimulationTimestamp(sol::optional<bool> highPrecision) {
 		if (highPrecision.value_or(true)) {
-			TES3::WorldController* worldController = TES3::WorldController::get();
+			auto worldController = TES3::WorldController::get();
 			if (worldController) {
 				return worldController->getHighPrecisionSimulationTimestamp();
 			}
@@ -1167,7 +1167,7 @@ namespace mwse::lua {
 			return nullptr;
 		}
 
-		TES3::WorldController* worldController = TES3::WorldController::get();
+		auto worldController = TES3::WorldController::get();
 		if (worldController) {
 			TES3::InputController* inputController = worldController->inputController;
 			if (inputController) {
@@ -1178,7 +1178,7 @@ namespace mwse::lua {
 	}
 
 	TES3::Region* getRegion(sol::optional<sol::table> maybeParams) {
-		TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+		auto dataHandler = TES3::DataHandler::get();
 		if (dataHandler) {
 			// Try to get the current cell's region first.
 			if (dataHandler->currentCell) {
@@ -1213,7 +1213,7 @@ namespace mwse::lua {
 	}
 
 	TES3::Region* findRegion(const char* id) {
-		TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+		auto dataHandler = TES3::DataHandler::get();
 		if (dataHandler) {
 			return dataHandler->nonDynamicData->getRegion(id);
 		}
@@ -1221,7 +1221,7 @@ namespace mwse::lua {
 	}
 
 	TES3::Weather* getCurrentWeather() {
-		TES3::WorldController* worldController = TES3::WorldController::get();
+		auto worldController = TES3::WorldController::get();
 		if (worldController) {
 			return worldController->weatherController->currentWeather;
 		}
@@ -1229,7 +1229,7 @@ namespace mwse::lua {
 	}
 
 	sol::optional<TES3::Vector2> getCursorPosition() {
-		TES3::WorldController* worldController = TES3::WorldController::get();
+		auto worldController = TES3::WorldController::get();
 		if (worldController) {
 			return TES3::Vector2(worldController->mouseController->position.x, worldController->mouseController->position.z);
 		}
@@ -1237,7 +1237,7 @@ namespace mwse::lua {
 	}
 
 	TES3::Skill* getSkill(int skillID) {
-		TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+		auto dataHandler = TES3::DataHandler::get();
 		if (dataHandler) {
 			return &dataHandler->nonDynamicData->skills[skillID];
 		}
@@ -1247,7 +1247,7 @@ namespace mwse::lua {
 	void removeEffects(sol::table params) {
 		auto& luaManager = mwse::lua::LuaManager::getInstance();
 		auto stateHandle = luaManager.getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		TES3::Reference* reference = getOptionalParamExecutionReference(params);
 		if (reference == nullptr) {
@@ -1290,7 +1290,7 @@ namespace mwse::lua {
 	bool triggerCrime(sol::table params) {
 		auto& luaManager = mwse::lua::LuaManager::getInstance();
 		auto stateHandle = luaManager.getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		TES3::CrimeEvent crimeEvent;
 
@@ -1417,7 +1417,7 @@ namespace mwse::lua {
 	bool playVoiceover(sol::table params) {
 		auto& luaManager = mwse::lua::LuaManager::getInstance();
 		auto stateHandle = luaManager.getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		// Get the actor that we're going to make say something.
 		auto actor = getOptionalParamMobileActor(params, "actor");
@@ -1824,7 +1824,7 @@ namespace mwse::lua {
 	void setStatistic(sol::table params) {
 		auto& luaManager = mwse::lua::LuaManager::getInstance();
 		auto stateHandle = luaManager.getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		// Figure out our mobile object, in case someone gives us a reference instead.
 		sol::userdata maybeMobile = params["reference"];
@@ -1941,7 +1941,7 @@ namespace mwse::lua {
 			}
 			else {
 				// Check to see if an attribute was edited.
-				for (size_t i = TES3::Attribute::FirstAttribute; i <= TES3::Attribute::LastAttribute; i++) {
+				for (size_t i = TES3::Attribute::FirstAttribute; i <= TES3::Attribute::LastAttribute; ++i) {
 					if (statistic == &mobile->attributes[i]) {
 						TES3::UI::updateEncumbranceBar();
 						TES3::UI::updatePlayerAttribute(statistic->getCurrent(), i);
@@ -1957,7 +1957,7 @@ namespace mwse::lua {
 	void modStatistic(sol::table params) {
 		auto& luaManager = mwse::lua::LuaManager::getInstance();
 		auto stateHandle = luaManager.getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		// Figure out our mobile object, in case someone gives us a reference instead.
 		sol::userdata maybeMobile = params["reference"];
@@ -2077,7 +2077,7 @@ namespace mwse::lua {
 			}
 			else {
 				// Check to see if an attribute was edited.
-				for (size_t i = TES3::Attribute::FirstAttribute; i <= TES3::Attribute::LastAttribute; i++) {
+				for (size_t i = TES3::Attribute::FirstAttribute; i <= TES3::Attribute::LastAttribute; ++i) {
 					if (statistic == &mobile->attributes[i]) {
 						TES3::UI::updateEncumbranceBar();
 						TES3::UI::updatePlayerAttribute(statistic->getCurrent(), i);
@@ -2178,7 +2178,7 @@ namespace mwse::lua {
 
 		auto& luaManager = mwse::lua::LuaManager::getInstance();
 		auto stateHandle = luaManager.getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 		sol::table result = state.create_table();
 
 		if (dataHandler->currentInteriorCell) {
@@ -2186,7 +2186,7 @@ namespace mwse::lua {
 		}
 		else {
 			int exteriorCount = 0;
-			for (size_t i = 0; i < 9; i++) {
+			for (size_t i = 0; i < 9; ++i) {
 				auto cellDataPointer = dataHandler->exteriorCellData[i];
 				if (cellDataPointer && cellDataPointer->loadingFlags >= 1) {
 					exteriorCount++;
@@ -2902,7 +2902,7 @@ namespace mwse::lua {
 
 			// Assign effects.
 			if (effects) {
-				for (int i = 1; i <= 8; i++) {
+				for (int i = 1; i <= 8; ++i) {
 					sol::optional<sol::table> effectParams = effects.value()[i];
 					if (!effectParams) {
 						break;
@@ -3853,18 +3853,17 @@ namespace mwse::lua {
 	}
 
 	void setAIActivate(sol::table params) {
-		TES3::MobileActor* mobileActor = getOptionalParamMobileActor(params, "reference");
+		auto mobileActor = getOptionalParamMobileActor(params, "reference");
 		if (mobileActor == nullptr) {
 			throw std::invalid_argument("Invalid reference parameter provided.");
 		}
 
-		TES3::Reference* target = getOptionalParamReference(params, "target");
+		auto target = getOptionalParamReference(params, "target");
 		if (target == nullptr) {
 			throw std::invalid_argument("Invalid target parameter provided.");
 		}
 
-		auto config = tes3::_new<TES3::AIPackageActivate::Config>();
-		config->type = TES3::AIPackageConfigType::Activate;
+		auto config = new TES3::AIPackageActivate::Config();
 		config->target = target;
 		config->reset = getOptionalParam<bool>(params, "reset", true);
 
@@ -3873,20 +3872,19 @@ namespace mwse::lua {
 	}
 
 	void setAIFollow(sol::table params) {
-		TES3::MobileActor* mobileActor = getOptionalParamMobileActor(params, "reference");
+		auto mobileActor = getOptionalParamMobileActor(params, "reference");
 		if (mobileActor == nullptr) {
 			throw std::invalid_argument("Invalid reference parameter provided.");
 		}
 
-		TES3::Reference* target = getOptionalParamReference(params, "target");
+		auto target = getOptionalParamReference(params, "target");
 		if (target == nullptr || !target->baseObject->isActor()) {
 			throw std::invalid_argument("Invalid target parameter provided.");
 		}
 
 		auto destination = getOptionalParamVector3(params, "destination");
 
-		auto config = tes3::_new<TES3::AIPackageFollow::Config>();
-		config->type = TES3::AIPackageConfigType::Follow;
+		auto config = new TES3::AIPackageFollow::Config();
 		if (destination) {
 			config->destination = destination.value();
 		}
@@ -3918,8 +3916,7 @@ namespace mwse::lua {
 			throw std::invalid_argument("Destination parameter is missing.");
 		}
 
-		auto config = tes3::_new<TES3::AIPackageEscort::Config>();
-		config->type = TES3::AIPackageConfigType::Escort;
+		auto config = new TES3::AIPackageEscort::Config();
 		config->destination = destination.value();
 		config->duration = getOptionalParam<unsigned char>(params, "duration", 0);
 		config->actor = static_cast<TES3::Actor*>(target->getBaseObject());
@@ -3931,7 +3928,7 @@ namespace mwse::lua {
 	}
 
 	void setAITravel(sol::table params) {
-		TES3::MobileActor* mobileActor = getOptionalParamMobileActor(params, "reference");
+		auto mobileActor = getOptionalParamMobileActor(params, "reference");
 		if (mobileActor == nullptr) {
 			throw std::invalid_argument("Invalid reference parameter provided.");
 		}
@@ -3941,8 +3938,7 @@ namespace mwse::lua {
 			throw std::invalid_argument("Invalid destination parameter provided.");
 		}
 
-		auto config = tes3::_new<TES3::AIPackageTravel::Config>();
-		config->type = TES3::AIPackageConfigType::Travel;
+		auto config = new TES3::AIPackageTravel::Config();
 		config->position = destination.value();
 		config->reset = getOptionalParam<bool>(params, "reset", true);
 
@@ -3951,7 +3947,7 @@ namespace mwse::lua {
 	}
 
 	void setAIWander(sol::table params) {
-		TES3::MobileActor* mobileActor = getOptionalParamMobileActor(params, "reference");
+		auto mobileActor = getOptionalParamMobileActor(params, "reference");
 		if (mobileActor == nullptr) {
 			throw std::invalid_argument("Invalid reference parameter provided.");
 		}
@@ -3961,15 +3957,14 @@ namespace mwse::lua {
 			throw std::invalid_argument("Invalid idles table provided.");
 		}
 
-		auto config = tes3::_new<TES3::AIPackageWander::Config>();
-		config->type = TES3::AIPackageConfigType::Wander;
+		auto config = new TES3::AIPackageWander::Config();
 		config->range = getOptionalParam<unsigned short>(params, "range", 0);
 		config->duration = getOptionalParam<unsigned char>(params, "duration", 0);
 		config->time = getOptionalParam<unsigned char>(params, "time", 0);
 		config->reset = getOptionalParam<bool>(params, "reset", true);
 
 		sol::table idles = maybeIdles.value();
-		for (size_t i = 0; i < 8; i++) {
+		for (size_t i = 0; i < 8; ++i) {
 			config->idles[i] = idles.get_or(i + 1, 0);
 		}
 
@@ -3984,7 +3979,7 @@ namespace mwse::lua {
 			throw std::invalid_argument("Cannoy be called before tes3worldController and tes3dataHandler are initialized.");
 		}
 
-		TES3::Reference* reference = getOptionalParamExecutionReference(params);
+		auto reference = getOptionalParamExecutionReference(params);
 		if (reference == nullptr) {
 			throw std::invalid_argument("Invalid reference parameter provided.");
 		}
@@ -3994,10 +3989,10 @@ namespace mwse::lua {
 			throw std::invalid_argument("Invalid soundPath parameter provided.");
 		}
 
-		float pitch = getOptionalParam(params, "pitch", 1.0f);
+		auto pitch = getOptionalParam(params, "pitch", 1.0f);
 
 		// Apply volume, using mix channel and rescale to 0-250.
-		double volume = std::clamp(getOptionalParam(params, "volume", 1.0), 0.0, 1.0);
+		auto volume = std::clamp(getOptionalParam(params, "volume", 1.0), 0.0, 1.0);
 		volume *= 250.0 * worldController->audioController->getMixVolume(TES3::AudioMixType::Voice);
 
 		// Show a messagebox.
@@ -4014,7 +4009,7 @@ namespace mwse::lua {
 
 	bool hasOwnershipAccess(sol::table params) {
 		// Who are we checking ownership for? The player by default.
-		TES3::Reference* reference = getOptionalParamExecutionReference(params);
+		auto reference = getOptionalParamExecutionReference(params);
 		auto playerReference = TES3::WorldController::get()->getMobilePlayer()->reference;
 		if (reference == nullptr) {
 			reference = playerReference;
@@ -4022,7 +4017,7 @@ namespace mwse::lua {
 		auto referenceBaseObject = reference->getBaseObject();
 
 		// What are we checking ownership of?
-		TES3::Reference* target = getOptionalParamReference(params, "target");
+		auto target = getOptionalParamReference(params, "target");
 		if (target == nullptr) {
 			throw std::invalid_argument("Invalid target parameter provided.");
 		}
@@ -4087,21 +4082,21 @@ namespace mwse::lua {
 
 	TES3::Reference* dropItem(sol::table params) {
 		// Who is dropping?
-		TES3::MobileActor* mobile = getOptionalParamMobileActor(params, "reference");
+		auto mobile = getOptionalParamMobileActor(params, "reference");
 		if (mobile == nullptr) {
 			throw std::invalid_argument("Invalid reference parameter provided.");
 		}
 
 		// What are they dropping?
-		TES3::Item* item = getOptionalParamObject<TES3::Item>(params, "item");
+		auto item = getOptionalParamObject<TES3::Item>(params, "item");
 		if (item == nullptr) {
 			throw std::invalid_argument("Invalid item parameter provided.");
 		}
 
 		// Get data about what is being dropped.
 		auto itemData = getOptionalParam<TES3::ItemData*>(params, "itemData");
-		int count = getOptionalParam<int>(params, "count", 1);
-		bool matchNoItemData = getOptionalParam<bool>(params, "matchNoItemData", false);
+		auto count = getOptionalParam<int>(params, "count", 1);
+		auto matchNoItemData = getOptionalParam<bool>(params, "matchNoItemData", false);
 
 		// Check if the item to drop exists, as the game functions don't handle it.
 		auto actor = static_cast<TES3::Actor*>(mobile->reference->baseObject);
@@ -4123,7 +4118,7 @@ namespace mwse::lua {
 		}
 
 		// Drop the item.
-		bool matchExact = itemData.has_value() || matchNoItemData;
+		auto matchExact = itemData.has_value() || matchNoItemData;
 		mobile->dropItem(item, itemData.value_or(nullptr), count, !matchExact);
 		auto droppedReference = mobile->getCell()->temporaryRefs.tail;
 
@@ -4149,7 +4144,7 @@ namespace mwse::lua {
 
 		auto rng = rand() % 100;
 
-		int index = getOptionalParam<int>(params, "index", -1);
+		auto index = getOptionalParam<int>(params, "index", -1);
 
 		if (index >= 0 && index <= 6) {
 			actor->reference->setObjectModified(true);
@@ -4157,12 +4152,12 @@ namespace mwse::lua {
 		}
 		else {
 			auto fBribe100Mod = TES3::DataHandler::get()->nonDynamicData->GMSTs[TES3::GMST::fBribe100Mod];
-			float modifier = getOptionalParam<float>(params, "modifier", 0.0f);
+			auto modifier = getOptionalParam<float>(params, "modifier", 0.0f);
 
-			float oldModifier = fBribe100Mod->value.asFloat;
+			auto oldModifier = fBribe100Mod->value.asFloat;
 			fBribe100Mod->value.asFloat = modifier;
 
-			bool result = actor->persuade(rng, 4);
+			auto result = actor->persuade(rng, 4);
 			fBribe100Mod->value.asFloat = oldModifier;
 
 			actor->reference->setObjectModified(true);
@@ -4172,9 +4167,9 @@ namespace mwse::lua {
 	}
 
 	TES3::Reference* findClosestExteriorReferenceOfObject(sol::table params) {
-		TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+		auto dataHandler = TES3::DataHandler::get();
 
-		TES3::PhysicalObject* object = getOptionalParamObject<TES3::PhysicalObject>(params, "object");
+		auto object = getOptionalParamObject<TES3::PhysicalObject>(params, "object");
 		if (object == nullptr) {
 			throw std::invalid_argument("Invalid 'object' parameter provided.");
 		}
@@ -4196,8 +4191,8 @@ namespace mwse::lua {
 			return TES3::DataHandler::get()->nonDynamicData->findDialogue(topic);
 		}
 
-		int type = getOptionalParam<int>(params, "type", -1);
-		int page = getOptionalParam<int>(params, "page", -1);
+		auto type = getOptionalParam<int>(params, "type", -1);
+		auto page = getOptionalParam<int>(params, "page", -1);
 		return TES3::Dialogue::getDialogue(type, page);
 	}
 
@@ -4410,7 +4405,7 @@ namespace mwse::lua {
 
 		sol::state_view state = thisState;
 		sol::table result = state.create_table();
-		for (size_t i = 0; i < 3; i++) {
+		for (size_t i = 0; i < 3; ++i) {
 			result[i + 1] = animData->timing[i];
 		}
 		return result;
@@ -5509,7 +5504,12 @@ namespace mwse::lua {
 			throw std::runtime_error("This function cannot be called before the VFX manager is created.");
 		}
 
-		auto effectObject = getOptionalParamObject<TES3::PhysicalObject>(params, "effect");
+		// Legacy support for old param names.
+		auto effectObject = getOptionalParamObject<TES3::PhysicalObject>(params, "object");
+		if (!effectObject) {
+			effectObject = getOptionalParamObject<TES3::PhysicalObject>(params, "effect");
+		}
+
 		if (effectObject) {
 			auto serial = getOptionalParam(params, "serial", 0u);
 			auto reference = getOptionalParamReference(params, "reference");
@@ -5533,10 +5533,15 @@ namespace mwse::lua {
 			return vfxManager->createForReference(serial, effectObject, reference, repeatCount, lifespan, scale, verticalOffset);
 		}
 
-		auto enchantEffect = getOptionalParam<int>(params, "enchantment");
+		// Legacy support for old param names.
+		auto enchantEffect = getOptionalParam<int>(params, "magicEffectId");
+		if (!enchantEffect) {
+			enchantEffect = getOptionalParam<int>(params, "enchantment");
+		}
+
 		if (enchantEffect) {
 			if (!TES3::DataHandler::get()->nonDynamicData->getMagicEffect(enchantEffect.value())) {
-				throw std::invalid_argument("Effect of the given index does not exist.");
+				throw std::invalid_argument("Invalid 'magicEffectId' parameter. Effect of the given index does not exist.");
 			}
 			auto reference = getOptionalParamReference(params, "reference");
 			auto lifespan = getOptionalParam(params, "lifespan", TES3::VFX::AGE_INFINITE);
@@ -5737,7 +5742,7 @@ namespace mwse::lua {
 
 	void bindTES3Util() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		//
 		// Extend tes3 library with extra functions.

@@ -23,7 +23,7 @@ public:
 
 	TEST_METHOD(LuaLength) {
 		NI::TArray<int> container(10);
-		for (size_t i = 0; i < container.size(); i++) {
+		for (size_t i = 0; i < container.size(); ++i) {
 			container.setAtIndex(i, rand() % 1000);
 		}
 
@@ -71,7 +71,7 @@ public:
 		NI::TArray<int> container(13);
 
 		// Fill all but one slots with 5, and fill the last one with 6.
-		for (size_t i = 0; i < 12; i++) {
+		for (size_t i = 0; i < 12; ++i) {
 			container.setAtIndex(i, 5);
 		}
 		container.setAtIndex(12, 6);

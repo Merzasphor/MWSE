@@ -114,7 +114,7 @@ namespace TES3 {
 #endif
 		memset(ndd->freed_0x5CC, 0x0, sizeof(ndd->freed_0x5CC));
 
-		for (int i = EffectID::FirstEffect; i <= EffectID::LastEffect; i++) {
+		for (int i = EffectID::FirstEffect; i <= EffectID::LastEffect; ++i) {
 			auto effect = new MagicEffect(i);
 			magicEffectController->addEffectObject(effect);
 		}
@@ -479,7 +479,7 @@ namespace TES3 {
 						continue;
 					}
 
-					for (size_t i = 0; i < 8; i++) {
+					for (size_t i = 0; i < 8; ++i) {
 						if (spell->effects[i].effectID == effect->id) {
 							hasEffect = true;
 							break;
@@ -533,7 +533,7 @@ namespace TES3 {
 						continue;
 					}
 
-					for (size_t i = 0; i < 8; i++) {
+					for (size_t i = 0; i < 8; ++i) {
 						if (spell->effects[i].effectID == effect->id) {
 							hasEffect = true;
 							break;
@@ -578,7 +578,7 @@ namespace TES3 {
 		instance->projectileHit(collision);
 
 		auto effects = instance->sourceCombo.getSourceEffects();
-		for (size_t i = 0; i < 8; i++) {
+		for (size_t i = 0; i < 8; ++i) {
 			auto effectId = effects[i].effectID;
 			if (effectId == -1) {
 				break;

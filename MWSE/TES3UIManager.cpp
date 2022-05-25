@@ -18,6 +18,7 @@
 #include "TES3Reference.h"
 #include "TES3WorldController.h"
 
+#include "LuaConsoleReferenceChangedEvent.h"
 #include "LuaShowRestWaitMenuEvent.h"
 #include "LuaUiSpellTooltipEvent.h"
 
@@ -62,6 +63,24 @@ namespace TES3 {
 		const auto TES3_ui_lookupID = reinterpret_cast<const char*(__cdecl *)(UI_ID)>(0x57B220);
 		const char* lookupID(UI_ID id) {
 			return TES3_ui_lookupID(id);
+		}
+
+		const auto TES3_ui_lookupPropertyID = reinterpret_cast<const char* (__cdecl*)(Property)>(0x57B220);
+		const char* lookupID(Property id) {
+			return TES3_ui_lookupPropertyID(id);
+		}
+
+		const char* lookupID_lua(sol::object id) {
+			if (id.is<TES3::UI::Property>()) {
+				return lookupID(id.as<TES3::UI::Property>());
+			}
+			else if (id.is<TES3::UI::UI_ID>()) {
+				return lookupID(id.as<TES3::UI::UI_ID>());
+			}
+			else if (id.is<short>()) {
+				return lookupID((UI_ID)id.as<short>());
+			}
+			throw std::invalid_argument("ID cannot be interpreted as a valid UI ID or property.");
 		}
 
 		Property registerProperty(const char *name) {
@@ -276,6 +295,31 @@ namespace TES3 {
 
 		void updateDialogDisposition() {
 			TES3_ui_updateDialogDisposition();
+		}
+
+
+		Reference* getConsoleReference() {
+			auto console = findMenu("MenuConsole");
+			if (!console) {
+				return nullptr;
+			}
+
+			return static_cast<Reference*>(console->getProperty(PropertyType::Pointer, registerProperty("MenuConsole_current_ref")).ptrValue);
+		}
+
+		const auto TES3_ui_setConsoleReference = reinterpret_cast<void(__cdecl*)(Reference*)>(0x5B2F00);
+		void __cdecl setConsoleReference(TES3::Reference* reference) {
+			// Store the previous value so we can know if it changed.
+			auto referenceBefore = getConsoleReference();
+
+			// Call the original function.
+			TES3_ui_setConsoleReference(reference);
+
+			// If it changed, fire off an event.
+			auto referenceAfter = getConsoleReference();
+			if (mwse::lua::event::ConsoleReferenceChangedEvent::getEventEnabled() && referenceBefore != referenceAfter) {
+				mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::ConsoleReferenceChangedEvent(referenceAfter));
+			}
 		}
 
 		std::tuple<unsigned int, unsigned int> getViewportSize_lua() {
@@ -646,6 +690,19 @@ namespace TES3 {
 
 		bool isInMenuMode() {
 			return TES3::WorldController::get()->flagMenuMode;
+		}
+
+		const auto TES3_ui_moveMenuToFront = reinterpret_cast<void(__cdecl*)(Element*)>(0x595870);
+		void moveMenuToFront(Element* menu) {
+			TES3_ui_moveMenuToFront(menu);
+		}
+
+		void moveMenuToFront_lua(sol::object id) {
+			auto menu = findMenu_lua(id);
+			if (menu == nullptr) {
+				throw std::invalid_argument("Parameter must be an element or a top level menu ID.");
+			}
+			moveMenuToFront(menu);
 		}
 
 		sol::table getPalette_lua(sol::this_state ts, const char* name) {

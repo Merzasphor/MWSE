@@ -41,7 +41,7 @@ function require(name)
 
 	local msg = {}
 	local loader, param
-	for _, searcher in ipairs(package.searchers) do
+	for _, searcher in ipairs(package.searchers) do ---@diagnostic disable-line
 		loader, param = searcher(name)
 		if type(loader) == "function" then break end
 		if type(loader) == "string" then
@@ -53,6 +53,7 @@ function require(name)
 
 	if loader == nil then
 		error("module '" .. name .. "' not found: " .. table.concat(msg), 2)
+		return
 	end
 
 	local res = loader(name, param)
@@ -85,7 +86,7 @@ function include(name)
 
 	local msg = {}
 	local loader, param
-	for _, searcher in ipairs(package.searchers) do
+	for _, searcher in ipairs(package.searchers) do ---@diagnostic disable-line
 		loader, param = searcher(name)
 		if type(loader) == "function" then break end
 		if type(loader) == "string" then
@@ -427,6 +428,24 @@ function table.swap(t, key, value)
 	return old
 end
 
+function table.get(t, key, default)
+	local value = t[key]
+	if (value == nil) then
+		return default
+	end
+	return value
+end
+
+function table.getset(t, key, default)
+	local value = t[key]
+	if (value ~= nil) then
+		return value
+	end
+
+	t[key] = default
+	return default
+end
+
 
 -------------------------------------------------
 -- Extend base table: Add binary search/insert
@@ -573,6 +592,10 @@ getmetatable("").trim = string.trim
 
 local function getNthLine(fileName, n)
 	local f = io.open(fileName, "r")
+	if (f == nil) then
+		return
+	end
+
 	local i = 1
 	for line in f:lines() do
 		if i == n then
@@ -862,6 +885,14 @@ end
 -- Usertype Extensions: tes3uiElement
 -------------------------------------------------
 
+--- @param container tes3uiElement
+--- @param index number
+local function setImageButtonToIndex(container, index)
+	for i, imageButton in ipairs(container.children) do
+		imageButton.visible = (i == index)
+	end
+end
+
 -- Create a button composed of images that has a mouse over and mouse pressed state.
 function tes3uiElement:createImageButton(params)
 	-- Get the button block params.
@@ -901,25 +932,17 @@ function tes3uiElement:createImageButton(params)
 	buttonPressed.visible = false
 
 	-- Create the functions to hide/show buttons based on mouse state.
-	buttonBlock:register("mouseOver", function()
-		buttonIdle.visible = false
-		buttonOver.visible = true
-		buttonPressed.visible = false
+	buttonBlock:register("mouseOver", function(e)
+		setImageButtonToIndex(e.source, 2)
 	end)
-	buttonBlock:register("mouseLeave", function()
-		buttonIdle.visible = true
-		buttonOver.visible = false
-		buttonPressed.visible = false
+	buttonBlock:register("mouseLeave", function(e)
+		setImageButtonToIndex(e.source, 1)
 	end)
-	buttonBlock:register("mouseDown", function()
-		buttonIdle.visible = false
-		buttonOver.visible = false
-		buttonPressed.visible = true
+	buttonBlock:register("mouseDown", function(e)
+		setImageButtonToIndex(e.source, 3)
 	end)
-	buttonBlock:register("mouseRelease", function()
-		buttonIdle.visible = false
-		buttonOver.visible = true
-		buttonPressed.visible = false
+	buttonBlock:register("mouseRelease", function(e)
+		setImageButtonToIndex(e.source, 2)
 	end)
 
 	-- Return the created block.
@@ -935,6 +958,123 @@ function tes3uiElement:sortChildren(fn)
 	for i, child in ipairs(children) do
 		self:reorderChildren(i, child, 1)
 	end
+end
+
+local tes3uiElementCopyDelegates = {}
+
+function tes3uiElementCopyDelegates.button(params)
+	return params.to:createButton({
+		id = params.from.id,
+		text = params.from.text,
+	})
+end
+
+function tes3uiElementCopyDelegates.image(params)
+	return params.to:createImage({
+		id = params.from.id,
+		path = params.from.contentPath,
+	})
+end
+
+function tes3uiElementCopyDelegates.layout(params)
+	return params.to:createBlock({
+		id = params.from.id,
+	})
+end
+
+function tes3uiElementCopyDelegates.model(params)
+	return params.to:createNif({
+		id = params.from.id,
+		path = params.from.contentPath,
+	})
+end
+
+function tes3uiElementCopyDelegates.rect(params)
+	return params.to:createRect({
+		id = params.from.id,
+	})
+end
+
+
+local tes3uiElementCopyPropertyDelegates = {}
+
+tes3uiElementCopyPropertyDelegates[1] = function(new, prop)
+	new:setPropertyInt(prop.id, prop.value)
+end
+
+tes3uiElementCopyPropertyDelegates[2] = function(new, prop)
+	new:setPropertyFloat(prop.id, prop.value)
+end
+
+tes3uiElementCopyPropertyDelegates[8] = function(new, prop)
+	new:setPropertyObject(prop.id, prop.value)
+end
+
+tes3uiElementCopyPropertyDelegates[16] = function(new, prop)
+	local value = prop.value
+	if (type(value) == "boolean") then
+		new:setPropertyBool(prop.id, value)
+	else
+		new:setPropertyProperty(prop.id, value)
+	end
+end
+
+tes3uiElementCopyPropertyDelegates[32] = function(new, prop)
+	new:setPropertyCallback(prop.id, prop.value)
+end
+
+local basicPropertiesToCopy = { "absolutePosAlignX", "absolutePosAlignY", "alpha", "autoHeight", "autoWidth", "borderAllSides", "borderBottom", "borderLeft", "borderRight", "borderTop", "childAlignX", "childAlignY", "childOffsetX", "childOffsetY", "color", "consumeMouseEvents", "contentPath", "disabled", "flowDirection", "font", "height", "heightProportional", "imageFilter", "imageScaleX", "imageScaleY", "justifyText", "maxHeight", "maxWidth", "minHeight", "minWidth", "nodeMaxX", "nodeMaxY", "nodeMinX", "nodeMinY", "nodeOffsetX", "nodeOffsetY", "paddingAllSides", "paddingBottom", "paddingLeft", "paddingRight", "paddingTop", "positionX", "positionY", "rawText", "repeatKeys", "scaleMode", "text", "texture", "visible", "width", "widthProportional", "wrapText" }
+
+function tes3uiElement:copy(params)
+	params.from = self
+	assert(type(params) == "table", "Invalid parameter. This function must be called with table parameters.")
+	assert(params.to, "Invalid 'to' parameter provided.")
+
+	-- Create our copy.
+	local elementType = self.type
+	local delegate = assert(tes3uiElementCopyDelegates[elementType], string.format("No copy function found for element of type %s.", elementType))
+	local newElement = delegate(params)
+
+	-- Copy basic properties.
+	for _, prop in ipairs(basicPropertiesToCopy) do
+		local value = self[prop]
+		if (value ~= nil) then
+			newElement[prop] = value
+		end
+	end
+
+	-- Copy over children.
+	if (table.get(params, "copyChildren", true)) then
+		for _, child in ipairs(params.from.children or {}) do
+			local childParams = table.copy(params)
+			childParams.to = newElement
+			child:copy(childParams)
+		end
+	end
+
+	-- Copy UI properties?
+	if (table.get(params, "copyProperties", true)) then
+		for _, prop in ipairs(self.properties) do
+			local propDelegate = assert(tes3uiElementCopyPropertyDelegates[prop.type], string.format("No copy function found for element of type %s.", prop.type))
+			propDelegate(newElement, prop)
+			mwse.log("prop '%s' = %s", prop.name, prop.value)
+		end
+		mwse.copyLuaCallbacks(self, newElement)
+	end
+
+	params.to:updateLayout()
+
+	return newElement
+end
+
+
+function tes3uiElement:move(params)
+	assert(type(params) == "table", "Invalid parameter. This function must be called with table parameters.")
+
+	local copy = self:copy({ to = params.to })
+	self:destroy()
+
+	return copy
 end
 
 

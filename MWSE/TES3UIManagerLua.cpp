@@ -38,7 +38,7 @@ namespace mwse::lua {
 	bool __cdecl eventDispatcher(Element* owningWidget, Property eventID, int data0, int data1, Element* source) {
 		LuaManager& luaManager = LuaManager::getInstance();
 		auto stateHandle = luaManager.getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		// Find dispatch target. Almost always source, but is owningWidget for 'focus' and 'unfocus' events.
 		Element* target = source;
@@ -66,7 +66,7 @@ namespace mwse::lua {
 		if (iterBeforeElements != eventCallbacksBefore.end()) {
 			auto iterCallback = iterBeforeElements->second.find(eventID);
 			if (iterCallback != iterBeforeElements->second.end()) {
-				sol::table eventData = state.create_table();
+				auto eventData = state.create_table();
 				eventData["forwardSource"] = source;
 				eventData["source"] = target;
 				eventData["widget"] = owningWidget;
@@ -110,7 +110,7 @@ namespace mwse::lua {
 			if (iterCallback != iterElements->second.end()) {
 				legacyUsed = true;
 
-				sol::table eventData = state.create_table();
+				auto eventData = state.create_table();
 				eventData["forwardSource"] = source;
 				eventData["source"] = target;
 				eventData["widget"] = owningWidget;
@@ -164,7 +164,7 @@ namespace mwse::lua {
 		if (iterAfterElements != eventCallbacksAfter.end()) {
 			auto iterCallback = iterAfterElements->second.find(eventID);
 			if (iterCallback != iterAfterElements->second.end()) {
-				sol::table eventData = state.create_table();
+				auto eventData = state.create_table();
 				eventData["forwardSource"] = source;
 				eventData["source"] = target;
 				eventData["widget"] = owningWidget;
@@ -205,7 +205,7 @@ namespace mwse::lua {
 
 	void __cdecl eventDestroyDispatcher(Element* source) {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		// Send off our event.
 		eventDispatcher(source, Property::event_destroy, 0, 0, source);
@@ -293,7 +293,7 @@ namespace mwse::lua {
 			const auto& propertyItt = targetItt->second.find(eventID);
 			if (propertyItt != targetItt->second.end()) {
 				// Search for our callback.
-				for (auto itt = propertyItt->second.begin(); itt != propertyItt->second.end(); itt++) {
+				for (auto itt = propertyItt->second.begin(); itt != propertyItt->second.end(); ++itt) {
 					if (itt->callback == callback) {
 						propertyItt->second.erase(itt);
 						return true;
@@ -311,7 +311,7 @@ namespace mwse::lua {
 			const auto& propertyItt = targetItt->second.find(eventID);
 			if (propertyItt != targetItt->second.end()) {
 				// Search for our callback.
-				for (auto itt = propertyItt->second.begin(); itt != propertyItt->second.end(); itt++) {
+				for (auto itt = propertyItt->second.begin(); itt != propertyItt->second.end(); ++itt) {
 					if (itt->callback == callback) {
 						propertyItt->second.erase(itt);
 						return true;
@@ -334,7 +334,7 @@ namespace mwse::lua {
 
 	bool eventForwarder(sol::table eventData) {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		Element* source = eventData["forwardSource"];
 		Element* owningWidget = eventData["widget"];
@@ -366,9 +366,27 @@ namespace mwse::lua {
 		originalCallbackMap.erase(element);
 	}
 
+	void copyLuaCallbacks(TES3::UI::Element* from, TES3::UI::Element* to) {
+		if (auto itt = eventCallbacksBefore.find(from); itt != eventCallbacksBefore.end()) {
+			eventCallbacksBefore[to] = itt->second;
+		}
+		if (auto itt = eventCallbacksLegacy.find(from); itt != eventCallbacksLegacy.end()) {
+			eventCallbacksLegacy[to] = itt->second;
+		}
+		if (auto itt = eventCallbacksAfter.find(from); itt != eventCallbacksAfter.end()) {
+			eventCallbacksAfter[to] = itt->second;
+		}
+		if (auto itt = originalCallbackMap.find(from); itt != originalCallbackMap.end()) {
+			originalCallbackMap[to] = itt->second;
+		}
+		if (auto itt = destroyMap.find(from); itt != destroyMap.end()) {
+			destroyMap[to] = itt->second;
+		}
+	}
+
 	void bindTES3UIManager() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 		auto tes3ui = state.create_named_table("tes3ui");
 
 		tes3ui["acquireTextInput"] = TES3::UI::acquireTextInput;
@@ -385,6 +403,7 @@ namespace mwse::lua {
 		tes3ui["findHelpLayerMenu"] = TES3::UI::findHelpLayerMenu_lua;
 		tes3ui["findMenu"] = TES3::UI::findMenu_lua;
 		tes3ui["forcePlayerInventoryUpdate"] = TES3::UI::forcePlayerInventoryUpdate;
+		tes3ui["getConsoleReference"] = TES3::UI::getConsoleReference;
 		tes3ui["getInventorySelectType"] = TES3::UI::getInventorySelectType;
 		tes3ui["getMenuOnTop"] = TES3::UI::getMenuOnTop;
 		tes3ui["getPalette"] = TES3::UI::getPalette_lua;
@@ -393,11 +412,13 @@ namespace mwse::lua {
 		tes3ui["getViewportSize"] = TES3::UI::getViewportSize_lua;
 		tes3ui["leaveMenuMode"] = TES3::UI::leaveMenuMode;
 		tes3ui["logToConsole"] = TES3::UI::logToConsole_lua;
-		tes3ui["lookupID"] = TES3::UI::lookupID;
+		tes3ui["lookupID"] = TES3::UI::lookupID_lua;
 		tes3ui["menuMode"] = TES3::UI::isInMenuMode;
+		tes3ui["moveMenuToFront"] = TES3::UI::moveMenuToFront_lua;
 		tes3ui["refreshTooltip"] = TES3::UI::refreshTooltip;
 		tes3ui["registerID"] = TES3::UI::registerID;
 		tes3ui["registerProperty"] = TES3::UI::registerProperty;
+		tes3ui["setConsoleReference"] = TES3::UI::setConsoleReference;
 		tes3ui["showBookMenu"] = TES3::UI::showBookMenu;
 		tes3ui["showDialogueMessage"] = TES3::UI::showDialogueMessage_lua;
 		tes3ui["showInventorySelectMenu"] = TES3::UI::showInventorySelectMenu_lua;
@@ -412,6 +433,9 @@ namespace mwse::lua {
 		tes3ui["updateInventorySelectTiles"] = TES3::UI::updateInventorySelectTiles_lua;
 		tes3ui["updateInventoryTiles"] = TES3::UI::updateInventoryMenuTiles;
 		tes3ui["updateSpellmakingMenu"] = TES3::UI::updateSpellmakingMenu;
+
+		// Internal mwse functions.
+		state["mwse"]["copyLuaCallbacks"] = copyLuaCallbacks;
 
 		// Add binding for TES3::UI::TreeItem type.
 		// TODO: Move this to its own file after TES3::UI::Tree has been made a template.

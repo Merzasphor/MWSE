@@ -37,7 +37,7 @@ namespace mwse::lua {
 	void bindNITimeController() {
 		// Get our lua state.
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		// Bind NI::TimeController
 		{

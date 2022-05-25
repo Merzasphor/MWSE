@@ -88,8 +88,11 @@ namespace TES3 {
 		else if (nameGMST > 0) {
 			ss << ndd->GMSTs[nameGMST]->value.asString;
 		}
+		else if (auto itt = ndd->magicEffects->effectCustomNames.find(id); itt != ndd->magicEffects->effectCustomNames.end()) {
+			ss << itt->second;
+		}
 		else {
-			ss << ndd->magicEffects->effectCustomNames[id];
+			ss << "<invalid effect>";
 		}
 
 		return std::move(ss.str());
@@ -475,13 +478,16 @@ namespace TES3 {
 
 
 	sol::optional<std::string> Effect::toString() const {
-		if (effectID == -1) {
+		if (effectID == EffectID::None) {
 			return {};
 		}
 
 		// Some data we'll want to hold onto.
 		auto ndd = DataHandler::get()->nonDynamicData;
 		const auto effectData = getEffectData();
+		if (effectData == nullptr) {
+			return {};
+		}
 
 		// We'll use a string stream and build up the result.
 		std::stringstream ss;

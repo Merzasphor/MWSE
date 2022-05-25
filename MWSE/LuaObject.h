@@ -148,7 +148,7 @@ namespace mwse::lua {
 			auto maybeEffects = getOptionalParam<sol::table>(params, "effects");
 			if (maybeEffects) {
 				auto& effects = maybeEffects.value();
-				for (int i = 0; i < 8; i++) {
+				for (auto i = 0; i < 8; ++i) {
 					sol::optional<sol::table> maybeEffect = effects[i + 1];
 					if (maybeEffect) {
 						alchemy->effects[i] = maybeEffect.value();
@@ -446,7 +446,7 @@ namespace mwse::lua {
 			auto maybeEffects = getOptionalParam<sol::table>(params, "effects");
 			if (maybeEffects) {
 				auto& effects = maybeEffects.value();
-				for (int i = 0; i < 8; i++) {
+				for (auto i = 0; i < 8; ++i) {
 					sol::optional<sol::table> maybeEffect = effects[i + 1];
 					if (maybeEffect) {
 						enchantment->effects[i] = maybeEffect.value();
@@ -692,7 +692,7 @@ namespace mwse::lua {
 			auto maybeEffects = getOptionalParam<sol::table>(params, "effects");
 			if (maybeEffects) {
 				auto& effects = maybeEffects.value();
-				for (int i = 0; i < 8; i++) {
+				for (auto i = 0; i < 8; ++i) {
 					sol::optional<sol::table> maybeEffect = effects[i + 1];
 					if (maybeEffect) {
 						spell->effects[i] = maybeEffect.value();

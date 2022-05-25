@@ -14,8 +14,8 @@ namespace mwse::lua::event {
 
 	sol::table SkillRaisedEvent::createEventTable() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table eventData = state.create_table();
+		auto& state = stateHandle.state;
+		auto eventData = state.create_table();
 
 		eventData["skill"] = m_Skill;
 		eventData["level"] = m_NewLevel;
@@ -26,8 +26,8 @@ namespace mwse::lua::event {
 
 	sol::object SkillRaisedEvent::getEventOptions() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table options = state.create_table();
+		auto& state = stateHandle.state;
+		auto options = state.create_table();
 
 		options["filter"] = m_Skill;
 

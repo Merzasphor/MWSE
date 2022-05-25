@@ -168,7 +168,7 @@ namespace mwse::lua {
 
 	void TimerController::clearTimers() {
 		// Mark all timers as expired.
-		for (auto itt = m_ActiveTimers.begin(); itt != m_ActiveTimers.end(); itt++) {
+		for (auto itt = m_ActiveTimers.begin(); itt != m_ActiveTimers.end(); ++itt) {
 			(*itt)->state = TimerState::Expired;
 		}
 
@@ -183,7 +183,7 @@ namespace mwse::lua {
 		std::shared_ptr<Timer> timer = nullptr;
 		while (!m_ActiveTimers.empty() && (timer = m_ActiveTimers.front()) && timer->timing <= m_Clock) {
 			// Build data to send to the callback.
-			sol::state& state = stateHandle.state;
+			auto& state = stateHandle.state;
 			sol::table data = state.create_table();
 
 			data["timer"] = timer;
@@ -474,7 +474,7 @@ namespace mwse::lua {
 	void bindLuaTimer() {
 		// Get our lua state.
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		// Bind TimerController.
 		{

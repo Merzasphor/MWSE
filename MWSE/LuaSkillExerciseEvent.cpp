@@ -13,8 +13,8 @@ namespace mwse::lua::event {
 
 	sol::table SkillExerciseEvent::createEventTable() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table eventData = state.create_table();
+		auto& state = stateHandle.state;
+		auto eventData = state.create_table();
 
 		eventData["skill"] = m_Skill;
 		eventData["progress"] = m_Progress;
@@ -24,8 +24,8 @@ namespace mwse::lua::event {
 
 	sol::object SkillExerciseEvent::getEventOptions() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table options = state.create_table();
+		auto& state = stateHandle.state;
+		auto options = state.create_table();
 
 		options["filter"] = m_Skill;
 

@@ -352,7 +352,7 @@ namespace mwse::lua {
 		else if (target.is<std::string>()) {
 			auto& luaManager = mwse::lua::LuaManager::getInstance();
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
-			sol::state& state = stateHandle.state;
+			auto& state = stateHandle.state;
 			sol::object result = state.safe_script_file("./Data Files/MWSE/mods/" + target.as<std::string>() + ".lua");
 			if (result.get_type() == sol::type::table) {
 				scriptOverrides[(unsigned long)script] = result;
@@ -381,7 +381,7 @@ namespace mwse::lua {
 	void LuaManager::lua_print(sol::object message) {
 		auto& luaManager = mwse::lua::LuaManager::getInstance();
 		auto stateHandle = luaManager.getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		static sol::protected_function luaTostring = state["tostring"];
 		std::string result = luaTostring(message);
@@ -567,7 +567,7 @@ namespace mwse::lua {
 
 		// Get and run the execute function.
 		auto stateHandle = manager.getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 		sol::protected_function execute;
 		if (searchResult->second.is<sol::function>()) {
 			execute = searchResult->second.as<sol::function>();
@@ -638,7 +638,7 @@ namespace mwse::lua {
 		// Grab the new player pointers for lua.
 		// Update tes3.player and tes3.mobilePlayer.
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 		state["tes3"]["mobilePlayer"] = macp;
 		state["tes3"]["player"] = player;
 		state["tes3"]["player1stPerson"] = macp->firstPersonReference;
@@ -653,7 +653,7 @@ namespace mwse::lua {
 
 		// Grab the new player pointers for lua.
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 		state["tes3"]["player"] = player;
 
 		return player;
@@ -670,7 +670,7 @@ namespace mwse::lua {
 
 		// Hook up shorthand access to data handler, world controller, and game.
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 		state["tes3"]["dataHandler"] = TES3::DataHandler::get();
 		state["tes3"]["worldController"] = TES3::WorldController::get();
 		state["tes3"]["game"] = TES3::Game::get();
@@ -709,7 +709,7 @@ namespace mwse::lua {
 		}
 
 		// Has our cell changed?
-		TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+		auto dataHandler = TES3::DataHandler::get();
 		if (dataHandler->currentCell != TES3::DataHandler::previousVisitedCell) {
 			if (event::CellChangedEvent::getEventEnabled()) {
 				luaManager.getThreadSafeStateHandle().triggerEvent(new event::CellChangedEvent(dataHandler->currentCell, TES3::DataHandler::previousVisitedCell));
@@ -1032,7 +1032,7 @@ namespace mwse::lua {
 		// Go through the keys to see if any of the states have changed, and launch an event based on that.
 		LuaManager& luaManager = LuaManager::getInstance();
 		auto stateHandle = luaManager.getThreadSafeStateHandle();
-		for (BYTE i = 0; i < UINT8_MAX; i++) {
+		for (BYTE i = 0; i < UINT8_MAX; ++i) {
 			if (event::KeyDownEvent::getEventEnabled() && inputController->isKeyPressedThisFrame(i)) {
 				stateHandle.triggerEvent(new event::KeyDownEvent(i, controlDown, shiftDown, altDown, superDown));
 
@@ -1052,7 +1052,7 @@ namespace mwse::lua {
 		}
 
 		// Do the same with mouse buttons.
-		for (BYTE i = 0; i < 8; i++) {
+		for (BYTE i = 0; i < 8; ++i) {
 			if (event::MouseButtonDownEvent::getEventEnabled() && inputController->isMouseButtonPressedThisFrame(i)) {
 				stateHandle.triggerEvent(new event::MouseButtonDownEvent(i, controlDown, shiftDown, altDown, superDown));
 			}
@@ -2341,7 +2341,7 @@ namespace mwse::lua {
 
 		OnSkillTrained_SkillId = -1;
 		auto macp = TES3::WorldController::get()->getMobilePlayer();
-		for (int i = TES3::SkillID::FirstSkill; i <= TES3::SkillID::LastSkill; i++) {
+		for (int i = TES3::SkillID::FirstSkill; i <= TES3::SkillID::LastSkill; ++i) {
 			if (&macp->skills[i] == skill) {
 				OnSkillTrained_SkillId = i;
 				break;
@@ -2589,7 +2589,7 @@ namespace mwse::lua {
 		// See if we have any non-comments/non-whitespace.
 		bool hasNonCommentContent = false;
 		bool inComment = false;
-		for (auto i = 0u; i <= commandLength; i++) {
+		for (auto i = 0u; i <= commandLength; ++i) {
 			auto c = command[i];
 			switch (c) {
 			case '\t':
@@ -3371,7 +3371,7 @@ namespace mwse::lua {
 			if (success) {
 				// Get our lua table, and replace it with our new table.
 				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-				sol::state& state = stateHandle.state;
+				auto& state = stateHandle.state;
 				auto threadID = GetCurrentThreadId();
 				auto saveLoadItemData = saveLoadItemDataMap[threadID];
 				if (saveLoadItemData && saveLoadItemData->luaData == nullptr) {
@@ -3406,7 +3406,7 @@ namespace mwse::lua {
 
 			// If it is empty, don't bother saving it.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-			sol::state& state = stateHandle.state;
+			auto& state = stateHandle.state;
 			if (!fnTableEmpty(table, true)) {
 				// Convert the table to json for storage.
 				std::string json = fnEncodeForSave(table);
@@ -3440,7 +3440,7 @@ namespace mwse::lua {
 			if (success) {
 				// Get our lua table, and replace it with our new table.
 				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-				sol::state& state = stateHandle.state;
+				auto& state = stateHandle.state;
 				auto itemData = saveLoadReferenceMap[GetCurrentThreadId()]->getAttachedItemData();
 				if (itemData) {
 					if (itemData->luaData == nullptr) {
@@ -5265,7 +5265,7 @@ namespace mwse::lua {
 		overrideVirtualTableEnforced(TES3::VirtualTableAddress::NPCInstance, offsetof(TES3::ObjectVirtualTable, reevaluateEquipment), 0x4D9A20, *reinterpret_cast<DWORD*>(&NPCInstance_reevaluateEquipment));
 		genCallEnforced(0x4D83AB, 0x4D9A20, *reinterpret_cast<DWORD*>(&NPCInstance_reevaluateEquipment));
 
-		// Event:: vfxCreated
+		// Event: vfxCreated
 		auto TES3_VFXManager_createForMagicEffect = &TES3::VFXManager::createForMagicEffect;
 		genCallEnforced(0x41CCB0, 0x4696A0, *reinterpret_cast<DWORD*>(&TES3_VFXManager_createForMagicEffect));
 		auto TES3_VFXManager_createForSource = &TES3::VFXManager::createForSource;
@@ -5277,6 +5277,10 @@ namespace mwse::lua {
 		genCallEnforced(0x516093, 0x468470, *reinterpret_cast<DWORD*>(&TES3_VFXManager_createAtPosition));
 		auto TES3_VFXManager_createForAVObject = &TES3::VFXManager::createForAVObject;
 		genCallEnforced(0x516227, 0x468560, *reinterpret_cast<DWORD*>(&TES3_VFXManager_createForAVObject));
+
+		// Event: consoleReferenceChanged
+		genCallEnforced(0x590414, 0x5B2F00, reinterpret_cast<DWORD>(TES3::UI::setConsoleReference));
+		genCallEnforced(0x5B2EEE, 0x5B2F00, reinterpret_cast<DWORD>(TES3::UI::setConsoleReference));
 
 		// UI framework hooks
 		TES3::UI::hook();
@@ -5386,8 +5390,8 @@ namespace mwse::lua {
 		if (buttonPressedCallback != sol::nil) {
 			sol::protected_function callback = buttonPressedCallback;
 			buttonPressedCallback = sol::nil;
-			sol::state& state = stateHandle.state;
-			sol::table eventData = state.create_table();
+			auto& state = stateHandle.state;
+			auto eventData = state.create_table();
 			eventData["button"] = tes3::ui::getButtonPressedIndex();
 			tes3::ui::resetButtonPressedIndex();
 

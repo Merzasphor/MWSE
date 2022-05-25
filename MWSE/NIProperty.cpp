@@ -319,7 +319,7 @@ namespace NI {
 
 	unsigned int TexturingProperty::getDecalCount() const {
 		auto count = 0;
-		for (auto i = (unsigned int)MapType::DECAL_FIRST; i <= (unsigned int)MapType::DECAL_LAST; i++) {
+		for (auto i = (unsigned int)MapType::DECAL_FIRST; i <= (unsigned int)MapType::DECAL_LAST; ++i) {
 			if (i >= maps.size()) {
 				break;
 			}

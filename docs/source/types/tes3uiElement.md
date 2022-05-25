@@ -545,6 +545,26 @@ Controls text wrapping. Setting this to `true` will also set `layoutHeightFracti
 
 ## Methods
 
+### `copy`
+
+Copies this element to a new parent. This function can have unintended consequences. The specifics of what exact elements are being copied is important.
+
+```lua
+local copy = myObject:copy(to, copyChildren, copyProperties)
+```
+
+**Parameters**:
+
+* `to` ([tes3uiElement](../../types/tes3uiElement)): Where to create the copy.
+* `copyChildren` (boolean): *Default*: `true`. If true, all children will also be copied to the newly created element.
+* `copyProperties` (boolean): *Default*: `true`. If true, all properties will be copied to the newly created element.
+
+**Returns**:
+
+* `copy` ([tes3uiElement](../../types/tes3uiElement)): The created copy.
+
+***
+
 ### `createBlock`
 
 Creates an empty block container inside the element. Used to group and layout elements.
@@ -571,13 +591,14 @@ Creates a clickable button. Register the `mouseClick` event to capture a button 
 Button specific properties can be accessed through the `widget` property. The widget type for buttons is [`tes3uiButton`](https://mwse.github.io/MWSE/types/tes3uiButton/).
 
 ```lua
-local result = myObject:createButton({ id = ... })
+local result = myObject:createButton({ id = ..., text = ... })
 ```
 
 **Parameters**:
 
 * `params` (table): *Optional*.
 	* `id` (string, number): *Optional*. An identifier to help find this element later.
+	* `text` (string): *Optional*. The text to add to the button. It will highlight on mouseover like a text select widget.
 
 **Returns**:
 
@@ -1011,6 +1032,24 @@ local result = myObject:getPropertyBool(propName)
 
 ***
 
+### `getPropertyCallback`
+
+Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. The callback is an address inside Morrowind.exe that will be called when the appropriate callback is invoked.
+
+```lua
+local result = myObject:getPropertyCallback(propName)
+```
+
+**Parameters**:
+
+* `propName` (string): The property name.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
 ### `getPropertyFloat`
 
 Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. Returns 0 if the property key did not have data.
@@ -1075,6 +1114,24 @@ local result = myObject:getPropertyObject(propName, expectedUsertype)
 
 ***
 
+### `getPropertyProperty`
+
+Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. This function gets a property whose value is, itself, a property.
+
+```lua
+local result = myObject:getPropertyProperty(propName)
+```
+
+**Parameters**:
+
+* `propName` (string): The property name.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
 ### `getTopLevelMenu`
 
 Finds the parent menu containing the element. Useful for finding the correct menu to run layout updates on.
@@ -1096,6 +1153,24 @@ Restores the menu's position and size information from the Morrowind.ini file. T
 ```lua
 myObject:loadMenuPosition()
 ```
+
+***
+
+### `move`
+
+Copies this element to a new parent, then destroys this element. This function can have unintended consequences. The specifics of what exact elements are being copied is important.
+
+```lua
+local copy = myObject:move(to)
+```
+
+**Parameters**:
+
+* `to` ([tes3uiElement](../../types/tes3uiElement)): Where to create the copy.
+
+**Returns**:
+
+* `copy` ([tes3uiElement](../../types/tes3uiElement)): The created copy.
 
 ***
 
@@ -1289,6 +1364,21 @@ myObject:setPropertyBool(propName, value)
 
 ***
 
+### `setPropertyCallback`
+
+Properties are named variables attached to an element. Sets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. The callback is an address inside Morrowind.exe that will be called when the appropriate callback is invoked.
+
+```lua
+myObject:setPropertyCallback(propName, value)
+```
+
+**Parameters**:
+
+* `propName` (string): The property name.
+* `value` (number): The value to set.
+
+***
+
 ### `setPropertyFloat`
 
 Sets a property value with `prop` as the property key. Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties.
@@ -1331,6 +1421,21 @@ myObject:setPropertyObject(propName, value)
 
 * `propName` (string): The property name.
 * `value` (object): The value to set.
+
+***
+
+### `setPropertyProperty`
+
+Properties are named variables attached to an element. Sets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. This function sets a property whose value is, itself, a property.
+
+```lua
+myObject:setPropertyProperty(propName, value)
+```
+
+**Parameters**:
+
+* `propName` (string): The property name.
+* `value` (number): The value to set.
 
 ***
 

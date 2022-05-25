@@ -7,6 +7,10 @@
 --- @field effectList niDynamicEffectLinkedList *Read-only*. The effect list of the node.
 niNode = {}
 
+--- Creates a new, empty NiNode.
+--- @return niBillboardNode|niCollisionSwitch|niNode|niSwitchNode node No description yet available.
+function niNode.new() end
+
 --- Attachs the child to the children list of the node.
 --- @param child niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niGeometry|niLight|niNode|niPointLight|niSpotLight|niSwitchNode|niTriBasedGeometry|niTriShape No description yet available.
 --- @param useFirstAvailable boolean? *Optional*. Use the first available space in the list. Default value is False.

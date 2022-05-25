@@ -314,6 +314,20 @@ local result = myObject:clone()
 
 ***
 
+### `createBoundingBox`
+
+Calculates and creates a bounding box for the object. The existing bounding box, if any, will not be used, a fresh one will always be calculated.
+
+```lua
+local boundingBox = myObject:createBoundingBox()
+```
+
+**Returns**:
+
+* `boundingBox` ([tes3boundingBox](../../types/tes3boundingBox)): The newly created bounding box.
+
+***
+
 ### `detachChild`
 
 Detaches the child from the children list of the node. Returns the detached child.
@@ -598,6 +612,22 @@ Update all attached properties.
 ```lua
 myObject:updateProperties()
 ```
+
+***
+
+## Functions
+
+### `new`
+
+Creates a new, empty NiNode.
+
+```lua
+local node = niNode.new()
+```
+
+**Returns**:
+
+* `node` ([niNode](../../types/niNode))
 
 ***
 

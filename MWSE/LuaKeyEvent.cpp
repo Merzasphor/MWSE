@@ -17,8 +17,8 @@ namespace mwse::lua::event {
 
 	sol::table KeyEvent::createEventTable() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table eventData = state.create_table();
+		auto& state = stateHandle.state;
+		auto eventData = state.create_table();
 
 		eventData["keyCode"] = m_KeyCode;
 		eventData["pressed"] = m_Pressed;
@@ -32,8 +32,8 @@ namespace mwse::lua::event {
 
 	sol::object KeyEvent::getEventOptions() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table options = state.create_table();
+		auto& state = stateHandle.state;
+		auto options = state.create_table();
 
 		options["filter"] = m_KeyCode;
 

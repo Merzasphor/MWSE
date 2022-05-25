@@ -15,7 +15,7 @@ namespace mwse::lua {
 	void bindTES3Creature() {
 		// Get our lua state.
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		// Binding for TES3::Creature
 		{

@@ -22,8 +22,8 @@ namespace mwse::lua::event {
 
 	sol::table CalculateTravelPriceEvent::createEventTable() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table eventData = state.create_table();
+		auto& state = stateHandle.state;
+		auto eventData = state.create_table();
 
 		eventData["mobile"] = m_MobileActor;
 		if (m_MobileActor) {
@@ -35,7 +35,7 @@ namespace mwse::lua::event {
 
 		if (!m_CompanionList->empty()) {
 			sol::table companionList = state.create_table();
-			for (size_t i = 0; i < m_CompanionList->size(); i++) {
+			for (size_t i = 0; i < m_CompanionList->size(); ++i) {
 				auto companion = m_CompanionList->at(i);
 				companionList[i + 1] = companion;
 			}

@@ -179,6 +179,46 @@ local result = table.find(t, value)
 
 ***
 
+### `table.get`
+
+Gets a value in a table. If the key doesn't exist in the table, a specified default value will be returned instead.
+
+```lua
+local result = table.get(t, key, defaultValue)
+```
+
+**Parameters**:
+
+* `t` (table)
+* `key` (any): The key to use to access the table.
+* `defaultValue` (any): The default value if the key didn't exist in the table.
+
+**Returns**:
+
+* `result` (any)
+
+***
+
+### `table.getset`
+
+Gets a value in a table. If the key doesn't exist in the table, a specified default value will be set in the table and returned instead.
+
+```lua
+local result = table.getset(t, key, defaultValue)
+```
+
+**Parameters**:
+
+* `t` (table)
+* `key` (any): The key to use to access the table.
+* `defaultValue` (any): The default value to set and return if the key didn't exist in the table.
+
+**Returns**:
+
+* `result` (any)
+
+***
+
 ### `table.invert`
 
 Returns a copy of `t` with the keys and values flipped.

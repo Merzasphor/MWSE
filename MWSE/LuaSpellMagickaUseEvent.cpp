@@ -17,8 +17,8 @@ namespace mwse::lua::event {
 
 	sol::table SpellMagickaUseEvent::createEventTable() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table eventData = state.create_table();
+		auto& state = stateHandle.state;
+		auto eventData = state.create_table();
 
 		eventData["caster"] = m_Source->caster;
 		eventData["spell"] = m_Source->sourceCombo.source.asSpell;
@@ -30,8 +30,8 @@ namespace mwse::lua::event {
 
 	sol::object SpellMagickaUseEvent::getEventOptions() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table options = state.create_table();
+		auto& state = stateHandle.state;
+		auto options = state.create_table();
 
 		options["filter"] = m_Source->caster;
 

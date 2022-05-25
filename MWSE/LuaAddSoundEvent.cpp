@@ -20,8 +20,8 @@ namespace mwse::lua::event {
 
 	sol::table AddSoundEvent::createEventTable() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table eventData = state.create_table();
+		auto& state = stateHandle.state;
+		auto eventData = state.create_table();
 
 		eventData["sound"] = m_Sound;
 		eventData["reference"] = m_Reference;

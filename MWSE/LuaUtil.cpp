@@ -419,7 +419,7 @@ namespace mwse::lua {
 		return false;
 	}
 
-	const TES3::UI::UI_ID TES3_UI_ID_NULL = static_cast<TES3::UI::UI_ID>(TES3::UI::Property::null);
+	constexpr auto TES3_UI_ID_NULL = static_cast<TES3::UI::UI_ID>(TES3::UI::Property::null);
 
 	TES3::UI::Property getPropertyFromObject(sol::object object) {
 		if (object.is<TES3::UI::Property>()) {
@@ -439,6 +439,9 @@ namespace mwse::lua {
 			}
 			else if (object.is<const char*>()) {
 				return TES3::UI::registerID(object.as<const char*>());
+			}
+			else if (object.is<TES3::UI::Element*>()) {
+				return object.as<TES3::UI::Element*>()->id;
 			}
 		}
 
@@ -488,7 +491,7 @@ namespace mwse::lua {
 		}
 
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 		static sol::protected_function luaDebugTraceback = state["debug"]["traceback"];
 
 		sol::protected_function_result result = luaDebugTraceback();

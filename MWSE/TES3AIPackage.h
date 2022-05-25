@@ -22,6 +22,8 @@ namespace TES3 {
 		Escort = 2,
 		Follow = 3,
 		Activate = 4,
+
+		Invalid = -1,
 	};
 
 	enum struct AIPackageConfigType {
@@ -30,6 +32,8 @@ namespace TES3 {
 		Escort = 3,
 		Follow = 4,
 		Activate = 5,
+
+		Invalid = -1,
 	};
 
 	struct AIPackageVirtualTable {
@@ -96,8 +100,11 @@ namespace TES3 {
 	struct AIPackageConfig {
 		AIPackageConfigType type; // 0x0
 
-		AIPackageConfig() = delete;
-		~AIPackageConfig() = delete;
+		static void* operator new(size_t size);
+		static void operator delete(void* block);
+
+		AIPackageConfig();
+		~AIPackageConfig();
 
 		// Helper function.
 		AIPackageType toPackageType() const;
@@ -109,8 +116,8 @@ namespace TES3 {
 			Vector3 position; // 0x4
 			bool reset; // 0x10
 
-			Config() = delete;
-			~Config() = delete;
+			Config();
+			~Config();
 		};
 		Vector3 destination; // 0x3C
 		int unknown_0x48;
@@ -131,8 +138,8 @@ namespace TES3 {
 			unsigned char idles[8]; // 0x08
 			bool reset; // 0x10
 
-			Config() = delete;
-			~Config() = delete;
+			Config();
+			~Config();
 		};
 		struct IdleNode {
 			unsigned char index; // 0x0
@@ -168,8 +175,8 @@ namespace TES3 {
 			Cell * cell; // 0x18
 			bool reset; // 0x1C
 
-			Config() = delete;
-			~Config() = delete;
+			Config();
+			~Config();
 		};
 		Vector3 destination; // 0x3C
 		int unknown_0x48;
@@ -189,8 +196,8 @@ namespace TES3 {
 			Cell * cell; // 0x18
 			bool reset; // 0x1C
 
-			Config() = delete;
-			~Config() = delete;
+			Config();
+			~Config();
 		};
 		Vector3 destination; // 0x3C
 		int unknown_0x48;
@@ -216,8 +223,8 @@ namespace TES3 {
 			Reference * target; // 0x4
 			bool reset; // 0x8
 
-			Config() = delete;
-			~Config() = delete;
+			Config();
+			~Config();
 		};
 		int unknown_0x3C;
 		int unknown_0x40;

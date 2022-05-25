@@ -76,6 +76,13 @@
 --- @field wrapText boolean Controls text wrapping. Setting this to `true` will also set `layoutHeightFraction` to `1.0`, which is required for wrapping text to adjust to its container size.
 tes3uiElement = {}
 
+--- Copies this element to a new parent. This function can have unintended consequences. The specifics of what exact elements are being copied is important.
+--- @param to tes3uiElement Where to create the copy.
+--- @param copyChildren boolean? *Default*: `true`. If true, all children will also be copied to the newly created element.
+--- @param copyProperties boolean? *Default*: `true`. If true, all properties will be copied to the newly created element.
+--- @return tes3uiElement copy The created copy.
+function tes3uiElement:copy(to, copyChildren, copyProperties) end
+
 --- Creates an empty block container inside the element. Used to group and layout elements.
 --- @param params tes3uiElement.createBlock.params? This table accepts the following values:
 --- 
@@ -378,6 +385,11 @@ function tes3uiElement:getContentElement() end
 --- @return boolean result No description yet available.
 function tes3uiElement:getPropertyBool(propName) end
 
+--- Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. The callback is an address inside Morrowind.exe that will be called when the appropriate callback is invoked.
+--- @param propName string The property name.
+--- @return number result No description yet available.
+function tes3uiElement:getPropertyCallback(propName) end
+
 --- Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. Returns 0 if the property key did not have data.
 --- @param propName string The property name.
 --- @return number result No description yet available.
@@ -403,6 +415,11 @@ function tes3uiElement:getPropertyInt(propName) end
 --- @return tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3birthsign|tes3bodyPart|tes3book|tes3cell|tes3class|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3dialogue|tes3dialogueInfo|tes3door|tes3enchantment|tes3faction|tes3gameSetting|tes3globalVariable|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3magicSourceInstance|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3quest|tes3race|tes3reference|tes3region|tes3repairTool|tes3script|tes3skill|tes3sound|tes3soundGenerator|tes3spell|tes3startScript|tes3static|tes3weapon|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3mobileProjectile|tes3mobileSpellProjectile|any result No description yet available.
 function tes3uiElement:getPropertyObject(propName, expectedUsertype) end
 
+--- Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. This function gets a property whose value is, itself, a property.
+--- @param propName string The property name.
+--- @return number result No description yet available.
+function tes3uiElement:getPropertyProperty(propName) end
+
 --- Finds the parent menu containing the element. Useful for finding the correct menu to run layout updates on.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:getTopLevelMenu() end
@@ -414,6 +431,11 @@ function tes3uiElement:getTopLevelParent() end
 
 --- Restores the menu's position and size information from the Morrowind.ini file. This may only be called on top-level parents.
 function tes3uiElement:loadMenuPosition() end
+
+--- Copies this element to a new parent, then destroys this element. This function can have unintended consequences. The specifics of what exact elements are being copied is important.
+--- @param to tes3uiElement Where to create the copy.
+--- @return tes3uiElement copy The created copy.
+function tes3uiElement:move(to) end
 
 --- Sets an `event` handler, which can add or override an existing event handler. The use of `registerBefore` or `registerAfter` is recommended if you do not want to replace the existing event handler. The eventID can be a standard `event` name, or an event specific to an element class. These can be accessed through [`tes3.uiEvent`](https://mwse.github.io/MWSE/references/ui-events/) for convenience. The callback receives an argument with the event data. See below for details.
 --- 	
@@ -545,6 +567,11 @@ function tes3uiElement:saveMenuPosition() end
 --- @param value boolean The value to set.
 function tes3uiElement:setPropertyBool(propName, value) end
 
+--- Properties are named variables attached to an element. Sets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. The callback is an address inside Morrowind.exe that will be called when the appropriate callback is invoked.
+--- @param propName string The property name.
+--- @param value number The value to set.
+function tes3uiElement:setPropertyCallback(propName, value) end
+
 --- Sets a property value with `prop` as the property key. Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties.
 --- @param propName string The property name.
 --- @param value number The value to set.
@@ -559,6 +586,11 @@ function tes3uiElement:setPropertyInt(propName, value) end
 --- @param propName string The property name.
 --- @param value object The value to set.
 function tes3uiElement:setPropertyObject(propName, value) end
+
+--- Properties are named variables attached to an element. Sets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. This function sets a property whose value is, itself, a property.
+--- @param propName string The property name.
+--- @param value number The value to set.
+function tes3uiElement:setPropertyProperty(propName, value) end
 
 --- Reorders the element's children given a sorting function.
 --- @param sortFunction function The function to sort with. Like most sorting functions, this is given two arguments to compare.

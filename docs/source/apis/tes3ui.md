@@ -137,7 +137,7 @@ local result = tes3ui.createMenu({ id = ..., dragFrame = ..., fixedFrame = ..., 
 
 * `params` (table)
 	* `id` (string, number): The menu’s ID. The menu can be later accessed by tes3ui.findMenu(id).
-	* `dragFrame` (boolean): *Default*: `false`. Constructs a draggable and resizeable frame and background for the menu. It is similar to the stats, inventory, magic and map menus in the standard UI. After construction, position and minimum dimensions should be set.
+	* `dragFrame` (boolean): *Default*: `false`. Constructs a draggable and resizeable frame and background for the menu. It is similar to the stats, inventory, magic and map menus in the standard UI. Its title bar text can be set with the .text property. After construction, position and minimum dimensions should be set.
 	* `fixedFrame` (boolean): *Default*: `false`. Constructs a fixed (non-draggable) frame and background for the menu. The layout system should automatically centre and size it to fit whatever is added to the menu.
 	* `loadable` (boolean): *Default*: `true`. If set to false, calls to loadMenuPosition will fail.
 
@@ -261,6 +261,20 @@ Forces the game to update the inventory tile GUI elements. Unlike tes3ui.updateI
 ```lua
 tes3ui.forcePlayerInventoryUpdate()
 ```
+
+***
+
+### `tes3ui.getConsoleReference`
+
+Gets the reference currently selected by the console, or nil if nothing is selected.
+
+```lua
+local result = tes3ui.getConsoleReference()
+```
+
+**Returns**:
+
+* `result` ([tes3reference](../../types/tes3reference), nil)
 
 ***
 
@@ -476,6 +490,20 @@ local result = tes3ui.menuMode()
 
 ***
 
+### `tes3ui.moveMenuToFront`
+
+Brings a menu forward to be the top-most menu, firing any associated front-related events. The desired element must be a top-level menu.
+
+```lua
+tes3ui.moveMenuToFront(menu)
+```
+
+**Parameters**:
+
+* `menu` (string, number, [tes3uiElement](../../types/tes3uiElement)): The menu to bring to the front.
+
+***
+
 ### `tes3ui.refreshTooltip`
 
 Causes the tooltip to be redisplayed. This will not use a configured delay. This will not function if the help menu does not currently exist, or if it is not currently visible.
@@ -523,6 +551,20 @@ local result = tes3ui.registerProperty(s)
 **Returns**:
 
 * `result` (number)
+
+***
+
+### `tes3ui.setConsoleReference`
+
+Sets the reference currently selected by the console, or deselects if passed `nil`.
+
+```lua
+tes3ui.setConsoleReference(reference)
+```
+
+**Parameters**:
+
+* `reference` ([tes3reference](../../types/tes3reference), nil)
 
 ***
 

@@ -22,8 +22,8 @@ namespace mwse::lua::event {
 
 	sol::table LoadedGameEvent::createEventTable() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table eventData = state.create_table();
+		auto& state = stateHandle.state;
+		auto eventData = state.create_table();
 
 		if (m_NewGame) {
 			eventData["newGame"] = true;
@@ -47,8 +47,8 @@ namespace mwse::lua::event {
 
 	sol::object LoadedGameEvent::getEventOptions() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table options = state.create_table();
+		auto& state = stateHandle.state;
+		auto options = state.create_table();
 
 		options["filter"] = m_FileName;
 

@@ -7,6 +7,8 @@ namespace TES3 {
 	namespace UI {
 		UI_ID registerID(const char* name);
 		const char* lookupID(UI_ID id);
+		const char* lookupID(Property id);
+		const char* lookupID_lua(sol::object id);
 		Property registerProperty(const char* name);
 		Element* createMenu(UI_ID id);
 		Element* createMenu_lua(sol::table params);
@@ -35,6 +37,9 @@ namespace TES3 {
 
 		MobileActor* getServiceActor();
 		void updateDialogDisposition();
+
+		Reference* getConsoleReference();
+		void __cdecl setConsoleReference(Reference* reference);
 
 		std::tuple<unsigned int, unsigned int> getViewportSize_lua();
 		float getViewportScale();
@@ -90,6 +95,9 @@ namespace TES3 {
 		void updateInventoryCharacterImage();
 
 		bool isInMenuMode();
+
+		void moveMenuToFront(Element* menu);
+		void moveMenuToFront_lua(sol::object id);
 
 		sol::table getPalette_lua(sol::this_state ts, const char* name);
 

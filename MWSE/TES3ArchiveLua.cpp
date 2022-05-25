@@ -9,7 +9,7 @@ namespace mwse::lua {
 	void bindTES3Archive() {
 		// Get our lua state.
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		// Bindings for TES3::BSALoader
 		{

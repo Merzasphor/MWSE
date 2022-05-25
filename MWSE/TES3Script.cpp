@@ -37,7 +37,7 @@ namespace TES3 {
 	}
 
 	sol::optional<unsigned int> Script::getShortVarIndex(const char* name) const {
-		for (int i = 0; i < shortCount; i++) {
+		for (int i = 0; i < shortCount; ++i) {
 			const char* varName = shortVarNamePointers[i];
 			if (varName && _stricmp(name, varName) == 0) {
 				return i;
@@ -85,19 +85,19 @@ namespace TES3 {
 		sol::table results = state.create_table();
 
 		// Append any short variables.
-		for (int i = 0; i < shortCount; i++) {
+		for (int i = 0; i < shortCount; ++i) {
 			const char* varName = shortVarNamePointers[i];
 			results[varName] = state.create_table_with("type", 's', "index", i, "value", getShortValue(i, useLocals.value_or(false)));
 		}
 
 		// Append any long variables.
-		for (int i = 0; i < longCount; i++) {
+		for (int i = 0; i < longCount; ++i) {
 			const char* varName = longVarNamePointers[i];
 			results[varName] = state.create_table_with("type", 'l', "index", i, "value", getLongValue(i, useLocals.value_or(false)));
 		}
 
 		// Append any float variables.
-		for (int i = 0; i < floatCount; i++) {
+		for (int i = 0; i < floatCount; ++i) {
 			const char* varName = floatVarNamePointers[i];
 			results[varName] = state.create_table_with("type", 'f', "index", i, "value", getFloatValue(i, useLocals.value_or(false)));
 		}

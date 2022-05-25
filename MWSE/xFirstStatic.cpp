@@ -22,7 +22,7 @@ namespace mwse {
 		mwse::tes3::clearExteriorRefs();
 
 		TES3::Reference* reference = NULL;
-		TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+		auto dataHandler = TES3::DataHandler::get();
 		if (dataHandler->currentInteriorCell != NULL) {
 			reference = static_cast<TES3::Reference*>(dataHandler->currentInteriorCell->persistentRefs.head->skipDeletedObjects());
 		}
@@ -32,7 +32,7 @@ namespace mwse {
 				// Get the start of the list for the center cell. We'll check that it's valid later.
 				reference = static_cast<TES3::Reference*>(cellPointer->cell->persistentRefs.head->skipDeletedObjects());
 				int exteriorCount = 0;
-				for (int i = 0; i < 9; i++) {
+				for (int i = 0; i < 9; ++i) {
 					if (i == TES3::CellGrid::Center) {
 						continue;
 					}

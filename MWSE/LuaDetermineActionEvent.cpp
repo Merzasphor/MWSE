@@ -17,8 +17,8 @@ namespace mwse::lua::event {
 
 	sol::table DetermineActionEvent::createEventTable() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table eventData = state.create_table();
+		auto& state = stateHandle.state;
+		auto eventData = state.create_table();
 
 		eventData["session"] = m_Session;
 

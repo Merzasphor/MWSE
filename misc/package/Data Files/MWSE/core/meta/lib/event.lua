@@ -46,6 +46,7 @@
 --- @field register fun(eventId: '"combatStarted"', callback: fun(e: combatStartedEventData), options: table?)
 --- @field register fun(eventId: '"combatStop"', callback: fun(e: combatStopEventData), options: table?)
 --- @field register fun(eventId: '"combatStopped"', callback: fun(e: combatStoppedEventData), options: table?)
+--- @field register fun(eventId: '"consoleReferenceChanged"', callback: fun(e: consoleReferenceChangedEventData), options: table?)
 --- @field register fun(eventId: '"containerClosed"', callback: fun(e: containerClosedEventData), options: table?)
 --- @field register fun(eventId: '"convertReferenceToItem"', callback: fun(e: convertReferenceToItemEventData), options: table?)
 --- @field register fun(eventId: '"crimeWitnessed"', callback: fun(e: crimeWitnessedEventData), options: table?)

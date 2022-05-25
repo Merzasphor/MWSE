@@ -12,7 +12,7 @@ namespace NI {
 	sol::table EulerRotKey::getKeys_lua(sol::this_state ts) {
 		sol::state_view state = ts;
 		auto table = state.create_table(3);
-		for (auto i = 0; i < 3; i++) {
+		for (auto i = 0; i < 3; ++i) {
 			if (keys[i].asFloatKey) {
 				switch (keyTypes[i]) {
 				case AnimationKey::Type::NoInterp:

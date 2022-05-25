@@ -31,11 +31,11 @@ namespace mwse {
 
 		// Validate skill index.
 		if (skillIndex >= TES3::SkillID::FirstSkill && skillIndex <= TES3::SkillID::LastSkill) {
-			TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+			auto dataHandler = TES3::DataHandler::get();
 			const TES3::Skill& skillRecord = dataHandler->nonDynamicData->skills[skillIndex];
 			attributeId = skillRecord.governingAttribute;
 			specialization = skillRecord.specialization;
-			for (size_t i = 0; i < 4; i++) {
+			for (size_t i = 0; i < 4; ++i) {
 				actions[i] = skillRecord.progressActions[i];
 			}
 		}

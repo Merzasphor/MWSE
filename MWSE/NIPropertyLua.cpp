@@ -12,7 +12,7 @@ namespace mwse::lua {
 	void bindNIProperties() {
 		// Get our lua state.
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		// Binding for NI::Property.
 		{

@@ -38,6 +38,7 @@
 #include "LuaCombatStartEvent.h"
 #include "LuaCombatStopEvent.h"
 #include "LuaCombatStoppedEvent.h"
+#include "LuaConsoleReferenceChangedEvent.h"
 #include "LuaContainerClosedEvent.h"
 #include "LuaConvertReferenceToItemEvent.h"
 #include "LuaCrimeWitnessedEvent.h"
@@ -147,7 +148,7 @@ namespace mwse::lua::event {
 	void DisableableEventManager::bindToLua() {
 		// Get our lua state.
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		// Start our usertype.
 		auto usertypeDefinition = state.new_usertype<DisableableEventManager>("mwseDisableableEventManager");
@@ -196,6 +197,7 @@ namespace mwse::lua::event {
 		usertypeDefinition["combatStarted"] = sol::property(&CombatStartedEvent::getEventEnabled, &CombatStartedEvent::setEventEnabled);
 		usertypeDefinition["combatStop"] = sol::property(&CombatStopEvent::getEventEnabled, &CombatStopEvent::setEventEnabled);
 		usertypeDefinition["combatStopped"] = sol::property(&CombatStoppedEvent::getEventEnabled, &CombatStoppedEvent::setEventEnabled);
+		usertypeDefinition["consoleReferenceChanged"] = sol::property(&ConsoleReferenceChangedEvent::getEventEnabled, &ConsoleReferenceChangedEvent::setEventEnabled);
 		usertypeDefinition["containerClosed"] = sol::property(&ContainerClosedEvent::getEventEnabled, &ContainerClosedEvent::setEventEnabled);
 		usertypeDefinition["convertReferenceToItem"] = sol::property(&ConvertReferenceToItemEvent::getEventEnabled, &ConvertReferenceToItemEvent::setEventEnabled);
 		usertypeDefinition["crimeWitnessed"] = sol::property(&CrimeWitnessedEvent::getEventEnabled, &CrimeWitnessedEvent::setEventEnabled);

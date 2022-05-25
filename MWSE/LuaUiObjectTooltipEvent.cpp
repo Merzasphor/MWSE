@@ -20,8 +20,8 @@ namespace mwse::lua::event {
 
 	sol::table UiObjectTooltipEvent::createEventTable() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table eventData = state.create_table();
+		auto& state = stateHandle.state;
+		auto eventData = state.create_table();
 
 		// If the object is a reference, expose its base object and the reference.
 		if (m_Object->objectType == TES3::ObjectType::Reference) {

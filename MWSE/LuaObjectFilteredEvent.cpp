@@ -20,8 +20,8 @@ namespace mwse::lua::event {
 
 	sol::object ObjectFilteredEvent::getEventOptions() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table options = state.create_table();
+		auto& state = stateHandle.state;
+		auto options = state.create_table();
 		options["filter"] = m_EventFilter;
 		return options;
 	}
