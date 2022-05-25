@@ -89,7 +89,7 @@ namespace mwse {
 				if (skillArrayId != 0) {
 					ContainedArray_t& skillArray = mwse::Arrays::getInstance().get(skillArrayId);
 					skillArray.push_back(7);
-					for (size_t i = 0; i < 7; i++) {
+					for (size_t i = 0; i < 7; ++i) {
 						if (race->skillBonuses[i].skill != TES3::SkillID::Invalid) {
 							skillArray.push_back(race->skillBonuses[i].skill);
 							skillArray.push_back(race->skillBonuses[i].bonus);
@@ -103,7 +103,7 @@ namespace mwse {
 				// Create array for attributes.
 				if (attributeArrayId != 0) {
 					ContainedArray_t& attributeArray = mwse::Arrays::getInstance().get(attributeArrayId);
-					for (size_t i = 0; i < 8; i++) {
+					for (size_t i = 0; i < 8; ++i) {
 						attributeArray.push_back(race->baseAttributes[i].male);
 						attributeArray.push_back(race->baseAttributes[i].female);
 					}

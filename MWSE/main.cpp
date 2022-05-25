@@ -167,7 +167,7 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {
 
 			// Print them to the log.
 			log << std::dec;
-			for (auto i = 0U; i < enabledFeatures.size(); i++) {
+			for (auto i = 0U; i < enabledFeatures.size(); ++i) {
 				if (i != 0) log << ", ";
 				log << enabledFeatures[i];
 			}

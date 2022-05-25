@@ -27,7 +27,7 @@ namespace mwse {
 		// Gather values into a temporary list, so they aren't in reverse order.
 		long valuesRead = 0;
 		std::list<float> values;
-		for (long i = 0; i < count; i++) {
+		for (long i = 0; i < count; ++i) {
 			try {
 				float value = mwse::FileSystem::getInstance().readFloat(fileName.c_str());
 				values.push_front(value);

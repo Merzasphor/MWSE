@@ -35,7 +35,7 @@ namespace mwse::lua::event {
 
 		if (!m_CompanionList->empty()) {
 			sol::table companionList = state.create_table();
-			for (size_t i = 0; i < m_CompanionList->size(); i++) {
+			for (size_t i = 0; i < m_CompanionList->size(); ++i) {
 				auto companion = m_CompanionList->at(i);
 				companionList[i + 1] = companion;
 			}

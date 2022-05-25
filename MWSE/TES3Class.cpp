@@ -252,7 +252,7 @@ namespace TES3 {
 	sol::table Class::getMajorSkills_lua(sol::this_state ts) {
 		sol::state_view state = ts;
 		sol::table result = state.create_table();
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 5; ++i) {
 			result[i + 1] = skills[i * 2 + 1];
 		}
 		return result;
@@ -261,7 +261,7 @@ namespace TES3 {
 	sol::table Class::getMinorSkills_lua(sol::this_state ts) {
 		sol::state_view state = ts;
 		sol::table result = state.create_table();
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 5; ++i) {
 			result[i + 1] = skills[i * 2];
 		}
 		return result;

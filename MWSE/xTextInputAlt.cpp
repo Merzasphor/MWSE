@@ -71,7 +71,7 @@ namespace mwse {
 		}
 
 		// Handle all other keys.
-		for (int i = 0x30; i <= 0x6F; i++) {
+		for (int i = 0x30; i <= 0x6F; ++i) {
 			if (GetKeyIsPressed(i)) {
 				char character = MapVirtualKey(i, MAPVK_VK_TO_CHAR);
 

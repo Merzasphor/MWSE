@@ -155,7 +155,7 @@ namespace NI {
 			setSize(other.size());
 			
 			// Copy over values.
-			for (size_t i = 0; i < storageCount; i++) {
+			for (size_t i = 0; i < storageCount; ++i) {
 				setAtIndex(i, other.storage[i]);
 			}
 
@@ -227,7 +227,7 @@ namespace NI {
 		}
 
 		void clear() {
-			for (size_type i = 0; i < storageCount; i++) {
+			for (size_type i = 0; i < storageCount; ++i) {
 				storage[i] = T(0);
 			}
 			filledCount = 0;
@@ -263,7 +263,7 @@ namespace NI {
 				return INVALID_INDEX;
 			}
 
-			for (size_type i = 0; i < endIndex; i++) {
+			for (size_type i = 0; i < endIndex; ++i) {
 				if (storage[i] == value) {
 					return i;
 				}
@@ -304,7 +304,7 @@ namespace NI {
 			}
 
 			if (size < endIndex) {
-				for (auto i = size; i < endIndex; i++) {
+				for (auto i = size; i < endIndex; ++i) {
 					if (storage[i]) {
 						storage[i] = T(0);
 						filledCount--;
@@ -318,7 +318,7 @@ namespace NI {
 #else
 			auto newStorage = new T[size];
 #endif
-			for (size_type i = 0; i < endIndex; i++) {
+			for (size_type i = 0; i < endIndex; ++i) {
 				newStorage[i] = storage[i];
 			}
 #if !defined(MWSE_NO_CUSTOM_ALLOC) || MWSE_NO_CUSTOM_ALLOC == 0
@@ -362,7 +362,7 @@ namespace NI {
 
 		void recalculateFirstEmpty() {
 			endIndex = storageCount;
-			for (size_type i = 0; i < storageCount; i++) {
+			for (size_type i = 0; i < storageCount; ++i) {
 				if (storage[i] == T(0)) {
 					endIndex = i;
 					return;

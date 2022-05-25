@@ -56,13 +56,10 @@ namespace mwse {
 
 		// Get spell list.
 		auto spellsList = TES3::DataHandler::get()->nonDynamicData->spellsList;
-		TES3::Spell* spellListHead = *spellsList->begin();
+		auto spellListHead = *spellsList->begin();
 
 		// Create new spell.
-		TES3::Spell* newSpell = tes3::malloc<TES3::Spell>();
-		memset(newSpell, 0, sizeof(TES3::Spell));
-		newSpell->vTable = spellListHead->vTable;
-		newSpell->objectType = TES3::ObjectType::Spell;
+		auto newSpell = new TES3::Spell();
 		newSpell->owningCollection.asSpellList = spellsList;
 		newSpell->magickaCost = 1;
 
@@ -71,7 +68,7 @@ namespace mwse {
 		newSpell->setName(spellName.c_str());
 
 		// Set effects.
-		for (int i = 0; i < 8; i++) {
+		for (auto i = 0; i < 8; ++i) {
 			newSpell->effects[i].effectID = TES3::EffectID::None;
 		}
 

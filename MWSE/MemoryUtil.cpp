@@ -28,7 +28,7 @@ namespace mwse {
 		MemAccess<DWORD>::Set(address + 1, to - address - 0x5);
 
 		// NOP out the rest of the block.
-		for (DWORD i = address + 5; i < address + size; i++) {
+		for (DWORD i = address + 5; i < address + size; ++i) {
 			genNOP(i);
 		}
 
@@ -64,7 +64,7 @@ namespace mwse {
 		MemAccess<DWORD>::Set(address + 1, to - address - 0x5);
 
 		// NOP out the rest of the block.
-		for (DWORD i = address + 5; i < address + size; i++) {
+		for (DWORD i = address + 5; i < address + size; ++i) {
 			genNOP(i);
 		}
 
@@ -84,7 +84,7 @@ namespace mwse {
 		MemAccess<DWORD>::Set(address + 1, to - address - 0x5);
 
 		// NOP out the rest of the block.
-		for (DWORD i = address + 5; i < address + size; i++) {
+		for (DWORD i = address + 5; i < address + size; ++i) {
 			genNOP(i);
 		}
 
@@ -120,7 +120,7 @@ namespace mwse {
 		MemAccess<DWORD>::Set(address + 1, to - address - 0x5);
 
 		// NOP out the rest of the block.
-		for (DWORD i = address + 5; i < address + size; i++) {
+		for (DWORD i = address + 5; i < address + size; ++i) {
 			genNOP(i);
 		}
 
@@ -237,7 +237,7 @@ namespace mwse {
 		DWORD oldProtect;
 		VirtualProtect((DWORD*)address, size, PAGE_READWRITE, &oldProtect);
 
-		for (DWORD i = 0; i < size; i++) {
+		for (DWORD i = 0; i < size; ++i) {
 			genNOP(address + i);
 		}
 

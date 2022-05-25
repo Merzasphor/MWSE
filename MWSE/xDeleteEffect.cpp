@@ -96,7 +96,7 @@ namespace mwse {
 		effects[effectIndex].effectID = TES3::EffectID::None;
 
 		// Move effects beyond the given index forward to fill the gap.
-		for (size_t i = effectIndex + 1; i < effectCount; i++) {
+		for (size_t i = effectIndex + 1; i < effectCount; ++i) {
 			effects[i - 1] = effects[i];
 			effects[i].effectID = TES3::EffectID::None;
 		}

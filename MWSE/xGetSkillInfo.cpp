@@ -35,7 +35,7 @@ namespace mwse {
 			const TES3::Skill& skillRecord = dataHandler->nonDynamicData->skills[skillIndex];
 			attributeId = skillRecord.governingAttribute;
 			specialization = skillRecord.specialization;
-			for (size_t i = 0; i < 4; i++) {
+			for (size_t i = 0; i < 4; ++i) {
 				actions[i] = skillRecord.progressActions[i];
 			}
 		}

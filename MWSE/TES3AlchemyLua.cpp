@@ -60,7 +60,7 @@ namespace mwse::lua {
 		// Assign effects.
 		sol::optional<sol::table> effects = params["effects"];
 		if (effects) {
-			for (int i = 1; i <= 8; i++) {
+			for (int i = 1; i <= 8; ++i) {
 				sol::optional<sol::table> effectParams = effects.value()[i];
 				if (!effectParams) {
 					break;

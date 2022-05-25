@@ -583,17 +583,17 @@ void VirtualMachine::dumpScriptVariables()
 	mwse::log::getLog() << __FUNCTION__ << " - Variable dump for '" << script->name << "'" << std::endl;
 
 	mwse::log::getLog() << "  Longs (" << script->longCount << "):" << std::endl;
-	for (int i = 0; i < script->longCount; i++) {
+	for (int i = 0; i < script->longCount; ++i) {
 		mwse::log::getLog() << "    " << script->longVarNamePointers[i] << " = " << std::dec << script->varValues.longVarValues[i] << std::endl;
 	}
 
 	mwse::log::getLog() << "  Floats (" << script->floatCount << "):" << std::endl;
-	for (int i = 0; i < script->floatCount; i++) {
+	for (int i = 0; i < script->floatCount; ++i) {
 		mwse::log::getLog() << "    " << script->floatVarNamePointers[i] << " = " << std::dec << script->varValues.floatVarValues[i] << std::endl;
 	}
 
 	mwse::log::getLog() << "  Shorts (" << script->shortCount << "):" << std::endl;
-	for (int i = 0; i < script->shortCount; i++) {
+	for (int i = 0; i < script->shortCount; ++i) {
 		mwse::log::getLog() << "    " << script->shortVarNamePointers[i] << " = " << std::dec << script->varValues.shortVarValues[i] << std::endl;
 	}
 }

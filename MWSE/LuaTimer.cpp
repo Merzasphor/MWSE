@@ -168,7 +168,7 @@ namespace mwse::lua {
 
 	void TimerController::clearTimers() {
 		// Mark all timers as expired.
-		for (auto itt = m_ActiveTimers.begin(); itt != m_ActiveTimers.end(); itt++) {
+		for (auto itt = m_ActiveTimers.begin(); itt != m_ActiveTimers.end(); ++itt) {
 			(*itt)->state = TimerState::Expired;
 		}
 

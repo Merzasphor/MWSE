@@ -1025,7 +1025,7 @@ namespace mwse::lua {
 		// Go through the keys to see if any of the states have changed, and launch an event based on that.
 		LuaManager& luaManager = LuaManager::getInstance();
 		auto stateHandle = luaManager.getThreadSafeStateHandle();
-		for (BYTE i = 0; i < UINT8_MAX; i++) {
+		for (BYTE i = 0; i < UINT8_MAX; ++i) {
 			if (event::KeyDownEvent::getEventEnabled() && inputController->isKeyPressedThisFrame(i)) {
 				stateHandle.triggerEvent(new event::KeyDownEvent(i, controlDown, shiftDown, altDown, superDown));
 
@@ -1045,7 +1045,7 @@ namespace mwse::lua {
 		}
 
 		// Do the same with mouse buttons.
-		for (BYTE i = 0; i < 8; i++) {
+		for (BYTE i = 0; i < 8; ++i) {
 			if (event::MouseButtonDownEvent::getEventEnabled() && inputController->isMouseButtonPressedThisFrame(i)) {
 				stateHandle.triggerEvent(new event::MouseButtonDownEvent(i, controlDown, shiftDown, altDown, superDown));
 			}
@@ -2334,7 +2334,7 @@ namespace mwse::lua {
 
 		OnSkillTrained_SkillId = -1;
 		auto macp = TES3::WorldController::get()->getMobilePlayer();
-		for (int i = TES3::SkillID::FirstSkill; i <= TES3::SkillID::LastSkill; i++) {
+		for (int i = TES3::SkillID::FirstSkill; i <= TES3::SkillID::LastSkill; ++i) {
 			if (&macp->skills[i] == skill) {
 				OnSkillTrained_SkillId = i;
 				break;
@@ -2582,7 +2582,7 @@ namespace mwse::lua {
 		// See if we have any non-comments/non-whitespace.
 		bool hasNonCommentContent = false;
 		bool inComment = false;
-		for (auto i = 0u; i <= commandLength; i++) {
+		for (auto i = 0u; i <= commandLength; ++i) {
 			auto c = command[i];
 			switch (c) {
 			case '\t':

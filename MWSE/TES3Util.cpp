@@ -203,7 +203,7 @@ namespace mwse::tes3 {
 
 	TES3::SoulGemData* getSoulGemData(const TES3::Misc* item) {
 		auto vanillaSoulGems = reinterpret_cast<TES3::SoulGemData*>(0x791C98);
-		for (size_t i = 0; i < 6; i++) {
+		for (size_t i = 0; i < 6; ++i) {
 			if (vanillaSoulGems[i].item == item) {
 				return &vanillaSoulGems[i];
 			}
@@ -250,7 +250,7 @@ namespace mwse::tes3 {
 	TES3::Reference* exteriorRefs[9] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
 
 	void clearExteriorRefs() {
-		for (size_t i = 0; i < 9; i++) {
+		for (size_t i = 0; i < 9; ++i) {
 			exteriorRefs[i] = NULL;
 		}
 	}

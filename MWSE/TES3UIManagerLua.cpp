@@ -293,7 +293,7 @@ namespace mwse::lua {
 			const auto& propertyItt = targetItt->second.find(eventID);
 			if (propertyItt != targetItt->second.end()) {
 				// Search for our callback.
-				for (auto itt = propertyItt->second.begin(); itt != propertyItt->second.end(); itt++) {
+				for (auto itt = propertyItt->second.begin(); itt != propertyItt->second.end(); ++itt) {
 					if (itt->callback == callback) {
 						propertyItt->second.erase(itt);
 						return true;
@@ -311,7 +311,7 @@ namespace mwse::lua {
 			const auto& propertyItt = targetItt->second.find(eventID);
 			if (propertyItt != targetItt->second.end()) {
 				// Search for our callback.
-				for (auto itt = propertyItt->second.begin(); itt != propertyItt->second.end(); itt++) {
+				for (auto itt = propertyItt->second.begin(); itt != propertyItt->second.end(); ++itt) {
 					if (itt->callback == callback) {
 						propertyItt->second.erase(itt);
 						return true;

@@ -303,7 +303,7 @@ namespace mwse::lua {
 		else if (key.is<std::string>()) {
 			int index = -1;
 			std::string keyStr = key.as<std::string>();
-			for (int i = 0; i <= TES3::GMST::sWitchhunter; i++) {
+			for (int i = 0; i <= TES3::GMST::sWitchhunter; ++i) {
 				TES3::GameSettingInfo* info = TES3::GameSettingInfo::get(i);
 				if (strcmp(info->name, keyStr.c_str()) == 0) {
 					index = i;
@@ -439,7 +439,7 @@ namespace mwse::lua {
 			if (maybeButtons && maybeButtons.value().size() > 0) {
 				sol::table buttons = maybeButtons.value();
 				size_t size = std::min(buttons.size(), size_t(32));
-				for (size_t i = 0; i < size; i++) {
+				for (size_t i = 0; i < size; ++i) {
 					std::string result = buttons[i + 1];
 					if (result.empty()) {
 						break;
@@ -920,7 +920,7 @@ namespace mwse::lua {
 		auto pickSuccess = rayTestCache->pickObjects(&position.value(), &directionNormalized, false, maxDistance);
 
 		// Restore previous cull states.
-		for (auto itt = ignoreRestoreList.begin(); itt != ignoreRestoreList.end(); itt++) {
+		for (auto itt = ignoreRestoreList.begin(); itt != ignoreRestoreList.end(); ++itt) {
 			(*itt)->setAppCulled(false);
 		}
 
@@ -1941,7 +1941,7 @@ namespace mwse::lua {
 			}
 			else {
 				// Check to see if an attribute was edited.
-				for (size_t i = TES3::Attribute::FirstAttribute; i <= TES3::Attribute::LastAttribute; i++) {
+				for (size_t i = TES3::Attribute::FirstAttribute; i <= TES3::Attribute::LastAttribute; ++i) {
 					if (statistic == &mobile->attributes[i]) {
 						TES3::UI::updateEncumbranceBar();
 						TES3::UI::updatePlayerAttribute(statistic->getCurrent(), i);
@@ -2077,7 +2077,7 @@ namespace mwse::lua {
 			}
 			else {
 				// Check to see if an attribute was edited.
-				for (size_t i = TES3::Attribute::FirstAttribute; i <= TES3::Attribute::LastAttribute; i++) {
+				for (size_t i = TES3::Attribute::FirstAttribute; i <= TES3::Attribute::LastAttribute; ++i) {
 					if (statistic == &mobile->attributes[i]) {
 						TES3::UI::updateEncumbranceBar();
 						TES3::UI::updatePlayerAttribute(statistic->getCurrent(), i);
@@ -2186,7 +2186,7 @@ namespace mwse::lua {
 		}
 		else {
 			int exteriorCount = 0;
-			for (size_t i = 0; i < 9; i++) {
+			for (size_t i = 0; i < 9; ++i) {
 				auto cellDataPointer = dataHandler->exteriorCellData[i];
 				if (cellDataPointer && cellDataPointer->loadingFlags >= 1) {
 					exteriorCount++;
@@ -2902,7 +2902,7 @@ namespace mwse::lua {
 
 			// Assign effects.
 			if (effects) {
-				for (int i = 1; i <= 8; i++) {
+				for (int i = 1; i <= 8; ++i) {
 					sol::optional<sol::table> effectParams = effects.value()[i];
 					if (!effectParams) {
 						break;
@@ -3964,7 +3964,7 @@ namespace mwse::lua {
 		config->reset = getOptionalParam<bool>(params, "reset", true);
 
 		sol::table idles = maybeIdles.value();
-		for (size_t i = 0; i < 8; i++) {
+		for (size_t i = 0; i < 8; ++i) {
 			config->idles[i] = idles.get_or(i + 1, 0);
 		}
 
@@ -4405,7 +4405,7 @@ namespace mwse::lua {
 
 		sol::state_view state = thisState;
 		sol::table result = state.create_table();
-		for (size_t i = 0; i < 3; i++) {
+		for (size_t i = 0; i < 3; ++i) {
 			result[i + 1] = animData->timing[i];
 		}
 		return result;

@@ -31,7 +31,7 @@ namespace mwse {
 				// If we found nothing, check the stored exterior references.
 				if (next == NULL && mwse::tes3::exteriorRefs[0] != NULL) {
 					next = mwse::tes3::exteriorRefs[0];
-					for (int i = 0; i < 8; i++) {
+					for (auto i = 0; i < 8; ++i) {
 						mwse::tes3::exteriorRefs[i] = mwse::tes3::exteriorRefs[i + 1];
 					}
 				}

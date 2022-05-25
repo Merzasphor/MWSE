@@ -300,7 +300,7 @@ namespace mwse::lua {
 
 		size_t byteCount = bytes.value().size();
 		BYTE* data = new BYTE[byteCount];
-		for (size_t i = 0; i < byteCount; i++) {
+		for (size_t i = 0; i < byteCount; ++i) {
 			sol::object byte = bytes.value()[i + 1];
 			if (byte.is<BYTE>()) {
 				data[i] = byte.as<BYTE>();
@@ -372,7 +372,7 @@ namespace mwse::lua {
 				sol::optional<sol::table> arguments = signature.value()["arguments"];
 				if (arguments) {
 					argumentCount = arguments.value().size();
-					for (size_t i = 0; i < argumentCount; i++) {
+					for (size_t i = 0; i < argumentCount; ++i) {
 						definition.argumentConverters.push_back(argumentConverters[arguments.value()[i + 1]]);
 					}
 				}
