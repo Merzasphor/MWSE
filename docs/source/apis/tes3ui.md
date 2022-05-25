@@ -137,7 +137,7 @@ local result = tes3ui.createMenu({ id = ..., dragFrame = ..., fixedFrame = ..., 
 
 * `params` (table)
 	* `id` (string, number): The menu’s ID. The menu can be later accessed by tes3ui.findMenu(id).
-	* `dragFrame` (boolean): *Default*: `false`. Constructs a draggable and resizeable frame and background for the menu. It is similar to the stats, inventory, magic and map menus in the standard UI. After construction, position and minimum dimensions should be set.
+	* `dragFrame` (boolean): *Default*: `false`. Constructs a draggable and resizeable frame and background for the menu. It is similar to the stats, inventory, magic and map menus in the standard UI. Its title bar text can be set with the .text property. After construction, position and minimum dimensions should be set.
 	* `fixedFrame` (boolean): *Default*: `false`. Constructs a fixed (non-draggable) frame and background for the menu. The layout system should automatically centre and size it to fit whatever is added to the menu.
 	* `loadable` (boolean): *Default*: `true`. If set to false, calls to loadMenuPosition will fail.
 

@@ -591,13 +591,14 @@ Creates a clickable button. Register the `mouseClick` event to capture a button 
 Button specific properties can be accessed through the `widget` property. The widget type for buttons is [`tes3uiButton`](https://mwse.github.io/MWSE/types/tes3uiButton/).
 
 ```lua
-local result = myObject:createButton({ id = ... })
+local result = myObject:createButton({ id = ..., text = ... })
 ```
 
 **Parameters**:
 
 * `params` (table): *Optional*.
 	* `id` (string, number): *Optional*. An identifier to help find this element later.
+	* `text` (string): *Optional*. The text to add to the button. It will highlight on mouseover like a text select widget.
 
 **Returns**:
 
