@@ -13,8 +13,8 @@ namespace mwse::lua::event {
 
 	sol::table MeshLoadEvent::createEventTable() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table eventData = state.create_table();
+		auto& state = stateHandle.state;
+		auto eventData = state.create_table();
 
 		eventData["path"] = m_Path;
 
@@ -23,8 +23,8 @@ namespace mwse::lua::event {
 
 	sol::object MeshLoadEvent::getEventOptions() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table options = state.create_table();
+		auto& state = stateHandle.state;
+		auto options = state.create_table();
 		options["filter"] = m_Path;
 		return options;
 	}

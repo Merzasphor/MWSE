@@ -19,8 +19,8 @@ namespace mwse::lua::event {
 
 	sol::table AbsorbedMagicEvent::createEventTable() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table eventData = state.create_table();
+		auto& state = stateHandle.state;
+		auto eventData = state.create_table();
 
 		eventData["absorb"] = m_Absorb;
 		eventData["mobile"] = m_MobileActor;

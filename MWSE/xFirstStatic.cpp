@@ -22,7 +22,7 @@ namespace mwse {
 		mwse::tes3::clearExteriorRefs();
 
 		TES3::Reference* reference = NULL;
-		TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+		auto dataHandler = TES3::DataHandler::get();
 		if (dataHandler->currentInteriorCell != NULL) {
 			reference = static_cast<TES3::Reference*>(dataHandler->currentInteriorCell->persistentRefs.head->skipDeletedObjects());
 		}

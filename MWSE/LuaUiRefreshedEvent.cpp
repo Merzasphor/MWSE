@@ -14,8 +14,8 @@ namespace mwse::lua::event {
 
 	sol::table UiRefreshedEvent::createEventTable() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table eventData = state.create_table();
+		auto& state = stateHandle.state;
+		auto eventData = state.create_table();
 
 		eventData["element"] = m_Element;
 
@@ -24,8 +24,8 @@ namespace mwse::lua::event {
 
 	sol::object UiRefreshedEvent::getEventOptions() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table options = state.create_table();
+		auto& state = stateHandle.state;
+		auto options = state.create_table();
 
 		options["filter"] = m_Element->name.cString;
 

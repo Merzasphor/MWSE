@@ -61,7 +61,7 @@ namespace mwse::lua {
 	// Fills luaFunctionArguments based on given argX parameters and what converters it expects.
 	FunctionDefinition* fillLuaCallArguments(DWORD callingAddress, DWORD functionAt, DWORD ecx, DWORD edx, DWORD arg0 = 0, DWORD arg1 = 0, DWORD arg2 = 0, DWORD arg3 = 0, DWORD arg4 = 0, DWORD arg5 = 0) {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		luaFunctionArguments.clear();
 
@@ -110,7 +110,7 @@ namespace mwse::lua {
 	// Actual dispatching function
 	DWORD callGenericLuaFunctionFinal(DWORD callingAddress, FunctionDefinition* definition = nullptr) {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		auto function = luaFunctionOverrides[callingAddress];
 		sol::protected_function_result result = function(sol::as_args(luaFunctionArguments));
@@ -472,7 +472,7 @@ namespace mwse::lua {
 
 	void bindMWSEMemoryUtil() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		sol::table mwse = state["mwse"];
 		auto memory = mwse.create_named("memory");

@@ -11,8 +11,8 @@ namespace mwse::lua::event {
 
 	sol::table ActiveMagicEffectIconsUpdatedEvent::createEventTable() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table eventData = state.create_table();
+		auto& state = stateHandle.state;
+		auto eventData = state.create_table();
 
 		return eventData;
 	}

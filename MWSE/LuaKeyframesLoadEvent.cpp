@@ -14,8 +14,8 @@ namespace mwse::lua::event {
 
 	sol::table KeyframesLoadEvent::createEventTable() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table eventData = state.create_table();
+		auto& state = stateHandle.state;
+		auto eventData = state.create_table();
 
 		eventData["path"] = m_Path;
 		eventData["sequenceName"] = m_SequenceName;
@@ -25,8 +25,8 @@ namespace mwse::lua::event {
 
 	sol::object KeyframesLoadEvent::getEventOptions() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table options = state.create_table();
+		auto& state = stateHandle.state;
+		auto options = state.create_table();
 
 		options["filter"] = m_Path;
 

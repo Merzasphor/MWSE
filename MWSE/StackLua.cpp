@@ -9,7 +9,7 @@
 namespace mwse::lua {
 	void bindMWSEStack() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		state["mwse"]["stack"] = state.create_table();
 

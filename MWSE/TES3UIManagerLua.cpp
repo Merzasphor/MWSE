@@ -38,7 +38,7 @@ namespace mwse::lua {
 	bool __cdecl eventDispatcher(Element* owningWidget, Property eventID, int data0, int data1, Element* source) {
 		LuaManager& luaManager = LuaManager::getInstance();
 		auto stateHandle = luaManager.getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		// Find dispatch target. Almost always source, but is owningWidget for 'focus' and 'unfocus' events.
 		Element* target = source;
@@ -66,7 +66,7 @@ namespace mwse::lua {
 		if (iterBeforeElements != eventCallbacksBefore.end()) {
 			auto iterCallback = iterBeforeElements->second.find(eventID);
 			if (iterCallback != iterBeforeElements->second.end()) {
-				sol::table eventData = state.create_table();
+				auto eventData = state.create_table();
 				eventData["forwardSource"] = source;
 				eventData["source"] = target;
 				eventData["widget"] = owningWidget;
@@ -110,7 +110,7 @@ namespace mwse::lua {
 			if (iterCallback != iterElements->second.end()) {
 				legacyUsed = true;
 
-				sol::table eventData = state.create_table();
+				auto eventData = state.create_table();
 				eventData["forwardSource"] = source;
 				eventData["source"] = target;
 				eventData["widget"] = owningWidget;
@@ -164,7 +164,7 @@ namespace mwse::lua {
 		if (iterAfterElements != eventCallbacksAfter.end()) {
 			auto iterCallback = iterAfterElements->second.find(eventID);
 			if (iterCallback != iterAfterElements->second.end()) {
-				sol::table eventData = state.create_table();
+				auto eventData = state.create_table();
 				eventData["forwardSource"] = source;
 				eventData["source"] = target;
 				eventData["widget"] = owningWidget;
@@ -205,7 +205,7 @@ namespace mwse::lua {
 
 	void __cdecl eventDestroyDispatcher(Element* source) {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		// Send off our event.
 		eventDispatcher(source, Property::event_destroy, 0, 0, source);
@@ -334,7 +334,7 @@ namespace mwse::lua {
 
 	bool eventForwarder(sol::table eventData) {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		Element* source = eventData["forwardSource"];
 		Element* owningWidget = eventData["widget"];
@@ -386,7 +386,7 @@ namespace mwse::lua {
 
 	void bindTES3UIManager() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 		auto tes3ui = state.create_named_table("tes3ui");
 
 		tes3ui["acquireTextInput"] = TES3::UI::acquireTextInput;

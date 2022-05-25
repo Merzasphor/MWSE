@@ -20,8 +20,8 @@ namespace mwse::lua::event {
 
 	sol::table PotionBrewSkillCheckEvent::createEventTable() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table eventData = state.create_table();
+		auto& state = stateHandle.state;
+		auto eventData = state.create_table();
 
 		eventData["potionStrength"] = m_PotionStrength;
 		eventData["success"] = m_PotionStrength >= 0;

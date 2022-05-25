@@ -46,7 +46,7 @@ namespace mwse::patch {
 	//
 
 	void PatchScriptOpEnable() {
-		TES3::ScriptVariables* scriptVars = mwscript::getLocalScriptVariables();
+		auto scriptVars = mwscript::getLocalScriptVariables();
 		if (scriptVars) {
 			scriptVars->unknown_0xC &= 0xFE;
 		}
@@ -59,7 +59,7 @@ namespace mwse::patch {
 	static bool PatchScriptOpDisable_ForceCollisionUpdate = false;
 
 	void PatchScriptOpDisable() {
-		TES3::ScriptVariables* scriptVars = mwscript::getLocalScriptVariables();
+		auto scriptVars = mwscript::getLocalScriptVariables();
 		if (scriptVars) {
 			scriptVars->unknown_0xC |= 0x1;
 		}
@@ -89,10 +89,10 @@ namespace mwse::patch {
 	//
 
 	void PatchUnifyAthleticsTraining() {
-		TES3::WorldController* worldController = TES3::WorldController::get();
-		TES3::MobilePlayer* mobilePlayer = worldController->getMobilePlayer();
+		auto worldController = TES3::WorldController::get();
+		auto mobilePlayer = worldController->getMobilePlayer();
 
-		TES3::Skill* athletics = &TES3::DataHandler::get()->nonDynamicData->skills[TES3::SkillID::Athletics];
+		auto athletics = &TES3::DataHandler::get()->nonDynamicData->skills[TES3::SkillID::Athletics];
 
 		// If we're running, use the first progress.
 		if (mobilePlayer->movementFlags & TES3::ActorMovement::Running) {
@@ -110,7 +110,7 @@ namespace mwse::patch {
 	//
 
 	void PatchUnifySneakTraining() {
-		TES3::NonDynamicData* nonDynamicData = TES3::DataHandler::get()->nonDynamicData;
+		auto nonDynamicData = TES3::DataHandler::get()->nonDynamicData;
 
 		// Decrement sneak use delay counter.
 		*reinterpret_cast<float*>(0x7D16E0) = *reinterpret_cast<float*>(0x7D16E0) - nonDynamicData->GMSTs[TES3::GMST::fSneakUseDelay]->value.asFloat;
@@ -333,7 +333,7 @@ namespace mwse::patch {
 	//
 
 	TES3::Reference::ReferenceData* __fastcall PatchFixupActorSelfReference(TES3::Reference* self) {
-		bool isClone = self->baseObject->isActor() && static_cast<TES3::Actor*>(self->baseObject)->isClone();
+		auto isClone = self->baseObject->isActor() && static_cast<TES3::Actor*>(self->baseObject)->isClone();
 
 		if (isClone && self->baseObject->referenceToThis == nullptr) {
 			self->baseObject->referenceToThis = self;
@@ -978,7 +978,7 @@ namespace mwse::patch {
 		}
 
 		// Open the file.
-		HANDLE hFile = CreateFile("MWSE_MiniDump.dmp", GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+		auto hFile = CreateFile("MWSE_MiniDump.dmp", GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
 		if ((hFile != NULL) && (hFile != INVALID_HANDLE_VALUE)) {
 			// Create the minidump.
@@ -993,13 +993,13 @@ namespace mwse::patch {
 			mci.CallbackRoutine = (MINIDUMP_CALLBACK_ROUTINE)miniDumpCallback;
 			mci.CallbackParam = 0;
 
-			MINIDUMP_TYPE mdt = (MINIDUMP_TYPE)(MiniDumpWithDataSegs |
+			auto mdt = (MINIDUMP_TYPE)(MiniDumpWithDataSegs |
 				MiniDumpWithHandleData |
 				MiniDumpWithFullMemoryInfo |
 				MiniDumpWithThreadInfo |
 				MiniDumpWithUnloadedModules);
 
-			BOOL rv = MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), hFile, mdt, (pep != 0) ? &mdei : 0, 0, &mci);
+			auto rv = MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), hFile, mdt, (pep != 0) ? &mdei : 0, 0, &mci);
 
 			if (!rv) {
 				log::getLog() << "MiniDump creation failed. Error: 0x" << std::hex << GetLastError() << std::endl;

@@ -227,7 +227,7 @@ namespace TES3 {
 			return containsItem(item, itemData.value_or(nullptr));
 		}
 		else if (itemOrItemId.is<const char*>()) {
-			TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+			auto dataHandler = TES3::DataHandler::get();
 			if (dataHandler) {
 				auto itemId = itemOrItemId.as<const char*>();
 				auto item = dataHandler->nonDynamicData->resolveObjectByType<TES3::Item>(itemId);
@@ -243,7 +243,7 @@ namespace TES3 {
 			return findItemStack(item, itemData.value_or(nullptr));
 		}
 		else if (itemOrItemId.is<const char*>()) {
-			TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+			auto dataHandler = TES3::DataHandler::get();
 			if (dataHandler) {
 				auto itemId = itemOrItemId.as<const char*>();
 				auto item = dataHandler->nonDynamicData->resolveObjectByType<TES3::Item>(itemId);

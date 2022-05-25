@@ -15,8 +15,8 @@ namespace mwse::lua::event {
 
 	sol::table InfoGetTextEvent::createEventTable() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table eventData = state.create_table();
+		auto& state = stateHandle.state;
+		auto eventData = state.create_table();
 
 		eventData["info"] = m_DialogueInfo;
 		eventData["loadOriginalText"] = getOriginalText;

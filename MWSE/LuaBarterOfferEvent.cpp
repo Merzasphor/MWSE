@@ -23,7 +23,7 @@ namespace mwse::lua::event {
 
 	sol::table getBuySellTable(const char* baseId) {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 		sol::table results = state.create_table();
 
 		std::string scrollpaneId = baseId;
@@ -55,8 +55,8 @@ namespace mwse::lua::event {
 
 	sol::table BarterOfferEvent::createEventTable() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table eventData = state.create_table();
+		auto& state = stateHandle.state;
+		auto eventData = state.create_table();
 
 		eventData["mobile"] = m_MobileActor;
 		eventData["success"] = m_Success;

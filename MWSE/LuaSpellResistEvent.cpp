@@ -21,8 +21,8 @@ namespace mwse::lua::event {
 
 	sol::table SpellResistEvent::createEventTable() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table eventData = state.create_table();
+		auto& state = stateHandle.state;
+		auto eventData = state.create_table();
 
 		eventData["caster"] = m_MagicSourceInstance->caster;
 		eventData["target"] = m_EffectInstance->target;
@@ -50,8 +50,8 @@ namespace mwse::lua::event {
 
 	sol::object SpellResistEvent::getEventOptions() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table options = state.create_table();
+		auto& state = stateHandle.state;
+		auto options = state.create_table();
 
 		options["filter"] = m_MagicSourceInstance->sourceCombo.source.asGeneric;
 

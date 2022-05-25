@@ -349,7 +349,7 @@ namespace mwse::lua {
 		else if (target.is<std::string>()) {
 			auto& luaManager = mwse::lua::LuaManager::getInstance();
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
-			sol::state& state = stateHandle.state;
+			auto& state = stateHandle.state;
 			sol::object result = state.safe_script_file("./Data Files/MWSE/mods/" + target.as<std::string>() + ".lua");
 			if (result.get_type() == sol::type::table) {
 				scriptOverrides[(unsigned long)script] = result;
@@ -378,7 +378,7 @@ namespace mwse::lua {
 	void LuaManager::lua_print(sol::object message) {
 		auto& luaManager = mwse::lua::LuaManager::getInstance();
 		auto stateHandle = luaManager.getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		static sol::protected_function luaTostring = state["tostring"];
 		std::string result = luaTostring(message);
@@ -564,7 +564,7 @@ namespace mwse::lua {
 
 		// Get and run the execute function.
 		auto stateHandle = manager.getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 		sol::protected_function execute;
 		if (searchResult->second.is<sol::function>()) {
 			execute = searchResult->second.as<sol::function>();
@@ -635,7 +635,7 @@ namespace mwse::lua {
 		// Grab the new player pointers for lua.
 		// Update tes3.player and tes3.mobilePlayer.
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 		state["tes3"]["mobilePlayer"] = macp;
 		state["tes3"]["player"] = player;
 		state["tes3"]["player1stPerson"] = macp->firstPersonReference;
@@ -650,7 +650,7 @@ namespace mwse::lua {
 
 		// Grab the new player pointers for lua.
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 		state["tes3"]["player"] = player;
 
 		return player;
@@ -666,7 +666,7 @@ namespace mwse::lua {
 
 		// Hook up shorthand access to data handler, world controller, and game.
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 		state["tes3"]["dataHandler"] = TES3::DataHandler::get();
 		state["tes3"]["worldController"] = TES3::WorldController::get();
 		state["tes3"]["game"] = TES3::Game::get();
@@ -702,7 +702,7 @@ namespace mwse::lua {
 		}
 
 		// Has our cell changed?
-		TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+		auto dataHandler = TES3::DataHandler::get();
 		if (dataHandler->currentCell != TES3::DataHandler::previousVisitedCell) {
 			if (event::CellChangedEvent::getEventEnabled()) {
 				luaManager.getThreadSafeStateHandle().triggerEvent(new event::CellChangedEvent(dataHandler->currentCell, TES3::DataHandler::previousVisitedCell));
@@ -3364,7 +3364,7 @@ namespace mwse::lua {
 			if (success) {
 				// Get our lua table, and replace it with our new table.
 				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-				sol::state& state = stateHandle.state;
+				auto& state = stateHandle.state;
 				auto threadID = GetCurrentThreadId();
 				auto saveLoadItemData = saveLoadItemDataMap[threadID];
 				if (saveLoadItemData && saveLoadItemData->luaData == nullptr) {
@@ -3399,7 +3399,7 @@ namespace mwse::lua {
 
 			// If it is empty, don't bother saving it.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-			sol::state& state = stateHandle.state;
+			auto& state = stateHandle.state;
 			if (!fnTableEmpty(table, true)) {
 				// Convert the table to json for storage.
 				std::string json = fnEncodeForSave(table);
@@ -3433,7 +3433,7 @@ namespace mwse::lua {
 			if (success) {
 				// Get our lua table, and replace it with our new table.
 				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-				sol::state& state = stateHandle.state;
+				auto& state = stateHandle.state;
 				auto itemData = saveLoadReferenceMap[GetCurrentThreadId()]->getAttachedItemData();
 				if (itemData) {
 					if (itemData->luaData == nullptr) {
@@ -5376,8 +5376,8 @@ namespace mwse::lua {
 		if (buttonPressedCallback != sol::nil) {
 			sol::protected_function callback = buttonPressedCallback;
 			buttonPressedCallback = sol::nil;
-			sol::state& state = stateHandle.state;
-			sol::table eventData = state.create_table();
+			auto& state = stateHandle.state;
+			auto eventData = state.create_table();
 			eventData["button"] = tes3::ui::getButtonPressedIndex();
 			tes3::ui::resetButtonPressedIndex();
 

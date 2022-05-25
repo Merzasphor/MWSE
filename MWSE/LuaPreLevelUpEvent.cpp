@@ -15,8 +15,8 @@ namespace mwse::lua::event {
 
 	sol::table PreLevelUpEvent::createEventTable() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table eventData = state.create_table();
+		auto& state = stateHandle.state;
+		auto eventData = state.create_table();
 
 		TES3::MobilePlayer* player = TES3::WorldController::get()->getMobilePlayer();
 
@@ -27,8 +27,8 @@ namespace mwse::lua::event {
 
 	sol::object PreLevelUpEvent::getEventOptions() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table options = state.create_table();
+		auto& state = stateHandle.state;
+		auto options = state.create_table();
 
 		TES3::MobilePlayer* player = TES3::WorldController::get()->getMobilePlayer();
 

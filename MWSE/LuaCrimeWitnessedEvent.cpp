@@ -20,16 +20,16 @@ namespace mwse::lua::event {
 
 	sol::object CrimeWitnessedEvent::getEventOptions() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table options = state.create_table();
+		auto& state = stateHandle.state;
+		auto options = state.create_table();
 		options["filter"] = m_Crime->typeString.c_str;
 		return options;
 	}
 
 	sol::table CrimeWitnessedEvent::createEventTable() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table eventData = state.create_table();
+		auto& state = stateHandle.state;
+		auto eventData = state.create_table();
 
 		eventData["type"] = m_Crime->typeString.c_str;
 		eventData["position"] = m_Crime->position;

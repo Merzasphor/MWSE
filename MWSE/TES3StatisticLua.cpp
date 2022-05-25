@@ -8,7 +8,7 @@
 namespace mwse::lua {
 	void bindTES3Statistic() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		{
 			// Start our usertype.

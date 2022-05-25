@@ -18,8 +18,8 @@ namespace mwse::lua::event {
 
 	sol::table PotionBrewFailedEvent::createEventTable() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table eventData = state.create_table();
+		auto& state = stateHandle.state;
+		auto eventData = state.create_table();
 
 		// Add the apparatus used.
 		eventData["alembic"] = m_Items.alembic;

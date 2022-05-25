@@ -28,7 +28,7 @@ namespace mwse {
 		}
 
 		// Get the string we're going to change.
-		TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+		auto dataHandler = TES3::DataHandler::get();
 		char*& oldString = dataHandler->nonDynamicData->GMSTs[gmstId]->value.asString;
 
 		// Reallocate string memory if it is growing in size.

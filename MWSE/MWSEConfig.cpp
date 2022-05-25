@@ -30,7 +30,7 @@ namespace mwse {
 	void Configuration::bindToLua() {
 		// Get our lua state.
 		auto stateHandle = lua::LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		defaultConfig = state.create_table();
 

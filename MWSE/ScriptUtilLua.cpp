@@ -23,7 +23,7 @@
 namespace mwse::lua {
 	void bindScriptUtil() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		//
 		// Get context on the current execution.

@@ -20,7 +20,7 @@ namespace mwse::lua {
 
 	void bindTES3UIWidgets() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
+		auto& state = stateHandle.state;
 
 		//
 		// Button (PartButton)

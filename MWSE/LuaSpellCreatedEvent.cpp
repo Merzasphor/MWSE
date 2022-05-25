@@ -16,8 +16,8 @@ namespace mwse::lua::event {
 
 	sol::table SpellCreatedEvent::createEventTable() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table eventData = state.create_table();
+		auto& state = stateHandle.state;
+		auto eventData = state.create_table();
 
 		eventData["spell"] = m_Spell;
 		eventData["source"] = m_Source;
@@ -27,8 +27,8 @@ namespace mwse::lua::event {
 
 	sol::object SpellCreatedEvent::getEventOptions() {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-		sol::table options = state.create_table();
+		auto& state = stateHandle.state;
+		auto options = state.create_table();
 
 		options["filter"] = m_Source;
 
