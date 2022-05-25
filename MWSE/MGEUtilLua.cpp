@@ -360,23 +360,75 @@ namespace mwse::lua {
 		return scattering;
 	}
 
-	auto mge_getWeatherDLFog(int weatherID) {
+	auto mge_getWeatherDLFog(int weatherID, sol::this_state ts) {
+		float fogDistMult, fogOffset;
+		mge::api->weatherDistantFogGet(weatherID, &fogDistMult, &fogOffset);
+
+		sol::state_view state = ts;
+		return state.create_table_with("distance", fogDistMult, "offset", fogOffset);
+	}
+
+	auto mge_setWeatherDLFog(sol::optional<sol::table> params) {
+		auto weatherID = getOptionalParam<int>(params, "weather", -1);
+		auto fogDistMult = getOptionalParam<float>(params, "distance", -1.0f);
+		auto fogOffset = getOptionalParam<float>(params, "offset", -1.0f);
+
+		if (weatherID < 0) {
+			throw std::invalid_argument("weather parameter required.");
+		}
+		if (fogDistMult < 0) {
+			throw std::invalid_argument("distance parameter required.");
+		}
+		if (fogOffset < 0) {
+			throw std::invalid_argument("offset parameter required.");
+		}
+
+		mge::api->weatherDistantFogSet(weatherID, fogDistMult, fogOffset);
+	}
+
+	auto mge_getWeatherPPLLight(int weatherID, sol::this_state ts) {
+		float sunMult, ambMult;
+		mge::api->weatherPerPixelLightGet(weatherID, &sunMult, &ambMult);
+
+		sol::state_view state = ts;
+		return state.create_table_with("sun", sunMult, "ambient", ambMult);
+	}
+
+	auto mge_setWeatherPPLLight(sol::optional<sol::table> params) {
+		auto weatherID = getOptionalParam<int>(params, "weather", -1);
+		auto sunMult = getOptionalParam<float>(params, "sun", -1.0f);
+		auto ambMult = getOptionalParam<float>(params, "ambient", -1.0f);
+
+		if (weatherID < 0) {
+			throw std::invalid_argument("weather parameter required.");
+		}
+		if (sunMult < 0) {
+			throw std::invalid_argument("sun parameter required.");
+		}
+		if (ambMult < 0) {
+			throw std::invalid_argument("ambient parameter required.");
+		}
+
+		mge::api->weatherPerPixelLightSet(weatherID, sunMult, ambMult);
+	}
+
+	auto mge_getWeatherDLFog_legacy(int weatherID) {
 		float fogDistMult, fogOffset;
 		mge::api->weatherDistantFogGet(weatherID, &fogDistMult, &fogOffset);
 		return std::make_tuple(fogDistMult, fogOffset);
 	}
 
-	auto mge_setWeatherDLFog(int weatherID, float fogDistMult, float fogOffset) {
+	auto mge_setWeatherDLFog_legacy(int weatherID, float fogDistMult, float fogOffset) {
 		mge::api->weatherDistantFogSet(weatherID, fogDistMult, fogOffset);
 	}
 
-	auto mge_getWeatherPPLLight(int weatherID) {
+	auto mge_getWeatherPPLLight_legacy(int weatherID) {
 		float sunMult, ambMult;
 		mge::api->weatherPerPixelLightGet(weatherID, &sunMult, &ambMult);
 		return std::make_tuple(sunMult, ambMult);
 	}
 
-	auto mge_setWeatherPPLLight(int weatherID, float sunMult, float ambMult) {
+	auto mge_setWeatherPPLLight_legacy(int weatherID, float sunMult, float ambMult) {
 		mge::api->weatherPerPixelLightSet(weatherID, sunMult, ambMult);
 	}
 
@@ -501,10 +553,13 @@ namespace mwse::lua {
 			auto usertypeDefinition = state.new_usertype<MgeWeatherConfig>("mgeWeatherConfig");
 			usertypeDefinition["new"] = sol::no_constructor;
 
-			// Properties.
-			usertypeDefinition["distantFog"] = sol::property(&mge_getWeatherDLFog, &mge_setWeatherDLFog);
-			usertypeDefinition["perPixelLighting"] = sol::property(&mge_getWeatherPPLLight, &mge_setWeatherPPLLight);
-			usertypeDefinition["scattering"] = sol::property(&mge_getWeatherScattering, &mge_setWeatherScattering);
+			// Functions.
+			usertypeDefinition["getDistantFog"] = &mge_getWeatherDLFog;
+			usertypeDefinition["setDistantFog"] = &mge_setWeatherDLFog;
+			usertypeDefinition["getPerPixelLighting"] = &mge_getWeatherPPLLight;
+			usertypeDefinition["setPerPixelLighting"] = &mge_setWeatherPPLLight;
+			usertypeDefinition["getScattering"] = &mge_getWeatherScattering;
+			usertypeDefinition["setScattering"] = &mge_setWeatherScattering;
 		}
 		lua_mge["weather"] = MgeWeatherConfig();
 
@@ -556,9 +611,9 @@ namespace mwse::lua {
 		lua_mge["getScreenWidth"] = []() { return TES3::Game::get()->windowWidth; };
 		lua_mge["getWeatherScattering"] = &mge_getWeatherScattering;
 		lua_mge["setWeatherScattering"] = &mge_setWeatherScattering;
-		lua_mge["getWeatherDLFog"] = &mge_getWeatherDLFog;
-		lua_mge["setWeatherDLFog"] = &mge_setWeatherDLFog;
-		lua_mge["getWeatherPPLLight"] = &mge_getWeatherPPLLight;
-		lua_mge["setWeatherPPLLight"] = &mge_setWeatherPPLLight;
+		lua_mge["getWeatherDLFog"] = &mge_getWeatherDLFog_legacy;
+		lua_mge["setWeatherDLFog"] = &mge_setWeatherDLFog_legacy;
+		lua_mge["getWeatherPPLLight"] = &mge_getWeatherPPLLight_legacy;
+		lua_mge["setWeatherPPLLight"] = &mge_setWeatherPPLLight_legacy;
 	}
 }
