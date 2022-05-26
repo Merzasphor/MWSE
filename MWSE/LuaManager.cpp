@@ -5268,6 +5268,10 @@ namespace mwse::lua {
 		genCallEnforced(0x590414, 0x5B2F00, reinterpret_cast<DWORD>(TES3::UI::setConsoleReference));
 		genCallEnforced(0x5B2EEE, 0x5B2F00, reinterpret_cast<DWORD>(TES3::UI::setConsoleReference));
 
+		// Event: barterOffer
+		genCallEnforced(0x5A70CF, 0x5A66C0, reinterpret_cast<DWORD>(GameBarterOffer));
+		genCallEnforced(0x5A6777, reinterpret_cast<DWORD>(OnExerciseSkill), reinterpret_cast<DWORD>(GameBarterOffer_BufferSkillGain));
+
 		// UI framework hooks
 		TES3::UI::hook();
 
@@ -5285,10 +5289,6 @@ namespace mwse::lua {
 		genCallEnforced(0x4EEFAA, 0x4F0CA0, *reinterpret_cast<DWORD*>(&baseObjectDestructor));
 		genCallEnforced(0x4F026F, 0x4F0CA0, *reinterpret_cast<DWORD*>(&baseObjectDestructor));
 		genCallEnforced(0x4F0C83, 0x4F0CA0, *reinterpret_cast<DWORD*>(&baseObjectDestructor));
-
-		// Raise event for barter attempts.
-		genCallEnforced(0x5A70CF, 0x5A66C0, reinterpret_cast<DWORD>(GameBarterOffer));
-		genCallEnforced(0x5A6777, reinterpret_cast<DWORD>(OnExerciseSkill), reinterpret_cast<DWORD>(GameBarterOffer_BufferSkillGain));
 
 		// Allow area-of-effect magic effects and tes3.findActorsInProximity to hit/find incapacitated actors.
 		genJumpUnprotected(0x570341, 0x57034C);
