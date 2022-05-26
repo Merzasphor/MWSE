@@ -41,6 +41,7 @@ namespace mwse::lua {
 		usertypeDefinition["physicalAttackType"] = &TES3::ActionData::physicalAttackType;
 		usertypeDefinition["physicalDamage"] = &TES3::ActionData::physicalDamage;
 		usertypeDefinition["stolenFrom"] = &TES3::ActionData::stolenFromFactionOrNPC;
+		usertypeDefinition["swingTimer"] = &TES3::ActionData::swingTimer;
 		usertypeDefinition["target"] = &TES3::ActionData::target;
 		usertypeDefinition["walkDestination"] = &TES3::ActionData::walkDestination;
 
