@@ -9,3 +9,7 @@
 --- Use by getting the animation controller from the mobile. e.g. `mobile.animationController.weaponSpeed = 0.5`
 tes3actorAnimationController = {}
 
+--- Calculates how much the attack has been charged. Returns a value ranging from `0.0` to `1.0`. A value of `0.0` indicates there is no attack being charged, whereas a value of `1.0` indicates that the attack is fully charged.
+--- @return number result No description yet available.
+function tes3actorAnimationController:calculateAttackSwing() end
+

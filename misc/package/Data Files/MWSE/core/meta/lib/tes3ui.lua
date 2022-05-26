@@ -54,7 +54,7 @@ function tes3ui.createHelpLayerMenu(params) end
 --- 
 --- `id`: string|number — The menu’s ID. The menu can be later accessed by tes3ui.findMenu(id).
 --- 
---- `dragFrame`: boolean? — *Default*: `false`. Constructs a draggable and resizeable frame and background for the menu. It is similar to the stats, inventory, magic and map menus in the standard UI. After construction, position and minimum dimensions should be set.
+--- `dragFrame`: boolean? — *Default*: `false`. Constructs a draggable and resizeable frame and background for the menu. It is similar to the stats, inventory, magic and map menus in the standard UI. Its title bar text can be set with the .text property. After construction, position and minimum dimensions should be set.
 --- 
 --- `fixedFrame`: boolean? — *Default*: `false`. Constructs a fixed (non-draggable) frame and background for the menu. The layout system should automatically centre and size it to fit whatever is added to the menu.
 --- 
@@ -65,7 +65,7 @@ function tes3ui.createMenu(params) end
 ---Table parameter definitions for `tes3ui.createMenu`.
 --- @class tes3ui.createMenu.params
 --- @field id string|number The menu’s ID. The menu can be later accessed by tes3ui.findMenu(id).
---- @field dragFrame boolean? *Default*: `false`. Constructs a draggable and resizeable frame and background for the menu. It is similar to the stats, inventory, magic and map menus in the standard UI. After construction, position and minimum dimensions should be set.
+--- @field dragFrame boolean? *Default*: `false`. Constructs a draggable and resizeable frame and background for the menu. It is similar to the stats, inventory, magic and map menus in the standard UI. Its title bar text can be set with the .text property. After construction, position and minimum dimensions should be set.
 --- @field fixedFrame boolean? *Default*: `false`. Constructs a fixed (non-draggable) frame and background for the menu. The layout system should automatically centre and size it to fit whatever is added to the menu.
 --- @field loadable boolean? *Default*: `true`. If set to false, calls to loadMenuPosition will fail.
 
