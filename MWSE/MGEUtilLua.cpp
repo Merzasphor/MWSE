@@ -268,6 +268,31 @@ namespace mwse::lua {
 	}
 
 	//
+	// Camera-related functions.
+	//
+
+	auto mge_getFoV() {
+		return mge::api->cameraGetFoV();
+	}
+
+	auto mge_setFoV(float fov) {
+		mge::api->cameraSetFoV(fov);
+	}
+
+	auto mge_getThirdPersonOffset() {
+		TES3::Vector3 offset;
+		mge::api->cameraThirdPersonGetOffset(&offset.x);
+		return offset;
+	}
+
+	auto mge_setThirdPersonOffset(sol::object param) {
+		auto offset = param.as<TES3::Vector3*>();
+		if (offset) {
+			mge::api->cameraThirdPersonSetOffset(&offset->x);
+		}
+	}
+
+	//
 	// Zoom-related functions.
 	//
 
@@ -483,6 +508,7 @@ namespace mwse::lua {
 				names["ReflectSky"] = mge::RenderFeature::ReflectSky;
 				names["BlurReflections"] = mge::RenderFeature::BlurReflections;
 				names["DynamicRipples"] = mge::RenderFeature::DynamicRipples;
+				names["CrosshairAutoHide"] = mge::RenderFeature::CrosshairAutoHide;
 			}
 
 			sol::object get(const std::string& id, sol::this_state ts) const {
@@ -534,10 +560,12 @@ namespace mwse::lua {
 			usertypeDefinition["new"] = sol::no_constructor;
 
 			// Properties.
+			usertypeDefinition["fov"] = sol::property(&mge_getFoV, &mge_setFoV);
 			usertypeDefinition["shakeAcceleration"] = sol::property(&mge_getCameraShakeAcceleration, &mge_setCameraShakeAcceleration);
 			usertypeDefinition["shakeEnable"] = sol::property(&mge_getCameraShakeEnabled, &mge_setCameraShakeEnabled);
 			usertypeDefinition["shakeMagnitude"] = sol::property(&mge_getCameraShakeMagnitude, &mge_setCameraShakeMagnitude);
 			usertypeDefinition["stopZoom"] = mge_stopZoom;
+			usertypeDefinition["thirdPersonOffset"] = sol::property(&mge_getThirdPersonOffset, &mge_setThirdPersonOffset);
 			usertypeDefinition["zoom"] = sol::property(&mge_getZoom, &mge_setZoom);
 			usertypeDefinition["zoomContinuous"] = mge_setZoomContinuous;
 			usertypeDefinition["zoomEnable"] = sol::property(&mge_getZoomEnabled, &mge_setZoomEnabled);
