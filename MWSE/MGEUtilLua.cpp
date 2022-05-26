@@ -57,7 +57,13 @@ namespace mwse::lua {
 	}
 
 	auto mge_getLightingMode() {
-		return int(mge::api->lightingModeGet());
+		switch (mge::api->lightingModeGet()) {
+		case mge::LightingMode::PerPixelAll:
+			return "perPixel";
+		case mge::LightingMode::PerPixelInteriorOnly:
+			return "interiorOnly";
+		}
+		return "vertex";
 	}
 
 	auto mge_setLightingMode(sol::optional<sol::table> params) {
@@ -65,7 +71,7 @@ namespace mwse::lua {
 		if (getOptionalParam<bool>(params, "interiorOnly", false)) {
 			mode = mge::LightingMode::PerPixelInteriorOnly;
 		}
-		else if (getOptionalParam<bool>(params, "dynamic", false)) {
+		else if (getOptionalParam<bool>(params, "perPixel", false)) {
 			mode = mge::LightingMode::PerPixelAll;
 		}
 
@@ -390,7 +396,7 @@ namespace mwse::lua {
 		mge::api->weatherDistantFogGet(weatherID, &fogDistMult, &fogOffset);
 
 		sol::state_view state = ts;
-		return state.create_table_with("distance", fogDistMult, "offset", fogOffset);
+		return state.create_table_with("weather", weatherID, "distance", fogDistMult, "offset", fogOffset);
 	}
 
 	auto mge_setWeatherDLFog(sol::optional<sol::table> params) {
@@ -416,7 +422,7 @@ namespace mwse::lua {
 		mge::api->weatherPerPixelLightGet(weatherID, &sunMult, &ambMult);
 
 		sol::state_view state = ts;
-		return state.create_table_with("sun", sunMult, "ambient", ambMult);
+		return state.create_table_with("weather", weatherID, "sun", sunMult, "ambient", ambMult);
 	}
 
 	auto mge_setWeatherPPLLight(sol::optional<sol::table> params) {
