@@ -187,7 +187,7 @@ function tes3uiElement:createImage(params) end
 --- 
 --- `over`: string — The path to the mouse hover image. This path is relative to `Data Files`.
 --- 
---- `path`: string — The path to the mouse pressed image. This path is relative to `Data Files`.
+--- `pressed`: string — The path to the mouse pressed image. This path is relative to `Data Files`.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createImageButton(params) end
 
@@ -196,7 +196,7 @@ function tes3uiElement:createImageButton(params) end
 --- @field id string|number|nil *Optional*. An identifier to help find this element later.
 --- @field idle string The path to the idle image. This path is relative to `Data Files`.
 --- @field over string The path to the mouse hover image. This path is relative to `Data Files`.
---- @field path string The path to the mouse pressed image. This path is relative to `Data Files`.
+--- @field pressed string The path to the mouse pressed image. This path is relative to `Data Files`.
 
 --- Creates a text label. It defaults to displaying all text on a single line. To get a multi-line label, set `wrap_text` to `true`. The element is created with `autoWidth` and `autoHeight` turned on.
 --- @param params tes3uiElement.createLabel.params? This table accepts the following values:
