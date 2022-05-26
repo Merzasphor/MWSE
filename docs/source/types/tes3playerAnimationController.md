@@ -31,7 +31,7 @@ Use by getting the animation controller from the mobile. e.g. `mobile.animationC
 
 ### `calculateAttackSwing`
 
-Calculates how much the attack has been charged. Returns a value ranging from `0.0` to `1.0`. A value of `0.0` indicates there is no attack being charged, whereas a value of `1.0` indicates that the attack is fully charged.
+Calculates how much an attack is currently being charged. Returns a value ranging from `0.0` to `1.0`. A value of `1.0` indicates that the attack is fully charged. Will always return `0.0` when not currently charging an attack.
 
 ```lua
 local result = myObject:calculateAttackSwing()
