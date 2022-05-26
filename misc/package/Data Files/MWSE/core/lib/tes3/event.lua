@@ -79,6 +79,7 @@ return {
 	["journal"] = "journal",
 	["jump"] = "jump",
 	["key"] = "key",
+	["keybindTested"] = "keybindTested",
 	["keyDown"] = "keyDown",
 	["keyUp"] = "keyUp",
 	["leveledCreaturePicked"] = "leveledCreaturePicked",

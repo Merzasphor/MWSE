@@ -5272,6 +5272,54 @@ namespace mwse::lua {
 		genCallEnforced(0x5A70CF, 0x5A66C0, reinterpret_cast<DWORD>(GameBarterOffer));
 		genCallEnforced(0x5A6777, reinterpret_cast<DWORD>(OnExerciseSkill), reinterpret_cast<DWORD>(GameBarterOffer_BufferSkillGain));
 
+		// Event: keybindTested
+		auto TES3_InputController_testKeybind = &TES3::InputController::keybindTest;
+		genCallEnforced(0x41AC14, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x41AC86, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x41ADE4, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x41AEC6, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x41AF9A, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x41B083, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x41B170, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x41B1B0, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x41B1E4, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x41B232, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x41B2D3, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x41CC7E, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x425325, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x5425C8, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x54266F, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x542685, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x568A85, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x568ABB, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x568AEC, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x568B02, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x568B16, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x568B2C, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x568B71, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x568BAD, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x568C46, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x568CDF, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x568D79, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x568E35, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x568F16, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x568F60, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x568FA9, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x569005, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x56927F, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x569538, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x56965F, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x5697BE, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x56985A, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x5699A4, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x5699BA, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x569E2B, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x569E40, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x569EC9, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x569FC3, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x5B7B49, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
+		genCallEnforced(0x745AA8, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind)); // MCP-89: Vanity keyboard lock.
+
 		// UI framework hooks
 		TES3::UI::hook();
 
