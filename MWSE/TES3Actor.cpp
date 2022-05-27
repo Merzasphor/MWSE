@@ -156,17 +156,24 @@ namespace TES3 {
 	}
 
 	int Actor::getBloodType() const {
-		return (actorFlags >> 0xA) & 0x7;
+		if (objectType != ObjectType::Creature) {
+			return 0;
+		}
+		return (actorFlags >> ActorFlagCreature::BloodBitsFirst) & 0x7;
 	}
 
 	void Actor::setBloodType(int value) {
+		if (objectType != ObjectType::Creature) {
+			return;
+		}
+
 		if (value < 0 || value > 7) {
 			throw std::invalid_argument("Type must be between 0 and 7.");
 		}
 
 		// Clear blood flags.
-		actorFlags &= ~0x1C00;
-		actorFlags |= (value << 0xA);
+		actorFlags &= ~ActorFlagCreature::BloodMask;
+		actorFlags |= (value << ActorFlagCreature::BloodBitsFirst);
 	}
 
 	SpellList* Actor::getSpellList() {

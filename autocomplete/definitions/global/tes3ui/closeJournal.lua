@@ -1,5 +1,5 @@
 return {
 	type = "function",
-	description = [[Closes the Journal.]],
+	description = [[Closes the journal menu.]],
 	returns = {{ name = "result", type = "boolean" }},
 }

@@ -1,0 +1,54 @@
+# keybindTested
+
+This event fires whenever a keybind is tested by the game. A keybind test is often to see if a button is pressed, but it can also be done to see if an input was toggled or released. Blocking this event is equivalent to setting the `result` event data to false.
+
+```lua
+--- @param e keybindTestedEventData
+local function keybindTestedCallback(e)
+end
+event.register(tes3.event.keybindTested, keybindTestedCallback)
+```
+
+!!! tip
+	This event can be filtered based on the **`keybind`** event data.
+
+!!! tip
+	This event supports blocking by setting `e.block` to `true` or returning `false`. Blocking the event prevents vanilla behavior from happening. For example, blocking an `equip` event prevents the item from being equipped.
+
+!!! tip
+	An event can be claimed by setting `e.claim` to `true`, or by returning `false` from the callback. Claiming the event prevents any lower priority callbacks from being called.
+
+## Event Data
+
+* `keybind` (number): *Read-only*. The keybind that was tested. This maps to the `tes3.keybind.*` constants.
+* `result` (boolean): The read state of the keybind. If true, the key was pressed/released/toggled as determined by the `transition` event data.
+* `transition` (number): *Read-only*. The transition for the keybind that was tested. This is typically `tes3.keyTransition.down` but not guaranteed to be. Always be sure to check what transition is being used.
+
+## Examples
+
+!!! example "Example: Block Journal Keybind"
+
+	Prevents the journal keybind from ever being registered as pressed.
+
+	```lua
+	--- @param e keybindTestedEventData
+	local function noJournalMenu(e)
+	    -- We only care about checks to see if the key was pressed.
+	    if (e.transition ~= tes3.keyTransition.down) then
+	        return
+	    end
+	
+	    -- If the result was false, we also don't care.
+	    if (not e.result) then
+	        return
+	    end
+	
+	    -- Set the result to false to make the game think the key wasn't pressed.
+	    -- We could also block this event by using `return false`.
+	    tes3.messageBox("You aren't allowed to open your journal.")
+	    e.result = false
+	end
+	event.register(tes3.event.keybindTested, noJournalMenu, { filter = tes3.keybind.journal })
+
+	```
+

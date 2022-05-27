@@ -42,5 +42,8 @@ namespace mwse::lua {
 
 		// Custom properties.
 		usertypeDefinition["weaponSpeed"] = sol::property(&TES3::ActorAnimationController::getWeaponAnimSpeed, &TES3::ActorAnimationController::setWeaponAnimSpeed);
+
+		// Basic function binding.
+		usertypeDefinition["calculateAttackSwing"] = &TES3::ActorAnimationController::calculateAttackSwing;
 	}
 }

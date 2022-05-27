@@ -18,8 +18,9 @@ namespace TES3 {
 			Flies = 0x20,
 			Walks = 0x40,
 			Essential = 0x80,
-			SkeletonBlood = 0x400,
-			MetalBlood = 0x800,
+
+			// Blood is stored 10 bits in, and stored in 3 bits for 8 total options.
+			BloodMask = 0x1C00,
 
 			DefaultFlags = Walks | IsBase,
 		};
@@ -33,8 +34,9 @@ namespace TES3 {
 			FliesBit = 5,
 			WalksBit = 6,
 			EssentialBit = 7,
-			SkeletonBloodBit = 10,
-			MetalBloodBit = 11,
+
+			BloodBitsFirst = 10,
+			BloodBitsLast = 12,
 		};
 	}
 

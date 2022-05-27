@@ -9,7 +9,7 @@ return {
 			{ name = "id", type = "string|number", description = "An identifier to help find this element later.", optional = true },
 			{ name = "idle", type = "string", description = "The path to the idle image. This path is relative to `Data Files`." },
 			{ name = "over", type = "string", description = "The path to the mouse hover image. This path is relative to `Data Files`." },
-			{ name = "path", type = "string", description = "The path to the mouse pressed image. This path is relative to `Data Files`." },
+			{ name = "pressed", type = "string", description = "The path to the mouse pressed image. This path is relative to `Data Files`." },
 		},
 	} },
 	valuetype = "tes3uiElement",

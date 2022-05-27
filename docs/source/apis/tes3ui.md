@@ -80,7 +80,7 @@ tes3ui.closeBookMenu()
 
 ### `tes3ui.closeJournal`
 
-Closes the Journal.
+Closes the journal menu.
 
 ```lua
 local result = tes3ui.closeJournal()
@@ -642,6 +642,20 @@ tes3ui.showInventorySelectMenu({ reference = ..., title = ..., leaveMenuMode = .
 			- `inventory` ([tes3inventory](https://mwse.github.io/MWSE/types/tes3inventory/)): The inventory containing the items.
 			- `actor` ([tes3actor](https://mwse.github.io/MWSE/types/tes3actor/)): The actor containing the inventory.
 
+
+***
+
+### `tes3ui.showJournal`
+
+Opens the journal menu. This can return false if the player hasn't gone through character generation, or if the journal was already open.
+
+```lua
+local wasShown = tes3ui.showJournal()
+```
+
+**Returns**:
+
+* `wasShown` (boolean)
 
 ***
 

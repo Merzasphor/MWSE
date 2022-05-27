@@ -100,12 +100,15 @@ function tes3uiElement:createBlock(params) end
 --- @param params tes3uiElement.createButton.params? This table accepts the following values:
 --- 
 --- `id`: string|number|nil — *Optional*. An identifier to help find this element later.
+--- 
+--- `text`: string? — *Optional*. The text to add to the button. It will highlight on mouseover like a text select widget.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createButton(params) end
 
 ---Table parameter definitions for `tes3uiElement.createButton`.
 --- @class tes3uiElement.createButton.params
 --- @field id string|number|nil *Optional*. An identifier to help find this element later.
+--- @field text string? *Optional*. The text to add to the button. It will highlight on mouseover like a text select widget.
 
 --- Creates a textured horizontal divider line, as used in the magic and stat menus. Scales automatically to the container width.
 --- @param params tes3uiElement.createDivider.params? This table accepts the following values:
@@ -184,7 +187,7 @@ function tes3uiElement:createImage(params) end
 --- 
 --- `over`: string — The path to the mouse hover image. This path is relative to `Data Files`.
 --- 
---- `path`: string — The path to the mouse pressed image. This path is relative to `Data Files`.
+--- `pressed`: string — The path to the mouse pressed image. This path is relative to `Data Files`.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createImageButton(params) end
 
@@ -193,7 +196,7 @@ function tes3uiElement:createImageButton(params) end
 --- @field id string|number|nil *Optional*. An identifier to help find this element later.
 --- @field idle string The path to the idle image. This path is relative to `Data Files`.
 --- @field over string The path to the mouse hover image. This path is relative to `Data Files`.
---- @field path string The path to the mouse pressed image. This path is relative to `Data Files`.
+--- @field pressed string The path to the mouse pressed image. This path is relative to `Data Files`.
 
 --- Creates a text label. It defaults to displaying all text on a single line. To get a multi-line label, set `wrap_text` to `true`. The element is created with `autoWidth` and `autoHeight` turned on.
 --- @param params tes3uiElement.createLabel.params? This table accepts the following values:

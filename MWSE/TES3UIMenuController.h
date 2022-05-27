@@ -129,7 +129,9 @@ namespace TES3::UI {
 		negative,
 		count,
 
-		MAX_ID = count
+		COLOR_COUNT,
+
+		MAX_ID = count,
 	};
 
 	struct MenuController {
@@ -154,7 +156,7 @@ namespace TES3::UI {
 		char unknown_0x39;
 		char padding_0x3A[2];
 		UI_ID unknown_0x3C;
-		FontColor fontColors[FontColorId::MAX_ID + 1];
+		FontColor fontColors[FontColorId::COLOR_COUNT];
 		void* unknown_0x28C;
 		void* unknown_0x290;
 		int unknown_0x294;

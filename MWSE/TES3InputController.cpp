@@ -1,5 +1,9 @@
 #include "TES3InputController.h"
 
+#include "LuaManager.h"
+
+#include "LuaKeybindTestedEvent.h"
+
 namespace TES3 {
 	std::reference_wrapper<BYTE[8]> InputController::DirectInputMouseState::getButtons() {
 		return std::ref(rgbButtons);
@@ -15,9 +19,24 @@ namespace TES3 {
 		return TES3_InputController_readButtonPressed(this, data);
 	}
 
-	const auto TES3_InputController_keybindTest = reinterpret_cast<int(__thiscall*)(const InputController*, unsigned int, unsigned int)>(0x406F40);
-	bool InputController::keybindTest(unsigned int keyBind, unsigned int transition) const {
-		return TES3_InputController_keybindTest(this, keyBind, transition);
+	const auto TES3_InputController_keybindTest = reinterpret_cast<BOOL(__thiscall*)(const InputController*, unsigned int, unsigned int)>(0x406F40);
+	BOOL InputController::keybindTest(unsigned int keyBind, unsigned int transition) const {
+		auto result = TES3_InputController_keybindTest(this, keyBind, transition);
+
+		if (mwse::lua::event::KeybindTestedEvent::getEventEnabled()) {
+			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::KeybindTestedEvent(keyBind, transition, bool(result)));
+			if (eventData.valid()) {
+				if (eventData.get_or("block", false)) {
+					return FALSE;
+				}
+
+				sol::optional<bool> luaResult = eventData["result"];
+				result = luaResult.value_or(bool(result));
+			}
+		}
+
+		return result;
 	}
 
 	bool InputController::isKeyDown(unsigned char keyCode) const {
@@ -45,7 +64,7 @@ namespace TES3 {
 	}
 
 	bool InputController::isAltDown() const {
-		return (keyboardState[DIK_LALT] & 0x80) || (keyboardState[DIK_RALT]);
+		return isKeyDown(DIK_LALT) || isKeyDown(DIK_RALT);
 	}
 
 	bool InputController::isCapsLockActive() const {
@@ -53,19 +72,19 @@ namespace TES3 {
 	}
 
 	bool InputController::isControlDown() const {
-		return (keyboardState[DIK_LCONTROL] & 0x80) || (keyboardState[DIK_RCONTROL]);
+		return isKeyDown(DIK_LCONTROL) || isKeyDown(DIK_RCONTROL);
 	}
 
 	bool InputController::isShiftDown() const {
-		return (keyboardState[DIK_LSHIFT] & 0x80) || (keyboardState[DIK_RSHIFT]);
+		return isKeyDown(DIK_LSHIFT) || isKeyDown(DIK_RSHIFT);
 	}
 
 	bool InputController::isSuperDown() const {
-		return (keyboardState[DIK_LWIN] & 0x80) || (keyboardState[DIK_RWIN]);
+		return isKeyDown(DIK_LWIN) || isKeyDown(DIK_RWIN);
 	}
 
 	bool InputController::keybindTest_lua(unsigned int key, sol::optional<unsigned int> transition) const {
-		return keybindTest(key, transition.value_or(TES3::KeyTransition::Down));
+		return (bool)keybindTest(key, transition.value_or(TES3::KeyTransition::Down));
 	}
 
 	std::reference_wrapper<unsigned char[256]> InputController::getKeyboardState() {

@@ -27,6 +27,19 @@ namespace TES3 {
 		return speed;
 	}
 
+	float ActorAnimationController::calculateAttackSwing() {
+		if (mobileActor->actionData.animStateAttack != AttackAnimationState::SwingUp) {
+			return 0.0;
+		}
+
+		if (startTime == 0.0 || maxAttackTiming == 0.0 || startTime == maxAttackTiming)
+		{
+			return 1.0;
+		}
+		
+		return std::clamp(mobileActor->actionData.swingTimer / (maxAttackTiming - startTime), 0.0f, 1.0f);
+	}
+
 	const auto TES3_ActorAnimationController_getOpacity = reinterpret_cast<float(__thiscall*)(ActorAnimationController*)>(0x542130);
 	float ActorAnimationController::getOpacity() {
 		return TES3_ActorAnimationController_getOpacity(this);

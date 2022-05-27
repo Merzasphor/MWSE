@@ -22,6 +22,7 @@
     <ClInclude Include="LuaCalcSpellmakingPriceEvent.h" />
     <ClInclude Include="LuaCalcSpellmakingSpellPointCostEvent.h" />
     <ClInclude Include="LuaEquipmentReevaluatedEvent.h" />
+    <ClInclude Include="LuaKeybindTestedEvent.h" />
     <ClInclude Include="LuaKeyframesLoadEvent.h" />
     <ClInclude Include="LuaMagicEffectRemovedEvent.h" />
     <ClInclude Include="LuaMeshLoadEvent.h" />
@@ -581,6 +582,7 @@
     <ClCompile Include="LuaItemTileUpdatedEvent.cpp" />
     <ClCompile Include="LuaJournalEvent.cpp" />
     <ClCompile Include="LuaJumpEvent.cpp" />
+    <ClCompile Include="LuaKeybindTestedEvent.cpp" />
     <ClCompile Include="LuaKeyDownEvent.cpp" />
     <ClCompile Include="LuaKeyEvent.cpp" />
     <ClCompile Include="LuaKeyframesLoadEvent.cpp" />

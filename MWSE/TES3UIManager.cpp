@@ -225,16 +225,6 @@ namespace TES3 {
 			return TES3_ui_requestMenuModeOff();
 		}
 
-		const auto TES3_ui_closeJournal = reinterpret_cast<bool(__cdecl*)()>(0x5D6A10);
-		bool closeJournal() {
-			if (!TES3_ui_closeJournal()) {
-				return false;
-			}
-			// Loop to exit out of all sub-sections of the journal.
-			while (TES3_ui_closeJournal()) {}
-			return true;
-		}
-
 		void acquireTextInput(Element* element) {
 			TES3::WorldController::get()->menuController->menuInputController->acquireTextInput(element);
 		}
@@ -462,6 +452,29 @@ namespace TES3 {
 			if (menuScroll) {
 				TES3_CloseScrollMenu();
 			}
+		}
+
+		const auto TES3_UI_ShowJournal = reinterpret_cast<void(__cdecl*)()>(0x5D62B0);
+		//const auto TES3_UI_ShowJournal = reinterpret_cast<void(__cdecl*)()>(0x5D62B0);
+		bool showJournal() {
+			if (findMenu("MenuJournal")) {
+				return false;
+			}
+
+			TES3_UI_ShowJournal();
+			TES3::WorldController::get()->menuController->unknown_0x2C = 1;
+
+			return findMenu("MenuJournal") != nullptr;
+		}
+
+		const auto TES3_ui_closeJournal = reinterpret_cast<bool(__cdecl*)()>(0x5D6A10);
+		bool closeJournal() {
+			if (!TES3_ui_closeJournal()) {
+				return false;
+			}
+			// Loop to exit out of all sub-sections of the journal.
+			while (TES3_ui_closeJournal()) {}
+			return true;
 		}
 
 		const auto TES3_ShowBookMenu = reinterpret_cast<void(__cdecl*)(const char*)>(0x5AC2A0);

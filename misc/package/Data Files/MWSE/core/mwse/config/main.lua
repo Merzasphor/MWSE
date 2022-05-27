@@ -9,7 +9,7 @@ local function saveConfig()
 	mwse.saveConfig("MWSE", values)
 end
 
-local i18n = mwse.loadTranslations("MWSE MCM")
+local i18n = mwse.loadTranslations("mwse.config")
 
 local config = {
 	name = "Morrowind Script Extender",
