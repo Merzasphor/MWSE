@@ -41,7 +41,6 @@ namespace mwse::lua {
 			usertypeDefinition["veryFarStaticEnd"] = &mge::DistantLandRenderConfig::VeryFarStaticEnd;
 			usertypeDefinition["veryFarStaticMinSize"] = &mge::DistantLandRenderConfig::VeryFarStaticMinSize;
 			usertypeDefinition["waterCaustics"] = &mge::DistantLandRenderConfig::WaterCaustics;
-			usertypeDefinition["waterReflect"] = &mge::DistantLandRenderConfig::WaterReflect;
 			usertypeDefinition["waterWaveHeight"] = &mge::DistantLandRenderConfig::WaterWaveHeight;
 			usertypeDefinition["wind"] = &mge::DistantLandRenderConfig::Wind;
 			// Note that DistantLandRenderConfig::ShadowResolution does not appear, as it is not configurable.
@@ -268,7 +267,7 @@ namespace mwse::lua {
 			}
 		}
 		else {
-			throw std::invalid_argument("shader argument missing.");
+			throw std::invalid_argument("name argument missing.");
 		}
 		return sol::nil;
 	}
@@ -509,7 +508,7 @@ namespace mwse::lua {
 				names["DistantLand"] = mge::RenderFeature::DistantLand;
 				names["DistantStatics"] = mge::RenderFeature::DistantStatics;
 				names["ReflectiveWater"] = mge::RenderFeature::ReflectiveWater;
-				names["ReflectNear"] = mge::RenderFeature::ReflectNear;
+				names["ReflectNearStatics"] = mge::RenderFeature::ReflectNearStatics;
 				names["ReflectInterior"] = mge::RenderFeature::ReflectInterior;
 				names["ReflectSky"] = mge::RenderFeature::ReflectSky;
 				names["BlurReflections"] = mge::RenderFeature::BlurReflections;
