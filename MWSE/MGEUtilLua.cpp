@@ -442,6 +442,30 @@ namespace mwse::lua {
 		mge::api->weatherPerPixelLightSet(weatherID, sunMult, ambMult);
 	}
 
+	auto mge_getWind(int weatherID, sol::this_state ts) {
+		if (!(weatherID >= 0 && weatherID < 10)) {
+			throw std::invalid_argument("valid weather parameter required.");
+		}
+
+		float speed = mge::api->getDistantLandRenderConfig()->Wind[weatherID];
+		sol::state_view state = ts;
+		return state.create_table_with("weather", weatherID, "speed", speed);
+	}
+
+	auto mge_setWind(sol::optional<sol::table> params) {
+		auto weatherID = getOptionalParam<int>(params, "weather", -1);
+		auto speed = getOptionalParam<float>(params, "speed", -1.0f);
+
+		if (!(weatherID >= 0 && weatherID < 10)) {
+			throw std::invalid_argument("valid weather parameter required.");
+		}
+		if (speed < 0) {
+			throw std::invalid_argument("speed parameter required.");
+		}
+
+		mge::api->getDistantLandRenderConfig()->Wind[weatherID] = speed;
+	}
+
 	auto mge_getWeatherDLFog_legacy(int weatherID) {
 		float fogDistMult, fogOffset;
 		mge::api->weatherDistantFogGet(weatherID, &fogDistMult, &fogOffset);
@@ -593,6 +617,8 @@ namespace mwse::lua {
 			usertypeDefinition["setPerPixelLighting"] = &mge_setWeatherPPLLight;
 			usertypeDefinition["getScattering"] = &mge_getWeatherScattering;
 			usertypeDefinition["setScattering"] = &mge_setWeatherScattering;
+			usertypeDefinition["getWind"] = &mge_getWind;
+			usertypeDefinition["setWind"] = &mge_setWind;
 		}
 		lua_mge["weather"] = MgeWeatherConfig();
 
