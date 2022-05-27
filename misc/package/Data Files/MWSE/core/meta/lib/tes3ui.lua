@@ -27,7 +27,7 @@ function tes3ui.choice(text, index) end
 --- This function closes the book menu.
 function tes3ui.closeBookMenu() end
 
---- Closes the Journal.
+--- Closes the journal menu.
 --- @return boolean result No description yet available.
 function tes3ui.closeJournal() end
 
@@ -301,6 +301,10 @@ function tes3ui.showInventorySelectMenu(params) end
 --- 			- `inventory` ([tes3inventory](https://mwse.github.io/MWSE/types/tes3inventory/)): The inventory containing the items.
 --- 			- `actor` ([tes3actor](https://mwse.github.io/MWSE/types/tes3actor/)): The actor containing the inventory.
 --- 
+
+--- Opens the journal menu. This can return false if the player hasn't gone through character generation, or if the journal was already open.
+--- @return boolean wasShown No description yet available.
+function tes3ui.showJournal() end
 
 --- Displays the scroll menu with arbitrary text. It needs to follow book text conventions as in the Construction Set. In essence, it uses HTML syntax. Important: every book needs to end with a `<BR>` statement to be displayed properly. See [`bookGetText`](https://mwse.github.io/MWSE/events/bookGetText/#examples) for an example of properly formatted scroll text.
 --- @param text string No description yet available.

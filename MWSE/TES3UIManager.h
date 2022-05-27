@@ -27,7 +27,6 @@ namespace TES3 {
 		bool enterMenuMode(const char* id);
 		bool enterMenuMode_lua(sol::object id);
 		bool leaveMenuMode();
-		bool closeJournal();
 		void acquireTextInput(Element* element);
 		void captureMouseDrag(bool capture);
 		void preventInventoryMenuToggle(Element* menu);
@@ -60,6 +59,8 @@ namespace TES3 {
 
 		void closeBookMenu();
 		void closeScrollMenu();
+		bool showJournal();
+		bool closeJournal();
 		void showBookMenu(const char* text);
 		void showScrollMenu(const char* text);
 		void showRestMenu(bool resting = true, bool scripted = true);
