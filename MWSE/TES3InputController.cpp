@@ -64,7 +64,7 @@ namespace TES3 {
 	}
 
 	bool InputController::isAltDown() const {
-		return (keyboardState[DIK_LALT] & 0x80) || (keyboardState[DIK_RALT]);
+		return isKeyDown(DIK_LALT) || isKeyDown(DIK_RALT);
 	}
 
 	bool InputController::isCapsLockActive() const {
@@ -72,15 +72,15 @@ namespace TES3 {
 	}
 
 	bool InputController::isControlDown() const {
-		return (keyboardState[DIK_LCONTROL] & 0x80) || (keyboardState[DIK_RCONTROL]);
+		return isKeyDown(DIK_LCONTROL) || isKeyDown(DIK_RCONTROL);
 	}
 
 	bool InputController::isShiftDown() const {
-		return (keyboardState[DIK_LSHIFT] & 0x80) || (keyboardState[DIK_RSHIFT]);
+		return isKeyDown(DIK_LSHIFT) || isKeyDown(DIK_RSHIFT);
 	}
 
 	bool InputController::isSuperDown() const {
-		return (keyboardState[DIK_LWIN] & 0x80) || (keyboardState[DIK_RWIN]);
+		return isKeyDown(DIK_LWIN) || isKeyDown(DIK_RWIN);
 	}
 
 	bool InputController::keybindTest_lua(unsigned int key, sol::optional<unsigned int> transition) const {
