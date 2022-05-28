@@ -508,6 +508,8 @@ namespace mwse::lua {
 		lua_mge["distantLandRenderConfig"] = mge::api->getDistantLandRenderConfig();
 		lua_mge["reloadDistantLand"] = mge_reloadDistantLand;
 
+		lua_mge["getGUIScale"] = []() { return mge::api->guiGetScale(); };
+		lua_mge["setGUIScale"] = [](float scale) { mge::api->guiSetScale(scale); };
 		lua_mge["getLightingMode"] = mge_getLightingMode;
 		lua_mge["setLightingMode"] = mge_setLightingMode;
 
