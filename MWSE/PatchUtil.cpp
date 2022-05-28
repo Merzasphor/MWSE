@@ -425,17 +425,6 @@ namespace mwse::patch {
 	}
 
 	//
-	// Patch: Fix empty menu positions from saving to the ini.
-	//
-
-	BOOL __stdcall PatchNonEmptyWritePrivateProfileStringA(LPCSTR lpAppName, LPCSTR lpKeyName, LPCSTR lpString, LPCSTR lpFileName) {
-		if (lpString == nullptr || strnlen_s(lpString, 1) == 0) {
-			return FALSE;
-		}
-		return WritePrivateProfileStringA(lpAppName, lpKeyName, lpString, lpFileName);
-	}
-
-	//
 	// Patch: Fix enchantment copying on books and weapons.
 	//
 
@@ -771,9 +760,6 @@ namespace mwse::patch {
 
 		// Patch: Correctly initialize MobileProjectile tag/objectType
 		genCallEnforced(0x572444, 0x4EE8A0, reinterpret_cast<DWORD>(PatchInitializeMobileProjectileType));
-
-		// Patch: Prevent the game from saving empty menu names to the INI file.
-		genCallUnprotected(0x5972AA, reinterpret_cast<DWORD>(PatchNonEmptyWritePrivateProfileStringA), 0x6);
 
 		// Patch: Fix book enchantment copying.
 		genNOPUnprotected(0x4A2618, 0x4A26D8 - 0x4A2618);
