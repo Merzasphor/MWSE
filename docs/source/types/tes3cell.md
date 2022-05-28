@@ -31,7 +31,7 @@ The cell's ambient color. Only available on interior cells.
 
 **Returns**:
 
-* `result` ([tes3packedColor](../../types/tes3packedColor))
+* `result` ([niPackedColor](../../types/niPackedColor))
 
 ***
 
@@ -111,7 +111,7 @@ The cell's fog color. Only available on interior cells.
 
 **Returns**:
 
-* `result` ([tes3packedColor](../../types/tes3packedColor))
+* `result` ([niPackedColor](../../types/niPackedColor))
 
 ***
 
@@ -321,7 +321,7 @@ The cell's sun color. Only available on interior cells.
 
 **Returns**:
 
-* `result` ([tes3packedColor](../../types/tes3packedColor))
+* `result` ([niPackedColor](../../types/niPackedColor))
 
 ***
 

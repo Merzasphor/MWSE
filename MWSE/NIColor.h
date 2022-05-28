@@ -12,7 +12,7 @@ namespace NI {
 		PackedColor() : r(0), g(0), b(0), a(0) {};
 		PackedColor(unsigned char _r, unsigned char _g, unsigned char _b, unsigned char _a = 0) : r(_r), g(_g), b(_b), a(_a) {};
 
-		std::string toString();
+		std::string toString() const;
 	};
 	static_assert(sizeof(PackedColor) == 0x4, "NI::PackedColor failed size validation");
 

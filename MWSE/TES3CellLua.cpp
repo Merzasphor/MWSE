@@ -6,6 +6,8 @@
 #include "TES3Cell.h"
 #include "TES3Region.h"
 
+#include "NIColor.h"
+
 namespace mwse::lua {
 	auto iterateReferencesFiltered(const TES3::Cell* cell, const std::unordered_set<unsigned int> desiredTypes) {
 		// Prepare the lists we care about.
@@ -83,25 +85,6 @@ namespace mwse::lua {
 		// Get our lua state.
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 		auto& state = stateHandle.state;
-
-		// Binding for TES3::PackedColor
-		{
-			// Start our usertype.
-			auto usertypeDefinition = state.new_usertype<TES3::PackedColor>("tes3packedColor");
-			usertypeDefinition["new"] = sol::no_constructor;
-
-			// Basic property binding.
-			usertypeDefinition["r"] = &TES3::PackedColor::r;
-			usertypeDefinition["g"] = &TES3::PackedColor::g;
-			usertypeDefinition["b"] = &TES3::PackedColor::b;
-			usertypeDefinition["a"] = &TES3::PackedColor::a;
-
-			// 
-			usertypeDefinition["red"] = &TES3::PackedColor::r;
-			usertypeDefinition["green"] = &TES3::PackedColor::g;
-			usertypeDefinition["blue"] = &TES3::PackedColor::b;
-			usertypeDefinition["alpha"] = &TES3::PackedColor::a;
-		}
 
 		// Binding for TES3::Cell
 		{
