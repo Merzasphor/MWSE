@@ -32,6 +32,12 @@ namespace mwse::lua::event {
 			eventData["fallback"] = m_Fallback;
 		}
 
+		auto attacker = m_Mobile->actionData.target;
+		if (attacker) {
+			eventData["attacker"] = attacker->reference;
+			eventData["attackerMobile"] = attacker;
+		}
+
 		return eventData;
 	}
 

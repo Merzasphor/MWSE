@@ -28,25 +28,25 @@ namespace TES3 {
 		auto nonDynamicData = dataHandler->nonDynamicData;
 		auto worldController = WorldController::get();
 
-		float totalAR = calculateArmorRating();
+		auto totalAR = calculateArmorRating();
 
-		float adjustedDamage = damage / (totalAR + damage) * damage;
+		auto adjustedDamage = damage / (totalAR + damage) * damage;
 
-		float adjustedDamageRatio = adjustedDamage / damage;
-		float fCombatArmorMinMult = nonDynamicData->GMSTs[GMST::fCombatArmorMinMult]->value.asFloat;
+		auto adjustedDamageRatio = adjustedDamage / damage;
+		auto fCombatArmorMinMult = nonDynamicData->GMSTs[GMST::fCombatArmorMinMult]->value.asFloat;
 		if (adjustedDamageRatio < fCombatArmorMinMult) {
 			adjustedDamage = fCombatArmorMinMult * damage;
 		}
 
-		float armorDamage = damage - adjustedDamage;
+		auto armorDamage = damage - adjustedDamage;
 		if (adjustedDamage < 1.0f) {
 			adjustedDamage = 1.0f;
 		}
 
 		// Figure out what slot we're going to hit.
-		ArmorSlot::ArmorSlot primarySlot = ArmorSlot::Invalid;
-		ArmorSlot::ArmorSlot fallbackSlot = ArmorSlot::Invalid;
-		int hitSlotRoll = mwse::tes3::rand() % 100;
+		auto primarySlot = ArmorSlot::Invalid;
+		auto fallbackSlot = ArmorSlot::Invalid;
+		auto hitSlotRoll = mwse::tes3::rand() % 100;
 		if (hitSlotRoll < 30) {
 			primarySlot = ArmorSlot::Cuirass;
 		}
@@ -101,7 +101,7 @@ namespace TES3 {
 			}
 		}
 
-		int hitArmorClass = -1;
+		auto hitArmorClass = -1;
 		if (hitArmorStack) {
 			hitArmorClass = reinterpret_cast<Armor*>(hitArmorStack->object)->getWeightClass();
 			if (damageEquipment) {
@@ -114,7 +114,7 @@ namespace TES3 {
 			}
 		}
 
-		TES3::Sound * hitSound = nullptr;
+		TES3::Sound* hitSound = nullptr;
 		if (hitArmorClass == ArmorWeightClass::Light) {
 			hitSound = worldController->soundLightArmorHit;
 		}
@@ -127,12 +127,12 @@ namespace TES3 {
 
 		if (hitSound) {
 			// Calculate the hit volume based on the strength of the swing.
-			float volume = (swing * 50.0f + 200.0f) * worldController->audioController->getMixVolume(AudioMixType::Effects);;
+			auto volume = (swing * 50.0f + 200.0f) * worldController->audioController->getMixVolume(AudioMixType::Effects);;
 			dataHandler->addSound(hitSound, reference, 0, volume);
 		}
 
 		if (actorType == TES3::MobileActorType::Player) {
-			TES3::SkillID::SkillID leveledSkill = TES3::SkillID::Unarmored;
+			auto leveledSkill = TES3::SkillID::Unarmored;
 
 			if (hitArmorClass == ArmorWeightClass::Light) {
 				leveledSkill = TES3::SkillID::LightArmor;
@@ -144,7 +144,7 @@ namespace TES3 {
 				leveledSkill = TES3::SkillID::HeavyArmor;
 			}
 
-			float progress = nonDynamicData->skills[leveledSkill].progressActions[0];
+			auto progress = nonDynamicData->skills[leveledSkill].progressActions[0];
 			worldController->getMobilePlayer()->exerciseSkill(leveledSkill, progress);
 		}
 
