@@ -9,9 +9,9 @@ return {
 			description = "The reference associated with the change in readied weapon.",
 		},
 		["weaponStack"] = {
-			type = "tes3baseObject",
+			type = "tes3equipmentStack",
 			readOnly = true,
-			description = "The bundle that contains the newly readied weapon and its associated data.",
+			description = "The stack that contains the newly readied weapon and its associated data.",
 		},
 	},
 }

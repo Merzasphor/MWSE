@@ -1,6 +1,6 @@
 # convertReferenceToItem
 
-This event is raised when an in-world `tes3reference` for an item is about to be converted to fit into a `tes3itemStack`.
+This event is raised when an in-world `tes3reference` for an item is about to be converted to fit into a `tes3itemStack`. Note that reference.itemData.owner is always nil, as the game clears it earlier when evaluating theft mechanics.
 
 ```lua
 --- @param e convertReferenceToItemEventData
