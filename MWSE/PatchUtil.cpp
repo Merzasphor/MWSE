@@ -425,6 +425,25 @@ namespace mwse::patch {
 	}
 
 	//
+	// Patch: Fix crash when saving menu position if the derived key name is too long.
+	//
+
+	__declspec(naked) void PatchSaveMenuPositionRightPad() {
+		__asm {
+			// Clamp eax <= 32
+			cmp eax, 32
+			jbe clamped
+			mov eax, 32
+		clamped:
+			// Null terminate padding so that key length+padding length is at least 32
+			lea ecx, [esp+4+0x64]
+			sub ecx, eax
+			mov byte ptr [ecx], 0
+			ret
+		}
+	}
+
+	//
 	// Patch: Fix enchantment copying on books and weapons.
 	//
 
@@ -760,6 +779,10 @@ namespace mwse::patch {
 
 		// Patch: Correctly initialize MobileProjectile tag/objectType
 		genCallEnforced(0x572444, 0x4EE8A0, reinterpret_cast<DWORD>(PatchInitializeMobileProjectileType));
+
+		// Patch: Fix crash when saving menu position if the derived key name is too long.
+		genCallUnprotected(0x597061, reinterpret_cast<DWORD>(PatchSaveMenuPositionRightPad), 0x6);
+		genNOPUnprotected(0x59706C, 0x59706F - 0x59706C);
 
 		// Patch: Fix book enchantment copying.
 		genNOPUnprotected(0x4A2618, 0x4A26D8 - 0x4A2618);
