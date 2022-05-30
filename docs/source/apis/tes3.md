@@ -912,7 +912,7 @@ tes3.closeSpellmakingMenu()
 
 ### `tes3.createObject`
 
-Create an object and returns it. The created object will be part of the saved game. Currently supported object types are: `tes3.objectType.activator`, `.alchemy`, `.ammo`, `.container`, `.misc`, `.sound`, `.spell`, `.static`, `.enchantment`, `.weapon`.
+Create an object and returns it. The created object will be part of the saved game. Currently supported object types are: `tes3.objectType.activator`, `.alchemy`, `.ammo`, `.book`, `.clothing`, `.container`, `.enchantment`, `.miscItem`, `.sound`, `.spell`, `.static`, and `.weapon`.
 
 ```lua
 local createdObject = tes3.createObject({ objectType = ..., getIfExists = ... })
