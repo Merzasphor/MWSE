@@ -2741,7 +2741,7 @@ local object = tes3.iterateObjects(filter)
 
 **Parameters**:
 
-* `filter` (number): Maps to [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) constants.
+* `filter` (number, number[], nil): Maps to [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) constants.
 
 **Returns**:
 
