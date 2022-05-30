@@ -12,65 +12,92 @@
 namespace TES3 {
 	namespace UI {
 		struct Element {
-			char tag;
-			String name;
-			short id;
-			Vector<Element*> vectorChildren;
-			Element* parent;
-			Tree properties;
+			char tag; // 0x0
+			String name; // 0x4
+			short id; // 0x14
+			Vector<Element*> vectorChildren; // 0x18
+			Element* parent; // 0x28
+			Tree properties; // 0x2C
 			Element* uielement_3C;
 			Vector<void> vectorVerts_40;
 			Vector<void> vector_50;
 			Vector<void> vector_60;
-			int updateReqTimestamp;
-			bool flagExtendImageToBounds;
-			bool visible;
-			bool visibleAtLastUpdate;
-			bool flagUsesRGBA;
-			bool flagPosChanged;
-			bool flagSizeChanged;
-			bool flagVisibilityChanged;
-			bool flagClippingChanged;
-			bool flagContentChanged;
+			int updateReqTimestamp; // 0x70
+			bool flagExtendImageToBounds; // 0x74
+			bool visible; // 0x75
+			bool visibleAtLastUpdate; // 0x76
+			bool flagUsesRGBA; // 0x77
+			bool flagPosChanged; // 0x78
+			bool flagSizeChanged; // 0x79
+			bool flagVisibilityChanged; // 0x7A
+			bool flagClippingChanged; // 0x7B
+			bool flagContentChanged; // 0x7C
 			char unknown_0x7D;
 			char unknown_0x7E;
-			bool flagConsumeMouseEvents;
+			bool flagConsumeMouseEvents; // 0x7F
 			char unknown_0x80;
 			char unknown_0x81;
 			char unknown_0x82;
 			char unknown_0x83;
 			int unknown_0x84;
-			NI::Pointer<NI::Node> sceneNode;
-			void* extraData;
-			NI::Pointer<NI::SourceTexture> texture;
-			int cached_offsetX, cached_offsetY;
-			int nodeMinX, nodeMaxX;
-			int nodeMinY, nodeMaxY;
-			int cached_unknown_x, cached_unknown_y;
-			int borderAllSides;
-			int borderLeft, borderRight, borderBottom, borderTop;
-			int paddingAllSides;
-			int paddingLeft, paddingRight, paddingBottom, paddingTop;
-			int positionX, positionY;
-			int cached_screenX, cached_screenY;
-			int width, height;
-			int childOffsetX, childOffsetY;
-			int minWidth, minHeight;
-			int maxWidth, maxHeight;
-			int inheritedWidth, inheritedHeight;
-			bool flagAutoWidth, flagAutoHeight;
-			float widthProportional, heightProportional;
-			float absolutePosAlignX, absolutePosAlignY;
-			int clipMinX, clipMaxX;
-			int clipMinY, clipMaxY;
-			Property scale_mode;
-			int nodeOffsetX, nodeOffsetY;
-			float imageScaleX, imageScaleY;
-			float colourRed, colourGreen, colourBlue, colourAlpha;
-			int font;
-			Property contentType;
-			String rawText;
-			String contentPath;
+			NI::Pointer<NI::Node> sceneNode; // 0x88
+			void* extraData; // 0x8C
+			NI::Pointer<NI::SourceTexture> texture; // 0x90
+			int cached_offsetX; // 0x94
+			int cached_offsetY; // 0x98
+			int nodeMinX; // 0x9C
+			int nodeMaxX; // 0xA0
+			int nodeMinY; // 0xA4
+			int nodeMaxY; // 0xA8
+			int cached_unknown_x; // 0xAC
+			int cached_unknown_y; // 0xB0
+			int borderAllSides; // 0xB4
+			int borderLeft; // 0xB8
+			int borderRight; // 0xBC
+			int borderBottom; // 0xC0
+			int borderTop; // 0xC4
+			int paddingAllSides; // 0xC8
+			int paddingLeft; // 0xCC
+			int paddingRight; // 0xD0
+			int paddingBottom; // 0xD4
+			int paddingTop; // 0xD8
+			int positionX; // 0xDC
+			int positionY; // 0xE0
+			int cached_screenX; // 0xE4
+			int cached_screenY; // 0xE8
+			int width; // 0xEC
+			int height; // 0xF0
+			int childOffsetX; // 0xF4
+			int childOffsetY; // 0xF8
+			int minWidth; // 0xFC
+			int minHeight; // 0x100
+			int maxWidth; // 0x104
+			int maxHeight; // 0x108
+			int inheritedWidth; // 0x10C
+			int inheritedHeight; // 0x110
+			bool flagAutoWidth; // 0x114
+			bool flagAutoHeight; // 0x115
+			float widthProportional; // 0x118
+			float heightProportional; // 0x1C
+			float absolutePosAlignX; // 0x120
+			float absolutePosAlignY; // 0x124
+			int clipMinX; // 0x128
+			int clipMaxX; // 0x12C
+			int clipMinY; // 0x130
+			int clipMaxY; // 0x134
+			Property scale_mode; // 0x138
+			int nodeOffsetX; // 0x13C
+			int nodeOffsetY; // 0x140
+			float imageScaleX; // 0x144
+			float imageScaleY; // 0x148
+			float colourRed; // 0x14C
+			float colourGreen; // 0x150
+			float colourBlue; // 0x154
+			float colourAlpha; // 0x158
+			int font; // 0x15C
+			Property contentType; // 0x160
+			String rawText; // 0x164
+			String contentPath; // 0x168
 
 			Element() = delete;
 			~Element() = delete;
