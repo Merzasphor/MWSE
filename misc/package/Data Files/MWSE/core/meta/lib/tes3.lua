@@ -624,7 +624,7 @@ function tes3.closeRestMenu() end
 --- This function closes the spellmaking menu.
 function tes3.closeSpellmakingMenu() end
 
---- Create an object and returns it. The created object will be part of the saved game. Currently supported object types are: `tes3.objectType.activator`, `.alchemy`, `.ammo`, `.container`, `.misc`, `.sound`, `.spell`, `.static`, `.enchantment`, `.weapon`.
+--- Create an object and returns it. The created object will be part of the saved game. Currently supported object types are: `tes3.objectType.activator`, `.alchemy`, `.ammo`, `.book`, `.clothing`, `.container`, `.enchantment`, `.miscItem`, `.sound`, `.spell`, `.static`, and `.weapon`.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3/#tes3createobject).
 --- @param params tes3.createObject.params This table accepts the following values:
