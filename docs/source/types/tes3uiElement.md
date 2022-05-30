@@ -1014,6 +1014,24 @@ local result = myObject:getContentElement()
 
 ***
 
+### `getLuaData`
+
+Gets an arbitrary lua value from the UI element. Each element has the capability to store keyed lua data, as if it were a table, using this function and `setLuaData`.
+
+```lua
+local result = myObject:getLuaData(key)
+```
+
+**Parameters**:
+
+* `key` (string): The key for the lua data.
+
+**Returns**:
+
+* `result` (any)
+
+***
+
 ### `getPropertyBool`
 
 Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. Returns `false` if the property key did not have data.
@@ -1346,6 +1364,21 @@ Saves the menu's position and size information to the Morrowind.ini file. This m
 ```lua
 myObject:saveMenuPosition()
 ```
+
+***
+
+### `setLuaData`
+
+Sets an arbitrary lua value for the UI element. Each element has the capability to store keyed lua data, as if it were a table, using this function and `getLuaData`.
+
+```lua
+myObject:setLuaData(key, value)
+```
+
+**Parameters**:
+
+* `key` (string): The key for the lua data.
+* `value` (any): The value to set.
 
 ***
 

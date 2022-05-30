@@ -383,6 +383,11 @@ function tes3uiElement:forwardEvent(id) end
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:getContentElement() end
 
+--- Gets an arbitrary lua value from the UI element. Each element has the capability to store keyed lua data, as if it were a table, using this function and `setLuaData`.
+--- @param key string The key for the lua data.
+--- @return any result No description yet available.
+function tes3uiElement:getLuaData(key) end
+
 --- Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. Returns `false` if the property key did not have data.
 --- @param propName string The property name.
 --- @return boolean result No description yet available.
@@ -564,6 +569,11 @@ function tes3uiElement:reorderChildren(insertBefore, moveFrom, count) end
 
 --- Saves the menu's position and size information to the Morrowind.ini file. This may only be called on top-level parents. Note that most menus save their position automatically.
 function tes3uiElement:saveMenuPosition() end
+
+--- Sets an arbitrary lua value for the UI element. Each element has the capability to store keyed lua data, as if it were a table, using this function and `getLuaData`.
+--- @param key string The key for the lua data.
+--- @param value any The value to set.
+function tes3uiElement:setLuaData(key, value) end
 
 --- Sets a property value with `prop` as the property key. Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties.
 --- @param propName string The property name.

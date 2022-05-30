@@ -20,7 +20,7 @@ namespace TES3 {
 			Pointer = 0x8,
 			Property = 0x10,
 			EventCallback = 0x20,
-			PropertyAccessCallback = 0x40
+			PropertyAccessCallback = 0x40,
 		};
 
 		enum class Property : short {

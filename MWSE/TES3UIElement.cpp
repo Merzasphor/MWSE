@@ -1,8 +1,9 @@
 #include "string.h"
 
-#include "TES3UIInventoryTile.h"
-#include "TES3UIManager.h"
 #include "TES3UIElement.h"
+#include "TES3UIInventoryTile.h"
+#include "TES3UILuaData.h"
+#include "TES3UIManager.h"
 #include "TES3UIWidgets.h"
 
 #include "TES3Inventory.h"
@@ -410,6 +411,7 @@ namespace TES3 {
 		static Property propButton, propFillbar, propParagraphInput;
 		static Property propScrollBar, propScrollPaneH, propScrollPaneV;
 		static Property propTextInput, propTextSelect;
+		static Property propLuaData;
 		static UI_ID uiidButtonText, uiidParagraphInputText;
 		void deferredPropInit() {
 			static bool init = false;
@@ -422,6 +424,7 @@ namespace TES3 {
 				propScrollPaneV = registerProperty("PartScrollPaneVert");
 				propTextInput = registerProperty("PartTextInput");
 				propTextSelect = registerProperty("PartTextSelect");
+				propLuaData = registerProperty("MWSE:LuaData");
 				uiidButtonText = registerID("PartButton_text_ptr");
 				uiidParagraphInputText = registerID("PartParagraphInput_text_input");
 				init = true;
@@ -1040,6 +1043,31 @@ namespace TES3 {
 
 		void Element::setPropertyProperty_lua(sol::object key, Property value) {
 			setProperty(getPropertyFromObject(key), value);
+		}
+
+		LuaData* Element::getLuaDataContainer() const {
+			deferredPropInit();
+
+			return reinterpret_cast<LuaData*>(getProperty(PropertyType::Pointer, propLuaData).ptrValue);
+		}
+
+		sol::object Element::getLuaData(const std::string_view& key) const {
+			auto container = getLuaDataContainer();
+			if (container == nullptr) {
+				return sol::nil;
+			}
+
+			return container->getValue(key);
+		}
+
+		void Element::setLuaData(sol::this_state ts, const std::string_view& key, sol::object value) {
+			auto container = getLuaDataContainer();
+			if (container == nullptr) {
+				container = new LuaData(ts);
+				setProperty(propLuaData, container);
+			}
+
+			container->setValue(key, value);
 		}
 
 		void Element::registerBefore_lua(const std::string& eventID, sol::protected_function callback, sol::optional<double> priority) {

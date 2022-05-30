@@ -7,6 +7,7 @@
 #include "LuaUtil.h"
 
 #include "TES3UIElement.h"
+#include "TES3UILuaData.h"
 #include "TES3UIManager.h"
 #include "TES3UIMenuController.h"
 
@@ -962,6 +963,12 @@ namespace TES3 {
 
 			// Clean up any lua event registration.
 			mwse::lua::cleanupEventRegistrations(self);
+
+			// Clean up any lua data.
+			auto luaData = self->getLuaDataContainer();
+			if (luaData) {
+				delete luaData;
+			}
 		}
 
 		void hook() {

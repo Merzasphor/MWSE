@@ -131,6 +131,10 @@ namespace mwse::lua {
 		usertypeDefinition["setPropertyObject"] = &Element::setPropertyObject_lua;
 		usertypeDefinition["setPropertyProperty"] = &Element::setPropertyProperty_lua;
 
+		// Custom lua property accessor functions.
+		usertypeDefinition["getLuaData"] = &Element::getLuaData;
+		usertypeDefinition["setLuaData"] = &Element::setLuaData;
+
 		// Event functions.
 		usertypeDefinition["registerBefore"] = &Element::registerBefore_lua;
 		usertypeDefinition["registerAfter"] = &Element::registerAfter_lua;

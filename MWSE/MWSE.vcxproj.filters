@@ -1635,6 +1635,9 @@
     <ClInclude Include="LuaKeybindTestedEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
+    <ClInclude Include="TES3UILuaData.h">
+      <Filter>Header Files\DataAdapters\TES3\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -3577,6 +3580,9 @@
     </ClCompile>
     <ClCompile Include="LuaKeybindTestedEvent.cpp">
       <Filter>Source Files\Lua\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3UILuaData.cpp">
+      <Filter>Source Files\DataAdapters\TES3\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
