@@ -1,0 +1,120 @@
+--
+-- Provides lua-written extensions to the UI library.
+--
+
+local common = require("mwse.ui.common")
+
+---@param e tes3uiEventData
+local function preTextInputKeyPress(e)
+	local element = e.source
+	local inputController = tes3.worldController.inputController
+	local characterEntered = common.eventCallbackHelper.getChacterPressed(e)
+
+	-- Prevent tabs from inserting themselves for when alt-tabbing.
+	if (inputController:isKeyDown(tes3.scanCode.tab)) then
+		return false
+	end
+
+	-- Are we in the placeholder state? Prevent garbage inputs.
+	local placeholderText = element:getLuaData("placeholderText") --- @type string?
+	if (element.text == placeholderText and characterEntered == nil) then
+		return false
+	end
+
+	-- Is this field numbers-only?
+	if (characterEntered and element:getLuaData("numeric") and characterEntered and not tonumber(characterEntered)) then
+		return false
+	end
+
+	-- Update previous text.
+	element:setLuaData("previousText", element.text)
+end
+
+---@param e tes3uiEventData
+local function postTextInputKeyPress(e)
+	local element = e.source
+
+	-- Check if we need to change back to placeholder text.
+	local placeholderText = element:getLuaData("placeholderText") --- @type string?
+	if (placeholderText and element.text == "") then
+		element.text = placeholderText
+		element.color = tes3ui.getPalette("disabled_color")
+
+		-- Raise textCleared event.
+		element:triggerEvent("textCleared")
+
+		-- Update previous text.
+		element:setLuaData("previousText", element.text)
+
+		-- We don't need to do anything else from here.
+		return
+	end
+
+	-- Ungray the text.
+	element.color = tes3ui.getPalette("normal_color")
+
+	-- Raise textUpdated event.
+	local previousText = element:getLuaData("placeholderText") --- @type string?
+	if (element.text ~= previousText) then
+		element:triggerEvent("textUpdated")
+	end
+
+	-- Update previous text.
+	element:setLuaData("previousText", element.text)
+
+	element:updateLayout()
+end
+
+function tes3uiElement:createTextInput(params)
+	params = params or {}
+
+	-- Create our element.
+	local element = self:_createTextInput(params) ---@diagnostic disable-line
+	local asWidget = element.widget
+
+	-- Basic property setting.
+	if (params.text) then
+		element.text = params.text
+	end
+
+	-- Detect if we need to do any special handling.
+	local addStandardKeyEvents = false
+
+	-- Allow placeholder text.
+	local placeholderText = params.placeholderText
+	if (placeholderText) then
+		element:setLuaData("placeholderText", placeholderText)
+		addStandardKeyEvents = true
+
+		-- If we weren't given text, set to the placeholder text.
+		if (params.text == nil) then
+			element.text = placeholderText
+		end
+
+		-- Fix color if we are using the placeholder text.
+		if (params.text == nil or params.text == placeholderText) then
+			element.color = tes3ui.getPalette("disabled_color")
+		end
+
+		asWidget.eraseOnFirstKey = true
+	end
+
+	-- Only allow numbers.
+	if (params.numeric) then
+		addStandardKeyEvents = true
+		element:setLuaData("numeric", true)
+	end
+
+	-- Handle focus.
+	element:registerAfter("mouseClick", common.eventCallback.focusOnClick)
+	if (params.autoFocus) then
+		tes3ui.acquireTextInput(element)
+	end
+
+	if (addStandardKeyEvents) then
+		element:registerBefore("keyPress", preTextInputKeyPress)
+		element:registerAfter("keyPress", postTextInputKeyPress)
+	end
+
+	return element
+end

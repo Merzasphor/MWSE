@@ -312,12 +312,24 @@ function tes3uiElement:createSliderVertical(params) end
 --- @param params tes3uiElement.createTextInput.params? This table accepts the following values:
 --- 
 --- `id`: string|number|nil — *Optional*. An identifier to help find this element later.
+--- 
+--- `text`: string? — *Optional*. The initial text to use for the input.
+--- 
+--- `placeholderText`: string? — *Optional*. Placeholder text for the input. If the element is ever made empty, this will be displayed instead in the disabled text color.
+--- 
+--- `numeric`: boolean? — *Default*: `false`. If true, only numbers can be put into the input. The text value of the element will still be a string, and need to be converted using `tonumber`.
+--- 
+--- `autoFocus`: boolean? — *Default*: `false`. If true, the input will be automatically focused after creation.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createTextInput(params) end
 
 ---Table parameter definitions for `tes3uiElement.createTextInput`.
 --- @class tes3uiElement.createTextInput.params
 --- @field id string|number|nil *Optional*. An identifier to help find this element later.
+--- @field text string? *Optional*. The initial text to use for the input.
+--- @field placeholderText string? *Optional*. Placeholder text for the input. If the element is ever made empty, this will be displayed instead in the disabled text color.
+--- @field numeric boolean? *Default*: `false`. If true, only numbers can be put into the input. The text value of the element will still be a string, and need to be converted using `tonumber`.
+--- @field autoFocus boolean? *Default*: `false`. If true, the input will be automatically focused after creation.
 
 --- Creates a selectable line of text, with configurable hover, click, and disabled colours. Can be used to create a list box by placing them in a ScrollPane.
 --- 

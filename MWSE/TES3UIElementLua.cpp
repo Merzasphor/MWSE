@@ -172,10 +172,12 @@ namespace mwse::lua {
 		usertypeDefinition["createRect"] = &Element::createRect_lua;
 		usertypeDefinition["createSlider"] = &Element::createSlider_lua;
 		usertypeDefinition["createSliderVertical"] = &Element::createSliderVertical_lua;
-		usertypeDefinition["createTextInput"] = &Element::createTextInput_lua;
 		usertypeDefinition["createTextSelect"] = &Element::createTextSelect_lua;
 		usertypeDefinition["createThinBorder"] = &Element::createThinBorder_lua;
 		usertypeDefinition["createVerticalScrollPane"] = &Element::createVerticalScrollPane_lua;
+
+		// Internal functions. These typically have a wrapper function defined in lua.
+		usertypeDefinition["_createTextInput"] = &Element::createTextInput_lua;
 
 		usertypeDefinition["destroy"] = &Element::destroy;
 	}
