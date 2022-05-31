@@ -303,7 +303,7 @@ local function onClickModConfigButton()
 		bottomBlock.childAlignX = 1.0
 
 		-- Add a close button to the bottom block.
-		local closeButton = bottomBlock:createButton({ id = "CloseButton", text = tes3.findGMST(tes3.gmst.sClose).value })
+		local closeButton = bottomBlock:createButton({ id = "MWSE:ModConfigMenu_Close", text = tes3.findGMST(tes3.gmst.sClose).value })
 		closeButton:register("mouseClick", onClickCloseButton)
 		event.register("keyDown", onClickCloseButton, { filter = tes3.scanCode.escape })
 		-- Cause the menu to refresh itself.
