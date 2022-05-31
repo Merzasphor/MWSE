@@ -8,7 +8,7 @@ local common = require("mwse.ui.common")
 local function preTextInputKeyPress(e)
 	local element = e.source
 	local inputController = tes3.worldController.inputController
-	local characterEntered = common.eventCallbackHelper.getChacterPressed(e)
+	local characterEntered = common.eventCallbackHelper.getCharacterPressed(e)
 
 	-- Prevent tabs from inserting themselves for when alt-tabbing.
 	if (inputController:isKeyDown(tes3.scanCode.tab)) then

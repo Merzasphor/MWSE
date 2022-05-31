@@ -14,7 +14,7 @@ function eventCallbackHelper.getKeyPressed(e)
 end
 
 ---@param e tes3uiEventData
-function eventCallbackHelper.getChacterPressed(e)
+function eventCallbackHelper.getCharacterPressed(e)
 	if (e.data0 <= 0) then --- @diagnostic disable-line
 		return nil
 	end
