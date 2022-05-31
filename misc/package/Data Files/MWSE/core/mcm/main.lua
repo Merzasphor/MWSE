@@ -81,52 +81,12 @@ local function caseInsensitiveSorter(a, b)
 	return a:lower() < b:lower()
 end
 
-local function focusSearchBar()
-	local menu = tes3ui.findMenu("MWSE:ModConfigMenu")
-	if (not menu) then return end
-
-	local searchBar = menu:findChild("SearchBar")
+---@param e tes3uiEventData
+local function focusSearchBar(e)
+	local searchBar = e.source:findChild("SearchBar")
 	if (not searchBar) then return end
 
 	tes3ui.acquireTextInput(searchBar)
-end
-
-local searchPlaceholderText = "Search..."
-
-local function getAnyKeyDown(...)
-	local inputController = tes3.worldController.inputController
-	for _, key in ipairs({ ... }) do
-		if (inputController:isKeyDown(key)) then
-			return true
-		end
-	end
-	return false
-end
-
----@param e tes3uiEventData
-local function preventWeirdInputBehavior(e)
-	local input = e.source
-	local inputController = tes3.worldController.inputController
-
-	-- Prevent tabs from inserting themselves for when alt-tabbing.
-	if (inputController:isKeyDown(tes3.scanCode.tab)) then
-		return false
-	end
-
-	-- Are we in the placeholder state?
-	local placeholding = input.text == searchPlaceholderText
-
-	-- Prevent deleting of placeholder text.
-	local deleting = getAnyKeyDown(tes3.scanCode.delete, tes3.scanCode.backspace)
-	if (placeholding and deleting) then
-		return false
-	end
-
-	-- Prevent moving into placeholder text.
-	local movingCursor = getAnyKeyDown(tes3.scanCode.keyUp, tes3.scanCode.keyDown, tes3.scanCode.keyLeft, tes3.scanCode.keyRight)
-	if (placeholding and movingCursor) then
-		return false
-	end
 end
 
 local function filterModByName(modName, searchText)
@@ -148,36 +108,20 @@ local function filterModByName(modName, searchText)
 end
 
 ---@param e tes3uiEventData
-local function onSearchKeyPress(e)
-	local searchBar = e.source
-
-	-- If we ended up with nothing, set back to placeholder state.
-	if (searchBar.text == "" or searchBar.text == searchPlaceholderText) then
-		-- Reset search text/color.
-		searchBar.text = searchPlaceholderText
-		searchBar.color = tes3ui.getPalette("disabled_color")
-
-		-- Unhide children.
-		local modList = searchBar:getTopLevelMenu():findChild("ModList"):getContentElement()
-		for _, child in ipairs(modList.children) do
-			child.visible = true
-		end
-
-		return
-	end
-
-	-- Ungray the text.
-	searchBar.color = tes3ui.getPalette("normal_color")
-
-	-- Hide anything that doesn't match.
-	local lowerSearchText = searchBar.text:lower()
-	local modList = searchBar:getTopLevelMenu():findChild("ModList"):getContentElement()
+local function onSearchUpdated(e)
+	local lowerSearchText = e.source.text:lower()
+	local modList = e.source:getTopLevelMenu():findChild("ModList"):getContentElement()
 	for _, child in ipairs(modList.children) do
 		child.visible = filterModByName(child.text, lowerSearchText)
 	end
+end
 
-	searchBar:updateLayout()
-	modList:updateLayout()
+---@param e tes3uiEventData
+local function onSearchCleared(e)
+	local modList = e.source:getTopLevelMenu():findChild("ModList"):getContentElement()
+	for _, child in ipairs(modList.children) do
+		child.visible = true
+	end
 end
 
 -- Callback for when the mod config button has been clicked.
@@ -187,10 +131,12 @@ local function onClickModConfigButton()
 	tes3.worldController.menuClickSound:play()
 
 	local menu = tes3ui.findMenu("MWSE:ModConfigMenu")
-	if (menu == nil) then
+	if (not menu) then
+		-- Fix dumb lua extensions.
+		--- @cast menu tes3uiElement
+
 		-- Create the main menu frame.
 		menu = tes3ui.createMenu({ id = "MWSE:ModConfigMenu", dragFrame = true })
-		--- @cast menu tes3uiElement
 		menu.text = mwse.mcm.i18n("Mod Configuration")
 		menu.minWidth = 600
 		menu.minHeight = 500
@@ -223,22 +169,20 @@ local function onClickModConfigButton()
 		searchBlock.widthProportional = 1.0
 		searchBlock.autoHeight = true
 
-		local searchBar = searchBlock:createTextInput({ id = "SearchBar" })
-		searchBar.color = tes3ui.getPalette("disabled_color")
+		local searchBar = searchBlock:createTextInput({
+			id = "SearchBar",
+			placeholderText = "Search...",
+			autoFocus = true,
+		})
 		searchBar.borderLeft = 5
 		searchBar.borderRight = 5
 		searchBar.borderTop = 3
 		searchBar.borderBottom = 5
-		searchBar.text = searchPlaceholderText
-		searchBar.widget.eraseOnFirstKey = true
-		searchBar.consumeMouseEvents = false
-		searchBar:registerBefore("keyPress", preventWeirdInputBehavior)
-		searchBar:registerAfter("keyPress", onSearchKeyPress)
+		searchBar:registerAfter("textUpdated", onSearchUpdated)
+		searchBar:registerAfter("textCleared", onSearchCleared)
 
-		-- Auto-focus the search bar.
-		tes3ui.acquireTextInput(searchBar)
+		-- Make clicking on the block focus the search input.
 		searchBlock:register("mouseClick", focusSearchBar)
-		searchBar:register("mouseClick", focusSearchBar)
 
 		-- Create the mod list.
 		local modList = leftBlock:createVerticalScrollPane({ id = "ModList" })
