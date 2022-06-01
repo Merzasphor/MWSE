@@ -130,7 +130,7 @@ local result = tes3ui.createHelpLayerMenu({ id = ... })
 Creates a top-level menu.
 
 ```lua
-local result = tes3ui.createMenu({ id = ..., dragFrame = ..., fixedFrame = ..., loadable = ... })
+local result = tes3ui.createMenu({ id = ..., dragFrame = ..., fixedFrame = ..., modal = ..., loadable = ... })
 ```
 
 **Parameters**:
@@ -138,7 +138,8 @@ local result = tes3ui.createMenu({ id = ..., dragFrame = ..., fixedFrame = ..., 
 * `params` (table)
 	* `id` (string, number): The menu’s ID. The menu can be later accessed by tes3ui.findMenu(id).
 	* `dragFrame` (boolean): *Default*: `false`. Constructs a draggable and resizeable frame and background for the menu. It is similar to the stats, inventory, magic and map menus in the standard UI. Its title bar text can be set with the .text property. After construction, position and minimum dimensions should be set.
-	* `fixedFrame` (boolean): *Default*: `false`. Constructs a fixed (non-draggable) frame and background for the menu. The layout system should automatically centre and size it to fit whatever is added to the menu.
+	* `fixedFrame` (boolean): *Default*: `false`. Constructs a fixed (non-draggable) frame and background for the menu. The layout system should automatically centre and size it to fit whatever is added to the menu. This type of menu is modal by default, preventing interaction with other menus while the menu is active.
+	* `modal` (boolean): *Default*: `true`. Only applies to fixedFrame menus. Modal menus prevent interaction with other menus while the menu is active. This behavior can be disabled with this flag.
 	* `loadable` (boolean): *Default*: `true`. If set to false, calls to loadMenuPosition will fail.
 
 **Returns**:

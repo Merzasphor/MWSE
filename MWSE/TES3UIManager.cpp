@@ -105,6 +105,12 @@ namespace TES3 {
 				menu->createFixedFrame(id, 1);
 				// Standard behaviours
 				preventInventoryMenuToggle(menu);
+
+				// Optionally turn off modal feature of fixedFrame menus.
+				if (!params.get_or("modal", true)) {
+					const auto returnTrueFunc = reinterpret_cast<EventCallback>(0x5A7655);
+					menu->setProperty(TES3::UI::Property::event_unfocus, returnTrueFunc);
+				}
 			}
 			else if (params.get_or("dragFrame", false)) {
 				menu->createDragFrame(id, 1);
