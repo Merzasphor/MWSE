@@ -503,6 +503,9 @@ namespace mwse::lua {
 		// General functions.
 		lua_mge["getVersion"] = mge_getVersion;
 
+		lua_mge["loadConfig"] = [] { if (!mge::api->loadConfig()) throw std::runtime_error("mge.loadConfig failed."); };
+		lua_mge["saveConfig"] = [] { if (!mge::api->saveConfig()) throw std::runtime_error("mge.saveConfig failed."); };
+
 		// Distant land functions.
 		bindMGEDistantLandRenderConfig();
 		lua_mge["distantLandRenderConfig"] = mge::api->getDistantLandRenderConfig();
