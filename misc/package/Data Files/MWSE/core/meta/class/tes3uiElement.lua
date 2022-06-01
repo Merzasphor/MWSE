@@ -312,12 +312,24 @@ function tes3uiElement:createSliderVertical(params) end
 --- @param params tes3uiElement.createTextInput.params? This table accepts the following values:
 --- 
 --- `id`: string|number|nil — *Optional*. An identifier to help find this element later.
+--- 
+--- `text`: string? — *Optional*. The initial text to use for the input.
+--- 
+--- `placeholderText`: string? — *Optional*. Placeholder text for the input. If the element is ever made empty, this will be displayed instead in the disabled text color.
+--- 
+--- `numeric`: boolean? — *Default*: `false`. If true, only numbers can be put into the input. The text value of the element will still be a string, and need to be converted using `tonumber`.
+--- 
+--- `autoFocus`: boolean? — *Default*: `false`. If true, the input will be automatically focused after creation.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createTextInput(params) end
 
 ---Table parameter definitions for `tes3uiElement.createTextInput`.
 --- @class tes3uiElement.createTextInput.params
 --- @field id string|number|nil *Optional*. An identifier to help find this element later.
+--- @field text string? *Optional*. The initial text to use for the input.
+--- @field placeholderText string? *Optional*. Placeholder text for the input. If the element is ever made empty, this will be displayed instead in the disabled text color.
+--- @field numeric boolean? *Default*: `false`. If true, only numbers can be put into the input. The text value of the element will still be a string, and need to be converted using `tonumber`.
+--- @field autoFocus boolean? *Default*: `false`. If true, the input will be automatically focused after creation.
 
 --- Creates a selectable line of text, with configurable hover, click, and disabled colours. Can be used to create a list box by placing them in a ScrollPane.
 --- 
@@ -382,6 +394,11 @@ function tes3uiElement:forwardEvent(id) end
 --- 	Some widgets like ScrollPanes are built of multiple layers of elements. When an element is created in a complex widget, it is automatically placed as a child of a content element, but other functions do not access this content element directly. This function finds this content container for any element, so that changing layout and accessing children is possible. For simple elements, the calling element will be returned so that there is always a valid container element.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:getContentElement() end
+
+--- Gets an arbitrary lua value from the UI element. Each element has the capability to store keyed lua data, as if it were a table, using this function and `setLuaData`.
+--- @param key string The key for the lua data.
+--- @return any result No description yet available.
+function tes3uiElement:getLuaData(key) end
 
 --- Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. Returns `false` if the property key did not have data.
 --- @param propName string The property name.
@@ -564,6 +581,11 @@ function tes3uiElement:reorderChildren(insertBefore, moveFrom, count) end
 
 --- Saves the menu's position and size information to the Morrowind.ini file. This may only be called on top-level parents. Note that most menus save their position automatically.
 function tes3uiElement:saveMenuPosition() end
+
+--- Sets an arbitrary lua value for the UI element. Each element has the capability to store keyed lua data, as if it were a table, using this function and `getLuaData`.
+--- @param key string The key for the lua data.
+--- @param value any The value to set.
+function tes3uiElement:setLuaData(key, value) end
 
 --- Sets a property value with `prop` as the property key. Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties.
 --- @param propName string The property name.

@@ -131,6 +131,10 @@ namespace mwse::lua {
 		usertypeDefinition["setPropertyObject"] = &Element::setPropertyObject_lua;
 		usertypeDefinition["setPropertyProperty"] = &Element::setPropertyProperty_lua;
 
+		// Custom lua property accessor functions.
+		usertypeDefinition["getLuaData"] = &Element::getLuaData;
+		usertypeDefinition["setLuaData"] = &Element::setLuaData;
+
 		// Event functions.
 		usertypeDefinition["registerBefore"] = &Element::registerBefore_lua;
 		usertypeDefinition["registerAfter"] = &Element::registerAfter_lua;
@@ -168,10 +172,12 @@ namespace mwse::lua {
 		usertypeDefinition["createRect"] = &Element::createRect_lua;
 		usertypeDefinition["createSlider"] = &Element::createSlider_lua;
 		usertypeDefinition["createSliderVertical"] = &Element::createSliderVertical_lua;
-		usertypeDefinition["createTextInput"] = &Element::createTextInput_lua;
 		usertypeDefinition["createTextSelect"] = &Element::createTextSelect_lua;
 		usertypeDefinition["createThinBorder"] = &Element::createThinBorder_lua;
 		usertypeDefinition["createVerticalScrollPane"] = &Element::createVerticalScrollPane_lua;
+
+		// Internal functions. These typically have a wrapper function defined in lua.
+		usertypeDefinition["_createTextInput"] = &Element::createTextInput_lua;
 
 		usertypeDefinition["destroy"] = &Element::destroy;
 	}

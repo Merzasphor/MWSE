@@ -132,21 +132,21 @@ namespace TES3 {
 		}
 	}
 
-	TES3::PackedColor* Cell::getAmbientColor() {
+	NI::PackedColor* Cell::getAmbientColor() {
 		if (getIsInterior()) {
 			return &variantData.interior.ambientColor;
 		}
 		return nullptr;
 	}
 
-	TES3::PackedColor* Cell::getFogColor() {
+	NI::PackedColor* Cell::getFogColor() {
 		if (getIsInterior()) {
 			return &variantData.interior.fogColor;
 		}
 		return nullptr;
 	}
 
-	TES3::PackedColor* Cell::getSunColor() {
+	NI::PackedColor* Cell::getSunColor() {
 		if (getIsInterior()) {
 			return &variantData.interior.sunColor;
 		}

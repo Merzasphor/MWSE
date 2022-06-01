@@ -869,13 +869,17 @@ Creates a single line text input element. To receive input the keyboard must be 
 Text input specific properties can be accessed through the `widget` property. The widget type for text inputs is [`tes3uiTextInput`](https://mwse.github.io/MWSE/types/tes3uiTextInput/).
 
 ```lua
-local result = myObject:createTextInput({ id = ... })
+local result = myObject:createTextInput({ id = ..., text = ..., placeholderText = ..., numeric = ..., autoFocus = ... })
 ```
 
 **Parameters**:
 
 * `params` (table): *Optional*.
 	* `id` (string, number): *Optional*. An identifier to help find this element later.
+	* `text` (string): *Optional*. The initial text to use for the input.
+	* `placeholderText` (string): *Optional*. Placeholder text for the input. If the element is ever made empty, this will be displayed instead in the disabled text color.
+	* `numeric` (boolean): *Default*: `false`. If true, only numbers can be put into the input. The text value of the element will still be a string, and need to be converted using `tonumber`.
+	* `autoFocus` (boolean): *Default*: `false`. If true, the input will be automatically focused after creation.
 
 **Returns**:
 
@@ -1011,6 +1015,24 @@ local result = myObject:getContentElement()
 **Returns**:
 
 * `result` ([tes3uiElement](../../types/tes3uiElement))
+
+***
+
+### `getLuaData`
+
+Gets an arbitrary lua value from the UI element. Each element has the capability to store keyed lua data, as if it were a table, using this function and `setLuaData`.
+
+```lua
+local result = myObject:getLuaData(key)
+```
+
+**Parameters**:
+
+* `key` (string): The key for the lua data.
+
+**Returns**:
+
+* `result` (any)
 
 ***
 
@@ -1346,6 +1368,21 @@ Saves the menu's position and size information to the Morrowind.ini file. This m
 ```lua
 myObject:saveMenuPosition()
 ```
+
+***
+
+### `setLuaData`
+
+Sets an arbitrary lua value for the UI element. Each element has the capability to store keyed lua data, as if it were a table, using this function and `getLuaData`.
+
+```lua
+myObject:setLuaData(key, value)
+```
+
+**Parameters**:
+
+* `key` (string): The key for the lua data.
+* `value` (any): The value to set.
 
 ***
 

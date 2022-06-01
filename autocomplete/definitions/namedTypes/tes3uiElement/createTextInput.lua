@@ -8,7 +8,11 @@ Text input specific properties can be accessed through the `widget` property. Th
 		type = "table",
 		optional = true,
 		tableParams = {
-			{ name = "id", type = "string|number", description = "An identifier to help find this element later.", optional = true },
+			{ name = "id", type = "string|number", optional = true, description = "An identifier to help find this element later." },
+			{ name = "text", type = "string", optional = true, description = "The initial text to use for the input." },
+			{ name = "placeholderText", type = "string", optional = true, description = "Placeholder text for the input. If the element is ever made empty, this will be displayed instead in the disabled text color." },
+			{ name = "numeric", type = "boolean", default = false, description = "If true, only numbers can be put into the input. The text value of the element will still be a string, and need to be converted using `tonumber`." },
+			{ name = "autoFocus", type = "boolean", default = false, description = "If true, the input will be automatically focused after creation." },
 		},
 	} },
 	valuetype = "tes3uiElement",

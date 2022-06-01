@@ -5674,7 +5674,7 @@ namespace mwse::lua {
 		}
 
 		target->startDialogue();
-		return true;
+		return TES3::UI::findMenu("MenuDialog") != nullptr;
 	}
 
 	const auto TES3_UI_goodbye = reinterpret_cast<bool(__cdecl*)()>(0x5BF7C0);

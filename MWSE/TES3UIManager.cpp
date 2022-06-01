@@ -7,6 +7,7 @@
 #include "LuaUtil.h"
 
 #include "TES3UIElement.h"
+#include "TES3UILuaData.h"
 #include "TES3UIManager.h"
 #include "TES3UIMenuController.h"
 
@@ -104,6 +105,12 @@ namespace TES3 {
 				menu->createFixedFrame(id, 1);
 				// Standard behaviours
 				preventInventoryMenuToggle(menu);
+
+				// Optionally turn off modal feature of fixedFrame menus.
+				if (!params.get_or("modal", true)) {
+					const auto returnTrueFunc = reinterpret_cast<EventCallback>(0x5A7655);
+					menu->setProperty(TES3::UI::Property::event_unfocus, returnTrueFunc);
+				}
 			}
 			else if (params.get_or("dragFrame", false)) {
 				menu->createDragFrame(id, 1);
@@ -962,6 +969,12 @@ namespace TES3 {
 
 			// Clean up any lua event registration.
 			mwse::lua::cleanupEventRegistrations(self);
+
+			// Clean up any lua data.
+			auto luaData = self->getLuaDataContainer();
+			if (luaData) {
+				delete luaData;
+			}
 		}
 
 		void hook() {

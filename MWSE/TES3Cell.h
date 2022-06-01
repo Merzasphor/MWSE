@@ -21,17 +21,6 @@ namespace TES3 {
 		};
 	}
 
-	struct PackedColor {
-		unsigned char r; // 0x0
-		unsigned char g; // 0x1
-		unsigned char b; // 0x2
-		unsigned char a; // 0x3
-
-		PackedColor() = delete;
-		~PackedColor() = delete;
-	};
-	static_assert(sizeof(PackedColor) == 0x4, "TES3::PackedColor failed size validation");
-
 	struct MapNote {
 		Vector3 position; // 0x0
 		char * text; // 0xC
@@ -118,15 +107,15 @@ namespace TES3 {
 		unsigned int cellFlags; // 0x18
 		union {
 			struct {
-				TES3::PackedColor regionMapColor; // 0x0
+				NI::PackedColor regionMapColor; // 0x0
 				void * landscape; // 0x4
 				int gridX; // 0x8
 				int gridY; // 0xC
 			} exterior;
 			struct {
-				PackedColor ambientColor; // 0x0
-				PackedColor sunColor; // 0x4
-				PackedColor fogColor; // 0x8
+				NI::PackedColor ambientColor; // 0x0
+				NI::PackedColor sunColor; // 0x4
+				NI::PackedColor fogColor; // 0x8
 				float fogDensity; // 0xC
 			} interior;
 		} variantData; // 0x1C
@@ -189,9 +178,9 @@ namespace TES3 {
 
 		Region * getRegion() const;
 
-		TES3::PackedColor* getAmbientColor();
-		TES3::PackedColor* getFogColor();
-		TES3::PackedColor* getSunColor();
+		NI::PackedColor* getAmbientColor();
+		NI::PackedColor* getFogColor();
+		NI::PackedColor* getSunColor();
 
 		bool getBehavesAsExterior() const;
 		void setBehavesAsExterior(bool value);

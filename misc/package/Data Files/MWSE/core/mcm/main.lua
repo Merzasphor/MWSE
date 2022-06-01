@@ -5,10 +5,7 @@
 	extend to provide a single place for users to configure their mods.
 ]]--
 
--- UI ID for the core mod config menu, so we can repeatedly access it.
-local UIID_mwse_modConfigMenu = nil
-
--- Storage for mod config packages. 
+-- Storage for mod config packages.
 local configMods = {}
 
 -- The current package that we are configuring.
@@ -46,7 +43,7 @@ local function onClickModName(e)
 	end
 
 	-- Change the mod config title bar to include the mod's name.
-	local menu = tes3ui.findMenu(UIID_mwse_modConfigMenu)
+	local menu = tes3ui.findMenu("MWSE:ModConfigMenu")
 	menu.text = mwse.mcm.i18n("Mod Configuration - %s", { e.source.text })
 	menu:updateLayout()
 end
@@ -54,8 +51,8 @@ end
 --- Callback for when the close button has been clicked.
 --- @param e keyDownEventData
 local function onClickCloseButton(e)
-
 	event.unregister("keyDown", onClickCloseButton, { filter = tes3.scanCode.escape })
+
 	-- If we have a current mod, fire its close event.
 	if (currentModConfig and currentModConfig.onClose) then
 		local status, error = pcall(currentModConfig.onClose, modConfigContainer)
@@ -63,9 +60,9 @@ local function onClickCloseButton(e)
 			mwse.log("Error in mod config close callback: %s\n%s", error, debug.traceback())
 		end
 	end
-	
+
 	-- Destroy the mod config menu.
-	local modConfigMenu = tes3ui.findMenu(UIID_mwse_modConfigMenu)
+	local modConfigMenu = tes3ui.findMenu("MWSE:ModConfigMenu")
 	if (modConfigMenu) then
 		currentModConfig = nil
 		modConfigContainer = nil
@@ -84,16 +81,62 @@ local function caseInsensitiveSorter(a, b)
 	return a:lower() < b:lower()
 end
 
+---@param e tes3uiEventData
+local function focusSearchBar(e)
+	local searchBar = e.source:findChild("SearchBar")
+	if (not searchBar) then return end
+
+	tes3ui.acquireTextInput(searchBar)
+end
+
+local function filterModByName(modName, searchText)
+	-- Perform a basic search.
+	local nameMatch = modName:lower():find(searchText, nil, true)
+	if (nameMatch ~= nil) then
+		return true
+	end
+
+	-- Get the mod package.
+	local package = configMods[modName]
+
+	-- Do we have a custom filter package?
+	if (package.onSearch and package.onSearch(searchText)) then
+		return true
+	end
+
+	return false
+end
+
+---@param e tes3uiEventData
+local function onSearchUpdated(e)
+	local lowerSearchText = e.source.text:lower()
+	local modList = e.source:getTopLevelMenu():findChild("ModList"):getContentElement()
+	for _, child in ipairs(modList.children) do
+		child.visible = filterModByName(child.text, lowerSearchText)
+	end
+end
+
+---@param e tes3uiEventData
+local function onSearchCleared(e)
+	local modList = e.source:getTopLevelMenu():findChild("ModList"):getContentElement()
+	for _, child in ipairs(modList.children) do
+		child.visible = true
+	end
+end
+
 -- Callback for when the mod config button has been clicked.
 -- Here, we'll create the GUI and set up everything.
 local function onClickModConfigButton()
 	-- Play the click sound.
 	tes3.worldController.menuClickSound:play()
 
-	local menu = tes3ui.findMenu(UIID_mwse_modConfigMenu)
-	if (menu == nil) then
+	local menu = tes3ui.findMenu("MWSE:ModConfigMenu")
+	if (not menu) then
+		-- Fix dumb lua extensions.
+		--- @cast menu tes3uiElement
+
 		-- Create the main menu frame.
-		menu = tes3ui.createMenu({ id = UIID_mwse_modConfigMenu, dragFrame = true })
+		menu = tes3ui.createMenu({ id = "MWSE:ModConfigMenu", dragFrame = true })
 		menu.text = mwse.mcm.i18n("Mod Configuration")
 		menu.minWidth = 600
 		menu.minHeight = 500
@@ -109,17 +152,41 @@ local function onClickModConfigButton()
 		end)
 
 		-- Create the left-right flow.
-		local mainHorizontalBlock = menu:createBlock({})
+		local mainHorizontalBlock = menu:createBlock({ id = "MainFlow" })
 		mainHorizontalBlock.flowDirection = "left_to_right"
 		mainHorizontalBlock.widthProportional = 1.0
 		mainHorizontalBlock.heightProportional = 1.0
 
+		local leftBlock = mainHorizontalBlock:createBlock({ id = "LeftFlow" })
+		leftBlock.flowDirection = "top_to_bottom"
+		leftBlock.width = 250
+		leftBlock.minWidth = 250
+		leftBlock.maxWidth = 250
+		leftBlock.widthProportional = -1.0
+		leftBlock.heightProportional = 1.0
+
+		local searchBlock = leftBlock:createThinBorder({ id = "SearchBlock" })
+		searchBlock.widthProportional = 1.0
+		searchBlock.autoHeight = true
+
+		local searchBar = searchBlock:createTextInput({
+			id = "SearchBar",
+			placeholderText = "Search...",
+			autoFocus = true,
+		})
+		searchBar.borderLeft = 5
+		searchBar.borderRight = 5
+		searchBar.borderTop = 3
+		searchBar.borderBottom = 5
+		searchBar:registerAfter("textUpdated", onSearchUpdated)
+		searchBar:registerAfter("textCleared", onSearchCleared)
+
+		-- Make clicking on the block focus the search input.
+		searchBlock:register("mouseClick", focusSearchBar)
+
 		-- Create the mod list.
-		local modList = mainHorizontalBlock:createVerticalScrollPane({})
-		modList.width = 250
-		modList.minWidth = 250
-		modList.maxWidth = 250
-		modList.widthProportional = -1.0
+		local modList = leftBlock:createVerticalScrollPane({ id = "ModList" })
+		modList.widthProportional = 1.0
 		modList.heightProportional = 1.0
 
 		-- Get a sorted list of mods.
@@ -135,31 +202,30 @@ local function onClickModConfigButton()
 		-- Fill in the mod list.
 		for i = 1, #sortedConfigModNames do
 			local modName = sortedConfigModNames[i]
-			local entry = modList:createTextSelect({})
-			entry.text = modName
+			local entry = modList:createTextSelect({ id = "ModEntry", text = modName })
 			entry:register("mouseClick", onClickModName)
 		end
 
 		-- Create container for mod content. This will be deleted whenever the pane is reloaded.
-		modConfigContainer = mainHorizontalBlock:createBlock({})
+		modConfigContainer = mainHorizontalBlock:createBlock({ id = "ModContainer" })
 		modConfigContainer.flowDirection = "top_to_bottom"
 		modConfigContainer.widthProportional = 1.0
 		modConfigContainer.heightProportional = 1.0
 		modConfigContainer.paddingLeft = 4
 
-		local containerPane = modConfigContainer:createThinBorder{}
+		local containerPane = modConfigContainer:createThinBorder({ id = "ContainerPane" })
 		containerPane.widthProportional = 1.0
 		containerPane.heightProportional = 1.0
 		containerPane.paddingAllSides = 12
 		containerPane.flowDirection = "top_to_bottom"
 
 		-- Splash screen.
-		local splash = containerPane:createImage({ path = "textures/mwse/menu_modconfig_splash.tga" })
+		local splash = containerPane:createImage({ id = "MWSESplash", path = "textures/mwse/menu_modconfig_splash.tga" })
 		splash.absolutePosAlignX = 0.5
 		splash.borderTop = 25
 
 		-- Create a link back to the website.
-		local site = containerPane:createLabel({ text = "mwse.github.io/MWSE" })
+		local site = containerPane:createLabel({ id = "MWSELink", text = "mwse.github.io/MWSE" })
 		site.absolutePosAlignX = 0.5
 		site.color = tes3ui.getPalette("link_color")
 		site:register("mouseClick", function()
@@ -175,13 +241,13 @@ local function onClickModConfigButton()
 		end)
 
 		-- Create bottom button block.
-		local bottomBlock = menu:createBlock{}
+		local bottomBlock = menu:createBlock({ id = "BottomFlow" })
 		bottomBlock.widthProportional = 1.0
 		bottomBlock.autoHeight = true
 		bottomBlock.childAlignX = 1.0
 
 		-- Add a close button to the bottom block.
-		local closeButton = bottomBlock:createButton{ text = tes3.findGMST(tes3.gmst.sClose).value }
+		local closeButton = bottomBlock:createButton({ id = "MWSE:ModConfigMenu_Close", text = tes3.findGMST(tes3.gmst.sClose).value })
 		closeButton:register("mouseClick", onClickCloseButton)
 		event.register("keyDown", onClickCloseButton, { filter = tes3.scanCode.escape })
 		-- Cause the menu to refresh itself.
@@ -269,8 +335,6 @@ end
 ---
 --- Set this up to run before most other initialized callbacks.
 local function onInitialized()
-	UIID_mwse_modConfigMenu = tes3ui.registerID("MWSE:ModConfigMenu")
-
 	event.trigger("modConfigReady")
 end
 event.register("initialized", onInitialized, { priority = 100 })

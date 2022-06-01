@@ -31,7 +31,7 @@ Each of the exposed type values and methods have definition files in a subfolder
 | description | `string`  | The description for the value. You can pass a string with `""` or `[[]]`. |
 | readOnly    | `boolean` | If a value is writable, this field is unnecessary. |
 | valuetype   | `string`  | This allows to specify the value type. You can put string names for basic Lua types: `number`, `boolean` and `string`, or objects exposed by MWSE, such as `tes3reference`. If the value can be of two or more types, then you should pass all the types split by `|`. For example, `tes3mobileCreature|tes3mobileNPC|nil`. If the type is `table`, consider adding the key and value types like this: `table<indexType, keyType>`. This will allow autocomplete to automatically deduce the types when the table is indexed. See more in the example below. |
-| examples    | `table`   | A table with entries that are the names of the files included as examples. Each entry is a table itself with one available field, `title`. The title will be shown as the title of the example on the documentation page. It works exactly the same as examples for [event](https://github.com/MWSE/MWSE/blob/docs-contributions-guide/docs/event-definitions-guide.md) or [function](https://github.com/MWSE/MWSE/blob/docs-contributions-guide/docs/function-definitions-guide.md) definitions. |
+| examples    | `table`   | A table with entries that are the names of the files included as examples. Each entry is a table itself with one available field, `title`. The title will be shown as the title of the example on the documentation page. It works exactly the same as examples for [event](https://github.com/MWSE/MWSE/blob/master/docs/event-definitions-guide.md) or [function](https://github.com/MWSE/MWSE/blob/master/docs/function-definitions-guide.md) definitions. |
 
 An example of a typical value definition:
 
@@ -65,7 +65,7 @@ Each type method definition file is just a regular Lua table with the following 
 | type        | `string` | The type of the definition. This flag is used when generating syntax highlighting files. This should always be `"method"` for method defintions. |
 | description | `string` | The description for the method. You can pass a string with `""` or `[[]]`. |
 | arguments   | `table`  | The arguments the function accepts. |
-| examples    | `table`  | A table with entries that are the names of the files included as examples. Each entry is a table itself with one available field, `title`. The title will be shown as the title of the example on the documentation page. It works exactly the same as examples for [event](https://github.com/MWSE/MWSE/blob/docs-contributions-guide/docs/event-definitions-guide.md) or [function](https://github.com/MWSE/MWSE/blob/docs-contributions-guide/docs/function-definitions-guide.md) definitions. |
+| examples    | `table`  | A table with entries that are the names of the files included as examples. Each entry is a table itself with one available field, `title`. The title will be shown as the title of the example on the documentation page. It works exactly the same as examples for [event](https://github.com/MWSE/MWSE/blob/master/docs/event-definitions-guide.md) or [function](https://github.com/MWSE/MWSE/blob/master/docs/function-definitions-guide.md) definitions. |
 | returns     | `table`  | The table with return values. |
 
 An example of a typical method definition:
@@ -82,7 +82,7 @@ return {
 }
 ```
 
-For a more elaborate description of the argument and return tables, please refer to [function definitions guide.](https://github.com/MWSE/MWSE/blob/docs-contributions-guide/docs/function-definitions-guide.md)
+For a more elaborate description of the argument and return tables, please refer to [function definitions guide.](https://github.com/MWSE/MWSE/blob/master/docs/function-definitions-guide.md)
 
 ## Notes
 

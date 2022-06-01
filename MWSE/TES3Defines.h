@@ -256,6 +256,8 @@ namespace TES3 {
 		struct InventoryTile;
 		struct String;
 		struct Tree;
+
+		class LuaData;
 	}
 
 }

@@ -459,6 +459,7 @@
     <ClInclude Include="TES3UIElementLua.h" />
     <ClInclude Include="TES3UIInventoryTile.h" />
     <ClInclude Include="TES3UIInventoryTileLua.h" />
+    <ClInclude Include="TES3UILuaData.h" />
     <ClInclude Include="TES3UIManager.h" />
     <ClInclude Include="TES3UIMenuController.h" />
     <ClInclude Include="TES3UIMenuControllerLua.h" />
@@ -816,6 +817,7 @@
     <ClCompile Include="TES3Stream.cpp" />
     <ClCompile Include="TES3UIInventoryTile.cpp" />
     <ClCompile Include="TES3UIInventoryTileLua.cpp" />
+    <ClCompile Include="TES3UILuaData.cpp" />
     <ClCompile Include="TES3UIManager.cpp" />
     <ClCompile Include="StackLua.cpp" />
     <ClCompile Include="StringUtilLua.cpp" />

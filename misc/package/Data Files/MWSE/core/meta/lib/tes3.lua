@@ -624,7 +624,7 @@ function tes3.closeRestMenu() end
 --- This function closes the spellmaking menu.
 function tes3.closeSpellmakingMenu() end
 
---- Create an object and returns it. The created object will be part of the saved game. Currently supported object types are: `tes3.objectType.activator`, `.alchemy`, `.ammo`, `.container`, `.misc`, `.sound`, `.spell`, `.static`, `.enchantment`, `.weapon`.
+--- Create an object and returns it. The created object will be part of the saved game. Currently supported object types are: `tes3.objectType.activator`, `.alchemy`, `.ammo`, `.book`, `.clothing`, `.container`, `.enchantment`, `.miscItem`, `.sound`, `.spell`, `.static`, and `.weapon`.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3/#tes3createobject).
 --- @param params tes3.createObject.params This table accepts the following values:
@@ -1422,7 +1422,7 @@ function tes3.isModActive(filename) end
 function tes3.iterate(iterator) end
 
 --- Iteration function used for looping over game options.
---- @param filter number Maps to [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) constants.
+--- @param filter number|number[]|nil Maps to [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) constants.
 --- @return tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3enchantment|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3reference|tes3repairTool|tes3spell|tes3static|tes3weapon object No description yet available.
 function tes3.iterateObjects(filter) end
 
