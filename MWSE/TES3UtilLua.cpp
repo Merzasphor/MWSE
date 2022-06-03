@@ -3224,6 +3224,14 @@ namespace mwse::lua {
 			mobile->updateOpacity();
 		}
 
+		// If the item matches our readied ammo, update the ammo count.
+		if (mobile && item->isWeaponOrAmmo() && getOptionalParam<bool>(params, "equipProjectiles", true)) {
+			auto asWeapon = static_cast<TES3::Weapon*>(item);
+			if (asWeapon->isProjectile() && mobile->readiedAmmo && mobile->readiedAmmo->object == item) {
+				mobile->readiedAmmoCount += fulfilledCount;
+			}
+		}
+
 		// If either of them are the player, we need to update the GUI.
 		if (playerMobile && getOptionalParam<bool>(params, "updateGUI", true)) {
 			// Update contents menu if necessary.
@@ -3633,6 +3641,14 @@ namespace mwse::lua {
 				else {
 					companionProfit -= fulfilledCount * item->getValue();
 				}
+			}
+		}
+
+		// If the item matches the target's readied ammo, update the ammo count.
+		if (toMobile && item->isWeaponOrAmmo() && getOptionalParam<bool>(params, "equipProjectiles", true)) {
+			auto asWeapon = static_cast<TES3::Weapon*>(item);
+			if (asWeapon->isProjectile() && toMobile->readiedAmmo && toMobile->readiedAmmo->object == item) {
+				toMobile->readiedAmmoCount += fulfilledCount;
 			}
 		}
 
