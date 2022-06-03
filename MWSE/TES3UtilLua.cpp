@@ -2907,16 +2907,7 @@ namespace mwse::lua {
 					if (!effectParams) {
 						break;
 					}
-
-					TES3::Effect* effect = &dynamicPotion->effects[i - 1];
-					effect->effectID = getOptionalParam<int>(effectParams, "id", -1);
-					effect->skillID = getOptionalParam<int>(effectParams, "skill", -1);
-					effect->attributeID = getOptionalParam<int>(effectParams, "attribute", -1);
-					effect->rangeType = static_cast<TES3::EffectRange>(getOptionalParam<int>(effectParams, "range", int(TES3::EffectRange::Self)));
-					effect->radius = getOptionalParam<int>(effectParams, "radius", 0);
-					effect->duration = getOptionalParam<int>(effectParams, "duration", 0);
-					effect->magnitudeMin = getOptionalParam<int>(effectParams, "min", 0);
-					effect->magnitudeMax = getOptionalParam<int>(effectParams, "max", 0);
+					dynamicPotion->effects[i - 1] = effectParams.value();
 				}
 			}
 
