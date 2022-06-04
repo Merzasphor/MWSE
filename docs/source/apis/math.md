@@ -24,6 +24,26 @@ The *machine* epsilon available for single-precision numbers. This is the differ
 
 ***
 
+### `math.fhuge`
+
+The *machine* maximum available value for single-precision numbers. This is the maximum representable value for any floating-point Morrowind structures.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `math.nfhuge`
+
+The *machine* minimum available value for single-precision numbers. This is the minimum representable value for any floating-point Morrowind structures.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
 ## Functions
 
 ### `math.clamp`

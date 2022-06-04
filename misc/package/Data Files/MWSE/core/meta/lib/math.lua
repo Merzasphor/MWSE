@@ -5,6 +5,8 @@
 --- @class mathlib
 --- @field epsilon number The *machine* epsilon available for double-precision numbers. This is the difference between 1.0 and the next representable value using lua numbers.
 --- @field fepsilon number The *machine* epsilon available for single-precision numbers. This is the difference between 1.0 and the next representable value for many Morrowind structures.
+--- @field fhuge number The *machine* maximum available value for single-precision numbers. This is the maximum representable value for any floating-point Morrowind structures.
+--- @field nfhuge number The *machine* minimum available value for single-precision numbers. This is the minimum representable value for any floating-point Morrowind structures.
 math = {}
 
 --- Returns a value, limited by upper and lower bounds.
