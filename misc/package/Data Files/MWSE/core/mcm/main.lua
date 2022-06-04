@@ -114,6 +114,7 @@ local function onSearchUpdated(e)
 	for _, child in ipairs(modList.children) do
 		child.visible = filterModByName(child.text, lowerSearchText)
 	end
+	modList.widget:contentsChanged()
 end
 
 ---@param e tes3uiEventData
@@ -122,6 +123,7 @@ local function onSearchCleared(e)
 	for _, child in ipairs(modList.children) do
 		child.visible = true
 	end
+	modList.widget:contentsChanged()
 end
 
 -- Callback for when the mod config button has been clicked.
@@ -205,6 +207,7 @@ local function onClickModConfigButton()
 			local entry = modList:createTextSelect({ id = "ModEntry", text = modName })
 			entry:register("mouseClick", onClickModName)
 		end
+		modList.widget:contentsChanged()
 
 		-- Create container for mod content. This will be deleted whenever the pane is reloaded.
 		modConfigContainer = mainHorizontalBlock:createBlock({ id = "ModContainer" })

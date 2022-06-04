@@ -2907,16 +2907,7 @@ namespace mwse::lua {
 					if (!effectParams) {
 						break;
 					}
-
-					TES3::Effect* effect = &dynamicPotion->effects[i - 1];
-					effect->effectID = getOptionalParam<int>(effectParams, "id", -1);
-					effect->skillID = getOptionalParam<int>(effectParams, "skill", -1);
-					effect->attributeID = getOptionalParam<int>(effectParams, "attribute", -1);
-					effect->rangeType = static_cast<TES3::EffectRange>(getOptionalParam<int>(effectParams, "range", int(TES3::EffectRange::Self)));
-					effect->radius = getOptionalParam<int>(effectParams, "radius", 0);
-					effect->duration = getOptionalParam<int>(effectParams, "duration", 0);
-					effect->magnitudeMin = getOptionalParam<int>(effectParams, "min", 0);
-					effect->magnitudeMax = getOptionalParam<int>(effectParams, "max", 0);
+					dynamicPotion->effects[i - 1] = effectParams.value();
 				}
 			}
 
@@ -3222,6 +3213,14 @@ namespace mwse::lua {
 			}
 
 			mobile->updateOpacity();
+		}
+
+		// If the item matches our readied ammo, update the ammo count.
+		if (mobile && item->isWeaponOrAmmo() && getOptionalParam<bool>(params, "equipProjectiles", true)) {
+			auto asWeapon = static_cast<TES3::Weapon*>(item);
+			if (asWeapon->isProjectile() && mobile->readiedAmmo && mobile->readiedAmmo->object == item) {
+				mobile->readiedAmmoCount += fulfilledCount;
+			}
 		}
 
 		// If either of them are the player, we need to update the GUI.
@@ -3636,6 +3635,14 @@ namespace mwse::lua {
 			}
 		}
 
+		// If the item matches the target's readied ammo, update the ammo count.
+		if (toMobile && item->isWeaponOrAmmo() && getOptionalParam<bool>(params, "equipProjectiles", true)) {
+			auto asWeapon = static_cast<TES3::Weapon*>(item);
+			if (asWeapon->isProjectile() && toMobile->readiedAmmo && toMobile->readiedAmmo->object == item) {
+				toMobile->readiedAmmoCount += fulfilledCount;
+			}
+		}
+
 		// If either of them are the player, we need to update the GUI.
 		if (playerMobile && getOptionalParam<bool>(params, "updateGUI", true)) {
 			// Update inventory menu if necessary.
@@ -3889,7 +3896,7 @@ namespace mwse::lua {
 			config->destination = destination.value();
 		}
 		else {
-			config->destination = TES3::Vector3(FLT_MAX, FLT_MAX, 0.0f);
+			config->destination = TES3::Vector3(std::numeric_limits<float>::max(), std::numeric_limits<float>::max(), 0.0f);
 		}
 		config->duration = getOptionalParam<unsigned char>(params, "duration", 0);
 		config->actor = static_cast<TES3::Actor*>(target->baseObject);

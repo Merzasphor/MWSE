@@ -440,6 +440,8 @@ namespace mwse::lua {
 		LuaExecutor::defineLuaBindings();
 
 		// Extend math library.
+		luaState["math"]["nfhuge"] = std::numeric_limits<float>::min();
+		luaState["math"]["fhuge"] = std::numeric_limits<float>::max();
 		luaState["math"]["epsilon"] = std::numeric_limits<double>::epsilon();
 		luaState["math"]["fepsilon"] = std::numeric_limits<float>::epsilon();
 

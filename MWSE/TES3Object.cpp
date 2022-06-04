@@ -134,6 +134,16 @@ namespace TES3 {
 		}
 	}
 
+	bool BaseObject::isWeaponOrAmmo() const {
+		switch (objectType) {
+		case TES3::ObjectType::Ammo:
+		case TES3::ObjectType::Weapon:
+			return true;
+		default:
+			return false;
+		}
+	}
+
 	const char* BaseObject::getSourceFilename() const {
 		if (sourceMod) {
 			return sourceMod->filename;
@@ -632,12 +642,12 @@ namespace TES3 {
 		return true;
 	}
 
-	NI::Node * Object::getSceneGraphNode() {
+	NI::Node* Object::getSceneGraphNode() {
 		return vTable.object->getSceneGraphNode(this);
 	}
 
-	Object * Object::skipDeletedObjects() {
-		TES3::Object * object = this;
+	Object* Object::skipDeletedObjects() {
+		TES3::Object* object = this;
 		while (object && (object->objectFlags & TES3::ObjectFlag::Delete) == TES3::ObjectFlag::Delete)
 		{
 			object = object->nextInCollection;

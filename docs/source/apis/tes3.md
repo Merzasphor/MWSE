@@ -145,7 +145,7 @@ tes3.addClothingSlot({ slot = ..., name = ... })
 Adds an item to a given reference's inventory or mobile's inventory.
 
 ```lua
-local addedCount = tes3.addItem({ reference = ..., item = ..., itemData = ..., soul = ..., count = ..., playSound = ..., limit = ..., reevaluateEquipment = ..., updateGUI = ... })
+local addedCount = tes3.addItem({ reference = ..., item = ..., itemData = ..., soul = ..., count = ..., playSound = ..., limit = ..., reevaluateEquipment = ..., equipProjectiles = ..., updateGUI = ... })
 ```
 
 **Parameters**:
@@ -159,6 +159,7 @@ local addedCount = tes3.addItem({ reference = ..., item = ..., itemData = ..., s
 	* `playSound` (boolean): *Default*: `true`. If false, the up/down sound for the item won't be played.
 	* `limit` (boolean): *Default*: `false`. If false, items can be placed into containers that shouldn't normally be allowed. This includes organic containers, and containers that are full.
 	* `reevaluateEquipment` (boolean): *Default*: `true`. If true, and the item added is armor, clothing, or a weapon, the actor will reevaluate its equipment choices to see if the new item is worth equipping. This does not affect the player.
+	* `equipProjectiles` (boolean): *Default*: `true`. If true, and the reference has the same projectile already equipped, the stacks will be merged. This will only work if the GUI is updated.
 	* `updateGUI` (boolean): *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though [`tes3ui.forcePlayerInventoryUpdate()`](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uiforceplayerinventoryupdate) must manually be called after all inventory updates are finished.
 
 **Returns**:
@@ -4136,7 +4137,7 @@ local was3rdPerson = tes3.togglePOV()
 Moves one or more items from one reference to another. Returns the actual amount of items successfully transferred.
 
 ```lua
-local transferredCount = tes3.transferItem({ from = ..., to = ..., item = ..., itemData = ..., count = ..., playSound = ..., limitCapacity = ..., reevaluateEquipment = ..., updateGUI = ... })
+local transferredCount = tes3.transferItem({ from = ..., to = ..., item = ..., itemData = ..., count = ..., playSound = ..., limitCapacity = ..., reevaluateEquipment = ..., equipProjectiles = ..., updateGUI = ... })
 ```
 
 **Parameters**:
@@ -4150,6 +4151,7 @@ local transferredCount = tes3.transferItem({ from = ..., to = ..., item = ..., i
 	* `playSound` (boolean): *Default*: `true`. If false, the up/down sound for the item won't be played.
 	* `limitCapacity` (boolean): *Default*: `true`. If false, items can be placed into containers that shouldn't normally be allowed. This includes organic containers, and containers that are full.
 	* `reevaluateEquipment` (boolean): *Default*: `true`. If true, and the item transferred is armor, clothing, or a weapon, the actors will reevaluate their equipment choices to see if the new item is worth equipping. This does not affect the player.
+	* `equipProjectiles` (boolean): *Default*: `true`. If true, and the reference has the same projectile already equipped, the stacks will be merged. This will only work if the GUI is updated.
 	* `updateGUI` (boolean): *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though [`tes3ui.forcePlayerInventoryUpdate()`](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uiforceplayerinventoryupdate) must manually be called after all inventory updates are finished.
 
 **Returns**:

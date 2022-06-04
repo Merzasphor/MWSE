@@ -106,7 +106,7 @@ function tes3uiElement:createTextInput(params)
 	end
 
 	-- Handle focus.
-	element:registerAfter("mouseClick", common.eventCallback.focusOnClick)
+	element:registerAfter("mouseClick", common.eventCallback.acquireTextInput)
 	if (params.autoFocus) then
 		tes3ui.acquireTextInput(element)
 	end
