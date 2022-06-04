@@ -166,7 +166,7 @@ function tes3ui.leaveMenuMode() end
 --- @vararg any *Optional*. No description yet available.
 function tes3ui.log(message, ...) end
 
---- Logs a message to the console.
+--- Logs a message to the console. Consider using `tes3ui.log` instead of this function if you do not need to make use of the `isCommand` parameter.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uilogtoconsole).
 --- @param text string No description yet available.
