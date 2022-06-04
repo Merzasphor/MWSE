@@ -35,7 +35,7 @@ namespace TES3 {
 		}
 
 		Effect* highestEffect = nullptr;
-		float highestCost = FLT_MAX;
+		float highestCost = std::numeric_limits<float>::max();
 		for (auto i = 7; i >= 0; i--) {
 			auto effect = &effects[i];
 			if (effect->effectID == EffectID::None) {

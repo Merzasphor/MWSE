@@ -3896,7 +3896,7 @@ namespace mwse::lua {
 			config->destination = destination.value();
 		}
 		else {
-			config->destination = TES3::Vector3(FLT_MAX, FLT_MAX, 0.0f);
+			config->destination = TES3::Vector3(std::numeric_limits<float>::max(), std::numeric_limits<float>::max(), 0.0f);
 		}
 		config->duration = getOptionalParam<unsigned char>(params, "duration", 0);
 		config->actor = static_cast<TES3::Actor*>(target->baseObject);
