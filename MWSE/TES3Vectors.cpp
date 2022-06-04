@@ -730,6 +730,13 @@ namespace TES3 {
 
 	}
 
+	BoundingBox::BoundingBox(const Vector3& min, const Vector3& max) :
+		minimum(min),
+		maximum(max)
+	{
+
+	}
+
 	BoundingBox::BoundingBox(float minX, float minY, float minZ, float maxX, float maxY, float maxZ) :
 		minimum(minX, minY, minZ),
 		maximum(maxX, maxY, maxZ)

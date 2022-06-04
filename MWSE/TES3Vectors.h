@@ -224,6 +224,7 @@ namespace TES3 {
 		Vector3 maximum;
 
 		BoundingBox();
+		BoundingBox(const Vector3& min, const Vector3& max);
 		BoundingBox(float minX, float minY, float minZ, float maxX, float maxY, float maxZ);
 
 		bool operator==(const BoundingBox& other) const;
