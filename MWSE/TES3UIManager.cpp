@@ -442,6 +442,9 @@ namespace TES3 {
 		}
 
 		void logToConsole_lua(const char* text, sol::optional<bool> isCommand) {
+			if (text == nullptr) {
+				return;
+			}
 			TES3_ConsoleLogResult(text, isCommand.value_or(false));
 		}
 
