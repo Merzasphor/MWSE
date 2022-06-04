@@ -579,6 +579,10 @@ namespace mwse::lua {
 			// Properties.
 			usertypeDefinition["list"] = sol::readonly_property(&mge_shaders);
 			usertypeDefinition["debug"] = sol::readonly_property(&mge_shadersDebug);
+			usertypeDefinition["hdrReactionSpeed"] = sol::property(
+				[] { return mge::api->shaderGetHDRReactionSpeed(); },
+				[](float speed) { mge::api->shaderSetHDRReactionSpeed(speed); }
+			);
 
 			// Functions.
 			usertypeDefinition["find"] = &mge_shaderFind;
