@@ -7,9 +7,10 @@
 #include "TES3Reference.h"
 
 namespace mwse::lua::event {
-	CalcHitChanceEvent::CalcHitChanceEvent(TES3::MobileActor* attacker, int hitChance) :
+	CalcHitChanceEvent::CalcHitChanceEvent(TES3::MobileActor* attacker, TES3::MobileProjectile* projectile, int hitChance) :
 		ObjectFilteredEvent("calcHitChance", attacker->reference->baseObject),
 		m_Attacker(attacker),
+		m_Projectile(projectile),
 		m_HitChance(hitChance)
 	{
 
@@ -27,6 +28,10 @@ namespace mwse::lua::event {
 		if (target) {
 			eventData["targetMobile"] = target;
 			eventData["target"] = target->reference;
+		}
+
+		if (m_Projectile) {
+			eventData["projectile"] = m_Projectile;
 		}
 
 		eventData["hitChance"] = m_HitChance;
