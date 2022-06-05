@@ -4688,7 +4688,7 @@ namespace mwse::lua {
 		genCallEnforced(0x49B550, 0x485E40, reinterpret_cast<DWORD>(OnItemDropped)); // Vanilla function.
 
 		// Event: Calculate hit chance.
-		constexpr auto patchCalcHitChanceAvailableSize = 0x555B15u - 0x555AC3u;
+		constexpr auto patchCalcHitChanceAvailableSize = 0x5554F7u - 0x55549Bu;
 		static_assert(patchCalculateHitChance_size <= patchCalcHitChanceAvailableSize, "calcHitChance patch too large!");
 		genNOPUnprotected(0x55549B, patchCalcHitChanceAvailableSize);
 		writePatchCodeUnprotected(0x55549B, (BYTE*)&patchCalculateHitChance, patchCalculateHitChance_size);
