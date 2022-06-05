@@ -23,5 +23,6 @@
 --- @field attackerMobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer *Read-only*. The mobile who is doing the hitting.
 --- @field fallback number A secondary slot to check for equipment on, if no armor is found using the primary slot.
 --- @field mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer *Read-only*. The mobile who is being hit.
+--- @field projectile tes3mobileProjectile|tes3mobileSpellProjectile|nil *Read-only*. The projectile used that is hitting the given reference. This is nil for all melee combat.
 --- @field reference tes3reference *Read-only*. A shortcut to the mobile's reference.
 --- @field slot number The primary slot that is targeted.

@@ -3,7 +3,10 @@
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
+#include "LuaDamageEvent.h"
+
 #include "TES3MobileNPC.h"
+#include "TES3MobileProjectile.h"
 #include "TES3Reference.h"
 
 namespace mwse::lua::event {
@@ -32,10 +35,15 @@ namespace mwse::lua::event {
 			eventData["fallback"] = m_Fallback;
 		}
 
-		auto attacker = m_Mobile->actionData.target;
+		auto attacker = mwse::lua::event::DamageEvent::m_Attacker;
 		if (attacker) {
 			eventData["attacker"] = attacker->reference;
 			eventData["attackerMobile"] = attacker;
+		}
+
+		auto projectile = mwse::lua::event::DamageEvent::m_Projectile;
+		if (projectile) {
+			eventData["projectile"] = projectile;
 		}
 
 		return eventData;
