@@ -501,6 +501,7 @@ namespace mwse::lua {
 		sol::table lua_mge = state["mge"];
 
 		// General functions.
+		lua_mge["enabled"] = [] { return true; };
 		lua_mge["getVersion"] = mge_getVersion;
 
 		lua_mge["loadConfig"] = [] { if (!mge::api->loadConfig()) throw std::runtime_error("mge.loadConfig failed."); };
@@ -675,13 +676,31 @@ namespace mwse::lua {
 		lua_macros["toggleZoom"] = mge::macros->ToggleZoom;
 
 		// Legacy functions.
-		lua_mge["getScreenHeight"] = []() { return TES3::Game::get()->windowHeight; };
-		lua_mge["getScreenWidth"] = []() { return TES3::Game::get()->windowWidth; };
+		lua_mge["getScreenHeight"] = [] { return TES3::Game::get()->windowHeight; };
+		lua_mge["getScreenWidth"] = [] { return TES3::Game::get()->windowWidth; };
+
 		lua_mge["getWeatherScattering"] = &mge_getWeatherScattering;
 		lua_mge["setWeatherScattering"] = &mge_setWeatherScattering;
 		lua_mge["getWeatherDLFog"] = &mge_getWeatherDLFog_legacy;
 		lua_mge["setWeatherDLFog"] = &mge_setWeatherDLFog_legacy;
 		lua_mge["getWeatherPPLLight"] = &mge_getWeatherPPLLight_legacy;
 		lua_mge["setWeatherPPLLight"] = &mge_setWeatherPPLLight_legacy;
+
+		lua_mge["disableZoom"] = [] { mge::api->zoomSetEnabled(false); };
+		lua_mge["enableZoom"] = [] { mge::api->zoomSetEnabled(true); };
+		lua_mge["toggleZoom"] = [] { mge::api->zoomSetEnabled(!mge::api->zoomGetEnabled()); };
+		lua_mge["getZoom"] = [] { return mge::api->zoomGetZoom(); };
+		lua_mge["setZoom"] = [](sol::optional<sol::table> params) {
+			float amount = getOptionalParam(params, "amount", 0.0f);
+			if (amount != 0.0f) { mge::api->zoomSetZoom(amount); }
+		};
+		lua_mge["zoomIn"] = [](sol::optional<sol::table> params) {
+			float amount = getOptionalParam(params, "amount", 0.0f);
+			if (amount != 0.0f) { mge::api->zoomIn(amount); }
+		};
+		lua_mge["zoomOut"] = [](sol::optional<sol::table> params) {
+			float amount = getOptionalParam(params, "amount", 0.0f);
+			if (amount != 0.0f) { mge::api->zoomOut(amount); }
+		};
 	}
 }

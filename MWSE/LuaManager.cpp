@@ -3907,10 +3907,13 @@ namespace mwse::lua {
 
 		// Bind MGE.
 		if (isMGEAPIAvailable()) {
+			// MGE API available from 0.14+.
 			bindMGEPostShaders();
 			bindMGEUtil();
-			// Beta code.
-			log::getLog() << "[LuaManager] MGE API beta is available." << std::endl;
+		}
+		else {
+			// Keep legacy MWScript based commands available.
+			bindLegacyMGEScriptUtil();
 		}
 
 		// Alter existing libraries.

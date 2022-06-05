@@ -488,4 +488,504 @@ namespace mwse::lua {
 			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::WakeUpPC);
 		};
 	}
+
+	void bindLegacyMGEScriptUtil() {
+		//
+		// Pre MGE XE v0.14.x support.
+		//
+		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+		sol::state& state = stateHandle.state;
+		sol::table lua_mge = state["mge"];
+
+		// General functions.
+		lua_mge["getScreenHeight"] = []() {
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEGetHeight);
+			return Stack::getInstance().popLong();
+		};
+		lua_mge["getScreenWidth"] = []() {
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEGetWidth);
+			return Stack::getInstance().popLong();
+		};
+		lua_mge["enabled"] = []() {
+			return InstructionStore::getInstance().isOpcode(OpCode::xGetGS);
+		};
+		lua_mge["getVersion"] = []() {
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEGetVersion);
+			return Stack::getInstance().popLong();
+		};
+		lua_mge["log"] = [](std::string string) {
+			Stack::getInstance().pushString(string);
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEOutputDebugString);
+		};
+
+		// HUD-related functions.
+		lua_mge["clearHUD"] = []() {
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEWipeAll);
+		};
+		lua_mge["disableHUD"] = [](sol::optional<sol::table> params) {
+			auto hud = getOptionalParam<std::string>(params, "hud", "");
+
+			if (!hud.empty()) {
+				Stack::getInstance().pushString(hud);
+				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEDisableHUD);
+			}
+			else {
+				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGENIDDisableHUD);
+			}
+
+			return true;
+		};
+		lua_mge["enableHUD"] = [](sol::optional<sol::table> params) {
+			auto hud = getOptionalParam<std::string>(params, "hud", "");
+
+			if (!hud.empty()) {
+				Stack::getInstance().pushString(hud);
+				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEEnableHUD);
+			}
+			else {
+				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGENIDEnableHUD);
+			}
+
+			return true;
+		};
+		lua_mge["freeHUD"] = [](sol::optional<sol::table> params) {
+			auto hud = getOptionalParam<std::string>(params, "hud", "");
+
+			if (!hud.empty()) {
+				Stack::getInstance().pushString(hud);
+				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEFreeHUD);
+			}
+			else {
+				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGENIDFreeHUD);
+			}
+
+			return true;
+		};
+		lua_mge["fullscreenHUD"] = [](sol::optional<sol::table> params) {
+			auto hud = getOptionalParam<std::string>(params, "hud", "");
+
+			if (!hud.empty()) {
+				Stack::getInstance().pushString(hud);
+				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEFullscreenHUD);
+			}
+			else {
+				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGENIDFullscreenHUD);
+			}
+
+			return true;
+		};
+		lua_mge["loadHUD"] = [](sol::optional<sol::table> params) {
+			auto hud = getOptionalParam<std::string>(params, "hud", "");
+			auto texture = getOptionalParam<std::string>(params, "texture", "");
+			if (hud.empty() || texture.empty()) {
+				return false;
+			}
+
+			Stack::getInstance().pushString(texture);
+			Stack::getInstance().pushString(hud);
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGELoadHUD);
+
+			if (getOptionalParam<bool>(params, "enable", false)) {
+				Stack::getInstance().pushString(hud);
+				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEEnableHUD);
+			}
+
+			return true;
+		};
+		lua_mge["positionHUD"] = [](sol::optional<sol::table> params) {
+			auto hud = getOptionalParam<std::string>(params, "hud", "");
+			auto x = getOptionalParam(params, "x", 0.0f);
+			auto y = getOptionalParam(params, "y", 0.0f);
+
+			if (!hud.empty()) {
+				Stack::getInstance().pushFloat(y);
+				Stack::getInstance().pushFloat(x);
+				Stack::getInstance().pushString(hud);
+				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEPositionHUD);
+			}
+			else {
+				Stack::getInstance().pushFloat(y);
+				Stack::getInstance().pushFloat(x);
+				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGENIDPositionHUD);
+			}
+
+			return true;
+		};
+		lua_mge["scaleHUD"] = [](sol::optional<sol::table> params) {
+			auto hud = getOptionalParam<std::string>(params, "hud", "");
+			auto x = getOptionalParam(params, "x", 0.0f);
+			auto y = getOptionalParam(params, "y", 0.0f);
+
+			if (!hud.empty()) {
+				Stack::getInstance().pushFloat(y);
+				Stack::getInstance().pushFloat(x);
+				Stack::getInstance().pushString(hud);
+				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEScaleHUD);
+			}
+			else {
+				Stack::getInstance().pushFloat(y);
+				Stack::getInstance().pushFloat(x);
+				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGENIDScaleHUD);
+			}
+
+			return true;
+		};
+		lua_mge["selectHUD"] = [](sol::optional<sol::table> params) {
+			auto hud = getOptionalParam<std::string>(params, "hud", "");
+			if (hud.empty()) {
+				return false;
+			}
+
+			Stack::getInstance().pushString(hud);
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEWithHUD);
+			return true;
+		};
+		lua_mge["setHUDEffect"] = [](sol::optional<sol::table> params) {
+			auto hud = getOptionalParam<std::string>(params, "hud", "");
+			auto effect = getOptionalParam<std::string>(params, "effect", "");
+			if (effect.empty()) {
+				return false;
+			}
+
+			if (!hud.empty()) {
+				Stack::getInstance().pushString(effect);
+				Stack::getInstance().pushString(hud);
+				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEChangeHUDEffect);
+			}
+			else {
+				Stack::getInstance().pushString(effect);
+				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGENIDChangeHUDEffect);
+			}
+
+			return true;
+		};
+		lua_mge["setHUDEffectFloat"] = [](sol::optional<sol::table> params) {
+			auto hud = getOptionalParam<std::string>(params, "hud", "");
+			auto variable = getOptionalParam<std::string>(params, "variable", "");
+			float value = getOptionalParam(params, "value", 0.0f);
+			if (variable.empty()) {
+				return false;
+			}
+
+			if (!hud.empty()) {
+				Stack::getInstance().pushString(hud);
+				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEWithHUD);
+			}
+
+			Stack::getInstance().pushFloat(value);
+			Stack::getInstance().pushString(variable);
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGENIDSetHUDEffectFloat);
+
+			return true;
+		};
+		lua_mge["setHUDEffectLong"] = [](sol::optional<sol::table> params) {
+			auto hud = getOptionalParam<std::string>(params, "hud", "");
+			auto variable = getOptionalParam<std::string>(params, "variable", "");
+			auto value = getOptionalParam(params, "value", 0);
+			if (variable.empty()) {
+				return false;
+			}
+
+			if (!hud.empty()) {
+				Stack::getInstance().pushString(hud);
+				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEWithHUD);
+			}
+
+			Stack::getInstance().pushLong(value);
+			Stack::getInstance().pushString(variable);
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGENIDSetHUDEffectLong);
+
+			return true;
+		};
+		lua_mge["setHUDEffectVector4"] = [](sol::optional<sol::table> params) {
+			auto hud = getOptionalParam<std::string>(params, "hud", "");
+			auto variable = getOptionalParam<std::string>(params, "variable", "");
+			auto values = getOptionalParam<sol::table>(params, "value", sol::nil);
+			if (variable.empty() || values == sol::nil || values.size() != 4) {
+				return false;
+			}
+
+			if (!hud.empty()) {
+				Stack::getInstance().pushString(hud);
+				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEWithHUD);
+			}
+
+			for (int i = 4; i > 0; i--) {
+				Stack::getInstance().pushFloat(values[i]);
+			}
+			Stack::getInstance().pushString(variable);
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGENIDSetHUDEffectVec);
+
+			return true;
+		};
+		lua_mge["setHUDTexture"] = [](sol::optional<sol::table> params) {
+			auto hud = getOptionalParam<std::string>(params, "hud", "");
+			auto texture = getOptionalParam<std::string>(params, "texture", "");
+			if (texture.empty()) {
+				return false;
+			}
+
+			if (!hud.empty()) {
+				Stack::getInstance().pushString(texture);
+				Stack::getInstance().pushString(hud);
+				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEChangeHUDTexture);
+			}
+			else {
+				Stack::getInstance().pushString(texture);
+				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGENIDChangeHUDTexture);
+			}
+
+			return true;
+		};
+		lua_mge["unselectHUD"] = [](sol::optional<sol::table> params) {
+			auto hud = getOptionalParam<std::string>(params, "hud", "");
+			if (hud.empty()) {
+				return false;
+			}
+
+			Stack::getInstance().pushString(hud);
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGECancelWithHUD);
+			return true;
+		};
+
+		// Shader-related functions.
+		lua_mge["disableShader"] = [](sol::optional<sol::table> params) {
+			auto shader = getOptionalParam<std::string>(params, "shader", "");
+			if (shader.empty()) {
+				return false;
+			}
+
+			Stack::getInstance().pushString(shader);
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEDisableShader);
+
+			return true;
+		};
+		lua_mge["enableShader"] = [](sol::optional<sol::table> params) {
+			auto shader = getOptionalParam<std::string>(params, "shader", "");
+			if (shader.empty()) {
+				return false;
+			}
+
+			Stack::getInstance().pushString(shader);
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEEnableShader);
+
+			return true;
+		};
+		lua_mge["setShaderFloat"] = [](sol::optional<sol::table> params) {
+			auto shader = getOptionalParam<std::string>(params, "shader", "");
+			auto variable = getOptionalParam<std::string>(params, "variable", "");
+			auto value = getOptionalParam(params, "value", 0.0f);
+			if (shader.empty() || variable.empty()) {
+				return false;
+			}
+
+			Stack::getInstance().pushFloat(value);
+			Stack::getInstance().pushString(variable);
+			Stack::getInstance().pushString(shader);
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEShaderSetFloat);
+
+			return true;
+		};
+		lua_mge["setShaderLong"] = [](sol::optional<sol::table> params) {
+			auto shader = getOptionalParam<std::string>(params, "shader", "");
+			auto variable = getOptionalParam<std::string>(params, "variable", "");
+			auto value = getOptionalParam(params, "value", 0);
+			if (shader.empty() || variable.empty()) {
+				return false;
+			}
+
+			Stack::getInstance().pushLong(value);
+			Stack::getInstance().pushString(variable);
+			Stack::getInstance().pushString(shader);
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEShaderSetLong);
+
+			return true;
+		};
+		lua_mge["setShaderVector4"] = [](sol::optional<sol::table> params) {
+			auto shader = getOptionalParam<std::string>(params, "shader", "");
+			auto variable = getOptionalParam<std::string>(params, "variable", "");
+			sol::table values = getOptionalParam<sol::table>(params, "value", sol::nil);
+			if (shader.empty() || variable.empty() || values == sol::nil || values.size() != 4) {
+				return false;
+			}
+			for (int i = 4; i > 0; i--) {
+				Stack::getInstance().pushFloat(values[i]);
+			}
+			Stack::getInstance().pushString(variable);
+			Stack::getInstance().pushString(shader);
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEShaderSetVector);
+
+			return true;
+		};
+
+		// Camera zoom functions.
+		lua_mge["disableZoom"] = []() {
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEDisableZoom);
+		};
+		lua_mge["enableZoom"] = []() {
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEEnableZoom);
+		};
+		lua_mge["toggleZoom"] = []() {
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEToggleZoom);
+		};
+		lua_mge["zoomIn"] = [](sol::optional<sol::table> params) {
+			auto amount = getOptionalParam(params, "amount", 0.0f);
+
+			if (amount == 0.0) {
+				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEZoomIn);
+			}
+			else {
+				Stack::getInstance().pushFloat(amount);
+				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEZoomInBy);
+			}
+		};
+		lua_mge["zoomOut"] = [](sol::optional<sol::table> params) {
+			auto amount = getOptionalParam(params, "amount", 0.0f);
+
+			if (amount == 0.0) {
+				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEZoomOut);
+			}
+			else {
+				Stack::getInstance().pushFloat(amount);
+				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEZoomOutBy);
+			}
+		};
+		lua_mge["setZoom"] = [](sol::optional<sol::table> params) {
+			auto amount = getOptionalParam(params, "amount", 0.0f);
+			auto animate = getOptionalParam(params, "animate", false);
+
+			if (animate) {
+				Stack::getInstance().pushFloat(amount);
+				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEZoom);
+			}
+			else {
+				Stack::getInstance().pushFloat(amount);
+				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGESetZoom);
+			}
+		};
+		lua_mge["getZoom"] = []() {
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEGetZoom);
+			return Stack::getInstance().popFloat();
+		};
+		lua_mge["stopZoom"] = []() {
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEStopZoom);
+		};
+
+		// Camera shake functions.
+		lua_mge["enableCameraShake"] = [](sol::optional<sol::table> params) {
+			auto magnitude = getOptionalParam(params, "magnitude", 0.0f);
+			if (magnitude != 0.0) {
+				Stack::getInstance().pushFloat(magnitude);
+				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGESetCameraShakeMagnitude);
+			}
+
+			auto acceleration = getOptionalParam(params, "acceleration", 0.0f);
+			if (acceleration != 0.0) {
+				Stack::getInstance().pushFloat(acceleration);
+				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGECameraShakeZoom);
+			}
+
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEEnableCameraShake);
+		};
+		lua_mge["disableCameraShake"] = []() {
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEDisableCameraShake);
+		};
+		lua_mge["setCameraShakeMagnitude"] = [](sol::optional<sol::table> params) {
+			auto magnitude = getOptionalParam(params, "magnitude", 0.0f);
+			Stack::getInstance().pushFloat(magnitude);
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGESetCameraShakeMagnitude);
+		};
+		lua_mge["setCameraShakeAcceleration"] = [](sol::optional<sol::table> params) {
+			auto acceleration = getOptionalParam(params, "acceleration", 0.0f);
+			Stack::getInstance().pushFloat(acceleration);
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGECameraShakeZoom);
+		};
+
+		// Camera rotation functions.
+		lua_mge["getScreenRotation"] = []() {
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEGetScreenRotation);
+			return Stack::getInstance().popFloat();
+		};
+		lua_mge["modScreenRotation"] = [](sol::optional<sol::table> params) {
+			auto rotation = getOptionalParam(params, "rotation", 0.0f);
+			Stack::getInstance().pushFloat(rotation);
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGERotateScreenBy);
+		};
+		lua_mge["setScreenRotation"] = [](sol::optional<sol::table> params) {
+			auto rotation = getOptionalParam(params, "rotation", 0.0f);
+			Stack::getInstance().pushFloat(rotation);
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGERotateScreen);
+		};
+		lua_mge["startScreenRotation"] = []() {
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEScreenSpin);
+		};
+		lua_mge["stopScreenRotation"] = []() {
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEStopSpinSpin);
+		};
+
+		// MGE XE rendering functions.
+		lua_mge["setWeatherScattering"] = [](sol::optional<sol::table> params) {
+			auto outscatter = getOptionalParam<sol::table>(params, "outscatter", sol::nil);
+			auto inscatter = getOptionalParam<sol::table>(params, "inscatter", sol::nil);
+
+			if (outscatter == sol::nil || outscatter.size() != 3 || inscatter == sol::nil || inscatter.size() != 3) {
+				return false;
+			}
+
+			for (int i = 3; i > 0; i--) {
+				Stack::getInstance().pushFloat(inscatter[i]);
+			}
+
+			for (int i = 3; i > 0; i--) {
+				Stack::getInstance().pushFloat(outscatter[i]);
+			}
+
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::xSetWeatherScattering);
+			return true;
+		};
+		lua_mge["getWeatherScattering"] = []() {
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			auto& state = stateHandle.state;
+			auto inscatter = state.create_table();
+			auto outscatter = state.create_table();
+
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::xGetWeatherScattering);
+			inscatter[3] = Stack::getInstance().popFloat();
+			inscatter[2] = Stack::getInstance().popFloat();
+			inscatter[1] = Stack::getInstance().popFloat();
+			outscatter[3] = Stack::getInstance().popFloat();
+			outscatter[2] = Stack::getInstance().popFloat();
+			outscatter[1] = Stack::getInstance().popFloat();
+
+			return std::make_tuple(outscatter, inscatter);
+		};
+		lua_mge["getWeatherDLFog"] = [](int weatherID) {
+			Stack::getInstance().pushLong(weatherID);
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEGetWeatherDLFog);
+
+			auto fogOffset = Stack::getInstance().popFloat();
+			auto fogDistMult = Stack::getInstance().popFloat();
+			return std::make_tuple(fogDistMult, fogOffset);
+		};
+		lua_mge["setWeatherDLFog"] = [](int weatherID, float fogDistMult, float fogOffset) {
+			Stack::getInstance().pushFloat(fogOffset);
+			Stack::getInstance().pushFloat(fogDistMult);
+			Stack::getInstance().pushLong(weatherID);
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGESetWeatherDLFog);
+		};
+		lua_mge["getWeatherPPLLight"] = [](int weatherID) {
+			Stack::getInstance().pushLong(weatherID);
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEGetWeatherPPLLight);
+
+			auto ambMult = Stack::getInstance().popFloat();
+			auto sunMult = Stack::getInstance().popFloat();
+			return std::make_tuple(sunMult, ambMult);
+		};
+		lua_mge["setWeatherPPLLight"] = [](int weatherID, float sunMult, float ambMult) {
+			Stack::getInstance().pushFloat(ambMult);
+			Stack::getInstance().pushFloat(sunMult);
+			Stack::getInstance().pushLong(weatherID);
+			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGESetWeatherPPLLight);
+		};
+	}
 }
