@@ -2802,7 +2802,7 @@ namespace mwse::lua {
 			sol::object eventResult = stateHandle.triggerEvent(new mwse::lua::event::CalcHitChanceEvent(OnCalculateHitChance_Attacker, OnCalculateHitChance_Projectile, hitChance));
 			if (eventResult.valid()) {
 				sol::table eventData = eventResult;
-				hitChance = getOptionalParam<int>(eventData, "hitChance", hitChance);
+				hitChance = getOptionalParam<int>(eventData, "hitChance", initialHitChance);
 			}
 		}
 
