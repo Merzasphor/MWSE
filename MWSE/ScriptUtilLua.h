@@ -2,4 +2,5 @@
 
 namespace mwse::lua {
 	void bindScriptUtil();
+	void bindLegacyMGEScriptUtil();
 }

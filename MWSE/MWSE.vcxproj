@@ -29,6 +29,11 @@
     <ClInclude Include="LuaSpellResistedEvent.h" />
     <ClInclude Include="LuaVFXCreatedEvent.h" />
     <ClInclude Include="MathUtil.h" />
+    <ClInclude Include="MGEApi.h" />
+    <ClInclude Include="MGEMacroFunctionDefs.h" />
+    <ClInclude Include="MGEPostShaders.h" />
+    <ClInclude Include="MGEPostShadersLua.h" />
+    <ClInclude Include="MGEUtilLua.h" />
     <ClInclude Include="NIColorData.h" />
     <ClInclude Include="NIColorKey.h" />
     <ClInclude Include="NIPosData.h" />
@@ -654,6 +659,9 @@
     <ClCompile Include="LuaWeatherCycledEvent.cpp" />
     <ClCompile Include="LuaWeatherTransitionFinishedEvent.cpp" />
     <ClCompile Include="LuaWeatherTransitionStartedEvent.cpp" />
+    <ClCompile Include="MGEPostShaders.cpp" />
+    <ClCompile Include="MGEPostShadersLua.cpp" />
+    <ClCompile Include="MGEUtilLua.cpp" />
     <ClCompile Include="MWSEConfig.cpp" />
     <ClCompile Include="MWSEUtilLua.cpp" />
     <ClCompile Include="NIAmbientLight.cpp" />

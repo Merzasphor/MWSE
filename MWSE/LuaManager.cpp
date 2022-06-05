@@ -73,10 +73,13 @@
 
 // Lua binding files. These are split out rather than kept here to help with compile times.
 #include "MemoryUtilLua.h"
+#include "MGEPostShadersLua.h"
+#include "MGEUtilLua.h"
 #include "StackLua.h"
 #include "ScriptUtilLua.h"
 #include "StringUtilLua.h"
 #include "TES3UtilLua.h"
+
 #include "TES3ActionDataLua.h"
 #include "TES3ActivatorLua.h"
 #include "TES3ActorAnimationControllerLua.h"
@@ -662,9 +665,10 @@ namespace mwse::lua {
 	// Hook: Finished initializing game code.
 	//
 
-	void __fastcall FinishInitialization(TES3::IteratedList<void*>* itt) {
+	bool __fastcall FinishInitialization(TES3::Game* game) {
 		// Call overwritten code.
-		itt->clear();
+		const auto TES3Game_loadAllPlugins = reinterpret_cast<bool(__thiscall*)(TES3::Game*)>(0x419CE0);
+		TES3Game_loadAllPlugins(game);
 
 		// Hook up shorthand access to data handler, world controller, and game.
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
@@ -674,6 +678,9 @@ namespace mwse::lua {
 		state["tes3"]["game"] = TES3::Game::get();
 
 		stateHandle.triggerEvent(new event::GenericEvent("initialized"));
+
+		// Return success.
+		return true;
 	}
 
 	//
@@ -918,7 +925,7 @@ namespace mwse::lua {
 		animController->startAttackAnimation(swing);
 	}
 
-	//
+	//MGE
 	// Collision events: Mobile Actor
 	//
 
@@ -3908,6 +3915,17 @@ namespace mwse::lua {
 		bindStringUtil();
 		bindTES3Util();
 
+		// Bind MGE.
+		if (isMGEAPIAvailable()) {
+			// MGE API available from 0.14+.
+			bindMGEPostShaders();
+			bindMGEUtil();
+		}
+		else {
+			// Keep legacy MWScript based commands available.
+			bindLegacyMGEScriptUtil();
+		}
+
 		// Alter existing libraries.
 		luaState["os"]["exit"] = customOSExit;
 
@@ -3926,9 +3944,8 @@ namespace mwse::lua {
 		genCallEnforced(0x5661A0, 0x4E5770, reinterpret_cast<DWORD>(OnPlayerReferenceAssigned));
 		genCallEnforced(0x4C0180, 0x4E4510, reinterpret_cast<DWORD>(OnPlayerReferenceCreated));
 
-		// Event: initialized. Hook just before we return successfully from where game data is loaded.
-		genCallEnforced(0x4BB440, 0x47E280, reinterpret_cast<DWORD>(FinishInitialization));
-		genCallEnforced(0x4BBC07, 0x47E280, reinterpret_cast<DWORD>(FinishInitialization));
+		// Event: initialized. Hook initial plugin loading and merging function.
+		genCallEnforced(0x418F88, 0x419CE0, reinterpret_cast<DWORD>(FinishInitialization));
 
 		// Event: enterFrame. This hook can be in a couple of locations, because of MCP.
 		genCallEnforced(0x41ABB0, 0x40F610, reinterpret_cast<DWORD>(EnterFrame));

@@ -487,37 +487,42 @@ namespace mwse::lua {
 		state["mwscript"]["wakeUpPC"] = []() {
 			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::WakeUpPC);
 		};
+	}
 
+	void bindLegacyMGEScriptUtil() {
 		//
-		// MGE opcodes.
+		// Pre MGE XE v0.14.x support.
 		//
+		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+		sol::state& state = stateHandle.state;
+		sol::table lua_mge = state["mge"];
 
 		// General functions.
-		state["mge"]["getScreenHeight"] = []() {
+		lua_mge["getScreenHeight"] = []() {
 			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEGetHeight);
 			return Stack::getInstance().popLong();
 		};
-		state["mge"]["getScreenWidth"] = []() {
+		lua_mge["getScreenWidth"] = []() {
 			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEGetWidth);
 			return Stack::getInstance().popLong();
 		};
-		state["mge"]["enabled"] = []() {
+		lua_mge["enabled"] = []() {
 			return InstructionStore::getInstance().isOpcode(OpCode::xGetGS);
 		};
-		state["mge"]["getVersion"] = []() {
+		lua_mge["getVersion"] = []() {
 			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEGetVersion);
 			return Stack::getInstance().popLong();
 		};
-		state["mge"]["log"] = [](std::string string) {
+		lua_mge["log"] = [](std::string string) {
 			Stack::getInstance().pushString(string);
 			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEOutputDebugString);
 		};
 
 		// HUD-related functions.
-		state["mge"]["clearHUD"] = []() {
+		lua_mge["clearHUD"] = []() {
 			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEWipeAll);
 		};
-		state["mge"]["disableHUD"] = [](sol::optional<sol::table> params) {
+		lua_mge["disableHUD"] = [](sol::optional<sol::table> params) {
 			auto hud = getOptionalParam<std::string>(params, "hud", "");
 
 			if (!hud.empty()) {
@@ -530,7 +535,7 @@ namespace mwse::lua {
 
 			return true;
 		};
-		state["mge"]["enableHUD"] = [](sol::optional<sol::table> params) {
+		lua_mge["enableHUD"] = [](sol::optional<sol::table> params) {
 			auto hud = getOptionalParam<std::string>(params, "hud", "");
 
 			if (!hud.empty()) {
@@ -543,7 +548,7 @@ namespace mwse::lua {
 
 			return true;
 		};
-		state["mge"]["freeHUD"] = [](sol::optional<sol::table> params) {
+		lua_mge["freeHUD"] = [](sol::optional<sol::table> params) {
 			auto hud = getOptionalParam<std::string>(params, "hud", "");
 
 			if (!hud.empty()) {
@@ -556,7 +561,7 @@ namespace mwse::lua {
 
 			return true;
 		};
-		state["mge"]["fullscreenHUD"] = [](sol::optional<sol::table> params) {
+		lua_mge["fullscreenHUD"] = [](sol::optional<sol::table> params) {
 			auto hud = getOptionalParam<std::string>(params, "hud", "");
 
 			if (!hud.empty()) {
@@ -569,7 +574,7 @@ namespace mwse::lua {
 
 			return true;
 		};
-		state["mge"]["loadHUD"] = [](sol::optional<sol::table> params) {
+		lua_mge["loadHUD"] = [](sol::optional<sol::table> params) {
 			auto hud = getOptionalParam<std::string>(params, "hud", "");
 			auto texture = getOptionalParam<std::string>(params, "texture", "");
 			if (hud.empty() || texture.empty()) {
@@ -587,7 +592,7 @@ namespace mwse::lua {
 
 			return true;
 		};
-		state["mge"]["positionHUD"] = [](sol::optional<sol::table> params) {
+		lua_mge["positionHUD"] = [](sol::optional<sol::table> params) {
 			auto hud = getOptionalParam<std::string>(params, "hud", "");
 			auto x = getOptionalParam(params, "x", 0.0f);
 			auto y = getOptionalParam(params, "y", 0.0f);
@@ -606,7 +611,7 @@ namespace mwse::lua {
 
 			return true;
 		};
-		state["mge"]["scaleHUD"] = [](sol::optional<sol::table> params) {
+		lua_mge["scaleHUD"] = [](sol::optional<sol::table> params) {
 			auto hud = getOptionalParam<std::string>(params, "hud", "");
 			auto x = getOptionalParam(params, "x", 0.0f);
 			auto y = getOptionalParam(params, "y", 0.0f);
@@ -625,7 +630,7 @@ namespace mwse::lua {
 
 			return true;
 		};
-		state["mge"]["selectHUD"] = [](sol::optional<sol::table> params) {
+		lua_mge["selectHUD"] = [](sol::optional<sol::table> params) {
 			auto hud = getOptionalParam<std::string>(params, "hud", "");
 			if (hud.empty()) {
 				return false;
@@ -635,7 +640,7 @@ namespace mwse::lua {
 			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEWithHUD);
 			return true;
 		};
-		state["mge"]["setHUDEffect"] = [](sol::optional<sol::table> params) {
+		lua_mge["setHUDEffect"] = [](sol::optional<sol::table> params) {
 			auto hud = getOptionalParam<std::string>(params, "hud", "");
 			auto effect = getOptionalParam<std::string>(params, "effect", "");
 			if (effect.empty()) {
@@ -654,7 +659,7 @@ namespace mwse::lua {
 
 			return true;
 		};
-		state["mge"]["setHUDEffectFloat"] = [](sol::optional<sol::table> params) {
+		lua_mge["setHUDEffectFloat"] = [](sol::optional<sol::table> params) {
 			auto hud = getOptionalParam<std::string>(params, "hud", "");
 			auto variable = getOptionalParam<std::string>(params, "variable", "");
 			float value = getOptionalParam(params, "value", 0.0f);
@@ -673,7 +678,7 @@ namespace mwse::lua {
 
 			return true;
 		};
-		state["mge"]["setHUDEffectLong"] = [](sol::optional<sol::table> params) {
+		lua_mge["setHUDEffectLong"] = [](sol::optional<sol::table> params) {
 			auto hud = getOptionalParam<std::string>(params, "hud", "");
 			auto variable = getOptionalParam<std::string>(params, "variable", "");
 			auto value = getOptionalParam(params, "value", 0);
@@ -692,7 +697,7 @@ namespace mwse::lua {
 
 			return true;
 		};
-		state["mge"]["setHUDEffectVector4"] = [](sol::optional<sol::table> params) {
+		lua_mge["setHUDEffectVector4"] = [](sol::optional<sol::table> params) {
 			auto hud = getOptionalParam<std::string>(params, "hud", "");
 			auto variable = getOptionalParam<std::string>(params, "variable", "");
 			auto values = getOptionalParam<sol::table>(params, "value", sol::nil);
@@ -713,7 +718,7 @@ namespace mwse::lua {
 
 			return true;
 		};
-		state["mge"]["setHUDTexture"] = [](sol::optional<sol::table> params) {
+		lua_mge["setHUDTexture"] = [](sol::optional<sol::table> params) {
 			auto hud = getOptionalParam<std::string>(params, "hud", "");
 			auto texture = getOptionalParam<std::string>(params, "texture", "");
 			if (texture.empty()) {
@@ -732,7 +737,7 @@ namespace mwse::lua {
 
 			return true;
 		};
-		state["mge"]["unselectHUD"] = [](sol::optional<sol::table> params) {
+		lua_mge["unselectHUD"] = [](sol::optional<sol::table> params) {
 			auto hud = getOptionalParam<std::string>(params, "hud", "");
 			if (hud.empty()) {
 				return false;
@@ -744,7 +749,7 @@ namespace mwse::lua {
 		};
 
 		// Shader-related functions.
-		state["mge"]["disableShader"] = [](sol::optional<sol::table> params) {
+		lua_mge["disableShader"] = [](sol::optional<sol::table> params) {
 			auto shader = getOptionalParam<std::string>(params, "shader", "");
 			if (shader.empty()) {
 				return false;
@@ -755,7 +760,7 @@ namespace mwse::lua {
 
 			return true;
 		};
-		state["mge"]["enableShader"] = [](sol::optional<sol::table> params) {
+		lua_mge["enableShader"] = [](sol::optional<sol::table> params) {
 			auto shader = getOptionalParam<std::string>(params, "shader", "");
 			if (shader.empty()) {
 				return false;
@@ -766,7 +771,7 @@ namespace mwse::lua {
 
 			return true;
 		};
-		state["mge"]["setShaderFloat"] = [](sol::optional<sol::table> params) {
+		lua_mge["setShaderFloat"] = [](sol::optional<sol::table> params) {
 			auto shader = getOptionalParam<std::string>(params, "shader", "");
 			auto variable = getOptionalParam<std::string>(params, "variable", "");
 			auto value = getOptionalParam(params, "value", 0.0f);
@@ -781,7 +786,7 @@ namespace mwse::lua {
 
 			return true;
 		};
-		state["mge"]["setShaderLong"] = [](sol::optional<sol::table> params) {
+		lua_mge["setShaderLong"] = [](sol::optional<sol::table> params) {
 			auto shader = getOptionalParam<std::string>(params, "shader", "");
 			auto variable = getOptionalParam<std::string>(params, "variable", "");
 			auto value = getOptionalParam(params, "value", 0);
@@ -796,7 +801,7 @@ namespace mwse::lua {
 
 			return true;
 		};
-		state["mge"]["setShaderVector4"] = [](sol::optional<sol::table> params) {
+		lua_mge["setShaderVector4"] = [](sol::optional<sol::table> params) {
 			auto shader = getOptionalParam<std::string>(params, "shader", "");
 			auto variable = getOptionalParam<std::string>(params, "variable", "");
 			sol::table values = getOptionalParam<sol::table>(params, "value", sol::nil);
@@ -814,16 +819,16 @@ namespace mwse::lua {
 		};
 
 		// Camera zoom functions.
-		state["mge"]["disableZoom"] = []() {
+		lua_mge["disableZoom"] = []() {
 			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEDisableZoom);
 		};
-		state["mge"]["enableZoom"] = []() {
+		lua_mge["enableZoom"] = []() {
 			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEEnableZoom);
 		};
-		state["mge"]["toggleZoom"] = []() {
+		lua_mge["toggleZoom"] = []() {
 			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEToggleZoom);
 		};
-		state["mge"]["zoomIn"] = [](sol::optional<sol::table> params) {
+		lua_mge["zoomIn"] = [](sol::optional<sol::table> params) {
 			auto amount = getOptionalParam(params, "amount", 0.0f);
 
 			if (amount == 0.0) {
@@ -834,7 +839,7 @@ namespace mwse::lua {
 				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEZoomInBy);
 			}
 		};
-		state["mge"]["zoomOut"] = [](sol::optional<sol::table> params) {
+		lua_mge["zoomOut"] = [](sol::optional<sol::table> params) {
 			auto amount = getOptionalParam(params, "amount", 0.0f);
 
 			if (amount == 0.0) {
@@ -845,7 +850,7 @@ namespace mwse::lua {
 				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEZoomOutBy);
 			}
 		};
-		state["mge"]["setZoom"] = [](sol::optional<sol::table> params) {
+		lua_mge["setZoom"] = [](sol::optional<sol::table> params) {
 			auto amount = getOptionalParam(params, "amount", 0.0f);
 			auto animate = getOptionalParam(params, "animate", false);
 
@@ -858,16 +863,16 @@ namespace mwse::lua {
 				mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGESetZoom);
 			}
 		};
-		state["mge"]["getZoom"] = []() {
+		lua_mge["getZoom"] = []() {
 			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEGetZoom);
 			return Stack::getInstance().popFloat();
 		};
-		state["mge"]["stopZoom"] = []() {
+		lua_mge["stopZoom"] = []() {
 			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEStopZoom);
 		};
 
 		// Camera shake functions.
-		state["mge"]["enableCameraShake"] = [](sol::optional<sol::table> params) {
+		lua_mge["enableCameraShake"] = [](sol::optional<sol::table> params) {
 			auto magnitude = getOptionalParam(params, "magnitude", 0.0f);
 			if (magnitude != 0.0) {
 				Stack::getInstance().pushFloat(magnitude);
@@ -882,44 +887,44 @@ namespace mwse::lua {
 
 			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEEnableCameraShake);
 		};
-		state["mge"]["disableCameraShake"] = []() {
+		lua_mge["disableCameraShake"] = []() {
 			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEDisableCameraShake);
 		};
-		state["mge"]["setCameraShakeMagnitude"] = [](sol::optional<sol::table> params) {
+		lua_mge["setCameraShakeMagnitude"] = [](sol::optional<sol::table> params) {
 			auto magnitude = getOptionalParam(params, "magnitude", 0.0f);
 			Stack::getInstance().pushFloat(magnitude);
 			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGESetCameraShakeMagnitude);
 		};
-		state["mge"]["setCameraShakeAcceleration"] = [](sol::optional<sol::table> params) {
+		lua_mge["setCameraShakeAcceleration"] = [](sol::optional<sol::table> params) {
 			auto acceleration = getOptionalParam(params, "acceleration", 0.0f);
 			Stack::getInstance().pushFloat(acceleration);
 			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGECameraShakeZoom);
 		};
 
 		// Camera rotation functions.
-		state["mge"]["getScreenRotation"] = []() {
+		lua_mge["getScreenRotation"] = []() {
 			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEGetScreenRotation);
 			return Stack::getInstance().popFloat();
 		};
-		state["mge"]["modScreenRotation"] = [](sol::optional<sol::table> params) {
+		lua_mge["modScreenRotation"] = [](sol::optional<sol::table> params) {
 			auto rotation = getOptionalParam(params, "rotation", 0.0f);
 			Stack::getInstance().pushFloat(rotation);
 			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGERotateScreenBy);
 		};
-		state["mge"]["setScreenRotation"] = [](sol::optional<sol::table> params) {
+		lua_mge["setScreenRotation"] = [](sol::optional<sol::table> params) {
 			auto rotation = getOptionalParam(params, "rotation", 0.0f);
 			Stack::getInstance().pushFloat(rotation);
 			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGERotateScreen);
 		};
-		state["mge"]["startScreenRotation"] = []() {
+		lua_mge["startScreenRotation"] = []() {
 			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEScreenSpin);
 		};
-		state["mge"]["stopScreenRotation"] = []() {
+		lua_mge["stopScreenRotation"] = []() {
 			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEStopSpinSpin);
 		};
 
 		// MGE XE rendering functions.
-		state["mge"]["setWeatherScattering"] = [](sol::optional<sol::table> params) {
+		lua_mge["setWeatherScattering"] = [](sol::optional<sol::table> params) {
 			auto outscatter = getOptionalParam<sol::table>(params, "outscatter", sol::nil);
 			auto inscatter = getOptionalParam<sol::table>(params, "inscatter", sol::nil);
 
@@ -938,7 +943,7 @@ namespace mwse::lua {
 			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::xSetWeatherScattering);
 			return true;
 		};
-		state["mge"]["getWeatherScattering"] = []() {
+		lua_mge["getWeatherScattering"] = []() {
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			auto& state = stateHandle.state;
 			auto inscatter = state.create_table();
@@ -954,7 +959,7 @@ namespace mwse::lua {
 
 			return std::make_tuple(outscatter, inscatter);
 		};
-		state["mge"]["getWeatherDLFog"] = [](int weatherID) {
+		lua_mge["getWeatherDLFog"] = [](int weatherID) {
 			Stack::getInstance().pushLong(weatherID);
 			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEGetWeatherDLFog);
 
@@ -962,13 +967,13 @@ namespace mwse::lua {
 			auto fogDistMult = Stack::getInstance().popFloat();
 			return std::make_tuple(fogDistMult, fogOffset);
 		};
-		state["mge"]["setWeatherDLFog"] = [](int weatherID, float fogDistMult, float fogOffset) {
+		lua_mge["setWeatherDLFog"] = [](int weatherID, float fogDistMult, float fogOffset) {
 			Stack::getInstance().pushFloat(fogOffset);
 			Stack::getInstance().pushFloat(fogDistMult);
 			Stack::getInstance().pushLong(weatherID);
 			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGESetWeatherDLFog);
 		};
-		state["mge"]["getWeatherPPLLight"] = [](int weatherID) {
+		lua_mge["getWeatherPPLLight"] = [](int weatherID) {
 			Stack::getInstance().pushLong(weatherID);
 			mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEGetWeatherPPLLight);
 
@@ -976,7 +981,7 @@ namespace mwse::lua {
 			auto sunMult = Stack::getInstance().popFloat();
 			return std::make_tuple(sunMult, ambMult);
 		};
-		state["mge"]["setWeatherPPLLight"] = [](int weatherID, float sunMult, float ambMult) {
+		lua_mge["setWeatherPPLLight"] = [](int weatherID, float sunMult, float ambMult) {
 			Stack::getInstance().pushFloat(ambMult);
 			Stack::getInstance().pushFloat(sunMult);
 			Stack::getInstance().pushLong(weatherID);
