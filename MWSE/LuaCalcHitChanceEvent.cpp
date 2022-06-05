@@ -4,6 +4,7 @@
 #include "LuaUtil.h"
 
 #include "TES3MobileActor.h"
+#include "TES3MobileProjectile.h"
 #include "TES3Reference.h"
 
 namespace mwse::lua::event {
