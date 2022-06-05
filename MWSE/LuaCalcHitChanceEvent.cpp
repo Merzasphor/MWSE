@@ -8,10 +8,8 @@
 #include "TES3Reference.h"
 
 namespace mwse::lua::event {
-	CalcHitChanceEvent::CalcHitChanceEvent(TES3::MobileActor* attacker, TES3::MobileProjectile* projectile, int hitChance) :
-		ObjectFilteredEvent("calcHitChance", attacker->reference->baseObject),
-		m_Attacker(attacker),
-		m_Projectile(projectile),
+	CalcHitChanceEvent::CalcHitChanceEvent(int hitChance) :
+		ObjectFilteredEvent("calcHitChance", m_Attacker->reference->baseObject),
 		m_HitChance(hitChance)
 	{
 
@@ -41,4 +39,6 @@ namespace mwse::lua::event {
 	}
 
 	bool CalcHitChanceEvent::m_EventEnabled = false;
+	TES3::MobileActor* CalcHitChanceEvent::m_Attacker = nullptr;
+	TES3::MobileProjectile* CalcHitChanceEvent::m_Projectile = nullptr;
 }

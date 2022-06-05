@@ -2783,13 +2783,10 @@ namespace mwse::lua {
 	// Event: Calculate hit chance.
 	//
 
-	static TES3::MobileActor* OnCalculateHitChance_Attacker = nullptr;
-	static TES3::MobileProjectile* OnCalculateHitChance_Projectile = nullptr;
-
 	const auto TES3_CombatHitRoll = reinterpret_cast<bool(__cdecl*)(TES3::MobileActor*, TES3::MobileProjectile*, unsigned int*)>(0x555290);
 	bool __cdecl OnCalculateHitChanceWrapper(TES3::MobileActor* attacker, TES3::MobileProjectile* projectile, unsigned int* out_serialCreated) {
-		OnCalculateHitChance_Attacker = attacker;
-		OnCalculateHitChance_Projectile = projectile;
+		event::CalcHitChanceEvent::m_Attacker = attacker;
+		event::CalcHitChanceEvent::m_Projectile = projectile;
 		return TES3_CombatHitRoll(attacker, projectile, out_serialCreated);
 	}
 
@@ -2799,7 +2796,7 @@ namespace mwse::lua {
 		// Allow the event to override the text.
 		if (mwse::lua::event::CalcHitChanceEvent::getEventEnabled()) {
 			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
-			sol::object eventResult = stateHandle.triggerEvent(new mwse::lua::event::CalcHitChanceEvent(OnCalculateHitChance_Attacker, OnCalculateHitChance_Projectile, hitChance));
+			sol::object eventResult = stateHandle.triggerEvent(new mwse::lua::event::CalcHitChanceEvent(hitChance));
 			if (eventResult.valid()) {
 				sol::table eventData = eventResult;
 				hitChance = getOptionalParam<int>(eventData, "hitChance", initialHitChance);
@@ -2809,7 +2806,10 @@ namespace mwse::lua {
 		// Overwritten code for this hook.
 		if (TES3::WorldController::get()->menuController->unknown_0x24 % 1) {
 			char* buffer = mwse::tes3::getThreadSafeStringBuffer();
-			sprintf(buffer, "Attack Chance %d%%, for %s to hit %s", hitChance, OnCalculateHitChance_Attacker->reference->baseObject->getObjectID(), OnCalculateHitChance_Attacker->actionData.hitTarget->reference->baseObject->getObjectID());
+			const auto attacker = event::CalcHitChanceEvent::m_Attacker;
+			const auto attackerId = attacker->reference->baseObject->getObjectID();
+			const auto targetId = attacker->actionData.hitTarget->reference->baseObject->getObjectID();
+			sprintf(buffer, "Attack Chance %d%%, for %s to hit %s", hitChance, attackerId, targetId);
 			TES3::UI::logToConsole(buffer, false);
 		}
 
