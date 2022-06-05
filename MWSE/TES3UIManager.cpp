@@ -445,7 +445,7 @@ namespace TES3 {
 			if (text == nullptr) {
 				return;
 			}
-			TES3_ConsoleLogResult(text, isCommand.value_or(false));
+			logToConsole(text, isCommand.value_or(false));
 		}
 
 		const auto TES3_CloseBookMenu = reinterpret_cast<void(__cdecl*)()>(0x5AC7F0);

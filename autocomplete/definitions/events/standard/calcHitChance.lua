@@ -22,6 +22,11 @@ return {
 			readOnly = true,
 			description = "The mobile who is being attacked. May not always be available.",
 		},
+		["projectile"] = {
+			type = "tes3mobileProjectile|nil",
+			readOnly = true,
+			description = "The projectile, if applicable, that hit the target.",
+		},
 		["hitChance"] = {
 			type = "number",
 			description = "The hit chance for the actor. This may be adjusted.",

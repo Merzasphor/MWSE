@@ -2790,23 +2790,34 @@ namespace mwse::lua {
 	// Event: Calculate hit chance.
 	//
 
-	int __fastcall OnCalculateHitChance(TES3::MobileActor* attacker, int hitChance) {
+	const auto TES3_CombatHitRoll = reinterpret_cast<bool(__cdecl*)(TES3::MobileActor*, TES3::MobileProjectile*, unsigned int*)>(0x555290);
+	bool __cdecl OnCalculateHitChanceWrapper(TES3::MobileActor* attacker, TES3::MobileProjectile* projectile, unsigned int* out_serialCreated) {
+		event::CalcHitChanceEvent::m_Attacker = attacker;
+		event::CalcHitChanceEvent::m_Projectile = projectile;
+		return TES3_CombatHitRoll(attacker, projectile, out_serialCreated);
+	}
+
+	int __fastcall OnCalculateHitChance(int initialHitChance) {
+		auto hitChance = initialHitChance;
+
 		// Allow the event to override the text.
 		if (mwse::lua::event::CalcHitChanceEvent::getEventEnabled()) {
 			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
-			sol::object eventResult = stateHandle.triggerEvent(new mwse::lua::event::CalcHitChanceEvent(attacker, hitChance));
+			sol::object eventResult = stateHandle.triggerEvent(new mwse::lua::event::CalcHitChanceEvent(hitChance));
 			if (eventResult.valid()) {
 				sol::table eventData = eventResult;
-				hitChance = getOptionalParam<int>(eventData, "hitChance", hitChance);
+				hitChance = getOptionalParam<int>(eventData, "hitChance", initialHitChance);
 			}
 		}
 
 		// Overwritten code for this hook.
 		if (TES3::WorldController::get()->menuController->unknown_0x24 % 1) {
 			char* buffer = mwse::tes3::getThreadSafeStringBuffer();
-			sprintf(buffer, "Attack Chance %d%%, for %s to hit %s", hitChance, attacker->reference->baseObject->getObjectID(), attacker->actionData.hitTarget->reference->baseObject->getObjectID());
-			const auto TES3_ConsoleLogResult = reinterpret_cast<void(__cdecl*)(const char*, bool)>(0x5B2C20);
-			TES3_ConsoleLogResult(buffer, false);
+			const auto attacker = event::CalcHitChanceEvent::m_Attacker;
+			const auto attackerId = attacker->reference->baseObject->getObjectID();
+			const auto targetId = attacker->actionData.hitTarget->reference->baseObject->getObjectID();
+			sprintf(buffer, "Attack Chance %d%%, for %s to hit %s", hitChance, attackerId, targetId);
+			TES3::UI::logToConsole(buffer, false);
 		}
 
 		return hitChance;
@@ -2814,8 +2825,7 @@ namespace mwse::lua {
 
 	__declspec(naked) void patchCalculateHitChance() {
 		__asm {
-			mov ecx, esi		// Size: 0x2
-			mov edx, [ebp + 0x8]	// Size: 0x3
+			mov ecx, [ebp + 0x8]	// Size: 0x3
 			nop // Replaced with a call generation. Can't do so here, because offsets aren't accurate.
 			nop // ^
 			nop // ^
@@ -2824,7 +2834,7 @@ namespace mwse::lua {
 			mov [ebp + 0x8], eax	// Size: 0x3
 		}
 	}
-	const size_t patchCalculateHitChance_size = 0xD;
+	const size_t patchCalculateHitChance_size = 0xB;
 
 	//
 	// Event: Calculate block chance.
@@ -4695,9 +4705,13 @@ namespace mwse::lua {
 		genCallEnforced(0x49B550, 0x485E40, reinterpret_cast<DWORD>(OnItemDropped)); // Vanilla function.
 
 		// Event: Calculate hit chance.
-		genNOPUnprotected(0x55549B, 0x5C);
+		constexpr auto patchCalcHitChanceAvailableSize = 0x5554F7u - 0x55549Bu;
+		static_assert(patchCalculateHitChance_size <= patchCalcHitChanceAvailableSize, "calcHitChance patch too large!");
+		genNOPUnprotected(0x55549B, patchCalcHitChanceAvailableSize);
 		writePatchCodeUnprotected(0x55549B, (BYTE*)&patchCalculateHitChance, patchCalculateHitChance_size);
-		genCallUnprotected(0x5554A0, reinterpret_cast<DWORD>(OnCalculateHitChance));
+		genCallUnprotected(0x55549B + 0x3, reinterpret_cast<DWORD>(OnCalculateHitChance));
+		genCallUnprotected(0x556867, reinterpret_cast<DWORD>(OnCalculateHitChanceWrapper));
+		genCallUnprotected(0x573BE6, reinterpret_cast<DWORD>(OnCalculateHitChanceWrapper));
 
 		// Event: Calculate block chance.
 		genNOPUnprotected(0x555AC3, 0x555B15 - 0x555AC3);

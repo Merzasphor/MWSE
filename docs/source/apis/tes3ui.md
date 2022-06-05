@@ -425,7 +425,7 @@ tes3ui.log(message, formatValues)
 
 ### `tes3ui.logToConsole`
 
-Logs a message to the console.
+Logs a message to the console. Consider using `tes3ui.log` instead of this function if you do not need to make use of the `isCommand` parameter.
 
 ```lua
 tes3ui.logToConsole(text, isCommand)

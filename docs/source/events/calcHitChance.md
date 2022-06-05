@@ -20,6 +20,7 @@ event.register(tes3.event.calcHitChance, calcHitChanceCallback)
 * `attacker` ([tes3reference](../../types/tes3reference)): *Read-only*. A shortcut to the mobile's reference.
 * `attackerMobile` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile who is making the attack.
 * `hitChance` (number): The hit chance for the actor. This may be adjusted.
+* `projectile` ([tes3mobileProjectile](../../types/tes3mobileProjectile), nil): *Read-only*. The projectile, if applicable, that hit the target.
 * `target` ([tes3reference](../../types/tes3reference)): *Read-only*. A shortcut to the target mobile's reference. May not always be available.
 * `targetMobile` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile who is being attacked. May not always be available.
 

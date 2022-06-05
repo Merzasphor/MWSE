@@ -25,6 +25,7 @@ namespace TES3 {
 		// vTable accessor functions.
 		//
 
+		// NOTE: The events from this function require the wrapper of a call to applyPhysicalHit. Consider before making use of.
 		float applyArmorRating(float damage, float swing, bool damageEquipment);
 
 		//

@@ -110,8 +110,10 @@ end
 ---@param e tes3uiEventData
 local function onSearchUpdated(e)
 	local lowerSearchText = e.source.text:lower()
-	local modList = e.source:getTopLevelMenu():findChild("ModList"):getContentElement()
-	for _, child in ipairs(modList.children) do
+	local mcm = e.source:getTopLevelMenu()
+	local modList = mcm:findChild("ModList")
+	local modListContents = modList:getContentElement()
+	for _, child in ipairs(modListContents.children) do
 		child.visible = filterModByName(child.text, lowerSearchText)
 	end
 	modList.widget:contentsChanged()
@@ -119,8 +121,10 @@ end
 
 ---@param e tes3uiEventData
 local function onSearchCleared(e)
-	local modList = e.source:getTopLevelMenu():findChild("ModList"):getContentElement()
-	for _, child in ipairs(modList.children) do
+	local mcm = e.source:getTopLevelMenu()
+	local modList = mcm:findChild("ModList")
+	local modListContents = modList:getContentElement()
+	for _, child in ipairs(modListContents.children) do
 		child.visible = true
 	end
 	modList.widget:contentsChanged()
@@ -202,9 +206,10 @@ local function onClickModConfigButton()
 		table.sort(sortedConfigModNames, caseInsensitiveSorter)
 
 		-- Fill in the mod list.
+		local modListContents = modList:getContentElement()
 		for i = 1, #sortedConfigModNames do
 			local modName = sortedConfigModNames[i]
-			local entry = modList:createTextSelect({ id = "ModEntry", text = modName })
+			local entry = modListContents:createTextSelect({ id = "ModEntry", text = modName })
 			entry:register("mouseClick", onClickModName)
 		end
 		modList.widget:contentsChanged()
