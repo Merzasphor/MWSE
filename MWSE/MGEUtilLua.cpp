@@ -486,6 +486,35 @@ namespace mwse::lua {
 		mge::api->weatherPerPixelLightSet(weatherID, sunMult, ambMult);
 	}
 
+	mge::ShaderHandle findShader_legacy(const sol::optional<sol::table>& params) {
+		auto shaderName = getOptionalParam<const char*>(params, "shader", nullptr);
+		return shaderName ? mge::api->shaderGetShader(shaderName) : nullptr;
+	}
+
+	auto mge_disableShader_legacy(sol::optional<sol::table> params) {
+		auto shader = findShader_legacy(params);
+		if (shader) {
+			mge::api->shaderSetEnabled(shader, false);
+		}
+	}
+
+	auto mge_enableShader_legacy(sol::optional<sol::table> params) {
+		auto shader = findShader_legacy(params);
+		if (shader) {
+			mge::api->shaderSetEnabled(shader, true);
+		}
+	}
+
+	auto mge_setShaderFloat_legacy(sol::optional<sol::table> params) {
+		auto shader = findShader_legacy(params);
+		auto variable = getOptionalParam<const char*>(params, "variable", nullptr);
+		auto value = getOptionalParam<float>(params, "value", 0.0f);
+
+		if (shader && variable) {
+			mge::api->shaderSetFloat(shader, variable, value);
+		}
+	}
+
 	//
 	// Expose it all to lua.
 	//
@@ -702,5 +731,9 @@ namespace mwse::lua {
 			float amount = getOptionalParam(params, "amount", 0.0f);
 			if (amount != 0.0f) { mge::api->zoomOut(amount); }
 		};
+
+		lua_mge["disableShader"] = mge_disableShader_legacy;
+		lua_mge["enableShader"] = mge_enableShader_legacy;
+		lua_mge["setShaderFloat"] = mge_setShaderFloat_legacy;
 	}
 }
