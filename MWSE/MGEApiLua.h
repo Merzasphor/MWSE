@@ -18,8 +18,8 @@ namespace mge::lua {
 		static float getGUIScale();
 		static void setGUIScale(float value);
 
-		static const char* getLightingMode();
-		static void setLightingMode(sol::optional<sol::table> params);
+		static LightingMode getLightingMode();
+		static void setLightingMode(LightingMode mode);
 	};
 
 	class CameraConfig {

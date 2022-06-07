@@ -42,25 +42,11 @@ namespace mge::lua {
 		api->guiSetScale(value);
 	}
 
-	const char* CoreInterface::getLightingMode() {
-		switch (api->lightingModeGet()) {
-		case LightingMode::PerPixelAll:
-			return "perPixel";
-		case LightingMode::PerPixelInteriorOnly:
-			return "interiorOnly";
-		}
-		return "vertex";
+	LightingMode CoreInterface::getLightingMode() {
+		return api->lightingModeGet();
 	}
 
-	void CoreInterface::setLightingMode(sol::optional<sol::table> params) {
-		auto mode = LightingMode::Vertex;
-		if (mwse::lua::getOptionalParam<bool>(params, "interiorOnly", false)) {
-			mode = LightingMode::PerPixelInteriorOnly;
-		}
-		else if (mwse::lua::getOptionalParam<bool>(params, "perPixel", false)) {
-			mode = LightingMode::PerPixelAll;
-		}
-
+	void CoreInterface::setLightingMode(LightingMode mode) {
 		api->lightingModeSet(mode);
 	}
 
