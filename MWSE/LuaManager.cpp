@@ -423,7 +423,6 @@ namespace mwse::lua {
 		// Create the base of API tables.
 		luaState["mwse"] = luaState.create_table();
 		luaState["mwscript"] = luaState.create_table();
-		luaState["mge"] = luaState.create_table();
 
 		// Bind config.
 		Configuration::bindToLua();

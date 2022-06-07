@@ -155,7 +155,8 @@ end
 -- Global includes
 -------------------------------------------------
 
-_G.tes3 = require("tes3.init")
+_G.tes3 = require("tes3")
+_G.mge = require("mge")
 _G.event = require("event")
 _G.json = require("dkjson")
 
