@@ -76,7 +76,7 @@ namespace mge::lua {
 	class WeatherConfig {
 	public:
 		static sol::table getScattering(sol::this_state ts);
-		static bool setScattering(sol::optional<sol::table> params);
+		static void setScattering(sol::optional<sol::table> params);
 		static sol::table getDLFog(int weatherID, sol::this_state ts);
 		static void setDLFog(sol::optional<sol::table> params);
 		static sol::table getPPLLight(int weatherID, sol::this_state ts);

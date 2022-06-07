@@ -227,18 +227,16 @@ namespace mge::lua {
 		return scattering;
 	}
 
-	bool WeatherConfig::setScattering(sol::optional<sol::table> params) {
+	void WeatherConfig::setScattering(sol::optional<sol::table> params) {
 		auto inscatter = mwse::lua::getOptionalParamVector3(params, "inscatter");
 		auto outscatter = mwse::lua::getOptionalParamVector3(params, "outscatter");
 
 		if (inscatter && outscatter) {
 			api->weatherScatteringSet(&inscatter.value().x, &outscatter.value().x);
-			return true;
 		}
 		else {
 			throw std::invalid_argument("inscatter and outscatter must be 3-vectors.");
 		}
-		return false;
 	}
 
 	sol::table WeatherConfig::getDLFog(int weatherID, sol::this_state ts) {
