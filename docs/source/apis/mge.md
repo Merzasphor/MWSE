@@ -2,6 +2,58 @@
 
 The mge library accesses MGE XE functionality, including control over shaders. Many older functions have been deprecated.
 
+## Properties
+
+### `mge.camera`
+
+Allows control of MGE camera features.
+
+**Returns**:
+
+* `result` ([mgeCameraConfig](../../types/mgeCameraConfig))
+
+***
+
+### `mge.distantLandRenderConfig`
+
+Allows control of the camera.
+
+**Returns**:
+
+* `result` ([mgeDistantLandRenderConfig](../../types/mgeDistantLandRenderConfig))
+
+***
+
+### `mge.render`
+
+Allows control of render features.
+
+**Returns**:
+
+* `result` ([mgeRenderFeatures](../../types/mgeRenderFeatures))
+
+***
+
+### `mge.shaders`
+
+Allows control of shaders.
+
+**Returns**:
+
+* `result` ([mgeShadersConfig](../../types/mgeShadersConfig))
+
+***
+
+### `mge.weather`
+
+Allows control of MGE weather features.
+
+**Returns**:
+
+* `result` ([mgeWeatherConfig](../../types/mgeWeatherConfig))
+
+***
+
 ## Functions
 
 ### `mge.enabled`
@@ -20,43 +72,29 @@ local enabled = mge.enabled()
 
 ### `mge.getGUIScale`
 
-Returns the exact GUI scaling used by MGE XE.
+Returns the GUI scaling used by MGE XE.
 
 ```lua
-local result = mge.getGUIScale()
+local scale = mge.getGUIScale()
 ```
 
 **Returns**:
 
-* `result` (number)
+* `scale` (number)
 
 ***
 
-### `mge.getScreenHeight`
+### `mge.getLightingMode`
 
-Gets the window's vertical resolution. Wrapper for mwscript's MGEGetHeight.
+Returns the lighting mode used by MGE XE. These values map to `mge.lightingMode.*` constants.
 
 ```lua
-local result = mge.getScreenHeight()
+local mode = mge.getLightingMode()
 ```
 
 **Returns**:
 
-* `result` (number)
-
-***
-
-### `mge.getScreenWidth`
-
-Gets the window's horizontal resolution. Wrapper for mwscript's MGEGetWidth.
-
-```lua
-local result = mge.getScreenWidth()
-```
-
-**Returns**:
-
-* `result` (number)
+* `mode` (number): Maps to the `mge.lightingMode.*` constants.
 
 ***
 
@@ -71,6 +109,64 @@ local result = mge.getVersion()
 **Returns**:
 
 * `result` (number)
+
+***
+
+### `mge.loadConfig`
+
+Reloads the MGE config file. This is primarily an internal function and shouldn't be called casually.
+
+```lua
+mge.loadConfig()
+```
+
+***
+
+### `mge.reloadDistantLand`
+
+Reloads the MGE distant land. This is a blocking call that can take some seconds.
+
+```lua
+mge.reloadDistantLand()
+```
+
+***
+
+### `mge.saveConfig`
+
+Saves the MGE config file. This is primarily an internal function and shouldn't be called casually.
+
+```lua
+mge.saveConfig()
+```
+
+***
+
+### `mge.setGUIScale`
+
+Sets the GUI scaling used by MGE XE.
+
+```lua
+mge.setGUIScale(scale)
+```
+
+**Parameters**:
+
+* `scale` (number)
+
+***
+
+### `mge.setLightingMode`
+
+Sets the lighting mode used by MGE XE. The values passed can be used from the `mge.lightingMode.*` constants.
+
+```lua
+mge.setLightingMode(mode)
+```
+
+**Parameters**:
+
+* `mode` (number): Maps from the `mge.lightingMode.*` constants.
 
 ***
 

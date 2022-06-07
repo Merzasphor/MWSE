@@ -1,5 +1,7 @@
 return {
 	type = "function",
-	description = [[Returns the exact GUI scaling used by MGE XE.]],
-	valuetype = "number",
+	description = [[Returns the GUI scaling used by MGE XE.]],
+	returns = {
+		{ name = "scale", type = "number" },
+	}
 }

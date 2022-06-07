@@ -1,4 +1,5 @@
 return {
-	type = "lib",
-	description = [[Allows control of the camera.]],
+	type = "value",
+	description = [[Allows control of MGE camera features.]],
+	valuetype = "mgeCameraConfig",
 }
