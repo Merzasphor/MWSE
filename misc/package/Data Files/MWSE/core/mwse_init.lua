@@ -770,16 +770,6 @@ end
 
 
 -------------------------------------------------
--- Extend our base API: mge
--------------------------------------------------
-
-function mge.getUIScale()
-	-- MGE XE uses uniform scaling, so we only need check the width.
-	return mge.getScreenWidth() / tes3.worldController.viewWidth
-end
-
-
--------------------------------------------------
 -- Extend our base API: mwse
 -------------------------------------------------
 
