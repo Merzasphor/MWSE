@@ -102,7 +102,7 @@ namespace mge {
 				if (mge::api->shaderGetFloatArray(handle, varName, &result[0], &count)) {
 					auto table = state.create_table(count, 0);
 
-					for (int i = 0; i < count; ++i) {
+					for (auto i = 0u; i < count; ++i) {
 						table[i + 1] = result[i];
 					}
 					return table;
@@ -172,7 +172,7 @@ namespace mge {
 				if (values != sol::nil) {
 					size_t count = values.size();
 					std::vector<float> valueBuffer(count);
-					for (int i = 0; i < count; i++) {
+					for (auto i = 0u; i < count; ++i) {
 						valueBuffer[i] = values[i+1];
 					}
 					mge::api->shaderSetFloatArray(handle, varName, valueBuffer.data(), &count);
@@ -248,7 +248,7 @@ namespace mge {
 		mge::ShaderVariableInfo info;
 		variableTypes.clear();
 
-		for (size_t i = 0; true; i++) {
+		for (auto i = 0u; true; ++i) {
 			if (mge::api->shaderGetVariableInfo(handle, i, &info)) {
 				// Skip variables with unknown type.
 				if (info.valueType != 'x') {
