@@ -46,19 +46,19 @@ namespace mwse::lua {
 			usertypeDefinition["aboveWaterFogStart"] = &DistantLandRenderConfig::AboveWaterFogStart;
 			usertypeDefinition["belowWaterFogEnd"] = &DistantLandRenderConfig::BelowWaterFogEnd;
 			usertypeDefinition["belowWaterFogStart"] = &DistantLandRenderConfig::BelowWaterFogStart;
-			usertypeDefinition["drawDist"] = &DistantLandRenderConfig::DrawDist;
+			usertypeDefinition["drawDistance"] = &DistantLandRenderConfig::DrawDist;
 			usertypeDefinition["farStaticEnd"] = &DistantLandRenderConfig::FarStaticEnd;
 			usertypeDefinition["farStaticMinSize"] = &DistantLandRenderConfig::FarStaticMinSize;
 			usertypeDefinition["interiorFogEnd"] = &DistantLandRenderConfig::InteriorFogEnd;
 			usertypeDefinition["interiorFogStart"] = &DistantLandRenderConfig::InteriorFogStart;
 			usertypeDefinition["nearStaticEnd"] = &DistantLandRenderConfig::NearStaticEnd;
-			usertypeDefinition["fogOffsetDist"] = &DistantLandRenderConfig::FogOffsetDist;
-			usertypeDefinition["fogDist"] = &DistantLandRenderConfig::FogDist;
+			usertypeDefinition["fogOffsetDistance"] = sol::readonly_property(&DistantLandRenderConfig::getFogOffsetDist);
+			usertypeDefinition["fogDistance"] = sol::readonly_property(&DistantLandRenderConfig::getFogDist);
 			usertypeDefinition["veryFarStaticEnd"] = &DistantLandRenderConfig::VeryFarStaticEnd;
 			usertypeDefinition["veryFarStaticMinSize"] = &DistantLandRenderConfig::VeryFarStaticMinSize;
 			usertypeDefinition["waterCaustics"] = &DistantLandRenderConfig::WaterCaustics;
 			usertypeDefinition["waterWaveHeight"] = &DistantLandRenderConfig::WaterWaveHeight;
-			usertypeDefinition["wind"] = &DistantLandRenderConfig::Wind;
+			usertypeDefinition["wind"] = sol::readonly_property(&DistantLandRenderConfig::getWind);
 			// Note that DistantLandRenderConfig::ShadowResolution does not appear, as it is not configurable.
 		}
 		lua_mge["distantLandRenderConfig"] = mge::api->getDistantLandRenderConfig();

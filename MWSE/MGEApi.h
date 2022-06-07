@@ -30,6 +30,11 @@ namespace mge {
 		float Wind[10];
 		float FogDist[10];
 		float FogOffsetDist[10];
+
+		// Custom wrapper functions.
+		std::reference_wrapper<float[10]> getWind() { return std::ref(Wind); }
+		std::reference_wrapper<float[10]> getFogDist() { return std::ref(FogDist); }
+		std::reference_wrapper<float[10]> getFogOffsetDist() { return std::ref(FogOffsetDist); }
 	};
 
 	enum struct LightingMode {
