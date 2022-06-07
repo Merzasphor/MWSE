@@ -1,7 +1,5 @@
 #pragma once
 
-#include <stddef.h>
-
 namespace mge {
 	static const int supported_api_version = 1;
 

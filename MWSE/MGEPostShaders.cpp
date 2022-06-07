@@ -1,11 +1,9 @@
-
 #include "MGEPostShaders.h"
+
 #include "MGEApi.h"
 #include "TES3Vectors.h"
 
 #include "Log.h"
-
-#include <sol/sol.hpp>
 
 namespace mge {
 	//
@@ -24,10 +22,10 @@ namespace mge {
 	bool ShaderHandleLua::reload() {
 		auto wasEnabled = getEnabled();
 
-		if (mge::api->shaderReload(handle)) {
+		if (api->shaderReload(handle)) {
 			// Update variables map
 			initialize();
-			mge::api->shaderSetEnabled(handle, wasEnabled);
+			api->shaderSetEnabled(handle, wasEnabled);
 			return true;
 		}
 		else {
@@ -37,7 +35,7 @@ namespace mge {
 
 	std::string ShaderHandleLua::toJson() const {
 		std::ostringstream ss;
-		ss << "\"" << mge::api->shaderGetName(handle) << "\"";
+		ss << "\"" << api->shaderGetName(handle) << "\"";
 		return std::move(ss.str());
 	}
 
@@ -63,7 +61,7 @@ namespace mge {
 		case 'b':
 			{
 				bool result;
-				if (mge::api->shaderGetBool(handle, varName, &result)) {
+				if (api->shaderGetBool(handle, varName, &result)) {
 					return sol::make_object(state, result);
 				}
 			}
@@ -71,7 +69,7 @@ namespace mge {
 		case 'i':
 			{
 				int result;
-				if (mge::api->shaderGetInt(handle, varName, &result)) {
+				if (api->shaderGetInt(handle, varName, &result)) {
 					return sol::make_object(state, result);
 				}
 			}
@@ -79,7 +77,7 @@ namespace mge {
 		case 'f':
 			{
 				float result;
-				if (mge::api->shaderGetFloat(handle, varName, &result)) {
+				if (api->shaderGetFloat(handle, varName, &result)) {
 					return sol::make_object(state, result);
 				}
 			}
@@ -87,7 +85,7 @@ namespace mge {
 		case 's':
 			{
 				const char* result;
-				if (mge::api->shaderGetString(handle, varName, &result)) {
+				if (api->shaderGetString(handle, varName, &result)) {
 					return sol::make_object(state, result);
 				}
 			}
@@ -99,7 +97,7 @@ namespace mge {
 				float result[max_count];
 				size_t count = max_count;
 				// Count is set to the actual length, if the call is successful.
-				if (mge::api->shaderGetFloatArray(handle, varName, &result[0], &count)) {
+				if (api->shaderGetFloatArray(handle, varName, &result[0], &count)) {
 					auto table = state.create_table(count, 0);
 
 					for (auto i = 0u; i < count; ++i) {
@@ -113,7 +111,7 @@ namespace mge {
 			{
 				// Float vectors of length 2.
 				TES3::Vector2 vec;
-				if (mge::api->shaderGetVector(handle, varName, &vec.x, 2)) {
+				if (api->shaderGetVector(handle, varName, &vec.x, 2)) {
 					return sol::make_object(state, vec);
 				}
 			}
@@ -122,7 +120,7 @@ namespace mge {
 			{
 				// Float vectors of length 3.
 				TES3::Vector3 vec;
-				if (mge::api->shaderGetVector(handle, varName, &vec.x, 3)) {
+				if (api->shaderGetVector(handle, varName, &vec.x, 3)) {
 					return sol::make_object(state, vec);
 				}
 			}
@@ -131,7 +129,7 @@ namespace mge {
 			{
 				// Float vectors of length 4.
 				TES3::Vector4 vec;
-				if (mge::api->shaderGetVector(handle, varName, &vec.x, 4)) {
+				if (api->shaderGetVector(handle, varName, &vec.x, 4)) {
 					return sol::make_object(state, vec);
 				}
 			}
@@ -154,16 +152,16 @@ namespace mge {
 
 		switch (v->second) {
 		case 'b':
-			mge::api->shaderSetBool(handle, varName, value.as<bool>());
+			api->shaderSetBool(handle, varName, value.as<bool>());
 			break;
 		case 'i':
-			mge::api->shaderSetInt(handle, varName, value.as<int>());
+			api->shaderSetInt(handle, varName, value.as<int>());
 			break;
 		case 'f':
-			mge::api->shaderSetFloat(handle, varName, value.as<float>());
+			api->shaderSetFloat(handle, varName, value.as<float>());
 			break;
 		case 's':
-			mge::api->shaderSetString(handle, varName, value.as<const char*>());
+			api->shaderSetString(handle, varName, value.as<const char*>());
 			break;
 		case 'a':
 			{
@@ -175,7 +173,7 @@ namespace mge {
 					for (auto i = 0u; i < count; ++i) {
 						valueBuffer[i] = values[i+1];
 					}
-					mge::api->shaderSetFloatArray(handle, varName, valueBuffer.data(), &count);
+					api->shaderSetFloatArray(handle, varName, valueBuffer.data(), &count);
 				}
 				break;
 			}
@@ -186,13 +184,13 @@ namespace mge {
 
 				if (value.is<TES3::Vector2*>()) {
 					vec = *value.as<TES3::Vector2*>();
-					mge::api->shaderSetVector(handle, varName, &vec.x, 2);
+					api->shaderSetVector(handle, varName, &vec.x, 2);
 				}
 				else if (value.is<sol::table>()) {
 					auto table = value.as<sol::table>();
 					vec.x = table[1];
 					vec.y = table[2];
-					mge::api->shaderSetVector(handle, varName, &vec.x, 2);
+					api->shaderSetVector(handle, varName, &vec.x, 2);
 				}
 			}
 		break;
@@ -203,14 +201,14 @@ namespace mge {
 
 				if (value.is<TES3::Vector3*>()) {
 					vec = *value.as<TES3::Vector3*>();
-					mge::api->shaderSetVector(handle, varName, &vec.x, 3);
+					api->shaderSetVector(handle, varName, &vec.x, 3);
 				}
 				else if (value.is<sol::table>()) {
 					auto table = value.as<sol::table>();
 					vec.x = table[1];
 					vec.y = table[2];
 					vec.z = table[3];
-					mge::api->shaderSetVector(handle, varName, &vec.x, 3);
+					api->shaderSetVector(handle, varName, &vec.x, 3);
 				}
 			}
 		break;
@@ -221,7 +219,7 @@ namespace mge {
 
 				if (value.is<TES3::Vector4*>()) {
 					vec = *value.as<TES3::Vector4*>();
-					mge::api->shaderSetVector(handle, varName, &vec.x, 4);
+					api->shaderSetVector(handle, varName, &vec.x, 4);
 				}
 				else if (value.is<sol::table>()) {
 					auto table = value.as<sol::table>();
@@ -229,7 +227,7 @@ namespace mge {
 					vec.y = table[2];
 					vec.z = table[3];
 					vec.w = table[4];
-					mge::api->shaderSetVector(handle, varName, &vec.x, 4);
+					api->shaderSetVector(handle, varName, &vec.x, 4);
 				}
 			}
 			break;
@@ -242,14 +240,14 @@ namespace mge {
 	}
 
 	void ShaderHandleLua::initialize() {
-		name = mge::api->shaderGetName(handle);
+		name = api->shaderGetName(handle);
 
 		// Load all variables.
-		mge::ShaderVariableInfo info;
+		ShaderVariableInfo info;
 		variableTypes.clear();
 
 		for (auto i = 0u; true; ++i) {
-			if (mge::api->shaderGetVariableInfo(handle, i, &info)) {
+			if (api->shaderGetVariableInfo(handle, i, &info)) {
 				// Skip variables with unknown type.
 				if (info.valueType != 'x') {
 					variableTypes[info.name] = info.valueType;
