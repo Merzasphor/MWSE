@@ -118,3 +118,4 @@ function mge.macros.toggleTransparencyAA() end
 
 --- Triggers the MGE "Toggle Zoom" macro.
 function mge.macros.toggleZoom() end
+

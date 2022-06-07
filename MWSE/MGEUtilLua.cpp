@@ -64,8 +64,8 @@ namespace mwse::lua {
 		lua_mge["distantLandRenderConfig"] = mge::api->getDistantLandRenderConfig();
 		lua_mge["reloadDistantLand"] = &mge::lua::CoreInterface::reloadDistantLand;
 
-		lua_mge["getGUIScale"] = &mge::lua::CoreInterface::getGUIScale;
-		lua_mge["setGUIScale"] = &mge::lua::CoreInterface::setGUIScale;
+		lua_mge["getUIScale"] = &mge::lua::CoreInterface::getGUIScale;
+		lua_mge["setUIScale"] = &mge::lua::CoreInterface::setGUIScale;
 		lua_mge["getLightingMode"] = &mge::lua::CoreInterface::getLightingMode;
 		lua_mge["setLightingMode"] = &mge::lua::CoreInterface::setLightingMode;
 

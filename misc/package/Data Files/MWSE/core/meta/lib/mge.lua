@@ -44,10 +44,6 @@ function mge.enableShader(params) end
 --- @deprecated
 function mge.enableZoom() end
 
---- Returns the GUI scaling used by MGE XE.
---- @return number scale No description yet available.
-function mge.getGUIScale() end
-
 --- Returns the lighting mode used by MGE XE. These values map to `mge.lightingMode.*` constants.
 --- @return number mode Maps to the `mge.lightingMode.*` constants.
 function mge.getLightingMode() end
@@ -61,6 +57,10 @@ function mge.getScreenHeight() end
 --- @deprecated
 --- @return number result No description yet available.
 function mge.getScreenWidth() end
+
+--- Returns the GUI scaling used by MGE XE.
+--- @return number scale No description yet available.
+function mge.getUIScale() end
 
 --- Gets the MGE version. Wrapper for MGEGetVersion.
 --- @return number result No description yet available.
@@ -99,10 +99,6 @@ function mge.reloadDistantLand() end
 --- Saves the MGE config file. This is primarily an internal function and shouldn't be called casually.
 function mge.saveConfig() end
 
---- Sets the GUI scaling used by MGE XE.
---- @param scale number No description yet available.
-function mge.setGUIScale(scale) end
-
 --- Sets the lighting mode used by MGE XE. The values passed can be used from the `mge.lightingMode.*` constants.
 --- @param mode number Maps from the `mge.lightingMode.*` constants.
 function mge.setLightingMode(mode) end
@@ -123,6 +119,10 @@ function mge.setShaderFloat(params) end
 --- @field name string No description yet available.
 --- @field variable string No description yet available.
 --- @field value number No description yet available.
+
+--- Sets the GUI scaling used by MGE XE.
+--- @param scale number No description yet available.
+function mge.setUIScale(scale) end
 
 --- Sets the weather distant land fog. Use `mge.weather.setDistantFog()` instead.
 --- @deprecated

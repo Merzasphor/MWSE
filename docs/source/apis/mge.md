@@ -70,20 +70,6 @@ local enabled = mge.enabled()
 
 ***
 
-### `mge.getGUIScale`
-
-Returns the GUI scaling used by MGE XE.
-
-```lua
-local scale = mge.getGUIScale()
-```
-
-**Returns**:
-
-* `scale` (number)
-
-***
-
 ### `mge.getLightingMode`
 
 Returns the lighting mode used by MGE XE. These values map to `mge.lightingMode.*` constants.
@@ -95,6 +81,20 @@ local mode = mge.getLightingMode()
 **Returns**:
 
 * `mode` (number): Maps to the `mge.lightingMode.*` constants.
+
+***
+
+### `mge.getUIScale`
+
+Returns the GUI scaling used by MGE XE.
+
+```lua
+local scale = mge.getUIScale()
+```
+
+**Returns**:
+
+* `scale` (number)
 
 ***
 
@@ -142,20 +142,6 @@ mge.saveConfig()
 
 ***
 
-### `mge.setGUIScale`
-
-Sets the GUI scaling used by MGE XE.
-
-```lua
-mge.setGUIScale(scale)
-```
-
-**Parameters**:
-
-* `scale` (number)
-
-***
-
 ### `mge.setLightingMode`
 
 Sets the lighting mode used by MGE XE. The values passed can be used from the `mge.lightingMode.*` constants.
@@ -167,6 +153,20 @@ mge.setLightingMode(mode)
 **Parameters**:
 
 * `mode` (number): Maps from the `mge.lightingMode.*` constants.
+
+***
+
+### `mge.setUIScale`
+
+Sets the GUI scaling used by MGE XE.
+
+```lua
+mge.setUIScale(scale)
+```
+
+**Parameters**:
+
+* `scale` (number)
 
 ***
 
