@@ -207,19 +207,22 @@ namespace mwse::lua {
 		lua_macros["toggleZoom"] = mge::macros->ToggleZoom;
 
 		// Legacy functions.
+		lua_mge["disableShader"] = &mge::lua::LegacyInterface::disableShader;
+		lua_mge["disableZoom"] = &mge::lua::LegacyInterface::disableZoom;
+		lua_mge["enableShader"] = &mge::lua::LegacyInterface::enableShader;
+		lua_mge["enableZoom"] = &mge::lua::LegacyInterface::enableZoom;
 		lua_mge["getScreenHeight"] = &mge::lua::LegacyInterface::getScreenHeight;
 		lua_mge["getScreenWidth"] = &mge::lua::LegacyInterface::getScreenWidth;
-		lua_mge["getWeatherScattering"] = &mge::lua::WeatherConfig::getScattering;
-		lua_mge["setWeatherScattering"] = &mge::lua::WeatherConfig::setScattering;
 		lua_mge["getWeatherDLFog"] = &mge::lua::LegacyInterface::getWeatherDLFog;
-		lua_mge["setWeatherDLFog"] = &mge::lua::LegacyInterface::setWeatherDLFog;
 		lua_mge["getWeatherPPLLight"] = &mge::lua::LegacyInterface::getWeatherPPLLight;
-		lua_mge["setWeatherPPLLight"] = &mge::lua::LegacyInterface::setWeatherPPLLight;
-		lua_mge["disableZoom"] = &mge::lua::LegacyInterface::disableZoom;
-		lua_mge["enableZoom"] = &mge::lua::LegacyInterface::enableZoom;
-		lua_mge["toggleZoom"] = &mge::lua::LegacyInterface::toggleZoom;
+		lua_mge["getWeatherScattering"] = &mge::lua::WeatherConfig::getScattering;
 		lua_mge["getZoom"] = &mge::lua::CameraConfig::getZoom;
+		lua_mge["setShaderFloat"] = &mge::lua::LegacyInterface::setShaderFloat;
+		lua_mge["setWeatherDLFog"] = &mge::lua::LegacyInterface::setWeatherDLFog;
+		lua_mge["setWeatherPPLLight"] = &mge::lua::LegacyInterface::setWeatherPPLLight;
+		lua_mge["setWeatherScattering"] = &mge::lua::WeatherConfig::setScattering;
 		lua_mge["setZoom"] = &mge::lua::LegacyInterface::setZoom;
+		lua_mge["toggleZoom"] = &mge::lua::LegacyInterface::toggleZoom;
 		lua_mge["zoomIn"] = &mge::lua::LegacyInterface::zoomIn;
 		lua_mge["zoomOut"] = &mge::lua::LegacyInterface::zoomOut;
 	}

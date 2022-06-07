@@ -362,6 +362,39 @@ namespace mge::lua {
 		}
 	}
 
+	ShaderHandle LegacyInterface::findShader(sol::optional<sol::table> params) {
+		auto shaderName = mwse::lua::getOptionalParam<const char*>(params, "shader", nullptr);
+		if (shaderName == nullptr) {
+			return nullptr;
+		}
+
+		return api->shaderGetShader(shaderName);
+	}
+
+	void LegacyInterface::enableShader(sol::optional<sol::table> params) {
+		auto shader = findShader(params);
+		if (shader) {
+			api->shaderSetEnabled(shader, true);
+		}
+	}
+
+	void LegacyInterface::disableShader(sol::optional<sol::table> params) {
+		auto shader = findShader(params);
+		if (shader) {
+			api->shaderSetEnabled(shader, false);
+		}
+	}
+
+	void LegacyInterface::setShaderFloat(sol::optional<sol::table> params) {
+		auto shader = findShader(params);
+		auto variable = mwse::lua::getOptionalParam<const char*>(params, "variable", nullptr);
+		auto value = mwse::lua::getOptionalParam<float>(params, "value", 0.0f);
+
+		if (shader && variable) {
+			api->shaderSetFloat(shader, variable, value);
+		}
+	}
+
 	std::tuple<float, float> LegacyInterface::getWeatherDLFog(int weatherID) {
 		float fogDistMult, fogOffset;
 		api->weatherDistantFogGet(weatherID, &fogDistMult, &fogOffset);

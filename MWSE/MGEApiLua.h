@@ -97,6 +97,10 @@ namespace mge::lua {
 		static void zoomOut(sol::optional<sol::table> params);
 		static void setZoom(sol::optional<sol::table> params);
 
+		static ShaderHandle findShader(sol::optional<sol::table> params);
+		static void enableShader(sol::optional<sol::table> params);
+		static void disableShader(sol::optional<sol::table> params);
+		static void setShaderFloat(sol::optional<sol::table> params);
 
 		static std::tuple<float, float> getWeatherDLFog(int weatherID);
 		static void setWeatherDLFog(int weatherID, float fogDistMult, float fogOffset);
