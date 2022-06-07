@@ -1656,6 +1656,9 @@
     <ClInclude Include="TES3UILuaData.h">
       <Filter>Header Files\DataAdapters\TES3\UI</Filter>
     </ClInclude>
+    <ClInclude Include="MGEApiLua.h">
+      <Filter>Header Files\MGE Interface</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -3610,6 +3613,9 @@
     </ClCompile>
     <ClCompile Include="TES3UILuaData.cpp">
       <Filter>Source Files\DataAdapters\TES3\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MGEApiLua.cpp">
+      <Filter>Source Files\MGE Interface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

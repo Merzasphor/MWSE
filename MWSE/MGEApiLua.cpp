@@ -1,0 +1,398 @@
+#include "MGEApiLua.h"
+
+#include "TES3Game.h"
+
+#include "LuaUtil.h"
+
+namespace mge::lua {
+
+	//
+	// CoreInterface
+	//
+
+	bool CoreInterface::enabled() {
+		return true;
+	}
+
+	int CoreInterface::getVersion() {
+		return api->getMGEVersion();
+	}
+
+	void CoreInterface::loadConfig() {
+		if (!api->loadConfig()) {
+			throw std::runtime_error("Could not load configuration.");
+		}
+	}
+
+	void CoreInterface::saveConfig() {
+		if (!api->saveConfig()) {
+			throw std::runtime_error("Could not save configuration.");
+		}
+	}
+	
+	bool CoreInterface::reloadDistantLand() {
+		return api->reloadDistantLand();
+	}
+
+	float CoreInterface::getGUIScale() {
+		return api->guiGetScale();
+	}
+
+	void CoreInterface::setGUIScale(float value) {
+		api->guiSetScale(value);
+	}
+
+	const char* CoreInterface::getLightingMode() {
+		switch (api->lightingModeGet()) {
+		case LightingMode::PerPixelAll:
+			return "perPixel";
+		case LightingMode::PerPixelInteriorOnly:
+			return "interiorOnly";
+		}
+		return "vertex";
+	}
+
+	void CoreInterface::setLightingMode(sol::optional<sol::table> params) {
+		auto mode = LightingMode::Vertex;
+		if (mwse::lua::getOptionalParam<bool>(params, "interiorOnly", false)) {
+			mode = LightingMode::PerPixelInteriorOnly;
+		}
+		else if (mwse::lua::getOptionalParam<bool>(params, "perPixel", false)) {
+			mode = LightingMode::PerPixelAll;
+		}
+
+		api->lightingModeSet(mode);
+	}
+
+	//
+	// CameraConfig
+	//
+
+	float CameraConfig::getFoV() {
+		return api->cameraGetFoV();
+	}
+
+	void CameraConfig::setFoV(float fov) {
+		api->cameraSetFoV(fov);
+	}
+
+	TES3::Vector3 CameraConfig::getThirdPersonOffset() {
+		TES3::Vector3 offset;
+		api->cameraThirdPersonGetOffset(&offset.x);
+		return offset;
+	}
+
+	void CameraConfig::setThirdPersonOffset(sol::stack_object param) {
+		TES3::Vector3 offset;
+		if (!mwse::lua::setVectorFromLua(offset, param)) {
+			throw std::invalid_argument("Provided argument is not convertable to a vector3.");
+		}
+
+		api->cameraThirdPersonSetOffset(&offset.x);
+	}
+
+	bool CameraConfig::getZoomEnabled() {
+		return api->zoomGetEnabled();
+	}
+
+	void CameraConfig::setZoomEnabled(bool value) {
+		api->zoomSetEnabled(value);
+	}
+
+	bool CameraConfig::getZoom() {
+		return api->zoomGetZoom();
+	}
+
+	void CameraConfig::setZoom(float value) {
+		api->zoomSetZoom(value);
+	}
+
+	void CameraConfig::zoomIn(sol::optional<sol::table> params) {
+		auto amount = mwse::lua::getOptionalParam<float>(params, "amount", 0.0625f);
+		api->zoomIn(amount);
+	}
+
+	void CameraConfig::zoomOut(sol::optional<sol::table> params) {
+		auto amount = mwse::lua::getOptionalParam<float>(params, "amount", 0.0625f);
+		api->zoomOut(amount);
+	}
+
+	void CameraConfig::setZoomContinuous(sol::optional<sol::table> params) {
+		auto rate = mwse::lua::getOptionalParam<float>(params, "rate", 1.0f);
+		auto targetRate = mwse::lua::getOptionalParam<float>(params, "targetRate", rate);
+		api->zoomSetZoomContinuous(rate, targetRate);
+	}
+
+	void CameraConfig::stopZoom() {
+		api->zoomStop();
+	}
+
+	bool CameraConfig::getCameraShakeEnabled() {
+		return api->cameraShakeGetEnabled();
+	}
+
+	void CameraConfig::setCameraShakeEnabled(bool value) {
+		api->cameraShakeSetEnabled(value);
+	}
+
+	float CameraConfig::getCameraShakeMagnitude() {
+		return api->cameraShakeGetMagnitude();
+	}
+
+	void CameraConfig::setCameraShakeMagnitude(float value) {
+		api->cameraShakeSetMagnitude(value);
+	}
+
+	float CameraConfig::getCameraShakeAcceleration() {
+		return api->cameraShakeGetAcceleration();
+	}
+
+	void CameraConfig::setCameraShakeAcceleration(float value) {
+		api->cameraShakeSetAcceleration(value);
+	}
+
+
+	//
+	// ShadersConfig
+	//
+
+	sol::table ShadersConfig::getShaders(sol::this_state ts) {
+		sol::state_view state(ts);
+		sol::table shaders = state.create_table();
+
+		for (size_t i = 0; true; ++i) {
+			auto s = api->shaderListShaders(i);
+			if (s) {
+				shaders[i + 1] = ShaderHandleLua(s);
+			}
+			else {
+				break;
+			}
+		}
+
+		return shaders;
+	}
+
+	std::string ShadersConfig::debugShaders() {
+		std::stringstream out;
+
+		for (size_t i = 0; true; i++) {
+			auto s = api->shaderListShaders(i);
+			if (s) {
+				char line[256];
+				std::snprintf(line, sizeof(line), "%p %s\n", s, api->shaderGetName(s));
+				out << line;
+			}
+			else {
+				break;
+			}
+		}
+
+		return std::move(out.str());
+	}
+
+	sol::optional<ShaderHandleLua> ShadersConfig::findShader(sol::optional<sol::table> params) {
+		auto id = mwse::lua::getOptionalParam<const char*>(params, "name", nullptr);
+		if (id == nullptr) {
+			throw std::invalid_argument("name argument missing.");
+		}
+
+		auto handle = api->shaderGetShader(id);
+		if (handle) {
+			return handle;
+		}
+
+		return {};
+	}
+
+	sol::optional<ShaderHandleLua> ShadersConfig::loadShader(sol::optional<sol::table> params) {
+		auto id = mwse::lua::getOptionalParam<const char*>(params, "name", nullptr);
+		if (id == nullptr) {
+			throw std::invalid_argument("name argument missing.");
+		}
+
+		auto handle = api->shaderLoad(id);
+		if (handle) {
+			return handle;
+		}
+
+		return {};
+	}
+
+	float ShadersConfig::getHDRReactionSpeed() {
+		return api->shaderGetHDRReactionSpeed();
+	}
+
+	void ShadersConfig::setHDRReactionSpeed(float speed) {
+		api->shaderSetHDRReactionSpeed(speed);
+	}
+
+	//
+	// WeatherConfig
+	//
+	sol::table WeatherConfig::getScattering(sol::this_state ts) {
+		float inscatter[3], outscatter[3];
+		api->weatherScatteringGet(inscatter, outscatter);
+
+		sol::state_view state = ts;
+		sol::table in = state.create_table_with(1, inscatter[0], 2, inscatter[1], 3, inscatter[2]);
+		sol::table out = state.create_table_with(1, outscatter[0], 2, outscatter[1], 3, outscatter[2]);
+		sol::table scattering = state.create_table_with("inscatter", in, "outscatter", out);
+		return scattering;
+	}
+
+	bool WeatherConfig::setScattering(sol::optional<sol::table> params) {
+		auto inscatter = mwse::lua::getOptionalParamVector3(params, "inscatter");
+		auto outscatter = mwse::lua::getOptionalParamVector3(params, "outscatter");
+
+		if (inscatter && outscatter) {
+			api->weatherScatteringSet(&inscatter.value().x, &outscatter.value().x);
+			return true;
+		}
+		else {
+			throw std::invalid_argument("inscatter and outscatter must be 3-vectors.");
+		}
+		return false;
+	}
+
+	sol::table WeatherConfig::getDLFog(int weatherID, sol::this_state ts) {
+		float fogDistMult, fogOffset;
+		api->weatherDistantFogGet(weatherID, &fogDistMult, &fogOffset);
+
+		sol::state_view state = ts;
+		return state.create_table_with("weather", weatherID, "distance", fogDistMult, "offset", fogOffset);
+	}
+
+	void WeatherConfig::setDLFog(sol::optional<sol::table> params) {
+		auto weatherID = mwse::lua::getOptionalParam<int>(params, "weather", -1);
+		auto fogDistMult = mwse::lua::getOptionalParam<float>(params, "distance", -1.0f);
+		auto fogOffset = mwse::lua::getOptionalParam<float>(params, "offset", -1.0f);
+
+		if (weatherID < 0) {
+			throw std::invalid_argument("weather parameter required.");
+		}
+		if (fogDistMult < 0) {
+			throw std::invalid_argument("distance parameter required.");
+		}
+		if (fogOffset < 0) {
+			throw std::invalid_argument("offset parameter required.");
+		}
+
+		api->weatherDistantFogSet(weatherID, fogDistMult, fogOffset);
+	}
+
+	sol::table WeatherConfig::getPPLLight(int weatherID, sol::this_state ts) {
+		float sunMult, ambMult;
+		api->weatherPerPixelLightGet(weatherID, &sunMult, &ambMult);
+
+		sol::state_view state = ts;
+		return state.create_table_with("weather", weatherID, "sun", sunMult, "ambient", ambMult);
+	}
+
+	void WeatherConfig::setPPLLight(sol::optional<sol::table> params) {
+		auto weatherID = mwse::lua::getOptionalParam<int>(params, "weather", -1);
+		auto sunMult = mwse::lua::getOptionalParam<float>(params, "sun", -1.0f);
+		auto ambMult = mwse::lua::getOptionalParam<float>(params, "ambient", -1.0f);
+
+		if (weatherID < 0) {
+			throw std::invalid_argument("weather parameter required.");
+		}
+		if (sunMult < 0) {
+			throw std::invalid_argument("sun parameter required.");
+		}
+		if (ambMult < 0) {
+			throw std::invalid_argument("ambient parameter required.");
+		}
+
+		api->weatherPerPixelLightSet(weatherID, sunMult, ambMult);
+	}
+
+	sol::table WeatherConfig::getWind(int weatherID, sol::this_state ts) {
+		if (!(weatherID >= 0 && weatherID < 10)) {
+			throw std::invalid_argument("valid weather parameter required.");
+		}
+
+		float speed = api->getDistantLandRenderConfig()->Wind[weatherID];
+		sol::state_view state = ts;
+		return state.create_table_with("weather", weatherID, "speed", speed);
+	}
+
+	void WeatherConfig::setWind(sol::optional<sol::table> params) {
+		auto weatherID = mwse::lua::getOptionalParam<int>(params, "weather", -1);
+		auto speed = mwse::lua::getOptionalParam<float>(params, "speed", -1.0f);
+
+		if (!(weatherID >= 0 && weatherID < 10)) {
+			throw std::invalid_argument("valid weather parameter required.");
+		}
+		if (speed < 0) {
+			throw std::invalid_argument("speed parameter required.");
+		}
+
+		api->getDistantLandRenderConfig()->Wind[weatherID] = speed;
+	}
+
+	//
+	// LegacyInterface
+	//
+
+	int LegacyInterface::getScreenHeight() {
+		return TES3::Game::get()->windowHeight;
+	}
+
+	int LegacyInterface::getScreenWidth() {
+		return TES3::Game::get()->windowWidth;
+	}
+
+	void LegacyInterface::enableZoom() {
+		api->zoomSetEnabled(true);
+	}
+
+	void LegacyInterface::disableZoom() {
+		api->zoomSetEnabled(false);
+	}
+
+	void LegacyInterface::toggleZoom() {
+		api->zoomSetEnabled(!api->zoomGetEnabled());
+	}
+
+	void LegacyInterface::zoomIn(sol::optional<sol::table> params) {
+		auto amount = mwse::lua::getOptionalParam<float>(params, "amount");
+		if (amount) {
+			api->zoomIn(amount.value());
+		}
+	}
+
+	void LegacyInterface::zoomOut(sol::optional<sol::table> params) {
+		auto amount = mwse::lua::getOptionalParam<float>(params, "amount");
+		if (amount) {
+			api->zoomOut(amount.value());
+		}
+	}
+
+	void LegacyInterface::setZoom(sol::optional<sol::table> params) {
+		auto amount = mwse::lua::getOptionalParam<float>(params, "amount");
+		if (amount) {
+			api->zoomSetZoom(amount.value());
+		}
+	}
+
+	std::tuple<float, float> LegacyInterface::getWeatherDLFog(int weatherID) {
+		float fogDistMult, fogOffset;
+		api->weatherDistantFogGet(weatherID, &fogDistMult, &fogOffset);
+		return std::make_tuple(fogDistMult, fogOffset);
+	}
+
+	void LegacyInterface::setWeatherDLFog(int weatherID, float fogDistMult, float fogOffset) {
+		api->weatherDistantFogSet(weatherID, fogDistMult, fogOffset);
+	}
+
+	std::tuple<float, float> LegacyInterface::getWeatherPPLLight(int weatherID) {
+		float sunMult, ambMult;
+		api->weatherPerPixelLightGet(weatherID, &sunMult, &ambMult);
+		return std::make_tuple(sunMult, ambMult);
+	}
+
+	void LegacyInterface::setWeatherPPLLight(int weatherID, float sunMult, float ambMult) {
+		api->weatherPerPixelLightSet(weatherID, sunMult, ambMult);
+	}
+}

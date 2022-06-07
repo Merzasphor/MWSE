@@ -30,6 +30,7 @@
     <ClInclude Include="LuaVFXCreatedEvent.h" />
     <ClInclude Include="MathUtil.h" />
     <ClInclude Include="MGEApi.h" />
+    <ClInclude Include="MGEApiLua.h" />
     <ClInclude Include="MGEMacroFunctionDefs.h" />
     <ClInclude Include="MGEPostShaders.h" />
     <ClInclude Include="MGEPostShadersLua.h" />
@@ -659,6 +660,7 @@
     <ClCompile Include="LuaWeatherCycledEvent.cpp" />
     <ClCompile Include="LuaWeatherTransitionFinishedEvent.cpp" />
     <ClCompile Include="LuaWeatherTransitionStartedEvent.cpp" />
+    <ClCompile Include="MGEApiLua.cpp" />
     <ClCompile Include="MGEPostShaders.cpp" />
     <ClCompile Include="MGEPostShadersLua.cpp" />
     <ClCompile Include="MGEUtilLua.cpp" />

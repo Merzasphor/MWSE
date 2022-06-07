@@ -8,483 +8,9 @@
 #include "LuaUtil.h"
 #include "Log.h"
 
+#include "MGEApiLua.h"
+
 namespace mwse::lua {
-
-	//
-	// Distant Land config struct.
-	//
-
-	void bindMGEDistantLandRenderConfig() {
-		// Get our lua state.
-		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-
-		// mge::DistantLandRenderConfig
-		{
-			// Start our usertype. We must finish this with state.set_usertype.
-			auto usertypeDefinition = state.new_usertype<mge::DistantLandRenderConfig>("mgeDistantLandRenderConfig");
-			usertypeDefinition["new"] = sol::no_constructor;
-
-			// Properties.
-			usertypeDefinition["aboveWaterFogEnd"] = &mge::DistantLandRenderConfig::AboveWaterFogEnd;
-			usertypeDefinition["aboveWaterFogStart"] = &mge::DistantLandRenderConfig::AboveWaterFogStart;
-			usertypeDefinition["belowWaterFogEnd"] = &mge::DistantLandRenderConfig::BelowWaterFogEnd;
-			usertypeDefinition["belowWaterFogStart"] = &mge::DistantLandRenderConfig::BelowWaterFogStart;
-			usertypeDefinition["drawDist"] = &mge::DistantLandRenderConfig::DrawDist;
-			usertypeDefinition["farStaticEnd"] = &mge::DistantLandRenderConfig::FarStaticEnd;
-			usertypeDefinition["farStaticMinSize"] = &mge::DistantLandRenderConfig::FarStaticMinSize;
-			usertypeDefinition["interiorFogEnd"] = &mge::DistantLandRenderConfig::InteriorFogEnd;
-			usertypeDefinition["interiorFogStart"] = &mge::DistantLandRenderConfig::InteriorFogStart;
-			usertypeDefinition["nearStaticEnd"] = &mge::DistantLandRenderConfig::NearStaticEnd;
-			usertypeDefinition["fogOffsetDist"] = &mge::DistantLandRenderConfig::FogOffsetDist;
-			usertypeDefinition["fogDist"] = &mge::DistantLandRenderConfig::FogDist;
-			usertypeDefinition["veryFarStaticEnd"] = &mge::DistantLandRenderConfig::VeryFarStaticEnd;
-			usertypeDefinition["veryFarStaticMinSize"] = &mge::DistantLandRenderConfig::VeryFarStaticMinSize;
-			usertypeDefinition["waterCaustics"] = &mge::DistantLandRenderConfig::WaterCaustics;
-			usertypeDefinition["waterWaveHeight"] = &mge::DistantLandRenderConfig::WaterWaveHeight;
-			usertypeDefinition["wind"] = &mge::DistantLandRenderConfig::Wind;
-			// Note that DistantLandRenderConfig::ShadowResolution does not appear, as it is not configurable.
-		}
-	}
-
-	//
-	// General functions.
-	//
-
-	auto mge_getVersion() {
-		return mge::api->getMGEVersion();
-	}
-
-	auto mge_getLightingMode() {
-		switch (mge::api->lightingModeGet()) {
-		case mge::LightingMode::PerPixelAll:
-			return "perPixel";
-		case mge::LightingMode::PerPixelInteriorOnly:
-			return "interiorOnly";
-		}
-		return "vertex";
-	}
-
-	auto mge_setLightingMode(sol::optional<sol::table> params) {
-		auto mode = mge::LightingMode::Vertex;
-		if (getOptionalParam<bool>(params, "interiorOnly", false)) {
-			mode = mge::LightingMode::PerPixelInteriorOnly;
-		}
-		else if (getOptionalParam<bool>(params, "perPixel", false)) {
-			mode = mge::LightingMode::PerPixelAll;
-		}
-
-		mge::api->lightingModeSet(mode);
-	}
-
-	auto mge_reloadDistantLand() {
-		mge::api->reloadDistantLand();
-	}
-
-	//
-	// HUD-related functions.
-	//
-
-	static std::string selectedHUDName;
-
-	auto mge_resetHUD() {
-		mge::api->hudReset();
-	}
-
-	auto mge_disableHUD(sol::optional<sol::table> params) {
-		auto hudName = getOptionalParam<const char*>(params, "hud", nullptr);
-		mge::api->hudSetEnabled(hudName, false);
-	}
-
-	auto mge_enableHUD(sol::optional<sol::table> params) {
-		auto hudName = getOptionalParam<const char*>(params, "hud", nullptr);
-		mge::api->hudSetEnabled(hudName, true);
-	}
-
-	auto mge_freeHUD(sol::optional<sol::table> params) {
-		auto hudName = getOptionalParam<const char*>(params, "hud", nullptr);
-		mge::api->hudFree(hudName);
-	}
-
-	auto mge_fullscreenHUD(sol::optional<sol::table> params) {
-		auto hudName = getOptionalParam<const char*>(params, "hud", nullptr);
-		mge::api->hudFullscreen(hudName);
-	}
-
-	auto mge_loadHUD(sol::optional<sol::table> params) {
-		auto hudName = getOptionalParam<const char*>(params, "hud", nullptr);
-		auto texture = getOptionalParam<const char*>(params, "texture", nullptr);
-		if (!hudName || !texture) {
-			throw std::invalid_argument("hud or texture argument missing.");
-		}
-
-		mge::api->hudLoad(hudName, texture);
-
-		if (getOptionalParam<bool>(params, "enable", false)) {
-			mge::api->hudSetEnabled(hudName, true);
-		}
-	}
-
-	auto mge_positionHUD(sol::optional<sol::table> params) {
-		auto hudName = getOptionalParam<const char*>(params, "hud", nullptr);
-		auto x = getOptionalParam(params, "x", 0.0f);
-		auto y = getOptionalParam(params, "y", 0.0f);
-		mge::api->hudPosition(hudName, x, y);
-	}
-
-	auto mge_scaleHUD(sol::optional<sol::table> params) {
-		auto hudName = getOptionalParam<const char*>(params, "hud", nullptr);
-		auto x = getOptionalParam(params, "x", 0.0f);
-		auto y = getOptionalParam(params, "y", 0.0f);
-		mge::api->hudScale(hudName, x, y);
-	}
-
-	auto mge_selectHUD(sol::optional<sol::table> params) {
-		auto hudName = getOptionalParam<const char*>(params, "hud", nullptr);
-		selectedHUDName = hudName;
-	}
-
-	auto mge_unselectHUD(sol::optional<sol::table> params) {
-		selectedHUDName.clear();
-	}
-
-	auto mge_setHUDEffect(sol::optional<sol::table> params) {
-		auto hudName = getOptionalParam<const char*>(params, "hud", nullptr);
-		auto effect = getOptionalParam<const char*>(params, "effect", nullptr);
-
-		if (!effect) {
-			throw std::invalid_argument("effect argument missing.");
-		}
-
-		mge::api->hudSetEffect(hudName, effect);
-	}
-
-	auto mge_setHUDEffectFloat(sol::optional<sol::table> params) {
-		auto hudName = getOptionalParam<const char*>(params, "hud", nullptr);
-		auto variable = getOptionalParam<const char*>(params, "variable", nullptr);
-		auto value = getOptionalParam<float>(params, "value");
-
-		if (!value) {
-			throw std::invalid_argument("value argument missing.");
-		}
-
-		mge::api->hudSetFloat(hudName, variable, value.value());
-	}
-
-	auto mge_setHUDEffectInt(sol::optional<sol::table> params) {
-		auto hudName = getOptionalParam<const char*>(params, "hud", nullptr);
-		auto variable = getOptionalParam<const char*>(params, "variable", nullptr);
-		auto value = getOptionalParam<int>(params, "value");
-
-		if (!value) {
-			throw std::invalid_argument("value argument missing.");
-		}
-
-		mge::api->hudSetInt(hudName, variable, value.value());
-	}
-
-	auto mge_setHUDEffectVector4(sol::optional<sol::table> params) {
-		auto hudName = getOptionalParam<const char*>(params, "hud", nullptr);
-		auto variable = getOptionalParam<const char*>(params, "variable", nullptr);
-		sol::table values = getOptionalParam<sol::table>(params, "value", sol::nil);
-
-		if (values == sol::nil && values.size() != 4) {
-			throw std::invalid_argument("value argument must be a length 4 array.");
-		}
-
-		float valueBuffer[4];
-		for (size_t i = 0; i < 4; i++) {
-			valueBuffer[i] = values[i];
-		}
-		mge::api->hudSetVector4(hudName, variable, valueBuffer);
-	}
-
-	auto mge_setHUDTexture(sol::optional<sol::table> params) {
-		auto hudName = getOptionalParam<const char*>(params, "hud", nullptr);
-		auto texture = getOptionalParam<const char*>(params, "texture", nullptr);
-		if (!texture) {
-			throw std::invalid_argument("texture argument missing.");
-		}
-
-		mge::api->hudSetTexture(hudName, texture);
-	}
-
-	//
-	// Shader related functions.
-	//
-
-	sol::table mge_shaders(sol::this_state ts) {
-		sol::state_view state(ts);
-		sol::table shaders = state.create_table();
-
-		for (size_t i = 0; true; i++) {
-			auto s = mge::api->shaderListShaders(i);
-			if (s) {
-				shaders[i + 1] = mge::ShaderHandleLua(s);
-			}
-			else {
-				break;
-			}
-		}
-
-		return shaders;
-	}
-
-	std::string mge_shadersDebug(sol::this_state ts) {
-		std::string out = "";
-		for (size_t i = 0; true; i++) {
-			auto s = mge::api->shaderListShaders(i);
-			if (s) {
-				char line[256];
-				std::snprintf(line, sizeof(line), "%p %s\n", s, mge::api->shaderGetName(s));
-				out += line;
-			}
-			else {
-				break;
-			}
-		}
-
-		return out;
-	}
-
-	sol::object mge_shaderFind(const char* id, sol::this_state ts) {
-		if (id) {
-			auto handle = mge::api->shaderGetShader(id);
-			if (handle) {
-				return sol::make_object(ts, mge::ShaderHandleLua(handle));
-			}
-		}
-		return sol::nil;
-	}
-
-	sol::object mge_shaderLoad(sol::optional<sol::table> params, sol::this_state ts) {
-		auto id = getOptionalParam<const char*>(params, "name", nullptr);
-
-		if (id) {
-			auto handle = mge::api->shaderLoad(id);
-			if (handle) {
-				return sol::make_object(ts, mge::ShaderHandleLua(handle));
-			}
-		}
-		else {
-			throw std::invalid_argument("name argument missing.");
-		}
-		return sol::nil;
-	}
-
-	//
-	// Camera-related functions.
-	//
-
-	auto mge_getFoV() {
-		return mge::api->cameraGetFoV();
-	}
-
-	auto mge_setFoV(float fov) {
-		mge::api->cameraSetFoV(fov);
-	}
-
-	auto mge_getThirdPersonOffset() {
-		TES3::Vector3 offset;
-		mge::api->cameraThirdPersonGetOffset(&offset.x);
-		return offset;
-	}
-
-	auto mge_setThirdPersonOffset(sol::object param) {
-		auto offset = param.as<TES3::Vector3*>();
-		if (offset) {
-			mge::api->cameraThirdPersonSetOffset(&offset->x);
-		}
-	}
-
-	//
-	// Zoom-related functions.
-	//
-
-	auto mge_getZoomEnabled() {
-		return mge::api->zoomGetEnabled();
-	}
-
-	auto mge_setZoomEnabled(bool value) {
-		mge::api->zoomSetEnabled(value);
-	}
-
-	auto mge_setZoom(float value) {
-		mge::api->zoomSetZoom(value);
-	}
-
-	auto mge_getZoom() {
-		return mge::api->zoomGetZoom();
-	}
-
-	auto mge_zoomIn(sol::optional<sol::table> params) {
-		float amount = getOptionalParam<float>(params, "amount", 0.0625f);
-		mge::api->zoomIn(amount);
-	}
-
-	auto mge_zoomOut(sol::optional<sol::table> params) {
-		float amount = getOptionalParam<float>(params, "amount", 0.0625f);
-		mge::api->zoomOut(amount);
-	}
-
-	auto mge_setZoomContinuous(sol::optional<sol::table> params) {
-		float rate = getOptionalParam<float>(params, "rate", 1.0f);
-		float targetRate = getOptionalParam<float>(params, "targetRate", rate);
-		mge::api->zoomSetZoomContinuous(rate, targetRate);
-	}
-
-	auto mge_stopZoom() {
-		mge::api->zoomStop();
-	}
-
-	auto mge_getCameraShakeEnabled() {
-		return mge::api->cameraShakeGetEnabled();
-	}
-
-	auto mge_setCameraShakeEnabled(bool value) {
-		mge::api->cameraShakeSetEnabled(value);
-	}
-
-	auto mge_getCameraShakeMagnitude(float value) {
-		return mge::api->cameraShakeGetMagnitude();
-	}
-
-	auto mge_setCameraShakeMagnitude(float value) {
-		mge::api->cameraShakeSetMagnitude(value);
-	}
-
-	auto mge_getCameraShakeAcceleration(float value) {
-		return mge::api->cameraShakeGetAcceleration();
-	}
-
-	auto mge_setCameraShakeAcceleration(float value) {
-		mge::api->cameraShakeSetAcceleration(value);
-	}
-
-	//
-	// Other MGE XE rendering functions.
-	//
-
-	auto mge_setWeatherScattering(sol::optional<sol::table> params) {
-		auto inscatter = getOptionalParamVector3(params, "inscatter");
-		auto outscatter = getOptionalParamVector3(params, "outscatter");
-
-		if (inscatter && outscatter) {
-			mge::api->weatherScatteringSet(&inscatter.value().x, &outscatter.value().x);
-			return true;
-		}
-		else {
-			throw std::invalid_argument("inscatter and outscatter must be 3-vectors.");
-		}
-		return false;
-	}
-
-	auto mge_getWeatherScattering(sol::this_state ts) {
-		float inscatter[3], outscatter[3];
-		mge::api->weatherScatteringGet(inscatter, outscatter);
-
-		sol::state_view state = ts;
-		sol::table in = state.create_table_with(1, inscatter[0], 2, inscatter[1], 3, inscatter[2]);
-		sol::table out = state.create_table_with(1, outscatter[0], 2, outscatter[1], 3, outscatter[2]);
-		sol::table scattering = state.create_table_with("inscatter", in, "outscatter", out);
-		return scattering;
-	}
-
-	auto mge_getWeatherDLFog(int weatherID, sol::this_state ts) {
-		float fogDistMult, fogOffset;
-		mge::api->weatherDistantFogGet(weatherID, &fogDistMult, &fogOffset);
-
-		sol::state_view state = ts;
-		return state.create_table_with("weather", weatherID, "distance", fogDistMult, "offset", fogOffset);
-	}
-
-	auto mge_setWeatherDLFog(sol::optional<sol::table> params) {
-		auto weatherID = getOptionalParam<int>(params, "weather", -1);
-		auto fogDistMult = getOptionalParam<float>(params, "distance", -1.0f);
-		auto fogOffset = getOptionalParam<float>(params, "offset", -1.0f);
-
-		if (weatherID < 0) {
-			throw std::invalid_argument("weather parameter required.");
-		}
-		if (fogDistMult < 0) {
-			throw std::invalid_argument("distance parameter required.");
-		}
-		if (fogOffset < 0) {
-			throw std::invalid_argument("offset parameter required.");
-		}
-
-		mge::api->weatherDistantFogSet(weatherID, fogDistMult, fogOffset);
-	}
-
-	auto mge_getWeatherPPLLight(int weatherID, sol::this_state ts) {
-		float sunMult, ambMult;
-		mge::api->weatherPerPixelLightGet(weatherID, &sunMult, &ambMult);
-
-		sol::state_view state = ts;
-		return state.create_table_with("weather", weatherID, "sun", sunMult, "ambient", ambMult);
-	}
-
-	auto mge_setWeatherPPLLight(sol::optional<sol::table> params) {
-		auto weatherID = getOptionalParam<int>(params, "weather", -1);
-		auto sunMult = getOptionalParam<float>(params, "sun", -1.0f);
-		auto ambMult = getOptionalParam<float>(params, "ambient", -1.0f);
-
-		if (weatherID < 0) {
-			throw std::invalid_argument("weather parameter required.");
-		}
-		if (sunMult < 0) {
-			throw std::invalid_argument("sun parameter required.");
-		}
-		if (ambMult < 0) {
-			throw std::invalid_argument("ambient parameter required.");
-		}
-
-		mge::api->weatherPerPixelLightSet(weatherID, sunMult, ambMult);
-	}
-
-	auto mge_getWind(int weatherID, sol::this_state ts) {
-		if (!(weatherID >= 0 && weatherID < 10)) {
-			throw std::invalid_argument("valid weather parameter required.");
-		}
-
-		float speed = mge::api->getDistantLandRenderConfig()->Wind[weatherID];
-		sol::state_view state = ts;
-		return state.create_table_with("weather", weatherID, "speed", speed);
-	}
-
-	auto mge_setWind(sol::optional<sol::table> params) {
-		auto weatherID = getOptionalParam<int>(params, "weather", -1);
-		auto speed = getOptionalParam<float>(params, "speed", -1.0f);
-
-		if (!(weatherID >= 0 && weatherID < 10)) {
-			throw std::invalid_argument("valid weather parameter required.");
-		}
-		if (speed < 0) {
-			throw std::invalid_argument("speed parameter required.");
-		}
-
-		mge::api->getDistantLandRenderConfig()->Wind[weatherID] = speed;
-	}
-
-	auto mge_getWeatherDLFog_legacy(int weatherID) {
-		float fogDistMult, fogOffset;
-		mge::api->weatherDistantFogGet(weatherID, &fogDistMult, &fogOffset);
-		return std::make_tuple(fogDistMult, fogOffset);
-	}
-
-	auto mge_setWeatherDLFog_legacy(int weatherID, float fogDistMult, float fogOffset) {
-		mge::api->weatherDistantFogSet(weatherID, fogDistMult, fogOffset);
-	}
-
-	auto mge_getWeatherPPLLight_legacy(int weatherID) {
-		float sunMult, ambMult;
-		mge::api->weatherPerPixelLightGet(weatherID, &sunMult, &ambMult);
-		return std::make_tuple(sunMult, ambMult);
-	}
-
-	auto mge_setWeatherPPLLight_legacy(int weatherID, float sunMult, float ambMult) {
-		mge::api->weatherPerPixelLightSet(weatherID, sunMult, ambMult);
-	}
 
 	//
 	// Expose it all to lua.
@@ -501,141 +27,146 @@ namespace mwse::lua {
 		sol::table lua_mge = state["mge"];
 
 		// General functions.
-		lua_mge["enabled"] = [] { return true; };
-		lua_mge["getVersion"] = mge_getVersion;
+		lua_mge["enabled"] = &mge::lua::CoreInterface::enabled;
+		lua_mge["getVersion"] = &mge::lua::CoreInterface::getVersion;
 
-		lua_mge["loadConfig"] = [] { if (!mge::api->loadConfig()) throw std::runtime_error("mge.loadConfig failed."); };
-		lua_mge["saveConfig"] = [] { if (!mge::api->saveConfig()) throw std::runtime_error("mge.saveConfig failed."); };
+		lua_mge["loadConfig"] = &mge::lua::CoreInterface::loadConfig;
+		lua_mge["saveConfig"] = &mge::lua::CoreInterface::saveConfig;
 
 		// Distant land functions.
-		bindMGEDistantLandRenderConfig();
-		lua_mge["distantLandRenderConfig"] = mge::api->getDistantLandRenderConfig();
-		lua_mge["reloadDistantLand"] = mge_reloadDistantLand;
+		{
+			using DistantLandRenderConfig = mge::DistantLandRenderConfig;
 
-		lua_mge["getGUIScale"] = []() { return mge::api->guiGetScale(); };
-		lua_mge["setGUIScale"] = [](float scale) { mge::api->guiSetScale(scale); };
-		lua_mge["getLightingMode"] = mge_getLightingMode;
-		lua_mge["setLightingMode"] = mge_setLightingMode;
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.new_usertype<DistantLandRenderConfig>("mgeDistantLandRenderConfig");
+			usertypeDefinition["new"] = sol::no_constructor;
+
+			// Properties.
+			usertypeDefinition["aboveWaterFogEnd"] = &DistantLandRenderConfig::AboveWaterFogEnd;
+			usertypeDefinition["aboveWaterFogStart"] = &DistantLandRenderConfig::AboveWaterFogStart;
+			usertypeDefinition["belowWaterFogEnd"] = &DistantLandRenderConfig::BelowWaterFogEnd;
+			usertypeDefinition["belowWaterFogStart"] = &DistantLandRenderConfig::BelowWaterFogStart;
+			usertypeDefinition["drawDist"] = &DistantLandRenderConfig::DrawDist;
+			usertypeDefinition["farStaticEnd"] = &DistantLandRenderConfig::FarStaticEnd;
+			usertypeDefinition["farStaticMinSize"] = &DistantLandRenderConfig::FarStaticMinSize;
+			usertypeDefinition["interiorFogEnd"] = &DistantLandRenderConfig::InteriorFogEnd;
+			usertypeDefinition["interiorFogStart"] = &DistantLandRenderConfig::InteriorFogStart;
+			usertypeDefinition["nearStaticEnd"] = &DistantLandRenderConfig::NearStaticEnd;
+			usertypeDefinition["fogOffsetDist"] = &DistantLandRenderConfig::FogOffsetDist;
+			usertypeDefinition["fogDist"] = &DistantLandRenderConfig::FogDist;
+			usertypeDefinition["veryFarStaticEnd"] = &DistantLandRenderConfig::VeryFarStaticEnd;
+			usertypeDefinition["veryFarStaticMinSize"] = &DistantLandRenderConfig::VeryFarStaticMinSize;
+			usertypeDefinition["waterCaustics"] = &DistantLandRenderConfig::WaterCaustics;
+			usertypeDefinition["waterWaveHeight"] = &DistantLandRenderConfig::WaterWaveHeight;
+			usertypeDefinition["wind"] = &DistantLandRenderConfig::Wind;
+			// Note that DistantLandRenderConfig::ShadowResolution does not appear, as it is not configurable.
+		}
+		lua_mge["distantLandRenderConfig"] = mge::api->getDistantLandRenderConfig();
+		lua_mge["reloadDistantLand"] = &mge::lua::CoreInterface::reloadDistantLand;
+
+		lua_mge["getGUIScale"] = &mge::lua::CoreInterface::getGUIScale;
+		lua_mge["setGUIScale"] = &mge::lua::CoreInterface::setGUIScale;
+		lua_mge["getLightingMode"] = &mge::lua::CoreInterface::getLightingMode;
+		lua_mge["setLightingMode"] = &mge::lua::CoreInterface::setLightingMode;
 
 		// Rendering feature functions.
-		struct MgeRenderFeatures {
-			std::unordered_map <std::string, mge::RenderFeature> names;
-
-			MgeRenderFeatures() {
-				names["FPSCounter"] = mge::RenderFeature::FPSCounter;
-				names["DisplayMessages"] = mge::RenderFeature::DisplayMessages;
-				names["PauseRenderingInMenus"] = mge::RenderFeature::PauseRenderingInMenus;
-				names["NoMWMGEBlending"] = mge::RenderFeature::NoMWMGEBlending;
-				names["NoMWSunglare"] = mge::RenderFeature::NoMWSunglare;
-				names["Shaders"] = mge::RenderFeature::Shaders;
-				names["TransparencyAA"] = mge::RenderFeature::TransparencyAA;
-				names["UpdateHDR"] = mge::RenderFeature::UpdateHDR;
-				names["ExponentialFog"] = mge::RenderFeature::ExponentialFog;
-				names["AtmosphericScattering"] = mge::RenderFeature::AtmosphericScattering;
-				names["Grass"] = mge::RenderFeature::Grass;
-				names["Shadows"] = mge::RenderFeature::Shadows;
-				names["DistantWater"] = mge::RenderFeature::DistantWater;
-				names["DistantLand"] = mge::RenderFeature::DistantLand;
-				names["DistantStatics"] = mge::RenderFeature::DistantStatics;
-				names["ReflectiveWater"] = mge::RenderFeature::ReflectiveWater;
-				names["ReflectNearStatics"] = mge::RenderFeature::ReflectNearStatics;
-				names["ReflectInterior"] = mge::RenderFeature::ReflectInterior;
-				names["ReflectSky"] = mge::RenderFeature::ReflectSky;
-				names["BlurReflections"] = mge::RenderFeature::BlurReflections;
-				names["DynamicRipples"] = mge::RenderFeature::DynamicRipples;
-				names["CrosshairAutoHide"] = mge::RenderFeature::CrosshairAutoHide;
-			}
-
-			sol::object get(const std::string& id, sol::this_state ts) const {
-				auto it = names.find(id);
-				if (it == names.end()) { return sol::nil; }
-
-				return sol::make_object(ts, mge::api->featureGetEnabled(it->second));
-			}
-
-			void set(const std::string& id, bool value) const {
-				auto it = names.find(id);
-				if (it == names.end()) { return; }
-
-				mge::api->featureSetEnabled(it->second, value);
-			}
-		};
 		{
+			using RenderFeature = mge::RenderFeature;
+			using RenderFeatures = mge::lua::RenderFeatures;
+
 			// Start our usertype. We must finish this with state.set_usertype.
-			auto usertypeDefinition = state.new_usertype<MgeRenderFeatures>("mgeRenderFeatures");
+			auto usertypeDefinition = state.new_usertype<mge::lua::RenderFeatures>("mgeRenderFeatures");
 			usertypeDefinition["new"] = sol::no_constructor;
 
-			usertypeDefinition[sol::meta_function::index] = &MgeRenderFeatures::get;
-			usertypeDefinition[sol::meta_function::new_index] = &MgeRenderFeatures::set;
+			RenderFeatures::bindFeature<RenderFeature::AtmosphericScattering>(usertypeDefinition, "atmosphericScattering");
+			RenderFeatures::bindFeature<RenderFeature::BlurReflections>(usertypeDefinition, "blurReflections");
+			RenderFeatures::bindFeature<RenderFeature::CrosshairAutoHide>(usertypeDefinition, "crosshairAutoHide");
+			RenderFeatures::bindFeature<RenderFeature::DisplayMessages>(usertypeDefinition, "displayMessages");
+			RenderFeatures::bindFeature<RenderFeature::DistantLand>(usertypeDefinition, "distantLand");
+			RenderFeatures::bindFeature<RenderFeature::DistantStatics>(usertypeDefinition, "distantStatics");
+			RenderFeatures::bindFeature<RenderFeature::DistantWater>(usertypeDefinition, "distantWater");
+			RenderFeatures::bindFeature<RenderFeature::DynamicRipples>(usertypeDefinition, "dynamicRipples");
+			RenderFeatures::bindFeature<RenderFeature::ExponentialFog>(usertypeDefinition, "exponentialFog");
+			RenderFeatures::bindFeature<RenderFeature::FPSCounter>(usertypeDefinition, "fpsCounter");
+			RenderFeatures::bindFeature<RenderFeature::Grass>(usertypeDefinition, "grass");
+			RenderFeatures::bindFeature<RenderFeature::NoMWMGEBlending>(usertypeDefinition, "noMWMGEBlending");
+			RenderFeatures::bindFeature<RenderFeature::NoMWSunglare>(usertypeDefinition, "noMWSunglare");
+			RenderFeatures::bindFeature<RenderFeature::PauseRenderingInMenus>(usertypeDefinition, "pauseRenderingInMenus");
+			RenderFeatures::bindFeature<RenderFeature::ReflectInterior>(usertypeDefinition, "reflectInterior");
+			RenderFeatures::bindFeature<RenderFeature::ReflectiveWater>(usertypeDefinition, "reflectiveWater");
+			RenderFeatures::bindFeature<RenderFeature::ReflectNearStatics>(usertypeDefinition, "reflectNearStatics");
+			RenderFeatures::bindFeature<RenderFeature::ReflectSky>(usertypeDefinition, "reflectSky");
+			RenderFeatures::bindFeature<RenderFeature::Shaders>(usertypeDefinition, "shaders");
+			RenderFeatures::bindFeature<RenderFeature::Shadows>(usertypeDefinition, "shadows");
+			RenderFeatures::bindFeature<RenderFeature::TransparencyAA>(usertypeDefinition, "transparencyAA");
+			RenderFeatures::bindFeature<RenderFeature::UpdateHDR>(usertypeDefinition, "updateHDR");
 		}
-		lua_mge["render"] = MgeRenderFeatures();
+		lua_mge["render"] = mge::lua::RenderFeatures();
 
 		// Shader-related functions.
-		struct MgeShadersConfig {};
 		{
+			using mge::lua::ShadersConfig;
+
 			// Start our usertype. We must finish this with state.set_usertype.
-			auto usertypeDefinition = state.new_usertype<MgeShadersConfig>("mgeShadersConfig");
+			auto usertypeDefinition = state.new_usertype<ShadersConfig>("mgeShadersConfig");
 			usertypeDefinition["new"] = sol::no_constructor;
 
 			// Properties.
-			usertypeDefinition["list"] = sol::readonly_property(&mge_shaders);
-			usertypeDefinition["debug"] = sol::readonly_property(&mge_shadersDebug);
-			usertypeDefinition["hdrReactionSpeed"] = sol::property(
-				[] { return mge::api->shaderGetHDRReactionSpeed(); },
-				[](float speed) { mge::api->shaderSetHDRReactionSpeed(speed); }
-			);
+			usertypeDefinition["list"] = sol::readonly_property(&ShadersConfig::getShaders);
+			usertypeDefinition["debug"] = sol::readonly_property(&ShadersConfig::debugShaders);
+			usertypeDefinition["hdrReactionSpeed"] = sol::property(&ShadersConfig::getHDRReactionSpeed, &ShadersConfig::setHDRReactionSpeed);
 
 			// Functions.
-			usertypeDefinition["find"] = &mge_shaderFind;
-			usertypeDefinition["load"] = &mge_shaderLoad;
+			usertypeDefinition["find"] = &ShadersConfig::findShader;
+			usertypeDefinition["load"] = &ShadersConfig::loadShader;
 		}
-		lua_mge["shaders"] = MgeShadersConfig();
+		lua_mge["shaders"] = mge::lua::ShadersConfig();
 
 		// Camera functions.
-		struct MgeCameraConfig {};
 		{
+			using mge::lua::CameraConfig;
+
 			// Start our usertype. We must finish this with state.set_usertype.
-			auto usertypeDefinition = state.new_usertype<MgeCameraConfig>("mgeCameraConfig");
+			auto usertypeDefinition = state.new_usertype<CameraConfig>("mgeCameraConfig");
 			usertypeDefinition["new"] = sol::no_constructor;
 
 			// Properties.
-			usertypeDefinition["fov"] = sol::property(&mge_getFoV, &mge_setFoV);
-			usertypeDefinition["shakeAcceleration"] = sol::property(&mge_getCameraShakeAcceleration, &mge_setCameraShakeAcceleration);
-			usertypeDefinition["shakeEnable"] = sol::property(&mge_getCameraShakeEnabled, &mge_setCameraShakeEnabled);
-			usertypeDefinition["shakeMagnitude"] = sol::property(&mge_getCameraShakeMagnitude, &mge_setCameraShakeMagnitude);
-			usertypeDefinition["stopZoom"] = mge_stopZoom;
-			usertypeDefinition["thirdPersonOffset"] = sol::property(&mge_getThirdPersonOffset, &mge_setThirdPersonOffset);
-			usertypeDefinition["zoom"] = sol::property(&mge_getZoom, &mge_setZoom);
-			usertypeDefinition["zoomContinuous"] = mge_setZoomContinuous;
-			usertypeDefinition["zoomEnable"] = sol::property(&mge_getZoomEnabled, &mge_setZoomEnabled);
-			usertypeDefinition["zoomIn"] = mge_zoomIn;
-			usertypeDefinition["zoomOut"] = mge_zoomOut;
+			usertypeDefinition["fov"] = sol::property(&CameraConfig::getFoV, &CameraConfig::setFoV);
+			usertypeDefinition["shakeAcceleration"] = sol::property(&CameraConfig::getCameraShakeAcceleration, &CameraConfig::setCameraShakeAcceleration);
+			usertypeDefinition["shakeEnable"] = sol::property(&CameraConfig::getCameraShakeEnabled, &CameraConfig::setCameraShakeEnabled);
+			usertypeDefinition["shakeMagnitude"] = sol::property(&CameraConfig::getCameraShakeMagnitude, &CameraConfig::setCameraShakeMagnitude);
+			usertypeDefinition["stopZoom"] = CameraConfig::stopZoom;
+			usertypeDefinition["thirdPersonOffset"] = sol::property(&CameraConfig::getThirdPersonOffset, &CameraConfig::setThirdPersonOffset);
+			usertypeDefinition["zoom"] = sol::property(&CameraConfig::getZoom, &CameraConfig::setZoom);
+			usertypeDefinition["zoomContinuous"] = CameraConfig::setZoomContinuous;
+			usertypeDefinition["zoomEnable"] = sol::property(&CameraConfig::getZoomEnabled, &CameraConfig::setZoomEnabled);
+			usertypeDefinition["zoomIn"] = CameraConfig::zoomIn;
+			usertypeDefinition["zoomOut"] = CameraConfig::zoomOut;
 		}
-		lua_mge["camera"] = MgeCameraConfig();
+		lua_mge["camera"] = mge::lua::CameraConfig();
 
 		// MGE XE weather functions.
-		struct MgeWeatherConfig {};
 		{
+			using mge::lua::WeatherConfig;
+
 			// Start our usertype. We must finish this with state.set_usertype.
-			auto usertypeDefinition = state.new_usertype<MgeWeatherConfig>("mgeWeatherConfig");
+			auto usertypeDefinition = state.new_usertype<WeatherConfig>("mgeWeatherConfig");
 			usertypeDefinition["new"] = sol::no_constructor;
 
 			// Functions.
-			usertypeDefinition["getDistantFog"] = &mge_getWeatherDLFog;
-			usertypeDefinition["setDistantFog"] = &mge_setWeatherDLFog;
-			usertypeDefinition["getPerPixelLighting"] = &mge_getWeatherPPLLight;
-			usertypeDefinition["setPerPixelLighting"] = &mge_setWeatherPPLLight;
-			usertypeDefinition["getScattering"] = &mge_getWeatherScattering;
-			usertypeDefinition["setScattering"] = &mge_setWeatherScattering;
-			usertypeDefinition["getWind"] = &mge_getWind;
-			usertypeDefinition["setWind"] = &mge_setWind;
+			usertypeDefinition["getDistantFog"] = &WeatherConfig::getDLFog;
+			usertypeDefinition["setDistantFog"] = &WeatherConfig::setDLFog;
+			usertypeDefinition["getPerPixelLighting"] = &WeatherConfig::getPPLLight;
+			usertypeDefinition["setPerPixelLighting"] = &WeatherConfig::setPPLLight;
+			usertypeDefinition["getScattering"] = &WeatherConfig::getScattering;
+			usertypeDefinition["setScattering"] = &WeatherConfig::setScattering;
+			usertypeDefinition["getWind"] = &WeatherConfig::getWind;
+			usertypeDefinition["setWind"] = &WeatherConfig::setWind;
 		}
-		lua_mge["weather"] = MgeWeatherConfig();
+		lua_mge["weather"] = mge::lua::WeatherConfig();
 
 		// Macro functions with on-screen notifications.
-		sol::table lua_macros = state.create_table();
-		lua_mge["macros"] = lua_macros;
-
+		auto lua_macros = lua_mge.create_named("macros");
 		lua_macros["decreaseFOV"] = mge::macros->DecreaseFOV;
 		lua_macros["decreaseViewRange"] = mge::macros->DecreaseViewRange;
 		lua_macros["decreaseZoom"] = mge::macros->DecreaseZoom;
@@ -676,31 +207,20 @@ namespace mwse::lua {
 		lua_macros["toggleZoom"] = mge::macros->ToggleZoom;
 
 		// Legacy functions.
-		lua_mge["getScreenHeight"] = [] { return TES3::Game::get()->windowHeight; };
-		lua_mge["getScreenWidth"] = [] { return TES3::Game::get()->windowWidth; };
-
-		lua_mge["getWeatherScattering"] = &mge_getWeatherScattering;
-		lua_mge["setWeatherScattering"] = &mge_setWeatherScattering;
-		lua_mge["getWeatherDLFog"] = &mge_getWeatherDLFog_legacy;
-		lua_mge["setWeatherDLFog"] = &mge_setWeatherDLFog_legacy;
-		lua_mge["getWeatherPPLLight"] = &mge_getWeatherPPLLight_legacy;
-		lua_mge["setWeatherPPLLight"] = &mge_setWeatherPPLLight_legacy;
-
-		lua_mge["disableZoom"] = [] { mge::api->zoomSetEnabled(false); };
-		lua_mge["enableZoom"] = [] { mge::api->zoomSetEnabled(true); };
-		lua_mge["toggleZoom"] = [] { mge::api->zoomSetEnabled(!mge::api->zoomGetEnabled()); };
-		lua_mge["getZoom"] = [] { return mge::api->zoomGetZoom(); };
-		lua_mge["setZoom"] = [](sol::optional<sol::table> params) {
-			float amount = getOptionalParam(params, "amount", 0.0f);
-			if (amount != 0.0f) { mge::api->zoomSetZoom(amount); }
-		};
-		lua_mge["zoomIn"] = [](sol::optional<sol::table> params) {
-			float amount = getOptionalParam(params, "amount", 0.0f);
-			if (amount != 0.0f) { mge::api->zoomIn(amount); }
-		};
-		lua_mge["zoomOut"] = [](sol::optional<sol::table> params) {
-			float amount = getOptionalParam(params, "amount", 0.0f);
-			if (amount != 0.0f) { mge::api->zoomOut(amount); }
-		};
+		lua_mge["getScreenHeight"] = &mge::lua::LegacyInterface::getScreenHeight;
+		lua_mge["getScreenWidth"] = &mge::lua::LegacyInterface::getScreenWidth;
+		lua_mge["getWeatherScattering"] = &mge::lua::WeatherConfig::getScattering;
+		lua_mge["setWeatherScattering"] = &mge::lua::WeatherConfig::setScattering;
+		lua_mge["getWeatherDLFog"] = &mge::lua::LegacyInterface::getWeatherDLFog;
+		lua_mge["setWeatherDLFog"] = &mge::lua::LegacyInterface::setWeatherDLFog;
+		lua_mge["getWeatherPPLLight"] = &mge::lua::LegacyInterface::getWeatherPPLLight;
+		lua_mge["setWeatherPPLLight"] = &mge::lua::LegacyInterface::setWeatherPPLLight;
+		lua_mge["disableZoom"] = &mge::lua::LegacyInterface::disableZoom;
+		lua_mge["enableZoom"] = &mge::lua::LegacyInterface::enableZoom;
+		lua_mge["toggleZoom"] = &mge::lua::LegacyInterface::toggleZoom;
+		lua_mge["getZoom"] = &mge::lua::CameraConfig::getZoom;
+		lua_mge["setZoom"] = &mge::lua::LegacyInterface::setZoom;
+		lua_mge["zoomIn"] = &mge::lua::LegacyInterface::zoomIn;
+		lua_mge["zoomOut"] = &mge::lua::LegacyInterface::zoomOut;
 	}
 }
