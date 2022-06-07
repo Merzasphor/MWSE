@@ -202,7 +202,13 @@ local function build(package)
 	common.log("Building " .. package.type .. ": " .. package.key .. " ...")
 
 	-- Get the package.
-	local outPath = lfs.join(metaFolder, package.type, package.key .. ".lua")
+	local outDir = lfs.join(metaFolder, package.type)
+	local parent = package.parent
+	while (parent) do
+		outDir = lfs.join(outDir, parent.key)
+		parent = parent.parent
+	end
+	local outPath = lfs.join(outDir, package.key .. ".lua")
 	local file = assert(io.open(outPath, "w"))
 
 	-- Mark the file as a meta file.
@@ -214,7 +220,7 @@ local function build(package)
 	if (package.type == "lib") then
 		file:write(formatDescription(common.getDescriptionString(package)) .. "\n")
 		writeExamples(package, file)
-		file:write(string.format("--- @class %slib\n", package.key))
+		file:write(string.format("--- @class %slib\n", package.namespace))
 	elseif (package.type == "class") then
 		file:write(formatDescription(common.getDescriptionString(package)) .. "\n")
 		writeExamples(package, file)
@@ -263,7 +269,7 @@ local function build(package)
 
 	-- Finalize the main class definition.
 	if (package.type == "lib" or package.type == "class") then
-		file:write(string.format("%s = {}\n\n", package.key))
+		file:write(string.format("%s = {}\n\n", package.namespace))
 	end
 
 	-- Write out functions.
@@ -278,9 +284,16 @@ local function build(package)
 		end
 	end
 
-	-- Special hack: Require in tes3.* and mge*, files.
+	-- Bring in external packages and build sub-libraries.
 	if (package.type == "lib") then
 		buildExternalRequires(package, file)
+
+		if (package.libs) then
+			lfs.mkdir(lfs.join(outDir, package.key))
+			for _, lib in pairs(package.libs) do
+				build(lib)
+			end
+		end
 	end
 
 	-- Close up shop.
