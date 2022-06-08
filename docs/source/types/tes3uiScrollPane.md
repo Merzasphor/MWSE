@@ -2,6 +2,7 @@
 
 A structure containing properties specific to scroll panes.
 
+This type inherits the following: [tes3uiWidget](../../types/tes3uiWidget)
 ## Properties
 
 ### `contentPane`

@@ -2,7 +2,7 @@
 --- @diagnostic disable:undefined-doc-name
 
 --- A structure containing properties specific to text selects.
---- @class tes3uiTextSelect
+--- @class tes3uiTextSelect : tes3uiWidget
 --- @field idle niColor The RGB color of the text when `state` is set to `normal`. An array of 3 floats with values ranging from `0.0` to `1.0`.
 --- @field idleActive niColor The RGB color of the text when `state` is set to `active`. An array of 3 floats with values ranging from `0.0` to `1.0`.
 --- @field idleDisabled niColor The RGB color of the text when `state` is set to `disabled`. An array of 3 floats with values ranging from `0.0` to `1.0`.

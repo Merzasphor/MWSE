@@ -2,7 +2,7 @@
 --- @diagnostic disable:undefined-doc-name
 
 --- A structure containing properties specific to sliders.
---- @class tes3uiSlider
+--- @class tes3uiSlider : tes3uiWidget
 --- @field current number The current value. The position of the slider handle is determined by dividing `current` by `max`.
 --- @field jump number The change in value when clicking into the empty areas next to the slider handle.
 --- @field max number The maximum value. The position of the slider handle is determined by dividing `current` by `max`.

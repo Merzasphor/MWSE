@@ -505,7 +505,7 @@ Access to element specific properties. This will be `nil` if there are no elemen
 
 **Returns**:
 
-* `result` ([tes3uiButton](../../types/tes3uiButton), [tes3uiFillBar](../../types/tes3uiFillBar), [tes3uiParagraphInput](../../types/tes3uiParagraphInput), [tes3uiSlider](../../types/tes3uiSlider), [tes3uiScrollPane](../../types/tes3uiScrollPane), [tes3uiTextInput](../../types/tes3uiTextInput), [tes3uiTextSelect](../../types/tes3uiTextSelect), nil)
+* `result` ([tes3uiWidget](../../types/tes3uiWidget), nil)
 
 ***
 

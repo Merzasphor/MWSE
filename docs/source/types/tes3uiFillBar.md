@@ -2,6 +2,7 @@
 
 A structure containing properties specific to fillbars.
 
+This type inherits the following: [tes3uiWidget](../../types/tes3uiWidget)
 ## Properties
 
 ### `current`

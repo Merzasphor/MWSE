@@ -2,7 +2,7 @@
 --- @diagnostic disable:undefined-doc-name
 
 --- A structure containing properties specific to scroll panes.
---- @class tes3uiScrollPane
+--- @class tes3uiScrollPane : tes3uiWidget
 --- @field contentPane tes3uiElement *Read-only*. The content element of this pane.
 --- @field positionX number The horizontal scroll offset in pixels.
 --- @field positionY number The vertical scroll offset in pixels.

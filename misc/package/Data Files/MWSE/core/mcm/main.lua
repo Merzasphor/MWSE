@@ -233,20 +233,8 @@ local function onClickModConfigButton()
 		splash.borderTop = 25
 
 		-- Create a link back to the website.
-		local site = containerPane:createLabel({ id = "MWSELink", text = "mwse.github.io/MWSE" })
+		local site = containerPane:createHyperlink({ id = "MWSELink", text = "mwse.github.io/MWSE", url = "https://mwse.github.io/MWSE" })
 		site.absolutePosAlignX = 0.5
-		site.color = tes3ui.getPalette("link_color")
-		site:register("mouseClick", function()
-			tes3.messageBox({
-				message = mwse.mcm.i18n("Open web browser?"),
-				buttons = { tes3.findGMST(tes3.gmst.sYes).value, tes3.findGMST(tes3.gmst.sNo).value },
-				callback = function(e)
-					if (e.button == 0) then
-						os.openURL("https://mwse.github.io/MWSE")
-					end
-				end,
-			})
-		end)
 
 		-- Create bottom button block.
 		local bottomBlock = menu:createBlock({ id = "BottomFlow" })
