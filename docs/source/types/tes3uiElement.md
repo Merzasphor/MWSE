@@ -671,7 +671,7 @@ local result = myObject:createHorizontalScrollPane({ id = ... })
 
 ### `createHyperlink`
 
-Creates a clickable text, colored as a link.
+Creates a clickable text, colored as a link. When the link is clicked, a URL is opened in the player's browser. If the `confirm` property is set, a confirmation prompt is opened first.
 
 Hyperlink-specific properties can be accessed through the `widget` property. The widget type for buttons is [`tes3uiHyperlink`](https://mwse.github.io/MWSE/types/tes3uiHyperlink/).
 
