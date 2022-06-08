@@ -52,7 +52,7 @@ namespace mwse::lua {
 			usertypeDefinition["interiorFogEnd"] = &DistantLandRenderConfig::InteriorFogEnd;
 			usertypeDefinition["interiorFogStart"] = &DistantLandRenderConfig::InteriorFogStart;
 			usertypeDefinition["nearStaticEnd"] = &DistantLandRenderConfig::NearStaticEnd;
-			usertypeDefinition["fogOffsetDistance"] = sol::readonly_property(&DistantLandRenderConfig::getFogOffsetDist);
+			usertypeDefinition["fogOffsetPercent"] = sol::readonly_property(&DistantLandRenderConfig::getFogOffset);
 			usertypeDefinition["fogDistance"] = sol::readonly_property(&DistantLandRenderConfig::getFogDist);
 			usertypeDefinition["veryFarStaticEnd"] = &DistantLandRenderConfig::VeryFarStaticEnd;
 			usertypeDefinition["veryFarStaticMinSize"] = &DistantLandRenderConfig::VeryFarStaticMinSize;
