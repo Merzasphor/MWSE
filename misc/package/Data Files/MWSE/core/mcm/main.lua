@@ -5,13 +5,16 @@
 	extend to provide a single place for users to configure their mods.
 ]]--
 
--- Storage for mod config packages.
+--- Storage for mod config packages.
+--- @type table<string, table>
 local configMods = {}
 
--- The current package that we are configuring.
+--- The current package that we are configuring.
+--- @type table?
 local currentModConfig = nil
 
--- Reusable access to UI elements.
+--- Reusable access to UI elements.
+--- @type tes3uiElement
 local modConfigContainer = nil
 
 -- Expose the mcm API.
@@ -30,6 +33,10 @@ local function onClickModName(e)
 
 	-- Update the current mod package.
 	currentModConfig = configMods[e.source.text]
+	if (not currentModConfig) then
+		error(string.format("No mod config could be found for key '%s'.", e.source.text))
+		return
+	end
 
 	-- Destroy and recreate the parent container.
 	modConfigContainer:destroyChildren()
