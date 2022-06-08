@@ -66,7 +66,7 @@
 --- @field texture niSourceTexture The underlying texture for the element. This assumes that the element is of an element type. Setting this value will change the element to an image type.
 --- @field type string *Read-only*. The type of content this `tes3uiElement` represents. This is an expanded set of the options available from the `contentType` property. Maps to values in [`tes3.uiElementType`](https://mwse.github.io/MWSE/references/tes3uiElement-types/).
 --- @field visible boolean Controls if the element is visible.
---- @field widget tes3uiButton|tes3uiFillBar|tes3uiParagraphInput|tes3uiScrollPane|tes3uiSlider|tes3uiTextInput|tes3uiTextSelect|nil Access to element specific properties. This will be `nil` if there are no element specific properties. See the return types and the create* functions for more details.
+--- @field widget tes3uiButton|tes3uiFillBar|tes3uiHyperlink|tes3uiParagraphInput|tes3uiScrollPane|tes3uiSlider|tes3uiTextInput|tes3uiTextSelect|nil Access to element specific properties. This will be `nil` if there are no element specific properties. See the return types and the create* functions for more details.
 --- @field width number Element dimensions in pixels. Integer number.
 --- @field widthProportional number Sets element dimensions using a proportional sizer. The sizer starts with the parent dimension in the flow direction, subtracts any fixed dimension children leaving the proportional sizer space. Each proportionally sized element then gets an equal division of the space, multiplied by this member. Values above 1.0 are permissible.
 --- 
@@ -152,6 +152,28 @@ function tes3uiElement:createHorizontalScrollPane(params) end
 ---Table parameter definitions for `tes3uiElement.createHorizontalScrollPane`.
 --- @class tes3uiElement.createHorizontalScrollPane.params
 --- @field id string|number|nil *Optional*. An identifier to help find this element later.
+
+--- Creates a clickable text, colored as a link.
+--- 
+--- Hyperlink-specific properties can be accessed through the `widget` property. The widget type for buttons is [`tes3uiHyperlink`](https://mwse.github.io/MWSE/types/tes3uiHyperlink/).
+--- @param params tes3uiElement.createHyperlink.params? This table accepts the following values:
+--- 
+--- `id`: string|number|nil — *Optional*. An identifier to help find this element later.
+--- 
+--- `text`: string — The text to add to the hyperlink.
+--- 
+--- `url`: string — The URL to open when the text is clicked.
+--- 
+--- `confirm`: boolean? — *Default*: `true`. If true, a confirmation prompt will be shown before any URL is opened.
+--- @return tes3uiElement element No description yet available.
+function tes3uiElement:createHyperlink(params) end
+
+---Table parameter definitions for `tes3uiElement.createHyperlink`.
+--- @class tes3uiElement.createHyperlink.params
+--- @field id string|number|nil *Optional*. An identifier to help find this element later.
+--- @field text string The text to add to the hyperlink.
+--- @field url string The URL to open when the text is clicked.
+--- @field confirm boolean? *Default*: `true`. If true, a confirmation prompt will be shown before any URL is opened.
 
 --- Creates a text area with clickable words as links. Usage is still under research.
 --- @param params tes3uiElement.createHypertext.params? This table accepts the following values:

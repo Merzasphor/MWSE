@@ -669,6 +669,30 @@ local result = myObject:createHorizontalScrollPane({ id = ... })
 
 ***
 
+### `createHyperlink`
+
+Creates a clickable text, colored as a link.
+
+Hyperlink-specific properties can be accessed through the `widget` property. The widget type for buttons is [`tes3uiHyperlink`](https://mwse.github.io/MWSE/types/tes3uiHyperlink/).
+
+```lua
+local element = myObject:createHyperlink({ id = ..., text = ..., url = ..., confirm = ... })
+```
+
+**Parameters**:
+
+* `params` (table): *Optional*.
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
+	* `text` (string): The text to add to the hyperlink.
+	* `url` (string): The URL to open when the text is clicked.
+	* `confirm` (boolean): *Default*: `true`. If true, a confirmation prompt will be shown before any URL is opened.
+
+**Returns**:
+
+* `element` ([tes3uiElement](../../types/tes3uiElement))
+
+***
+
 ### `createHypertext`
 
 Creates a text area with clickable words as links. Usage is still under research.
