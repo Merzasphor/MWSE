@@ -4,6 +4,9 @@
 
 namespace TES3::UI {
 	struct Widget : Element {
+		Widget() = delete;
+		~Widget() = delete;
+
 		Element* getElement();
 	};
 

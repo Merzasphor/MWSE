@@ -497,7 +497,11 @@ namespace TES3::UI {
 			return sol::make_object(state, WidgetTextSelect::fromElement(this));
 		}
 		else if (part == propLuaWidget) {
-			return getLuaData("MWSE:WidgetData");
+			auto data = getLuaData("MWSE:WidgetData");
+			if (data == sol::nil) {
+				throw std::runtime_error("No widget data has been defined. Incorrect use of API.");
+			}
+			return data;
 		}
 
 
