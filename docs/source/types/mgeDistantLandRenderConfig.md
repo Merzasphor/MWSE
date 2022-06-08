@@ -6,7 +6,7 @@ Allows control of MGE distant land features.
 
 ### `aboveWaterFogEnd`
 
-The above water fog end distance.
+The above water fog end distance, in cells.
 
 **Returns**:
 
@@ -16,7 +16,7 @@ The above water fog end distance.
 
 ### `aboveWaterFogStart`
 
-The above water fog start distance.
+The above water fog start distance, in cells.
 
 **Returns**:
 
@@ -26,7 +26,7 @@ The above water fog start distance.
 
 ### `belowWaterFogEnd`
 
-The below water fog end distance.
+The below water fog end distance, in cells.
 
 **Returns**:
 
@@ -36,7 +36,7 @@ The below water fog end distance.
 
 ### `belowWaterFogStart`
 
-The below water fog start distance.
+The below water fog start distance, in cells.
 
 **Returns**:
 
@@ -46,7 +46,7 @@ The below water fog start distance.
 
 ### `drawDistance`
 
-The draw distance.
+The draw distance, in cells.
 
 **Returns**:
 
@@ -56,7 +56,7 @@ The draw distance.
 
 ### `farStaticEnd`
 
-No description yet available.
+The maximum distance that 'far' statics will be visible, in cells.
 
 **Returns**:
 
@@ -66,7 +66,7 @@ No description yet available.
 
 ### `farStaticMinSize`
 
-No description yet available.
+Distant objects which are at least this size (and are smaller than veryFarStaticMinSize) are classified as 'far' statics. Smaller objects are classified as 'near' statics. This cannot be updated during gameplay. The game must be restarted to see changes.
 
 **Returns**:
 
@@ -76,7 +76,7 @@ No description yet available.
 
 ### `fogDistance`
 
-No description yet available.
+An array containing the fog distance multiplier for each weather.
 
 **Returns**:
 
@@ -84,9 +84,9 @@ No description yet available.
 
 ***
 
-### `fogOffsetDistance`
+### `fogOffsetPercent`
 
-No description yet available.
+An array containing the fog offset % for each weather.
 
 **Returns**:
 
@@ -96,7 +96,7 @@ No description yet available.
 
 ### `interiorFogEnd`
 
-The interior fog end distance.
+The interior fog end distance, in cells.
 
 **Returns**:
 
@@ -106,7 +106,7 @@ The interior fog end distance.
 
 ### `interiorFogStart`
 
-The interior fog start distance.
+The interior fog start distance, in cells.
 
 **Returns**:
 
@@ -116,7 +116,7 @@ The interior fog start distance.
 
 ### `nearStaticEnd`
 
-No description yet available.
+The maximum distance that 'near' statics will be visible, in cells.
 
 **Returns**:
 
@@ -126,7 +126,7 @@ No description yet available.
 
 ### `veryFarStaticEnd`
 
-No description yet available.
+The maximum distance that 'very far' statics will be visible, in cells.
 
 **Returns**:
 
@@ -136,7 +136,7 @@ No description yet available.
 
 ### `veryFarStaticMinSize`
 
-No description yet available.
+Distant objects which are at least this size are classified as 'very far' statics. This cannot be updated during gameplay. The game must be restarted to see changes.
 
 **Returns**:
 
@@ -146,7 +146,7 @@ No description yet available.
 
 ### `waterCaustics`
 
-No description yet available.
+The % brightness of water caustics.
 
 **Returns**:
 
@@ -156,7 +156,7 @@ No description yet available.
 
 ### `waterWaveHeight`
 
-No description yet available.
+The maximum height of dynamic waves.
 
 **Returns**:
 
@@ -166,7 +166,7 @@ No description yet available.
 
 ### `wind`
 
-No description yet available.
+An array containing the wind speed multiplier for each weather.
 
 **Returns**:
 
