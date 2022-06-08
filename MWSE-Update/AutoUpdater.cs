@@ -80,6 +80,23 @@ namespace MWSE
         }
 
         /// <summary>
+        /// Determines if the MO2 VFS module is loaded by the current process.
+        /// </summary>
+        /// <returns>True if the MO2 VFS is loaded.</returns>
+        static bool IsLaunchedThroughMO2()
+        {
+            foreach (ProcessModule module in Process.GetCurrentProcess().Modules)
+            {
+                if (module.ModuleName == "usvfs_x86.dll")
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Program entry point.
         /// </summary>
         /// <param name="args">
@@ -87,6 +104,15 @@ namespace MWSE
         /// </param>
         static int Main(string[] args)
         {
+            // Prevent updating through MO2.
+            if (IsLaunchedThroughMO2())
+            {
+                Console.WriteLine("Updating MWSE through MO2 can lead to duplicate core files, out of date files, and has caused support headaches in the past. It is no longer supported.");
+                Console.WriteLine("Press any key to exit...");
+                Console.ReadKey();
+                return 1;
+            }
+
             // Check to see if Morrowind is running; wait for it to close.
             if (IsMorrowindRunning())
             {
