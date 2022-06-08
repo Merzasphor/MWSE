@@ -462,6 +462,9 @@ namespace TES3 {
 				if (data != sol::nil && data.is<const char*>()) {
 					return data.as<const char*>();
 				}
+				else {
+					return "luaWidget";
+				}
 			}
 
 			return getContentTypeString();

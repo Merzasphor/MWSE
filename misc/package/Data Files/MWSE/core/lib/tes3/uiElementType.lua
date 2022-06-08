@@ -3,6 +3,7 @@ return {
 	fillbar = "fillbar",
 	image = "image",
 	layout = "layout",
+	luaWidget = "luaWidget",
 	model = "model",
 	paragraphInput = "paragraphInput",
 	rect = "rect",
