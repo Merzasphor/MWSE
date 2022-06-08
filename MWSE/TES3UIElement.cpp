@@ -411,7 +411,7 @@ namespace TES3 {
 		static Property propButton, propFillbar, propParagraphInput;
 		static Property propScrollBar, propScrollPaneH, propScrollPaneV;
 		static Property propTextInput, propTextSelect;
-		static Property propLuaData;
+		static Property propLuaData, propLuaWidget;
 		static UI_ID uiidButtonText, uiidParagraphInputText;
 		void deferredPropInit() {
 			static bool init = false;
@@ -425,6 +425,7 @@ namespace TES3 {
 				propTextInput = registerProperty("PartTextInput");
 				propTextSelect = registerProperty("PartTextSelect");
 				propLuaData = registerProperty("MWSE:LuaData");
+				propLuaWidget = registerProperty("MWSE:LuaWidget");
 				uiidButtonText = registerID("PartButton_text_ptr");
 				uiidParagraphInputText = registerID("PartParagraphInput_text_input");
 				init = true;
@@ -455,6 +456,12 @@ namespace TES3 {
 			}
 			else if (part == propTextSelect) {
 				return "textSelect";
+			}
+			else if (part == propLuaWidget) {
+				auto data = getLuaData("MWSE:WidgetTypeName");
+				if (data != sol::nil && data.is<const char*>()) {
+					return data.as<const char*>();
+				}
 			}
 
 			return getContentTypeString();
@@ -487,6 +494,10 @@ namespace TES3 {
 			else if (part == propTextSelect) {
 				return sol::make_object(state, WidgetTextSelect::fromElement(this));
 			}
+			else if (part == propLuaWidget) {
+				return getLuaData("MWSE:WidgetData");
+			}
+
 
 			return sol::nil;
 		}
