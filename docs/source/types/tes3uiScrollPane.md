@@ -15,6 +15,16 @@ This type inherits the following: [tes3uiWidget](../../types/tes3uiWidget)
 
 ***
 
+### `element`
+
+Access back to the element this widget interface is for.
+
+**Returns**:
+
+* `result` ([tes3uiElement](../../types/tes3uiElement))
+
+***
+
 ### `positionX`
 
 The horizontal scroll offset in pixels.

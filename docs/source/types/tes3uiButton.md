@@ -5,6 +5,16 @@ A structure containing properties specific to buttons.
 This type inherits the following: [tes3uiWidget](../../types/tes3uiWidget)
 ## Properties
 
+### `element`
+
+Access back to the element this widget interface is for.
+
+**Returns**:
+
+* `result` ([tes3uiElement](../../types/tes3uiElement))
+
+***
+
 ### `idle`
 
 The RGB color of the button's text when `state` is set to `normal`.	An array of 3 floats with values ranging from `0.0` to `1.0`.

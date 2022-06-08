@@ -15,6 +15,16 @@ The current value. The size of the filled portion is determined by dividing `cur
 
 ***
 
+### `element`
+
+Access back to the element this widget interface is for.
+
+**Returns**:
+
+* `result` ([tes3uiElement](../../types/tes3uiElement))
+
+***
+
 ### `fillAlpha`
 
 The alpha value of `fillColor`. Setting this will also set the alpha value of `fillColor`.

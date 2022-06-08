@@ -11,3 +11,15 @@ Some core widget interfaces offered by MWSE include:
 * [tes3uiTextInput](https://mwse.github.io/MWSE/types/tes3uiTextInput)
 * [tes3uiTextSelect](https://mwse.github.io/MWSE/types/tes3uiTextSelect)
 
+## Properties
+
+### `element`
+
+Access back to the element this widget interface is for.
+
+**Returns**:
+
+* `result` ([tes3uiElement](../../types/tes3uiElement))
+
+***
+

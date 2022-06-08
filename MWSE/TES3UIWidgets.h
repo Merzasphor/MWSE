@@ -4,7 +4,11 @@
 
 namespace TES3 {
 	namespace UI {
-		struct WidgetButton : Element {
+		struct Widget : Element {
+			Element* getElement();
+		};
+
+		struct WidgetButton : Widget {
 			int getState() const;
 			void setState(int state);
 
@@ -47,7 +51,7 @@ namespace TES3 {
 			static bool initProperties();
 		};
 
-		struct WidgetFillbar : Element {
+		struct WidgetFillbar : Widget {
 			double getCurrent() const;
 			void setCurrent(double value);
 			double getMax() const;
@@ -70,7 +74,7 @@ namespace TES3 {
 			static bool initProperties();
 		};
 
-		struct WidgetParagraphInput : Element {
+		struct WidgetParagraphInput : Widget {
 			int getLengthLimit() const;
 			void setLengthLimit(int limit);
 			void setLengthLimit_lua(sol::optional<int> limit = 1023);
@@ -85,7 +89,7 @@ namespace TES3 {
 			static bool initProperties();
 		};
 
-		struct WidgetScrollBar : Element {
+		struct WidgetScrollBar : Widget {
 			int getCurrent() const;
 			void setCurrent(int value);
 			int getMax() const;
@@ -103,7 +107,7 @@ namespace TES3 {
 			static bool initProperties();
 		};
 
-		struct WidgetScrollPane : Element {
+		struct WidgetScrollPane : Widget {
 			int getHorizontalPos() const;
 			void setHorizontalPos(int value);
 			int getVerticalPos() const;
@@ -121,7 +125,7 @@ namespace TES3 {
 			static bool initProperties();
 		};
 
-		struct WidgetTextInput : Element {
+		struct WidgetTextInput : Widget {
 			int getLengthLimit() const;
 			sol::optional<int> getLengthLimit_lua() const;
 			void setLengthLimit(int limit);
@@ -141,7 +145,7 @@ namespace TES3 {
 			static bool initProperties();
 		};
 
-		struct WidgetTextSelect : Element {
+		struct WidgetTextSelect : Widget {
 			int getState() const;
 			void setState(int state);
 

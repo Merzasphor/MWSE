@@ -42,6 +42,14 @@ namespace TES3 {
 		}
 
 		//
+		// Widget
+		//
+
+		Element* Widget::getElement() {
+			return this;
+		}
+
+		//
 		// WidgetButton
 		//
 

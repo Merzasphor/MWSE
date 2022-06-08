@@ -39,6 +39,7 @@ namespace mwse::lua {
 			usertypeDefinition["idleActive"] = sol::property(&WidgetButton::getColourActive_lua, &WidgetButton::setColourActive_lua);
 			usertypeDefinition["overActive"] = sol::property(&WidgetButton::getColourActiveOver_lua, &WidgetButton::setColourActiveOver_lua);
 			usertypeDefinition["pressedActive"] = sol::property(&WidgetButton::getColourActivePressed_lua, &WidgetButton::setColourActivePressed_lua);
+			usertypeDefinition["element"] = sol::readonly_property(&WidgetButton::getElement);
 		}
 
 		//
@@ -54,6 +55,7 @@ namespace mwse::lua {
 			usertypeDefinition["normalized"] = sol::property(&WidgetFillbar::getNormalized, &WidgetFillbar::setNormalized);
 			usertypeDefinition["fillColor"] = sol::property(&WidgetFillbar::getFillColour_lua, &WidgetFillbar::setFillColour_lua);
 			usertypeDefinition["fillAlpha"] = sol::property(&WidgetFillbar::getFillAlpha, &WidgetFillbar::setFillAlpha);
+			usertypeDefinition["element"] = sol::readonly_property(&WidgetFillbar::getElement);
 		}
 
 		//
@@ -64,6 +66,7 @@ namespace mwse::lua {
 			usertypeDefinition["new"] = sol::no_constructor;
 
 			usertypeDefinition["lengthLimit"] = sol::property(&WidgetParagraphInput::getLengthLimit, &WidgetParagraphInput::setLengthLimit_lua);
+			usertypeDefinition["element"] = sol::readonly_property(&WidgetParagraphInput::getElement);
 		}
 
 		//
@@ -77,6 +80,7 @@ namespace mwse::lua {
 			usertypeDefinition["max"] = sol::property(&WidgetScrollBar::getMax, &WidgetScrollBar::setMax);
 			usertypeDefinition["step"] = sol::property(&WidgetScrollBar::getStepX, &WidgetScrollBar::setStepX);
 			usertypeDefinition["jump"] = sol::property(&WidgetScrollBar::getJumpX, &WidgetScrollBar::setJumpX);
+			usertypeDefinition["element"] = sol::readonly_property(&WidgetScrollBar::getElement);
 		}
 
 		//
@@ -90,6 +94,7 @@ namespace mwse::lua {
 			usertypeDefinition["positionX"] = sol::property(&WidgetScrollPane::getHorizontalPos, &WidgetScrollPane::setHorizontalPos);
 			usertypeDefinition["positionY"] = sol::property(&WidgetScrollPane::getVerticalPos, &WidgetScrollPane::setVerticalPos);
 			usertypeDefinition["scrollbarVisible"] = sol::property(&WidgetScrollPane::getScrollbarVisible, &WidgetScrollPane::setScrollbarVisible);
+			usertypeDefinition["element"] = sol::readonly_property(&WidgetScrollPane::getElement);
 
 			// Quick access to the pane contents.
 			usertypeDefinition["contentPane"] = sol::readonly_property(&WidgetScrollPane::getContentPane);
@@ -106,6 +111,7 @@ namespace mwse::lua {
 
 			usertypeDefinition["lengthLimit"] = sol::property(&WidgetTextInput::getLengthLimit_lua, &WidgetTextInput::setLengthLimit_lua);
 			usertypeDefinition["eraseOnFirstKey"] = sol::property(&WidgetTextInput::getEraseOnFirstKey, &WidgetTextInput::setEraseOnFirstKey);
+			usertypeDefinition["element"] = sol::readonly_property(&WidgetTextInput::getElement);
 		}
 
 		//
@@ -125,6 +131,7 @@ namespace mwse::lua {
 			usertypeDefinition["idleActive"] = sol::property(&WidgetTextSelect::getColourActive_lua, &WidgetTextSelect::setColourActive_lua);
 			usertypeDefinition["overActive"] = sol::property(&WidgetTextSelect::getColourActiveOver_lua, &WidgetTextSelect::setColourActiveOver_lua);
 			usertypeDefinition["pressedActive"] = sol::property(&WidgetTextSelect::getColourActivePressed_lua, &WidgetTextSelect::setColourActivePressed_lua);
+			usertypeDefinition["element"] = sol::readonly_property(&WidgetTextSelect::getElement);
 		}
 	}
 }

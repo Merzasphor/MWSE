@@ -15,6 +15,16 @@ The current value. The position of the slider handle is determined by dividing `
 
 ***
 
+### `element`
+
+Access back to the element this widget interface is for.
+
+**Returns**:
+
+* `result` ([tes3uiElement](../../types/tes3uiElement))
+
+***
+
 ### `jump`
 
 The change in value when clicking into the empty areas next to the slider handle.
