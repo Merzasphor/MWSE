@@ -1041,8 +1041,8 @@ namespace TES3 {
 			return getProperty(TES3::UI::PropertyType::Property, getPropertyFromObject(key)).propertyValue;
 		}
 
-		void Element::setPropertyProperty_lua(sol::object key, Property value) {
-			setProperty(getPropertyFromObject(key), value);
+		void Element::setPropertyProperty_lua(sol::object key, sol::object value) {
+			setProperty(getPropertyFromObject(key), getPropertyFromObject(value));
 		}
 
 		LuaData* Element::getLuaDataContainer() const {

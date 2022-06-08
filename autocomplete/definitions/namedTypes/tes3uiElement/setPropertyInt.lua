@@ -1,8 +1,8 @@
 return {
 	type = "method",
-	description = [[Sets a property value with `prop` as the property key. Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties.]],
+	description = [[Properties are extra variables attached to an element. Morrowind uses these to bind variables to the UI, and they can be useful for element class-specific properties. This function sets a property to an integer value.]],
 	arguments = {
-		{ name = "propName", type = "string", description = "The property name." },
+		{ name = "property", type = "number|string", description = "The property to set." },
 		{ name = "value", type = "number", description = "The value to set." },
 	},
 }

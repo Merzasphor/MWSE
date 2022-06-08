@@ -1,18 +1,11 @@
 return {
 	type = "method",
-	description = [[Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. Returns `nil` if the property key did not have data, or if it could not guess the type of the property value.
-	
-	For `getPropertyObject`, an expected return value not derived from `tes3baseObject` requires the usertype to be provided as well. Currently accepted usertypes are:
-	`tes3itemData`
-	`tes3itemStack`
-	`tes3gameFile`
-	`tes3inventoryTile`
-	`tes3uiElement`
-	
-	This is required because there is no identifying type information stored with the pointer. If the usertype is incorrect, there are no safety checks keeping the game from crashing.]],
+	description = [[Properties are extra variables attached to an element. Morrowind uses these to bind variables to the UI, and they can be useful for element class-specific properties. This function gets a property as an object value, defaulting to `nil` if the property was not set. This function can be dangerous to use, and can lead to crashes if not properly understood.]],
 	arguments = {
-		{ name = "propName", type = "string", description = "The property name." },
-		{ name = "expectedUsertype", type = "string", description = "A Lua usertype name, if expecting a non-standard object type.", optional = true },
+		{ name = "property", type = "number|string", description = "The property to get." },
+		{ name = "typeCast", default = "tes3baseObject", type = "string|nil", description = "The casting of the property to get." },
 	},
-	valuetype = "tes3baseObject|tes3mobileObject|any",
+	returns = {
+		{ name = "value", type = "number", description = "The value of the property, defaulting to `nil` if the property was not set." },
+	},
 }

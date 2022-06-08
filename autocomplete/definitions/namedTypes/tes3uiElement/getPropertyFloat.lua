@@ -1,8 +1,10 @@
 return {
 	type = "method",
-	description = [[Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. Returns 0 if the property key did not have data.]],
+	description = [[Properties are extra variables attached to an element. Morrowind uses these to bind variables to the UI, and they can be useful for element class-specific properties. This function gets a property as a floating-point value, defaulting to `0` if the property was not set.]],
 	arguments = {
-		{ name = "propName", type = "string", description = "The property name." },
+		{ name = "property", type = "number|string", description = "The property to get." },
 	},
-	valuetype = "number",
+	returns = {
+		{ name = "value", type = "number", description = "The value of the property, defaulting to `0` if the property was not set." },
+	},
 }

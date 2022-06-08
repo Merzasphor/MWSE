@@ -298,7 +298,7 @@ namespace TES3 {
 			sol::object getPropertyObject_lua(sol::this_state ts, sol::object key, sol::optional<std::string> typeCast) const;
 			void setPropertyObject_lua(sol::object key, sol::object value);
 			Property getPropertyProperty_lua(sol::object key) const;
-			void setPropertyProperty_lua(sol::object key, Property value);
+			void setPropertyProperty_lua(sol::object key, sol::object value);
 
 			LuaData* getLuaDataContainer() const;
 			sol::object getLuaData(const std::string_view& key) const;

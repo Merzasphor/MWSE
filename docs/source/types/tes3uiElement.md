@@ -1038,119 +1038,110 @@ local result = myObject:getLuaData(key)
 
 ### `getPropertyBool`
 
-Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. Returns `false` if the property key did not have data.
+Properties are extra variables attached to an element. Morrowind uses these to bind variables to the UI, and they can be useful for element class-specific properties. This function gets a property as a boolean value, defaulting to false if the property was not set.
 
 ```lua
-local result = myObject:getPropertyBool(propName)
+local value = myObject:getPropertyBool(property)
 ```
 
 **Parameters**:
 
-* `propName` (string): The property name.
+* `property` (number, string): The property to get.
 
 **Returns**:
 
-* `result` (boolean)
+* `value` (boolean): The value of the property, defaulting to false if the property was not set.
 
 ***
 
 ### `getPropertyCallback`
 
-Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. The callback is an address inside Morrowind.exe that will be called when the appropriate callback is invoked.
+Properties are extra variables attached to an element. Morrowind uses these to bind variables to the UI, and they can be useful for element class-specific properties. This function gets a property as a number value, defaulting to `0` if the property was not set. This function can be dangerous to use, and can lead to crashes if not properly understood.
 
 ```lua
-local result = myObject:getPropertyCallback(propName)
+local value = myObject:getPropertyCallback(property)
 ```
 
 **Parameters**:
 
-* `propName` (string): The property name.
+* `property` (number, string): The property to get.
 
 **Returns**:
 
-* `result` (number)
+* `value` (number): The value of the property, defaulting to `0` if the property was not set.
 
 ***
 
 ### `getPropertyFloat`
 
-Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. Returns 0 if the property key did not have data.
+Properties are extra variables attached to an element. Morrowind uses these to bind variables to the UI, and they can be useful for element class-specific properties. This function gets a property as a floating-point value, defaulting to `0` if the property was not set.
 
 ```lua
-local result = myObject:getPropertyFloat(propName)
+local value = myObject:getPropertyFloat(property)
 ```
 
 **Parameters**:
 
-* `propName` (string): The property name.
+* `property` (number, string): The property to get.
 
 **Returns**:
 
-* `result` (number)
+* `value` (number): The value of the property, defaulting to `0` if the property was not set.
 
 ***
 
 ### `getPropertyInt`
 
-Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. Returns 0 if the property key did not have data.
+Properties are extra variables attached to an element. Morrowind uses these to bind variables to the UI, and they can be useful for element class-specific properties. This function gets a property as an integer value, defaulting to `0` if the property was not set.
 
 ```lua
-local result = myObject:getPropertyInt(propName)
+local value = myObject:getPropertyInt(property)
 ```
 
 **Parameters**:
 
-* `propName` (string): The property name.
+* `property` (number, string): The property to get.
 
 **Returns**:
 
-* `result` (number)
+* `value` (number): The value of the property, defaulting to `0` if the property was not set.
 
 ***
 
 ### `getPropertyObject`
 
-Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. Returns `nil` if the property key did not have data, or if it could not guess the type of the property value.
-	
-	For `getPropertyObject`, an expected return value not derived from `tes3baseObject` requires the usertype to be provided as well. Currently accepted usertypes are:
-	`tes3itemData`
-	`tes3itemStack`
-	`tes3gameFile`
-	`tes3inventoryTile`
-	`tes3uiElement`
-	
-	This is required because there is no identifying type information stored with the pointer. If the usertype is incorrect, there are no safety checks keeping the game from crashing.
+Properties are extra variables attached to an element. Morrowind uses these to bind variables to the UI, and they can be useful for element class-specific properties. This function gets a property as an object value, defaulting to `nil` if the property was not set. This function can be dangerous to use, and can lead to crashes if not properly understood.
 
 ```lua
-local result = myObject:getPropertyObject(propName, expectedUsertype)
+local value = myObject:getPropertyObject(property, typeCast)
 ```
 
 **Parameters**:
 
-* `propName` (string): The property name.
-* `expectedUsertype` (string): *Optional*. A Lua usertype name, if expecting a non-standard object type.
+* `property` (number, string): The property to get.
+* `typeCast` (string, nil): *Default*: `tes3baseObject`. The casting of the property to get.
 
 **Returns**:
 
-* `result` ([tes3baseObject](../../types/tes3baseObject), [tes3mobileObject](../../types/tes3mobileObject), any)
+* `value` (number): The value of the property, defaulting to `nil` if the property was not set.
 
 ***
 
 ### `getPropertyProperty`
 
-Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. This function gets a property whose value is, itself, a property.
+Properties are extra variables attached to an element. Morrowind uses these to bind variables to the UI, and they can be useful for element class-specific properties. This function gets a property whose value is, itself, a property, defaulting to `0` if the property was not set.
 
 ```lua
-local result = myObject:getPropertyProperty(propName)
+local value = myObject:getPropertyProperty(property)
 ```
 
 **Parameters**:
 
-* `propName` (string): The property name.
+* `property` (number, string): The property to get.
 
 **Returns**:
 
-* `result` (number)
+* `value` (number): The value of the property, defaulting to `0` if the property was not set.
 
 ***
 
@@ -1388,60 +1379,60 @@ myObject:setLuaData(key, value)
 
 ### `setPropertyBool`
 
-Sets a property value with `prop` as the property key. Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties.
+Properties are extra variables attached to an element. Morrowind uses these to bind variables to the UI, and they can be useful for element class-specific properties. This function sets a property to a boolean value.
 
 ```lua
-myObject:setPropertyBool(propName, value)
+myObject:setPropertyBool(property, value)
 ```
 
 **Parameters**:
 
-* `propName` (string): The property name.
+* `property` (number, string): The property to set.
 * `value` (boolean): The value to set.
 
 ***
 
 ### `setPropertyCallback`
 
-Properties are named variables attached to an element. Sets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. The callback is an address inside Morrowind.exe that will be called when the appropriate callback is invoked.
+Properties are extra variables attached to an element. Morrowind uses these to bind variables to the UI, and they can be useful for element class-specific properties. This function sets a property to a callback value, represented as a number. This function can be dangerous to use, and can lead to crashes if not properly understood.
 
 ```lua
-myObject:setPropertyCallback(propName, value)
+myObject:setPropertyCallback(property, value)
 ```
 
 **Parameters**:
 
-* `propName` (string): The property name.
+* `property` (number, string): The property to set.
 * `value` (number): The value to set.
 
 ***
 
 ### `setPropertyFloat`
 
-Sets a property value with `prop` as the property key. Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties.
+Properties are extra variables attached to an element. Morrowind uses these to bind variables to the UI, and they can be useful for element class-specific properties. This function sets a property to a floating-point value.
 
 ```lua
-myObject:setPropertyFloat(propName, value)
+myObject:setPropertyFloat(property, value)
 ```
 
 **Parameters**:
 
-* `propName` (string): The property name.
+* `property` (number, string): The property to set.
 * `value` (number): The value to set.
 
 ***
 
 ### `setPropertyInt`
 
-Sets a property value with `prop` as the property key. Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties.
+Properties are extra variables attached to an element. Morrowind uses these to bind variables to the UI, and they can be useful for element class-specific properties. This function sets a property to an integer value.
 
 ```lua
-myObject:setPropertyInt(propName, value)
+myObject:setPropertyInt(property, value)
 ```
 
 **Parameters**:
 
-* `propName` (string): The property name.
+* `property` (number, string): The property to set.
 * `value` (number): The value to set.
 
 ***
@@ -1451,28 +1442,28 @@ myObject:setPropertyInt(propName, value)
 Sets a property value with `prop` as the property key. Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties.
 
 ```lua
-myObject:setPropertyObject(propName, value)
+myObject:setPropertyObject(property, value)
 ```
 
 **Parameters**:
 
-* `propName` (string): The property name.
+* `property` (number, string): The property to get.
 * `value` (object): The value to set.
 
 ***
 
 ### `setPropertyProperty`
 
-Properties are named variables attached to an element. Sets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. This function sets a property whose value is, itself, a property.
+Properties are named variables attached to an element. Sets a property value with `property` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. This function sets a property whose value is, itself, a property.
 
 ```lua
-myObject:setPropertyProperty(propName, value)
+myObject:setPropertyProperty(property, value)
 ```
 
 **Parameters**:
 
-* `propName` (string): The property name.
-* `value` (number): The value to set.
+* `property` (number, string): The property to get.
+* `value` (number, string): The value to set.
 
 ***
 
