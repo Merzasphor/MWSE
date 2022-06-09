@@ -13,6 +13,10 @@ local configMods = {}
 --- @type table?
 local currentModConfig = nil
 
+--- The previously selected element.
+--- @type tes3uiElement?
+local previousModConfigSelector = nil
+
 --- Reusable access to UI elements.
 --- @type tes3uiElement
 local modConfigContainer = nil
@@ -37,6 +41,12 @@ local function onClickModName(e)
 		error(string.format("No mod config could be found for key '%s'.", e.source.text))
 		return
 	end
+
+	if (previousModConfigSelector) then
+		previousModConfigSelector.widget.state = tes3.uiState.normal
+	end
+	e.source.widget.state = tes3.uiState.active
+	previousModConfigSelector = e.source
 
 	-- Destroy and recreate the parent container.
 	modConfigContainer:destroyChildren()
@@ -123,6 +133,8 @@ local function onSearchUpdated(e)
 	for _, child in ipairs(modListContents.children) do
 		child.visible = filterModByName(child.text, lowerSearchText)
 	end
+	mcm:updateLayout()
+	modList.widget:contentsChanged()
 end
 
 ---@param e tes3uiEventData
@@ -133,6 +145,8 @@ local function onSearchCleared(e)
 	for _, child in ipairs(modListContents.children) do
 		child.visible = true
 	end
+	mcm:updateLayout()
+	modList.widget:contentsChanged()
 end
 
 -- Callback for when the mod config button has been clicked.
@@ -199,6 +213,7 @@ local function onClickModConfigButton()
 		local modList = leftBlock:createVerticalScrollPane({ id = "ModList" })
 		modList.widthProportional = 1.0
 		modList.heightProportional = 1.0
+		modList:setPropertyBool("PartScrollPane_hide_if_unneeded", true)
 
 		-- Get a sorted list of mods.
 		local sortedConfigModNames = {}
@@ -250,8 +265,10 @@ local function onClickModConfigButton()
 		local closeButton = bottomBlock:createButton({ id = "MWSE:ModConfigMenu_Close", text = tes3.findGMST(tes3.gmst.sClose).value })
 		closeButton:register("mouseClick", onClickCloseButton)
 		event.register("keyDown", onClickCloseButton, { filter = tes3.scanCode.escape })
+
 		-- Cause the menu to refresh itself.
 		menu:updateLayout()
+		modList.widget:contentsChanged()
 	else
 		menu.visible = true
 	end
