@@ -7,17 +7,17 @@ local common = require("mwse.ui.common")
 ---@param e tes3uiEventData
 local function preTextInputKeyPress(e)
 	local element = e.source
-	local inputController = tes3.worldController.inputController
+	local keyPressed = common.eventCallbackHelper.getKeyPressed(e)
 	local characterEntered = common.eventCallbackHelper.getCharacterPressed(e)
 
 	-- Prevent tabs from inserting themselves for when alt-tabbing.
-	if (inputController:isKeyDown(tes3.scanCode.tab)) then
+	if (keyPressed == 9) then
 		return false
 	end
 
 	-- Are we in the placeholder state? Prevent garbage inputs.
-	local placeholderText = element:getLuaData("placeholderText") --- @type string?
-	if (element.text == placeholderText and characterEntered == nil) then
+	local placeholding = element:getLuaData("placeholding") --- @type boolean
+	if (placeholding and characterEntered == nil) then
 		return false
 	end
 
@@ -39,6 +39,7 @@ local function postTextInputKeyPress(e)
 	if (placeholderText and element.text == "") then
 		element.text = placeholderText
 		element.color = tes3ui.getPalette("disabled_color")
+		element:setLuaData("placeholding", true)
 
 		-- Raise textCleared event.
 		element:triggerEvent("textCleared")
@@ -52,9 +53,10 @@ local function postTextInputKeyPress(e)
 
 	-- Ungray the text.
 	element.color = tes3ui.getPalette("normal_color")
+	element:setLuaData("placeholding", false)
 
 	-- Raise textUpdated event.
-	local previousText = element:getLuaData("placeholderText") --- @type string?
+	local previousText = element:getLuaData("previousText") --- @type string?
 	if (element.text ~= previousText) then
 		element:triggerEvent("textUpdated")
 	end
@@ -94,6 +96,7 @@ function tes3uiElement:createTextInput(params)
 		-- Fix color if we are using the placeholder text.
 		if (params.text == nil or params.text == placeholderText) then
 			element.color = tes3ui.getPalette("disabled_color")
+			element:setLuaData("placeholding", true)
 		end
 
 		asWidget.eraseOnFirstKey = true
