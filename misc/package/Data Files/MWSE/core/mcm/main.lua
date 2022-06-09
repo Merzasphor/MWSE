@@ -81,8 +81,6 @@ local function onClickCloseButton(e)
 	-- Destroy the mod config menu.
 	local modConfigMenu = tes3ui.findMenu("MWSE:ModConfigMenu")
 	if (modConfigMenu) then
-		currentModConfig = nil
-		modConfigContainer = nil
 		modConfigMenu:destroy()
 	end
 
@@ -149,6 +147,12 @@ local function onSearchCleared(e)
 	modList.widget:contentsChanged()
 end
 
+local function cleanupMCM(e)
+	currentModConfig = nil
+	modConfigContainer = nil
+	previousModConfigSelector = nil
+end
+
 -- Callback for when the mod config button has been clicked.
 -- Here, we'll create the GUI and set up everything.
 local function onClickModConfigButton()
@@ -169,6 +173,7 @@ local function onClickModConfigButton()
 		menu.height = 800
 		menu.positionX = menu.width / -2
 		menu.positionY = menu.height / 2
+		menu:registerAfter("destroy", cleanupMCM)
 
 		-- Register and block unfocus event, to prevent players
 		-- messing up state by opening their inventory.
