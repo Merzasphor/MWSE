@@ -30,7 +30,7 @@ namespace mge::lua {
 		static void setThirdPersonOffset(sol::stack_object param);
 		static bool getZoomEnabled();
 		static void setZoomEnabled(bool value);
-		static bool getZoom();
+		static float getZoom();
 		static void setZoom(float value);
 		static void zoomIn(sol::optional<sol::table> params);
 		static void zoomOut(sol::optional<sol::table> params);

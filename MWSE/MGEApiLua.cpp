@@ -85,7 +85,7 @@ namespace mge::lua {
 		api->zoomSetEnabled(value);
 	}
 
-	bool CameraConfig::getZoom() {
+	float CameraConfig::getZoom() {
 		return api->zoomGetZoom();
 	}
 
