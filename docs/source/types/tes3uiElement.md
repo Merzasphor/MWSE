@@ -606,6 +606,29 @@ local result = myObject:createButton({ id = ..., text = ... })
 
 ***
 
+### `createCycleButton`
+
+Creates a clickable button, whose text changes linerally through options as it is clicked. Register the `valueChanged` event for when the option is cycled or changed via script.
+
+Button specific properties can be accessed through the `widget` property. The widget type for buttons is [`tes3uiCycleButton`](https://mwse.github.io/MWSE/types/tes3uiCycleButton/).
+
+```lua
+local result = myObject:createCycleButton({ id = ..., options = ..., index = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `id` (string, number): *Optional*. An identifier to help find this element later.
+	* `options` ([tes3uiCycleButtonOption](../../types/tes3uiCycleButtonOption)[]): An array of options for the button to cycle through. At minimum the option must have a `text` property defined, to show on the button. If a `value` is provided, it can be accessed through the `.widget`'s `.value` property.
+	* `index` (number): *Optional*. The index selected by default.
+
+**Returns**:
+
+* `result` ([tes3uiElement](../../types/tes3uiElement))
+
+***
+
 ### `createDivider`
 
 Creates a textured horizontal divider line, as used in the magic and stat menus. Scales automatically to the container width.

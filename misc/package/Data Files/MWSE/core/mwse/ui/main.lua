@@ -29,5 +29,6 @@ function tes3ui.defineLuaWidget(params)
 end
 
 -- Setup our custom widgets.
+dofile("mwse.ui.tes3uiElement.createCycleButton")
 dofile("mwse.ui.tes3uiElement.createHyperlink")
 dofile("mwse.ui.tes3uiElement.createTextInput")

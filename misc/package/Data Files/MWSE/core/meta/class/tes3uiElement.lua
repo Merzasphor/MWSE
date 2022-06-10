@@ -66,7 +66,7 @@
 --- @field texture niSourceTexture The underlying texture for the element. This assumes that the element is of an element type. Setting this value will change the element to an image type.
 --- @field type string *Read-only*. The type of content this `tes3uiElement` represents. This is an expanded set of the options available from the `contentType` property. Maps to values in [`tes3.uiElementType`](https://mwse.github.io/MWSE/references/tes3uiElement-types/).
 --- @field visible boolean Controls if the element is visible.
---- @field widget tes3uiButton|tes3uiFillBar|tes3uiHyperlink|tes3uiParagraphInput|tes3uiScrollPane|tes3uiSlider|tes3uiTextInput|tes3uiTextSelect|nil Access to element specific properties. This will be `nil` if there are no element specific properties. See the return types and the create* functions for more details.
+--- @field widget tes3uiButton|tes3uiCycleButton|tes3uiFillBar|tes3uiHyperlink|tes3uiParagraphInput|tes3uiScrollPane|tes3uiSlider|tes3uiTextInput|tes3uiTextSelect|nil Access to element specific properties. This will be `nil` if there are no element specific properties. See the return types and the create* functions for more details.
 --- @field width number Element dimensions in pixels. Integer number.
 --- @field widthProportional number Sets element dimensions using a proportional sizer. The sizer starts with the parent dimension in the flow direction, subtracts any fixed dimension children leaving the proportional sizer space. Each proportionally sized element then gets an equal division of the space, multiplied by this member. Values above 1.0 are permissible.
 --- 
@@ -109,6 +109,25 @@ function tes3uiElement:createButton(params) end
 --- @class tes3uiElement.createButton.params
 --- @field id string|number|nil *Optional*. An identifier to help find this element later.
 --- @field text string? *Optional*. The text to add to the button. It will highlight on mouseover like a text select widget.
+
+--- Creates a clickable button, whose text changes linerally through options as it is clicked. Register the `valueChanged` event for when the option is cycled or changed via script.
+--- 
+--- Button specific properties can be accessed through the `widget` property. The widget type for buttons is [`tes3uiCycleButton`](https://mwse.github.io/MWSE/types/tes3uiCycleButton/).
+--- @param params tes3uiElement.createCycleButton.params This table accepts the following values:
+--- 
+--- `id`: string|number|nil — *Optional*. An identifier to help find this element later.
+--- 
+--- `options`: tes3uiCycleButtonOption[] — An array of options for the button to cycle through. At minimum the option must have a `text` property defined, to show on the button. If a `value` is provided, it can be accessed through the `.widget`'s `.value` property.
+--- 
+--- `index`: number? — *Optional*. The index selected by default.
+--- @return tes3uiElement result No description yet available.
+function tes3uiElement:createCycleButton(params) end
+
+---Table parameter definitions for `tes3uiElement.createCycleButton`.
+--- @class tes3uiElement.createCycleButton.params
+--- @field id string|number|nil *Optional*. An identifier to help find this element later.
+--- @field options tes3uiCycleButtonOption[] An array of options for the button to cycle through. At minimum the option must have a `text` property defined, to show on the button. If a `value` is provided, it can be accessed through the `.widget`'s `.value` property.
+--- @field index number? *Optional*. The index selected by default.
 
 --- Creates a textured horizontal divider line, as used in the magic and stat menus. Scales automatically to the container width.
 --- @param params tes3uiElement.createDivider.params? This table accepts the following values:
