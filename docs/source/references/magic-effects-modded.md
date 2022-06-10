@@ -3,9 +3,9 @@ hide:
   - toc
 ---
 
-# Magic Effects (Modded)
+# Magic Effects, Modded
 
-These effects build off of the [standard magic effects](../magic-effects). If you would like to add your effect to the list, consider [editing this page online](https://github.com/MWSE/MWSE/edit/master/docs/source/references/magic-effects-modded.md), and submitting your change as a pull request. Alternatively, create [an issue](https://github.com/MWSE/MWSE/issues/new?assignees=&labels=claim-effect-id&claim-effect-id.md&title=) to list the information that needs to be added.
+These effects build off of the [standard magic effects](../magic-effects). If you would like to add your effect to the list, consider [editing this page online](https://github.com/MWSE/MWSE/edit/master/docs/source/references/magic-effects-modded.md), and submitting your change as a pull request. Alternatively, create [an issue](https://github.com/MWSE/MWSE/issues/new?assignees=&labels=custom-effect-id&template=claim-effect-id.md&title=) to list the information that needs to be added.
 
 !!! warning
 	When registering a new effect ID, both the index and the value must be unique! Two mods cannot use the same magic effect id of `420`, nor can they both have the index of `tes3.effect.summonCreeper`.

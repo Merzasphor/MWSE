@@ -1,6 +1,6 @@
 ---
 name: Claim Magic Effect ID
-about: Claim a magic effect id to allow other modders to know
+about: Claim a magic effect id, to help prevent collisions with other mods.
 title: ''
 labels: custom-effect-id
 assignees: ''
