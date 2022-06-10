@@ -9,7 +9,7 @@ hide:
 	These values are available in Lua by their index in the `tes3.effect` table. For example, `tes3.effect.fortifySkill` has a value of `83`.
 
 !!! note
-	Custom effects can be added, expanding this list. See the [Magicka Expanded](https://www.nexusmods.com/morrowind/mods/47111) article on [Claiming a Spell Effect ID](https://www.nexusmods.com/morrowind/articles/137) for more information.
+	Custom effects can be added, expanding the `tes3.effect` table. See the [Magic Effects, Modded](../magic-effects-modded) reference page for more information.
 
 Index                    | Value
 ------------------------ | -----
