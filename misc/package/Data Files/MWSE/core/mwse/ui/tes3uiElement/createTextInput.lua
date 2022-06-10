@@ -2,13 +2,13 @@
 -- Provides lua-written extensions to the UI library.
 --
 
-local common = require("mwse.ui.common")
+local common = require("mwse.common")
 
 ---@param e tes3uiEventData
 local function preTextInputKeyPress(e)
 	local element = e.source
-	local keyPressed = common.eventCallbackHelper.getKeyPressed(e)
-	local characterEntered = common.eventCallbackHelper.getCharacterPressed(e)
+	local keyPressed = common.ui.eventCallbackHelper.getKeyPressed(e)
+	local characterEntered = common.ui.eventCallbackHelper.getCharacterPressed(e)
 
 	-- Prevent tabs from inserting themselves for when alt-tabbing.
 	if (keyPressed == 9) then
@@ -109,7 +109,7 @@ function tes3uiElement:createTextInput(params)
 	end
 
 	-- Handle focus.
-	element:registerAfter("mouseClick", common.eventCallback.acquireTextInput)
+	element:registerAfter("mouseClick", common.ui.eventCallback.acquireTextInput)
 	if (params.autoFocus) then
 		tes3ui.acquireTextInput(element)
 	end

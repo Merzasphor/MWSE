@@ -1,7 +1,7 @@
-local hyperlinkWidgetMeta = {}
-hyperlinkWidgetMeta.__index = hyperlinkWidgetMeta
+local metatable = {}
+metatable.__index = metatable
 
-function hyperlinkWidgetMeta:openURL()
+function metatable:openURL()
 	-- Create a message box to confirm.
 	if (self.confirm) then
 		tes3.messageBox({
@@ -57,5 +57,5 @@ end
 
 tes3ui.defineLuaWidget({
 	name = "hyperlink",
-	metatable = hyperlinkWidgetMeta,
+	metatable = metatable,
 })

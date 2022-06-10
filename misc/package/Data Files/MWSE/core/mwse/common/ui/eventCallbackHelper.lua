@@ -1,13 +1,4 @@
-local common = {}
-
-local eventCallback = {}
 local eventCallbackHelper = {}
-
---- The triggering element will be passed to `tes3ui.acquireTextInput`.
---- @param e tes3uiEventData
-function eventCallback.acquireTextInput(e)
-	tes3ui.acquireTextInput(e.source)
-end
 
 --- Takes in event data from a keyPress event and strips the last bit from it to return an ASCII code.
 --- @param e tes3uiEventData
@@ -26,6 +17,4 @@ function eventCallbackHelper.getCharacterPressed(e)
 	return string.char(eventCallbackHelper.getKeyPressed(e))
 end
 
-common.eventCallback = eventCallback
-common.eventCallbackHelper = eventCallbackHelper
-return common
+return eventCallbackHelper
