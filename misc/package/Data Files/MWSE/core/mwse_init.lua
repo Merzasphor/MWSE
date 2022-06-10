@@ -447,6 +447,15 @@ function table.getset(t, key, default)
 	return default
 end
 
+function table.wrapindex(t, index)
+	local size = #t
+	local newIndex = index % size
+	if (newIndex == 0) then
+		newIndex = size
+	end
+	return newIndex
+end
+
 
 -------------------------------------------------
 -- Extend base table: Add binary search/insert
