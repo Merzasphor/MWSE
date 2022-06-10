@@ -119,3 +119,26 @@ local lerpedcolor = myObject:lerp(tocolor, transition)
 
 ***
 
+## Functions
+
+### `new`
+
+Creates a new niColorA.
+
+```lua
+local color = niColorA.new(r, g, b, a)
+```
+
+**Parameters**:
+
+* `r` (number): The red value for the color.
+* `g` (number): The green value for the color.
+* `b` (number): The blue value for the color.
+* `a` (number): The alpha value for the color.
+
+**Returns**:
+
+* `color` ([niColorA](../../types/niColorA))
+
+***
+

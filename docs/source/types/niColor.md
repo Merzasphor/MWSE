@@ -123,3 +123,25 @@ local result = myObject:toVector3()
 
 ***
 
+## Functions
+
+### `new`
+
+Creates a new niColor.
+
+```lua
+local color = niColor.new(r, g, b)
+```
+
+**Parameters**:
+
+* `r` (number): The red value for the color.
+* `g` (number): The green value for the color.
+* `b` (number): The blue value for the color.
+
+**Returns**:
+
+* `color` ([niColor](../../types/niColor))
+
+***
+
