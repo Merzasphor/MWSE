@@ -28,6 +28,9 @@ function tes3ui.defineLuaWidget(params)
 	luaWidgetTypes[params.name] = params.metatable
 end
 
+-- Setup API extensions widgets.
+tes3ui.showNotifyMenu = require("mwse.ui.api.showNotifyMenu")
+
 -- Setup our custom widgets.
 dofile("mwse.ui.tes3uiElement.createCycleButton")
 dofile("mwse.ui.tes3uiElement.createHyperlink")
