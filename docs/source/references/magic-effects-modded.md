@@ -221,3 +221,4 @@ These effects build off of the [standard magic effects](../magic-effects). If yo
 | ss20SoulManipulation         | 8113      | [Pimp My Shrine - The Daedric Legend of Vernaccus](https://www.nexusmods.com/morrowind/mods/49173) |
 | ss20ManipulateSouls          | 8114      | [Pimp My Shrine - The Daedric Legend of Vernaccus](https://www.nexusmods.com/morrowind/mods/49173) |
 | selfRepair                   | 8500      | [DRIP - Dynamic Randomised Item Properties](https://www.nexusmods.com/morrowind/mods/51242)        |
+| npcSoulTrap                  | 10000     | [Seph's NPC Soul Trapping](https://www.nexusmods.com/morrowind/mods/50744)                         |
