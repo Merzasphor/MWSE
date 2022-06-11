@@ -215,6 +215,16 @@ The weather's maximum particles.
 
 ***
 
+### `name`
+
+*Read-only*. The weather's user-friendly name, hardcoded in English to match the INI settings name. These values can be `"Ashstorm"`, `"Blight"`, `"Blizzard"`, `"Clear"`, `"Cloudy"`, `"Foggy"`, `"Overcast"`, `"Rain"`, `"Snow"`, or `"Thunderstorm"` as appropriate.
+
+**Returns**:
+
+* `result` (string)
+
+***
+
 ### `particleEntranceSpeed`
 
 The weather's particle entrance speed.

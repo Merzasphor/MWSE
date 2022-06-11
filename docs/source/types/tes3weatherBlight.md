@@ -215,6 +215,16 @@ The weather's land fog night depth value.
 
 ***
 
+### `name`
+
+*Read-only*. The weather's user-friendly name, hardcoded in English to match the INI settings name. These values can be `"Ashstorm"`, `"Blight"`, `"Blizzard"`, `"Clear"`, `"Cloudy"`, `"Foggy"`, `"Overcast"`, `"Rain"`, `"Snow"`, or `"Thunderstorm"` as appropriate.
+
+**Returns**:
+
+* `result` (string)
+
+***
+
 ### `skyDayColor`
 
 *Read-only*. The weather's sky day color. The values can range from 0 to 1.

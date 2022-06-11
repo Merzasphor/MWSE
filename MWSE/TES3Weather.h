@@ -68,6 +68,8 @@ namespace TES3 {
 
 		std::string toJson() const;
 
+		const char* getName() const;
+
 		const char* getCloudTexturePath() const;
 		bool setCloudTexturePath(const char* path);
 		const char* getAmbientLoopSoundID() const;

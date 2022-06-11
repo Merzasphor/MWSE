@@ -24,6 +24,21 @@ namespace TES3 {
 		return std::move(ss.str());
 	}
 
+	const char* Weather::getName() const {
+		switch (index) {
+		case WeatherType::Ash: return "Ashstorm";
+		case WeatherType::Blight: return "Blight";
+		case WeatherType::Blizzard: return "Blizzard";
+		case WeatherType::Clear: return "Clear";
+		case WeatherType::Cloudy: return "Cloudy";
+		case WeatherType::Foggy: return "Foggy";
+		case WeatherType::Overcast: return "Overcast";
+		case WeatherType::Rain: return "Rain";
+		case WeatherType::Snow: return "Snow";
+		case WeatherType::Thunder: return "Thunderstorm";
+		}
+	}
+
 	const char* Weather::getCloudTexturePath() const {
 		return texturePathCloud;
 	}
