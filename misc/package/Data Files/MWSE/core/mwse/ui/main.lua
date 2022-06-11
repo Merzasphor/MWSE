@@ -30,6 +30,7 @@ end
 
 -- Setup API extensions widgets.
 tes3ui.showNotifyMenu = require("mwse.ui.api.showNotifyMenu")
+tes3ui.showMessageMenu = require("mwse.ui.api.showMessageMenu")
 
 -- Setup our custom widgets.
 dofile("mwse.ui.tes3uiElement.createCycleButton")
