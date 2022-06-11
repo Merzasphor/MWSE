@@ -309,6 +309,12 @@ function tes3ui.showInventorySelectMenu(params) end
 --- @return boolean wasShown No description yet available.
 function tes3ui.showJournal() end
 
+--- Creates
+--- @param string string The message to display. If it supports formatting, additional arguments are used.
+--- @vararg any Optional values to feed to formatting found in the first parameter.
+--- @return tes3uiElement menu The notify menu created.
+function tes3ui.showNotifyMenu(string, ...) end
+
 --- Displays the scroll menu with arbitrary text. It needs to follow book text conventions as in the Construction Set. In essence, it uses HTML syntax. Important: every book needs to end with a `<BR>` statement to be displayed properly. See [`bookGetText`](https://mwse.github.io/MWSE/events/bookGetText/#examples) for an example of properly formatted scroll text.
 --- @param text string No description yet available.
 function tes3ui.showScrollMenu(text) end

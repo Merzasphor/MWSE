@@ -660,6 +660,25 @@ local wasShown = tes3ui.showJournal()
 
 ***
 
+### `tes3ui.showNotifyMenu`
+
+Creates
+
+```lua
+local menu = tes3ui.showNotifyMenu(string, formatValues)
+```
+
+**Parameters**:
+
+* `string` (string): The message to display. If it supports formatting, additional arguments are used.
+* `formatValues` (variadic): Optional values to feed to formatting found in the first parameter.
+
+**Returns**:
+
+* `menu` ([tes3uiElement](../../types/tes3uiElement)): The notify menu created.
+
+***
+
 ### `tes3ui.showScrollMenu`
 
 Displays the scroll menu with arbitrary text. It needs to follow book text conventions as in the Construction Set. In essence, it uses HTML syntax. Important: every book needs to end with a `<BR>` statement to be displayed properly. See [`bookGetText`](https://mwse.github.io/MWSE/events/bookGetText/#examples) for an example of properly formatted scroll text.
