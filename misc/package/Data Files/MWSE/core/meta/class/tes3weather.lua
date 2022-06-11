@@ -19,7 +19,7 @@
 --- @field fogSunriseColor tes3vector3 *Read-only*. The weather's fog sunrise color. The values can range from 0 to 1.
 --- @field fogSunsetColor tes3vector3 *Read-only*. The weather's fog sunset color. The values can range from 0 to 1.
 --- @field glareView number The weather's glare view.
---- @field index number *Read-only*. The weather's index ID. Maps to values in the [`tes3.weather`](https://mwse.github.io/MWSE/references/weathers/) table.
+--- @field index number *Read-only*. The weather's index ID. Maps to values in the [`tes3.weather`](https://mwse.github.io/MWSE/references/weather-types/) table.
 --- @field landFogDayDepth number The weather's land fog day depth value.
 --- @field landFogNightDepth number The weather's land fog night depth value.
 --- @field name string *Read-only*. The weather's user-friendly name, hardcoded in English to match the INI settings name. These values can be `"Ashstorm"`, `"Blight"`, `"Blizzard"`, `"Clear"`, `"Cloudy"`, `"Foggy"`, `"Overcast"`, `"Rain"`, `"Snow"`, or `"Thunderstorm"` as appropriate.

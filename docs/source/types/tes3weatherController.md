@@ -546,7 +546,7 @@ The underwater sunset fog value.
 
 ### `weathers`
 
-*Read-only*. Array-style table for the different weather types. Each object in the table is a [tes3weather](https://mwse.github.io/MWSE/types/tes3weather/). The indices in the table map to the values in the [`tes3.weather`](https://mwse.github.io/MWSE/references/weathers/) table.
+*Read-only*. Array-style table for the different weather types. Each object in the table is a [tes3weather](https://mwse.github.io/MWSE/types/tes3weather/). The indices in the table map to the values in the [`tes3.weather`](https://mwse.github.io/MWSE/references/weather-types/) table.
 
 **Returns**:
 
@@ -603,7 +603,7 @@ myObject:switchImmediate(weatherId)
 
 **Parameters**:
 
-* `weatherId` (number): Maps to values in the [`tes3.weather`](https://mwse.github.io/MWSE/references/weathers/) table.
+* `weatherId` (number): Maps to values in the [`tes3.weather`](https://mwse.github.io/MWSE/references/weather-types/) table.
 
 ***
 
@@ -617,7 +617,7 @@ myObject:switchTransition(weatherId)
 
 **Parameters**:
 
-* `weatherId` (number): Maps to values in the [`tes3.weather`](https://mwse.github.io/MWSE/references/weathers/) table.
+* `weatherId` (number): Maps to values in the [`tes3.weather`](https://mwse.github.io/MWSE/references/weather-types/) table.
 
 ***
 

@@ -2,6 +2,6 @@ return {
 	type = "method",
 	description = [[Changes the current weather for the region to the provided weather-type parameter.]],
 	arguments = {
-		{ name = "weatherId", type = "number", description = "Maps to values in the [`tes3.weather`](https://mwse.github.io/MWSE/references/weathers/) table." },
+		{ name = "weatherId", type = "number", description = "Maps to values in the [`tes3.weather`](https://mwse.github.io/MWSE/references/weather-types/) table." },
 	},
 }
