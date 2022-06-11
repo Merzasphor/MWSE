@@ -662,7 +662,7 @@ local wasShown = tes3ui.showJournal()
 
 ### `tes3ui.showNotifyMenu`
 
-Creates
+Creates a new notify menu with a formatted string. A notify menu is a toast-style display that shows at the bottom of the screen. It will expire after an amount of time, determined by the length of the message and the `fMessageTimePerChar` GMST.
 
 ```lua
 local menu = tes3ui.showNotifyMenu(string, formatValues)

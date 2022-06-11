@@ -309,7 +309,7 @@ function tes3ui.showInventorySelectMenu(params) end
 --- @return boolean wasShown No description yet available.
 function tes3ui.showJournal() end
 
---- Creates
+--- Creates a new notify menu with a formatted string. A notify menu is a toast-style display that shows at the bottom of the screen. It will expire after an amount of time, determined by the length of the message and the `fMessageTimePerChar` GMST.
 --- @param string string The message to display. If it supports formatting, additional arguments are used.
 --- @vararg any Optional values to feed to formatting found in the first parameter.
 --- @return tes3uiElement menu The notify menu created.
