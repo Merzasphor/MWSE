@@ -120,6 +120,23 @@ function mge.setShaderFloat(params) end
 --- @field variable string No description yet available.
 --- @field value number No description yet available.
 
+--- Sets a shader long value. Use the named variable interface on the shader handle instead.
+--- @deprecated
+--- @param params mge.setShaderLong.params This table accepts the following values:
+--- 
+--- `name`: string — No description yet available.
+--- 
+--- `variable`: string — No description yet available.
+--- 
+--- `value`: number — No description yet available.
+function mge.setShaderLong(params) end
+
+---Table parameter definitions for `mge.setShaderLong`.
+--- @class mge.setShaderLong.params
+--- @field name string No description yet available.
+--- @field variable string No description yet available.
+--- @field value number No description yet available.
+
 --- Sets the GUI scaling used by MGE XE.
 --- @param scale number No description yet available.
 function mge.setUIScale(scale) end

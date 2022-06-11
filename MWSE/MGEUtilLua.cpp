@@ -218,6 +218,7 @@ namespace mwse::lua {
 		lua_mge["getWeatherScattering"] = &mge::lua::WeatherConfig::getScattering;
 		lua_mge["getZoom"] = &mge::lua::CameraConfig::getZoom;
 		lua_mge["setShaderFloat"] = &mge::lua::LegacyInterface::setShaderFloat;
+		lua_mge["setShaderLong"] = &mge::lua::LegacyInterface::setShaderLong;
 		lua_mge["setWeatherDLFog"] = &mge::lua::LegacyInterface::setWeatherDLFog;
 		lua_mge["setWeatherPPLLight"] = &mge::lua::LegacyInterface::setWeatherPPLLight;
 		lua_mge["setWeatherScattering"] = &mge::lua::WeatherConfig::setScattering;

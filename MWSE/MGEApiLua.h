@@ -101,6 +101,7 @@ namespace mge::lua {
 		static void enableShader(sol::optional<sol::table> params);
 		static void disableShader(sol::optional<sol::table> params);
 		static void setShaderFloat(sol::optional<sol::table> params);
+		static void setShaderLong(sol::optional<sol::table> params);
 
 		static std::tuple<float, float> getWeatherDLFog(int weatherID);
 		static void setWeatherDLFog(int weatherID, float fogDistMult, float fogOffset);
