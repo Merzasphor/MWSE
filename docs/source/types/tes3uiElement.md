@@ -608,7 +608,7 @@ local result = myObject:createButton({ id = ..., text = ... })
 
 ### `createCycleButton`
 
-Creates a clickable button, whose text changes linerally through options as it is clicked. Register the `valueChanged` event for when the option is cycled or changed via script.
+Creates a clickable button, whose text changes linearly through options as it is clicked. Register the `valueChanged` event for when the option is cycled or changed via script.
 
 Button specific properties can be accessed through the `widget` property. The widget type for buttons is [`tes3uiCycleButton`](https://mwse.github.io/MWSE/types/tes3uiCycleButton/).
 
