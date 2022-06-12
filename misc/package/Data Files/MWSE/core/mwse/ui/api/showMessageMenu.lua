@@ -265,7 +265,7 @@ recreateMenu = function(menu)
 	-- Add previous button.
 	local showPreviousNextButtons = #showableButtons > messageData.pageSize
 	if (showPreviousNextButtons) then
-		local prevButton = bottomButtonsBlock:createButton({ text = "<--" })
+		local prevButton = bottomButtonsBlock:createButton({ text = "<" })
 		if (messageData.page == 1) then
 			common.ui.disable(prevButton)
 		else
@@ -284,7 +284,7 @@ recreateMenu = function(menu)
 
 	-- Add next button.
 	if (showPreviousNextButtons) then
-		local nextButton = bottomButtonsBlock:createButton({ text = "-->" })
+		local nextButton = bottomButtonsBlock:createButton({ text = ">" })
 		if (showableButtons[endIndex + 1] == nil) then
 			common.ui.disable(nextButton)
 		else
