@@ -1057,7 +1057,6 @@ function tes3uiElement:copy(params)
 		for _, prop in ipairs(self.properties) do
 			local propDelegate = assert(tes3uiElementCopyPropertyDelegates[prop.type], string.format("No copy function found for element of type %s.", prop.type))
 			propDelegate(newElement, prop)
-			mwse.log("prop '%s' = %s", prop.name, prop.value)
 		end
 		mwse.copyLuaCallbacks(self, newElement)
 	end
