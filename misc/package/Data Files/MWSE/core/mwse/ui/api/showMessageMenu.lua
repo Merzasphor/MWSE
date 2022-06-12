@@ -316,7 +316,7 @@ local function validateButtonParam(button)
 end
 
 ---@param params tes3ui.showMessageMenu.params
-local function showMessageMenu(params)
+function tes3ui.showMessageMenu(params)
 	-- Validate parameters.
 	assert(type(params) == "table", "Invalid parameters passed to function.")
 	assert(type(params.buttons) == "table", "Invalid 'buttons' parameter provided. Must be a table.")
@@ -345,5 +345,3 @@ local function showMessageMenu(params)
 	-- Create our menu.
 	recreateMenu(menu)
 end
-
-return showMessageMenu

@@ -1,4 +1,8 @@
 
+--
+-- Custom widget support.
+--
+
 --- @type table<string, table>
 local luaWidgetTypes = {}
 
@@ -28,11 +32,32 @@ function tes3ui.defineLuaWidget(params)
 	luaWidgetTypes[params.name] = params.metatable
 end
 
--- Setup API extensions widgets.
-tes3ui.showNotifyMenu = require("mwse.ui.api.showNotifyMenu")
-tes3ui.showMessageMenu = require("mwse.ui.api.showMessageMenu")
 
--- Setup our custom widgets.
+--
+-- Simple API extensions.
+--
+
+function tes3ui.log(str, ...)
+	tes3ui.logToConsole(tostring(str):format(...), false)
+end
+
+function tes3ui.showNotifyMenu(str, ...)
+	return tes3.messageBox(tostring(str):format(...))
+end
+
+
+--
+-- Complex API extensions, hosted in separate files.
+--
+
+-- tes3ui extensions.
+dofile("mwse.ui.api.showMessageMenu")
+
+-- tes3uiElement extensions.
+dofile("mwse.ui.tes3uiElement.copy")
 dofile("mwse.ui.tes3uiElement.createCycleButton")
 dofile("mwse.ui.tes3uiElement.createHyperlink")
+dofile("mwse.ui.tes3uiElement.createImageButton")
 dofile("mwse.ui.tes3uiElement.createTextInput")
+dofile("mwse.ui.tes3uiElement.move")
+dofile("mwse.ui.tes3uiElement.sortChildren")
