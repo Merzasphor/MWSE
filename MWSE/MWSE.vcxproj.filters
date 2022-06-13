@@ -1659,6 +1659,9 @@
     <ClInclude Include="MGEApiLua.h">
       <Filter>Header Files\MGE Interface</Filter>
     </ClInclude>
+    <ClInclude Include="LuaDispositionEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -3616,6 +3619,9 @@
     </ClCompile>
     <ClCompile Include="MGEApiLua.cpp">
       <Filter>Source Files\MGE Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaDispositionEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

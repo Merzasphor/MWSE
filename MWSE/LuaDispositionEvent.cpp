@@ -1,0 +1,36 @@
+#include "LuaDispositionEvent.h"
+
+#include "LuaManager.h"
+#include "LuaUtil.h"
+
+#include "TES3NPC.h"
+#include "TES3Reference.h"
+#include "TES3MobileActor.h"
+
+namespace mwse::lua::event {
+	DispositionEvent::DispositionEvent(TES3::NPCInstance* npc, int disposition, bool clamp) :
+		ObjectFilteredEvent("disposition", npc->baseNPC),
+		m_NPC(npc),
+		m_Disposition(disposition),
+		m_Clamp(clamp)
+	{
+
+	}
+
+	sol::table DispositionEvent::createEventTable() {
+		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+		auto& state = stateHandle.state;
+		auto eventData = state.create_table();
+
+		auto mobile = m_NPC->getMobile();
+		eventData["mobile"] = mobile;
+		eventData["reference"] = mobile->reference;
+
+		eventData["disposition"] = m_Disposition;
+		eventData["clamped"] = m_Clamp;
+
+		return eventData;
+	}
+
+	bool DispositionEvent::m_EventEnabled = false;
+}

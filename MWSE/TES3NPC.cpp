@@ -11,6 +11,7 @@
 #include "LuaManager.h"
 
 #include "LuaCalcSoulValueEvent.h"
+#include "LuaDispositionEvent.h"
 #include "LuaEquipmentReevaluatedEvent.h"
 #include "LuaIsGuardEvent.h"
 
@@ -115,7 +116,24 @@ namespace TES3 {
 
 	const auto TES3_NPCInstance_calculateDisposition = reinterpret_cast<int (__thiscall*)(const NPCInstance*, bool)>(0x4DA330);
 	int NPCInstance::getDisposition(bool clamp) {
-		return TES3_NPCInstance_calculateDisposition(this, clamp);
+		// Call the base function without clamping.
+		auto disposition = TES3_NPCInstance_calculateDisposition(this, false);
+
+		// Fire off our event.
+		if (mwse::lua::event::DispositionEvent::getEventEnabled()) {
+			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::table payload = stateHandle.triggerEvent(new mwse::lua::event::DispositionEvent(this, disposition, clamp));
+			if (payload.valid()) {
+				disposition = payload.get_or("disposition", disposition);
+			}
+		}
+
+		// Re-clamp.
+		if (clamp) {
+			disposition = std::clamp(disposition, 0, 100);
+		}
+
+		return disposition;
 	}
 
 	const auto TES3_NPCInstance_reevaluateEquipment = reinterpret_cast<void(__thiscall*)(NPCInstance*)>(0x4D9A20);

@@ -5352,6 +5352,18 @@ namespace mwse::lua {
 		genCallEnforced(0x5B7B49, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind));
 		genCallEnforced(0x745AA8, 0x406F40, *reinterpret_cast<DWORD*>(&TES3_InputController_testKeybind)); // MCP-89: Vanity keyboard lock.
 
+		// Event: Disposition
+		auto TES3_NPCInstance_getDisposition = &TES3::NPCInstance::getDisposition;
+		genCallEnforced(0x4D5D26, 0x4DA330, *reinterpret_cast<DWORD*>(&TES3_NPCInstance_getDisposition));
+		genCallEnforced(0x4D5D3D, 0x4DA330, *reinterpret_cast<DWORD*>(&TES3_NPCInstance_getDisposition));
+		genCallEnforced(0x4D5D58, 0x4DA330, *reinterpret_cast<DWORD*>(&TES3_NPCInstance_getDisposition));
+		genCallEnforced(0x4D5D75, 0x4DA330, *reinterpret_cast<DWORD*>(&TES3_NPCInstance_getDisposition));
+		genCallEnforced(0x4D5D8F, 0x4DA330, *reinterpret_cast<DWORD*>(&TES3_NPCInstance_getDisposition));
+		genCallEnforced(0x4D5DB4, 0x4DA330, *reinterpret_cast<DWORD*>(&TES3_NPCInstance_getDisposition));
+		genCallEnforced(0x4D5DCD, 0x4DA330, *reinterpret_cast<DWORD*>(&TES3_NPCInstance_getDisposition));
+		genCallEnforced(0x5077EA, 0x4DA330, *reinterpret_cast<DWORD*>(&TES3_NPCInstance_getDisposition));
+		genCallEnforced(0x54DC88, 0x4DA330, *reinterpret_cast<DWORD*>(&TES3_NPCInstance_getDisposition));
+
 		// UI framework hooks
 		TES3::UI::hook();
 

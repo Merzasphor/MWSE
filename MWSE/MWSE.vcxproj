@@ -18,6 +18,7 @@
     <ClInclude Include="LuaCalcBlockChanceEvent.h" />
     <ClInclude Include="LuaConsoleReferenceChangedEvent.h" />
     <ClInclude Include="LuaDialogueEnvironmentCreatedEvent.h" />
+    <ClInclude Include="LuaDispositionEvent.h" />
     <ClInclude Include="LuaJumpEvent.h" />
     <ClInclude Include="LuaCalcSpellmakingPriceEvent.h" />
     <ClInclude Include="LuaCalcSpellmakingSpellPointCostEvent.h" />
@@ -557,6 +558,7 @@
     <ClCompile Include="LuaDialogueEnvironmentCreatedEvent.cpp" />
     <ClCompile Include="LuaDisableableEventManager.cpp" />
     <ClCompile Include="LuaDisarmTrapEvent.cpp" />
+    <ClCompile Include="LuaDispositionEvent.cpp" />
     <ClCompile Include="LuaEnchantedItemCreatedEvent.cpp" />
     <ClCompile Include="LuaEnchantedItemCreateFailedEvent.cpp" />
     <ClCompile Include="LuaEnchantChargeUseEvent.cpp" />
