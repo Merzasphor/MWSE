@@ -53,6 +53,7 @@
 --- @field isAttackingOrCasting boolean *Read-only*. If true, the actor is attacking, casting magic or using a lockpick or probe.
 --- @field isCrittable boolean *Read-only*. Friendly access to the actor's flag that controls if the actor can be critically hit.
 --- @field isDead boolean *Read-only*. True if the actor is dead.
+--- @field isDiseased boolean *Read-only*. True if the actor is has a disease effect. This counts normal, blight, and corprus effects.
 --- @field isFalling boolean Direct access to the actor's current movement flags, showing if the actor is falling. This is when the actor is falling without having jumped, e.g. if they walked off a ledge.
 --- @field isFlying boolean Direct access to the actor's current movement flags, showing if the actor is flying.
 --- @field isJumping boolean Direct access to the actor's current movement flags, showing if the actor is jumping.

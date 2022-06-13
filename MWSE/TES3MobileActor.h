@@ -279,6 +279,8 @@ namespace TES3 {
 		bool isAffectedByEnchantment(Enchantment * enchantment) const;
 		bool isAffectedBySpell(Spell * spell) const;
 
+		bool isDiseased() const;
+
 		SpellList* getSpellList();
 		IteratedList<Spell*> * getCombatSpellList();
 

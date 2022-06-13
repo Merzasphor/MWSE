@@ -161,6 +161,7 @@ namespace mwse::lua {
 		usertypeDefinition["cell"] = sol::property(&TES3::MobileActor::getCell);
 		usertypeDefinition["hasFreeAction"] = sol::readonly_property(&TES3::MobileActor::isNotKnockedDown);
 		usertypeDefinition["isAttackingOrCasting"] = sol::readonly_property(&TES3::MobileActor::isAttackingOrCasting);
+		usertypeDefinition["isDiseased"] = sol::readonly_property(&TES3::MobileActor::isDiseased);
 		usertypeDefinition["isParalyzed"] = sol::readonly_property(&TES3::MobileActor::isParalyzed);
 		usertypeDefinition["isReadyingWeapon"] = sol::readonly_property(&TES3::MobileActor::isReadyingWeapon);
 		usertypeDefinition["mobToMobCollision"] = sol::property(&TES3::MobileActor::getMobToMobCollision, &TES3::MobileActor::setMobToMobCollision);

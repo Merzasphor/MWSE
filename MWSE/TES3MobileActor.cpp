@@ -698,6 +698,11 @@ namespace TES3 {
 		return TES3_MobileActor_isAffectedBySpell(this, spell);
 	}
 
+	const auto TES3_MobileActor_isDiseased = reinterpret_cast<bool(__thiscall*)(const MobileActor*)>(0x54DB80);
+	bool MobileActor::isDiseased() const {
+		return TES3_MobileActor_isDiseased(this);
+	}
+
 	const auto TES3_MobileActor_getSpellList = reinterpret_cast<SpellList * (__thiscall*)(const MobileActor*)>(0x52B3D0);
 	SpellList* MobileActor::getSpellList() {
 		return TES3_MobileActor_getSpellList(this);
