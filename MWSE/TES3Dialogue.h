@@ -59,6 +59,12 @@ namespace TES3 {
 
 		static Dialogue* getDialogue(int type, int page);
 
+		//
+		// Cached values to help speed up dialogue filtering.
+		//
+
+		static std::optional<int> cachedActorDisposition;
+
 	};
 	static_assert(sizeof(Dialogue) == 0x30, "TES3::Dialogue failed size validation");
 }

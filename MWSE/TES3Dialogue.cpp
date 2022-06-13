@@ -6,6 +6,7 @@
 
 #include "LuaUtil.h"
 
+#include "TES3Actor.h"
 #include "TES3DialogueInfo.h"
 #include "TES3MobilePlayer.h"
 #include "TES3Reference.h"
@@ -113,7 +114,21 @@ namespace TES3 {
 
 	const auto TES3_Dialogue_getFilteredInfo = reinterpret_cast<DialogueInfo* (__thiscall*)(Dialogue*, Actor*, Reference*, bool)>(0x4B29E0);
 	DialogueInfo* Dialogue::getFilteredInfo(Actor* actor, Reference* reference, bool flag) {
-		return TES3_Dialogue_getFilteredInfo(this, actor, reference, flag);
+		// Cache some heavier values.
+		if (actor->objectType == ObjectType::NPC) {
+			auto mobile = static_cast<MobileNPC*>(reference->getAttachedMobileActor());
+			if (mobile) {
+				cachedActorDisposition = mobile->getDisposition();
+			}
+		}
+
+		// Call original code.
+		auto result = TES3_Dialogue_getFilteredInfo(this, actor, reference, flag);
+
+		// Clean any cached values.
+		cachedActorDisposition = {};
+
+		return result;
 	}
 
 	std::string Dialogue::toJson() {
@@ -144,6 +159,8 @@ namespace TES3 {
 	Dialogue* Dialogue::getDialogue(int type, int page) {
 		return TES3_getDialogue(type, page);
 	}
+
+	std::optional<int> Dialogue::cachedActorDisposition = {};
 }
 
 MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_TES3(TES3::Dialogue)

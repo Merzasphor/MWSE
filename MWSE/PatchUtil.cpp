@@ -9,6 +9,7 @@
 #include "TES3Cell.h"
 #include "TES3CutscenePlayer.h"
 #include "TES3DataHandler.h"
+#include "TES3Dialogue.h"
 #include "TES3Game.h"
 #include "TES3GameFile.h"
 #include "TES3GameSetting.h"
@@ -564,6 +565,22 @@ namespace mwse::patch {
 	}
 
 	//
+	// Patch: Cache values between dialogue filters.
+	// 
+	// Current additional caching:
+	//  * speaker's dialogue
+	//
+
+	int __fastcall PatchDialogueFilterCacheGetDisposition(TES3::MobileNPC* npc) {
+		if (TES3::Dialogue::cachedActorDisposition) {
+			return TES3::Dialogue::cachedActorDisposition.value();
+		}
+
+		// Always allow the default behavior if something we hit a weird context.
+		return npc->getDisposition();
+	}
+
+	//
 	// Install all the patches.
 	//
 
@@ -813,6 +830,26 @@ namespace mwse::patch {
 
 		// Patch: Fix crash when releasing a clone of a light with no reference.
 		genCallEnforced(0x4D260C, 0x4E5170, reinterpret_cast<DWORD>(PatchReleaseLightEntityForReference));
+
+		// Patch: Cache values between dialogue filters.
+		auto Dialogue_getFilteredInfo = &TES3::Dialogue::getFilteredInfo;
+		genCallEnforced(0x40B8EE, 0x4B29E0, *reinterpret_cast<DWORD*>(&Dialogue_getFilteredInfo));
+		genCallEnforced(0x4B2F51, 0x4B29E0, *reinterpret_cast<DWORD*>(&Dialogue_getFilteredInfo));
+		genCallEnforced(0x5290B2, 0x4B29E0, *reinterpret_cast<DWORD*>(&Dialogue_getFilteredInfo));
+		genCallEnforced(0x52931A, 0x4B29E0, *reinterpret_cast<DWORD*>(&Dialogue_getFilteredInfo));
+		genCallEnforced(0x5BF01C, 0x4B29E0, *reinterpret_cast<DWORD*>(&Dialogue_getFilteredInfo));
+		genCallEnforced(0x5BF17C, 0x4B29E0, *reinterpret_cast<DWORD*>(&Dialogue_getFilteredInfo));
+		genCallEnforced(0x5BF25C, 0x4B29E0, *reinterpret_cast<DWORD*>(&Dialogue_getFilteredInfo));
+		genCallEnforced(0x5BF33C, 0x4B29E0, *reinterpret_cast<DWORD*>(&Dialogue_getFilteredInfo));
+		genCallEnforced(0x5BF43C, 0x4B29E0, *reinterpret_cast<DWORD*>(&Dialogue_getFilteredInfo));
+		genCallEnforced(0x5BF51C, 0x4B29E0, *reinterpret_cast<DWORD*>(&Dialogue_getFilteredInfo));
+		genCallEnforced(0x5BF62C, 0x4B29E0, *reinterpret_cast<DWORD*>(&Dialogue_getFilteredInfo));
+		genCallEnforced(0x5C05F7, 0x4B29E0, *reinterpret_cast<DWORD*>(&Dialogue_getFilteredInfo));
+		genCallEnforced(0x5C0A48, 0x4B29E0, *reinterpret_cast<DWORD*>(&Dialogue_getFilteredInfo));
+		genCallEnforced(0x5C0A67, 0x4B29E0, *reinterpret_cast<DWORD*>(&Dialogue_getFilteredInfo));
+		genCallEnforced(0x6004E9, 0x4B29E0, *reinterpret_cast<DWORD*>(&Dialogue_getFilteredInfo));
+		genCallUnprotected(0x4B1646, reinterpret_cast<DWORD>(PatchDialogueFilterCacheGetDisposition), 0x6);
+		genCallUnprotected(0x4B167B, reinterpret_cast<DWORD>(PatchDialogueFilterCacheGetDisposition), 0x6);
 	}
 
 	void installPostLuaPatches() {

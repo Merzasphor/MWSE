@@ -2,7 +2,6 @@
 
 #include "TES3Defines.h"
 
-#include "TES3Dialogue.h"
 #include "TES3MobileNPC.h"
 #include "TES3StdString.h"
 #include "TES3Vectors.h"

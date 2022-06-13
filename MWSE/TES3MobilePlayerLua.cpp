@@ -5,6 +5,7 @@
 
 #include "TES3Alchemy.h"
 #include "TES3Cell.h"
+#include "TES3Dialogue.h"
 #include "TES3Enchantment.h"
 #include "TES3MobilePlayer.h"
 #include "TES3Apparatus.h"

@@ -6,7 +6,9 @@
 #include "TES3Actor.h"
 #include "TES3Class.h"
 #include "TES3DataHandler.h"
+#include "TES3Dialogue.h"
 #include "TES3Faction.h"
+#include "TES3MobileNPC.h"
 #include "TES3Race.h"
 #include "TES3Cell.h"
 
