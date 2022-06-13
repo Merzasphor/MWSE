@@ -221,6 +221,21 @@ local string = myObject:__tojson()
 
 ***
 
+### `getLowestJoinedReaction`
+
+For this faction, this function finds the worst reaction for another faction that the player has joined. It returns that reaction and its associated faction, or `nil` for both values if the no relationship is applicable.
+
+```lua
+local reaction, faction = myObject:getLowestJoinedReaction()
+```
+
+**Returns**:
+
+* `reaction` (number, nil): The reaction, if any, that is worst for the player.
+* `faction` ([tes3faction](../../types/tes3faction), nil): The faction association, if any, that is worst for the player.
+
+***
+
 ### `getRankName`
 
 This function fetches the player-facing name of a rank in the faction.
@@ -236,6 +251,24 @@ local result = myObject:getRankName(rank)
 **Returns**:
 
 * `result` (string)
+
+***
+
+### `getReactionWithFaction`
+
+Returns a reaction value for another faction, or `nil` if no relationship exists between the two factions.
+
+```lua
+local reaction = myObject:getReactionWithFaction(faction)
+```
+
+**Parameters**:
+
+* `faction` ([tes3faction](../../types/tes3faction)): Another faction to get a reaction for.
+
+**Returns**:
+
+* `reaction` (number, nil): The reaction, if any, with the other faction.
 
 ***
 

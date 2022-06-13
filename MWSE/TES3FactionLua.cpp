@@ -67,6 +67,8 @@ namespace mwse::lua {
 			usertypeDefinition["playerRank"] = sol::property(&TES3::Faction::getEffectivePlayerRank, &TES3::Faction::setEffectivePlayerRank);
 
 			// Basic function binding.
+			usertypeDefinition["getReactionWithFaction"] = &TES3::Faction::getReactionWithFaction_lua;
+			usertypeDefinition["getLowestJoinedReaction"] = &TES3::Faction::getLowestJoinedReaction_lua;
 			usertypeDefinition["getRankName"] = &TES3::Faction::getRankName;
 			usertypeDefinition["setRankName"] = &TES3::Faction::setRankName;
 		}

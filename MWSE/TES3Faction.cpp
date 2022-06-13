@@ -85,6 +85,38 @@ namespace TES3 {
 		setMembershipFlag(TES3::FactionMembershipFlag::PlayerExpelled, value);
 	}
 
+	bool Faction::getReactionWithFaction(const Faction* faction, int& out_reaction) const {
+		for (const auto& itt : reactions) {
+			if (itt->faction == faction) {
+				out_reaction = itt->reaction;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	sol::optional<int> Faction::getReactionWithFaction_lua(const Faction* faction) const {
+		int reaction = 0;
+		if (getReactionWithFaction(faction, reaction)) {
+			return reaction;
+		}
+		return {};
+	}
+
+	const auto TES3_Faction_getLowestJoinedReaction = reinterpret_cast<int(__thiscall*)(const Faction*, Faction**)>(0x4AD5E0);
+	int Faction::getLowestJoinedReaction(Faction** out_faction) const {
+		return TES3_Faction_getLowestJoinedReaction(this, out_faction);
+	}
+
+	sol::optional<std::tuple<int, Faction*>> Faction::getLowestJoinedReaction_lua() const {
+		Faction* faction = nullptr;
+		auto reaction = getLowestJoinedReaction(&faction);
+		if (faction) {
+			return { { reaction, faction } };
+		}
+		return {};
+	}
+
 	std::reference_wrapper<int[2]> Faction::getAttributes() {
 		return std::ref(attributes);
 	}

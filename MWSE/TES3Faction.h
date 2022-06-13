@@ -76,6 +76,12 @@ namespace TES3 {
 		bool getPlayerExpelled() const;
 		void setPlayerExpelled(bool value);
 
+		bool getReactionWithFaction(const Faction* faction, int& out_reaction) const;
+		sol::optional<int> getReactionWithFaction_lua(const Faction* faction) const;
+
+		int getLowestJoinedReaction(Faction** out_faction) const;
+		sol::optional<std::tuple<int, Faction*>> getLowestJoinedReaction_lua() const;
+
 		std::reference_wrapper<int[2]> getAttributes();
 		std::reference_wrapper<int[7]> getSkills();
 		std::reference_wrapper<Rank[10]> getRanks();
