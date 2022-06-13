@@ -37,6 +37,8 @@ namespace TES3 {
 		case WeatherType::Snow: return "Snow";
 		case WeatherType::Thunder: return "Thunderstorm";
 		}
+
+		throw std::runtime_error("Invalid weather index. No name could be determined.");
 	}
 
 	const char* Weather::getCloudTexturePath() const {
