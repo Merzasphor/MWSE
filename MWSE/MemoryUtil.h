@@ -122,8 +122,8 @@ namespace mwse {
 		void* malloc(size_t size);
 
 		template <typename T>
-		inline constexpr T* malloc() {
-			T* ret = reinterpret_cast<T*>(malloc(sizeof(T)));
+		inline constexpr T* malloc(size_t count = 1) {
+			T* ret = reinterpret_cast<T*>(malloc(sizeof(T) * count));
 			memset(ret, 0, sizeof(T));
 			return ret;
 		}
