@@ -455,13 +455,12 @@ namespace TES3 {
 	}
 
 	float MobileActor::applyDamage_lua(sol::table params) {
-		bool applyArmor = params["applyArmor"].get_or(false);
-		bool applyDifficulty = params["applyDifficulty"].get_or(false);
+		auto applyArmor = params.get_or("applyArmor", false);
+		auto applyDifficulty = params.get_or("applyDifficulty", false);
 		sol::optional<float> damage = params["damage"];
-		bool doNotChangeHealth = params["doNotChangeHealth"].get_or(false);
+		auto doNotChangeHealth = params.get_or("doNotChangeHealth", false);
 		sol::optional<bool> playerAttack = params["playerAttack"];
-		sol::optional<int> resistAttribute = params["resistAttribute"];
-		int resistIndex = resistAttribute.value_or(-1);
+		auto resistIndex = params.get_or("resistAttribute", -1);
 
 		if (applyDifficulty && !playerAttack) {
 			throw std::invalid_argument("'applyDifficulty' requires a 'playerAttack' parameter.");
@@ -469,21 +468,17 @@ namespace TES3 {
 		if (!damage) {
 			throw std::invalid_argument("Invalid 'damage' parameter provided.");
 		}
-		if (resistAttribute) {
-			if (resistIndex < TES3::MagicEffectAttribute::AttackBonus || resistIndex > TES3::MagicEffectAttribute::Invisibility) {
-				// Disable resistAttribute for effect attributes that are > Invisibility.
-				resistAttribute.reset();
-			}
-		}
 
-		float adjustedDamage = damage.value();
+		auto adjustedDamage = damage.value();
+
 		// Apply armor mitigation. Includes damaging armor condition, hit sounds, and player armor skill experience.
 		if (applyArmor) {
 			adjustedDamage = applyArmorRating(adjustedDamage, 1.0f, true);
 		}
+
 		// Effect attribute based resistance/weakness.
-		if (resistAttribute) {
-			adjustedDamage *= std::max(0, 100 - this->effectAttributes[resistIndex]) / 100.0f;
+		if (resistIndex >= TES3::MagicEffectAttribute::AttackBonus && resistIndex <= TES3::MagicEffectAttribute::Invisibility) {
+			adjustedDamage *= std::max(0, 100 - effectAttributes[resistIndex]) / 100.0f;
 		}
 
 		auto prevSource = mwse::lua::event::DamageEvent::m_Source;
@@ -495,37 +490,31 @@ namespace TES3 {
 	}
 
 	float MobileActor::calcEffectiveDamage_lua(sol::table params) {
-		bool applyArmor = params["applyArmor"].get_or(false);
+		auto applyArmor = params.get_or("applyArmor", false);
 		sol::optional<float> damage = params["damage"];
-		sol::optional<int> resistAttribute = params["resistAttribute"];
-		int resistIndex = resistAttribute.value_or(-1);
+		auto resistIndex = params.get_or("resistAttribute", -1);
 
 		if (!damage) {
 			throw std::invalid_argument("Invalid 'damage' parameter provided.");
 		}
-		if (resistAttribute) {
-			if (resistIndex < TES3::MagicEffectAttribute::AttackBonus || resistIndex > TES3::MagicEffectAttribute::Invisibility) {
-				// Disable resistAttribute for effect attributes that are > Invisibility.
-				resistAttribute.reset();
-			}
-		}
 
 		// Emulate armor mitigation.
-		float adjustedDamage = damage.value();
+		auto adjustedDamage = damage.value();
 		if (applyArmor) {
 			if (adjustedDamage > 0.001f) {
-				float fCombatArmorMinMult = TES3::DataHandler::get()->nonDynamicData->GMSTs[TES3::GMST::fCombatArmorMinMult]->value.asFloat;
-				float armor = calculateArmorRating();
-				float reducer = std::max(fCombatArmorMinMult, adjustedDamage / (armor + adjustedDamage));
+				auto fCombatArmorMinMult = TES3::DataHandler::get()->nonDynamicData->GMSTs[TES3::GMST::fCombatArmorMinMult]->value.asFloat;
+				auto armor = calculateArmorRating();
+				auto reducer = std::max(fCombatArmorMinMult, adjustedDamage / (armor + adjustedDamage));
 				adjustedDamage = std::max(1.0f, reducer * adjustedDamage);
 			}
 			else {
 				adjustedDamage = 0;
 			}
 		}
+
 		// Effect attribute based resistance/weakness.
-		if (resistAttribute) {
-			adjustedDamage *= std::max(0, 100 - this->effectAttributes[resistIndex]) / 100.0f;
+		if (resistIndex >= TES3::MagicEffectAttribute::AttackBonus && resistIndex <= TES3::MagicEffectAttribute::Invisibility) {
+			adjustedDamage *= std::max(0, 100 - effectAttributes[resistIndex]) / 100.0f;
 		}
 
 		return adjustedDamage;
