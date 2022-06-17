@@ -2692,7 +2692,7 @@ namespace mwse::lua {
 					auto message = ss.str();
 					log::getLog() << "[LuaManager] ERROR: " << message << std::endl;
 
-					reinterpret_cast<void(__cdecl*)(const char*)>(0x477400)(message.c_str());
+					mwse::tes3::logAndShowError(message.c_str());
 
 					posStart = posEnd;
 					continue;

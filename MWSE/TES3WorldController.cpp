@@ -263,7 +263,7 @@ namespace TES3 {
 						totalKills += countBuffer;
 					}
 					else {
-						reinterpret_cast<void(__cdecl*)(const char*, const char*)>(0x477400)("Unable to locate Killed Object '%s'.", idBuffer);
+						mwse::tes3::logAndShowError("Unable to locate Killed Object '%s'.", idBuffer);
 					}
 				}
 				break;

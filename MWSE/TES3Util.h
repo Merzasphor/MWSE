@@ -54,6 +54,18 @@ namespace mwse::tes3 {
 		return *reinterpret_cast<float*>(0x7C6708);
 	};
 
+	template <typename ... Args>
+	inline void logErrorAndSavePoint(const char* str, Args&& ... args) {
+		const auto contained = reinterpret_cast<void(__cdecl*)(const char*, ...)>(0x476E20);
+		contained(str, std::forward<Args>(args) ...);
+	}
+
+	template <typename ... Args>
+	inline void logAndShowError(const char* str, Args&& ... args) {
+		const auto contained = reinterpret_cast<void(__cdecl*)(const char*, ...)>(0x477400);
+		contained(str, std::forward<Args>(args) ...);
+	}
+
 	//
 	// Original function calls in Morrowind.
 	//
