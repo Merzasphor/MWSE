@@ -25,6 +25,9 @@ namespace TES3 {
 	struct LeveledListNode {
 		Object * object;
 		short levelRequirement;
+
+		LeveledListNode() = delete;
+		~LeveledListNode() = delete;
 	};
 	static_assert(sizeof(LeveledListNode) == 0x8, "TES3::LeveledListNode failed size validation");
 
@@ -34,6 +37,9 @@ namespace TES3 {
 		int itemCount; // 0x38
 		unsigned int flags; // 0x3C
 		signed char chanceForNothing; // 0x40
+
+		LeveledCreature() = delete;
+		~LeveledCreature() = delete;
 
 		//
 		// Other related this-call functions.
@@ -60,6 +66,9 @@ namespace TES3 {
 		int itemCount; // 0x34
 		unsigned int flags; // 0x38
 		signed char chanceForNothing; // 0x3C
+
+		LeveledItem() = delete;
+		~LeveledItem() = delete;
 
 		//
 		// Other related this-call functions.
