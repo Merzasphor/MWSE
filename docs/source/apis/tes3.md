@@ -563,12 +563,12 @@ local instance = tes3.applyMagicSource({ reference = ..., source = ..., name = .
 * `params` (table)
 	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): A reference on which the magic source will be applied.
 	* `source` ([tes3object](../../types/tes3object)): *Optional*. A magic source to apply.
-	* `name` (string): *Optional*. While optional for other uses, if applying alchemy as a source, you must specifiy a name for the magic source.
+	* `name` (string): *Optional*. While optional for other uses, if applying alchemy as a source, you must specify a name for the magic source.
 	* `effects` (table): *Optional*. A table of custom effects to apply as a potion. Maximal number of effects is 8.
 		* `id` (boolean): *Default*: `-1`. ID of the effect.
 		* `skill` (number): *Default*: `-1`. If effect parameter specified is: Absorb, Damage, Drain, Fortify or Restore Skill, a skill should be provided. This also applies to any custom spell effect which operates on a certain skill. This value maps to [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) constants.
 		* `attribute` (number): *Default*: `-1`. If effect parameter specified is: Absorb, Damage, Drain, Fortify or Restore Attribute, an attribute should be provided. This also applies to any custom spell effect which operates on a certain attribute. This value maps to [`tes3.attribute`](https://mwse.github.io/MWSE/references/attributes/) constants.
-		* `range` (number): *Default*: `tes3.effectRange.self`. The range of the effect. This maps to [`tes3.effectRange`](https://mwse.github.io/MWSE/references/effect-ranges/) constants.
+		* `rangeType` (number): *Default*: `tes3.effectRange.self`. The range of the effect. This maps to [`tes3.effectRange`](https://mwse.github.io/MWSE/references/effect-ranges/) constants.
 		* `radius` (number): *Default*: `0`. The radius of the effect.
 		* `duration` (number): *Default*: `0`. Number of seconds the effect is going to be active.
 		* `min` (number): *Default*: `0`. The minimal magintude of the effect per tick.

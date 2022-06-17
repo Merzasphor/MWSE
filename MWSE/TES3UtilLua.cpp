@@ -2907,7 +2907,14 @@ namespace mwse::lua {
 					if (!effectParams) {
 						break;
 					}
+
 					dynamicPotion->effects[i - 1] = effectParams.value();
+
+					// Legacy parameter name for rangeType.
+					sol::optional<TES3::EffectRange> range = effectParams.value()["range"];
+					if (range) {
+						dynamicPotion->effects[i - 1].rangeType = range.value();
+					}
 				}
 			}
 

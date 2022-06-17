@@ -56,7 +56,10 @@ event.register(tes3.event.disposition, dispositionCallback)
 			local reaction = 0
 			local pairedFaction = nil --- @type tes3faction?
 			if (not faction.playerJoined or faction.playerExpelled) then
-				reaction, pairedFaction = faction:getLowestJoinedReaction()
+				local lowestReaction, lowestFaction = faction:getLowestJoinedReaction()
+				if (lowestReaction) then
+					reaction, pairedFaction = lowestReaction, lowestFaction
+				end
 			else
 				local selfReaction = faction:getReactionWithFaction(faction)
 				if (selfReaction) then
