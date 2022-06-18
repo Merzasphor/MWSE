@@ -61,6 +61,8 @@ namespace TES3 {
 		void setDescription(const char*);
 		void freeDescription();
 
+		std::string getLevelUpImage() const;
+
 		std::reference_wrapper<int[2]> getAttributes();
 		std::reference_wrapper<int[10]> getSkills();
 

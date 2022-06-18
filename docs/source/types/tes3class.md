@@ -195,6 +195,16 @@ Loads from disk and returns the description of the class.
 
 ***
 
+### `image`
+
+The path used for the class selection/level up menus, where appropriate. Custom classes may not have their images shown in the level up menu.
+
+**Returns**:
+
+* `result` (string)
+
+***
+
 ### `majorSkills`
 
 *Read-only*. An array-style table of the 5 skills IDs associated with the class' major skills. Maps to values in [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) namespace.

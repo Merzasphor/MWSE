@@ -7,6 +7,7 @@
 #include "TES3Actor.h"
 #include "TES3BodyPartManager.h"
 #include "TES3Cell.h"
+#include "TES3Class.h"
 #include "TES3CutscenePlayer.h"
 #include "TES3DataHandler.h"
 #include "TES3Dialogue.h"
@@ -581,6 +582,28 @@ namespace mwse::patch {
 	}
 
 	//
+	// Patch: Support custom class images.
+	//
+
+	__declspec(naked) void PatchAddCustomClassImageSupportSetup() {
+		__asm {
+			mov ecx, esi			// Size: 0x2. The Class*.
+			mov edx, ebx			// Size: 0x2. The parent element pointer.
+			nop						// Size: 0x5. Replaced with a call generation. Can't do so here, because offsets aren't accurate.
+			nop						// ^
+			nop						// ^
+			nop						// ^
+			nop						// ^
+		}
+	}
+	constexpr auto PatchAddCustomClassImageSupport_size = 0x9;
+
+	TES3::UI::Element* __fastcall PatchAddCustomClassImageSupport(const TES3::Class* charClass, TES3::UI::Element* parent) {
+		auto result = charClass->getLevelUpImage();
+		return parent->createImage(TES3::UI::ID_NULL, result.c_str(), false);
+	}
+
+	//
 	// Install all the patches.
 	//
 
@@ -850,6 +873,11 @@ namespace mwse::patch {
 		genCallEnforced(0x6004E9, 0x4B29E0, *reinterpret_cast<DWORD*>(&Dialogue_getFilteredInfo));
 		genCallUnprotected(0x4B1646, reinterpret_cast<DWORD>(PatchDialogueFilterCacheGetDisposition), 0x6);
 		genCallUnprotected(0x4B167B, reinterpret_cast<DWORD>(PatchDialogueFilterCacheGetDisposition), 0x6);
+
+		// Patch: Support custom class images.
+		genNOPUnprotected(0x5AF047, 0x5AF583 - 0x5AF047);
+		writePatchCodeUnprotected(0x5AF047, (BYTE*)&PatchAddCustomClassImageSupportSetup, PatchAddCustomClassImageSupport_size);
+		genCallUnprotected(0x5AF047 + 0x4, reinterpret_cast<DWORD>(PatchAddCustomClassImageSupport), 0x9);
 	}
 
 	void installPostLuaPatches() {

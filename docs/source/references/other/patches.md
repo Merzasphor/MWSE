@@ -4,6 +4,7 @@ The following patches are included by MWSE.
 
 ## Features
 
+* Allows custom classes to have custom images on the class selection menu. The texture used is a bmp file found in the textures\\levelup directory, whose name is the id of the class.
 - Allows Morrowind to run when not in focus.
 - Allows movies to be played with letterboxing.
 - Allows NiFlipController to specify its affected map correctly.
