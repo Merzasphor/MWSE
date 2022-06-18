@@ -21,8 +21,6 @@ namespace mwse::lua {
 	using TES3::UI::Element;
 	using TES3::UI::UI_ID;
 
-	const UI_ID idNull = static_cast<UI_ID>(TES3::UI::Property::null);
-
 	void bindTES3UIElement() {
 		// Get our lua state.
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();

@@ -50,8 +50,6 @@ namespace TES3::UI {
 	const auto TES3_ui_getServiceActor = reinterpret_cast<MobileActor* (__cdecl*)()>(0x5BFEA0);
 	const auto TES3_ui_updateDialogDisposition = reinterpret_cast<void (__cdecl*)()>(0x5C0780);
 
-	const UI_ID idNull = static_cast<UI_ID>(TES3::UI::Property::null);
-
 	//
 	// UI framework functions
 	//
@@ -93,7 +91,7 @@ namespace TES3::UI {
 
 	Element* createMenu_lua(sol::table params) {
 		auto id = mwse::lua::getOptionalUIID(params, "id");
-		if (id == idNull) {
+		if (id == ID_NULL) {
 			mwse::log::getLog() << "createMenu: id argument is required." << std::endl;
 			return nullptr;
 		}
@@ -131,7 +129,7 @@ namespace TES3::UI {
 
 	Element* createHelpLayerMenu_lua(sol::table params) {
 		auto id = mwse::lua::getOptionalUIID(params, "id");
-		if (id == idNull) {
+		if (id == ID_NULL) {
 			mwse::log::getLog() << "createHelpLayerMenu: id argument is required." << std::endl;
 			return static_cast<Element*>(nullptr);
 		}

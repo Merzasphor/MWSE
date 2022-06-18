@@ -296,4 +296,5 @@ namespace TES3::UI {
 		PropertyValue() { integerValue = 0; }
 	};
 
+	constexpr TES3::UI::UI_ID ID_NULL = static_cast<TES3::UI::UI_ID>(TES3::UI::Property::null);
 }
