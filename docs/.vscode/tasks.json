@@ -15,16 +15,6 @@
 				"kind": "build",
 				"isDefault": true
 			}
-		},
-		{
-			"label": "mkdocs - Deploy",
-			"args": [
-				"gh-deploy"
-			],
-			"type": "shell",
-			"command": "mkdocs",
-			"problemMatcher": [],
-			"group": "build"
 		}
 	]
 }
