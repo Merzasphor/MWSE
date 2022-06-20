@@ -201,7 +201,7 @@ local function onClickModConfigButton()
 
 		local searchBar = searchBlock:createTextInput({
 			id = "SearchBar",
-			placeholderText = "Search...",
+			placeholderText = mwse.mcm.i18n("Search..."),
 			autoFocus = true,
 		})
 		searchBar.borderLeft = 5
