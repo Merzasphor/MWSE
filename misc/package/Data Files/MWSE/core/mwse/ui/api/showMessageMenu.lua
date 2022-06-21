@@ -167,7 +167,7 @@ end
 --- @param parent tes3uiElement
 --- @param buttonData tes3ui.showMessageMenu.params.button
 --- @return tes3uiElement
-local function addButton(parent, buttonData)
+local function addButton(parent, buttonData, messageData)
 	local button = parent:createButton({
 		id = uiids.button,
 		text = common.resolveDynamicText(buttonData.text)
@@ -177,7 +177,7 @@ local function addButton(parent, buttonData)
 	button:setLuaData("buttonData", buttonData)
 
 	-- Set disabled if there are requirements.
-	if (buttonData.enableRequirements and not buttonData.enableRequirements()) then
+	if (buttonData.enableRequirements and not buttonData.enableRequirements(messageData.callbackParams)) then
 		common.ui.disable(button)
 	end
 
@@ -233,7 +233,7 @@ recreateMenu = function(menu)
 	-- Get an array of showable buttons.
 	local showableButtons = {}
 	for _, button in ipairs(messageData.buttons) do
-		if (button.showRequirements == nil or button.showRequirements()) then
+		if (button.showRequirements == nil or button.showRequirements(messageData.callbackParams)) then
 			table.insert(showableButtons, button)
 		end
 	end
@@ -251,7 +251,7 @@ recreateMenu = function(menu)
 	for i = startIndex, endIndex do
 		local buttonData = showableButtons[i]
 		if (buttonData) then
-			addButton(buttonsBlock, buttonData)
+			addButton(buttonsBlock, buttonData, messageData)
 		end
 	end
 
