@@ -25,7 +25,7 @@
 #include "TES3MagicEffectController.h"
 #include "TES3MagicEffectInstance.h"
 #include "TES3MagicInstanceController.h"
-#include "TES3MobController.h"
+#include "TES3MobManager.h"
 #include "TES3MobilePlayer.h"
 #include "TES3ItemData.h"
 #include "TES3Spell.h"
@@ -1477,20 +1477,20 @@ namespace TES3 {
 
 	bool MobileActor::getMobToMobCollision() const {
 		if (actorFlags & TES3::MobileActorFlag::ActiveInSimulation) {
-			auto mobController = TES3::WorldController::get()->mobController;
-			return mobController->hasMobileCollision(this);
+			auto mobManager = TES3::WorldController::get()->mobManager;
+			return mobManager->hasMobileCollision(this);
 		}
 		return false;
 	}
 
 	void MobileActor::setMobToMobCollision(bool collide) {
 		if (actorFlags & TES3::MobileActorFlag::ActiveInSimulation) {
-			auto mobController = TES3::WorldController::get()->mobController;
+			auto mobManager = TES3::WorldController::get()->mobManager;
 			if (collide) {
-				mobController->enableMobileCollision(this);
+				mobManager->enableMobileCollision(this);
 			}
 			else {
-				mobController->disableMobileCollision(this);
+				mobManager->disableMobileCollision(this);
 			}
 		}
 	}

@@ -1,6 +1,6 @@
 return {
 	type = "value",
 	readOnly = true,
-	description = [[Access to Process Manager.]],
+	description = [[Access to the process manager.]],
 	valuetype = "tes3processManager",
 }

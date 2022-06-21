@@ -795,7 +795,7 @@
     <ClInclude Include="TES3DialogueConditional.h">
       <Filter>Header Files\DataAdapters\TES3\Dialog</Filter>
     </ClInclude>
-    <ClInclude Include="TES3MobController.h">
+    <ClInclude Include="TES3MobManager.h">
       <Filter>Header Files\DataAdapters\TES3\Worldspace</Filter>
     </ClInclude>
     <ClInclude Include="TES3CrimeEvent.h">
@@ -1362,7 +1362,7 @@
     <ClInclude Include="NITextureEffectLua.h">
       <Filter>Header Files\Lua\Bindings\NI</Filter>
     </ClInclude>
-    <ClInclude Include="TES3MobControllerLua.h">
+    <ClInclude Include="TES3MobManagerLua.h">
       <Filter>Header Files\Lua\Bindings\TES3</Filter>
     </ClInclude>
     <ClInclude Include="LuaDetectSneakEvent.h">
@@ -2714,7 +2714,7 @@
     <ClCompile Include="NINode.cpp">
       <Filter>Source Files\DataAdapters\NI</Filter>
     </ClCompile>
-    <ClCompile Include="TES3MobController.cpp">
+    <ClCompile Include="TES3MobManager.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
     <ClCompile Include="TES3CrimeEvent.cpp">
@@ -3263,7 +3263,7 @@
     <ClCompile Include="NiTextureEffectLua.cpp">
       <Filter>Source Files\Lua\Bindings\NI</Filter>
     </ClCompile>
-    <ClCompile Include="TES3MobControllerLua.cpp">
+    <ClCompile Include="TES3MobManagerLua.cpp">
       <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
     <ClCompile Include="LuaDetectSneakEvent.cpp">

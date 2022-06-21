@@ -489,13 +489,13 @@ The sound played when a weapon fails its to-hit check.
 
 ***
 
-### `mobController`
+### `mobManager`
 
-*Read-only*. The controller responsible for mobile objects and collision.
+*Read-only*. The manager responsible for mobile objects and collision.
 
 **Returns**:
 
-* `result` ([tes3mobController](../../types/tes3mobController))
+* `result` ([tes3mobManager](../../types/tes3mobManager))
 
 ***
 

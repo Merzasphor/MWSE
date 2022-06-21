@@ -55,7 +55,7 @@
 #include "TES3MagicEffectInstance.h"
 #include "TES3MagicInstanceController.h"
 #include "TES3Misc.h"
-#include "TES3MobController.h"
+#include "TES3MobManager.h"
 #include "TES3MobileCreature.h"
 #include "TES3MobilePlayer.h"
 #include "TES3NPC.h"
@@ -1364,7 +1364,7 @@ namespace mwse::lua {
 
 		// Do detection and the like.
 		bool forceDetection = getOptionalParam<bool>(params, "forceDetection", false);
-		auto processManager = TES3::WorldController::get()->mobController->processManager;
+		auto processManager = TES3::WorldController::get()->mobManager->processManager;
 		if (!forceDetection && processManager->detectPresence(crimeEvent.criminal)) {
 			processManager->checkAlarmRadius(crimeEvent.victim, crimeEvent.witnesses);
 		}
@@ -2702,7 +2702,7 @@ namespace mwse::lua {
 
 		// Did we just make an actor? If so we need to add it to the mob manager.
 		if (object->objectType == TES3::ObjectType::Creature || object->objectType == TES3::ObjectType::NPC) {
-			TES3::WorldController::get()->mobController->addMob(reference);
+			TES3::WorldController::get()->mobManager->addMob(reference);
 			auto mact = reference->getAttachedMobileActor();
 			if (mact && mact->isActor()) {
 				mact->enterLeaveSimulation(true);
@@ -5128,7 +5128,7 @@ namespace mwse::lua {
 		if (!worldController || !dataHandler) return false;
 
 		// Check to see if there are enemies nearby.
-		if (getOptionalParam<bool>(params, "checkForEnemies", true) && !worldController->mobController->processManager->checkNearbyEnemiesAllowRest()) {
+		if (getOptionalParam<bool>(params, "checkForEnemies", true) && !worldController->mobManager->processManager->checkNearbyEnemiesAllowRest()) {
 			if (getOptionalParam<bool>(params, "showMessage", showMessageByDefault)) {
 				TES3::UI::showMessageBox(dataHandler->nonDynamicData->GMSTs[TES3::GMST::sNotifyMessage2]->value.asString, nullptr, true);
 			}
@@ -5390,7 +5390,7 @@ namespace mwse::lua {
 		}
 
 		TES3::IteratedList<TES3::MobileActor*> actors;
-		auto processManager = TES3::WorldController::get()->mobController->processManager;
+		auto processManager = TES3::WorldController::get()->mobManager->processManager;
 		processManager->findActorsInProximity(&position.value(), range.value(), &actors);
 
 		// Convert list to lua array.

@@ -15,7 +15,7 @@
 #include "TES3InputController.h"
 #include "TES3ItemData.h"
 #include "TES3MobileActor.h"
-#include "TES3MobController.h"
+#include "TES3MobManager.h"
 #include "TES3Quest.h"
 #include "TES3Script.h"
 #include "TES3Sound.h"
@@ -156,7 +156,7 @@ namespace mwse::lua {
 			usertypeDefinition["menuController"] = sol::readonly_property(&TES3::WorldController::menuController);
 			usertypeDefinition["menuSizeSound"] = &TES3::WorldController::soundMenuSize;
 			usertypeDefinition["missSound"] = &TES3::WorldController::soundMiss;
-			usertypeDefinition["mobController"] = sol::readonly_property(&TES3::WorldController::mobController);
+			usertypeDefinition["mobManager"] = sol::readonly_property(&TES3::WorldController::mobManager);
 			usertypeDefinition["month"] = sol::readonly_property(&TES3::WorldController::gvarMonth);
 			usertypeDefinition["monthsToRespawn"] = sol::readonly_property(&TES3::WorldController::gvarMonthsToRespawn);
 			usertypeDefinition["mouseSensitivityX"] = &TES3::WorldController::horzSensitivity;
@@ -202,6 +202,7 @@ namespace mwse::lua {
 			usertypeDefinition["flagEventMenuModeOff"] = &TES3::WorldController::flagEventMenuModeOff;
 			usertypeDefinition["flagEventMenuModeOn"] = &TES3::WorldController::flagEventMenuModeOn;
 			usertypeDefinition["flagMenuMode"] = &TES3::WorldController::flagMenuMode;
+			usertypeDefinition["mobController"] = sol::readonly_property(&TES3::WorldController::mobManager);
 		}
 	}
 }

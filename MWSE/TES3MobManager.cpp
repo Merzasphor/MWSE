@@ -1,4 +1,4 @@
-#include "TES3MobController.h"
+#include "TES3MobManager.h"
 
 #include "LuaManager.h"
 
@@ -64,10 +64,10 @@ namespace TES3 {
 		aiDistance = 1000.0f + 6000.0f * scalar;
 	}
 
-	const auto TES3_ProjectileController_resolveCollisions = reinterpret_cast<void(__thiscall*)(ProjectileController*, float)>(0x5753A0);
-	void ProjectileController::resolveCollisions(float deltaTime) {
+	const auto TES3_ProjectileManager_resolveCollisions = reinterpret_cast<void(__thiscall*)(ProjectileManager*, float)>(0x5753A0);
+	void ProjectileManager::resolveCollisions(float deltaTime) {
 		// Explode flagged spell projectiles.
-		criticalSection.enter("MWSE:ProjectileController::resolveCollisions");
+		criticalSection.enter("MWSE:ProjectileManager::resolveCollisions");
 		for (auto projectile : activeProjectiles) {
 			if (projectile->patchFlagExplode && (projectile->actorFlags & MobileActorFlag::ActiveInSimulation)) {
 				static_cast<MobileSpellProjectile*>(projectile)->explode();
@@ -75,12 +75,12 @@ namespace TES3 {
 		}
 		criticalSection.leave();
 
-		TES3_ProjectileController_resolveCollisions(this, deltaTime);
+		TES3_ProjectileManager_resolveCollisions(this, deltaTime);
 	}
 
-	const auto TES3_MobController_addMob = reinterpret_cast<void(__thiscall*)(MobController*, Reference*)>(0x5636A0);
-	void MobController::addMob(Reference * reference) {
-		TES3_MobController_addMob(this, reference);
+	const auto TES3_MobManager_addMob = reinterpret_cast<void(__thiscall*)(MobManager*, Reference*)>(0x5636A0);
+	void MobManager::addMob(Reference * reference) {
+		TES3_MobManager_addMob(this, reference);
 
 		auto mobile = reference->getAttachedMobileObject();
 		if (mwse::lua::event::MobileActorActivatedEvent::getEventEnabled() && mobile) {
@@ -92,25 +92,25 @@ namespace TES3 {
 		}
 	}
 
-	const auto TES3_MobController_removeMob = reinterpret_cast<void(__thiscall*)(MobController*, Reference*)>(0x5637F0);
-	void MobController::removeMob(Reference * reference) {
-		TES3_MobController_removeMob(this, reference);
+	const auto TES3_MobManager_removeMob = reinterpret_cast<void(__thiscall*)(MobManager*, Reference*)>(0x5637F0);
+	void MobManager::removeMob(Reference * reference) {
+		TES3_MobManager_removeMob(this, reference);
 
 		if (mwse::lua::event::MobileActorDeactivatedEvent::getEventEnabled()) {
 			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileActorDeactivatedEvent(reference));
 		}
 	}
 
-	void MobController::checkPlayerDistance() {
+	void MobManager::checkPlayerDistance() {
 		processManager->checkPlayerDistance();
 	}
 
-	const auto TES3_MobController_addPlayerAsCollider = reinterpret_cast<void(__thiscall*)(MobController*)>(0x563640);
-	void MobController::addPlayerAsCollider() {
-		TES3_MobController_addPlayerAsCollider(this);
+	const auto TES3_MobManager_addPlayerAsCollider = reinterpret_cast<void(__thiscall*)(MobManager*)>(0x563640);
+	void MobManager::addPlayerAsCollider() {
+		TES3_MobManager_addPlayerAsCollider(this);
 	}
 
-	bool MobController::hasMobileCollision(const MobileActor* mobile) {
+	bool MobManager::hasMobileCollision(const MobileActor* mobile) {
 		bool result = false;
 		if (mobile && (mobile->actorFlags & TES3::MobileActorFlag::ActiveInSimulation)) {
 			auto node = mobile->reference->sceneNode;
@@ -121,7 +121,7 @@ namespace TES3 {
 		return result;
 	}
 
-	void MobController::enableMobileCollision(MobileActor* mobile) {
+	void MobManager::enableMobileCollision(MobileActor* mobile) {
 		if (mobile && (mobile->actorFlags & TES3::MobileActorFlag::ActiveInSimulation)) {
 			auto node = mobile->reference->sceneNode;
 			criticalSection_Mobs.enter();
@@ -132,7 +132,7 @@ namespace TES3 {
 		}
 	}
 
-	void MobController::disableMobileCollision(MobileActor* mobile) {
+	void MobManager::disableMobileCollision(MobileActor* mobile) {
 		if (mobile && (mobile->actorFlags & TES3::MobileActorFlag::ActiveInSimulation)) {
 			auto node = mobile->reference->sceneNode;
 			criticalSection_Mobs.enter();

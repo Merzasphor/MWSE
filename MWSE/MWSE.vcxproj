@@ -284,9 +284,9 @@
     <ClInclude Include="TES3ItemData.h" />
     <ClInclude Include="TES3Land.h" />
     <ClInclude Include="TES3LandTexture.h" />
-    <ClInclude Include="TES3MobController.h" />
+    <ClInclude Include="TES3MobManager.h" />
     <ClInclude Include="TES3AttachmentLua.h" />
-    <ClInclude Include="TES3MobControllerLua.h" />
+    <ClInclude Include="TES3MobManagerLua.h" />
     <ClInclude Include="TES3MobileSpellProjectile.h" />
     <ClInclude Include="TES3PlayerAnimationControllerLua.h" />
     <ClInclude Include="TES3ScriptCompiler.h" />
@@ -799,7 +799,7 @@
     <ClCompile Include="TES3MagicEffect.cpp" />
     <ClCompile Include="TES3MagicEffectInstance.cpp" />
     <ClCompile Include="TES3Misc.cpp" />
-    <ClCompile Include="TES3MobControllerLua.cpp" />
+    <ClCompile Include="TES3MobManagerLua.cpp" />
     <ClCompile Include="TES3MobileActorLua.cpp" />
     <ClCompile Include="TES3MobileSpellProjectile.cpp" />
     <ClCompile Include="TES3Moon.cpp" />
@@ -819,7 +819,7 @@
     <ClCompile Include="TES3StdString.cpp" />
     <ClCompile Include="TES3AttachmentLua.cpp" />
     <ClCompile Include="TES3CrimeEvent.cpp" />
-    <ClCompile Include="TES3MobController.cpp" />
+    <ClCompile Include="TES3MobManager.cpp" />
     <ClCompile Include="TES3Stream.cpp" />
     <ClCompile Include="TES3UIInventoryTile.cpp" />
     <ClCompile Include="TES3UIInventoryTileLua.cpp" />

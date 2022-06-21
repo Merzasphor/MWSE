@@ -293,7 +293,7 @@ namespace TES3 {
 		MouseController * mouseController; // 0x50
 		Script * scriptCompileAndRun; // 0x54
 		WeatherController * weatherController; // 0x58
-		MobController * mobController; // 0x5C
+		MobManager * mobManager; // 0x5C
 		KillCounter * playerKills; // 0x60
 		JournalHTML * journalHTML; // 0x64
 		SplashController * splashController; // 0x68
@@ -445,7 +445,7 @@ namespace TES3 {
 	};
 	static_assert(sizeof(WorldController) == 0x374, "TES3::WorldController failed size validation");
 	static_assert(offsetof(WorldController, inputController) == 0x4C, "TES3::WorldController failed offset validation");
-	static_assert(offsetof(WorldController, mobController) == 0x5C, "TES3::WorldController failed offset validation");
+	static_assert(offsetof(WorldController, mobManager) == 0x5C, "TES3::WorldController failed offset validation");
 	static_assert(offsetof(WorldController, gvarGameHour) == 0xA8, "TES3::WorldController failed offset validation");
 	static_assert(offsetof(WorldController, flagMenuMode) == 0xD6, "TES3::WorldController failed offset validation");
 	static_assert(offsetof(WorldController, menuController) == 0x2E4, "TES3::WorldController failed offset validation");

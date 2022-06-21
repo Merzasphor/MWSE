@@ -89,7 +89,7 @@ namespace TES3 {
 	struct MapNote;
 	struct Matrix33;
 	struct Misc;
-	struct MobController;
+	struct MobManager;
 	struct MobileActor;
 	struct MobileActor_vTable;
 	struct MobileCreature;
@@ -114,6 +114,7 @@ namespace TES3 {
 	struct PlayerBounty;
 	struct Probe;
 	struct ProcessManager;
+	struct ProjectileManager;
 	struct Quest;
 	struct Race;
 	struct Reference;

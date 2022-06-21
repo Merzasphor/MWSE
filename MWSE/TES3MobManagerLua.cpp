@@ -1,13 +1,13 @@
-#include "TES3MobControllerLua.h"
+#include "TES3MobManagerLua.h"
 
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
-#include "TES3MobController.h"
+#include "TES3MobManager.h"
 #include "TES3MobileProjectile.h"
 
 namespace mwse::lua {
-	void bindTES3MobController() {
+	void bindTES3MobManager() {
 		// Get our lua state.
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 		auto& state = stateHandle.state;
@@ -32,28 +32,29 @@ namespace mwse::lua {
 			usertypeDefinition["aiDistanceScale"] = sol::property(&TES3::ProcessManager::getAIDistanceScale, &TES3::ProcessManager::setAIDistanceScale);
 		}
 
-		// Binding for TES3::ProjectileController.
+		// Binding for TES3::ProjectileManager.
 		{
 			// Start our usertype.
-			auto usertypeDefinition = state.new_usertype<TES3::ProjectileController>("tes3projectileController");
+			auto usertypeDefinition = state.new_usertype<TES3::ProjectileManager>("tes3projectileManager");
 			usertypeDefinition["new"] = sol::no_constructor;
 
 			// Basic property binding.
-			usertypeDefinition["projectiles"] = sol::readonly_property(&TES3::ProjectileController::activeProjectiles);
+			usertypeDefinition["projectiles"] = sol::readonly_property(&TES3::ProjectileManager::activeProjectiles);
 		}
 
-		// Binding for TES3::MobController.
+		// Binding for TES3::MobManager.
 		{
 			// Start our usertype.
-			auto usertypeDefinition = state.new_usertype<TES3::MobController>("tes3mobController");
+			auto usertypeDefinition = state.new_usertype<TES3::MobManager>("tes3mobManager");
 			usertypeDefinition["new"] = sol::no_constructor;
 
 			// Basic property binding.
-			usertypeDefinition["processManager"] = sol::readonly_property(&TES3::MobController::processManager);
-			usertypeDefinition["projectileController"] = sol::readonly_property(&TES3::MobController::projectileController);
+			usertypeDefinition["processManager"] = sol::readonly_property(&TES3::MobManager::processManager);
+			usertypeDefinition["projectileManager"] = sol::readonly_property(&TES3::MobManager::projectileManager);
 
 			// Legacy bindings.
-			usertypeDefinition["mobController_0x24"] = sol::readonly_property(&TES3::MobController::processManager);
+			usertypeDefinition["mobController_0x24"] = sol::readonly_property(&TES3::MobManager::processManager);
+			usertypeDefinition["projectileController"] = sol::readonly_property(&TES3::MobManager::projectileManager);
 		}
 	}
 }

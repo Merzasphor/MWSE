@@ -32,7 +32,7 @@
 #include "TES3MobileCreature.h"
 #include "TES3MobilePlayer.h"
 #include "TES3MobileProjectile.h"
-#include "TES3MobController.h"
+#include "TES3MobManager.h"
 #include "TES3NPC.h"
 #include "TES3WorldController.h"
 
@@ -339,12 +339,12 @@ namespace TES3 {
 				}
 
 				macp->aiPlanner->assignMobileActor(macp);
-				worldController->mobController->addPlayerAsCollider();
+				worldController->mobManager->addPlayerAsCollider();
 				TES3_MobilePlayer_sub566500(macp);
 			}
 			else {
 				mobile->vTable.mobileObject->enterLeaveSimulation(mobile, true);
-				TES3::WorldController::get()->mobController->addMob(this);
+				TES3::WorldController::get()->mobManager->addMob(this);
 			}
 		}
 	}
@@ -419,7 +419,7 @@ namespace TES3 {
 
 		// Enable simulation for creatures/NPCs.
 		if (baseObject->objectType == TES3::ObjectType::Creature || baseObject->objectType == TES3::ObjectType::NPC) {
-			TES3::WorldController::get()->mobController->addMob(this);
+			TES3::WorldController::get()->mobManager->addMob(this);
 			auto mobile = getAttachedMobileActor();
 			if (mobile) {
 				mobile->enterLeaveSimulationByDistance();
@@ -468,7 +468,7 @@ namespace TES3 {
 			auto mact = getAttachedMobileObject();
 			if (mact) {
 				mact->enterLeaveSimulation(false);
-				TES3::WorldController::get()->mobController->removeMob(this);
+				TES3::WorldController::get()->mobManager->removeMob(this);
 			}
 		}
 		// Update lights for objects.
@@ -978,17 +978,17 @@ namespace TES3 {
 				mobile->collidingReference = nullptr;
 				mobile->enterLeaveSimulationByDistance();
 				if (isCellInMemory) {
-					WorldController::get()->mobController->addMob(reference);
+					WorldController::get()->mobManager->addMob(reference);
 				}
 				else {
-					WorldController::get()->mobController->removeMob(reference);
+					WorldController::get()->mobManager->removeMob(reference);
 				}
 			}
 			else if (isCellInMemory) {
 				// Create mobile if needed.
 				if (sceneNode) {
 					if (reference->baseObject->objectType == ObjectType::Creature || reference->baseObject->objectType == ObjectType::NPC) {
-						WorldController::get()->mobController->addMob(reference);
+						WorldController::get()->mobManager->addMob(reference);
 						mobile = reference->getAttachedMobileActor();
 						if (mobile) {
 							mobile->setFootPoint(position);

@@ -54,7 +54,7 @@
 --- @field menuController tes3uiMenuController *Read-only*. The controller responsible for the menu system.
 --- @field menuSizeSound tes3sound Unused sound. Not used when a menu is resized.
 --- @field missSound tes3sound The sound played when a weapon fails its to-hit check.
---- @field mobController tes3mobController *Read-only*. The controller responsible for mobile objects and collision.
+--- @field mobManager tes3mobManager *Read-only*. The manager responsible for mobile objects and collision.
 --- @field month tes3globalVariable *Read-only*. The `Month` global variable, indicating the current month. Month numbering starts at `0` for the first month, Morning Star.
 --- @field monthsToRespawn tes3globalVariable *Read-only*. The `monthsToRespawn` global variable, used by the game to count the time left until containers are respawned. This is decremented at the end of a month (or end of a day with the appropriate MCP option). When it reaches `0`, containers are respawned.
 --- @field mouseSensitivityX number The horizontal camera rotation sensitivity. Corresponds to the "Horizontal sensitivity" option in the Options menu.

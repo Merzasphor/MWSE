@@ -48,7 +48,7 @@
 #include "TES3MagicEffectInstance.h"
 #include "TES3MagicInstanceController.h"
 #include "TES3Misc.h"
-#include "TES3MobController.h"
+#include "TES3MobManager.h"
 #include "TES3MobileActor.h"
 #include "TES3MobileCreature.h"
 #include "TES3MobilePlayer.h"
@@ -121,7 +121,7 @@
 #include "TES3MagicEffectLua.h"
 #include "TES3MagicSourceInstanceLua.h"
 #include "TES3MiscLua.h"
-#include "TES3MobControllerLua.h"
+#include "TES3MobManagerLua.h"
 #include "TES3MobileActorLua.h"
 #include "TES3MobileCreatureLua.h"
 #include "TES3MobileNPCLua.h"
@@ -486,7 +486,7 @@ namespace mwse::lua {
 		bindTES3MagicEffectInstance();
 		bindTES3MagicSourceInstance();
 		bindTES3Misc();
-		bindTES3MobController();
+		bindTES3MobManager();
 		bindTES3MobileActor();
 		bindTES3MobileCreature();
 		bindTES3MobileNPC();
@@ -875,9 +875,9 @@ namespace mwse::lua {
 		tes3::startNewGame();
 	}
 
-	void __fastcall OnNewGameViaStartingCell(TES3::MobController* mobController) {
+	void __fastcall OnNewGameViaStartingCell(TES3::MobManager* mobManager) {
 		// Call overwritten code.
-		mobController->checkPlayerDistance();
+		mobManager->checkPlayerDistance();
 
 		// Fire off the loaded/cellChanged events.
 		LuaManager& luaManager = LuaManager::getInstance();
@@ -924,7 +924,7 @@ namespace mwse::lua {
 		animController->startAttackAnimation(swing);
 	}
 
-	//MGE
+	//
 	// Collision events: Mobile Actor
 	//
 
@@ -1171,7 +1171,7 @@ namespace mwse::lua {
 	// Projectile expire event.
 	//
 
-	void __fastcall OnProjectileExpire(void* mobController, DWORD _UNUSED_, TES3::Reference* reference) {
+	void __fastcall OnProjectileExpire(TES3::MobManager* mobManager, DWORD _UNUSED_, TES3::Reference* reference) {
 		// Get the fired projectile, and trigger an event for it.
 		if (event::ProjectileExpireEvent::getEventEnabled()) {
 			TES3::MobileProjectile* projectile = reference->getAttachedMobileProjectile();
@@ -1179,7 +1179,8 @@ namespace mwse::lua {
 		}
 
 		// Call overwritten function.
-		reinterpret_cast<void(__thiscall*)(void*, TES3::Reference*)>(0x5637F0)(mobController, reference);
+		const auto removeMob = reinterpret_cast<void(__thiscall*)(TES3::MobManager*, TES3::Reference*)>(0x5637F0);
+		removeMob(mobManager, reference);
 	}
 
 	//
@@ -4158,7 +4159,7 @@ namespace mwse::lua {
 		overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileProjectile, 0x8C, 0x573790, *reinterpret_cast<DWORD*>(&mobileProjectileCollideWater));
 		overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileProjectile, 0x90, 0x561600, *reinterpret_cast<DWORD*>(&mobileObjectCollideActivator));
 
-		// Mobile Projectile Expire
+		// Event: Mobile Projectile Expire
 		genCallEnforced(0x57548A, 0x5637F0, reinterpret_cast<DWORD>(OnProjectileExpire));
 
 		// Event: UI Event
@@ -4519,40 +4520,40 @@ namespace mwse::lua {
 		genCallEnforced(0x570E48, 0x570600, *reinterpret_cast<DWORD*>(&processManagerDetectSneak));
 
 		// Event: Mobile added to controller.
-		auto mobControllerAddMob = &TES3::MobController::addMob;
-		genCallEnforced(0x4665D5, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
-		genCallEnforced(0x484F3D, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
-		genCallEnforced(0x4C6954, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
-		genCallEnforced(0x4DC965, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
-		genCallEnforced(0x4EBCBF, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
-		genCallEnforced(0x5090BF, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
-		genCallEnforced(0x50990C, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
-		genCallEnforced(0x509A6E, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
-		genCallEnforced(0x50EFE3, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
-		genCallEnforced(0x529C3B, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
-		genCallEnforced(0x54DE92, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
-		genCallEnforced(0x57356C, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
-		genCallEnforced(0x5752C6, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
-		genCallEnforced(0x57595B, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
-		genCallEnforced(0x635390, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
+		auto mobManagerAddMob = &TES3::MobManager::addMob;
+		genCallEnforced(0x4665D5, 0x5636A0, *reinterpret_cast<DWORD*>(&mobManagerAddMob));
+		genCallEnforced(0x484F3D, 0x5636A0, *reinterpret_cast<DWORD*>(&mobManagerAddMob));
+		genCallEnforced(0x4C6954, 0x5636A0, *reinterpret_cast<DWORD*>(&mobManagerAddMob));
+		genCallEnforced(0x4DC965, 0x5636A0, *reinterpret_cast<DWORD*>(&mobManagerAddMob));
+		genCallEnforced(0x4EBCBF, 0x5636A0, *reinterpret_cast<DWORD*>(&mobManagerAddMob));
+		genCallEnforced(0x5090BF, 0x5636A0, *reinterpret_cast<DWORD*>(&mobManagerAddMob));
+		genCallEnforced(0x50990C, 0x5636A0, *reinterpret_cast<DWORD*>(&mobManagerAddMob));
+		genCallEnforced(0x509A6E, 0x5636A0, *reinterpret_cast<DWORD*>(&mobManagerAddMob));
+		genCallEnforced(0x50EFE3, 0x5636A0, *reinterpret_cast<DWORD*>(&mobManagerAddMob));
+		genCallEnforced(0x529C3B, 0x5636A0, *reinterpret_cast<DWORD*>(&mobManagerAddMob));
+		genCallEnforced(0x54DE92, 0x5636A0, *reinterpret_cast<DWORD*>(&mobManagerAddMob));
+		genCallEnforced(0x57356C, 0x5636A0, *reinterpret_cast<DWORD*>(&mobManagerAddMob));
+		genCallEnforced(0x5752C6, 0x5636A0, *reinterpret_cast<DWORD*>(&mobManagerAddMob));
+		genCallEnforced(0x57595B, 0x5636A0, *reinterpret_cast<DWORD*>(&mobManagerAddMob));
+		genCallEnforced(0x635390, 0x5636A0, *reinterpret_cast<DWORD*>(&mobManagerAddMob));
 
 		// Event: Mobile removed from controller.
-		auto mobControllerRemoveMob = &TES3::MobController::removeMob;
-		genCallEnforced(0x4668D8, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
-		genCallEnforced(0x484E24, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
-		genCallEnforced(0x4E47C1, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
-		genCallEnforced(0x4E8911, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
-		genCallEnforced(0x4EBD8C, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
-		genCallEnforced(0x50919F, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
-		genCallEnforced(0x523A1F, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
-		genCallEnforced(0x523AE5, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
-		genCallEnforced(0x52E980, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
-		genCallEnforced(0x52EA6D, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
-		genCallEnforced(0x52EDE5, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
-		genCallEnforced(0x574FDB, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
-		genCallEnforced(0x57509A, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
-		genCallEnforced(0x57548A, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
-		genCallEnforced(0x575647, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
+		auto mobManagerRemoveMob = &TES3::MobManager::removeMob;
+		genCallEnforced(0x4668D8, 0x5637F0, *reinterpret_cast<DWORD*>(&mobManagerRemoveMob));
+		genCallEnforced(0x484E24, 0x5637F0, *reinterpret_cast<DWORD*>(&mobManagerRemoveMob));
+		genCallEnforced(0x4E47C1, 0x5637F0, *reinterpret_cast<DWORD*>(&mobManagerRemoveMob));
+		genCallEnforced(0x4E8911, 0x5637F0, *reinterpret_cast<DWORD*>(&mobManagerRemoveMob));
+		genCallEnforced(0x4EBD8C, 0x5637F0, *reinterpret_cast<DWORD*>(&mobManagerRemoveMob));
+		genCallEnforced(0x50919F, 0x5637F0, *reinterpret_cast<DWORD*>(&mobManagerRemoveMob));
+		genCallEnforced(0x523A1F, 0x5637F0, *reinterpret_cast<DWORD*>(&mobManagerRemoveMob));
+		genCallEnforced(0x523AE5, 0x5637F0, *reinterpret_cast<DWORD*>(&mobManagerRemoveMob));
+		genCallEnforced(0x52E980, 0x5637F0, *reinterpret_cast<DWORD*>(&mobManagerRemoveMob));
+		genCallEnforced(0x52EA6D, 0x5637F0, *reinterpret_cast<DWORD*>(&mobManagerRemoveMob));
+		genCallEnforced(0x52EDE5, 0x5637F0, *reinterpret_cast<DWORD*>(&mobManagerRemoveMob));
+		genCallEnforced(0x574FDB, 0x5637F0, *reinterpret_cast<DWORD*>(&mobManagerRemoveMob));
+		genCallEnforced(0x57509A, 0x5637F0, *reinterpret_cast<DWORD*>(&mobManagerRemoveMob));
+		genCallEnforced(0x57548A, 0x5637F0, *reinterpret_cast<DWORD*>(&mobManagerRemoveMob));
+		genCallEnforced(0x575647, 0x5637F0, *reinterpret_cast<DWORD*>(&mobManagerRemoveMob));
 
 		// Event Mobile added/removed from simulation by recalculated distance.
 		auto mobileEnterLeaveSimulationByDistance = &TES3::MobileObject::enterLeaveSimulationByDistance;
@@ -5405,8 +5406,8 @@ namespace mwse::lua {
 		// Initialize extra flag members in MobileProjectile::ctor.
 		writeByteUnprotected(0x5723BC, 0x89);
 		// The explode logic is deferred to execute at the same point as projectile simulation to preserve consistency.
-		auto projectileControllerResolveCollisions = &TES3::ProjectileController::resolveCollisions;
-		genCallEnforced(0x5638F8, 0x5753A0, *reinterpret_cast<DWORD*>(&projectileControllerResolveCollisions));
+		auto projectileManagerResolveCollisions = &TES3::ProjectileManager::resolveCollisions;
+		genCallEnforced(0x5638F8, 0x5753A0, *reinterpret_cast<DWORD*>(&projectileManagerResolveCollisions));
 
 		// Warn about MGE being disabled.
 		if (!InstructionStore::getInstance().isOpcode(OpCode::xGetGS)) {

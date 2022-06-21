@@ -3,7 +3,7 @@
 	More information: https://github.com/MWSE/MWSE/tree/master/docs
 -->
 
-# tes3projectileController
+# tes3projectileManager
 
 A game structure which holds all active projectiles.
 

@@ -3,9 +3,9 @@
 	More information: https://github.com/MWSE/MWSE/tree/master/docs
 -->
 
-# tes3mobController
+# tes3mobManager
 
-The controller responsible for mobile objects and collision.
+The manager responsible for mobile objects and collision.
 
 ## Properties
 
@@ -19,13 +19,13 @@ The controller responsible for mobile objects and collision.
 
 ***
 
-### `projectileController`
+### `projectileManager`
 
-*Read-only*. Access to Projectile Controller.
+*Read-only*. Access to the projectile manager.
 
 **Returns**:
 
-* `result` ([tes3projectileController](../../types/tes3projectileController))
+* `result` ([tes3projectileManager](../../types/tes3projectileManager))
 
 ***
 

@@ -5,7 +5,7 @@
 #include "TES3GameFile.h"
 #include "TES3GameSetting.h"
 #include "TES3GlobalVariable.h"
-#include "TES3MobController.h"
+#include "TES3MobManager.h"
 #include "TES3MobilePlayer.h"
 #include "TES3NPC.h"
 #include "TES3Reference.h"
@@ -543,12 +543,12 @@ namespace TES3 {
 	}
 
 	float WorldController::getAIDistance() const {
-		return mobController->processManager->aiDistance;
+		return mobManager->processManager->aiDistance;
 	}
 
 	void WorldController::setAIDistance(float value) {
-		mobController->processManager->aiDistance = value;
-		aiDistanceScale = mobController->processManager->getAIDistanceScale();
+		mobManager->processManager->aiDistance = value;
+		aiDistanceScale = mobManager->processManager->getAIDistanceScale();
 	}
 
 	float WorldController::getAIDistanceScale() const {
@@ -557,7 +557,7 @@ namespace TES3 {
 
 	void WorldController::setAIDistanceScale(float scale) {
 		aiDistanceScale = scale;
-		mobController->processManager->setAIDistanceScale(scale);
+		mobManager->processManager->setAIDistanceScale(scale);
 	}
 
 	const auto TES3_WorldController_rechargerAddItem = reinterpret_cast<void(__thiscall*)(WorldController*, Object*, Enchantment*, ItemData*)>(0x410790);

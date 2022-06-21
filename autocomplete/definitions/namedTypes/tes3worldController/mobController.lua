@@ -1,6 +1,7 @@
 return {
 	type = "value",
-	description = [[The controller responsible for mobile objects and collision.]],
+	deprecated = true,
+	description = [[Deprecated, please use `mobManager`.]],
 	readOnly = true,
-	valuetype = "tes3mobController",
+	valuetype = "tes3mobManager",
 }
