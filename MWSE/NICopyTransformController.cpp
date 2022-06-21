@@ -37,7 +37,7 @@ namespace NI {
 	}
 
 	bool CopyTransformController::registerStreamables(Stream* stream) {
-		if (TimeController::_registerStreamables(this, stream)) {
+		if (!TimeController::_registerStreamables(this, stream)) {
 			return false;
 		}
 
