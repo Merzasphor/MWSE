@@ -25,8 +25,8 @@ namespace NI {
 		};
 		static_assert(sizeof(CollisionGroup::Intersect) == 0x38, "NI::CollisionGroup::Intersect failed size validation");
 
-		NI::TArray<NI::AVObject*> colliders;
-		NI::TArray<NI::AVObject*> collidees;
+		NI::TArray<Record*> colliders;
+		NI::TArray<Record*> collidees;
 
 
 		bool containsCollider(AVObject* obj);

@@ -66,7 +66,7 @@ namespace TES3 {
 		ProcessManager* processManager; // 0x24
 		ProjectileManager* projectileManager; // 0x28
 		bool mobCollisionActive;
-		IteratedList<Reference*> listPropReferences;
+		IteratedList<Reference*> listMovingProps;
 		CriticalSection criticalSection_Props;
 		CriticalSection criticalSection_Mobs;
 

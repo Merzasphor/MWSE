@@ -36,6 +36,7 @@
     <ClInclude Include="MGEPostShaders.h" />
     <ClInclude Include="MGEPostShadersLua.h" />
     <ClInclude Include="MGEUtilLua.h" />
+    <ClInclude Include="NICollisionGroupLua.h" />
     <ClInclude Include="NIColorData.h" />
     <ClInclude Include="NIColorKey.h" />
     <ClInclude Include="NICopyTransformController.h" />
@@ -674,6 +675,7 @@
     <ClCompile Include="NIBinaryStream.cpp" />
     <ClCompile Include="NICamera.cpp" />
     <ClCompile Include="NICollisionGroup.cpp" />
+    <ClCompile Include="NICollisionGroupLua.cpp" />
     <ClCompile Include="NICollisionSwitch.cpp" />
     <ClCompile Include="NIColorData.cpp" />
     <ClCompile Include="NICopyTransformController.cpp" />

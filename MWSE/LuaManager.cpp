@@ -156,6 +156,7 @@
 #include "TES3WorldControllerLua.h"
 
 #include "NICameraLua.h"
+#include "NICollisionGroupLua.h"
 #include "NICollisionSwitchLua.h"
 #include "NIColorLua.h"
 #include "NIExtraDataLua.h"
@@ -523,6 +524,7 @@ namespace mwse::lua {
 
 		// Bind NI data types.
 		bindNICamera();
+		bindNICollisionGroup();
 		bindNICollisionSwitch();
 		bindNIColor();
 		bindNIDynamicEffect();

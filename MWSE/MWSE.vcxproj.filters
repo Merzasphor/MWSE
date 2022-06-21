@@ -1665,6 +1665,9 @@
     <ClInclude Include="NICopyTransformController.h">
       <Filter>Header Files\DataAdapters\NI</Filter>
     </ClInclude>
+    <ClInclude Include="NICollisionGroupLua.h">
+      <Filter>Header Files\Lua\Bindings\NI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -3627,6 +3630,9 @@
       <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
     <ClCompile Include="NICopyTransformController.cpp">
+      <Filter>Source Files\Lua\Bindings\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="NICollisionGroupLua.cpp">
       <Filter>Source Files\Lua\Bindings\NI</Filter>
     </ClCompile>
   </ItemGroup>

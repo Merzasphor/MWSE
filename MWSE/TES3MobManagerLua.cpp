@@ -5,6 +5,7 @@
 
 #include "TES3MobManager.h"
 #include "TES3MobileProjectile.h"
+#include "TES3Reference.h"
 
 namespace mwse::lua {
 	void bindTES3MobManager() {
@@ -49,6 +50,8 @@ namespace mwse::lua {
 			usertypeDefinition["new"] = sol::no_constructor;
 
 			// Basic property binding.
+			usertypeDefinition["mobCollisionGroup"] = sol::readonly_property(&TES3::MobManager::mobCollisionGroup);
+			usertypeDefinition["movingProps"] = sol::readonly_property(&TES3::MobManager::listMovingProps);
 			usertypeDefinition["processManager"] = sol::readonly_property(&TES3::MobManager::processManager);
 			usertypeDefinition["projectileManager"] = sol::readonly_property(&TES3::MobManager::projectileManager);
 
