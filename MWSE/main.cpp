@@ -8,6 +8,9 @@
 #include "MWSEDefs.h"
 #include "BuildDate.h"
 
+#include "NICopyTransformController.h"
+#include "NIStream.h"
+
 #include "LuaManager.h"
 #include "MGEApi.h"
 #include "TES3Game.h"
@@ -54,6 +57,10 @@ const auto TES3_Game_ctor = reinterpret_cast<TES3::Game * (__thiscall*)(TES3::Ga
 TES3::Game* __fastcall OnGameStructCreated(TES3::Game* game) {
 	// Install necessary patches.
 	mwse::patch::installPatches();
+
+	// Install NetImmerse extensions.
+	auto registered = *reinterpret_cast<TES3::HashMap<int, int>**>(0x7DDE5C);
+	NI::Stream::registerLoader(NI::CopyTransformController::CopyTransformController_Name, &NI::CopyTransformController::loader);
 
 	// Call overloaded function.
 	return TES3_Game_ctor(game);

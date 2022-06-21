@@ -53,12 +53,14 @@ namespace NI {
 		//
 
 		RTTI * getRunTimeTypeInformation() const;
-
-		Object * createClone();
+		bool registerStreamables(Stream* stream);
+		void loadBinary(Stream* stream);
 
 		//
 		// Other related this-call functions.
 		//
+
+		Object* createClone();
 
 		void release();
 

@@ -82,6 +82,7 @@ namespace NI {
 
 		static constexpr auto _loadBinary = reinterpret_cast<void(__thiscall*)(TimeController*, Stream*)>(0x6FC9F0);
 		static constexpr auto _registerStreamables = reinterpret_cast<bool(__thiscall*)(TimeController*, Stream*)>(0x6FCAD0);
+		static constexpr auto _linkObject = reinterpret_cast<void(__thiscall*)(TimeController*, Stream*)>(0x6FCA70);
 		static constexpr auto _saveBinary = reinterpret_cast<void(__thiscall*)(TimeController*, Stream*)>(0x6FCB00);
 		static constexpr auto _isEqual = reinterpret_cast<bool(__thiscall*)(TimeController*, TimeController*)>(0x6FCBA0);
 		static constexpr auto _addViewerStrings = reinterpret_cast<void(__thiscall*)(TimeController*, TArray<char*>*)>(0x6FCC30);
