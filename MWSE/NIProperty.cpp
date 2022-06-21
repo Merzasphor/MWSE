@@ -318,12 +318,8 @@ namespace NI {
 
 	unsigned int TexturingProperty::getUsedMapCount() const {
 		unsigned int count = 0;
-		for (auto i = (unsigned int)MapType::MAP_FIRST; i <= (unsigned int)MapType::MAP_LAST; ++i) {
-			if (i > maps.size()) {
-				break;
-			}
-
-			if (auto map = maps.at(i); map && map->texture) {
+		for (auto map : maps) {
+			if (map && map->texture) {
 				count++;
 			}
 		}
