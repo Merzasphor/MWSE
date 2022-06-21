@@ -168,9 +168,13 @@ namespace NI {
 			DECAL_FIRST = DECAL_1,
 			DECAL_LAST = DECAL_6,
 
+			MAP_FIRST = BASE,
+			MAP_LAST = DECAL_LAST,
+
 			INVALID = UINT32_MAX,
 		};
 
+		static constexpr auto MAX_MAP_COUNT = 8u;
 		static constexpr auto MAX_DECAL_COUNT = (unsigned int)MapType::DECAL_LAST - (unsigned int)MapType::DECAL_FIRST + 1u;
 
 		struct Map {
@@ -224,6 +228,9 @@ namespace NI {
 		void setGlowMap(sol::optional<Map*> map);
 		BumpMap* getBumpMap();
 		void setBumpMap(sol::optional<BumpMap*> map);
+
+		unsigned int getUsedMapCount() const;
+		bool canAddMap() const;
 
 		unsigned int getDecalCount() const;
 		bool canAddDecalMap() const;

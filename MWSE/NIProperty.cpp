@@ -316,6 +316,23 @@ namespace NI {
 		}
 	}
 
+	unsigned int TexturingProperty::getUsedMapCount() const {
+		unsigned int count = 0;
+		for (auto i = (unsigned int)MapType::MAP_FIRST; i <= (unsigned int)MapType::MAP_LAST; ++i) {
+			if (i > maps.size()) {
+				break;
+			}
+
+			if (auto map = maps.at(i); map && map->texture) {
+				count++;
+			}
+		}
+		return count;
+	}
+
+	bool TexturingProperty::canAddMap() const {
+		return getUsedMapCount() < MAX_MAP_COUNT;
+	}
 
 	unsigned int TexturingProperty::getDecalCount() const {
 		auto count = 0;
@@ -332,6 +349,9 @@ namespace NI {
 	}
 
 	bool TexturingProperty::canAddDecalMap() const {
+		if (!canAddMap()) {
+			return false;
+		}
 		return getDecalCount() < MAX_DECAL_COUNT;
 	}
 
