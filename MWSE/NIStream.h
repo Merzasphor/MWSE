@@ -63,6 +63,8 @@ namespace NI {
 		void readLinkId(unsigned int index);
 		void writeLinkId(Object* object);
 
+		static Object* getCopiedObject(const Object* existing);
+
 		typedef Object* (__cdecl *CreateFunction)(Stream*);
 		static void __cdecl registerLoader(const char* className, CreateFunction createObjectFunction);
 

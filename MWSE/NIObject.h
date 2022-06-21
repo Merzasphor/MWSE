@@ -55,6 +55,7 @@ namespace NI {
 		RTTI * getRunTimeTypeInformation() const;
 		bool registerStreamables(Stream* stream);
 		void loadBinary(Stream* stream);
+		bool isEqual(Object* other) const;
 
 		//
 		// Other related this-call functions.
@@ -105,7 +106,7 @@ namespace NI {
 		void * linkObject; // 0x10
 		bool(__thiscall* registerStreamables)(Object*, Stream*); // 0x14
 		void (__thiscall* saveBinary)(Object*, Stream*); // 0x18
-		bool(__thiscall* isEqual)(Object*, Object*); // 0x1C
+		bool(__thiscall* isEqual)(const Object*, const Object*); // 0x1C
 		void(__thiscall* addViewerStrings)(Object*, TArray<char*>*); // 0x20
 		void * getViewerStrings; // 0x24
 		void * unknown_0x28; // 0x28
