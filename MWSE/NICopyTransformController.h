@@ -27,6 +27,7 @@ namespace NI {
 		void linkObject(Stream* stream);
 		void loadBinary(Stream* stream);
 		void saveBinary(Stream* stream);
+		bool isEqual(const CopyTransformController* other) const;
 		void update(float fTime);
 		bool targetIsRequiredType() const;
 

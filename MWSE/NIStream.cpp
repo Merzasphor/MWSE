@@ -78,6 +78,14 @@ namespace NI {
 		outStream->write(&linkId);
 	}
 
+	Object* Stream::getCopiedObject(const Object* existing) {
+		const auto recentlyCopiedObjects = *reinterpret_cast<TES3::HashMap<const Object*, Object*>**>(0x7DE768);
+		if (auto result = recentlyCopiedObjects->getNode(existing)) {
+			return result->value;
+		}
+		return nullptr;
+	}
+
 	void __cdecl Stream::registerLoader(const char* className, CreateFunction createObjectFunction) {
 		_registerLoader(className, createObjectFunction);
 	}

@@ -31,8 +31,8 @@ namespace NI {
 	Object* CopyTransformController::createClone() const {
 		auto copy = new CopyTransformController();
 		TimeController::_copy(this, copy);
-		copy->flags = flags;
-		copy->copyFrom = copyFrom;
+		copy->copyFrom = static_cast<AVObject*>(Stream::getCopiedObject(copyFrom));
+
 		return copy;
 	}
 
@@ -65,6 +65,18 @@ namespace NI {
 		stream->writeLinkId(copyFrom);
 	}
 
+	bool CopyTransformController::isEqual(const CopyTransformController* other) const {
+		if (!TimeController::_isEqual(this, other)) {
+			return false;
+		}
+
+		if (copyFrom && other->copyFrom) {
+			return copyFrom->isEqual(other->copyFrom);
+		}
+
+		return copyFrom == nullptr && other->copyFrom == nullptr;
+	}
+
 	void CopyTransformController::update(float fTime) {
 		if (!target || !copyFrom) {
 			return;
@@ -72,7 +84,7 @@ namespace NI {
 
 		auto validTarget = static_cast<AVObject*>(target);
 		validTarget->localTranslate = copyFrom->localTranslate;
-		*validTarget->localRotation = *copyFrom->localRotation;
+		validTarget->setLocalRotationMatrix(copyFrom->localRotation);
 		validTarget->localScale = copyFrom->localScale;
 	}
 
@@ -113,6 +125,7 @@ namespace NI {
 		linkObject = ConvertThisCall<decltype(linkObject)>(&CopyTransformController::linkObject);
 		loadBinary = ConvertThisCall<decltype(loadBinary)>(&CopyTransformController::loadBinary);
 		saveBinary = ConvertThisCall<decltype(saveBinary)>(&CopyTransformController::saveBinary);
+		isEqual = ConvertThisCall<decltype(isEqual)>(&CopyTransformController::isEqual);
 		targetIsRequiredType = ConvertThisCall<decltype(targetIsRequiredType)>(&CopyTransformController::getRunTimeTypeInformation);
 		update = ConvertThisCall<decltype(update)>(&CopyTransformController::update);
 	}
