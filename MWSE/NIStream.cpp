@@ -1,8 +1,33 @@
 #include "NIStream.h"
 
+#include "NIBinaryStream.h"
+
 #include "MemoryUtil.h"
 
 namespace NI {
+	//
+	// NiStream::LoadingObject
+	//
+
+	void* Stream::LoadingObject::operator new(size_t size) {
+		return mwse::tes3::_new<LoadingObject>();
+	}
+
+	void Stream::LoadingObject::operator delete(void* block) {
+		mwse::tes3::_delete(block);
+	}
+
+	Stream::LoadingObject::LoadingObject() {
+		vTable = reinterpret_cast<VirtualTable*>(0x74F36C);
+		unknown_0x4 = 0;
+		unknown_0x8 = 0;
+		linkId = -1;
+	}
+
+	//
+	// NiStream
+	//
+
 	const auto NI_Stream_ctor = reinterpret_cast<void(__thiscall*)(Stream*)>(0x6C2B60);
 	Stream::Stream() {
 		NI_Stream_ctor(this);
@@ -34,6 +59,23 @@ namespace NI {
 
 	void Stream::writeString(const char* string) {
 		_writeString(this, string);
+	}
+
+	Object* Stream::getLinkObject(int id) const {
+		return _getLinkObject(this, id);
+	}
+
+	int Stream::getLinkId(const Object* object) const {
+		return _getObjectIndex(this, object);
+	}
+
+	void Stream::readLinkId(unsigned int id) {
+		inStream->read(&currentlyLoading->linkId);
+	}
+
+	void Stream::writeLinkId(Object* object) {
+		auto linkId = getLinkId(object);
+		outStream->write(&linkId);
 	}
 
 	void __cdecl Stream::registerLoader(const char* className, CreateFunction createObjectFunction) {

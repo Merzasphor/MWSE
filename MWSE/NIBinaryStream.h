@@ -17,5 +17,15 @@ namespace NI {
 
 		unsigned int read(void* data, unsigned int bytes);
 		unsigned int write(const void* data, unsigned int bytes);
+
+		template <typename T>
+		inline unsigned int read(T* data) {
+			return read(data, sizeof(T));
+		}
+
+		template <typename T>
+		inline unsigned int write(const T* data) {
+			return write(data, sizeof(T));
+		}
 	};
 }
