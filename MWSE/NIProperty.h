@@ -164,9 +164,11 @@ namespace NI {
 			DECAL_4,
 			DECAL_5,
 			DECAL_6,
+			DECAL_7,
+			DECAL_8,
 
 			DECAL_FIRST = DECAL_1,
-			DECAL_LAST = DECAL_6,
+			DECAL_LAST = DECAL_8,
 
 			MAP_FIRST = BASE,
 			MAP_LAST = DECAL_LAST,
