@@ -42,7 +42,6 @@ namespace NI {
 	//
 
 	AlphaProperty::AlphaProperty() {
-		Property::Property();
 		vTable.asProperty = (Property_vTable*)0x7465A8;
 		setFlag(false, 0);
 		setFlagBitField(6, 0xF, 1);
@@ -85,7 +84,6 @@ namespace NI {
 		ambient = value;
 		revisionID++;
 	}
-
 
 	Color MaterialProperty::getDiffuse() {
 		return diffuse;
@@ -421,7 +419,6 @@ namespace NI {
 	//
 
 	ZBufferProperty::ZBufferProperty() {
-		Property::Property();
 		vTable.asProperty = (Property_vTable*)0x74652C;
 		setFlag(false, 0);
 		setFlag(false, 1);
