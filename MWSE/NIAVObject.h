@@ -12,32 +12,32 @@ namespace NI {
 	};
 
 	struct AVObject_vTable : Object_vTable {
-		void* unknown_0x2C;
-		void* unknown_0x30;
-		void* getWorldBound; // 0x34
-		void* unknown_0x38;
-		void* unknown_0x3C;
-		void* unknown_0x40;
-		void* unknown_0x44;
-		void* unknown_0x48;
-		void* unknown_0x4C;
-		void(__thiscall* setAppCulled)(AVObject*, bool); // 0x50
-		bool(__thiscall* getAppCulled)(AVObject*); // 0x54
-		void* unknown_0x58;
+		void (__thiscall* updateControllers)(AVObject*, float); // 0x2C
+		void (__thiscall* applyTransform)(AVObject*, TES3::Matrix33*, TES3::Vector3*, bool); // 0x30
+		Bound* (__thiscall* getWorldBound)(AVObject*); // 0x34
+		void (__thiscall* createWorldVertices)(AVObject*); // 0x38
+		void (__thiscall* updateWorldVertices)(AVObject*); // 0x3C
+		void (__thiscall* destroyWorldVertices)(AVObject*); // 0x40
+		void (__thiscall* createWorldNormals)(AVObject*); // 0x44
+		void (__thiscall* updateWorldNormals)(AVObject*); // 0x48
+		void (__thiscall* destroyWorldNormals)(AVObject*); // 0x4C
+		void (__thiscall* setAppCulled)(AVObject*, bool); // 0x50
+		bool (__thiscall* getAppCulled)(AVObject*); // 0x54
+		void (__thiscall* setPropagationMode)(AVObject*, int); // 0x58
 		AVObject* (__thiscall* getObjectByName)(AVObject*, const char*); // 0x5C
-		void* unknown_0x60;
-		void* unknown_0x64;
-		void* unknown_0x68;
-		void* unknown_0x6C;
-		void* unknown_0x70;
-		void* unknown_0x74;
-		void* unknown_0x78;
-		void* unknown_0x7C;
-		void* unknown_0x80;
-		void* unknown_0x84;
-		void* findIntersections; // 0x88
-		void* updateWorldData; // 0x8C
-		void* updateWorldBound; // 0x90
+		void (__thiscall* updateDownwardPass)(AVObject*, float, bool, bool); // 0x60
+		bool (__thiscall* isVisualObject)(AVObject*); // 0x64
+		void (__thiscall* updatePropertiesDownward)(AVObject*, void*); // 0x68
+		void (__thiscall* updateEffectsDownward)(AVObject*, void*); // 0x6C
+		void* (__thiscall* getPropertyState)(AVObject*, void**); // 0x70
+		void* (__thiscall* getEffectsState)(AVObject*, void**); // 0x74
+		void (__thiscall* display)(AVObject*, Camera*); // 0x78
+		void (__thiscall* updateCollisionData)(AVObject*); // 0x7C
+		bool (__thiscall* testCollisions)(AVObject*, float, void*, void*); // 0x80
+		int (__thiscall* findCollisions)(AVObject*, float, void*, void*); // 0x84
+		bool (__thiscall* findIntersections)(AVObject*, TES3::Vector3*, TES3::Vector3*, Pick*); // 0x88
+		void (__thiscall* updateWorldData)(AVObject*); // 0x8C
+		void (__thiscall* updateWorldBound)(AVObject*); // 0x90
 	};
 	static_assert(sizeof(AVObject_vTable) == 0x94, "NI::AVObject's vtable failed size validation");
 

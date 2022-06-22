@@ -103,13 +103,13 @@ namespace NI {
 		RTTI * (__thiscall * getRTTI)(const Object*); // 0x4
 		Object * (__thiscall * createClone)(Object*); // 0x8
 		void (__thiscall * loadBinary)(Object*, Stream*); // 0xC
-		void * linkObject; // 0x10
-		bool(__thiscall* registerStreamables)(Object*, Stream*); // 0x14
+		void (__thiscall* linkObject)(Object*, Stream*); // 0x10
+		bool (__thiscall* registerStreamables)(Object*, Stream*); // 0x14
 		void (__thiscall* saveBinary)(Object*, Stream*); // 0x18
-		bool(__thiscall* isEqual)(const Object*, const Object*); // 0x1C
-		void(__thiscall* addViewerStrings)(Object*, TArray<char*>*); // 0x20
-		void * getViewerStrings; // 0x24
-		void * unknown_0x28; // 0x28
+		bool (__thiscall* isEqual)(const Object*, const Object*); // 0x1C
+		void (__thiscall* addViewerStrings)(Object*, TArray<char*>*); // 0x20
+		void (__thiscall* processClone)(Object*); // 0x24
+		void (__thiscall* createRendererData)(Object*); // 0x28
 	};
 	static_assert(sizeof(Object_vTable) == 0x2C, "NI::Object's vtable failed size validation");
 }
