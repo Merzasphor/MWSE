@@ -202,6 +202,7 @@ These effects build off of the [standard magic effects](../magic-effects). If yo
 | boundarrow                   | 704       | [Bound Ammo](https://www.nexusmods.com/morrowind/mods/50766)                                       |
 | animatedWeapon               | 711       | [Animate Weapon Spell](https://www.nexusmods.com/morrowind/mods/50165)                             |
 | enchantDrain                 | 786       | [Enchant Drain](https://www.nexusmods.com/morrowind/mods/51124)                                    |
+| soulRelease                  | 787       | [Obedient Summons](https://www.nexusmods.com/morrowind/mods/51472)                                 |
 | fortifyStrength              | 790       | [Class Starting Spells](https://www.nexusmods.com/morrowind/mods/49010)                            |
 | fortifyIntelligence          | 791       | [Class Starting Spells](https://www.nexusmods.com/morrowind/mods/49010)                            |
 | fortifyAgility               | 793       | [Class Starting Spells](https://www.nexusmods.com/morrowind/mods/49010)                            |
