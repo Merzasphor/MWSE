@@ -2605,7 +2605,7 @@ tes3.incrementKillCount({ actor = ... })
 
 ### `tes3.is3rdPerson`
 
-Returns if the game is in 3rd person.
+Returns true if the game is in 3rd person.
 
 ```lua
 local state = tes3.is3rdPerson()
@@ -2637,6 +2637,20 @@ local isAffectedBy = tes3.isAffectedBy({ reference = ..., effect = ..., object =
 **Returns**:
 
 * `isAffectedBy` (boolean)
+
+***
+
+### `tes3.isCharGenFinished`
+
+Returns true if the character generation process has been finished for the current player character.
+
+```lua
+local result = tes3.isCharGenFinished()
+```
+
+**Returns**:
+
+* `result` (boolean)
 
 ***
 

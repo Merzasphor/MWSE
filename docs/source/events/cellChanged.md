@@ -5,7 +5,7 @@
 
 # cellChanged
 
-The cellChanged event is occurs when the player changes cells. This might occur from going through a door, using intervention or recall spells, or from scripted repositioning.
+The cellChanged event is triggered when the player changes cells. This might occur from going through a door, using intervention or recall spells, or from scripted repositioning.
 
 ```lua
 --- @param e cellChangedEventData

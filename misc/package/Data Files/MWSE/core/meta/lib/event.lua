@@ -44,6 +44,7 @@
 --- @field register fun(eventId: '"cellActivated"', callback: fun(e: cellActivatedEventData), options: table?)
 --- @field register fun(eventId: '"cellChanged"', callback: fun(e: cellChangedEventData), options: table?)
 --- @field register fun(eventId: '"cellDeactivated"', callback: fun(e: cellDeactivatedEventData), options: table?)
+--- @field register fun(eventId: '"charGenFinished"', callback: fun(e: charGenFinishedEventData), options: table?)
 --- @field register fun(eventId: '"collideWater"', callback: fun(e: collideWaterEventData), options: table?)
 --- @field register fun(eventId: '"collision"', callback: fun(e: collisionEventData), options: table?)
 --- @field register fun(eventId: '"combatStart"', callback: fun(e: combatStartEventData), options: table?)

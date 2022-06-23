@@ -47,6 +47,7 @@ calcWalkSpeed                 | `"calcWalkSpeed"`                 | [`calcWalkSp
 cellActivated                 | `"cellActivated"`                 | [`cellActivated`](https://mwse.github.io/MWSE/events/cellActivated)
 cellChanged                   | `"cellChanged"`                   | [`cellChanged`](https://mwse.github.io/MWSE/events/cellChanged)
 cellDeactivated               | `"cellDeactivated"`               | [`cellDeactivated`](https://mwse.github.io/MWSE/events/cellDeactivated)
+charGenFinished               | `"charGenFinished"`               | [`charGenFinished`](https://mwse.github.io/MWSE/events/charGenFinished)
 collideWater                  | `"collideWater"`                  | [`collideWater`](https://mwse.github.io/MWSE/events/collideWater)
 collision                     | `"collision"`                     | [`collision`](https://mwse.github.io/MWSE/events/collision)
 combatStart                   | `"combatStart"`                   | [`combatStart`](https://mwse.github.io/MWSE/events/combatStart)

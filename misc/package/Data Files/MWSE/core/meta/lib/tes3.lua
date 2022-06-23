@@ -1371,7 +1371,7 @@ function tes3.incrementKillCount(params) end
 --- @class tes3.incrementKillCount.params
 --- @field actor tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance|string The actor (or their ID) for whom to increase player's kill count.
 
---- Returns if the game is in 3rd person.
+--- Returns true if the game is in 3rd person.
 --- @return boolean state No description yet available.
 function tes3.is3rdPerson() end
 
@@ -1393,6 +1393,10 @@ function tes3.isAffectedBy(params) end
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string No description yet available.
 --- @field effect number? *Optional*. A numerical identifier of the magic effect to perform a check for. Maps to [`tes3.effect`](https://mwse.github.io/MWSE/references/magic-effects/) constant, including those claimed with `tes3.claimSpellEffectId()`, and then added with `tes3.addMagicEffect()`.
 --- @field object tes3alchemy|tes3enchantment|tes3spell|tes3magicEffect|string|nil *Optional*. An object to perform a check for.
+
+--- Returns true if the character generation process has been finished for the current player character.
+--- @return boolean result No description yet available.
+function tes3.isCharGenFinished() end
 
 --- Compares two key objects and returns their equality. Returns true if the objects are equal, false otherwise.
 --- @param params tes3.isKeyEqual.params This table accepts the following values:
