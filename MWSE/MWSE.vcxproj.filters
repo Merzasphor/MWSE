@@ -1668,6 +1668,9 @@
     <ClInclude Include="NICollisionGroupLua.h">
       <Filter>Header Files\Lua\Bindings\NI</Filter>
     </ClInclude>
+    <ClInclude Include="LuaAttackHitEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -3634,6 +3637,9 @@
     </ClCompile>
     <ClCompile Include="NICollisionGroupLua.cpp">
       <Filter>Source Files\Lua\Bindings\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaAttackHitEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

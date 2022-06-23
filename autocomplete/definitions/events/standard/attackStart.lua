@@ -1,7 +1,9 @@
 return {
 	type = "event",
-	description = [[This event is invoked whenever an actor starts an attack with their fists or a weapon, or a creature makes any attack. More precisely, it is when the actor raises a melee weapon or draws an arrow. There is not necessarily a target in range, or any target at all for the player.]],
-	related = { "attack" },
+	description = [[This event is invoked whenever an actor starts an attack with their fists or a weapon, or a creature makes any attack. More precisely, it is when the actor raises a melee weapon or draws an arrow. There is not necessarily a target in range, or any target at all for the player.
+
+Lockpicks and probes do not invoke this event.]],
+	related = { "attack", "attackHit" },
 	eventData = {
 		["mobile"] = {
 			type = "tes3mobileActor",

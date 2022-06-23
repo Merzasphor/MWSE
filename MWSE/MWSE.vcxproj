@@ -15,6 +15,7 @@
     <ClInclude Include="BitUtil.h" />
     <ClInclude Include="BSAnimationManager.h" />
     <ClInclude Include="LuaActiveMagicEffectIconsUpdatedEvent.h" />
+    <ClInclude Include="LuaAttackHitEvent.h" />
     <ClInclude Include="LuaCalcBlockChanceEvent.h" />
     <ClInclude Include="LuaConsoleReferenceChangedEvent.h" />
     <ClInclude Include="LuaDialogueEnvironmentCreatedEvent.h" />
@@ -518,6 +519,7 @@
     <ClCompile Include="LuaAddTopicEvent.cpp" />
     <ClCompile Include="LuaAttackEvent.cpp" />
     <ClCompile Include="LuaAttackStartEvent.cpp" />
+    <ClCompile Include="LuaAttackHitEvent.cpp" />
     <ClCompile Include="LuaBarterOfferEvent.cpp" />
     <ClCompile Include="LuaBaseEvent.cpp" />
     <ClCompile Include="LuaBodyPartAssignedEvent.cpp" />

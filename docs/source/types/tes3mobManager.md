@@ -11,7 +11,7 @@ The manager responsible for mobile objects and collision.
 
 ### `processManager`
 
-*Read-only*. Access to Process Manager.
+*Read-only*. Access to the process manager.
 
 **Returns**:
 

@@ -10,6 +10,7 @@
 #include "LuaAddTempSoundEvent.h"
 #include "LuaAddTopicEvent.h"
 #include "LuaAttackEvent.h"
+#include "LuaAttackHitEvent.h"
 #include "LuaAttackStartEvent.h"
 #include "LuaBarterOfferEvent.h"
 #include "LuaBodyPartAssignedEvent.h"
@@ -164,6 +165,7 @@ namespace mwse::lua::event {
 		usertypeDefinition["addSound"] = sol::property(&AddSoundEvent::getEventEnabled, &AddSoundEvent::setEventEnabled);
 		usertypeDefinition["addTempSound"] = sol::property(&AddTempSoundEvent::getEventEnabled, &AddTempSoundEvent::setEventEnabled);
 		usertypeDefinition["attack"] = sol::property(&AttackEvent::getEventEnabled, &AttackEvent::setEventEnabled);
+		usertypeDefinition["attackHit"] = sol::property(&AttackHitEvent::getEventEnabled, &AttackHitEvent::setEventEnabled);
 		usertypeDefinition["attackStart"] = sol::property(&AttackStartEvent::getEventEnabled, &AttackStartEvent::setEventEnabled);
 		usertypeDefinition["barterOffer"] = sol::property(&BarterOfferEvent::getEventEnabled, &BarterOfferEvent::setEventEnabled);
 		usertypeDefinition["bodyPartAssigned"] = sol::property(&BodyPartAssignedEvent::getEventEnabled, &BodyPartAssignedEvent::setEventEnabled);

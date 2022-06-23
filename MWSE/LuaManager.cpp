@@ -183,6 +183,7 @@
 #include "LuaActiveMagicEffectIconsUpdatedEvent.h"
 #include "LuaAddTopicEvent.h"
 #include "LuaAttackEvent.h"
+#include "LuaAttackHitEvent.h"
 #include "LuaBarterOfferEvent.h"
 #include "LuaCalcBarterPriceEvent.h"
 #include "LuaCalcBlockChanceEvent.h"
@@ -924,6 +925,17 @@ namespace mwse::lua {
 	void __fastcall OnAttackStart(TES3::ActorAnimationController* animController, DWORD _UNUSED_, float swing) {
 		// Call our wrapper for the function so that events are triggered.
 		animController->startAttackAnimation(swing);
+	}
+
+	void __fastcall OnAttackStrike(TES3::MobileActor* mobileActor) {
+		// Invoke event before the action.
+		if (event::AttackHitEvent::getEventEnabled()) {
+			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::AttackHitEvent(mobileActor));
+		}
+
+		// Call original function.
+		const auto TES3_MACT_combatWeaponStrike = reinterpret_cast<void(__thiscall*)(TES3::MobileActor*)>(0x556F40);
+		TES3_MACT_combatWeaponStrike(mobileActor);
 	}
 
 	//
@@ -4101,6 +4113,9 @@ namespace mwse::lua {
 		genCallEnforced(0x541489, TES3_ActorAnimController_attackCheckMeleeHit, reinterpret_cast<DWORD>(OnAttack));
 		genCallEnforced(0x5414CD, TES3_ActorAnimController_attackCheckMeleeHit, reinterpret_cast<DWORD>(OnAttack));
 		genCallEnforced(0x569E78, TES3_ActorAnimController_attackCheckMeleeHit, reinterpret_cast<DWORD>(OnAttack));
+
+		// Event: Melee strike
+		genCallEnforced(0x5419D7, 0x556F40, reinterpret_cast<DWORD>(OnAttackStrike));
 
 		// Event: Begin physical attack
 		genCallEnforced(0x54A4BA, 0x5411C0, reinterpret_cast<DWORD>(OnAttackStart));

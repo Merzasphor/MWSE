@@ -6,6 +6,7 @@ return {
 	["addSound"] = "addSound",
 	["addTempSound"] = "addTempSound",
 	["attack"] = "attack",
+	["attackHit"] = "attackHit",
 	["attackStart"] = "attackStart",
 	["barterOffer"] = "barterOffer",
 	["bodyPartAssigned"] = "bodyPartAssigned",

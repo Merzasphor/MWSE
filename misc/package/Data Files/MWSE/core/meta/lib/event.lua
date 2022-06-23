@@ -14,6 +14,7 @@
 --- @field register fun(eventId: '"addSound"', callback: fun(e: addSoundEventData), options: table?)
 --- @field register fun(eventId: '"addTempSound"', callback: fun(e: addTempSoundEventData), options: table?)
 --- @field register fun(eventId: '"attack"', callback: fun(e: attackEventData), options: table?)
+--- @field register fun(eventId: '"attackHit"', callback: fun(e: attackHitEventData), options: table?)
 --- @field register fun(eventId: '"attackStart"', callback: fun(e: attackStartEventData), options: table?)
 --- @field register fun(eventId: '"barterOffer"', callback: fun(e: barterOfferEventData), options: table?)
 --- @field register fun(eventId: '"bodyPartAssigned"', callback: fun(e: bodyPartAssignedEventData), options: table?)

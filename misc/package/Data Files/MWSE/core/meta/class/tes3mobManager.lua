@@ -6,7 +6,7 @@
 
 --- The manager responsible for mobile objects and collision.
 --- @class tes3mobManager
---- @field processManager tes3processManager *Read-only*. Access to Process Manager.
+--- @field processManager tes3processManager *Read-only*. Access to the process manager.
 --- @field projectileManager tes3projectileManager *Read-only*. Access to the projectile manager.
 tes3mobManager = {}
 

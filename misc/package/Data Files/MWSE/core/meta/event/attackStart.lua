@@ -5,6 +5,8 @@
 --- @diagnostic disable:undefined-doc-name
 
 --- This event is invoked whenever an actor starts an attack with their fists or a weapon, or a creature makes any attack. More precisely, it is when the actor raises a melee weapon or draws an arrow. There is not necessarily a target in range, or any target at all for the player.
+--- 
+--- Lockpicks and probes do not invoke this event.
 --- @class attackStartEventData
 --- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.
 --- @field attackSpeed number The speed multiplier of the attack animation, normally equal to the weapon speed (1.0 for no equipped weapon). May be changed to change the current attack's speed. See also [`tes3actorAnimationController`](https://mwse.github.io/MWSE/types/tes3actorAnimationController/) to change animation speed during the attack.
