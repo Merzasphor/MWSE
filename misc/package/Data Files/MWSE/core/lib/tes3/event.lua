@@ -36,6 +36,7 @@ return {
 	["cellActivated"] = "cellActivated",
 	["cellChanged"] = "cellChanged",
 	["cellDeactivated"] = "cellDeactivated",
+	["charGenFinished"] = "charGenFinished",
 	["collideWater"] = "collideWater",
 	["collision"] = "collision",
 	["combatStart"] = "combatStart",
