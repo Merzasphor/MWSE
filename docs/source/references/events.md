@@ -17,6 +17,7 @@ activeMagicEffectIconsUpdated | `"activeMagicEffectIconsUpdated"` | [`activeMagi
 addSound                      | `"addSound"`                      | [`addSound`](https://mwse.github.io/MWSE/events/addSound)
 addTempSound                  | `"addTempSound"`                  | [`addTempSound`](https://mwse.github.io/MWSE/events/addTempSound)
 attack                        | `"attack"`                        | [`attack`](https://mwse.github.io/MWSE/events/attack)
+attackHit                     | `"attackHit"`                     | [`attackHit`](https://mwse.github.io/MWSE/events/attackHit)
 attackStart                   | `"attackStart"`                   | [`attackStart`](https://mwse.github.io/MWSE/events/attackStart)
 barterOffer                   | `"barterOffer"`                   | [`barterOffer`](https://mwse.github.io/MWSE/events/barterOffer)
 bodyPartAssigned              | `"bodyPartAssigned"`              | [`bodyPartAssigned`](https://mwse.github.io/MWSE/events/bodyPartAssigned)
