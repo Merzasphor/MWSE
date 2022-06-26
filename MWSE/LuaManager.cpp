@@ -220,7 +220,6 @@
 #include "LuaInfoResponseEvent.h"
 #include "LuaItemDroppedEvent.h"
 #include "LuaItemTileUpdatedEvent.h"
-#include "LuaJumpEvent.h"
 #include "LuaKeyDownEvent.h"
 #include "LuaKeyUpEvent.h"
 #include "LuaLeveledCreaturePickedEvent.h"
@@ -2895,24 +2894,7 @@ namespace mwse::lua {
 	//
 
 	void __fastcall OnJump(TES3::MobileActor* mobile, TES3::Vector3* velocity) {
-		// Allow the event to override the text.
-		if (mwse::lua::event::JumpEvent::getEventEnabled()) {
-			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
-			sol::object eventResult = stateHandle.triggerEvent(new mwse::lua::event::JumpEvent(mobile, *velocity));
-			if (eventResult.valid()) {
-				sol::table eventData = eventResult;
-				if (eventData.get_or("block", false)) {
-					return;
-				}
-				velocity = &getOptionalParam<TES3::Vector3>(eventData, "velocity", *velocity);
-			}
-		}
-
-		// Overwritten code for this hook.
-		mobile->setInstantVelocity(&TES3::Vector3());
-		mobile->updateConstantVelocity(velocity);
-		mobile->vTable.mobileActor->setJumping(mobile, true);
-		mobile->applyJumpFatigueCost();
+		mobile->doJump(*velocity, true, true);
 	}
 
 	__declspec(naked) void patchJump() {

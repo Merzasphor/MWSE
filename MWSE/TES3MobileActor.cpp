@@ -13,6 +13,7 @@
 #include "LuaDamageEvent.h"
 #include "LuaDamageHandToHandEvent.h"
 #include "LuaDeathEvent.h"
+#include "LuaJumpEvent.h"
 #include "LuaMobileObjectCollisionEvent.h"
 
 #include "TES3Actor.h"
@@ -222,7 +223,8 @@ namespace TES3 {
 		}
 		else if (source->isItem()) {
 			auto item = static_cast<Item*>(source);
-			EquipmentStack* equipmentStack = nullptr;
+			EquipmentStack equipmentStack;
+			EquipmentStack* equipmentStackPointer = &equipmentStack;
 
 			// Ignore items without enchantments that can be casted.
 			auto enchantment = item->getEnchantment();
@@ -233,8 +235,7 @@ namespace TES3 {
 			if (item->objectType == ObjectType::Book)
 			{
 				// Create a basic equipment stack for enchanted scrolls.
-				equipmentStack = new EquipmentStack();
-				equipmentStack->object = source;
+				equipmentStack.object = source;
 			}
 			else {
 				if (equipItem) {
@@ -248,20 +249,20 @@ namespace TES3 {
 
 					// Get the equipment stack from the actor.
 					if (itemData) {
-						equipmentStack = actor->getEquippedItemExact(item, itemData);
+						equipmentStackPointer = actor->getEquippedItemExact(item, itemData);
 					}
 					else {
-						equipmentStack = actor->getEquippedItem(item);
+						equipmentStackPointer = actor->getEquippedItem(item);
 					}
 
 
-					if (!equipmentStack) {
+					if (!equipmentStackPointer) {
 						// Equip the item if desired.
 						this->equipItem(item, itemData);
-						equipmentStack = actor->getEquippedItem(item);
+						equipmentStackPointer = actor->getEquippedItem(item);
 
 						// Return if the item could not be equipped.
-						if (!equipmentStack) {
+						if (!equipmentStackPointer) {
 							return false;
 						}
 					}
@@ -272,18 +273,17 @@ namespace TES3 {
 					}
 
 					// Create an equipment stack for items that should not be equipped automatically.
-					equipmentStack = new EquipmentStack();
-					equipmentStack->object = source;
-					equipmentStack->itemData = itemData;
+					equipmentStack.object = source;
+					equipmentStack.itemData = itemData;
 				}
 			}
 
 			// Equip the item enchantment.
-			setCurrentMagicFromEquipmentStack(equipmentStack);
+			setCurrentMagicFromEquipmentStack(equipmentStackPointer);
 
 			// Update the GUI if desired.
 			if (updateGUI) {
-				UI::updateCurrentMagicFromEquipmentStack(equipmentStack);
+				UI::updateCurrentMagicFromEquipmentStack(equipmentStackPointer);
 				UI::updateMagicMenuSelection();
 			}
 		}
@@ -551,6 +551,54 @@ namespace TES3 {
 		TES3_MobileActor_applyJumpFatigueCost(this);
 	}
 
+	bool MobileActor::doJump(Vector3 velocity, bool applyFatigueCost, bool isDefaultJump) {
+		// Allow the event to override the velocity or block the jump.
+		if (mwse::lua::event::JumpEvent::getEventEnabled()) {
+			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::object eventResult = stateHandle.triggerEvent(new mwse::lua::event::JumpEvent(this, velocity, applyFatigueCost, isDefaultJump));
+			if (eventResult.valid()) {
+				sol::table eventData = eventResult;
+				if (eventData.get_or("block", false)) {
+					return false;
+				}
+				velocity = mwse::lua::getOptionalParam<Vector3>(eventData, "velocity", velocity);
+				applyFatigueCost = mwse::lua::getOptionalParam<bool>(eventData, "applyFatigueCost", applyFatigueCost);
+			}
+		}
+
+		// Execute the actual jumping logic.
+		Vector3 zeroVector;
+		setInstantVelocity(&zeroVector);
+		updateConstantVelocity(&velocity);
+		vTable.mobileActor->setJumping(this, true);
+		if (applyFatigueCost) {
+			applyJumpFatigueCost();
+		}
+		return true;
+	}
+
+	bool MobileActor::doJump_lua(sol::optional<sol::table> params) {
+		sol::optional<Vector3> velocity = mwse::lua::getOptionalParamVector3(params, "velocity");
+		bool applyFatigueCost = mwse::lua::getOptionalParam(params, "applyFatigueCost", true);
+		bool allowMidairJumping = mwse::lua::getOptionalParam(params, "allowMidairJumping", false);
+		bool isDefaultJump = false;
+
+		// Prevent jumping if it would break logic.
+		if (!canJump(allowMidairJumping)) {
+			return false;
+		}
+
+		// Get the default jumping velocity if none has been provided.
+		bool isVelocityValid = velocity.has_value();
+		if (!isVelocityValid) {
+			Vector2 zeroVector;
+			velocity = calculateJumpVelocity(zeroVector);
+			isDefaultJump = applyFatigueCost && !allowMidairJumping;
+		}
+
+		return doJump(velocity.value(), applyFatigueCost, isDefaultJump);
+	}
+
 	const auto TES3_MobileActor_isNotKnockedDown = reinterpret_cast<bool(__thiscall*)(const MobileActor*)>(0x527580);
 	bool MobileActor::isNotKnockedDown() const {
 		return TES3_MobileActor_isNotKnockedDown(this);
@@ -562,7 +610,8 @@ namespace TES3 {
 	}
 
 	bool MobileActor::isReadyingWeapon() const {
-		return actionData.animStateAttack == AttackAnimationState::ReadyingWeap || actionData.animStateAttack == AttackAnimationState::UnreadyWeap;
+		return actionData.animStateAttack == AttackAnimationState::ReadyingWeap ||
+			actionData.animStateAttack == AttackAnimationState::UnreadyWeap;
 	}
 
 	bool MobileActor::isParalyzed() const {
@@ -570,7 +619,27 @@ namespace TES3 {
 	}
 
 	bool MobileActor::canAct() const {
-		return !isDead() && isNotKnockedDown() && !isAttackingOrCasting() && !isParalyzed() && !isReadyingWeapon();
+		return !isDead() &&
+			isNotKnockedDown() &&
+			!isAttackingOrCasting() &&
+			!isParalyzed() &&
+			!isReadyingWeapon();
+	}
+
+	bool MobileActor::canJump(bool allowMidairJumping) const {
+		return WorldController::get()->collisionEnabled &&
+			!isDead() &&
+			isNotKnockedDown() &&
+			!isParalyzed() &&
+			!getMovementFlagSwimming() &&
+			!getMovementFlagFlying() &&
+			(allowMidairJumping || (!getMovementFlagJumping() && !getMovementFlagFalling())) &&
+			(!getMobileActorMovementFlag(ActorMovement::Unknown) || thisFrameDeltaPosition.length() <= 0.0099999998);
+	}
+
+	bool MobileActor::canJump_lua(sol::optional<sol::table> params) const {
+		bool allowMidairJumping = mwse::lua::getOptionalParam(params, "allowMidairJumping", false);
+		return canJump(allowMidairJumping);
 	}
 
 	const auto TES3_MobileActor_calculateRunSpeed = reinterpret_cast<float(__thiscall*)(MobileActor*)>(0x527050);
@@ -646,6 +715,60 @@ namespace TES3 {
 		}
 
 		return speed;
+	}
+
+	Vector3 MobileActor::calculateJumpVelocity(Vector2 direction) {
+		GameSetting** GMSTs = DataHandler::get()->nonDynamicData->GMSTs;
+		float fJumpEncumbranceBase = GMSTs[TES3::GMST::fJumpEncumbranceBase]->value.asFloat;
+		float fJumpEncumbranceMultiplier = GMSTs[TES3::GMST::fJumpEncumbranceMultiplier]->value.asFloat;
+		float fJumpAcrobaticsBase = GMSTs[TES3::GMST::fJumpAcrobaticsBase]->value.asFloat;
+		float fJumpAcroMultiplier = GMSTs[TES3::GMST::fJumpAcroMultiplier]->value.asFloat;
+		float fJumpRunMultiplier = GMSTs[TES3::GMST::fJumpRunMultiplier]->value.asFloat;
+		float acrobaticsSkill = getSkillValue(TES3::SkillID::Acrobatics);
+		int jumpEffectMagnitude = getEffectAttributeJump();
+
+		// Calculate acrobatics jump height coefficients.
+		float lowCoefficient = acrobaticsSkill;
+		float highCoefficient = 0.0f;
+		if (acrobaticsSkill > 50.0f) {
+			lowCoefficient = 50.0f;
+			highCoefficient = acrobaticsSkill - 50.0f;
+		}
+
+		// Calculate the impact of encumbrance on jump height.
+		float encumbranceTerm = fJumpEncumbranceBase + fJumpEncumbranceMultiplier * (1 - encumbrance.getNormalized());
+
+		// Calculate the jump height.
+		float jumpHeight = fJumpAcrobaticsBase + pow(lowCoefficient / 15.0f, fJumpAcroMultiplier);
+		jumpHeight += 3.0f * highCoefficient * fJumpAcroMultiplier;
+		jumpHeight += jumpEffectMagnitude * 64;
+		jumpHeight *= encumbranceTerm;
+		if (getMovementFlagRunning()) {
+			jumpHeight *= fJumpRunMultiplier;
+		}
+		jumpHeight *= getFatigueTerm();
+		jumpHeight -= WorldController::get()->mobManager->gravity.z;
+		jumpHeight /= 3.0f;
+
+		// Velocity is unavailable outside of the physics loop.
+		// For now this is solved by letting the caller provide a direction vector.
+		// The code snippet below is the actual logic and velocity that is required to automatically determine the direction.
+		/*if (getMovementFlagWalking() || getMovementFlagRunning()) {
+			Vector3 localVelocity = reference->sceneNode->getLocalVelocity();
+			Vector3 direction = Vector3(localVelocity.x, localVelocity.y, 0).normalized();*/
+		if (direction.length() > 0) {
+			direction.normalize();
+			return Vector3(direction.x, direction.y, 1.0f) * jumpHeight * 0.707f;
+		}
+		else
+		{
+			return Vector3(0.0f, 0.0f, jumpHeight);
+		}
+	}
+
+	Vector3 MobileActor::calculateJumpVelocity_lua(sol::optional<sol::table> params) {
+		Vector2 direction = mwse::lua::getOptionalParam<Vector2>(params, "direction", Vector2());
+		return calculateJumpVelocity(direction);
 	}
 
 	const auto TES3_MobileActor_calcDerivedStats = reinterpret_cast<void(__thiscall*)(const MobileActor*, Statistic*)>(0x527BC0);

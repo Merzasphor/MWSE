@@ -8,11 +8,13 @@
 namespace mwse::lua::event {
 	class JumpEvent : public ObjectFilteredEvent, public DisableableEvent<JumpEvent> {
 	public:
-		JumpEvent(TES3::MobileActor* mobile, TES3::Vector3& velocity);
+		JumpEvent(TES3::MobileActor* mobile, TES3::Vector3& velocity, bool applyFatigueCost, bool isDefaultJump);
 		sol::table createEventTable();
 
 	protected:
 		TES3::MobileActor* m_MobileActor;
 		TES3::Vector3 m_Velocity;
+		bool m_ApplyFatigueCost;
+		bool m_IsDefaultJump;
 	};
 }

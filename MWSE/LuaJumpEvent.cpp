@@ -7,10 +7,12 @@
 #include "TES3Vectors.h"
 
 namespace mwse::lua::event {
-	JumpEvent::JumpEvent(TES3::MobileActor* mobile, TES3::Vector3& velocity) :
+	JumpEvent::JumpEvent(TES3::MobileActor* mobile, TES3::Vector3& velocity, bool applyFatigueCost, bool isDefaultJump) :
 		ObjectFilteredEvent("jump", mobile->reference),
 		m_MobileActor(mobile),
-		m_Velocity(velocity)
+		m_Velocity(velocity),
+		m_ApplyFatigueCost(applyFatigueCost),
+		m_IsDefaultJump(isDefaultJump)
 	{
 
 	}
@@ -23,6 +25,8 @@ namespace mwse::lua::event {
 		eventData["mobile"] = m_MobileActor;
 		eventData["reference"] = m_MobileActor->reference;
 		eventData["velocity"] = m_Velocity;
+		eventData["applyFatigueCost"] = m_ApplyFatigueCost;
+		eventData["isDefaultJump"] = m_IsDefaultJump;
 
 		return eventData;
 	}

@@ -127,7 +127,11 @@ namespace mwse::lua {
 		usertypeDefinition["applyHealthDamage"] = &TES3::MobileActor::applyHealthDamage;
 		usertypeDefinition["applyFatigueDamage"] = &TES3::MobileActor::applyFatigueDamage;
 		usertypeDefinition["applyDamage"] = &TES3::MobileActor::applyDamage_lua;
+		usertypeDefinition["applyJumpFatigueCost"] = &TES3::MobileActor::applyJumpFatigueCost;
 		usertypeDefinition["calcEffectiveDamage"] = &TES3::MobileActor::calcEffectiveDamage_lua;
+		usertypeDefinition["calculateJumpVelocity"] = &TES3::MobileActor::calculateJumpVelocity_lua;
+		usertypeDefinition["canJump"] = &TES3::MobileActor::canJump_lua;
+		usertypeDefinition["doJump"] = &TES3::MobileActor::doJump_lua;
 		usertypeDefinition["equip"] = &TES3::MobileActor::equip_lua;
 		usertypeDefinition["equipMagic"] = &TES3::MobileActor::equipMagic_lua;
 		usertypeDefinition["getActiveMagicEffects"] = &TES3::MobileActor::getActiveMagicEffectsList_lua;

@@ -79,7 +79,8 @@ namespace TES3 {
 			Swimming = 0x800,
 			Jumping = 0x1000,
 			Flying = 0x2000,
-			Falling = 0x4000
+			Falling = 0x4000,
+			Unknown = 0x8000
 		};
 
 		enum FlagBit {
