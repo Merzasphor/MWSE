@@ -1,6 +1,6 @@
 return {
 	type = "event",
-	description = "This event is called when an actor tries to jump. The velocity can be modified.",
+	description = "This event is called when an actor tries to jump. The `velocity` and `applyFatigueCost` can be modified.",
 	eventData = {
 		["mobile"] = {
 			type = "tes3mobileActor",
@@ -15,6 +15,15 @@ return {
 		["velocity"] = {
 			type = "tes3vector3",
 			description = "The velocity of the jump.",
+		},
+		["applyFatigueCost"] = {
+			type = "bool",
+			description = "If `false`, this jump will not reduce fatigue.",
+		},
+		["isDefaultJump"] = {
+			type = "bool",
+			readOnly = true,
+			description = "If `true`, the jump has been initiated from the ground and without custom velocity or fatigue cost. This does not change if other event callbacks change any of these parameters.",
 		},
 	},
 	filter = "reference",

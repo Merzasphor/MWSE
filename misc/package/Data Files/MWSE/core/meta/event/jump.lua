@@ -4,12 +4,14 @@
 --- @meta
 --- @diagnostic disable:undefined-doc-name
 
---- This event is called when an actor tries to jump. The velocity can be modified.
+--- This event is called when an actor tries to jump. The `velocity` and `applyFatigueCost` can be modified.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/events/jump).
 --- @class jumpEventData
 --- @field block boolean If set to `true`, vanilla logic will be suppressed. Returning `false` will set this to `true`.
 --- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.
+--- @field applyFatigueCost bool If `false`, this jump will not reduce fatigue.
+--- @field isDefaultJump bool *Read-only*. If `true`, the jump has been initiated from the ground and without custom velocity or fatigue cost. This does not change if other event callbacks change any of these parameters.
 --- @field mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer *Read-only*. The mobile actor that is trying to jump.
 --- @field reference tes3reference *Read-only*. Mobile's related reference.
 --- @field velocity tes3vector3 The velocity of the jump.
