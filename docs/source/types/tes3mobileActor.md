@@ -187,7 +187,27 @@ A vector that shows the size of the bounding box in X and Y directions. `boundSi
 
 ### `canAct`
 
-*Read-only*. If true, the actor is able to freely execute actions like attacking or casting magic. This is equal to checking if the actor is not dead, knocked down, stunned, paralyzed, drawing/sheathing their weapon, attacking, casting magic or using a lockpick or probe.
+*Read-only*. If `true`, the actor is able to freely execute actions like attacking or casting magic. This is equal to checking if the actor is not dead, knocked down, stunned, paralyzed, drawing/sheathing their weapon, attacking, casting magic or using a lockpick or probe.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
+### `canJump`
+
+*Read-only*. If `true`, the actor is currently able to jump. This is equal to checking if the actor is not dead, knocked down, stunned, paralyzed, jumping, falling, swimming or flying.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
+### `canJumpMidair`
+
+*Read-only*. If `true`, the actor is currently able to jump midair. This is equal to checking if the actor is not dead, knocked down, stunned, paralyzed, swimming or flying. For more information on midair jumping see [`tes3mobileActor:doJump()`](https://mwse.github.io/MWSE/types/tes3mobileActor/#dojump).
 
 **Returns**:
 

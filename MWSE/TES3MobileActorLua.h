@@ -130,7 +130,6 @@ namespace mwse::lua {
 		usertypeDefinition["applyJumpFatigueCost"] = &TES3::MobileActor::applyJumpFatigueCost;
 		usertypeDefinition["calcEffectiveDamage"] = &TES3::MobileActor::calcEffectiveDamage_lua;
 		usertypeDefinition["calculateJumpVelocity"] = &TES3::MobileActor::calculateJumpVelocity_lua;
-		usertypeDefinition["canJump"] = &TES3::MobileActor::canJump_lua;
 		usertypeDefinition["doJump"] = &TES3::MobileActor::doJump_lua;
 		usertypeDefinition["equip"] = &TES3::MobileActor::equip_lua;
 		usertypeDefinition["equipMagic"] = &TES3::MobileActor::equipMagic_lua;
@@ -162,6 +161,8 @@ namespace mwse::lua {
 		// Functions exposed as properties.
 		usertypeDefinition["armorRating"] = sol::property(&TES3::MobileActor::getArmorRating_lua);
 		usertypeDefinition["canAct"] = sol::readonly_property(&TES3::MobileActor::canAct);
+		usertypeDefinition["canJump"] = sol::readonly_property(&TES3::MobileActor::canJump_lua);
+		usertypeDefinition["canJumpMidair"] = sol::readonly_property(&TES3::MobileActor::canJumpMidair_lua);
 		usertypeDefinition["cell"] = sol::property(&TES3::MobileActor::getCell);
 		usertypeDefinition["hasFreeAction"] = sol::readonly_property(&TES3::MobileActor::isNotKnockedDown);
 		usertypeDefinition["isAttackingOrCasting"] = sol::readonly_property(&TES3::MobileActor::isAttackingOrCasting);

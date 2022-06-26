@@ -26,7 +26,9 @@
 --- @field attributes tes3statistic[]|tes3statisticSkill[] *Read-only*. Access to a table of 8 [`tes3statistic`](https://mwse.github.io/MWSE/types/tes3statistic/) objects for the actor's attributes.
 --- @field barterGold number The current amount of gold that the actor has access to for bartering.
 --- @field blind number Direct access to the actor's blind effect attribute.
---- @field canAct boolean *Read-only*. If true, the actor is able to freely execute actions like attacking or casting magic. This is equal to checking if the actor is not dead, knocked down, stunned, paralyzed, drawing/sheathing their weapon, attacking, casting magic or using a lockpick or probe.
+--- @field canAct boolean *Read-only*. If `true`, the actor is able to freely execute actions like attacking or casting magic. This is equal to checking if the actor is not dead, knocked down, stunned, paralyzed, drawing/sheathing their weapon, attacking, casting magic or using a lockpick or probe.
+--- @field canJump boolean *Read-only*. If `true`, the actor is currently able to jump. This is equal to checking if the actor is not dead, knocked down, stunned, paralyzed, jumping, falling, swimming or flying.
+--- @field canJumpMidair boolean *Read-only*. If `true`, the actor is currently able to jump midair. This is equal to checking if the actor is not dead, knocked down, stunned, paralyzed, swimming or flying. For more information on midair jumping see [`tes3mobileActor:doJump()`](https://mwse.github.io/MWSE/types/tes3mobileActor/#dojump).
 --- @field cell tes3cell *Read-only*. Fetches the cell that the actor is in.
 --- @field chameleon number Direct access to the actor's chameleon effect attribute.
 --- @field collidingReference tes3reference *Read-only*. The reference that the mobile has collided with this frame.

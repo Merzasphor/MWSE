@@ -265,7 +265,8 @@ namespace TES3 {
 		bool isAttackingOrCasting() const;
 		bool canAct() const;
 		bool canJump(bool allowMidairJumping = false) const;
-		bool canJump_lua(sol::optional<sol::table> params) const;
+		bool canJump_lua() const;
+		bool canJumpMidair_lua() const;
 		float calculateRunSpeed();
 		float calculateSwimSpeed();
 		float calculateSwimRunSpeed();

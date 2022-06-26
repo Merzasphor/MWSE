@@ -637,9 +637,12 @@ namespace TES3 {
 			(!getMobileActorMovementFlag(ActorMovement::Unknown) || thisFrameDeltaPosition.length() <= 0.0099999998);
 	}
 
-	bool MobileActor::canJump_lua(sol::optional<sol::table> params) const {
-		bool allowMidairJumping = mwse::lua::getOptionalParam(params, "allowMidairJumping", false);
-		return canJump(allowMidairJumping);
+	bool MobileActor::canJump_lua() const {
+		return canJump(false);
+	}
+
+	bool MobileActor::canJumpMidair_lua() const {
+		return canJump(true);
 	}
 
 	const auto TES3_MobileActor_calculateRunSpeed = reinterpret_cast<float(__thiscall*)(MobileActor*)>(0x527050);
