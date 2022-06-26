@@ -1326,6 +1326,16 @@ local result = myObject:applyHealthDamage(damage, isPlayerAttack, scaleWithDiffi
 
 ***
 
+### `applyJumpFatigueCost`
+
+Reduces the actor's current fatigue by the amount a regular jump would currently cost.
+
+```lua
+myObject:applyJumpFatigueCost()
+```
+
+***
+
 ### `calcEffectiveDamage`
 
 Calculates the damage that would be inflicted to an actor after armor and/or resistance. Returns the actual damage done after armor mitigation and resistance, but before difficulty scaling.

@@ -167,6 +167,9 @@ function tes3mobileActor:applyFatigueDamage(fatigueDamage, swing, alwaysPlayHitV
 --- @return boolean result No description yet available.
 function tes3mobileActor:applyHealthDamage(damage, isPlayerAttack, scaleWithDifficulty, doNotChangeHealth) end
 
+--- Reduces the actor's current fatigue by the amount a regular jump would currently cost.
+function tes3mobileActor:applyJumpFatigueCost() end
+
 --- Calculates the damage that would be inflicted to an actor after armor and/or resistance. Returns the actual damage done after armor mitigation and resistance, but before difficulty scaling.
 --- @param params tes3mobileActor.calcEffectiveDamage.params This table accepts the following values:
 --- 
