@@ -51,6 +51,8 @@ namespace mwse::lua {
 			// Basic function binding.
 			usertypeDefinition["copy"] = &TES3::Vector2::copy;
 			usertypeDefinition["length"] = &TES3::Vector2::length;
+			usertypeDefinition["normalize"] = &TES3::Vector2::normalize;
+			usertypeDefinition["normalized"] = &TES3::Vector2::normalized;
 		}
 
 		// Binding for TES3::Vector3.

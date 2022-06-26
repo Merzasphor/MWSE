@@ -2642,7 +2642,7 @@ local isAffectedBy = tes3.isAffectedBy({ reference = ..., effect = ..., object =
 
 ### `tes3.isCharGenFinished`
 
-Returns true if the character generation process has been finished for the current player character.
+Returns `true` if the character generation process has been finished for the current player character.
 
 ```lua
 local result = tes3.isCharGenFinished()

@@ -37,6 +37,8 @@ namespace TES3 {
 		Vector2 copy() const;
 
 		float length() const;
+		bool normalize();
+		Vector2 normalized() const;
 	};
 	static_assert(sizeof(Vector2) == 0x8, "TES3::Vector2 failed size validation");
 

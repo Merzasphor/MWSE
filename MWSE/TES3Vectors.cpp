@@ -89,6 +89,24 @@ namespace TES3 {
 		return sqrt(x * x + y * y);
 	}
 
+	bool Vector2::normalize() {
+		float len = length();
+		if (len > 0.0f) {
+			x = x / len;
+			y = y / len;
+			return true;
+		}
+		x = 0;
+		y = 0;
+		return false;
+	}
+
+	Vector2 Vector2::normalized() const {
+		auto copy = Vector2(x, y);
+		copy.normalize();
+		return copy;
+	}
+
 	//
 	// Vector3
 	//

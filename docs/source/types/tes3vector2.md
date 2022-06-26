@@ -59,6 +59,34 @@ local result = myObject:length()
 
 ***
 
+### `normalize`
+
+Normalize the vector in-place, or set its components to zero if normalization is not possible. Returns `true` if the vector was successfully normalized.
+
+```lua
+local result = myObject:normalize()
+```
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
+### `normalized`
+
+Get a normalized copy of the vector.
+
+```lua
+local result = myObject:normalized()
+```
+
+**Returns**:
+
+* `result` ([tes3vector2](../../types/tes3vector2))
+
+***
+
 ## Functions
 
 ### `new`
