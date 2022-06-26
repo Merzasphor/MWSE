@@ -187,6 +187,34 @@ function tes3mobileActor:calcEffectiveDamage(params) end
 --- @field applyArmor boolean? *Optional*. If armor should mitigate the incoming damage.
 --- @field resistAttribute number? *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
 
+--- Calculates the starting velocity of a jump.
+--- @param params tes3mobileActor.calculateJumpVelocity.params This table accepts the following values:
+--- 
+--- `direction`: tes3vector2? — *Optional*. The ground direction vector used to calculate the velocity. If not specified, a zero-length direction vector for a regular jump without movement will be used.
+--- @return tes3vector3 result No description yet available.
+function tes3mobileActor:calculateJumpVelocity(params) end
+
+---Table parameter definitions for `tes3mobileActor.calculateJumpVelocity`.
+--- @class tes3mobileActor.calculateJumpVelocity.params
+--- @field direction tes3vector2? *Optional*. The ground direction vector used to calculate the velocity. If not specified, a zero-length direction vector for a regular jump without movement will be used.
+
+--- Forces the actor to jump. If `velocity` or other parameters with non-default values are specified it will be treated as a non-default jump during the [`jump`](https://mwse.github.io/MWSE/events/jump) event. Returns `false` if the actor is currently unable to jump or the jump has been cancelled, otherwise returns `true`.
+--- @param params tes3mobileActor.doJump.params This table accepts the following values:
+--- 
+--- `velocity`: tes3vector3? — *Optional*. The initial velocity of the jump. If not specified, the velocity of a regular jump without movement will be used.
+--- 
+--- `applyFatigueCost`: boolean? — *Default*: `true`. If `true`, reduces the actor's current fatigue by the amount a regular jump would currently cost. Will not reduce fatigue if `false`.
+--- 
+--- `allowMidairJumping`: boolean? — *Default*: `false`. If `true`, enables the jump to be performed while already jumping or falling. Does not work during levitation or other methods of flying.
+--- @return boolean result No description yet available.
+function tes3mobileActor:doJump(params) end
+
+---Table parameter definitions for `tes3mobileActor.doJump`.
+--- @class tes3mobileActor.doJump.params
+--- @field velocity tes3vector3? *Optional*. The initial velocity of the jump. If not specified, the velocity of a regular jump without movement will be used.
+--- @field applyFatigueCost boolean? *Default*: `true`. If `true`, reduces the actor's current fatigue by the amount a regular jump would currently cost. Will not reduce fatigue if `false`.
+--- @field allowMidairJumping boolean? *Default*: `false`. If `true`, enables the jump to be performed while already jumping or falling. Does not work during levitation or other methods of flying.
+
 --- Equips an item, optionally adding the item if needed. If the best match is already equipped, it does not perform an unequip-equip cycle, but does return `true`.
 --- @param params tes3mobileActor.equip.params This table accepts the following values:
 --- 

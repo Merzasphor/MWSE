@@ -1357,6 +1357,46 @@ local result = myObject:calcEffectiveDamage({ damage = ..., applyArmor = ..., re
 
 ***
 
+### `calculateJumpVelocity`
+
+Calculates the starting velocity of a jump.
+
+```lua
+local result = myObject:calculateJumpVelocity({ direction = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `direction` ([tes3vector2](../../types/tes3vector2)): *Optional*. The ground direction vector used to calculate the velocity. If not specified, a zero-length direction vector for a regular jump without movement will be used.
+
+**Returns**:
+
+* `result` ([tes3vector3](../../types/tes3vector3))
+
+***
+
+### `doJump`
+
+Forces the actor to jump. If `velocity` or other parameters with non-default values are specified it will be treated as a non-default jump during the [`jump`](https://mwse.github.io/MWSE/events/jump) event. Returns `false` if the actor is currently unable to jump or the jump has been cancelled, otherwise returns `true`.
+
+```lua
+local result = myObject:doJump({ velocity = ..., applyFatigueCost = ..., allowMidairJumping = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `velocity` ([tes3vector3](../../types/tes3vector3)): *Optional*. The initial velocity of the jump. If not specified, the velocity of a regular jump without movement will be used.
+	* `applyFatigueCost` (boolean): *Default*: `true`. If `true`, reduces the actor's current fatigue by the amount a regular jump would currently cost. Will not reduce fatigue if `false`.
+	* `allowMidairJumping` (boolean): *Default*: `false`. If `true`, enables the jump to be performed while already jumping or falling. Does not work during levitation or other methods of flying.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
 ### `equip`
 
 Equips an item, optionally adding the item if needed. If the best match is already equipped, it does not perform an unequip-equip cycle, but does return `true`.
