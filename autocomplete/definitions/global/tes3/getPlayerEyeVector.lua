@@ -1,5 +1,5 @@
 return {
 	type = "function",
 	description = [[Returns the look direction of the player's eyes.]],
-	returns = {{ name = "position", type = "tes3vector3" }},
+	returns = {{ name = "lookDirection", type = "tes3vector3" }},
 }

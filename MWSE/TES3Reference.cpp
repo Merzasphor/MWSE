@@ -626,6 +626,30 @@ namespace TES3 {
 		setObjectModified(true);
 	}
 
+	Vector3 Reference::getForwardDirectionVector() const {
+		if (sceneNode) {
+			Matrix33* localRotation = sceneNode->localRotation;
+			return Vector3(localRotation->m0.y, localRotation->m1.y, localRotation->m2.y);
+		}
+		return Vector3();
+	}
+
+	Vector3 Reference::getRightDirectionVector() const {
+		if (sceneNode) {
+			Matrix33* localRotation = sceneNode->localRotation;
+			return Vector3(localRotation->m0.x, localRotation->m1.x, localRotation->m2.x);
+		}
+		return Vector3();
+	}
+
+	Vector3 Reference::getUpDirectionVector() const {
+		if (sceneNode) {
+			Matrix33* localRotation = sceneNode->localRotation;
+			return Vector3(localRotation->m0.z, localRotation->m1.z, localRotation->m2.z);
+		}
+		return Vector3();
+	}
+
 	float Reference::getFacing() {
 		return getOrientation()->z;
 	}

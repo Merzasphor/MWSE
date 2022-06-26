@@ -2212,12 +2212,12 @@ local position = tes3.getPlayerEyePosition()
 Returns the look direction of the player's eyes.
 
 ```lua
-local position = tes3.getPlayerEyeVector()
+local lookDirection = tes3.getPlayerEyeVector()
 ```
 
 **Returns**:
 
-* `position` ([tes3vector3](../../types/tes3vector3))
+* `lookDirection` ([tes3vector3](../../types/tes3vector3))
 
 ***
 

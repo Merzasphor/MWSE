@@ -89,16 +89,20 @@ namespace TES3 {
 		void setReferenceActive(bool skipDeleted = true);
 		void setReferenceInactive(bool skipDeleted = true);
 
-		Vector3 * getPosition();
+		Vector3* getPosition();
 		void setPosition(const Vector3 * newPosition);
 
-		Vector3 * getOrientation();
+		Vector3* getOrientation();
 		void setOrientation(const Vector3 * newOrientation);
 
 		float getFacing();
 		void setFacing(float facing);
 
 		float getAngleToReference(Reference* reference);
+
+		Vector3 getForwardDirectionVector() const;
+		Vector3 getRightDirectionVector() const;
+		Vector3 getUpDirectionVector() const;
 
 		TravelDestination * setTravelDestination(const Vector3 * position, const Vector3 * orientation, Cell * cell = nullptr);
 

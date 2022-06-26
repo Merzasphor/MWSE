@@ -17,6 +17,7 @@
 --- @field data table A generic lua table that data can be written to, and synced to/from the save. All information stored must be valid for serialization to json. For item references, this is the same table as on the `tes3itemData` structure. To store data that doesn't get serialized to/from the save, use `tempData`.
 --- @field destination tes3travelDestinationNode|nil *Read-only*. Returns the travel destination node for this reference, or `nil`. This can be used to determine where a given door links to.
 --- @field facing number Convenient access to the z-component of the reference's orientation. Setting the facing sets the reference as modified.
+--- @field forwardDirection tes3vector3 *Read-only*. The normalized forward or Y direction vector of the reference's `sceneNode`. Will return a zero-length vector if the `sceneNode` is unavailable.
 --- @field hasNoCollision boolean Sets the no-collision flag on this reference, and recalculates collision groups. Use the [`setNoCollisionFlag()`](https://mwse.github.io/MWSE/types/tes3reference/?h=setnocollisionflag#setnocollisionflag) function to manage collision group recalculation instead.
 --- @field isDead boolean|nil *Read-only*. Returns `true` if the object is dead, `false` if they are alive, or `nil` if that couldn't be determined.
 --- @field isEmpty boolean Friendly access onto the reference's empty inventory flag.
@@ -34,6 +35,7 @@
 --- @field orientation tes3vector3 Access to the reference's orientation. Setting the orientation sets the reference as modified.
 --- @field position tes3vector3 Access to the reference's position. Setting the position sets the reference as modified.
 --- @field previousNode tes3reference *Read-only*. The previous reference in the parent reference list.
+--- @field rightDirection tes3vector3 *Read-only*. The normalized right or X direction vector of the reference's `sceneNode`. Will return a zero-length vector if the `sceneNode` is unavailable.
 --- @field sceneNode niBillboardNode|niCollisionSwitch|niNode|niSwitchNode *Read-only*. The scene graph node that the reference uses for rendering.
 --- @field sourceFormId number No description yet available.
 --- @field sourceModId number No description yet available.
@@ -44,6 +46,7 @@
 --- @field targetFormId number No description yet available.
 --- @field targetModId number No description yet available.
 --- @field tempData table As with the `data` field, a generic lua table that data can be written to. No information in this table will persist into saves. For item references, this is the same table as on the `tes3itemData` structure.
+--- @field upDirection tes3vector3 *Read-only*. The normalized up or Z direction vector of the reference's `sceneNode`. Will return a zero-length vector if the `sceneNode` is unavailable.
 tes3reference = {}
 
 --- Causes this reference to activate another. This will lead them to go through doors, pick up items, etc.

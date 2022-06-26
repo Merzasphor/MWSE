@@ -132,6 +132,16 @@ Convenient access to the z-component of the reference's orientation. Setting the
 
 ***
 
+### `forwardDirection`
+
+*Read-only*. The normalized forward or Y direction vector of the reference's `sceneNode`. Will return a zero-length vector if the `sceneNode` is unavailable.
+
+**Returns**:
+
+* `result` ([tes3vector3](../../types/tes3vector3))
+
+***
+
 ### `hasNoCollision`
 
 Sets the no-collision flag on this reference, and recalculates collision groups. Use the [`setNoCollisionFlag()`](https://mwse.github.io/MWSE/types/tes3reference/?h=setnocollisionflag#setnocollisionflag) function to manage collision group recalculation instead.
@@ -392,6 +402,16 @@ The previous object in parent collection's list.
 
 ***
 
+### `rightDirection`
+
+*Read-only*. The normalized right or X direction vector of the reference's `sceneNode`. Will return a zero-length vector if the `sceneNode` is unavailable.
+
+**Returns**:
+
+* `result` ([tes3vector3](../../types/tes3vector3))
+
+***
+
 ### `scale`
 
 The object's scale.
@@ -539,6 +559,16 @@ As with the `data` field, a generic lua table that data can be written to. No in
 **Returns**:
 
 * `result` (table)
+
+***
+
+### `upDirection`
+
+*Read-only*. The normalized up or Z direction vector of the reference's `sceneNode`. Will return a zero-length vector if the `sceneNode` is unavailable.
+
+**Returns**:
+
+* `result` ([tes3vector3](../../types/tes3vector3))
 
 ***
 

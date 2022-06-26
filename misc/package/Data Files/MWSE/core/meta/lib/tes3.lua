@@ -1214,7 +1214,7 @@ function tes3.getPlayerCell() end
 function tes3.getPlayerEyePosition() end
 
 --- Returns the look direction of the player's eyes.
---- @return tes3vector3 position No description yet available.
+--- @return tes3vector3 lookDirection No description yet available.
 function tes3.getPlayerEyeVector() end
 
 --- Gets the gold count carried by the player.
