@@ -100,9 +100,10 @@ namespace TES3 {
 
 		float getAngleToReference(Reference* reference);
 
-		Vector3 getForwardDirectionVector() const;
-		Vector3 getRightDirectionVector() const;
-		Vector3 getUpDirectionVector() const;
+		Matrix33 getRotationMatrix();
+		Vector3 getForwardDirectionVector();
+		Vector3 getRightDirectionVector();
+		Vector3 getUpDirectionVector();
 
 		TravelDestination * setTravelDestination(const Vector3 * position, const Vector3 * orientation, Cell * cell = nullptr);
 

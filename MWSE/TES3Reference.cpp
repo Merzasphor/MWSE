@@ -626,28 +626,29 @@ namespace TES3 {
 		setObjectModified(true);
 	}
 
-	Vector3 Reference::getForwardDirectionVector() const {
+	Matrix33 Reference::getRotationMatrix() {
 		if (sceneNode) {
-			Matrix33* localRotation = sceneNode->localRotation;
-			return Vector3(localRotation->m0.y, localRotation->m1.y, localRotation->m2.y);
+			return *sceneNode->localRotation;
 		}
-		return Vector3();
+		Matrix33 rotation;
+		Vector3* orientation = getOrientation();
+		rotation.fromEulerXYZ(orientation->x, orientation->y, orientation->z);
+		return rotation;
 	}
 
-	Vector3 Reference::getRightDirectionVector() const {
-		if (sceneNode) {
-			Matrix33* localRotation = sceneNode->localRotation;
-			return Vector3(localRotation->m0.x, localRotation->m1.x, localRotation->m2.x);
-		}
-		return Vector3();
+	Vector3 Reference::getForwardDirectionVector() {
+		Matrix33 rotation = getRotationMatrix();
+		return Vector3(rotation.m0.y, rotation.m1.y, rotation.m2.y);
 	}
 
-	Vector3 Reference::getUpDirectionVector() const {
-		if (sceneNode) {
-			Matrix33* localRotation = sceneNode->localRotation;
-			return Vector3(localRotation->m0.z, localRotation->m1.z, localRotation->m2.z);
-		}
-		return Vector3();
+	Vector3 Reference::getRightDirectionVector() {
+		Matrix33 rotation = getRotationMatrix();
+		return Vector3(rotation.m0.x, rotation.m1.x, rotation.m2.x);
+	}
+
+	Vector3 Reference::getUpDirectionVector() {
+		Matrix33 rotation = getRotationMatrix();
+		return Vector3(rotation.m0.z, rotation.m1.z, rotation.m2.z);
 	}
 
 	float Reference::getFacing() {

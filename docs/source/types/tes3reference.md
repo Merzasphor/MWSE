@@ -134,7 +134,7 @@ Convenient access to the z-component of the reference's orientation. Setting the
 
 ### `forwardDirection`
 
-*Read-only*. The normalized forward or Y direction vector of the reference's `sceneNode`. Will return a zero-length vector if the `sceneNode` is unavailable.
+*Read-only*. The normalized forward or Y direction vector of the reference.
 
 **Returns**:
 
@@ -404,7 +404,7 @@ The previous object in parent collection's list.
 
 ### `rightDirection`
 
-*Read-only*. The normalized right or X direction vector of the reference's `sceneNode`. Will return a zero-length vector if the `sceneNode` is unavailable.
+*Read-only*. The normalized right or X direction vector of the reference.
 
 **Returns**:
 
@@ -564,7 +564,7 @@ As with the `data` field, a generic lua table that data can be written to. No in
 
 ### `upDirection`
 
-*Read-only*. The normalized up or Z direction vector of the reference's `sceneNode`. Will return a zero-length vector if the `sceneNode` is unavailable.
+*Read-only*. The normalized up or Z direction vector of the reference.
 
 **Returns**:
 
