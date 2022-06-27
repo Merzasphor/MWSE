@@ -24,15 +24,15 @@ namespace NI {
 			unsigned short numBonesPerVertex; // 0x24
 			void* bufferData; // 0x28
 
-			std::span<unsigned short> getBones();
-			std::span<unsigned short> getStripLengths();
-			std::span<Triangle> getTriangles();
-			std::span<unsigned short> getVertices();
+			nonstd::span<unsigned short> getBones();
+			nonstd::span<unsigned short> getStripLengths();
+			nonstd::span<Triangle> getTriangles();
+			nonstd::span<unsigned short> getVertices();
 		};
 		unsigned int partitionCount; // 0x8
 		Partition* partitions; // 0xC
 
-		std::span<Partition> getPartitions();
+		nonstd::span<Partition> getPartitions();
 	};
 	static_assert(sizeof(SkinPartition) == 0x10, "NI::SkinPartition failed size validation");
 	static_assert(sizeof(SkinPartition::Partition) == 0x2C, "NI::SkinPartition::Partition failed size validation");
@@ -50,7 +50,7 @@ namespace NI {
 			VertexWeight* weights; // 0x48
 			unsigned short weightCount; // 0x48
 
-			std::span<VertexWeight> getWeights();
+			nonstd::span<VertexWeight> getWeights();
 		};
 		Pointer<SkinPartition> partition; // 0x8
 		TES3::Matrix33 rotation; // 0xC
@@ -59,7 +59,7 @@ namespace NI {
 		unsigned int numBones; // 0x40
 		BoneData* boneData; // 0x44
 
-		std::span<BoneData> getBones();
+		nonstd::span<BoneData> getBones();
 	};
 	static_assert(sizeof(SkinData) == 0x48, "NI::SkinData failed size validation");
 	static_assert(sizeof(SkinData::BoneData) == 0x4C, "NI::SkinData::BoneData failed size validation");
@@ -71,7 +71,7 @@ namespace NI {
 		AVObject** bones; // 0x10
 		int unknown_0x14;
 
-		std::span<AVObject*> getBoneObjects();
+		nonstd::span<AVObject*> getBoneObjects();
 	};
 	static_assert(sizeof(SkinInstance) == 0x18, "NI::SkinInstance failed size validation");
 }

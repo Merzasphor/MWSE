@@ -14,7 +14,7 @@ namespace NI {
 		// Custom functions.
 		//
 
-		std::span<BYTE> getGenericData();
+		nonstd::span<BYTE> getGenericData();
 
 		ExtraData* getNext() const;
 		void setNext(ExtraData* next);
@@ -65,7 +65,7 @@ namespace NI {
 		// Custom functions.
 		//
 
-		std::span<TextKey> getKeys() const;
+		nonstd::span<TextKey> getKeys() const;
 
 	};
 	static_assert(sizeof(TextKeyExtraData) == 0x1C, "NI::TextKeyExtraData failed size validation");

@@ -5,9 +5,9 @@
 #include "TES3Util.h"
 
 namespace NI {
-	std::span<BYTE> ExtraData::getGenericData() {
+	nonstd::span<BYTE> ExtraData::getGenericData() {
 		if (genericData) {
-			return std::span((BYTE*)genericData, genericDataLength);
+			return nonstd::span((BYTE*)genericData, genericDataLength);
 		}
 		return {};
 	}
@@ -47,9 +47,9 @@ namespace NI {
 		mwse::tes3::setDataString(&text, t);
 	}
 
-	std::span<TextKey> TextKeyExtraData::getKeys() const {
+	nonstd::span<TextKey> TextKeyExtraData::getKeys() const {
 		if (key) {
-			return std::span(key, keyCount);
+			return nonstd::span(key, keyCount);
 		}
 		return {};
 	}

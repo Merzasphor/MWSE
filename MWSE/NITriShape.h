@@ -21,8 +21,8 @@ namespace NI {
 		TriShapeData* getModelData() const;
 
 		// Convenient access to model data.
-		std::span<TES3::Vector3> getVertices() const;
-		std::span<TES3::Vector3> getNormals() const;
+		nonstd::span<TES3::Vector3> getVertices() const;
+		nonstd::span<TES3::Vector3> getNormals() const;
 
 	};
 	static_assert(sizeof(TriShape) == 0xAC, "NI::TriShape failed size validation");

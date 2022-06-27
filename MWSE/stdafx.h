@@ -24,8 +24,6 @@
 #include <unordered_set>
 #include <vector>
 #include <future>
-#include <span>
-#include <numbers>
 
 // Required C includes.
 #include <cmath>
@@ -39,6 +37,10 @@
 #include <psapi.h>
 #include <dbghelp.h>
 #include <d3d.h>
+
+// 3rd party library: span-lite
+// URL: https://github.com/martinmoene/span-lite
+#include <nonstd/span.hpp>
 
 // DirectInput/Sound requirements.
 #define DIRECTINPUT_VERSION 0x0800

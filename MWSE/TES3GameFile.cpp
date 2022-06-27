@@ -162,8 +162,8 @@ namespace TES3 {
 		return gmdt.playerName;
 	}
 
-	std::span<GameFile*> GameFile::getMasters() {
-		return std::span(arrayMasters, masterNames->size());
+	nonstd::span<GameFile*> GameFile::getMasters() {
+		return nonstd::span(arrayMasters, masterNames->size());
 	}
 
 }

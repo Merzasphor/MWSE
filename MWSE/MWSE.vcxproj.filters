@@ -1605,6 +1605,9 @@
     <ClInclude Include="TES3VFXManager.h">
       <Filter>Header Files\DataAdapters\TES3\Magic</Filter>
     </ClInclude>
+    <ClInclude Include="MathUtil.h">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
     <ClInclude Include="LuaSpellResistedEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>

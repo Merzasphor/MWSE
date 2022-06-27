@@ -20,30 +20,30 @@ namespace NI {
 		NI_Bound_ComputeFromData(&bounds, vertexCount, vertex, sizeof(TES3::Vector3));
 	}
 
-	std::span<PackedColor> GeometryData::getColors() {
+	nonstd::span<PackedColor> GeometryData::getColors() {
 		if (color) {
-			return std::span(color, vertexCount);
+			return nonstd::span(color, vertexCount);
 		}
 		return {};
 	}
 
-	std::span<TES3::Vector3> GeometryData::getVertices() {
+	nonstd::span<TES3::Vector3> GeometryData::getVertices() {
 		if (vertex) {
-			return std::span(vertex, vertexCount);
+			return nonstd::span(vertex, vertexCount);
 		}
 		return {};
 	}
 
-	std::span<TES3::Vector3> GeometryData::getNormals() {
+	nonstd::span<TES3::Vector3> GeometryData::getNormals() {
 		if (normal) {
-			return std::span(normal, vertexCount);
+			return nonstd::span(normal, vertexCount);
 		}
 		return {};
 	}
 
-	std::span<TES3::Vector2> GeometryData::getTextureCoordinates() {
+	nonstd::span<TES3::Vector2> GeometryData::getTextureCoordinates() {
 		if (textureCoords) {
-			return std::span(textureCoords, vertexCount * textureSets);
+			return nonstd::span(textureCoords, vertexCount * textureSets);
 		}
 		return {};
 	}

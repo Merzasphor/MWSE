@@ -112,7 +112,7 @@ namespace TES3 {
 		float getDaysPassed() const;
 		const char* getPlayerName() const;
 
-		std::span<GameFile*> getMasters();
+		nonstd::span<GameFile*> getMasters();
 
 	};
 	static_assert(sizeof(GameFile) == 0x574, "TES3::GameFile failed size validation");
