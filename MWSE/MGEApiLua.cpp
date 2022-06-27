@@ -185,7 +185,7 @@ namespace mge::lua {
 
 		auto handle = api->shaderGetShader(id);
 		if (handle) {
-			return handle;
+			return { handle };
 		}
 
 		return {};
@@ -199,7 +199,7 @@ namespace mge::lua {
 
 		auto handle = api->shaderLoad(id);
 		if (handle) {
-			return handle;
+			return { handle };
 		}
 
 		return {};

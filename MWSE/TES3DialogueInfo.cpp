@@ -96,7 +96,7 @@ namespace TES3 {
 	sol::optional<std::string> DialogueInfo::getID() {
 		// If we're already loaded for some reason, don't reload.
 		if (loadLinkNode) {
-			return loadLinkNode->name;
+			return { loadLinkNode->name };
 		}
 
 		// Hit the IO to find it...

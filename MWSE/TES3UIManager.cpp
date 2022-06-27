@@ -589,8 +589,8 @@ namespace TES3::UI {
 		TES3_UI_UpdateCurrentMagicFillBar(current, max);
 	}
 
-	const auto TES3_UI_UpdateCurrentMagicFromSpell = reinterpret_cast<void(__cdecl*)(char*, const char*, Spell*)>(0x5F4E70);
-	void updateCurrentMagicFromSpell(char* iconPath, const char* spellName, Spell* spell) {
+	const auto TES3_UI_UpdateCurrentMagicFromSpell = reinterpret_cast<void(__cdecl*)(const char*, const char*, Spell*)>(0x5F4E70);
+	void updateCurrentMagicFromSpell(const char* iconPath, const char* spellName, Spell* spell) {
 		TES3_UI_UpdateCurrentMagicFromSpell(iconPath, spellName, spell);
 	}
 

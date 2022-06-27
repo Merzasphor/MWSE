@@ -33,7 +33,7 @@ namespace TES3 {
 			if (eventResult.valid()) {
 				sol::table eventData = eventResult;
 
-				sol::optional<int> value = eventData["armorRating"];
+				sol::optional<double> value = eventData["armorRating"];
 				if (eventData.get_or("block", false) && value) {
 					return value.value();
 				}

@@ -207,7 +207,7 @@ namespace TES3 {
 
 			if (updateGUI) {
 				// Get the icon path of the spell's first effect.
-				char* iconPath = "";
+				const char* iconPath = "";
 				Effect* effects = spell->effects;
 				if (effects) {
 					TES3::MagicEffect* effect = DataHandler::get()->nonDynamicData->getMagicEffect(effects[0].effectID);

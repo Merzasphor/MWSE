@@ -38,7 +38,7 @@ namespace mwse::lua {
 			try {
 				return { mwse::string::store::get(value).c_str() };
 			}
-			catch (std::exception& e) {
+			catch (std::exception&) {
 				return {};
 			}
 		};

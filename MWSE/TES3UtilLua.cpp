@@ -2808,9 +2808,9 @@ namespace mwse::lua {
 				casterMobile->equipMagic(spell, nullptr, false, false);
 
 				// Activate the spell.
+				TES3::MagicSourceCombo sourceCombo(spell);
 				TES3::MagicInstanceController* magicInstanceController = TES3::WorldController::get()->magicInstanceController;
-				TES3::MagicSourceCombo* sourceCombo = &TES3::MagicSourceCombo(spell);
-				unsigned int serialNumber = magicInstanceController->activateSpell(casterMobile->reference, nullptr, sourceCombo);
+				unsigned int serialNumber = magicInstanceController->activateSpell(casterMobile->reference, nullptr, &sourceCombo);
 				if (serialNumber) {
 					// Set lua parameters on the spell instance.
 					TES3::MagicSourceInstance* spellInstance = magicInstanceController->getInstanceFromSerial(serialNumber);
@@ -2822,9 +2822,7 @@ namespace mwse::lua {
 
 					// Play the cast animation.
 					TES3::PlayerAnimationController* animationController = casterMobile->animationController.asPlayer;
-					if (sourceCombo->sourceType == TES3::MagicSourceType::Spell) {
-						animationController->animationData->timing[1] = 0.0;
-					}
+					animationController->animationData->timing[1] = 0.0;
 					animationController->startCastAnimation();
 				}
 

@@ -22,7 +22,7 @@ namespace TES3 {
 
 	const auto TES3_SpellList_removeByObject = reinterpret_cast<void(__thiscall*)(SpellList*, Spell*)>(0x4ACBE0);
 	bool SpellList::remove(Spell* spell) {
-		int previousSize = list.size();
+		size_t previousSize = list.size();
 		TES3_SpellList_removeByObject(this, spell);
 		return list.size() < previousSize;
 	}
