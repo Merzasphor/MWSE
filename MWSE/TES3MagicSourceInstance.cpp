@@ -141,7 +141,7 @@ namespace TES3 {
 			throw std::invalid_argument("Invalid 'effectIndex' parameter. Must be a number between 0 and 7.");
 		}
 
-		float scale = mwse::lua::getOptionalParam<int>(params, "scale", 1.0);
+		float scale = mwse::lua::getOptionalParam<float>(params, "scale", 1.0f);
 		if (scale < 0) {
 			throw std::invalid_argument("Invalid 'scale' parameter. Must be a positive number.");
 		}
