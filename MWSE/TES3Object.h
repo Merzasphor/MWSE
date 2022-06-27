@@ -362,30 +362,10 @@ namespace TES3 {
 		T* createCopy_lua(sol::optional<sol::table> params) const {
 			auto created = new T();
 			created->copy(this);
-
-			// Set provided or generated ID.
-			auto id = mwse::lua::getOptionalParam<const char*>(params, "id", nullptr);
-			if (id) {
-				created->setID(id);
-			}
-			else {
-				created->setID("");
-			}
-
-			if (mwse::lua::getOptionalParam(params, "addToObjectList", true)) {
-				if (!TES3::DataHandler::get()->nonDynamicData->addNewObject(created)) {
-					delete created;
-					created = nullptr;
-					throw std::runtime_error("tes3object:createCopy(): Could not add the newly created object to the data handler.");
-				}
-			}
-
-			if (mwse::lua::getOptionalParam(params, "sourceless", false) || TES3::WorldController::get()->getMobilePlayer() == nullptr) {
-				setSourceless(true);
-			}
-
+			finishCreateCopy_lua(created, params);	// May delete created and throw std::runtime_error.
 			return created;
 		}
+		static void finishCreateCopy_lua(Object* created, sol::optional<sol::table> params);
 
 		Object * skipDeletedObjects();
 		ReferenceList* getOwningCollection();
