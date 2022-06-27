@@ -1,5 +1,5 @@
 return {
 	type = "value",
-	readOnly = true,
+	description = [[The time interval in seconds between specific actor AI checks. These checks include checking for hostile actors and engaging combat, as well as checking if the actor should equip a light source if it is too dark. The specified time in seconds will always be increased by one second when checking, therefore a value of `0.0` will actually cause the actor AI checks to occur every second instead of every frame. Setting this to lower values than the default increases the impact on performance. The default value for a newly created actor depends on the total amount of all currently active [`tes3aiPlanner`](https://mwse.github.io/MWSE/types/tes3aiPlanner), meaning the checks will be executed at different intervals for each actor.]],
 	valuetype = "number",
 }

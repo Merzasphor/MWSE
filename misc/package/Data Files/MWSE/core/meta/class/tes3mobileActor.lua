@@ -103,8 +103,8 @@
 --- @field resistPoison number Direct access to the actor's poison resistance effect attribute.
 --- @field resistShock number Direct access to the actor's shock resistance effect attribute.
 --- @field sanctuary number Direct access to the actor's sanctuary effect attribute.
---- @field scanInterval number *Read-only*. No description yet available.
---- @field scanTimer number *Read-only*. No description yet available.
+--- @field scanInterval number The time interval in seconds between specific actor AI checks. These checks include checking for hostile actors and engaging combat, as well as checking if the actor should equip a light source if it is too dark. The specified time in seconds will always be increased by one second when checking, therefore a value of `0.0` will actually cause the actor AI checks to occur every second instead of every frame. Setting this to lower values than the default increases the impact on performance. The default value for a newly created actor depends on the total amount of all currently active [`tes3aiPlanner`](https://mwse.github.io/MWSE/types/tes3aiPlanner), meaning the checks will be executed at different intervals for each actor.
+--- @field scanTimer number *Read-only*. The time in seconds since the last time the checks specified in [`scanInterval`](https://mwse.github.io/MWSE/types/tes3mobileActor/#scaninterval) were executed.
 --- @field shield number Direct access to the actor's shield effect attribute.
 --- @field silence number Direct access to the actor's silence effect attribute.
 --- @field sound number Direct access to the actor's sound effect attribute.
