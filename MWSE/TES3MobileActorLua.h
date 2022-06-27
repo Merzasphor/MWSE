@@ -46,7 +46,7 @@ namespace mwse::lua {
 		usertypeDefinition["readiedAmmoCount"] = &TES3::MobileActor::readiedAmmoCount;
 		usertypeDefinition["readiedShield"] = &TES3::MobileActor::readiedShield;
 		usertypeDefinition["readiedWeapon"] = &TES3::MobileActor::readiedWeapon;
-		usertypeDefinition["scanInterval"] = sol::readonly_property(&TES3::MobileActor::scanInterval);
+		usertypeDefinition["scanInterval"] = &TES3::MobileActor::scanInterval;
 		usertypeDefinition["scanTimer"] = sol::readonly_property(&TES3::MobileActor::scanTimer);
 		usertypeDefinition["torchSlot"] = &TES3::MobileActor::torchSlot;
 		usertypeDefinition["width"] = sol::readonly_property(&TES3::MobileActor::widthInUnits);
