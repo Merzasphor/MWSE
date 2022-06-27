@@ -36,10 +36,10 @@ namespace NI {
 		void markAsChanged();
 		void updateModelBound();
 
-		nonstd::span<PackedColor> getColors();
-		nonstd::span<TES3::Vector3> getVertices();
-		nonstd::span<TES3::Vector3> getNormals();
-		nonstd::span<TES3::Vector2> getTextureCoordinates();
+		std::span<PackedColor> getColors();
+		std::span<TES3::Vector3> getVertices();
+		std::span<TES3::Vector3> getNormals();
+		std::span<TES3::Vector2> getTextureCoordinates();
 
 	};
 	static_assert(sizeof(GeometryData) == 0x34, "NI::GeometryData failed size validation");

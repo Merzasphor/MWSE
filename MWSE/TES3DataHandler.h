@@ -182,7 +182,7 @@ namespace TES3 {
 
 		std::reference_wrapper<Skill[27]> getSkills();
 
-		nonstd::span<GameFile*> getActiveMods();
+		std::span<GameFile*> getActiveMods();
 
 		sol::table getMagicEffects_lua(sol::this_state ts);
 

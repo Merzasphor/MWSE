@@ -85,7 +85,6 @@
 #include "LuaEnchantChargeUseEvent.h"
 
 #include "BitUtil.h"
-#include "MathUtil.h"
 
 namespace mwse::lua {
 	//
@@ -2274,7 +2273,7 @@ namespace mwse::lua {
 		else {
 			TES3::DataHandler::suppressThreadLoad = true;
 			if (userProvidedOrientation) {
-				reference->relocate(cell, &position.value(), orientation.value().z * (180.0f / math::M_PI));
+				reference->relocate(cell, &position.value(), orientation.value().z * (180.0f / std::numbers::pi));
 			}
 			else {
 				reference->relocateNoRotation(cell, &position.value());

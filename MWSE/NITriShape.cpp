@@ -7,11 +7,11 @@ namespace NI {
 		return static_cast<TriShapeData*>(modelData.get());
 	}
 
-	nonstd::span<TES3::Vector3> TriShape::getVertices() const {
+	std::span<TES3::Vector3> TriShape::getVertices() const {
 		return getModelData()->getVertices();
 	}
 
-	nonstd::span<TES3::Vector3> TriShape::getNormals() const {
+	std::span<TES3::Vector3> TriShape::getNormals() const {
 		return getModelData()->getNormals();
 	}
 }

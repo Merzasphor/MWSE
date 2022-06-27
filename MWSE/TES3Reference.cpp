@@ -39,7 +39,6 @@
 #include "TES3UIManager.h"
 
 #include "BitUtil.h"
-#include "MathUtil.h"
 
 namespace TES3 {
 	Reference::Reference() {
@@ -946,8 +945,8 @@ namespace TES3 {
 		}
 
 		// Recalculate rotation to always be between [0,2pi].
-		constexpr auto math2Pi = (mwse::math::M_PI * 2);
-		auto rotationInRadians = fmod(rotationInDegrees * (mwse::math::M_PI / 180.f), math2Pi);
+		constexpr auto math2Pi = std::numbers::pi * 2.0;
+		auto rotationInRadians = fmod(rotationInDegrees * (std::numbers::pi / 180.0f), math2Pi);
 		if (rotationInRadians < 0)
 			rotationInRadians += math2Pi;
 
@@ -1067,7 +1066,7 @@ namespace TES3 {
 			sceneNode->localRotation->toEulerXYZ(&cachedOrientation);
 		}
 
-		relocate(cell, position, cachedOrientation.z * (180.0f / mwse::math::M_PI));
+		relocate(cell, position, cachedOrientation.z * (180.0f / std::numbers::pi));
 
 		setOrientation(&cachedOrientation);
 	}

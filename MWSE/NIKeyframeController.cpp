@@ -17,13 +17,13 @@ namespace NI {
 				switch (keyTypes[i]) {
 				case AnimationKey::Type::NoInterp:
 				case AnimationKey::Type::Linear:
-					table[i + 1] = nonstd::span(keys[i].asFloatKey, numKeys[i]);
+					table[i + 1] = std::span(keys[i].asFloatKey, numKeys[i]);
 					break;
 				case AnimationKey::Type::Bezier:
-					table[i + 1] = nonstd::span(keys[i].asBezFloatKey, numKeys[i]);
+					table[i + 1] = std::span(keys[i].asBezFloatKey, numKeys[i]);
 					break;
 				case AnimationKey::Type::TCB:
-					table[i + 1] = nonstd::span(keys[i].asTCBFloatKey, numKeys[i]);
+					table[i + 1] = std::span(keys[i].asTCBFloatKey, numKeys[i]);
 					break;
 				default:
 					throw std::runtime_error("Invalid euler rotation key type found. Report to MWSE developers.");
@@ -44,13 +44,13 @@ namespace NI {
 		switch (rotationType) {
 		case AnimationKey::Type::NoInterp:
 		case AnimationKey::Type::Linear:
-			return sol::make_object(L, nonstd::span(rotationKeys.asRotKey, rotationKeyCount));
+			return sol::make_object(L, std::span(rotationKeys.asRotKey, rotationKeyCount));
 		case AnimationKey::Type::Bezier:
-			return sol::make_object(L, nonstd::span(rotationKeys.asBezRotKey, rotationKeyCount));
+			return sol::make_object(L, std::span(rotationKeys.asBezRotKey, rotationKeyCount));
 		case AnimationKey::Type::TCB:
-			return sol::make_object(L, nonstd::span(rotationKeys.asTCBRotKey, rotationKeyCount));
+			return sol::make_object(L, std::span(rotationKeys.asTCBRotKey, rotationKeyCount));
 		case AnimationKey::Type::Euler:
-			return sol::make_object(L, nonstd::span(rotationKeys.asEulerRotKey, rotationKeyCount));
+			return sol::make_object(L, std::span(rotationKeys.asEulerRotKey, rotationKeyCount));
 		default:
 			throw std::runtime_error("Invalid position type found. Report to MWSE developers.");
 		}
@@ -63,11 +63,11 @@ namespace NI {
 		switch (positionType) {
 		case AnimationKey::Type::NoInterp:
 		case AnimationKey::Type::Linear:
-			return sol::make_object(L, nonstd::span(positionKeys.asPosKey, positionKeyCount));
+			return sol::make_object(L, std::span(positionKeys.asPosKey, positionKeyCount));
 		case AnimationKey::Type::Bezier:
-			return sol::make_object(L, nonstd::span(positionKeys.asBezPosKey, positionKeyCount));
+			return sol::make_object(L, std::span(positionKeys.asBezPosKey, positionKeyCount));
 		case AnimationKey::Type::TCB:
-			return sol::make_object(L, nonstd::span(positionKeys.asTCBPosKey, positionKeyCount));
+			return sol::make_object(L, std::span(positionKeys.asTCBPosKey, positionKeyCount));
 		default:
 			throw std::runtime_error("Invalid position type found. Report to MWSE developers.");
 		}
@@ -80,11 +80,11 @@ namespace NI {
 		switch (scaleType) {
 		case AnimationKey::Type::NoInterp:
 		case AnimationKey::Type::Linear:
-			return sol::make_object(L, nonstd::span(scaleKeys.asFloatKey, scaleKeyCount));
+			return sol::make_object(L, std::span(scaleKeys.asFloatKey, scaleKeyCount));
 		case AnimationKey::Type::Bezier:
-			return sol::make_object(L, nonstd::span(scaleKeys.asBezFloatKey, scaleKeyCount));
+			return sol::make_object(L, std::span(scaleKeys.asBezFloatKey, scaleKeyCount));
 		case AnimationKey::Type::TCB:
-			return sol::make_object(L, nonstd::span(scaleKeys.asTCBFloatKey, scaleKeyCount));
+			return sol::make_object(L, std::span(scaleKeys.asTCBFloatKey, scaleKeyCount));
 		default:
 			throw std::runtime_error("Invalid position type found. Report to MWSE developers.");
 		}

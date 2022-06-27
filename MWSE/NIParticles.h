@@ -12,7 +12,7 @@ namespace NI {
 		// Accessor methods.
 		//
 
-		nonstd::span<float> getSizes();
+		std::span<float> getSizes();
 	};
 	static_assert(sizeof(ParticlesData) == 0x44, "NI::ParticlesData failed size validation");
 
@@ -23,7 +23,7 @@ namespace NI {
 		// Accessor methods.
 		//
 
-		nonstd::span<NI::Quaternion> getRotations();
+		std::span<NI::Quaternion> getRotations();
 	};
 	static_assert(sizeof(RotatingParticlesData) == 0x48, "NI::RotatingParticlesData failed size validation");
 

@@ -1,16 +1,18 @@
 #include "NIParticles.h"
 
+#include "NIQuaternion.h"
+
 namespace NI {
-	nonstd::span<float> ParticlesData::getSizes() {
+	std::span<float> ParticlesData::getSizes() {
 		if (sizes) {
-			return nonstd::span(sizes, vertexCount);
+			return std::span(sizes, vertexCount);
 		}
 		return {};
 	}
 
-	nonstd::span<NI::Quaternion> RotatingParticlesData::getRotations() {
+	std::span<NI::Quaternion> RotatingParticlesData::getRotations() {
 		if (rotations) {
-			return nonstd::span(rotations, vertexCount);
+			return std::span(rotations, vertexCount);
 		}
 		return {};
 	}
