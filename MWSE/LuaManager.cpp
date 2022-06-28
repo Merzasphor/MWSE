@@ -422,8 +422,9 @@ namespace mwse::lua {
 		usertypeDefinition["context"] = sol::readonly_property(&LuaScript::getContext);
 
 		// Create the base of API tables.
-		luaState["mwse"] = luaState.create_table();
-		luaState["mwscript"] = luaState.create_table();
+		auto luaMWSE = luaState.create_named_table("mwse");
+		luaMWSE.create_named("activeLuaMods");
+		luaState.create_named_table("mwscript");
 
 		// Bind config.
 		Configuration::bindToLua();
@@ -2391,7 +2392,7 @@ namespace mwse::lua {
 
 		// Do some precomputing for storing and calculating active lua mods.
 		sol::table luaMWSE = luaState["mwse"];
-		auto activeLuaMods = luaMWSE.create_named("activeLuaMods");
+		auto activeLuaMods = luaMWSE["activeLuaMods"];
 		auto luaDirectoryLength = strnlen_s(path, 260);
 		auto luaFilenameLength = strnlen_s(filename, 260);
 
