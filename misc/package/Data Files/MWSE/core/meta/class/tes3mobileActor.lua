@@ -74,6 +74,7 @@
 --- @field isReadyingWeapon boolean *Read-only*. If `true`, the actor is drawing or sheathing their weapon.
 --- @field isRunning boolean Direct access to the actor's current movement flags, showing if the actor is running.
 --- @field isSneaking boolean Direct access to the actor's current movement flags, showing if the actor is sneaking.
+--- @field isStunned boolean *Read-only*. If `true`, the actor is stunned. An actor can be stunned after being attacked.
 --- @field isSwimming boolean Direct access to the actor's current movement flags, showing if the actor is swimming.
 --- @field isTurningLeft boolean Direct access to the actor's current movement flags, showing if the actor is turning left.
 --- @field isTurningRight boolean Direct access to the actor's current movement flags, showing if the actor is turning right.

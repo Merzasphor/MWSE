@@ -614,6 +614,10 @@ namespace TES3 {
 		return TES3_MobileActor_isKnockedOut(this);
 	}
 
+	bool MobileActor::isStunned() const {
+		return actionData.currentAnimGroup >= 0x13 && actionData.currentAnimGroup <= 0x1A;
+	}
+
 	const auto TES3_MobileActor_isAttackingOrCasting = reinterpret_cast<bool(__thiscall*)(const MobileActor*)>(0x5567D0);
 	bool MobileActor::isAttackingOrCasting() const {
 		return TES3_MobileActor_isAttackingOrCasting(this);

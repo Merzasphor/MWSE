@@ -262,6 +262,7 @@ namespace TES3 {
 		bool isNotKnockedDownOrOut() const;
 		bool isKnockedDown() const;
 		bool isKnockedOut() const;
+		bool isStunned() const;
 		bool isReadyingWeapon() const;
 		bool isParalyzed() const;
 		bool isAttackingOrCasting() const;
