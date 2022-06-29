@@ -715,16 +715,6 @@ Direct access to the actor's current movement flags, showing if the actor is sne
 
 ***
 
-### `isStunned`
-
-*Read-only*. If `true`, the actor is stunned. An actor can be stunned after being attacked.
-
-**Returns**:
-
-* `result` (boolean)
-
-***
-
 ### `isSwimming`
 
 Direct access to the actor's current movement flags, showing if the actor is swimming.
