@@ -267,7 +267,7 @@ A vector that shows the size of the bounding box in X and Y directions. `boundSi
 
 ### `canAct`
 
-*Read-only*. If `true`, the actor is able to freely execute actions like attacking or casting magic. This is equal to checking if the actor is not dead, knocked down, stunned, paralyzed, drawing/sheathing their weapon, attacking, casting magic or using a lockpick or probe.
+*Read-only*. If `true`, the actor is able to freely execute actions like attacking or casting magic. This is equal to checking if the actor is not dead, knocked down, knocked out, paralyzed, drawing/sheathing their weapon, attacking, casting magic or using a lockpick or probe.
 
 **Returns**:
 
@@ -277,7 +277,7 @@ A vector that shows the size of the bounding box in X and Y directions. `boundSi
 
 ### `canJump`
 
-*Read-only*. If `true`, the actor is currently able to jump. This is equal to checking if the actor is not dead, knocked down, stunned, paralyzed, jumping, falling, swimming or flying.
+*Read-only*. If `true`, the actor is currently able to jump. This is equal to checking if the actor is not dead, knocked down, knocked out, paralyzed, jumping, falling, swimming or flying.
 
 **Returns**:
 
@@ -287,7 +287,7 @@ A vector that shows the size of the bounding box in X and Y directions. `boundSi
 
 ### `canJumpMidair`
 
-*Read-only*. If `true`, the actor is currently able to jump midair. This is equal to checking if the actor is not dead, knocked down, stunned, paralyzed, swimming or flying. For more information on midair jumping see [`tes3mobileActor:doJump()`](https://mwse.github.io/MWSE/types/tes3mobileActor/#dojump).
+*Read-only*. If `true`, the actor is currently able to jump midair. This is equal to checking if the actor is not dead, knocked down, knocked out, paralyzed, swimming or flying. For more information on midair jumping see [`tes3mobileActor:doJump()`](https://mwse.github.io/MWSE/types/tes3mobileActor/#dojump).
 
 **Returns**:
 
@@ -587,7 +587,7 @@ No description yet available.
 
 ### `hasFreeAction`
 
-*Read-only*. If true, the actor isn't knocked down or stunned.
+*Read-only*. If true, the actor isn't knocked down or knocked out.
 
 **Returns**:
 
@@ -717,7 +717,7 @@ Direct access to the actor's invisibility effect attribute.
 
 ### `isAttackingOrCasting`
 
-*Read-only*. If true, the actor is attacking, casting magic or using a lockpick or probe.
+*Read-only*. If `true`, the actor is attacking, casting magic or using a lockpick or probe.
 
 **Returns**:
 
@@ -785,6 +785,26 @@ Direct access to the actor's current movement flags, showing if the actor is jum
 
 ***
 
+### `isKnockedDown`
+
+*Read-only*. If `true`, the actor is knocked down. An actor can be knocked down after being attacked or falling.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
+### `isKnockedOut`
+
+*Read-only*. If `true`, the actor is knocked out. An actor can be knocked out if their fatigue has been reduced below zero.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
 ### `isMovingBack`
 
 Direct access to the actor's current movement flags, showing if the actor is moving backwards.
@@ -827,7 +847,7 @@ Direct access to the actor's current movement flags, showing if the actor is mov
 
 ### `isParalyzed`
 
-*Read-only*. If true, the actor is affected by the magic effect paralyze.
+*Read-only*. If `true`, the actor is affected by the magic effect paralyze.
 
 **Returns**:
 
@@ -857,7 +877,7 @@ Direct access to the actor's flag showing the player was hidden on the last dete
 
 ### `isReadyingWeapon`
 
-*Read-only*. If true, the actor is drawing or sheathing their weapon.
+*Read-only*. If `true`, the actor is drawing or sheathing their weapon.
 
 **Returns**:
 

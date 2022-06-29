@@ -164,9 +164,11 @@ namespace mwse::lua {
 		usertypeDefinition["canJump"] = sol::readonly_property(&TES3::MobileActor::canJump_lua);
 		usertypeDefinition["canJumpMidair"] = sol::readonly_property(&TES3::MobileActor::canJumpMidair_lua);
 		usertypeDefinition["cell"] = sol::property(&TES3::MobileActor::getCell);
-		usertypeDefinition["hasFreeAction"] = sol::readonly_property(&TES3::MobileActor::isNotKnockedDown);
+		usertypeDefinition["hasFreeAction"] = sol::readonly_property(&TES3::MobileActor::isNotKnockedDownOrOut);
 		usertypeDefinition["isAttackingOrCasting"] = sol::readonly_property(&TES3::MobileActor::isAttackingOrCasting);
 		usertypeDefinition["isDiseased"] = sol::readonly_property(&TES3::MobileActor::isDiseased);
+		usertypeDefinition["isKnockedDown"] = sol::readonly_property(&TES3::MobileActor::isKnockedDown);
+		usertypeDefinition["isKnockedOut"] = sol::readonly_property(&TES3::MobileActor::isKnockedOut);
 		usertypeDefinition["isParalyzed"] = sol::readonly_property(&TES3::MobileActor::isParalyzed);
 		usertypeDefinition["isReadyingWeapon"] = sol::readonly_property(&TES3::MobileActor::isReadyingWeapon);
 		usertypeDefinition["mobToMobCollision"] = sol::property(&TES3::MobileActor::getMobToMobCollision, &TES3::MobileActor::setMobToMobCollision);

@@ -259,7 +259,9 @@ namespace TES3 {
 		float calcEffectiveDamage_lua(sol::table params);
 		bool doJump(Vector3 velocity, bool applyFatigueCost = true, bool isDefaultJump = false);
 		bool doJump_lua(sol::optional<sol::table> params);
-		bool isNotKnockedDown() const;
+		bool isNotKnockedDownOrOut() const;
+		bool isKnockedDown() const;
+		bool isKnockedOut() const;
 		bool isReadyingWeapon() const;
 		bool isParalyzed() const;
 		bool isAttackingOrCasting() const;

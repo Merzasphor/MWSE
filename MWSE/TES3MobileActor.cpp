@@ -599,9 +599,19 @@ namespace TES3 {
 		return doJump(velocity.value(), applyFatigueCost, isDefaultJump);
 	}
 
-	const auto TES3_MobileActor_isNotKnockedDown = reinterpret_cast<bool(__thiscall*)(const MobileActor*)>(0x527580);
-	bool MobileActor::isNotKnockedDown() const {
-		return TES3_MobileActor_isNotKnockedDown(this);
+	const auto TES3_MobileActor_isNotKnockedDownOrOut = reinterpret_cast<bool(__thiscall*)(const MobileActor*)>(0x527580);
+	bool MobileActor::isNotKnockedDownOrOut() const {
+		return TES3_MobileActor_isNotKnockedDownOrOut(this);
+	}
+
+	const auto TES3_MobileActor_isKnockedDown = reinterpret_cast<bool(__thiscall*)(const MobileActor*)>(0x5275D0);
+	bool MobileActor::isKnockedDown() const {
+		return TES3_MobileActor_isKnockedDown(this);
+	}
+
+	const auto TES3_MobileActor_isKnockedOut = reinterpret_cast<bool(__thiscall*)(const MobileActor*)>(0x5275F0);
+	bool MobileActor::isKnockedOut() const {
+		return TES3_MobileActor_isKnockedOut(this);
 	}
 
 	const auto TES3_MobileActor_isAttackingOrCasting = reinterpret_cast<bool(__thiscall*)(const MobileActor*)>(0x5567D0);
@@ -620,7 +630,7 @@ namespace TES3 {
 
 	bool MobileActor::canAct() const {
 		return !isDead() &&
-			isNotKnockedDown() &&
+			isNotKnockedDownOrOut() &&
 			!isAttackingOrCasting() &&
 			!isParalyzed() &&
 			!isReadyingWeapon();
@@ -629,7 +639,7 @@ namespace TES3 {
 	bool MobileActor::canJump(bool allowMidairJumping) const {
 		return WorldController::get()->collisionEnabled &&
 			!isDead() &&
-			isNotKnockedDown() &&
+			isNotKnockedDownOrOut() &&
 			!isParalyzed() &&
 			!getMovementFlagSwimming() &&
 			!getMovementFlagFlying() &&

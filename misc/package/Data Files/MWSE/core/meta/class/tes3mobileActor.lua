@@ -26,9 +26,9 @@
 --- @field attributes tes3statistic[]|tes3statisticSkill[] *Read-only*. Access to a table of 8 [`tes3statistic`](https://mwse.github.io/MWSE/types/tes3statistic/) objects for the actor's attributes.
 --- @field barterGold number The current amount of gold that the actor has access to for bartering.
 --- @field blind number Direct access to the actor's blind effect attribute.
---- @field canAct boolean *Read-only*. If `true`, the actor is able to freely execute actions like attacking or casting magic. This is equal to checking if the actor is not dead, knocked down, stunned, paralyzed, drawing/sheathing their weapon, attacking, casting magic or using a lockpick or probe.
---- @field canJump boolean *Read-only*. If `true`, the actor is currently able to jump. This is equal to checking if the actor is not dead, knocked down, stunned, paralyzed, jumping, falling, swimming or flying.
---- @field canJumpMidair boolean *Read-only*. If `true`, the actor is currently able to jump midair. This is equal to checking if the actor is not dead, knocked down, stunned, paralyzed, swimming or flying. For more information on midair jumping see [`tes3mobileActor:doJump()`](https://mwse.github.io/MWSE/types/tes3mobileActor/#dojump).
+--- @field canAct boolean *Read-only*. If `true`, the actor is able to freely execute actions like attacking or casting magic. This is equal to checking if the actor is not dead, knocked down, knocked out, paralyzed, drawing/sheathing their weapon, attacking, casting magic or using a lockpick or probe.
+--- @field canJump boolean *Read-only*. If `true`, the actor is currently able to jump. This is equal to checking if the actor is not dead, knocked down, knocked out, paralyzed, jumping, falling, swimming or flying.
+--- @field canJumpMidair boolean *Read-only*. If `true`, the actor is currently able to jump midair. This is equal to checking if the actor is not dead, knocked down, knocked out, paralyzed, swimming or flying. For more information on midair jumping see [`tes3mobileActor:doJump()`](https://mwse.github.io/MWSE/types/tes3mobileActor/#dojump).
 --- @field cell tes3cell *Read-only*. Fetches the cell that the actor is in.
 --- @field chameleon number Direct access to the actor's chameleon effect attribute.
 --- @field collidingReference tes3reference *Read-only*. The reference that the mobile has collided with this frame.
@@ -46,7 +46,7 @@
 --- @field friendlyActors tes3iterator *Read-only*. A collection of other `tes3mobileActor`s that this actor considers friendly.
 --- @field greetDuration number No description yet available.
 --- @field greetTimer number *Read-only*. No description yet available.
---- @field hasFreeAction boolean *Read-only*. If true, the actor isn't knocked down or stunned.
+--- @field hasFreeAction boolean *Read-only*. If true, the actor isn't knocked down or knocked out.
 --- @field health tes3statistic|tes3statisticSkill *Read-only*. Access to the actor's health statistic.
 --- @field hello number The actor's hello AI value.
 --- @field holdBreathTime number This is the time the actor can stay underwater without taking drowning damage, measured in seconds. It's starting value is `fHoldBreathTime`(GMST) seconds by default. Once the actor is underwater, this value is decreasing based on the time passed while underwater. The actor will start taking drowning damage once this time is below 0. During drowning this time will have more and more negative values based on the duration of the drowning. Changing this allows manipulating for how long the actor can stay underwater without drowning. Note that player's Breath HUD element won't show values larger than `fHoldBreathTime`.
@@ -55,21 +55,23 @@
 --- @field inCombat boolean *Read-only*. Friendly access to the actor's flag that controls if the actor is in combat.
 --- @field intelligence tes3statistic|tes3statisticSkill *Read-only*. Direct access to the actor's intelligence attribute statistic.
 --- @field invisibility number Direct access to the actor's invisibility effect attribute.
---- @field isAttackingOrCasting boolean *Read-only*. If true, the actor is attacking, casting magic or using a lockpick or probe.
+--- @field isAttackingOrCasting boolean *Read-only*. If `true`, the actor is attacking, casting magic or using a lockpick or probe.
 --- @field isCrittable boolean *Read-only*. Friendly access to the actor's flag that controls if the actor can be critically hit.
 --- @field isDead boolean *Read-only*. True if the actor is dead.
 --- @field isDiseased boolean *Read-only*. True if the actor is has a disease effect. This counts normal, blight, and corprus effects.
 --- @field isFalling boolean Direct access to the actor's current movement flags, showing if the actor is falling. This is when the actor is falling without having jumped, e.g. if they walked off a ledge.
 --- @field isFlying boolean Direct access to the actor's current movement flags, showing if the actor is flying.
 --- @field isJumping boolean Direct access to the actor's current movement flags, showing if the actor is jumping.
+--- @field isKnockedDown boolean *Read-only*. If `true`, the actor is knocked down. An actor can be knocked down after being attacked or falling.
+--- @field isKnockedOut boolean *Read-only*. If `true`, the actor is knocked out. An actor can be knocked out if their fatigue has been reduced below zero.
 --- @field isMovingBack boolean Direct access to the actor's current movement flags, showing if the actor is moving backwards.
 --- @field isMovingForward boolean Direct access to the actor's current movement flags, showing if the actor is moving forwards.
 --- @field isMovingLeft boolean Direct access to the actor's current movement flags, showing if the actor is moving left.
 --- @field isMovingRight boolean Direct access to the actor's current movement flags, showing if the actor is moving right.
---- @field isParalyzed boolean *Read-only*. If true, the actor is affected by the magic effect paralyze.
+--- @field isParalyzed boolean *Read-only*. If `true`, the actor is affected by the magic effect paralyze.
 --- @field isPlayerDetected boolean Direct access to the actor's flag showing the player was detected on the last detection check.
 --- @field isPlayerHidden boolean Direct access to the actor's flag showing the player was hidden on the last detection check.
---- @field isReadyingWeapon boolean *Read-only*. If true, the actor is drawing or sheathing their weapon.
+--- @field isReadyingWeapon boolean *Read-only*. If `true`, the actor is drawing or sheathing their weapon.
 --- @field isRunning boolean Direct access to the actor's current movement flags, showing if the actor is running.
 --- @field isSneaking boolean Direct access to the actor's current movement flags, showing if the actor is sneaking.
 --- @field isSwimming boolean Direct access to the actor's current movement flags, showing if the actor is swimming.
