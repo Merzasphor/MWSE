@@ -16,7 +16,7 @@ return {
 			description = "The soul gem used for the failed creation of the item.",
 		},
 		["enchanter"] = {
-			type = "tes3mobile",
+			type = "tes3mobileActor",
 			description = "The mobile actor responsible for failing to create the enchantment.",
 		},
 		["enchanterReference"] = {

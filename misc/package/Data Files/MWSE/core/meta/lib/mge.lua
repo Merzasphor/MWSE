@@ -85,7 +85,7 @@ function mge.getWeatherPPLLight(weather) end
 
 --- Gets the in- and out-scatter values from MGE. These are returned in a table with the `inscatter` and `outscatter` keys. The result table can be modified, then sent back to `setScattering`.
 --- @deprecated
---- @return table<string, float> result No description yet available.
+--- @return table<string, number> result No description yet available.
 function mge.getWeatherScattering() end
 
 --- Gets the camera zoom. Use `mge.camera.zoom` instead.
@@ -160,7 +160,7 @@ function mge.setWeatherPPLLight(weather, mult, offset) end
 
 --- Use `mge.weather.getScattering()` instead.
 --- @deprecated
---- @return table<string, float> result No description yet available.
+--- @return table<string, number> result No description yet available.
 function mge.setWeatherScattering() end
 
 --- Sets the zoom to a specified amount. Use `mge.camera.zoom = amount` instead.

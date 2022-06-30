@@ -17,11 +17,11 @@ return {
 			description = "The velocity of the jump.",
 		},
 		["applyFatigueCost"] = {
-			type = "bool",
+			type = "boolean",
 			description = "If `false`, this jump will not reduce fatigue.",
 		},
 		["isDefaultJump"] = {
-			type = "bool",
+			type = "boolean",
 			readOnly = true,
 			description = "If `true`, the jump has been initiated from the ground and without custom velocity or fatigue cost. This does not change if other event callbacks change any of these parameters.",
 		},

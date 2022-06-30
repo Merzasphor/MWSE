@@ -21,7 +21,7 @@ return {
 			description = "The soul gem used for the creation of the item.",
 		},
 		["enchanter"] = {
-			type = "tes3mobile",
+			type = "tes3mobileActor",
 			description = "The mobile actor responsible for creating the enchantment.",
 		},
 		["enchanterReference"] = {

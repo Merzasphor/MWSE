@@ -11,6 +11,6 @@
 --- @field rainRoot niBillboardNode|niCollisionSwitch|niNode|niSwitchNode *Read-only*. A shortcut to the root rain node.
 --- @field remainingLifetime number The remaining time before the particle becomes inactive.
 --- @field velocity tes3vector3 The velocity of the particle.
---- @field weatherController tes3vector3 *Read-only*. A shortcut to the weather controller.
+--- @field weatherController tes3weatherController *Read-only*. A shortcut to the weather controller.
 tes3weatherControllerParticle = {}
 

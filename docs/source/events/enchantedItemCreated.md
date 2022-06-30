@@ -20,7 +20,7 @@ event.register(tes3.event.enchantedItemCreated, enchantedItemCreatedCallback)
 ## Event Data
 
 * `baseObject` ([tes3item](../../types/tes3item)): *Read-only*. The item originally enchanted.
-* `enchanter` (tes3mobile): The mobile actor responsible for creating the enchantment.
+* `enchanter` ([tes3mobileActor](../../types/tes3mobileActor)): The mobile actor responsible for creating the enchantment.
 * `enchanterReference` ([tes3reference](../../types/tes3reference)): The reference responsible for creating the enchantment.
 * `object` ([tes3item](../../types/tes3item)): *Read-only*. The newly created and enchanted item.
 * `soul` ([tes3actor](../../types/tes3actor)): The actor used to enchant the item.

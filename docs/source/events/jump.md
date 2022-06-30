@@ -25,8 +25,8 @@ event.register(tes3.event.jump, jumpCallback)
 
 ## Event Data
 
-* `applyFatigueCost` (bool): If `false`, this jump will not reduce fatigue.
-* `isDefaultJump` (bool): *Read-only*. If `true`, the jump has been initiated from the ground and without custom velocity or fatigue cost. This does not change if other event callbacks change any of these parameters.
+* `applyFatigueCost` (boolean): If `false`, this jump will not reduce fatigue.
+* `isDefaultJump` (boolean): *Read-only*. If `true`, the jump has been initiated from the ground and without custom velocity or fatigue cost. This does not change if other event callbacks change any of these parameters.
 * `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile actor that is trying to jump.
 * `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. Mobile's related reference.
 * `velocity` ([tes3vector3](../../types/tes3vector3)): The velocity of the jump.
