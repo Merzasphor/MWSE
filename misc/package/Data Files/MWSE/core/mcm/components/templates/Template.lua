@@ -137,7 +137,7 @@ function Template:createTabsBlock(parentBlock)
 	outerTabsBlock.widthProportional = 1.0
 
 	-- Create a tab for each page (no need if only one page)
-	if table.getn(self.pages) > 1 then
+	if #self.pages > 1 then
 
 		-- Previous Button
 		local prevButton = outerTabsBlock:createButton{ id = tes3ui.registerID("MCM_PreviousButton"), text = "<--" }

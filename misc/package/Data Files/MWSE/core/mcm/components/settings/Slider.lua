@@ -15,7 +15,7 @@ function Slider:updateValueLabel()
 	local labelText = ""
 
 	if self.elements.slider then
-		newValue = self.elements.slider.widget.current + self.min
+		newValue = self.elements.slider.widget.current + self.min ---@diagnostic disable-line
 	end
 
 	if string.find(self.label, "%s", 1, true) then
@@ -86,11 +86,11 @@ end
 
 function Slider:createLabel(parentBlock)
 	Parent.createLabel(self, parentBlock)
-	self:updateValueLabel(self)
+	self:updateValueLabel()
 	--[[self.elements.label.autoWidth = true
 	self.elements.label.widthProportional = nil
 	self.elements.labelBlock.flowDirection = "left_to_right"
-	
+
 	local sliderValueLabel = self.elements.labelBlock:createLabel({text = ": --" })
 	self.elements.sliderValueLabel = sliderValueLabel
 	table.insert(self.mouseOvers, sliderValueLabel)]] --
