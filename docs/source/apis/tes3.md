@@ -1537,7 +1537,7 @@ tes3.getAttachment(reference, attachment)
 
 ### `tes3.getAttributeName`
 
-Returns the lowercase identifying name of an attribute for a given numerical, 0-based index. E.g. "strength".
+Returns the lowercase identifying name of an attribute for a given numerical, 0-based index. E.g. "strength", by using GMSTs. Uses `tes3.attributeName` enumeration as a fallback.
 
 ```lua
 local name = tes3.getAttributeName(attributeId)
@@ -1545,7 +1545,7 @@ local name = tes3.getAttributeName(attributeId)
 
 **Parameters**:
 
-* `attributeId` (number): The attribute id to get the name of, from tes3.attributeName constants.
+* `attributeId` (number): The attribute id to get the name of. Maps to values in [`tes3.attribute`](https://mwse.github.io/MWSE/references/attributes/) namespace.
 
 **Returns**:
 
@@ -2349,7 +2349,7 @@ local skill = tes3.getSkill(id)
 
 **Parameters**:
 
-* `id` (number): Maps to [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) constants.
+* `id` (number): Maps to [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) enumeration.
 
 **Returns**:
 
@@ -2362,8 +2362,12 @@ local skill = tes3.getSkill(id)
 Returns the identifying name of a skill for a given numerical, 0-based index. E.g. "Enchant".
 
 ```lua
-local name = tes3.getSkillName()
+local name = tes3.getSkillName(skillId)
 ```
+
+**Parameters**:
+
+* `skillId` (number): Maps to [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) enumeration.
 
 **Returns**:
 
@@ -2430,11 +2434,15 @@ local soundIsPlaying = tes3.getSoundPlaying({ sound = ..., reference = ... })
 
 ### `tes3.getSpecializationName`
 
-Returns the lowercase identifying name of a specialization type for a given numerical, 0-based index. E.g. "magic".
+Returns the lowercase identifying name of a specialization type for a given numerical, 0-based index. E.g. "magic", by using GMSTs. Uses `tes3.specializationName` enumeration as a fallback.
 
 ```lua
-local name = tes3.getSpecializationName()
+local name = tes3.getSpecializationName(specializationId)
 ```
+
+**Parameters**:
+
+* `specializationId` (number): Maps to [`tes3.specialization`](https://mwse.github.io/MWSE/references/specializations/) enumeration.
 
 **Returns**:
 

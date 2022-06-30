@@ -933,8 +933,8 @@ function tes3.getArchiveList() end
 --- @param attachment string No description yet available.
 function tes3.getAttachment(reference, attachment) end
 
---- Returns the lowercase identifying name of an attribute for a given numerical, 0-based index. E.g. "strength".
---- @param attributeId number The attribute id to get the name of, from tes3.attributeName constants.
+--- Returns the lowercase identifying name of an attribute for a given numerical, 0-based index. E.g. "strength", by using GMSTs. Uses `tes3.attributeName` enumeration as a fallback.
+--- @param attributeId number The attribute id to get the name of. Maps to values in [`tes3.attribute`](https://mwse.github.io/MWSE/references/attributes/) namespace.
 --- @return string name No description yet available.
 function tes3.getAttributeName(attributeId) end
 
@@ -1263,13 +1263,14 @@ function tes3.getScript(id) end
 function tes3.getSimulationTimestamp() end
 
 --- Fetches the core game object for a given skill ID.
---- @param id number Maps to [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) constants.
+--- @param id number Maps to [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) enumeration.
 --- @return tes3skill skill No description yet available.
 function tes3.getSkill(id) end
 
 --- Returns the identifying name of a skill for a given numerical, 0-based index. E.g. "Enchant".
+--- @param skillId number Maps to [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) enumeration.
 --- @return string name No description yet available.
-function tes3.getSkillName() end
+function tes3.getSkillName(skillId) end
 
 --- Locates and returns a sound by a given id.
 --- @param id string No description yet available.
@@ -1296,9 +1297,10 @@ function tes3.getSoundPlaying(params) end
 --- @field sound tes3sound|string The sound object, or the ID of the sound to look for.
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string|nil *Optional*. No description yet available.
 
---- Returns the lowercase identifying name of a specialization type for a given numerical, 0-based index. E.g. "magic".
+--- Returns the lowercase identifying name of a specialization type for a given numerical, 0-based index. E.g. "magic", by using GMSTs. Uses `tes3.specializationName` enumeration as a fallback.
+--- @param specializationId number Maps to [`tes3.specialization`](https://mwse.github.io/MWSE/references/specializations/) enumeration.
 --- @return string name No description yet available.
-function tes3.getSpecializationName() end
+function tes3.getSpecializationName(specializationId) end
 
 --- Gets the top-level UI menu.
 --- @return tes3uiElement menu No description yet available.
