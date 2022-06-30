@@ -148,6 +148,18 @@ function table.deepcopy(t)
 	return copy
 end
 
+---@param t table
+---@param value any
+---@return boolean
+function table.removevalue(t, value)
+	local i = table.find(t, value)
+	if (i ~= nil) then
+		table.remove(t, i)
+		return true
+	end
+	return false
+end
+
 
 --
 -- json library extensions

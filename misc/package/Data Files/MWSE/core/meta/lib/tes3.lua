@@ -1498,7 +1498,7 @@ function tes3.makeSafeObjectHandle(object) end
 function tes3.menuMode() end
 
 --- Displays a message box. This may be a simple toast-style message, or a box with choice buttons.
---- @param messageOrParams tes3.messageBox.params This table accepts the following values:
+--- @param messageOrParams string|tes3.messageBox.params This table accepts the following values:
 --- 
 --- `message`: string — No description yet available.
 --- 
@@ -1509,7 +1509,7 @@ function tes3.menuMode() end
 --- `showInDialog`: boolean? — *Default*: `true`. Specifying showInDialog = false forces the toast-style message, which is not shown in the dialog menu.
 --- 
 --- `duration`: number? — *Optional*. Overrides how long the toast-style message remains visible.
---- @vararg any *Optional*. Only used if messageOrParams is a string.
+--- @param ... any? *Optional*. Only used if messageOrParams is a string.
 --- @return tes3uiElement|nil element The UI menu created for the notification, if any.
 function tes3.messageBox(messageOrParams, ...) end
 
