@@ -189,6 +189,26 @@ The hours remaining.
 
 ***
 
+### `particlesActive`
+
+*Read-only*. Provides a list of active weather particles.
+
+**Returns**:
+
+* `result` ([tes3weatherControllerParticle](../../types/tes3weatherControllerParticle)[])
+
+***
+
+### `particlesInactive`
+
+*Read-only*. Provides a list of inactive weather particles.
+
+**Returns**:
+
+* `result` ([tes3weatherControllerParticle](../../types/tes3weatherControllerParticle)[])
+
+***
+
 ### `sceneRainRoot`
 
 *Read-only*. Provides read-only access to the scene rain root NiNode.

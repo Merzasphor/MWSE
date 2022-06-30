@@ -6,6 +6,8 @@
 #include "TES3IteratedList.h"
 #include "TES3Vectors.h"
 
+#include "NINode.h"
+
 namespace TES3 {
 	namespace WeatherType {
 		enum WeatherType {
@@ -26,6 +28,24 @@ namespace TES3 {
 	}
 
 	struct WeatherController {
+		struct Particle {
+			struct VirtualTable {
+				void* dtor; // 0x0
+				void* getType; // 0x4
+				void* create; // 0x8
+				void* update; // 0xC
+			};
+			VirtualTable* vtbl;
+			Vector3 unknown_0x4;
+			Vector3 velocity; // 0x10
+			WeatherController* weatherController; // 0x1C
+			NI::Pointer<NI::Node> rainRoot; // 0x20
+			float remainingLifetime; // 0x24
+			float diameter; // 0x28
+			int unknown_0x2C;
+			NI::Pointer<NI::AVObject> object; // 0x30
+			int unknown_0x34;
+		};
 		NI::Node* sgSunVis; // 0x0
 		NI::Node* sgSunBase; // 0x4
 		NI::Node* sgSunGlare; // 0x8
@@ -90,8 +110,8 @@ namespace TES3 {
 		float starsFadingDuration; // 0x138
 		int activeRainParticles; // 0x13C
 		int activeSnowParticles; // 0x140
-		IteratedList<void*> listActiveParticles; // 0x144
-		IteratedList<void*> listInactiveParticles; // 0x158
+		IteratedList<Particle*> listActiveParticles; // 0x144
+		IteratedList<Particle*> listInactiveParticles; // 0x158
 		float hoursBetweenWeatherChanges; // 0x16C
 		float transitionScalar; // 0x170
 		float hoursRemaining; // 0x174
@@ -143,4 +163,6 @@ namespace TES3 {
 		void switchTransition(int weather);
 	};
 	static_assert(sizeof(WeatherController) == 0x1F0, "TES3::WeatherController failed size validation");
+	static_assert(sizeof(WeatherController::Particle) == 0x38, "TES3::WeatherController::Particle failed size validation");
+	static_assert(sizeof(WeatherController::Particle::VirtualTable) == 0x10, "TES3::WeatherController::Particle::VirtualTable failed size validation");
 }

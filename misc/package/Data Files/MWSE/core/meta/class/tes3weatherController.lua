@@ -24,6 +24,8 @@
 --- @field lastActiveRegion tes3region *Read-only*. Provides read-only access to last active region object.
 --- @field masser tes3moon *Read-only*. Provides read-only access to the Masser moon object.
 --- @field nextWeather tes3weatherAsh|tes3weatherBlight|tes3weatherBlizzard|tes3weatherClear|tes3weatherCloudy|tes3weatherFoggy|tes3weatherOvercast|tes3weatherRain|tes3weatherSnow|tes3weatherThunder *Read-only*. The next weather.
+--- @field particlesActive tes3weatherControllerParticle[] *Read-only*. Provides a list of active weather particles.
+--- @field particlesInactive tes3weatherControllerParticle[] *Read-only*. Provides a list of inactive weather particles.
 --- @field sceneRainRoot niBillboardNode|niCollisionSwitch|niNode|niSwitchNode *Read-only*. Provides read-only access to the scene rain root NiNode.
 --- @field sceneSkyLight niDirectionalLight *Read-only*. Provides read-only access to the scene sky light directional light.
 --- @field sceneSkyRoot niBillboardNode|niCollisionSwitch|niNode|niSwitchNode *Read-only*. Provides read-only access to the scene sky root NiNode.
