@@ -1,6 +1,6 @@
 return {
 	type = "event",
-	description = "The unequipped event fires after an actor has successfully equipped an item.",
+	description = "The unequipped event fires after an actor has successfully unequipped an item.",
 	related = { "equip", "equipped", "unequipped" },
 	eventData = {
 		["actor"] = {

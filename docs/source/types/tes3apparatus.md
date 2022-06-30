@@ -242,7 +242,7 @@ The soruceless flag of the object.
 
 ### `sourceMod`
 
-*Read-only*. The filename of the mod that owns this object.
+*Read-only*. The filename (including the extension) of the mod that owns this object. It has `nil` value if the object was anything other than loaded from an ESP or ESM file.
 
 **Returns**:
 
@@ -272,7 +272,7 @@ If true, references of this object can store temporary or persistent lua data.
 
 ### `type`
 
-The type of the apparatus.
+The type of the apparatus. Maps to values in [`tes3.apparatusType`](https://mwse.github.io/MWSE/references/apparatus-types/) namespace.
 
 **Returns**:
 

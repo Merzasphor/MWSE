@@ -5,7 +5,7 @@
 
 # unequipped
 
-The unequipped event fires after an actor has successfully equipped an item.
+The unequipped event fires after an actor has successfully unequipped an item.
 
 ```lua
 --- @param e unequippedEventData

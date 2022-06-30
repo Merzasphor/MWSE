@@ -11,7 +11,7 @@
 --- @field name string The player-facing name for the object.
 --- @field quality number The quality of the apparatus.
 --- @field script tes3script The script that runs on the object.
---- @field type number The type of the apparatus.
+--- @field type number The type of the apparatus. Maps to values in [`tes3.apparatusType`](https://mwse.github.io/MWSE/references/apparatus-types/) namespace.
 --- @field value number The value of the object.
 --- @field weight number The weight of the object.
 tes3apparatus = {}

@@ -11,7 +11,7 @@
 --- @field caster tes3reference *Read-only*. The caster of the spell.
 --- @field deltaTime number *Read-only*. The number of seconds since the last spell tick.
 --- @field effect tes3magicEffect *Read-only*. The individual effect structure on source.
---- @field effectId number *Read-only*. The magic effect ID that is being ticked.
+--- @field effectId number *Read-only*. The magic effect ID that is being ticked. Maps to values in [`tes3.effect`](https://mwse.github.io/MWSE/references/magic-effects/) namespace.
 --- @field effectIndex number *Read-only*. The index of the effect in source’s effects list.
 --- @field effectInstance tes3magicEffectInstance *Read-only*. The unique instance of the magic effect.
 --- @field source tes3alchemy|tes3enchantment|tes3spell *Read-only*. The magic source.

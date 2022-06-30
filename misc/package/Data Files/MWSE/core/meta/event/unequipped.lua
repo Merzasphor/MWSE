@@ -4,7 +4,7 @@
 --- @meta
 --- @diagnostic disable:undefined-doc-name
 
---- The unequipped event fires after an actor has successfully equipped an item.
+--- The unequipped event fires after an actor has successfully unequipped an item.
 --- @class unequippedEventData
 --- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.
 --- @field actor tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance *Read-only*. The actor that has unequipped the item.

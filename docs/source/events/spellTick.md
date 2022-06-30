@@ -28,7 +28,7 @@ event.register(tes3.event.spellTick, spellTickCallback)
 * `caster` ([tes3reference](../../types/tes3reference)): *Read-only*. The caster of the spell.
 * `deltaTime` (number): *Read-only*. The number of seconds since the last spell tick.
 * `effect` ([tes3magicEffect](../../types/tes3magicEffect)): *Read-only*. The individual effect structure on source.
-* `effectId` (number): *Read-only*. The magic effect ID that is being ticked.
+* `effectId` (number): *Read-only*. The magic effect ID that is being ticked. Maps to values in [`tes3.effect`](https://mwse.github.io/MWSE/references/magic-effects/) namespace.
 * `effectIndex` (number): *Read-only*. The index of the effect in source’s effects list.
 * `effectInstance` ([tes3magicEffectInstance](../../types/tes3magicEffectInstance)): *Read-only*. The unique instance of the magic effect.
 * `source` ([tes3alchemy](../../types/tes3alchemy), [tes3enchantment](../../types/tes3enchantment), [tes3spell](../../types/tes3spell)): *Read-only*. The magic source.

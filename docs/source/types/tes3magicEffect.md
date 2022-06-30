@@ -141,7 +141,9 @@ Access to the base flag that determines if this effect can be used with a range 
 
 ### `casterLinked`
 
-Access to the base flag.
+Access to the base flag that determines if this effect must end if caster is dead, or not an NPC/creature. Not allowed in containter or door trap spells.
+
+Note that this property is hidden in the Construction Set.
 
 **Returns**:
 
@@ -191,7 +193,7 @@ Raw access to the numerical representation of flags. Typically shouldn't be used
 
 ### `hasContinuousVFX`
 
-Access to the base flag that determines if this effect's VFX continuously plays.
+Access to the base flag that determines if this effect's VFX continuously plays for the full duration of the spell, rather than occuring once on hit.
 
 **Returns**:
 
@@ -371,7 +373,7 @@ The maximum possible size of the spell projectile with this effect.
 
 ### `skill`
 
-*Read-only*. The skill for the associated school that the effect is associated with.
+*Read-only*. The skill for the associated school that the effect is associated with. This skill is used when calculating experience gain per skill after a spell with this effect is cast. Maps to values in [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) namespace.
 
 **Returns**:
 

@@ -249,7 +249,9 @@ local effect = tes3.addMagicEffect({ id = ..., name = ..., baseCost = ..., schoo
 	* `canCastSelf` (boolean): *Default*: `true`. A flag which controls whether this effect can be used with cast on self range.
 	* `canCastTarget` (boolean): *Default*: `true`. A flag which controls whether this effect can be used with cast on target range.
 	* `canCastTouch` (boolean): *Default*: `true`. A flag which controls whether this effect can be used with cast on touch range.
-	* `casterLinked` (boolean): *Default*: `true`.
+	* `casterLinked` (boolean): *Default*: `true`. Access to the base flag that determines if this effect must end if caster is dead, or not an NPC/creature. Not allowed in containter or door trap spells.
+
+Note that this property is hidden in the Construction Set.
 	* `hasContinuousVFX` (boolean): *Default*: `true`. A flag which controls whether the effect's visual is continuously played during the whole duration of the effect.
 	* `hasNoDuration` (boolean): *Default*: `true`. A flag which controls whether this effect doesn't have duration.
 	* `hasNoMagnitude` (boolean): *Default*: `true`. A flag which controls whether this effect doesn't have magnitude.
@@ -921,12 +923,13 @@ tes3.closeSpellmakingMenu()
 Create an object and returns it. The created object will be part of the saved game. Currently supported object types are: `tes3.objectType.activator`, `.alchemy`, `.ammo`, `.book`, `.clothing`, `.container`, `.enchantment`, `.miscItem`, `.sound`, `.spell`, `.static`, and `.weapon`.
 
 ```lua
-local createdObject = tes3.createObject({ objectType = ..., getIfExists = ... })
+local createdObject = tes3.createObject({ id = ..., objectType = ..., getIfExists = ... })
 ```
 
 **Parameters**:
 
 * `params` (table)
+	* `id` (string): *Optional*. The id of the new object.
 	* `objectType` (number): Maps to [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) constants. Used to filter object type to create.
 	* `getIfExists` (boolean): *Default*: `true`. If `true`, an existing object of the same type and ID will be returned instead of creating a new one.
 
@@ -3207,7 +3210,7 @@ local result = tes3.rayTest({ position = ..., direction = ..., findAll = ..., ma
 
 **Returns**:
 
-* `result` ([niPickRecord](../../types/niPickRecord), table)
+* `result` ([niPickRecord](../../types/niPickRecord), [niPickRecord](../../types/niPickRecord)[])
 
 ??? example "Example: Get Activation Target"
 

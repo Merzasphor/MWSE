@@ -262,7 +262,7 @@ The soruceless flag of the object.
 
 ### `sourceMod`
 
-*Read-only*. The filename of the mod that owns this object.
+*Read-only*. The filename (including the extension) of the mod that owns this object. It has `nil` value if the object was anything other than loaded from an ESP or ESM file.
 
 **Returns**:
 

@@ -172,7 +172,9 @@ function tes3.addJournalEntry(params) end
 --- 
 --- `canCastTouch`: boolean? — *Default*: `true`. A flag which controls whether this effect can be used with cast on touch range.
 --- 
---- `casterLinked`: boolean? — *Default*: `true`. No description yet available.
+--- `casterLinked`: boolean? — *Default*: `true`. Access to the base flag that determines if this effect must end if caster is dead, or not an NPC/creature. Not allowed in containter or door trap spells.
+--- --- 
+--- --- Note that this property is hidden in the Construction Set.
 --- 
 --- `hasContinuousVFX`: boolean? — *Default*: `true`. A flag which controls whether the effect's visual is continuously played during the whole duration of the effect.
 --- 
@@ -265,7 +267,9 @@ function tes3.addMagicEffect(params) end
 --- @field canCastSelf boolean? *Default*: `true`. A flag which controls whether this effect can be used with cast on self range.
 --- @field canCastTarget boolean? *Default*: `true`. A flag which controls whether this effect can be used with cast on target range.
 --- @field canCastTouch boolean? *Default*: `true`. A flag which controls whether this effect can be used with cast on touch range.
---- @field casterLinked boolean? *Default*: `true`. No description yet available.
+--- @field casterLinked boolean? *Default*: `true`. Access to the base flag that determines if this effect must end if caster is dead, or not an NPC/creature. Not allowed in containter or door trap spells.
+--- 
+--- Note that this property is hidden in the Construction Set.
 --- @field hasContinuousVFX boolean? *Default*: `true`. A flag which controls whether the effect's visual is continuously played during the whole duration of the effect.
 --- @field hasNoDuration boolean? *Default*: `true`. A flag which controls whether this effect doesn't have duration.
 --- @field hasNoMagnitude boolean? *Default*: `true`. A flag which controls whether this effect doesn't have magnitude.
@@ -635,6 +639,8 @@ function tes3.closeSpellmakingMenu() end
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3/#tes3createobject).
 --- @param params tes3.createObject.params This table accepts the following values:
 --- 
+--- `id`: string? — *Optional*. The id of the new object.
+--- 
 --- `objectType`: number — Maps to [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) constants. Used to filter object type to create.
 --- 
 --- `getIfExists`: boolean? — *Default*: `true`. If `true`, an existing object of the same type and ID will be returned instead of creating a new one.
@@ -643,6 +649,7 @@ function tes3.createObject(params) end
 
 ---Table parameter definitions for `tes3.createObject`.
 --- @class tes3.createObject.params
+--- @field id string? *Optional*. The id of the new object.
 --- @field objectType number Maps to [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) constants. Used to filter object type to create.
 --- @field getIfExists boolean? *Default*: `true`. If `true`, an existing object of the same type and ID will be returned instead of creating a new one.
 
@@ -1751,7 +1758,7 @@ function tes3.random(seed) end
 --- `returnTexture`: boolean? — *Default*: `false`. Calculate and return the texture coordinate at intersections.
 --- 
 --- `ignore`: tes3reference[]|niBillboardNode[]|niCollisionSwitch[]|niNode[]|niSwitchNode[]|nil — *Optional*. An array of references and/or scene graph nodes to cull from the result(s).
---- @return niPickRecord|table result No description yet available.
+--- @return niPickRecord|niPickRecord[] result No description yet available.
 function tes3.rayTest(params) end
 
 ---Table parameter definitions for `tes3.rayTest`.

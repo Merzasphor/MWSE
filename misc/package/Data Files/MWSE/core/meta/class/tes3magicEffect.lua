@@ -19,12 +19,14 @@
 --- @field canCastSelf boolean Access to the base flag that determines if this effect can be used with a range of self.
 --- @field canCastTarget boolean Access to the base flag that determines if this effect can be used with a range of target.
 --- @field canCastTouch boolean Access to the base flag that determines if this effect can be used with a range of touch.
---- @field casterLinked boolean Access to the base flag.
+--- @field casterLinked boolean Access to the base flag that determines if this effect must end if caster is dead, or not an NPC/creature. Not allowed in containter or door trap spells.
+--- 
+--- Note that this property is hidden in the Construction Set.
 --- @field castSoundEffect tes3sound The sound effect that plays when casting. Can be set to ``nil`` to use the default sound effect for the magic school.
 --- @field castVisualEffect tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon The visual played when a spell with this effect is cast.
 --- @field description string Player-facing description of the effect.
 --- @field flags number Raw access to the numerical representation of flags. Typically shouldn't be used.
---- @field hasContinuousVFX boolean Access to the base flag that determines if this effect's VFX continuously plays.
+--- @field hasContinuousVFX boolean Access to the base flag that determines if this effect's VFX continuously plays for the full duration of the spell, rather than occuring once on hit.
 --- @field hasNoDuration boolean Access to the base flag that determines if this effect doesn't use a duration.
 --- @field hasNoMagnitude boolean Access to the base flag that determines if this effect doesn't make use of its magnitude.
 --- @field hitSoundEffect tes3sound The sound effect that plays when the effect hits a target. Can be set to ``nil`` to use the default sound effect for the magic school.
@@ -42,7 +44,7 @@
 --- @field school number The school that the effect is associated with. Maps to [`tes3.magicSchool`](https://mwse.github.io/MWSE/references/magic-schools/) constants.
 --- @field size number The size scale for the spells containing this magic effect.
 --- @field sizeCap number The maximum possible size of the spell projectile with this effect.
---- @field skill number *Read-only*. The skill for the associated school that the effect is associated with.
+--- @field skill number *Read-only*. The skill for the associated school that the effect is associated with. This skill is used when calculating experience gain per skill after a spell with this effect is cast. Maps to values in [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) namespace.
 --- @field speed number No description yet available.
 --- @field spellFailureSoundEffect tes3sound *Read-only*. The sound effect that plays when a spell fails to cast, and when magic is resisted. This is determined only by the spell school.
 --- @field targetsAttributes boolean Access to the base flag that determines if this effect makes use of attributes.
