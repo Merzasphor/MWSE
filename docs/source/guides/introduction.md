@@ -23,7 +23,7 @@ end
 myFunctionName("foo")
 ```
 
-For a broader introduction to the Lua scripting language, refer to the [Introduction to Lua](../introduction-to-lua) guide. 
+For a broader introduction to the Lua scripting language, refer to the [Introduction to Lua](../introduction-to-lua) guide.
 
 ## Morrowind Object Types
 
@@ -55,14 +55,14 @@ local function myKeyEvent(eventData)
 end
 
 -- Tell MWSE that we want our callback to be invoked when a key is pressed.
-event.register("key", myKeyEvent)
+event.register(tes3.event.key, myKeyEvent)
 ```
 
 We can also pass filters to events. For the key event, the filter is the key that was pressed/released.
 
 ```lua
 -- If we use this instead of the above registration, we filter to key 22 (U).
-event.register("key", myKeyEvent, { filter = 22 })
+event.register(tes3.event.key, myKeyEvent, { filter = tes3.scanCode.u })
 ```
 
 For a broader introduction to event based programming, refer to the [Introduction to Event Based Programming](../introduction-to-event-based-programming) guide.
@@ -103,7 +103,7 @@ For example, with the file `Data Files\MWSE\mods\demo\main.lua` in place, it wil
 local function myLoadedGameCallback(e)
     mwse.log("Loaded game: %s", e.filename)
 end
-event.register("loaded", myLoadedGameCallback)
+event.register(tes3.event.loaded, myLoadedGameCallback)
 ```
 
 

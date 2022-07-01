@@ -68,10 +68,10 @@ function this.createWindow()
     local button_ok = button_block:createButton{ id = this.id_ok, text = tes3.findGMST("sOK").value }
 
     -- Events
-    button_cancel:register("mouseClick", this.onCancel)
-    menu:register("keyEnter", this.onOK) -- only works when text input is not captured
-    input:register("keyEnter", this.onOK)
-    button_ok:register("mouseClick", this.onOK)
+    button_cancel:register(tes3.uiEvent.mouseClick, this.onCancel)
+    menu:register(tes3.uiEvent.keyEnter, this.onOK) -- only works when text input is not captured
+    input:register(tes3.uiEvent.keyEnter, this.onOK)
+    button_ok:register(tes3.uiEvent.mouseClick, this.onOK)
 
     -- Final setup
     menu:updateLayout()
@@ -119,6 +119,6 @@ function this.onCommand(e)
     end
 end
 
-event.register("initialized", this.init)
-event.register("keyDown", this.onCommand, { filter = 53 }) -- "/" key
+event.register(tes3.event.initialized, this.init)
+event.register(tes3.event.keyDown, this.onCommand, { filter = tes3.scanCode["/"] }) -- "/" key
 ```

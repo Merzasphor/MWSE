@@ -25,7 +25,7 @@ end
 local function registerModConfig()
     mwse.registerModConfig("My Awesome Mod", modConfigPackage)
 end
-event.register("modConfigReady", registerModConfig)
+event.register(tes3.event.modConfigReady, registerModConfig)
 ```
 
 After loading up the game, you should see "My Awesome Mod" in the mod config menu, with a single "Hello world!" in its configuration pane.
@@ -53,5 +53,5 @@ local modConfigPackage = { hidden = true }
 local function enableModConfigOnLoaded()
     modConfigPackage.hidden = false
 end
-event.register("loaded", enableModConfigOnLoaded)
+event.register(tes3.event.loaded, enableModConfigOnLoaded)
 ```

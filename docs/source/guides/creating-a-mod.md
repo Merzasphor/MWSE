@@ -6,18 +6,18 @@ This guide will demonstrate the most basic steps of creating a mod for *The Elde
 To facilitate this, this guide will explain how to create a mod that displays a unique messagebox every time the player draws a two-handed weapon.
 
 ## Development Workflow
-A Development Workflow is the environment and processes used to facilitate software development. This guide assumes that you have setup a development environment. 
+A Development Workflow is the environment and processes used to facilitate software development. This guide assumes that you have setup a development environment.
 
 If you have not set up a development environment, or do not know how to, please refer to the [Development Workflow](../development-workflows) guide to set one up.
 
 ## Introduction to the Lua Scripting Language
-If you have basic knowledge of the Lua scripting language, you may skip this section. If you are not familiar with the Lua scripting language, please take a moment to read the [Introduction to Lua](../introduction-to-lua) guide. 
+If you have basic knowledge of the Lua scripting language, you may skip this section. If you are not familiar with the Lua scripting language, please take a moment to read the [Introduction to Lua](../introduction-to-lua) guide.
 
 ## Introduction to Event Based Programming
 If you have basic knowledge of event based programming, you may skip this section. If you are not familiar with event based programming, please take a moment to read the [Introduction to Event Based Programming](../introduction-to-event-based-programming) guide.
 
 ## Creating the Mod File Structure
-Now that you have setup a development workflow, you are ready to create a mod. 
+Now that you have setup a development workflow, you are ready to create a mod.
 
 Next, the folder structure for MWSE must be created:
 
@@ -29,15 +29,15 @@ The newly created folder structure should look like this:
 
 - **Morrowind\\Data Files\\MWSE\\mods\\MWSE-Guide-Demo**
 
-Now that the folder structure is complete, you must create a code file to run your code in. 
+Now that the folder structure is complete, you must create a code file to run your code in.
 
-- In "MWSE-Guide-Demo", create a file named *main.lua*. This file will contain the Lua code for the mod. 
+- In "MWSE-Guide-Demo", create a file named *main.lua*. This file will contain the Lua code for the mod.
 
 **The main file of your mod must be named main.lua**. This file should configure and initialize any other code files in your mod. The name *main.lua* is required by MWSE.
 
 
 ## Registering an Event
-The Morrowind game engine, through MWSE, provides a variety of *events* that can be used to trigger code. An *event* is a trigger that will notify any registered functions of it's occurrence. 
+The Morrowind game engine, through MWSE, provides a variety of *events* that can be used to trigger code. An *event* is a trigger that will notify any registered functions of it's occurrence.
 
 For example, consider the `loaded` event. This event is triggered whenever the player loads a save game. If you register a function to be called when this event occurs, your function will be called when the player loads a save game. By cleverly using Morrowind's events, powerful functionality can be created.
 
@@ -54,7 +54,7 @@ local function initialized() -- 1.
 end
 
 -- Register our initialized function to the initialized event.
-event.register("initialized", initialized) --3.
+event.register(tes3.event.initialized, initialized) --3.
 ```
 
 1. Declare a function to call whenever the `initialized` event is triggered.
@@ -71,15 +71,15 @@ end
 
 -- The function to call on the initialized event.
 local function initialized()
-    -- Register our function to the onReadied event.
-    event.register("weaponReadied", showMessageboxOnWeaponReadied) --3.
+    -- Register our function to the weaponReadied event.
+    event.register(tes3.event.weaponReadied, showMessageboxOnWeaponReadied) --3.
 
     -- Print a "Ready!" statement to the MWSE.log file.
     print("[MWSE Guide Demo: INFO] MWSE Guide Demo Initialized")
 end
 
 -- Register our initialized function to the initialized event.
-event.register("initialized", initialized)
+event.register(tes3.event.initialized, initialized)
 ```
 
 1. Declare a function to call whenever the `weaponReadied` event is triggered.
@@ -113,14 +113,14 @@ end
 ```
 
 1. We must check that the event was triggered by the player. Without this step, the code would be executed for all actors, including NPCs and creatures! `e.reference` is an property of the `weaponedReadied` event. `tes3.player` is an easy way to access the player reference.
-2. Store a copy of the weaponStack reference in a local variable to prevent typing `e.weaponStack` more than once. 
+2. Store a copy of the weaponStack reference in a local variable to prevent typing `e.weaponStack` more than once.
 3. The first part of this if condition checks that the reference exists. This should be done to prevent null reference exceptions. The second part of this if condition performs our validation: it ensures that the weapon being readied is a two-handed weapon.
 4. Show a messagebox with some custom object information. `.name` is available on any object.
 
 The mod should be tested again. When drawing a two-handed weapon, you should now see a custom messagebox!
 
 ## Conclusion
-This guide provided a simple introduction to modding *The Elder Scrolls III: Morrowind* using MWSE 2.1 Lua. 
+This guide provided a simple introduction to modding *The Elder Scrolls III: Morrowind* using MWSE 2.1 Lua.
 
 This guide:
 
@@ -153,12 +153,12 @@ end
 -- The function to call on the initialized event.
 local function initialized()
     -- Register our function to the onReadied event.
-    event.register("weaponReadied", showMessageboxOnWeaponReadied)
+    event.register(tes3.event.weaponReadied, showMessageboxOnWeaponReadied)
 
     -- Print a "Ready!" statement to the MWSE.log file.
     print("[MWSE Guide Demo: INFO] MWSE Guide Demo Initialized")
 end
 
 -- Register our initialized function to the initialized event.
-event.register("initialized", initialized)
+event.register(tes3.event.initialized, initialized)
 ```

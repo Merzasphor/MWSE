@@ -18,14 +18,14 @@ local function editMagicEffectTooltips()
     iconBar = multi:findChild("MenuMulti_magic_icons_1")
 
     for _, x in pairs(iconBar.children) do
-        x:registerAfter("help", magicEffectTooltip)
+        x:registerAfter(tes3.uiEvent.help, magicEffectTooltip)
     end
 
     multi = tes3ui.findMenu("MenuMagic")
     iconBar = multi:findChild("MagicMenu_t_icon_row_1")
 
     for _, x in pairs(iconBar.children) do
-        x:registerAfter("help", magicEffectTooltip)
+        x:registerAfter(tes3.uiEvent.help, magicEffectTooltip)
     end
 end
 ```

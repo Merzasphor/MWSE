@@ -12,7 +12,7 @@ To begin, let's look at some source code that we want to enable translations for
 	local function onPressZ(e)
 		tes3.messageBox("Hello world!")
 	end
-	event.register("keyDown", onPressZ, { filter = tes3.scanCode.z })
+	event.register(tes3.event.keyDown, onPressZ, { filter = tes3.scanCode.z })
 	```
 
 Here we just want to allow translators to provide a different string instead of `"Hello world!"`. To do this, we need to make an **i18n** folder in our project to define our language files in. For example:
@@ -68,7 +68,7 @@ Here we just want to allow translators to provide a different string instead of 
 	local function onPressZ(e)
 		tes3.messageBox(i18n("Hello world!"))
 	end
-	event.register("keyDown", onPressZ, { filter = tes3.scanCode.z })
+	event.register(tes3.event.keyDown, onPressZ, { filter = tes3.scanCode.z })
 	```
 
 This code looks pretty simple, but what is really happening here? `mwse.loadTranslations("The Hello World Mod")` loads content from **The Hello World Mod\\i18n\\eng.lua** as well as an optional additional file, based on the player's game language. This can be **deu.lua**, **fra.lua**, or **rus.lua**. When the `i18n` translation result is called, it returns the translation for the player's current language with the key `"Hello world!"`.
@@ -122,7 +122,7 @@ i18n supports the [unicode.org plural rules](http://cldr.unicode.org/index/cldr-
 		local daggerCount = tes3.getItemCount({ reference = tes3.player, item = dagger })
 		tes3.messageBox(i18n("itemCountNotification", { count = daggerCount, item = dagger.name }))
 	end
-	event.register("keyDown", onPressZ, { filter = tes3.scanCode.z })
+	event.register(tes3.event.keyDown, onPressZ, { filter = tes3.scanCode.z })
 	```
 
 Here, the correct language will be chosen depending on the context of `daggerCount`. If the player has no iron daggers, `"You have no Iron Daggers."` will be displayed. If the player has exactly 1 iron dagger, `"You have 1 Iron Dagger."`. Finally, in any other case, the `other` key is used.
