@@ -627,6 +627,26 @@ local result = mwscript.scriptRunning({ script = ... })
 
 ***
 
+### `mwscript.setDelete`
+
+Marks the `reference` as deleted, and modified. Deleted reference isn't rendered nor is its local mwscript run.
+
+```lua
+local executed = mwscript.setDelete({ reference = ..., delete = ... })
+```
+
+**Parameters**:
+
+* `params` (table)
+	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
+	* `delete` (boolean): *Default*: `true`. Setting this to true deletes the reference and triggers `referenceDeactivated` event. Setting this to false effectively undeletes/activates the reference and triggers `referenceActivated` event.
+
+**Returns**:
+
+* `executed` (boolean)
+
+***
+
 ### `mwscript.setLevel`
 
 Use [`tes3npc.level`](https://mwse.github.io/MWSE/types/tes3npc/#level) instead. Wrapper for the `SetLevel` mwscript function.
