@@ -1,6 +1,6 @@
 return {
 	type = "value",
-	description = [[The serial number of the associated source instance.]],
-	readOnly =true,
-	valuetype = "number",
+	description = [[The the associated magic source instance.]],
+	readOnly = true,
+	valuetype = "tes3magicSourceInstance",
 }

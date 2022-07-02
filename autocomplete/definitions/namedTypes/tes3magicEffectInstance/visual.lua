@@ -1,4 +1,5 @@
 return {
 	type = "value",
-	valuetype = "number",
+	description = [[The associated visual effect.]],
+	valuetype = "tes3vfx",
 }

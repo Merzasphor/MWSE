@@ -4,7 +4,7 @@
 --- @meta
 --- @diagnostic disable:undefined-doc-name
 
---- A managed visual effect, attached to position, reference, or arbitrary node. These can be created through script with `tes3.createVisualEffect` and destroyed with `tes3.removeVisualEffect`.
+--- A managed visual effect, attached to position, reference, or arbitrary node. These can be created through script with [`tes3.createVisualEffect`](https://mwse.github.io/MWSE/apis/tes3/#tes3createvisualeffect) and destroyed with [`tes3.removeVisualEffect`](https://mwse.github.io/MWSE/apis/tes3/#tes3removevisualeffect).
 --- @class tes3vfx
 --- @field age number The VFX's current age, in seconds.
 --- @field attachNode niBillboardNode|niCollisionSwitch|niNode|niSwitchNode|nil The node the VFX was created to attach to, if it was created for node attachment.
@@ -15,10 +15,10 @@
 --- @field expired boolean A flag controlling if the effect is expired. This can be set to cause the effect to remove itself on the next update.
 --- @field id number *Read-only*. The unique numberic identifier for this visual effect.
 --- @field keyTime number The VFX's current keyframe timing. When this value exceeds the `endKeyTime`, the effect will either loop back to `beginKeyTime` or the effect will expire.
---- @field maxAge number The VFX's maximum age, in seconds. 
+--- @field maxAge number The VFX's maximum age, in seconds.
 --- @field position tes3vector3 The position the VFX was created at.
---- @field sourceInstance number *Read-only*. The serial number of the associated source instance.
---- @field sourceInstanceSerial number The serial number of the associated source instance.
+--- @field sourceInstance tes3magicSourceInstance *Read-only*. The the associated magic source instance.
+--- @field sourceInstanceSerial number *Read-only*. The serial number of the associated source instance.
 --- @field target tes3reference The reference the target is associated with, if any.
 --- @field verticalOffset number The VFX's vertical offset, at the time of creation. Changing this value will not automatically readjust the VFX's visual node.
 tes3vfx = {}

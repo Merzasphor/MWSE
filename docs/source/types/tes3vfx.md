@@ -5,7 +5,7 @@
 
 # tes3vfx
 
-A managed visual effect, attached to position, reference, or arbitrary node. These can be created through script with `tes3.createVisualEffect` and destroyed with `tes3.removeVisualEffect`.
+A managed visual effect, attached to position, reference, or arbitrary node. These can be created through script with [`tes3.createVisualEffect`](https://mwse.github.io/MWSE/apis/tes3/#tes3createvisualeffect) and destroyed with [`tes3.removeVisualEffect`](https://mwse.github.io/MWSE/apis/tes3/#tes3removevisualeffect).
 
 ## Properties
 
@@ -101,7 +101,7 @@ The VFX's current keyframe timing. When this value exceeds the `endKeyTime`, the
 
 ### `maxAge`
 
-The VFX's maximum age, in seconds. 
+The VFX's maximum age, in seconds.
 
 **Returns**:
 
@@ -121,17 +121,17 @@ The position the VFX was created at.
 
 ### `sourceInstance`
 
-*Read-only*. The serial number of the associated source instance.
+*Read-only*. The the associated magic source instance.
 
 **Returns**:
 
-* `result` (number)
+* `result` ([tes3magicSourceInstance](../../types/tes3magicSourceInstance))
 
 ***
 
 ### `sourceInstanceSerial`
 
-The serial number of the associated source instance.
+*Read-only*. The serial number of the associated source instance.
 
 **Returns**:
 

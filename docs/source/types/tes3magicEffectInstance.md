@@ -131,7 +131,7 @@ No description yet available.
 
 ### `timeActive`
 
-No description yet available.
+The time since the effect started affecting its target.
 
 **Returns**:
 
@@ -141,11 +141,11 @@ No description yet available.
 
 ### `visual`
 
-No description yet available.
+The associated visual effect.
 
 **Returns**:
 
-* `result` (number)
+* `result` ([tes3vfx](../../types/tes3vfx))
 
 ***
 

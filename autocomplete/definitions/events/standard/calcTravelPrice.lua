@@ -10,7 +10,7 @@ return {
 		["reference"] = {
 			type = "tes3reference",
 			readOnly = true,
-			description = "mobile’s related reference.",
+			description = "The mobile’s related reference.",
 		},
 		["basePrice"] = {
 			type = "number",
@@ -27,7 +27,7 @@ return {
 			description = "The travel marker that marks the destination.",
 		},
 		["companions"] = {
-			type = "tes3reference[]|nil",
+			type = "tes3mobileActor[]|nil",
 			readOnly = true,
 			description = "Companions that will travel with the player, or `nil` if no companions are present."
 		},
