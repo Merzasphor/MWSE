@@ -1,4 +1,6 @@
 return {
 	type = "value",
-	valuetype = "tes3alchemy",
+	deprecated = true,
+	description = [[Use `.selectedItem` property instead.]],
+	valuetype = "tes3itemStack",
 }

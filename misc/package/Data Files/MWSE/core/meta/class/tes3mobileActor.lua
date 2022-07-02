@@ -32,7 +32,7 @@
 --- @field cell tes3cell *Read-only*. Fetches the cell that the actor is in.
 --- @field chameleon number Direct access to the actor's chameleon effect attribute.
 --- @field collidingReference tes3reference *Read-only*. The reference that the mobile has collided with this frame.
---- @field combatSession tes3combatSession *Read-only*. Combat session data. This exists while the actor is in combat to provide memory for AI combat decisions.
+--- @field combatSession tes3combatSession|nil *Read-only*. Combat session data. This exists while the actor is in combat to provide memory for AI combat decisions. Doesn't exist on the player's mobile.
 --- @field corpseHourstamp number This is the time measured in hours from the beginning of the game when the actor died. Returns a UNIX-style timestamp based on in-world simulation time since the start of the era. For living actors this field has value a of `0`.
 --- @field currentEnchantedItem tes3equipmentStack *Read-only*. The currently equipped enchanted item that the actor will use.
 --- @field currentSpell tes3spell *Read-only*. The currently equipped spell that the actor will use.

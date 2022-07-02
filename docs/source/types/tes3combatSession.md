@@ -21,13 +21,17 @@ No description yet available.
 
 ### `data`
 
-No description yet available.
+A generic lua table that data can be written to, and synced to/from the save. All information stored must be valid for serialization to json.
+
+**Returns**:
+
+* `result` (table)
 
 ***
 
 ### `distance`
 
-No description yet available.
+The combat distance.
 
 **Returns**:
 
@@ -47,7 +51,7 @@ No description yet available.
 
 ### `mobile`
 
-*Read-only*. No description yet available.
+*Read-only*. Convenience access back to the associated actor.
 
 **Returns**:
 
@@ -67,21 +71,11 @@ No description yet available.
 
 ### `selectedAction`
 
-No description yet available.
+The next action.
 
 **Returns**:
 
 * `result` (number)
-
-***
-
-### `selectedAlchemy`
-
-No description yet available.
-
-**Returns**:
-
-* `result` ([tes3alchemy](../../types/tes3alchemy))
 
 ***
 
@@ -107,7 +101,7 @@ No description yet available.
 
 ### `selectedSpell`
 
-No description yet available.
+This field containg the spell the actor is currently casting. If not in casting state this field has `nil` value.
 
 **Returns**:
 
@@ -117,7 +111,7 @@ No description yet available.
 
 ### `selectedWeapon`
 
-*Read-only*. No description yet available.
+*Read-only*. The weapon the actor is using in this combat session.
 
 **Returns**:
 

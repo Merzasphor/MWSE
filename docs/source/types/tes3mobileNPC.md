@@ -347,11 +347,11 @@ Direct access to the actor's chameleon effect attribute.
 
 ### `combatSession`
 
-*Read-only*. Combat session data. This exists while the actor is in combat to provide memory for AI combat decisions.
+*Read-only*. Combat session data. This exists while the actor is in combat to provide memory for AI combat decisions. Doesn't exist on the player's mobile.
 
 **Returns**:
 
-* `result` ([tes3combatSession](../../types/tes3combatSession))
+* `result` ([tes3combatSession](../../types/tes3combatSession), nil)
 
 ***
 

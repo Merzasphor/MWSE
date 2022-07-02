@@ -7,17 +7,16 @@
 --- A structure that keeps track of combat session data.
 --- @class tes3combatSession
 --- @field alchemyPriority number No description yet available.
---- @field data any No description yet available.
---- @field distance number No description yet available.
+--- @field data table A generic lua table that data can be written to, and synced to/from the save. All information stored must be valid for serialization to json.
+--- @field distance number The combat distance.
 --- @field lastUseTimestamp number No description yet available.
---- @field mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer *Read-only*. No description yet available.
+--- @field mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer *Read-only*. Convenience access back to the associated actor.
 --- @field potionUseFlag number No description yet available.
---- @field selectedAction number No description yet available.
---- @field selectedAlchemy tes3alchemy No description yet available.
+--- @field selectedAction number The next action.
 --- @field selectedItem tes3itemStack No description yet available.
 --- @field selectedShield tes3equipmentStack *Read-only*. No description yet available.
---- @field selectedSpell tes3spell No description yet available.
---- @field selectedWeapon tes3equipmentStack *Read-only*. No description yet available.
+--- @field selectedSpell tes3spell This field containg the spell the actor is currently casting. If not in casting state this field has `nil` value.
+--- @field selectedWeapon tes3equipmentStack *Read-only*. The weapon the actor is using in this combat session.
 --- @field selectionPriority number No description yet available.
 tes3combatSession = {}
 

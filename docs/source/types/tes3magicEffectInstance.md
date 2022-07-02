@@ -131,7 +131,7 @@ No description yet available.
 
 ### `timeActive`
 
-The time since the effect started affecting its target.
+The time since the effect started affecting its target in seconds.
 
 **Returns**:
 
