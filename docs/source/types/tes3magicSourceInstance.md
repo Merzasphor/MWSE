@@ -112,7 +112,7 @@ The number of hours passed since the player's corprus state last worsened.
 
 ### `magicID`
 
-*Read-only*. No description yet available.
+*Read-only*. For spells created in the Contruction Set, this is the id of the spell defined there. For spells created during play, with spellmaking, this is a number.
 
 **Returns**:
 
@@ -262,7 +262,7 @@ If true, references of this object can store temporary or persistent lua data.
 
 ### `timestampCastBegin`
 
-No description yet available.
+The timestamp at which this magic source was cast.
 
 **Returns**:
 

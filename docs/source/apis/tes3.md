@@ -612,25 +612,6 @@ local result = tes3.applyTextDefines({ text = ..., actor = ... })
 
 ***
 
-### `tes3.beginTransform`
-
-Changes a reference to werewolf form. This function works only on a reference infected with Lycanthropy, be it the player or any other reference. Returns true if successful.
-
-```lua
-local success = tes3.beginTransform({ reference = ... })
-```
-
-**Parameters**:
-
-* `params` (table)
-	* `reference` ([tes3reference](../../types/tes3reference)): A reference to change to werewolf form.
-
-**Returns**:
-
-* `success` (boolean)
-
-***
-
 ### `tes3.calculateChargeUse`
 
 Calculates the actual charge use of an enchantment by a mobile actor, after skills are applied. Invokes the enchantChargeUse event to account for modded charge usage. Takes into account the MCP charge use rebalance patch, if activated.

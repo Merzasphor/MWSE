@@ -1,5 +1,5 @@
 return {
 	type = "value",
-	description = [[]],
+	description = [[The sound listener position.]],
 	valuetype = "tes3vector3",
 }

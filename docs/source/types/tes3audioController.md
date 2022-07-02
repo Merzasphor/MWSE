@@ -31,7 +31,7 @@ A flag which controls whether the audio is disabled or not.
 
 ### `listenerPosition`
 
-
+The sound listener position.
 
 **Returns**:
 
@@ -51,7 +51,7 @@ A flag which controls whether the audio is disabled or not.
 
 ### `musicFadeBeginTimestamp`
 
-
+The timestamp at which currently playing music track started fading in. So, it's a timestamp at which currently playing music track started.
 
 **Returns**:
 

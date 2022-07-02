@@ -8,9 +8,9 @@
 --- @class tes3audioController
 --- @field currentMusicFilePath string File path of the currently playing music track. The path can not be longer than 260 characters.
 --- @field disableAudio boolean A flag which controls whether the audio is disabled or not.
---- @field listenerPosition tes3vector3 
+--- @field listenerPosition tes3vector3 The sound listener position.
 --- @field musicDuration number *Read-only*. The duration of the currently playing music track.
---- @field musicFadeBeginTimestamp number 
+--- @field musicFadeBeginTimestamp number The timestamp at which currently playing music track started fading in. So, it's a timestamp at which currently playing music track started.
 --- @field musicNextTrackStartTimestamp number 
 --- @field musicNextTrackVolume number The volume of the next track.
 --- @field musicPosition number Current play time for currently playing music track.

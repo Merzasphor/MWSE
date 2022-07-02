@@ -177,7 +177,7 @@ local result = myObject:isMouseButtonDown(button)
 
 **Parameters**:
 
-* `button` (number): The mouse button to test. Must be between `0` and `7`.
+* `button` (number): The mouse button to test. Must be between `0` and `7`. Left mouse button is `0`, right is `1`, and middle is `2`.
 
 **Returns**:
 
@@ -195,7 +195,7 @@ local result = myObject:isMouseButtonPressedThisFrame(button)
 
 **Parameters**:
 
-* `button` (number): The mouse button to test. Must be between `0` and `7`.
+* `button` (number): The mouse button to test. Must be between `0` and `7`. Left mouse button is `0`, right is `1`, and middle is `2`.
 
 **Returns**:
 
@@ -213,7 +213,7 @@ local result = myObject:isMouseButtonReleasedThisFrame(button)
 
 **Parameters**:
 
-* `button` (number): The mouse button to test. Must be between `0` and `7`.
+* `button` (number): The mouse button to test. Must be between `0` and `7`. Left mouse button is `0`, right is `1`, and middle is `2`.
 
 **Returns**:
 

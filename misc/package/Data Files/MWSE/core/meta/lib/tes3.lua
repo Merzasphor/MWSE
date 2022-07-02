@@ -453,17 +453,6 @@ function tes3.applyTextDefines(params) end
 --- @field text string The input string to do text replacements for.
 --- @field actor tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance The actor to use for replacements like `%Name` and `%Faction`.
 
---- Changes a reference to werewolf form. This function works only on a reference infected with Lycanthropy, be it the player or any other reference. Returns true if successful.
---- @param params tes3.beginTransform.params This table accepts the following values:
---- 
---- `reference`: tes3reference — A reference to change to werewolf form.
---- @return boolean success No description yet available.
-function tes3.beginTransform(params) end
-
----Table parameter definitions for `tes3.beginTransform`.
---- @class tes3.beginTransform.params
---- @field reference tes3reference A reference to change to werewolf form.
-
 --- Calculates the actual charge use of an enchantment by a mobile actor, after skills are applied. Invokes the enchantChargeUse event to account for modded charge usage. Takes into account the MCP charge use rebalance patch, if activated.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3/#tes3calculatechargeuse).

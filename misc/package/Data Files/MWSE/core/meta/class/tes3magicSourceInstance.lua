@@ -12,7 +12,7 @@
 --- @field item tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon *Read-only*. No description yet available.
 --- @field itemData tes3itemData *Read-only*. No description yet available.
 --- @field itemID string *Read-only*. No description yet available.
---- @field magicID string *Read-only*. No description yet available.
+--- @field magicID string *Read-only*. For spells created in the Contruction Set, this is the id of the spell defined there. For spells created during play, with spellmaking, this is a number.
 --- @field projectile tes3mobileProjectile|tes3mobileSpellProjectile *Read-only*. No description yet available.
 --- @field serialNumber number *Read-only*. Unique indentifier for just this magic source.
 --- @field source tes3alchemy|tes3enchantment|tes3spell *Read-only*. No description yet available.
@@ -20,7 +20,7 @@
 --- @field sourceType number *Read-only*. The type of this magic source. Maps to [`tes3.magicSourceType`](https://mwse.github.io/MWSE/references/magic-source-types/) constants.
 --- @field state number Shows if the state is pre-cast, cast, beginning, working, ending, retired, etc. Maps to [`tes3.spellState`](https://mwse.github.io/MWSE/references/spell-states/) constants.
 --- @field target tes3reference *Read-only*. No description yet available.
---- @field timestampCastBegin number No description yet available.
+--- @field timestampCastBegin number The timestamp at which this magic source was cast.
 tes3magicSourceInstance = {}
 
 --- Gets the magic effect instance for a given effect index and target reference. Effect instances may not all be active on a target, due to reflect, absorption, dispels, different durations and other factors.

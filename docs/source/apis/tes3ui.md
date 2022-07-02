@@ -332,7 +332,7 @@ local palette = tes3ui.getPalette(name)
 
 ### `tes3ui.getServiceActor`
 
-Returns the mobile actor currently providing services to the player.
+Returns the mobile actor currently providing services, or the actor the player is talking to.
 
 ```lua
 local result = tes3ui.getServiceActor()

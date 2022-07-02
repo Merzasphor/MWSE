@@ -42,17 +42,17 @@ function tes3inputController:isKeyPressedThisFrame(key) end
 function tes3inputController:isKeyReleasedThisFrame(key) end
 
 --- Returns the mouse down state for a given mouse button.
---- @param button number The mouse button to test. Must be between `0` and `7`.
+--- @param button number The mouse button to test. Must be between `0` and `7`. Left mouse button is `0`, right is `1`, and middle is `2`.
 --- @return boolean result No description yet available.
 function tes3inputController:isMouseButtonDown(button) end
 
 --- Returns true if a mouse button was up last frame, and down this frame.
---- @param button number The mouse button to test. Must be between `0` and `7`.
+--- @param button number The mouse button to test. Must be between `0` and `7`. Left mouse button is `0`, right is `1`, and middle is `2`.
 --- @return boolean result No description yet available.
 function tes3inputController:isMouseButtonPressedThisFrame(button) end
 
 --- Returns true if a mouse button was down last frame, and up this frame.
---- @param button number The mouse button to test. Must be between `0` and `7`.
+--- @param button number The mouse button to test. Must be between `0` and `7`. Left mouse button is `0`, right is `1`, and middle is `2`.
 --- @return boolean result No description yet available.
 function tes3inputController:isMouseButtonReleasedThisFrame(button) end
 

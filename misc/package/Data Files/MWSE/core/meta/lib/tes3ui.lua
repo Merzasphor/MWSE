@@ -145,7 +145,7 @@ function tes3ui.getMenuOnTop() end
 --- @return number[] palette An array containing the RGB color values, in the range [0.0, 1.0].
 function tes3ui.getPalette(name) end
 
---- Returns the mobile actor currently providing services to the player.
+--- Returns the mobile actor currently providing services, or the actor the player is talking to.
 --- @return tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer result No description yet available.
 function tes3ui.getServiceActor() end
 
