@@ -116,11 +116,11 @@ namespace TES3 {
 		float transitionScalar; // 0x170
 		float hoursRemaining; // 0x174
 		float unknown_0x178;
-		float unknown_0x17C;
+		float particleGravity; // 0x17C
 		float snowGravityScale; // 0x180
 		float snowHighKill; // 0x184
 		float snowLowKill; // 0x188
-		Vector3 unknown_0x18C;
+		Vector3 sunTransitConstants; // 0x18C
 		char bInactivateWeather; // 0x198
 		char bUnderwaterPitchbendState; // 0x199
 		char bRainRipples; // 0x19A
