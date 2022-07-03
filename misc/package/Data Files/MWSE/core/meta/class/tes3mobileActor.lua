@@ -12,7 +12,7 @@
 --- @field activeMagicEffectList tes3activeMagicEffect[] *Read-only*. The active magic effects on the actor, from which all others can be accessed. A table with [`tes3activeMagicEffect`](https://mwse.github.io/MWSE/types/tes3activeMagicEffect/) items.
 --- @field actorType number *Read-only*. The type of the mobile actor. Maps to values in [`tes3.actorType`](https://mwse.github.io/MWSE/references/actor-types/) namespace.
 --- @field agility tes3statistic|tes3statisticSkill *Read-only*. Direct access to the actor's agility attribute statistic.
---- @field aiPlanner tes3aiPlanner *Read-only*. Access to the mobile's AI planner and AI package information.
+--- @field aiPlanner tes3aiPlanner|nil *Read-only*. Access to the mobile's AI planner and AI package information. Doesn't exist on the player mobile.
 --- @field alarm number The actor's alarm AI value.
 --- @field animationController tes3actorAnimationController|tes3playerAnimationController *Read-only*. No description yet available.
 --- @field armorRating number *Read-only*. The actor's current armour rating, taking equipment condition into account. Armour mitigation can be automatically applied to damage by using the `applyDamage` function.

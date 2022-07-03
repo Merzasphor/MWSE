@@ -5,7 +5,7 @@
 
 # tes3aiConfig
 
-A game object which contains AI configuration inforamtion for an actor. This includes: alarm, fight, flee, hello values, which services the actor provides, goods types the actor trades in, and possible destinations this actor can take the player to.
+A game object which contains AI configuration information for an actor. This includes: alarm, fight, flee, hello values, which services the actor provides, goods types the actor trades in, and possible destinations this actor can take the player to.
 
 ## Properties
 

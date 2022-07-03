@@ -4,9 +4,9 @@
 --- @meta
 --- @diagnostic disable:undefined-doc-name
 
---- An AI Escort package game object. Sets an actor to follow another actor to a destination.
+--- An AI Escort package game object. The actor with this package will escort the target actor to a certain destination.
 --- @class tes3aiPackageEscort : tes3aiPackage
---- @field destination tes3vector3 The coordinates for destination of this AI travel package.
---- @field targetActor tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance The actor this AI escort package is set to follow.
+--- @field destination tes3vector3 The destination coordinates of this escort AI package.
+--- @field targetActor tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer The actor to be escorted to the destination.
 tes3aiPackageEscort = {}
 

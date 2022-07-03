@@ -1,5 +1,5 @@
 return {
 	type = "value",
-	description = [[The distance this AI Follow package has configured.]],
+	description = [[The distance between the follower and their target in the in-game units.]],
 	valuetype = "number",
 }

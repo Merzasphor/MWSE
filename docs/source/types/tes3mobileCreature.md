@@ -72,11 +72,11 @@ Friendly access to the actor's flag that controls if AI is active.
 
 ### `aiPlanner`
 
-*Read-only*. Access to the mobile's AI planner and AI package information.
+*Read-only*. Access to the mobile's AI planner and AI package information. Doesn't exist on the player mobile.
 
 **Returns**:
 
-* `result` ([tes3aiPlanner](../../types/tes3aiPlanner))
+* `result` ([tes3aiPlanner](../../types/tes3aiPlanner), nil)
 
 ***
 

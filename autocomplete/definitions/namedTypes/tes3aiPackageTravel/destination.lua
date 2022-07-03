@@ -1,5 +1,5 @@
 return {
 	type = "value",
-	description = [[The coordinates for destination of this AI travel package.]],
+	description = [[The destination coordinates of this travel AI package.]],
 	valuetype = "tes3vector3",
 }

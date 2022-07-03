@@ -6,7 +6,19 @@
 
 --- An AI Wander package idle node game object. Contains information on the chance that the actor will wander at that idle node.
 --- @class tes3aiPackageWanderIdleNode
---- @field chance number A chance that the actor will wander at this idle node.
---- @field index number The index of this idle node.
+--- @field chance number A chance that the actor will play corresponding idle animation while standing when parent tes3aiPackageWander is active.
+--- @field index number The index of this idle node. Determines the chance that certain idle animation will be played.
+--- 
+--- Index | Animation description
+--- ----- | -------------------------------------------------
+--- 1     | Looking around
+--- 2     | Looking behind
+--- 3     | Scratching head and then shaking it
+--- 4     | Shifting clothing or armor on shoulder
+--- 5     | Yawn, strech, look around
+--- 6     | Looks at fingers and then looks around furitevely
+--- 7     | Puts right fist above heart and bows head
+--- 8     | Reaches for the weapon
+--- 
 tes3aiPackageWanderIdleNode = {}
 

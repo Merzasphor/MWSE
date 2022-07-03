@@ -1,5 +1,5 @@
 return {
 	type = "value",
-	description = [[The actor this AI escort package is set to follow.]],
-	valuetype = "tes3actor",
+	description = [[The actor to be escorted to the destination.]],
+	valuetype = "tes3mobileActor",
 }

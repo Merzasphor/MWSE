@@ -31,7 +31,7 @@ The access to mobile actor this `tes3aiPlanner` object works on.
 
 ### `nextOpenPackageIndex`
 
-*Read-only*. 
+*Read-only*. This is the index in `.packages` table that represents the currently active AI package.
 
 **Returns**:
 
@@ -41,7 +41,7 @@ The access to mobile actor this `tes3aiPlanner` object works on.
 
 ### `packages`
 
-*Read-only*. The table with `tes3aiPackage` objects assigned to this mobile actor.
+*Read-only*. The table with `tes3aiPackage` objects assigned to this mobile actor. These packages are executed as instruction in the order they are defined. When the last one is executed, the cycle is repeated from the start. Has 32 entries, where any can be nil.
 
 **Returns**:
 

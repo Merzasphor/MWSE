@@ -1,5 +1,5 @@
 return {
 	type = "class",
-	description = [[An AI Escort package game object. Sets an actor to follow another actor to a destination.]],
+	description = [[An AI Escort package game object. The actor with this package will escort the target actor to a certain destination.]],
 	inherits = "tes3aiPackage",
 }

@@ -4,9 +4,11 @@
 --- @meta
 --- @diagnostic disable:undefined-doc-name
 
---- An AI Wander package game object. Sets an actor to wander around a cell at certain points called idle nodes.
+--- Wander AI package causing an actor to move around at random. Actors will choose points to walk to based on the path grid of the cell they are in.
+--- 
+--- 	Idle nodes represent the percentage chance the actor will stand still and perform the particular idle animation. Each idle is checked, and the one that passes with the highest roll is played. If no Idle passes the random roll, the actor will move (walk)
 --- @class tes3aiPackageWander : tes3aiPackage
 --- @field activationTarget tes3reference 
---- @field idles tes3aiPackageWanderIdleNode[] *Read-only*. A table with idle nodes ([`tes3aiPackageWanderIdleNode`](https://mwse.github.io/MWSE/types/tes3aiPackageWanderIdleNode/) objects) for this AI Wander package.
+--- @field idles tes3aiPackageWanderIdleNode[] *Read-only*. This is a table with chances that the actor will play corresponding idle animation.
 tes3aiPackageWander = {}
 

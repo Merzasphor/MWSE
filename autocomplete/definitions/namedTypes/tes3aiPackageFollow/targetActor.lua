@@ -1,5 +1,5 @@
 return {
 	type = "value",
-	description = [[The actor this AI Follow package is set to follow.]],
-	valuetype = "tes3actor",
+	description = [[The actor this follow AI package is set to follow.]],
+	valuetype = "tes3mobileActor",
 }

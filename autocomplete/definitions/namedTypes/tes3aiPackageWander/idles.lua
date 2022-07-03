@@ -1,6 +1,6 @@
 return {
 	type = "value",
 	readOnly = true,
-	description = [[A table with idle nodes ([`tes3aiPackageWanderIdleNode`](https://mwse.github.io/MWSE/types/tes3aiPackageWanderIdleNode/) objects) for this AI Wander package.]],
+	description = [[This is a table with chances that the actor will play corresponding idle animation.]],
 	valuetype = "tes3aiPackageWanderIdleNode[]",
 }

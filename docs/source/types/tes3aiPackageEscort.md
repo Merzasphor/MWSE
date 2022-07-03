@@ -5,14 +5,14 @@
 
 # tes3aiPackageEscort
 
-An AI Escort package game object. Sets an actor to follow another actor to a destination.
+An AI Escort package game object. The actor with this package will escort the target actor to a certain destination.
 
 This type inherits the following: [tes3aiPackage](../../types/tes3aiPackage)
 ## Properties
 
 ### `destination`
 
-The coordinates for destination of this AI travel package.
+The destination coordinates of this escort AI package.
 
 **Returns**:
 
@@ -20,13 +20,143 @@ The coordinates for destination of this AI travel package.
 
 ***
 
-### `targetActor`
+### `destinationCell`
 
-The actor this AI escort package is set to follow.
+The destination cell for escort and follow AI packages. For wander package, this is the cell the actor wanders in.
 
 **Returns**:
 
-* `result` ([tes3actor](../../types/tes3actor))
+* `result` ([tes3cell](../../types/tes3cell))
+
+***
+
+### `distance`
+
+Determines the size of the area the actor with this wander AI package will walk around. Measured in the in-game units.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `duration`
+
+This property represents the duration of the AI package. It is present for wander, escort and follow AI packages. Measured in the in-game hours.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `hourOfDay`
+
+
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `isDone`
+
+
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
+### `isFinalized`
+
+
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
+### `isMoving`
+
+This property is `true` if the parent actor is moving.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
+### `isReset`
+
+
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
+### `isStarted`
+
+
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
+### `mobile`
+
+Access to the actor to whom this AI package belongs.
+
+**Returns**:
+
+* `result` ([tes3mobileActor](../../types/tes3mobileActor))
+
+***
+
+### `startGameHour`
+
+The in-game hour at which this AI package started.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `targetActor`
+
+The actor to be escorted to the destination.
+
+**Returns**:
+
+* `result` ([tes3mobileActor](../../types/tes3mobileActor))
+
+***
+
+### `targetPosition`
+
+The final position to be reached by the escort, follow, and travel AI packages.
+
+**Returns**:
+
+* `result` ([tes3vector3](../../types/tes3vector3))
+
+***
+
+### `type`
+
+*Read-only*. Maps to values in [`tes3.aiPackage`](https://mwse.github.io/MWSE/references/ai-packages/) namespace.
+
+**Returns**:
+
+* `result` (number)
 
 ***
 

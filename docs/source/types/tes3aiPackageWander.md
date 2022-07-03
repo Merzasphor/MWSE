@@ -5,7 +5,9 @@
 
 # tes3aiPackageWander
 
-An AI Wander package game object. Sets an actor to wander around a cell at certain points called idle nodes.
+Wander AI package causing an actor to move around at random. Actors will choose points to walk to based on the path grid of the cell they are in.
+
+	Idle nodes represent the percentage chance the actor will stand still and perform the particular idle animation. Each idle is checked, and the one that passes with the highest roll is played. If no Idle passes the random roll, the actor will move (walk)
 
 This type inherits the following: [tes3aiPackage](../../types/tes3aiPackage)
 ## Properties
@@ -20,13 +22,153 @@ This type inherits the following: [tes3aiPackage](../../types/tes3aiPackage)
 
 ***
 
+### `destinationCell`
+
+The destination cell for escort and follow AI packages. For wander package, this is the cell the actor wanders in.
+
+**Returns**:
+
+* `result` ([tes3cell](../../types/tes3cell))
+
+***
+
+### `distance`
+
+Determines the size of the area the actor with this wander AI package will walk around. Measured in the in-game units.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `duration`
+
+This property represents the duration of the AI package. It is present for wander, escort and follow AI packages. Measured in the in-game hours.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `hourOfDay`
+
+
+
+**Returns**:
+
+* `result` (number)
+
+***
+
 ### `idles`
 
-*Read-only*. A table with idle nodes ([`tes3aiPackageWanderIdleNode`](https://mwse.github.io/MWSE/types/tes3aiPackageWanderIdleNode/) objects) for this AI Wander package.
+*Read-only*. This is a table with chances that the actor will play corresponding idle animation.
 
 **Returns**:
 
 * `result` ([tes3aiPackageWanderIdleNode](../../types/tes3aiPackageWanderIdleNode)[])
+
+***
+
+### `isDone`
+
+
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
+### `isFinalized`
+
+
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
+### `isMoving`
+
+This property is `true` if the parent actor is moving.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
+### `isReset`
+
+
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
+### `isStarted`
+
+
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
+### `mobile`
+
+Access to the actor to whom this AI package belongs.
+
+**Returns**:
+
+* `result` ([tes3mobileActor](../../types/tes3mobileActor))
+
+***
+
+### `startGameHour`
+
+The in-game hour at which this AI package started.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `targetActor`
+
+The target actor for activate, follow and escort AI packages.
+
+**Returns**:
+
+* `result` ([tes3mobileActor](../../types/tes3mobileActor))
+
+***
+
+### `targetPosition`
+
+The final position to be reached by the escort, follow, and travel AI packages.
+
+**Returns**:
+
+* `result` ([tes3vector3](../../types/tes3vector3))
+
+***
+
+### `type`
+
+*Read-only*. Maps to values in [`tes3.aiPackage`](https://mwse.github.io/MWSE/references/ai-packages/) namespace.
+
+**Returns**:
+
+* `result` (number)
 
 ***
 
