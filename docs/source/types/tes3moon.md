@@ -7,11 +7,17 @@
 
 A structure that keeps track of information related two the game's two moons.
 
+Moon move in an arc shape along the sky. The arc's start is at in-game North and ends in the South. The arc's plane can be rotated from North-South axis, by `axisOffset` property.
+
+Each moon has 8 phases, which differ by the amount of the moon that is visible and the part covered in black. During waxing the moon appears in the sky during the first part of the night, before midnight. After the full phase, the moons usually rise during the later part of the night, after midnight. Much like the Earth's moon. Absolutely the first moment the moon can appear is controlled by `fadeInStart` property, while the latest moment the moon sets is controlled by `fadeOutFinish` property.
+
+Most of the properties exposed here correspond to the setting of the same name in [Moons] section of the Morrowind.ini file.
+
 ## Properties
 
 ### `axisOffset`
 
-No description yet available.
+The rotation of the moon's path arc from the North-South axis, in degrees.
 
 **Returns**:
 
@@ -21,7 +27,7 @@ No description yet available.
 
 ### `dailyIncrement`
 
-No description yet available.
+Looks like this property controls when the moon raises during each phase of its cycle. Also seems to impact the progression of moon phases. The units of this property are most likely game hours.
 
 **Returns**:
 
@@ -31,7 +37,7 @@ No description yet available.
 
 ### `fadeEndAngle`
 
-No description yet available.
+This angle represents the angle from the water plane, in degrees. If a moon arrives at that point in the sky it will start disappearing. A moon can dissapear even before its `fadeOutStart` hour if it reaches this angle.
 
 **Returns**:
 
@@ -41,7 +47,7 @@ No description yet available.
 
 ### `fadeInFinish`
 
-No description yet available.
+The game hour at which the moon finishes fading in.
 
 **Returns**:
 
@@ -51,7 +57,7 @@ No description yet available.
 
 ### `fadeInStart`
 
-No description yet available.
+The game hour at which the moon starts to be visible in the sky.
 
 **Returns**:
 
@@ -61,7 +67,7 @@ No description yet available.
 
 ### `fadeOutFinish`
 
-No description yet available.
+The game hour at which has completely faded out.
 
 **Returns**:
 
@@ -71,7 +77,7 @@ No description yet available.
 
 ### `fadeOutStart`
 
-No description yet available.
+The game hour at which the moon starts fading out.
 
 **Returns**:
 
@@ -81,7 +87,7 @@ No description yet available.
 
 ### `fadeStartAngle`
 
-No description yet available.
+The angle, in degrees, from the water plane at which the moon first appears in the sky.
 
 **Returns**:
 
@@ -91,7 +97,7 @@ No description yet available.
 
 ### `index`
 
-*Read-only*. The index of the moon, 0 for Masser, 1 for Secunda
+*Read-only*. The index of the moon, 0 for Masser, 1 for Secunda.
 
 **Returns**:
 
@@ -111,7 +117,21 @@ Determines if the moon is red, typically during the events of Bloodmoon.
 
 ### `phase`
 
-No description yet available.
+The moon's current phase. The phase controls which of the moon's textures is currently being used.
+
+Moon's phase | Used texture's suffix
+------------ | ---------------------
+0            | _new
+1            | _one_wax
+2            | _half_wax
+3            | _three_wax
+4            | _full
+5            | _three_wan
+6            | _half_wan
+7            | _one_wan
+
+
+	
 
 **Returns**:
 
@@ -131,7 +151,7 @@ No description yet available.
 
 ### `speed`
 
-No description yet available.
+Controls the speed of the moons across the sky. This corresponds to the setting of the same name in [Moons] section of the Morrowind.ini file.
 
 **Returns**:
 
@@ -141,7 +161,7 @@ No description yet available.
 
 ### `texture`
 
-*Read-only*. The texture to use for the moon.
+*Read-only*. The texture to use for the moon. These look like "Textures\tx_masser". The actual texture that is used is determined by the current moon phase.
 
 **Returns**:
 

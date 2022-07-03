@@ -5,21 +5,41 @@
 --- @diagnostic disable:undefined-doc-name
 
 --- A structure that keeps track of information related two the game's two moons.
+--- 
+--- Moon move in an arc shape along the sky. The arc's start is at in-game North and ends in the South. The arc's plane can be rotated from North-South axis, by `axisOffset` property.
+--- 
+--- Each moon has 8 phases, which differ by the amount of the moon that is visible and the part covered in black. During waxing the moon appears in the sky during the first part of the night, before midnight. After the full phase, the moons usually rise during the later part of the night, after midnight. Much like the Earth's moon. Absolutely the first moment the moon can appear is controlled by `fadeInStart` property, while the latest moment the moon sets is controlled by `fadeOutFinish` property.
+--- 
+--- Most of the properties exposed here correspond to the setting of the same name in [Moons] section of the Morrowind.ini file.
 --- @class tes3moon
---- @field axisOffset number No description yet available.
---- @field dailyIncrement number No description yet available.
---- @field fadeEndAngle number No description yet available.
---- @field fadeInFinish number No description yet available.
---- @field fadeInStart number No description yet available.
---- @field fadeOutFinish number No description yet available.
---- @field fadeOutStart number No description yet available.
---- @field fadeStartAngle number No description yet available.
---- @field index number *Read-only*. The index of the moon, 0 for Masser, 1 for Secunda
+--- @field axisOffset number The rotation of the moon's path arc from the North-South axis, in degrees.
+--- @field dailyIncrement number Looks like this property controls when the moon raises during each phase of its cycle. Also seems to impact the progression of moon phases. The units of this property are most likely game hours.
+--- @field fadeEndAngle number This angle represents the angle from the water plane, in degrees. If a moon arrives at that point in the sky it will start disappearing. A moon can dissapear even before its `fadeOutStart` hour if it reaches this angle.
+--- @field fadeInFinish number The game hour at which the moon finishes fading in.
+--- @field fadeInStart number The game hour at which the moon starts to be visible in the sky.
+--- @field fadeOutFinish number The game hour at which has completely faded out.
+--- @field fadeOutStart number The game hour at which the moon starts fading out.
+--- @field fadeStartAngle number The angle, in degrees, from the water plane at which the moon first appears in the sky.
+--- @field index number *Read-only*. The index of the moon, 0 for Masser, 1 for Secunda.
 --- @field isRed boolean Determines if the moon is red, typically during the events of Bloodmoon.
---- @field phase number No description yet available.
+--- @field phase number The moon's current phase. The phase controls which of the moon's textures is currently being used.
+--- 
+--- Moon's phase | Used texture's suffix
+--- ------------ | ---------------------
+--- 0            | _new
+--- 1            | _one_wax
+--- 2            | _half_wax
+--- 3            | _three_wax
+--- 4            | _full
+--- 5            | _three_wan
+--- 6            | _half_wan
+--- 7            | _one_wan
+--- 
+--- 
+--- 	
 --- @field shadowEarlyFadeAngle number No description yet available.
---- @field speed number No description yet available.
---- @field texture string *Read-only*. The texture to use for the moon.
+--- @field speed number Controls the speed of the moons across the sky. This corresponds to the setting of the same name in [Moons] section of the Morrowind.ini file.
+--- @field texture string *Read-only*. The texture to use for the moon. These look like "Textures\tx_masser". The actual texture that is used is determined by the current moon phase.
 --- @field weatherController tes3weatherController *Read-only*. Quick access back to the weather controller structure.
 tes3moon = {}
 
