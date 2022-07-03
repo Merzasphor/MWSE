@@ -1975,29 +1975,29 @@ function tes3.set3rdPersonCameraOffset(offset) end
 --- Configures a mobile actor to activate an object.
 --- @param params tes3.setAIActivate.params This table accepts the following values:
 --- 
---- `reference`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference — No description yet available.
+--- `reference`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference — This actor will activate the provided `target` reference.
 --- 
---- `target`: tes3reference — No description yet available.
+--- `target`: tes3reference — The reference to activate.
 --- 
 --- `reset`: boolean? — *Default*: `true`. No description yet available.
 function tes3.setAIActivate(params) end
 
 ---Table parameter definitions for `tes3.setAIActivate`.
 --- @class tes3.setAIActivate.params
---- @field reference tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference No description yet available.
---- @field target tes3reference No description yet available.
+--- @field reference tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference This actor will activate the provided `target` reference.
+--- @field target tes3reference The reference to activate.
 --- @field reset boolean? *Default*: `true`. No description yet available.
 
---- Configures a mobile actor to escort another actor to a destination.
+--- Configures a mobile actor to escort another actor to a destination. Escorting actor will protect and wait for the escortee to catch up. Its advisible to make the `target` actor follow the escorting actor with `tes3.setAIFollow()`, because the escorting actor will otherwise wait the escortee forever.
 --- @param params tes3.setAIEscort.params This table accepts the following values:
 --- 
---- `reference`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference — No description yet available.
+--- `reference`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference — The escorting actor.
 --- 
---- `target`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer — No description yet available.
+--- `target`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer — The actor being escorted.
 --- 
 --- `destination`: tes3vector3|table — No description yet available.
 --- 
---- `duration`: number? — *Optional*. No description yet available.
+--- `duration`: number? — *Default*: `0`. How long the escorter will do the escorting, in hours.
 --- 
 --- `cell`: tes3cell|string|nil — *Optional*. No description yet available.
 --- 
@@ -2006,23 +2006,23 @@ function tes3.setAIEscort(params) end
 
 ---Table parameter definitions for `tes3.setAIEscort`.
 --- @class tes3.setAIEscort.params
---- @field reference tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference No description yet available.
---- @field target tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer No description yet available.
+--- @field reference tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference The escorting actor.
+--- @field target tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer The actor being escorted.
 --- @field destination tes3vector3|table No description yet available.
---- @field duration number? *Optional*. No description yet available.
+--- @field duration number? *Default*: `0`. How long the escorter will do the escorting, in hours.
 --- @field cell tes3cell|string|nil *Optional*. No description yet available.
 --- @field reset boolean? *Default*: `true`. No description yet available.
 
 --- Configures a mobile actor to follow another actor to a destination.
 --- @param params tes3.setAIFollow.params This table accepts the following values:
 --- 
---- `reference`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference — No description yet available.
+--- `reference`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference — This is the actor that will follow another one.
 --- 
---- `target`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer — No description yet available.
+--- `target`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer — The actor to follow.
 --- 
 --- `destination`: tes3vector3|table|nil — *Optional*. No description yet available.
 --- 
---- `duration`: number? — *Optional*. No description yet available.
+--- `duration`: number? — *Default*: `0`. How long the follower will follow, in hours.
 --- 
 --- `cell`: tes3cell|string|nil — *Optional*. No description yet available.
 --- 
@@ -2031,10 +2031,10 @@ function tes3.setAIFollow(params) end
 
 ---Table parameter definitions for `tes3.setAIFollow`.
 --- @class tes3.setAIFollow.params
---- @field reference tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference No description yet available.
---- @field target tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer No description yet available.
+--- @field reference tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference This is the actor that will follow another one.
+--- @field target tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer The actor to follow.
 --- @field destination tes3vector3|table|nil *Optional*. No description yet available.
---- @field duration number? *Optional*. No description yet available.
+--- @field duration number? *Default*: `0`. How long the follower will follow, in hours.
 --- @field cell tes3cell|string|nil *Optional*. No description yet available.
 --- @field reset boolean? *Default*: `true`. No description yet available.
 
@@ -2057,26 +2057,26 @@ function tes3.setAITravel(params) end
 --- Configures a mobile actor to wander around a cell.
 --- @param params tes3.setAIWander.params This table accepts the following values:
 --- 
---- `reference`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference — No description yet available.
+--- `reference`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference — This actor will wander around.
 --- 
---- `idles`: number[] — No description yet available.
+--- `idles`: number[] — An array with 8 values that corresponds to the chance of playing each idle animation. For more info see [tes3aiPackageWander.idles](https://mwse.github.io/MWSE/types/tes3aiPackageWander/#idles).
 --- 
---- `range`: number? — *Optional*. No description yet available.
+--- `range`: number? — *Default*: `0`. No description yet available.
 --- 
---- `duration`: number? — *Optional*. No description yet available.
+--- `duration`: number? — *Default*: `0`. How long the actor will be wandering around, in hours.
 --- 
---- `time`: number? — *Optional*. No description yet available.
+--- `time`: number? — *Default*: `0`. No description yet available.
 --- 
 --- `reset`: boolean? — *Default*: `true`. No description yet available.
 function tes3.setAIWander(params) end
 
 ---Table parameter definitions for `tes3.setAIWander`.
 --- @class tes3.setAIWander.params
---- @field reference tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference No description yet available.
---- @field idles number[] No description yet available.
---- @field range number? *Optional*. No description yet available.
---- @field duration number? *Optional*. No description yet available.
---- @field time number? *Optional*. No description yet available.
+--- @field reference tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference This actor will wander around.
+--- @field idles number[] An array with 8 values that corresponds to the chance of playing each idle animation. For more info see [tes3aiPackageWander.idles](https://mwse.github.io/MWSE/types/tes3aiPackageWander/#idles).
+--- @field range number? *Default*: `0`. No description yet available.
+--- @field duration number? *Default*: `0`. How long the actor will be wandering around, in hours.
+--- @field time number? *Default*: `0`. No description yet available.
 --- @field reset boolean? *Default*: `true`. No description yet available.
 
 --- This function sets a reference's animation groups' timings to a specified value.

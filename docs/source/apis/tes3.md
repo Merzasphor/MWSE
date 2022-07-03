@@ -3550,15 +3550,15 @@ tes3.setAIActivate({ reference = ..., target = ..., reset = ... })
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3mobileActor](../../types/tes3mobileActor), [tes3reference](../../types/tes3reference))
-	* `target` ([tes3reference](../../types/tes3reference))
+	* `reference` ([tes3mobileActor](../../types/tes3mobileActor), [tes3reference](../../types/tes3reference)): This actor will activate the provided `target` reference.
+	* `target` ([tes3reference](../../types/tes3reference)): The reference to activate.
 	* `reset` (boolean): *Default*: `true`.
 
 ***
 
 ### `tes3.setAIEscort`
 
-Configures a mobile actor to escort another actor to a destination.
+Configures a mobile actor to escort another actor to a destination. Escorting actor will protect and wait for the escortee to catch up. Its advisible to make the `target` actor follow the escorting actor with `tes3.setAIFollow()`, because the escorting actor will otherwise wait the escortee forever.
 
 ```lua
 tes3.setAIEscort({ reference = ..., target = ..., destination = ..., duration = ..., cell = ..., reset = ... })
@@ -3567,10 +3567,10 @@ tes3.setAIEscort({ reference = ..., target = ..., destination = ..., duration = 
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3mobileActor](../../types/tes3mobileActor), [tes3reference](../../types/tes3reference))
-	* `target` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor))
+	* `reference` ([tes3mobileActor](../../types/tes3mobileActor), [tes3reference](../../types/tes3reference)): The escorting actor.
+	* `target` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor)): The actor being escorted.
 	* `destination` ([tes3vector3](../../types/tes3vector3), table)
-	* `duration` (number): *Optional*.
+	* `duration` (number): *Default*: `0`. How long the escorter will do the escorting, in hours.
 	* `cell` ([tes3cell](../../types/tes3cell), string): *Optional*.
 	* `reset` (boolean): *Default*: `true`.
 
@@ -3587,10 +3587,10 @@ tes3.setAIFollow({ reference = ..., target = ..., destination = ..., duration = 
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3mobileActor](../../types/tes3mobileActor), [tes3reference](../../types/tes3reference))
-	* `target` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor))
+	* `reference` ([tes3mobileActor](../../types/tes3mobileActor), [tes3reference](../../types/tes3reference)): This is the actor that will follow another one.
+	* `target` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor)): The actor to follow.
 	* `destination` ([tes3vector3](../../types/tes3vector3), table): *Optional*.
-	* `duration` (number): *Optional*.
+	* `duration` (number): *Default*: `0`. How long the follower will follow, in hours.
 	* `cell` ([tes3cell](../../types/tes3cell), string): *Optional*.
 	* `reset` (boolean): *Default*: `true`.
 
@@ -3624,11 +3624,11 @@ tes3.setAIWander({ reference = ..., idles = ..., range = ..., duration = ..., ti
 **Parameters**:
 
 * `params` (table)
-	* `reference` ([tes3mobileActor](../../types/tes3mobileActor), [tes3reference](../../types/tes3reference))
-	* `idles` (number[])
-	* `range` (number): *Optional*.
-	* `duration` (number): *Optional*.
-	* `time` (number): *Optional*.
+	* `reference` ([tes3mobileActor](../../types/tes3mobileActor), [tes3reference](../../types/tes3reference)): This actor will wander around.
+	* `idles` (number[]): An array with 8 values that corresponds to the chance of playing each idle animation. For more info see [tes3aiPackageWander.idles](https://mwse.github.io/MWSE/types/tes3aiPackageWander/#idles).
+	* `range` (number): *Default*: `0`.
+	* `duration` (number): *Default*: `0`. How long the actor will be wandering around, in hours.
+	* `time` (number): *Default*: `0`.
 	* `reset` (boolean): *Default*: `true`.
 
 ***
