@@ -12,10 +12,10 @@ namespace TES3 {
 		NI::TriShape * unknown_0xC;
 		NI::TriShape * sgTriMoonShadow; // 0x10
 		WeatherController * weatherController; // 0x14
-		float fadeInStart; // 0x18
-		float fadeInFinish; // 0x1C
-		float fadeOutStart; // 0x20
-		float fadeOutFinish; // 0x24
+		int fadeInStart; // 0x18
+		int fadeInFinish; // 0x1C
+		int fadeOutStart; // 0x20
+		int fadeOutFinish; // 0x24
 		float shadowEarlyFadeAngle; // 0x28
 		int unknown_0x2C;
 		int unknown_0x30;
