@@ -73,6 +73,7 @@
 --- @field register fun(eventId: '"equipmentReevaluated"', callback: fun(e: equipmentReevaluatedEventData), options: table?)
 --- @field register fun(eventId: '"equipped"', callback: fun(e: equippedEventData), options: table?)
 --- @field register fun(eventId: '"exerciseSkill"', callback: fun(e: exerciseSkillEventData), options: table?)
+--- @field register fun(eventId: '"fadersCreated"', callback: fun(e: fadersCreatedEventData), options: table?)
 --- @field register fun(eventId: '"filterBarterMenu"', callback: fun(e: filterBarterMenuEventData), options: table?)
 --- @field register fun(eventId: '"filterContentsMenu"', callback: fun(e: filterContentsMenuEventData), options: table?)
 --- @field register fun(eventId: '"filterInventory"', callback: fun(e: filterInventoryEventData), options: table?)
