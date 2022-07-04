@@ -4,12 +4,12 @@
 --- @meta
 --- @diagnostic disable:undefined-doc-name
 
---- 
+--- This event triggers before certain object sounds are about to be played. For example, item pickup sounds.
 --- @class soundObjectPlayEventData
 --- @field block boolean If set to `true`, vanilla logic will be suppressed. Returning `false` will set this to `true`.
 --- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.
---- @field flags number 
+--- @field flags number A flag whether the sound is looping or not. 0 means the sound doesn't loop, 1 means the sound loops.
 --- @field isNot3D boolean 
---- @field pitch number 
---- @field sound tes3sound 
---- @field volume number 
+--- @field pitch number The pitch-shift multiplier. For 22kHz audio (most typical) it can have the range [0.005, 4.5]; for 44kHz audio it can have the range [0.0025, 2.25].
+--- @field sound tes3sound The sound about to be played.
+--- @field volume number The volume of the sound. In range [1, 250].

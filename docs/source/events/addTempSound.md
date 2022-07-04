@@ -5,7 +5,7 @@
 
 # addTempSound
 
-
+This event is triggered when the game is about to play a sound from a sound generator.
 
 ```lua
 --- @param e addTempSoundEventData
@@ -28,8 +28,8 @@ event.register(tes3.event.addTempSound, addTempSoundCallback)
 * `flags` (number): *Read-only*. A flag whether the sound is looping or not. 0 means the sound doesn't loop, 1 means the sound loops.
 * `isVoiceover` (boolean): A flag whether the sound is a voiced line, which are usually found in the Sound\Vo data folder.
 * `path` (string): The path to the sound to play, relative to Data Files\Sounds
-* `pitch` (number): Pitch of the sound.
+* `pitch` (number): The pitch-shift multiplier. For 22kHz audio (most typical) it can have the range [0.005, 4.5]; for 44kHz audio it can have the range [0.0025, 2.25].
 * `reference` ([tes3reference](../../types/tes3reference)): The reference which is emiting the sound.
-* `sound` ([tes3sound](../../types/tes3sound)): 
-* `volume` (number): The volume of the sound. Volume = 1 means 100 % loudness. Values lower than 1 make the sound quiter.
+* `sound` ([tes3sound](../../types/tes3sound)): The sound object about to be played.
+* `volume` (number): The volume of the sound. In range [1, 250].
 

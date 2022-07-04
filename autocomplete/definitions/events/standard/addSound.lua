@@ -18,17 +18,17 @@ return {
 		},
 		["volume"] = {
 			type = "number",
-			description = "The volume of the sound. Volume = 1 means 100 % loudness. Values lower than 1 make the sound quiter.",
+			description = "The volume of the sound. In range [1, 250].",
 		},
 		["pitch"] = {
 			type = "number",
-			description = "Pitch of the sound.",
+			description = "The pitch-shift multiplier. For 22kHz audio (most typical) it can have the range [0.005, 4.5]; for 44kHz audio it can have the range [0.0025, 2.25].",
 		},
 		["isVoiceover"] = {
 			type = "boolean",
 			description = "A flag whether the sound is a voiced line, which are usually found in the Sound\\Vo data folder.",
 		},
 	},
+	filter = "sound",
 	blockable = true,
-	-- TODO - Add an example: return false, e.block = true, or e.volume = 0
 }

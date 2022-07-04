@@ -4,13 +4,13 @@
 --- @meta
 --- @diagnostic disable:undefined-doc-name
 
---- 
+--- This event is triggered when an animation is about to be played.
 --- @class playGroupEventData
 --- @field block boolean If set to `true`, vanilla logic will be suppressed. Returning `false` will set this to `true`.
 --- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.
---- @field animationData tes3animationData 
---- @field flags number 
---- @field group number 
---- @field index number 
---- @field loopCount number 
---- @field reference tes3reference 
+--- @field animationData tes3animationData *Read-only*. The related animation data.
+--- @field flags number Maps to values in [`tes3.animationStartFlag`](https://mwse.github.io/MWSE/references/animation-start-flags/) namespace.
+--- @field group number The animation group about to be played. Maps to values in [`tes3.animationGroup`](https://mwse.github.io/MWSE/references/animation-groups/) namespace.
+--- @field index number *Read-only*. The index of the body section the animation will be played on. Maps to values in [`tes3.animationBodySection`](https://mwse.github.io/MWSE/references/animation-body-sections/) namespace.
+--- @field loopCount number The number of times the animation is going to be played. Infinite looping is marked by `-1`, while `0` means the animation will be played only once (no looping).
+--- @field reference tes3reference *Read-only*. The actor that is about to play the animation.

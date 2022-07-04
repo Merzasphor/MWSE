@@ -1,6 +1,6 @@
 return {
 	type = "event",
-	description = "",
+	description = "This event is triggered when the game is about to play a sound from a sound generator.",
 	related = { "addSound" },
 	eventData = {
 		["path"] = {
@@ -18,11 +18,11 @@ return {
 		},
 		["volume"] = {
 			type = "number",
-			description = "The volume of the sound. Volume = 1 means 100 % loudness. Values lower than 1 make the sound quiter."
+			description = "The volume of the sound. In range [1, 250].",
 		},
 		["pitch"] = {
 			type = "number",
-			description = "Pitch of the sound.",
+			description = "The pitch-shift multiplier. For 22kHz audio (most typical) it can have the range [0.005, 4.5]; for 44kHz audio it can have the range [0.0025, 2.25].",
 		},
 		["isVoiceover"] = {
 			type = "boolean",
@@ -30,7 +30,7 @@ return {
 		},
 		["sound"] = {
 			type = "tes3sound",
-			description = "",
+			description = "The sound object about to be played.",
 		},
 	},
 	filter = "sound",
