@@ -4,7 +4,7 @@
 --- @meta
 --- @diagnostic disable:undefined-doc-name
 
---- An object that applies a graphical effect on the screen, such as screen glare or damage coloring.
+--- An object that applies a graphical effect on the screen, such as screen glare or damage coloring. For an example of how to set up a custom fader, see [fadersCreated](https://mwse.github.io/MWSE/events/fadersCreated/) event.
 --- @class tes3fader
 --- @field active boolean The activation state for the fader. Setting this effectively calls activate/deactivate.
 tes3fader = {}
@@ -52,28 +52,28 @@ function tes3fader:fadeTo(params) end
 --- @field value number? *Default*: `1`. The value to fade to.
 --- @field duration number? *Default*: `1`. The time it takes to fade, in seconds.
 
---- Applies a coloring effect to the fader.
+--- Applies a coloring effect to the fader. A fader without a texture will apply a colouring effect over the screen. The colour set here can completely change the color of the fader's texture.
 --- @param params tes3fader.setColor.params This table accepts the following values:
 --- 
---- `color`: tes3vector3|table — The RGB values to set.
+--- `color`: tes3vector3|table — The RGB values to set in [0.0, 1.0] range.
 --- 
---- `flag`: boolean — No description yet available.
+--- `flag`: boolean? — *Default*: `false`. No description yet available.
 --- @return boolean result No description yet available.
 function tes3fader:setColor(params) end
 
 ---Table parameter definitions for `tes3fader.setColor`.
 --- @class tes3fader.setColor.params
---- @field color tes3vector3|table The RGB values to set.
---- @field flag boolean No description yet available.
+--- @field color tes3vector3|table The RGB values to set in [0.0, 1.0] range.
+--- @field flag boolean? *Default*: `false`. No description yet available.
 
 --- This method allows changing the texture of the fader.
 --- @param path string A path for the texture that will be displayed on screen.
 function tes3fader:setTexture(path) end
 
---- Updates the fader for the current frame.
+--- Updates the fader for the current frame. This method needs to be called each frame for fader to be present.
 function tes3fader:update() end
 
---- Updates the fader for the current frame.
---- @param value number No description yet available.
+--- Updates the fader's alpha. The fader needs to be active.
+--- @param value number The opacity of the fader in range [0.0, 1.0]
 function tes3fader:updateMaterialProperty(value) end
 

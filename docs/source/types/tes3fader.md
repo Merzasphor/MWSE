@@ -5,7 +5,7 @@
 
 # tes3fader
 
-An object that applies a graphical effect on the screen, such as screen glare or damage coloring.
+An object that applies a graphical effect on the screen, such as screen glare or damage coloring. For an example of how to set up a custom fader, see [fadersCreated](https://mwse.github.io/MWSE/events/fadersCreated/) event.
 
 ## Properties
 
@@ -89,7 +89,7 @@ myObject:fadeTo({ value = ..., duration = ... })
 
 ### `setColor`
 
-Applies a coloring effect to the fader.
+Applies a coloring effect to the fader. A fader without a texture will apply a colouring effect over the screen. The colour set here can completely change the color of the fader's texture.
 
 ```lua
 local result = myObject:setColor({ color = ..., flag = ... })
@@ -98,8 +98,8 @@ local result = myObject:setColor({ color = ..., flag = ... })
 **Parameters**:
 
 * `params` (table)
-	* `color` ([tes3vector3](../../types/tes3vector3), table): The RGB values to set.
-	* `flag` (boolean)
+	* `color` ([tes3vector3](../../types/tes3vector3), table): The RGB values to set in [0.0, 1.0] range.
+	* `flag` (boolean): *Default*: `false`.
 
 **Returns**:
 
@@ -123,7 +123,7 @@ myObject:setTexture(path)
 
 ### `update`
 
-Updates the fader for the current frame.
+Updates the fader for the current frame. This method needs to be called each frame for fader to be present.
 
 ```lua
 myObject:update()
@@ -133,7 +133,7 @@ myObject:update()
 
 ### `updateMaterialProperty`
 
-Updates the fader for the current frame.
+Updates the fader's alpha. The fader needs to be active.
 
 ```lua
 myObject:updateMaterialProperty(value)
@@ -141,7 +141,7 @@ myObject:updateMaterialProperty(value)
 
 **Parameters**:
 
-* `value` (number)
+* `value` (number): The opacity of the fader in range [0.0, 1.0]
 
 ***
 

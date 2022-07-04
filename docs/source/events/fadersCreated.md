@@ -51,7 +51,8 @@ event.register(tes3.event.fadersCreated, fadersCreatedCallback)
 		)
 	end
 	
-	-- The fader needs to be created during `fadersCreated` event, so our createFader function is registered for that event.
+	-- The fader needs to be created during `fadersCreated` event,
+	-- so our createFader() function is registered for that event.
 	event.register(tes3.event.fadersCreated, createFader)
 	
 	
@@ -80,11 +81,13 @@ event.register(tes3.event.fadersCreated, fadersCreatedCallback)
 		else
 			return
 		end
-		-- This method sets the current opacity of our fader to the value of `opacity` variable
+		-- This method sets the current opacity of our fader
+		-- to the value of `opacity` variable
 		fader:updateMaterialProperty(opacity)
 	
 		-- The "\n" sign means insert a new line here.
-		-- The "%.1f" code means insert the opacity's value in this text. The ".1" part means show 1 decimal after the decimal point.
+		-- The "%.1f" code means insert the opacity's value in this text.
+		-- The ".1" part means show 1 decimal after the decimal point.
 		tes3.messageBox("Fader opacity increased.\nCurrent opacity: %.1f", opacity)
 	end
 	event.register(tes3.event.keyDown, increaseOpacity, { filter = tes3.scanCode.l })
