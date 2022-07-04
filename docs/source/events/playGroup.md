@@ -5,7 +5,7 @@
 
 # playGroup
 
-
+This event is triggered when an animation is about to be played.
 
 ```lua
 --- @param e playGroupEventData
@@ -25,10 +25,10 @@ event.register(tes3.event.playGroup, playGroupCallback)
 
 ## Event Data
 
-* `animationData` (tes3animationData): 
-* `flags` (number): 
-* `group` (number): 
-* `index` (number): 
-* `loopCount` (number): 
-* `reference` ([tes3reference](../../types/tes3reference)): 
+* `animationData` (tes3animationData): *Read-only*. The related animation data.
+* `flags` (number): Maps to values in [`tes3.animationStartFlag`](https://mwse.github.io/MWSE/references/animation-start-flags/) namespace.
+* `group` (number): The animation group about to be played. Maps to values in [`tes3.animationGroup`](https://mwse.github.io/MWSE/references/animation-groups/) namespace.
+* `index` (number): *Read-only*. The index of the body section the animation will be played on. Maps to values in [`tes3.animationBodySection`](https://mwse.github.io/MWSE/references/animation-body-sections/) namespace.
+* `loopCount` (number): The number of times the animation is going to be played. Infinite looping is marked by `-1`, while `0` means the animation will be played only once (no looping).
+* `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. The actor that is about to play the animation.
 
