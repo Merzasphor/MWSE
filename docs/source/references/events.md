@@ -164,5 +164,4 @@ weaponReadied                 | `"weaponReadied"`                 | [`weaponRead
 weaponUnreadied               | `"weaponUnreadied"`               | [`weaponUnreadied`](https://mwse.github.io/MWSE/events/weaponUnreadied)
 weatherChangedImmediate       | `"weatherChangedImmediate"`       | [`weatherChangedImmediate`](https://mwse.github.io/MWSE/events/weatherChangedImmediate)
 weatherCycled                 | `"weatherCycled"`                 | [`weatherCycled`](https://mwse.github.io/MWSE/events/weatherCycled)
-weatherTransitionFinished     | `"weatherTransitionFinished"`     | [`weatherTransitionFinished`](https://mwse.github.io/MWSE/events/weatherTransitionFinished)
 weatherTransitionStarted      | `"weatherTransitionStarted"`      | [`weatherTransitionStarted`](https://mwse.github.io/MWSE/events/weatherTransitionStarted)

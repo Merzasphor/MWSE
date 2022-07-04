@@ -154,6 +154,5 @@ return {
 	["weatherChangedImmediate"] = "weatherChangedImmediate",
 	["weatherCycled"] = "weatherCycled",
 	["weatherTransitionFinished"] = "weatherTransitionFinished",
-	["weatherTransitionImmediate"] = "weatherTransitionImmediate",
 	["weatherTransitionStarted"] = "weatherTransitionStarted",
 }

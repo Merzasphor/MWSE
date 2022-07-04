@@ -162,7 +162,6 @@
 --- @field register fun(eventId: '"weatherChangedImmediate"', callback: fun(e: weatherChangedImmediateEventData), options: table?)
 --- @field register fun(eventId: '"weatherCycled"', callback: fun(e: weatherCycledEventData), options: table?)
 --- @field register fun(eventId: '"weatherTransitionFinished"', callback: fun(e: weatherTransitionFinishedEventData), options: table?)
---- @field register fun(eventId: '"weatherTransitionImmediate"', callback: fun(e: weatherTransitionImmediateEventData), options: table?)
 --- @field register fun(eventId: '"weatherTransitionStarted"', callback: fun(e: weatherTransitionStartedEventData), options: table?)
 event = {}
 
