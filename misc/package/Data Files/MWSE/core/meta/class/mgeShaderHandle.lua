@@ -9,8 +9,8 @@
 --- @field enabled boolean The enabled state of the shader.
 --- @field name string The shader name.
 --- @field orderPriority number The calculated ordering priority value of the shader, that allows auto-sorting of shaders. Changing this value will re-sort the shader list.
---- @field variables table Lists the shader's editable variables. The result table has the variable names as keys, and the variable types as values. To get and set the actual variable, use the expression `shaderHandle.<variableName>`.
---- 	
+--- @field variables table<string, string> Lists the shader's editable variables. The result table has the variable names as keys, and the variable types as values. To get and set the actual variable, use the expression `shaderHandle.<variableName>`.
+--- 
 --- 	Variable types are:
 --- 	'b' boolean
 --- 	'i' integer

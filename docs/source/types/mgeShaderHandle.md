@@ -42,7 +42,7 @@ The calculated ordering priority value of the shader, that allows auto-sorting o
 ### `variables`
 
 Lists the shader's editable variables. The result table has the variable names as keys, and the variable types as values. To get and set the actual variable, use the expression `shaderHandle.<variableName>`.
-	
+
 	Variable types are:
 	'b' boolean
 	'i' integer
@@ -56,7 +56,7 @@ Lists the shader's editable variables. The result table has the variable names a
 
 **Returns**:
 
-* `result` (table)
+* `result` (table&lt;string, string&gt;)
 
 ***
 
