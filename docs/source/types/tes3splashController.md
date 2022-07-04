@@ -11,7 +11,7 @@ A core game controller responsible for controlling temporary graphics.
 
 ### `activeSplashes`
 
-*Read-only*. A list of [`tes3splashControllerActiveSplash`](https://mwse.github.io/MWSE/types/tes3splashControllerActiveSplash/) objects.
+*Read-only*. A list of tes3splashControllerActiveSplash objects.
 
 **Returns**:
 
@@ -41,7 +41,7 @@ A core game controller responsible for controlling temporary graphics.
 
 ### `bloodSplashDurations`
 
-*Read-only*. A list of blood splash durations.
+*Read-only*. A list of blood splash durations, measured in seconds.
 
 **Returns**:
 

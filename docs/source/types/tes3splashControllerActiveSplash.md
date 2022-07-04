@@ -11,7 +11,7 @@ An object representing an active splash, such as a blood particle.
 
 ### `age`
 
-The splash's current age.
+The splash's current age, measured in seconds.
 
 **Returns**:
 
@@ -21,7 +21,7 @@ The splash's current age.
 
 ### `maxAge`
 
-The splash's maximum age.
+The splash's maximum age, measured in seconds.
 
 **Returns**:
 
