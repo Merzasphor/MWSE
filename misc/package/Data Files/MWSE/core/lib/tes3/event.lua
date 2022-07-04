@@ -117,7 +117,6 @@ return {
 	["powerRecharged"] = "powerRecharged",
 	["preLevelUp"] = "preLevelUp",
 	["preventRest"] = "preventRest",
-	["processAI"] = "processAI",
 	["projectileExpire"] = "projectileExpire",
 	["projectileHitActor"] = "projectileHitActor",
 	["projectileHitObject"] = "projectileHitObject",

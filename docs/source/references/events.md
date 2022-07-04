@@ -123,7 +123,6 @@ potionBrewSkillCheck          | `"potionBrewSkillCheck"`          | [`potionBrew
 powerRecharged                | `"powerRecharged"`                | [`powerRecharged`](https://mwse.github.io/MWSE/events/powerRecharged)
 preLevelUp                    | `"preLevelUp"`                    | [`preLevelUp`](https://mwse.github.io/MWSE/events/preLevelUp)
 preventRest                   | `"preventRest"`                   | [`preventRest`](https://mwse.github.io/MWSE/events/preventRest)
-processAI                     | `"processAI"`                     | [`processAI`](https://mwse.github.io/MWSE/events/processAI)
 projectileExpire              | `"projectileExpire"`              | [`projectileExpire`](https://mwse.github.io/MWSE/events/projectileExpire)
 projectileHitActor            | `"projectileHitActor"`            | [`projectileHitActor`](https://mwse.github.io/MWSE/events/projectileHitActor)
 projectileHitObject           | `"projectileHitObject"`           | [`projectileHitObject`](https://mwse.github.io/MWSE/events/projectileHitObject)
