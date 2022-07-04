@@ -214,23 +214,25 @@ function tes3ui.setConsoleReference(reference) end
 --- @param text string No description yet available.
 function tes3ui.showBookMenu(text) end
 
---- 
+--- This function creates a dialogue message. The message can have three styles. The style `2` makes a selectable text. That way by calling this function multiple time you can create a selection of responses.
 --- @param params tes3ui.showDialogueMessage.params This table accepts the following values:
 --- 
 --- `text`: string? — *Default*: ``. The text of the shown message.
 --- 
---- `style`: number? — *Default*: `0`. 
+--- `style`: number? — *Default*: `0`. This argument controls the text color of the message. Value `0` makes the message text the same color as the text in the dialogue window. Value `1` makes the text white, and also print a newline after the message. Value `2` turns the message into a selectable text inside the dialogue window. Value `3` looks the same as `1` but there isn't a newline after each message. Value `4` is the same as value `1`. All the other values work as `0`.
 --- 
---- `answerIndex`: number? — *Default*: `0`. 
+--- `answerIndex`: number? — *Default*: `0`. This number can be used later to identify which response was selected.
 function tes3ui.showDialogueMessage(params) end
 
 ---Table parameter definitions for `tes3ui.showDialogueMessage`.
 --- @class tes3ui.showDialogueMessage.params
 --- @field text string? *Default*: ``. The text of the shown message.
---- @field style number? *Default*: `0`. 
---- @field answerIndex number? *Default*: `0`. 
+--- @field style number? *Default*: `0`. This argument controls the text color of the message. Value `0` makes the message text the same color as the text in the dialogue window. Value `1` makes the text white, and also print a newline after the message. Value `2` turns the message into a selectable text inside the dialogue window. Value `3` looks the same as `1` but there isn't a newline after each message. Value `4` is the same as value `1`. All the other values work as `0`.
+--- @field answerIndex number? *Default*: `0`. This number can be used later to identify which response was selected.
 
 --- This function opens the inventory select menu which lets the player select items from an inventory. These items can be selected from any actor's inventory and can be filtered with the `filter` callback. The selected item can be retrieved in the function assigned to `callback`.
+---
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uishowinventoryselectmenu).
 --- @param params tes3ui.showInventorySelectMenu.params This table accepts the following values:
 --- 
 --- `reference`: tes3reference? — *Default*: `tes3player`. The reference of a `tes3actor` whose inventory will be used.
@@ -249,10 +251,10 @@ function tes3ui.showDialogueMessage(params) end
 --- --- 
 --- --- 		- `alembic`: Only [tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/) items of type `tes3.apparatusType.alembic` will be shown.
 --- --- 		- `calcinator`: Only [tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/) items of type `tes3.apparatusType.calcinator` will be shown.
---- --- 		- `enchanted`: Only enchanted items will be shown.
+--- --- 		- `enchanted`: Only non-enchanted items will be shown. That's because that filter is usually used in the enchanting menu to select items viable for enchanting.
 --- --- 		- `ingredients`: Only [tes3ingredient](https://mwse.github.io/MWSE/types/tes3ingredient/) items will be shown.
 --- --- 		- `mortar`: Only [tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/) items of type `tes3.apparatusType.mortarAndPestle` will be shown.
---- --- 		- `quickUse`: Only items available for quick use will be shown.
+--- --- 		- `quickUse`: Only items that can be assigned as quick keys will be shown.
 --- --- 		- `retort`: Only [tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/) items of type `tes3.apparatusType.retort` will be shown.
 --- --- 		- `soulgemFilled`: Only filled soulgems will be shown.
 --- --- 
@@ -286,10 +288,10 @@ function tes3ui.showInventorySelectMenu(params) end
 --- 
 --- 		- `alembic`: Only [tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/) items of type `tes3.apparatusType.alembic` will be shown.
 --- 		- `calcinator`: Only [tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/) items of type `tes3.apparatusType.calcinator` will be shown.
---- 		- `enchanted`: Only enchanted items will be shown.
+--- 		- `enchanted`: Only non-enchanted items will be shown. That's because that filter is usually used in the enchanting menu to select items viable for enchanting.
 --- 		- `ingredients`: Only [tes3ingredient](https://mwse.github.io/MWSE/types/tes3ingredient/) items will be shown.
 --- 		- `mortar`: Only [tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/) items of type `tes3.apparatusType.mortarAndPestle` will be shown.
---- 		- `quickUse`: Only items available for quick use will be shown.
+--- 		- `quickUse`: Only items that can be assigned as quick keys will be shown.
 --- 		- `retort`: Only [tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/) items of type `tes3.apparatusType.retort` will be shown.
 --- 		- `soulgemFilled`: Only filled soulgems will be shown.
 --- 

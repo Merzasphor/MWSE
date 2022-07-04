@@ -590,7 +590,7 @@ tes3ui.showBookMenu(text)
 
 ### `tes3ui.showDialogueMessage`
 
-
+This function creates a dialogue message. The message can have three styles. The style `2` makes a selectable text. That way by calling this function multiple time you can create a selection of responses.
 
 ```lua
 tes3ui.showDialogueMessage({ text = ..., style = ..., answerIndex = ... })
@@ -600,8 +600,8 @@ tes3ui.showDialogueMessage({ text = ..., style = ..., answerIndex = ... })
 
 * `params` (table)
 	* `text` (string): *Default*: ``. The text of the shown message.
-	* `style` (number): *Default*: `0`. 
-	* `answerIndex` (number): *Default*: `0`. 
+	* `style` (number): *Default*: `0`. This argument controls the text color of the message. Value `0` makes the message text the same color as the text in the dialogue window. Value `1` makes the text white, and also print a newline after the message. Value `2` turns the message into a selectable text inside the dialogue window. Value `3` looks the same as `1` but there isn't a newline after each message. Value `4` is the same as value `1`. All the other values work as `0`.
+	* `answerIndex` (number): *Default*: `0`. This number can be used later to identify which response was selected.
 
 ***
 
@@ -627,10 +627,10 @@ tes3ui.showInventorySelectMenu({ reference = ..., title = ..., leaveMenuMode = .
 
 		- `alembic`: Only [tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/) items of type `tes3.apparatusType.alembic` will be shown.
 		- `calcinator`: Only [tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/) items of type `tes3.apparatusType.calcinator` will be shown.
-		- `enchanted`: Only enchanted items will be shown.
+		- `enchanted`: Only non-enchanted items will be shown. That's because that filter is usually used in the enchanting menu to select items viable for enchanting.
 		- `ingredients`: Only [tes3ingredient](https://mwse.github.io/MWSE/types/tes3ingredient/) items will be shown.
 		- `mortar`: Only [tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/) items of type `tes3.apparatusType.mortarAndPestle` will be shown.
-		- `quickUse`: Only items available for quick use will be shown.
+		- `quickUse`: Only items that can be assigned as quick keys will be shown.
 		- `retort`: Only [tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/) items of type `tes3.apparatusType.retort` will be shown.
 		- `soulgemFilled`: Only filled soulgems will be shown.
 
@@ -648,6 +648,114 @@ tes3ui.showInventorySelectMenu({ reference = ..., title = ..., leaveMenuMode = .
 			- `inventory` ([tes3inventory](https://mwse.github.io/MWSE/types/tes3inventory/)): The inventory containing the items.
 			- `actor` ([tes3actor](https://mwse.github.io/MWSE/types/tes3actor/)): The actor containing the inventory.
 
+
+??? example "Example: Bribe an NPC with items from your inventory"
+
+	This code allows the player to give an item to the actor the player is currently looking at.
+
+	```lua
+	-- This is a working example. You are encouraged to create a new file
+	-- main.lua, paste this code and see the results in-game!
+	-- Use `u` key to bribe an actor you are looking at with items from your inventory.
+	
+	
+	local function bribe()
+		local actorReference = tes3.getPlayerTarget()
+		-- This function returns nil value if the player isn't aiming at a reference,
+		-- so we skip that case
+		if not actorReference then return end
+	
+		tes3ui.showInventorySelectMenu({
+			reference = tes3.player,
+			-- .. is Lua operator of concatenation. It joins 2 strings together.
+			title = "Bribe " .. actorReference.object.name,
+			callback = function(e)
+				if e.item then
+					-- If e.item exist, that means that the player picked an
+					-- item in the  menu. It up to us to do something with it.
+					tes3.transferItem({
+						from = tes3.player,
+						to = actorReference,
+						item = e.item,
+						itemData = e.itemData,
+						count = e.count,
+					})
+					-- Here we calculate the total gold value of the transfered item(s), since that
+					-- can be a stack of items. e.count holds the amount of the items selected.
+					local itemWorth = e.item.value * e.count
+	
+					-- At last! Now the actual persuasion part. We use `modifier` argument.
+					-- The higher the value we pass there the higher the disposition change.
+					tes3.persuade({
+						actor = actorReference,
+						modifier = math.log10(itemWorth)
+					})
+				end
+			end,
+			-- At first it's counter intuitive that this filter selects all the non-enchanted items
+			-- This illusion disappears soon as we relize that the game uses this filter in the
+			-- enchanting menu to select items viable for enchanting.
+			filter = tes3.inventorySelectFilter.enchanted
+		})
+	
+	end
+	
+	-- We registered our bribe function on keyDown event, and filtered it for `u` key,
+	-- so our bribe function is only called once `u` key is pressed
+	event.register(tes3.event.keyDown, bribe, { filter = tes3.scanCode.u })
+
+	```
+
+??? example "Example: Filter functions"
+
+	A few possible filtering functions.
+
+	```lua
+	-- This example has a few implementations of filter functions that
+	-- can be passed to `filter` argument of tes3.showInventorySelectMenu().
+	
+	-- This function will filter only weapon items.
+	local function weaponFilter(e)
+		if e.item.objectType == tes3.objectType.weapon then
+			-- The filter function needs to return `true`
+			-- for a certain item to appear in the menu.
+			return true
+		else
+			return false
+		end
+	end
+	
+	-- This is a dictinary of items that can be damaged (have a condition)
+	local damageableItems = {
+		[tes3.objectType.weapon] = true,
+		[tes3.objectType.armor] = true,
+	}
+	-- This function will filter only items that aren't at full condition.
+	local function damagedItemsFilter(e)
+		-- The first check is whether the item is in our
+		-- dictionary of items with condition
+		if damageableItems[e.item.objectType] and
+		-- Only damaged items have this field. If it does
+		-- not exist the item is in perfect condition.
+		e.itemData and
+		(e.itemData.condition < e.item.maxCondition) then
+			return true
+		else
+			return false
+		end
+	end
+	
+	local myFilterValue = 256
+	-- This function will filter only items that have a value less than `myFilterValue`
+	local function valueFilter(e)
+		if (e.item.value < myFilterValue) then
+			return true
+		else
+			return false
+		end
+	end
+
+	```
 
 ***
 

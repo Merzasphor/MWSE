@@ -17,5 +17,10 @@ return {
 			readOnly = true,
 			description = "The inventory filter type.",
 		},
+		["filter"] = {
+			type = "boolean",
+			description = "Set this value to `true` to make the item appear in the inventory. If this is set to `false` the item won't appear in the inventory."
+		}
 	},
+	filter = "type"
 }

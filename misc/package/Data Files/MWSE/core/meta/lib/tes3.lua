@@ -1569,7 +1569,7 @@ function tes3.onMainMenu() end
 --- 
 --- `index`: number? — *Optional*. If an index is provided, 0-indexed with the following results: admire, intimidate, taunt, bribe (10), bribe (100), bribe (1000).
 --- 
---- `modifier`: number? — *Optional*. If no index is provided, this is the direct modifier to try.
+--- `modifier`: number? — *Optional*. If no index is provided, this is the direct modifier to try. The higher the modifer the higher the chance of a successful persuation, and higher disposition change.
 --- @return boolean success No description yet available.
 function tes3.persuade(params) end
 
@@ -1577,7 +1577,7 @@ function tes3.persuade(params) end
 --- @class tes3.persuade.params
 --- @field actor tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string The actor to try to persuade.
 --- @field index number? *Optional*. If an index is provided, 0-indexed with the following results: admire, intimidate, taunt, bribe (10), bribe (100), bribe (1000).
---- @field modifier number? *Optional*. If no index is provided, this is the direct modifier to try.
+--- @field modifier number? *Optional*. If no index is provided, this is the direct modifier to try. The higher the modifer the higher the chance of a successful persuation, and higher disposition change.
 
 --- Plays a given animation group. Optional flags can be used to define how the group starts.
 --- 

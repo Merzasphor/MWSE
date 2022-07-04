@@ -3014,7 +3014,7 @@ local success = tes3.persuade({ actor = ..., index = ..., modifier = ... })
 * `params` (table)
 	* `actor` ([tes3mobileActor](../../types/tes3mobileActor), [tes3reference](../../types/tes3reference), string): The actor to try to persuade.
 	* `index` (number): *Optional*. If an index is provided, 0-indexed with the following results: admire, intimidate, taunt, bribe (10), bribe (100), bribe (1000).
-	* `modifier` (number): *Optional*. If no index is provided, this is the direct modifier to try.
+	* `modifier` (number): *Optional*. If no index is provided, this is the direct modifier to try. The higher the modifer the higher the chance of a successful persuation, and higher disposition change.
 
 **Returns**:
 

@@ -15,10 +15,14 @@ event.register(tes3.event.filterInventorySelect, filterInventorySelectCallback)
 ```
 
 !!! tip
+	This event can be filtered based on the **`type`** event data.
+
+!!! tip
 	An event can be claimed by setting `e.claim` to `true`, or by returning `false` from the callback. Claiming the event prevents any lower priority callbacks from being called.
 
 ## Event Data
 
+* `filter` (boolean): Set this value to `true` to make the item appear in the inventory. If this is set to `false` the item won't appear in the inventory.
 * `item` ([tes3item](../../types/tes3item)): *Read-only*. The item being filtered.
 * `itemData` ([tes3itemData](../../types/tes3itemData)): *Read-only*. The item data for the item being filtered.
 * `type` (string): *Read-only*. The inventory filter type.

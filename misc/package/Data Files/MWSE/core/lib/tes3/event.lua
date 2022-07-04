@@ -84,6 +84,7 @@ return {
 	["key"] = "key",
 	["keybindTested"] = "keybindTested",
 	["keyDown"] = "keyDown",
+	["keyframesLoad"] = "keyframesLoad",
 	["keyUp"] = "keyUp",
 	["leveledCreaturePicked"] = "leveledCreaturePicked",
 	["leveledItemPicked"] = "leveledItemPicked",
@@ -154,5 +155,6 @@ return {
 	["weatherChangedImmediate"] = "weatherChangedImmediate",
 	["weatherCycled"] = "weatherCycled",
 	["weatherTransitionFinished"] = "weatherTransitionFinished",
+	["weatherTransitionImmediate"] = "weatherTransitionImmediate",
 	["weatherTransitionStarted"] = "weatherTransitionStarted",
 }

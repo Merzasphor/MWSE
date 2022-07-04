@@ -45,10 +45,10 @@ return {
 
 		- `alembic`: Only [tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/) items of type `tes3.apparatusType.alembic` will be shown.
 		- `calcinator`: Only [tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/) items of type `tes3.apparatusType.calcinator` will be shown.
-		- `enchanted`: Only enchanted items will be shown.
+		- `enchanted`: Only non-enchanted items will be shown. That's because that filter is usually used in the enchanting menu to select items viable for enchanting.
 		- `ingredients`: Only [tes3ingredient](https://mwse.github.io/MWSE/types/tes3ingredient/) items will be shown.
 		- `mortar`: Only [tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/) items of type `tes3.apparatusType.mortarAndPestle` will be shown.
-		- `quickUse`: Only items available for quick use will be shown.
+		- `quickUse`: Only items that can be assigned as quick keys will be shown.
 		- `retort`: Only [tes3apparatus](https://mwse.github.io/MWSE/types/tes3apparatus/) items of type `tes3.apparatusType.retort` will be shown.
 		- `soulgemFilled`: Only filled soulgems will be shown.
 
@@ -74,4 +74,14 @@ return {
 			},
 		},
 	}},
+	examples = {
+		["bribe"] = {
+			title = [[Bribe an NPC with items from your inventory]],
+			description = [[This code allows the player to give an item to the actor the player is currently looking at.]]
+		},
+		["filters"] = {
+			title = [[Filter functions]],
+			description = [[A few possible filtering functions.]]
+		}
+	}
 }
