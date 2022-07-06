@@ -59,10 +59,10 @@ namespace TES3 {
 
 	struct MobManager {
 		NI::CollisionGroup * mobCollisionGroup;
-		Vector3 gravity; // 0x4
+		Vector3 gravity; // 0x4, Initialized to {0, 0, -627.2}.
 		Vector3 terminalVelocity; // Initialized to {0, 0, -4005.5}.
-		float dotProductOfMaxClimableSlope; // Initialized to cos(46 degrees).
-		float maxClimableSlopeDegrees; // Initialized to 46 degrees.
+		float dotProductOfMaxClimbableSlope; // Initialized to cos(46 degrees).
+		float maxClimbableSlopeDegrees; // Initialized to 46 degrees.
 		ProcessManager* processManager; // 0x24
 		ProjectileManager* projectileManager; // 0x28
 		bool mobCollisionActive;
@@ -91,6 +91,13 @@ namespace TES3 {
 		bool hasMobileCollision(const MobileActor* mobile);
 		void enableMobileCollision(MobileActor* mobile);
 		void disableMobileCollision(MobileActor* mobile);
+
+		Vector3* getGravity();
+		void setGravity(sol::stack_object);
+		Vector3* getTerminalVelocity();
+		void setTerminalVelocity(sol::stack_object);
+		float getMaxClimbableSlope();
+		void setMaxClimbableSlope(float value);
 	};
 	static_assert(sizeof(MobManager) == 0x8C, "TES3::MobManager failed size validation");
 }

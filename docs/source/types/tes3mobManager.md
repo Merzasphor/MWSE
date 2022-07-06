@@ -9,6 +9,16 @@ The manager responsible for mobile objects and collision.
 
 ## Properties
 
+### `gravity`
+
+The gravity applied to all actors. Has a default value of `{0.0, 0.0, -627.2}`.
+
+**Returns**:
+
+* `result` ([tes3vector3](../../types/tes3vector3))
+
+***
+
 ### `processManager`
 
 *Read-only*. Access to the process manager.
@@ -26,6 +36,16 @@ The manager responsible for mobile objects and collision.
 **Returns**:
 
 * `result` ([tes3projectileManager](../../types/tes3projectileManager))
+
+***
+
+### `terminalVelocity`
+
+The maximum velocity that actors can reach through the application of gravity. Has a default value of `{0.0, 0.0, -4005.5}`.
+
+**Returns**:
+
+* `result` ([tes3vector3](../../types/tes3vector3))
 
 ***
 

@@ -50,10 +50,12 @@ namespace mwse::lua {
 			usertypeDefinition["new"] = sol::no_constructor;
 
 			// Basic property binding.
+			usertypeDefinition["gravity"] = sol::property(&TES3::MobManager::getGravity, &TES3::MobManager::setGravity);
 			usertypeDefinition["mobCollisionGroup"] = sol::readonly_property(&TES3::MobManager::mobCollisionGroup);
 			usertypeDefinition["movingProps"] = sol::readonly_property(&TES3::MobManager::listMovingProps);
 			usertypeDefinition["processManager"] = sol::readonly_property(&TES3::MobManager::processManager);
 			usertypeDefinition["projectileManager"] = sol::readonly_property(&TES3::MobManager::projectileManager);
+			usertypeDefinition["terminalVelocity"] = sol::property(&TES3::MobManager::getTerminalVelocity, &TES3::MobManager::setTerminalVelocity);
 
 			// Legacy bindings.
 			usertypeDefinition["mobController_0x24"] = sol::readonly_property(&TES3::MobManager::processManager);

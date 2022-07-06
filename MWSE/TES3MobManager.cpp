@@ -1,6 +1,7 @@
 #include "TES3MobManager.h"
 
 #include "LuaManager.h"
+#include "LuaUtil.h"
 
 #include "LuaMobileActorActivatedEvent.h"
 #include "LuaMobileActorDeactivatedEvent.h"
@@ -11,6 +12,8 @@
 #include "TES3Reference.h"
 #include "TES3MobileSpellProjectile.h"
 #include "TES3WorldController.h"
+
+#include "MathUtil.h"
 
 namespace TES3 {
 	const auto TES3_ProcessManager_detectPresence = reinterpret_cast<bool(__thiscall*)(ProcessManager*, MobileActor*, bool)>(0x570A60);
@@ -139,5 +142,30 @@ namespace TES3 {
 			mobCollisionGroup->removeCollider(node);
 			criticalSection_Mobs.leave();
 		}
+	}
+
+	Vector3* MobManager::getGravity() {
+		return &gravity;
+	}
+
+	void MobManager::setGravity(sol::stack_object value) {
+		mwse::lua::setVectorFromLua(gravity, value);
+	}
+
+	Vector3* MobManager::getTerminalVelocity() {
+		return &terminalVelocity;
+	}
+
+	void MobManager::setTerminalVelocity(sol::stack_object value) {
+		mwse::lua::setVectorFromLua(terminalVelocity, value);
+	}
+
+	float MobManager::getMaxClimbableSlope() {
+		return maxClimbableSlopeDegrees;
+	}
+
+	void MobManager::setMaxClimbableSlope(float value) {
+		maxClimbableSlopeDegrees = value;
+		dotProductOfMaxClimbableSlope = cos(maxClimbableSlopeDegrees * mwse::math::M_PI / 180.0);
 	}
 }
