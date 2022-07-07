@@ -37,12 +37,12 @@ function tes3.getSpells(params)
 	local mobile = reference.mobile
 	local object = reference.object
 
-	local spellType = params.spellType or -1
-	assert(type(spellType) == "number", "Invalid 'spellType' parameter provided. Must be a number or nil.")
+	local spellType = table.get(params, "spellType", -1)
+	assert(type(spellType) == "number", "Invalid 'spellType' parameter provided. Must be a number.")
 
-	local getActorSpells = common.ternary(params.getActorSpells ~= nil, params.getActorSpells, true)
-	local getRaceSpells = common.ternary(params.getRaceSpells ~= nil, params.getRaceSpells, true)
-	local getBirthsignSpells = common.ternary(params.getBirthsignSpells ~= nil, params.getBirthsignSpells, true)
+	local getActorSpells = table.get(params, "getActorSpells", true)
+	local getRaceSpells = table.get(params, "getRaceSpells", true)
+	local getBirthsignSpells = table.get(params, "getBirthsignSpells", true)
 
 	-- Create the resulting spell table.
 	local result = {}

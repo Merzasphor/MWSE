@@ -2,23 +2,11 @@ local common = {}
 
 local dynamicTextMT = {}
 
---- Returns `trueValue` if `condition` is `true`, otherwise returns `falseValue`.
----@param condition boolean
----@param trueValue any
----@param falseValue any
----@return any
-function common.ternary(condition, trueValue, falseValue)
-	if condition then
-		return trueValue
-	end
-	return falseValue
-end
-
 --- Returns `true` if the value is or inherits from tes3reference.
 ---@param value any
 ---@return boolean
 function common.isReference(value)
-	return type(value) == "userdata" and value.objectType and value.objectType == tes3.objectType.reference
+	return type(value) == "userdata" and value.objectType == tes3.objectType.reference
 end
 
 --- Returns `true` if the value is or inherits from tes3mobileActor.
