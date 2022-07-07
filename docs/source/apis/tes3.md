@@ -670,6 +670,24 @@ local price = tes3.calculatePrice({ object = ..., basePrice = ..., buying = ...,
 
 ***
 
+### `tes3.canCastSpells`
+
+Returns `true` if the `target` actor can cast spells, otherwise returns `false`.
+
+```lua
+local result = tes3.canCastSpells(target)
+```
+
+**Parameters**:
+
+* `target` ([tes3reference](../../types/tes3reference), [tes3mobileObject](../../types/tes3mobileObject), [tes3physicalObject](../../types/tes3physicalObject)): The actor to check.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
 ### `tes3.cancelAnimationLoop`
 
 Signals looping animations on the actor to stop looping and play to the end. The animation will continue, playing past the loop point until the end frame. Useful for exiting looping animations cleanly.
@@ -2428,6 +2446,28 @@ local name = tes3.getSpecializationName(specializationId)
 **Returns**:
 
 * `name` (string)
+
+***
+
+### `tes3.getSpells`
+
+Gets the spells of an actor. This can be filtered by `spellType` and set to include or exclude basic, racial and birthsign spells.
+
+```lua
+local result = tes3.getSpells(target, spellType, getActorSpells, getRaceSpells, getBirthsignSpells)
+```
+
+**Parameters**:
+
+* `target` ([tes3reference](../../types/tes3reference), [tes3mobileObject](../../types/tes3mobileObject), [tes3physicalObject](../../types/tes3physicalObject)): The actor to get the spells of.
+* `spellType` (number): *Default*: `-1`. The spell type to filter for. Only spells with this spell type will be returned. A value of `-1` will return spells of all types. Maps to values in the [`tes3.spellType`](https://mwse.github.io/MWSE/references/spell-types/) table.
+* `getActorSpells` (boolean): *Default*: `true`. If `true`, the spells of the actor itself will be included in the result. This includes every spell except racial and birthsign spells.
+* `getRaceSpells` (boolean): *Default*: `true`. If `true`, the spells of the actor's race will be included in the result.
+* `getBirthsignSpells` (boolean): *Default*: `true`. If `true`, the spells of the actor's birthsign will be included in the result.
+
+**Returns**:
+
+* `result` ([tes3spell](../../types/tes3spell)[])
 
 ***
 

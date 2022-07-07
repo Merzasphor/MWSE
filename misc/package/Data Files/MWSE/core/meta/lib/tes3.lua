@@ -510,6 +510,11 @@ function tes3.calculatePrice(params) end
 --- @field itemData tes3itemData? *Optional*. If `bartering` or `repairing`, the item data passed to the [calcBarterPrice](https://mwse.github.io/MWSE/events/calcBarterPrice) or [calcRepairPrice](https://mwse.github.io/MWSE/events/calcRepairPrice) event.
 --- @field skill number If `training`, the skill ID passed to the [calcTrainingPrice](https://mwse.github.io/MWSE/events/calcTrainingPrice) event.
 
+--- Returns `true` if the `target` actor can cast spells, otherwise returns `false`.
+--- @param target tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3mobileProjectile|tes3mobileSpellProjectile|tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon The actor to check.
+--- @return boolean result No description yet available.
+function tes3.canCastSpells(target) end
+
 --- Signals looping animations on the actor to stop looping and play to the end. The animation will continue, playing past the loop point until the end frame. Useful for exiting looping animations cleanly.
 --- @param params tes3.cancelAnimationLoop.params This table accepts the following values:
 --- 
@@ -1290,6 +1295,15 @@ function tes3.getSoundPlaying(params) end
 --- @param specializationId number Maps to [`tes3.specialization`](https://mwse.github.io/MWSE/references/specializations/) enumeration.
 --- @return string name No description yet available.
 function tes3.getSpecializationName(specializationId) end
+
+--- Gets the spells of an actor. This can be filtered by `spellType` and set to include or exclude basic, racial and birthsign spells.
+--- @param target tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3mobileProjectile|tes3mobileSpellProjectile|tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon The actor to get the spells of.
+--- @param spellType number? *Default*: `-1`. The spell type to filter for. Only spells with this spell type will be returned. A value of `-1` will return spells of all types. Maps to values in the [`tes3.spellType`](https://mwse.github.io/MWSE/references/spell-types/) table.
+--- @param getActorSpells boolean? *Default*: `true`. If `true`, the spells of the actor itself will be included in the result. This includes every spell except racial and birthsign spells.
+--- @param getRaceSpells boolean? *Default*: `true`. If `true`, the spells of the actor's race will be included in the result.
+--- @param getBirthsignSpells boolean? *Default*: `true`. If `true`, the spells of the actor's birthsign will be included in the result.
+--- @return tes3spell[] result No description yet available.
+function tes3.getSpells(target, spellType, getActorSpells, getRaceSpells, getBirthsignSpells) end
 
 --- Gets the top-level UI menu.
 --- @return tes3uiElement menu No description yet available.
