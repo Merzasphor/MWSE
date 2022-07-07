@@ -38,6 +38,13 @@ function tes3uiElementCopyDelegates.rect(params)
 	})
 end
 
+function tes3uiElementCopyDelegates.text(params)
+	return params.to:createLabel({
+		id = params.from.id,
+		text = params.from.text,
+	})
+end
+
 
 --
 -- Specific delegates for duplicating element properties.
@@ -74,9 +81,9 @@ end
 local basicPropertiesToCopy = { "absolutePosAlignX", "absolutePosAlignY", "alpha", "autoHeight", "autoWidth", "borderAllSides", "borderBottom", "borderLeft", "borderRight", "borderTop", "childAlignX", "childAlignY", "childOffsetX", "childOffsetY", "color", "consumeMouseEvents", "contentPath", "disabled", "flowDirection", "font", "height", "heightProportional", "imageFilter", "imageScaleX", "imageScaleY", "justifyText", "maxHeight", "maxWidth", "minHeight", "minWidth", "nodeMaxX", "nodeMaxY", "nodeMinX", "nodeMinY", "nodeOffsetX", "nodeOffsetY", "paddingAllSides", "paddingBottom", "paddingLeft", "paddingRight", "paddingTop", "positionX", "positionY", "rawText", "repeatKeys", "scaleMode", "text", "texture", "visible", "width", "widthProportional", "wrapText" }
 
 function tes3uiElement:copy(params)
-	params.from = self
 	assert(type(params) == "table", "Invalid parameter. This function must be called with table parameters.")
 	assert(params.to, "Invalid 'to' parameter provided.")
+	params.from = self
 
 	-- Create our copy.
 	local elementType = self.type
