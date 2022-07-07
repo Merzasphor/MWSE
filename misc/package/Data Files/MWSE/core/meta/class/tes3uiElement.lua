@@ -80,11 +80,21 @@
 tes3uiElement = {}
 
 --- Copies this element to a new parent. This function can have unintended consequences. The specifics of what exact elements are being copied is important.
---- @param to tes3uiElement Where to create the copy.
---- @param copyChildren boolean? *Default*: `true`. If true, all children will also be copied to the newly created element.
---- @param copyProperties boolean? *Default*: `true`. If true, all properties will be copied to the newly created element.
+--- @param params tes3uiElement.copy.params This table accepts the following values:
+--- 
+--- `to`: tes3uiElement — The element to create the copy in. Will be the parent of the newly created element.
+--- 
+--- `copyChildren`: boolean? — *Default*: `true`. If `true`, all children will also be copied to the newly created element.
+--- 
+--- `copyProperties`: boolean? — *Default*: `true`. If `true`, all properties will be copied to the newly created element.
 --- @return tes3uiElement copy The created copy.
-function tes3uiElement:copy(to, copyChildren, copyProperties) end
+function tes3uiElement:copy(params) end
+
+---Table parameter definitions for `tes3uiElement.copy`.
+--- @class tes3uiElement.copy.params
+--- @field to tes3uiElement The element to create the copy in. Will be the parent of the newly created element.
+--- @field copyChildren boolean? *Default*: `true`. If `true`, all children will also be copied to the newly created element.
+--- @field copyProperties boolean? *Default*: `true`. If `true`, all properties will be copied to the newly created element.
 
 --- Creates an empty block container inside the element. Used to group and layout elements.
 --- @param params tes3uiElement.createBlock.params? This table accepts the following values:

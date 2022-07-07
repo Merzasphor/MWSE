@@ -555,14 +555,15 @@ Controls text wrapping. Setting this to `true` will also set `layoutHeightFracti
 Copies this element to a new parent. This function can have unintended consequences. The specifics of what exact elements are being copied is important.
 
 ```lua
-local copy = myObject:copy(to, copyChildren, copyProperties)
+local copy = myObject:copy({ to = ..., copyChildren = ..., copyProperties = ... })
 ```
 
 **Parameters**:
 
-* `to` ([tes3uiElement](../../types/tes3uiElement)): Where to create the copy.
-* `copyChildren` (boolean): *Default*: `true`. If true, all children will also be copied to the newly created element.
-* `copyProperties` (boolean): *Default*: `true`. If true, all properties will be copied to the newly created element.
+* `params` (table)
+	* `to` ([tes3uiElement](../../types/tes3uiElement)): The element to create the copy in. Will be the parent of the newly created element.
+	* `copyChildren` (boolean): *Default*: `true`. If `true`, all children will also be copied to the newly created element.
+	* `copyProperties` (boolean): *Default*: `true`. If `true`, all properties will be copied to the newly created element.
 
 **Returns**:
 
