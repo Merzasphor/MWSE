@@ -32,7 +32,7 @@ function common.isMobileActor(value)
 			value.objectType == tes3.objectType.mobilePlayer)
 end
 
---- Returns `true` if the value is or inherits from tes3mobileActor.
+--- Returns `true` if the value is or inherits from tes3actor.
 ---@param value any
 ---@return boolean
 function common.isActor(value)

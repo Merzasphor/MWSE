@@ -4,7 +4,7 @@ return {
 	arguments = {
 		{
 			name = "target",
-			type = "tes3reference|tes3mobileObject|tes3physicalObject",
+			type = "tes3reference|tes3mobileActor|tes3actor",
 			description = "The actor to get the spells of."
 		},
 		{

@@ -2459,7 +2459,7 @@ local result = tes3.getSpells(target, spellType, getActorSpells, getRaceSpells, 
 
 **Parameters**:
 
-* `target` ([tes3reference](../../types/tes3reference), [tes3mobileObject](../../types/tes3mobileObject), [tes3physicalObject](../../types/tes3physicalObject)): The actor to get the spells of.
+* `target` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), [tes3actor](../../types/tes3actor)): The actor to get the spells of.
 * `spellType` (number): *Default*: `-1`. The spell type to filter for. Only spells with this spell type will be returned. A value of `-1` will return spells of all types. Maps to values in the [`tes3.spellType`](https://mwse.github.io/MWSE/references/spell-types/) table.
 * `getActorSpells` (boolean): *Default*: `true`. If `true`, the spells of the actor itself will be included in the result. This includes every spell except racial and birthsign spells.
 * `getRaceSpells` (boolean): *Default*: `true`. If `true`, the spells of the actor's race will be included in the result.

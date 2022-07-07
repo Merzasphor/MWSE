@@ -1297,7 +1297,7 @@ function tes3.getSoundPlaying(params) end
 function tes3.getSpecializationName(specializationId) end
 
 --- Gets the spells of an actor. This can be filtered by `spellType` and set to include or exclude basic, racial and birthsign spells.
---- @param target tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3mobileProjectile|tes3mobileSpellProjectile|tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon The actor to get the spells of.
+--- @param target tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance The actor to get the spells of.
 --- @param spellType number? *Default*: `-1`. The spell type to filter for. Only spells with this spell type will be returned. A value of `-1` will return spells of all types. Maps to values in the [`tes3.spellType`](https://mwse.github.io/MWSE/references/spell-types/) table.
 --- @param getActorSpells boolean? *Default*: `true`. If `true`, the spells of the actor itself will be included in the result. This includes every spell except racial and birthsign spells.
 --- @param getRaceSpells boolean? *Default*: `true`. If `true`, the spells of the actor's race will be included in the result.

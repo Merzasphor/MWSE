@@ -4,7 +4,7 @@ function tes3.canCastSpells(params)
 	-- Validate parameters.
 	assert(type(params) == "table", "Invalid parameters provided. Must be a table.")
 	local reference = common.getRelatedReference(params.target)
-	assert(reference, "Invalid 'target' parameter provided. Must be a tes3reference, tes3mobileObject or tes3physicalObject.")
+	assert(reference, "Invalid 'target' parameter provided. Must be a tes3reference, tes3mobileActor or tes3actor.")
 
 	-- Only npcs and creatures can cast spells.
 	local object = reference.object
@@ -32,7 +32,7 @@ function tes3.getSpells(params)
 	assert(type(params) == "table", "Invalid parameters provided. Must be a table.")
 
 	local reference = common.getRelatedReference(params.target)
-	assert(reference, "Invalid 'target' parameter provided. Must be a tes3reference, tes3mobileObject or tes3physicalObject.")
+	assert(reference, "Invalid 'target' parameter provided. Must be a tes3reference, tes3mobileActor or tes3actor.")
 	assert(tes3.canCastSpells{target = reference}, "Invalid 'target' parameter provided. Must be able to cast spells.")
 	local mobile = reference.mobile
 	local object = reference.object
