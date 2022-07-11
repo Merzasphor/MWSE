@@ -287,7 +287,13 @@ namespace TES3 {
 			break;
 		}
 
-		mobileObjectCache[this] = ref;
+		if (ref != sol::nil) {
+			mobileObjectCache[this] = ref;
+		}
+		else {
+			mwse::log::getLog() << "[MWSE] WARNING: An unknown mobile type was identified with a virtual table address of 0x" << std::hex << (unsigned int)vTable.mobileObject << ". Report this to MWSE developers." << std::endl;
+		}
+
 		mobileObjectCacheMutex.unlock();
 
 		return ref;

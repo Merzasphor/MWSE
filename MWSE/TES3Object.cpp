@@ -407,6 +407,9 @@ namespace TES3 {
 		if (ref != sol::nil) {
 			baseObjectCache[this] = ref;
 		}
+		else {
+			mwse::log::getLog() << "[MWSE] WARNING: An unknown object type was identified with a virtual table address of 0x" << std::hex << (unsigned int)vTable.base << ". Report this to MWSE developers." << std::endl;
+		}
 
 		return ref;
 	}
