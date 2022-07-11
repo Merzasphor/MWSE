@@ -960,8 +960,10 @@ namespace TES3 {
 			reference->position = *position;
 			reference->orientation.z = rotationInRadians;
 
-			// Update scene node.
-			auto sceneNode = reference->getSceneGraphNode();
+			// Update scene node, if loaded.
+			// Note: Calling reference->getSceneGraphNode() here can crash if the reference is to a base actor,
+			// which may still be moved before ever being visited and cloned. getSceneGraphNode expects a clone actor.
+			auto sceneNode = reference->sceneNode;
 			if (sceneNode) {
 				Matrix33 rotationMatrix;
 				reference->updateSceneMatrix(&rotationMatrix, false);
@@ -970,11 +972,16 @@ namespace TES3 {
 				sceneNode->update();
 			}
 
+			// Check if the scene node needs to be moved to another cell.
 			if (cell != reference->getCell()) {
-				if (sceneNode || isCellInMemory) {
+				// Only try to create/get a scene node for the reference if the cell is loaded.
+				if (sceneNode == nullptr && isCellInMemory) {
+					sceneNode = reference->getSceneGraphNode();
+				}
+				if (sceneNode) {
 					if (isCellInMemory) {
 						if (reference->baseObject->objectType != ObjectType::Static) {
-							cell->getOrCreateActivatorsNode()->attachChild(reference->getSceneGraphNode(), true);
+							cell->getOrCreateActivatorsNode()->attachChild(sceneNode, true);
 						}
 					}
 					else {
@@ -1023,7 +1030,6 @@ namespace TES3 {
 							mobile->unknown_0x230 = 1;
 							mobile->collidingReference = nullptr;
 							mobile->enterLeaveSimulationByDistance();
-
 						}
 					}
 				}
