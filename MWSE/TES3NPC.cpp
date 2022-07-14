@@ -142,6 +142,15 @@ namespace TES3 {
 			return;
 		}
 
+		// Make sure to unequip all items before reevaluating equipment.
+		// This is normally always done before calling TES3_NPCInstance_reevaluateEquipment in vanilla logic.
+		// TES3_NPCInstance_reevaluateEquipment will lead to calls to TES3_Actor_equipItem/unequipItem without passing the mobile.
+		// TES3_Actor_unequipItem will delete EquipmentStack pointers, therefore invalidating pointers present on the mobile.
+		// If no mobile has been passed to TES3_Actor_unequipItem, those pointers will remain broken and lead to a crash.
+		// To prevent this, TES3_Actor_unequipAllItems should get called before TES3_NPCInstance_reevaluateEquipment.
+		// This is superfluous for vanilla logic, but prevents this function from being used incorrectly and has little to no cost if called twice.
+		unequipAllItems(static_cast<MobileActor*>(getMobile()));
+
 		// Call original function.
 		TES3_NPCInstance_reevaluateEquipment(this);
 
