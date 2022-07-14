@@ -29,6 +29,7 @@ namespace mwse::lua {
 		usertypeDefinition["velocity"] = sol::property(&TES3::MobileObject::getVelocity, &TES3::MobileObject::setVelocityFromLua);
 
 		// Custom property bindings.
+		usertypeDefinition["isAffectedByGravity"] = sol::property(&TES3::MobileObject::getAffectedByGravityFlag, &TES3::MobileObject::setAffectedByGravityFlag);
 		usertypeDefinition["movementCollision"] = sol::property(&TES3::MobileObject::getMovementCollisionFlag, &TES3::MobileObject::setMovementCollisionFlag);
 	}
 }

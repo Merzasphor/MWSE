@@ -545,6 +545,16 @@ Direct access to the actor's invisibility effect attribute.
 
 ***
 
+### `isAffectedByGravity`
+
+If `true`, the mobile is affected by gravity. Does not have any impact on spell projectiles.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
 ### `isAttackingOrCasting`
 
 *Read-only*. If `true`, the actor is attacking, casting magic or using a lockpick or probe.

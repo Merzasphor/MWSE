@@ -79,6 +79,16 @@ A vector that represents the 3D acceleration of the object.
 
 ***
 
+### `isAffectedByGravity`
+
+If `true`, the mobile is affected by gravity. Does not have any impact on spell projectiles.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
 ### `movementCollision`
 
 Controls if the mobile has movement collision active. When false, the mobile can move through any object, but can still block other mobiles, and can still be hit in combat. Actors will still follow pathgrids, ramps and stairs when navigating.
