@@ -2452,7 +2452,7 @@ local name = tes3.getSpecializationName(specializationId)
 
 ### `tes3.getSpells`
 
-Gets the spells of an actor. This can be filtered by `spellType` and set to include or exclude basic, racial and birthsign spells.
+Gets the spells of an actor. This can be filtered by `spellType` and set to include or exclude actor, racial and birthsign spells.
 
 ```lua
 local result = tes3.getSpells({ target = ..., spellType = ..., getActorSpells = ..., getRaceSpells = ..., getBirthsignSpells = ... })

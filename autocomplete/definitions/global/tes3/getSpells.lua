@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[Gets the spells of an actor. This can be filtered by `spellType` and set to include or exclude basic, racial and birthsign spells.]],
+	description = [[Gets the spells of an actor. This can be filtered by `spellType` and set to include or exclude actor, racial and birthsign spells.]],
 	arguments = {
 		{
 			name = "params",

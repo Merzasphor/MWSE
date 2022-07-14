@@ -1302,7 +1302,7 @@ function tes3.getSoundPlaying(params) end
 --- @return string name No description yet available.
 function tes3.getSpecializationName(specializationId) end
 
---- Gets the spells of an actor. This can be filtered by `spellType` and set to include or exclude basic, racial and birthsign spells.
+--- Gets the spells of an actor. This can be filtered by `spellType` and set to include or exclude actor, racial and birthsign spells.
 --- @param params tes3.getSpells.params This table accepts the following values:
 --- 
 --- `target`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance — The actor to get the spells of. Must be able to cast spells.

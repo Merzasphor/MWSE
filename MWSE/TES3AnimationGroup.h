@@ -25,8 +25,8 @@ namespace TES3 {
 		AnimationGroup() = delete;
 		~AnimationGroup() = delete;
 	};
-	static_assert(sizeof(AnimationGroup) == 0x2C, "TES3::AnimationAttachment failed size validation");
-	static_assert(sizeof(AnimationGroup::Node) == 0x14, "TES3::AnimationAttachment::Node failed size validation");
+	static_assert(sizeof(AnimationGroup) == 0x2C, "TES3::AnimationGroup failed size validation");
+	static_assert(sizeof(AnimationGroup::Node) == 0x14, "TES3::AnimationGroup::Node failed size validation");
 }
 
 MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::AnimationGroup)
