@@ -1304,16 +1304,15 @@ namespace TES3::UI {
 
 	Element* Element::createImage_lua(sol::optional<sol::table> params) {
 		std::string path = mwse::lua::getOptionalParam<const char*>(params, "path", "");
-		if (path.empty()) {
-			throw std::invalid_argument("createImage: path argument is required.");
-		}
 
-		// Sanitize path.
-		std::replace(path.begin(), path.end(), '/', '\\');
+		if (!path.empty()) {
+			// Sanitize path.
+			std::replace(path.begin(), path.end(), '/', '\\');
 
-		// Make sure the file exists.
-		if (mwse::tes3::resolveAssetPath(path.c_str()) == 0) {
-			throw std::invalid_argument("Provided file does not exist.");
+			// Make sure the file exists.
+			if (mwse::tes3::resolveAssetPath(path.c_str()) == 0) {
+				throw std::invalid_argument("Provided file does not exist.");
+			}
 		}
 
 		auto id = mwse::lua::getOptionalUIID(params, "id");

@@ -7,7 +7,7 @@ return {
 		optional = true,
 		tableParams = {
 			{ name = "id", type = "string|number", description = "An identifier to help find this element later.", optional = true },
-			{ name = "path", type = "string", description = "An image path. This path is relative to `Data Files`." },
+			{ name = "path", type = "string", optional = true, description = "An image path. This path is relative to `Data Files`." },
 		},
 	} },
 	valuetype = "tes3uiElement",

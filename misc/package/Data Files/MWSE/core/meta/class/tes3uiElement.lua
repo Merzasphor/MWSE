@@ -223,14 +223,14 @@ function tes3uiElement:createHypertext(params) end
 --- 
 --- `id`: string|number|nil — *Optional*. An identifier to help find this element later.
 --- 
---- `path`: string — An image path. This path is relative to `Data Files`.
+--- `path`: string? — *Optional*. An image path. This path is relative to `Data Files`.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:createImage(params) end
 
 ---Table parameter definitions for `tes3uiElement.createImage`.
 --- @class tes3uiElement.createImage.params
 --- @field id string|number|nil *Optional*. An identifier to help find this element later.
---- @field path string An image path. This path is relative to `Data Files`.
+--- @field path string? *Optional*. An image path. This path is relative to `Data Files`.
 
 --- Creates an interactive button composed of images for the **idle**, **over**, and **pressed** states. The texture must have power-of-2 dimensions (i.e. 16, 32, 64, 128, 256, 512, 1024); the final display size can be trimmed by setting width and height.
 --- @param params tes3uiElement.createImageButton.params? This table accepts the following values:

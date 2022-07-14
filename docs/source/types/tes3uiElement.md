@@ -753,7 +753,7 @@ local result = myObject:createImage({ id = ..., path = ... })
 
 * `params` (table): *Optional*.
 	* `id` (string, number): *Optional*. An identifier to help find this element later.
-	* `path` (string): An image path. This path is relative to `Data Files`.
+	* `path` (string): *Optional*. An image path. This path is relative to `Data Files`.
 
 **Returns**:
 
