@@ -152,7 +152,7 @@ A vector that represents the 3D acceleration of the object.
 
 ### `isAffectedByGravity`
 
-If `true`, the mobile is affected by gravity. Does not have any impact on spell projectiles.
+If `true`, the mobile is affected by gravity. Does not have any effect on spell projectiles.
 
 **Returns**:
 

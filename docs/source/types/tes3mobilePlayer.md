@@ -886,7 +886,7 @@ Direct access to the actor's invisibility effect attribute.
 
 ### `isAffectedByGravity`
 
-If `true`, the mobile is affected by gravity. Does not have any impact on spell projectiles.
+If `true`, the mobile is affected by gravity. Does not have any effect on spell projectiles.
 
 **Returns**:
 

@@ -19,7 +19,7 @@
 --- @field canCastSelf boolean Access to the base flag that determines if this effect can be used with a range of self.
 --- @field canCastTarget boolean Access to the base flag that determines if this effect can be used with a range of target.
 --- @field canCastTouch boolean Access to the base flag that determines if this effect can be used with a range of touch.
---- @field casterLinked boolean Access to the base flag that determines if this effect must end if caster is dead, or not an NPC/creature. Not allowed in containter or door trap spells.
+--- @field casterLinked boolean Access to the base flag that determines if this effect must end if caster is dead, or not an NPC/creature. Not allowed in container or door trap spells.
 --- 
 --- Note that this property is hidden in the Construction Set.
 --- @field castSoundEffect tes3sound The sound effect that plays when casting. Can be set to ``nil`` to use the default sound effect for the magic school.
