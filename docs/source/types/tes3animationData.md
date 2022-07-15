@@ -201,9 +201,9 @@ Animations are divided into three layers. The layer 0 is the base layer containi
 
 ***
 
-### `nextLoopCounts`
+### `movementSpeed`
 
-
+The animation speed multiplier of movement animations. This includes walking, running, crouching, swimming, turning, jumping and other movement related animations.
 
 **Returns**:
 
@@ -211,7 +211,7 @@ Animations are divided into three layers. The layer 0 is the base layer containi
 
 ***
 
-### `playbackSpeed`
+### `nextLoopCounts`
 
 
 
@@ -273,7 +273,7 @@ Animations are divided into three layers. The layer 0 is the base layer containi
 
 ### `weaponSpeed`
 
-The speed of the weapon the actor has equipped.
+The animation speed multiplier of weapon animations. This includes all weapon related idle, attack, and ready/unready animations.
 
 **Returns**:
 

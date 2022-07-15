@@ -1,5 +1,5 @@
 return {
 	type = "value",
-	description = [[The speed of the weapon the actor has equipped.]],
+	description = [[The animation speed multiplier of weapon animations. This includes all weapon related idle, attack, and ready/unready animations.]],
 	valuetype = "number",
 }

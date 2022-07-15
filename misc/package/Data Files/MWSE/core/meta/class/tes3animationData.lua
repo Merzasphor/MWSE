@@ -27,14 +27,14 @@
 --- @field loopCounts number[] *Read-only*. 
 --- @field manager niKeyframeManager 
 --- @field modelRootNode niBillboardNode|niCollisionSwitch|niNode|niSwitchNode 
+--- @field movementSpeed number The animation speed multiplier of movement animations. This includes walking, running, crouching, swimming, turning, jumping and other movement related animations.
 --- @field nextLoopCounts number 
---- @field playbackSpeed number 
 --- @field positionDeltaModelRoot tes3vector3 
 --- @field spine1Node niBillboardNode|niCollisionSwitch|niNode|niSwitchNode 
 --- @field spine2Node niBillboardNode|niCollisionSwitch|niNode|niSwitchNode 
 --- @field spineAngle number 
 --- @field timings number[] 
---- @field weaponSpeed number The speed of the weapon the actor has equipped.
+--- @field weaponSpeed number The animation speed multiplier of weapon animations. This includes all weapon related idle, attack, and ready/unready animations.
 tes3animationData = {}
 
 --- This method fetches the reference of the actor to whom this animation data belongs.
