@@ -203,7 +203,7 @@ Animations are divided into three layers. The layer 0 is the base layer containi
 
 ### `movementSpeed`
 
-The animation speed multiplier of movement animations. This includes walking, running, crouching, swimming, turning, jumping and other movement related animations.
+*Read-only*. The animation speed multiplier of movement animations. This includes walking, running, crouching, swimming, turning, jumping and other movement related animations.
 
 **Returns**:
 

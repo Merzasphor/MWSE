@@ -27,7 +27,7 @@
 --- @field loopCounts number[] *Read-only*. 
 --- @field manager niKeyframeManager 
 --- @field modelRootNode niBillboardNode|niCollisionSwitch|niNode|niSwitchNode 
---- @field movementSpeed number The animation speed multiplier of movement animations. This includes walking, running, crouching, swimming, turning, jumping and other movement related animations.
+--- @field movementSpeed number *Read-only*. The animation speed multiplier of movement animations. This includes walking, running, crouching, swimming, turning, jumping and other movement related animations.
 --- @field nextLoopCounts number 
 --- @field positionDeltaModelRoot tes3vector3 
 --- @field spine1Node niBillboardNode|niCollisionSwitch|niNode|niSwitchNode 
