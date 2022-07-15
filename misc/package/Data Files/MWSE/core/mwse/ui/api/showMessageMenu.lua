@@ -84,7 +84,7 @@ local function callbackButtonHelp(e)
 	end
 
 	-- Ensure we got something valid.
-	tooltipCreator = common.resolveDynamicValue(tooltipCreator)
+	tooltipCreator = common.resolveDynamicValue(tooltipCreator, menuData.callbackParams)
 	if (not tooltipCreator) then
 		return
 	end
@@ -105,7 +105,7 @@ local function callbackButtonHelp(e)
 	-- Make our header.
 	if tooltipCreator.header then
 		local headerLabel = outerBlock:createLabel({
-			text = common.resolveDynamicText(tooltipCreator.header),
+			text = common.resolveDynamicText(tooltipCreator.header, menuData.callbackParams),
 		})
 		headerLabel.autoHeight = true
 		headerLabel.width = 285
@@ -116,7 +116,7 @@ local function callbackButtonHelp(e)
 	-- Make our normal text.
 	if tooltipCreator.text then
 		local descriptionLabel = outerBlock:createLabel({
-			text = common.resolveDynamicText(tooltipCreator.text),
+			text = common.resolveDynamicText(tooltipCreator.text, menuData.callbackParams),
 		})
 		descriptionLabel.autoHeight = true
 		descriptionLabel.width = 285
