@@ -67,7 +67,7 @@ namespace mwse::lua {
 			usertypeDefinition["manager"] = &TES3::AnimationData::manager;
 			usertypeDefinition["modelRootNode"] = &TES3::AnimationData::modelRootNode;
 			usertypeDefinition["nextLoopCounts"] = &TES3::AnimationData::nextLoopCounts;
-			usertypeDefinition["playbackSpeed"] = &TES3::AnimationData::playbackSpeed;
+			usertypeDefinition["movementSpeed"] = &TES3::AnimationData::movementSpeed;
 			usertypeDefinition["positionDeltaModelRoot"] = &TES3::AnimationData::positionDeltaModelRoot;
 			usertypeDefinition["spine1Node"] = &TES3::AnimationData::spine1Node;
 			usertypeDefinition["spine2Node"] = &TES3::AnimationData::spine2Node;

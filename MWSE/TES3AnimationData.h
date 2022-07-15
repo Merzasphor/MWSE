@@ -62,7 +62,7 @@ namespace TES3 {
 		int currentAnimGroupLayer[3];
 		signed char animGroupLayerIndex[150]; // 0x314
 		short approxRootTravelSpeed[150]; // 0x3AA
-		float playbackSpeed; // 0x4D8
+		float movementSpeed; // 0x4D8
 		float weaponSpeed; // 0x4DC
 		int currentSoundgenIndices[3]; // 0x4E0
 		unsigned char animationGroupSoundgenCounts[150]; // 0x4EC
