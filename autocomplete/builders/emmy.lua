@@ -130,14 +130,18 @@ local function writeFunction(package, file, namespaceOverride)
 		local type = argument.type
 		local description = common.getDescriptionString(argument)
 		if (argument.tableParams) then
-			type = package.namespace .. ".params"
+			local types = type:split("|")
+			table.removevalue(types, "table")
+			table.insert(types, package.namespace .. ".params")
+
+			type = table.concat(types, "|")
 			description = "This table accepts the following values:"
 			for _, tableArgument in ipairs(argument.tableParams) do
 				description = description .. string.format("\n\n`%s`: %s — %s", tableArgument.name or "unknown", getAllPossibleVariationsOfType(tableArgument.type, tableArgument) or "any", formatLineBreaks(common.getDescriptionString(tableArgument)))
 			end
 		end
 		if (argument.type == "variadic") then
-			file:write(string.format("--- @vararg %s %s\n", getAllPossibleVariationsOfType(argument.variadicType, argument) or "any", formatLineBreaks(description)))
+			file:write(string.format("--- @param ... %s %s\n", getAllPossibleVariationsOfType(argument.variadicType, argument) or "any?", formatLineBreaks(description)))
 		else
 			file:write(string.format("--- @param %s %s %s\n", argument.name or "unknown", getAllPossibleVariationsOfType(type, argument), formatLineBreaks(description)))
 		end
