@@ -15,7 +15,7 @@ Elements can have custom data attached using their `Property`_ key-value store, 
 
 The horizontal alignment of the element relative to it's parent element. Can be `nil`. If `nil`, deactivates behaviour associated with this property. Valid values range from `0.0` to `1.0`. Sets the element's `positionX` to a point relative to the parent element. A value of `0.0` is equal to the parent element's left content edge, whereas a value of `1.0` is equal to the parent element's right content edge. The positioning is absolute, which frees the element from the standard flow layout and allows overlapping elements.
 	
-Incompatible with and will change the value of [`tes3uiElement.ignoreLayoutX`](https://mwse.github.io/MWSE/types/tes3uiElement/#ignorelayoutx).
+Incompatible with and will change the value of [`ignoreLayoutX`](https://mwse.github.io/MWSE/types/tes3uiElement/#ignorelayoutx).
 
 Elements may not respond to `widthProportional` sizing after this property is set. If you need to use both you should consider testing if it works first.
 
@@ -29,7 +29,7 @@ Elements may not respond to `widthProportional` sizing after this property is se
 
 The vertical alignment of the element relative to it's parent element. Can be `nil`. If `nil`, deactivates behaviour associated with this property. Valid values range from `0.0` to `1.0`. Sets the element's `positionY` to a point relative to the parent element. A value of `0.0` is equal to the parent element's top content edge, whereas a value of `1.0` is equal to the parent element's bottom content edge. The positioning is absolute, which frees the element from the standard flow layout and allows overlapping elements.
 	
-Incompatible with and will change the value of [`tes3uiElement.ignoreLayoutY`](https://mwse.github.io/MWSE/types/tes3uiElement/#ignorelayouty).
+Incompatible with and will change the value of [`ignoreLayoutY`](https://mwse.github.io/MWSE/types/tes3uiElement/#ignorelayouty).
 
 Elements may not respond to `heightProportional` sizing after this property is set. If you need to use both you should consider testing if it works first.
 
@@ -270,9 +270,9 @@ Sets element dimensions using a proportional sizer. The sizer starts with the pa
 
 ### `ignoreLayoutX`
 
-If `true`, the element's [`tes3uiElement.positionX`](https://mwse.github.io/MWSE/types/tes3uiElement/#positionx) can be modified and will not be affected by any layout restrictions imposed by the parent element. Incompatible with and will change the value of [`tes3uiElement.absolutePosAlignX`](https://mwse.github.io/MWSE/types/tes3uiElement/#absoluteposalignx).
+If `true`, the element's [`positionX`](https://mwse.github.io/MWSE/types/tes3uiElement/#positionx) can be modified and will not be affected by any layout restrictions imposed by the parent element. Incompatible with and will change the value of [`absolutePosAlignX`](https://mwse.github.io/MWSE/types/tes3uiElement/#absoluteposalignx).
 	
-Elements that bypass parent layout will be ignored when automatically determing the parent's width. See [`tes3uiElement.autoWidth`](https://mwse.github.io/MWSE/types/tes3uiElement/#autowidth) for more information.
+Elements that bypass parent layout will be ignored when automatically determing the parent's width. See [`autoWidth`](https://mwse.github.io/MWSE/types/tes3uiElement/#autowidth) for more information.
 
 **Returns**:
 
@@ -282,9 +282,9 @@ Elements that bypass parent layout will be ignored when automatically determing 
 
 ### `ignoreLayoutY`
 
-If `true`, the element's [`tes3uiElement.positionY`](https://mwse.github.io/MWSE/types/tes3uiElement/#positiony) can be modified and will not be affected by any layout restrictions imposed by the parent element. Incompatible with and will change the value of [`tes3uiElement.absolutePosAlignY`](https://mwse.github.io/MWSE/types/tes3uiElement/#absoluteposaligny).
+If `true`, the element's [`positionY`](https://mwse.github.io/MWSE/types/tes3uiElement/#positiony) can be modified and will not be affected by any layout restrictions imposed by the parent element. Incompatible with and will change the value of [`absolutePosAlignY`](https://mwse.github.io/MWSE/types/tes3uiElement/#absoluteposaligny).
 	
-Elements that bypass parent layout will be ignored when automatically determing the parent's height. See [`tes3uiElement.autoHeight`](https://mwse.github.io/MWSE/types/tes3uiElement/#autoheight) for more information.
+Elements that bypass parent layout will be ignored when automatically determing the parent's height. See [`autoHeight`](https://mwse.github.io/MWSE/types/tes3uiElement/#autoheight) for more information.
 
 **Returns**:
 
@@ -434,7 +434,7 @@ Integer number. Top padding size in pixels. When this is set to `-1`, the paddin
 
 ### `positionX`
 
-Integer number. The element's horizontal position relative to its parent's top-left content area. For top-level menus, the position will be relative to the the centre of the screen. Modifying this value will not have any effect on most elements due to child element's positions being controlled by the layout and positioning settings of their parent elements, unless [`tes3uiElement.ignoreLayoutX`](https://mwse.github.io/MWSE/types/tes3uiElement/#ignorelayoutx) is `true`.
+Integer number. The element's horizontal position relative to its parent's top-left content area. For top-level menus, the position will be relative to the the centre of the screen. Modifying this value will not have any effect on most elements due to child element's positions being controlled by the layout and positioning settings of their parent elements, unless [`ignoreLayoutX`](https://mwse.github.io/MWSE/types/tes3uiElement/#ignorelayoutx) is `true`.
 
 **Returns**:
 
@@ -444,7 +444,7 @@ Integer number. The element's horizontal position relative to its parent's top-l
 
 ### `positionY`
 
-Integer number. The element's vertical position relative to its parent's top-left content area. For top-level menus, the position will be relative to the the centre of the screen. Modifying this value will not have any effect on most elements due to child element's positions being controlled by the layout and positioning settings of their parent elements, unless [`tes3uiElement.ignoreLayoutY`](https://mwse.github.io/MWSE/types/tes3uiElement/#ignorelayouty) is `true`.
+Integer number. The element's vertical position relative to its parent's top-left content area. For top-level menus, the position will be relative to the the centre of the screen. Modifying this value will not have any effect on most elements due to child element's positions being controlled by the layout and positioning settings of their parent elements, unless [`ignoreLayoutY`](https://mwse.github.io/MWSE/types/tes3uiElement/#ignorelayouty) is `true`.
 
 **Returns**:
 

@@ -10,12 +10,12 @@
 --- @class tes3uiElement
 --- @field absolutePosAlignX number The horizontal alignment of the element relative to it's parent element. Can be `nil`. If `nil`, deactivates behaviour associated with this property. Valid values range from `0.0` to `1.0`. Sets the element's `positionX` to a point relative to the parent element. A value of `0.0` is equal to the parent element's left content edge, whereas a value of `1.0` is equal to the parent element's right content edge. The positioning is absolute, which frees the element from the standard flow layout and allows overlapping elements.
 --- 	
---- Incompatible with and will change the value of [`tes3uiElement.ignoreLayoutX`](https://mwse.github.io/MWSE/types/tes3uiElement/#ignorelayoutx).
+--- Incompatible with and will change the value of [`ignoreLayoutX`](https://mwse.github.io/MWSE/types/tes3uiElement/#ignorelayoutx).
 --- 
 --- Elements may not respond to `widthProportional` sizing after this property is set. If you need to use both you should consider testing if it works first.
 --- @field absolutePosAlignY number The vertical alignment of the element relative to it's parent element. Can be `nil`. If `nil`, deactivates behaviour associated with this property. Valid values range from `0.0` to `1.0`. Sets the element's `positionY` to a point relative to the parent element. A value of `0.0` is equal to the parent element's top content edge, whereas a value of `1.0` is equal to the parent element's bottom content edge. The positioning is absolute, which frees the element from the standard flow layout and allows overlapping elements.
 --- 	
---- Incompatible with and will change the value of [`tes3uiElement.ignoreLayoutY`](https://mwse.github.io/MWSE/types/tes3uiElement/#ignorelayouty).
+--- Incompatible with and will change the value of [`ignoreLayoutY`](https://mwse.github.io/MWSE/types/tes3uiElement/#ignorelayouty).
 --- 
 --- Elements may not respond to `heightProportional` sizing after this property is set. If you need to use both you should consider testing if it works first.
 --- @field alpha number The element's alpha color. Valid values range from `0.0` to `1.0`. Used to composite elements. If you wish to hide an element completely, use `disable` instead.
@@ -49,12 +49,12 @@
 --- 
 --- 	Overrides fixed, minimum and maximum sizes unless this value is `nil` (default).
 --- @field id number *Read-only*. The element's ID.  The element can be later accessed by `ancestor:findChild(id)`. Note that multiple elements may have the same ID, such as subparts of a widget, or list items. Therefore, you may think of ids as an element class identifier.
---- @field ignoreLayoutX boolean If `true`, the element's [`tes3uiElement.positionX`](https://mwse.github.io/MWSE/types/tes3uiElement/#positionx) can be modified and will not be affected by any layout restrictions imposed by the parent element. Incompatible with and will change the value of [`tes3uiElement.absolutePosAlignX`](https://mwse.github.io/MWSE/types/tes3uiElement/#absoluteposalignx).
+--- @field ignoreLayoutX boolean If `true`, the element's [`positionX`](https://mwse.github.io/MWSE/types/tes3uiElement/#positionx) can be modified and will not be affected by any layout restrictions imposed by the parent element. Incompatible with and will change the value of [`absolutePosAlignX`](https://mwse.github.io/MWSE/types/tes3uiElement/#absoluteposalignx).
 --- 	
---- Elements that bypass parent layout will be ignored when automatically determing the parent's width. See [`tes3uiElement.autoWidth`](https://mwse.github.io/MWSE/types/tes3uiElement/#autowidth) for more information.
---- @field ignoreLayoutY boolean If `true`, the element's [`tes3uiElement.positionY`](https://mwse.github.io/MWSE/types/tes3uiElement/#positiony) can be modified and will not be affected by any layout restrictions imposed by the parent element. Incompatible with and will change the value of [`tes3uiElement.absolutePosAlignY`](https://mwse.github.io/MWSE/types/tes3uiElement/#absoluteposaligny).
+--- Elements that bypass parent layout will be ignored when automatically determing the parent's width. See [`autoWidth`](https://mwse.github.io/MWSE/types/tes3uiElement/#autowidth) for more information.
+--- @field ignoreLayoutY boolean If `true`, the element's [`positionY`](https://mwse.github.io/MWSE/types/tes3uiElement/#positiony) can be modified and will not be affected by any layout restrictions imposed by the parent element. Incompatible with and will change the value of [`absolutePosAlignY`](https://mwse.github.io/MWSE/types/tes3uiElement/#absoluteposaligny).
 --- 	
---- Elements that bypass parent layout will be ignored when automatically determing the parent's height. See [`tes3uiElement.autoHeight`](https://mwse.github.io/MWSE/types/tes3uiElement/#autoheight) for more information.
+--- Elements that bypass parent layout will be ignored when automatically determing the parent's height. See [`autoHeight`](https://mwse.github.io/MWSE/types/tes3uiElement/#autoheight) for more information.
 --- @field imageScaleX number Image scaling multipliers. Only applies to image elements.
 --- @field imageScaleY number Image scaling multipliers. Only applies to image elements.
 --- @field justifyText string Can have values `"left"`, `"center"`, or `"right"`. Controls text justification. Maps to values in the [`tes3.justifyText`](https://mwse.github.io/MWSE/references/justify-text/) table. To work correctly for center/right justification, `wrapText` must be `true`.
@@ -69,8 +69,8 @@
 --- @field paddingRight number Integer number. Right padding size in pixels. When this is set to `-1`, the paddingAllSides setting is used for this side instead.
 --- @field paddingTop number Integer number. Top padding size in pixels. When this is set to `-1`, the paddingAllSides setting is used for this side instead.
 --- @field parent tes3uiElement *Read-only*. A reference to the parent element.
---- @field positionX number Integer number. The element's horizontal position relative to its parent's top-left content area. For top-level menus, the position will be relative to the the centre of the screen. Modifying this value will not have any effect on most elements due to child element's positions being controlled by the layout and positioning settings of their parent elements, unless [`tes3uiElement.ignoreLayoutX`](https://mwse.github.io/MWSE/types/tes3uiElement/#ignorelayoutx) is `true`.
---- @field positionY number Integer number. The element's vertical position relative to its parent's top-left content area. For top-level menus, the position will be relative to the the centre of the screen. Modifying this value will not have any effect on most elements due to child element's positions being controlled by the layout and positioning settings of their parent elements, unless [`tes3uiElement.ignoreLayoutY`](https://mwse.github.io/MWSE/types/tes3uiElement/#ignorelayouty) is `true`.
+--- @field positionX number Integer number. The element's horizontal position relative to its parent's top-left content area. For top-level menus, the position will be relative to the the centre of the screen. Modifying this value will not have any effect on most elements due to child element's positions being controlled by the layout and positioning settings of their parent elements, unless [`ignoreLayoutX`](https://mwse.github.io/MWSE/types/tes3uiElement/#ignorelayoutx) is `true`.
+--- @field positionY number Integer number. The element's vertical position relative to its parent's top-left content area. For top-level menus, the position will be relative to the the centre of the screen. Modifying this value will not have any effect on most elements due to child element's positions being controlled by the layout and positioning settings of their parent elements, unless [`ignoreLayoutY`](https://mwse.github.io/MWSE/types/tes3uiElement/#ignorelayouty) is `true`.
 --- @field rawText string The raw value of the element's text. This, unlike the normal text property, will not directly read widget information or handle the removal of the positional cursor.
 --- @field repeatKeys boolean Controls if there is repeating text input when keys are held down. `true` by default.
 --- @field scaleMode boolean When set to `true` on image and NIF elements, they are scaled to fit `width` and `height`.
