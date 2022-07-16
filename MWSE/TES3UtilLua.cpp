@@ -1300,7 +1300,7 @@ namespace mwse::lua {
 		// Set some basic crime event data.
 		crimeEvent.timestamp = float(timeGetTime());
 		crimeEvent.position = crimeEvent.criminal->reference->position;
-		crimeEvent.stolenValue = getOptionalParam<int>(params, "value", crimeEvent.stolenValue);
+		int stolenValue = getOptionalParam<int>(params, "value", crimeEvent.stolenValue);
 
 		// The player is always the criminal. Other values will have no effect and do not get reacted to by AI actors.
 		crimeEvent.criminal = TES3::WorldController::get()->getMobilePlayer();
@@ -1349,6 +1349,7 @@ namespace mwse::lua {
 		case TES3::CrimeType::Theft:
 			crimeEvent.type = TES3::CrimeType::Theft;
 			crimeEvent.bountyKey = "theft";
+			crimeEvent.stolenValue = stolenValue;
 			break;
 		case TES3::CrimeType::Trespass:
 			crimeEvent.bountyKey = "trespass";
@@ -1369,12 +1370,13 @@ namespace mwse::lua {
 			processManager->checkAlarmRadius(crimeEvent.criminal, crimeEvent.witnesses);
 		}
 
-		// Add the crime to the criminal's committed crimes list.
+		// Add the crime to the criminal's committed crimes list if there are witnesses.
 		if (crimeEvent.witnesses->count) {
 			crimeEvent.criminal->committedCrimes.insertCrime(&crimeEvent);
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	NI::Pointer<NI::Node> loadMesh(const char* relativePath, sol::optional<bool> useCached) {
