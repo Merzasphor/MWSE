@@ -1297,13 +1297,13 @@ namespace mwse::lua {
 		}
 		crimeEvent.type = crimeType;
 
+		// The player is always the criminal. Other values will have no effect and do not get reacted to by AI actors.
+		crimeEvent.criminal = TES3::WorldController::get()->getMobilePlayer();
+
 		// Set some basic crime event data.
 		crimeEvent.timestamp = float(timeGetTime());
 		crimeEvent.position = crimeEvent.criminal->reference->position;
 		int stolenValue = getOptionalParam<int>(params, "value", crimeEvent.stolenValue);
-
-		// The player is always the criminal. Other values will have no effect and do not get reacted to by AI actors.
-		crimeEvent.criminal = TES3::WorldController::get()->getMobilePlayer();
 
 		// Try to set as many victim-related crime event fields as possible.
 		sol::object victim = params["victim"];
