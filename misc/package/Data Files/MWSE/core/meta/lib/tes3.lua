@@ -2572,28 +2572,25 @@ function tes3.transferItem(params) end
 --- @field equipProjectiles boolean? *Default*: `true`. If true, and the reference has the same projectile already equipped, the stacks will be merged. This will only work if the GUI is updated.
 --- @field updateGUI boolean? *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though [`tes3ui.forcePlayerInventoryUpdate()`](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uiforceplayerinventoryupdate) must manually be called after all inventory updates are finished.
 
---- Emulates the player committing a crime.
+--- Emulates the player committing a crime. Returns `true` if the crime was witnessed by an actor.
 --- @param params tes3.triggerCrime.params This table accepts the following values:
 --- 
---- `criminal`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string|nil — *Default*: `tes3.mobilePlayer`. No description yet available.
+--- `type`: number? — *Default*: `tes3.crimeType.theft`. The type of crime to be committed. Maps to values in the [`tes3.crimeType`](https://mwse.github.io/MWSE/references/crime-types/) table.
 --- 
---- `forceDetection`: boolean? — *Default*: `false`. Can be set to true to ignore normal detection checks.
+--- `victim`: tes3mobileNPC|tes3mobilePlayer|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance|tes3faction|nil — *Default*: `tes3.mobilePlayer`. The victim of the crime. This can be an individual actor or a entire faction. Has no effect on crimes with a `type` of `tes3.crimeType.trespass` or `tes3.crimeType.werewolf`.
 --- 
---- `type`: number? — *Default*: `tes3.crimeType.stealing`. Maps to [`tes3.crimeType`](https://mwse.github.io/MWSE/references/crime-types/) constants.
+--- `value`: number? — *Default*: `0`. Only valid if `type` is `tes3.crimeType.theft`. The value of the stolen objects.
 --- 
---- `value`: number — Penalty for the crime. Defaults to 25 for pickpocketing.
---- 
---- `victim`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string|nil — *Default*: `tes3.mobilePlayer`. No description yet available.
---- @return boolean executed No description yet available.
+--- `forceDetection`: boolean? — *Default*: `false`. If `true`, bypasses regular detection logic and forces all nearby actors to detect the crime.
+--- @return boolean result No description yet available.
 function tes3.triggerCrime(params) end
 
 ---Table parameter definitions for `tes3.triggerCrime`.
 --- @class tes3.triggerCrime.params
---- @field criminal tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string|nil *Default*: `tes3.mobilePlayer`. No description yet available.
---- @field forceDetection boolean? *Default*: `false`. Can be set to true to ignore normal detection checks.
---- @field type number? *Default*: `tes3.crimeType.stealing`. Maps to [`tes3.crimeType`](https://mwse.github.io/MWSE/references/crime-types/) constants.
---- @field value number Penalty for the crime. Defaults to 25 for pickpocketing.
---- @field victim tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string|nil *Default*: `tes3.mobilePlayer`. No description yet available.
+--- @field type number? *Default*: `tes3.crimeType.theft`. The type of crime to be committed. Maps to values in the [`tes3.crimeType`](https://mwse.github.io/MWSE/references/crime-types/) table.
+--- @field victim tes3mobileNPC|tes3mobilePlayer|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance|tes3faction|nil *Default*: `tes3.mobilePlayer`. The victim of the crime. This can be an individual actor or a entire faction. Has no effect on crimes with a `type` of `tes3.crimeType.trespass` or `tes3.crimeType.werewolf`.
+--- @field value number? *Default*: `0`. Only valid if `type` is `tes3.crimeType.theft`. The value of the stolen objects.
+--- @field forceDetection boolean? *Default*: `false`. If `true`, bypasses regular detection logic and forces all nearby actors to detect the crime.
 
 --- Changes a reference back from werewolf form to human. This function works only on a reference infected with Lycanthropy, be it the player or any other reference. Returns true if successful.
 --- @param params tes3.undoTransform.params This table accepts the following values:

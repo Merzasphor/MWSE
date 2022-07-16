@@ -4215,24 +4215,23 @@ local transferredCount = tes3.transferItem({ from = ..., to = ..., item = ..., i
 
 ### `tes3.triggerCrime`
 
-Emulates the player committing a crime.
+Emulates the player committing a crime. Returns `true` if the crime was witnessed by an actor.
 
 ```lua
-local executed = tes3.triggerCrime({ criminal = ..., forceDetection = ..., type = ..., value = ..., victim = ... })
+local result = tes3.triggerCrime({ type = ..., victim = ..., value = ..., forceDetection = ... })
 ```
 
 **Parameters**:
 
 * `params` (table)
-	* `criminal` ([tes3mobileActor](../../types/tes3mobileActor), [tes3reference](../../types/tes3reference), string): *Default*: `tes3.mobilePlayer`.
-	* `forceDetection` (boolean): *Default*: `false`. Can be set to true to ignore normal detection checks.
-	* `type` (number): *Default*: `tes3.crimeType.stealing`. Maps to [`tes3.crimeType`](https://mwse.github.io/MWSE/references/crime-types/) constants.
-	* `value` (number): Penalty for the crime. Defaults to 25 for pickpocketing.
-	* `victim` ([tes3mobileActor](../../types/tes3mobileActor), [tes3reference](../../types/tes3reference), string): *Default*: `tes3.mobilePlayer`.
+	* `type` (number): *Default*: `tes3.crimeType.theft`. The type of crime to be committed. Maps to values in the [`tes3.crimeType`](https://mwse.github.io/MWSE/references/crime-types/) table.
+	* `victim` ([tes3mobileNPC](../../types/tes3mobileNPC), [tes3actor](../../types/tes3actor), [tes3faction](../../types/tes3faction)): *Default*: `tes3.mobilePlayer`. The victim of the crime. This can be an individual actor or a entire faction. Has no effect on crimes with a `type` of `tes3.crimeType.trespass` or `tes3.crimeType.werewolf`.
+	* `value` (number): *Default*: `0`. Only valid if `type` is `tes3.crimeType.theft`. The value of the stolen objects.
+	* `forceDetection` (boolean): *Default*: `false`. If `true`, bypasses regular detection logic and forces all nearby actors to detect the crime.
 
 **Returns**:
 
-* `executed` (boolean)
+* `result` (boolean)
 
 ***
 
