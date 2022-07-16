@@ -35,7 +35,7 @@
 --- @field children tes3uiElement[] *Read-only*. The child elements of this element. This is a copy that does not track changes.
 --- @field color number[] The RGB color of the element. An array of 3 numbers with values ranging from `0.0` to `1.0`. For menus and rects, it sets the background color. For text, it sets the text color. For images, it multiplies the image by the color.
 --- @field consumeMouseEvents boolean When `true`, mouse events over this element are sent to event handlers, or discarded if there is no handler. When `false`, mouse events go upwards to the first ancestor that can consume mouse events. Useful to set on widget sub-elements. `true` by default.
---- @field contentPath string *Read-only*. The file path to the image or model content of this element. Only used if `contentType` is set to `tes3.contentType.image` or `tes3.contentType.model`.
+--- @field contentPath string The file path to the image or model content of this element. Only used if `contentType` is set to `tes3.contentType.image` or `tes3.contentType.model`.
 --- @field contentType string *Read-only*. The type of content this `tes3uiElement` represents. Maps to values in the [`tes3.contentType`](https://mwse.github.io/MWSE/references/content-types/) table.
 --- @field disabled boolean Disables user actions on this element. Widgets may stop accepting mouse and keyboard input while disabled.
 --- @field flowDirection string Can have values `"left_to_right"` or `"top_to_bottom"`. These values are available as [`tes3.flowDirection`](https://mwse.github.io/MWSE/references/flow-directions/) enumeration. Indicates which direction child elements are laid out.
