@@ -1,6 +1,6 @@
 return {
 	type = "method",
-	description = [[Creates a filled rectangle. The rectangle is displayed as filled with the element's colour. It supports alpha compositing.]],
+	description = [[Creates a filled rectangle. The rectangle is displayed as filled with the element's color. It supports alpha compositing.]],
 	arguments = { {
 		name = "params",
 		type = "table",

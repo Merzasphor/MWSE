@@ -1,5 +1,5 @@
 return {
 	type = "value",
-	description = [[When `true`, automatically expands element dimensions to fit child elements. Dimensions are restricted by `minWidth`, `minHeight`, `maxWidth` and `maxHeight` properties.]],
+	description = [[If `true`, automatically expands element dimensions to fit child elements. Ignores child elements that have `ignoreLayoutY` set to `true`. Dimensions are restricted by `minWidth`, `minHeight`, `maxWidth` and `maxHeight` properties.]],
 	valuetype = "boolean",
 }

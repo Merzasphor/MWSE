@@ -11,7 +11,7 @@ Contains color information of a font.
 
 ### `b`
 
-Blue colour value, in range [0.0, 1.0].
+Blue color value, in range [0.0, 1.0].
 
 **Returns**:
 
@@ -21,7 +21,7 @@ Blue colour value, in range [0.0, 1.0].
 
 ### `g`
 
-Green colour value, in range [0.0, 1.0].
+Green color value, in range [0.0, 1.0].
 
 **Returns**:
 
@@ -31,7 +31,7 @@ Green colour value, in range [0.0, 1.0].
 
 ### `r`
 
-Red colour value, in range [0.0, 1.0].
+Red color value, in range [0.0, 1.0].
 
 **Returns**:
 

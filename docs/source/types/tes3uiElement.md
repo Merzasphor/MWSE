@@ -13,9 +13,11 @@ Elements can have custom data attached using their `Property`_ key-value store, 
 
 ### `absolutePosAlignX`
 
-Sets element position to a point relative to the parent element. 0.0 = left/top content edge, 1.0 = right/bottom content edge. The positioning is absolute, which frees the element from the standard flow layout and allows overlapping elements.
+The horizontal alignment of the element relative to it's parent element. Can be `nil`. If `nil`, deactivates behaviour associated with this property. Valid values range from `0.0` to `1.0`. Sets the element's `positionX` to a point relative to the parent element. A value of `0.0` is equal to the parent element's left content edge, whereas a value of `1.0` is equal to the parent element's right content edge. The positioning is absolute, which frees the element from the standard flow layout and allows overlapping elements.
 	
-	Bug note: Elements may not respond to widthProportional/heightProportional sizing after either of these properties are set. If you need to use both you should consider testing if it works first.
+Incompatible with and will change the value of [`tes3uiElement.ignoreLayoutX`](https://mwse.github.io/MWSE/types/tes3uiElement/#ignorelayoutx).
+
+Elements may not respond to `widthProportional` sizing after this property is set. If you need to use both you should consider testing if it works first.
 
 **Returns**:
 
@@ -25,7 +27,11 @@ Sets element position to a point relative to the parent element. 0.0 = left/top 
 
 ### `absolutePosAlignY`
 
-See absolutePosAlignX.
+The vertical alignment of the element relative to it's parent element. Can be `nil`. If `nil`, deactivates behaviour associated with this property. Valid values range from `0.0` to `1.0`. Sets the element's `positionY` to a point relative to the parent element. A value of `0.0` is equal to the parent element's top content edge, whereas a value of `1.0` is equal to the parent element's bottom content edge. The positioning is absolute, which frees the element from the standard flow layout and allows overlapping elements.
+	
+Incompatible with and will change the value of [`tes3uiElement.ignoreLayoutY`](https://mwse.github.io/MWSE/types/tes3uiElement/#ignorelayouty).
+
+Elements may not respond to `heightProportional` sizing after this property is set. If you need to use both you should consider testing if it works first.
 
 **Returns**:
 
@@ -35,7 +41,7 @@ See absolutePosAlignX.
 
 ### `alpha`
 
-Element alpha colour, using range [0.0, 1.0]. Used to composite elements. If you wish to hide an element completely, use `disable` instead.
+The element's alpha color. Valid values range from `0.0` to `1.0`. Used to composite elements. If you wish to hide an element completely, use `disable` instead.
 
 **Returns**:
 
@@ -45,7 +51,7 @@ Element alpha colour, using range [0.0, 1.0]. Used to composite elements. If you
 
 ### `autoHeight`
 
-When `true`, automatically expands element dimensions to fit child elements. Dimensions are restricted by `minWidth`, `minHeight`, `maxWidth` and `maxHeight` properties.
+If `true`, automatically expands element dimensions to fit child elements. Ignores child elements that have `ignoreLayoutY` set to `true`. Dimensions are restricted by `minWidth`, `minHeight`, `maxWidth` and `maxHeight` properties.
 
 **Returns**:
 
@@ -55,7 +61,7 @@ When `true`, automatically expands element dimensions to fit child elements. Dim
 
 ### `autoWidth`
 
-When `true`, automatically expands element dimensions to fit child elements. Dimensions are restricted by `minWidth`, `minHeight`, `maxWidth` and `maxHeight` properties.
+If `true`, automatically expands element dimensions to fit child elements. Ignores child elements that have `ignoreLayoutX` set to `true`. Dimensions are restricted by `minWidth`, `minHeight`, `maxWidth` and `maxHeight` properties.
 
 **Returns**:
 
@@ -65,7 +71,7 @@ When `true`, automatically expands element dimensions to fit child elements. Dim
 
 ### `borderAllSides`
 
-Integer number. Border size in pixels. Border is the extra empty space around an element. Individual border sizes default to using the borderAllSides setting.
+Integer number. The border size in pixels. Border is the extra empty space around an element. Individual border sizes default to using the borderAllSides setting.
 
 **Returns**:
 
@@ -75,7 +81,7 @@ Integer number. Border size in pixels. Border is the extra empty space around an
 
 ### `borderBottom`
 
-Integer number. Bottom border size in pixels. When this is set to `-1`, the borderAllSides setting is used for this side instead.
+Integer number. The bottom border size in pixels. When this is set to `-1`, the `borderAllSides` setting is used for this side instead.
 
 **Returns**:
 
@@ -85,7 +91,7 @@ Integer number. Bottom border size in pixels. When this is set to `-1`, the bord
 
 ### `borderLeft`
 
-Integer number. Left border size in pixels. When this is set to `-1`, the borderAllSides setting is used for this side instead.
+Integer number. The left border size in pixels. When this is set to `-1`, the `borderAllSides` setting is used for this side instead.
 
 **Returns**:
 
@@ -95,7 +101,7 @@ Integer number. Left border size in pixels. When this is set to `-1`, the border
 
 ### `borderRight`
 
-Integer number. Left border size in pixels. When this is set to `-1`, the borderAllSides setting is used for this side instead.
+Integer number. The left border size in pixels. When this is set to `-1`, the `borderAllSides` setting is used for this side instead.
 
 **Returns**:
 
@@ -105,7 +111,7 @@ Integer number. Left border size in pixels. When this is set to `-1`, the border
 
 ### `borderTop`
 
-Integer number. Top border size in pixels. When this is set to `-1`, the borderAllSides setting is used for this side instead.
+Integer number. The top border size in pixels. When this is set to `-1`, the `borderAllSides` setting is used for this side instead.
 
 **Returns**:
 
@@ -167,7 +173,7 @@ See childOffsetX.
 
 ### `color`
 
-The RGB color of the element. An array of 3 numbers with values ranging from `0.0` to `1.0`. For menus and rects, it sets the background colour. For text, it sets the text colour. For images, it multiplies the image by the colour.
+The RGB color of the element. An array of 3 numbers with values ranging from `0.0` to `1.0`. For menus and rects, it sets the background color. For text, it sets the text color. For images, it multiplies the image by the color.
 
 **Returns**:
 
@@ -259,6 +265,30 @@ Sets element dimensions using a proportional sizer. The sizer starts with the pa
 **Returns**:
 
 * `result` (number)
+
+***
+
+### `ignoreLayoutX`
+
+If `true`, the element's [`tes3uiElement.positionX`](https://mwse.github.io/MWSE/types/tes3uiElement/#positionx) can be modified and will not be affected by any layout restrictions imposed by the parent element. Incompatible with and will change the value of [`tes3uiElement.absolutePosAlignX`](https://mwse.github.io/MWSE/types/tes3uiElement/#absoluteposalignx).
+	
+Elements that bypass parent layout will be ignored when automatically determing the parent's width. See [`tes3uiElement.autoWidth`](https://mwse.github.io/MWSE/types/tes3uiElement/#autowidth) for more information.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
+### `ignoreLayoutY`
+
+If `true`, the element's [`tes3uiElement.positionY`](https://mwse.github.io/MWSE/types/tes3uiElement/#positiony) can be modified and will not be affected by any layout restrictions imposed by the parent element. Incompatible with and will change the value of [`tes3uiElement.absolutePosAlignY`](https://mwse.github.io/MWSE/types/tes3uiElement/#absoluteposaligny).
+	
+Elements that bypass parent layout will be ignored when automatically determing the parent's height. See [`tes3uiElement.autoHeight`](https://mwse.github.io/MWSE/types/tes3uiElement/#autoheight) for more information.
+
+**Returns**:
+
+* `result` (boolean)
 
 ***
 
@@ -404,7 +434,7 @@ Integer number. Top padding size in pixels. When this is set to `-1`, the paddin
 
 ### `positionX`
 
-Integer number. Element X position relative to its parent's top-left content area. For top-level menus there is a difference: (0, 0) is the centre of the screen.
+Integer number. The element's horizontal position relative to its parent's top-left content area. For top-level menus, the position will be relative to the the centre of the screen. Modifying this value will not have any effect on most elements due to child element's positions being controlled by the layout and positioning settings of their parent elements, unless [`tes3uiElement.ignoreLayoutX`](https://mwse.github.io/MWSE/types/tes3uiElement/#ignorelayoutx) is `true`.
 
 **Returns**:
 
@@ -414,7 +444,7 @@ Integer number. Element X position relative to its parent's top-left content are
 
 ### `positionY`
 
-Integer number. Element Y position relative to its parent's top-left content area. For top-level menus there is a difference: (0, 0) is the centre of the screen.
+Integer number. The element's vertical position relative to its parent's top-left content area. For top-level menus, the position will be relative to the the centre of the screen. Modifying this value will not have any effect on most elements due to child element's positions being controlled by the layout and positioning settings of their parent elements, unless [`tes3uiElement.ignoreLayoutY`](https://mwse.github.io/MWSE/types/tes3uiElement/#ignorelayouty) is `true`.
 
 **Returns**:
 
@@ -540,7 +570,7 @@ Sets element dimensions using a proportional sizer. The sizer starts with the pa
 
 ### `wrapText`
 
-Controls text wrapping. Setting this to `true` will also set `layoutHeightFraction` to `1.0`, which is required for wrapping text to adjust to its container size.
+Controls text wrapping. Setting this to `true` will also set `heightProportional` to `1.0`, which is required for wrapping text to adjust to its container size.
 
 **Returns**:
 
@@ -846,7 +876,7 @@ local result = myObject:createParagraphInput({ id = ... })
 
 ### `createRect`
 
-Creates a filled rectangle. The rectangle is displayed as filled with the element's colour. It supports alpha compositing.
+Creates a filled rectangle. The rectangle is displayed as filled with the element's color. It supports alpha compositing.
 
 ```lua
 local result = myObject:createRect({ id = ..., color = ..., randomizeColor = ... })
@@ -942,7 +972,7 @@ local result = myObject:createTextInput({ id = ..., text = ..., placeholderText 
 
 ### `createTextSelect`
 
-Creates a selectable line of text, with configurable hover, click, and disabled colours. Can be used to create a list box by placing them in a ScrollPane.
+Creates a selectable line of text, with configurable hover, click, and disabled colors. Can be used to create a list box by placing them in a ScrollPane.
 
 Text select specific properties can be accessed through the `widget` property. The widget type for text selects is [`tes3uiTextSelect`](https://mwse.github.io/MWSE/types/tes3uiTextSelect/).
 
