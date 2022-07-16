@@ -191,9 +191,19 @@ When `true`, mouse events over this element are sent to event handlers, or disca
 
 ***
 
+### `contentPath`
+
+*Read-only*. The file path to the image or model content of this element. Only used if `contentType` is set to `tes3.contentType.image` or `tes3.contentType.model`.
+
+**Returns**:
+
+* `result` (string)
+
+***
+
 ### `contentType`
 
-*Read-only*. The type of content this `tes3uiElement` represents. Maps to values in [`tes3.contentType`](https://mwse.github.io/MWSE/references/content-types/).
+*Read-only*. The type of content this `tes3uiElement` represents. Maps to values in the [`tes3.contentType`](https://mwse.github.io/MWSE/references/content-types/) table.
 
 **Returns**:
 
