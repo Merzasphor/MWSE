@@ -569,19 +569,19 @@ namespace TES3::UI {
 	}
 
 	sol::optional<float> Element::getAbsolutePosAlignX_lua() const {
-		return valueDefaultAsNil(absolutePosAlignX, -1.0f);
+		return valueDefaultAsNil(absolutePosAlignX, FLOAT_FIELD_INACTIVE);
 	}
 
 	void Element::setAbsolutePosAlignX_lua(sol::optional<float> value) {
-		absolutePosAlignX = value.value_or(-1.0f);
+		absolutePosAlignX = value.value_or(FLOAT_FIELD_INACTIVE);
 	}
 
 	sol::optional<float> Element::getAbsolutePosAlignY_lua() const {
-		return valueDefaultAsNil(absolutePosAlignY, -1.0f);
+		return valueDefaultAsNil(absolutePosAlignY, FLOAT_FIELD_INACTIVE);
 	}
 
 	void Element::setAbsolutePosAlignY_lua(sol::optional<float> value) {
-		absolutePosAlignY = value.value_or(-1.0f);
+		absolutePosAlignY = value.value_or(FLOAT_FIELD_INACTIVE);
 	}
 
 	float Element::getAlpha() const {
@@ -602,35 +602,35 @@ namespace TES3::UI {
 	}
 
 	sol::optional<int> Element::getBorderBottom_lua() const {
-		return valueDefaultAsNil(borderBottom, -1);
+		return valueDefaultAsNil(borderBottom, INT_FIELD_INACTIVE);
 	}
 
 	void Element::setBorderBottom_lua(sol::optional<int> value) {
-		borderBottom = value.value_or(-1);
+		borderBottom = value.value_or(INT_FIELD_INACTIVE);
 	}
 
 	sol::optional<int> Element::getBorderLeft_lua() const {
-		return valueDefaultAsNil(borderLeft, -1);
+		return valueDefaultAsNil(borderLeft, INT_FIELD_INACTIVE);
 	}
 
 	void Element::setBorderLeft_lua(sol::optional<int> value) {
-		borderLeft = value.value_or(-1);
+		borderLeft = value.value_or(INT_FIELD_INACTIVE);
 	}
 
 	sol::optional<int> Element::getBorderRight_lua() const {
-		return valueDefaultAsNil(borderRight, -1);
+		return valueDefaultAsNil(borderRight, INT_FIELD_INACTIVE);
 	}
 
 	void Element::setBorderRight_lua(sol::optional<int> value) {
-		borderRight = value.value_or(-1);
+		borderRight = value.value_or(INT_FIELD_INACTIVE);
 	}
 
 	sol::optional<int> Element::getBorderTop_lua() const {
-		return valueDefaultAsNil(borderTop, -1);
+		return valueDefaultAsNil(borderTop, INT_FIELD_INACTIVE);
 	}
 
 	void Element::setBorderTop_lua(sol::optional<int> value) {
-		borderTop = value.value_or(-1);
+		borderTop = value.value_or(INT_FIELD_INACTIVE);
 	}
 
 	float Element::getChildAlignX() const {
@@ -738,11 +738,35 @@ namespace TES3::UI {
 	}
 
 	sol::optional<float> Element::getHeightProportional_lua() const {
-		return valueDefaultAsNil(heightProportional, -1.0f);
+		return valueDefaultAsNil(heightProportional, FLOAT_FIELD_INACTIVE);
 	}
 
 	void Element::setHeightProportional_lua(sol::optional<float> value) {
-		heightProportional = value.value_or(-1.0f);
+		heightProportional = value.value_or(FLOAT_FIELD_INACTIVE);
+	}
+
+	bool Element::getIgnoreLayoutX() const {
+		return absolutePosAlignX < 0.0f && absolutePosAlignX != FLOAT_FIELD_INACTIVE;
+	}
+
+	void Element::setIgnoreLayoutX(bool value) {
+		if (getIgnoreLayoutX() == value) {
+			return;
+		}
+		absolutePosAlignX = (value) ? IGNORE_ABSPOSALIGN_AND_LAYOUT : FLOAT_FIELD_INACTIVE;
+		flagPosChanged = true;
+	}
+
+	bool Element::getIgnoreLayoutY() const {
+		return absolutePosAlignY < 0.0f && absolutePosAlignY != FLOAT_FIELD_INACTIVE;
+	}
+
+	void Element::setIgnoreLayoutY(bool value) {
+		if (getIgnoreLayoutY() == value) {
+			return;
+		}
+		absolutePosAlignY = (value) ? IGNORE_ABSPOSALIGN_AND_LAYOUT : FLOAT_FIELD_INACTIVE;
+		flagPosChanged = true;
 	}
 
 	bool Element::getImageFilter() const {
@@ -863,35 +887,35 @@ namespace TES3::UI {
 	}
 
 	sol::optional<int> Element::getPaddingBottom_lua() const {
-		return valueDefaultAsNil(paddingBottom, -1);
+		return valueDefaultAsNil(paddingBottom, INT_FIELD_INACTIVE);
 	}
 
 	void Element::setPaddingBottom_lua(sol::optional<int> value) {
-		paddingBottom = value.value_or(-1);
+		paddingBottom = value.value_or(INT_FIELD_INACTIVE);
 	}
 
 	sol::optional<int> Element::getPaddingLeft_lua() const {
-		return valueDefaultAsNil(paddingLeft, -1);
+		return valueDefaultAsNil(paddingLeft, INT_FIELD_INACTIVE);
 	}
 
 	void Element::setPaddingLeft_lua(sol::optional<int> value) {
-		paddingLeft = value.value_or(-1);
+		paddingLeft = value.value_or(INT_FIELD_INACTIVE);
 	}
 
 	sol::optional<int> Element::getPaddingRight_lua() const {
-		return valueDefaultAsNil(paddingRight, -1);
+		return valueDefaultAsNil(paddingRight, INT_FIELD_INACTIVE);
 	}
 
 	void Element::setPaddingRight_lua(sol::optional<int> value) {
-		paddingRight = value.value_or(-1);
+		paddingRight = value.value_or(INT_FIELD_INACTIVE);
 	}
 
 	sol::optional<int> Element::getPaddingTop_lua() const {
-		return valueDefaultAsNil(paddingTop, -1);
+		return valueDefaultAsNil(paddingTop, INT_FIELD_INACTIVE);
 	}
 
 	void Element::setPaddingTop_lua(sol::optional<int> value) {
-		paddingTop = value.value_or(-1);
+		paddingTop = value.value_or(INT_FIELD_INACTIVE);
 	}
 
 	int Element::getPositionX() const {
@@ -954,11 +978,11 @@ namespace TES3::UI {
 	}
 
 	sol::optional<float> Element::getWidthProportional_lua() const {
-		return valueDefaultAsNil(widthProportional, -1.0f);
+		return valueDefaultAsNil(widthProportional, FLOAT_FIELD_INACTIVE);
 	}
 
 	void Element::setWidthProportional_lua(sol::optional<float> value) {
-		widthProportional = value.value_or(-1.0f);
+		widthProportional = value.value_or(FLOAT_FIELD_INACTIVE);
 	}
 
 	bool Element::getWrapText() const {

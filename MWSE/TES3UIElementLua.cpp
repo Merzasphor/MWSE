@@ -71,6 +71,8 @@ namespace mwse::lua {
 		usertypeDefinition["font"] = sol::property(&Element::getFont, &Element::setFont_lua);
 		usertypeDefinition["height"] = sol::property(&Element::getHeight, &Element::setHeight);
 		usertypeDefinition["heightProportional"] = sol::property(&Element::getHeightProportional_lua, &Element::setHeightProportional_lua);
+		usertypeDefinition["ignoreLayoutX"] = sol::property(&Element::getIgnoreLayoutX, &Element::setIgnoreLayoutX);
+		usertypeDefinition["ignoreLayoutY"] = sol::property(&Element::getIgnoreLayoutY, &Element::setIgnoreLayoutY);
 		usertypeDefinition["imageFilter"] = sol::property(&Element::getImageFilter, &Element::setImageFilter);
 		usertypeDefinition["imageScaleX"] = sol::property(&Element::getImageScaleX, &Element::setImageScaleX);
 		usertypeDefinition["imageScaleY"] = sol::property(&Element::getImageScaleY, &Element::setImageScaleY);

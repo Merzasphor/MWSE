@@ -196,21 +196,21 @@ namespace TES3::UI {
 		void setWidgetText_lua(sol::object text, sol::this_state ts);
 
 		sol::optional<float> getAbsolutePosAlignX_lua() const;
-		void setAbsolutePosAlignX_lua(sol::optional<float> value = -1.0f);
+		void setAbsolutePosAlignX_lua(sol::optional<float> value = FLOAT_FIELD_INACTIVE);
 		sol::optional<float> getAbsolutePosAlignY_lua() const;
-		void setAbsolutePosAlignY_lua(sol::optional<float> value = -1.0f);
+		void setAbsolutePosAlignY_lua(sol::optional<float> value = FLOAT_FIELD_INACTIVE);
 		float getAlpha() const;
 		void setAlpha(float value);
 		int getBorderAllSides() const;
 		void setBorderAllSides_lua(sol::optional<int> value = 0);
 		sol::optional<int> getBorderBottom_lua() const;
-		void setBorderBottom_lua(sol::optional<int> value = -1);
+		void setBorderBottom_lua(sol::optional<int> value = INT_FIELD_INACTIVE);
 		sol::optional<int> getBorderLeft_lua() const;
-		void setBorderLeft_lua(sol::optional<int> value = -1);
+		void setBorderLeft_lua(sol::optional<int> value = INT_FIELD_INACTIVE);
 		sol::optional<int> getBorderRight_lua() const;
-		void setBorderRight_lua(sol::optional<int> value = -1);
+		void setBorderRight_lua(sol::optional<int> value = INT_FIELD_INACTIVE);
 		sol::optional<int> getBorderTop_lua() const;
-		void setBorderTop_lua(sol::optional<int> value = -1);
+		void setBorderTop_lua(sol::optional<int> value = INT_FIELD_INACTIVE);
 		float getChildAlignX() const;
 		void setChildAlignX(float value);
 		float getChildAlignY() const;
@@ -235,6 +235,10 @@ namespace TES3::UI {
 		void setHeight(int value);
 		sol::optional<float> getHeightProportional_lua() const;
 		void setHeightProportional_lua(sol::optional<float> value = 1.0f);
+		bool getIgnoreLayoutX() const;
+		void setIgnoreLayoutX(bool value);
+		bool getIgnoreLayoutY() const;
+		void setIgnoreLayoutY(bool value);
 		bool getImageFilter() const;
 		void setImageFilter(bool value);
 		float getImageScaleX() const;
@@ -258,13 +262,13 @@ namespace TES3::UI {
 		int getPaddingAllSides() const;
 		void setPaddingAllSides_lua(sol::optional<int> value = 0);
 		sol::optional<int> getPaddingBottom_lua() const;
-		void setPaddingBottom_lua(sol::optional<int> value = -1);
+		void setPaddingBottom_lua(sol::optional<int> value = INT_FIELD_INACTIVE);
 		sol::optional<int> getPaddingLeft_lua() const;
-		void setPaddingLeft_lua(sol::optional<int> value = -1);
+		void setPaddingLeft_lua(sol::optional<int> value = INT_FIELD_INACTIVE);
 		sol::optional<int> getPaddingRight_lua() const;
-		void setPaddingRight_lua(sol::optional<int> value = -1);
+		void setPaddingRight_lua(sol::optional<int> value = INT_FIELD_INACTIVE);
 		sol::optional<int> getPaddingTop_lua() const;
-		void setPaddingTop_lua(sol::optional<int> value = -1);
+		void setPaddingTop_lua(sol::optional<int> value = INT_FIELD_INACTIVE);
 		int getPositionX() const;
 		void setPositionX(int value);
 		int getPositionY() const;
@@ -280,7 +284,7 @@ namespace TES3::UI {
 		int getWidth() const;
 		void setWidth(int value);
 		sol::optional<float> getWidthProportional_lua() const;
-		void setWidthProportional_lua(sol::optional<float> value = -1.0f);
+		void setWidthProportional_lua(sol::optional<float> value = FLOAT_FIELD_INACTIVE);
 		bool getWrapText() const;
 		void setWrapText(bool value);
 
@@ -342,6 +346,13 @@ namespace TES3::UI {
 
 		void patchUpdateLayout_propagateFlow();
 
+		//
+		// Static data
+		//
+
+		static constexpr int INT_FIELD_INACTIVE = -1;
+		static constexpr float FLOAT_FIELD_INACTIVE = -1.0f;
+		static constexpr float IGNORE_ABSPOSALIGN_AND_LAYOUT = -2.0f; // Any negative value that is not -1.0f will result in the same behaviour.
 	};
 	static_assert(sizeof(Element) == 0x184, "TES3::UI::Element failed size validation");
 }
