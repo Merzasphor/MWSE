@@ -23,6 +23,16 @@ constexpr auto TES3_MobilePlayer_setBounty = 0x5688D0;
 constexpr auto TES3_MobilePlayer_modBounty = 0x5688F0;
 
 namespace TES3 {
+	const auto TES3_BountyData_getValue = reinterpret_cast<int(__thiscall*)(BountyData*, StdString*)>(0x55D220);
+	int BountyData::getValue(StdString* crimeType) {
+		return TES3_BountyData_getValue(this, crimeType);
+	}
+
+	const auto TES3_BountyData_setValue = reinterpret_cast<int(__thiscall*)(BountyData*, StdString*, int)>(0x55D300);
+	void BountyData::setValue(StdString* crimeType, int value) {
+		TES3_BountyData_setValue(this, crimeType, value);
+	}
+
 	void MobilePlayer::exerciseSkill(int skillId, float progress) {
 		// Invoke our exercise skill event and allow skill blocking.
 		if (mwse::lua::event::SkillExerciseEvent::getEventEnabled()) {

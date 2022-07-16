@@ -27,6 +27,7 @@ namespace TES3 {
 		// Related this-call functions.
 		//
 
+		bool detectAttack(MobileActor* actor);
 		bool detectPresence(MobileActor * actor, bool unknown = true);
 		bool detectSneak(MobileActor * detector, MobileActor * target, bool unknown = true);
 		void findActorsInProximity(Vector3 * position, float range, IteratedList<MobileActor*>* outputList);

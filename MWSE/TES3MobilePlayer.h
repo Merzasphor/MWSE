@@ -11,18 +11,25 @@ namespace TES3 {
 		Vector3 position; // 0x0
 		float rotation; // 0xC
 		Cell * cell; // 0x10
+	};
 
+	struct BountyData {
+		int defaultValue;
+		StdString tempString; // 0x4
+		int* storage; // 0x14
+		StdString* keys; // 0x18
+		int storageSize; // 0x1C
+		int maybe_usedCount; // 0x20
+
+		//
+		// Other related this-call functions.
+		//
+
+		int getValue(StdString* crimeType);
+		void setValue(StdString* crimeType, int value);
 	};
 
 	struct PlayerBounty {
-		struct BountyData {
-			int unknown_0x0;
-			StdString tempString; // 0x4
-			int * storage; // 0x14
-			StdString * names; // 0x18
-			int storageSize; // 0x1C
-			int maybe_usedCount; // 0x20
-		};
 		BountyData * data;
 	};
 

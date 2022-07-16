@@ -1288,91 +1288,90 @@ namespace mwse::lua {
 	}
 
 	bool triggerCrime(sol::table params) {
-		auto& luaManager = mwse::lua::LuaManager::getInstance();
-		auto stateHandle = luaManager.getThreadSafeStateHandle();
-		auto& state = stateHandle.state;
-
 		TES3::CrimeEvent crimeEvent;
 
-		// Look at the given type.
-		int crimeType = getOptionalParam<int>(params, "type", 3);
-		if (crimeType < 1 || crimeType > 7) {
-			throw std::exception("Invalid type given. Value must be between 1 and 7.");
+		// Verify the provided type.
+		int crimeType = getOptionalParam<int>(params, "type", TES3::CrimeType::Theft);
+		if (crimeType < TES3::CrimeType::Attack || crimeType > TES3::CrimeType::Werewolf) {
+			throw std::invalid_argument("Invalid 'type' parameter provided. Must be one of the values in the 'tes3.crimeType' table.");
 		}
 		crimeEvent.type = crimeType;
 
-		// Also set the type string based on the crime committed.
-		switch (crimeType) {
-		case 1:
-			crimeEvent.typeString = "attack";
-			break;
-		case 2:
-			crimeEvent.typeString = "killing";
-			break;
-		case 3:
-			crimeEvent.typeString = "stealing";
-			break;
-		case 4:
-			crimeEvent.typeString = "pickpocket";
-			crimeEvent.penalty = 25;
-			break;
-		case 5:
-			crimeEvent.typeString = "theft";
-			break;
-		case 6:
-			crimeEvent.typeString = "trespass";
-			break;
-		case 7:
-			crimeEvent.typeString = "werewolf";
-			break;
-		}
-
-		// Criminal is assumed to be the player if no value is supplied.
-		TES3::MobileActor* criminal = getOptionalParamMobileActor(params, "criminal");
-		if (criminal == nullptr) {
-			criminal = TES3::WorldController::get()->getMobilePlayer();
-		}
-		crimeEvent.criminal = criminal;
-
 		// Set some basic crime event data.
 		crimeEvent.timestamp = float(timeGetTime());
-		crimeEvent.position = criminal->reference->position;
-		crimeEvent.penalty = getOptionalParam<int>(params, "value", crimeEvent.penalty);
+		crimeEvent.position = crimeEvent.criminal->reference->position;
+		crimeEvent.stolenValue = getOptionalParam<int>(params, "value", crimeEvent.stolenValue);
 
-		// Victim can be more complicated.
+		// The player is always the criminal. Other values will have no effect and do not get reacted to by AI actors.
+		crimeEvent.criminal = TES3::WorldController::get()->getMobilePlayer();
+
+		// Try to set as many victim-related crime event fields as possible.
 		sol::object victim = params["victim"];
-		crimeEvent.victim = TES3::WorldController::get()->getMobilePlayer();
+		crimeEvent.victim = crimeEvent.criminal;
 		if (victim.is<TES3::Faction>()) {
 			crimeEvent.victimFaction = victim.as<TES3::Faction*>();
 		}
 		else if (victim.is<TES3::Actor>()) {
-			crimeEvent.victim = TES3::WorldController::get()->getMobilePlayer();
+			crimeEvent.victim = static_cast<TES3::MobileActor*>(victim.as<TES3::Actor*>()->getMobile());
 			crimeEvent.victimFaction = victim.as<TES3::Actor*>()->getFaction();
 			if (victim.is<TES3::NPC>()) {
-				crimeEvent.victimBaseActor = victim.as<TES3::NPC*>();
+				crimeEvent.stolenFrom = victim.as<TES3::NPC*>();
 			}
 			else if (victim.is<TES3::NPCInstance>()) {
-				crimeEvent.victimBaseActor = victim.as<TES3::NPCInstance*>()->baseNPC;
+				crimeEvent.stolenFrom = victim.as<TES3::NPCInstance*>()->baseNPC;
 			}
 		}
 		else if (victim.is<TES3::MobileNPC>()) {
-			TES3::MobileNPC* mach = victim.as<TES3::MobileNPC*>();
-			crimeEvent.victim = mach;
-			crimeEvent.victimFaction = mach->npcInstance->getFaction();
-			crimeEvent.victimBaseActor = mach->npcInstance;
+			TES3::MobileNPC* mobileNPC = victim.as<TES3::MobileNPC*>();
+			crimeEvent.victim = mobileNPC;
+			crimeEvent.victimFaction = mobileNPC->npcInstance->getFaction();
+			crimeEvent.stolenFrom = mobileNPC->npcInstance;
 		}
 
-		// Do detection and the like.
+		// Set crime event data based on the crime committed.
+		bool isAttack = false;
+		switch (crimeType) {
+		case TES3::CrimeType::Attack:
+			isAttack = true;
+			crimeEvent.bountyKey = "attack";
+			crimeEvent.stolenFrom = nullptr;
+			break;
+		case TES3::CrimeType::Killing:
+			isAttack = true;
+			crimeEvent.bountyKey = "killing";
+			crimeEvent.stolenFrom = nullptr;
+			break;
+		case TES3::CrimeType::Pickpocket:
+			crimeEvent.bountyKey = "pickpocket";
+			crimeEvent.stolenValue = 25;
+			break;
+		case TES3::CrimeType::WitnessReaction: // Not really a valid type for this function, but redirected to TES3::CrimeType::Theft for backwards compatibility.
+		case TES3::CrimeType::Theft:
+			crimeEvent.type = TES3::CrimeType::Theft;
+			crimeEvent.bountyKey = "theft";
+			break;
+		case TES3::CrimeType::Trespass:
+			crimeEvent.bountyKey = "trespass";
+			crimeEvent.victim = crimeEvent.criminal; // The player mobile will always be the victim for this crime type.
+			crimeEvent.stolenFrom = nullptr;
+			break;
+		case TES3::CrimeType::Werewolf:
+			crimeEvent.bountyKey = "werewolf";
+			crimeEvent.victim = crimeEvent.criminal; // The player mobile will always be the victim for this crime type.
+			crimeEvent.stolenFrom = nullptr;
+			break;
+		}
+
+		// Try to detect the crime.
 		bool forceDetection = getOptionalParam<bool>(params, "forceDetection", false);
 		auto processManager = TES3::WorldController::get()->mobManager->processManager;
-		if (!forceDetection && processManager->detectPresence(crimeEvent.criminal)) {
-			processManager->checkAlarmRadius(crimeEvent.victim, crimeEvent.witnesses);
+		if (forceDetection || (isAttack && processManager->detectAttack(crimeEvent.criminal)) || (!isAttack && processManager->detectPresence(crimeEvent.criminal))) {
+			processManager->checkAlarmRadius(crimeEvent.criminal, crimeEvent.witnesses);
 		}
 
-		// If we were detected, add it to the list.
-		if (forceDetection || crimeEvent.witnesses->size() > 0) {
-			auto crimeController = &crimeEvent.victim->crimesA;
-			crimeController->insertCrime(&crimeEvent);
+		// Add the crime to the criminal's committed crimes list.
+		if (crimeEvent.witnesses->count) {
+			crimeEvent.criminal->committedCrimes.insertCrime(&crimeEvent);
 		}
 
 		return true;

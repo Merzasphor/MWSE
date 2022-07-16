@@ -16,6 +16,11 @@
 #include "MathUtil.h"
 
 namespace TES3 {
+	const auto TES3_ProcessManager_detectAttack = reinterpret_cast<bool(__thiscall*)(ProcessManager*, MobileActor*)>(0x570C60);
+	bool ProcessManager::detectAttack(MobileActor* actor) {
+		return TES3_ProcessManager_detectAttack(this, actor);
+	}
+
 	const auto TES3_ProcessManager_detectPresence = reinterpret_cast<bool(__thiscall*)(ProcessManager*, MobileActor*, bool)>(0x570A60);
 	bool ProcessManager::detectPresence(MobileActor * actor, bool unknown) {
 		return TES3_ProcessManager_detectPresence(this, actor, unknown);

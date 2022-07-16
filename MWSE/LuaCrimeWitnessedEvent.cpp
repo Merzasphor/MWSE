@@ -22,7 +22,7 @@ namespace mwse::lua::event {
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 		auto& state = stateHandle.state;
 		auto options = state.create_table();
-		options["filter"] = m_Crime->typeString.c_str;
+		options["filter"] = m_Crime->bountyKey.c_str;
 		return options;
 	}
 
@@ -31,18 +31,18 @@ namespace mwse::lua::event {
 		auto& state = stateHandle.state;
 		auto eventData = state.create_table();
 
-		eventData["type"] = m_Crime->typeString.c_str;
+		eventData["type"] = m_Crime->bountyKey.c_str;
 		eventData["position"] = m_Crime->position;
 		eventData["realTimestamp"] = m_Crime->timestamp;
-		if (m_Crime->victimBaseActor) {
-			eventData["victim"] = m_Crime->victimBaseActor;
+		if (m_Crime->stolenFrom) {
+			eventData["victim"] = m_Crime->stolenFrom;
 		}
 		else {
 			eventData["victim"] = m_Crime->victimFaction;
 		}
 		eventData["victimMobile"] = m_Crime->victim;
 		eventData["victimFaction"] = m_Crime->victimFaction;
-		eventData["value"] = m_Crime->penalty;
+		eventData["value"] = m_Crime->stolenValue;
 		eventData["witness"] = m_Witness->reference;
 		eventData["witnessMobile"] = m_Witness;
 
