@@ -17,7 +17,7 @@
 --- @field currentAnimGroups number[] *Read-only*. The currently playing [animation group](https://mwse.github.io/MWSE/references/animation-groups/), on each of the [body sections](https://mwse.github.io/MWSE/references/animation-body-sections/).
 --- @field currentNodeIndices number[] *Read-only*. 
 --- @field currentSoundgenIndices number[] *Read-only*. The index of the currently used sound generator for each of the [body sections](https://mwse.github.io/MWSE/references/animation-body-sections/).
---- @field deltaTime number 
+--- @field deltaTime number The time in seconds since the last update.
 --- @field flags number 
 --- @field hasOverrideAnimations boolean *Read-only*. 
 --- @field headGeometry niGeometry|niTriBasedGeometry|niTriShape 
@@ -33,7 +33,7 @@
 --- @field spine1Node niBillboardNode|niCollisionSwitch|niNode|niSwitchNode 
 --- @field spine2Node niBillboardNode|niCollisionSwitch|niNode|niSwitchNode 
 --- @field spineAngle number 
---- @field timings number[] 
+--- @field timings number[] The time in seconds indicating the current position within the animation for each individual body section, indexed by values in the [`tes3.animationBodySection`](https://mwse.github.io/MWSE/references/animation-body-sections/) table.
 --- @field weaponSpeed number The animation speed multiplier of weapon animations. This includes all weapon related idle, attack, and ready/unready animations.
 tes3animationData = {}
 

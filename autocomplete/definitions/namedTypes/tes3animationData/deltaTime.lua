@@ -1,5 +1,5 @@
 return {
 	type = "value",
-	description = [[]],
+	description = [[The time in seconds since the last update.]],
 	valuetype = "number",
 }

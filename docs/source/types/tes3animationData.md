@@ -103,7 +103,7 @@ Animations are divided into three layers. The layer 0 is the base layer containi
 
 ### `deltaTime`
 
-
+The time in seconds since the last update.
 
 **Returns**:
 
@@ -263,7 +263,7 @@ Animations are divided into three layers. The layer 0 is the base layer containi
 
 ### `timings`
 
-
+The time in seconds indicating the current position within the animation for each individual body section, indexed by values in the [`tes3.animationBodySection`](https://mwse.github.io/MWSE/references/animation-body-sections/) table.
 
 **Returns**:
 
