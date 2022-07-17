@@ -920,7 +920,7 @@ tes3.closeSpellmakingMenu()
 
 ### `tes3.createObject`
 
-Create an object and returns it. The created object will be part of the saved game. Currently supported object types are: `tes3.objectType.activator`, `.alchemy`, `.ammo`, `.book`, `.clothing`, `.container`, `.enchantment`, `.miscItem`, `.sound`, `.spell`, `.static`, and `.weapon`.
+Creates an object and returns it. The created object will be part of the saved game.
 
 ```lua
 local createdObject = tes3.createObject({ id = ..., objectType = ..., getIfExists = ... })
@@ -930,12 +930,25 @@ local createdObject = tes3.createObject({ id = ..., objectType = ..., getIfExist
 
 * `params` (table)
 	* `id` (string): *Optional*. The id of the new object.
-	* `objectType` (number): Maps to [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) constants. Used to filter object type to create.
-	* `getIfExists` (boolean): *Default*: `true`. If `true`, an existing object of the same type and ID will be returned instead of creating a new one.
+	* `objectType` (number): The type of object to create. Maps to values in the [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) table. Supported object types are:
+		- `tes3.objectType.activator`
+		- `tes3.objectType.alchemy`
+		- `tes3.objectType.armor`
+		- `tes3.objectType.book`
+		- `tes3.objectType.clothing`
+		- `tes3.objectType.container`
+		- `tes3.objectType.enchantment`
+		- `tes3.objectType.misc`
+		- `tes3.objectType.sound`
+		- `tes3.objectType.spell`
+		- `tes3.objectType.static`
+		- `tes3.objectType.weapon`
+
+	* `getIfExists` (boolean): *Default*: `true`. If `true`, an existing object of the same `objectType` and `id` will be returned instead of creating a new one.
 
 **Returns**:
 
-* `createdObject` ([tes3activator](../../types/tes3activator), [tes3alchemy](../../types/tes3alchemy), [tes3container](../../types/tes3container), [tes3enchantment](../../types/tes3enchantment), [tes3misc](../../types/tes3misc), [tes3sound](../../types/tes3sound), [tes3spell](../../types/tes3spell), [tes3static](../../types/tes3static), [tes3weapon](../../types/tes3weapon))
+* `createdObject` ([tes3activator](../../types/tes3activator), [tes3alchemy](../../types/tes3alchemy), [tes3armor](../../types/tes3armor), [tes3book](../../types/tes3book), [tes3clothing](../../types/tes3clothing), [tes3container](../../types/tes3container), [tes3enchantment](../../types/tes3enchantment), [tes3misc](../../types/tes3misc), [tes3sound](../../types/tes3sound), [tes3spell](../../types/tes3spell), [tes3static](../../types/tes3static), [tes3weapon](../../types/tes3weapon))
 
 ??? example "Example: Creates a tes3misc object"
 

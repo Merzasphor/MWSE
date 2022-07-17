@@ -634,24 +634,50 @@ function tes3.closeRestMenu() end
 --- This function closes the spellmaking menu.
 function tes3.closeSpellmakingMenu() end
 
---- Create an object and returns it. The created object will be part of the saved game. Currently supported object types are: `tes3.objectType.activator`, `.alchemy`, `.ammo`, `.book`, `.clothing`, `.container`, `.enchantment`, `.miscItem`, `.sound`, `.spell`, `.static`, and `.weapon`.
+--- Creates an object and returns it. The created object will be part of the saved game.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3/#tes3createobject).
 --- @param params tes3.createObject.params This table accepts the following values:
 --- 
 --- `id`: string? — *Optional*. The id of the new object.
 --- 
---- `objectType`: number — Maps to [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) constants. Used to filter object type to create.
+--- `objectType`: number — The type of object to create. Maps to values in the [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) table. Supported object types are:
+--- --- 		- `tes3.objectType.activator`
+--- --- 		- `tes3.objectType.alchemy`
+--- --- 		- `tes3.objectType.armor`
+--- --- 		- `tes3.objectType.book`
+--- --- 		- `tes3.objectType.clothing`
+--- --- 		- `tes3.objectType.container`
+--- --- 		- `tes3.objectType.enchantment`
+--- --- 		- `tes3.objectType.misc`
+--- --- 		- `tes3.objectType.sound`
+--- --- 		- `tes3.objectType.spell`
+--- --- 		- `tes3.objectType.static`
+--- --- 		- `tes3.objectType.weapon`
+--- --- 
 --- 
---- `getIfExists`: boolean? — *Default*: `true`. If `true`, an existing object of the same type and ID will be returned instead of creating a new one.
---- @return tes3activator|tes3alchemy|tes3container|tes3enchantment|tes3misc|tes3sound|tes3spell|tes3static|tes3weapon createdObject No description yet available.
+--- `getIfExists`: boolean? — *Default*: `true`. If `true`, an existing object of the same `objectType` and `id` will be returned instead of creating a new one.
+--- @return tes3activator|tes3alchemy|tes3armor|tes3book|tes3clothing|tes3container|tes3enchantment|tes3misc|tes3sound|tes3spell|tes3static|tes3weapon createdObject No description yet available.
 function tes3.createObject(params) end
 
 ---Table parameter definitions for `tes3.createObject`.
 --- @class tes3.createObject.params
 --- @field id string? *Optional*. The id of the new object.
---- @field objectType number Maps to [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) constants. Used to filter object type to create.
---- @field getIfExists boolean? *Default*: `true`. If `true`, an existing object of the same type and ID will be returned instead of creating a new one.
+--- @field objectType number The type of object to create. Maps to values in the [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) table. Supported object types are:
+--- 		- `tes3.objectType.activator`
+--- 		- `tes3.objectType.alchemy`
+--- 		- `tes3.objectType.armor`
+--- 		- `tes3.objectType.book`
+--- 		- `tes3.objectType.clothing`
+--- 		- `tes3.objectType.container`
+--- 		- `tes3.objectType.enchantment`
+--- 		- `tes3.objectType.misc`
+--- 		- `tes3.objectType.sound`
+--- 		- `tes3.objectType.spell`
+--- 		- `tes3.objectType.static`
+--- 		- `tes3.objectType.weapon`
+--- 
+--- @field getIfExists boolean? *Default*: `true`. If `true`, an existing object of the same `objectType` and `id` will be returned instead of creating a new one.
 
 --- Similar to mwscript's PlaceAtPC or PlaceAtMe, this creates a new reference in the game world.
 --- @param params tes3.createReference.params This table accepts the following values:
