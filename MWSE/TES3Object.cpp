@@ -638,8 +638,12 @@ namespace TES3 {
 			return false;
 		}
 
-		// Prevent markers from supporting lua data.
-		if (getIsLocationMarker()) {
+		// Prevent markers from supporting lua data, due to the loading code crashing on bad assumptions.
+		// getIsLocationMarker returns true for lights without a mesh, but they generate scene nodes and work normally when modified.
+		if (objectType == ObjectType::Light) {
+			return true;
+		}
+		else if (getIsLocationMarker()) {
 			return false;
 		}
 
