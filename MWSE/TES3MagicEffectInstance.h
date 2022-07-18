@@ -22,7 +22,7 @@ namespace TES3 {
 		MagicEffectInstance() = delete;
 		~MagicEffectInstance() = delete;
 
-		int getEffectiveMagnitude() const;
+		float getEffectiveMagnitude() const;
 	};
 	static_assert(sizeof(MagicEffectInstance) == 0x38, "TES3::MagicEffectInstance failed size validation");
 }
