@@ -74,7 +74,7 @@
 --- @field shaderWaterReflectTerrain boolean If pixel shader water reflection includes terrain. Not functional with MGE enabled.
 --- @field shaderWaterReflectUpdate number Period between reflection updates for pixel shader water. Not functional with MGE enabled.
 --- @field shadowCamera tes3worldControllerRenderCamera *Read-only*. The access to the camera used for shadows rendering.
---- @field shadows number An integer in the range of `0` to `6`. Controls the amount of actor shadows drawn. Corresponds to the "Real-time shadows" option in the Options menu.
+--- @field shadows integer An integer in the range of `0` to `6`. Controls the amount of actor shadows drawn. Corresponds to the "Real-time shadows" option in the Options menu.
 --- @field showSubtitles boolean If subtitles are shown. Corresponds to the "Subtitles" option in the Options menu.
 --- @field simulationTimeScalar number A scalar used for simulation time. At the start of every frame, the `deltaTime` is multiplied by this value. Doing this here is safer than doing it in another event.
 --- @field splashController tes3splashController *Read-only*. Access to the splash controller.

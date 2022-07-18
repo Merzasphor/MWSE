@@ -650,7 +650,7 @@ An integer in the range of `0` to `6`. Controls the amount of actor shadows draw
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
