@@ -71,51 +71,51 @@ If `true`, automatically expands element dimensions to fit child elements. Ignor
 
 ### `borderAllSides`
 
-Integer number. The border size in pixels. Border is the extra empty space around an element. Individual border sizes default to using the borderAllSides setting.
+The border size in pixels. Border is the extra empty space around an element. Individual border sizes default to using the borderAllSides setting.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
 ### `borderBottom`
 
-Integer number. The bottom border size in pixels. When this is set to `-1`, the `borderAllSides` setting is used for this side instead.
+The bottom border size in pixels. When this is set to `-1`, the `borderAllSides` setting is used for this side instead.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
 ### `borderLeft`
 
-Integer number. The left border size in pixels. When this is set to `-1`, the `borderAllSides` setting is used for this side instead.
+The left border size in pixels. When this is set to `-1`, the `borderAllSides` setting is used for this side instead.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
 ### `borderRight`
 
-Integer number. The left border size in pixels. When this is set to `-1`, the `borderAllSides` setting is used for this side instead.
+The left border size in pixels. When this is set to `-1`, the `borderAllSides` setting is used for this side instead.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
 ### `borderTop`
 
-Integer number. The top border size in pixels. When this is set to `-1`, the `borderAllSides` setting is used for this side instead.
+The top border size in pixels. When this is set to `-1`, the `borderAllSides` setting is used for this side instead.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -143,11 +143,11 @@ See childAlignX.
 
 ### `childOffsetX`
 
-Integer number. View offset in pixels, applied to the position of child nodes. Used in scroll panes.
+The view offset in pixels, applied to the position of child nodes. Used in scroll panes.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -246,11 +246,11 @@ Index of font to use for text.
 
 ### `height`
 
-Element dimensions in pixels. Integer number.
+The element's height in pixels.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -334,41 +334,41 @@ Can have values `"left"`, `"center"`, or `"right"`. Controls text justification.
 
 ### `maxHeight`
 
-Maximum dimensions for auto-size layout and resizable frames. Integer number.
+The maximum height for auto-size layout and resizable frames.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
 ### `maxWidth`
 
-Maximum dimensions for auto-size layout and resizable frames. Integer number.
+The maximum width for auto-size layout and resizable frames.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
 ### `minHeight`
 
-Minimum dimensions for auto-size layout and resizable frames. Integer number.
+The minimum height for auto-size layout and resizable frames.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
 ### `minWidth`
 
-Minimum dimensions for auto-size layout and resizable frames. Integer number.
+The minimum width for auto-size layout and resizable frames.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -384,31 +384,31 @@ Minimum dimensions for auto-size layout and resizable frames. Integer number.
 
 ### `paddingAllSides`
 
-Integer number. Padding size in pixels. Padding is the blank space between the edge of an element and its contents. Individual padding sizes default to `-1`, making it use the paddingAllSides setting.
+The padding size in pixels. Padding is the blank space between the edge of an element and its contents. Individual padding sizes default to `-1`, making it use the `paddingAllSides` setting.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
 ### `paddingBottom`
 
-Integer number. Bottom padding size in pixels. When this is set to `-1`, the paddingAllSides setting is used for this side instead.
+The bottom padding size in pixels. When this is set to `-1`, the `paddingAllSides` setting is used for this side instead.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
 ### `paddingLeft`
 
-Integer number. Left padding size in pixels. When this is set to `-1`, the paddingAllSides setting is used for this side instead.
+The left padding size in pixels. When this is set to `-1`, the `paddingAllSides` setting is used for this side instead.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -424,11 +424,11 @@ Integer number. Right padding size in pixels. When this is set to `-1`, the padd
 
 ### `paddingTop`
 
-Integer number. Top padding size in pixels. When this is set to `-1`, the paddingAllSides setting is used for this side instead.
+The top padding size in pixels. When this is set to `-1`, the `paddingAllSides` setting is used for this side instead.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -444,21 +444,21 @@ Integer number. Top padding size in pixels. When this is set to `-1`, the paddin
 
 ### `positionX`
 
-Integer number. The element's horizontal position relative to its parent's top-left content area. For top-level menus, the position will be relative to the the centre of the screen. Modifying this value will not have any effect on most elements due to child element's positions being controlled by the layout and positioning settings of their parent elements, unless [`ignoreLayoutX`](https://mwse.github.io/MWSE/types/tes3uiElement/#ignorelayoutx) is `true`.
+The element's horizontal position relative to its parent's top-left content area. For top-level menus, the position will be relative to the the centre of the screen. Modifying this value will not have any effect on most elements due to child element's positions being controlled by the layout and positioning settings of their parent elements, unless [`ignoreLayoutX`](https://mwse.github.io/MWSE/types/tes3uiElement/#ignorelayoutx) is `true`.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
 ### `positionY`
 
-Integer number. The element's vertical position relative to its parent's top-left content area. For top-level menus, the position will be relative to the the centre of the screen. Modifying this value will not have any effect on most elements due to child element's positions being controlled by the layout and positioning settings of their parent elements, unless [`ignoreLayoutY`](https://mwse.github.io/MWSE/types/tes3uiElement/#ignorelayouty) is `true`.
+The element's vertical position relative to its parent's top-left content area. For top-level menus, the position will be relative to the the centre of the screen. Modifying this value will not have any effect on most elements due to child element's positions being controlled by the layout and positioning settings of their parent elements, unless [`ignoreLayoutY`](https://mwse.github.io/MWSE/types/tes3uiElement/#ignorelayouty) is `true`.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -556,11 +556,11 @@ Access to element specific properties. This will be `nil` if there are no elemen
 
 ### `width`
 
-Element dimensions in pixels. Integer number.
+The element's width in pixels.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -1197,7 +1197,7 @@ local value = myObject:getPropertyInt(property)
 
 **Returns**:
 
-* `value` (number): The value of the property, defaulting to `0` if the property was not set.
+* `value` (integer): The value of the property, defaulting to `0` if the property was not set.
 
 ***
 

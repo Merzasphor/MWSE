@@ -1731,7 +1731,7 @@ local dialogueInfo = tes3.getDialogueInfo(dialogue, id)
 
 ### `tes3.getEffectMagnitude`
 
-This function returns the total effective magnitude and total base magnitude of a certain magic effect affecting a reference. It returns a pair of numbers, the first being the effective magnitude after all the actor's resistances are applied (see examples). The second number is the magnitude before any of the actor's resistances are applied; it is always an integer, so it is used in some UI elements.
+This function returns the total effective magnitude and total base magnitude of a certain magic effect affecting a reference. It returns a pair of numbers, the first being the effective magnitude after all the actor's resistances are applied (see examples). The second number is the magnitude before any of the actor's resistances are applied.
 
 ```lua
 local effectiveMagnitude, magnitude = tes3.getEffectMagnitude({ reference = ..., effect = ..., skill = ..., attribute = ... })
@@ -1748,7 +1748,7 @@ local effectiveMagnitude, magnitude = tes3.getEffectMagnitude({ reference = ...,
 **Returns**:
 
 * `effectiveMagnitude` (number): The effective magnitude after all the actor's resistances are applied.
-* `magnitude` (number): The magnitude before any of the actor's resistances are applied.
+* `magnitude` (integer): The magnitude before any of the actor's resistances are applied.
 
 ??? example "Example: Get both magnitudes."
 

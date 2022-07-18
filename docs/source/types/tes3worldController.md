@@ -646,7 +646,7 @@ Period between reflection updates for pixel shader water. Not functional with MG
 
 ### `shadows`
 
-An integer in the range [0,6]. Controls the amount of actor shadows drawn. Corresponds to the "Real-time shadows" option in the Options menu.
+An integer in the range of `0` to `6`. Controls the amount of actor shadows drawn. Corresponds to the "Real-time shadows" option in the Options menu.
 
 **Returns**:
 

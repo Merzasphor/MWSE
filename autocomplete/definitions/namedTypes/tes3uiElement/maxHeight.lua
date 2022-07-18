@@ -1,5 +1,5 @@
 return {
 	type = "value",
-	description = [[Maximum dimensions for auto-size layout and resizable frames. Integer number.]],
-	valuetype = "number",
+	description = [[The maximum height for auto-size layout and resizable frames.]],
+	valuetype = "integer",
 }

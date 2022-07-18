@@ -21,16 +21,16 @@
 --- @field alpha number The element's alpha color. Valid values range from `0.0` to `1.0`. Used to composite elements. If you wish to hide an element completely, use `disable` instead.
 --- @field autoHeight boolean If `true`, automatically expands element dimensions to fit child elements. Ignores child elements that have `ignoreLayoutY` set to `true`. Dimensions are restricted by `minWidth`, `minHeight`, `maxWidth` and `maxHeight` properties.
 --- @field autoWidth boolean If `true`, automatically expands element dimensions to fit child elements. Ignores child elements that have `ignoreLayoutX` set to `true`. Dimensions are restricted by `minWidth`, `minHeight`, `maxWidth` and `maxHeight` properties.
---- @field borderAllSides number Integer number. The border size in pixels. Border is the extra empty space around an element. Individual border sizes default to using the borderAllSides setting.
---- @field borderBottom number Integer number. The bottom border size in pixels. When this is set to `-1`, the `borderAllSides` setting is used for this side instead.
---- @field borderLeft number Integer number. The left border size in pixels. When this is set to `-1`, the `borderAllSides` setting is used for this side instead.
---- @field borderRight number Integer number. The left border size in pixels. When this is set to `-1`, the `borderAllSides` setting is used for this side instead.
---- @field borderTop number Integer number. The top border size in pixels. When this is set to `-1`, the `borderAllSides` setting is used for this side instead.
+--- @field borderAllSides integer The border size in pixels. Border is the extra empty space around an element. Individual border sizes default to using the borderAllSides setting.
+--- @field borderBottom integer The bottom border size in pixels. When this is set to `-1`, the `borderAllSides` setting is used for this side instead.
+--- @field borderLeft integer The left border size in pixels. When this is set to `-1`, the `borderAllSides` setting is used for this side instead.
+--- @field borderRight integer The left border size in pixels. When this is set to `-1`, the `borderAllSides` setting is used for this side instead.
+--- @field borderTop integer The top border size in pixels. When this is set to `-1`, the `borderAllSides` setting is used for this side instead.
 --- @field childAlignX number Sets alignment of child elements inside its parent, though it only works in specific conditions. 0.0 = left/top edge touches left/top edge of parent, 0.5 = centred, 1.0 = right/bottom edge touches right/bottom edge of parent. For negative values, there is a special case behaviour: all children but the last will be left-aligned/top-aligned, the last child will be right-aligned/bottom-aligned.
 --- 	
 --- 	Child alignment only works if the element has proportional sizing (using widthProportional/heightProportional) and all children use non-proportional sizing (widthProportional and heightProportional are nil).
 --- @field childAlignY number See childAlignX.
---- @field childOffsetX number Integer number. View offset in pixels, applied to the position of child nodes. Used in scroll panes.
+--- @field childOffsetX integer The view offset in pixels, applied to the position of child nodes. Used in scroll panes.
 --- @field childOffsetY number See childOffsetX.
 --- @field children tes3uiElement[] *Read-only*. The child elements of this element. This is a copy that does not track changes.
 --- @field color number[] The RGB color of the element. An array of 3 numbers with values ranging from `0.0` to `1.0`. For menus and rects, it sets the background color. For text, it sets the text color. For images, it multiplies the image by the color.
@@ -43,7 +43,7 @@
 --- 		0 - Magic Cards (default)
 --- 		1 - Century Sans
 --- 		2 - Daedric
---- @field height number Element dimensions in pixels. Integer number.
+--- @field height integer The element's height in pixels.
 --- @field heightProportional number Sets element dimensions using a proportional sizer. The sizer starts with the parent dimension in the flow direction, subtracts any fixed dimension children leaving the proportional sizer space. Each proportionally sized element then gets an equal division of the space, multiplied by this member. Values above 1.0 are permissible.
 --- 
 --- 	Bug note: If widthProportional is used without heightProportional, an element may not respond to changes in parent size. It is recommended to set heightProportional, or have a fixed size sibling element if dynamic reflow is required.
@@ -59,19 +59,19 @@
 --- @field imageScaleX number Image scaling multipliers. Only applies to image elements.
 --- @field imageScaleY number Image scaling multipliers. Only applies to image elements.
 --- @field justifyText string Can have values `"left"`, `"center"`, or `"right"`. Controls text justification. Maps to values in the [`tes3.justifyText`](https://mwse.github.io/MWSE/references/justify-text/) table. To work correctly for center/right justification, `wrapText` must be `true`.
---- @field maxHeight number Maximum dimensions for auto-size layout and resizable frames. Integer number.
---- @field maxWidth number Maximum dimensions for auto-size layout and resizable frames. Integer number.
---- @field minHeight number Minimum dimensions for auto-size layout and resizable frames. Integer number.
---- @field minWidth number Minimum dimensions for auto-size layout and resizable frames. Integer number.
+--- @field maxHeight integer The maximum height for auto-size layout and resizable frames.
+--- @field maxWidth integer The maximum width for auto-size layout and resizable frames.
+--- @field minHeight integer The minimum height for auto-size layout and resizable frames.
+--- @field minWidth integer The minimum width for auto-size layout and resizable frames.
 --- @field name string *Read-only*. The element's name, taken from the name registered for the ID.
---- @field paddingAllSides number Integer number. Padding size in pixels. Padding is the blank space between the edge of an element and its contents. Individual padding sizes default to `-1`, making it use the paddingAllSides setting.
---- @field paddingBottom number Integer number. Bottom padding size in pixels. When this is set to `-1`, the paddingAllSides setting is used for this side instead.
---- @field paddingLeft number Integer number. Left padding size in pixels. When this is set to `-1`, the paddingAllSides setting is used for this side instead.
+--- @field paddingAllSides integer The padding size in pixels. Padding is the blank space between the edge of an element and its contents. Individual padding sizes default to `-1`, making it use the `paddingAllSides` setting.
+--- @field paddingBottom integer The bottom padding size in pixels. When this is set to `-1`, the `paddingAllSides` setting is used for this side instead.
+--- @field paddingLeft integer The left padding size in pixels. When this is set to `-1`, the `paddingAllSides` setting is used for this side instead.
 --- @field paddingRight number Integer number. Right padding size in pixels. When this is set to `-1`, the paddingAllSides setting is used for this side instead.
---- @field paddingTop number Integer number. Top padding size in pixels. When this is set to `-1`, the paddingAllSides setting is used for this side instead.
+--- @field paddingTop integer The top padding size in pixels. When this is set to `-1`, the `paddingAllSides` setting is used for this side instead.
 --- @field parent tes3uiElement *Read-only*. A reference to the parent element.
---- @field positionX number Integer number. The element's horizontal position relative to its parent's top-left content area. For top-level menus, the position will be relative to the the centre of the screen. Modifying this value will not have any effect on most elements due to child element's positions being controlled by the layout and positioning settings of their parent elements, unless [`ignoreLayoutX`](https://mwse.github.io/MWSE/types/tes3uiElement/#ignorelayoutx) is `true`.
---- @field positionY number Integer number. The element's vertical position relative to its parent's top-left content area. For top-level menus, the position will be relative to the the centre of the screen. Modifying this value will not have any effect on most elements due to child element's positions being controlled by the layout and positioning settings of their parent elements, unless [`ignoreLayoutY`](https://mwse.github.io/MWSE/types/tes3uiElement/#ignorelayouty) is `true`.
+--- @field positionX integer The element's horizontal position relative to its parent's top-left content area. For top-level menus, the position will be relative to the the centre of the screen. Modifying this value will not have any effect on most elements due to child element's positions being controlled by the layout and positioning settings of their parent elements, unless [`ignoreLayoutX`](https://mwse.github.io/MWSE/types/tes3uiElement/#ignorelayoutx) is `true`.
+--- @field positionY integer The element's vertical position relative to its parent's top-left content area. For top-level menus, the position will be relative to the the centre of the screen. Modifying this value will not have any effect on most elements due to child element's positions being controlled by the layout and positioning settings of their parent elements, unless [`ignoreLayoutY`](https://mwse.github.io/MWSE/types/tes3uiElement/#ignorelayouty) is `true`.
 --- @field rawText string The raw value of the element's text. This, unlike the normal text property, will not directly read widget information or handle the removal of the positional cursor.
 --- @field repeatKeys boolean Controls if there is repeating text input when keys are held down. `true` by default.
 --- @field scaleMode boolean When set to `true` on image and NIF elements, they are scaled to fit `width` and `height`.
@@ -83,7 +83,7 @@
 --- @field type string *Read-only*. The type of content this `tes3uiElement` represents. This is an expanded set of the options available from the `contentType` property. Maps to values in [`tes3.uiElementType`](https://mwse.github.io/MWSE/references/tes3uiElement-types/).
 --- @field visible boolean Controls if the element is visible.
 --- @field widget tes3uiButton|tes3uiCycleButton|tes3uiFillBar|tes3uiHyperlink|tes3uiParagraphInput|tes3uiScrollPane|tes3uiSlider|tes3uiTextInput|tes3uiTextSelect|nil Access to element specific properties. This will be `nil` if there are no element specific properties. See the return types and the create* functions for more details.
---- @field width number Element dimensions in pixels. Integer number.
+--- @field width integer The element's width in pixels.
 --- @field widthProportional number Sets element dimensions using a proportional sizer. The sizer starts with the parent dimension in the flow direction, subtracts any fixed dimension children leaving the proportional sizer space. Each proportionally sized element then gets an equal division of the space, multiplied by this member. Values above 1.0 are permissible.
 --- 
 --- 	Bug note: If widthProportional is used without heightProportional, an element may not respond to changes in parent size. It is recommended to set heightProportional, or have a fixed size sibling element if dynamic reflow is required.
@@ -484,7 +484,7 @@ function tes3uiElement:getPropertyFloat(property) end
 
 --- Properties are extra variables attached to an element. Morrowind uses these to bind variables to the UI, and they can be useful for element class-specific properties. This function gets a property as an integer value, defaulting to `0` if the property was not set.
 --- @param property number|string The property to get.
---- @return number value The value of the property, defaulting to `0` if the property was not set.
+--- @return integer value The value of the property, defaulting to `0` if the property was not set.
 function tes3uiElement:getPropertyInt(property) end
 
 --- Properties are extra variables attached to an element. Morrowind uses these to bind variables to the UI, and they can be useful for element class-specific properties. This function gets a property as an object value, defaulting to `nil` if the property was not set. This function can be dangerous to use, and can lead to crashes if not properly understood.

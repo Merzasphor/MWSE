@@ -1,5 +1,5 @@
 return {
 	type = "value",
-	description = [[Minimum dimensions for auto-size layout and resizable frames. Integer number.]],
-	valuetype = "number",
+	description = [[The minimum width for auto-size layout and resizable frames.]],
+	valuetype = "integer",
 }

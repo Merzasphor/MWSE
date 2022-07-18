@@ -8,6 +8,6 @@
 --- @class spellMagickaUseEventData
 --- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.
 --- @field caster tes3reference *Read-only*. The caster of the spell.
---- @field cost number The magicka cost required to cast the spell. May be modified. This value is rounded to an integer when used by the engine.
+--- @field cost integer The magicka cost required to cast the spell. May be modified.
 --- @field instance tes3magicSourceInstance The magic source instance.
 --- @field spell tes3spell *Read-only*. The spell being cast.

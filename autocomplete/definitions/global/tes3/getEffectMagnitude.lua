@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[This function returns the total effective magnitude and total base magnitude of a certain magic effect affecting a reference. It returns a pair of numbers, the first being the effective magnitude after all the actor's resistances are applied (see examples). The second number is the magnitude before any of the actor's resistances are applied; it is always an integer, so it is used in some UI elements.]],
+	description = [[This function returns the total effective magnitude and total base magnitude of a certain magic effect affecting a reference. It returns a pair of numbers, the first being the effective magnitude after all the actor's resistances are applied (see examples). The second number is the magnitude before any of the actor's resistances are applied.]],
 	arguments = {{
 		name = "params",
 		type = "table",
@@ -13,7 +13,7 @@ return {
 	}},
 	returns = {
 		{ name = "effectiveMagnitude", type = "number", description = "The effective magnitude after all the actor's resistances are applied." },
-		{ name = "magnitude", type = "number", description = "The magnitude before any of the actor's resistances are applied." },
+		{ name = "magnitude", type = "integer", description = "The magnitude before any of the actor's resistances are applied." },
 	},
 	examples = {
 		["getOneMagnitude"] = {

@@ -1,6 +1,6 @@
 return {
 	type = "value",
-	description = [[The chance the Foggy weather-type will be used. Must be an integer between 0 - 100.]],
+	description = [[The chance the Foggy weather-type will be used. Must be an integer between `0` and `100`.]],
 	readOnly = false,
-	valuetype = "number",
+	valuetype = "integer",
 }

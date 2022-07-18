@@ -481,7 +481,7 @@ Access to the root mobile object flags, represented as an integer. Should not be
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -1093,7 +1093,7 @@ Access to the root mobile object movement flags, represented as an integer. Shou
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -1193,7 +1193,7 @@ Access to the root mobile object movement flags from the previous frame, represe
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 

@@ -162,81 +162,81 @@ The region's current weather.
 
 ### `weatherChanceAsh`
 
-The chance the Ash weather-type will be used. Must be an integer between 0 - 100.
+The chance the Ash weather-type will be used. Must be an integer between `0` and `100`.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
 ### `weatherChanceBlight`
 
-The chance the Blight weather-type will be used. Must be an integer between 0 - 100.
+The chance the Blight weather-type will be used. Must be an integer between `0` and `100`.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
 ### `weatherChanceBlizzard`
 
-The chance the Blizzard weather-type will be used. Must be an integer between 0 - 100.
+The chance the Blizzard weather-type will be used. Must be an integer between `0` and `100`.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
 ### `weatherChanceClear`
 
-The chance the Clear weather-type will be used. Must be an integer between 0 - 100.
+The chance the Clear weather-type will be used. Must be an integer between `0` and `100`.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
 ### `weatherChanceCloudy`
 
-The chance the Cloudy weather-type will be used. Must be an integer between 0 - 100.
+The chance the Cloudy weather-type will be used. Must be an integer between `0` and `100`.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
 ### `weatherChanceFoggy`
 
-The chance the Foggy weather-type will be used. Must be an integer between 0 - 100.
+The chance the Foggy weather-type will be used. Must be an integer between `0` and `100`.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
 ### `weatherChanceOvercast`
 
-The chance the Overcast weather-type will be used. Must be an integer between 0 - 100.
+The chance the Overcast weather-type will be used. Must be an integer between `0` and `100`.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
 ### `weatherChanceRain`
 
-The chance the Rain weather-type will be used. Must be an integer between 0 - 100.
+The chance the Rain weather-type will be used. Must be an integer between `0` and `100`.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -252,21 +252,21 @@ The chance the Rain weather-type will be used. Must be an integer between 0 - 10
 
 ### `weatherChanceSnow`
 
-The chance the Snow weather-type will be used. Must be an integer between 0 - 100.
+The chance the Snow weather-type will be used. Must be an integer between `0` and `100`.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
 ### `weatherChanceThunder`
 
-The chance the Thunder weather-type will be used. Must be an integer between 0 - 100.
+The chance the Thunder weather-type will be used. Must be an integer between `0` and `100`.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 

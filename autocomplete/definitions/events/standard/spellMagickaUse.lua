@@ -13,8 +13,8 @@ return {
 			description = "The spell being cast.",
 		},
 		["cost"] = {
-			type = "number",
-			description = "The magicka cost required to cast the spell. May be modified. This value is rounded to an integer when used by the engine.",
+			type = "integer",
+			description = "The magicka cost required to cast the spell. May be modified.",
 		},
 		["instance"] = {
 			type = "tes3magicSourceInstance",

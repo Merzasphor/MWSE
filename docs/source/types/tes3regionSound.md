@@ -11,11 +11,11 @@ A structure that contains region sound information.
 
 ### `chance`
 
-The chance the region sound will be used. Must be an integer between 0 - 100.
+The chance the region sound will be used. Must be an integer between `0` and `100`.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 

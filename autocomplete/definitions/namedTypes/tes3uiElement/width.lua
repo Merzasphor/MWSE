@@ -1,5 +1,5 @@
 return {
 	type = "value",
-	description = [[Element dimensions in pixels. Integer number.]],
-	valuetype = "number",
+	description = [[The element's width in pixels.]],
+	valuetype = "integer",
 }
