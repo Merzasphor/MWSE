@@ -1535,16 +1535,29 @@ local archives = tes3.getArchiveList()
 
 ### `tes3.getAttachment`
 
-Fetches an attachment with a given type.
+Fetches an attachment with a given type from a reference. Will return `nil` if no attachment of that type has been found.
 
 ```lua
-tes3.getAttachment(reference, attachment)
+local result = tes3.getAttachment(reference, attachment)
 ```
 
 **Parameters**:
 
-* `reference` ([tes3reference](../../types/tes3reference))
-* `attachment` (string)
+* `reference` ([tes3reference](../../types/tes3reference)): The reference to get the attachment from.
+* `attachment` (string): The type of attachment to get. Possible values are:
+	- `"bodyPartManager"`: Returns `tes3bodyPartManager`
+	- `"light"`: Returns `tes3lightNode`
+	- `"lock"`: Returns `tes3lockNode`
+	- `"leveledBase"`: Returns `tes3reference`
+	- `"travelDestination"`: Returns `tes3travelDestinationNode`
+	- `"variables"`: Returns `tes3itemData`
+	- `"actor"`: Returns `tes3mobileActor`
+	- `"animation"`: Returns `tes3animationData`
+
+
+**Returns**:
+
+* `result` (nil, [tes3bodyPartManager](../../types/tes3bodyPartManager), [tes3itemData](../../types/tes3itemData), [tes3lightNode](../../types/tes3lightNode), [tes3lockNode](../../types/tes3lockNode), [tes3mobileActor](../../types/tes3mobileActor), [tes3reference](../../types/tes3reference), [tes3travelDestinationNode](../../types/tes3travelDestinationNode), [tes3animationData](../../types/tes3animationData))
 
 ***
 

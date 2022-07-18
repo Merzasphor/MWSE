@@ -1266,6 +1266,9 @@ namespace TES3 {
 			case AttachmentType::ActorData:
 				result["actor"] = reinterpret_cast<MobileActorAttachment*>(attachment)->data;
 				break;
+			case AttachmentType::Animation:
+				result["animation"] = reinterpret_cast<AnimationAttachment*>(attachment)->data;
+				break;
 			}
 
 			attachment = attachment->next;

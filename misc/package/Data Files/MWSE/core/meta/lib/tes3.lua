@@ -954,9 +954,19 @@ function tes3.getAnimationTiming(params) end
 --- @return tes3archive[] archives No description yet available.
 function tes3.getArchiveList() end
 
---- Fetches an attachment with a given type.
---- @param reference tes3reference No description yet available.
---- @param attachment string No description yet available.
+--- Fetches an attachment with a given type from a reference. Will return `nil` if no attachment of that type has been found.
+--- @param reference tes3reference The reference to get the attachment from.
+--- @param attachment string The type of attachment to get. Possible values are:
+--- 	- `"bodyPartManager"`: Returns `tes3bodyPartManager`
+--- 	- `"light"`: Returns `tes3lightNode`
+--- 	- `"lock"`: Returns `tes3lockNode`
+--- 	- `"leveledBase"`: Returns `tes3reference`
+--- 	- `"travelDestination"`: Returns `tes3travelDestinationNode`
+--- 	- `"variables"`: Returns `tes3itemData`
+--- 	- `"actor"`: Returns `tes3mobileActor`
+--- 	- `"animation"`: Returns `tes3animationData`
+--- 
+--- @return nil|tes3bodyPartManager|tes3itemData|tes3lightNode|tes3lockNode|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|tes3travelDestinationNode|tes3animationData result No description yet available.
 function tes3.getAttachment(reference, attachment) end
 
 --- Returns the lowercase identifying name of an attribute for a given numerical, 0-based index. E.g. "strength", by using GMSTs. Uses `tes3.attributeName` enumeration as a fallback.
