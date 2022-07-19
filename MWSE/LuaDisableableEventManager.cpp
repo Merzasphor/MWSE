@@ -93,8 +93,8 @@
 #include "LuaMenuStateEvent.h"
 #include "LuaMeshLoadedEvent.h"
 #include "LuaMeshLoadEvent.h"
-#include "LuaMobileActorActivatedEvent.h"
-#include "LuaMobileActorDeactivatedEvent.h"
+#include "LuaMobileObjectActivatedEvent.h"
+#include "LuaMobileObjectDeactivatedEvent.h"
 #include "LuaMobileObjectCollisionEvent.h"
 #include "LuaMobileObjectWaterImpactEvent.h"
 #include "LuaMobileProjectileActorCollisionEvent.h"
@@ -253,8 +253,8 @@ namespace mwse::lua::event {
 		usertypeDefinition["menuExit"] = sol::property(&MenuStateEvent::getEventEnabled, &MenuStateEvent::setEventEnabled);
 		usertypeDefinition["meshLoad"] = sol::property(&MeshLoadEvent::getEventEnabled, &MeshLoadEvent::setEventEnabled);
 		usertypeDefinition["meshLoaded"] = sol::property(&MeshLoadedEvent::getEventEnabled, &MeshLoadedEvent::setEventEnabled);
-		usertypeDefinition["mobileActivated"] = sol::property(&MobileActorActivatedEvent::getEventEnabled, &MobileActorActivatedEvent::setEventEnabled);
-		usertypeDefinition["mobileDeactivated"] = sol::property(&MobileActorDeactivatedEvent::getEventEnabled, &MobileActorDeactivatedEvent::setEventEnabled);
+		usertypeDefinition["mobileActivated"] = sol::property(&MobileObjectActivatedEvent::getEventEnabled, &MobileObjectActivatedEvent::setEventEnabled);
+		usertypeDefinition["mobileDeactivated"] = sol::property(&MobileObjectDeactivatedEvent::getEventEnabled, &MobileObjectDeactivatedEvent::setEventEnabled);
 		usertypeDefinition["mouseAxis"] = sol::property(&MouseAxisEvent::getEventEnabled, &MouseAxisEvent::setEventEnabled);
 		usertypeDefinition["mouseButtonDown"] = sol::property(&MouseButtonDownEvent::getEventEnabled, &MouseButtonDownEvent::setEventEnabled);
 		usertypeDefinition["mouseButtonUp"] = sol::property(&MouseButtonUpEvent::getEventEnabled, &MouseButtonUpEvent::setEventEnabled);

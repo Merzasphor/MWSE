@@ -229,6 +229,8 @@
 #include "LuaMagicCastedEvent.h"
 #include "LuaMagicEffectRemovedEvent.h"
 #include "LuaMenuStateEvent.h"
+#include "LuaMobileObjectActivatedEvent.h"
+#include "LuaMobileObjectDeactivatedEvent.h"
 #include "LuaMouseAxisEvent.h"
 #include "LuaMouseButtonDownEvent.h"
 #include "LuaMouseButtonUpEvent.h"
@@ -3630,6 +3632,35 @@ namespace mwse::lua {
 	}
 
 	//
+	// Event: Mobile activated/deactivated
+	//
+
+	const auto TES3_MobileObject_EnterLeaveSimulation = reinterpret_cast<void(__thiscall*)(TES3::MobileObject*, bool)>(0x561CB0);
+	void __fastcall onMobileObjectEnterLeaveSimulation(TES3::MobileObject* mobileObject, DWORD _EDX_, bool active) {
+		// Check if the current mobile is the player.
+		bool isPlayer = false;
+		if (mobileObject->isActor()) {
+			isPlayer = static_cast<TES3::MobileActor*>(mobileObject)->actorType == TES3::MobileActorType::Player;
+		}
+
+		// Store previous ActiveInSimulation state.
+		bool wasActive = mobileObject->actorFlags & TES3::MobileActorFlag::ActiveInSimulation;
+
+		// Call original function.
+		TES3_MobileObject_EnterLeaveSimulation(mobileObject, active);
+
+		// Fire off mobile activation events for anything but the player if ActiveInSimulation state changed.
+		if (!isPlayer) {
+			if (mwse::lua::event::MobileObjectActivatedEvent::getEventEnabled() && !wasActive && active) {
+				mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileObjectActivatedEvent(mobileObject));
+			}
+			else if (mwse::lua::event::MobileObjectDeactivatedEvent::getEventEnabled() && wasActive && !active) {
+				mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileObjectDeactivatedEvent(mobileObject));
+			}
+		}
+	}
+
+	//
 	// Event: Power recharged
 	//
 
@@ -4519,50 +4550,12 @@ namespace mwse::lua {
 		genCallEnforced(0x570C0B, 0x570600, *reinterpret_cast<DWORD*>(&processManagerDetectSneak));
 		genCallEnforced(0x570E48, 0x570600, *reinterpret_cast<DWORD*>(&processManagerDetectSneak));
 
-		// Event: Mobile added to controller.
-		auto mobManagerAddMob = &TES3::MobManager::addMob;
-		genCallEnforced(0x4665D5, 0x5636A0, *reinterpret_cast<DWORD*>(&mobManagerAddMob));
-		genCallEnforced(0x484F3D, 0x5636A0, *reinterpret_cast<DWORD*>(&mobManagerAddMob));
-		genCallEnforced(0x4C6954, 0x5636A0, *reinterpret_cast<DWORD*>(&mobManagerAddMob));
-		genCallEnforced(0x4DC965, 0x5636A0, *reinterpret_cast<DWORD*>(&mobManagerAddMob));
-		genCallEnforced(0x4EBCBF, 0x5636A0, *reinterpret_cast<DWORD*>(&mobManagerAddMob));
-		genCallEnforced(0x5090BF, 0x5636A0, *reinterpret_cast<DWORD*>(&mobManagerAddMob));
-		genCallEnforced(0x50990C, 0x5636A0, *reinterpret_cast<DWORD*>(&mobManagerAddMob));
-		genCallEnforced(0x509A6E, 0x5636A0, *reinterpret_cast<DWORD*>(&mobManagerAddMob));
-		genCallEnforced(0x50EFE3, 0x5636A0, *reinterpret_cast<DWORD*>(&mobManagerAddMob));
-		genCallEnforced(0x529C3B, 0x5636A0, *reinterpret_cast<DWORD*>(&mobManagerAddMob));
-		genCallEnforced(0x54DE92, 0x5636A0, *reinterpret_cast<DWORD*>(&mobManagerAddMob));
-		genCallEnforced(0x57356C, 0x5636A0, *reinterpret_cast<DWORD*>(&mobManagerAddMob));
-		genCallEnforced(0x5752C6, 0x5636A0, *reinterpret_cast<DWORD*>(&mobManagerAddMob));
-		genCallEnforced(0x57595B, 0x5636A0, *reinterpret_cast<DWORD*>(&mobManagerAddMob));
-		genCallEnforced(0x635390, 0x5636A0, *reinterpret_cast<DWORD*>(&mobManagerAddMob));
-
-		// Event: Mobile removed from controller.
-		auto mobManagerRemoveMob = &TES3::MobManager::removeMob;
-		genCallEnforced(0x4668D8, 0x5637F0, *reinterpret_cast<DWORD*>(&mobManagerRemoveMob));
-		genCallEnforced(0x484E24, 0x5637F0, *reinterpret_cast<DWORD*>(&mobManagerRemoveMob));
-		genCallEnforced(0x4E47C1, 0x5637F0, *reinterpret_cast<DWORD*>(&mobManagerRemoveMob));
-		genCallEnforced(0x4E8911, 0x5637F0, *reinterpret_cast<DWORD*>(&mobManagerRemoveMob));
-		genCallEnforced(0x4EBD8C, 0x5637F0, *reinterpret_cast<DWORD*>(&mobManagerRemoveMob));
-		genCallEnforced(0x50919F, 0x5637F0, *reinterpret_cast<DWORD*>(&mobManagerRemoveMob));
-		genCallEnforced(0x523A1F, 0x5637F0, *reinterpret_cast<DWORD*>(&mobManagerRemoveMob));
-		genCallEnforced(0x523AE5, 0x5637F0, *reinterpret_cast<DWORD*>(&mobManagerRemoveMob));
-		genCallEnforced(0x52E980, 0x5637F0, *reinterpret_cast<DWORD*>(&mobManagerRemoveMob));
-		genCallEnforced(0x52EA6D, 0x5637F0, *reinterpret_cast<DWORD*>(&mobManagerRemoveMob));
-		genCallEnforced(0x52EDE5, 0x5637F0, *reinterpret_cast<DWORD*>(&mobManagerRemoveMob));
-		genCallEnforced(0x574FDB, 0x5637F0, *reinterpret_cast<DWORD*>(&mobManagerRemoveMob));
-		genCallEnforced(0x57509A, 0x5637F0, *reinterpret_cast<DWORD*>(&mobManagerRemoveMob));
-		genCallEnforced(0x57548A, 0x5637F0, *reinterpret_cast<DWORD*>(&mobManagerRemoveMob));
-		genCallEnforced(0x575647, 0x5637F0, *reinterpret_cast<DWORD*>(&mobManagerRemoveMob));
-
-		// Event Mobile added/removed from simulation by recalculated distance.
-		auto mobileEnterLeaveSimulationByDistance = &TES3::MobileObject::enterLeaveSimulationByDistance;
-		genCallEnforced(0x5090D1, 0x55FFC0, *reinterpret_cast<DWORD*>(&mobileEnterLeaveSimulationByDistance));
-		genCallEnforced(0x509EFF, 0x55FFC0, *reinterpret_cast<DWORD*>(&mobileEnterLeaveSimulationByDistance));
-		genCallEnforced(0x50EF90, 0x55FFC0, *reinterpret_cast<DWORD*>(&mobileEnterLeaveSimulationByDistance));
-		genCallEnforced(0x50F033, 0x55FFC0, *reinterpret_cast<DWORD*>(&mobileEnterLeaveSimulationByDistance));
-		genCallEnforced(0x5244F5, 0x55FFC0, *reinterpret_cast<DWORD*>(&mobileEnterLeaveSimulationByDistance));
-		genJumpEnforced(0x564F97, 0x55FFC0, *reinterpret_cast<DWORD*>(&mobileEnterLeaveSimulationByDistance));
+		// Event: Mobile activated/deactivated.
+		genCallEnforced(0x524C34, 0x561CB0, reinterpret_cast<DWORD>(onMobileObjectEnterLeaveSimulation)); // MobileActor::enterLeaveSimulation
+		genCallEnforced(0x524A63, 0x561CB0, reinterpret_cast<DWORD>(onMobileObjectEnterLeaveSimulation)); // MobileActor::enterLeaveSimulation
+		overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileObject, 0x70, 0x561CB0, reinterpret_cast<DWORD>(onMobileObjectEnterLeaveSimulation));
+		overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileProjectile, 0x70, 0x561CB0, reinterpret_cast<DWORD>(onMobileObjectEnterLeaveSimulation));
+		overrideVirtualTableEnforced(TES3::VirtualTableAddress::SpellProjectile, 0x70, 0x561CB0, reinterpret_cast<DWORD>(onMobileObjectEnterLeaveSimulation));
 
 		// Event: Calculate barter price.
 		if (genCallEnforced(0x5A447B, 0x5A46E0, reinterpret_cast<DWORD>(OnCalculateBarterPrice_CalcItemValue))) {

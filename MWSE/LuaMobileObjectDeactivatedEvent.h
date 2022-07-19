@@ -4,9 +4,9 @@
 #include "LuaDisableableEvent.h"
 
 namespace mwse::lua::event {
-	class MobileActorActivatedEvent : public ObjectFilteredEvent, public DisableableEvent<MobileActorActivatedEvent> {
+	class MobileObjectDeactivatedEvent : public ObjectFilteredEvent, public DisableableEvent<MobileObjectDeactivatedEvent> {
 	public:
-		MobileActorActivatedEvent(TES3::MobileObject* mobile);
+		MobileObjectDeactivatedEvent(TES3::MobileObject* mobile);
 		sol::table createEventTable();
 
 	protected:

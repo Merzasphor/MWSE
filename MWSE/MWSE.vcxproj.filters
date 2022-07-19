@@ -1005,10 +1005,10 @@
     <ClInclude Include="LuaLeveledCreaturePickedEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
-    <ClInclude Include="LuaMobileActorActivatedEvent.h">
+    <ClInclude Include="LuaMobileObjectActivatedEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
-    <ClInclude Include="LuaMobileActorDeactivatedEvent.h">
+    <ClInclude Include="LuaMobileObjectDeactivatedEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
     <ClInclude Include="LuaCalcBarterPriceEvent.h">
@@ -2939,10 +2939,10 @@
     <ClCompile Include="LuaLeveledCreaturePickedEvent.cpp">
       <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
-    <ClCompile Include="LuaMobileActorActivatedEvent.cpp">
+    <ClCompile Include="LuaMobileObjectActivatedEvent.cpp">
       <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
-    <ClCompile Include="LuaMobileActorDeactivatedEvent.cpp">
+    <ClCompile Include="LuaMobileObjectDeactivatedEvent.cpp">
       <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
     <ClCompile Include="LuaCalcBarterPriceEvent.cpp">

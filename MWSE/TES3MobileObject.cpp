@@ -14,9 +14,6 @@
 #include "TES3Reference.h"
 #include "TES3WorldController.h"
 
-#include "LuaMobileActorActivatedEvent.h"
-#include "LuaMobileActorDeactivatedEvent.h"
-
 #include "Log.h"
 
 namespace TES3 {
@@ -156,21 +153,7 @@ namespace TES3 {
 
 	const auto TES3_MobileObject_enterLeaveSimulationByDistance = reinterpret_cast<void(__thiscall *)(MobileObject*)>(0x55FFC0);
 	void MobileObject::enterLeaveSimulationByDistance() {
-		// Store previous AI state information.
-		const auto isMobileActor = isActor();
-		const auto wasActive = isMobileActor ? static_cast<MobileActor*>(this)->getFlagActiveAI() : false;
-
-		// Call original function.
 		TES3_MobileObject_enterLeaveSimulationByDistance(this);
-
-		// Fire off mobile activation events if necessary.
-		const auto nowActive = isMobileActor ? static_cast<MobileActor*>(this)->getFlagActiveAI() : false;
-		if (mwse::lua::event::MobileActorActivatedEvent::getEventEnabled() && nowActive && !wasActive) {
-			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileActorActivatedEvent(this));
-		}
-		else if (mwse::lua::event::MobileActorDeactivatedEvent::getEventEnabled() && !nowActive && wasActive) {
-			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileActorDeactivatedEvent(this->reference));
-		}
 	}
 
 	const auto TES3_MobileObject_getInventory = reinterpret_cast<IteratedList<ItemStack*> * (__thiscall*)(const MobileObject*)>(0x521620);
