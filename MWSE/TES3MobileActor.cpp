@@ -135,6 +135,10 @@ namespace TES3 {
 		return result;
 	}
 
+	void MobileActor::enterLeaveSimulation(bool entering) {
+		vTable.mobileActor->enterLeaveSimulation(this, entering);
+	}
+
 	SkillStatistic* MobileActor::getSkillStatistic(int skillId) {
 		return vTable.mobileActor->getSkillStatistic(this, skillId);
 	}
@@ -423,6 +427,11 @@ namespace TES3 {
 	void MobileActor::kill() {
 		health.setCurrentCapped(0.0f, false);
 	}
+
+	const auto TES3_MobileActor_retireMagic = reinterpret_cast<void(__thiscall*)(MobileActor*)>(0x52C990);
+	void MobileActor::retireMagic() {
+		TES3_MobileActor_retireMagic(this);
+	};
 
 	const auto TES3_MobileActor_applyHealthDamage = reinterpret_cast<bool(__thiscall*)(MobileActor*, float, bool, bool, bool)>(0x557CF0);
 	bool MobileActor::applyHealthDamage(float damage, bool isPlayerAttack, bool scaleWithDifficulty, bool doNotChangeHealth) {
