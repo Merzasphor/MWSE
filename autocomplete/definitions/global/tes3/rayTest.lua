@@ -15,7 +15,6 @@ return {
 			{ name = "useBackTriangles", type = "boolean", default = false, description = "Include intersections with back-facing triangles." },
 			{ name = "observeAppCullFlag", type = "boolean", default = true, description = "Ignore intersections with culled (hidden) models." },
 			{ name = "root", type = "niNode", default = "tes3.game.worldRoot", description = "Node pointer to node scene."},
-			{ name = "ignoreSkinned", type = "boolean", default = false, description = "Ignore results from skinned objects."},
 			{ name = "returnColor", type = "boolean", default = false, description = "Calculate and return the vertex color at intersections." },
 			{ name = "returnNormal", type = "boolean", default = false, description = "Calculate and return the vertex normal at intersections." },
 			{ name = "returnSmoothNormal", type = "boolean", default = false, description = "Use normal interpolation for calculating vertex normals." },
