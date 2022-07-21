@@ -361,8 +361,13 @@ namespace TES3 {
 
 	const auto TES3_MobileActor_startCombat = reinterpret_cast<void(__thiscall*)(MobileActor*, MobileActor*)>(0x530470);
 	void MobileActor::startCombat(MobileActor* target) {
-		// Patch: Make sure that disabled NPCs can't start combat.
-		if (reference->getDisabled()) {
+		// Patch: Make sure that disabled or dead NPCs can't start combat.
+		if (reference->getDisabled() || !getFlagActiveAI() || isDead()) {
+			return;
+		}
+
+		// Patch: Make sure that disabled or dead NPCs can't be the target of combat.
+		if (target->reference->getDisabled() || !target->getFlagActiveAI() || target->isDead()) {
 			return;
 		}
 
