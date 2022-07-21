@@ -28,7 +28,7 @@ namespace mwse::lua::event {
 
 		eventData["caster"] = m_MagicSourceInstance->caster;
 		eventData["target"] = m_MagicSourceInstance->target;
-		eventData["source"] = m_MagicSourceInstance->sourceCombo.source.asSpell;
+		eventData["source"] = m_MagicSourceInstance->sourceCombo.source.asGeneric;
 		eventData["sourceInstance"] = m_MagicSourceInstance;
 		eventData["expGainSchool"] = m_ExpGainSchool;
 
