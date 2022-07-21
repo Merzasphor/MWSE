@@ -26,7 +26,7 @@ return {
 			},
 			{
 				name = "school",
-				type = "number",
+				type = "integer",
 				optional = true,
 				default = "tes3.magicSchool.alteration",
 				description = "The magic school the new effect will be assigned to. Maps to [`tes3.magicSchool`](https://mwse.github.io/MWSE/references/magic-schools/) constants."
@@ -116,25 +116,25 @@ return {
 			},
 			{
 				name = "castVFX",
-				type = "tes3physicalObject",
+				type = "tes3physicalObject|string",
 				optional = true,
 				description = "The visual played when a spell with this effect is cast."
 			},
 			{
 				name = "boltVFX",
-				type = "tes3physicalObject",
+				type = "tes3physicalObject|string",
 				optional = true,
 				description = "The visual played when a spell with this effect is in flight."
 			},
 			{
 				name = "hitVFX",
-				type = "tes3physicalObject",
+				type = "tes3physicalObject|string",
 				optional = true,
 				description = "The visual played when a spell with this effect hits something."
 			},
 			{
 				name = "areaVFX",
-				type = "tes3physicalObject",
+				type = "tes3physicalObject|string",
 				optional = true,
 				description = "The visual played when a spell with this effect, with area of effect hits something."
 			},
@@ -266,13 +266,13 @@ Note that this property is hidden in the Construction Set.]]
 				description = [[A function which will be called on each tick of a spell containing this effect. A table `tickParams` will be passed to the callback function. Note: `dt`(frame time) scaling is handled automatically.
 		- `tickParams` (table)
 			- `effectId` (number)
-			- `sourceInstance` ([tes3magicSourceInstance](https://mwse.github.io/MWSE/types/tes3magicSourceInstance/)): Access to the magic source of the effect instance. 
+			- `sourceInstance` ([tes3magicSourceInstance](https://mwse.github.io/MWSE/types/tes3magicSourceInstance/)): Access to the magic source of the effect instance.
 			- `deltaTime` (number): The time passed since the last tick of the spell.
 			- `effectInstance` ([tes3magicEffectInstance](https://mwse.github.io/MWSE/types/tes3magicEffectInstance/)): Access to the magic effect instance.
 			- `effectIndex` (number): The index of the effect in the spell.
 
 		In addition, a function registered as `onTick` can also call the following methods:
-	
+
 		- trigger(`triggerParams`): Allows the effect to run through the normal spell event system.
 			**Parameters:**
 			- `triggerParams` (table)
@@ -284,11 +284,11 @@ Note that this property is hidden in the Construction Set.]]
 				- `resistanceCheck(resistParams)` (function): *Optional.* The function passed as `resistanceCheck` will be used on any of the game's spell resistance checks. For example, the only effect in vanilla Morrowind that implements this function is Water Walking. It disallows using a spell with Water Walking when the player is deep underwater, by setting it as expired. So, returning `true` from this function will set your effect to expired, and depending on your trigger code may stop processing. The function passed here must returns boolean values.
 					**Parameters**
 					- `resistParams` (table)
-						- `sourceInstance` ([tes3magicSourceInstance](https://mwse.github.io/MWSE/types/tes3magicSourceInstance/)): Access to the magic source of the effect instance. 
+						- `sourceInstance` ([tes3magicSourceInstance](https://mwse.github.io/MWSE/types/tes3magicSourceInstance/)): Access to the magic source of the effect instance.
 						- `effectInstance` ([tes3magicEffectInstance](https://mwse.github.io/MWSE/types/tes3magicEffectInstance/)): Access to the magic effect instance.
 						- `effectIndex` (number): The index of the effect in the spell.
 
-		- triggerBoundWeapon(`id`): Performs vanilla weapon summoning logic. It will create a summoned version of the weapon with provided ID. 
+		- triggerBoundWeapon(`id`): Performs vanilla weapon summoning logic. It will create a summoned version of the weapon with provided ID.
 			**Parameters:**
 			- `id` (string): The ID of the weapon object to summon.
 
@@ -317,5 +317,5 @@ Note that this property is hidden in the Construction Set.]]
 			description = "An implementation of the vanilla Fire Damage effect. Also, three spells are constructed with newly created magic effect, which are added to the player. You can test this in-game.",
 		}
 	},
-	returns = {{ name = "effect", type = "tes3effect"}},
+	returns = {{ name = "effect", type = "tes3magicEffect"}},
 }

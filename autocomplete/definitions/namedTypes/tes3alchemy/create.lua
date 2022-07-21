@@ -1,6 +1,7 @@
 return {
 	type = "function",
-	description = [[Creates a new alchemy item, which will be stored as part of the current saved game. If there is already an alchemy item with matching effects, name, weight, value, and script, that will be returned instead of creating a new item.]],
+	deprecated = true,
+	description = [[Use [`tes3.createObject`](https://mwse.github.io/MWSE/apis/tes3/#tes3createobject) instead. Creates a new alchemy item, which will be stored as part of the current saved game. If there is already an alchemy item with matching effects, name, weight, value, and script, that will be returned instead of creating a new item.]],
 	arguments = {{
 		name = "params",
 		type = "table",

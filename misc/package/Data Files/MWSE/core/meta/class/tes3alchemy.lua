@@ -17,7 +17,8 @@
 --- @field weight number The weight of the object.
 tes3alchemy = {}
 
---- Creates a new alchemy item, which will be stored as part of the current saved game. If there is already an alchemy item with matching effects, name, weight, value, and script, that will be returned instead of creating a new item.
+--- Use [`tes3.createObject`](https://mwse.github.io/MWSE/apis/tes3/#tes3createobject) instead. Creates a new alchemy item, which will be stored as part of the current saved game. If there is already an alchemy item with matching effects, name, weight, value, and script, that will be returned instead of creating a new item.
+--- @deprecated
 --- @param params tes3alchemy.create.params This table accepts the following values:
 --- 
 --- `id`: string — The new object's ID. Must be unique.

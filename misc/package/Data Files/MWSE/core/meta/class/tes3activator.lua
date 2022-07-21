@@ -11,7 +11,7 @@
 --- @field script tes3script The script that runs on the object.
 tes3activator = {}
 
---- Use `tes3.createObject` instead. This function created a new activator object, which will be stored as part of the current saved game.
+--- Use [`tes3.createObject`](https://mwse.github.io/MWSE/apis/tes3/#tes3createobject) instead. This function created a new activator object, which will be stored as part of the current saved game.
 --- @deprecated
 --- @param params tes3activator.create.params This table accepts the following values:
 --- 

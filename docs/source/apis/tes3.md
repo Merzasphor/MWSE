@@ -224,7 +224,7 @@ local effect = tes3.addMagicEffect({ id = ..., name = ..., baseCost = ..., schoo
 	* `id` (number): Id of the new effect. Maps to newly claimed `tes3.effect` constants with `tes3.claimSpellEffectId()`. If the effect of this id already exists, an error will be thrown.
 	* `name` (string): *Default*: `Unnamed Effect`. Name of the effect.
 	* `baseCost` (number): *Default*: `1`. Base magicka cost for the effect.
-	* `school` (number): *Default*: `tes3.magicSchool.alteration`. The magic school the new effect will be assigned to. Maps to [`tes3.magicSchool`](https://mwse.github.io/MWSE/references/magic-schools/) constants.
+	* `school` (integer): *Default*: `tes3.magicSchool.alteration`. The magic school the new effect will be assigned to. Maps to [`tes3.magicSchool`](https://mwse.github.io/MWSE/references/magic-schools/) constants.
 	* `size` (number): *Default*: `1`. The size scale for the spells containing this magic effect.
 	* `sizeCap` (number): *Default*: `1`. The maximum possible size of the projectile.
 	* `speed` (number): *Default*: `1`.
@@ -239,10 +239,10 @@ local effect = tes3.addMagicEffect({ id = ..., name = ..., baseCost = ..., schoo
 	* `boltSound` (string): The sound ID which will be played when a spell with this effect is in flight. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
 	* `hitSound` (string): The sound ID which will be played when a spell with this effect hits something. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
 	* `areaSound` (string): The sound ID which will be played on area of effect impact. Must be a string no longer than 31 characters long. If not specified, the default sound for the spell school will be used.
-	* `castVFX` ([tes3physicalObject](../../types/tes3physicalObject)): *Optional*. The visual played when a spell with this effect is cast.
-	* `boltVFX` ([tes3physicalObject](../../types/tes3physicalObject)): *Optional*. The visual played when a spell with this effect is in flight.
-	* `hitVFX` ([tes3physicalObject](../../types/tes3physicalObject)): *Optional*. The visual played when a spell with this effect hits something.
-	* `areaVFX` ([tes3physicalObject](../../types/tes3physicalObject)): *Optional*. The visual played when a spell with this effect, with area of effect hits something.
+	* `castVFX` ([tes3physicalObject](../../types/tes3physicalObject), string): *Optional*. The visual played when a spell with this effect is cast.
+	* `boltVFX` ([tes3physicalObject](../../types/tes3physicalObject), string): *Optional*. The visual played when a spell with this effect is in flight.
+	* `hitVFX` ([tes3physicalObject](../../types/tes3physicalObject), string): *Optional*. The visual played when a spell with this effect hits something.
+	* `areaVFX` ([tes3physicalObject](../../types/tes3physicalObject), string): *Optional*. The visual played when a spell with this effect, with area of effect hits something.
 	* `allowEnchanting` (boolean): *Default*: `true`. A flag which controls whether this effect can be used in a custom enchantment.
 	* `allowSpellmaking` (boolean): *Default*: `true`. A flag which controls whether this effect can be used in a custom spell.
 	* `appliesOnce` (boolean): *Default*: `true`. A flag which controls whether this effect applies once or is a ticking effect.
@@ -265,13 +265,13 @@ Note that this property is hidden in the Construction Set.
 	* `onTick` (function): *Optional*. A function which will be called on each tick of a spell containing this effect. A table `tickParams` will be passed to the callback function. Note: `dt`(frame time) scaling is handled automatically.
 		- `tickParams` (table)
 			- `effectId` (number)
-			- `sourceInstance` ([tes3magicSourceInstance](https://mwse.github.io/MWSE/types/tes3magicSourceInstance/)): Access to the magic source of the effect instance. 
+			- `sourceInstance` ([tes3magicSourceInstance](https://mwse.github.io/MWSE/types/tes3magicSourceInstance/)): Access to the magic source of the effect instance.
 			- `deltaTime` (number): The time passed since the last tick of the spell.
 			- `effectInstance` ([tes3magicEffectInstance](https://mwse.github.io/MWSE/types/tes3magicEffectInstance/)): Access to the magic effect instance.
 			- `effectIndex` (number): The index of the effect in the spell.
 
 		In addition, a function registered as `onTick` can also call the following methods:
-	
+
 		- trigger(`triggerParams`): Allows the effect to run through the normal spell event system.
 			**Parameters:**
 			- `triggerParams` (table)
@@ -283,11 +283,11 @@ Note that this property is hidden in the Construction Set.
 				- `resistanceCheck(resistParams)` (function): *Optional.* The function passed as `resistanceCheck` will be used on any of the game's spell resistance checks. For example, the only effect in vanilla Morrowind that implements this function is Water Walking. It disallows using a spell with Water Walking when the player is deep underwater, by setting it as expired. So, returning `true` from this function will set your effect to expired, and depending on your trigger code may stop processing. The function passed here must returns boolean values.
 					**Parameters**
 					- `resistParams` (table)
-						- `sourceInstance` ([tes3magicSourceInstance](https://mwse.github.io/MWSE/types/tes3magicSourceInstance/)): Access to the magic source of the effect instance. 
+						- `sourceInstance` ([tes3magicSourceInstance](https://mwse.github.io/MWSE/types/tes3magicSourceInstance/)): Access to the magic source of the effect instance.
 						- `effectInstance` ([tes3magicEffectInstance](https://mwse.github.io/MWSE/types/tes3magicEffectInstance/)): Access to the magic effect instance.
 						- `effectIndex` (number): The index of the effect in the spell.
 
-		- triggerBoundWeapon(`id`): Performs vanilla weapon summoning logic. It will create a summoned version of the weapon with provided ID. 
+		- triggerBoundWeapon(`id`): Performs vanilla weapon summoning logic. It will create a summoned version of the weapon with provided ID.
 			**Parameters:**
 			- `id` (string): The ID of the weapon object to summon.
 
@@ -305,7 +305,7 @@ Note that this property is hidden in the Construction Set.
 
 **Returns**:
 
-* `effect` ([tes3effect](../../types/tes3effect))
+* `effect` ([tes3magicEffect](../../types/tes3magicEffect))
 
 ??? example "Example: Fire Damage effect"
 
@@ -3915,14 +3915,13 @@ local changedControlState = tes3.setPlayerControlState({ enabled = ..., attack =
 Sets an object (of any kind) to be sourceless, which are objects the game does not store in savegames. This can be useful for mod-created temporary objects which are not necessary to save.
 
 ```lua
-tes3.setSourceless({ object = ..., sourceless = ... })
+tes3.setSourceless(object, sourceless)
 ```
 
 **Parameters**:
 
-* `params` (table)
-	* `object` ([tes3baseObject](../../types/tes3baseObject)): The object whose sourceless flag to modify.
-	* `sourceless` (boolean): *Default*: `true`. Allows flagging an object as sourceless or undoing that action.
+* `object` ([tes3baseObject](../../types/tes3baseObject)): The object whose sourceless flag to modify.
+* `sourceless` (boolean): *Default*: `true`. Allows flagging an object as sourceless or undoing that action.
 
 ***
 
