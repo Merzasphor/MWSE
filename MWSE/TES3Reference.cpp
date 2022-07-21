@@ -448,12 +448,12 @@ namespace TES3 {
 		return true;
 	}
 
+	const auto TES3_MobileActor_onDeath = reinterpret_cast<void(__thiscall*)(MobileActor*)>(0x523AA0);
 	bool Reference::disable() {
 		// Make sure we're not already disabled.
 		if (getDisabled()) {
 			return false;
 		}
-		BIT_SET_ON(objectFlags, ObjectFlag::DisabledBit);
 
 		auto dataHandler = TES3::DataHandler::get();
 
@@ -465,8 +465,9 @@ namespace TES3 {
 
 		// Leave simulation if we have a mobile.
 		if (baseObject->objectType == TES3::ObjectType::Creature || baseObject->objectType == TES3::ObjectType::NPC) {
-			auto mact = getAttachedMobileObject();
+			auto mact = getAttachedMobileActor();
 			if (mact) {
+				TES3_MobileActor_onDeath(mact);
 				mact->enterLeaveSimulation(false);
 				TES3::WorldController::get()->mobManager->removeMob(this);
 			}
@@ -488,6 +489,9 @@ namespace TES3 {
 		if (sound) {
 			dataHandler->removeSound(sound, this);
 		}
+
+		// Set the disabled bit at the end since it will prevent functions such as enterLeaveSimulation executing properly.
+		BIT_SET_ON(objectFlags, ObjectFlag::DisabledBit);
 
 		// Finally flag as modified.
 		setObjectModified(true);
