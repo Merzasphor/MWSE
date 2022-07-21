@@ -281,7 +281,7 @@ namespace TES3 {
 		void setFootPoint(const Vector3* point);
 		void setInstantVelocity(const Vector3* velocity);
 		void updateConstantVelocity(const Vector3* velocity);
-
+		void resetCollisionGroup();
 		void enterLeaveSimulationByDistance();
 		IteratedList<ItemStack*>* getInventory() const;
 		bool getBasePositionIsUnderwater() const;

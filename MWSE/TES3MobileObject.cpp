@@ -151,6 +151,11 @@ namespace TES3 {
 		TES3_MobileObject_updateConstantVelocity(this, velocity);
 	}
 
+	const auto TES3_MobileObject_resetCollisionGroup = reinterpret_cast<void(__thiscall*)(MobileObject*)>(0x55ECB0);
+	void MobileObject::resetCollisionGroup() {
+		TES3_MobileObject_resetCollisionGroup(this);
+	}
+
 	const auto TES3_MobileObject_enterLeaveSimulationByDistance = reinterpret_cast<void(__thiscall *)(MobileObject*)>(0x55FFC0);
 	void MobileObject::enterLeaveSimulationByDistance() {
 		TES3_MobileObject_enterLeaveSimulationByDistance(this);

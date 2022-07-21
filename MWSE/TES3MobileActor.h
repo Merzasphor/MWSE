@@ -213,8 +213,6 @@ namespace TES3 {
 		// vTable accessor functions.
 		//
 
-		void enterLeaveSimulation(bool entering);
-
 		bool onActorCollision(int collisionIndex);
 		bool onObjectCollision(int collisionIndex, bool flag);
 		bool onTerrainCollision(int collisionIndex);
@@ -331,6 +329,9 @@ namespace TES3 {
 		void setWeaponReady(bool value);
 
 		void updateOpacity();
+		void notifyActorDeadOrDestroyed(MobileActor* mobileActor);
+		void broadcastDeadOrDestroyed();
+		void removeFiredProjectiles(bool includeSpellProjectiles);
 
 		ActorAnimationController* getAnimationController() const;
 		BaseObject* getCurrentSpell() const;

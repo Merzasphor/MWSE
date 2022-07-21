@@ -135,10 +135,6 @@ namespace TES3 {
 		return result;
 	}
 
-	void MobileActor::enterLeaveSimulation(bool entering) {
-		vTable.mobileActor->enterLeaveSimulation(this, entering);
-	}
-
 	SkillStatistic* MobileActor::getSkillStatistic(int skillId) {
 		return vTable.mobileActor->getSkillStatistic(this, skillId);
 	}
@@ -186,6 +182,10 @@ namespace TES3 {
 	const auto TES3_MobileActor_setCurrentMagicFromEquipmentStack = reinterpret_cast<void(__thiscall*)(MobileActor*, EquipmentStack*)>(0x52B2A0);
 	void MobileActor::setCurrentMagicFromEquipmentStack(EquipmentStack* equipmentStack) {
 		TES3_MobileActor_setCurrentMagicFromEquipmentStack(this, equipmentStack);
+	}
+
+	void MobileActor::removeFiredProjectiles(bool includeSpellProjectiles) {
+		TES3::WorldController::get()->mobManager->projectileManager->removeProjectilesFiredByActor(this, includeSpellProjectiles);
 	}
 
 	bool MobileActor::equipMagic(Object* source, ItemData* itemData, bool equipItem, bool updateGUI) {
@@ -427,6 +427,19 @@ namespace TES3 {
 	void MobileActor::kill() {
 		health.setCurrentCapped(0.0f, false);
 	}
+
+	const auto TES3_MobileActor_notifyActorDeadOrDestroyed = reinterpret_cast<void(__thiscall*)(MobileActor*, MobileActor*)>(0x51FEB0);
+	void MobileActor::notifyActorDeadOrDestroyed(MobileActor* mobileActor) {
+		TES3_MobileActor_notifyActorDeadOrDestroyed(this, mobileActor);
+	};
+
+	void MobileActor::broadcastDeadOrDestroyed() {
+		for (auto mobileActor : *WorldController::get()->allMobileActors) {
+			if (mobileActor != this) {
+				mobileActor->notifyActorDeadOrDestroyed(this);
+			}
+		}
+	};
 
 	const auto TES3_MobileActor_retireMagic = reinterpret_cast<void(__thiscall*)(MobileActor*)>(0x52C990);
 	void MobileActor::retireMagic() {
