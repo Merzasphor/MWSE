@@ -28,10 +28,11 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
-		unsigned int activateSpell(Reference * reference, EquipmentStack * sourceItem, MagicSourceCombo* source);
-		void removeSpellsByEffect(Reference * reference, int effectId, int percentChance);
-		void clearSpellEffect(Reference * reference, int castType, int percentChance, bool removeSpell);
-		MagicSourceInstance * getInstanceFromSerial(unsigned int serial);
+		unsigned int activateSpell(Reference* reference, EquipmentStack* sourceItem, MagicSourceCombo* source);
+		void removeSpellsByEffect(Reference* reference, int effectId, int percentChance);
+		void clearSpellEffect(Reference* reference, int castType, int percentChance, bool removeSpell);
+		MagicSourceInstance* getInstanceFromSerial(unsigned int serial);
+		void retireMagicCastedByActor(Reference* reference);
 
 	};
 	static_assert(sizeof(MagicInstanceController) == 0x38, "TES3::MagicInstanceController failed size validation");
