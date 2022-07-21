@@ -84,6 +84,17 @@ namespace TES3 {
 		TES3_ProjectileManager_resolveCollisions(this, deltaTime);
 	}
 
+	void ProjectileManager::removeProjectilesFiredByActor(MobileActor* mobileActor, bool includeSpellProjectiles) {
+		criticalSection.enter("MWSE:ProjectileManager::removeProjectilesFiredByActor");
+		for (auto projectile : activeProjectiles) {
+			if (projectile->firingActor == mobileActor && (includeSpellProjectiles || projectile->objectType == ObjectType::MobileProjectile)) {
+				projectile->enterLeaveSimulation(false);
+				projectile->flagExpire = true;
+			}
+		}
+		criticalSection.leave();
+	}
+
 	const auto TES3_MobManager_addMob = reinterpret_cast<void(__thiscall*)(MobManager*, Reference*)>(0x5636A0);
 	void MobManager::addMob(Reference * reference) {
 		TES3_MobManager_addMob(this, reference);
