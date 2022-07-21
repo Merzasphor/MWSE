@@ -28,6 +28,7 @@
 #include "TES3GameSetting.h"
 #include "TES3ItemData.h"
 #include "TES3Light.h"
+#include "TES3MagicInstanceController.h"
 #include "TES3Misc.h"
 #include "TES3MobileCreature.h"
 #include "TES3MobilePlayer.h"
@@ -35,6 +36,7 @@
 #include "TES3MobManager.h"
 #include "TES3NPC.h"
 #include "TES3WorldController.h"
+#include "TES3VFXManager.h"
 
 #include "TES3UIManager.h"
 
@@ -448,7 +450,6 @@ namespace TES3 {
 		return true;
 	}
 
-	const auto TES3_MobileActor_onDeath = reinterpret_cast<void(__thiscall*)(MobileActor*)>(0x523AA0);
 	bool Reference::disable() {
 		// Make sure we're not already disabled.
 		if (getDisabled()) {
@@ -467,9 +468,10 @@ namespace TES3 {
 		if (baseObject->objectType == TES3::ObjectType::Creature || baseObject->objectType == TES3::ObjectType::NPC) {
 			auto mact = getAttachedMobileActor();
 			if (mact) {
-				TES3_MobileActor_onDeath(mact);
-				mact->enterLeaveSimulation(false);
-				TES3::WorldController::get()->mobManager->removeMob(this);
+				auto worldController = TES3::WorldController::get();
+				worldController->mobManager->removeMob(this);
+				worldController->vfxManager->removeForReference(this);
+				worldController->magicInstanceController->retireMagicCastedByActor(this);
 			}
 		}
 		// Update lights for objects.
