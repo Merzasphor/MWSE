@@ -961,6 +961,10 @@ namespace mwse::lua {
 			// Go through and clone the results in a way that will play nice.
 			// Skip any results that have a skinInstance
 			for (auto& r : rayTestCache->results) {
+				if (r == nullptr) {
+					continue;
+				}
+
 				if (r->object->isInstanceOfType(NI::RTTIStaticPtr::NiTriShape)) {
 					auto node = static_cast<const NI::TriShape*>(r->object);
 					if (!node->skinInstance) {
