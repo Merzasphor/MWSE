@@ -3661,6 +3661,21 @@ namespace mwse::lua {
 	}
 
 	//
+	// Fix: Unsummoned actor cleanup
+	//
+
+	const auto TES3_MobileActor_onDeath = reinterpret_cast<void(__thiscall*)(TES3::MobileActor*)>(0x523AA0);
+	TES3::MobileActor* __fastcall cleanupUnsummonedActor(TES3::Reference* reference) {
+		TES3::MobileActor* mobileActor = reference->getAttachedMobileActor();
+
+		TES3_MobileActor_onDeath(mobileActor);
+		mobileActor->enterLeaveSimulation(false);
+		TES3::WorldController::get()->mobManager->removeMob(mobileActor->reference);
+
+		return mobileActor;
+	}
+
+	//
 	// Event: Power recharged
 	//
 
@@ -4556,6 +4571,9 @@ namespace mwse::lua {
 		overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileObject, 0x70, 0x561CB0, reinterpret_cast<DWORD>(onMobileObjectEnterLeaveSimulation));
 		overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileProjectile, 0x70, 0x561CB0, reinterpret_cast<DWORD>(onMobileObjectEnterLeaveSimulation));
 		overrideVirtualTableEnforced(TES3::VirtualTableAddress::SpellProjectile, 0x70, 0x561CB0, reinterpret_cast<DWORD>(onMobileObjectEnterLeaveSimulation));
+
+		// Fix: Clean up unsummoned actors.
+		genCallEnforced(0x466858, 0x4E5750, reinterpret_cast<DWORD>(cleanupUnsummonedActor));
 
 		// Event: Calculate barter price.
 		if (genCallEnforced(0x5A447B, 0x5A46E0, reinterpret_cast<DWORD>(OnCalculateBarterPrice_CalcItemValue))) {
