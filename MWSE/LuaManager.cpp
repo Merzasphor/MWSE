@@ -3637,17 +3637,23 @@ namespace mwse::lua {
 
 	const auto TES3_MobileObject_EnterLeaveSimulation = reinterpret_cast<void(__thiscall*)(TES3::MobileObject*, bool)>(0x561CB0);
 	void __fastcall onMobileObjectEnterLeaveSimulation(TES3::MobileObject* mobileObject, DWORD _EDX_, bool active) {
-		// Check if the current mobile is the player.
-		bool isPlayer = false;
-		if (mobileObject->isActor()) {
-			isPlayer = static_cast<TES3::MobileActor*>(mobileObject)->actorType == TES3::MobileActorType::Player;
-		}
-
 		// Store previous ActiveInSimulation state.
 		bool wasActive = mobileObject->actorFlags & TES3::MobileActorFlag::ActiveInSimulation;
 
 		// Call original function.
 		TES3_MobileObject_EnterLeaveSimulation(mobileObject, active);
+
+		// Check if the current mobile is the player.
+		bool isPlayer = false;
+		if (mobileObject->isActor()) {
+			TES3::MobileActor* mobileActor = static_cast<TES3::MobileActor*>(mobileObject);
+			isPlayer = mobileActor->actorType == TES3::MobileActorType::Player;
+
+			// Remove projectiles fired by this actor from simulation since they will contain invalid data shortly after.
+			if (wasActive && !active) {
+				mobileActor->removeFiredProjectiles(false);
+			}
+		}
 
 		// Fire off mobile activation events for anything but the player if ActiveInSimulation state changed.
 		if (!isPlayer) {
@@ -3667,11 +3673,8 @@ namespace mwse::lua {
 	const auto TES3_MobileActor_onDeath = reinterpret_cast<void(__thiscall*)(TES3::MobileActor*)>(0x523AA0);
 	TES3::MobileActor* __fastcall cleanupUnsummonedActor(TES3::Reference* reference) {
 		TES3::MobileActor* mobileActor = reference->getAttachedMobileActor();
-
-		TES3_MobileActor_onDeath(mobileActor);
-		mobileActor->enterLeaveSimulation(false);
-		TES3::WorldController::get()->mobManager->removeMob(mobileActor->reference);
-
+		auto worldController = TES3::WorldController::get();
+		worldController->mobManager->removeMob(reference);
 		return mobileActor;
 	}
 
