@@ -858,7 +858,7 @@ namespace mwse::lua {
 
 		// Determine what returned values we care about.
 		rayTestCache->returnColor = getOptionalParam<bool>(params, "returnColor", false);
-		rayTestCache->returnNormal = getOptionalParam<bool>(params, "returnNormal", true);
+		rayTestCache->returnNormal = getOptionalParam<bool>(params, "returnNormal", false);
 		rayTestCache->returnSmoothNormal = getOptionalParam<bool>(params, "returnSmoothNormal", false);
 		rayTestCache->returnTexture = getOptionalParam<bool>(params, "returnTexture", false);
 
