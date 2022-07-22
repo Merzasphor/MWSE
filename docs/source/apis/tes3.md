@@ -3242,7 +3242,7 @@ tes3.random(seed)
 Performs a ray test and returns various information related to the result(s). If `findAll` is set, the result will be a table of results, otherwise only the first result is returned.
 
 ```lua
-local result = tes3.rayTest({ position = ..., direction = ..., findAll = ..., maxDistance = ..., sort = ..., useModelBounds = ..., useModelCoordinates = ..., useBackTriangles = ..., observeAppCullFlag = ..., root = ..., ignoreSkinned = ..., returnColor = ..., returnNormal = ..., returnSmoothNormal = ..., returnTexture = ..., ignore = ... })
+local result = tes3.rayTest({ position = ..., direction = ..., findAll = ..., maxDistance = ..., sort = ..., useModelBounds = ..., useModelCoordinates = ..., useBackTriangles = ..., observeAppCullFlag = ..., root = ..., returnColor = ..., returnNormal = ..., returnSmoothNormal = ..., returnTexture = ..., ignore = ... })
 ```
 
 **Parameters**:
@@ -3258,9 +3258,8 @@ local result = tes3.rayTest({ position = ..., direction = ..., findAll = ..., ma
 	* `useBackTriangles` (boolean): *Default*: `false`. Include intersections with back-facing triangles.
 	* `observeAppCullFlag` (boolean): *Default*: `true`. Ignore intersections with culled (hidden) models.
 	* `root` ([niNode](../../types/niNode)): *Default*: `tes3.game.worldRoot`. Node pointer to node scene.
-	* `ignoreSkinned` (boolean): *Default*: `false`. Ignore results from skinned objects.
 	* `returnColor` (boolean): *Default*: `false`. Calculate and return the vertex color at intersections.
-	* `returnNormal` (boolean): *Default*: `true`. Calculate and return the vertex normal at intersections.
+	* `returnNormal` (boolean): *Default*: `false`. Calculate and return the vertex normal at intersections.
 	* `returnSmoothNormal` (boolean): *Default*: `false`. Use normal interpolation for calculating vertex normals.
 	* `returnTexture` (boolean): *Default*: `false`. Calculate and return the texture coordinate at intersections.
 	* `ignore` ([tes3reference](../../types/tes3reference)[], [niNode](../../types/niNode)[]): *Optional*. An array of references and/or scene graph nodes to cull from the result(s).

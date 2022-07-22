@@ -1813,11 +1813,9 @@ function tes3.random(seed) end
 --- 
 --- `root`: niBillboardNode|niCollisionSwitch|niNode|niSwitchNode|nil — *Default*: `tes3.game.worldRoot`. Node pointer to node scene.
 --- 
---- `ignoreSkinned`: boolean? — *Default*: `false`. Ignore results from skinned objects.
---- 
 --- `returnColor`: boolean? — *Default*: `false`. Calculate and return the vertex color at intersections.
 --- 
---- `returnNormal`: boolean? — *Default*: `true`. Calculate and return the vertex normal at intersections.
+--- `returnNormal`: boolean? — *Default*: `false`. Calculate and return the vertex normal at intersections.
 --- 
 --- `returnSmoothNormal`: boolean? — *Default*: `false`. Use normal interpolation for calculating vertex normals.
 --- 
@@ -1839,9 +1837,8 @@ function tes3.rayTest(params) end
 --- @field useBackTriangles boolean? *Default*: `false`. Include intersections with back-facing triangles.
 --- @field observeAppCullFlag boolean? *Default*: `true`. Ignore intersections with culled (hidden) models.
 --- @field root niBillboardNode|niCollisionSwitch|niNode|niSwitchNode|nil *Default*: `tes3.game.worldRoot`. Node pointer to node scene.
---- @field ignoreSkinned boolean? *Default*: `false`. Ignore results from skinned objects.
 --- @field returnColor boolean? *Default*: `false`. Calculate and return the vertex color at intersections.
---- @field returnNormal boolean? *Default*: `true`. Calculate and return the vertex normal at intersections.
+--- @field returnNormal boolean? *Default*: `false`. Calculate and return the vertex normal at intersections.
 --- @field returnSmoothNormal boolean? *Default*: `false`. Use normal interpolation for calculating vertex normals.
 --- @field returnTexture boolean? *Default*: `false`. Calculate and return the texture coordinate at intersections.
 --- @field ignore tes3reference[]|niBillboardNode[]|niCollisionSwitch[]|niNode[]|niSwitchNode[]|nil *Optional*. An array of references and/or scene graph nodes to cull from the result(s).
