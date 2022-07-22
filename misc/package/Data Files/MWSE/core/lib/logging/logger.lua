@@ -83,7 +83,7 @@ end
 --- Set the log level for a logger
 ---@param newLogLevel string Log level to set. Available options are: TRACE, DEBUG, INFO, WARN and ERROR
 function Logger:setLogLevel(newLogLevel)
-	local errMsg = "[%s ERROR] Logger:setLogLevel() - Not a valid log level (valid logs levels: TRACE, DEBUG, INFO, WARN, ERROR"
+	local errMsg = "[%s ERROR] Logger:setLogLevel() - Not a valid log level (valid log levels: TRACE, DEBUG, INFO, WARN, ERROR, NONE)"
 	assert(logLevels[newLogLevel], string.format(errMsg, self.name))
 	self.logLevel = newLogLevel
 end
@@ -94,7 +94,7 @@ function Logger:setOutputFile(outputFile)
 	if outputFile == nil or string.lower(outputFile) == "mwse.log" then
 		self.outputFile = nil
 	else
-		local errMsg = "[%s ERROR] Logger:setLogLevel() - Not a valid outputFile (must be a string)"
+		local errMsg = "[%s ERROR] Logger:setOutputFile() - Not a valid outputFile (must be a string)"
 		assert(type(outputFile) == "string", string.format(errMsg, self.name))
 		self.outputFile = io.open(outputFile, "w")
 	end

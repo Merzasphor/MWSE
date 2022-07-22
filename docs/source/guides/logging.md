@@ -41,6 +41,17 @@ log:error("This is an error message")
 log:setLogLevel("INFO")
 ```
 
+## Using your logger in different source files
+
+In your main.lua, place the logger creation before other source files are included or required. This is to ensure the logger is created and accessible to these other source files.
+
+In the other source files:
+```lua
+local log = logger.getLogger("Test Mod")
+
+log:info("This is an info message")
+```
+
 ## Creating an MCM to control Log Level
 
 In your MCM config, create a dropdown with the following options:
@@ -52,12 +63,13 @@ settings:createDropdown{
     { label = "TRACE", value = "TRACE"},
     { label = "DEBUG", value = "DEBUG"},
     { label = "INFO", value = "INFO"},
+    { label = "WARN", value = "WARN"},
     { label = "ERROR", value = "ERROR"},
     { label = "NONE", value = "NONE"},
   },
   variable = mwse.mcm.createTableVariable{ id = "logLevel", table = mcmConfig },
   callback = function(self)
-    logger:setLogLevel(self.variable.value)
+    log:setLogLevel(self.variable.value)
   end
 }
 ```
