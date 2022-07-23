@@ -786,7 +786,7 @@ function tes3.dropItem(params) end
 function tes3.enableKey(keyCode) end
 
 --- Similar to the vanilla FadeIn mwscript command.
---- @param params tes3.fadeIn.params This table accepts the following values:
+--- @param params tes3.fadeIn.params? This table accepts the following values:
 --- 
 --- `fader`: tes3fader? — *Optional*. Defaults to the transition fader.
 --- 
@@ -799,7 +799,7 @@ function tes3.fadeIn(params) end
 --- @field duration number? *Default*: `1.0`. Time, in seconds, for the fade.
 
 --- Similar to the vanilla FadeOut mwscript command.
---- @param params tes3.fadeOut.params This table accepts the following values:
+--- @param params tes3.fadeOut.params? This table accepts the following values:
 --- 
 --- `fader`: tes3fader? — *Optional*. Defaults to the transition fader.
 --- 
@@ -812,7 +812,7 @@ function tes3.fadeOut(params) end
 --- @field duration number? *Default*: `1.0`. Time, in seconds, for the fade.
 
 --- Similar to the vanilla FadeTo mwscript command.
---- @param params tes3.fadeTo.params This table accepts the following values:
+--- @param params tes3.fadeTo.params? This table accepts the following values:
 --- 
 --- `fader`: tes3fader? — *Optional*. Defaults to the transition fader.
 --- 
@@ -1142,7 +1142,7 @@ function tes3.getJournalIndex(params) end
 --- @field id tes3dialogue|string No description yet available.
 
 --- Returns how many times the player killed an actor. If no actor is specified, total number of kills player commited will be returned.
---- @param params tes3.getKillCount.params This table accepts the following values:
+--- @param params tes3.getKillCount.params? This table accepts the following values:
 --- 
 --- `actor`: tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance|string|nil — *Optional*. The actor (or their ID) for whom to retrieve player's kill count.
 --- @return number count No description yet available.
@@ -2308,7 +2308,7 @@ function tes3.setOwner(params) end
 --- @field requiredRank number? *Default*: `0`. If `owner` is set to faction, `requitedRank` variable controls minimal rank in faction the player has to have to be able to freely take the reference.
 
 --- Enables or disables player's controls state.
---- @param params tes3.setPlayerControlState.params This table accepts the following values:
+--- @param params tes3.setPlayerControlState.params? This table accepts the following values:
 --- 
 --- `enabled`: boolean? — *Default*: `false`. Setting this to false will disable any kind of control.
 --- 
@@ -2386,7 +2386,7 @@ function tes3.setTrap(params) end
 --- Toggles the camera into vanity mode. In vanity mode the camera is in third person and it is orbiting slowly around the player character. Returns true if changed to vanity mode.
 --- 
 --- Note that unlike the vanity mode caused by not doing anything for a while, this vanity mode must be toggled to go off.
---- @param params tes3.setVanityMode.params This table accepts the following values:
+--- @param params tes3.setVanityMode.params? This table accepts the following values:
 --- 
 --- `enabled`: boolean? — *Default*: `true`. This flag sets the vanity mode as enabled or disabled.
 --- 
@@ -2444,19 +2444,19 @@ function tes3.showDialogueMenu(params) end
 --- @field checkAllowWerewolfForceGreeting boolean? *Default*: `true`. If true, the `AllowWerewolfForceGreeting` variable must exist on the reference's script to allow opening a dialogue while the player is a werewolf. This can be set to false to override the vanilla behavior.
 
 --- This function opens the repair service menu.
---- @param params tes3.showRepairServiceMenu.params This table accepts the following values:
+--- @param params tes3.showRepairServiceMenu.params? This table accepts the following values:
 --- 
---- `serviceActor`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string|nil — *Optional*. The actor to use for calculating the service price.
+--- `serviceActor`: tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string|nil — *Default*: `tes3mobilePlayer`. The actor to use for calculating the service price.
 function tes3.showRepairServiceMenu(params) end
 
 ---Table parameter definitions for `tes3.showRepairServiceMenu`.
 --- @class tes3.showRepairServiceMenu.params
---- @field serviceActor tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string|nil *Optional*. The actor to use for calculating the service price.
+--- @field serviceActor tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|string|nil *Default*: `tes3mobilePlayer`. The actor to use for calculating the service price.
 
 --- This function opens the resting menu and returns true on success. If the player can't rest currently, it returns false.
 --- 
 --- Various parameters can be used to allow resting in situations not normally possible.
---- @param params tes3.showRestMenu.params This table accepts the following values:
+--- @param params tes3.showRestMenu.params? This table accepts the following values:
 --- 
 --- `checkForEnemies`: boolean? — *Default*: `true`. Perform a check whether there are enemies nearby before opening rest menu. If there are, false is returned.
 --- 

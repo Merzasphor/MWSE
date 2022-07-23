@@ -190,7 +190,7 @@ function tes3mobileActor:calcEffectiveDamage(params) end
 --- @field resistAttribute number? *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
 
 --- Calculates the starting velocity of a jump.
---- @param params tes3mobileActor.calculateJumpVelocity.params This table accepts the following values:
+--- @param params tes3mobileActor.calculateJumpVelocity.params? This table accepts the following values:
 --- 
 --- `direction`: tes3vector2? — *Optional*. The ground direction vector used to calculate the velocity. If not specified, a zero-length direction vector for a regular jump without movement will be used.
 --- @return tes3vector3 result No description yet available.
@@ -201,7 +201,7 @@ function tes3mobileActor:calculateJumpVelocity(params) end
 --- @field direction tes3vector2? *Optional*. The ground direction vector used to calculate the velocity. If not specified, a zero-length direction vector for a regular jump without movement will be used.
 
 --- Forces the actor to jump. If `velocity` or other parameters with non-default values are specified it will be treated as a non-default jump during the [`jump`](https://mwse.github.io/MWSE/events/jump) event. Returns `false` if the actor is currently unable to jump or the jump has been cancelled, otherwise returns `true`.
---- @param params tes3mobileActor.doJump.params This table accepts the following values:
+--- @param params tes3mobileActor.doJump.params? This table accepts the following values:
 --- 
 --- `velocity`: tes3vector3? — *Optional*. The initial velocity of the jump. If not specified, the velocity of a regular jump without movement will be used.
 --- 
@@ -378,7 +378,7 @@ function tes3mobileActor:unequip(params) end
 --- @field clothingSlot number? *Optional*. The clothing slot to unequip. Maps to values in [`tes3.clothingSlot`](https://mwse.github.io/MWSE/references/clothing-slots/) namespace
 
 --- Unequips the currently equipped magic, optionally unequipping the enchanted item if needed.
---- @param params tes3mobileActor.unequipMagic.params This table accepts the following values:
+--- @param params tes3mobileActor.unequipMagic.params? This table accepts the following values:
 --- 
 --- `unequipItem`: boolean? — *Default*: `false`. Only valid if the currently equipped magic is from an equippable item enchantment. If `true`, the item containing the enchantment will be unequipped.
 --- 

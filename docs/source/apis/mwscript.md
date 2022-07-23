@@ -22,7 +22,7 @@ mwscript.activate({ reference = ... })
 
 **Parameters**:
 
-* `params` (table)
+* `params` (table): *Optional*.
 	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 
 ***
@@ -317,7 +317,7 @@ local result = mwscript.getDisabled({ reference = ... })
 
 **Parameters**:
 
-* `params` (table)
+* `params` (table): *Optional*.
 	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 
 **Returns**:
@@ -637,7 +637,7 @@ local executed = mwscript.setDelete({ reference = ..., delete = ... })
 
 **Parameters**:
 
-* `params` (table)
+* `params` (table): *Optional*.
 	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target reference for this command to be executed on. Defaults to the normal script execution reference.
 	* `delete` (boolean): *Default*: `true`. Setting this to true deletes the reference and triggers `referenceDeactivated` event. Setting this to false effectively undeletes/activates the reference and triggers `referenceActivated` event.
 

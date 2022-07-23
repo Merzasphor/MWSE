@@ -6,6 +6,7 @@ Note that unlike the vanity mode caused by not doing anything for a while, this 
 	arguments = {{
 		name = "params",
 		type = "table",
+		optional = true,
 		tableParams = {
 			{ name = "enabled", type = "boolean", optional = true, default = true, description = "This flag sets the vanity mode as enabled or disabled." },
 			{ name = "checkVanityDisabled", type = "boolean", optional = true, default = true, description = "This will prevent changing vanity mode according to vanityDisabled flag on tes3.mobilePlayer." },

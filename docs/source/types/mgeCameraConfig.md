@@ -101,7 +101,7 @@ mgeCameraConfig.zoomContinuous({ rate = ..., targetRate = ... })
 
 **Parameters**:
 
-* `params` (table)
+* `params` (table): *Optional*.
 	* `rate` (number): *Optional*.
 	* `targetRate` (number): *Optional*.
 

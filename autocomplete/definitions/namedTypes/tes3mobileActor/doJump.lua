@@ -4,6 +4,7 @@ return {
 	arguments = {{
 		name = "params",
 		type = "table",
+		optional = true,
 		tableParams = {
 			{name = "velocity", type = "tes3vector3", optional = true, description = "The initial velocity of the jump. If not specified, the velocity of a regular jump without movement will be used."},
 			{name = "applyFatigueCost", type = "boolean", optional = true, default = true, description = "If `true`, reduces the actor's current fatigue by the amount a regular jump would currently cost. Will not reduce fatigue if `false`."},

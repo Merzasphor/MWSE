@@ -4,6 +4,7 @@ return {
 	arguments = {{
 		name = "params",
 		type = "table",
+		optional = true,
 		tableParams = {
 			{ name = "enabled", type = "boolean", optional = true, default = false, description = "Setting this to false will disable any kind of control." },
 			{ name = "attack", type = "boolean", optional = true, default = false, description = "If this is false, it will block player from attacking." },
@@ -13,6 +14,5 @@ return {
 			{ name = "viewSwitch", type = "boolean", optional = true, default = false, description = "If this is false, it will block player changing view mod from 1st to 3rd person camera and vice versa." },
 		},
 	}},
-	returns = "changedControlState",
-	valuetype = "boolean",
+	returns = {{ name = "changedControlState", type = "boolean" }}
 }

@@ -4,10 +4,10 @@ return {
 	arguments = {{
 		name = "params",
 		type = "table",
+		optional = true,
 		tableParams = {
 			{ name = "actor", type = "tes3actor|string", optional = true, description = "The actor (or their ID) for whom to retrieve player's kill count." },
 		},
 	}},
-	returns = "count",
-	valuetype = "number",
+	returns = {{ name = "count", type = "number" }}
 }

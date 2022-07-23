@@ -1787,7 +1787,7 @@ local result = myObject:calculateJumpVelocity({ direction = ... })
 
 **Parameters**:
 
-* `params` (table)
+* `params` (table): *Optional*.
 	* `direction` ([tes3vector2](../../types/tes3vector2)): *Optional*. The ground direction vector used to calculate the velocity. If not specified, a zero-length direction vector for a regular jump without movement will be used.
 
 **Returns**:
@@ -1806,7 +1806,7 @@ local result = myObject:doJump({ velocity = ..., applyFatigueCost = ..., allowMi
 
 **Parameters**:
 
-* `params` (table)
+* `params` (table): *Optional*.
 	* `velocity` ([tes3vector3](../../types/tes3vector3)): *Optional*. The initial velocity of the jump. If not specified, the velocity of a regular jump without movement will be used.
 	* `applyFatigueCost` (boolean): *Default*: `true`. If `true`, reduces the actor's current fatigue by the amount a regular jump would currently cost. Will not reduce fatigue if `false`.
 	* `allowMidairJumping` (boolean): *Default*: `false`. If `true`, enables the jump to be performed while already jumping or falling. Does not work during levitation or other methods of flying.
@@ -2174,7 +2174,7 @@ myObject:unequipMagic({ unequipItem = ..., updateGUI = ... })
 
 **Parameters**:
 
-* `params` (table)
+* `params` (table): *Optional*.
 	* `unequipItem` (boolean): *Default*: `false`. Only valid if the currently equipped magic is from an equippable item enchantment. If `true`, the item containing the enchantment will be unequipped.
 	* `updateGUI` (boolean): *Default*: `true`. Only valid if this actor is the player. If `false`, the player GUI will not be updated to reflect the change to equipped magic.
 

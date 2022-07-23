@@ -4,8 +4,9 @@ return {
 	arguments = {{
 		name = "params",
 		type = "table",
+		optional = true,
 		tableParams = {
-			{ name = "serviceActor", type = "tes3mobileActor|tes3reference|string", optional = true, description = "The actor to use for calculating the service price." },
+			{ name = "serviceActor", type = "tes3mobileActor|tes3reference|string", optional = true, default = "tes3mobilePlayer", description = "The actor to use for calculating the service price." },
 		},
 	}},
 }

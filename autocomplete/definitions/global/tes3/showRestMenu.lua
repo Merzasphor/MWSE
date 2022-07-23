@@ -6,6 +6,7 @@ Various parameters can be used to allow resting in situations not normally possi
 	arguments = {{
 		name = "params",
 		type = "table",
+		optional = true,
 		tableParams = {
 			{ name = "checkForEnemies", type = "boolean", optional = true, default = true, description = "Perform a check whether there are enemies nearby before opening rest menu. If there are, false is returned." },
 			{ name = "checkForSolidGround", type = "boolean", optional = true, default = true, description = "Perform a check if the player is underwater. If underwater, false is returned." },
@@ -16,6 +17,5 @@ Various parameters can be used to allow resting in situations not normally possi
 			{ name = "waiting", type = "boolean", optional = true, default = false, description = "Or, is this a wait?" },
 		},
 	}},
-	returns = "success",
-	valuetype = "boolean",
+	returns = {{ name = "success", type = "boolean" }}
 }

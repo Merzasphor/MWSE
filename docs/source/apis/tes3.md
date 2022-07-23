@@ -1170,7 +1170,7 @@ tes3.fadeIn({ fader = ..., duration = ... })
 
 **Parameters**:
 
-* `params` (table)
+* `params` (table): *Optional*.
 	* `fader` ([tes3fader](../../types/tes3fader)): *Optional*. Defaults to the transition fader.
 	* `duration` (number): *Default*: `1.0`. Time, in seconds, for the fade.
 
@@ -1186,7 +1186,7 @@ tes3.fadeOut({ fader = ..., duration = ... })
 
 **Parameters**:
 
-* `params` (table)
+* `params` (table): *Optional*.
 	* `fader` ([tes3fader](../../types/tes3fader)): *Optional*. Defaults to the transition fader.
 	* `duration` (number): *Default*: `1.0`. Time, in seconds, for the fade.
 
@@ -1202,7 +1202,7 @@ tes3.fadeTo({ fader = ..., duration = ..., value = ... })
 
 **Parameters**:
 
-* `params` (table)
+* `params` (table): *Optional*.
 	* `fader` ([tes3fader](../../types/tes3fader)): *Optional*. Defaults to the transition fader.
 	* `duration` (number): *Default*: `1.0`. Time, in seconds, for the fade.
 	* `value` (number): *Default*: `1.0`.
@@ -1981,7 +1981,7 @@ local count = tes3.getKillCount({ actor = ... })
 
 **Parameters**:
 
-* `params` (table)
+* `params` (table): *Optional*.
 	* `actor` ([tes3actor](../../types/tes3actor), string): *Optional*. The actor (or their ID) for whom to retrieve player's kill count.
 
 **Returns**:
@@ -3895,7 +3895,7 @@ local changedControlState = tes3.setPlayerControlState({ enabled = ..., attack =
 
 **Parameters**:
 
-* `params` (table)
+* `params` (table): *Optional*.
 	* `enabled` (boolean): *Default*: `false`. Setting this to false will disable any kind of control.
 	* `attack` (boolean): *Default*: `false`. If this is false, it will block player from attacking.
 	* `jumping` (boolean): *Default*: `false`. If this is false, it will block player from jumping.
@@ -3978,7 +3978,7 @@ local changedVanityMode = tes3.setVanityMode({ enabled = ..., checkVanityDisable
 
 **Parameters**:
 
-* `params` (table)
+* `params` (table): *Optional*.
 	* `enabled` (boolean): *Default*: `true`. This flag sets the vanity mode as enabled or disabled.
 	* `checkVanityDisabled` (boolean): *Default*: `true`. This will prevent changing vanity mode according to vanityDisabled flag on tes3.mobilePlayer.
 	* `toggle` (boolean): *Default*: `false`. When this flag is set to true. The vanity mode will be toggled. If the player was in vanity mode, this will make the player leave vanity mode. Conversly, if the player wasn't in the vanity mode, this will turn on the vanity mode.
@@ -4064,8 +4064,8 @@ tes3.showRepairServiceMenu({ serviceActor = ... })
 
 **Parameters**:
 
-* `params` (table)
-	* `serviceActor` ([tes3mobileActor](../../types/tes3mobileActor), [tes3reference](../../types/tes3reference), string): *Optional*. The actor to use for calculating the service price.
+* `params` (table): *Optional*.
+	* `serviceActor` ([tes3mobileActor](../../types/tes3mobileActor), [tes3reference](../../types/tes3reference), string): *Default*: `tes3mobilePlayer`. The actor to use for calculating the service price.
 
 ***
 
@@ -4081,7 +4081,7 @@ local success = tes3.showRestMenu({ checkForEnemies = ..., checkForSolidGround =
 
 **Parameters**:
 
-* `params` (table)
+* `params` (table): *Optional*.
 	* `checkForEnemies` (boolean): *Default*: `true`. Perform a check whether there are enemies nearby before opening rest menu. If there are, false is returned.
 	* `checkForSolidGround` (boolean): *Default*: `true`. Perform a check if the player is underwater. If underwater, false is returned.
 	* `checkSleepingIllegal` (boolean): *Default*: `true`. Perform a check if the sleeping in the current cell is illegal. If illegal, then the player will be prompted to wait instead of rest.
