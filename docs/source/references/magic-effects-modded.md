@@ -136,6 +136,8 @@ These effects build off of the [standard magic effects](../magic-effects). If yo
 | detectTrap                   | 342       | [Enhanced Detection](https://www.nexusmods.com/morrowind/mods/47480)                               |
 |                              | 343       | Hircine's Maze                                                                                     |
 | magelight                    | 344       | [MM - Enhanced Light](https://www.nexusmods.com/morrowind/mods/47672)                              |
+| detectAnimalLand             | 345       | [Enhanced Detection](https://www.nexusmods.com/morrowind/mods/47480)                               |
+| detectAnimalUnderwater       | 346       | [Enhanced Detection](https://www.nexusmods.com/morrowind/mods/47480)                               |
 | dispelLevitate               | 400       | [Deeper Dagoth Ur](https://www.nexusmods.com/morrowind/mods/47234)                                 |
 | dispelLevitateJavelin        | 401       | [Deeper Dagoth Ur](https://www.nexusmods.com/morrowind/mods/47234)                                 |
 | slowTime                     | 402       | [Fortified Molag Mar](https://www.nexusmods.com/morrowind/mods/47270)                              |
