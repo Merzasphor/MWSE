@@ -361,13 +361,8 @@ namespace TES3 {
 
 	const auto TES3_MobileActor_startCombat = reinterpret_cast<void(__thiscall*)(MobileActor*, MobileActor*)>(0x530470);
 	void MobileActor::startCombat(MobileActor* target) {
-		// Patch: Make sure that disabled or dead NPCs can't start combat.
-		if (reference->getDisabled() || !getFlagActiveAI() || isDead()) {
-			return;
-		}
-
-		// Patch: Make sure that disabled or dead NPCs can't be the target of combat.
-		if (target->reference->getDisabled() || !target->getFlagActiveAI() || target->isDead()) {
+		// Patch: Make sure that disabled NPCs can't start combat.
+		if (reference->getDisabled()) {
 			return;
 		}
 
@@ -388,6 +383,26 @@ namespace TES3 {
 		if (mwse::lua::event::CombatStartedEvent::getEventEnabled()) {
 			luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::CombatStartedEvent(this, target));
 		}
+	}
+
+	void MobileActor::startCombat_lua(sol::object target) {
+		if (target.is<MobileActor>()) {
+			auto targetActor = target.as<MobileActor*>();
+
+			// Make sure that disabled or dead NPCs can't start combat.
+			if (!getFlagActiveAI() || isDead()) {
+				return;
+			}
+
+			// Make sure that disabled or dead NPCs can't be the target of combat.
+			if (targetActor->reference->getDisabled() || !targetActor->getFlagActiveAI() || targetActor->isDead()) {
+				return;
+			}
+
+			startCombat(targetActor);
+			return;
+		}
+		throw std::invalid_argument("Invalid 'target' parameter provided. Must be a tes3mobileActor.");
 	}
 
 	const auto TES3_MobileActor_stopCombat = reinterpret_cast<void(__thiscall*)(MobileActor*, bool)>(0x558720);

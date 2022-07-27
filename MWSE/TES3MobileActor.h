@@ -242,6 +242,7 @@ namespace TES3 {
 		float getWeaponSpeed() const;
 
 		void startCombat(MobileActor*);
+		void startCombat_lua(sol::object target);
 		void stopCombat(bool);
 		void stopCombat_lua(sol::optional<bool>);
 		bool isDead() const;
