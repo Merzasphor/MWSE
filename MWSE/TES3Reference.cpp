@@ -469,7 +469,12 @@ namespace TES3 {
 			auto mact = getAttachedMobileActor();
 			if (mact) {
 				auto worldController = TES3::WorldController::get();
+
+				// Remove the actor from simulation.
 				worldController->mobManager->removeMob(this);
+
+				// Cleanup related VFX and magic casted by this actor.
+				// This is normally done during actor death near 0x523D53 and is required when deleting actors.
 				worldController->vfxManager->removeForReference(this);
 				worldController->magicInstanceController->retireMagicCastedByActor(this);
 			}

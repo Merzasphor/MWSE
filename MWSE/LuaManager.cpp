@@ -3643,9 +3643,9 @@ namespace mwse::lua {
 		// Call original function.
 		TES3_MobileObject_EnterLeaveSimulation(mobileObject, active);
 
-		// Check if the current mobile is the player.
 		bool isPlayer = false;
 		if (mobileObject->isActor()) {
+			// Check if the current mobile is the player.
 			TES3::MobileActor* mobileActor = static_cast<TES3::MobileActor*>(mobileObject);
 			isPlayer = mobileActor->actorType == TES3::MobileActorType::Player;
 
@@ -4569,6 +4569,7 @@ namespace mwse::lua {
 		genCallEnforced(0x570E48, 0x570600, *reinterpret_cast<DWORD*>(&processManagerDetectSneak));
 
 		// Event: Mobile activated/deactivated.
+		// MobileObject::enterLeaveSimulation call at 0x57249B is not required as it is already taken care of by the other hooks.
 		genCallEnforced(0x524C34, 0x561CB0, reinterpret_cast<DWORD>(onMobileObjectEnterLeaveSimulation)); // MobileActor::enterLeaveSimulation
 		genCallEnforced(0x524A63, 0x561CB0, reinterpret_cast<DWORD>(onMobileObjectEnterLeaveSimulation)); // MobileActor::enterLeaveSimulation
 		overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobileObject, 0x70, 0x561CB0, reinterpret_cast<DWORD>(onMobileObjectEnterLeaveSimulation));
