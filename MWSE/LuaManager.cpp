@@ -3670,7 +3670,6 @@ namespace mwse::lua {
 	// Fix: Unsummoned actor cleanup
 	//
 
-	const auto TES3_MobileActor_onDeath = reinterpret_cast<void(__thiscall*)(TES3::MobileActor*)>(0x523AA0);
 	TES3::MobileActor* __fastcall cleanupUnsummonedActor(TES3::Reference* reference) {
 		TES3::MobileActor* mobileActor = reference->getAttachedMobileActor();
 		auto worldController = TES3::WorldController::get();
