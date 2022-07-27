@@ -159,7 +159,7 @@ namespace mwse::lua {
 			if (!TES3::DataHandler::get()->nonDynamicData->addNewObject(alchemy)) {
 				delete alchemy;
 				alchemy = nullptr;
-				throw std::runtime_error("tes3.createObject: Could not add the newly created spell in its proper collection.");
+				throw std::runtime_error("tes3.createObject: Could not add the newly created alchemy in its proper collection.");
 			}
 
 			// If created outside of a save game, mark the object as sourceless.

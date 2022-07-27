@@ -3,8 +3,6 @@
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
-#include "LuaMobileActorActivatedEvent.h"
-#include "LuaMobileActorDeactivatedEvent.h"
 #include "LuaDetectSneakEvent.h"
 
 #include "TES3MobileActor.h"
@@ -86,27 +84,25 @@ namespace TES3 {
 		TES3_ProjectileManager_resolveCollisions(this, deltaTime);
 	}
 
+	void ProjectileManager::removeProjectilesFiredByActor(MobileActor* mobileActor, bool includeSpellProjectiles) {
+		criticalSection.enter("MWSE:ProjectileManager::removeProjectilesFiredByActor");
+		for (auto projectile : activeProjectiles) {
+			if (projectile->firingActor == mobileActor && (includeSpellProjectiles || projectile->objectType == ObjectType::MobileProjectile)) {
+				projectile->enterLeaveSimulation(false);
+				projectile->flagExpire = true;
+			}
+		}
+		criticalSection.leave();
+	}
+
 	const auto TES3_MobManager_addMob = reinterpret_cast<void(__thiscall*)(MobManager*, Reference*)>(0x5636A0);
 	void MobManager::addMob(Reference * reference) {
 		TES3_MobManager_addMob(this, reference);
-
-		auto mobile = reference->getAttachedMobileObject();
-		if (mwse::lua::event::MobileActorActivatedEvent::getEventEnabled() && mobile) {
-			// Update simulation distance with an initial value before the event fires.
-			auto macp = WorldController::get()->getMobilePlayer();
-			mobile->simulationDistance = reference->position.distance(&macp->reference->position);
-
-			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileActorActivatedEvent(mobile));
-		}
 	}
 
 	const auto TES3_MobManager_removeMob = reinterpret_cast<void(__thiscall*)(MobManager*, Reference*)>(0x5637F0);
 	void MobManager::removeMob(Reference * reference) {
 		TES3_MobManager_removeMob(this, reference);
-
-		if (mwse::lua::event::MobileActorDeactivatedEvent::getEventEnabled()) {
-			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileActorDeactivatedEvent(reference));
-		}
 	}
 
 	void MobManager::checkPlayerDistance() {

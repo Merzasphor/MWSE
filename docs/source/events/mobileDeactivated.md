@@ -5,7 +5,7 @@
 
 # mobileDeactivated
 
-This event is called when a Mobile Actor is deactivated. Typically this happens when transitioning through cells. When the player enters a cell, the `mobileActivated` event will fire for each new actor. When the player leaves the cell, the `mobileDeactivated` event is called.
+This event is called when a mobile object is deactivated. This includes NPCs, creatures and projectiles of any kind. Typically this happens when an actor dies, a creature gets unsummoned, a projectile collides with something or expires or when the player transitions from one cell to another, causing actors in previously visited cells to get deactivated.
 
 ```lua
 --- @param e mobileDeactivatedEventData
@@ -19,5 +19,6 @@ event.register(tes3.event.mobileDeactivated, mobileDeactivatedCallback)
 
 ## Event Data
 
-* `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. The reference that the mobile has been deactivated for.
+* `mobile` ([tes3mobileObject](../../types/tes3mobileObject)): *Read-only*. The deactivated mobile object.
+* `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. The reference that the mobile object has been deactivated for.
 

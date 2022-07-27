@@ -272,6 +272,9 @@ namespace TES3 {
 		bool onActivatorCollision(int collisionIndex);
 
 		bool isActor() const;
+
+		// Enters/leaves the simulation state and executes related cleanup/initialization logic.
+		// If executed on a MobileActor the reference must not be disabled before calling this function, as it blocks execution.
 		void enterLeaveSimulation(bool entering);
 
 		//
@@ -281,7 +284,7 @@ namespace TES3 {
 		void setFootPoint(const Vector3* point);
 		void setInstantVelocity(const Vector3* velocity);
 		void updateConstantVelocity(const Vector3* velocity);
-
+		void resetCollisionGroup();
 		void enterLeaveSimulationByDistance();
 		IteratedList<ItemStack*>* getInventory() const;
 		bool getBasePositionIsUnderwater() const;

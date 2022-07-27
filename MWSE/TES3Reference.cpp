@@ -28,6 +28,7 @@
 #include "TES3GameSetting.h"
 #include "TES3ItemData.h"
 #include "TES3Light.h"
+#include "TES3MagicInstanceController.h"
 #include "TES3Misc.h"
 #include "TES3MobileCreature.h"
 #include "TES3MobilePlayer.h"
@@ -35,6 +36,7 @@
 #include "TES3MobManager.h"
 #include "TES3NPC.h"
 #include "TES3WorldController.h"
+#include "TES3VFXManager.h"
 
 #include "TES3UIManager.h"
 
@@ -453,7 +455,6 @@ namespace TES3 {
 		if (getDisabled()) {
 			return false;
 		}
-		BIT_SET_ON(objectFlags, ObjectFlag::DisabledBit);
 
 		auto dataHandler = TES3::DataHandler::get();
 
@@ -465,10 +466,17 @@ namespace TES3 {
 
 		// Leave simulation if we have a mobile.
 		if (baseObject->objectType == TES3::ObjectType::Creature || baseObject->objectType == TES3::ObjectType::NPC) {
-			auto mact = getAttachedMobileObject();
+			auto mact = getAttachedMobileActor();
 			if (mact) {
-				mact->enterLeaveSimulation(false);
-				TES3::WorldController::get()->mobManager->removeMob(this);
+				auto worldController = TES3::WorldController::get();
+
+				// Remove the actor from simulation.
+				worldController->mobManager->removeMob(this);
+
+				// Cleanup related VFX and magic casted by this actor.
+				// This is normally done during actor death near 0x523D53 and is required when deleting actors.
+				worldController->vfxManager->removeForReference(this);
+				worldController->magicInstanceController->retireMagicCastedByActor(this);
 			}
 		}
 		// Update lights for objects.
@@ -488,6 +496,9 @@ namespace TES3 {
 		if (sound) {
 			dataHandler->removeSound(sound, this);
 		}
+
+		// Set the disabled bit at the end since it will prevent functions such as enterLeaveSimulation executing properly.
+		BIT_SET_ON(objectFlags, ObjectFlag::DisabledBit);
 
 		// Finally flag as modified.
 		setObjectModified(true);

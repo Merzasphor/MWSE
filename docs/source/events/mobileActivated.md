@@ -5,7 +5,7 @@
 
 # mobileActivated
 
-This event is called when a Mobile Actor is activated. This may be the first time that a given Reference has an associated Mobile Actor attached to it. Typically this happens when transitioning through cells. When the player enters a cell, the `mobileActivated` event will fire for each new actor. When the player leaves the cell, the `mobileDeactivated` event is called.
+This event is called when a mobile object is activated. This includes NPCs, creatures and projectiles of any kind. This may be the first time that a given reference has an associated mobile object attached to it. Typically this happens when a projectile gets fired, a creature gets summoned or when the player transitions from one cell to another, causing actors in newly loaded cells to get activated.
 
 ```lua
 --- @param e mobileActivatedEventData
@@ -19,6 +19,6 @@ event.register(tes3.event.mobileActivated, mobileActivatedCallback)
 
 ## Event Data
 
-* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The activated mobile.
-* `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. The reference that the mobile has been activated for.
+* `mobile` ([tes3mobileObject](../../types/tes3mobileObject)): *Read-only*. The activated mobile object.
+* `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. The reference that the mobile object has been activated for.
 

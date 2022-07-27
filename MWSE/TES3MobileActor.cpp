@@ -184,6 +184,10 @@ namespace TES3 {
 		TES3_MobileActor_setCurrentMagicFromEquipmentStack(this, equipmentStack);
 	}
 
+	void MobileActor::removeFiredProjectiles(bool includeSpellProjectiles) {
+		TES3::WorldController::get()->mobManager->projectileManager->removeProjectilesFiredByActor(this, includeSpellProjectiles);
+	}
+
 	bool MobileActor::equipMagic(Object* source, ItemData* itemData, bool equipItem, bool updateGUI) {
 		if (!source) {
 			throw std::invalid_argument("Invalid 'source' parameter provided. Must not be nil.");
@@ -381,6 +385,26 @@ namespace TES3 {
 		}
 	}
 
+	void MobileActor::startCombat_lua(sol::object target) {
+		if (target.is<MobileActor>()) {
+			auto targetActor = target.as<MobileActor*>();
+
+			// Make sure that disabled or dead NPCs can't start combat.
+			if (!getFlagActiveAI() || isDead()) {
+				return;
+			}
+
+			// Make sure that disabled or dead NPCs can't be the target of combat.
+			if (targetActor->reference->getDisabled() || !targetActor->getFlagActiveAI() || targetActor->isDead()) {
+				return;
+			}
+
+			startCombat(targetActor);
+			return;
+		}
+		throw std::invalid_argument("Invalid 'target' parameter provided. Must be a tes3mobileActor.");
+	}
+
 	const auto TES3_MobileActor_stopCombat = reinterpret_cast<void(__thiscall*)(MobileActor*, bool)>(0x558720);
 	void MobileActor::stopCombat(bool something) {
 		// Invoke our combat stop event and check if it is blocked.
@@ -423,6 +447,16 @@ namespace TES3 {
 	void MobileActor::kill() {
 		health.setCurrentCapped(0.0f, false);
 	}
+
+	const auto TES3_MobileActor_notifyActorDeadOrDestroyed = reinterpret_cast<void(__thiscall*)(MobileActor*, MobileActor*)>(0x51FEB0);
+	void MobileActor::notifyActorDeadOrDestroyed(MobileActor* mobileActor) {
+		TES3_MobileActor_notifyActorDeadOrDestroyed(this, mobileActor);
+	};
+
+	const auto TES3_MobileActor_retireMagic = reinterpret_cast<void(__thiscall*)(MobileActor*)>(0x52C990);
+	void MobileActor::retireMagic() {
+		TES3_MobileActor_retireMagic(this);
+	};
 
 	const auto TES3_MobileActor_applyHealthDamage = reinterpret_cast<bool(__thiscall*)(MobileActor*, float, bool, bool, bool)>(0x557CF0);
 	bool MobileActor::applyHealthDamage(float damage, bool isPlayerAttack, bool scaleWithDifficulty, bool doNotChangeHealth) {

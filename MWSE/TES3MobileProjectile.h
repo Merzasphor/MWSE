@@ -6,6 +6,12 @@
 #include "TES3Vectors.h"
 
 namespace TES3 {
+	struct MobileProjectile_vTable : MobileObject_vTable {
+		void* initStats; // 0x98
+		void* initPhysics; // 0x9C
+		void* serializeExtraData; // 0xA0
+	};
+	static_assert(sizeof(MobileProjectile_vTable) == 0xA4, "TES3::MobileProjectile_vTable failed size validation");
 
 	struct MobileProjectile : MobileObject {
 		MobileActor* firingActor; // 0x80

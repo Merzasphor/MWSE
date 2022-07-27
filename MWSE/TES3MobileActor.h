@@ -224,11 +224,6 @@ namespace TES3 {
 		float applyArmorRating(float damage, float swing, bool damageEquipment);
 		float calculateArmorRating(int * armorItemCount = nullptr) const;
 		float getArmorRating_lua() const;
-		void applyPhysicalHit(MobileActor* attacker, MobileActor* defender, float damage, float swing, MobileProjectile* projectile = nullptr, bool alwaysPlayHitVoice = false);
-
-		void setCurrentMagicFromSpell(Spell* spell);
-		void setCurrentMagicFromSourceCombo(MagicSourceCombo sourceCombo);
-		void setCurrentMagicFromEquipmentStack(EquipmentStack* equipmentStack);
 
 		//
 		// Other related this-call functions.
@@ -247,11 +242,13 @@ namespace TES3 {
 		float getWeaponSpeed() const;
 
 		void startCombat(MobileActor*);
+		void startCombat_lua(sol::object target);
 		void stopCombat(bool);
 		void stopCombat_lua(sol::optional<bool>);
 		bool isDead() const;
 		void onDeath();
 		void kill();
+		void retireMagic();
 		bool applyHealthDamage(float damage, bool isPlayerAttack, bool scaleWithDifficulty, bool doNotChangeHealth);
 		float applyFatigueDamage(float damage, float swing, bool alwaysPlayHitVoice = false);
 		void applyJumpFatigueCost() const;
@@ -275,6 +272,10 @@ namespace TES3 {
 		float calculateFlySpeed();
 		Vector3 calculateJumpVelocity(Vector2 direction);
 		Vector3 calculateJumpVelocity_lua(sol::optional<sol::table> params);
+		void applyPhysicalHit(MobileActor* attacker, MobileActor* defender, float damage, float swing, MobileProjectile* projectile = nullptr, bool alwaysPlayHitVoice = false);
+		void setCurrentMagicFromSpell(Spell* spell);
+		void setCurrentMagicFromSourceCombo(MagicSourceCombo sourceCombo);
+		void setCurrentMagicFromEquipmentStack(EquipmentStack* equipmentStack);
 
 		void updateDerivedStatistics(Statistic * baseStatistic);
 		void updateDerivedStatistics_lua(sol::optional<Statistic*> baseStatistic);
@@ -329,6 +330,8 @@ namespace TES3 {
 		void setWeaponReady(bool value);
 
 		void updateOpacity();
+		void notifyActorDeadOrDestroyed(MobileActor* mobileActor);
+		void removeFiredProjectiles(bool includeSpellProjectiles);
 
 		ActorAnimationController* getAnimationController() const;
 		BaseObject* getCurrentSpell() const;

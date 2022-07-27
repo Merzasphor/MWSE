@@ -55,6 +55,7 @@ namespace TES3 {
 		//
 
 		void resolveCollisions(float deltaTime);
+		void removeProjectilesFiredByActor(MobileActor* mobileActor, bool includeSpellProjectiles);
 	};
 	static_assert(sizeof(ProjectileManager) == 0x3C, "TES3::ProjectileManager failed size validation");
 
@@ -78,7 +79,12 @@ namespace TES3 {
 		// Related this-call functions.
 		//
 
+		// Adds an actor to simulation, while also setting up their collider and AI planner.
+		// The reference must not be disabled before calling this function, as it blocks execution.
 		void addMob(Reference * reference);
+
+		// Removes an actor from simulation, while also cleaning up their collider and AI planner.
+		// Simulation will not be exited if the reference is disabled before calling this function.
 		void removeMob(Reference * reference);
 
 		void checkPlayerDistance();

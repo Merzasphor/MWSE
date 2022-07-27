@@ -99,7 +99,9 @@ namespace TES3 {
 	struct MobileObject_vTable;
 	struct MobilePlayer;
 	struct MobileProjectile;
+	struct MobileProjectile_vTable;
 	struct MobileSpellProjectile;
+	struct MobileSpellProjectile_vTable;
 	struct Moon;
 	struct NonDynamicData;
 	struct NPC;
