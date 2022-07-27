@@ -438,14 +438,6 @@ namespace TES3 {
 		TES3_MobileActor_notifyActorDeadOrDestroyed(this, mobileActor);
 	};
 
-	void MobileActor::broadcastDeadOrDestroyed() {
-		for (auto mobileActor : *WorldController::get()->allMobileActors) {
-			if (mobileActor != this) {
-				mobileActor->notifyActorDeadOrDestroyed(this);
-			}
-		}
-	};
-
 	const auto TES3_MobileActor_retireMagic = reinterpret_cast<void(__thiscall*)(MobileActor*)>(0x52C990);
 	void MobileActor::retireMagic() {
 		TES3_MobileActor_retireMagic(this);

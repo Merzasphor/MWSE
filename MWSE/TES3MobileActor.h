@@ -330,7 +330,6 @@ namespace TES3 {
 
 		void updateOpacity();
 		void notifyActorDeadOrDestroyed(MobileActor* mobileActor);
-		void broadcastDeadOrDestroyed();
 		void removeFiredProjectiles(bool includeSpellProjectiles);
 
 		ActorAnimationController* getAnimationController() const;
