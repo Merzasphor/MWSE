@@ -3048,6 +3048,10 @@ namespace mwse::lua {
 	}
 
 	int addItem(sol::table params) {
+		auto& luaManager = mwse::lua::LuaManager::getInstance();
+		auto stateHandle = luaManager.getThreadSafeStateHandle();
+		auto& state = stateHandle.state;
+
 		// Get the reference we are manipulating.
 		TES3::Reference* reference = getOptionalParamReference(params, "reference");
 		if (reference == nullptr) {
@@ -3163,9 +3167,22 @@ namespace mwse::lua {
 		// Play the relevant sound.
 		auto worldController = TES3::WorldController::get();
 		auto playerMobile = worldController->getMobilePlayer();
-		if (playerMobile && getOptionalParam<bool>(params, "playSound", true)) {
-			if (mobile == playerMobile) {
+		if (mobile == playerMobile) {
+			if (getOptionalParam<bool>(params, "playSound", true)) {
 				worldController->playItemUpDownSound(item, TES3::ItemSoundState::Down);
+			}
+
+			if (getOptionalParam<bool>(params, "showMessage", false)) {
+				std::string message;
+				auto luaFormat = state["string"]["format"];
+				auto GMSTs = TES3::DataHandler::get()->nonDynamicData->GMSTs;
+				if (fulfilledCount > 1) {
+					message = luaFormat(GMSTs[TES3::GMST::sNotifyMessage61]->value.asString, fulfilledCount, item->getName());
+				}
+				else {
+					message = luaFormat(GMSTs[TES3::GMST::sNotifyMessage60]->value.asString, item->getName());
+				}
+				TES3::UI::showMessageBox(message.c_str());
 			}
 		}
 

@@ -62,15 +62,17 @@ function tes3.addClothingSlot(params) end
 --- 
 --- `count`: number? — *Default*: `1`. The maximum number of items to add.
 --- 
---- `playSound`: boolean? — *Default*: `true`. If false, the up/down sound for the item won't be played.
+--- `playSound`: boolean? — *Default*: `true`. If `false`, the up/down sound for the item won't be played. This only applies if `reference` is the player.
 --- 
---- `limit`: boolean? — *Default*: `false`. If false, items can be placed into containers that shouldn't normally be allowed. This includes organic containers, and containers that are full.
+--- `showMessage`: boolean? — *Default*: `false`. If `true`, a message box notifying the player will be shown. This only applies if `reference` is the player.
 --- 
---- `reevaluateEquipment`: boolean? — *Default*: `true`. If true, and the item added is armor, clothing, or a weapon, the actor will reevaluate its equipment choices to see if the new item is worth equipping. This does not affect the player.
+--- `limit`: boolean? — *Default*: `false`. If `false`, items can be placed into containers that shouldn't normally be allowed. This includes organic containers, and containers that are full.
 --- 
---- `equipProjectiles`: boolean? — *Default*: `true`. If true, and the reference has the same projectile already equipped, the stacks will be merged. This will only work if the GUI is updated.
+--- `reevaluateEquipment`: boolean? — *Default*: `true`. If `true`, and the item added is armor, clothing, or a weapon, the actor will reevaluate its equipment choices to see if the new item is worth equipping. This does not affect the player.
 --- 
---- `updateGUI`: boolean? — *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though [`tes3ui.forcePlayerInventoryUpdate()`](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uiforceplayerinventoryupdate) must manually be called after all inventory updates are finished.
+--- `equipProjectiles`: boolean? — *Default*: `true`. If `true`, and the reference has the same projectile already equipped, the stacks will be merged. This will only work if the GUI is updated.
+--- 
+--- `updateGUI`: boolean? — *Default*: `true`. If `false`, the function won't manually resync the player's GUI state. This can result in some optimizations, though [`tes3ui.forcePlayerInventoryUpdate()`](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uiforceplayerinventoryupdate) must manually be called after all inventory updates are finished.
 --- @return number addedCount No description yet available.
 function tes3.addItem(params) end
 
@@ -81,11 +83,12 @@ function tes3.addItem(params) end
 --- @field itemData tes3itemData? *Optional*. The item data for the item.
 --- @field soul tes3creature|tes3npc|nil *Optional*. For creating filled soul gems.
 --- @field count number? *Default*: `1`. The maximum number of items to add.
---- @field playSound boolean? *Default*: `true`. If false, the up/down sound for the item won't be played.
---- @field limit boolean? *Default*: `false`. If false, items can be placed into containers that shouldn't normally be allowed. This includes organic containers, and containers that are full.
---- @field reevaluateEquipment boolean? *Default*: `true`. If true, and the item added is armor, clothing, or a weapon, the actor will reevaluate its equipment choices to see if the new item is worth equipping. This does not affect the player.
---- @field equipProjectiles boolean? *Default*: `true`. If true, and the reference has the same projectile already equipped, the stacks will be merged. This will only work if the GUI is updated.
---- @field updateGUI boolean? *Default*: `true`. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though [`tes3ui.forcePlayerInventoryUpdate()`](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uiforceplayerinventoryupdate) must manually be called after all inventory updates are finished.
+--- @field playSound boolean? *Default*: `true`. If `false`, the up/down sound for the item won't be played. This only applies if `reference` is the player.
+--- @field showMessage boolean? *Default*: `false`. If `true`, a message box notifying the player will be shown. This only applies if `reference` is the player.
+--- @field limit boolean? *Default*: `false`. If `false`, items can be placed into containers that shouldn't normally be allowed. This includes organic containers, and containers that are full.
+--- @field reevaluateEquipment boolean? *Default*: `true`. If `true`, and the item added is armor, clothing, or a weapon, the actor will reevaluate its equipment choices to see if the new item is worth equipping. This does not affect the player.
+--- @field equipProjectiles boolean? *Default*: `true`. If `true`, and the reference has the same projectile already equipped, the stacks will be merged. This will only work if the GUI is updated.
+--- @field updateGUI boolean? *Default*: `true`. If `false`, the function won't manually resync the player's GUI state. This can result in some optimizations, though [`tes3ui.forcePlayerInventoryUpdate()`](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uiforceplayerinventoryupdate) must manually be called after all inventory updates are finished.
 
 --- Creates an item data if there is room for a new stack in a given inventory. This can be then used to add custom user data or adjust an item's condition. This will return nil if no item data could be allocated for the item -- for example if the reference doesn't have the item in their inventory or each item of that type already has item data.
 --- @param params tes3.addItemData.params This table accepts the following values:
