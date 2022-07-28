@@ -4246,19 +4246,22 @@ namespace mwse::lua {
 
 		// Change the animation temporarily. Passing nullptr resets the animation to base.
 		const char* modelFile = getOptionalParam<const char*>(params, "file", nullptr);
-		reference->setModelPath(modelFile, true);
 
-		if (modelFile == nullptr) {
-			// Reset animation control.
-			auto mact = reference->getAttachedMobileActor();
-			if (mact) {
-				mact->setMobileActorFlag(TES3::MobileActorFlag::IdleAnim, false);
-			}
-		}
-		else {
+		if (modelFile) {
+			reference->setModelPath(modelFile, true);
+
 			animData = reference->getAttachedAnimationData();
 			if (!animData->hasOverrideAnimations()) {
 				throw std::logic_error("Animation file failed to load.");
+			}
+		}
+		else {
+			reference->reloadAnimation(reference->baseObject->getModelPath());
+
+			// Reset animation control that may be set by playAnimation.
+			auto mact = reference->getAttachedMobileActor();
+			if (mact) {
+				mact->setMobileActorFlag(TES3::MobileActorFlag::IdleAnim, false);
 			}
 		}
 	}
