@@ -36,7 +36,7 @@ return {
 				type = "number",
 				optional = true,
 				default = 1.0,
-				description = "The size scale for the spells containing this magic effect."
+				description = "Controls how much the visual effect scales with its magnitude."
 			},
 			{
 				name = "sizeCap",
