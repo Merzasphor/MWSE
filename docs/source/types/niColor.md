@@ -73,7 +73,7 @@ Alias for the red value of the color.
 
 ### `clamp`
 
-Clamps the color object.
+Clamps the color object to [0.0, 1.0] range.
 
 ```lua
 myObject:clamp()

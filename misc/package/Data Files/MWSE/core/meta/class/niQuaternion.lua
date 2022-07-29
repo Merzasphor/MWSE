@@ -19,11 +19,15 @@ function niQuaternion:copy() end
 --- Fill the quaternion by converting an angle-axis rotation. The angle must be within the interval [0, PI] and the axis must be unit length.
 --- @param angle number No description yet available.
 --- @param axis tes3vector3 No description yet available.
-function niQuaternion:fromAxisAngle(angle, axis) end
+function niQuaternion:fromAngleAxis(angle, axis) end
 
 --- Fill the quaternion by converting a rotation matrix.
 --- @param matrix tes3matrix33 No description yet available.
 function niQuaternion:fromRotation(matrix) end
+
+--- Inverting or conjugating a rotation quaternion has the effect of reversing the axis of rotation, which modifies it to rotate in the opposite direction from the original. That is, if an object is rotated to a new position using a quaternion, then rotating it again by quaternion's inverse will return it to its original location.
+--- @return niQuaternion result No description yet available.
+function niQuaternion:invert() end
 
 --- Calculates the spherical linear interpolate between this quaternion and another.
 --- @param target niQuaternion The quaternion to interpolate towards.
@@ -34,7 +38,7 @@ function niQuaternion:slerp(target, transition) end
 --- Convert this quaternion into an angle-axis rotation.
 --- @return number angle No description yet available.
 --- @return tes3vector3 axis No description yet available.
-function niQuaternion:toAxisAngle() end
+function niQuaternion:toAngleAxis() end
 
 --- Convert this quaternion into a rotation matrix.
 --- @return tes3matrix33 result No description yet available.

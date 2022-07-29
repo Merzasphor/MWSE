@@ -132,7 +132,7 @@ local result = myObject:reorthogonalize()
 
 ### `toEulerXYZ`
 
-Converts the matrix to a vector with 3 Euler angles.
+Converts the matrix to series of rotations along each axis.
 
 ```lua
 local isUnique, vector3 = myObject:toEulerXYZ()
@@ -147,7 +147,7 @@ local isUnique, vector3 = myObject:toEulerXYZ()
 
 ### `toEulerZYX`
 
-Converts the matrix to a vector with 3 Euler angles.
+Converts the matrix to series of rotations along each axis.
 
 ```lua
 local isUnique, vector3 = myObject:toEulerZYX()

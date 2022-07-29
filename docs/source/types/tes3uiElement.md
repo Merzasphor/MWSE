@@ -1212,7 +1212,7 @@ local value = myObject:getPropertyObject(property, typeCast)
 **Parameters**:
 
 * `property` (number, string): The property to get.
-* `typeCast` (string, nil): *Default*: `tes3baseObject`. The casting of the property to get.
+* `typeCast` (string, nil): *Default*: `"tes3baseObject"`. The casting of the property to get.
 
 **Returns**:
 

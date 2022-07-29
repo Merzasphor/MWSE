@@ -65,12 +65,12 @@ local result = myObject:copy()
 
 ***
 
-### `fromAxisAngle`
+### `fromAngleAxis`
 
 Fill the quaternion by converting an angle-axis rotation. The angle must be within the interval [0, PI] and the axis must be unit length.
 
 ```lua
-myObject:fromAxisAngle(angle, axis)
+myObject:fromAngleAxis(angle, axis)
 ```
 
 **Parameters**:
@@ -94,6 +94,20 @@ myObject:fromRotation(matrix)
 
 ***
 
+### `invert`
+
+Inverting or conjugating a rotation quaternion has the effect of reversing the axis of rotation, which modifies it to rotate in the opposite direction from the original. That is, if an object is rotated to a new position using a quaternion, then rotating it again by quaternion's inverse will return it to its original location.
+
+```lua
+local result = myObject:invert()
+```
+
+**Returns**:
+
+* `result` ([niQuaternion](../../types/niQuaternion))
+
+***
+
 ### `slerp`
 
 Calculates the spherical linear interpolate between this quaternion and another.
@@ -113,12 +127,12 @@ local result = myObject:slerp(target, transition)
 
 ***
 
-### `toAxisAngle`
+### `toAngleAxis`
 
 Convert this quaternion into an angle-axis rotation.
 
 ```lua
-local angle, axis = myObject:toAxisAngle()
+local angle, axis = myObject:toAngleAxis()
 ```
 
 **Returns**:

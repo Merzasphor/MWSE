@@ -42,7 +42,7 @@
 --- @field nonRecastable boolean Access to the base flag that determines if this effect can be refreshed by recasting.
 --- @field particleTexture boolean *Read-only*. The path to use for the particle effect texture.
 --- @field school number The school that the effect is associated with. Maps to [`tes3.magicSchool`](https://mwse.github.io/MWSE/references/magic-schools/) constants.
---- @field size number The size scale for the spells containing this magic effect.
+--- @field size number Controls how much the visual effect scales with its magnitude.
 --- @field sizeCap number The maximum possible size of the spell projectile with this effect.
 --- @field skill number *Read-only*. The skill for the associated school that the effect is associated with. This skill is used when calculating experience gain per skill after a spell with this effect is cast. Maps to values in [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) namespace.
 --- @field speed number No description yet available.

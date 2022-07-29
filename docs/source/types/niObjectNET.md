@@ -128,9 +128,81 @@ local reference = myObject:getGameReference(searchParents)
 
 ***
 
+### `getStringDataStartingWith`
+
+Searches for an niExtraData on this object to see if it has niStringExtraData that has its string start with the provided `value` argument.
+
+```lua
+local extra = myObject:getStringDataStartingWith(value)
+```
+
+**Parameters**:
+
+* `value` (string): The first niStringExtraData starting with this value will be returned.
+
+**Returns**:
+
+* `extra` ([niStringExtraData](../../types/niStringExtraData))
+
+***
+
+### `getStringDataWith`
+
+Searches for an niExtraData on this object to see if it has niStringExtraData that has the provided `value` argument in its string field.
+
+```lua
+local extra = myObject:getStringDataWith(value)
+```
+
+**Parameters**:
+
+* `value` (string): The first niStringExtraData with this word will be returned.
+
+**Returns**:
+
+* `extra` ([niStringExtraData](../../types/niStringExtraData))
+
+***
+
+### `hasStringDataStartingWith`
+
+Searches for an niExtraData on this object to see if it has niStringExtraData that has its string start with the provided `value` argument. Returns true if the value was found.
+
+```lua
+local result = myObject:hasStringDataStartingWith(value)
+```
+
+**Parameters**:
+
+* `value` (string): The value to search for.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
+### `hasStringDataWith`
+
+Searches for an niExtraData on this object to see if it has niStringExtraData that contains the provided `value` argument in its string field. Returns true if the value was found.
+
+```lua
+local result = myObject:hasStringDataWith(value)
+```
+
+**Parameters**:
+
+* `value` (string): The value to search for.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
 ### `isInstanceOfType`
 
-Determines if the object is of a given type, or of a type derived from the given type. Types can be found in the tes3.niType table.
+Determines if the object is of a given type, or of a type derived from the given type. Types can be found in the [`tes3.niType`](https://mwse.github.io/MWSE/references/niTypes/) table.
 
 ```lua
 local result = myObject:isInstanceOfType(type)
@@ -138,7 +210,7 @@ local result = myObject:isInstanceOfType(type)
 
 **Parameters**:
 
-* `type` (number)
+* `type` (number): Use values in the [`tes3.niType`](https://mwse.github.io/MWSE/references/niTypes/) table.
 
 **Returns**:
 
@@ -148,7 +220,7 @@ local result = myObject:isInstanceOfType(type)
 
 ### `isOfType`
 
-Determines if the object is of a given type. Types can be found in the tes3.niType table.
+Determines if the object is of a given type. Types can be found in the [`tes3.niType`](https://mwse.github.io/MWSE/references/niTypes/) table.
 
 ```lua
 local result = myObject:isOfType(type)
@@ -156,7 +228,7 @@ local result = myObject:isOfType(type)
 
 **Parameters**:
 
-* `type` (number)
+* `type` (number): Use values in the [`tes3.niType`](https://mwse.github.io/MWSE/references/niTypes/) table.
 
 **Returns**:
 
@@ -169,12 +241,12 @@ local result = myObject:isOfType(type)
 Add a controller to the object as the first controller.
 
 ```lua
-myObject:prependController(type)
+myObject:prependController(controller)
 ```
 
 **Parameters**:
 
-* `type` ([niTimeController](../../types/niTimeController))
+* `controller` ([niTimeController](../../types/niTimeController))
 
 ***
 

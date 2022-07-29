@@ -353,7 +353,7 @@ The school that the effect is associated with. Maps to [`tes3.magicSchool`](http
 
 ### `size`
 
-The size scale for the spells containing this magic effect.
+Controls how much the visual effect scales with its magnitude.
 
 **Returns**:
 

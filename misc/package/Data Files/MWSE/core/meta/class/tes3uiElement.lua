@@ -489,7 +489,7 @@ function tes3uiElement:getPropertyInt(property) end
 
 --- Properties are extra variables attached to an element. Morrowind uses these to bind variables to the UI, and they can be useful for element class-specific properties. This function gets a property as an object value, defaulting to `nil` if the property was not set. This function can be dangerous to use, and can lead to crashes if not properly understood.
 --- @param property number|string The property to get.
---- @param typeCast string|nil *Default*: `tes3baseObject`. The casting of the property to get.
+--- @param typeCast string|nil *Default*: `"tes3baseObject"`. The casting of the property to get.
 --- @return number value The value of the property, defaulting to `nil` if the property was not set.
 function tes3uiElement:getPropertyObject(property, typeCast) end
 

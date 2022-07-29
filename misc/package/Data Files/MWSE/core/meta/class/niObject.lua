@@ -16,13 +16,13 @@ niObject = {}
 --- @return niAlphaProperty|niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niExtraData|niFogProperty|niGeometry|niGeometryData|niKeyframeController|niKeyframeData|niLight|niLookAtController|niMaterialProperty|niNode|niPixelData|niPointLight|niSkinData|niSkinInstance|niSourceTexture|niSpotLight|niStencilProperty|niStringExtraData|niSwitchNode|niTexture|niTexturingProperty|niTimeController|niTriBasedGeometry|niTriBasedGeometryData|niTriShape|niTriShapeData|niVertexColorProperty result No description yet available.
 function niObject:clone() end
 
---- Determines if the object is of a given type, or of a type derived from the given type. Types can be found in the tes3.niType table.
---- @param type number No description yet available.
+--- Determines if the object is of a given type, or of a type derived from the given type. Types can be found in the [`tes3.niType`](https://mwse.github.io/MWSE/references/niTypes/) table.
+--- @param type number Use values in the [`tes3.niType`](https://mwse.github.io/MWSE/references/niTypes/) table.
 --- @return boolean result No description yet available.
 function niObject:isInstanceOfType(type) end
 
---- Determines if the object is of a given type. Types can be found in the tes3.niType table.
---- @param type number No description yet available.
+--- Determines if the object is of a given type. Types can be found in the [`tes3.niType`](https://mwse.github.io/MWSE/references/niTypes/) table.
+--- @param type number Use values in the [`tes3.niType`](https://mwse.github.io/MWSE/references/niTypes/) table.
 --- @return boolean result No description yet available.
 function niObject:isOfType(type) end
 

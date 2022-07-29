@@ -21,7 +21,7 @@ niColor = {}
 --- @return niColor color No description yet available.
 function niColor.new(r, g, b) end
 
---- Clamps the color object.
+--- Clamps the color object to [0.0, 1.0] range.
 function niColor:clamp() end
 
 --- Creates a copy of the color object.

@@ -226,7 +226,7 @@ local effect = tes3.addMagicEffect({ id = ..., name = ..., baseCost = ..., schoo
 	* `name` (string): *Default*: `Unnamed Effect`. Name of the effect.
 	* `baseCost` (number): *Default*: `1`. Base magicka cost for the effect.
 	* `school` (integer): *Default*: `tes3.magicSchool.alteration`. The magic school the new effect will be assigned to. Maps to [`tes3.magicSchool`](https://mwse.github.io/MWSE/references/magic-schools/) constants.
-	* `size` (number): *Default*: `1`. The size scale for the spells containing this magic effect.
+	* `size` (number): *Default*: `1`. Controls how much the visual effect scales with its magnitude.
 	* `sizeCap` (number): *Default*: `1`. The maximum possible size of the projectile.
 	* `speed` (number): *Default*: `1`.
 	* `description` (string): *Default*: `No description available.`. Description for the effect.

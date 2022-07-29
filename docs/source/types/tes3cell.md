@@ -395,7 +395,7 @@ myObject:iterateReferences(filter)
 
 **Parameters**:
 
-* `filter` (number): *Optional*. The TES3 object type to filter results by. Those are stored in [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) namespace.
+* `filter` (number, number[]): *Optional*. The TES3 object type to filter results by. Those are stored in [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) namespace.
 
 ***
 

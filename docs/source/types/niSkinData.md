@@ -68,7 +68,7 @@ local result = myObject:clone()
 
 ### `isInstanceOfType`
 
-Determines if the object is of a given type, or of a type derived from the given type. Types can be found in the tes3.niType table.
+Determines if the object is of a given type, or of a type derived from the given type. Types can be found in the [`tes3.niType`](https://mwse.github.io/MWSE/references/niTypes/) table.
 
 ```lua
 local result = myObject:isInstanceOfType(type)
@@ -76,7 +76,7 @@ local result = myObject:isInstanceOfType(type)
 
 **Parameters**:
 
-* `type` (number)
+* `type` (number): Use values in the [`tes3.niType`](https://mwse.github.io/MWSE/references/niTypes/) table.
 
 **Returns**:
 
@@ -86,7 +86,7 @@ local result = myObject:isInstanceOfType(type)
 
 ### `isOfType`
 
-Determines if the object is of a given type. Types can be found in the tes3.niType table.
+Determines if the object is of a given type. Types can be found in the [`tes3.niType`](https://mwse.github.io/MWSE/references/niTypes/) table.
 
 ```lua
 local result = myObject:isOfType(type)
@@ -94,7 +94,7 @@ local result = myObject:isOfType(type)
 
 **Parameters**:
 
-* `type` (number)
+* `type` (number): Use values in the [`tes3.niType`](https://mwse.github.io/MWSE/references/niTypes/) table.
 
 **Returns**:
 

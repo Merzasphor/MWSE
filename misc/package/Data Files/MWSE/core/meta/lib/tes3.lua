@@ -133,7 +133,7 @@ function tes3.addJournalEntry(params) end
 --- 
 --- `school`: integer? — *Default*: `tes3.magicSchool.alteration`. The magic school the new effect will be assigned to. Maps to [`tes3.magicSchool`](https://mwse.github.io/MWSE/references/magic-schools/) constants.
 --- 
---- `size`: number? — *Default*: `1`. The size scale for the spells containing this magic effect.
+--- `size`: number? — *Default*: `1`. Controls how much the visual effect scales with its magnitude.
 --- 
 --- `sizeCap`: number? — *Default*: `1`. The maximum possible size of the projectile.
 --- 
@@ -249,7 +249,7 @@ function tes3.addMagicEffect(params) end
 --- @field name string? *Default*: `Unnamed Effect`. Name of the effect.
 --- @field baseCost number? *Default*: `1`. Base magicka cost for the effect.
 --- @field school integer? *Default*: `tes3.magicSchool.alteration`. The magic school the new effect will be assigned to. Maps to [`tes3.magicSchool`](https://mwse.github.io/MWSE/references/magic-schools/) constants.
---- @field size number? *Default*: `1`. The size scale for the spells containing this magic effect.
+--- @field size number? *Default*: `1`. Controls how much the visual effect scales with its magnitude.
 --- @field sizeCap number? *Default*: `1`. The maximum possible size of the projectile.
 --- @field speed number? *Default*: `1`. No description yet available.
 --- @field description string? *Default*: `No description available.`. Description for the effect.

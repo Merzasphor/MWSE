@@ -56,12 +56,12 @@ function tes3matrix33:invert() end
 --- @return boolean result No description yet available.
 function tes3matrix33:reorthogonalize() end
 
---- Converts the matrix to a vector with 3 Euler angles.
+--- Converts the matrix to series of rotations along each axis.
 --- @return boolean isUnique No description yet available.
 --- @return tes3vector3 vector3 No description yet available.
 function tes3matrix33:toEulerXYZ() end
 
---- Converts the matrix to a vector with 3 Euler angles.
+--- Converts the matrix to series of rotations along each axis.
 --- @return boolean isUnique No description yet available.
 --- @return tes3vector3 vector3 No description yet available.
 function tes3matrix33:toEulerZYX() end
