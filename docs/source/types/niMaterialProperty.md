@@ -142,11 +142,11 @@ The specular material color.
 
 ### `type`
 
-The unique class identifier number of the given rendering property.
+The unique class identifier number of the given rendering property. The types are available in [`tes3.niPropertyType`](https://mwse.github.io/MWSE/references/niProperty-types/) table.
 
 **Returns**:
 
-* `result` (niPropertyType)
+* `result` (number)
 
 ***
 
