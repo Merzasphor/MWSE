@@ -136,7 +136,7 @@ The access to the triangles of the object. The length of the array is equal to t
 
 **Returns**:
 
-* `result` (niTriangle[])
+* `result` ([niTriangle](../../types/niTriangle)[])
 
 ***
 
