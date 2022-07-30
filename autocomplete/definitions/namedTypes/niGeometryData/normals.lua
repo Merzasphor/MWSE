@@ -1,6 +1,6 @@
 return {
 	type = "value",
-	description = [[The normals list for the object.]],
+	description = [[The list of unitized, model-space vertex normals for the object. The length of the array is equal to `vertexCount`.]],
 	readOnly = true,
-	valuetype = "tes3vector3",
+	valuetype = "tes3vector3[]",
 }

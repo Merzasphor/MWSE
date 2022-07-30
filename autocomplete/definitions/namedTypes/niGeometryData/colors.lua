@@ -1,6 +1,6 @@
 return {
 	type = "value",
-	description = [[The color for the object.]],
+	description = [[The vertex colors for the object. The length of the array is equal to `vertexCount`.]],
 	readOnly = true,
-	valuetype = "niColorA",
+	valuetype = "niPackedColor[]",
 }
