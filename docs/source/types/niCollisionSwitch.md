@@ -122,7 +122,7 @@ The human-facing name of the given object.
 
 ### `parent`
 
-The object's parent. It may not have one if it is not attached to the scene.
+*Read-only*. The object's parent. It may not have one if it is not attached to the scene.
 
 **Returns**:
 
@@ -132,7 +132,7 @@ The object's parent. It may not have one if it is not attached to the scene.
 
 ### `properties`
 
-The list of properties attached to this `niAVObject`.
+*Read-only*. The list of properties attached to this `niAVObject`.
 
 **Returns**:
 
@@ -230,6 +230,16 @@ The object's local translation vector.
 
 ***
 
+### `velocity`
+
+The object's local velocity.
+
+**Returns**:
+
+* `result` ([tes3vector3](../../types/tes3vector3))
+
+***
+
 ### `vertexColorProperty`
 
 Convenient access to this object's vertex coloring property. Setting this value to be nil will erase the property, while setting it to a valid vertex coloring property will set (or replace) it.
@@ -237,6 +247,36 @@ Convenient access to this object's vertex coloring property. Setting this value 
 **Returns**:
 
 * `result` ([niVertexColorProperty](../../types/niVertexColorProperty), nil)
+
+***
+
+### `worldBoundOrigin`
+
+The world coordinates of the object's bounds origin.
+
+**Returns**:
+
+* `result` ([tes3vector3](../../types/tes3vector3))
+
+***
+
+### `worldBoundRadius`
+
+The radius of the object's bounds.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `worldTransform`
+
+The object's transformations in the world space.
+
+**Returns**:
+
+* `result` ([tes3transform](../../types/tes3transform))
 
 ***
 
@@ -283,7 +323,7 @@ myObject:attachChild(child, useFirstAvailable)
 
 ### `attachProperty`
 
-Attach a property to this object.
+Attaches a property to this object.
 
 ```lua
 myObject:attachProperty(property)
@@ -333,6 +373,24 @@ local boundingBox = myObject:createBoundingBox()
 
 ***
 
+### `detachAllProperties`
+
+Detaches all the properties on the object and returns them in the table.
+
+```lua
+local result = myObject:detachAllProperties(ts)
+```
+
+**Parameters**:
+
+* `ts` (table)
+
+**Returns**:
+
+* `result` ([niProperty](../../types/niProperty)[])
+
+***
+
 ### `detachChild`
 
 Detaches the child from the children list of the node. Returns the detached child.
@@ -379,7 +437,7 @@ local result = myObject:detachProperty(type)
 
 **Parameters**:
 
-* `type` (number)
+* `type` (number): The types are available in [`tes3.niPropertyType`](https://mwse.github.io/MWSE/references/niProperty-types/) table.
 
 **Returns**:
 
@@ -451,7 +509,7 @@ local result = myObject:getProperty(type)
 
 **Parameters**:
 
-* `type` (number)
+* `type` (number): The types are available in [`tes3.niPropertyType`](https://mwse.github.io/MWSE/references/niProperty-types/) table.
 
 **Returns**:
 
@@ -581,6 +639,23 @@ myObject:prependController(controller)
 
 ***
 
+### `propagatePositionChange`
+
+Alias for `update()` method. Updates the world transforms of this node and its children, which makes changes visible for rendering. Use after changing any local rotation, translation, scale, or bounds.
+
+```lua
+myObject:propagatePositionChange({ time = ..., controllers = ..., bounds = ... })
+```
+
+**Parameters**:
+
+* `args` (table): *Optional*.
+	* `time` (number): *Default*: `0`. 
+	* `controllers` (boolean): *Default*: `false`. Update object's controllers.
+	* `bounds` (boolean): *Default*: `true`. Update object's bounds.
+
+***
+
 ### `removeAllControllers`
 
 Removes all controllers.
@@ -667,8 +742,15 @@ myObject:setFlag(state, index)
 Updates the world transforms of this node and its children, which makes changes visible for rendering. Use after changing any local rotation, translation, scale, or bounds.
 
 ```lua
-myObject:update()
+myObject:update({ time = ..., controllers = ..., bounds = ... })
 ```
+
+**Parameters**:
+
+* `args` (table): *Optional*.
+	* `time` (number): *Default*: `0`. 
+	* `controllers` (boolean): *Default*: `false`. Update object's controllers.
+	* `bounds` (boolean): *Default*: `true`. Update object's bounds.
 
 ***
 

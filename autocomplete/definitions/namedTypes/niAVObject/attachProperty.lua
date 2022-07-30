@@ -1,6 +1,6 @@
 return {
 	type = "method",
-	description = [[Attach a property to this object.]],
+	description = [[Attaches a property to this object.]],
 	arguments = {
 		{ name = "property", type = "niProperty" },
 	},
