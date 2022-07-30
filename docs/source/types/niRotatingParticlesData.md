@@ -36,7 +36,7 @@ The model-space bounding sphere of the object.
 
 **Returns**:
 
-* `result` ([niBound](../../types/niBound))
+* `result` (niBound)
 
 ***
 
@@ -77,16 +77,6 @@ The model-space bounding sphere of the object.
 **Returns**:
 
 * `result` (number)
-
-***
-
-### `references`
-
-*Read-only*. The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
-
-**Returns**:
-
-* `result` (string)
 
 ***
 

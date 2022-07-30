@@ -40,16 +40,6 @@ The skinning data. May be shared by multiple skin instances.
 
 ***
 
-### `references`
-
-*Read-only*. The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
-
-**Returns**:
-
-* `result` (string)
-
-***
-
 ### `root`
 
 The skeleton root (parent of the root bone).

@@ -150,16 +150,6 @@ The port on the backbuffer of the camera.
 
 ***
 
-### `references`
-
-*Read-only*. The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
-
-**Returns**:
-
-* `result` (string)
-
-***
-
 ### `renderer`
 
 *Read-only*. The renderer of the camera.

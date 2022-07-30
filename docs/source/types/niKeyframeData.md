@@ -50,16 +50,6 @@ This type inherits the following: [niObject](../../types/niObject)
 
 ***
 
-### `references`
-
-*Read-only*. The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
-
-**Returns**:
-
-* `result` (string)
-
-***
-
 ### `rotationKeyCount`
 
 *Read-only*. The number of rotation keys available.
