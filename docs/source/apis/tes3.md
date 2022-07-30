@@ -95,6 +95,16 @@ A reference to the player.
 
 ***
 
+### `tes3.player1stPerson`
+
+A reference used for the player's first person hands.
+
+**Returns**:
+
+* `result` ([tes3reference](../../types/tes3reference))
+
+***
+
 ### `tes3.worldController`
 
 One of the core game objects.

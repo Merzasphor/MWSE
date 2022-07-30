@@ -13,6 +13,7 @@
 --- @field magicSchoolSkill number This table is used to convert numerical magic school IDs to their respective skill IDs. These constants will return their respective `tes3.skill` constants.
 --- @field mobilePlayer tes3mobilePlayer The player's mobile actor.
 --- @field player tes3reference A reference to the player.
+--- @field player1stPerson tes3reference A reference used for the player's first person hands.
 --- @field worldController tes3worldController One of the core game objects.
 tes3 = {}
 
