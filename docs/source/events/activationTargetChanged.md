@@ -22,6 +22,6 @@ event.register(tes3.event.activationTargetChanged, activationTargetChangedCallba
 
 ## Event Data
 
-* `current` ([tes3reference](../../types/tes3reference)): *Read-only*. The activation target for the player, should they press the activation key.
-* `previous` ([tes3reference](../../types/tes3reference)): *Read-only*. The previous activation target.
+* `current` ([tes3reference](../../types/tes3reference)): *Read-only*. The activation target for the player, should they press the activation key. This can be nil when the player is not looking at an activateable object.
+* `previous` ([tes3reference](../../types/tes3reference)): *Read-only*. The previous activation target. If the player picked up or activated the previous target, this value may become nil, as the reference no longer exists after being taken.
 

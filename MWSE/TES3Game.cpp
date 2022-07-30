@@ -1,8 +1,6 @@
 #include "TES3Game.h"
 
 namespace TES3 {
-	Reference* Game::previousPlayerTarget = nullptr;
-
 	void Game::setGamma(float value) {
 		vTable->setGamma(this, value);
 	}

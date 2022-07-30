@@ -122,12 +122,6 @@ namespace TES3 {
 		~Game() = delete;
 
 		//
-		// Extra static data fields.
-		//
-
-		static Reference* previousPlayerTarget;
-
-		//
 		// vTable accessor functions.
 		//
 

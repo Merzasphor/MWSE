@@ -61,10 +61,6 @@ namespace TES3 {
 
 	const auto TES3_Reference_dtor = reinterpret_cast<void(__thiscall*)(Reference*)>(0x4E45C0);
 	void Reference::dtor() {
-		if (TES3::Game::previousPlayerTarget == this) {
-			TES3::Game::previousPlayerTarget = nullptr;
-		}
-
 		TES3_Reference_dtor(this);
 	}
 
