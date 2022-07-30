@@ -9,37 +9,37 @@
 
 namespace TES3 {
 	struct Game_vTable {
-		void * unknown_0x0;
-		void * unknown_0x4;
-		void * unknown_0x8;
-		void * unknown_0xC;
-		void * unknown_0x10;
-		void * unknown_0x14;
-		void * unknown_0x18;
-		void * unknown_0x1C;
-		void * unknown_0x20;
-		void(__thiscall* setPixelShaderEnabled)(Game*, bool); // 0x24
-		void * unknown_0x28;
-		void * unknown_0x2C;
-		void * unknown_0x30;
-		void * unknown_0x34;
-		void * unknown_0x38;
-		void * unknown_0x3C;
-		void * unknown_0x40;
-		void * unknown_0x44;
-		void * unknown_0x48;
-		void * unknown_0x4C;
-		void(__thiscall * setGamma)(Game*, float); // 0x50
-		void * unknown_0x54;
-		void * unknown_0x58;
-		void * unknown_0x5C;
-		void * unknown_0x60;
+		void* dtor; // 0x0
+		void* SetRegistryKey; // 0x4
+		void* SetWindowWidth; // 0x8
+		void* SetWindowHeight; // 0xC
+		void* SetBitDepth; // 0x10
+		void* SetBackBuffers; // 0x14
+		void* SetMultisampleEnable; // 0x18
+		void* SetMultisamples; // 0x1C
+		void* SetFullScreen; // 0x20
+		void(__thiscall* SetPixelShaderEnabled)(Game*, bool); // 0x24
+		void* SetStencil; // 0x28
+		void* SetMipmap; // 0x2C
+		void* SetMipmapSkipLevel; // 0x30
+		void* SetHardwareTL; // 0x34
+		void* SetMultipass; // 0x38
+		void* SetVertexProcessing; // 0x3C
+		void* SetSwapEffect; // 0x40
+		void* SetRefreshRate; // 0x44
+		void* SetPresentInterval; // 0x48
+		void* SetAdapterID; // 0x4C
+		void(__thiscall* SetGamma)(Game*, float); // 0x50
+		void* ReadSettings; // 0x54
+		void* WriteSettings; // 0x58
+		void* CreateRenderer; // 0x5C
+		void* CreateRendererFromSettings; // 0x60
 	};
 	static_assert(sizeof(Game_vTable) == 0x64, "TES3::Game_vTable failed size validation");
 
 	struct Game {
-		Game_vTable * vTable;
-		void * unknown_0x4;
+		Game_vTable* vTable;
+		const char* registryKey; // 0x4
 		int windowWidth; // 0x8
 		int windowHeight; // 0xC
 		int screenDepth; // 0x10
@@ -75,19 +75,17 @@ namespace TES3 {
 		HWND parentWindowHandle; // 0x5C
 		HWND windowHandle; // 0x60
 		NI::Renderer* renderer; // 0x64
-		int unknown_0x68;
-		int unknown_0x6C;
-		int unknown_0x70;
+		NI::Color unknown_0x68; // 0x68
 		char unknown_0x74;
 		char unknown_0x75;
-		void * unknown_0x78;
+		void* unknown_0x78;
 		char unknown_0x7C;
 		int unknown_0x80;
-		int unknown_0x84;
-		void * unknown_0x88; // std::string?
-		int unknown_0x8C;
-		int unknown_0x90;
-		int unknown_0x94;
+		char resolutionModeStringsVectorTag; // 0x84
+		void* resolutionModeStringsBegin; // 0x88 - pointer to std::string
+		void* resolutionModeStringsEnd; // 0x8C
+		void* resolutionModeStringsStorageEnd; // 0x90
+		void* showSceneGraphStruct; // 0x94
 		IteratedList<NI::ObjectNET*>* unknown_0x98;
 		NI::Pointer<NI::Node> worldRoot; // 0x9C
 		NI::Pointer<NI::Node> worldObjectRoot; // 0xA0
@@ -98,34 +96,26 @@ namespace TES3 {
 		NI::Pointer<NI::AmbientLight> activationAmbientLight; // 0xB4
 		NI::Pointer<NI::Node> gridString; // 0xB8
 		NI::Pointer<NI::Node> collideString; // 0xBC
-		int unknown_0xC0;
-		int unknown_0xC4;
+		void* unknown_0xC0;
+		void* unknown_0xC4;
 		NI::Pointer<NI::Node> textureString; // 0xC8
-		int unknown_0xCC;
-		void * unknown_0xD0[3]; // SG nodes?
-		int unknown_0xDC;
-		int unknown_0xE0;
+		void* unknown_0xCC;
+		void* unknown_0xD0[3]; // SG nodes?
+		void* unknown_0xDC;
+		void* unknown_0xE0;
 		NI::Pick* playerTargetPick; // 0xE4
 		Reference* playerTarget; // 0xE8
-		int unknown_0xEC;
+		Reference* tooltipTarget; // 0xEC
 		NI::Pointer<NI::FogProperty> fogProperty; // 0xF0
-		int unknown_0xF4;
-		int unknown_0xF8;
-		int unknown_0xFC;
-		int unknown_0x100;
-		int unknown_0x104;
+		int compassHeading; // 0xF4
+		void* unknown_0xF8;
+		NI::Color currentFogColour; // 0xFC
 		LoadScreenManager* loadScreenManager; // 0x108
-		char unknown_0x10C;
+		char skipRenderingNextFrame; // 0x10C
 		char unknown_0x10D[3]; // Padding.
 
 		Game() = delete;
 		~Game() = delete;
-
-		//
-		// Extra static data fields.
-		//
-
-		static Reference* previousPlayerTarget;
 
 		//
 		// vTable accessor functions.
@@ -150,4 +140,6 @@ namespace TES3 {
 
 	};
 	static_assert(sizeof(Game) == 0x110, "TES3::Game failed size validation");
+	static_assert(offsetof(Game, Game::worldPickObjectRoot) == 0xA4, "TES3::Game failed offset validation");
+	static_assert(offsetof(Game, Game::playerTarget) == 0xE8, "TES3::Game failed offset validation");
 }

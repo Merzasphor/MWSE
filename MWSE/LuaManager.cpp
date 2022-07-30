@@ -1840,21 +1840,36 @@ namespace mwse::lua {
 	// Event: Activation Target Changed
 	//
 
-	static const uintptr_t MACP__getPlayerAnimData_fieldEC = 0x567990;
+	static const uintptr_t MACP__getVanityState = 0x567990;
+	static TES3::Reference* ActivationTargetChanged_preActivationTarget = nullptr;
+	static bool ActivationTargetChanged_invalidated = false;
 
 	static __declspec(naked) void HookPreFindActivationTarget() {
 		_asm {
-			mov eax, ds: [0x7C6CDC]  // global_TES3_Game
-			mov eax, [eax + 0xE8]	// game->playerTarget
-			mov TES3::Game::previousPlayerTarget, eax
-			jmp MACP__getPlayerAnimData_fieldEC
+			mov		eax, ds: [0x7C6CDC]  // global_TES3_Game
+			mov		eax, [eax + 0xE8]	// game->playerTarget
+			mov		ActivationTargetChanged_preActivationTarget, eax
+			mov		ActivationTargetChanged_invalidated, 0
+			jmp		MACP__getVanityState
+		}
+	}
+
+	static __declspec(naked) void HookPostActivate() {
+		// On ref activation, clear remembered reference to avoid using a stale pointer to a possibly destroyed reference.
+		// The invalidation flag is required to identify change when the current target also becomes nullptr.
+		_asm {
+			xor		edx, edx
+			mov		ActivationTargetChanged_preActivationTarget, edx
+			mov		ActivationTargetChanged_invalidated, 1
+			retn	8
 		}
 	}
 
 	static void HookPostFindActivationTarget() {
 		TES3::Reference* currentTarget = TES3::Game::get()->playerTarget;
-		if (TES3::Game::previousPlayerTarget != currentTarget && event::ActivationTargetChangedEvent::getEventEnabled()) {
-			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::ActivationTargetChangedEvent(TES3::Game::previousPlayerTarget, currentTarget));
+		bool changed = ActivationTargetChanged_invalidated || ActivationTargetChanged_preActivationTarget != currentTarget;
+		if (changed && event::ActivationTargetChangedEvent::getEventEnabled()) {
+			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::ActivationTargetChangedEvent(ActivationTargetChanged_preActivationTarget, currentTarget));
 		}
 	}
 
@@ -3693,7 +3708,11 @@ namespace mwse::lua {
 	void __fastcall OnDeletePowerHashMapKVP(PowersHashMap* self, DWORD edx, PowersHashMap::Node* node) {
 		if (event::PowerRechargedEvent::getEventEnabled()) {
 			auto mobile = reinterpret_cast<TES3::MobileActor*>(DWORD(self) - offsetof(TES3::MobileActor, powers));
-			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new lua::event::PowerRechargedEvent(node->key, mobile));
+
+			// Ignore calls from cleanup in the mobile dtor.
+			if (mobile->getFlagActiveAI()) {
+				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new lua::event::PowerRechargedEvent(node->key, mobile));
+			}
 		}
 	}
 
@@ -4500,6 +4519,7 @@ namespace mwse::lua {
 
 		// Event: Activation Target Changed
 		genCallEnforced(0x41CA64, 0x567990, reinterpret_cast<DWORD>(HookPreFindActivationTarget));
+		genJumpUnprotected(0x4EB0BE, reinterpret_cast<DWORD>(HookPostActivate));
 		genJumpUnprotected(0x41CCF5, reinterpret_cast<DWORD>(HookPostFindActivationTarget));
 
 		// Event: Active magic effect icons updated
