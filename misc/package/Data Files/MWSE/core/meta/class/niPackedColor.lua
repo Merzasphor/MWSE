@@ -16,3 +16,10 @@
 --- @field red number Alias for the red value of the color.
 niPackedColor = {}
 
+--- Creates a new niPackedColor object.
+--- @param r number The red value for the color.
+--- @param g number The green value for the color.
+--- @param b number The blue value for the color.
+--- @return niPackedColor color No description yet available.
+function niPackedColor.new(r, g, b) end
+

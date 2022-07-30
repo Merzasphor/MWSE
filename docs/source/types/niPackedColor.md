@@ -89,3 +89,25 @@ Alias for the red value of the color.
 
 ***
 
+## Functions
+
+### `new`
+
+Creates a new niPackedColor object.
+
+```lua
+local color = niPackedColor.new(r, g, b)
+```
+
+**Parameters**:
+
+* `r` (number): The red value for the color.
+* `g` (number): The green value for the color.
+* `b` (number): The blue value for the color.
+
+**Returns**:
+
+* `color` ([niPackedColor](../../types/niPackedColor))
+
+***
+

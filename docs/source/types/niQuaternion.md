@@ -156,3 +156,26 @@ local result = myObject:toRotation()
 
 ***
 
+## Functions
+
+### `new`
+
+Creates a new niQuaternion object.
+
+```lua
+local quaternion = niQuaternion.new(w, x, y, z)
+```
+
+**Parameters**:
+
+* `w` (number)
+* `x` (number)
+* `y` (number)
+* `z` (number)
+
+**Returns**:
+
+* `quaternion` ([niQuaternion](../../types/niQuaternion))
+
+***
+

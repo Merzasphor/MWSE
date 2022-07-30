@@ -12,6 +12,14 @@
 --- @field z number The Z component of the quaternion.
 niQuaternion = {}
 
+--- Creates a new niQuaternion object.
+--- @param w number No description yet available.
+--- @param x number No description yet available.
+--- @param y number No description yet available.
+--- @param z number No description yet available.
+--- @return niQuaternion quaternion No description yet available.
+function niQuaternion.new(w, x, y, z) end
+
 --- Creates a copy of the quaternion.
 --- @return niQuaternion result No description yet available.
 function niQuaternion:copy() end
