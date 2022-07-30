@@ -49,7 +49,7 @@ function niAVObject:detachProperty(type) end
 
 --- Searches this node and all child nodes recursively for a node with a name that matches the argument.
 --- @param name string No description yet available.
---- @return niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niLight|niNode|niPointLight|niSpotLight|niSwitchNode|niTriShape result No description yet available.
+--- @return niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niLight|niNode|niParticles|niPointLight|niRotatingParticles|niSpotLight|niSwitchNode|niTriShape result No description yet available.
 function niAVObject:getObjectByName(name) end
 
 --- Gets an attached property by property type.
