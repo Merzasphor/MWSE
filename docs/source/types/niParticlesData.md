@@ -7,6 +7,8 @@
 
 niParticlesData objects contain the geometry data necessary to render a niParticles object. When a niParticles-based object is created, the actual geometry data is stored in an attached niParticlesData object.
 
+There are two ways to adjust particle size within an niParticles object. The `radius` affects all the particles in this niParticlesData object. There is also a `size` for each particle (available as `sizes` array), which is a ratio between 0.0 and 1.0 that is multiplied by the radius to obtain the final rendered size of the particle.
+
 This type inherits the following: [niTriBasedGeometryData](../../types/niTriBasedGeometryData), [niGeometryData](../../types/niGeometryData), [niObject](../../types/niObject)
 ## Properties
 
@@ -36,7 +38,7 @@ The model-space bounding sphere of the object.
 
 **Returns**:
 
-* `result` ([niBound](../../types/niBound))
+* `result` (niBound)
 
 ***
 
@@ -77,16 +79,6 @@ The model-space bounding sphere of the object.
 **Returns**:
 
 * `result` (number)
-
-***
-
-### `references`
-
-*Read-only*. The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
-
-**Returns**:
-
-* `result` (string)
 
 ***
 
