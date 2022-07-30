@@ -10,6 +10,6 @@
 niSwitchNode = {}
 
 --- Gets the active child node, or returns nil if the switch index is -1.
---- @return niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niGeometry|niLight|niNode|niPointLight|niSpotLight|niSwitchNode|niTriBasedGeometry|niTriShape result No description yet available.
+--- @return niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niLight|niNode|niPointLight|niSpotLight|niSwitchNode|niTriShape result No description yet available.
 function niSwitchNode:getActiveChild() end
 

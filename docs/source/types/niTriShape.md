@@ -102,11 +102,11 @@ The human-facing name of the given object.
 
 ### `normals`
 
-The normals of the object.
+*Read-only*. The list of unitized, model-space vertex normals for the object. The length of the array is equal to the vertex count.
 
 **Returns**:
 
-* `result` ([tes3vector3](../../types/tes3vector3))
+* `result` ([tes3vector3](../../types/tes3vector3)[])
 
 ***
 
@@ -252,11 +252,11 @@ Convenient access to this object's vertex coloring property. Setting this value 
 
 ### `vertices`
 
-The vertices of the object.
+*Read-only*. The array of vertex position data. The length of the array is equal to vertex count.
 
 **Returns**:
 
-* `result` ([tes3vector3](../../types/tes3vector3))
+* `result` ([tes3vector3](../../types/tes3vector3)[])
 
 ***
 

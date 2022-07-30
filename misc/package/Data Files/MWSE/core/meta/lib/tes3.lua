@@ -723,7 +723,7 @@ function tes3.createReference(params) end
 --- 
 --- `position`: tes3vector3|table|nil — *Optional*. If provided the VFX will be attached relative to a position, and not follow a reference.
 --- 
---- `avObject`: niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niGeometry|niLight|niNode|niPointLight|niSpotLight|niSwitchNode|niTriBasedGeometry|niTriShape|nil — *Optional*. 
+--- `avObject`: niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niLight|niNode|niPointLight|niSpotLight|niSwitchNode|niTriShape|nil — *Optional*. 
 --- 
 --- `magicEffectId`: number? — *Optional*. The magic effect ID to use to create an enchantment-style VFX. This will use most of the same VFX logic, but cannot be applied to a position or specific niAVObject.
 --- @return tes3vfx vfx A handle to the VFX that was created. This can be passed to `tes3.removeVisualEffect` to remove it from the reference.
@@ -738,7 +738,7 @@ function tes3.createVisualEffect(params) end
 --- @field scale number? *Default*: `1`. The scale used to resize the given VFX. The default value will match the size used by most magical effect logic. This is not used when creating an enchantment-style VFX.
 --- @field verticalOffset number? *Default*: `0`. This offset will be used to position it above its anchor reference. This is not used when creating an enchantment-style VFX.
 --- @field position tes3vector3|table|nil *Optional*. If provided the VFX will be attached relative to a position, and not follow a reference.
---- @field avObject niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niGeometry|niLight|niNode|niPointLight|niSpotLight|niSwitchNode|niTriBasedGeometry|niTriShape|nil *Optional*. 
+--- @field avObject niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niLight|niNode|niPointLight|niSpotLight|niSwitchNode|niTriShape|nil *Optional*. 
 --- @field magicEffectId number? *Optional*. The magic effect ID to use to create an enchantment-style VFX. This will use most of the same VFX logic, but cannot be applied to a position or specific niAVObject.
 
 --- Decreases player's kill count of a certain type of actor by one.
@@ -1957,7 +1957,7 @@ function tes3.removeSpell(params) end
 --- 
 --- `vfx`: tes3vfx? — *Optional*. If provided, the specific VFX handle will be deleted.
 --- 
---- `avObject`: niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niGeometry|niLight|niNode|niPointLight|niSpotLight|niSwitchNode|niTriBasedGeometry|niTriShape|nil — *Optional*. If provided, any VFXs associated with the given niAVObject will be deleted.
+--- `avObject`: niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niLight|niNode|niPointLight|niSpotLight|niSwitchNode|niTriShape|nil — *Optional*. If provided, any VFXs associated with the given niAVObject will be deleted.
 --- 
 --- `serial`: number? — *Optional*. The magic source instance serial number to remove effects for. This must be paired with a reference as well.
 --- 
@@ -1968,7 +1968,7 @@ function tes3.removeVisualEffect(params) end
 ---Table parameter definitions for `tes3.removeVisualEffect`.
 --- @class tes3.removeVisualEffect.params
 --- @field vfx tes3vfx? *Optional*. If provided, the specific VFX handle will be deleted.
---- @field avObject niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niGeometry|niLight|niNode|niPointLight|niSpotLight|niSwitchNode|niTriBasedGeometry|niTriShape|nil *Optional*. If provided, any VFXs associated with the given niAVObject will be deleted.
+--- @field avObject niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niLight|niNode|niPointLight|niSpotLight|niSwitchNode|niTriShape|nil *Optional*. If provided, any VFXs associated with the given niAVObject will be deleted.
 --- @field serial number? *Optional*. The magic source instance serial number to remove effects for. This must be paired with a reference as well.
 --- @field reference tes3reference|string|nil *Optional*. The reference to remove all visual effects from. A serial may also be provided.
 

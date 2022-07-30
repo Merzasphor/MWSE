@@ -20,7 +20,7 @@
 --- @field deltaTime number The time in seconds since the last update.
 --- @field flags number 
 --- @field hasOverrideAnimations boolean *Read-only*. 
---- @field headGeometry niGeometry|niTriBasedGeometry|niTriShape 
+--- @field headGeometry niTriShape 
 --- @field headNode niBillboardNode|niCollisionSwitch|niNode|niSwitchNode 
 --- @field keyframeLayers tes3animationDataSequenceGroup[] *Read-only*. 
 --- @field lipsyncLevel number 
