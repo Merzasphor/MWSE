@@ -3708,7 +3708,11 @@ namespace mwse::lua {
 	void __fastcall OnDeletePowerHashMapKVP(PowersHashMap* self, DWORD edx, PowersHashMap::Node* node) {
 		if (event::PowerRechargedEvent::getEventEnabled()) {
 			auto mobile = reinterpret_cast<TES3::MobileActor*>(DWORD(self) - offsetof(TES3::MobileActor, powers));
-			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new lua::event::PowerRechargedEvent(node->key, mobile));
+
+			// Ignore calls from cleanup in the mobile dtor.
+			if (mobile->getFlagActiveAI()) {
+				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new lua::event::PowerRechargedEvent(node->key, mobile));
+			}
 		}
 	}
 
