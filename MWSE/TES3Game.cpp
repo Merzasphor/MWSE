@@ -2,7 +2,7 @@
 
 namespace TES3 {
 	void Game::setGamma(float value) {
-		vTable->setGamma(this, value);
+		vTable->SetGamma(this, value);
 	}
 
 	const auto TES3_Game_initialize = reinterpret_cast<bool(__thiscall *)(Game*)>(0x417880);
