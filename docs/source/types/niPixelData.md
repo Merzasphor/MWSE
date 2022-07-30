@@ -100,9 +100,24 @@ local result = myObject:createSourceTexture()
 
 ***
 
+### `fill`
+
+Fills this pixel data with the provided color.
+
+```lua
+myObject:fill(data, mipMapLevel)
+```
+
+**Parameters**:
+
+* `data` (number[]): The color data to be set (1-indexed). The values should be in range [0.0, 1.0]. The first three values are RGB color channels, while the last one is alpha channel. The array length must be equal to the `bytesPerPixel` property of this niPixelData object, because alpha can be assigned only to the niPixelData object that has an alpha channel.
+* `mipMapLevel` (number): *Default*: `0`. The mipmap level to fill with the provided color. The finest (largest) mipmap level is level 0.
+
+***
+
 ### `getHeight`
 
-Returns the height of the mipmap level at the given index, where level 1 is the largest.
+Returns the height of the mipmap level at the given index, where level 0 is the finest (largest) mipmap level, and level `mipMapLevels - 1` is the coarsest (smallest) mipmap level.
 
 ```lua
 local result = myObject:getHeight(mipMapLevel)
@@ -110,7 +125,7 @@ local result = myObject:getHeight(mipMapLevel)
 
 **Parameters**:
 
-* `mipMapLevel` (number): *Optional*. Default value: 1
+* `mipMapLevel` (number): *Default*: `0`.
 
 **Returns**:
 
@@ -120,7 +135,7 @@ local result = myObject:getHeight(mipMapLevel)
 
 ### `getWidth`
 
-Returns the width of the mipmap level at the given index, where level 1 is the largest.
+Returns the width of the mipmap level at the given index, where level 0 is the finest (largest) mipmap level, and level `mipMapLevels - 1` is the coarsest (smallest) mipmap level.
 
 ```lua
 local result = myObject:getWidth(mipMapLevel)
@@ -128,7 +143,7 @@ local result = myObject:getWidth(mipMapLevel)
 
 **Parameters**:
 
-* `mipMapLevel` (number): *Optional*. Default value: 1
+* `mipMapLevel` (number): *Default*: `0`.
 
 **Returns**:
 
@@ -200,8 +215,8 @@ myObject:setPixelsByte(data, mipMapLevel)
 
 **Parameters**:
 
-* `data` (table): The byte data to be set to.
-* `mipMapLevel` (number): *Optional*. Default value: 1
+* `data` (number[]): The byte data to be set to (1-indexed).
+* `mipMapLevel` (number): *Default*: `0`. The mipmap level whose data to modify. The finest (largest) mipmap level is level 0.
 
 ***
 
@@ -215,8 +230,8 @@ myObject:setPixelsFloat(data, mipMapLevel)
 
 **Parameters**:
 
-* `data` (table): The float data to be set to.
-* `mipMapLevel` (number): *Optional*. Default value: 1
+* `data` (number[]): The float data to be set to (1-indexed). The values should be in range [0.0, 1.0].
+* `mipMapLevel` (number): *Default*: `0`. The mipmap level whose data to modify. The finest (largest) mipmap level is level 0.
 
 ***
 
@@ -227,13 +242,18 @@ myObject:setPixelsFloat(data, mipMapLevel)
 Creates a new NiPixelData object.
 
 ```lua
-niPixelData.new(width, height)
+local pixelData = niPixelData.new(width, height, mipMapLevels)
 ```
 
 **Parameters**:
 
 * `width` (number)
 * `height` (number)
+* `mipMapLevels` (number): *Default*: `1`.
+
+**Returns**:
+
+* `pixelData` ([niPixelData](../../types/niPixelData))
 
 ***
 

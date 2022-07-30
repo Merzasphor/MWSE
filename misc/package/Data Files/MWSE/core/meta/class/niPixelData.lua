@@ -13,29 +13,36 @@ niPixelData = {}
 --- Creates a new NiPixelData object.
 --- @param width number No description yet available.
 --- @param height number No description yet available.
-function niPixelData.new(width, height) end
+--- @param mipMapLevels number? *Default*: `1`. No description yet available.
+--- @return niPixelData pixelData No description yet available.
+function niPixelData.new(width, height, mipMapLevels) end
 
 --- Creates a source texture from the current NiPixelData object.
 --- @return niSourceTexture result No description yet available.
 function niPixelData:createSourceTexture() end
 
---- Returns the height of the mipmap level at the given index, where level 1 is the largest.
---- @param mipMapLevel number? *Optional*. Default value: 1
+--- Fills this pixel data with the provided color.
+--- @param data number[] The color data to be set (1-indexed). The values should be in range [0.0, 1.0]. The first three values are RGB color channels, while the last one is alpha channel. The array length must be equal to the `bytesPerPixel` property of this niPixelData object, because alpha can be assigned only to the niPixelData object that has an alpha channel.
+--- @param mipMapLevel number? *Default*: `0`. The mipmap level to fill with the provided color. The finest (largest) mipmap level is level 0.
+function niPixelData:fill(data, mipMapLevel) end
+
+--- Returns the height of the mipmap level at the given index, where level 0 is the finest (largest) mipmap level, and level `mipMapLevels - 1` is the coarsest (smallest) mipmap level.
+--- @param mipMapLevel number? *Default*: `0`. No description yet available.
 --- @return number result No description yet available.
 function niPixelData:getHeight(mipMapLevel) end
 
---- Returns the width of the mipmap level at the given index, where level 1 is the largest.
---- @param mipMapLevel number? *Optional*. Default value: 1
+--- Returns the width of the mipmap level at the given index, where level 0 is the finest (largest) mipmap level, and level `mipMapLevels - 1` is the coarsest (smallest) mipmap level.
+--- @param mipMapLevel number? *Default*: `0`. No description yet available.
 --- @return number result No description yet available.
 function niPixelData:getWidth(mipMapLevel) end
 
 --- Sets the pixel data from byte data.
---- @param data table The byte data to be set to.
---- @param mipMapLevel number? *Optional*. Default value: 1
+--- @param data number[] The byte data to be set to (1-indexed).
+--- @param mipMapLevel number? *Default*: `0`. The mipmap level whose data to modify. The finest (largest) mipmap level is level 0.
 function niPixelData:setPixelsByte(data, mipMapLevel) end
 
 --- Sets the pixel data from float data.
---- @param data table The float data to be set to.
---- @param mipMapLevel number? *Optional*. Default value: 1
+--- @param data number[] The float data to be set to (1-indexed). The values should be in range [0.0, 1.0].
+--- @param mipMapLevel number? *Default*: `0`. The mipmap level whose data to modify. The finest (largest) mipmap level is level 0.
 function niPixelData:setPixelsFloat(data, mipMapLevel) end
 
