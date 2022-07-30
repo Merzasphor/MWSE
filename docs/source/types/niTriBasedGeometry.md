@@ -278,7 +278,7 @@ myObject:addExtraData(extraData)
 
 ### `attachProperty`
 
-Attaches a property to this object.
+Attaches a property to this object, without checking to see if the property or another of its type is already on the list. Property lists must not have more than one property of a given class (i.e. no two niTexturingProperty objects) attached at once, or else undefined behavior will result.
 
 ```lua
 myObject:attachProperty(property)
@@ -542,7 +542,12 @@ myObject:prependController(controller)
 
 ### `propagatePositionChange`
 
-Alias for `update()` method. Updates the world transforms of this node and its children, which makes changes visible for rendering. Use after changing any local rotation, translation, scale, or bounds.
+Alias for `update()` method. Updates the world transforms of this node and its children, which makes changes visible for rendering. Use after changing any local rotation, translation, scale, bounds or after attaching and detaching nodes.
+
+!!! tip
+	Update Efficiency
+	It's best to "batch up" calls to this method. For example, when transform of an object its parent and grandparent are all changed during the same frame, it is much more efficient to call this method only on the grandparent object after all transforms have been changed. Also, consider calling this function as low as possible on a scene graph.
+
 
 ```lua
 myObject:propagatePositionChange({ time = ..., controllers = ..., bounds = ... })
@@ -551,9 +556,9 @@ myObject:propagatePositionChange({ time = ..., controllers = ..., bounds = ... }
 **Parameters**:
 
 * `args` (table): *Optional*.
-	* `time` (number): *Default*: `0`. 
-	* `controllers` (boolean): *Default*: `false`. Update object's controllers.
-	* `bounds` (boolean): *Default*: `true`. Update object's bounds.
+	* `time` (number): *Default*: `0`. This parameter is the time-slice for transformation and bounds updates
+	* `controllers` (boolean): *Default*: `false`. Update object's controllers?
+	* `bounds` (boolean): *Default*: `true`. Update object's bounds?
 
 ***
 
@@ -640,7 +645,12 @@ myObject:setFlag(state, index)
 
 ### `update`
 
-Updates the world transforms of this node and its children, which makes changes visible for rendering. Use after changing any local rotation, translation, scale, or bounds.
+Updates the world transforms of this node and its children, which makes changes visible for rendering. Use after changing any local rotation, translation, scale, bounds or after attaching and detaching nodes.
+
+!!! tip
+	Update Efficiency
+	It's best to "batch up" calls to this method. For example, when transform of an object its parent and grandparent are all changed during the same frame, it is much more efficient to call this method only on the grandparent object after all transforms have been changed. Also, consider calling this function as low as possible on a scene graph.
+
 
 ```lua
 myObject:update({ time = ..., controllers = ..., bounds = ... })
@@ -649,15 +659,15 @@ myObject:update({ time = ..., controllers = ..., bounds = ... })
 **Parameters**:
 
 * `args` (table): *Optional*.
-	* `time` (number): *Default*: `0`. 
-	* `controllers` (boolean): *Default*: `false`. Update object's controllers.
-	* `bounds` (boolean): *Default*: `true`. Update object's bounds.
+	* `time` (number): *Default*: `0`. This parameter is the time-slice for transformation and bounds updates
+	* `controllers` (boolean): *Default*: `false`. Update object's controllers?
+	* `bounds` (boolean): *Default*: `true`. Update object's bounds?
 
 ***
 
 ### `updateEffects`
 
-Update all attached effects.
+Update all attached effects. This method must be called at or above any object when dynamic effects are attached or detached from it
 
 ```lua
 myObject:updateEffects()
