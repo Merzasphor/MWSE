@@ -39,6 +39,26 @@ The effective magnitude of the effect, after all resistances are applied.
 
 ***
 
+### `isBoundItem`
+
+*Read-only*. If this effect has summoned a bound item.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
+### `isSummon`
+
+*Read-only*. If this effect has summoned a creature.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
 ### `lastUsedArmor`
 
 *Read-only*. No description yet available.

@@ -110,16 +110,6 @@ The app-level pixel data.
 
 ***
 
-### `references`
-
-*Read-only*. The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
-
-**Returns**:
-
-* `result` (string)
-
-***
-
 ### `RTTI`
 
 *Read-only*. The runtime type information for this object. This is an alias for the `.runTimeTypeInformation` property.

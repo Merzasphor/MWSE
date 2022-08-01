@@ -52,8 +52,10 @@ namespace mwse::lua {
 			usertypeDefinition["effectId"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::magicEffectID);
 			usertypeDefinition["effectIndex"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::magicInstanceEffectIndex);
 			usertypeDefinition["harmful"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::isHarmful);
-			usertypeDefinition["mobile"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::mobile);
+			usertypeDefinition["isBoundItem"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::isBoundItem);
 			usertypeDefinition["isIllegalSummon"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::isIllegalSummon);
+			usertypeDefinition["isSummon"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::isSummon);
+			usertypeDefinition["mobile"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::mobile);
 			usertypeDefinition["serial"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::magicInstanceSerial);
 			usertypeDefinition["skillId"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::skillOrAttributeID);
 

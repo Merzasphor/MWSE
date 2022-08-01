@@ -79,9 +79,29 @@ An active magic effect.
 
 ***
 
+### `isBoundItem`
+
+*Read-only*. If this effect has summoned a bound item.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
+### `isIllegalSummon`
+
+*Read-only*. If this effect has summoned a creature that has been declared illegal to summon. This is an otherwise unused flag in the game that is set for daedra and undead summon magic effects, but not for any other summon creature magic effects.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
 ### `isSummon`
 
-*Read-only*. No description yet available.
+*Read-only*. If this effect has summoned a creature.
 
 **Returns**:
 

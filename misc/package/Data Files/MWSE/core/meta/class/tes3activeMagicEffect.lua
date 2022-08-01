@@ -13,7 +13,9 @@
 --- @field effectInstance tes3magicEffectInstance *Read-only*. The magic effect instance for this effect.
 --- @field harmful boolean *Read-only*. This flag that determines if this effect is counted as a hostile action.
 --- @field instance tes3magicSourceInstance *Read-only*. The magic source instance for this effect.
---- @field isSummon boolean *Read-only*. No description yet available.
+--- @field isBoundItem boolean *Read-only*. If this effect has summoned a bound item.
+--- @field isIllegalSummon boolean *Read-only*. If this effect has summoned a creature that has been declared illegal to summon. This is an otherwise unused flag in the game that is set for daedra and undead summon magic effects, but not for any other summon creature magic effects.
+--- @field isSummon boolean *Read-only*. If this effect has summoned a creature.
 --- @field magnitude integer *Read-only*. The unresisted magnitude of the magic effect, that is the magnitude before resistance attributes are applied. To find the actual effective magnitude after resistances are applied, you must check the magic effect instance.
 --- @field magnitudeMin number *Read-only*. Deprecated.
 --- @field mobile tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3mobilePlayer *Read-only*. The mobile affected by the magic effect.

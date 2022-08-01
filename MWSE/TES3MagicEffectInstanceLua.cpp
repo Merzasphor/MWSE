@@ -38,5 +38,7 @@ namespace mwse::lua {
 
 		// Expose functions as properties.
 		usertypeDefinition["effectiveMagnitude"] = sol::readonly_property(&TES3::MagicEffectInstance::getEffectiveMagnitude);
+		usertypeDefinition["isBoundItem"] = sol::readonly_property(&TES3::MagicEffectInstance::isBoundItem);
+		usertypeDefinition["isSummon"] = sol::readonly_property(&TES3::MagicEffectInstance::isSummon);
 	}
 }

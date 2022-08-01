@@ -12,7 +12,7 @@ namespace TES3 {
 		int state; // 0x14
 		VFX * visual; // 0x18
 		EquipmentStack * createdData; // 0x1C
-		int unknown_0x20;
+		EquipmentStack * createdData2; // 0x20
 		Weapon * lastUsedWeapon; // 0x24
 		Armor * lastUsedArmor; // 0x28
 		Armor * lastUsedShield; // 0x2C
@@ -23,6 +23,8 @@ namespace TES3 {
 		~MagicEffectInstance() = delete;
 
 		float getEffectiveMagnitude() const;
+		bool isBoundItem() const;
+		bool isSummon() const;
 	};
 	static_assert(sizeof(MagicEffectInstance) == 0x38, "TES3::MagicEffectInstance failed size validation");
 }

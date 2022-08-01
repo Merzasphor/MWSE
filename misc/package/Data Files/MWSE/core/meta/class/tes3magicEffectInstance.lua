@@ -9,6 +9,8 @@
 --- @field createdData tes3equipmentStack *Read-only*. The bound or summoned data associated with the instance, for summoned creatures or items. The stack's object will be a reference in the case of summoned creatures.
 --- @field cumulativeMagnitude number No description yet available.
 --- @field effectiveMagnitude number The effective magnitude of the effect, after all resistances are applied.
+--- @field isBoundItem boolean *Read-only*. If this effect has summoned a bound item.
+--- @field isSummon boolean *Read-only*. If this effect has summoned a creature.
 --- @field lastUsedArmor tes3armor *Read-only*. No description yet available.
 --- @field lastUsedEnchItem tes3alchemy|tes3apparatus|tes3armor|tes3book|tes3clothing|tes3ingredient|tes3light|tes3lockpick|tes3misc|tes3probe|tes3repairTool|tes3weapon *Read-only*. No description yet available.
 --- @field lastUsedLight tes3light *Read-only*. No description yet available.

@@ -59,6 +59,16 @@ namespace TES3 {
 		return nullptr;
 	}
 
+	bool ActiveMagicEffectLua::isBoundItem() const {
+		auto effectInstance = getEffectInstance();
+		return effectInstance ? effectInstance->isBoundItem() : false;
+	}
+
+	bool ActiveMagicEffectLua::isSummon() const {
+		auto effectInstance = getEffectInstance();
+		return effectInstance ? effectInstance->isSummon() : false;
+	}
+
 	ActiveMagicEffect* ActiveMagicEffectLua::getFirst_legacy() const {
 		return &mobile->activeMagicEffects.front();
 	}

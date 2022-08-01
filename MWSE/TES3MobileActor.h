@@ -125,6 +125,8 @@ namespace TES3 {
 		//
 
 		MagicEffectInstance * getEffectInstance() const;
+		bool isBoundItem() const;
+		bool isSummon() const;
 
 		ActiveMagicEffect* getFirst_legacy() const;
 		ActiveMagicEffect* getNext_legacy();
