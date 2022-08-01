@@ -93,7 +93,7 @@ namespace TES3 {
 		unsigned char padding_0x5;
 		short magicEffectID; // 0x6
 		bool isHarmful; // 0x8
-		bool isSummon; // 0x9
+		bool isIllegalSummon; // 0x9
 		unsigned short duration; // 0xA
 		unsigned short unresistedMagnitude; // 0xC
 		signed char skillOrAttributeID; // 0xE

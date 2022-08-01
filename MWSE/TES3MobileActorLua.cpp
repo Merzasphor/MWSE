@@ -25,7 +25,7 @@ namespace mwse::lua {
 			usertypeDefinition["effectId"] = sol::readonly_property(&TES3::ActiveMagicEffect::magicEffectID);
 			usertypeDefinition["effectIndex"] = sol::readonly_property(&TES3::ActiveMagicEffect::magicInstanceEffectIndex);
 			usertypeDefinition["harmful"] = sol::readonly_property(&TES3::ActiveMagicEffect::isHarmful);
-			usertypeDefinition["isSummon"] = sol::readonly_property(&TES3::ActiveMagicEffect::isSummon);
+			usertypeDefinition["isIllegalSummon"] = sol::readonly_property(&TES3::ActiveMagicEffect::isIllegalSummon);
 			usertypeDefinition["serial"] = sol::readonly_property(&TES3::ActiveMagicEffect::magicInstanceSerial);
 			usertypeDefinition["skillId"] = sol::readonly_property(&TES3::ActiveMagicEffect::skillOrAttributeID);
 
@@ -34,7 +34,7 @@ namespace mwse::lua {
 			usertypeDefinition["magnitude"] = sol::readonly_property(&TES3::ActiveMagicEffect::getMagnitude);
 
 			// Legacy support.
-			usertypeDefinition["flag9"] = sol::readonly_property(&TES3::ActiveMagicEffect::isSummon);
+			usertypeDefinition["flag9"] = sol::readonly_property(&TES3::ActiveMagicEffect::isIllegalSummon);
 			usertypeDefinition["magnitudeMin"] = sol::readonly_property(&TES3::ActiveMagicEffect::unresistedMagnitude);
 			usertypeDefinition["next"] = sol::property(&TES3::ActiveMagicEffect::getNext_legacy);
 
@@ -53,7 +53,7 @@ namespace mwse::lua {
 			usertypeDefinition["effectIndex"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::magicInstanceEffectIndex);
 			usertypeDefinition["harmful"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::isHarmful);
 			usertypeDefinition["mobile"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::mobile);
-			usertypeDefinition["isSummon"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::isSummon);
+			usertypeDefinition["isIllegalSummon"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::isIllegalSummon);
 			usertypeDefinition["serial"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::magicInstanceSerial);
 			usertypeDefinition["skillId"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::skillOrAttributeID);
 

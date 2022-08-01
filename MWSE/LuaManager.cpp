@@ -3892,6 +3892,32 @@ namespace mwse::lua {
 	}
 
 	//
+	// Fix: Set ActiveMagicEffect.isIllegalSummon correctly on loading a savegame.
+	//
+
+	// Patches ActiveMagicManager::addLoadedMagicSourceInstance.
+	__declspec(naked) void patchLoadActiveMagicEffect() {
+		__asm {
+			mov edx, eax
+			shr eax, 4				// eax >>= HarmfulBit
+			and al, 1
+			mov [esp+0x2C], al		// activeMagicEffect.isHarmful = al
+			shr edx, 15				// edx >>= IllegalDaedraBit
+			and dl, 1
+			mov [esp+0x2D], dl		// activeMagicEffect.isIllegalSummon = dl
+			mov ecx, esi
+			call $ + 0x42763		// call MagicSourceCombo__getEffects
+			mov cx, [eax+ebp+0xC]	// cx = effect[ebp]->duration
+			mov [esp+0x2E], cx		// activeMagicEffect.duration = cx
+			mov dx, [eax+ebp+0x10]	// dx = effect[ebp]->magnitudeMin
+			mov [esp+0x30], dx		// activeMagicEffect.magnitudeMin = dx
+			nop
+			nop
+		}
+	}
+	const size_t patchLoadActiveMagicEffect_size = 0x32;
+
+	//
 	//
 	//
 
@@ -4605,6 +4631,9 @@ namespace mwse::lua {
 
 		// Fix: Clean up unsummoned actors.
 		genCallEnforced(0x466858, 0x4E5750, reinterpret_cast<DWORD>(cleanupUnsummonedActor));
+
+		// Fix: Set ActiveMagicEffect.isIllegalSummon correctly on loading a savegame.
+		writePatchCodeUnprotected(0x454826, (BYTE*)&patchLoadActiveMagicEffect, patchLoadActiveMagicEffect_size);
 
 		// Event: Calculate barter price.
 		if (genCallEnforced(0x5A447B, 0x5A46E0, reinterpret_cast<DWORD>(OnCalculateBarterPrice_CalcItemValue))) {

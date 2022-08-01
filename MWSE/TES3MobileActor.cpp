@@ -1617,7 +1617,7 @@ namespace TES3 {
 
 	bool MobileActor::hasSummonEffect() {
 		for (auto& activeEffect : activeMagicEffects) {
-			if (activeEffect.isSummon) {
+			if (activeEffect.isIllegalSummon) {
 				return true;
 			}
 		}
