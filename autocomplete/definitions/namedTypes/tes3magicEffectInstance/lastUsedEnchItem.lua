@@ -1,5 +1,5 @@
 return {
 	type = "value",
 	readOnly = true,
-	valuetype = "tes3item",
+	valuetype = "tes3equipmentStack",
 }

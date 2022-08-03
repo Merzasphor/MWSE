@@ -65,7 +65,7 @@ The effective magnitude of the effect, after all resistances are applied.
 
 **Returns**:
 
-* `result` ([tes3armor](../../types/tes3armor))
+* `result` ([tes3equipmentStack](../../types/tes3equipmentStack))
 
 ***
 
@@ -75,7 +75,7 @@ The effective magnitude of the effect, after all resistances are applied.
 
 **Returns**:
 
-* `result` ([tes3item](../../types/tes3item))
+* `result` ([tes3equipmentStack](../../types/tes3equipmentStack))
 
 ***
 
@@ -85,7 +85,7 @@ The effective magnitude of the effect, after all resistances are applied.
 
 **Returns**:
 
-* `result` ([tes3light](../../types/tes3light))
+* `result` ([tes3equipmentStack](../../types/tes3equipmentStack))
 
 ***
 
@@ -95,7 +95,7 @@ The effective magnitude of the effect, after all resistances are applied.
 
 **Returns**:
 
-* `result` ([tes3armor](../../types/tes3armor))
+* `result` ([tes3equipmentStack](../../types/tes3equipmentStack))
 
 ***
 
@@ -105,7 +105,7 @@ The effective magnitude of the effect, after all resistances are applied.
 
 **Returns**:
 
-* `result` ([tes3weapon](../../types/tes3weapon))
+* `result` ([tes3equipmentStack](../../types/tes3equipmentStack))
 
 ***
 
