@@ -435,7 +435,7 @@ namespace TES3 {
 	}
 
 	Vector3 DataHandler::getLastExteriorPosition() {
-		if (currentInteriorCell && lastExteriorCellPositionX != INT_MAX && lastExteriorCellPositionX != INT_MAX) {
+		if (currentInteriorCell && lastExteriorCellPositionX != INT_MAX && lastExteriorCellPositionY != INT_MAX) {
 			auto x = float(lastExteriorCellPositionX * TES3::Cell::exteriorGridWidth);
 			auto y = float(lastExteriorCellPositionY * TES3::Cell::exteriorGridWidth);
 			return Vector3(x, y, 0.0f);
