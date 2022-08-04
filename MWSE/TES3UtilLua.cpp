@@ -2699,6 +2699,11 @@ namespace mwse::lua {
 	}
 
 	TES3::BaseObject* createObject(sol::table params) {
+		const char* id = getOptionalParam<const char*>(params, "id", nullptr);
+		if (id && strlen(id) == 0) {
+			throw std::invalid_argument("Invalid 'id' parameter provided.");
+		}
+
 		auto objectType = getOptionalParam(params, "objectType", TES3::ObjectType::Invalid);
 		if (objectType == TES3::ObjectType::Invalid) {
 			throw std::invalid_argument("Invalid 'objectType' parameter provided.");
