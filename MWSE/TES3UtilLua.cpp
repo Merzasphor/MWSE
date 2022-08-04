@@ -4449,7 +4449,7 @@ namespace mwse::lua {
 		}
 
 		auto mact = reference->getAttachedMobileActor();
-		if (mact == nullptr) {
+		if (mact == nullptr || !mact->isActor()) {
 			throw std::invalid_argument("Invalid 'reference' parameter provided. No mobile actor found.");
 		}
 
@@ -4511,7 +4511,7 @@ namespace mwse::lua {
 		}
 
 		auto mact = reference->getAttachedMobileActor();
-		if (mact == nullptr) {
+		if (mact == nullptr || !mact->isActor()) {
 			throw std::invalid_argument("Invalid 'reference' parameter provided. No mobile actor found.");
 		}
 
@@ -5326,7 +5326,7 @@ namespace mwse::lua {
 		float height1, height2;
 
 		// Try to get the first reference's data.
-		auto mobile1 = reference1->getAttachedMobileActor();
+		auto mobile1 = reference1->getAttachedMobileObject();
 		position1 = reference1->position;
 		if (mobile1) {
 			height1 = mobile1->height;
@@ -5340,7 +5340,7 @@ namespace mwse::lua {
 		}
 
 		// Try to get the second reference's data.
-		auto mobile2 = reference2->getAttachedMobileActor();
+		auto mobile2 = reference2->getAttachedMobileObject();
 		position2 = reference2->position;
 		if (mobile2) {
 			height2 = mobile2->height;
@@ -5365,7 +5365,7 @@ namespace mwse::lua {
 			position = reference->position;
 
 			// Use centre of body location to match how the findActorsInProximity treats mobiles.
-			auto mobile = reference->getAttachedMobileActor();
+			auto mobile = reference->getAttachedMobileObject();
 			if (mobile) {
 				position.value().z += 0.5f * mobile->height;
 			}
