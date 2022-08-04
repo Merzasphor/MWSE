@@ -18,6 +18,7 @@
 #include "TES3LoadScreenManager.h"
 #include "TES3Misc.h"
 #include "TES3MobilePlayer.h"
+#include "TES3MobManager.h"
 #include "TES3Reference.h"
 #include "TES3Script.h"
 #include "TES3UIElement.h"
@@ -604,6 +605,43 @@ namespace mwse::patch {
 	}
 
 	//
+	// Patch: Unsummoned actor cleanup
+	//
+
+	TES3::MobileActor* __fastcall cleanupUnsummonedActor(TES3::Reference* reference) {
+		TES3::MobileActor* mobileActor = reference->getAttachedMobileActor();
+		auto worldController = TES3::WorldController::get();
+		worldController->mobManager->removeMob(reference);
+		return mobileActor;
+	}
+
+	//
+	// Patch: Set ActiveMagicEffect.isIllegalSummon correctly on loading a savegame.
+	//
+
+	// Patches ActiveMagicManager::addLoadedMagicSourceInstance.
+	__declspec(naked) void PatchLoadActiveMagicEffect() {
+		__asm {
+			mov edx, eax
+			shr eax, 4				// eax >>= HarmfulBit
+			and al, 1
+			mov [esp+0x2C], al		// activeMagicEffect.isHarmful = al
+			shr edx, 15				// edx >>= IllegalDaedraBit
+			and dl, 1
+			mov [esp+0x2D], dl		// activeMagicEffect.isIllegalSummon = dl
+			mov ecx, esi
+			call $ + 0x42763		// call MagicSourceCombo__getEffects
+			mov cx, [eax+ebp+0xC]	// cx = effect[ebp]->duration
+			mov [esp+0x2E], cx		// activeMagicEffect.duration = cx
+			mov dx, [eax+ebp+0x10]	// dx = effect[ebp]->magnitudeMin
+			mov [esp+0x30], dx		// activeMagicEffect.magnitudeMin = dx
+			nop
+			nop
+		}
+	}
+	const size_t PatchLoadActiveMagicEffect_size = 0x32;
+
+	//
 	// Install all the patches.
 	//
 
@@ -878,6 +916,12 @@ namespace mwse::patch {
 		genNOPUnprotected(0x5AF047, 0x5AF583 - 0x5AF047);
 		writePatchCodeUnprotected(0x5AF047, (BYTE*)&PatchAddCustomClassImageSupportSetup, PatchAddCustomClassImageSupport_size);
 		genCallUnprotected(0x5AF047 + 0x4, reinterpret_cast<DWORD>(PatchAddCustomClassImageSupport), 0x9);
+
+		// Patch: Clean up unsummoned actors.
+		genCallEnforced(0x466858, 0x4E5750, reinterpret_cast<DWORD>(cleanupUnsummonedActor));
+
+		// Patch: Set ActiveMagicEffect.isIllegalSummon correctly on loading a savegame.
+		writePatchCodeUnprotected(0x454826, (BYTE*)&PatchLoadActiveMagicEffect, PatchLoadActiveMagicEffect_size);
 	}
 
 	void installPostLuaPatches() {
