@@ -229,7 +229,3 @@ No description yet available.
 
 ***
 
-**Returns**:
-
-* `result` ([mgeRenderFeatures](../../types/mgeRenderFeatures))
-

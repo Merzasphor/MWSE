@@ -143,7 +143,3 @@ mgeWeatherConfig.setWind({ weather = ..., speed = ... })
 
 ***
 
-**Returns**:
-
-* `result` ([mgeWeatherConfig](../../types/mgeWeatherConfig))
-

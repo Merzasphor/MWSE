@@ -137,7 +137,3 @@ mgeCameraConfig.zoomOut({ amount = ... })
 
 ***
 
-**Returns**:
-
-* `result` ([mgeCameraConfig](../../types/mgeCameraConfig))
-

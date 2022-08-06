@@ -179,7 +179,3 @@ An array containing the wind speed multiplier for each weather.
 
 ***
 
-**Returns**:
-
-* `result` ([mgeDistantLandRenderConfig](../../types/mgeDistantLandRenderConfig))
-

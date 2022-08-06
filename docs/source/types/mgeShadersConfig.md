@@ -89,7 +89,3 @@ local shader = mgeShadersConfig.load({ name = ... })
 
 ***
 
-**Returns**:
-
-* `result` ([mgeShadersConfig](../../types/mgeShadersConfig))
-
