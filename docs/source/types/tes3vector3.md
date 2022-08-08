@@ -145,7 +145,7 @@ local result = myObject:dot(vec)
 
 **Returns**:
 
-* `result` ([tes3vector3](../../types/tes3vector3))
+* `result` (number)
 
 ***
 

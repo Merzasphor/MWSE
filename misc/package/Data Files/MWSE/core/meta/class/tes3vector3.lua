@@ -38,7 +38,7 @@ function tes3vector3:distance(vec) end
 
 --- Calculates the dot product with another vector.
 --- @param vec tes3vector3 No description yet available.
---- @return tes3vector3 result No description yet available.
+--- @return number result No description yet available.
 function tes3vector3:dot(vec) end
 
 --- Calculates the vertical distance to another vector.
