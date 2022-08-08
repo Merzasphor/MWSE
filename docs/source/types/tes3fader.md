@@ -152,12 +152,17 @@ myObject:updateMaterialProperty(value)
 Creates a new fader, and adds it to the fader system.
 
 ```lua
-local result = tes3fader.new()
+local fader = tes3fader.new(distance, unknownBool)
 ```
+
+**Parameters**:
+
+* `distance` (number): *Optional*. If no distance is provided, a distance will be calculated based on current amount of faders, `tes3.worldController.projectionDistance` and crosshair node's `translation.y`.
+* `unknownBool` (boolean): *Default*: `true`.
 
 **Returns**:
 
-* `result` ([tes3fader](../../types/tes3fader))
+* `fader` ([tes3fader](../../types/tes3fader))
 
 ***
 

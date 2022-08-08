@@ -17,9 +17,10 @@
 niPackedColor = {}
 
 --- Creates a new niPackedColor object.
---- @param r number The red value for the color.
---- @param g number The green value for the color.
---- @param b number The blue value for the color.
+--- @param r number? *Default*: `0`. The red value for the color.
+--- @param g number? *Default*: `0`. The green value for the color.
+--- @param b number? *Default*: `0`. The blue value for the color.
+--- @param a number? *Default*: `0`. The alpha value for the color.
 --- @return niPackedColor color No description yet available.
-function niPackedColor.new(r, g, b) end
+function niPackedColor.new(r, g, b, a) end
 

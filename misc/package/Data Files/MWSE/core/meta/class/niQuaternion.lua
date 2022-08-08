@@ -13,10 +13,10 @@
 niQuaternion = {}
 
 --- Creates a new niQuaternion object.
---- @param w number No description yet available.
---- @param x number No description yet available.
---- @param y number No description yet available.
---- @param z number No description yet available.
+--- @param w number? *Default*: `0`. No description yet available.
+--- @param x number? *Default*: `0`. No description yet available.
+--- @param y number? *Default*: `0`. No description yet available.
+--- @param z number? *Default*: `0`. No description yet available.
 --- @return niQuaternion quaternion No description yet available.
 function niQuaternion.new(w, x, y, z) end
 

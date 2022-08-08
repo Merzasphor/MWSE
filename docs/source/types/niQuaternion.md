@@ -168,10 +168,10 @@ local quaternion = niQuaternion.new(w, x, y, z)
 
 **Parameters**:
 
-* `w` (number)
-* `x` (number)
-* `y` (number)
-* `z` (number)
+* `w` (number): *Default*: `0`.
+* `x` (number): *Default*: `0`.
+* `y` (number): *Default*: `0`.
+* `z` (number): *Default*: `0`.
 
 **Returns**:
 

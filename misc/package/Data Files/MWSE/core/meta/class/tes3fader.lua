@@ -10,8 +10,10 @@
 tes3fader = {}
 
 --- Creates a new fader, and adds it to the fader system.
---- @return tes3fader result No description yet available.
-function tes3fader.new() end
+--- @param distance number? *Optional*. If no distance is provided, a distance will be calculated based on current amount of faders, `tes3.worldController.projectionDistance` and crosshair node's `translation.y`.
+--- @param unknownBool boolean? *Default*: `true`. No description yet available.
+--- @return tes3fader fader No description yet available.
+function tes3fader.new(distance, unknownBool) end
 
 --- Activates a deactivated fader.
 function tes3fader:activate() end
