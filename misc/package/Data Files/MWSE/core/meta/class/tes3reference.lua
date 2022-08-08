@@ -32,7 +32,7 @@
 --- @field nextNode tes3reference *Read-only*. The next reference in the parent reference list.
 --- @field nodeData tes3reference *Read-only*. Redundant access to this object, for iterating over a tes3referenceList.
 --- @field object tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3repairTool|tes3static|tes3weapon *Read-only*. The object that the reference is for, such as a weapon, armor, or actor.
---- @field orientation tes3vector3 Access to the reference's orientation. Setting the orientation sets the reference as modified.
+--- @field orientation tes3vector3 Access to the reference's orientation, which corresponds to rotation along each axis in degrees (Euler angles). Setting the orientation sets the reference as modified.
 --- @field position tes3vector3 Access to the reference's position. Setting the position sets the reference as modified.
 --- @field previousNode tes3reference *Read-only*. The previous reference in the parent reference list.
 --- @field rightDirection tes3vector3 *Read-only*. The normalized right or X direction vector of the reference.

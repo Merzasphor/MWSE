@@ -12,23 +12,23 @@
 --- @field z tes3vector4 The 4th row of the matrix.
 tes3matrix44 = {}
 
---- Creates a new 4 by 4 matrix from 4 provided vectors, 16 numbers or creates an empty matrix if nothing is provided.
---- @param x0 number? *Optional*. No description yet available.
---- @param y0 number? *Optional*. No description yet available.
---- @param z0 number? *Optional*. No description yet available.
---- @param w0 number? *Optional*. No description yet available.
---- @param x1 number? *Optional*. No description yet available.
---- @param y1 number? *Optional*. No description yet available.
---- @param z1 number? *Optional*. No description yet available.
---- @param w1 number? *Optional*. No description yet available.
---- @param x2 number? *Optional*. No description yet available.
---- @param y2 number? *Optional*. No description yet available.
---- @param z2 number? *Optional*. No description yet available.
---- @param w2 number? *Optional*. No description yet available.
---- @param x3 number? *Optional*. No description yet available.
---- @param y3 number? *Optional*. No description yet available.
---- @param z3 number? *Optional*. No description yet available.
---- @param w3 number? *Optional*. No description yet available.
+--- Creates a new 4 by 4 matrix from 4 provided vectors or 16 numbers. Creates an empty matrix if nothing is provided.
+--- @param x0 number? *Default*: `0`. No description yet available.
+--- @param y0 number? *Default*: `0`. No description yet available.
+--- @param z0 number? *Default*: `0`. No description yet available.
+--- @param w0 number? *Default*: `0`. No description yet available.
+--- @param x1 number? *Default*: `0`. No description yet available.
+--- @param y1 number? *Default*: `0`. No description yet available.
+--- @param z1 number? *Default*: `0`. No description yet available.
+--- @param w1 number? *Default*: `0`. No description yet available.
+--- @param x2 number? *Default*: `0`. No description yet available.
+--- @param y2 number? *Default*: `0`. No description yet available.
+--- @param z2 number? *Default*: `0`. No description yet available.
+--- @param w2 number? *Default*: `0`. No description yet available.
+--- @param x3 number? *Default*: `0`. No description yet available.
+--- @param y3 number? *Default*: `0`. No description yet available.
+--- @param z3 number? *Default*: `0`. No description yet available.
+--- @param w3 number? *Default*: `0`. No description yet available.
 --- @param x tes3vector4? *Optional*. No description yet available.
 --- @param y tes3vector4? *Optional*. No description yet available.
 --- @param z tes3vector4? *Optional*. No description yet available.

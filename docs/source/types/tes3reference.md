@@ -344,7 +344,7 @@ The next object in parent collection's list.
 
 ### `orientation`
 
-Access to the reference's orientation. Setting the orientation sets the reference as modified.
+Access to the reference's orientation, which corresponds to rotation along each axis in degrees (Euler angles). Setting the orientation sets the reference as modified.
 
 **Returns**:
 
