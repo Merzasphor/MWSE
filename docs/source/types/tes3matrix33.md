@@ -135,13 +135,13 @@ local result = myObject:reorthogonalize()
 Converts the matrix to series of rotations along each axis.
 
 ```lua
-local isUnique, vector3 = myObject:toEulerXYZ()
+local vector3, isUnique = myObject:toEulerXYZ()
 ```
 
 **Returns**:
 
-* `isUnique` (boolean)
 * `vector3` ([tes3vector3](../../types/tes3vector3))
+* `isUnique` (boolean)
 
 ***
 
@@ -150,13 +150,13 @@ local isUnique, vector3 = myObject:toEulerXYZ()
 Converts the matrix to series of rotations along each axis.
 
 ```lua
-local isUnique, vector3 = myObject:toEulerZYX()
+local vector3, isUnique = myObject:toEulerZYX()
 ```
 
 **Returns**:
 
-* `isUnique` (boolean)
 * `vector3` ([tes3vector3](../../types/tes3vector3))
+* `isUnique` (boolean)
 
 ***
 
