@@ -91,10 +91,10 @@ local vector = tes3vector4.new(x, y, z, w)
 
 **Parameters**:
 
-* `x` (number): *Optional*.
-* `y` (number): *Optional*.
-* `z` (number): *Optional*.
-* `w` (number): *Optional*.
+* `x` (number): *Default*: `0`.
+* `y` (number): *Default*: `0`.
+* `z` (number): *Default*: `0`.
+* `w` (number): *Default*: `0`.
 
 **Returns**:
 

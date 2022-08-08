@@ -99,8 +99,8 @@ local vector = tes3vector2.new(x, y)
 
 **Parameters**:
 
-* `x` (number): *Optional*.
-* `y` (number): *Optional*.
+* `x` (number): *Default*: `0`.
+* `y` (number): *Default*: `0`.
 
 **Returns**:
 

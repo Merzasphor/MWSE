@@ -13,10 +13,10 @@
 tes3vector4 = {}
 
 --- Creates a new vector. If no parameters are provided, an empty set will be constructed.
---- @param x number? *Optional*. No description yet available.
---- @param y number? *Optional*. No description yet available.
---- @param z number? *Optional*. No description yet available.
---- @param w number? *Optional*. No description yet available.
+--- @param x number? *Default*: `0`. No description yet available.
+--- @param y number? *Default*: `0`. No description yet available.
+--- @param z number? *Default*: `0`. No description yet available.
+--- @param w number? *Default*: `0`. No description yet available.
 --- @return tes3vector4 vector No description yet available.
 function tes3vector4.new(x, y, z, w) end
 
