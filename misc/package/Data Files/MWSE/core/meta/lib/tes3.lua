@@ -419,7 +419,7 @@ function tes3.advanceTime(params) end
 --- 
 --- `effects`: table? — *Optional*. A table of custom effects to apply as a potion. Maximal number of effects is 8.
 --- 
---- `createCopy`: boolean? — *Default*: `false`. This parameter controls whether the function will return the original magic source or a copy of the magic source. This parameter is only used if source is alchemy.
+--- `createCopy`: boolean? — *Default*: `true`. This parameter controls whether the function will return the original magic source or a copy of the magic source. This parameter is only used if source is alchemy.
 --- 
 --- `fromStack`: tes3equipmentStack? — *Optional*. The piece of equipment this magic source is coming from. The fromStack has to be an already equipped item from tes3actor.equipment. This will probably change in the future.
 --- 
@@ -437,7 +437,7 @@ function tes3.applyMagicSource(params) end
 --- @field source tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3enchantment|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3reference|tes3repairTool|tes3spell|tes3static|tes3weapon|nil *Optional*. A magic source to apply.
 --- @field name string? *Optional*. While optional for other uses, if applying alchemy as a source, you must specify a name for the magic source.
 --- @field effects table? *Optional*. A table of custom effects to apply as a potion. Maximal number of effects is 8.
---- @field createCopy boolean? *Default*: `false`. This parameter controls whether the function will return the original magic source or a copy of the magic source. This parameter is only used if source is alchemy.
+--- @field createCopy boolean? *Default*: `true`. This parameter controls whether the function will return the original magic source or a copy of the magic source. This parameter is only used if source is alchemy.
 --- @field fromStack tes3equipmentStack? *Optional*. The piece of equipment this magic source is coming from. The fromStack has to be an already equipped item from tes3actor.equipment. This will probably change in the future.
 --- @field castChance number? *Optional*. This parameter allows overriding the casting chance of the magic source.
 --- @field target tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string|nil *Optional*. The target of the magic.

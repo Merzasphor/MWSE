@@ -591,7 +591,7 @@ local instance = tes3.applyMagicSource({ reference = ..., source = ..., name = .
 		* `duration` (number): *Default*: `0`. Number of seconds the effect is going to be active.
 		* `min` (number): *Default*: `0`. The minimal magintude of the effect per tick.
 		* `max` (number): *Default*: `0`. The maximal magnitude of the effect per tick.
-	* `createCopy` (boolean): *Default*: `false`. This parameter controls whether the function will return the original magic source or a copy of the magic source. This parameter is only used if source is alchemy.
+	* `createCopy` (boolean): *Default*: `true`. This parameter controls whether the function will return the original magic source or a copy of the magic source. This parameter is only used if source is alchemy.
 	* `fromStack` ([tes3equipmentStack](../../types/tes3equipmentStack)): *Optional*. The piece of equipment this magic source is coming from. The fromStack has to be an already equipped item from tes3actor.equipment. This will probably change in the future.
 	* `castChance` (number): *Optional*. This parameter allows overriding the casting chance of the magic source.
 	* `target` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): *Optional*. The target of the magic.
