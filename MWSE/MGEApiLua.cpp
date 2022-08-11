@@ -50,6 +50,17 @@ namespace mge::lua {
 		api->lightingModeSet(mode);
 	}
 
+	void CoreInterface::saveScreenshot(sol::optional<sol::table> params) {
+		const char* path = mwse::lua::getOptionalParam<const char*>(params, "path", nullptr);
+		bool captureWithUI = mwse::lua::getOptionalParam<bool>(params, "captureWithUI", false);
+
+		if (!path) {
+			throw std::invalid_argument("path argument missing.");
+		}
+
+		static_cast<MGEAPIv2*>(api)->saveScreenshot(path, captureWithUI);
+	}
+
 	//
 	// CameraConfig
 	//
@@ -236,6 +247,27 @@ namespace mge::lua {
 		}
 		else {
 			throw std::invalid_argument("inscatter and outscatter must be 3-vectors.");
+		}
+	}
+
+	sol::table WeatherConfig::getFarScattering(sol::this_state ts) {
+		float far_scatter[3];
+		static_cast<MGEAPIv2*>(api)->weatherScatteringFarGet(far_scatter);
+
+		sol::state_view state = ts;
+		sol::table far = state.create_table_with(1, far_scatter[0], 2, far_scatter[1], 3, far_scatter[2]);
+		sol::table scattering = state.create_table_with("far", far);
+		return scattering;
+	}
+
+	void WeatherConfig::setFarScattering(sol::optional<sol::table> params) {
+		auto far_scatter = mwse::lua::getOptionalParamVector3(params, "far");
+
+		if (far_scatter) {
+			static_cast<MGEAPIv2*>(api)->weatherScatteringFarSet(&far_scatter.value().x);
+		}
+		else {
+			throw std::invalid_argument("far must be a 3-vector.");
 		}
 	}
 

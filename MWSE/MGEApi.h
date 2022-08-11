@@ -1,7 +1,7 @@
 #pragma once
 
 namespace mge {
-	static const int supported_api_version = 1;
+	static const int supported_api_version = 2;
 
 	struct MGEAPI {
 		virtual int getAPIVersion() const = 0;
@@ -208,6 +208,14 @@ namespace mge {
 		virtual void weatherPerPixelLightSet(int weatherID, float sunMult, float ambMult);
 	};
 
+	struct MGEAPIv2 : public MGEAPIv1 {
+		virtual void saveScreenshot(const char* path, bool captureWithUI);
+
+		virtual void weatherScatteringFarGet(float* farSky);
+		virtual void weatherScatteringFarSet(float farSky[3]);
+	};
+
 	inline MGEAPIv1* api = nullptr;
+	inline int apiVersion = 0;
 	inline const MacroFunctions* macros = nullptr;
 }

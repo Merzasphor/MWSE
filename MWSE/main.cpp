@@ -233,8 +233,10 @@ extern "C"
 }
 
 bool MGEInterface(mge::MGEAPI* api) {
-	if (api->getAPIVersion() >= 1) {
+	int version = api->getAPIVersion();
+	if (version >= 1) {
 		mge::api = static_cast<mge::MGEAPIv1*>(api);
+		mge::apiVersion = version;
 		mge::macros = mge::api->macroFunctions();
 		return true;
 	}
