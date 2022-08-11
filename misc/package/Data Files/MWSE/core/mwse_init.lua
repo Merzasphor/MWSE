@@ -157,6 +157,7 @@ end
 
 _G.tes3 = require("tes3")
 _G.mge = require("mge")
+_G.ni = require("ni")
 _G.event = require("event")
 _G.json = require("dkjson")
 
