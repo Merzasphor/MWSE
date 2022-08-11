@@ -12,7 +12,7 @@
 niObject = {}
 
 --- Creates a copy of this object.
---- @return niAlphaProperty|niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niExtraData|niFogProperty|niGeometryData|niKeyframeController|niKeyframeData|niLight|niLookAtController|niMaterialProperty|niNode|niParticles|niParticlesData|niPixelData|niPointLight|niRotatingParticles|niRotatingParticlesData|niSkinData|niSkinInstance|niSourceTexture|niSpotLight|niStencilProperty|niStringExtraData|niSwitchNode|niTexture|niTexturingProperty|niTimeController|niTriBasedGeometryData|niTriShape|niTriShapeData|niVertexColorProperty result No description yet available.
+--- @return niAlphaProperty|niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niColorData|niDirectionalLight|niDynamicEffect|niExtraData|niFogProperty|niGeometryData|niGravity|niKeyframeController|niKeyframeData|niLight|niLookAtController|niMaterialProperty|niNode|niParticleBomb|niParticleCollider|niParticleColorModifier|niParticleGrowFade|niParticleRotation|niParticles|niParticlesData|niPixelData|niPlanarCollider|niPointLight|niRotatingParticles|niRotatingParticlesData|niSkinData|niSkinInstance|niSourceTexture|niSphericalCollider|niSpotLight|niStencilProperty|niStringExtraData|niSwitchNode|niTexture|niTexturingProperty|niTimeController|niTriBasedGeometryData|niTriShape|niTriShapeData|niVertexColorProperty result No description yet available.
 function niObject:clone() end
 
 --- Determines if the object is of a given type, or of a type derived from the given type. Types can be found in the [`tes3.niType`](https://mwse.github.io/MWSE/references/niTypes/) table.

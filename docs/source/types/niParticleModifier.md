@@ -5,7 +5,7 @@
 
 # niParticleModifier
 
-Abstract base class for particle system modifiers.
+Abstract base class for particle system modifiers. It affects every particle in a particle system.
 
 This type inherits the following: [niObject](../../types/niObject)
 ## Properties

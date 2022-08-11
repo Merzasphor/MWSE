@@ -6,8 +6,8 @@
 
 --- The NiColorData class provides a shareable wrapper for color animation data. Usually found in niParticleColorModifiers.
 --- @class niColorData : niObject
---- @field keyCount number The number of keys in this niColorData.
+--- @field keyCount integer The number of keys in this niColorData.
 --- @field keys niColorKey[] *Read-only*. The keyframe data that this object currently stores.
---- @field keyType niAnimationKeyType The type of the keys.
+--- @field keyType integer The type of the keys.
 niColorData = {}
 

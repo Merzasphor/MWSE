@@ -4,9 +4,9 @@
 --- @meta
 --- @diagnostic disable:undefined-doc-name
 
---- Abstract base class for particle system modifiers.
+--- Abstract base class for particle system modifiers. It affects every particle in a particle system.
 --- @class niParticleModifier : niObject
 --- @field controller niParticleSystemController Access to the generic time controller for particle systems.
---- @field next niParticleModifier Access to the next attached modifier.
+--- @field next niGravity|niParticleBomb|niParticleCollider|niParticleColorModifier|niParticleGrowFade|niParticleRotation|niPlanarCollider|niSphericalCollider Access to the next attached modifier.
 niParticleModifier = {}
 

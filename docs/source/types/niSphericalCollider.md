@@ -3,46 +3,96 @@
 	More information: https://github.com/MWSE/MWSE/tree/master/docs
 -->
 
-# niColorData
+# niSphericalCollider
 
-The NiColorData class provides a shareable wrapper for color animation data. Usually found in niParticleColorModifiers.
+This modifier makes particles bounce off of a sphere.
 
-This type inherits the following: [niObject](../../types/niObject)
+This type inherits the following: [niParticleCollider](../../types/niParticleCollider), [niParticleModifier](../../types/niParticleModifier), [niObject](../../types/niObject)
 ## Properties
 
-### `keyCount`
+### `collisionPoint`
 
-The number of keys in this niColorData.
+
 
 **Returns**:
 
-* `result` (integer)
+* `result` ([tes3vector3](../../types/tes3vector3))
 
 ***
 
-### `keys`
+### `collisionTime`
 
-*Read-only*. The keyframe data that this object currently stores.
+
 
 **Returns**:
 
-* `result` ([niColorKey](../../types/niColorKey)[])
+* `result` (number)
 
 ***
 
-### `keyType`
+### `controller`
 
-The type of the keys.
+Access to the generic time controller for particle systems.
 
 **Returns**:
 
-* `result` (integer)
+* `result` (niParticleSystemController)
+
+***
+
+### `dieOnCollide`
+
+If this flag is true a particle that collides with something will be destroyed.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
+### `next`
+
+Access to the next attached modifier.
+
+**Returns**:
+
+* `result` ([niParticleModifier](../../types/niParticleModifier))
+
+***
+
+### `position`
+
+The center of the deflecting sphere.
+
+**Returns**:
+
+* `result` ([tes3vector3](../../types/tes3vector3))
+
+***
+
+### `radius`
+
+The radius of the used spherical deflector.
+
+**Returns**:
+
+* `result` (number)
 
 ***
 
 ### `refCount`
 
 *Read-only*. The number of references that exist for this object. When this value reaches zero, the object will be deleted.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `restitution`
+
+The fraction of the original amount of energy the particle retains after a collision.
 
 **Returns**:
 
@@ -67,6 +117,16 @@ The type of the keys.
 **Returns**:
 
 * `result` ([niRTTI](../../types/niRTTI))
+
+***
+
+### `spawnOnCollide`
+
+This flag controls if a new particle will be spawned on a collision. The new particle is spawned at the position of the old particle with the same attributes.
+
+**Returns**:
+
+* `result` (boolean)
 
 ***
 
