@@ -20,6 +20,9 @@ namespace mge::lua {
 
 		static LightingMode getLightingMode();
 		static void setLightingMode(LightingMode mode);
+
+		// API v2+ for following functions
+		static void saveScreenshot(sol::optional<sol::table> params);
 	};
 
 	class CameraConfig {
@@ -77,6 +80,8 @@ namespace mge::lua {
 	public:
 		static sol::table getScattering(sol::this_state ts);
 		static void setScattering(sol::optional<sol::table> params);
+		static sol::table getFarScattering(sol::this_state ts);
+		static void setFarScattering(sol::optional<sol::table> params);
 		static sol::table getDLFog(int weatherID, sol::this_state ts);
 		static void setDLFog(sol::optional<sol::table> params);
 		static sol::table getPPLLight(int weatherID, sol::this_state ts);

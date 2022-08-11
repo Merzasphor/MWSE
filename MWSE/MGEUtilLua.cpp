@@ -69,6 +69,10 @@ namespace mwse::lua {
 		lua_mge["getLightingMode"] = &mge::lua::CoreInterface::getLightingMode;
 		lua_mge["setLightingMode"] = &mge::lua::CoreInterface::setLightingMode;
 
+		if (mge::apiVersion >= 2) {
+			lua_mge["saveScreenshot"] = &mge::lua::CoreInterface::saveScreenshot;
+		}
+
 		// Rendering feature functions.
 		{
 			using RenderFeature = mge::RenderFeature;
@@ -162,6 +166,11 @@ namespace mwse::lua {
 			usertypeDefinition["setScattering"] = &WeatherConfig::setScattering;
 			usertypeDefinition["getWind"] = &WeatherConfig::getWind;
 			usertypeDefinition["setWind"] = &WeatherConfig::setWind;
+
+			if (mge::apiVersion >= 2) {
+				usertypeDefinition["getFarScattering"] = &WeatherConfig::getFarScattering;
+				usertypeDefinition["setFarScattering"] = &WeatherConfig::setFarScattering;
+			}
 		}
 		lua_mge["weather"] = mge::lua::WeatherConfig();
 
