@@ -23,13 +23,13 @@ namespace TES3 {
 
 	struct ActorAnimationController_VirtualTable {
 		void(__thiscall* destructor)(ActorAnimationController*, int); // 0x0
-		void(__thiscall* unknown_0x4)(ActorAnimationController*, float); // 0x4
-		void(__thiscall* unknown_0x8)(ActorAnimationController*, int); // 0x8
+		void(__thiscall* update)(ActorAnimationController*, float); // 0x4
+		void(__thiscall* updateProceduralAnim)(ActorAnimationController*); // 0x8
 		void(__thiscall* syncReferenceRotation)(ActorAnimationController*); // 0xC
 		void(__thiscall* setProperties)(ActorAnimationController*, NI::Node*); // 0x10
 		Matrix33* (__thiscall* getRotation)(ActorAnimationController*, Matrix33*); // 0x14
-		void(__thiscall* unknown_0x18)(ActorAnimationController*, Vector3*); // 0x18
-		void(__thiscall* unknown_0x1C)(ActorAnimationController*); // 0x1C
+		void(__thiscall* getAnimationDelta)(ActorAnimationController*, Vector3*); // 0x18
+		void(__thiscall* reset)(ActorAnimationController*); // 0x1C
 	};
 	static_assert(sizeof(ActorAnimationController_VirtualTable) == 0x20, "TES3::ActorAnimationController_VirtualTable failed size validation");
 
@@ -51,18 +51,18 @@ namespace TES3 {
 		char animGroup_unknown; // 0x08
 		char padding_0x9[3];
 		int playbackTypeEnum; // 0x0C
-		float attackFollowTiming;
+		float attackFollowTiming; // 0x10
 		float remainingBlockTime; // 0x14
 		float startTime; // 0x18
 		float minAttackTiming; // 0x1C
 		float maxAttackTiming; // 0x20
 		float minHitTiming; // 0x24
 		float hitTiming; // 0x28
-		float attackSwing; // 0x2C
+		float strikeWhenAttackSwingReaches; // 0x2C
 		float attachTiming; // 0x30
 		float speedMultiplier; // 0x34
-		MobileActor * mobileActor; // 0x38
-		AnimationData * animationData; // 0x3C
+		MobileActor* mobileActor; // 0x38
+		AnimationData* animationData; // 0x3C
 		NI::Pointer<NI::AlphaProperty> alphaProperty; // 0x40
 		NI::Pointer<NI::MaterialProperty> materialProperty; // 0x44
 		NI::Pointer<NI::VertexColorProperty> vertexColorProperty; // 0x48

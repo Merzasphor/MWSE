@@ -23,7 +23,6 @@ namespace mwse::lua {
 		usertypeDefinition["animGroupMovement"] = &TES3::ActorAnimationController::animGroupMovement;
 		usertypeDefinition["attachTiming"] = &TES3::ActorAnimationController::attachTiming;
 		usertypeDefinition["attackFollowTiming"] = &TES3::ActorAnimationController::attackFollowTiming;
-		usertypeDefinition["attackSwing"] = &TES3::ActorAnimationController::attackSwing;
 		usertypeDefinition["groundPlaneRotation"] = &TES3::ActorAnimationController::groundPlaneRotation;
 		usertypeDefinition["hitTiming"] = &TES3::ActorAnimationController::hitTiming;
 		usertypeDefinition["animationData"] = &TES3::ActorAnimationController::animationData;
@@ -37,6 +36,7 @@ namespace mwse::lua {
 		usertypeDefinition["shouldJump"] = &TES3::ActorAnimationController::shouldJump;
 		usertypeDefinition["speedMultiplier"] = &TES3::ActorAnimationController::speedMultiplier;
 		usertypeDefinition["startTime"] = &TES3::ActorAnimationController::startTime;
+		usertypeDefinition["strikeWhenAttackSwingReaches"] = &TES3::ActorAnimationController::strikeWhenAttackSwingReaches;
 		usertypeDefinition["verticalRotation"] = &TES3::ActorAnimationController::verticalRotation;
 		usertypeDefinition["vertexColorProperty"] = &TES3::ActorAnimationController::vertexColorProperty;
 
