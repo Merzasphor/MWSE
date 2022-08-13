@@ -36,7 +36,7 @@ Access to the generic time controller for particle systems.
 
 **Returns**:
 
-* `result` (niParticleSystemController)
+* `result` ([niParticleSystemController](../../types/niParticleSystemController))
 
 ***
 
