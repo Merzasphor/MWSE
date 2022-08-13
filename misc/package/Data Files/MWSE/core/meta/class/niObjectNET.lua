@@ -7,12 +7,12 @@
 --- An object that has a name, extra data, and controllers.
 --- @class niObjectNET : niObject
 --- @field controller niKeyframeController|niLookAtController|niParticleSystemController|niTimeController *Read-only*. The first controller available on the object.
---- @field extraData niExtraData|niStringExtraData|niTES3ExtraData|niTextKeyExtraData *Read-only*. The first extra data available on the object.
+--- @field extraData niStringExtraData|niTES3ExtraData|niTextKeyExtraData *Read-only*. The first extra data available on the object.
 --- @field name string The human-facing name of the given object.
 niObjectNET = {}
 
 --- Appends an extra data to the object.
---- @param extraData niExtraData|niStringExtraData|niTES3ExtraData|niTextKeyExtraData No description yet available.
+--- @param extraData niStringExtraData|niTES3ExtraData|niTextKeyExtraData No description yet available.
 function niObjectNET:addExtraData(extraData) end
 
 --- Searches for an niExtraData on this object to see if it has one that holds a related reference.
@@ -55,7 +55,7 @@ function niObjectNET:removeAllExtraData() end
 function niObjectNET:removeController(controller) end
 
 --- Removes a specific extra data from the object.
---- @param extraData niExtraData|niStringExtraData|niTES3ExtraData|niTextKeyExtraData No description yet available.
+--- @param extraData niStringExtraData|niTES3ExtraData|niTextKeyExtraData No description yet available.
 function niObjectNET:removeExtraData(extraData) end
 
 --- Sets a given flag in the niObjectNET flag data. The specifics use of the flag is dependent on the real underlying type.
