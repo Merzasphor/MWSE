@@ -212,7 +212,7 @@ The object's local translation vector.
 
 ### `type`
 
-The enumerated type of a given dynamic effect. Types: `0 - niAmbientLight`, `1 - niDirectionalLight`, `2 - niPointLight`, `3 - niSpotLight`, `4 - niTextureEffect`.
+*Read-only*. The enumerated type of a given dynamic effect. Types: `0 - niAmbientLight`, `1 - niDirectionalLight`, `2 - niPointLight`, `3 - niSpotLight`, `4 - niTextureEffect`.
 
 **Returns**:
 
@@ -296,6 +296,20 @@ myObject:addExtraData(extraData)
 
 ***
 
+### `attachAffectedNode`
+
+Adds a node to the dynamic effect's affected nodes list. The node's `:updateEffects()` function should be called afterwards to recognize the change.
+
+```lua
+myObject:attachAffectedNode(node)
+```
+
+**Parameters**:
+
+* `node` ([niNode](../../types/niNode)): The node to add to the affected nodes list.
+
+***
+
 ### `attachProperty`
 
 Attaches a property to this object, without checking to see if the property or another of its type is already on the list. Property lists must not have more than one property of a given class (i.e. no two niTexturingProperty objects) attached at once, or else undefined behavior will result.
@@ -345,6 +359,20 @@ local boundingBox = myObject:createBoundingBox()
 **Returns**:
 
 * `boundingBox` ([tes3boundingBox](../../types/tes3boundingBox)): The newly created bounding box.
+
+***
+
+### `detachAffectedNode`
+
+Removes a node from the dynamic effect's affected nodes list. The node's `:updateEffects()` function should be called afterwards to recognize the change.
+
+```lua
+myObject:detachAffectedNode(node)
+```
+
+**Parameters**:
+
+* `node` ([niNode](../../types/niNode)): The node to remove from the affected nodes list.
 
 ***
 
@@ -702,36 +730,6 @@ Update all attached properties.
 ```lua
 myObject:updateProperties()
 ```
-
-***
-
-## Functions
-
-### `attachAffectedNode`
-
-Adds a node to the dynamic effect's affected nodes list. The node's `:updateEffects()` function should be called afterwards to recognize the change.
-
-```lua
-niDynamicEffect.attachAffectedNode(node)
-```
-
-**Parameters**:
-
-* `node` ([niNode](../../types/niNode)): The node to add to the affected nodes list.
-
-***
-
-### `detachAffectedNode`
-
-Removes a node from the dynamic effect's affected nodes list. The node's `:updateEffects()` function should be called afterwards to recognize the change.
-
-```lua
-niDynamicEffect.detachAffectedNode(node)
-```
-
-**Parameters**:
-
-* `node` ([niNode](../../types/niNode)): The node to remove from the affected nodes list.
 
 ***
 

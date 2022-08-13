@@ -4,10 +4,10 @@
 --- @meta
 --- @diagnostic disable:undefined-doc-name
 
---- Represents a spotlight in a scene. Spotlights have a specific location and direction, as well as a distance attenuation and angle attenuation functions. The light direction is handled in the same way as in `niDirectionalLight`.
+--- Represents a spotlight in a scene. The street lights, emmithing the illumination in the cone shape can be represented by this class. Spotlights have a specific location and direction, as well as a distance attenuation and angle attenuation functions. The light direction is handled in the same way as in `niDirectionalLight` - it shines down the model-space positive X axis of the light.
 --- @class niSpotLight : niPointLight, niLight, niDynamicEffect, niAVObject, niObjectNET, niObject
---- @field direction tes3vector3 The direction of the spotlight.
---- @field spotAngle number The spotlight angle, in degrees.
+--- @field direction tes3vector3 The direction of the axis of the spotlight cone from the light location in world space.
+--- @field spotAngle number The spotlight angle, in degrees. Controls the size of the light's cone.
 --- @field spotExponent number The spotlight angular attenuation exponent. This value may be ignored.
 niSpotLight = {}
 

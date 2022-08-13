@@ -8,14 +8,14 @@
 --- @class niDynamicEffect : niAVObject, niObjectNET, niObject
 --- @field affectedNodes niNodeLinkedList The list of nodes that a given dynamic effect will affect.
 --- @field enabled boolean The enabled state of a given dynamic effect.
---- @field type number The enumerated type of a given dynamic effect. Types: `0 - niAmbientLight`, `1 - niDirectionalLight`, `2 - niPointLight`, `3 - niSpotLight`, `4 - niTextureEffect`.
+--- @field type number *Read-only*. The enumerated type of a given dynamic effect. Types: `0 - niAmbientLight`, `1 - niDirectionalLight`, `2 - niPointLight`, `3 - niSpotLight`, `4 - niTextureEffect`.
 niDynamicEffect = {}
 
 --- Adds a node to the dynamic effect's affected nodes list. The node's `:updateEffects()` function should be called afterwards to recognize the change.
 --- @param node niBillboardNode|niCollisionSwitch|niNode|niSwitchNode The node to add to the affected nodes list.
-function niDynamicEffect.attachAffectedNode(node) end
+function niDynamicEffect:attachAffectedNode(node) end
 
 --- Removes a node from the dynamic effect's affected nodes list. The node's `:updateEffects()` function should be called afterwards to recognize the change.
 --- @param node niBillboardNode|niCollisionSwitch|niNode|niSwitchNode The node to remove from the affected nodes list.
-function niDynamicEffect.detachAffectedNode(node) end
+function niDynamicEffect:detachAffectedNode(node) end
 

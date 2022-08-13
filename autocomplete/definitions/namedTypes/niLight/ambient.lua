@@ -1,5 +1,5 @@
 return {
 	type = "value",
-	description = [[The ambient settings for the light.]],
+	description = [[The ambient light color.]],
 	valuetype = "niColor",
 }

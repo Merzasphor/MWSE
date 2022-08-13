@@ -5,7 +5,7 @@
 
 # niDirectionalLight
 
-An object that represents a light with light traveling in a given direction. The light may be pointed in any direction by rotating the light.
+An object that represents a light source located at infinity with parallel light rays traveling in a given direction. The light will project illumination in its model-space positive X axis. The light may be pointed in any direction by rotating the light.
 
 This type inherits the following: [niLight](../../types/niLight), [niDynamicEffect](../../types/niDynamicEffect), [niAVObject](../../types/niAVObject), [niObjectNET](../../types/niObjectNET), [niObject](../../types/niObject)
 ## Properties
@@ -32,7 +32,7 @@ Convenient access to this object's alpha property. Setting this value to be nil 
 
 ### `ambient`
 
-The ambient settings for the light.
+The ambient light color.
 
 **Returns**:
 
@@ -62,7 +62,7 @@ A flag indicating if this object is culled. When culled, it will not render, and
 
 ### `diffuse`
 
-The defuse settings for the light.
+The diffuse light color.
 
 **Returns**:
 
@@ -72,11 +72,11 @@ The defuse settings for the light.
 
 ### `dimmer`
 
-The dimmer settings for the light.
+This flag scales the overall brightness of all light components. This value must be nonnegative. It is usually less than or equal to 1.0 (although advanced lighting effects may use larger values).
 
 **Returns**:
 
-* `result` ([niColor](../../types/niColor))
+* `result` (number)
 
 ***
 
@@ -222,7 +222,9 @@ The object's local uniform scaling factor.
 
 ### `specular`
 
-The specular settings for the light.
+This property was inteded to be specular light color in Gamebryo, but in Morrowind it represents the dynamic culling radius. All the color channels are equal to the radius.
+
+In practice, this radius represents the light's influence radius.
 
 **Returns**:
 
@@ -262,7 +264,7 @@ The object's local translation vector.
 
 ### `type`
 
-The enumerated type of a given dynamic effect. Types: `0 - niAmbientLight`, `1 - niDirectionalLight`, `2 - niPointLight`, `3 - niSpotLight`, `4 - niTextureEffect`.
+*Read-only*. The enumerated type of a given dynamic effect. Types: `0 - niAmbientLight`, `1 - niDirectionalLight`, `2 - niPointLight`, `3 - niSpotLight`, `4 - niTextureEffect`.
 
 **Returns**:
 
@@ -346,6 +348,20 @@ myObject:addExtraData(extraData)
 
 ***
 
+### `attachAffectedNode`
+
+Adds a node to the dynamic effect's affected nodes list. The node's `:updateEffects()` function should be called afterwards to recognize the change.
+
+```lua
+myObject:attachAffectedNode(node)
+```
+
+**Parameters**:
+
+* `node` ([niNode](../../types/niNode)): The node to add to the affected nodes list.
+
+***
+
 ### `attachProperty`
 
 Attaches a property to this object, without checking to see if the property or another of its type is already on the list. Property lists must not have more than one property of a given class (i.e. no two niTexturingProperty objects) attached at once, or else undefined behavior will result.
@@ -395,6 +411,20 @@ local boundingBox = myObject:createBoundingBox()
 **Returns**:
 
 * `boundingBox` ([tes3boundingBox](../../types/tes3boundingBox)): The newly created bounding box.
+
+***
+
+### `detachAffectedNode`
+
+Removes a node from the dynamic effect's affected nodes list. The node's `:updateEffects()` function should be called afterwards to recognize the change.
+
+```lua
+myObject:detachAffectedNode(node)
+```
+
+**Parameters**:
+
+* `node` ([niNode](../../types/niNode)): The node to remove from the affected nodes list.
 
 ***
 
@@ -752,36 +782,6 @@ Update all attached properties.
 ```lua
 myObject:updateProperties()
 ```
-
-***
-
-## Functions
-
-### `attachAffectedNode`
-
-Adds a node to the dynamic effect's affected nodes list. The node's `:updateEffects()` function should be called afterwards to recognize the change.
-
-```lua
-niDynamicEffect.attachAffectedNode(node)
-```
-
-**Parameters**:
-
-* `node` ([niNode](../../types/niNode)): The node to add to the affected nodes list.
-
-***
-
-### `detachAffectedNode`
-
-Removes a node from the dynamic effect's affected nodes list. The node's `:updateEffects()` function should be called afterwards to recognize the change.
-
-```lua
-niDynamicEffect.detachAffectedNode(node)
-```
-
-**Parameters**:
-
-* `node` ([niNode](../../types/niNode)): The node to remove from the affected nodes list.
 
 ***
 

@@ -11,15 +11,15 @@
 --- @field quadraticAttenuation number The quadratic attenuation factor.
 niPointLight = {}
 
---- Creates a new NiPointLight.
+--- Creates a new niPointLight. Sets the light's constant attenuation to 0, linear attenuation to 1 and quadratic attenuation to 0.
 --- @return niPointLight|niSpotLight light No description yet available.
 function niPointLight.new() end
 
---- Sets the attenuation for the radius.
---- @param radius number No description yet available.
+--- Sets the light attenuation values for the given radius. Respects the values in the `Morrowind.ini` file
+--- @param radius integer No description yet available.
 function niPointLight:setAttenuationForRadius(radius) end
 
 --- Sets both the light's influence radius, and its lighting attenuation to match the radius.
---- @param radius number No description yet available.
+--- @param radius integer No description yet available.
 function niPointLight:setRadius(radius) end
 
