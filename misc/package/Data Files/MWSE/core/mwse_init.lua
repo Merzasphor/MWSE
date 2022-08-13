@@ -368,18 +368,6 @@ function table.copymissing(to, from)
 	end
 end
 
-function table.copymissingflat(to, from)
-	if (type(to) ~= "table" or type(from) ~= "table") then
-		error("Arguments for table.copymissing must be tables.")
-	end
-
-	for k, v in pairs(from) do
-		if (to[k] == nil) then
-			to[k] = v
-		end
-	end
-end
-
 function table.traverse(t, k)
 	k = k or "children"
 	local function iter(nodes)
@@ -804,7 +792,7 @@ function mwse.loadConfig(fileName, defaults)
 
 	if (result) then
 		if (type(defaults) == "table") then
-			table.copymissingflat(result, defaults)
+			table.copymissing(result, defaults)
 		end
 	else
 		result = defaults
