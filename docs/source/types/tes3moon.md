@@ -37,7 +37,7 @@ Looks like this property controls when the moon raises during each phase of its 
 
 ### `fadeEndAngle`
 
-This angle represents the angle from the water plane, in degrees. If a moon arrives at that point in the sky it will start disappearing. A moon can dissapear even before its `fadeOutStart` hour if it reaches this angle.
+This angle represents the angle from the water plane, in degrees. If a moon arrives at that point in the sky it will start disappearing. A moon can disappear even before its `fadeOutStart` hour if it reaches this angle.
 
 **Returns**:
 

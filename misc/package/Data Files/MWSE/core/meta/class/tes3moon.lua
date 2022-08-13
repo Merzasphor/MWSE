@@ -14,7 +14,7 @@
 --- @class tes3moon
 --- @field axisOffset number The rotation of the moon's path arc from the North-South axis, in degrees.
 --- @field dailyIncrement number Looks like this property controls when the moon raises during each phase of its cycle. Also seems to impact the progression of moon phases. The units of this property are most likely game hours.
---- @field fadeEndAngle number This angle represents the angle from the water plane, in degrees. If a moon arrives at that point in the sky it will start disappearing. A moon can dissapear even before its `fadeOutStart` hour if it reaches this angle.
+--- @field fadeEndAngle number This angle represents the angle from the water plane, in degrees. If a moon arrives at that point in the sky it will start disappearing. A moon can disappear even before its `fadeOutStart` hour if it reaches this angle.
 --- @field fadeInFinish number The game hour at which the moon finishes fading in.
 --- @field fadeInStart number The game hour at which the moon starts to be visible in the sky.
 --- @field fadeOutFinish number The game hour at which has completely faded out.
