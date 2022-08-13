@@ -6,8 +6,8 @@
 
 --- Contains instance-dependent skinning data for a `NiTriShape` object.
 --- @class niSkinInstance : niObject
---- @field bones niAmbientLight[]|niBillboardNode[]|niCamera[]|niCollisionSwitch[]|niDirectionalLight[]|niDynamicEffect[]|niLight[]|niNode[]|niParticles[]|niPointLight[]|niRotatingParticles[]|niSpotLight[]|niSwitchNode[]|niTriShape[] The bone influences for this skin instance.
+--- @field bones niAmbientLight[]|niBillboardNode[]|niCamera[]|niCollisionSwitch[]|niDirectionalLight[]|niDynamicEffect[]|niLight[]|niNode[]|niParticles[]|niPointLight[]|niRotatingParticles[]|niSpotLight[]|niSwitchNode[]|niTextureEffect[]|niTriShape[] The bone influences for this skin instance.
 --- @field data niSkinData The skinning data. May be shared by multiple skin instances.
---- @field root niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niLight|niNode|niParticles|niPointLight|niRotatingParticles|niSpotLight|niSwitchNode|niTriShape The skeleton root (parent of the root bone).
+--- @field root niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niLight|niNode|niParticles|niPointLight|niRotatingParticles|niSpotLight|niSwitchNode|niTextureEffect|niTriShape The skeleton root (parent of the root bone).
 niSkinInstance = {}
 

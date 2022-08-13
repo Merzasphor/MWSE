@@ -14,10 +14,10 @@
 --- @field lastScaledTime number No description.
 --- @field lastTime number No description.
 --- @field lowKeyFrame number No description.
---- @field nextController niKeyframeController|niLookAtController|niTimeController The next NiTimeController in the list of controllers containing the calling controller.
+--- @field nextController niKeyframeController|niLookAtController|niParticleSystemController|niTimeController The next NiTimeController in the list of controllers containing the calling controller.
 --- @field phase number The phase value.
 --- @field startTime number No description.
---- @field target niAlphaProperty|niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niFogProperty|niLight|niMaterialProperty|niNode|niParticles|niPointLight|niRotatingParticles|niSourceTexture|niSpotLight|niStencilProperty|niSwitchNode|niTexture|niTexturingProperty|niTriShape|niVertexColorProperty The scene graph object that this animation controller is to animate.
+--- @field target niAlphaProperty|niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niFogProperty|niLight|niMaterialProperty|niNode|niParticles|niPointLight|niRotatingParticles|niSourceTexture|niSpotLight|niStencilProperty|niSwitchNode|niTexture|niTextureEffect|niTexturingProperty|niTriShape|niVertexColorProperty The scene graph object that this animation controller is to animate.
 niTimeController = {}
 
 --- Starts the controller at the specified time.

@@ -215,7 +215,7 @@ The sound played when an actor is losing health by drowning.
 
 **Returns**:
 
-* `result` (niTextureEffect)
+* `result` ([niTextureEffect](../../types/niTextureEffect))
 
 ***
 
