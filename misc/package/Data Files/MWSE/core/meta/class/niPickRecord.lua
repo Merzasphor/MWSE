@@ -10,8 +10,8 @@
 --- @field distance number The distance of the triangle intersection from the ray origin.
 --- @field intersection tes3vector3 The intersection point on the triangle.
 --- @field normal tes3vector3 The normal vector at the point of intersection. The normal is valid only when `returnNormal = true`.
---- @field object niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niLight|niNode|niParticles|niPointLight|niRotatingParticles|niSpotLight|niSwitchNode|niTextureEffect|niTriShape *Read-only*. The object of the record.
---- @field parent niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niDynamicEffect|niLight|niNode|niParticles|niPointLight|niRotatingParticles|niSpotLight|niSwitchNode|niTextureEffect|niTriShape *Read-only*. The parent of the record.
+--- @field object niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niNode|niParticles|niPointLight|niRotatingParticles|niSpotLight|niSwitchNode|niTextureEffect|niTriShape *Read-only*. The object of the record.
+--- @field parent niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niNode|niParticles|niPointLight|niRotatingParticles|niSpotLight|niSwitchNode|niTextureEffect|niTriShape *Read-only*. The parent of the record.
 --- @field reference tes3reference Quick reference to the associated object's reference.
 --- @field texture tes3vector2 The texture coordinates at the point of intersection. The coordinates are valid only when `returnTexture = true`.
 --- @field triangleIndex number The index of the intersected triangle.

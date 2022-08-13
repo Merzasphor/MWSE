@@ -750,7 +750,7 @@ local success = myObject:saveBinary(path)
 
 ### `setAttenuationForRadius`
 
-Sets the light attenuation values for the given radius. Respects the values in the `Morrowind.ini` file
+Sets the light attenuation values for the given radius. Respects the values in the `Morrowind.ini` file.
 
 ```lua
 myObject:setAttenuationForRadius(radius)

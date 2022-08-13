@@ -15,7 +15,7 @@ niPointLight = {}
 --- @return niPointLight|niSpotLight light No description yet available.
 function niPointLight.new() end
 
---- Sets the light attenuation values for the given radius. Respects the values in the `Morrowind.ini` file
+--- Sets the light attenuation values for the given radius. Respects the values in the `Morrowind.ini` file.
 --- @param radius integer No description yet available.
 function niPointLight:setAttenuationForRadius(radius) end
 
