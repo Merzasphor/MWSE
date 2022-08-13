@@ -32,7 +32,7 @@ A flag indicating if this object is culled. When culled, it will not render, and
 
 ### `children`
 
-*Read-only*. The children of the node.
+*Read-only*. The children of the node. Can have `nil` entries.
 
 **Returns**:
 
@@ -52,7 +52,7 @@ A flag indicating if this object is culled. When culled, it will not render, and
 
 ### `effectList`
 
-*Read-only*. The effect list of the node.
+*Read-only*. The effect list of the node. Attached effects affect the node and all of its child subtree geometry.
 
 **Returns**:
 
@@ -298,7 +298,7 @@ myObject:addExtraData(extraData)
 
 ### `attachChild`
 
-Attachs the child to the children list of the node.
+Attaches the child to the children list of the node. Doesn't check to see if the object is already in the child list.
 
 ```lua
 myObject:attachChild(child, useFirstAvailable)
@@ -307,7 +307,21 @@ myObject:attachChild(child, useFirstAvailable)
 **Parameters**:
 
 * `child` ([niAVObject](../../types/niAVObject))
-* `useFirstAvailable` (boolean): *Optional*. Use the first available space in the list. Default value is False.
+* `useFirstAvailable` (boolean): *Default*: `false`. Use the first available space in the list. If `false` appends the child at the end of the list.
+
+***
+
+### `attachEffect`
+
+Attaches a dynamic effect to the node. It will not attach the same effect twice.
+
+```lua
+myObject:attachEffect(effect)
+```
+
+**Parameters**:
+
+* `effect` ([niDynamicEffect](../../types/niDynamicEffect))
 
 ***
 
@@ -386,7 +400,7 @@ local result = myObject:detachAllProperties(ts)
 Detaches the child from the children list of the node. Returns the detached child.
 
 ```lua
-local result = myObject:detachChild(child)
+local detachedChild = myObject:detachChild(child)
 ```
 
 **Parameters**:
@@ -395,7 +409,7 @@ local result = myObject:detachChild(child)
 
 **Returns**:
 
-* `result` ([niAVObject](../../types/niAVObject))
+* `detachedChild` ([niAVObject](../../types/niAVObject))
 
 ***
 
@@ -404,16 +418,30 @@ local result = myObject:detachChild(child)
 Detaches the child at the specified index from the children list of the node. Returns the detached child.
 
 ```lua
-local result = myObject:detachChildAt(index)
+local detachedChild = myObject:detachChildAt(index)
 ```
 
 **Parameters**:
 
-* `index` (number)
+* `index` (integer)
 
 **Returns**:
 
-* `result` ([niAVObject](../../types/niAVObject))
+* `detachedChild` ([niAVObject](../../types/niAVObject))
+
+***
+
+### `detachEffect`
+
+Detaches the given dynamic effect from the effect list of the node, if it was present. Has no effect if the effect wasn't attached to the node.
+
+```lua
+myObject:detachEffect(effect)
+```
+
+**Parameters**:
+
+* `effect` ([niDynamicEffect](../../types/niDynamicEffect))
 
 ***
 
@@ -451,19 +479,19 @@ local result = myObject:getActiveChild()
 
 ### `getEffect`
 
-Gets the effect for the given type.
+Gets the effect of the given type.
 
 ```lua
-local result = myObject:getEffect(type)
+local effect = myObject:getEffect(type)
 ```
 
 **Parameters**:
 
-* `type` (number)
+* `type` (integer): Use the values from [`tes3.dynamicEffectType`](https://mwse.github.io/MWSE/references/dynamic-effect-types/) table.
 
 **Returns**:
 
-* `result` ([niDynamicEffect](../../types/niDynamicEffect))
+* `effect` ([niDynamicEffect](../../types/niDynamicEffect), nil)
 
 ***
 

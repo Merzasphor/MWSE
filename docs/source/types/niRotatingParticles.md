@@ -314,20 +314,6 @@ local result = myObject:clone()
 
 ***
 
-### `createBoundingBox`
-
-Calculates and creates a bounding box for the object. The existing bounding box, if any, will not be used, a fresh one will always be calculated.
-
-```lua
-local boundingBox = myObject:createBoundingBox()
-```
-
-**Returns**:
-
-* `boundingBox` ([tes3boundingBox](../../types/tes3boundingBox)): The newly created bounding box.
-
-***
-
 ### `detachAllProperties`
 
 Detaches all the properties on the object and returns them in the table.

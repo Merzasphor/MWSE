@@ -4,5 +4,5 @@ return {
 	arguments = {
 		{ name = "child", type = "niAVObject" },
 	},
-	valuetype = "niAVObject",
+	returns = { name = "detachedChild", type = "niAVObject" },
 }

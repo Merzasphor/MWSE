@@ -12,3 +12,7 @@
 --- @field vertices tes3vector3[] *Read-only*. The array of vertex position data. The length of the array is equal to vertex count.
 niTriShape = {}
 
+--- Calculates and creates a bounding box for the object. The existing bounding box, if any, will not be used, a fresh one will always be calculated.
+--- @return tes3boundingBox boundingBox The newly created bounding box.
+function niTriShape:createBoundingBox() end
+

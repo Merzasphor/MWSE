@@ -1,8 +1,8 @@
 return {
 	type = "method",
-	description = [[Gets the effect for the given type.]],
+	description = [[Gets the effect of the given type.]],
 	arguments = {
-		{ name = "type", type = "number" },
+		{ name = "type", type = "integer", description = "Use the values from [`tes3.dynamicEffectType`](https://mwse.github.io/MWSE/references/dynamic-effect-types/) table." },
 	},
-	valuetype = "niDynamicEffect",
+	returns = { name = "effect", type = "niDynamicEffect|nil" },
 }

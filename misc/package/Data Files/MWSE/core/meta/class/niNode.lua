@@ -6,31 +6,43 @@
 
 --- Base class that represents the nodes of a scene graph. A node can have any number of child nodes.
 --- @class niNode : niAVObject, niObjectNET, niObject
---- @field children niAmbientLight[]|niBillboardNode[]|niCamera[]|niCollisionSwitch[]|niDirectionalLight[]|niNode[]|niParticles[]|niPointLight[]|niRotatingParticles[]|niSpotLight[]|niSwitchNode[]|niTextureEffect[]|niTriShape[] *Read-only*. The children of the node.
---- @field effectList niDynamicEffectLinkedList *Read-only*. The effect list of the node.
+--- @field children niAmbientLight[]|niBillboardNode[]|niCamera[]|niCollisionSwitch[]|niDirectionalLight[]|niNode[]|niParticles[]|niPointLight[]|niRotatingParticles[]|niSpotLight[]|niSwitchNode[]|niTextureEffect[]|niTriShape[] *Read-only*. The children of the node. Can have `nil` entries.
+--- @field effectList niDynamicEffectLinkedList *Read-only*. The effect list of the node. Attached effects affect the node and all of its child subtree geometry.
 niNode = {}
 
 --- Creates a new, empty NiNode.
 --- @return niBillboardNode|niCollisionSwitch|niNode|niSwitchNode node No description yet available.
 function niNode.new() end
 
---- Attachs the child to the children list of the node.
+--- Attaches the child to the children list of the node. Doesn't check to see if the object is already in the child list.
 --- @param child niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niNode|niParticles|niPointLight|niRotatingParticles|niSpotLight|niSwitchNode|niTextureEffect|niTriShape No description yet available.
---- @param useFirstAvailable boolean? *Optional*. Use the first available space in the list. Default value is False.
+--- @param useFirstAvailable boolean? *Default*: `false`. Use the first available space in the list. If `false` appends the child at the end of the list.
 function niNode:attachChild(child, useFirstAvailable) end
+
+--- Attaches a dynamic effect to the node. It will not attach the same effect twice.
+--- @param effect niAmbientLight|niDirectionalLight|niPointLight|niSpotLight|niTextureEffect No description yet available.
+function niNode:attachEffect(effect) end
+
+--- Calculates and creates a bounding box for the object. The existing bounding box, if any, will not be used, a fresh one will always be calculated.
+--- @return tes3boundingBox boundingBox The newly created bounding box.
+function niNode:createBoundingBox() end
 
 --- Detaches the child from the children list of the node. Returns the detached child.
 --- @param child niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niNode|niParticles|niPointLight|niRotatingParticles|niSpotLight|niSwitchNode|niTextureEffect|niTriShape No description yet available.
---- @return niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niNode|niParticles|niPointLight|niRotatingParticles|niSpotLight|niSwitchNode|niTextureEffect|niTriShape result No description yet available.
+--- @return niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niNode|niParticles|niPointLight|niRotatingParticles|niSpotLight|niSwitchNode|niTextureEffect|niTriShape detachedChild No description yet available.
 function niNode:detachChild(child) end
 
 --- Detaches the child at the specified index from the children list of the node. Returns the detached child.
---- @param index number No description yet available.
---- @return niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niNode|niParticles|niPointLight|niRotatingParticles|niSpotLight|niSwitchNode|niTextureEffect|niTriShape result No description yet available.
+--- @param index integer No description yet available.
+--- @return niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niNode|niParticles|niPointLight|niRotatingParticles|niSpotLight|niSwitchNode|niTextureEffect|niTriShape detachedChild No description yet available.
 function niNode:detachChildAt(index) end
 
---- Gets the effect for the given type.
---- @param type number No description yet available.
---- @return niAmbientLight|niDirectionalLight|niPointLight|niSpotLight|niTextureEffect result No description yet available.
+--- Detaches the given dynamic effect from the effect list of the node, if it was present. Has no effect if the effect wasn't attached to the node.
+--- @param effect niAmbientLight|niDirectionalLight|niPointLight|niSpotLight|niTextureEffect No description yet available.
+function niNode:detachEffect(effect) end
+
+--- Gets the effect of the given type.
+--- @param type integer Use the values from [`tes3.dynamicEffectType`](https://mwse.github.io/MWSE/references/dynamic-effect-types/) table.
+--- @return niAmbientLight|niDirectionalLight|niPointLight|niSpotLight|niTextureEffect|nil effect No description yet available.
 function niNode:getEffect(type) end
 

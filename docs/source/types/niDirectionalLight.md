@@ -400,20 +400,6 @@ local result = myObject:clone()
 
 ***
 
-### `createBoundingBox`
-
-Calculates and creates a bounding box for the object. The existing bounding box, if any, will not be used, a fresh one will always be calculated.
-
-```lua
-local boundingBox = myObject:createBoundingBox()
-```
-
-**Returns**:
-
-* `boundingBox` ([tes3boundingBox](../../types/tes3boundingBox)): The newly created bounding box.
-
-***
-
 ### `detachAffectedNode`
 
 Removes a node from the dynamic effect's affected nodes list. The node's `:updateEffects()` function should be called afterwards to recognize the change.
