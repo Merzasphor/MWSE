@@ -251,20 +251,22 @@ namespace mge::lua {
 	}
 
 	sol::table WeatherConfig::getFarScattering(sol::this_state ts) {
-		float far_scatter[3];
+		float far_scatter[4];
 		static_cast<MGEAPIv2*>(api)->weatherScatteringFarGet(far_scatter);
 
 		sol::state_view state = ts;
 		sol::table far = state.create_table_with(1, far_scatter[0], 2, far_scatter[1], 3, far_scatter[2]);
-		sol::table scattering = state.create_table_with("far", far);
+		sol::table scattering = state.create_table_with("far", far, "mix", far_scatter[3]);
 		return scattering;
 	}
 
 	void WeatherConfig::setFarScattering(sol::optional<sol::table> params) {
 		auto far_scatter = mwse::lua::getOptionalParamVector3(params, "far");
+		auto far_mix = mwse::lua::getOptionalParam<float>(params, "mix", 0.44f);
 
 		if (far_scatter) {
-			static_cast<MGEAPIv2*>(api)->weatherScatteringFarSet(&far_scatter.value().x);
+			TES3::Vector4 v(far_scatter.value().x, far_scatter.value().y, far_scatter.value().z, far_mix);
+			static_cast<MGEAPIv2*>(api)->weatherScatteringFarSet(&v.x);
 		}
 		else {
 			throw std::invalid_argument("far must be a 3-vector.");
