@@ -5,7 +5,7 @@
 
 # niCamera
 
-Object that represent a camera. Position and orientation is determined by parent properties.
+Object that represent a camera. Position and orientation is determined by parent properties. This enables the cameras to be attached to scene graph objects and follow them automatically, as they move.
 
 This type inherits the following: [niAVObject](../../types/niAVObject), [niObjectNET](../../types/niObjectNET), [niObject](../../types/niObject)
 ## Properties
@@ -42,7 +42,7 @@ A flag indicating if this object is culled. When culled, it will not render, and
 
 ### `cullingPlanes`
 
-The culling planes of the camera.
+The culling planes of the camera: near, far, left, right, top, and bottom.
 
 **Returns**:
 
@@ -82,7 +82,7 @@ Convenient access to this object's fog property. Setting this value to be nil wi
 
 ### `lodAdjust`
 
-The level-of-detail adjustment value for the camera. A higher value will lower the LOD of the objects drawn by the camera.
+The level-of-detail adjustment value for the camera. This value is used by NiLODNode objects to multiply the distance between the object whose LOD is being computed and the camera. A higher value will lower the LOD of the objects drawn by the camera.
 
 **Returns**:
 
@@ -122,7 +122,7 @@ The human-facing name of the given object.
 
 ### `port`
 
-The port on the backbuffer of the camera.
+The port on the backbuffer of the camera. Represents the rectangular portion of the rendering backbuffer to which the camera's view rectangle is drawn (purely 2D mapping). These values are called port settings. The ordering is left, right, top and bottom. All port settings must be in the unit interval [0, 1]. The left edge of the backbuffer is 0.0, the right edge is 1.0. The top edge of the backbuffer is 1.0, the bottom edge is 0.0.
 
 **Returns**:
 
@@ -156,7 +156,7 @@ The port on the backbuffer of the camera.
 
 **Returns**:
 
-* `result` ([niObject](../../types/niObject))
+* `result` (niRenderer)
 
 ***
 
@@ -206,7 +206,7 @@ The object's local uniform scaling factor.
 
 **Returns**:
 
-* `result` ([niObject](../../types/niObject))
+* `result` ([niNode](../../types/niNode))
 
 ***
 
@@ -387,6 +387,20 @@ Resets the object's local transform.
 ```lua
 myObject:clearTransforms()
 ```
+
+***
+
+### `click`
+
+This method renders the currently-attached scene graph to the active renderer.
+
+```lua
+myObject:click(something)
+```
+
+**Parameters**:
+
+* `something` (boolean): *Default*: `false`.
 
 ***
 
