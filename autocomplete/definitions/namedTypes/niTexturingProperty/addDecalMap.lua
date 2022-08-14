@@ -6,6 +6,6 @@ return {
 	},
 	returns = {
 		{ name = "map", type = "niTexturingPropertyMap|nil", description = "A newly created decal map." },
-		{ name = "index", type = "number|nil", description = "The index of the newly added decal map." },
+		{ name = "index", type = "integer|nil", description = "The index of the newly added decal map." },
 	},
 }

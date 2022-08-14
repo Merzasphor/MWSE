@@ -5,18 +5,18 @@
 
 # niFogProperty
 
-A rendering property that controls the appearance of fogging.
+A rendering property that controls the appearance of fogging, also known as haze.
 
 This type inherits the following: [niProperty](../../types/niProperty), [niObjectNET](../../types/niObjectNET), [niObject](../../types/niObject)
 ## Properties
 
 ### `color`
 
-*Read-only*. The fog color.
+*Read-only*. The RGBA fog color value in range [0, 255].
 
 **Returns**:
 
-* `result` ([niColor](../../types/niColor))
+* `result` (integer[])
 
 ***
 
@@ -32,7 +32,7 @@ This type inherits the following: [niProperty](../../types/niProperty), [niObjec
 
 ### `density`
 
-The fog density.
+The fog density in normalized units [0.0, 1.0]. If set to 1.0, then the fogging begins at the near plane. If set to a value of 0.5, then fogging begins halfway between the near and far planes in world space.
 
 **Returns**:
 
@@ -57,6 +57,16 @@ The human-facing name of the given object.
 **Returns**:
 
 * `result` (string)
+
+***
+
+### `propertyFlags`
+
+
+
+**Returns**:
+
+* `result` (integer)
 
 ***
 
@@ -92,11 +102,11 @@ The human-facing name of the given object.
 
 ### `type`
 
-The unique class identifier number of the given rendering property. The types are available in [`tes3.niPropertyType`](https://mwse.github.io/MWSE/references/niProperty-types/) table.
+*Read-only*. The unique class identifier number of the given rendering property. The types are available in [`tes3.niPropertyType`](https://mwse.github.io/MWSE/references/niProperty-types/) table.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 

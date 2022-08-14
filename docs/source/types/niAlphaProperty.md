@@ -5,18 +5,18 @@
 
 # niAlphaProperty
 
-A rendering property that manages alpha blending, enabling and disabling it, and setting blending functions. The property affects alpha testing, which can provide a performance boost.
+A rendering property that manages alpha blending, enabling and disabling it, and setting blending functions. The property also affects alpha testing, which can provide a performance boost.
 
 This type inherits the following: [niProperty](../../types/niProperty), [niObjectNET](../../types/niObjectNET), [niObject](../../types/niObject)
 ## Properties
 
 ### `alphaTestRef`
 
-No description.
+The reference value used for alpha testing. In range [0, 255].
 
 **Returns**:
 
-* `result` (string)
+* `result` (integer)
 
 ***
 
@@ -47,6 +47,16 @@ The human-facing name of the given object.
 **Returns**:
 
 * `result` (string)
+
+***
+
+### `propertyFlags`
+
+
+
+**Returns**:
+
+* `result` (integer)
 
 ***
 
@@ -82,11 +92,11 @@ The human-facing name of the given object.
 
 ### `type`
 
-The unique class identifier number of the given rendering property. The types are available in [`tes3.niPropertyType`](https://mwse.github.io/MWSE/references/niProperty-types/) table.
+*Read-only*. The unique class identifier number of the given rendering property. The types are available in [`tes3.niPropertyType`](https://mwse.github.io/MWSE/references/niProperty-types/) table.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -338,6 +348,22 @@ myObject:setFlag(state, index)
 
 * `state` (boolean)
 * `index` (number)
+
+***
+
+## Functions
+
+### `new`
+
+Creates a new, niAlphaProperty, with the `alphaTestRef` set to 0.
+
+```lua
+local property = niAlphaProperty.new()
+```
+
+**Returns**:
+
+* `property` ([niAlphaProperty](../../types/niAlphaProperty))
 
 ***
 

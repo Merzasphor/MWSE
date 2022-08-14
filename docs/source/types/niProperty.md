@@ -40,6 +40,16 @@ The human-facing name of the given object.
 
 ***
 
+### `propertyFlags`
+
+
+
+**Returns**:
+
+* `result` (integer)
+
+***
+
 ### `refCount`
 
 *Read-only*. The number of references that exist for this object. When this value reaches zero, the object will be deleted.
@@ -72,11 +82,11 @@ The human-facing name of the given object.
 
 ### `type`
 
-The unique class identifier number of the given rendering property. The types are available in [`tes3.niPropertyType`](https://mwse.github.io/MWSE/references/niProperty-types/) table.
+*Read-only*. The unique class identifier number of the given rendering property. The types are available in [`tes3.niPropertyType`](https://mwse.github.io/MWSE/references/niProperty-types/) table.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 

@@ -6,6 +6,7 @@
 
 --- A base class representing all rendering properties.
 --- @class niProperty : niObjectNET, niObject
---- @field type number The unique class identifier number of the given rendering property. The types are available in [`tes3.niPropertyType`](https://mwse.github.io/MWSE/references/niProperty-types/) table.
+--- @field propertyFlags integer 
+--- @field type integer *Read-only*. The unique class identifier number of the given rendering property. The types are available in [`tes3.niPropertyType`](https://mwse.github.io/MWSE/references/niProperty-types/) table.
 niProperty = {}
 

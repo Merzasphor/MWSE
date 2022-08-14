@@ -35,7 +35,7 @@ The texture coordinate set for the Map.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 

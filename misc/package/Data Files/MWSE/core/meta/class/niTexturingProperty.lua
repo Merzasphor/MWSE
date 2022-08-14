@@ -11,7 +11,7 @@
 --- @field bumpMap niTexturingPropertyMap|nil Gets or set the bump map. Can be set to nil to delete it. Note that doing so will free the memory of the map, causing all existing handles to it to become invalid.
 --- @field canAddDecal boolean *Read-only*. If true, the texturing property supports additional decal maps.
 --- @field darkMap niTexturingPropertyMap|nil Gets or set the dark map. Can be set to nil to delete it. Note that doing so will free the memory of the map, causing all existing handles to it to become invalid.
---- @field decalCount number *Read-only*. The number of decals currently on the texturing property.
+--- @field decalCount integer *Read-only*. The number of decals currently on the texturing property.
 --- @field detailMap niTexturingPropertyMap|nil Gets or set the detail map. Can be set to nil to delete it. Note that doing so will free the memory of the map, causing all existing handles to it to become invalid.
 --- @field glossMap niTexturingPropertyMap|nil Gets or set the gloss map. Can be set to nil to delete it. Note that doing so will free the memory of the map, causing all existing handles to it to become invalid.
 --- @field glowMap niTexturingPropertyMap|nil Gets or set the glow map. Can be set to nil to delete it. Note that doing so will free the memory of the map, causing all existing handles to it to become invalid.
@@ -21,11 +21,11 @@ niTexturingProperty = {}
 --- Attempts to create a new decal map. If successful, it returns both the new map and the index it was created in.
 --- @param texture niSourceTexture|niTexture|nil *Optional*. The texture to assign to the new decal.
 --- @return niTexturingPropertyMap|nil map A newly created decal map.
---- @return number|nil index The index of the newly added decal map.
+--- @return integer|nil index The index of the newly added decal map.
 function niTexturingProperty:addDecalMap(texture) end
 
 --- Attempts to remove a decal at a given index.
---- @param index number The index of the decal to remove.
+--- @param index integer The index of the decal to remove.
 --- @return boolean removed True if the decal was removed.
 function niTexturingProperty:removeDecalMap(index) end
 

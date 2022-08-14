@@ -5,7 +5,7 @@
 
 # niVertexColorProperty
 
-A rendering property that allows the application to control the method used to compute colors for each vertex in a geometry object.  This class enables effects such as static pre-lighting, dynamic lighting, etc.
+A rendering property that allows the application to control the method used to compute colors for each vertex in a geometry object. This class enables effects such as static pre-lighting, dynamic lighting, etc.
 
 This type inherits the following: [niProperty](../../types/niProperty), [niObjectNET](../../types/niObjectNET), [niObject](../../types/niObject)
 ## Properties
@@ -32,11 +32,16 @@ This type inherits the following: [niProperty](../../types/niProperty), [niObjec
 
 ### `lighting`
 
-The lighting mode.
+Describes how vertex colors influence lighting.
+
+Value | Mode                   | Description
+----- | ---------------------- | -----------------
+0     | LIGHT_MODE_EMISSIVE    | Only the emissive component of the lighting equation is used. No dynamic lights are considered in the lighting process.
+1	  | LIGHT_MODE_EMI_AMB_DIF | The emissive, ambient, and diffuse components of the lighting equation are all used.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -47,6 +52,16 @@ The human-facing name of the given object.
 **Returns**:
 
 * `result` (string)
+
+***
+
+### `propertyFlags`
+
+
+
+**Returns**:
+
+* `result` (integer)
 
 ***
 
@@ -82,21 +97,27 @@ The human-facing name of the given object.
 
 ### `source`
 
-The source vertex mode.
+Determines how vertex and material colors are mixed on subclasses of niGeometryData.
+
+Value | Mode                   | Description
+----- | ---------------------- | -----------------
+0     | VERT_MODE_SRC_IGNORE   | Emissive, ambient, and diffuse colors are all specified by the niMaterialProperty.
+1	  | VERT_MODE_SRC_EMISSIVE | Emissive colors are specified by the source vertex colors. Ambient and Diffuse are specified by the niMaterialProperty.
+2	  | VERT_MODE_SRC_AMB_DIF  | Ambient and Diffuse colors are specified by the source vertex colors. Emissive is specified by the niMaterialProperty (Default).
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
 ### `type`
 
-The unique class identifier number of the given rendering property. The types are available in [`tes3.niPropertyType`](https://mwse.github.io/MWSE/references/niProperty-types/) table.
+*Read-only*. The unique class identifier number of the given rendering property. The types are available in [`tes3.niPropertyType`](https://mwse.github.io/MWSE/references/niProperty-types/) table.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -348,6 +369,22 @@ myObject:setFlag(state, index)
 
 * `state` (boolean)
 * `index` (number)
+
+***
+
+## Functions
+
+### `new`
+
+Creates a new niVertexColorProperty with `lighting` set to `LIGHT_MODE_EMI_AMB_DIF` and `source` set to `VERT_MODE_SRC_IGNORE`.
+
+```lua
+local property = niVertexColorProperty.new()
+```
+
+**Returns**:
+
+* `property` ([niVertexColorProperty](../../types/niVertexColorProperty))
 
 ***
 

@@ -4,9 +4,9 @@
 --- @meta
 --- @diagnostic disable:undefined-doc-name
 
---- A rendering property that controls the appearance of fogging.
+--- A rendering property that controls the appearance of fogging, also known as haze.
 --- @class niFogProperty : niProperty, niObjectNET, niObject
---- @field color niColor *Read-only*. The fog color.
---- @field density number The fog density.
+--- @field color integer[] *Read-only*. The RGBA fog color value in range [0, 255].
+--- @field density number The fog density in normalized units [0.0, 1.0]. If set to 1.0, then the fogging begins at the near plane. If set to a value of 0.5, then fogging begins halfway between the near and far planes in world space.
 niFogProperty = {}
 

@@ -12,7 +12,7 @@ This type inherits the following: [niProperty](../../types/niProperty), [niObjec
 
 ### `alpha`
 
-The alpha value of the material. Value should be between 0 - 1.
+The alpha value of the material. Value should be in [0.0, 1.0] range. Setting this value also marks the material as changed, so that renderer knows that it needs to update its copies of the material settings.
 
 **Returns**:
 
@@ -22,7 +22,7 @@ The alpha value of the material. Value should be between 0 - 1.
 
 ### `ambient`
 
-The ambient material color.
+The ambient material color. Setting this value also marks the material as changed, so that renderer knows that it needs to update its copies of the material settings.
 
 **Returns**:
 
@@ -42,7 +42,7 @@ The ambient material color.
 
 ### `diffuse`
 
-The diffuse material color.
+The diffuse material color. Setting this value also marks the material as changed, so that renderer knows that it needs to update its copies of the material settings.
 
 **Returns**:
 
@@ -52,7 +52,7 @@ The diffuse material color.
 
 ### `emissive`
 
-The emissive material color.
+The emissive material color. Setting this value also marks the material as changed, so that renderer knows that it needs to update its copies of the material settings.
 
 **Returns**:
 
@@ -77,6 +77,16 @@ The human-facing name of the given object.
 **Returns**:
 
 * `result` (string)
+
+***
+
+### `propertyFlags`
+
+
+
+**Returns**:
+
+* `result` (integer)
 
 ***
 
@@ -112,7 +122,7 @@ The human-facing name of the given object.
 
 ### `shininess`
 
-The shine of the material. Value should be >= 0.
+The shine of the material. Value should be >= 0. Higher values tend to make the material appear to have a more mirror-like finish. Setting this value also marks the material as changed, so that renderer knows that it needs to update its copies of the material settings.
 
 **Returns**:
 
@@ -122,7 +132,7 @@ The shine of the material. Value should be >= 0.
 
 ### `specular`
 
-The specular material color.
+The specular material color. Setting this value also marks the material as changed, so that renderer knows that it needs to update its copies of the material settings.
 
 **Returns**:
 
@@ -132,11 +142,11 @@ The specular material color.
 
 ### `type`
 
-The unique class identifier number of the given rendering property. The types are available in [`tes3.niPropertyType`](https://mwse.github.io/MWSE/references/niProperty-types/) table.
+*Read-only*. The unique class identifier number of the given rendering property. The types are available in [`tes3.niPropertyType`](https://mwse.github.io/MWSE/references/niProperty-types/) table.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -257,6 +267,16 @@ local result = myObject:hasStringDataWith(value)
 **Returns**:
 
 * `result` (boolean)
+
+***
+
+### `incrementRevisionId`
+
+This marks the material as changed, so that the renderer knows that it needs to update the copies of the material settings.
+
+```lua
+myObject:incrementRevisionId()
+```
 
 ***
 

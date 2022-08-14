@@ -76,7 +76,7 @@ Gets or set the dark map. Can be set to nil to delete it. Note that doing so wil
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -140,6 +140,16 @@ The human-facing name of the given object.
 
 ***
 
+### `propertyFlags`
+
+
+
+**Returns**:
+
+* `result` (integer)
+
+***
+
 ### `refCount`
 
 *Read-only*. The number of references that exist for this object. When this value reaches zero, the object will be deleted.
@@ -172,11 +182,11 @@ The human-facing name of the given object.
 
 ### `type`
 
-The unique class identifier number of the given rendering property. The types are available in [`tes3.niPropertyType`](https://mwse.github.io/MWSE/references/niProperty-types/) table.
+*Read-only*. The unique class identifier number of the given rendering property. The types are available in [`tes3.niPropertyType`](https://mwse.github.io/MWSE/references/niProperty-types/) table.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -197,7 +207,7 @@ local map, index = myObject:addDecalMap(texture)
 **Returns**:
 
 * `map` ([niTexturingPropertyMap](../../types/niTexturingPropertyMap), nil): A newly created decal map.
-* `index` (number, nil): The index of the newly added decal map.
+* `index` (integer, nil): The index of the newly added decal map.
 
 ***
 
@@ -413,7 +423,7 @@ local removed = myObject:removeDecalMap(index)
 
 **Parameters**:
 
-* `index` (number): The index of the decal to remove.
+* `index` (integer): The index of the decal to remove.
 
 **Returns**:
 

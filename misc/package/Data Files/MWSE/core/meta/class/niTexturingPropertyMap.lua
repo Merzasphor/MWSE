@@ -8,7 +8,7 @@
 --- @class niTexturingPropertyMap
 --- @field clampMode niTexturingPropertyClampMode The clamp mode for the Map.
 --- @field filterMode niTexturingPropertyFilterMode The filter mode for the Map.
---- @field texCoordSet number The texture coordinate set for the Map.
+--- @field texCoordSet integer The texture coordinate set for the Map.
 --- @field texture niSourceTexture|niTexture The texture for the Map.
 niTexturingPropertyMap = {}
 
