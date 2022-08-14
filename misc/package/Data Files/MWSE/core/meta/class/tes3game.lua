@@ -25,7 +25,7 @@
 --- @field volumeMedia number Mix volumes for music.
 --- @field volumeVoice number Mix volumes for voices.
 --- @field windowHandle number *Read-only*. The Windows HWND for the window.
---- @field wireframeProperty niAlphaProperty|niFogProperty|niMaterialProperty|niStencilProperty|niTexturingProperty|niVertexColorProperty *Read-only*. The reused wireframe property, applied when toggling wireframe rendering.
+--- @field wireframeProperty niAlphaProperty|niFogProperty|niMaterialProperty|niStencilProperty|niTexturingProperty|niVertexColorProperty|niZBufferProperty *Read-only*. The reused wireframe property, applied when toggling wireframe rendering.
 --- @field worldLandscapeRoot niBillboardNode|niCollisionSwitch|niNode|niSwitchNode *Read-only*. Access to the root of the scene graph of all the currently loaded terrain.
 --- @field worldObjectRoot niBillboardNode|niCollisionSwitch|niNode|niSwitchNode *Read-only*. Access to the root of the scene graph containing all the static objects, and lights that can't be picked up.
 --- @field worldPickRoot niBillboardNode|niCollisionSwitch|niNode|niSwitchNode *Read-only*. Access to the root of the scene graph containing all the objects that can be interacted with (NPCs, items, harvestable plants, activators, doors...), but also some objects that are only rendered in the Construction Set such as sound emmiting activator objects with EditorMarker.NIF mesh.

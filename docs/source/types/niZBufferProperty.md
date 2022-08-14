@@ -3,9 +3,9 @@
 	More information: https://github.com/MWSE/MWSE/tree/master/docs
 -->
 
-# niVertexColorProperty
+# niZBufferProperty
 
-A rendering property that allows the application to control the method used to compute colors for each vertex in a geometry object. This class enables effects such as static pre-lighting, dynamic lighting, etc.
+A rendering property that allows the application to set the test and write modes of the renderer's Z-buffer and to set the comparison function used for the Z-buffer test.
 
 This type inherits the following: [niProperty](../../types/niProperty), [niObjectNET](../../types/niObjectNET), [niObject](../../types/niObject)
 ## Properties
@@ -27,21 +27,6 @@ This type inherits the following: [niProperty](../../types/niProperty), [niObjec
 **Returns**:
 
 * `result` ([niExtraData](../../types/niExtraData))
-
-***
-
-### `lighting`
-
-Describes how vertex colors influence lighting.
-
-Value | Mode                   | Description
------ | ---------------------- | -----------------
-0     | LIGHT_MODE_EMISSIVE    | Only the emissive component of the lighting equation is used. No dynamic lights are considered in the lighting process.
-1	  | LIGHT_MODE_EMI_AMB_DIF | The emissive, ambient, and diffuse components of the lighting equation are all used.
-
-**Returns**:
-
-* `result` (integer)
 
 ***
 
@@ -95,15 +80,21 @@ The human-facing name of the given object.
 
 ***
 
-### `source`
+### `testFunction`
 
-Determines how vertex and material colors are mixed on subclasses of niAVObject.
+The Z-buffer test function.
 
-Value | Mode                   | Description
------ | ---------------------- | -----------------
-0     | VERT_MODE_SRC_IGNORE   | Emissive, ambient, and diffuse colors are all specified by the niMaterialProperty.
-1	  | VERT_MODE_SRC_EMISSIVE | Emissive colors are specified by the source vertex colors. Ambient and Diffuse are specified by the niMaterialProperty.
-2	  | VERT_MODE_SRC_AMB_DIF  | Ambient and Diffuse colors are specified by the source vertex colors. Emissive is specified by the niMaterialProperty (Default).
+Note that "less than" means closer to the camera and "greater than" means further from the camera, regardless of the low-level hardware representation of Z values.
+Value | Mode                | Description
+----- | ------------------- | -----------------
+0     | ZCOMP_ALWAYS        | Test will allways succeed. The Z Buffer value is ignored.
+1	  | ZCOMP_LESS          | The test will only succeed if the pixel is nearer than the previous pixel.
+2     | ZCOMP_EQUAL         | Test will only succeed if the Z value of the pixel to be drawn is equal to the value of the previous drawn pixel.
+3     | ZCOMP_LESS_EQUAL    | Test will succeed if the Z value of the pixel to be drawn is smaller than or equal to the value in the Z Buffer.
+4     | ZCOMP_GREATER       | Opposite of TEST_LESS
+5     | ZCOMP_NOT_EQUAL     | Test will succeed if the Z value of the pixel to be drawn is NOT equal to the value of the previously drawn pixel.
+6     | ZCOMP_GREATER_EQUAL | Opposite of TEST_LESS_EQUAL.
+7     | ZCOMP_NEVER         | Test will allways return false. Nothing is drawn at all.
 
 **Returns**:
 
@@ -379,7 +370,7 @@ myObject:setFlag(state, index)
 Creates a new niVertexColorProperty with `lighting` set to `LIGHT_MODE_EMI_AMB_DIF` and `source` set to `VERT_MODE_SRC_IGNORE`.
 
 ```lua
-local property = niVertexColorProperty.new()
+local property = niZBufferProperty.new()
 ```
 
 **Returns**:

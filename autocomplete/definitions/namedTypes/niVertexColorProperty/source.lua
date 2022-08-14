@@ -1,6 +1,6 @@
 return {
 	type = "value",
-	description = [[Determines how vertex and material colors are mixed on subclasses of niGeometryData.
+	description = [[Determines how vertex and material colors are mixed on subclasses of niAVObject.
 
 Value | Mode                   | Description
 ----- | ---------------------- | -----------------

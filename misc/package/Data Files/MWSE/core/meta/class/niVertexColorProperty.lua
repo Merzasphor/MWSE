@@ -12,7 +12,7 @@
 --- ----- | ---------------------- | -----------------
 --- 0     | LIGHT_MODE_EMISSIVE    | Only the emissive component of the lighting equation is used. No dynamic lights are considered in the lighting process.
 --- 1	  | LIGHT_MODE_EMI_AMB_DIF | The emissive, ambient, and diffuse components of the lighting equation are all used.
---- @field source integer Determines how vertex and material colors are mixed on subclasses of niGeometryData.
+--- @field source integer Determines how vertex and material colors are mixed on subclasses of niAVObject.
 --- 
 --- Value | Mode                   | Description
 --- ----- | ---------------------- | -----------------
