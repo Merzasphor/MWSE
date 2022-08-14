@@ -192,11 +192,11 @@ Convenient access to this object's stencil property. Setting this value to be ni
 
 ### `switchIndex`
 
-The value of the active child index. This index represents the index of the active child in the array of the NiSwitchNode. If this index is –1, then no child is active.
+The value of the active child index. This index represents the index of the active child in the `children` array of the niSwitchNode. If this index is -1, then no child is active.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 

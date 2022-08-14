@@ -110,7 +110,7 @@ The orientation mode.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -824,15 +824,15 @@ myObject:updateProperties()
 
 ### `new`
 
-Creates a new, empty NiNode.
+Creates a new, empty niBillboardNode, with the mode set to rotate about the model-space up vector.
 
 ```lua
-local node = niNode.new()
+local node = niBillboardNode.new()
 ```
 
 **Returns**:
 
-* `node` ([niNode](../../types/niNode))
+* `node` ([niBillboardNode](../../types/niBillboardNode))
 
 ***
 
