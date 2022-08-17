@@ -29,6 +29,26 @@ The base object holding the information of a collision.
 
 ***
 
+### `collisionType`
+
+*Read-only*. The collision type.
+
+Value | Collsion type
+----- | -------------
+0     | Actor
+1     | Static
+2     | Terrain
+3     | Water
+4     | Activator
+5     | staticAvoidNode
+6     | none
+
+**Returns**:
+
+* `result` (integer)
+
+***
+
 ### `normal`
 
 *Read-only*. The normal vector at the collision point.

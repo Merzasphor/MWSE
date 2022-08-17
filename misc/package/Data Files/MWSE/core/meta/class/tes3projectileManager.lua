@@ -6,6 +6,6 @@
 
 --- A game structure which holds all active projectiles.
 --- @class tes3projectileManager
---- @field projectiles tes3iterator *Read-only*. A list of all currently active projectiles ([tes3mobileProjectile](https://mwse.github.io/MWSE/types/tes3mobileProjectile/)).
+--- @field projectiles tes3mobileProjectile[]|tes3mobileSpellProjectile[] *Read-only*. A list of all currently active projectiles ([tes3mobileProjectile](https://mwse.github.io/MWSE/types/tes3mobileProjectile/)).
 tes3projectileManager = {}
 

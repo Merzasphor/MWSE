@@ -705,6 +705,16 @@ A vector that represents the 3D acceleration of the object.
 
 ***
 
+### `inventory`
+
+*Read-only*. Access to the items the mobile object has in its inventory.
+
+**Returns**:
+
+* `result` ([tes3itemStack](../../types/tes3itemStack)[])
+
+***
+
 ### `invisibility`
 
 Direct access to the actor's invisibility effect attribute.

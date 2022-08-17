@@ -79,6 +79,16 @@ A vector that represents the 3D acceleration of the object.
 
 ***
 
+### `inventory`
+
+*Read-only*. Access to the items the mobile object has in its inventory.
+
+**Returns**:
+
+* `result` ([tes3itemStack](../../types/tes3itemStack)[])
+
+***
+
 ### `isAffectedByGravity`
 
 If `true`, the mobile is affected by gravity. Does not have any effect on spell projectiles.

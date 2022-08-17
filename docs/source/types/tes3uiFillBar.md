@@ -60,6 +60,16 @@ The maximum value. The size of the filled portion is determined by dividing `cur
 
 ***
 
+### `normalized`
+
+The current value in range [0.0, 1.0].
+
+**Returns**:
+
+* `result` (number)
+
+***
+
 ### `showText`
 
 If `true`, shows a centered text with the format `current/max` inside the fillbar.
