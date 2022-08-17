@@ -6,6 +6,12 @@
 
 --- A set of 4 floating-point numbers. You can perform following arithmetic with this type: `+`, `-`, and `*`.
 --- @class tes3vector4
+--- @operator add(tes3vector4): tes3vector4
+--- @operator div(number): tes3vector4
+--- @operator len: number
+--- @operator mul(tes3vector4): tes3vector4
+--- @operator mul(number): tes3vector4
+--- @operator sub(tes3vector4): tes3vector4
 --- @field w number The 1st value in the vector.
 --- @field x number The 2nd value in the vector.
 --- @field y number The 3rd value in the vector.

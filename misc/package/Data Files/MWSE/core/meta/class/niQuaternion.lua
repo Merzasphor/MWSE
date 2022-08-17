@@ -6,6 +6,7 @@
 
 --- A rotation in quaternion representation.
 --- @class niQuaternion
+--- @operator mul(niQuaternion): niQuaternion
 --- @field w number The W component of the quaternion.
 --- @field x number The X component of the quaternion.
 --- @field y number The Y component of the quaternion.
