@@ -10,6 +10,26 @@ Contains skinning data that may be shared by multiple `NiSkinInstance` objects.
 This type inherits the following: [niObject](../../types/niObject)
 ## Properties
 
+### `boneData`
+
+*Read-only*. An array of objects containing one entry for each bone that influences vertices in the skinned mesh. The order of the entries in the `boneData` array corresponds to the order of the bones in the bone array in the `niSkinInstance` objects that point to this `niSkinData`. Each object in this array contains all the data needed to deform vertices by a single bone.
+
+**Returns**:
+
+* `result` ([niSkinDataBoneData](../../types/niSkinDataBoneData)[])
+
+***
+
+### `partition`
+
+Access to the container with the skinning data optimized for hardware skinning. If the `niSkinData` object has not been partitioned, this property is `nil`.
+
+**Returns**:
+
+* `result` ([niSkinPartition](../../types/niSkinPartition), nil)
+
+***
+
 ### `refCount`
 
 *Read-only*. The number of references that exist for this object. When this value reaches zero, the object will be deleted.
@@ -17,6 +37,16 @@ This type inherits the following: [niObject](../../types/niObject)
 **Returns**:
 
 * `result` (number)
+
+***
+
+### `rotation`
+
+Defines the rotation of the root bone in the bind pose from the parent node of the root bone to the coordinate system of the skinned object.
+
+**Returns**:
+
+* `result` ([tes3matrix33](../../types/tes3matrix33))
 
 ***
 
@@ -37,6 +67,26 @@ This type inherits the following: [niObject](../../types/niObject)
 **Returns**:
 
 * `result` ([niRTTI](../../types/niRTTI))
+
+***
+
+### `scale`
+
+Defines the scale of the root bone in the bind pose from the parent node of the root bone to the coordinate system of the skinned object.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `translation`
+
+Defines the translation of the root bone in the bind pose from the parent node of the root bone to the coordinate system of the skinned object.
+
+**Returns**:
+
+* `result` ([tes3vector3](../../types/tes3vector3))
 
 ***
 
