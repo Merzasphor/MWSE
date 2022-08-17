@@ -80,6 +80,10 @@ namespace mwse::lua {
 
 	sol::optional<std::shared_ptr<LuaExecutor>> createProcess(sol::table params) {
 		auto command = getOptionalParam<const char*>(params, "command", nullptr);
+		if (command == nullptr) {
+			throw std::invalid_argument("Invalid 'command' parameter passed. It cannot be nil.");
+		}
+
 		auto executor = std::make_shared<LuaExecutor>(command);
 		executor->start();
 		if (!executor->isValid()) {
