@@ -864,6 +864,16 @@ Toggle flag for if the player is currently in jail.
 
 ***
 
+### `inventory`
+
+*Read-only*. Access to the items the mobile object has in its inventory.
+
+**Returns**:
+
+* `result` ([tes3itemStack](../../types/tes3itemStack)[])
+
+***
+
 ### `invisibility`
 
 Direct access to the actor's invisibility effect attribute.
