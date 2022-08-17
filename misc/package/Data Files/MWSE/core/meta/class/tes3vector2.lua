@@ -6,6 +6,11 @@
 
 --- A simple pair of floating-point numbers. You can perform following arithmetic with this type: `+`, `-`, and `*`.
 --- @class tes3vector2
+--- @operator add(tes3vector2): tes3vector2
+--- @operator div(number): tes3vector2
+--- @operator mul(tes3vector2): tes3vector2
+--- @operator mul(number): tes3vector2
+--- @operator sub(tes3vector2): tes3vector2
 --- @field x number The first value in the vector.
 --- @field y number The second value in the vector.
 tes3vector2 = {}

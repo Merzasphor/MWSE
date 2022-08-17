@@ -6,6 +6,10 @@
 
 --- A 4 by 4 matrix. You can perform following arithmetic with this type: `+`, `-`, `*`, and `==`.
 --- @class tes3matrix44
+--- @operator add(tes3matrix44): tes3matrix44
+--- @operator mul(tes3matrix44): tes3matrix44
+--- @operator mul(number): tes3matrix44
+--- @operator sub(tes3matrix44): tes3matrix44
 --- @field w tes3vector4 The 1st row of the matrix.
 --- @field x tes3vector4 The 2nd row of the matrix.
 --- @field y tes3vector4 The 3rd row of the matrix.

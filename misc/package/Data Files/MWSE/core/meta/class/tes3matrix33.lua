@@ -6,6 +6,11 @@
 
 --- A 3 by 3 matrix. You can perform following arithmetic with this type: `+`, `-`, `*`, and `==`.
 --- @class tes3matrix33
+--- @operator add(tes3matrix33): tes3matrix33
+--- @operator mul(tes3matrix33): tes3matrix33
+--- @operator mul(tes3vector3): tes3vector3
+--- @operator mul(number): tes3matrix33
+--- @operator sub(tes3matrix33): tes3matrix33
 --- @field x tes3vector3 The first row of the matrix.
 --- @field y tes3vector3 The second row of the matrix.
 --- @field z tes3vector3 The third row of the matrix.

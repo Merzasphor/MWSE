@@ -6,6 +6,12 @@
 
 --- A simple trio of floating-point numbers. You can perform following arithmetic with this type: `+`, `-`, and `*`.
 --- @class tes3vector3
+--- @operator add(tes3vector3): tes3vector3
+--- @operator div(number): tes3vector3
+--- @operator len: number
+--- @operator mul(tes3vector3): tes3vector3
+--- @operator mul(number): tes3vector3
+--- @operator sub(tes3vector3): tes3vector3
 --- @field angle number The angle between the vector and the water plane.
 --- @field b number The third value in the vector. An alias for `z`.
 --- @field g number The second value in the vector. An alias for `y`.

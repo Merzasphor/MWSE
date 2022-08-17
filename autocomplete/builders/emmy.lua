@@ -241,6 +241,19 @@ local function build(package)
 		writeFunction(package, file)
 	end
 
+	-- Write out operator overloads
+	for _, operator in ipairs(package.operators or {}) do
+		for _, overload in ipairs(operator.overloads) do
+			-- Handle unary operators
+			local rightSideType = ""
+			if overload.rightType then
+				rightSideType = string.format("(%s)", overload.rightType)
+			end
+
+			file:write(string.format("--- @operator %s%s: %s\n", operator.key, rightSideType, overload.resultType))
+		end
+	end
+
 	-- Write out fields.
 	for _, value in ipairs(package.values or {}) do
 		if (not value.deprecated) then

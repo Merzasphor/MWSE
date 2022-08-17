@@ -6,6 +6,10 @@
 
 --- An object that represents a RGB color.
 --- @class niColor
+--- @operator add(niColor): niColor
+--- @operator mul(niColor): niColor
+--- @operator mul(number): niColor
+--- @operator sub(niColor): niColor
 --- @field b number The blue value of the color.
 --- @field blue number Alias for the blue value of the color.
 --- @field g number The green value of the color.
