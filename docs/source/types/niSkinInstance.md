@@ -12,7 +12,7 @@ This type inherits the following: [niObject](../../types/niObject)
 
 ### `bones`
 
-The bone influences for this skin instance.
+*Read-only*. The bone influences for this skin instance.
 
 **Returns**:
 
@@ -46,7 +46,7 @@ The skeleton root (parent of the root bone).
 
 **Returns**:
 
-* `result` ([niAVObject](../../types/niAVObject))
+* `result` ([niNode](../../types/niNode))
 
 ***
 
