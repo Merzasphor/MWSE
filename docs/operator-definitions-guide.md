@@ -55,3 +55,8 @@ return {
 ## Why
 
 Adding these definitions helps mod developers, because with these definitions VSCode can give proper type suggestions.
+
+
+![Operator definitions](https://user-images.githubusercontent.com/41503714/185394230-91dc4020-0938-4efd-9e6f-893fdfbfbd7d.png)
+
+
