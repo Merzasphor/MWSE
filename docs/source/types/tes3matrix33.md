@@ -203,7 +203,7 @@ myObject:toRotation(angle, x, y, z)
 
 ### `toRotationX`
 
-Fills this matrix with the values needed to rotate a 3-by-1 vector or 3-by-N matrix of vectors around the X axis by `x` degrees. For the rotation matrix A and vector v, the rotated vector is given by A * v.
+Fills this matrix with the values needed to rotate a 3-by-1 vector or 3-by-N matrix of vectors around the X axis by `x` radians. For the rotation matrix A and vector v, the rotated vector is given by A * v.
 
 ```lua
 myObject:toRotationX(x)
@@ -211,13 +211,13 @@ myObject:toRotationX(x)
 
 **Parameters**:
 
-* `x` (number)
+* `x` (number): In radians.
 
 ***
 
 ### `toRotationY`
 
-Fills this matrix with the values needed to rotate a 3-by-1 vector or 3-by-N matrix of vectors around the Y axis by `y` degrees. For the rotation matrix A and vector v, the rotated vector is given by A * v.
+Fills this matrix with the values needed to rotate a 3-by-1 vector or 3-by-N matrix of vectors around the Y axis by `y` radians. For the rotation matrix A and vector v, the rotated vector is given by A * v.
 
 ```lua
 myObject:toRotationY(y)
@@ -225,13 +225,13 @@ myObject:toRotationY(y)
 
 **Parameters**:
 
-* `y` (number)
+* `y` (number): In radians.
 
 ***
 
 ### `toRotationZ`
 
-Fills this matrix with the values needed to rotate a 3-by-1 vector or 3-by-N matrix of vectors around the Z axis by `x` degrees. For the rotation matrix A and vector v, the rotated vector is given by A * v.
+Fills this matrix with the values needed to rotate a 3-by-1 vector or 3-by-N matrix of vectors around the Z axis by `z` radians. For the rotation matrix A and vector v, the rotated vector is given by A * v.
 
 ```lua
 myObject:toRotationZ(z)
@@ -239,7 +239,7 @@ myObject:toRotationZ(z)
 
 **Parameters**:
 
-* `z` (number)
+* `z` (number): In radians.
 
 ***
 
