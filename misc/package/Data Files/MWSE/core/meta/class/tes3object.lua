@@ -13,6 +13,5 @@
 --- @field scale number The object's scale.
 --- @field sceneCollisionRoot niBillboardNode|niCollisionSwitch|niNode|niSwitchNode The scene graph node for this object's physics collision, if its mesh has a root collision node.
 --- @field sceneNode niBillboardNode|niCollisionSwitch|niNode|niSwitchNode The scene graph node for this object.
---- @field sceneReference niBillboardNode|niCollisionSwitch|niNode|niSwitchNode The scene graph reference node for this object.
 tes3object = {}
 

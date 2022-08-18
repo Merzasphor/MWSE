@@ -220,16 +220,6 @@ The scene graph node for this object.
 
 ***
 
-### `sceneReference`
-
-The scene graph reference node for this object.
-
-**Returns**:
-
-* `result` ([niNode](../../types/niNode))
-
-***
-
 ### `sourceless`
 
 The soruceless flag of the object.

@@ -230,16 +230,6 @@ The NiNode-derived object for the object's loaded mesh.
 
 ***
 
-### `sceneReference`
-
-The scene graph reference node for this object.
-
-**Returns**:
-
-* `result` ([niNode](../../types/niNode))
-
-***
-
 ### `sourceless`
 
 The soruceless flag of the object.

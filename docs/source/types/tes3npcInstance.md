@@ -490,16 +490,6 @@ The scene graph node for this object.
 
 ***
 
-### `sceneReference`
-
-The scene graph reference node for this object.
-
-**Returns**:
-
-* `result` ([niNode](../../types/niNode))
-
-***
-
 ### `script`
 
 *Read-only*. Quick access to the base NPC's script.
