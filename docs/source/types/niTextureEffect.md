@@ -18,7 +18,7 @@ The list of nodes that a given dynamic effect will affect.
 
 **Returns**:
 
-* `result` (niNodeLinkedList)
+* `result` ([niNodeLinkedList](../../types/niNodeLinkedList))
 
 ***
 

@@ -11,7 +11,7 @@ A linked list of properties.
 
 ### `data`
 
-The current property in the linked list.
+*Read-only*. The current property in the linked list.
 
 **Returns**:
 
@@ -21,7 +21,7 @@ The current property in the linked list.
 
 ### `next`
 
-The next property in the linked list.
+*Read-only*. The next property in the linked list.
 
 **Returns**:
 
