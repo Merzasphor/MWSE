@@ -12,8 +12,8 @@ return {
 			{ name = "base", type = "number", optional = true, description = "If set, the base value will be modified." },
 			{ name = "current", type = "number", optional = true, description = "If set, the current value will be modified." },
 			{ name = "value", type = "number", optional = true, description = "If set, both the base and current value will be modified." },
-			{ name = "limit", type = "boolean", default = false, description = "If set, the attribute won't rise above 100 or fall below 0." },
-			{ name = "limitToBase", type = "boolean", default = false, description = "If set, the attribute's current value won't rise above its base value. Useful for health, magicka, and fatigue." },
+			{ name = "limit", type = "boolean", optional = true, default = false, description = "If set, the attribute won't rise above 100 or fall below 0." },
+			{ name = "limitToBase", type = "boolean", optional = true, default = false, description = "If set, the attribute's current value won't rise above its base value. Useful for health, magicka, and fatigue." },
 		},
 	}},
 	examples = {
