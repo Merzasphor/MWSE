@@ -15,7 +15,7 @@ The vertex color at the point of intersection. The color is valid only when `ret
 
 **Returns**:
 
-* `result` (number)
+* `result` ([niPackedColor](../../types/niPackedColor))
 
 ***
 
@@ -41,7 +41,7 @@ The intersection point on the triangle.
 
 ### `normal`
 
-The normal vector at the point of intersection. The normal is valid only when `returnNormal = true`.
+The normal vector at the point of intersection. The normal is valid only when `returnNormal = true` in the parent niPick object.
 
 **Returns**:
 
@@ -71,7 +71,7 @@ The normal vector at the point of intersection. The normal is valid only when `r
 
 ### `reference`
 
-Quick reference to the associated object's reference.
+*Read-only*. Quick access to the associated object's reference.
 
 **Returns**:
 
@@ -81,7 +81,7 @@ Quick reference to the associated object's reference.
 
 ### `texture`
 
-The texture coordinates at the point of intersection. The coordinates are valid only when `returnTexture = true`.
+The texture coordinates at the point of intersection. The coordinates are valid only when `returnTexture = true` in the parent niPick object.
 
 **Returns**:
 
@@ -95,17 +95,17 @@ The index of the intersected triangle.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
 ### `vertexIndex`
 
-The index of the vertex of the intersected triangle.
+An array containing the 3 indices of the vertices that form the triangle at the intersection point.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer[])
 
 ***
 

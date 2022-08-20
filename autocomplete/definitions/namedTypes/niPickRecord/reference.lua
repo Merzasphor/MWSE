@@ -1,5 +1,6 @@
 return {
 	type = "value",
-	description = [[Quick reference to the associated object's reference.]],
+	description = [[Quick access to the associated object's reference.]],
+	readOnly = true,
 	valuetype = "tes3reference",
 }

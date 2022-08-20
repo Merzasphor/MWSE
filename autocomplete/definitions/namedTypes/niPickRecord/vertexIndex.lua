@@ -1,5 +1,5 @@
 return {
 	type = "value",
-	description = [[The index of the vertex of the intersected triangle.]],
-	valuetype = "number",
+	description = [[An array containing the 3 indices of the vertices that form the triangle at the intersection point.]],
+	valuetype = "integer[]",
 }
