@@ -300,8 +300,11 @@ common.urlBase = "https://mwse.github.io/MWSE"
 -- Reused language strings
 --
 
---- @type string
 common.defaultNoDescriptionText = "No description yet available."
+common.defaultExperimentalAPIWarning = [[
+!!! warning
+	This part of the API isn't fully understood yet and thus is considered experimental. That means that there can be breaking changes requiring the code using this part of the API to be rewritten. The MWSE team will not make any effort to keep backward compatibility with the mods using experimental APIs.
+]]
 
 --- @param package table
 --- @param useDefault boolean|nil
@@ -321,6 +324,10 @@ function common.getDescriptionString(package, useDefault)
 		table.insert(descriptionBits, string.format("*Default*: `%s`.", tostring(package.default)))
 	elseif (package.optional) then
 		table.insert(descriptionBits, "*Optional*.")
+	end
+
+	if (package.experimental) then
+		table.insert(descriptionBits, common.defaultExperimentalAPIWarning)
 	end
 
 	if (package.description) then
