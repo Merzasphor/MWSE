@@ -3262,7 +3262,7 @@ local result = tes3.rayTest({ position = ..., direction = ..., findAll = ..., ma
 	* `position` ([tes3vector3](../../types/tes3vector3), table): Position of the ray origin.
 	* `direction` ([tes3vector3](../../types/tes3vector3), table): Direction of the ray. Does not have to be unit length.
 	* `findAll` (boolean): *Default*: `false`. If true, the ray test won't stop after the first result.
-	* `maxDistance` (number): *Optional*. The maximum distance that the test will run.
+	* `maxDistance` (number): *Default*: `0`. The maximum distance that the test will run.
 	* `sort` (boolean): *Default*: `true`. If true, the results will be sorted by distance from the origin position.
 	* `useModelBounds` (boolean): *Default*: `false`. If true, model bounds will be tested for intersection. Otherwise triangles will be used.
 	* `useModelCoordinates` (boolean): *Default*: `false`. If true, model coordinates will be used instead of world coordinates.
@@ -3273,11 +3273,11 @@ local result = tes3.rayTest({ position = ..., direction = ..., findAll = ..., ma
 	* `returnNormal` (boolean): *Default*: `false`. Calculate and return the vertex normal at intersections.
 	* `returnSmoothNormal` (boolean): *Default*: `false`. Use normal interpolation for calculating vertex normals.
 	* `returnTexture` (boolean): *Default*: `false`. Calculate and return the texture coordinate at intersections.
-	* `ignore` ([tes3reference](../../types/tes3reference)[], [niNode](../../types/niNode)[]): *Optional*. An array of references and/or scene graph nodes to cull from the result(s).
+	* `ignore` (table&lt;integer, [niNode](../../types/niNode)|[tes3reference](../../types/tes3reference)&gt;): *Optional*. An array of references and/or scene graph nodes to cull from the result(s).
 
 **Returns**:
 
-* `result` ([niPickRecord](../../types/niPickRecord), [niPickRecord](../../types/niPickRecord)[])
+* `result` ([niPickRecord](../../types/niPickRecord), [niPickRecord](../../types/niPickRecord)[], nil)
 
 ??? example "Example: Get Activation Target"
 

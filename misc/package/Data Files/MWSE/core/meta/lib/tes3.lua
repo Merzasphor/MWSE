@@ -1803,7 +1803,7 @@ function tes3.random(seed) end
 --- 
 --- `findAll`: boolean? — *Default*: `false`. If true, the ray test won't stop after the first result.
 --- 
---- `maxDistance`: number? — *Optional*. The maximum distance that the test will run.
+--- `maxDistance`: number? — *Default*: `0`. The maximum distance that the test will run.
 --- 
 --- `sort`: boolean? — *Default*: `true`. If true, the results will be sorted by distance from the origin position.
 --- 
@@ -1825,8 +1825,8 @@ function tes3.random(seed) end
 --- 
 --- `returnTexture`: boolean? — *Default*: `false`. Calculate and return the texture coordinate at intersections.
 --- 
---- `ignore`: tes3reference[]|niBillboardNode[]|niCollisionSwitch[]|niNode[]|niSwitchNode[]|nil — *Optional*. An array of references and/or scene graph nodes to cull from the result(s).
---- @return niPickRecord|niPickRecord[] result No description yet available.
+--- `ignore`: table<integer?, niBillboardNode|niCollisionSwitch|niNode|niSwitchNode|tes3reference|nil> — *Optional*. An array of references and/or scene graph nodes to cull from the result(s).
+--- @return niPickRecord|niPickRecord[]|nil result No description yet available.
 function tes3.rayTest(params) end
 
 ---Table parameter definitions for `tes3.rayTest`.
@@ -1834,7 +1834,7 @@ function tes3.rayTest(params) end
 --- @field position tes3vector3|table Position of the ray origin.
 --- @field direction tes3vector3|table Direction of the ray. Does not have to be unit length.
 --- @field findAll boolean? *Default*: `false`. If true, the ray test won't stop after the first result.
---- @field maxDistance number? *Optional*. The maximum distance that the test will run.
+--- @field maxDistance number? *Default*: `0`. The maximum distance that the test will run.
 --- @field sort boolean? *Default*: `true`. If true, the results will be sorted by distance from the origin position.
 --- @field useModelBounds boolean? *Default*: `false`. If true, model bounds will be tested for intersection. Otherwise triangles will be used.
 --- @field useModelCoordinates boolean? *Default*: `false`. If true, model coordinates will be used instead of world coordinates.
@@ -1845,7 +1845,7 @@ function tes3.rayTest(params) end
 --- @field returnNormal boolean? *Default*: `false`. Calculate and return the vertex normal at intersections.
 --- @field returnSmoothNormal boolean? *Default*: `false`. Use normal interpolation for calculating vertex normals.
 --- @field returnTexture boolean? *Default*: `false`. Calculate and return the texture coordinate at intersections.
---- @field ignore tes3reference[]|niBillboardNode[]|niCollisionSwitch[]|niNode[]|niSwitchNode[]|nil *Optional*. An array of references and/or scene graph nodes to cull from the result(s).
+--- @field ignore table<integer?, niBillboardNode|niCollisionSwitch|niNode|niSwitchNode|tes3reference|nil> *Optional*. An array of references and/or scene graph nodes to cull from the result(s).
 
 --- Simulates releasing a keyboard key.
 --- @param keyCode number Maps to values in [`tes3.scanCode`](https://mwse.github.io/MWSE/references/scan-codes/) namespace.
