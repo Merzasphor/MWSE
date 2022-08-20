@@ -5,7 +5,7 @@ return {
 		name = "params",
 		type = "table",
 		tableParams = {
-			{ name = "reference", type = "tes3reference|tes3mobileActor|string", default = "tes3.player", description = "The actor to check permissions for.", },
+			{ name = "reference", type = "tes3reference|tes3mobileActor|string", optional = true, default = "tes3.player", description = "The actor to check permissions for.", },--See what the default value ends up in the meta file
 			{ name = "target", type = "tes3reference|tes3mobileActor|string", description = "The reference to check access of.", },
 		},
 	}},

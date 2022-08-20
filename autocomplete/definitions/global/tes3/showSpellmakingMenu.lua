@@ -6,7 +6,7 @@ return {
 		type = "table",
 		tableParams = {
 			{ name = "serviceActor", type = "tes3mobileActor|tes3reference|string", optional = true, description = "The actor to use for calculating the service price. If none is provided, an open dialog menu's service actor will be used instead." },
-			{ name = "useDialogActor", type = "boolean", default = true, description = "If set to false, the dialog menu service actor will be ignored. If false, a serviceActor must be provided." },
+			{ name = "useDialogActor", type = "boolean", optional = true, default = true, description = "If set to false, the dialog menu service actor will be ignored. If false, a serviceActor must be provided." },
 		},
 	}},
 	returns = "success",

@@ -6,7 +6,7 @@ If any of the available patterns match, the matching pattern is returned followe
 	arguments = {
 		{ name = "s", type = "string", description = "The string to perform finds on." },
 		{ name = "pattern", type = "table", description = "An array-style table that contains pattern strings." },
-		{ name = "index", type = "number", default = 1, description = "Start index of the find." },
-		{ name = "plain", type = "boolean", default = false, description = "If true, a normal search instead of a pattern search will be performed." },
+		{ name = "index", type = "number", optional = true, default = 1, description = "Start index of the find." },
+		{ name = "plain", type = "boolean", optional = true, default = false, description = "If true, a normal search instead of a pattern search will be performed." },
 	},
 }

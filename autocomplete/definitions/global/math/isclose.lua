@@ -4,8 +4,8 @@ return {
 	arguments = {
 		{ name = "a", type = "number", description = "First value." },
 		{ name = "b", type = "number", description = "Second value." },
-		{ name = "absoluteTolerance", type = "number", default = "math.epsilon", description = "The absolute difference allowed between the two numbers. A value of 0.01 will only allow the values to differ by 0.01." },
-		{ name = "relativeTolerance", type = "number", default = 1e-9, description = "The relative difference allowed between the two numbers. A value of 0.01 will only allow the values to differ by 1%." },
+		{ name = "absoluteTolerance", type = "number", optional = true, default = "math.epsilon", description = "The absolute difference allowed between the two numbers. A value of 0.01 will only allow the values to differ by 0.01." },
+		{ name = "relativeTolerance", type = "number", optional = true, default = 1e-9, description = "The relative difference allowed between the two numbers. A value of 0.01 will only allow the values to differ by 1%." },
 	},
 	valuetype = "number",
 }

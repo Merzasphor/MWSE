@@ -10,7 +10,7 @@ return {
 			{ name = "range", type = "number", optional = true, default = 0 },
 			{ name = "duration", type = "number", optional = true, default = 0, description = "How long the actor will be wandering around, in hours." },
 			{ name = "time", type = "number", optional = true, default = 0 },
-			{ name = "reset", type = "boolean", default = true },
+			{ name = "reset", type = "boolean", optional = true, default = true },
 		},
 	}},
 }

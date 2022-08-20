@@ -33,6 +33,7 @@ return {
 				{
 					name = "getIfExists",
 					type = "boolean",
+					optional = true,
 					default = true,
 					description = "If `true`, an existing object of the same `objectType` and `id` will be returned instead of creating a new one."
 				},

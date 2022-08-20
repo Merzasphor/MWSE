@@ -5,8 +5,8 @@ return {
 		name = "params",
 		type = "table",
 		tableParams = {
-			{ name = "value", type = "number", default = 1, description = "The value to fade to." },
-			{ name = "duration", type = "number", default = 1, description = "The time it takes to fade, in seconds." },
+			{ name = "value", type = "number", optional = true, default = 1, description = "The value to fade to." },
+			{ name = "duration", type = "number", optional = true, default = 1, description = "The time it takes to fade, in seconds." },
 		}
 	}},
 }

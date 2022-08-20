@@ -6,7 +6,7 @@ return {
 		type = "table",
 		tableParams = {
 			{ name = "command", type = "string", description = "The command to run." },
-			{ name = "async", type = "boolean", default = "true", description = "If set to false, Morrowind will halt execution until the program finishes." },
+			{ name = "async", type = "boolean", optional = true, default = "true", description = "If set to false, Morrowind will halt execution until the program finishes." },
 		},
 	}},
 	returns = {
