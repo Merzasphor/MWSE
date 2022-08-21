@@ -469,12 +469,12 @@ tes3ui.logToConsole(text, isCommand)
 
 
 ```lua
-local executed = tes3ui.lookupID(unknown)
+local executed = tes3ui.lookupID(id)
 ```
 
 **Parameters**:
 
-* `unnamed`
+* `id` ([tes3uiProperty](../../types/tes3uiProperty), integer)
 
 **Returns**:
 

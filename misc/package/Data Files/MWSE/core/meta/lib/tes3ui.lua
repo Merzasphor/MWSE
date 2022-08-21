@@ -177,9 +177,9 @@ function tes3ui.log(message, ...) end
 function tes3ui.logToConsole(text, isCommand) end
 
 --- 
---- @param unknown nil No description yet available.
+--- @param id tes3uiProperty|integer No description yet available.
 --- @return string executed No description yet available.
-function tes3ui.lookupID(unknown) end
+function tes3ui.lookupID(id) end
 
 --- Checks if the game is in menu mode.
 --- @return boolean result No description yet available.
