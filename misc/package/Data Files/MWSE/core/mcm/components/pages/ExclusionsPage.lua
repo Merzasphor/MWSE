@@ -91,7 +91,7 @@ function ExclusionsPage:toggle(e)
 	if list == self.elements.leftList then
 		list = self.elements.rightList
 		local var = self.variable.value
-		var[text] = nil
+		var[text] = false
 		self.variable.value = var
 	else
 		list = self.elements.leftList
