@@ -9,3 +9,7 @@
 --- @field collisionActive boolean The enabled state of collision on the collision switch.
 niCollisionSwitch = {}
 
+--- Creates a new niCollisionSwitch.
+--- @return niCollisionSwitch new No description yet available.
+function niCollisionSwitch.new() end
+
