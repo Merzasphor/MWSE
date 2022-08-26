@@ -4,7 +4,7 @@
 --- @meta
 --- @diagnostic disable:undefined-doc-name
 
---- A 3 by 3 matrix. You can perform following arithmetic with this type: `+`, `-`, `*`, and `==`.
+--- A 3 by 3 matrix. You can perform following arithmetic with this type: `==`.
 --- @class tes3matrix33
 --- @operator add(tes3matrix33): tes3matrix33
 --- @operator mul(tes3matrix33): tes3matrix33

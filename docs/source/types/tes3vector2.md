@@ -5,7 +5,7 @@
 
 # tes3vector2
 
-A simple pair of floating-point numbers. You can perform following arithmetic with this type: `+`, `-`, and `*`.
+A simple pair of floating-point numbers.
 
 ## Properties
 
@@ -114,28 +114,32 @@ local vector = tes3vector2.new(x, y)
 
 | Left operand type | Right operand type | Result type | Description |
 | ----------------- | ------------------ | ----------- | ----------- |
-| tes3vector2 | tes3vector2 | tes3vector2 |  |
+| tes3vector2 | tes3vector2 | tes3vector2 | Standard vector addition. |
+
 ***
 
 ### Division (`/`)
 
 | Left operand type | Right operand type | Result type | Description |
 | ----------------- | ------------------ | ----------- | ----------- |
-| tes3vector2 | number | tes3vector2 |  |
+| tes3vector2 | number | tes3vector2 | Divides the vector by a scalar. |
+
 ***
 
 ### Multiplication (`*`)
 
 | Left operand type | Right operand type | Result type | Description |
 | ----------------- | ------------------ | ----------- | ----------- |
-| tes3vector2 | tes3vector2 | tes3vector2 |  |
-| tes3vector2 | number | tes3vector2 |  |
+| tes3vector2 | tes3vector2 | tes3vector2 | The per-element multiplication of two vectors. |
+| tes3vector2 | number | tes3vector2 | Multiplies the vector by a scalar. |
+
 ***
 
 ### Subtraction (`-`)
 
 | Left operand type | Right operand type | Result type | Description |
 | ----------------- | ------------------ | ----------- | ----------- |
-| tes3vector2 | tes3vector2 | tes3vector2 |  |
+| tes3vector2 | tes3vector2 | tes3vector2 | Standard vector subtraction. |
+
 ***
 

@@ -1,6 +1,6 @@
 return {
 	type = "operator",
 	overloads = {
-		{ rightType = "number", resultType = "tes3vector4" },
+		{ rightType = "number", resultType = "tes3vector4", description = "Divides the vector by a scalar."  },
 	}
 }

@@ -22,20 +22,22 @@ The format of operator definition is:
 
 The format of the `overloads` table:
 
-| Field       | Type      | Description                                                                     |
-| ----------- | --------- | ------------------------------------------------------------------------------- |
-| rightType   | `string`  | *Optional.* The right operand type. Don't specify this for the unary operators. |
-| resultType  | `string`  | The resulting type of the expression.                                           |
+| Field       | Type     | Description                                                                     |
+| ----------- | -------- | ------------------------------------------------------------------------------- |
+| rightType   | `string` | *Optional.* The right operand type. Don't specify this for the unary operators. |
+| resultType  | `string` | The resulting type of the expression.                                           |
+| description | `string` | The description of the operation.                                               |
 
 An example of a typical operator definition:
 
 ```Lua
--- autocomplete\definitions\namedTypes\niColor\mul.lua
+-- autocomplete\definitions\namedTypes\tes3matrix33\mul.lua
 return {
 	type = "operator", -- Necessary for operator definitions
 	overloads = {
-		{ rightType = "niColor", resultType = "niColor" },
-		{ rightType = "number", resultType = "niColor" },
+		{ rightType = "tes3matrix33", resultType = "tes3matrix33", description = "The matrix multiplication. Geometrically, this will concatenate the transformations of both matrices in the resulting matrix." },
+		{ rightType = "tes3vector3", resultType = "tes3vector3", description = "Multiplies the matrix by a vector. The resulting vector is staring vector with the matrix' transformations applied." },
+		{ rightType = "number", resultType = "tes3matrix33", description = "Multiplies the matrix by a scalar." },
 	}
 }
 ```
@@ -47,7 +49,7 @@ Here is an example of the unary length (`#`) operator definition:
 return {
 	type = "operator",
 	overloads = {
-		{ resultType = "number" },
+		{ resultType = "number", description = "Evaluates to the vector's length in [game units](https://mwse.github.io/MWSE/references/other/game-units/)." },
 	}
 }
 ```

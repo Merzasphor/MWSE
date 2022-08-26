@@ -4,7 +4,7 @@
 --- @meta
 --- @diagnostic disable:undefined-doc-name
 
---- A simple pair of floating-point numbers. You can perform following arithmetic with this type: `+`, `-`, and `*`.
+--- A simple pair of floating-point numbers.
 --- @class tes3vector2
 --- @operator add(tes3vector2): tes3vector2
 --- @operator div(number): tes3vector2
