@@ -317,7 +317,7 @@ local vector = tes3vector3.new(x, y, z)
 
 | Left operand type | Right operand type | Result type | Description |
 | ----------------- | ------------------ | ----------- | ----------- |
-| tes3vector3 | tes3vector3 | tes3vector3 | Standard vector addition. |
+| [tes3vector3](../../types/tes3vector3) | [tes3vector3](../../types/tes3vector3) | [tes3vector3](../../types/tes3vector3) | Standard vector addition. |
 
 ***
 
@@ -325,7 +325,7 @@ local vector = tes3vector3.new(x, y, z)
 
 | Left operand type | Right operand type | Result type | Description |
 | ----------------- | ------------------ | ----------- | ----------- |
-| tes3vector3 | number | tes3vector3 | Divides the vector by a scalar. |
+| [tes3vector3](../../types/tes3vector3) | number | [tes3vector3](../../types/tes3vector3) | Divides the vector by a scalar. |
 
 ***
 
@@ -341,8 +341,8 @@ local vector = tes3vector3.new(x, y, z)
 
 | Left operand type | Right operand type | Result type | Description |
 | ----------------- | ------------------ | ----------- | ----------- |
-| tes3vector3 | tes3vector3 | tes3vector3 | The per-element multiplication of two vectors. |
-| tes3vector3 | number | tes3vector3 | Multiplies the vector by a scalar. |
+| [tes3vector3](../../types/tes3vector3) | [tes3vector3](../../types/tes3vector3) | [tes3vector3](../../types/tes3vector3) | The per-element multiplication of two vectors. |
+| [tes3vector3](../../types/tes3vector3) | number | [tes3vector3](../../types/tes3vector3) | Multiplies the vector by a scalar. |
 
 ***
 
@@ -350,7 +350,7 @@ local vector = tes3vector3.new(x, y, z)
 
 | Left operand type | Right operand type | Result type | Description |
 | ----------------- | ------------------ | ----------- | ----------- |
-| tes3vector3 | tes3vector3 | tes3vector3 | Standard vector subtraction. |
+| [tes3vector3](../../types/tes3vector3) | [tes3vector3](../../types/tes3vector3) | [tes3vector3](../../types/tes3vector3) | Standard vector subtraction. |
 
 ***
 

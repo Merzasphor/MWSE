@@ -175,13 +175,13 @@ local function writeOperatorPackage(file, operator, package)
 		file:write("| Left operand type | Right operand type | Result type | Description |\n")
 		file:write("| ----------------- | ------------------ | ----------- | ----------- |\n")
 		for _, overload in ipairs(operator.overloads) do
-			file:write(string.format("| %s | %s | %s | %s |\n", package.namespace, overload.rightType, overload.resultType, overload.description or ""))
+			file:write(string.format("| %s | %s | %s | %s |\n", getTypeLink(package.namespace), getTypeLink(overload.rightType), getTypeLink(overload.resultType), overload.description or ""))
 		end
 	else
 		file:write("| Result type | Description |\n")
 		file:write("| ----------- | ----------- |\n")
 		for _, overload in ipairs(operator.overloads) do
-			file:write(string.format("| %s | %s |\n", overload.resultType, overload.description or ""))
+			file:write(string.format("| %s | %s |\n", getTypeLink(overload.resultType), overload.description or ""))
 		end
 	end
 

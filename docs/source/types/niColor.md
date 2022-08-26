@@ -156,7 +156,7 @@ local color = niColor.new(r, g, b)
 
 | Left operand type | Right operand type | Result type | Description |
 | ----------------- | ------------------ | ----------- | ----------- |
-| niColor | niColor | niColor | Adds the color channel values of two `niColor` objects. |
+| [niColor](../../types/niColor) | [niColor](../../types/niColor) | [niColor](../../types/niColor) | Adds the color channel values of two `niColor` objects. |
 
 ***
 
@@ -164,8 +164,8 @@ local color = niColor.new(r, g, b)
 
 | Left operand type | Right operand type | Result type | Description |
 | ----------------- | ------------------ | ----------- | ----------- |
-| niColor | niColor | niColor | Multiplies color channel values. |
-| niColor | number | niColor | Multiplies each color value with a scalar. |
+| [niColor](../../types/niColor) | [niColor](../../types/niColor) | [niColor](../../types/niColor) | Multiplies color channel values. |
+| [niColor](../../types/niColor) | number | [niColor](../../types/niColor) | Multiplies each color value with a scalar. |
 
 ***
 
@@ -173,7 +173,7 @@ local color = niColor.new(r, g, b)
 
 | Left operand type | Right operand type | Result type | Description |
 | ----------------- | ------------------ | ----------- | ----------- |
-| niColor | niColor | niColor | Subtracts the color channel values. |
+| [niColor](../../types/niColor) | [niColor](../../types/niColor) | [niColor](../../types/niColor) | Subtracts the color channel values. |
 
 ***
 
