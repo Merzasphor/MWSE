@@ -173,16 +173,20 @@ function event.clear(eventId, filter) end
 --- Returns true for a function previously registered to an event with `event.register()`.
 --- @param eventId string No description yet available.
 --- @param callback function No description yet available.
---- @param options event.isRegistered.params? This table accepts the following values:
+--- @param options event.isRegistered.options? This table accepts the following values:
 --- 
 --- `filter`: userdata|string|number|nil — *Optional*. Allows searching for a callback function registered with the specified filter.
 --- @return boolean result No description yet available.
 function event.isRegistered(eventId, callback, options) end
 
+---Table parameter definitions for `event.isRegistered`.
+--- @class event.isRegistered.options
+--- @field filter userdata|string|number|nil *Optional*. Allows searching for a callback function registered with the specified filter.
+
 --- Registers a function to be called when an event is raised.
 --- @param eventId string No description yet available.
 --- @param callback function No description yet available.
---- @param options event.register.params? This table accepts the following values:
+--- @param options event.register.options? This table accepts the following values:
 --- 
 --- `doOnce`: boolean? — *Default*: `false`. If this option is set to `true`, the function registered will be executed only once, and automatically unregistered thereafter.
 --- 
@@ -191,20 +195,34 @@ function event.isRegistered(eventId, callback, options) end
 --- `priority`: number? — *Optional*. Event callback with higher priority is executed before callback with lower priority. Typically used to make certain mods compatible.
 function event.register(eventId, callback, options) end
 
+---Table parameter definitions for `event.register`.
+--- @class event.register.options
+--- @field doOnce boolean? *Default*: `false`. If this option is set to `true`, the function registered will be executed only once, and automatically unregistered thereafter.
+--- @field filter userdata|string|number|nil *Optional*. This parameter allows selectively executing the callback function only when a specific condition is met. The exact behavior depends on each event.
+--- @field priority number? *Optional*. Event callback with higher priority is executed before callback with lower priority. Typically used to make certain mods compatible.
+
 --- Triggers an event. This can be used to trigger custom events with specific data.
 --- @param eventId string No description yet available.
 --- @param payload table? *Optional*. No description yet available.
---- @param options event.trigger.params? This table accepts the following values:
+--- @param options event.trigger.options? This table accepts the following values:
 --- 
 --- `filter`: userdata|string|number|nil — *Optional*. Assigning a filter will make the event callbacks with filters matching this one to be executed first. All the other unfiltered callbacks are executed after.
 --- @return table resultPayload This is the modified payload after all the callback functions registered on the triggered event are executed. Returning `true` from a callback function will set both `payload.block` and `payload.claim` to `true`. After an event has been claimed by a certain function (by setting the `claim` in eventData to `true`) no other registered callback functions will be executed on this event trigger. This is useful if you wish to implement blocking system for your event. In addition, this can be used to the same effect as some MWSE's events allow changing some of the `eventData` values to modify the behavior of the vanilla mechanics.
 function event.trigger(eventId, payload, options) end
 
+---Table parameter definitions for `event.trigger`.
+--- @class event.trigger.options
+--- @field filter userdata|string|number|nil *Optional*. Assigning a filter will make the event callbacks with filters matching this one to be executed first. All the other unfiltered callbacks are executed after.
+
 --- Unregisters a function previously registered for an event with `event.register()`.
 --- @param eventId string No description yet available.
 --- @param callback function No description yet available.
---- @param options event.unregister.params? This table accepts the following values:
+--- @param options event.unregister.options? This table accepts the following values:
 --- 
 --- `filter`: userdata|string|number|nil — *Optional*. If a callback function was registered with a filter, the same filter needs to be passed to `event.unregister` to successfully unregister the callback function.
 function event.unregister(eventId, callback, options) end
+
+---Table parameter definitions for `event.unregister`.
+--- @class event.unregister.options
+--- @field filter userdata|string|number|nil *Optional*. If a callback function was registered with a filter, the same filter needs to be passed to `event.unregister` to successfully unregister the callback function.
 

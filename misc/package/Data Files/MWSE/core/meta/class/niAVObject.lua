@@ -59,7 +59,7 @@ function niAVObject:getProperty(type) end
 --- 	Update Efficiency
 --- 	It's best to "batch up" calls to this method. For example, when transform of an object its parent and grandparent are all changed during the same frame, it is much more efficient to call this method only on the grandparent object after all transforms have been changed. Also, consider calling this function as low as possible on a scene graph.
 --- 
---- @param args niAVObject.propagatePositionChange.params? This table accepts the following values:
+--- @param args niAVObject.propagatePositionChange.args? This table accepts the following values:
 --- 
 --- `time`: number? — *Default*: `0`. This parameter is the time-slice for transformation and bounds updates
 --- 
@@ -69,7 +69,7 @@ function niAVObject:getProperty(type) end
 function niAVObject:propagatePositionChange(args) end
 
 ---Table parameter definitions for `niAVObject.propagatePositionChange`.
---- @class niAVObject.propagatePositionChange.params
+--- @class niAVObject.propagatePositionChange.args
 --- @field time number? *Default*: `0`. This parameter is the time-slice for transformation and bounds updates
 --- @field controllers boolean? *Default*: `false`. Update object's controllers?
 --- @field bounds boolean? *Default*: `true`. Update object's bounds?
@@ -80,7 +80,7 @@ function niAVObject:propagatePositionChange(args) end
 --- 	Update Efficiency
 --- 	It's best to "batch up" calls to this method. For example, when transform of an object its parent and grandparent are all changed during the same frame, it is much more efficient to call this method only on the grandparent object after all transforms have been changed. Also, consider calling this function as low as possible on a scene graph.
 --- 
---- @param args niAVObject.update.params? This table accepts the following values:
+--- @param args niAVObject.update.args? This table accepts the following values:
 --- 
 --- `time`: number? — *Default*: `0`. This parameter is the time-slice for transformation and bounds updates
 --- 
@@ -90,7 +90,7 @@ function niAVObject:propagatePositionChange(args) end
 function niAVObject:update(args) end
 
 ---Table parameter definitions for `niAVObject.update`.
---- @class niAVObject.update.params
+--- @class niAVObject.update.args
 --- @field time number? *Default*: `0`. This parameter is the time-slice for transformation and bounds updates
 --- @field controllers boolean? *Default*: `false`. Update object's controllers?
 --- @field bounds boolean? *Default*: `true`. Update object's bounds?

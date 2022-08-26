@@ -1575,7 +1575,7 @@ function tes3.makeSafeObjectHandle(object) end
 function tes3.menuMode() end
 
 --- Displays a message box. This may be a simple toast-style message, or a box with choice buttons.
---- @param messageOrParams string|tes3.messageBox.params This table accepts the following values:
+--- @param messageOrParams string|tes3.messageBox.messageOrParams This table accepts the following values:
 --- 
 --- `message`: string — No description yet available.
 --- 
@@ -1591,7 +1591,7 @@ function tes3.menuMode() end
 function tes3.messageBox(messageOrParams, ...) end
 
 ---Table parameter definitions for `tes3.messageBox`.
---- @class tes3.messageBox.params
+--- @class tes3.messageBox.messageOrParams
 --- @field message string No description yet available.
 --- @field buttons string[]? *Optional*. An array of strings to use for buttons.
 --- @field callback function No description yet available.
