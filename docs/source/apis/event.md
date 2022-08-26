@@ -14,13 +14,13 @@ The event library helps to instruct mwse to call a given function when a specifi
 Removes all callbacks registered for a given event.
 
 ```lua
-event.clear(eventId, options)
+event.clear(eventId, filter)
 ```
 
 **Parameters**:
 
-* `eventId` (string)
-* `options` (table): *Optional*.
+* `eventId` (string): *Optional*.
+* `filter` (userdata, string, number): *Optional*.
 
 ***
 
@@ -29,7 +29,7 @@ event.clear(eventId, options)
 Returns true for a function previously registered to an event with `event.register()`.
 
 ```lua
-local result = event.isRegistered(eventId, callback, options)
+local result = event.isRegistered(eventId, callback, { filter = ... })
 ```
 
 **Parameters**:
@@ -37,6 +37,7 @@ local result = event.isRegistered(eventId, callback, options)
 * `eventId` (string)
 * `callback` (function)
 * `options` (table): *Optional*.
+	* `filter` (userdata, string, number): *Optional*. Allows searching for a callback function registered with the specified filter.
 
 **Returns**:
 
@@ -49,7 +50,7 @@ local result = event.isRegistered(eventId, callback, options)
 Registers a function to be called when an event is raised.
 
 ```lua
-event.register(eventId, callback, options)
+event.register(eventId, callback, { doOnce = ..., filter = ..., priority = ... })
 ```
 
 **Parameters**:
@@ -57,6 +58,9 @@ event.register(eventId, callback, options)
 * `eventId` (string)
 * `callback` (function)
 * `options` (table): *Optional*.
+	* `doOnce` (boolean): *Default*: `false`. If this option is set to `true`, the function registered will be executed only once, and automatically unregistered thereafter.
+	* `filter` (userdata, string, number): *Optional*. This parameter allows selectively executing the callback function only when a specific condition is met. The exact behavior depends on each event.
+	* `priority` (number): *Optional*. Event callback with higher priority is executed before callback with lower priority. Typically used to make certain mods compatible.
 
 ***
 
@@ -65,7 +69,7 @@ event.register(eventId, callback, options)
 Triggers an event. This can be used to trigger custom events with specific data.
 
 ```lua
-event.trigger(eventId, payload, options)
+local resultPayload = event.trigger(eventId, payload, { filter = ... })
 ```
 
 **Parameters**:
@@ -73,6 +77,11 @@ event.trigger(eventId, payload, options)
 * `eventId` (string)
 * `payload` (table): *Optional*.
 * `options` (table): *Optional*.
+	* `filter` (userdata, string, number): *Optional*. Assigning a filter will make the event callbacks with filters matching this one to be executed first. All the other unfiltered callbacks are executed after.
+
+**Returns**:
+
+* `resultPayload` (table): This is the modified payload after all the callback functions registered on the triggered event are executed. Returning `true` from a callback function will set both `payload.block` and `payload.claim` to `true`. After an event has been claimed by a certain function (by setting the `claim` in eventData to `true`) no other registered callback functions will be executed on this event trigger. This is useful if you wish to implement blocking system for your event. In addition, this can be used to the same effect as some MWSE's events allow changing some of the `eventData` values to modify the behavior of the vanilla mechanics.
 
 ***
 
@@ -81,7 +90,7 @@ event.trigger(eventId, payload, options)
 Unregisters a function previously registered for an event with `event.register()`.
 
 ```lua
-event.unregister(eventId, callback, options)
+event.unregister(eventId, callback, { filter = ... })
 ```
 
 **Parameters**:
@@ -89,6 +98,7 @@ event.unregister(eventId, callback, options)
 * `eventId` (string)
 * `callback` (function)
 * `options` (table): *Optional*.
+	* `filter` (userdata, string, number): *Optional*. If a callback function was registered with a filter, the same filter needs to be passed to `event.unregister` to successfully unregister the callback function.
 
 ***
 

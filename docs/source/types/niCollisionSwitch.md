@@ -806,15 +806,15 @@ myObject:updateProperties()
 
 ### `new`
 
-Creates a new, empty NiNode.
+Creates a new niCollisionSwitch.
 
 ```lua
-local node = niNode.new()
+local new = niCollisionSwitch.new()
 ```
 
 **Returns**:
 
-* `node` ([niNode](../../types/niNode))
+* `new` ([niCollisionSwitch](../../types/niCollisionSwitch))
 
 ***
 
