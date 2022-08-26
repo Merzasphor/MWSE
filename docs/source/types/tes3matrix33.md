@@ -298,3 +298,28 @@ local matrix = tes3matrix33.new(x0, y0, z0, x1, y1, z1, x2, y2, z2, x, y, z)
 
 ***
 
+## Math Operations
+
+### Addition (`+`)
+
+| Left operand type | Right operand type | Result type | Description |
+| ----------------- | ------------------ | ----------- | ----------- |
+| tes3matrix33 | tes3matrix33 | tes3matrix33 |  |
+***
+
+### Multiplication (`*`)
+
+| Left operand type | Right operand type | Result type | Description |
+| ----------------- | ------------------ | ----------- | ----------- |
+| tes3matrix33 | tes3matrix33 | tes3matrix33 |  |
+| tes3matrix33 | tes3vector3 | tes3vector3 |  |
+| tes3matrix33 | number | tes3matrix33 |  |
+***
+
+### Subtraction (`-`)
+
+| Left operand type | Right operand type | Result type | Description |
+| ----------------- | ------------------ | ----------- | ----------- |
+| tes3matrix33 | tes3matrix33 | tes3matrix33 |  |
+***
+

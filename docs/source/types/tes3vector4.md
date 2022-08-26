@@ -102,3 +102,41 @@ local vector = tes3vector4.new(x, y, z, w)
 
 ***
 
+## Math Operations
+
+### Addition (`+`)
+
+| Left operand type | Right operand type | Result type | Description |
+| ----------------- | ------------------ | ----------- | ----------- |
+| tes3vector4 | tes3vector4 | tes3vector4 |  |
+***
+
+### Division (`/`)
+
+| Left operand type | Right operand type | Result type | Description |
+| ----------------- | ------------------ | ----------- | ----------- |
+| tes3vector4 | number | tes3vector4 |  |
+***
+
+### Length (`#`)
+
+| Result type | Description |
+| ----------- | ----------- |
+| number |  |
+***
+
+### Multiplication (`*`)
+
+| Left operand type | Right operand type | Result type | Description |
+| ----------------- | ------------------ | ----------- | ----------- |
+| tes3vector4 | tes3vector4 | tes3vector4 |  |
+| tes3vector4 | number | tes3vector4 |  |
+***
+
+### Subtraction (`-`)
+
+| Left operand type | Right operand type | Result type | Description |
+| ----------------- | ------------------ | ----------- | ----------- |
+| tes3vector4 | tes3vector4 | tes3vector4 |  |
+***
+

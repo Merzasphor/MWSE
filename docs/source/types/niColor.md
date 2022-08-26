@@ -150,3 +150,27 @@ local color = niColor.new(r, g, b)
 
 ***
 
+## Math Operations
+
+### Addition (`+`)
+
+| Left operand type | Right operand type | Result type | Description |
+| ----------------- | ------------------ | ----------- | ----------- |
+| niColor | niColor | niColor |  |
+***
+
+### Multiplication (`*`)
+
+| Left operand type | Right operand type | Result type | Description |
+| ----------------- | ------------------ | ----------- | ----------- |
+| niColor | niColor | niColor |  |
+| niColor | number | niColor |  |
+***
+
+### Subtraction (`-`)
+
+| Left operand type | Right operand type | Result type | Description |
+| ----------------- | ------------------ | ----------- | ----------- |
+| niColor | niColor | niColor |  |
+***
+

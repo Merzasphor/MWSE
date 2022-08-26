@@ -179,3 +179,12 @@ local quaternion = niQuaternion.new(w, x, y, z)
 
 ***
 
+## Math Operations
+
+### Multiplication (`*`)
+
+| Left operand type | Right operand type | Result type | Description |
+| ----------------- | ------------------ | ----------- | ----------- |
+| niQuaternion | niQuaternion | niQuaternion |  |
+***
+

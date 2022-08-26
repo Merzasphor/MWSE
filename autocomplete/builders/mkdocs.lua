@@ -154,6 +154,40 @@ end
 
 local writeSubPackage = nil
 
+local operatorToTitle = {
+	add = "Addition (`+`)",
+	sub = "Subtraction (`-`)",
+	mul = "Multiplication (`*`)",
+	div = "Division (`/`)",
+	idiv = "Floor division (`//`)",
+	mod = "Modulo (`%`)",
+	pow = "Exponentation (`^`)",
+	concat = "Concatenation (`..`)",
+	len = "Length (`#`)",
+}
+
+local function writeOperatorPackage(file, operator, package)
+	file:write(string.format("### %s\n\n", operatorToTitle[operator.key]))
+
+	local notUnary = operator.overloads[1].rightType and true
+
+	if (notUnary) then
+		file:write("| Left operand type | Right operand type | Result type | Description |\n")
+		file:write("| ----------------- | ------------------ | ----------- | ----------- |\n")
+		for _, overload in ipairs(operator.overloads) do
+			file:write(string.format("| %s | %s | %s | %s |\n", package.namespace, overload.rightType, overload.resultType, overload.description or ""))
+		end
+	else
+		file:write("| Result type | Description |\n")
+		file:write("| ----------- | ----------- |\n")
+		for _, overload in ipairs(operator.overloads) do
+			file:write(string.format("| %s | %s |\n", overload.resultType, overload.description or ""))
+		end
+	end
+
+	file:write("\n")
+end
+
 local function writePackageDetails(file, package)
 	-- Write description.
 	file:write(string.format("%s\n\n", common.getDescriptionString(package)))
@@ -203,6 +237,16 @@ local function writePackageDetails(file, package)
 				writeSubPackage(file, fn, package)
 				file:write("***\n\n")
 			end
+		end
+	end
+
+	-- Write out operators.
+	local operators = table.values(getPackageComponentsArray(package, "operators"), sortPackagesByKey)
+	if (#operators > 0) then
+		file:write("## Math Operations\n\n")
+		for _, operator in ipairs(operators) do
+			writeOperatorPackage(file, operator, package)
+			file:write("***\n\n")
 		end
 	end
 

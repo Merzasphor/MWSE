@@ -311,3 +311,41 @@ local vector = tes3vector3.new(x, y, z)
 
 ***
 
+## Math Operations
+
+### Addition (`+`)
+
+| Left operand type | Right operand type | Result type | Description |
+| ----------------- | ------------------ | ----------- | ----------- |
+| tes3vector3 | tes3vector3 | tes3vector3 |  |
+***
+
+### Division (`/`)
+
+| Left operand type | Right operand type | Result type | Description |
+| ----------------- | ------------------ | ----------- | ----------- |
+| tes3vector3 | number | tes3vector3 |  |
+***
+
+### Length (`#`)
+
+| Result type | Description |
+| ----------- | ----------- |
+| number |  |
+***
+
+### Multiplication (`*`)
+
+| Left operand type | Right operand type | Result type | Description |
+| ----------------- | ------------------ | ----------- | ----------- |
+| tes3vector3 | tes3vector3 | tes3vector3 |  |
+| tes3vector3 | number | tes3vector3 |  |
+***
+
+### Subtraction (`-`)
+
+| Left operand type | Right operand type | Result type | Description |
+| ----------------- | ------------------ | ----------- | ----------- |
+| tes3vector3 | tes3vector3 | tes3vector3 |  |
+***
+

@@ -108,3 +108,34 @@ local vector = tes3vector2.new(x, y)
 
 ***
 
+## Math Operations
+
+### Addition (`+`)
+
+| Left operand type | Right operand type | Result type | Description |
+| ----------------- | ------------------ | ----------- | ----------- |
+| tes3vector2 | tes3vector2 | tes3vector2 |  |
+***
+
+### Division (`/`)
+
+| Left operand type | Right operand type | Result type | Description |
+| ----------------- | ------------------ | ----------- | ----------- |
+| tes3vector2 | number | tes3vector2 |  |
+***
+
+### Multiplication (`*`)
+
+| Left operand type | Right operand type | Result type | Description |
+| ----------------- | ------------------ | ----------- | ----------- |
+| tes3vector2 | tes3vector2 | tes3vector2 |  |
+| tes3vector2 | number | tes3vector2 |  |
+***
+
+### Subtraction (`-`)
+
+| Left operand type | Right operand type | Result type | Description |
+| ----------------- | ------------------ | ----------- | ----------- |
+| tes3vector2 | tes3vector2 | tes3vector2 |  |
+***
+
