@@ -10,6 +10,16 @@ Works in conjuction with mobile AI to perform idle, movement, and attack animati
 This type inherits the following: [tes3actorAnimationController](../../types/tes3actorAnimationController)
 ## Properties
 
+### `allowVerticalAirControl`
+
+*Read-only*. 
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
 ### `alphaProperty`
 
 The alpha property applied to the actor. Controls the opacity/opaqueness of the actor.
@@ -80,6 +90,26 @@ The actor's movement animations group. Maps to values in [`tes3.animationGroup`]
 
 ***
 
+### `cameraOffset`
+
+*Read-only*. Additional offset applied to the camera's position during the third person.
+
+**Returns**:
+
+* `result` ([tes3vector3](../../types/tes3vector3))
+
+***
+
+### `firstPersonHeadCameraNode`
+
+*Read-only*. 
+
+**Returns**:
+
+* `result` ([niCamera](../../types/niCamera))
+
+***
+
 ### `groundPlaneRotation`
 
 The rotation of the actor around the up-down axis. When converted to euler angles, this axis corresponds to the z axis. The rotation range is [-PI, PI], where rotation of 0 corresponds to the game north.
@@ -97,6 +127,16 @@ This it the time of the actor's attack animation in their `.kf`, played during t
 **Returns**:
 
 * `result` (number)
+
+***
+
+### `is3rdPerson`
+
+*Read-only*. This flag is set to `true` when the player's view is in third person. To change the player's POV, you can use [tes3.force1stPerson](https://mwse.github.io/MWSE/apis/tes3/#tes3force1stperson) and [tes3.force3rdPerson](https://mwse.github.io/MWSE/apis/tes3/#tes3force3rdperson).
+
+**Returns**:
+
+* `result` (boolean)
 
 ***
 
@@ -160,6 +200,16 @@ This it the time of the actor's attack animation in their `.kf`, played during t
 
 ***
 
+### `pickData`
+
+*Read-only*. 
+
+**Returns**:
+
+* `result` ([niPick](../../types/niPick))
+
+***
+
 ### `remainingBlockTime`
 
 
@@ -167,6 +217,16 @@ This it the time of the actor's attack animation in their `.kf`, played during t
 **Returns**:
 
 * `result` (number)
+
+***
+
+### `shadowCameraMatrix`
+
+*Read-only*. The local rotation matrix of the shadow camera.
+
+**Returns**:
+
+* `result` ([tes3matrix33](../../types/tes3matrix33))
 
 ***
 
@@ -203,6 +263,66 @@ This it the starting time of the actor's attack animation in their `.kf` file. I
 ### `strikeWhenAttackSwingReaches`
 
 For NPCs this corresponds to how long the weapon was charged by the NPC after the attack landed. The value is in range [0.0, 1.0]. This property isn't used for the player character.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `togglePOV`
+
+*Read-only*. 
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
+### `useThirdPersonAfterVanityCameraDone`
+
+*Read-only*. This flag is set to `true` if vanity mode was entered from third person view. If vanity mode was entered from first person view, this flag is set to `false`.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
+### `vanityCamera`
+
+*Read-only*. 
+
+**Returns**:
+
+* `result` ([niCamera](../../types/niCamera))
+
+***
+
+### `vanityCameraDistance`
+
+*Read-only*. The orbiting radius of the camera during vanity mode in [game units](https://mwse.github.io/MWSE/references/other/game-units/). Measured from the center of the player's head.
+
+**Returns**:
+
+* `result` (integer)
+
+***
+
+### `vanityCameraEnabled`
+
+*Read-only*. The value of this property is `1` during vanity camera mode, and `0` otherwise.
+
+**Returns**:
+
+* `result` (integer)
+
+***
+
+### `vanityCameraZ`
+
+*Read-only*. The offset on up-down (world z) axis of the camera in third person or during vanity mode from the player's head height in [game units](https://mwse.github.io/MWSE/references/other/game-units/).
 
 **Returns**:
 

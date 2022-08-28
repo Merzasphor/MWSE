@@ -132,11 +132,11 @@ Toggle flag for if the player should always run.
 
 ### `animationController`
 
-*Read-only*. No description yet available.
+*Read-only*. Access to the player's animation controller.
 
 **Returns**:
 
-* `result` ([tes3actorAnimationController](../../types/tes3actorAnimationController))
+* `result` ([tes3playerAnimationController](../../types/tes3playerAnimationController))
 
 ***
 

@@ -7,6 +7,7 @@
 --- A mobile object for a the player.
 --- @class tes3mobilePlayer : tes3mobileNPC, tes3mobileActor, tes3mobileObject
 --- @field alwaysRun boolean Toggle flag for if the player should always run.
+--- @field animationController tes3playerAnimationController *Read-only*. Access to the player's animation controller.
 --- @field attackDisabled boolean Toggle flag for if the player can attack.
 --- @field autoRun boolean Toggle flag for if the player should constantly run forward.
 --- @field birthsign tes3birthsign *Read-only*. The player's birthsign.
