@@ -35,7 +35,7 @@ A child container from [`tes3dataHandler`](https://mwse.github.io/MWSE/types/tes
 
 **Returns**:
 
-* `result` (tes3stlList)
+* `result` ([tes3cell](../../types/tes3cell)[])
 
 ***
 
@@ -105,7 +105,7 @@ A child container from [`tes3dataHandler`](https://mwse.github.io/MWSE/types/tes
 
 **Returns**:
 
-* `result` (tes3linkedList)
+* `result` ([tes3object](../../types/tes3object)[])
 
 ***
 
@@ -175,7 +175,7 @@ A child container from [`tes3dataHandler`](https://mwse.github.io/MWSE/types/tes
 
 **Returns**:
 
-* `result` (tes3linkedList)
+* `result` ([tes3spell](../../types/tes3spell)[])
 
 ***
 

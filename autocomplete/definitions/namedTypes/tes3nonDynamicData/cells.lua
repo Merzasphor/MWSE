@@ -2,5 +2,5 @@ return {
 	type = "value",
 	description = [[A collection of all cell objects.]],
 	readOnly = true,
-	valuetype = "tes3stlList",
+	valuetype = "tes3cell[]",
 }
