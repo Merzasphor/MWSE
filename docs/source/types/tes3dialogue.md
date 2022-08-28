@@ -56,7 +56,7 @@ The blocked state of the object.
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([tes3dialogueInfo](../../types/tes3dialogueInfo)[])
 
 ***
 

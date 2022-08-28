@@ -21,11 +21,11 @@ A value in the range [0, 1]. The (relative) maximum distance setting for AI simu
 
 ### `allMobileActors`
 
-*Read-only*. The list of all active mobile actors ([`tes3mobileActor`](https://mwse.github.io/MWSE/types/tes3mobileActor/)). Mobile actors expire after 72 hours if they have not been in a loaded cell.
+*Read-only*. The list of all active mobile actors. Mobile actors expire after 72 hours if they have not been in a loaded cell.
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([tes3mobileActor](../../types/tes3mobileActor)[])
 
 ***
 
@@ -265,7 +265,7 @@ If teleporting is disabled.
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([tes3globalScript](../../types/tes3globalScript)[])
 
 ***
 
@@ -586,11 +586,11 @@ Note: These values are available as [`tes3.musicSituation`](https://mwse.github.
 
 ### `quests`
 
-*Read-only*. A list of all available [`tes3quest`](https://mwse.github.io/MWSE/types/tes3quest/)s.
+*Read-only*. A list of all available quest objects.
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([tes3quest](../../types/tes3quest)[])
 
 ***
 
@@ -606,11 +606,11 @@ Controls if auto-save on resting or waiting is enabled. Corresponds to the "Auto
 
 ### `rechargingItems`
 
-*Read-only*. A list of enchanted items that are recharging (type [`tes3rechargingItem`](https://mwse.github.io/MWSE/types/tes3rechargingItem/)). Items in the list may not all belong to the player.
+*Read-only*. A list of enchanted items that are recharging. Items in the list may not all belong to the player.
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([tes3rechargingItem](../../types/tes3rechargingItem)[])
 
 ***
 

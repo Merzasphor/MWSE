@@ -1,6 +1,6 @@
 return {
 	type = "value",
-	description = [[A collection of all [`tes3startScript`](https://mwse.github.io/MWSE/types/tes3startScript/) objects.]],
+	description = [[A collection of all start script objects.]],
 	readOnly = true,
-	valuetype = "tes3iterator",
+	valuetype = "tes3startScript[]",
 }

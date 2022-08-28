@@ -12,7 +12,7 @@
 --- @field barterGold number Friendly access to actor's barter gold amount.
 --- @field blood number Friendly access to actor's blood type.
 --- @field cloneCount number *Read-only*. The number of clones that exist of this actor.
---- @field equipment tes3iterator *Read-only*. The items currently equipped to the actor.
+--- @field equipment tes3equipmentStack[] *Read-only*. The items currently equipped to the actor.
 --- @field inventory tes3inventory *Read-only*. The items currently carried by the actor.
 tes3actor = {}
 

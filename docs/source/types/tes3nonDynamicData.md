@@ -25,7 +25,7 @@ A child container from [`tes3dataHandler`](https://mwse.github.io/MWSE/types/tes
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([tes3birthsign](../../types/tes3birthsign)[])
 
 ***
 
@@ -45,7 +45,7 @@ A child container from [`tes3dataHandler`](https://mwse.github.io/MWSE/types/tes
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([tes3class](../../types/tes3class)[])
 
 ***
 
@@ -55,7 +55,7 @@ A child container from [`tes3dataHandler`](https://mwse.github.io/MWSE/types/tes
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([tes3dialogue](../../types/tes3dialogue)[])
 
 ***
 
@@ -65,7 +65,7 @@ A child container from [`tes3dataHandler`](https://mwse.github.io/MWSE/types/tes
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([tes3faction](../../types/tes3faction)[])
 
 ***
 
@@ -115,7 +115,7 @@ A child container from [`tes3dataHandler`](https://mwse.github.io/MWSE/types/tes
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([tes3race](../../types/tes3race)[])
 
 ***
 
@@ -125,7 +125,7 @@ A child container from [`tes3dataHandler`](https://mwse.github.io/MWSE/types/tes
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([tes3region](../../types/tes3region)[])
 
 ***
 
@@ -135,7 +135,7 @@ A child container from [`tes3dataHandler`](https://mwse.github.io/MWSE/types/tes
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([tes3script](../../types/tes3script)[])
 
 ***
 
@@ -155,7 +155,7 @@ A child container from [`tes3dataHandler`](https://mwse.github.io/MWSE/types/tes
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([tes3soundGenerator](../../types/tes3soundGenerator)[])
 
 ***
 
@@ -165,7 +165,7 @@ A child container from [`tes3dataHandler`](https://mwse.github.io/MWSE/types/tes
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([tes3sound](../../types/tes3sound)[])
 
 ***
 
@@ -181,11 +181,11 @@ A child container from [`tes3dataHandler`](https://mwse.github.io/MWSE/types/tes
 
 ### `startScripts`
 
-*Read-only*. A collection of all [`tes3startScript`](https://mwse.github.io/MWSE/types/tes3startScript/) objects.
+*Read-only*. A collection of all start script objects.
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([tes3startScript](../../types/tes3startScript)[])
 
 ***
 

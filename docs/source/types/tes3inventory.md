@@ -25,19 +25,7 @@ An inventory composes of an iterator, and flags caching the state of the invento
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
-
-***
-
-### `iterator`
-
-*Read-only*. Deprecated. Use `for index, stack in pairs(inventory)` to iterate over inventory stacks.
-	
-Direct access to the container that holds the inventory's items.
-
-**Returns**:
-
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([tes3itemStack](../../types/tes3itemStack)[])
 
 ***
 

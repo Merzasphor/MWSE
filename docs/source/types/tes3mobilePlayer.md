@@ -520,7 +520,7 @@ This is the time measured in hours from the beginning of the game when the actor
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([tes3dialogue](../../types/tes3dialogue)[])
 
 ***
 
@@ -690,7 +690,7 @@ Toggle flag for if the NPC sneaks.
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([tes3mobileActor](../../types/tes3mobileActor)[])
 
 ***
 
@@ -790,7 +790,7 @@ This is the time the actor can stay underwater without taking drowning damage, m
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([tes3mobileActor](../../types/tes3mobileActor)[])
 
 ***
 

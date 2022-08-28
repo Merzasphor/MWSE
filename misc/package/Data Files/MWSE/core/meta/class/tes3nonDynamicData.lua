@@ -7,23 +7,23 @@
 --- A child container from [`tes3dataHandler`](https://mwse.github.io/MWSE/types/tes3dataHandler/), where game data is stored.
 --- @class tes3nonDynamicData
 --- @field activeMods tes3gameFile[] *Read-only*. A collection of all actively loaded mods.
---- @field birthsigns tes3iterator *Read-only*. A collection of all birthsign objects.
+--- @field birthsigns tes3birthsign[] *Read-only*. A collection of all birthsign objects.
 --- @field cells tes3cell[] *Read-only*. A collection of all cell objects.
---- @field classes tes3iterator *Read-only*. A collection of all class objects.
---- @field dialogues tes3iterator *Read-only*. A collection of all dialogue objects.
---- @field factions tes3iterator *Read-only*. A collection of all faction objects.
+--- @field classes tes3class[] *Read-only*. A collection of all class objects.
+--- @field dialogues tes3dialogue[] *Read-only*. A collection of all dialogue objects.
+--- @field factions tes3faction[] *Read-only*. A collection of all faction objects.
 --- @field globals tes3iterator *Read-only*. A collection of all global variable objects.
 --- @field isSavingOrLoading boolean *Read-only*. True when in the process of saving or loading the game.
 --- @field magicEffects table<number, tes3magicEffect> *Read-only*. A table of references to all magic effects. This is a dictionary, as the effect list may have gaps.
 --- @field objects tes3activator[]|tes3alchemy[]|tes3apparatus[]|tes3armor[]|tes3bodyPart[]|tes3book[]|tes3clothing[]|tes3container[]|tes3containerInstance[]|tes3creature[]|tes3creatureInstance[]|tes3door[]|tes3enchantment[]|tes3ingredient[]|tes3leveledCreature[]|tes3leveledItem[]|tes3light[]|tes3lockpick[]|tes3misc[]|tes3npc[]|tes3npcInstance[]|tes3probe[]|tes3reference[]|tes3repairTool[]|tes3spell[]|tes3static[]|tes3weapon[] *Read-only*. A collection of all other game objects.
---- @field races tes3iterator *Read-only*. A collection of all race objects.
---- @field regions tes3iterator *Read-only*. A collection of all region objects.
---- @field scripts tes3iterator *Read-only*. A collection of all script objects.
+--- @field races tes3race[] *Read-only*. A collection of all race objects.
+--- @field regions tes3region[] *Read-only*. A collection of all region objects.
+--- @field scripts tes3script[] *Read-only*. A collection of all script objects.
 --- @field skills tes3skill[] *Read-only*. A table of references to all 27 skills.
---- @field soundGenerators tes3iterator *Read-only*. A collection of all sound generator objects.
---- @field sounds tes3iterator *Read-only*. A collection of all sound objects.
+--- @field soundGenerators tes3soundGenerator[] *Read-only*. A collection of all sound generator objects.
+--- @field sounds tes3sound[] *Read-only*. A collection of all sound objects.
 --- @field spells tes3spell[] *Read-only*. A collection of all spell objects.
---- @field startScripts tes3iterator *Read-only*. A collection of all [`tes3startScript`](https://mwse.github.io/MWSE/types/tes3startScript/) objects.
+--- @field startScripts tes3startScript[] *Read-only*. A collection of all start script objects.
 tes3nonDynamicData = {}
 
 --- Inserts a newly created object into the proper collections.

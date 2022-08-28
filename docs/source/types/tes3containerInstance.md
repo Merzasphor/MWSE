@@ -106,7 +106,7 @@ The bounding box for the object.
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([tes3equipmentStack](../../types/tes3equipmentStack)[])
 
 ***
 
@@ -336,7 +336,7 @@ A list of actors that the object has been stolen from.
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([tes3baseObject](../../types/tes3baseObject)[])
 
 ***
 
