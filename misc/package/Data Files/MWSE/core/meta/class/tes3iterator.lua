@@ -4,7 +4,7 @@
 --- @meta
 --- @diagnostic disable:undefined-doc-name
 
---- A collection that can be iterated over Contains items in a simple linked list, and stores its head/tail.
+--- A collection that can be iterated over. Contains items in a simple linked list, and stores its head/tail.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3iterator).
 --- @class tes3iterator
