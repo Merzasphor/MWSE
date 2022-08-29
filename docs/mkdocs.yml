@@ -24,7 +24,7 @@ theme:
   logo: assets/images/logo.png
   favicon: assets/images/favicon.png
   icon:
-    repo: fontawesome/brands/github-square
+    repo: fontawesome/brands/square-github
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
