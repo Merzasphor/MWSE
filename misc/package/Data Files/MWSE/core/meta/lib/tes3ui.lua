@@ -210,7 +210,7 @@ function tes3ui.registerProperty(s) end
 --- @param reference tes3reference|nil No description yet available.
 function tes3ui.setConsoleReference(reference) end
 
---- Displays the book menu with arbitrary text. Paging is automatically handled. It needs to follow book text conventions as in the Construction Set. In essence, it uses HTML syntax. Important: every book needs to end with a `<BR>` statement to be displayed properly. See [`bookGetText`](https://mwse.github.io/MWSE/events/bookGetText/#examples) for an example of properly formatted book text.
+--- Displays the book menu with arbitrary text. Paging is automatically handled. It needs to follow [book text conventions](https://mwse.github.io/MWSE/references/other/books/) as in the Construction Set. In essence, it uses HTML syntax. Important: every book needs to end with a `<BR>` statement to be displayed properly. See [`bookGetText`](https://mwse.github.io/MWSE/events/bookGetText/#examples) for an example of properly formatted book text.
 --- @param text string No description yet available.
 function tes3ui.showBookMenu(text) end
 
@@ -320,7 +320,7 @@ function tes3ui.showJournal() end
 --- @return tes3uiElement menu The notify menu created.
 function tes3ui.showNotifyMenu(string, ...) end
 
---- Displays the scroll menu with arbitrary text. It needs to follow book text conventions as in the Construction Set. In essence, it uses HTML syntax. Important: every book needs to end with a `<BR>` statement to be displayed properly. See [`bookGetText`](https://mwse.github.io/MWSE/events/bookGetText/#examples) for an example of properly formatted scroll text.
+--- Displays the scroll menu with arbitrary text. It needs to follow [book text conventions](https://mwse.github.io/MWSE/references/other/books/) as in the Construction Set. In essence, it uses HTML syntax. Important: every book needs to end with a `<BR>` statement to be displayed properly. See [`bookGetText`](https://mwse.github.io/MWSE/events/bookGetText/#examples) for an example of properly formatted scroll text.
 --- @param text string No description yet available.
 function tes3ui.showScrollMenu(text) end
 

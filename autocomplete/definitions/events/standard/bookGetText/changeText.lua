@@ -1,8 +1,7 @@
 
-local newText = [[
-<DIV ALIGN="LEFT"><FONT COLOR="000000" SIZE="3" FACE="Magic Cards"><BR>
+local newText = [[<div align="left"><font color="002200" size="3" face="Magic Cards"><br>
 Sweetroll
-<BR>
+<br>
 ]]
 
 local function example(e)
