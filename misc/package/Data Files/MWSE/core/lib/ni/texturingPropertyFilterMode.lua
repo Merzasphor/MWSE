@@ -1,8 +1,8 @@
 return {
-	["NEAREST"] = 0,
-	["BILERP"] = 1,
-	["TRILERP"] = 2,
-	["NEAREST_MIPNEAREST"] = 3,
-	["NEAREST_MIPLERP"] = 4,
-	["BILERP_MIPNEAREST"] = 5,
+	["nearest"] = 0,
+	["bilerp"] = 1,
+	["trilerp"] = 2,
+	["nearestMipNearest"] = 3,
+	["nearestMipLerp"] = 4,
+	["bilerpMipNearest"] = 5,
 }
