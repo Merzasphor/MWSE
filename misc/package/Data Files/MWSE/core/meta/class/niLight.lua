@@ -9,7 +9,7 @@
 --- @field ambient niColor The ambient light color.
 --- @field diffuse niColor The diffuse light color.
 --- @field dimmer number This flag scales the overall brightness of all light components. This value must be nonnegative. It is usually less than or equal to 1.0 (although advanced lighting effects may use larger values).
---- @field specular niColor This property was inteded to be specular light color in Gamebryo, but in Morrowind it represents the dynamic culling radius. All the color channels are equal to the radius.
+--- @field specular niColor This property was inteded to be specular light color in NetImmerse, but in Morrowind it represents the dynamic culling radius. All the color channels are equal to the radius.
 --- 
 --- In practice, this radius represents the light's influence radius.
 niLight = {}
