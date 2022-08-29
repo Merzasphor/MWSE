@@ -11,7 +11,7 @@ A core game object used for storing game settings.
 
 ### `activationAmbientLight`
 
-*Read-only*. No description yet available.
+*Read-only*. An ambiental light inside the `worldObjectRoot`.
 
 **Returns**:
 
@@ -211,7 +211,7 @@ Mix volumes for voices.
 
 ### `worldLandscapeRoot`
 
-*Read-only*. Access to the root of the scene graph of all the currently loaded terrain.
+*Read-only*. Access to the root of the scene graph of all the currently loaded terrain. It's nine cells in total when the player is in exterior cell. While the player is in interior cell this node is culled.
 
 **Returns**:
 
@@ -221,7 +221,7 @@ Mix volumes for voices.
 
 ### `worldObjectRoot`
 
-*Read-only*. Access to the root of the scene graph containing all the static objects, and lights that can't be picked up.
+*Read-only*. Access to the root of the scene graph containing all the static objects, and lights that can't be picked up. In addition, the player's scene graph is a child node of this root node.
 
 **Returns**:
 
@@ -241,17 +241,7 @@ Mix volumes for voices.
 
 ### `worldRoot`
 
-*Read-only*. Access to the root of the world scene graph.
-
-**Returns**:
-
-* `result` ([niNode](../../types/niNode))
-
-***
-
-### `worldSceneGraphRoot`
-
-*Read-only*. Deprecated, please use `tes3.game.worldRoot` instead. Access to the root of the scene graph.
+*Read-only*. Access to the root of the world scene graph. Contains all the 3D geometry. All the other available world root nodes are child nodes of the world root.
 
 **Returns**:
 

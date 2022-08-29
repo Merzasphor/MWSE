@@ -191,7 +191,7 @@ An engine flag that controls if there is a fade in/out between cells.
 
 ### `worldLandscapeRoot`
 
-*Read-only*. One of the core parent scene graph nodes.
+*Read-only*. Access to the root of the scene graph of all the currently loaded terrain. It's nine cells in total when the player is in exterior cell. While the player is in interior cell this node is culled.
 
 **Returns**:
 
@@ -201,7 +201,7 @@ An engine flag that controls if there is a fade in/out between cells.
 
 ### `worldObjectRoot`
 
-*Read-only*. One of the core parent scene graph nodes.
+*Read-only*. Access to the root of the scene graph containing all the static objects, and lights that can't be picked up. In addition, the player's scene graph is a child node of this root node.
 
 **Returns**:
 
@@ -211,7 +211,7 @@ An engine flag that controls if there is a fade in/out between cells.
 
 ### `worldPickObjectRoot`
 
-*Read-only*. One of the core parent scene graph nodes.
+*Read-only*. Access to the root of the scene graph containing all the objects that can be interacted with (NPCs, items, harvestable plants, activators, doors...), but also some objects that are only rendered in the Construction Set such as sound emmiting activator objects with EditorMarker.NIF mesh.
 
 **Returns**:
 

@@ -6,7 +6,7 @@
 
 --- A core game object used for storing game settings.
 --- @class tes3game
---- @field activationAmbientLight niAmbientLight *Read-only*. No description yet available.
+--- @field activationAmbientLight niAmbientLight *Read-only*. An ambiental light inside the `worldObjectRoot`.
 --- @field debugRoot niBillboardNode|niCollisionSwitch|niNode|niSwitchNode *Read-only*. Access to the root of the scene graph of the Debug menu layer.
 --- @field fogProperty niFogProperty *Read-only*. No description yet available.
 --- @field parentWindowHandle number *Read-only*. The Windows HWND for the parent window.
@@ -26,11 +26,10 @@
 --- @field volumeVoice number Mix volumes for voices.
 --- @field windowHandle number *Read-only*. The Windows HWND for the window.
 --- @field wireframeProperty niAlphaProperty|niFogProperty|niMaterialProperty|niStencilProperty|niTexturingProperty|niVertexColorProperty|niZBufferProperty *Read-only*. The reused wireframe property, applied when toggling wireframe rendering.
---- @field worldLandscapeRoot niBillboardNode|niCollisionSwitch|niNode|niSwitchNode *Read-only*. Access to the root of the scene graph of all the currently loaded terrain.
---- @field worldObjectRoot niBillboardNode|niCollisionSwitch|niNode|niSwitchNode *Read-only*. Access to the root of the scene graph containing all the static objects, and lights that can't be picked up.
+--- @field worldLandscapeRoot niBillboardNode|niCollisionSwitch|niNode|niSwitchNode *Read-only*. Access to the root of the scene graph of all the currently loaded terrain. It's nine cells in total when the player is in exterior cell. While the player is in interior cell this node is culled.
+--- @field worldObjectRoot niBillboardNode|niCollisionSwitch|niNode|niSwitchNode *Read-only*. Access to the root of the scene graph containing all the static objects, and lights that can't be picked up. In addition, the player's scene graph is a child node of this root node.
 --- @field worldPickRoot niBillboardNode|niCollisionSwitch|niNode|niSwitchNode *Read-only*. Access to the root of the scene graph containing all the objects that can be interacted with (NPCs, items, harvestable plants, activators, doors...), but also some objects that are only rendered in the Construction Set such as sound emmiting activator objects with EditorMarker.NIF mesh.
---- @field worldRoot niBillboardNode|niCollisionSwitch|niNode|niSwitchNode *Read-only*. Access to the root of the world scene graph.
---- @field worldSceneGraphRoot niBillboardNode|niCollisionSwitch|niNode|niSwitchNode *Read-only*. Deprecated, please use `tes3.game.worldRoot` instead. Access to the root of the scene graph.
+--- @field worldRoot niBillboardNode|niCollisionSwitch|niNode|niSwitchNode *Read-only*. Access to the root of the world scene graph. Contains all the 3D geometry. All the other available world root nodes are child nodes of the world root.
 tes3game = {}
 
 --- Clears data related to activation, resetting what the player can activate.

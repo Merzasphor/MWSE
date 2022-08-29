@@ -14,7 +14,7 @@ return {
 			{ name = "useModelCoordinates", type = "boolean", optional = true, default = false, description = "If true, model coordinates will be used instead of world coordinates." },
 			{ name = "useBackTriangles", type = "boolean", optional = true, default = false, description = "Include intersections with back-facing triangles." },
 			{ name = "observeAppCullFlag", type = "boolean", optional = true, default = true, description = "Ignore intersections with culled (hidden) models." },
-			{ name = "root", type = "niNode", optional = true, default = "tes3.game.worldRoot", description = "Node pointer to node scene."},
+			{ name = "root", type = "niNode", optional = true, default = "tes3.game.worldRoot", description = "Node pointer to node scene. To reduce the computational work, consider passing only a smaller subset of the `worldRoot` to improve performance. The typical nodes you can pass here are: [`tes3.game.worldLandscapeRoot`](https://mwse.github.io/MWSE/types/tes3game/#worldLandscapeRoot), [`worldObjectRoot`](https://mwse.github.io/MWSE/types/tes3game/#worldObjectRoot), and [`worldPickRoot`](https://mwse.github.io/MWSE/types/tes3game/#worldPickRoot)."},
 			{ name = "returnColor", type = "boolean", optional = true, default = false, description = "Calculate and return the vertex color at intersections." },
 			{ name = "returnNormal", type = "boolean", optional = true, default = false, description = "Calculate and return the vertex normal at intersections." },
 			{ name = "returnSmoothNormal", type = "boolean", optional = true, default = false, description = "Use normal interpolation for calculating vertex normals." },
