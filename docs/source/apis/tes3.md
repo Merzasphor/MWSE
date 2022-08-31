@@ -542,7 +542,7 @@ tes3.adjustSoundVolume({ sound = ..., reference = ..., mixChannel = ..., volume 
 * `params` (table)
 	* `sound` ([tes3sound](../../types/tes3sound), string): The sound object, or id of the sound to look for.
 	* `reference` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), string): The reference to attach the sound to.
-	* `mixChannel` (number): *Default*: `tes3.soundMix.effects`. The channel to base volume off of. Maps to [`tes3.soundMix`](https://mwse.github.io/MWSE/references/sound-mix-types/) constants.
+	* `mixChannel` (integer): *Default*: `tes3.soundMix.effects`. The channel to base volume off of. Maps to [`tes3.soundMix`](https://mwse.github.io/MWSE/references/sound-mix-types/) constants.
 	* `volume` (number): *Default*: `1.0`. A value between 0.0 and 1.0 to scale the volume off of.
 
 ***
@@ -673,7 +673,7 @@ local price = tes3.calculatePrice({ object = ..., basePrice = ..., buying = ...,
 	* `training` (boolean): *Default*: `false`. If `true`, a [calcTrainingPrice](https://mwse.github.io/MWSE/events/calcTrainingPrice) event will be triggered, passing the given `skill` ID.
 	* `count` (number): *Default*: `1`. If `bartering`, the count passed to the [calcBarterPrice](https://mwse.github.io/MWSE/events/calcBarterPrice) event.
 	* `itemData` ([tes3itemData](../../types/tes3itemData)): *Optional*. If `bartering` or `repairing`, the item data passed to the [calcBarterPrice](https://mwse.github.io/MWSE/events/calcBarterPrice) or [calcRepairPrice](https://mwse.github.io/MWSE/events/calcRepairPrice) event.
-	* `skill` (number): If `training`, the skill ID passed to the [calcTrainingPrice](https://mwse.github.io/MWSE/events/calcTrainingPrice) event.
+	* `skill` (number): If `training`, the skill ID passed to the [calcTrainingPrice](https://mwse.github.io/MWSE/events/calcTrainingPrice) event. Maps to value in [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) table.
 
 **Returns**:
 
@@ -3262,22 +3262,22 @@ local result = tes3.rayTest({ position = ..., direction = ..., findAll = ..., ma
 	* `position` ([tes3vector3](../../types/tes3vector3), table): Position of the ray origin.
 	* `direction` ([tes3vector3](../../types/tes3vector3), table): Direction of the ray. Does not have to be unit length.
 	* `findAll` (boolean): *Default*: `false`. If true, the ray test won't stop after the first result.
-	* `maxDistance` (number): *Optional*. The maximum distance that the test will run.
+	* `maxDistance` (number): *Default*: `0`. The maximum distance that the test will run.
 	* `sort` (boolean): *Default*: `true`. If true, the results will be sorted by distance from the origin position.
 	* `useModelBounds` (boolean): *Default*: `false`. If true, model bounds will be tested for intersection. Otherwise triangles will be used.
 	* `useModelCoordinates` (boolean): *Default*: `false`. If true, model coordinates will be used instead of world coordinates.
 	* `useBackTriangles` (boolean): *Default*: `false`. Include intersections with back-facing triangles.
 	* `observeAppCullFlag` (boolean): *Default*: `true`. Ignore intersections with culled (hidden) models.
-	* `root` ([niNode](../../types/niNode)): *Default*: `tes3.game.worldRoot`. Node pointer to node scene.
+	* `root` ([niNode](../../types/niNode)): *Default*: `tes3.game.worldRoot`. Node pointer to node scene. To reduce the computational work, consider passing only a smaller subset of the `worldRoot` to improve performance. The typical nodes you can pass here are: [`tes3.game.worldLandscapeRoot`](https://mwse.github.io/MWSE/types/tes3game/#worldLandscapeRoot), [`worldObjectRoot`](https://mwse.github.io/MWSE/types/tes3game/#worldObjectRoot), and [`worldPickRoot`](https://mwse.github.io/MWSE/types/tes3game/#worldPickRoot).
 	* `returnColor` (boolean): *Default*: `false`. Calculate and return the vertex color at intersections.
 	* `returnNormal` (boolean): *Default*: `false`. Calculate and return the vertex normal at intersections.
 	* `returnSmoothNormal` (boolean): *Default*: `false`. Use normal interpolation for calculating vertex normals.
 	* `returnTexture` (boolean): *Default*: `false`. Calculate and return the texture coordinate at intersections.
-	* `ignore` ([tes3reference](../../types/tes3reference)[], [niNode](../../types/niNode)[]): *Optional*. An array of references and/or scene graph nodes to cull from the result(s).
+	* `ignore` (table&lt;integer, [niNode](../../types/niNode)|[tes3reference](../../types/tes3reference)&gt;): *Optional*. An array of references and/or scene graph nodes to cull from the result(s).
 
 **Returns**:
 
-* `result` ([niPickRecord](../../types/niPickRecord), [niPickRecord](../../types/niPickRecord)[])
+* `result` ([niPickRecord](../../types/niPickRecord), [niPickRecord](../../types/niPickRecord)[], nil)
 
 ??? example "Example: Get Activation Target"
 

@@ -442,16 +442,6 @@ The scene graph node for this object's physics collision, if its mesh has a root
 
 ***
 
-### `sceneReference`
-
-The scene graph reference node for this object.
-
-**Returns**:
-
-* `result` ([niNode](../../types/niNode))
-
-***
-
 ### `sourceFormId`
 
 No description yet available.

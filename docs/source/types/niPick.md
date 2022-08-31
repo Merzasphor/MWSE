@@ -5,7 +5,7 @@
 
 # niPick
 
-Class used in the picking intersection system within the game engine.  Using a ray, the engine performs picking operations on a scene graph or any subtree. Given a ray and a subtree, the subtree is traversed and matching nodes are added to an array.
+Class used in the picking intersection system within the game engine. Using a ray, the engine performs picking operations on a scene graph or any subtree. Given a ray and a subtree, the subtree is traversed and matching nodes are added to an array.
 
 ## Properties
 
@@ -73,11 +73,11 @@ The pick type for the object.
 
 ### `results`
 
-The array of pick records obtained by the last call to PickObjects.
+*Read-only*. The array of pick records obtained by the last call to `pickObjects`.
 
 **Returns**:
 
-* `result` (niPickRecordTArray)
+* `result` ([niPickRecord](../../types/niPickRecord)[])
 
 ***
 
@@ -155,17 +155,17 @@ myObject:clearResults()
 
 ### `pickObjects`
 
-Performs the picking operation.
+Performs the picking operation by casting a ray.
 
 ```lua
-myObject:pickObjects(origin, distance, append, maxDistance)
+myObject:pickObjects(origin, direction, append, maxDistance)
 ```
 
 **Parameters**:
 
-* `origin` ([tes3vector3](../../types/tes3vector3))
-* `distance` ([tes3vector3](../../types/tes3vector3))
-* `append` (boolean): *Optional*. Default value: false
+* `origin` ([tes3vector3](../../types/tes3vector3)): The origin of the ray in world coordinates.
+* `direction` ([tes3vector3](../../types/tes3vector3))
+* `append` (boolean): *Default*: `false`. This parameter indicates whether the new results are appended to the results array, or if a new array is formed clearing the results array.
 * `maxDistance` (number): *Optional*. Default value: 0.0F
 
 ***

@@ -10,7 +10,7 @@ return {
 			{ name = "destination", type = "tes3vector3|table" },
 			{ name = "duration", type = "number", optional = true, default = 0, description = "How long the escorter will do the escorting, in hours." },
 			{ name = "cell", type = "tes3cell|string", optional = true },
-			{ name = "reset", type = "boolean", default = true },
+			{ name = "reset", type = "boolean", optional = true, default = true },
 		},
 	}},
 }

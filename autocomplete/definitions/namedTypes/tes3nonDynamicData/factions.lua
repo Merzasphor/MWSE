@@ -2,5 +2,5 @@ return {
 	type = "value",
 	description = [[A collection of all faction objects.]],
 	readOnly = true,
-	valuetype = "tes3iterator",
+	valuetype = "tes3faction[]",
 }

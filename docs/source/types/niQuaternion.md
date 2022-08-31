@@ -179,3 +179,13 @@ local quaternion = niQuaternion.new(w, x, y, z)
 
 ***
 
+## Math Operations
+
+### Multiplication (`*`)
+
+| Left operand type | Right operand type | Result type | Description |
+| ----------------- | ------------------ | ----------- | ----------- |
+| [niQuaternion](../../types/niQuaternion) | [niQuaternion](../../types/niQuaternion) | [niQuaternion](../../types/niQuaternion) | Multiplies two quaternions. The end effect is that the resulting rotation quaternion is equal to the rotation of both quaternions. |
+
+***
+

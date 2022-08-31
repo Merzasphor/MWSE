@@ -43,14 +43,14 @@
 --- @field fatigue tes3statistic|tes3statisticSkill *Read-only*. Access to the actor's fatigue statistic.
 --- @field fight number The actor's fight AI value.
 --- @field flee number The actor's flee AI value.
---- @field friendlyActors tes3iterator *Read-only*. A collection of other `tes3mobileActor`s that this actor considers friendly.
+--- @field friendlyActors tes3mobileActor[]|tes3mobileCreature[]|tes3mobileNPC[]|tes3mobilePlayer[] *Read-only*. A collection of other `tes3mobileActor`s that this actor considers friendly.
 --- @field greetDuration number No description yet available.
 --- @field greetTimer number *Read-only*. No description yet available.
 --- @field hasFreeAction boolean *Read-only*. If true, the actor isn't knocked down or knocked out.
 --- @field health tes3statistic|tes3statisticSkill *Read-only*. Access to the actor's health statistic.
 --- @field hello number The actor's hello AI value.
 --- @field holdBreathTime number This is the time the actor can stay underwater without taking drowning damage, measured in seconds. It's starting value is `fHoldBreathTime`(GMST) seconds by default. Once the actor is underwater, this value is decreasing based on the time passed while underwater. The actor will start taking drowning damage once this time is below 0. During drowning this time will have more and more negative values based on the duration of the drowning. Changing this allows manipulating for how long the actor can stay underwater without drowning. Note that player's Breath HUD element won't show values larger than `fHoldBreathTime`.
---- @field hostileActors tes3iterator *Read-only*. A collection of other `tes3mobileActor`s that this actor considers hostile.
+--- @field hostileActors tes3mobileActor[]|tes3mobileCreature[]|tes3mobileNPC[]|tes3mobilePlayer[] *Read-only*. A collection of other `tes3mobileActor`s that this actor considers hostile.
 --- @field idleAnim boolean *Read-only*. Friendly access to the actor's flag that controls if the actor is using their idle animation.
 --- @field inCombat boolean *Read-only*. Friendly access to the actor's flag that controls if the actor is in combat.
 --- @field intelligence tes3statistic|tes3statisticSkill *Read-only*. Direct access to the actor's intelligence attribute statistic.

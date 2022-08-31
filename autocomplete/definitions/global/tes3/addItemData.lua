@@ -7,7 +7,7 @@ return {
 		tableParams = {
 			{ name = "to", type = "tes3reference|tes3mobileActor|string", description = "The reference or mobile whose inventory will be modified." },
 			{ name = "item", type = "tes3item|string", description = "The item to create item data for." },
-			{ name = "updateGUI", type = "boolean", default = true, description = "If false, the player or contents menu won't be updated." },
+			{ name = "updateGUI", type = "boolean", optional = true, default = true, description = "If false, the player or contents menu won't be updated." },
 		},
 	}},
 	returns = {{ name = "createdData", type = "tes3itemData" }},

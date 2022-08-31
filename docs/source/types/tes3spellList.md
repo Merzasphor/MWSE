@@ -12,12 +12,12 @@ A list of spells. Used by actors, birthsigns, and races.
 ### `iterator`
 
 *Read-only*. Deprecated. Use `for index, spell in pairs(spellList)` to iterate over spells.
-	
+
 Direct access to the spells in this list.
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([tes3spell](../../types/tes3spell)[])
 
 ***
 

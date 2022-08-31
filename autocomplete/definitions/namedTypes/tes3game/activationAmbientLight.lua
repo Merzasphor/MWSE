@@ -1,6 +1,6 @@
 return {
 	type = "value",
-	--description = [[]],
+	description = [[An ambiental light inside the `worldObjectRoot`.]],
 	readOnly = true,
 	valuetype = "niAmbientLight",
 }

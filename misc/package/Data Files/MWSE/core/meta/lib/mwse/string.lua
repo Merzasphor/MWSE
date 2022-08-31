@@ -11,12 +11,12 @@ mwse.string = {}
 --- Creates a string in storage, and returns the numerical key for it.
 --- 
 --- If the string is already in storage, the previous key will be returned.
---- @param unknown string No description yet available.
+--- @param value string No description yet available.
 --- @return number result No description yet available.
-function mwse.string.create(unknown) end
+function mwse.string.create(value) end
 
 --- Returns the numerical key for a given string in storage, or nil if the string isn't in storage.
---- @param unknown string No description yet available.
---- @return number? result *Optional*. No description yet available.
-function mwse.string.get(unknown) end
+--- @param id number? *Optional*. No description yet available.
+--- @return string result No description yet available.
+function mwse.string.get(id) end
 

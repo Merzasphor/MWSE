@@ -11,7 +11,7 @@
 --- @field attributes number[] Simplified access to the base creature's attributes. A table of eight numbers, representing the base values for the creature's attributes.
 --- @field baseObject tes3creature Access to creature that this one is instanced from.
 --- @field biped boolean Access to the creature's biped flag.
---- @field equipment tes3iterator *Read-only*. A collection that contains the currently equipped items.
+--- @field equipment tes3equipmentStack[] *Read-only*. A collection that contains the currently equipped items.
 --- @field fatigue number *Read-only*. The creature's current fatigue.
 --- @field flies boolean Access to the creature's flies flag.
 --- @field health number *Read-only*. The creature's current health.

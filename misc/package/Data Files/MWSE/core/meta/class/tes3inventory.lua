@@ -7,10 +7,7 @@
 --- An inventory composes of an iterator, and flags caching the state of the inventory.
 --- @class tes3inventory
 --- @field flags number *Read-only*. Raw bit-based flags.
---- @field items tes3iterator *Read-only*. Direct acces to the container that holds the inventory's items.
---- @field iterator tes3iterator *Read-only*. Deprecated. Use `for index, stack in pairs(inventory)` to iterate over inventory stacks.
---- 	
---- Direct access to the container that holds the inventory's items.
+--- @field items tes3itemStack[] *Read-only*. Direct acces to the container that holds the inventory's items.
 tes3inventory = {}
 
 --- Adds an item into the inventory directly. This should not be used, in favor of the [`tes3.addItem()`](https://mwse.github.io/MWSE/apis/tes3/#tes3additem) function.

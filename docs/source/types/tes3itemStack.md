@@ -35,7 +35,7 @@ A collection of variables that are associated with the stack's object, or nil if
 
 **Returns**:
 
-* `result` (tes3TArray)
+* `result` ([tes3itemData](../../types/tes3itemData)[])
 
 ***
 

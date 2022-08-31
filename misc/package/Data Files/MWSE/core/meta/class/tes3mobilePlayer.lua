@@ -7,6 +7,7 @@
 --- A mobile object for a the player.
 --- @class tes3mobilePlayer : tes3mobileNPC, tes3mobileActor, tes3mobileObject
 --- @field alwaysRun boolean Toggle flag for if the player should always run.
+--- @field animationController tes3playerAnimationController *Read-only*. Access to the player's animation controller.
 --- @field attackDisabled boolean Toggle flag for if the player can attack.
 --- @field autoRun boolean Toggle flag for if the player should constantly run forward.
 --- @field birthsign tes3birthsign *Read-only*. The player's birthsign.
@@ -15,7 +16,7 @@
 --- @field castReady boolean Toggle flag for if the player has casting ready.
 --- @field clawMultiplier tes3globalVariable *Read-only*. Quick access to the `ClawMultiplier` global variable.
 --- @field controlsDisabled boolean Toggle flag for if the player's controls are disabled.
---- @field dialogueList tes3iterator *Read-only*. Access to the collection that holds what dialogue topics the player has access to.
+--- @field dialogueList tes3dialogue[] *Read-only*. Access to the collection that holds what dialogue topics the player has access to.
 --- @field firstPerson tes3npc *Read-only*. Quick access to the first person NPC.
 --- @field firstPersonReference tes3reference *Read-only*. Quick access to the first person NPC's reference.
 --- @field inactivityTime number The time that the player has spent inactive.

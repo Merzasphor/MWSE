@@ -16,7 +16,7 @@ The list of nodes that a given dynamic effect will affect.
 
 **Returns**:
 
-* `result` (niNodeLinkedList)
+* `result` ([niNodeLinkedList](../../types/niNodeLinkedList))
 
 ***
 
@@ -222,7 +222,7 @@ The object's local uniform scaling factor.
 
 ### `specular`
 
-This property was inteded to be specular light color in Gamebryo, but in Morrowind it represents the dynamic culling radius. All the color channels are equal to the radius.
+This property was inteded to be specular light color in NetImmerse, but in Morrowind it represents the dynamic culling radius. All the color channels are equal to the radius.
 
 In practice, this radius represents the light's influence radius.
 
@@ -631,7 +631,6 @@ myObject:prependController(controller)
 Alias for `update()` method. Updates the world transforms of this node and its children, which makes changes visible for rendering. Use after changing any local rotation, translation, scale, bounds or after attaching and detaching nodes.
 
 !!! tip
-	Update Efficiency
 	It's best to "batch up" calls to this method. For example, when transform of an object its parent and grandparent are all changed during the same frame, it is much more efficient to call this method only on the grandparent object after all transforms have been changed. Also, consider calling this function as low as possible on a scene graph.
 
 

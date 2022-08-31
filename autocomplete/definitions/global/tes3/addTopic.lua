@@ -6,7 +6,7 @@ return {
 		type = "table",
 		tableParams = {
 			{ name = "topic", type = "tes3dialogue|string", description = "The topic to add" },
-			{ name = "updateGUI", type = "boolean", default = true, description = "If true, the GUI will be updated respecting the adding of the topic." },
+			{ name = "updateGUI", type = "boolean", optional = true, default = true, description = "If true, the GUI will be updated respecting the adding of the topic." },
 		},
 	}},
 	returns = {

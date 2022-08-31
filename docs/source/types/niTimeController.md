@@ -5,7 +5,7 @@
 
 # niTimeController
 
-Controls the timing and update functions for animation controllers.
+An abstract base class from which all the animation controllers inherit. It has all the functionality needed to control the timing and update animations.
 
 This type inherits the following: [niObject](../../types/niObject)
 ## Properties
@@ -42,7 +42,7 @@ The animation cycle type. Type 0 is looping, type 2 is reverse, type 4 is clampe
 
 ### `frequency`
 
-The animation controller's frequency value.
+The animation controller's frequency value. It is a scaling value used to convert from update time units to keyframe time units, if necessary.
 
 **Returns**:
 
@@ -52,7 +52,7 @@ The animation controller's frequency value.
 
 ### `highKeyFrame`
 
-No description.
+This is the end animation key time of the animation controller.
 
 **Returns**:
 
@@ -62,7 +62,7 @@ No description.
 
 ### `lastScaledTime`
 
-No description.
+This function returns the last scaled time computed by this controller. The scaled time takes the `frequency` and `phase` into account, along with the `cycleType` and `animTimingType`. This is the last value used to interpolate animation keys.
 
 **Returns**:
 
@@ -82,7 +82,7 @@ No description.
 
 ### `lowKeyFrame`
 
-No description.
+This is the beginning animation key time of the animation controller.
 
 **Returns**:
 
@@ -92,7 +92,7 @@ No description.
 
 ### `nextController`
 
-The next NiTimeController in the list of controllers containing the calling controller.
+The next animation controller in the list of controllers containing the calling controller.
 
 **Returns**:
 
@@ -102,7 +102,7 @@ The next NiTimeController in the list of controllers containing the calling cont
 
 ### `phase`
 
-The phase value.
+The phase value. It is an offset applied to the animation's update time, in seconds.
 
 **Returns**:
 
@@ -142,7 +142,7 @@ The phase value.
 
 ### `startTime`
 
-No description.
+The time at which the animation controller starts playing its animation.
 
 **Returns**:
 
@@ -152,7 +152,7 @@ No description.
 
 ### `target`
 
-The scene graph object that this animation controller is to animate.
+*Read-only*. The scene graph object that this animation controller is to animate.
 
 **Returns**:
 
@@ -230,9 +230,23 @@ local success = myObject:saveBinary(path)
 
 ***
 
+### `setTarget`
+
+This method assigns a new target to the animation controller.
+
+```lua
+myObject:setTarget(target)
+```
+
+**Parameters**:
+
+* `target` ([niObjectNET](../../types/niObjectNET)): The new target to assign.
+
+***
+
 ### `start`
 
-Starts the controller at the specified time.
+Starts the controller at the specified time. Intended for controllers with `animTimingType` of 1.
 
 ```lua
 myObject:start(time)

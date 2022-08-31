@@ -5,8 +5,8 @@ return {
 		name = "params",
 		type = "table",
 		tableParams = {
-			{ name = "index", type = "number", default = 0 },
-			{ name = "actor", type = "tes3mobileActor|tes3reference|string", default = "tes3.player" },
+			{ name = "index", type = "number", optional = true, default = 0 },
+			{ name = "actor", type = "tes3mobileActor|tes3reference|string", optional = true, default = "tes3.player" },
 		}
 	}},
 	valuetype = "boolean",

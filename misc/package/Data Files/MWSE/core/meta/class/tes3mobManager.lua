@@ -7,6 +7,12 @@
 --- The manager responsible for mobile objects and collision.
 --- @class tes3mobManager
 --- @field gravity tes3vector3 The gravity applied to all actors. Has a default value of `{0.0, 0.0, -627.2}`.
+--- @field mobCollisionGroup niCollisionGroup *Read-only*. !!! warning
+--- 	This part of the API isn't fully understood yet and thus is considered experimental. That means that there can be breaking changes requiring the code using this part of the API to be rewritten. The MWSE team will not make any effort to keep backward compatibility with the mods using experimental APIs.
+---  Access to the collision group used by the game engine.
+--- @field movingProps tes3reference[] *Read-only*. !!! warning
+--- 	This part of the API isn't fully understood yet and thus is considered experimental. That means that there can be breaking changes requiring the code using this part of the API to be rewritten. The MWSE team will not make any effort to keep backward compatibility with the mods using experimental APIs.
+---  
 --- @field processManager tes3processManager *Read-only*. Access to the process manager.
 --- @field projectileManager tes3projectileManager *Read-only*. Access to the projectile manager.
 --- @field terminalVelocity tes3vector3 The maximum velocity that actors can reach through the application of gravity. Has a default value of `{0.0, 0.0, -4005.5}`.

@@ -4,7 +4,7 @@ return {
 
 If the string is already in storage, the previous key will be returned.]],
 	arguments = {
-		{ type = "string" }
+		{ name = "value", type = "string" }
 	},
 	returns = "number",
 }

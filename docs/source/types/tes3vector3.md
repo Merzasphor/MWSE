@@ -5,7 +5,7 @@
 
 # tes3vector3
 
-A simple trio of floating-point numbers. You can perform following arithmetic with this type: `+`, `-`, and `*`.
+A simple trio of floating-point numbers.
 
 ## Properties
 
@@ -308,6 +308,49 @@ local vector = tes3vector3.new(x, y, z)
 **Returns**:
 
 * `vector` ([tes3vector3](../../types/tes3vector3))
+
+***
+
+## Math Operations
+
+### Addition (`+`)
+
+| Left operand type | Right operand type | Result type | Description |
+| ----------------- | ------------------ | ----------- | ----------- |
+| [tes3vector3](../../types/tes3vector3) | [tes3vector3](../../types/tes3vector3) | [tes3vector3](../../types/tes3vector3) | Standard vector addition. |
+
+***
+
+### Division (`/`)
+
+| Left operand type | Right operand type | Result type | Description |
+| ----------------- | ------------------ | ----------- | ----------- |
+| [tes3vector3](../../types/tes3vector3) | number | [tes3vector3](../../types/tes3vector3) | Divides the vector by a scalar. |
+
+***
+
+### Length (`#`)
+
+| Result type | Description |
+| ----------- | ----------- |
+| number | Evaluates to the vector's length in [game units](https://mwse.github.io/MWSE/references/other/game-units/). |
+
+***
+
+### Multiplication (`*`)
+
+| Left operand type | Right operand type | Result type | Description |
+| ----------------- | ------------------ | ----------- | ----------- |
+| [tes3vector3](../../types/tes3vector3) | [tes3vector3](../../types/tes3vector3) | [tes3vector3](../../types/tes3vector3) | The per-element multiplication of two vectors. |
+| [tes3vector3](../../types/tes3vector3) | number | [tes3vector3](../../types/tes3vector3) | Multiplies the vector by a scalar. |
+
+***
+
+### Subtraction (`-`)
+
+| Left operand type | Right operand type | Result type | Description |
+| ----------------- | ------------------ | ----------- | ----------- |
+| [tes3vector3](../../types/tes3vector3) | [tes3vector3](../../types/tes3vector3) | [tes3vector3](../../types/tes3vector3) | Standard vector subtraction. |
 
 ***
 

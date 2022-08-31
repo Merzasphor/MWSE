@@ -24,7 +24,7 @@ event.register(tes3.event.bookGetText, bookGetTextCallback)
 
 * `book` ([tes3book](../../types/tes3book)): *Read-only*. The book whose text is being retrieved.
 * `loadOriginalText` (method): Loads the original text for the book from the game files, bypassing this event.
-* `text` (string): If set, the book's text will be overwritten with this value. It needs to follow book text conventions as in the Construction Set. In essence, it uses HTML syntax. Important: every book needs to end with a `<BR>` statement to be displayed properly.
+* `text` (string): If set, the book's text will be overwritten with this value. It needs to follow book text conventions as in the Construction Set. In essence, it uses HTML syntax. Important: every book needs to end with a `<BR>` statement to be displayed properly. For more details, please read the page on [book conventions](https://mwse.github.io/MWSE/references/other/books/).
 
 ## Examples
 
@@ -34,10 +34,9 @@ event.register(tes3.event.bookGetText, bookGetTextCallback)
 
 	```lua
 	
-	local newText = [[
-	<DIV ALIGN="LEFT"><FONT COLOR="000000" SIZE="3" FACE="Magic Cards"><BR>
+	local newText = [[<div align="left"><font color="002200" size="3" face="Magic Cards"><br>
 	Sweetroll
-	<BR>
+	<br>
 	]]
 	
 	local function example(e)

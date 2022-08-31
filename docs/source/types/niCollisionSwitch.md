@@ -662,7 +662,6 @@ myObject:prependController(controller)
 Alias for `update()` method. Updates the world transforms of this node and its children, which makes changes visible for rendering. Use after changing any local rotation, translation, scale, bounds or after attaching and detaching nodes.
 
 !!! tip
-	Update Efficiency
 	It's best to "batch up" calls to this method. For example, when transform of an object its parent and grandparent are all changed during the same frame, it is much more efficient to call this method only on the grandparent object after all transforms have been changed. Also, consider calling this function as low as possible on a scene graph.
 
 
@@ -806,15 +805,15 @@ myObject:updateProperties()
 
 ### `new`
 
-Creates a new, empty NiNode.
+Creates a new niCollisionSwitch.
 
 ```lua
-local node = niNode.new()
+local new = niCollisionSwitch.new()
 ```
 
 **Returns**:
 
-* `node` ([niNode](../../types/niNode))
+* `new` ([niCollisionSwitch](../../types/niCollisionSwitch))
 
 ***
 

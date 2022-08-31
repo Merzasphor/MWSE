@@ -5,7 +5,7 @@
 
 # tes3matrix44
 
-A 4 by 4 matrix. You can perform following arithmetic with this type: `+`, `-`, `*`, and `==`.
+A 4 by 4 matrix. You can perform following arithmetic with this type: `==`.
 
 ## Properties
 
@@ -111,6 +111,33 @@ local matrix = tes3matrix44.new(w0, x0, y0, z0, w1, x1, y1, z1, w2, x2, y2, z2, 
 **Returns**:
 
 * `matrix` ([tes3matrix44](../../types/tes3matrix44))
+
+***
+
+## Math Operations
+
+### Addition (`+`)
+
+| Left operand type | Right operand type | Result type | Description |
+| ----------------- | ------------------ | ----------- | ----------- |
+| [tes3matrix44](../../types/tes3matrix44) | [tes3matrix44](../../types/tes3matrix44) | [tes3matrix44](../../types/tes3matrix44) | The matrix addition. |
+
+***
+
+### Multiplication (`*`)
+
+| Left operand type | Right operand type | Result type | Description |
+| ----------------- | ------------------ | ----------- | ----------- |
+| [tes3matrix44](../../types/tes3matrix44) | [tes3matrix44](../../types/tes3matrix44) | [tes3matrix44](../../types/tes3matrix44) | The matrix multiplication. Geometrically, this will concatenate the transformations of both matrices in the resulting matrix. |
+| [tes3matrix44](../../types/tes3matrix44) | number | [tes3matrix44](../../types/tes3matrix44) | Multiplies the matrix by a scalar. |
+
+***
+
+### Subtraction (`-`)
+
+| Left operand type | Right operand type | Result type | Description |
+| ----------------- | ------------------ | ----------- | ----------- |
+| [tes3matrix44](../../types/tes3matrix44) | [tes3matrix44](../../types/tes3matrix44) | [tes3matrix44](../../types/tes3matrix44) | The matrix subtraction. |
 
 ***
 

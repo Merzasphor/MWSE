@@ -182,16 +182,6 @@ The scene graph node for this object.
 
 ***
 
-### `sceneReference`
-
-The scene graph reference node for this object.
-
-**Returns**:
-
-* `result` ([niNode](../../types/niNode))
-
-***
-
 ### `sourceless`
 
 The soruceless flag of the object.
@@ -218,7 +208,7 @@ A list of actors that the object has been stolen from.
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([tes3baseObject](../../types/tes3baseObject)[])
 
 ***
 

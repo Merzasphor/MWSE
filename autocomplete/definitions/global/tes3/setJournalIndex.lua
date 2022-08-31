@@ -8,7 +8,7 @@ return {
 			{ name = "id", type = "tes3dialogue|string" },
 			{ name = "index", type = "number" },
 			{ name = "speaker", type = "tes3mobileActor|tes3reference|string" },
-			{ name = "showMessage", type = "boolean", default = false, description = "If set, a message may be shown to the player." },
+			{ name = "showMessage", type = "boolean", optional = true, default = false, description = "If set, a message may be shown to the player." },
 		},
 	}},
 	returns = "wasSet",

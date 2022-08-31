@@ -7,7 +7,7 @@
 --- A core game object used for storing world simulation data.
 --- @class tes3worldController
 --- @field aiDistanceScale number A value in the range [0, 1]. The (relative) maximum distance setting for AI simulation. Corresponds to the AI distance option in the Options menu.
---- @field allMobileActors tes3iterator *Read-only*. The list of all active mobile actors ([`tes3mobileActor`](https://mwse.github.io/MWSE/types/tes3mobileActor/)). Mobile actors expire after 72 hours if they have not been in a loaded cell.
+--- @field allMobileActors tes3mobileActor[]|tes3mobileCreature[]|tes3mobileNPC[]|tes3mobilePlayer[] *Read-only*. The list of all active mobile actors. Mobile actors expire after 72 hours if they have not been in a loaded cell.
 --- @field armCamera tes3worldControllerRenderCamera *Read-only*. The access to the first person arms camera.
 --- @field audioController tes3audioController *Read-only*. The audio controller.
 --- @field blindnessFader tes3fader *Read-only*. Screen overlay fader for the blind effect.
@@ -31,7 +31,7 @@
 --- @field enchantedItemEffectTextures tes3iterator *Read-only*. An array of textures used for the enchanted item effect.
 --- @field flagLevitationDisabled boolean If levitation is disabled.
 --- @field flagTeleportingDisabled boolean If teleporting is disabled.
---- @field globalScripts tes3iterator *Read-only*. A list of active global scripts.
+--- @field globalScripts tes3globalScript[] *Read-only*. A list of active global scripts.
 --- @field handToHandHit2Sound tes3sound A sound played when a hand to hand attack hits. For each attack, `handToHandHitSound` or `handToHandHitSound2` are randomly chosen.
 --- @field handToHandHitSound tes3sound A sound played when a hand to hand attack hits. For each attack, `handToHandHitSound` or `handToHandHitSound2` are randomly chosen.
 --- @field healthDamageSound tes3sound The sound played when health damage is taken.
@@ -68,9 +68,9 @@
 --- @field nodeCursor niBillboardNode|niCollisionSwitch|niNode|niSwitchNode *Read-only*. The scenegraph node for the target crosshair.
 --- @field parentWindowHandle HWND *Read-only*. Handle to the parent window.
 --- @field projectionDistance number 
---- @field quests tes3iterator *Read-only*. A list of all available [`tes3quest`](https://mwse.github.io/MWSE/types/tes3quest/)s.
+--- @field quests tes3quest[] *Read-only*. A list of all available quest objects.
 --- @field quickSaveWhenResting boolean Controls if auto-save on resting or waiting is enabled. Corresponds to the "Auto-save when rest" option in the Options menu.
---- @field rechargingItems tes3iterator *Read-only*. A list of enchanted items that are recharging (type [`tes3rechargingItem`](https://mwse.github.io/MWSE/types/tes3rechargingItem/)). Items in the list may not all belong to the player.
+--- @field rechargingItems tes3rechargingItem[] *Read-only*. A list of enchanted items that are recharging. Items in the list may not all belong to the player.
 --- @field shaderWaterReflectTerrain boolean If pixel shader water reflection includes terrain. Not functional with MGE enabled.
 --- @field shaderWaterReflectUpdate number Period between reflection updates for pixel shader water. Not functional with MGE enabled.
 --- @field shadowCamera tes3worldControllerRenderCamera *Read-only*. The access to the camera used for shadows rendering.

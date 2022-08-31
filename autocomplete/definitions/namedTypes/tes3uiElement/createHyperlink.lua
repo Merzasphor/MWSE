@@ -11,7 +11,7 @@ Hyperlink-specific properties can be accessed through the `widget` property. The
 			{ name = "id", type = "string|number", description = "An identifier to help find this element later.", optional = true },
 			{ name = "text", type = "string", description = "The text to add to the hyperlink." },
 			{ name = "url", type = "string", description = "The URL to open when the text is clicked." },
-			{ name = "confirm", type = "boolean", default = true, description = "If true, a confirmation prompt will be shown before any URL is opened." },
+			{ name = "confirm", type = "boolean", optional = true, default = true, description = "If true, a confirmation prompt will be shown before any URL is opened." },
 		},
 	} },
 	returns = {

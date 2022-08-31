@@ -6,7 +6,7 @@ return {
 		type = "table",
 		tableParams = {
 			{ name = "reference", type = "tes3mobileActor|tes3reference|string", description = "The reference to open the contents of." },
-			{ name = "pickpocket", type = "boolean", default = false, description = "If true, the contents menu will open in the context of an attempted pickpocketing." },
+			{ name = "pickpocket", type = "boolean", optional = true, default = false, description = "If true, the contents menu will open in the context of an attempted pickpocketing." },
 		},
 	}},
 	returns = {

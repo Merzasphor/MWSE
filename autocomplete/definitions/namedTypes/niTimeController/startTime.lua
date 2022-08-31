@@ -1,5 +1,5 @@
 return {
 	type = "value",
-	description = [[No description.]],
+	description = [[The time at which the animation controller starts playing its animation.]],
 	valuetype = "number",
 }

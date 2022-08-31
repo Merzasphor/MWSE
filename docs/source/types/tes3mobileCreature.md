@@ -411,7 +411,7 @@ The actor's flee AI value.
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([tes3mobileActor](../../types/tes3mobileActor)[])
 
 ***
 
@@ -491,7 +491,7 @@ This is the time the actor can stay underwater without taking drowning damage, m
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([tes3mobileActor](../../types/tes3mobileActor)[])
 
 ***
 

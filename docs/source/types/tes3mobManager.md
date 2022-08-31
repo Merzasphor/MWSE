@@ -19,6 +19,30 @@ The gravity applied to all actors. Has a default value of `{0.0, 0.0, -627.2}`.
 
 ***
 
+### `mobCollisionGroup`
+
+*Read-only*. !!! warning
+	This part of the API isn't fully understood yet and thus is considered experimental. That means that there can be breaking changes requiring the code using this part of the API to be rewritten. The MWSE team will not make any effort to keep backward compatibility with the mods using experimental APIs.
+ Access to the collision group used by the game engine.
+
+**Returns**:
+
+* `result` ([niCollisionGroup](../../types/niCollisionGroup))
+
+***
+
+### `movingProps`
+
+*Read-only*. !!! warning
+	This part of the API isn't fully understood yet and thus is considered experimental. That means that there can be breaking changes requiring the code using this part of the API to be rewritten. The MWSE team will not make any effort to keep backward compatibility with the mods using experimental APIs.
+ 
+
+**Returns**:
+
+* `result` ([tes3reference](../../types/tes3reference)[])
+
+***
+
 ### `processManager`
 
 *Read-only*. Access to the process manager.

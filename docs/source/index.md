@@ -17,7 +17,7 @@ These extra functions allow modders to add features and behavior to scripts that
 
 ## Contributing
 
-The Morrowind Script Extender is open source software that welcomes contributions in the forms of ideas, bug fixes, documentation, and new features. There is a separate guide for documentation contributions found [here](https://github.com/MWSE/MWSE/tree/docs-contributions-guide/docs).
+The Morrowind Script Extender is open source software that welcomes contributions in the forms of ideas, bug fixes, documentation, and new features. There is a separate guide for documentation contributions found [here](https://github.com/MWSE/MWSE/tree/master/docs).
 
 ### Requirements
 

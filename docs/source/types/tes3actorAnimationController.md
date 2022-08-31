@@ -9,6 +9,136 @@ Works in conjuction with mobile AI to perform idle, movement, and attack animati
 
 ## Properties
 
+### `alphaProperty`
+
+The alpha property applied to the actor. Controls the opacity/opaqueness of the actor.
+
+**Returns**:
+
+* `result` ([niAlphaProperty](../../types/niAlphaProperty))
+
+***
+
+### `animationData`
+
+Access to the actor's animation data.
+
+**Returns**:
+
+* `result` ([tes3animationData](../../types/tes3animationData))
+
+***
+
+### `animGroupIdle`
+
+The actor's idle animation. Maps to values in [`tes3.animationGroup`](https://mwse.github.io/MWSE/references/animation-groups/) table.
+
+**Returns**:
+
+* `result` (integer)
+
+***
+
+### `animGroupIdle2`
+
+
+
+**Returns**:
+
+* `result` (integer)
+
+***
+
+### `animGroupMovement`
+
+The actor's movement animations group. Maps to values in [`tes3.animationGroup`](https://mwse.github.io/MWSE/references/animation-groups/) table.
+
+**Returns**:
+
+* `result` (integer)
+
+***
+
+### `attachTiming`
+
+
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `attackFollowTiming`
+
+
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `groundPlaneRotation`
+
+The rotation of the actor around the up-down axis. When converted to euler angles, this axis corresponds to the z axis. The rotation range is [-PI, PI], where rotation of 0 corresponds to the game north.
+
+**Returns**:
+
+* `result` ([tes3matrix33](../../types/tes3matrix33))
+
+***
+
+### `hitTiming`
+
+This it the time of the actor's attack animation in their `.kf`, played during the hit phase for fully charged attack. It's updated for the attacks from different directions.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `materialProperty`
+
+The material property applied to the actor.
+
+**Returns**:
+
+* `result` ([niMaterialProperty](../../types/niMaterialProperty))
+
+***
+
+### `maxAttackTiming`
+
+This it the time of the actor's attack animation in their `.kf` file, when the attack animation is fully charged. It's updated for the attacks from different directions.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `minAttackTiming`
+
+This it the time of the actor's attack animation in their `.kf` file, at the earliest point the attack animation can end (when the attack button is just clicked and released). It's updated for the attacks from different directions.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `minHitTiming`
+
+This it the time of the actor's attack animation in their `.kf`, played during the hit phase for the minimally charged attack. It's updated for the attacks from different directions.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
 ### `mobile`
 
 *Read-only*. The mobile actor that this controller is responsible for.
@@ -19,9 +149,89 @@ Works in conjuction with mobile AI to perform idle, movement, and attack animati
 
 ***
 
+### `patchedOverrideState`
+
+
+
+**Returns**:
+
+* `result` (integer)
+
+***
+
+### `remainingBlockTime`
+
+
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `shouldJump`
+
+
+
+**Returns**:
+
+* `result` (integer)
+
+***
+
+### `speedMultiplier`
+
+This is the speed multiplier of the current animation. For example, it is used by the game engine to scale the speed of the turning animation whith the speed at which the player is rotating the view with the mouse. In that case the value range is [0.0, 1.5].
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `startTime`
+
+This it the starting time of the actor's attack animation in their `.kf` file. It's updated for the attacks from different directions.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `strikeWhenAttackSwingReaches`
+
+For NPCs this corresponds to how long the weapon was charged by the NPC after the attack landed. The value is in range [0.0, 1.0]. This property isn't used for the player character.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `vertexColorProperty`
+
+The vertex color property applied to the actor.
+
+**Returns**:
+
+* `result` ([niVertexColorProperty](../../types/niVertexColorProperty))
+
+***
+
+### `verticalRotation`
+
+Only used for the player. When converted to euler angles, the rotation about x axis will correspond to the rotation obtained from looking up and down. The rotations around other axes are always zero. In degrees the rotations range from -89.95 degrees for looking up, and 89.95 for looking maximally down.
+
+**Returns**:
+
+* `result` ([tes3matrix33](../../types/tes3matrix33))
+
+***
+
 ### `weaponSpeed`
 
-*Read-only*. The animation speed scaling of the weapon animations. This includes all weapon related idle, attack, and ready/unready animations. This value is reset at the starting frame of each weapon strike, normally equal to the the weapon speed. Therefore if you use this it should be changed after every strike, and reset after. Ready/unready actions do not change speed, but are affected by speed.
+The animation speed scaling of the weapon animations. This includes all weapon related idle, attack, and ready/unready animations. This value is reset at the starting frame of each weapon strike, normally equal to the the weapon speed. Therefore if you use this it should be changed after every strike, and reset after. Ready/unready actions do not change speed, but are affected by speed.
 
 Use by getting the animation controller from the mobile. e.g. `mobile.animationController.weaponSpeed = 0.5`
 

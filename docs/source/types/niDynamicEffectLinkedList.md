@@ -11,7 +11,7 @@ A linked list of dynamic effects.
 
 ### `data`
 
-The current dynamic effect in the linked list.
+*Read-only*. The current dynamic effect in the linked list.
 
 **Returns**:
 
@@ -21,7 +21,7 @@ The current dynamic effect in the linked list.
 
 ### `next`
 
-The next dynamic effect in the linked list.
+*Read-only*. The next dynamic effect in the linked list.
 
 **Returns**:
 

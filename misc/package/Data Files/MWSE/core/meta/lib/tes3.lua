@@ -379,7 +379,7 @@ function tes3.addTopic(params) end
 --- 
 --- `reference`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string — The reference to attach the sound to.
 --- 
---- `mixChannel`: number? — *Default*: `tes3.soundMix.effects`. The channel to base volume off of. Maps to [`tes3.soundMix`](https://mwse.github.io/MWSE/references/sound-mix-types/) constants.
+--- `mixChannel`: integer? — *Default*: `tes3.soundMix.effects`. The channel to base volume off of. Maps to [`tes3.soundMix`](https://mwse.github.io/MWSE/references/sound-mix-types/) constants.
 --- 
 --- `volume`: number? — *Default*: `1.0`. A value between 0.0 and 1.0 to scale the volume off of.
 function tes3.adjustSoundVolume(params) end
@@ -388,7 +388,7 @@ function tes3.adjustSoundVolume(params) end
 --- @class tes3.adjustSoundVolume.params
 --- @field sound tes3sound|string The sound object, or id of the sound to look for.
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string The reference to attach the sound to.
---- @field mixChannel number? *Default*: `tes3.soundMix.effects`. The channel to base volume off of. Maps to [`tes3.soundMix`](https://mwse.github.io/MWSE/references/sound-mix-types/) constants.
+--- @field mixChannel integer? *Default*: `tes3.soundMix.effects`. The channel to base volume off of. Maps to [`tes3.soundMix`](https://mwse.github.io/MWSE/references/sound-mix-types/) constants.
 --- @field volume number? *Default*: `1.0`. A value between 0.0 and 1.0 to scale the volume off of.
 
 --- Advances the game time. Can be used to simulate player resting.
@@ -496,7 +496,7 @@ function tes3.calculateChargeUse(params) end
 --- 
 --- `itemData`: tes3itemData? — *Optional*. If `bartering` or `repairing`, the item data passed to the [calcBarterPrice](https://mwse.github.io/MWSE/events/calcBarterPrice) or [calcRepairPrice](https://mwse.github.io/MWSE/events/calcRepairPrice) event.
 --- 
---- `skill`: number — If `training`, the skill ID passed to the [calcTrainingPrice](https://mwse.github.io/MWSE/events/calcTrainingPrice) event.
+--- `skill`: number — If `training`, the skill ID passed to the [calcTrainingPrice](https://mwse.github.io/MWSE/events/calcTrainingPrice) event. Maps to value in [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) table.
 --- @return number price The calculated price, filtered by events.
 function tes3.calculatePrice(params) end
 
@@ -512,7 +512,7 @@ function tes3.calculatePrice(params) end
 --- @field training boolean? *Default*: `false`. If `true`, a [calcTrainingPrice](https://mwse.github.io/MWSE/events/calcTrainingPrice) event will be triggered, passing the given `skill` ID.
 --- @field count number? *Default*: `1`. If `bartering`, the count passed to the [calcBarterPrice](https://mwse.github.io/MWSE/events/calcBarterPrice) event.
 --- @field itemData tes3itemData? *Optional*. If `bartering` or `repairing`, the item data passed to the [calcBarterPrice](https://mwse.github.io/MWSE/events/calcBarterPrice) or [calcRepairPrice](https://mwse.github.io/MWSE/events/calcRepairPrice) event.
---- @field skill number If `training`, the skill ID passed to the [calcTrainingPrice](https://mwse.github.io/MWSE/events/calcTrainingPrice) event.
+--- @field skill number If `training`, the skill ID passed to the [calcTrainingPrice](https://mwse.github.io/MWSE/events/calcTrainingPrice) event. Maps to value in [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) table.
 
 --- Returns `true` if the `target` actor can cast spells, otherwise returns `false`.
 --- @param params tes3.canCastSpells.params This table accepts the following values:
@@ -1575,7 +1575,7 @@ function tes3.makeSafeObjectHandle(object) end
 function tes3.menuMode() end
 
 --- Displays a message box. This may be a simple toast-style message, or a box with choice buttons.
---- @param messageOrParams string|tes3.messageBox.params This table accepts the following values:
+--- @param messageOrParams string|tes3.messageBox.messageOrParams This table accepts the following values:
 --- 
 --- `message`: string — No description yet available.
 --- 
@@ -1591,7 +1591,7 @@ function tes3.menuMode() end
 function tes3.messageBox(messageOrParams, ...) end
 
 ---Table parameter definitions for `tes3.messageBox`.
---- @class tes3.messageBox.params
+--- @class tes3.messageBox.messageOrParams
 --- @field message string No description yet available.
 --- @field buttons string[]? *Optional*. An array of strings to use for buttons.
 --- @field callback function No description yet available.
@@ -1803,7 +1803,7 @@ function tes3.random(seed) end
 --- 
 --- `findAll`: boolean? — *Default*: `false`. If true, the ray test won't stop after the first result.
 --- 
---- `maxDistance`: number? — *Optional*. The maximum distance that the test will run.
+--- `maxDistance`: number? — *Default*: `0`. The maximum distance that the test will run.
 --- 
 --- `sort`: boolean? — *Default*: `true`. If true, the results will be sorted by distance from the origin position.
 --- 
@@ -1815,7 +1815,7 @@ function tes3.random(seed) end
 --- 
 --- `observeAppCullFlag`: boolean? — *Default*: `true`. Ignore intersections with culled (hidden) models.
 --- 
---- `root`: niBillboardNode|niCollisionSwitch|niNode|niSwitchNode|nil — *Default*: `tes3.game.worldRoot`. Node pointer to node scene.
+--- `root`: niBillboardNode|niCollisionSwitch|niNode|niSwitchNode|nil — *Default*: `tes3.game.worldRoot`. Node pointer to node scene. To reduce the computational work, consider passing only a smaller subset of the `worldRoot` to improve performance. The typical nodes you can pass here are: [`tes3.game.worldLandscapeRoot`](https://mwse.github.io/MWSE/types/tes3game/#worldLandscapeRoot), [`worldObjectRoot`](https://mwse.github.io/MWSE/types/tes3game/#worldObjectRoot), and [`worldPickRoot`](https://mwse.github.io/MWSE/types/tes3game/#worldPickRoot).
 --- 
 --- `returnColor`: boolean? — *Default*: `false`. Calculate and return the vertex color at intersections.
 --- 
@@ -1825,8 +1825,8 @@ function tes3.random(seed) end
 --- 
 --- `returnTexture`: boolean? — *Default*: `false`. Calculate and return the texture coordinate at intersections.
 --- 
---- `ignore`: tes3reference[]|niBillboardNode[]|niCollisionSwitch[]|niNode[]|niSwitchNode[]|nil — *Optional*. An array of references and/or scene graph nodes to cull from the result(s).
---- @return niPickRecord|niPickRecord[] result No description yet available.
+--- `ignore`: table<integer?, niBillboardNode|niCollisionSwitch|niNode|niSwitchNode|tes3reference|nil> — *Optional*. An array of references and/or scene graph nodes to cull from the result(s).
+--- @return niPickRecord|niPickRecord[]|nil result No description yet available.
 function tes3.rayTest(params) end
 
 ---Table parameter definitions for `tes3.rayTest`.
@@ -1834,18 +1834,18 @@ function tes3.rayTest(params) end
 --- @field position tes3vector3|table Position of the ray origin.
 --- @field direction tes3vector3|table Direction of the ray. Does not have to be unit length.
 --- @field findAll boolean? *Default*: `false`. If true, the ray test won't stop after the first result.
---- @field maxDistance number? *Optional*. The maximum distance that the test will run.
+--- @field maxDistance number? *Default*: `0`. The maximum distance that the test will run.
 --- @field sort boolean? *Default*: `true`. If true, the results will be sorted by distance from the origin position.
 --- @field useModelBounds boolean? *Default*: `false`. If true, model bounds will be tested for intersection. Otherwise triangles will be used.
 --- @field useModelCoordinates boolean? *Default*: `false`. If true, model coordinates will be used instead of world coordinates.
 --- @field useBackTriangles boolean? *Default*: `false`. Include intersections with back-facing triangles.
 --- @field observeAppCullFlag boolean? *Default*: `true`. Ignore intersections with culled (hidden) models.
---- @field root niBillboardNode|niCollisionSwitch|niNode|niSwitchNode|nil *Default*: `tes3.game.worldRoot`. Node pointer to node scene.
+--- @field root niBillboardNode|niCollisionSwitch|niNode|niSwitchNode|nil *Default*: `tes3.game.worldRoot`. Node pointer to node scene. To reduce the computational work, consider passing only a smaller subset of the `worldRoot` to improve performance. The typical nodes you can pass here are: [`tes3.game.worldLandscapeRoot`](https://mwse.github.io/MWSE/types/tes3game/#worldLandscapeRoot), [`worldObjectRoot`](https://mwse.github.io/MWSE/types/tes3game/#worldObjectRoot), and [`worldPickRoot`](https://mwse.github.io/MWSE/types/tes3game/#worldPickRoot).
 --- @field returnColor boolean? *Default*: `false`. Calculate and return the vertex color at intersections.
 --- @field returnNormal boolean? *Default*: `false`. Calculate and return the vertex normal at intersections.
 --- @field returnSmoothNormal boolean? *Default*: `false`. Use normal interpolation for calculating vertex normals.
 --- @field returnTexture boolean? *Default*: `false`. Calculate and return the texture coordinate at intersections.
---- @field ignore tes3reference[]|niBillboardNode[]|niCollisionSwitch[]|niNode[]|niSwitchNode[]|nil *Optional*. An array of references and/or scene graph nodes to cull from the result(s).
+--- @field ignore table<integer?, niBillboardNode|niCollisionSwitch|niNode|niSwitchNode|tes3reference|nil> *Optional*. An array of references and/or scene graph nodes to cull from the result(s).
 
 --- Simulates releasing a keyboard key.
 --- @param keyCode number Maps to values in [`tes3.scanCode`](https://mwse.github.io/MWSE/references/scan-codes/) namespace.

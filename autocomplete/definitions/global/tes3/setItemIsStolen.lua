@@ -7,7 +7,7 @@ return {
 		tableParams = {
 			{ name = "item", type = "tes3item", description = "The item whose stolen flag to modify." },
 			{ name = "from", type = "tes3creature|tes3npc|tes3faction|nil", description = "Who or what to set/clear the stolen state for. If not provided, the stolen state can be cleared (but not set) for all objects." },
-			{ name = "stolen", type = "boolean", default = true, description = "If this parameter is set to true, the item will be flagged as stolen. Otherwise, the item's stolen flag will be removed." },
+			{ name = "stolen", type = "boolean", optional = true, default = true, description = "If this parameter is set to true, the item will be flagged as stolen. Otherwise, the item's stolen flag will be removed." },
 		},
 	}},
 }

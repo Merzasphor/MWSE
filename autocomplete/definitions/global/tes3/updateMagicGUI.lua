@@ -6,8 +6,8 @@ return {
 		type = "table",
 		tableParams = {
 			{ name = "reference", type = "tes3reference|tes3mobileActor|string", description = "The reference to update GUI elements for." },
-			{ name = "updateSpells", type = "boolean", default = true, description = "Determines if the spell and power lists are refreshed." },
-			{ name = "updateEnchantments", type = "boolean", default = true, description = "Determines if the enchanted items list is refreshed." },
+			{ name = "updateSpells", type = "boolean", optional = true, default = true, description = "Determines if the spell and power lists are refreshed." },
+			{ name = "updateEnchantments", type = "boolean", optional = true, default = true, description = "Determines if the enchanted items list is refreshed." },
 		},
 	}},
 }

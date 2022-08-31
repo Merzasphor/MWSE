@@ -10,7 +10,7 @@ return {
 			{ name = "destination", type = "tes3vector3|table", optional = true },
 			{ name = "duration", type = "number", optional = true, default = 0, description = "How long the follower will follow, in hours." },
 			{ name = "cell", type = "tes3cell|string", optional = true },
-			{ name = "reset", type = "boolean", default = true },
+			{ name = "reset", type = "boolean", optional = true, default = true },
 		},
 	}},
 }

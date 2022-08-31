@@ -126,13 +126,16 @@ local function writeFunction(package, file, namespaceOverride)
 		file:write("--- @deprecated\n")
 	end
 
+	local functionHasTableArguments = false
+
 	for _, argument in ipairs(package.arguments or {}) do
 		local type = argument.type
 		local description = common.getDescriptionString(argument)
 		if (argument.tableParams) then
+			functionHasTableArguments = true
 			local types = type:split("|")
 			table.removevalue(types, "table")
-			table.insert(types, package.namespace .. ".params")
+			table.insert(types, package.namespace .. "." .. argument.name)
 
 			type = table.concat(types, "|")
 			description = "This table accepts the following values:"
@@ -153,13 +156,18 @@ local function writeFunction(package, file, namespaceOverride)
 
 	file:write(string.format("function %s(%s) end\n\n", namespaceOverride or package.namespace, table.concat(getParamNames(package), ", ")))
 
-	if (package.arguments and #package.arguments > 0 and package.arguments[1].tableParams) then
+	if (functionHasTableArguments) then
 		file:write(string.format("---Table parameter definitions for `%s`.\n", package.namespace))
-		file:write(string.format("--- @class %s.params\n", package.namespace))
-		for _, param in ipairs(package.arguments[1].tableParams) do
-			file:write(string.format("--- @field %s %s %s\n", param.name, getAllPossibleVariationsOfType(param.type, param), formatLineBreaks(common.getDescriptionString(param))))
+		for _, argument in ipairs(package.arguments or {}) do
+			if (argument.tableParams) then
+				file:write(string.format("--- @class %s.%s\n", package.namespace, argument.name))
+
+				for _, param in ipairs(argument.tableParams) do
+					file:write(string.format("--- @field %s %s %s\n", param.name, getAllPossibleVariationsOfType(param.type, param), formatLineBreaks(common.getDescriptionString(param))))
+				end
+				file:write("\n")
+			end
 		end
-		file:write("\n")
 	end
 end
 
@@ -239,6 +247,19 @@ local function build(package)
 		file:write(string.format("--- @class %sEventData\n", package.key))
 	elseif (package.type == "function") then
 		writeFunction(package, file)
+	end
+
+	-- Write out operator overloads
+	for _, operator in ipairs(package.operators or {}) do
+		for _, overload in ipairs(operator.overloads) do
+			-- Handle unary operators
+			local rightSideType = ""
+			if overload.rightType then
+				rightSideType = string.format("(%s)", overload.rightType)
+			end
+
+			file:write(string.format("--- @operator %s%s: %s\n", operator.key, rightSideType, overload.resultType))
+		end
 	end
 
 	-- Write out fields.

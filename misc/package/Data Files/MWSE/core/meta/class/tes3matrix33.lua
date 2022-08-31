@@ -4,8 +4,13 @@
 --- @meta
 --- @diagnostic disable:undefined-doc-name
 
---- A 3 by 3 matrix. You can perform following arithmetic with this type: `+`, `-`, `*`, and `==`.
+--- A 3 by 3 matrix. You can perform following arithmetic with this type: `==`.
 --- @class tes3matrix33
+--- @operator add(tes3matrix33): tes3matrix33
+--- @operator mul(tes3matrix33): tes3matrix33
+--- @operator mul(tes3vector3): tes3vector3
+--- @operator mul(number): tes3matrix33
+--- @operator sub(tes3matrix33): tes3matrix33
 --- @field x tes3vector3 The first row of the matrix.
 --- @field y tes3vector3 The second row of the matrix.
 --- @field z tes3vector3 The third row of the matrix.
@@ -80,16 +85,16 @@ function tes3matrix33:toQuaternion() end
 --- @param z number No description yet available.
 function tes3matrix33:toRotation(angle, x, y, z) end
 
---- Fills this matrix with the values needed to rotate a 3-by-1 vector or 3-by-N matrix of vectors around the X axis by `x` degrees. For the rotation matrix A and vector v, the rotated vector is given by A * v.
---- @param x number No description yet available.
+--- Fills this matrix with the values needed to rotate a 3-by-1 vector or 3-by-N matrix of vectors around the X axis by `x` radians. For the rotation matrix A and vector v, the rotated vector is given by A * v.
+--- @param x number In radians.
 function tes3matrix33:toRotationX(x) end
 
---- Fills this matrix with the values needed to rotate a 3-by-1 vector or 3-by-N matrix of vectors around the Y axis by `y` degrees. For the rotation matrix A and vector v, the rotated vector is given by A * v.
---- @param y number No description yet available.
+--- Fills this matrix with the values needed to rotate a 3-by-1 vector or 3-by-N matrix of vectors around the Y axis by `y` radians. For the rotation matrix A and vector v, the rotated vector is given by A * v.
+--- @param y number In radians.
 function tes3matrix33:toRotationY(y) end
 
---- Fills this matrix with the values needed to rotate a 3-by-1 vector or 3-by-N matrix of vectors around the Z axis by `x` degrees. For the rotation matrix A and vector v, the rotated vector is given by A * v.
---- @param z number No description yet available.
+--- Fills this matrix with the values needed to rotate a 3-by-1 vector or 3-by-N matrix of vectors around the Z axis by `z` radians. For the rotation matrix A and vector v, the rotated vector is given by A * v.
+--- @param z number In radians.
 function tes3matrix33:toRotationZ(z) end
 
 --- Zeroes out all values in the matrix.

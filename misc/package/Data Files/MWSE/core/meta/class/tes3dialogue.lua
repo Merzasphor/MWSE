@@ -6,7 +6,7 @@
 
 --- A parent-level dialogue, such as a topic, voice, greeting, persuasion response, or journal.
 --- @class tes3dialogue : tes3baseObject
---- @field info tes3iterator *Read-only*. A collection of individual entries in the dialogue.
+--- @field info tes3dialogueInfo[] *Read-only*. A collection of individual entries in the dialogue.
 --- @field journalIndex number|nil For journal dialogues, the currently active journal index.
 --- @field type number *Read-only*. The type of the dialogue. Maps to values in [`tes3.dialogueType`](https://mwse.github.io/MWSE/references/dialogue-types/) namespace.
 tes3dialogue = {}
