@@ -6,7 +6,8 @@
 
 --- !!! warning
 --- 	This part of the API isn't fully understood yet and thus is considered experimental. That means that there can be breaking changes requiring the code using this part of the API to be rewritten. The MWSE team will not make any effort to keep backward compatibility with the mods using experimental APIs.
----  ### Collision Basics:
+---  
+--- ### Collision Basics:
 --- 
 --- Collidion detection means the detecting of the intersection of two objects. The collision detection is split in narrow and broad phase. The during narrow phase the actuall collision intersection test are done. The broad phase it is determined if two object should be tested for a potential collision. For example, there is no need to check for collision between two static, non-movable objects.
 --- 

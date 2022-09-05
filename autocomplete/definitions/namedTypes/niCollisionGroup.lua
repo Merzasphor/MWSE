@@ -1,6 +1,8 @@
 return {
 	type = "class",
-	description = [[### Collision Basics:
+	description = [[
+
+### Collision Basics:
 
 Collidion detection means the detecting of the intersection of two objects. The collision detection is split in narrow and broad phase. The during narrow phase the actuall collision intersection test are done. The broad phase it is determined if two object should be tested for a potential collision. For example, there is no need to check for collision between two static, non-movable objects.
 

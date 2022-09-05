@@ -1,11 +1,11 @@
 return {
 	type = "function",
-	description = [[This function is used to iterate over values and its subtables in the table.
+	description = [[This function is used to iterate over a graph-like table. You can specify the key of the subtable that contains the child nodes.
 
 Each "node" is an object with a children table of other "nodes", each of which might have their own children. For example, a sceneNode is made up of niNodes, and each niNodes can have a list of niNode children. This is best used for recursive data structures like UI elements and sceneNodes etc.]],
 	arguments = {
 		{ name = "t", type = "table", description = "A table to transverse." },
-		{ name = "k", type = "unknown", optional = "true", default = "children", description = "The key of a table inside t object." },
+		{ name = "k", type = "string", optional = "true", default = "children", description = "The subtable key." },
 	},
 	valuetype = "iterator",
 	examples = {

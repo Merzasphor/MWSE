@@ -1,6 +1,6 @@
 return {
 	type = "method",
-	description = [[Creates a text label. It defaults to displaying all text on a single line. To get a multi-line label, set `wrap_text` to `true`. The element is created with `autoWidth` and `autoHeight` turned on.]],
+	description = [[Creates a text label. It defaults to displaying all text on a single line. To get a multi-line label, set `wrapText` to `true`. The element is created with `autoWidth` and `autoHeight` turned on.]],
 	arguments = { {
 		name = "params",
 		type = "table",

@@ -9,6 +9,7 @@
 --- @field testFunction integer The Z-buffer test function.
 --- 
 --- Note that "less than" means closer to the camera and "greater than" means further from the camera, regardless of the low-level hardware representation of Z values.
+--- 
 --- Value | Mode                | Description
 --- ----- | ------------------- | -----------------
 --- 0     | ZCOMP_ALWAYS        | Test will allways succeed. The Z Buffer value is ignored.
@@ -19,9 +20,11 @@
 --- 5     | ZCOMP_NOT_EQUAL     | Test will succeed if the Z value of the pixel to be drawn is NOT equal to the value of the previously drawn pixel.
 --- 6     | ZCOMP_GREATER_EQUAL | Opposite of TEST_LESS_EQUAL.
 --- 7     | ZCOMP_NEVER         | Test will allways return false. Nothing is drawn at all.
+--- 
+--- 
 niZBufferProperty = {}
 
 --- Creates a new niVertexColorProperty with `lighting` set to `LIGHT_MODE_EMI_AMB_DIF` and `source` set to `VERT_MODE_SRC_IGNORE`.
---- @return niVertexColorProperty property No description yet available.
+--- @return niZBufferProperty property No description yet available.
 function niZBufferProperty.new() end
 

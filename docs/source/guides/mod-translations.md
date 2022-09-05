@@ -86,14 +86,14 @@ A translation value is typically a string, but it can also have support for diff
 !!! warning "Dots in Translation Keys"
 	When using dots to break apart translation keys, be careful of not to use a category as a value. For example, the following will create an error:
 	```lua
-	return = {
+	return {
 		["mcm.component.console"] = "Enable console component?",
 		["mcm.component.console.description"] = "It's really cool, so you should.",
 	}
 	```
 	Instead, use something like:
 	```lua
-	return = {
+	return {
 		["mcm.component.console.label"] = "Enable console component?",
 		["mcm.component.console.description"] = "It's really cool, so you should.",
 	}
@@ -106,7 +106,7 @@ i18n supports the [unicode.org plural rules](http://cldr.unicode.org/index/cldr-
 !!! example "Pluralization"
 	**i18n\\eng.lua**:
 	```lua linenums="1"
-	return = {
+	return {
 		itemCountNotification = {
 			zero = "You have no %{item}s.",
 			one = "You have 1 %{item}.",
@@ -137,7 +137,7 @@ Values can be passed to translation strings in a few different ways:
 !!! example "Named Style"
 	**i18n\\eng.lua**:
 	```lua linenums="1"
-	return = {
+	return {
 		itemCountNotification = {
 			zero = "You have no %{item}s.",
 			one = "You have 1 %{item}.",
@@ -153,7 +153,7 @@ Values can be passed to translation strings in a few different ways:
 !!! example "`string.format` Style"
 	**i18n\\eng.lua**:
 	```lua linenums="1"
-	return = {
+	return {
 		itemCountNotification = {
 			zero = "You have no %ss.",
 			one = "You have 1 %s.",
@@ -173,7 +173,7 @@ Values can be passed to translation strings in a few different ways:
 !!! example "Named with `string.format` Style"
 	**i18n\\eng.lua**:
 	```lua linenums="1"
-	return = {
+	return {
 		itemCountNotification = {
 			zero = "You have no %<item>ss.",
 			one = "You have 1 %<item>d.",
