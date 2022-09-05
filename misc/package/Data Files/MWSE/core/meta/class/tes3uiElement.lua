@@ -27,7 +27,8 @@
 --- @field borderRight integer The left border size in pixels. When this is set to `-1`, the `borderAllSides` setting is used for this side instead.
 --- @field borderTop integer The top border size in pixels. When this is set to `-1`, the `borderAllSides` setting is used for this side instead.
 --- @field childAlignX number Sets alignment of child elements inside its parent, though it only works in specific conditions. 0.0 = left/top edge touches left/top edge of parent, 0.5 = centred, 1.0 = right/bottom edge touches right/bottom edge of parent. For negative values, there is a special case behaviour: all children but the last will be left-aligned/top-aligned, the last child will be right-aligned/bottom-aligned.
---- 	
+--- 
+--- !!! important
 --- 	Child alignment only works if the element has proportional sizing (using widthProportional/heightProportional) and all children use non-proportional sizing (widthProportional and heightProportional are nil).
 --- @field childAlignY number See childAlignX.
 --- @field childOffsetX integer The view offset in pixels, applied to the position of child nodes. Used in scroll panes.
@@ -46,9 +47,10 @@
 --- @field height integer The element's height in pixels.
 --- @field heightProportional number Sets element dimensions using a proportional sizer. The sizer starts with the parent dimension in the flow direction, subtracts any fixed dimension children leaving the proportional sizer space. Each proportionally sized element then gets an equal division of the space, multiplied by this member. Values above 1.0 are permissible.
 --- 
---- 	Bug note: If widthProportional is used without heightProportional, an element may not respond to changes in parent size. It is recommended to set heightProportional, or have a fixed size sibling element if dynamic reflow is required.
+--- !!! bug
+--- 	If widthProportional is used without heightProportional, an element may not respond to changes in parent size. It is recommended to set heightProportional, or have a fixed size sibling element if dynamic reflow is required.
 --- 
---- 	Overrides fixed, minimum and maximum sizes unless this value is `nil` (default).
+--- Overrides fixed, minimum and maximum sizes unless this value is `nil` (default).
 --- @field id number *Read-only*. The element's ID.  The element can be later accessed by `ancestor:findChild(id)`. Note that multiple elements may have the same ID, such as subparts of a widget, or list items. Therefore, you may think of ids as an element class identifier.
 --- @field ignoreLayoutX boolean If `true`, the element's [`positionX`](https://mwse.github.io/MWSE/types/tes3uiElement/#positionx) can be modified and will not be affected by any layout restrictions imposed by the parent element. Incompatible with and will change the value of [`absolutePosAlignX`](https://mwse.github.io/MWSE/types/tes3uiElement/#absoluteposalignx).
 --- 	
@@ -78,7 +80,8 @@
 --- @field sceneNode niBillboardNode|niCollisionSwitch|niNode|niSwitchNode *Read-only*. Underlying access to the scene graph responsible for this element.
 --- @field text string The element's text. Text input can be read by accessing this property.
 --- 
---- 	tip: If your element's text is a number, you need to manually convert it to string using `tostring()`.
+--- !!! tip
+--- 	If your element's text is a number, you need to manually convert it to string using `tostring()`.
 --- @field texture niSourceTexture The underlying texture for the element. This assumes that the element is of an element type. Setting this value will change the element to an image type.
 --- @field type string *Read-only*. The type of content this `tes3uiElement` represents. This is an expanded set of the options available from the `contentType` property. Maps to values in [`tes3.uiElementType`](https://mwse.github.io/MWSE/references/tes3uiElement-types/).
 --- @field visible boolean Controls if the element is visible.
@@ -86,9 +89,10 @@
 --- @field width integer The element's width in pixels.
 --- @field widthProportional number Sets element dimensions using a proportional sizer. The sizer starts with the parent dimension in the flow direction, subtracts any fixed dimension children leaving the proportional sizer space. Each proportionally sized element then gets an equal division of the space, multiplied by this member. Values above 1.0 are permissible.
 --- 
---- 	Bug note: If widthProportional is used without heightProportional, an element may not respond to changes in parent size. It is recommended to set heightProportional, or have a fixed size sibling element if dynamic reflow is required.
+--- !!! bug
+--- 	If widthProportional is used without heightProportional, an element may not respond to changes in parent size. It is recommended to set heightProportional, or have a fixed size sibling element if dynamic reflow is required.
 --- 
---- 	Overrides fixed, minimum and maximum sizes unless this value is `nil` (default).
+--- Overrides fixed, minimum and maximum sizes unless this value is `nil` (default).
 --- @field wrapText boolean Controls text wrapping. Setting this to `true` will also set `heightProportional` to `1.0`, which is required for wrapping text to adjust to its container size.
 tes3uiElement = {}
 
@@ -265,7 +269,7 @@ function tes3uiElement:createImageButton(params) end
 --- @field over string The path to the mouse hover image. This path is relative to `Data Files`.
 --- @field pressed string The path to the mouse pressed image. This path is relative to `Data Files`.
 
---- Creates a text label. It defaults to displaying all text on a single line. To get a multi-line label, set `wrap_text` to `true`. The element is created with `autoWidth` and `autoHeight` turned on.
+--- Creates a text label. It defaults to displaying all text on a single line. To get a multi-line label, set `wrapText` to `true`. The element is created with `autoWidth` and `autoHeight` turned on.
 --- @param params tes3uiElement.createLabel.params? This table accepts the following values:
 --- 
 --- `id`: string|number|nil — *Optional*. An identifier to help find this element later.
@@ -458,7 +462,7 @@ function tes3uiElement:forwardEvent(id) end
 
 --- Returns the descendant element that creation functions used on this element will place children into, or the calling element if there is no specific descendant for children.
 --- 
---- 	Some widgets like ScrollPanes are built of multiple layers of elements. When an element is created in a complex widget, it is automatically placed as a child of a content element, but other functions do not access this content element directly. This function finds this content container for any element, so that changing layout and accessing children is possible. For simple elements, the calling element will be returned so that there is always a valid container element.
+--- Some widgets like ScrollPanes are built of multiple layers of elements. When an element is created in a complex widget, it is automatically placed as a child of a content element, but other functions do not access this content element directly. This function finds this content container for any element, so that changing layout and accessing children is possible. For simple elements, the calling element will be returned so that there is always a valid container element.
 --- @return tes3uiElement result No description yet available.
 function tes3uiElement:getContentElement() end
 
@@ -516,7 +520,7 @@ function tes3uiElement:loadMenuPosition() end
 function tes3uiElement:move(to) end
 
 --- Sets an `event` handler, which can add or override an existing event handler. The use of `registerBefore` or `registerAfter` is recommended if you do not want to replace the existing event handler. The eventID can be a standard `event` name, or an event specific to an element class. These can be accessed through [`tes3.uiEvent`](https://mwse.github.io/MWSE/references/ui-events/) for convenience. The callback receives an argument with the event data. See below for details.
---- 	
+--- 
 --- The original Morrowind callback is captured and can be invoked with the `forwardEvent` method on the event argument. If there is an existing Lua callback, it is replaced.
 --- 
 --- 	Standard events:
@@ -570,19 +574,19 @@ function tes3uiElement:move(to) end
 --- Event forwarding
 --- -------------------------------------------------------------------------------
 --- 
---- The original Morrowind event handler is saved when you first register an event. It may be optionally invoked with the `forwardEvent` method.  Note that handler may or may not destroy the event widget or the menu, so you should know how it behaves before accessing any elements after a callback. 
+--- The original Morrowind event handler is saved when you first register an event. It may be optionally invoked with the `forwardEvent` method.  Note that handler may or may not destroy the event widget or the menu, so you should know how it behaves before accessing any elements after a callback.
 --- 
 --- **Example**
+--- ```Lua
+--- local function onClick(e)
+--- 	-- pre-event code
+--- 	e.source:forwardEvent(e)
+--- 	-- post-event code
+--- end
 --- 
---- 	local function onClick(e)
---- 		-- pre-event code
---- 		e.source:forwardEvent(e)
---- 		-- post-event code
---- 	end
---- 	
---- 	local button = menu:findChild("MenuExample_Ok")
---- 	button:register("mouseClick", onClick)
---- 
+--- local button = menu:findChild("MenuExample_Ok")
+--- button:register("mouseClick", onClick)
+--- ```
 --- 
 --- Event handler
 --- -------------------------------------------------------------------------------
@@ -592,26 +596,26 @@ function tes3uiElement:move(to) end
 --- 	`boolean`_ eventHandler(**EventData** e)
 --- 		Returns: `optional`
 --- 			Returning `false` may cancel an interaction for certain events. e.g. unfocus
---- 	
+--- 
 --- 		EventData:
 --- 			**source** (`Element`_)
 --- 				The source element of the event.
---- 			
+--- 
 --- 			**id** (`number`_)
 --- 				The numeric id of the event type.
---- 		
+--- 
 --- 			**widget** (`Element`_)
 --- 				The widget element that the source belongs to, if the element is a sub-part of a widget. May not be accurate if the element is not a sub-part.
---- 			
+--- 
 --- 			**data0** (`number`_)
 --- 				..
---- 				
+--- 
 --- 			**data1** (`number`_)
 --- 				Event-specific raw data values. For mouse events, these are the screen X and Y coordinates of the pointer. For keyboard events, data0 is the `scan code`_.
---- 			
+--- 
 --- 			**relativeX** (`number`_)
 --- 				..
---- 				
+--- 
 --- 			**relativeY** (`number`_)
 --- 				For mouse events only. X and Y coordinates of the pointer relative to the top-left of the element.
 --- @param eventID string The event id. Maps to values in [`tes3.uiEvent`](https://mwse.github.io/MWSE/references/ui-events/).

@@ -1,7 +1,7 @@
 return {
 	type = "method",
 	description = [[Sets an `event` handler, which can add or override an existing event handler. The use of `registerBefore` or `registerAfter` is recommended if you do not want to replace the existing event handler. The eventID can be a standard `event` name, or an event specific to an element class. These can be accessed through [`tes3.uiEvent`](https://mwse.github.io/MWSE/references/ui-events/) for convenience. The callback receives an argument with the event data. See below for details.
-	
+
 The original Morrowind callback is captured and can be invoked with the `forwardEvent` method on the event argument. If there is an existing Lua callback, it is replaced.
 
 	Standard events:
@@ -55,19 +55,19 @@ The original Morrowind callback is captured and can be invoked with the `forward
 Event forwarding
 -------------------------------------------------------------------------------
 
-The original Morrowind event handler is saved when you first register an event. It may be optionally invoked with the `forwardEvent` method.  Note that handler may or may not destroy the event widget or the menu, so you should know how it behaves before accessing any elements after a callback. 
+The original Morrowind event handler is saved when you first register an event. It may be optionally invoked with the `forwardEvent` method.  Note that handler may or may not destroy the event widget or the menu, so you should know how it behaves before accessing any elements after a callback.
 
 **Example**
+```Lua
+local function onClick(e)
+	-- pre-event code
+	e.source:forwardEvent(e)
+	-- post-event code
+end
 
-	local function onClick(e)
-		-- pre-event code
-		e.source:forwardEvent(e)
-		-- post-event code
-	end
-	
-	local button = menu:findChild("MenuExample_Ok")
-	button:register("mouseClick", onClick)
-
+local button = menu:findChild("MenuExample_Ok")
+button:register("mouseClick", onClick)
+```
 
 Event handler
 -------------------------------------------------------------------------------
@@ -77,26 +77,26 @@ The standard type signature for events.
 	`boolean`_ eventHandler(**EventData** e)
 		Returns: `optional`
 			Returning `false` may cancel an interaction for certain events. e.g. unfocus
-	
+
 		EventData:
 			**source** (`Element`_)
 				The source element of the event.
-			
+
 			**id** (`number`_)
 				The numeric id of the event type.
-		
+
 			**widget** (`Element`_)
 				The widget element that the source belongs to, if the element is a sub-part of a widget. May not be accurate if the element is not a sub-part.
-			
+
 			**data0** (`number`_)
 				..
-				
+
 			**data1** (`number`_)
 				Event-specific raw data values. For mouse events, these are the screen X and Y coordinates of the pointer. For keyboard events, data0 is the `scan code`_.
-			
+
 			**relativeX** (`number`_)
 				..
-				
+
 			**relativeY** (`number`_)
 				For mouse events only. X and Y coordinates of the pointer relative to the top-left of the element.]],
 	arguments = {

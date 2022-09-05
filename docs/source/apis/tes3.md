@@ -2364,7 +2364,7 @@ local script = tes3.getScript(id)
 
 ### `tes3.getSimulationTimestamp`
 
-Returns a UNIX-style timestamp based on in-world simulation time since the start of the era.
+Returns a UNIX-style timestamp based on in-world simulation time since the start of the era, in hours.
 
 ```lua
 local timestamp = tes3.getSimulationTimestamp()

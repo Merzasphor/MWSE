@@ -1303,7 +1303,7 @@ function tes3.getRegion(useDoors) end
 --- @return tes3script script No description yet available.
 function tes3.getScript(id) end
 
---- Returns a UNIX-style timestamp based on in-world simulation time since the start of the era.
+--- Returns a UNIX-style timestamp based on in-world simulation time since the start of the era, in hours.
 --- @return number timestamp No description yet available.
 function tes3.getSimulationTimestamp() end
 

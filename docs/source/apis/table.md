@@ -319,7 +319,7 @@ local result = table.size(t)
 
 ### `table.traverse`
 
-This function is used to iterate over values and its subtables in the table.
+This function is used to iterate over a graph-like table. You can specify the key of the subtable that contains the child nodes.
 
 Each "node" is an object with a children table of other "nodes", each of which might have their own children. For example, a sceneNode is made up of niNodes, and each niNodes can have a list of niNode children. This is best used for recursive data structures like UI elements and sceneNodes etc.
 
@@ -330,7 +330,7 @@ local result = table.traverse(t, k)
 **Parameters**:
 
 * `t` (table): A table to transverse.
-* `k` (unknown): *Default*: `children`. The key of a table inside t object.
+* `k` (string): *Default*: `children`. The subtable key.
 
 **Returns**:
 
