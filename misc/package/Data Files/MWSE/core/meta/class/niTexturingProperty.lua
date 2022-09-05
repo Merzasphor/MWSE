@@ -6,7 +6,7 @@
 
 --- A rendering property that controls the methods used to filter texture pixels, and blend texture colors and vertex colors.
 --- @class niTexturingProperty : niProperty, niObjectNET, niObject
---- @field applyMode niTexturingPropertyApplyMode The texture apply mode. The texture apply mode controls how the vertex colors are blended with the texture color.
+--- @field applyMode integer The texture apply mode. The texture apply mode controls how the vertex colors are blended with the texture color. Maps to values in [`ni.texturingPropertyApplyMode`](https://mwse.github.io/MWSE/references/ni/texturing-property-apply-modes/) table.
 --- @field baseMap niTexturingPropertyMap|nil Gets or set the base map. Can be set to nil to delete it. Note that doing so will free the memory of the map, causing all existing handles to it to become invalid.
 --- @field bumpMap niTexturingPropertyMap|nil Gets or set the bump map. Can be set to nil to delete it. Note that doing so will free the memory of the map, causing all existing handles to it to become invalid.
 --- @field canAddDecal boolean *Read-only*. If true, the texturing property supports additional decal maps.
@@ -15,7 +15,7 @@
 --- @field detailMap niTexturingPropertyMap|nil Gets or set the detail map. Can be set to nil to delete it. Note that doing so will free the memory of the map, causing all existing handles to it to become invalid.
 --- @field glossMap niTexturingPropertyMap|nil Gets or set the gloss map. Can be set to nil to delete it. Note that doing so will free the memory of the map, causing all existing handles to it to become invalid.
 --- @field glowMap niTexturingPropertyMap|nil Gets or set the glow map. Can be set to nil to delete it. Note that doing so will free the memory of the map, causing all existing handles to it to become invalid.
---- @field maps niTexturingPropertyMapTArray The maps of texture property. Accessible as an array.
+--- @field maps niTexturingPropertyMap[] *Read-only*. The maps of texture property. Accessible as an array.
 niTexturingProperty = {}
 
 --- Attempts to create a new decal map. If successful, it returns both the new map and the index it was created in.

@@ -8,6 +8,6 @@
 --- @class niColorData : niObject
 --- @field keyCount integer The number of keys in this niColorData.
 --- @field keys niColorKey[] *Read-only*. The keyframe data that this object currently stores.
---- @field keyType integer The type of the keys.
+--- @field keyType integer The type of the keys. Maps to values in [`ni.animationKeyType`](https://mwse.github.io/MWSE/references/ni/animation-key-types/) table.
 niColorData = {}
 

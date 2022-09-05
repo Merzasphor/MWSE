@@ -11,11 +11,11 @@ Class used in the picking intersection system within the game engine. Using a ra
 
 ### `coordinateType`
 
-The coordinate type for the object.
+The coordinate type for the object. Maps to values in [`ni.pickCoordinateType`](https://mwse.github.io/MWSE/references/ni/pick-coordinate-types/) table.
 
 **Returns**:
 
-* `result` (niPickCoordinateType)
+* `result` (integer)
 
 ***
 
@@ -32,11 +32,11 @@ If true, back face triangles (those with clockwise winding order) are culled pri
 
 ### `intersectType`
 
-The intersect type for the object.
+The intersect type for the object. Maps to values in [`ni.pickIntersectType`](https://mwse.github.io/MWSE/references/ni/pick-intersection-types/) table.
 
 **Returns**:
 
-* `result` (niPickIntersectType)
+* `result` (integer)
 
 ***
 
@@ -63,11 +63,11 @@ If true, the pick stops if it encounters an object with the 'app culled' flag se
 
 ### `pickType`
 
-The pick type for the object.
+The pick type for the object. Maps to values in [`ni.pickType`](https://mwse.github.io/MWSE/references/ni/pick-types/) table.
 
 **Returns**:
 
-* `result` (niPickType)
+* `result` (integer)
 
 ***
 
@@ -133,11 +133,11 @@ The root pick type for the object.
 
 ### `sortType`
 
-The sort type for the object.
+The sort type for the object. Maps to values in [`ni.pickSortType`](https://mwse.github.io/MWSE/references/ni/pick-sort-types/) table.
 
 **Returns**:
 
-* `result` (niPickSortType)
+* `result` (integer)
 
 ***
 

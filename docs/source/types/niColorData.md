@@ -32,7 +32,7 @@ The number of keys in this niColorData.
 
 ### `keyType`
 
-The type of the keys.
+The type of the keys. Maps to values in [`ni.animationKeyType`](https://mwse.github.io/MWSE/references/ni/animation-key-types/) table.
 
 **Returns**:
 

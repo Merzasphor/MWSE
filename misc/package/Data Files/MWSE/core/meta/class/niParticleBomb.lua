@@ -6,13 +6,15 @@
 
 --- This modifer applies acceleration to particles in the parent niParticleSystemController.
 --- @class niParticleBomb : niParticleModifier, niObject
---- @field decay number The niParticleBomb modifers with decayType linear and exponential have their strength attenuated with distance. No attenuation occurs within the `.decay` distance of the niParticelBomb's position.
---- @field decayType integer Controls how the force applied attenuates with distance.
+--- @field decay number The niParticleBomb modifers with `decayType` linear and exponential have their strength attenuated with distance. No attenuation occurs within the `.decay` distance of the niParticelBomb's position.
+--- @field decayType integer Controls how the force applied attenuates with distance. Maps to values in [`ni.particleBombDecayType`](https://mwse.github.io/MWSE/references/ni/particle-bomb-decay-types/) table.
 --- @field deltaV number The acceleration applied to the particles.
 --- @field direction tes3vector3 The direction of applied acceleration used for cylindrical and planar particle bombs.
 --- @field duration number Controls how long this modifer affects the particles.
---- @field position tes3vector3 
+--- @field position tes3vector3 This is the center of force that spherical and cylindrical particle bombs apply to the particles.
 --- @field start number The time at which this modifier start affecting the particles.
 --- @field symmetryType integer Controls how this modifer affects the particles. Spherical modifer operates around the point defined by `.position` property. Cylindrical modifer applied the force parallel to the `.direction` vector, centered at `position` property. Planar modifers operate perpendicular to the `.direction` vector.
+--- 
+--- Maps to values in [`ni.particleBombSymmetryType`](https://mwse.github.io/MWSE/references/ni/particle-bomb-symmetry-types/) table.
 niParticleBomb = {}
 

@@ -32,11 +32,11 @@ This type inherits the following: [niObject](../../types/niObject)
 
 ### `positionType`
 
-*Read-only*. The type of animation key used for position keys.
+*Read-only*. The type of animation key used for position keys. Maps to values in [`ni.animationKeyType`](https://mwse.github.io/MWSE/references/ni/animation-key-types/) table.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -72,11 +72,11 @@ This type inherits the following: [niObject](../../types/niObject)
 
 ### `rotationType`
 
-*Read-only*. The type of animation key used for rotation keys.
+*Read-only*. The type of animation key used for rotation keys. Maps to values in [`ni.animationKeyType`](https://mwse.github.io/MWSE/references/ni/animation-key-types/) table.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -122,11 +122,11 @@ This type inherits the following: [niObject](../../types/niObject)
 
 ### `scaleType`
 
-*Read-only*. The type of animation key used for scale keys.
+*Read-only*. The type of animation key used for scale keys. Maps to values in [`ni.animationKeyType`](https://mwse.github.io/MWSE/references/ni/animation-key-types/) table.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 

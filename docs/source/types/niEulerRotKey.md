@@ -12,11 +12,11 @@ This type inherits the following: [niRotKey](../../types/niRotKey), [niAnimation
 
 ### `keyOrder`
 
-*Read-only*. An array of 3 values that define the ordering used for the contained keys.
+*Read-only*. An array of 3 values that define the ordering used for the contained keys. Maps to values in [`ni.eulerRotKeyOrder`](https://mwse.github.io/MWSE/references/ni/euler-rotation-key-orders/) table.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer[])
 
 ***
 
@@ -32,11 +32,11 @@ This type inherits the following: [niRotKey](../../types/niRotKey), [niAnimation
 
 ### `keyTypes`
 
-*Read-only*. An array of 3 values that define the types used for the contained keys.
+*Read-only*. An array of 3 values that define the types used for the contained keys. The types map to values in [`ni.animationKeyType`](https://mwse.github.io/MWSE/references/ni/animation-key-types/) table.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer[])
 
 ***
 
@@ -46,7 +46,7 @@ This type inherits the following: [niRotKey](../../types/niRotKey), [niAnimation
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer[])
 
 ***
 
@@ -56,7 +56,7 @@ This type inherits the following: [niRotKey](../../types/niRotKey), [niAnimation
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer[])
 
 ***
 

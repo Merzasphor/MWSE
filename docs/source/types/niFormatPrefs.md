@@ -11,31 +11,31 @@ A class that represents a set of preferences for texture formats. These preferen
 
 ### `alphaLayout`
 
-The Alpha format.
+The Alpha format. Maps to values in [`ni.textureFormatPrefsAlphaFormat`](https://mwse.github.io/MWSE/references/ni/texture-format-preference-alpha-formats/) table.
 
 **Returns**:
 
-* `result` (niTextureFormatPrefsAlphaFormat)
+* `result` (integer)
 
 ***
 
 ### `mipLayout`
 
-The MIP format.
+The MIP format. Maps to values in [`ni.textureFormatPrefsMipFlag`](https://mwse.github.io/MWSE/references/ni/texture-format-preference-mip-flags/) table.
 
 **Returns**:
 
-* `result` (niTextureFormatPrefsMipFlag)
+* `result` (integer)
 
 ***
 
 ### `pixelLayout`
 
-The pixel layout.
+The pixel layout. Maps to values in [`ni.textureFormatPrefsPixelLayout`](https://mwse.github.io/MWSE/references/ni/texture-format-preference-pixel-layouts/) table.
 
 **Returns**:
 
-* `result` (niTextureFormatPrefsPixelLayout)
+* `result` (integer)
 
 ***
 

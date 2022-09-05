@@ -1,6 +1,6 @@
 return {
 	type = "value",
-	description = [[The enumerated type of a given dynamic effect. Types: `0 - niAmbientLight`, `1 - niDirectionalLight`, `2 - niPointLight`, `3 - niSpotLight`, `4 - niTextureEffect`.]],
-	valuetype = "number",
+	description = [[The enumerated type of a given dynamic effect. Maps to values in [`ni.dynamicEffectType`](https://mwse.github.io/MWSE/references/ni/dynamic-effect-types/) table.]],
+	valuetype = "integer",
 	readOnly = true,
 }

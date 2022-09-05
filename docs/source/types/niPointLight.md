@@ -284,11 +284,11 @@ The object's local translation vector.
 
 ### `type`
 
-*Read-only*. The enumerated type of a given dynamic effect. Types: `0 - niAmbientLight`, `1 - niDirectionalLight`, `2 - niPointLight`, `3 - niSpotLight`, `4 - niTextureEffect`.
+*Read-only*. The enumerated type of a given dynamic effect. Maps to values in [`ni.dynamicEffectType`](https://mwse.github.io/MWSE/references/ni/dynamic-effect-types/) table.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 

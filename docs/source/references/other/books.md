@@ -16,10 +16,10 @@ The tags are space sensitive.
 ```
 
 The available tags are:
- - &lt;div&gt; - text alignment
- - &lt;font&gt; - text style
- - &lt;br&gt; - a new line
- - &lt;img&gt; - inserts an image
+- &lt;div&gt; - text alignment
+- &lt;font&gt; - text style
+- &lt;br&gt; - a new line
+- &lt;img&gt; - inserts an image
 
 ### &lt;div align="options"&gt;
 

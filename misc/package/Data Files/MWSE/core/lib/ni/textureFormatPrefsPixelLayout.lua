@@ -4,5 +4,5 @@ return {
 	["trueColor32"] = 2,
 	["compressed"] = 3,
 	["bumpMap"] = 4,
-	["default"] = 4,
+	["default"] = 5,
 }

@@ -31,7 +31,7 @@ The distance of the triangle intersection from the ray origin.
 
 ### `intersection`
 
-The intersection point on the triangle.
+The intersection point on the triangle. It's valid only if the `intersectType` was `ni.pickIntersectType.triangleIntersect`.
 
 **Returns**:
 
@@ -101,7 +101,7 @@ The index of the intersected triangle.
 
 ### `vertexIndex`
 
-An array containing the 3 indices of the vertices that form the triangle at the intersection point.
+An array containing the 3 indices of the vertices that form the triangle at the intersection point. It's valid only if the `intersectType` was `ni.pickIntersectType.triangleIntersect`.
 
 **Returns**:
 

@@ -11,21 +11,21 @@ A combination of a texture, a filter mode, a clamping mode, and an index to a se
 
 ### `clampMode`
 
-The clamp mode for the Map.
+The clamp mode for the Map. Maps to values in [`ni.texturingPropertyClampMode`](https://mwse.github.io/MWSE/references/ni/texturing-property-clamp-modes/) table.
 
 **Returns**:
 
-* `result` (niTexturingPropertyClampMode)
+* `result` (integer)
 
 ***
 
 ### `filterMode`
 
-The filter mode for the Map.
+The filter mode for the Map. Maps to values in [`ni.texturingPropertyFilterMode`](https://mwse.github.io/MWSE/references/ni/texturing-property-filter-modes/) table.
 
 **Returns**:
 
-* `result` (niTexturingPropertyFilterMode)
+* `result` (integer)
 
 ***
 
@@ -61,11 +61,11 @@ local map = niTexturingPropertyMap.new({ texture = ..., clampMode = ..., filterM
 
 **Parameters**:
 
-* `params` (table)
+* `params` (table): *Optional*.
 	* `texture` ([niTexture](../../types/niTexture)): *Optional*. If provided, sets the map texture to the given value.
-	* `clampMode` (number): *Default*: `WRAP_S_WRAP_T`. The clamp mode to set the map to use.
-	* `filterMode` (number): *Default*: `TRILERP`. The filter mode to set the map to use.
-	* `textCoords` (number): *Default*: `0`. The texture coordinates to set the map to use.
+	* `clampMode` (integer): *Default*: `ni.texturingPropertyClampMode.wrapSwrapT`. The clamp mode to set the map to use.
+	* `filterMode` (integer): *Default*: `ni.texturingPropertyFilterMode.trilerp`. The filter mode to set the map to use.
+	* `textCoords` (integer): *Default*: `0`. The texture coordinates to set the map to use.
 	* `isBumpMap` (boolean): *Default*: `false`. If true, a bump map will be created instead.
 
 **Returns**:

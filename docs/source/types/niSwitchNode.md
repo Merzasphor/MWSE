@@ -483,7 +483,7 @@ local effect = myObject:getEffect(type)
 
 **Parameters**:
 
-* `type` (integer): Use the values from [`tes3.dynamicEffectType`](https://mwse.github.io/MWSE/references/dynamic-effect-types/) table.
+* `type` (integer): Use the values from [`ni.dynamicEffectType`](https://mwse.github.io/MWSE/references/ni/dynamic-effect-types/) table.
 
 **Returns**:
 

@@ -22,7 +22,7 @@ Access to the generic time controller for particle systems.
 
 ### `decay`
 
-The niParticleBomb modifers with decayType linear and exponential have their strength attenuated with distance. No attenuation occurs within the `.decay` distance of the niParticelBomb's position.
+The niParticleBomb modifers with `decayType` linear and exponential have their strength attenuated with distance. No attenuation occurs within the `.decay` distance of the niParticelBomb's position.
 
 **Returns**:
 
@@ -32,7 +32,7 @@ The niParticleBomb modifers with decayType linear and exponential have their str
 
 ### `decayType`
 
-Controls how the force applied attenuates with distance.
+Controls how the force applied attenuates with distance. Maps to values in [`ni.particleBombDecayType`](https://mwse.github.io/MWSE/references/ni/particle-bomb-decay-types/) table.
 
 **Returns**:
 
@@ -82,7 +82,7 @@ Access to the next attached modifier.
 
 ### `position`
 
-
+This is the center of force that spherical and cylindrical particle bombs apply to the particles.
 
 **Returns**:
 
@@ -134,6 +134,8 @@ The time at which this modifier start affecting the particles.
 
 Controls how this modifer affects the particles. Spherical modifer operates around the point defined by `.position` property. Cylindrical modifer applied the force parallel to the `.direction` vector, centered at `position` property. Planar modifers operate perpendicular to the `.direction` vector.
 
+Maps to values in [`ni.particleBombSymmetryType`](https://mwse.github.io/MWSE/references/ni/particle-bomb-symmetry-types/) table.
+
 **Returns**:
 
 * `result` (integer)
@@ -158,7 +160,7 @@ local result = myObject:clone()
 
 ### `isInstanceOfType`
 
-Determines if the object is of a given type, or of a type derived from the given type. Types can be found in the [`tes3.niType`](https://mwse.github.io/MWSE/references/niTypes/) table.
+Determines if the object is of a given type, or of a type derived from the given type. Types can be found in the [`ni.type`](https://mwse.github.io/MWSE/references/ni/types/) table.
 
 ```lua
 local result = myObject:isInstanceOfType(type)
@@ -166,7 +168,7 @@ local result = myObject:isInstanceOfType(type)
 
 **Parameters**:
 
-* `type` (number): Use values in the [`tes3.niType`](https://mwse.github.io/MWSE/references/niTypes/) table.
+* `type` (number): Use values in the [`ni.type`](https://mwse.github.io/MWSE/references/ni/types/) table.
 
 **Returns**:
 
@@ -176,7 +178,7 @@ local result = myObject:isInstanceOfType(type)
 
 ### `isOfType`
 
-Determines if the object is of a given type. Types can be found in the [`tes3.niType`](https://mwse.github.io/MWSE/references/niTypes/) table.
+Determines if the object is of a given type. Types can be found in the [`ni.type`](https://mwse.github.io/MWSE/references/ni/types/) table.
 
 ```lua
 local result = myObject:isOfType(type)
@@ -184,7 +186,7 @@ local result = myObject:isOfType(type)
 
 **Parameters**:
 
-* `type` (number): Use values in the [`tes3.niType`](https://mwse.github.io/MWSE/references/niTypes/) table.
+* `type` (number): Use values in the [`ni.type`](https://mwse.github.io/MWSE/references/ni/types/) table.
 
 **Returns**:
 

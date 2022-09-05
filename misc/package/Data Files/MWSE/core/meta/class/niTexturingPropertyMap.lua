@@ -6,22 +6,22 @@
 
 --- A combination of a texture, a filter mode, a clamping mode, and an index to a set of texture coordinates.
 --- @class niTexturingPropertyMap
---- @field clampMode niTexturingPropertyClampMode The clamp mode for the Map.
---- @field filterMode niTexturingPropertyFilterMode The filter mode for the Map.
+--- @field clampMode integer The clamp mode for the Map. Maps to values in [`ni.texturingPropertyClampMode`](https://mwse.github.io/MWSE/references/ni/texturing-property-clamp-modes/) table.
+--- @field filterMode integer The filter mode for the Map. Maps to values in [`ni.texturingPropertyFilterMode`](https://mwse.github.io/MWSE/references/ni/texturing-property-filter-modes/) table.
 --- @field texCoordSet integer The texture coordinate set for the Map.
 --- @field texture niSourceTexture|niTexture The texture for the Map.
 niTexturingPropertyMap = {}
 
 --- Creates a new basic or bump map.
---- @param params niTexturingPropertyMap.new.params This table accepts the following values:
+--- @param params niTexturingPropertyMap.new.params? This table accepts the following values:
 --- 
 --- `texture`: niSourceTexture|niTexture|nil — *Optional*. If provided, sets the map texture to the given value.
 --- 
---- `clampMode`: number? — *Default*: `WRAP_S_WRAP_T`. The clamp mode to set the map to use.
+--- `clampMode`: integer? — *Default*: `ni.texturingPropertyClampMode.wrapSwrapT`. The clamp mode to set the map to use.
 --- 
---- `filterMode`: number? — *Default*: `TRILERP`. The filter mode to set the map to use.
+--- `filterMode`: integer? — *Default*: `ni.texturingPropertyFilterMode.trilerp`. The filter mode to set the map to use.
 --- 
---- `textCoords`: number? — *Default*: `0`. The texture coordinates to set the map to use.
+--- `textCoords`: integer? — *Default*: `0`. The texture coordinates to set the map to use.
 --- 
 --- `isBumpMap`: boolean? — *Default*: `false`. If true, a bump map will be created instead.
 --- @return niTexturingPropertyMap map The created basic or bump map.
@@ -30,8 +30,8 @@ function niTexturingPropertyMap.new(params) end
 ---Table parameter definitions for `niTexturingPropertyMap.new`.
 --- @class niTexturingPropertyMap.new.params
 --- @field texture niSourceTexture|niTexture|nil *Optional*. If provided, sets the map texture to the given value.
---- @field clampMode number? *Default*: `WRAP_S_WRAP_T`. The clamp mode to set the map to use.
---- @field filterMode number? *Default*: `TRILERP`. The filter mode to set the map to use.
---- @field textCoords number? *Default*: `0`. The texture coordinates to set the map to use.
+--- @field clampMode integer? *Default*: `ni.texturingPropertyClampMode.wrapSwrapT`. The clamp mode to set the map to use.
+--- @field filterMode integer? *Default*: `ni.texturingPropertyFilterMode.trilerp`. The filter mode to set the map to use.
+--- @field textCoords integer? *Default*: `0`. The texture coordinates to set the map to use.
 --- @field isBumpMap boolean? *Default*: `false`. If true, a bump map will be created instead.
 

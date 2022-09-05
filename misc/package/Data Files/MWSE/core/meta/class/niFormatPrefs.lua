@@ -6,8 +6,8 @@
 
 --- A class that represents a set of preferences for texture formats. These preferences dictate levels of pixel accuracy.
 --- @class niFormatPrefs
---- @field alphaLayout niTextureFormatPrefsAlphaFormat The Alpha format.
---- @field mipLayout niTextureFormatPrefsMipFlag The MIP format.
---- @field pixelLayout niTextureFormatPrefsPixelLayout The pixel layout.
+--- @field alphaLayout integer The Alpha format. Maps to values in [`ni.textureFormatPrefsAlphaFormat`](https://mwse.github.io/MWSE/references/ni/texture-format-preference-alpha-formats/) table.
+--- @field mipLayout integer The MIP format. Maps to values in [`ni.textureFormatPrefsMipFlag`](https://mwse.github.io/MWSE/references/ni/texture-format-preference-mip-flags/) table.
+--- @field pixelLayout integer The pixel layout. Maps to values in [`ni.textureFormatPrefsPixelLayout`](https://mwse.github.io/MWSE/references/ni/texture-format-preference-pixel-layouts/) table.
 niFormatPrefs = {}
 

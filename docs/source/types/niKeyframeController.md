@@ -24,9 +24,11 @@ If the controller is active. When inactive, the target does not get updated and 
 
 How the time parameter passed to the update function is treated. Type 0 is the default, which treats the update time as a delta time. Type 1 treats the update time an offset from the start of the animation.
 
+Maps to values in [`ni.animType`](https://mwse.github.io/MWSE/references/ni/animation-types/) table.
+
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -34,9 +36,11 @@ How the time parameter passed to the update function is treated. Type 0 is the d
 
 The animation cycle type. Type 0 is looping, type 2 is reverse, type 4 is clamped.
 
+Maps to values in [`ni.animCycleType`](https://mwse.github.io/MWSE/references/ni/animation-cycle-types/) table.
+
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
