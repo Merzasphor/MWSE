@@ -25,7 +25,7 @@ niTexturingProperty = {}
 function niTexturingProperty:addDecalMap(texture) end
 
 --- Attempts to remove a decal at a given index.
---- @param index integer The index of the decal to remove.
+--- @param index integer The index of the decal to remove. The available indices are between `ni.texturingPropertyMapType.decalFirst` and `ni.texturingPropertyMapType.decalLast`.
 --- @return boolean removed True if the decal was removed.
 function niTexturingProperty:removeDecalMap(index) end
 

@@ -26,6 +26,7 @@ ni.textureFormatPrefsPixelLayout = require("ni.textureFormatPrefsPixelLayout")
 ni.texturingPropertyApplyMode = require("ni.texturingPropertyApplyMode")
 ni.texturingPropertyClampMode = require("ni.texturingPropertyClampMode")
 ni.texturingPropertyFilterMode = require("ni.texturingPropertyFilterMode")
+ni.texturingPropertyMapType = require("ni.texturingPropertyMapType")
 ni.type = require("ni.type")
 ni.zBufferPropertyTestFunction = require("ni.zBufferPropertyTestFunction")
 

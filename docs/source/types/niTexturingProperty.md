@@ -423,7 +423,7 @@ local removed = myObject:removeDecalMap(index)
 
 **Parameters**:
 
-* `index` (integer): The index of the decal to remove.
+* `index` (integer): The index of the decal to remove. The available indices are between `ni.texturingPropertyMapType.decalFirst` and `ni.texturingPropertyMapType.decalLast`.
 
 **Returns**:
 

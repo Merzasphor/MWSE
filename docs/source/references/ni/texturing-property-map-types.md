@@ -3,10 +3,10 @@ hide:
   - toc
 ---
 
-# Texturing Properties
+# Texturing Property Map Types
 
 !!! tip
-	These values are available in Lua by their index in the `tes3.texturingPropertyMap` table. For example, `tes3.texturingPropertyMap.decalFirst` has a value of `7`.
+	These values are available in Lua by their index in the `ni.texturingPropertyMapType` table. For example, `ni.texturingPropertyMapType.decalFirst` has a value of `7`.
 
 Index      | Value | Description
 ---------- | ----- | ------------
