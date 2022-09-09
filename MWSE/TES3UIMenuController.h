@@ -134,6 +134,36 @@ namespace TES3::UI {
 		MAX_ID = count,
 	};
 
+	namespace MenuControllerGameplayFlags {
+		enum GameplayFlags : unsigned int {
+			ShowCombatStats = 0x1,
+			LightingUpdateDisabled = 0x2,
+			GodModeEnabled = 0x4,
+			AIDisabled = 0x8,
+			BordersEnabled = 0x10,
+			SkyDisabled = 0x20,
+			WorldDisabled = 0x40,
+			WireframeEnabled = 0x80,
+			CollisionDisabled = 0x100,
+			CollisionBoxesEnabled = 0x200,
+			CollisionGridEnabled = 0x400,
+			DebugTextEnabled = 0x800,
+			TextureStringEnabled = 0x1000,
+			GridEnabled = 0x2000,
+			MenusDisabled = 0x4000,
+			ScriptOutputEnabled = 0x8000,
+			MoveOneToOneEnabled = 0x10000,
+			WaterDisabled = 0x20000,
+			MagicStats = 0x40000,
+			DialogueStats = 0x80000,
+			KillStats = 0x100000,
+			ScriptsDisabled = 0x400000,
+			ShowPathGrid = 0x800000,
+			FullHelpEnabled = 0x1000000,
+			FogOfWarDisabled = 0x2000000,
+		};
+	}
+
 	struct MenuController {
 		Element* mainRoot; // 0x0
 		Element* helpRoot; // 0x4
@@ -144,7 +174,7 @@ namespace TES3::UI {
 		void* unknown_0x18;
 		int unknown_0x1C;
 		ScriptCompiler* scriptCompiler; // 0x20
-		int unknown_0x24; // Maybe toggle flags?
+		unsigned int gameplayFlags; // 0x24
 		int helpDelay; // 0x28
 		char unknown_0x2C;
 		TES3::UI::Element* unknown_0x30;

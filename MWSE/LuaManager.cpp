@@ -2842,7 +2842,7 @@ namespace mwse::lua {
 		}
 
 		// Overwritten code for this hook.
-		if (TES3::WorldController::get()->menuController->unknown_0x24 % 1) {
+		if (TES3::WorldController::get()->menuController->gameplayFlags & TES3::UI::MenuControllerGameplayFlags::ShowCombatStats) {
 			char* buffer = mwse::tes3::getThreadSafeStringBuffer();
 			const auto attacker = event::CalcHitChanceEvent::m_Attacker;
 			const auto attackerId = attacker->reference->baseObject->getObjectID();
@@ -2883,7 +2883,7 @@ namespace mwse::lua {
 		}
 
 		// Overwritten code for this hook.
-		if (TES3::WorldController::get()->menuController->unknown_0x24 % 1) {
+		if (TES3::WorldController::get()->menuController->gameplayFlags & TES3::UI::MenuControllerGameplayFlags::ShowCombatStats) {
 			char* buffer = mwse::tes3::getThreadSafeStringBuffer();
 			sprintf(buffer, "Block Chance %d%%, for %s to hit %s", blockChance, attacker->reference->baseObject->getObjectID(), attacker->actionData.hitTarget->reference->baseObject->getObjectID());
 			const auto TES3_ConsoleLogResult = reinterpret_cast<void(__cdecl*)(const char*, bool)>(0x5B2C20);

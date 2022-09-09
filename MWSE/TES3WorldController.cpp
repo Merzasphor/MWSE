@@ -124,7 +124,7 @@ namespace TES3 {
 		}
 
 		// Log to console.
-		if (worldController->menuController->unknown_0x24 & 0x100000) {
+		if (worldController->menuController->gameplayFlags & TES3::UI::MenuControllerGameplayFlags::KillStats) {
 			std::stringstream ss;
 			ss << actor->getObjectID() << " killed, total kills " << totalKills << ", werewolf kills " << werewolfKills << ".";
 			UI::logToConsole(ss.str().c_str());
@@ -174,7 +174,7 @@ namespace TES3 {
 		}
 
 		// Log to console.
-		if (worldController->menuController->unknown_0x24 & 0x100000) {
+		if (worldController->menuController->gameplayFlags & TES3::UI::MenuControllerGameplayFlags::KillStats) {
 			std::stringstream ss;
 			ss << actor->getObjectID() << " killed, total kills " << totalKills << ", werewolf kills " << werewolfKills << ".";
 			UI::logToConsole(ss.str().c_str());
