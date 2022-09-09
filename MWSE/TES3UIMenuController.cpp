@@ -6,6 +6,8 @@
 #include "LuaManager.h"
 #include "LuaUiObjectTooltipEvent.h"
 
+#include "BitUtil.h"
+
 namespace TES3::UI {
 	const auto TES3_MenuInputController_flushBufferedTextEvents = reinterpret_cast<void(__thiscall*)(MenuInputController*)>(0x58E9C0);
 	void MenuInputController::flushBufferedTextEvents() {
@@ -111,6 +113,11 @@ namespace TES3::UI {
 		TES3_MenuController_setStatsMenuEnabled(this, enabled);
 	}
 
+	const auto TES3_updateFogOfWarRenderState = reinterpret_cast<void(__cdecl*)()>(0x5EB340);
+	void MenuController::updateFogOfWarRenderState() {
+		TES3_updateFogOfWarRenderState();
+	}
+
 	bool MenuController::getInventoryMenuEnabled() {
 		return inventoryMenuEnabled;
 	}
@@ -125,6 +132,15 @@ namespace TES3::UI {
 
 	bool MenuController::getStatsMenuEnabled() {
 		return statsMenuEnabled;
+	}
+
+	bool MenuController::getFogOfWarDisabled() const {
+		return BITMASK_TEST(gameplayFlags, MenuControllerGameplayFlags::FogOfWarDisabled);
+	}
+
+	void MenuController::setFogOfWarDisabled(bool state) {
+		BITMASK_SET(gameplayFlags, MenuControllerGameplayFlags::FogOfWarDisabled, state);
+		updateFogOfWarRenderState();
 	}
 
 	std::reference_wrapper<FontColor[FontColorId::MAX_ID + 1]> MenuController::getFontColors() {

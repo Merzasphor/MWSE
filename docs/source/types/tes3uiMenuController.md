@@ -9,6 +9,16 @@ The controller responsible for the menu system.
 
 ## Properties
 
+### `fogOfWarDisabled`
+
+A flag that controls whether the local map menu renders fog of war.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
 ### `fontColors`
 
 *Read-only*. A 1-indexed table with 49 [`tes3uiFontColor`](https://mwse.github.io/MWSE/types/tes3uiFontColor/) objects for all different in-game uses for fonts.

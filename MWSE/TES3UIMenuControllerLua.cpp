@@ -50,6 +50,7 @@ namespace mwse::lua {
 			usertypeDefinition["new"] = sol::no_constructor;
 
 			// Basic property binding.
+			usertypeDefinition["fogOfWarDisabled"] = sol::property(&TES3::UI::MenuController::getFogOfWarDisabled, &TES3::UI::MenuController::setFogOfWarDisabled);
 			usertypeDefinition["fontColors"] = sol::readonly_property(&TES3::UI::MenuController::getFontColors);
 			usertypeDefinition["helpDelay"] = sol::readonly_property(&TES3::UI::MenuController::helpDelay);
 			usertypeDefinition["helpRoot"] = sol::readonly_property(&TES3::UI::MenuController::helpRoot);

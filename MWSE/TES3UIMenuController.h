@@ -206,6 +206,8 @@ namespace TES3::UI {
 		void setMapMenuEnabled(bool enabled);
 		void setStatsMenuEnabled(bool enabled);
 
+		static void __cdecl updateFogOfWarRenderState();
+
 		//
 		// Custom functions.
 		//
@@ -214,6 +216,9 @@ namespace TES3::UI {
 		bool getMagicMenuEnabled();
 		bool getMapMenuEnabled();
 		bool getStatsMenuEnabled();
+
+		bool getFogOfWarDisabled() const;
+		void setFogOfWarDisabled(bool state);
 
 		std::reference_wrapper<FontColor[FontColorId::MAX_ID + 1]> getFontColors();
 
