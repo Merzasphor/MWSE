@@ -96,6 +96,21 @@ local result = mwse.clearScriptOverride(scriptId)
 
 ***
 
+### `mwse.getCurrentMorrowindScriptState`
+
+This function returns information on the current mwscript execution state.
+
+```lua
+local script, reference = mwse.getCurrentMorrowindScriptState()
+```
+
+**Returns**:
+
+* `script` ([tes3script](../../types/tes3script), nil): The currently executing mwscript script, or nil if none is presently being executed.
+* `reference` ([tes3reference](../../types/tes3reference), nil): The currently executing mwscript script's associated reference. This will be nil for global scripts, or nil if no script is presently being executed.
+
+***
+
 ### `mwse.getVersion`
 
 Equivalent to mwse.version.

@@ -11,8 +11,10 @@
 
 #include "Log.h"
 
-#include "TES3WorldController.h"
 #include "TES3InputController.h"
+#include "TES3Reference.h"
+#include "TES3Script.h"
+#include "TES3WorldController.h"
 
 namespace mwse::lua {
 #ifdef APPVEYOR_BUILD_NUMBER
@@ -52,6 +54,10 @@ namespace mwse::lua {
 		return sol::nil;
 	}
 
+	std::tuple<TES3::Script*,TES3::Reference*> getCurrentMorrowindScriptState() {
+		return { TES3::Script::currentlyExecutingScript, TES3::Script::currentlyExecutingScriptReference };
+	}
+
 	void bindMWSEUtil() {
 		auto& manager = LuaManager::getInstance();
 		auto stateHandle = manager.getThreadSafeStateHandle();
@@ -72,13 +78,14 @@ namespace mwse::lua {
 
 		// Basic function binding.
 		lua_mwse["breakpoint"] = breakpoint;
+		lua_mwse["clearScriptOverride"] = clearScriptOverride;
 		lua_mwse["crash"] = crash;
 		lua_mwse["forceCursorOn"] = forceCursorOn;
+		lua_mwse["getCurrentMorrowindScriptState"] = getCurrentMorrowindScriptState;
 		lua_mwse["getVersion"] = getVersion;
 		lua_mwse["getVirtualMemoryUsage"] = getVirtualMemoryUsage;
 		lua_mwse["iconv"] = iconv;
 		lua_mwse["overrideScript"] = overrideScript;
-		lua_mwse["clearScriptOverride"] = clearScriptOverride;
 		lua_mwse["virtualKeyPressed"] = getIsVirtualKeyPressed;
 	}
 }
