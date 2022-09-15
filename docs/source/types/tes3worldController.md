@@ -844,14 +844,14 @@ The camera FOV when the player is a werewolf.
 
 ***
 
-## Functions
+## Methods
 
 ### `applyEnchantEffect`
 
-This function applies an enchantment's effects to a scene node.
+This method applies an enchantment's effects to a scene node.
 
 ```lua
-local result = tes3worldController.applyEnchantEffect(node, enchantment)
+local result = myObject:applyEnchantEffect(node, enchantment)
 ```
 
 **Parameters**:

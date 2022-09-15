@@ -96,9 +96,9 @@
 --- @field year tes3globalVariable *Read-only*. The `Year` global variable, indicating the current year.
 tes3worldController = {}
 
---- This function applies an enchantment's effects to a scene node.
+--- This method applies an enchantment's effects to a scene node.
 --- @param node niBillboardNode|niCollisionSwitch|niNode|niSwitchNode A scene node to which to apply the enchantment's effects.
 --- @param enchantment tes3enchantment The enchantment's effects to apply.
 --- @return boolean result No description yet available.
-function tes3worldController.applyEnchantEffect(node, enchantment) end
+function tes3worldController:applyEnchantEffect(node, enchantment) end
 
