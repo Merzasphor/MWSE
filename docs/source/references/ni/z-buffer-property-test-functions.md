@@ -8,6 +8,9 @@ hide:
 !!! tip
 	These values are available in Lua by their index in the `ni.zBufferPropertyTestFunction` table. For example, `ni.zBufferPropertyTestFunction.less` has a value of `1`.
 
+!!! note
+	Less than means closer to the camera and greater than means farther from the camera, regardless of the low-level hardware representation of Z values.
+
 Index        | Value  | Description
 ------------ | ------ | -----------------------------------------------
 always       | `0`    | Test will allways succeed. The Z Buffer value is ignored.

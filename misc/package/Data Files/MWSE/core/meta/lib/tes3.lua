@@ -1062,7 +1062,7 @@ function tes3.getEffectMagnitude(params) end
 --- 
 --- `actor`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance — No description yet available.
 --- 
---- `enchanted`: boolean? — *Optional*. If true, filters to enchanted items.
+--- `enchanted`: boolean? — *Optional*. If true, filters only enchanted items.
 --- 
 --- `objectType`: number? — *Optional*. Maps to [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) constants. Used to filter equipment by type.
 --- 
@@ -1075,7 +1075,7 @@ function tes3.getEquippedItem(params) end
 ---Table parameter definitions for `tes3.getEquippedItem`.
 --- @class tes3.getEquippedItem.params
 --- @field actor tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance No description yet available.
---- @field enchanted boolean? *Optional*. If true, filters to enchanted items.
+--- @field enchanted boolean? *Optional*. If true, filters only enchanted items.
 --- @field objectType number? *Optional*. Maps to [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) constants. Used to filter equipment by type.
 --- @field slot number? *Optional*. Maps to [`tes3.armorSlot`](https://mwse.github.io/MWSE/references/armor-slots/) or [`tes3.clothingSlot`](https://mwse.github.io/MWSE/references/clothing-slots/). Used to filter equipment by slot.
 --- @field type number? *Optional*. Maps to [`tes3.weaponType`](https://mwse.github.io/MWSE/references/weapon-types/). Used to filter equipment by type.
@@ -1854,12 +1854,26 @@ function tes3.releaseKey(keyCode) end
 --- Removes magic effects from a given reference. Requires that either the `effect` or `castType` parameter be provided.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3/#tes3removeeffects).
---- @param reference tes3reference Target reference to remove effects from.
---- @param effect number? *Optional*. Maps to [`tes3.effect`](https://mwse.github.io/MWSE/references/magic-effects/) constants.
---- @param castType number? *Optional*. Maps to [`tes3.spellType`](https://mwse.github.io/MWSE/references/spell-types/) constants.
---- @param chance number? *Default*: `100`. The chance for the effect to be removed.
---- @param removeSpell boolean? *Optional*. If removing by cast type, determines if the spell should be removed from the target's spell list. Defaults to true if `castType` is not `tes3.spellType.spell.` This causes diseases and curses to be removed when dispelled.
-function tes3.removeEffects(reference, effect, castType, chance, removeSpell) end
+--- @param params tes3.removeEffects.params This table accepts the following values:
+--- 
+--- `reference`: tes3reference — Target reference to remove effects from.
+--- 
+--- `effect`: integer? — *Optional*. Maps to [`tes3.effect`](https://mwse.github.io/MWSE/references/magic-effects/) constants.
+--- 
+--- `castType`: integer? — *Optional*. Maps to [`tes3.spellType`](https://mwse.github.io/MWSE/references/spell-types/) constants.
+--- 
+--- `chance`: number? — *Default*: `100`. The chance for the effect to be removed.
+--- 
+--- `removeSpell`: boolean? — *Optional*. If removing by cast type, determines if the spell should be removed from the target's spell list. Defaults to true if `castType` is not `tes3.spellType.spell.` This causes diseases and curses to be removed when dispelled.
+function tes3.removeEffects(params) end
+
+---Table parameter definitions for `tes3.removeEffects`.
+--- @class tes3.removeEffects.params
+--- @field reference tes3reference Target reference to remove effects from.
+--- @field effect integer? *Optional*. Maps to [`tes3.effect`](https://mwse.github.io/MWSE/references/magic-effects/) constants.
+--- @field castType integer? *Optional*. Maps to [`tes3.spellType`](https://mwse.github.io/MWSE/references/spell-types/) constants.
+--- @field chance number? *Default*: `100`. The chance for the effect to be removed.
+--- @field removeSpell boolean? *Optional*. If removing by cast type, determines if the spell should be removed from the target's spell list. Defaults to true if `castType` is not `tes3.spellType.spell.` This causes diseases and curses to be removed when dispelled.
 
 --- Removes an item from a given reference's inventory.
 --- @param params tes3.removeItem.params This table accepts the following values:

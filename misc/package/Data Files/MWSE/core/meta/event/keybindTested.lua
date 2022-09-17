@@ -4,7 +4,7 @@
 --- @meta
 --- @diagnostic disable:undefined-doc-name
 
---- This event fires whenever a keybind is tested by the game. A keybind test is often to see if a button is pressed, but it can also be done to see if an input was toggled or released. Blocking this event is equivalent to setting the `result` event data to false.
+--- This event fires whenever a keybind is tested by the game. A keybind test is often used to see if a button is pressed, but it can also be done to see if an input was toggled or released. Blocking this event is equivalent to setting the `result` event data to false.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/events/keybindTested).
 --- @class keybindTestedEventData

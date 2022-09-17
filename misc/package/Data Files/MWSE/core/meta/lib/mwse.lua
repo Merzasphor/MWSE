@@ -63,6 +63,8 @@ function mwse.log(message, ...) end
 function mwse.longToString(type) end
 
 --- Configures MWSE to execute a given function instead when a script would run.
+---
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/mwse/#mwseoverridescript).
 --- @param scriptId string No description yet available.
 --- @param callback function No description yet available.
 --- @return boolean result No description yet available.

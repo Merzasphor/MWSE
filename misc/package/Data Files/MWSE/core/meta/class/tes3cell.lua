@@ -17,7 +17,7 @@
 --- @field fogDensity number The cell's fog density. Only available on interior cells.
 --- @field gridX number The cell's X grid coordinate. Only available on exterior cells.
 --- @field gridY number The cell's Y grid coordinate. Only available on exterior cells.
---- @field hasMapMarker boolean *Read-only*. If true, the cell will have be marked on the player's map. This does not take into account if the player has been to that cell.
+--- @field hasMapMarker boolean *Read-only*. If true, the cell will be marked on the player's map. This does not take into account if the player has been to that cell.
 --- @field hasWater boolean If true, the cell has water. Only applies to interior cells.
 --- @field isInterior boolean If true, the cell is an interior.
 --- @field isOrBehavesAsExterior boolean *Read-only*. `true` if the cell is not an interior or if it behaves as an exterior.
@@ -25,7 +25,7 @@
 --- @field pickObjectsRoot niBillboardNode|niCollisionSwitch|niNode|niSwitchNode The scenegraph node containing player-interactable objects from this cell.
 --- @field region tes3region The region associated with the cell. Only available on exterior cells, or interior cells that behave as exterior cells.
 --- @field restingIsIllegal boolean If true, the player may not rest in the cell.
---- @field staticObjectsRoot tes3region The scenegraph node containing static non-player-interactable objects from this cell.
+--- @field staticObjectsRoot niBillboardNode|niCollisionSwitch|niNode|niSwitchNode The scenegraph node containing static non-player-interactable objects from this cell.
 --- @field statics tes3referenceList *Read-only*. One of the three reference collections for a cell.
 --- @field sunColor niPackedColor The cell's sun color. Only available on interior cells.
 --- @field waterLevel number The water level in the cell. Only available on interior cells.
@@ -38,6 +38,6 @@ tes3cell = {}
 function tes3cell:isPointInCell(x, y) end
 
 --- Used in a for loop, iterates over objects in the cell.
---- @param filter number|number[]|nil *Optional*. The TES3 object type to filter results by. Those are stored in [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) namespace.
+--- @param filter integer|integer[]|nil *Optional*. The TES3 object type to filter results by. Those are stored in [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) namespace.
 function tes3cell:iterateReferences(filter) end
 

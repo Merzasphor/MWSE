@@ -152,7 +152,7 @@ The cell's Y grid coordinate. Only available on exterior cells.
 
 ### `hasMapMarker`
 
-*Read-only*. If true, the cell will have be marked on the player's map. This does not take into account if the player has been to that cell.
+*Read-only*. If true, the cell will be marked on the player's map. This does not take into account if the player has been to that cell.
 
 **Returns**:
 
@@ -306,7 +306,7 @@ The scenegraph node containing static non-player-interactable objects from this 
 
 **Returns**:
 
-* `result` ([tes3region](../../types/tes3region))
+* `result` ([niNode](../../types/niNode))
 
 ***
 
@@ -395,7 +395,7 @@ myObject:iterateReferences(filter)
 
 **Parameters**:
 
-* `filter` (number, number[]): *Optional*. The TES3 object type to filter results by. Those are stored in [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) namespace.
+* `filter` (integer, integer[]): *Optional*. The TES3 object type to filter results by. Those are stored in [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) namespace.
 
 ***
 

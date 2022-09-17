@@ -1793,7 +1793,7 @@ local stack = tes3.getEquippedItem({ actor = ..., enchanted = ..., objectType = 
 
 * `params` (table)
 	* `actor` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor), [tes3actor](../../types/tes3actor))
-	* `enchanted` (boolean): *Optional*. If true, filters to enchanted items.
+	* `enchanted` (boolean): *Optional*. If true, filters only enchanted items.
 	* `objectType` (number): *Optional*. Maps to [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) constants. Used to filter equipment by type.
 	* `slot` (number): *Optional*. Maps to [`tes3.armorSlot`](https://mwse.github.io/MWSE/references/armor-slots/) or [`tes3.clothingSlot`](https://mwse.github.io/MWSE/references/clothing-slots/). Used to filter equipment by slot.
 	* `type` (number): *Optional*. Maps to [`tes3.weaponType`](https://mwse.github.io/MWSE/references/weapon-types/). Used to filter equipment by type.
@@ -3373,16 +3373,17 @@ tes3.releaseKey(keyCode)
 Removes magic effects from a given reference. Requires that either the `effect` or `castType` parameter be provided.
 
 ```lua
-tes3.removeEffects(reference, effect, castType, chance, removeSpell)
+tes3.removeEffects({ reference = ..., effect = ..., castType = ..., chance = ..., removeSpell = ... })
 ```
 
 **Parameters**:
 
-* `reference` ([tes3reference](../../types/tes3reference)): Target reference to remove effects from.
-* `effect` (number): *Optional*. Maps to [`tes3.effect`](https://mwse.github.io/MWSE/references/magic-effects/) constants.
-* `castType` (number): *Optional*. Maps to [`tes3.spellType`](https://mwse.github.io/MWSE/references/spell-types/) constants.
-* `chance` (number): *Default*: `100`. The chance for the effect to be removed.
-* `removeSpell` (boolean): *Optional*. If removing by cast type, determines if the spell should be removed from the target's spell list. Defaults to true if `castType` is not `tes3.spellType.spell.` This causes diseases and curses to be removed when dispelled.
+* `params` (table)
+	* `reference` ([tes3reference](../../types/tes3reference)): Target reference to remove effects from.
+	* `effect` (integer): *Optional*. Maps to [`tes3.effect`](https://mwse.github.io/MWSE/references/magic-effects/) constants.
+	* `castType` (integer): *Optional*. Maps to [`tes3.spellType`](https://mwse.github.io/MWSE/references/spell-types/) constants.
+	* `chance` (number): *Default*: `100`. The chance for the effect to be removed.
+	* `removeSpell` (boolean): *Optional*. If removing by cast type, determines if the spell should be removed from the target's spell list. Defaults to true if `castType` is not `tes3.spellType.spell.` This causes diseases and curses to be removed when dispelled.
 
 ??? example "Example: Simulating a Dispel"
 

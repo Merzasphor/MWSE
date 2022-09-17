@@ -6,18 +6,22 @@
 
 --- A texture that represent both static and dynamic content, as NiSourceTexture data objects can have their pixel data modified on the fly to implement dynamic texture behavior.
 --- @class niSourceTexture : niTexture, niObjectNET, niObject
---- @field fileName string *Read-only*. The platform-independent version of the filename from which the image was created, or NULL if the image was created from pixel data.
---- @field isStatic boolean The static flag.
+--- @field fileName string *Read-only*. The platform-independent version of the filename from which the image was created, or nil if the image was created from pixel data.
+--- @field isStatic boolean If this flag is true, then the application cannot assume that any dynamic changes to the app pixel data will be reflected in the rendered image, even if the revision ID of the app pixel data is changed. If the flag is false, then the changing the revision ID of the app pixel data will cause the rendered version of the texture to be updated. Renderers use this flag for optimization purposes. The default setting is true – by default, all NiSourceTextures are assumed to be static. Applications must manually clear this flag for textures they intend to modify. See the notes section below for notes on changing the app-level pixel data dynamically.
 --- @field pixelData niPixelData The app-level pixel data.
 --- @field platformFilename string *Read-only*. The platform-specific version of the filename.
 niSourceTexture = {}
 
 --- Creates an NiSourceTexture from the given filepath.
---- @param path string The filepath of the texture to load.
+--- @param path string The filepath of the texture to load, relative to Textures folder.
 --- @param useCached boolean? *Default*: `true`. If true, the texture will be stored in the normal texture source cache, so that multiple calls to the same path will return the same object. This behavior can be disabled if necessary.
 function niSourceTexture.createFromPath(path, useCached) end
 
 --- Detaches any pixel data associated with this texture. Any render-specific data will be maintained, and remain in the GPU's memory.
+--- 
+--- 
+--- 	However, once the values are modified, the application must ensure that the NiSourceTexture is not marked as static (i.e. NiSourceTexture::SetStatic(false) has been called upon the object at some point).  Then, after modifying the data but before using the texture in a rendering operation, it must call NiPixelData::MarkAsChanged on the app-level pixel data.  If either of these conditions is not met, the renderer may not reload the changed pixel data to the destination device texture data.  These actions are optimizations to speed the use of the more common case of static texture data.
+--- 	
 function niSourceTexture:clearPixelData() end
 
 --- Loads the file associated with the texture into memory, and makes it accessible from the pixelData property.

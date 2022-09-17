@@ -344,7 +344,7 @@ The next object in parent collection's list.
 
 ### `orientation`
 
-Access to the reference's orientation, which corresponds to rotation along each axis in degrees (Euler angles). Setting the orientation sets the reference as modified.
+Access to the reference's orientation, in XYZ Euler angles in Radians. Changing the orientation marks the reference as modified.
 
 **Returns**:
 
@@ -375,6 +375,12 @@ The persistent flag of the object.
 ### `position`
 
 Access to the reference's position. Setting the position sets the reference as modified.
+
+For actors, the axes are:
+- X right - left(+)
+- Y front - back(+)
+- Z down  - up(+)
+
 
 **Returns**:
 

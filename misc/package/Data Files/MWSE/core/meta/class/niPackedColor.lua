@@ -6,21 +6,21 @@
 
 --- An object that represents a RGB color with alpha channel support. Unlike other color values, this is compressed into 4 bytes. Values are not from 0 to 1, but from 0 to 255.
 --- @class niPackedColor
---- @field a number The alpha value of the color.
---- @field alpha number The alpha value of the color.
---- @field b number The blue value of the color.
---- @field blue number Alias for the blue value of the color.
---- @field g number The green value of the color.
---- @field green number Alias for the green value of the color.
---- @field r number The red value of the color.
---- @field red number Alias for the red value of the color.
+--- @field a integer The alpha value of the color.
+--- @field alpha integer The alpha value of the color.
+--- @field b integer The blue value of the color.
+--- @field blue integer Alias for the blue value of the color.
+--- @field g integer The green value of the color.
+--- @field green integer Alias for the green value of the color.
+--- @field r integer The red value of the color.
+--- @field red integer Alias for the red value of the color.
 niPackedColor = {}
 
 --- Creates a new niPackedColor object.
---- @param r number? *Default*: `0`. The red value for the color.
---- @param g number? *Default*: `0`. The green value for the color.
---- @param b number? *Default*: `0`. The blue value for the color.
---- @param a number? *Default*: `0`. The alpha value for the color.
+--- @param r integer? *Default*: `0`. The red value for the color.
+--- @param g integer? *Default*: `0`. The green value for the color.
+--- @param b integer? *Default*: `0`. The blue value for the color.
+--- @param a integer? *Default*: `0`. The alpha value for the color.
 --- @return niPackedColor color No description yet available.
 function niPackedColor.new(r, g, b, a) end
 
