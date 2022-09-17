@@ -189,6 +189,7 @@ local results = myObject:getVariableData()
 * `results` (table): The table with all of script's variable names as keys.
 
 Each entry has the following fields:
+
 	1. type - `s`, `f` or `l`, which stand for `short`, `float`, and `long`
 	2. index - the order of occurrence of the variable in the script, starting from `0`
 	3. value - this can have `nil` value
