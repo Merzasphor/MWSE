@@ -36,9 +36,9 @@
 --- @field position tes3vector3 Access to the reference's position. Setting the position sets the reference as modified.
 --- 
 --- For actors, the axes are:
---- - X right - left(+)
---- - Y front - back(+)
---- - Z down  - up(+)
+---  - X right - left(+)
+---  - Y front - back(+)
+---  - Z down  - up(+)
 --- 
 --- @field previousNode tes3reference *Read-only*. The previous reference in the parent reference list.
 --- @field rightDirection tes3vector3 *Read-only*. The normalized right or X direction vector of the reference.

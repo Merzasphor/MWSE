@@ -234,7 +234,7 @@ local result = mwse.overrideScript(scriptId, callback)
 
 	```lua
 	-- In this example, the vanilla "RaceCheck" script is overridden
-	-- with our own raceCeheck() function that does the same thing.
+	-- with our own raceCheck() function that does the same thing.
 	
 	local raceCheckScriptID = "RaceCheck"
 	
