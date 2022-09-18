@@ -32,7 +32,7 @@ This type inherits the following: [niTexture](../../types/niTexture), [niObjectN
 
 ### `fileName`
 
-*Read-only*. The platform-independent version of the filename from which the image was created, or NULL if the image was created from pixel data.
+*Read-only*. The platform-independent version of the filename from which the image was created, or nil if the image was created from pixel data.
 
 **Returns**:
 
@@ -415,7 +415,7 @@ myObject:setFlag(state, index)
 
 ### `createFromPath`
 
-Creates an NiSourceTexture from the given filepath.
+Creates an niSourceTexture from the given filepath.
 
 ```lua
 niSourceTexture.createFromPath(path, useCached)
