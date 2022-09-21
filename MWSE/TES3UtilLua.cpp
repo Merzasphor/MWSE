@@ -2246,6 +2246,9 @@ namespace mwse::lua {
 				reference->relocateNoRotation(cell, &position.value());
 			}
 			TES3::DataHandler::suppressThreadLoad = false;
+
+			// Script item data needs to be instanced if the item is now active but has not been seen before.
+			reference->ensureScriptDataIsInstanced();
 		}
 
 		// Ensure the reference and cell is flagged as modified.
