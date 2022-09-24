@@ -31,7 +31,8 @@ This is a wrapper for the vanilla AddItem function that can take variable input.
 
 Calculates the distance between the calling reference and **target**.
 
-.. note:: Unlike the vanilla `GetDistance` function, this function will work on non-actors.
+!!! note
+	Unlike the vanilla `GetDistance` function, this function will work on non-actors.
 
 ??? example "Distance from PC Target"
 	This example calculates the distance between the PC and what they are looking at.
@@ -166,7 +167,7 @@ Calculates the total, unmodified encumbrance of the target reference's inventory
 This is a wrapper function around `GetItemCount` that allows variable input.
 
 
-??? example 
+??? example
 	```
 	begin Example_xGetItemCount
 

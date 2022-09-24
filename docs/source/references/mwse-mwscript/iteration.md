@@ -344,7 +344,8 @@ This function behaves similar to `xContentList`/`xContentListFiltered`, returnin
 
 `xFirstStatic` returns the first reference in the current cell's "Static" list. Despite the name of this function, the associated list can contain references of any [Object Type](../../object-types) other than those exclusive to `xFirstNPC`. Once acquired, the reference can be used with various other MWSE functions, such as `xRefID` and `xRefType`. Passing the reference as the argument to the `xNextRef` function will return the next reference in its associated list.
 
-.. note:: Scripts that intend to process *all* references in the loaded cells will need to independently handle the separate lists provided by `xFirstItem`, `xFirstStatic`, and `xFirstNPC`.
+!!! note
+	Scripts that intend to process *all* references in the loaded cells will need to independently handle the separate lists provided by `xFirstItem`, `xFirstStatic`, and `xFirstNPC`.
 
 
 ***
@@ -399,7 +400,7 @@ Returns the **objectID** and **count** of an item in the target's inventory. The
 Returns the **objectID** and **count** of an item in the target's inventory. The **nextStack** can be fed into xNextStack to continue iteration.
 
 !!! warning
-	This function is limited. Consider using `xContentList`, `xContentListFiltered` or `xEquipmentList` instead. 
+	This function is limited. Consider using `xContentList`, `xContentListFiltered` or `xEquipmentList` instead.
 
 
 ***

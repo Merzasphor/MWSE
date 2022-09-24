@@ -9,7 +9,7 @@
 
 **Parameters:**
 
-- `reference` **target**: What the reference will try to activate. 
+- `reference` **target**: What the reference will try to activate.
 
 **Returned:**
 
@@ -17,7 +17,8 @@
 
 This function allows the forced activation of one reference onto another. Unlike the vanilla `Activate` function, this allows variable input and will work even when `OnActivate` hasn't been triggered in the script.
 
-.. note:: Unlike the vanilla activate function, the reference is the actor that will activate something, rather than the object to activate.
+!!! note
+	Unlike the vanilla activate function, the reference is the actor that will activate something, rather than the object to activate.
 
 ??? example "Force the PC to Activate"
 	```
@@ -186,8 +187,8 @@ Returns the base value of the referenced object's skill.
 
 **Parameters:**
 
-- `long` **attributesMask**: A bit mask to apply to the **attributes** value. 
-- `long` **majorMask**: A bit mask to apply to the **majorSkills** value. 
+- `long` **attributesMask**: A bit mask to apply to the **attributes** value.
+- `long` **majorMask**: A bit mask to apply to the **majorSkills** value.
 - `long` **minorMask**: A bit mask to apply to the **minorSkills** value.
 
 **Returned:**
@@ -197,8 +198,8 @@ Returns the base value of the referenced object's skill.
 - `long` **playable**: 1 if the class can be chosen by the PC, 0 otherwise.
 - `long` **specialization**: `0` = Combat, `1` = Magic, `2` = Stealth
 - `long` **attributes**: A bitmap of the two primary attributes. The result is obtained by adding the values found in the attributes table below.
-- `long` **majorSkills**: A bitmap of the 5 major skills. The result is obtained by adding the values found in the skills table below. 
-- `long` **minorSkills**: A bitmap of the 5 minor skills. The result is obtained by adding the values found in the skills table below. 
+- `long` **majorSkills**: A bitmap of the 5 major skills. The result is obtained by adding the values found in the skills table below.
+- `long` **minorSkills**: A bitmap of the 5 minor skills. The result is obtained by adding the values found in the skills table below.
 
 Returns info about the class of the target NPC/PC, or 0 if the target is not an NPC or the PC.
 
@@ -309,7 +310,7 @@ Returns the currently equipped spell or enchanted item. This is specifically the
 
 - `float` **maxFatigue**: The reference's maximum fatigue.
 
-!!! noteReturns maximum fatigue. 
+!!! noteReturns maximum fatigue.
 	This function only supports the player and NPCs.
 
 
@@ -325,7 +326,7 @@ Returns the currently equipped spell or enchanted item. This is specifically the
 
 - `float` **maxHealth**: The reference's maximum health.
 
-!!! noteReturns maximum health. 
+!!! noteReturns maximum health.
 	This function only supports the player and NPCs.
 
 
@@ -341,7 +342,7 @@ Returns the currently equipped spell or enchanted item. This is specifically the
 
 - `float` **maxMagicka**: The reference's maximum magicka.
 
-!!! noteReturns maximum magicka. 
+!!! noteReturns maximum magicka.
 	This function only supports the player and NPCs.
 
 
