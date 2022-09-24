@@ -2247,7 +2247,7 @@ namespace mwse::lua {
 			}
 			TES3::DataHandler::suppressThreadLoad = false;
 
-			// Script item data needs to be instanced if the item is now active but has not been seen before.
+			// Script item data needs to be instanced if the reference is now active but has not been seen before.
 			reference->ensureScriptDataIsInstanced();
 		}
 
