@@ -14,3 +14,7 @@ tes3boundingBox = {}
 --- @return tes3boundingBox result No description yet available.
 function tes3boundingBox:copy() end
 
+--- Returns a table containing the 8 vertices comprising this bounding box.
+--- @return tes3vector3[] result No description yet available.
+function tes3boundingBox:vertices() end
+

@@ -45,3 +45,17 @@ local result = myObject:copy()
 
 ***
 
+### `vertices`
+
+Returns a table containing the 8 vertices comprising this bounding box.
+
+```lua
+local result = myObject:vertices()
+```
+
+**Returns**:
+
+* `result` ([tes3vector3](../../types/tes3vector3)[])
+
+***
+

@@ -151,6 +151,7 @@ namespace mwse::lua {
 
 			// Basic function binding.
 			usertypeDefinition["copy"] = &TES3::BoundingBox::copy;
+			usertypeDefinition["vertices"] = &TES3::BoundingBox::vertices;
 		}
 
 		// Binding for TES3::Matrix33.

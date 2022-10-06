@@ -237,6 +237,7 @@ namespace TES3 {
 		std::string toJson() const;
 
 		BoundingBox copy() const;
+		std::array<Vector3, 8> vertices() const;
 	};
 	static_assert(sizeof(BoundingBox) == 0x18, "TES3::BoundingBox failed size validation");
 

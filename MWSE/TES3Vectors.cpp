@@ -794,6 +794,19 @@ namespace TES3 {
 		return *this;
 	}
 
+	std::array<Vector3, 8> BoundingBox::vertices() const {
+		return std::array {
+			Vector3(minimum.x, minimum.y, minimum.z),
+			Vector3(minimum.x, minimum.y, maximum.z),
+			Vector3(minimum.x, maximum.y, minimum.z),
+			Vector3(minimum.x, maximum.y, maximum.z),
+			Vector3(maximum.x, maximum.y, minimum.z),
+			Vector3(maximum.x, minimum.y, maximum.z),
+			Vector3(maximum.x, minimum.y, minimum.z),
+			Vector3(maximum.x, maximum.y, maximum.z),
+		};
+	}
+
 	//
 	// Transform
 	//
