@@ -346,7 +346,7 @@ namespace TES3::UI {
 		Element *help = TES3_ui_findHelpLayerMenu(static_cast<UI_ID>(Property::HelpMenu));
 		if (help) {
 			// Remove menu from help layer child vector.
-			Element **p = help->parent->vectorChildren.begin, **end = help->parent->vectorChildren.end;
+			Element **p = help->parent->vectorChildren.first, **end = help->parent->vectorChildren.nextEmpty;
 			while (*p != help) {
 				++p;
 			}
@@ -354,7 +354,7 @@ namespace TES3::UI {
 				*p = *(p + 1);
 			}
 			*p = 0;
-			help->parent->vectorChildren.end--;
+			help->parent->vectorChildren.nextEmpty--;
 
 			// Place menu in main layer.
 			help->reattachToParent(*TES3_uiMainRoot);

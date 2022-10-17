@@ -36,8 +36,8 @@ namespace mwse::lua::event {
 		if (menu) {
 			auto thingyProperty = TES3::UI::registerProperty(thingId.c_str());
 			auto contents = static_cast<TES3::UI::WidgetScrollPane*>(menu->findChild(scrollpaneId.c_str()))->getContentPane();
-			for (auto columnItt = contents->vectorChildren.begin; columnItt != contents->vectorChildren.end; ++columnItt) {
-				for (auto tileItt = (*columnItt)->vectorChildren.begin; tileItt != (*columnItt)->vectorChildren.end; ++tileItt) {
+			for (auto columnItt = contents->vectorChildren.first; columnItt != contents->vectorChildren.nextEmpty; ++columnItt) {
+				for (auto tileItt = (*columnItt)->vectorChildren.first; tileItt != (*columnItt)->vectorChildren.nextEmpty; ++tileItt) {
 					auto tile = reinterpret_cast<TES3::UI::InventoryTile*>((*tileItt)->getProperty(TES3::UI::PropertyType::Pointer, thingyProperty).ptrValue);
 					if (!tile) {
 						continue;

@@ -178,10 +178,10 @@ namespace TES3::UI {
 	}
 
 	int Element::getIndexOfChild(const Element *child) const {
-		Element** it = vectorChildren.begin;
-		Element** end = vectorChildren.end;
+		Element** it = vectorChildren.first;
+		Element** end = vectorChildren.nextEmpty;
 
-		for (int i = 0; it != this->vectorChildren.end; ++i, ++it) {
+		for (int i = 0; it != this->vectorChildren.nextEmpty; ++i, ++it) {
 			if (*it == child) {
 				return i;
 			}
@@ -210,12 +210,12 @@ namespace TES3::UI {
 	bool Element::reorderChildren(int insertBefore, int moveFrom, int count) {
 		// Move <count> children from index <moveFrom> to index <insertBefore>
 		// Negative positions indicate distance from end, negative count moves all children after moveFrom
-		if (vectorChildren.begin == vectorChildren.end) {
+		if (vectorChildren.first == vectorChildren.nextEmpty) {
 			return false;
 		}
 
-		Element** begin = vectorChildren.begin;
-		Element** end = vectorChildren.end;
+		Element** begin = vectorChildren.first;
+		Element** end = vectorChildren.nextEmpty;
 		int childCount = int(end - begin);
 
 		// Convert negative indices to distance from end, and negative count to move all items after moveFrom
@@ -362,8 +362,8 @@ namespace TES3::UI {
 	sol::table Element::getChildren_lua(sol::this_state ts) const {
 		sol::state_view state = ts;
 		sol::table children = state.create_table();
-		auto it = vectorChildren.begin;
-		auto end = vectorChildren.end;
+		auto it = vectorChildren.first;
+		auto end = vectorChildren.nextEmpty;
 		for (int i = 1; it != end; ++it, ++i) {
 			children[i] = *it;
 		}
