@@ -1671,6 +1671,9 @@
     <ClInclude Include="LuaAttackHitEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
+    <ClInclude Include="LuaCalcEnchantmentPriceEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -3639,6 +3642,9 @@
       <Filter>Source Files\Lua\Bindings\NI</Filter>
     </ClCompile>
     <ClCompile Include="LuaAttackHitEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaCalcEnchantmentPriceEvent.cpp">
       <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
   </ItemGroup>

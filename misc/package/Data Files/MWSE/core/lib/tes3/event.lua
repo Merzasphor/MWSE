@@ -17,6 +17,7 @@ return {
 	["calcArmorRating"] = "calcArmorRating",
 	["calcBarterPrice"] = "calcBarterPrice",
 	["calcBlockChance"] = "calcBlockChance",
+	["calcEnchantmentPrice"] = "calcEnchantmentPrice",
 	["calcFlySpeed"] = "calcFlySpeed",
 	["calcHitChance"] = "calcHitChance",
 	["calcMoveSpeed"] = "calcMoveSpeed",

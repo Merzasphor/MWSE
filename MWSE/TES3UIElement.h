@@ -157,6 +157,16 @@ namespace TES3::UI {
 		bool hasProperty(Property prop) const;
 		const char* getText() const;
 
+		template <typename T>
+		T* getPropertyPointer(Property prop) {
+			return static_cast<T*>(getProperty(PropertyType::Pointer, prop).ptrValue);
+		}
+
+		template <typename T>
+		T* getPropertyPointer(const char* prop) {
+			return static_cast<T*>(getProperty(PropertyType::Pointer, registerProperty(prop)).ptrValue);
+		}
+
 		void setProperty(Property prop, PropertyValue value, PropertyType type);
 		void setProperty(Property prop, int value);
 		void setProperty(Property prop, float value);
