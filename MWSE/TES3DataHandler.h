@@ -164,6 +164,7 @@ namespace TES3 {
 		void respawnContainers();
 
 		Cell * getCellByGrid(int x, int y);
+		Cell * getCellByPosition(float x, float y);
 		Cell * getCellByName(const char* name);
 		Region* getRegion(const char* id);
 

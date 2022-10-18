@@ -363,6 +363,12 @@ namespace TES3 {
 		return TES3_NonDynamicData_getCellByGrid(this, x, y);
 	}
 
+	Cell* NonDynamicData::getCellByPosition(float x, float y) {
+		int cellX = Cell::toGridCoord(x);
+		int cellY = Cell::toGridCoord(y);
+		return getCellByGrid(cellX, cellY);
+	}
+
 	const auto TES3_NonDynamicData_getCellByName = reinterpret_cast<Cell * (__thiscall*)(NonDynamicData*, const char*)>(0x4BA9B0);
 	Cell* NonDynamicData::getCellByName(const char* name) {
 		return TES3_NonDynamicData_getCellByName(this, name);

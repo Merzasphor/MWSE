@@ -2739,6 +2739,12 @@ namespace mwse::lua {
 
 		// Get the cell.
 		TES3::Cell* cell = getOptionalParamCell(params, "cell");
+		if (cell == nullptr) {
+			cell = TES3::DataHandler::get()->nonDynamicData->getCellByPosition(position->x, position->y);
+			if (cell == nullptr) {
+				throw std::invalid_argument("Invalid position parameter provided. It does not resolve to a valid exterior cell.");
+			}
+		}
 
 		reference->setTravelDestination(&position.value(), &orientation.value(), cell);
 		reference->setObjectModified(true);
