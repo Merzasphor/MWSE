@@ -1,12 +1,12 @@
 # The Hierarchy of NetImmerse Classes
 
-This page puts into relation various classes that compromise Morrowind's scene graph. Some of these classes are abstract, meaning they aren't directly found in the scene graph, but are used by other classes to inherit common variables and methods. Game's scene graph can be inspected by entering ssg (show scene graph) command in the console. Morrowind's engine is Gamebryo, which was before known as NetImmerse. That's why these classes have prefix ni in their name. These classes in MWSE follow the naming as in the vanilla engine. But, there are some classes that contain information about the scene graph in MWSE and have tes3 prefix such as `tes3vector3`.
+This page puts into relation various classes that compromise Morrowind's scene graph. Some of these classes are abstract, meaning they aren't directly found in the scene graph but are used by other classes to inherit common variables and methods. The game's scene graph can be inspected by entering ssg (show scene graph) command in the console. Morrowind's engine is Gamebryo, which was before known as NetImmerse. That's why these classes have the prefix ni in their name. These classes in MWSE follow the naming as in the vanilla engine. But, some classes contain information about the scene graph in MWSE and have tes3 prefixes such as `tes3vector3`.
 
-The primary building blocks of scene graph are called nodes. Each node has one parent and zero or more child nodes. For example, the base node of the Morrowind's world scene graph, named `worldRoot`, and all the game world objects are represented by nodes that are children of `worldRoot` node.
+The primary building blocks of the scene graph are called nodes. Each node has one parent and zero or more child nodes. For example, the base node of Morrowind's world scene graph, named `worldRoot`, and all the game world objects are represented by nodes that are children of the `worldRoot` node.
 
-Note that the relations described here don't reflect how these types are organized in the scene graph. For instance, `worldRoot` node mentioned earlier is of type `niNode`, but is the root node of the world's scene graph, while the base class of most types described here is `niObject`.
+Note that the relations described here don't reflect how these types are organized in the scene graph. For instance, the `worldRoot` node mentioned earlier is of type `niNode`, but is the root node of the world's scene graph, while the base class of most types described here is `niObject`.
 
-The types are arranged into functional groupings. Within each grouping, indentation implies inheritance from the class of the previous indentation level. The color of the taxt carries the following meanings:
+The types are arranged into functional groupings. Within each grouping, indentation implies inheritance from the class of the previous indentation level. The color of the text carries the following meanings:
 
  - <span style = "color:Turquoise">Turquoise - Classes read by MWSE but not yet exposed to Lua scripts</span>
  - <span style = "color:YellowGreen">Green - Classes present in Morrowind but not yet read by MWSE</span>
