@@ -7,6 +7,7 @@ The primary building blocks of scene graph are called nodes. Each node has one p
 Note that the relations described here don't reflect how these types are organized in the scene graph. For instance, `worldRoot` node mentioned earlier is of type `niNode`, but is the root node of the world's scene graph, while the base class of most types described here is `niObject`.
 
 The types are arranged into functional groupings. Within each grouping, indentation implies inheritance from the class of the previous indentation level. The color of the taxt carries the following meanings:
+
  - <span style = "color:Turquoise">Turquoise - Classes read by MWSE but not yet exposed to Lua scripts</span>
  - <span style = "color:YellowGreen">Green - Classes present in Morrowind but not yet read by MWSE</span>
  - All the other classes in standard text color in this list are available in Lua scripts
@@ -156,7 +157,7 @@ The types are arranged into functional groupings. Within each grouping, indentat
 
 ### Particle System Classes
 - niObject
-	- <span  style = "color:YellowGreen">niEmitterModifier - Wo don't have this one</span>
+	- <span  style = "color:YellowGreen">niEmitterModifier</span>
 	- niParticleModifier
 		- niGravity
 		- niParticleBomb
@@ -193,7 +194,7 @@ The types are arranged into functional groupings. Within each grouping, indentat
 ### Animation Classes
 - niObject
 	- niColorData
-	- niExtraData - Not related to animation
+	- niExtraData - this type is not related to animation by itself.
 		- niTextKeyExtraData
 	- <span  style = "color:YellowGreen">niFloatData</span>
 	- niKeyframeData
