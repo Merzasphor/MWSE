@@ -397,6 +397,7 @@ end
 --- @field folder string The folder that the package was created from.
 --- @field parent package The package this package is a child of.
 --- @field namespace string The full namespace of the package.
+--- @field deprecated boolean Allows marking definitions as deprecated. Those definitions aren't written to the web documentation.
 
 --- @class packageLib : package
 --- @field children table<string, package>|nil

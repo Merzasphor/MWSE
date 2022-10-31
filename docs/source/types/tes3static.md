@@ -259,5 +259,3 @@ local newObject = myObject:createCopy({ id = ..., addToObjectList = ..., sourcel
 
 ***
 
-## Functions
-

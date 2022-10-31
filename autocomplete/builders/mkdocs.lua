@@ -39,6 +39,17 @@ common.compilePath(lfs.join(common.pathDefinitions, "events", "standard"), event
 -- Building
 --
 
+---@param packages package[]
+local function getDeprecatedCount(packages)
+	local count = 0
+	for _, pack in ipairs(packages) do
+		if pack.deprecated then
+			count = count + 1
+		end
+	end
+	return count
+end
+
 local function buildParentChain(className)
 	local package = assert(classes[className])
 	local ret = ""
@@ -71,6 +82,9 @@ local function getTypeLink(type)
 	return typeLinks[type]
 end
 
+---@param type string
+---@param nested boolean?
+---@return string
 local function breakoutTypeLinks(type, nested)
 	local types = {}
 
@@ -230,7 +244,8 @@ local function writePackageDetails(file, package)
 
 	-- Write out functions.
 	local functions = table.values(getPackageComponentsArray(package, "functions"), sortPackagesByKey)
-	if (#functions > 0) then
+	local deprecatedCount = getDeprecatedCount(functions)
+	if (#functions > 0 and #functions > deprecatedCount) then
 		file:write("## Functions\n\n")
 		for _, fn in ipairs(functions) do
 			if (not fn.deprecated) then

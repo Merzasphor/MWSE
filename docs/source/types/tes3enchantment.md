@@ -309,5 +309,3 @@ local index = myObject:getFirstIndexOfEffect(effectId)
 
 ***
 
-## Functions
-

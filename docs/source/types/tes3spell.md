@@ -425,5 +425,3 @@ local schoolID = myObject:getLeastProficientSchool(actor)
 
 ***
 
-## Functions
-
