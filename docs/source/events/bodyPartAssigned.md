@@ -29,3 +29,22 @@ event.register(tes3.event.bodyPartAssigned, bodyPartAssignedCallback)
 * `object` ([tes3physicalObject](../../types/tes3physicalObject)): *Read-only*. Access to the physical object for the assigned body part.
 * `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. The reference for the actor whose body part was assigned.
 
+## Examples
+
+!!! example "Example: Bald is beautiful"
+
+	This example shows how to disable hair body parts from appearing on NPCs or the Player.
+
+	```lua
+	---@param e bodyPartAssignedEventData
+	local function baldIsBeautiful(e)
+	    if (e.index == tes3.activeBodyPart.hair) then
+			-- Returning false from this event will
+			-- block the assignment of the body part.
+	        return false
+	    end
+	end
+	event.register(tes3.event.bodyPartAssigned, baldIsBeautiful)
+
+	```
+

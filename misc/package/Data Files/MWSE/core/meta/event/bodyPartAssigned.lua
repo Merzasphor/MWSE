@@ -5,6 +5,8 @@
 --- @diagnostic disable:undefined-doc-name
 
 --- Allows reading and overwriting body part assignments.
+---
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/events/bodyPartAssigned).
 --- @class bodyPartAssignedEventData
 --- @field block boolean If set to `true`, vanilla logic will be suppressed. Returning `false` will set this to `true`.
 --- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.

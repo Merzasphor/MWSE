@@ -308,7 +308,7 @@ common.defaultExperimentalAPIWarning = [[
 
 --- @param package table
 --- @param useDefault boolean|nil
---- @return string
+--- @return string|nil
 function common.getDescriptionString(package, useDefault)
 	if (useDefault == nil) then
 		useDefault = true

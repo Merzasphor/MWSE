@@ -1576,13 +1576,15 @@ function tes3.makeSafeObjectHandle(object) end
 function tes3.menuMode() end
 
 --- Displays a message box. This may be a simple toast-style message, or a box with choice buttons.
+---
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3/#tes3messagebox).
 --- @param messageOrParams string|tes3.messageBox.messageOrParams This table accepts the following values:
 --- 
 --- `message`: string — No description yet available.
 --- 
 --- `buttons`: string[]? — *Optional*. An array of strings to use for buttons.
 --- 
---- `callback`: function — No description yet available.
+--- `callback`: function — The callback function will be executed after a button was pressed. The callback function will be passed a table with `button` field corresponding to 0-based index of the button from passed `buttons` array.
 --- 
 --- `showInDialog`: boolean? — *Default*: `true`. Specifying showInDialog = false forces the toast-style message, which is not shown in the dialog menu.
 --- 
@@ -1595,7 +1597,7 @@ function tes3.messageBox(messageOrParams, ...) end
 --- @class tes3.messageBox.messageOrParams
 --- @field message string No description yet available.
 --- @field buttons string[]? *Optional*. An array of strings to use for buttons.
---- @field callback function No description yet available.
+--- @field callback function The callback function will be executed after a button was pressed. The callback function will be passed a table with `button` field corresponding to 0-based index of the button from passed `buttons` array.
 --- @field showInDialog boolean? *Default*: `true`. Specifying showInDialog = false forces the toast-style message, which is not shown in the dialog menu.
 --- @field duration number? *Optional*. Overrides how long the toast-style message remains visible.
 

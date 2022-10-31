@@ -2996,7 +2996,7 @@ local element = tes3.messageBox({ message = ..., buttons = ..., callback = ..., 
 * `messageOrParams` (string, table)
 	* `message` (string)
 	* `buttons` (string[]): *Optional*. An array of strings to use for buttons.
-	* `callback` (function)
+	* `callback` (function): The callback function will be executed after a button was pressed. The callback function will be passed a table with `button` field corresponding to 0-based index of the button from passed `buttons` array.
 	* `showInDialog` (boolean): *Default*: `true`. Specifying showInDialog = false forces the toast-style message, which is not shown in the dialog menu.
 	* `duration` (number): *Optional*. Overrides how long the toast-style message remains visible.
 * `formatAdditions` (variadic): *Optional*. Only used if messageOrParams is a string.
@@ -3004,6 +3004,44 @@ local element = tes3.messageBox({ message = ..., buttons = ..., callback = ..., 
 **Returns**:
 
 * `element` ([tes3uiElement](../../types/tes3uiElement), nil): The UI menu created for the notification, if any.
+
+??? example "Example: A message box with a callback function"
+
+	This demonstrates how to determine which button was pressed inside callback function.
+
+	```lua
+	-- This variable is used to store a function that will be
+	-- registered as a callback when a button is pressed inside
+	-- our messageBox. The function's body is declared later.
+	local onButtonPressed
+	
+	
+	-- This function is registered to execute when U key is pressed.
+	local function onKeyPressed()
+		tes3.messageBox({
+			message = "Do you want a muffin?",
+			buttons = { "Yes", "No" },
+			showInDialog = false,
+			callback = onButtonPressed,
+		})
+	end
+	event.register(tes3.event.keyDown, onKeyPressed, { filter = tes3.scanCode.u })
+	
+	-- Here we define the body of our function.
+	onButtonPressed = function(e)
+		-- This corresponds to the first button
+		--  of our message, which is "Yes"
+		if e.button == 0 then
+			tes3.addItem({
+				reference = tes3.player,
+				item = "ingred_bread_01_UNI3",
+			})
+		else
+			-- Do nothing
+		end
+	end
+
+	```
 
 ***
 

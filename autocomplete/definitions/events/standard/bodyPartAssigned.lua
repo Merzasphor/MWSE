@@ -34,4 +34,10 @@ return {
 		},
 	},
 	blockable = true,
+	examples = {
+		["baldIsBeautiful"] = {
+			title = "Bald is beautiful",
+			description = "This example shows how to disable hair body parts from appearing on NPCs or the Player.",
+		}
+	}
 }

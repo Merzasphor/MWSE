@@ -5,6 +5,8 @@
 --- @diagnostic disable:undefined-doc-name
 
 --- A script context object, which allows variables to be get/set using the variable name.
+---
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3scriptContext).
 --- @class tes3scriptContext
 --- @operator len: number
 tes3scriptContext = {}

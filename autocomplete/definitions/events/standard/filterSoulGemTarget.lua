@@ -26,5 +26,8 @@ return {
 		["example"] = {
 			title = "Example"
 		},
+		["..\\..\\..\\global\\tes3\\addSoulGem\\customSoulGem"] = {
+			title = "A more elaborate example."
+		}
 	},
 }

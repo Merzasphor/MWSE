@@ -12,4 +12,9 @@ return {
 			description = "The value of the actor's soul. This may be `nil` for NPCs.",
 		},
 	},
+	examples = {
+		["..\\..\\..\\global\\tes3\\addSoulGem\\customSoulGem"] = {
+			title = "This example shows how to assign a value to an NPC's soul."
+		}
+	}
 }
