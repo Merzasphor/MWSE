@@ -40,9 +40,9 @@ Each entry has following fields:
 
 ***
 
-??? example "Example: Checking reference's script variables."
+??? example "Example: An example of indexing local script variables inside `tes3scriptContext` objects"
 
-	Companions usually have a mwscript script with variable named `companion` set to 1. This can be used if a certain reference is player's companion or not.
+	Companions usually have a mwscript script with variable named `companion` set to 1. This can be used to determine if a reference is player's companion or not.
 
 	```lua
 	

@@ -102,7 +102,7 @@ The actor's movement animations group. Maps to values in [`tes3.animationGroup`]
 
 ### `firstPersonHeadCameraNode`
 
-*Read-only*. 
+*Read-only*. This is the camera used while in first person. Switching from first person to third person point of view doesn't affect this camera.
 
 **Returns**:
 
@@ -272,7 +272,7 @@ For NPCs this corresponds to how long the weapon was charged by the NPC after th
 
 ### `togglePOV`
 
-*Read-only*. 
+*Read-only*. This property is set to `true` for one frame to change the point of view. Since this property is read-only, you can use [tes3.force1stPerson](https://mwse.github.io/MWSE/apis/tes3/#tes3force1stperson) and [tes3.force3rdPerson](https://mwse.github.io/MWSE/apis/tes3/#tes3force3rdperson).
 
 **Returns**:
 

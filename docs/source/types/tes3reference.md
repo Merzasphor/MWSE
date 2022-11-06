@@ -80,7 +80,7 @@ The blocked state of the object.
 
 * `result` ([tes3scriptContext](../../types/tes3scriptContext))
 
-??? example "Example: Checking reference's script variables."
+??? example "Example: Checking reference's script variables"
 
 	Companions usually have a mwscript script with variable named `companion` set to 1. This can be used to determine if a reference is player's companion or not.
 

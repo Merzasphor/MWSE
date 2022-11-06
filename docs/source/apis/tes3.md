@@ -2368,8 +2368,12 @@ local script = tes3.getScript(id)
 Returns a UNIX-style timestamp based on in-world simulation time since the start of the era, in hours.
 
 ```lua
-local timestamp = tes3.getSimulationTimestamp()
+local timestamp = tes3.getSimulationTimestamp(highPrecision)
 ```
+
+**Parameters**:
+
+* `highPrecision` (boolean): *Default*: `true`. If `false` is passed returns the value of the simulation time variable used by the game engine. Calculates the timestamp from the current year, month and game hour global variables otherwise.
 
 **Returns**:
 

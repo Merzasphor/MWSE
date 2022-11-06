@@ -8,11 +8,11 @@
 --- @class tes3playerAnimationController : tes3actorAnimationController
 --- @field allowVerticalAirControl boolean *Read-only*. 
 --- @field cameraOffset tes3vector3 *Read-only*. Additional offset applied to the camera's position during the third person.
---- @field firstPersonHeadCameraNode niCamera *Read-only*. 
+--- @field firstPersonHeadCameraNode niCamera *Read-only*. This is the camera used while in first person. Switching from first person to third person point of view doesn't affect this camera.
 --- @field is3rdPerson boolean *Read-only*. This flag is set to `true` when the player's view is in third person. To change the player's POV, you can use [tes3.force1stPerson](https://mwse.github.io/MWSE/apis/tes3/#tes3force1stperson) and [tes3.force3rdPerson](https://mwse.github.io/MWSE/apis/tes3/#tes3force3rdperson).
 --- @field pickData niPick *Read-only*. 
 --- @field shadowCameraMatrix tes3matrix33 *Read-only*. The local rotation matrix of the shadow camera.
---- @field togglePOV boolean *Read-only*. 
+--- @field togglePOV boolean *Read-only*. This property is set to `true` for one frame to change the point of view. Since this property is read-only, you can use [tes3.force1stPerson](https://mwse.github.io/MWSE/apis/tes3/#tes3force1stperson) and [tes3.force3rdPerson](https://mwse.github.io/MWSE/apis/tes3/#tes3force3rdperson).
 --- @field useThirdPersonAfterVanityCameraDone boolean *Read-only*. This flag is set to `true` if vanity mode was entered from third person view. If vanity mode was entered from first person view, this flag is set to `false`.
 --- @field vanityCamera niCamera *Read-only*. 
 --- @field vanityCameraDistance integer *Read-only*. The orbiting radius of the camera during vanity mode in [game units](https://mwse.github.io/MWSE/references/other/game-units/). Measured from the center of the player's head.
