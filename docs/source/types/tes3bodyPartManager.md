@@ -15,7 +15,7 @@ A game object which holds information about body parts.
 
 **Returns**:
 
-* `result` ([tes3bodyPartManagerActiveBodyPart](../../types/tes3bodyPartManagerActiveBodyPart)[])
+* `result` (table&lt;integer, table&lt;integer, [tes3bodyPartManagerActiveBodyPart](../../types/tes3bodyPartManagerActiveBodyPart)&gt;&gt;)
 
 ***
 

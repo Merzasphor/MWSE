@@ -91,7 +91,7 @@ local function breakoutTypeLinks(type, nested)
 	-- Support "table<x, y>" as type, in HTML < and > signs have a special meaning.
 	-- Use "&lt;" and "&gt;" instead.
 	if type:startswith("table<") then
-		local keyType, valueType = type:match("table<(.+), (.+)>")
+		local keyType, valueType = type:match("table<(%w+), (.+)>")
 		keyType = breakoutTypeLinks(keyType, true)
 		valueType = breakoutTypeLinks(valueType, true)
 
