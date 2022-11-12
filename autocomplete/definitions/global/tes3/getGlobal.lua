@@ -4,6 +4,5 @@ return {
 	arguments = {
 		{ name = "id", type = "string" }
 	},
-	returns = "value",
-	valuetype = "number",
+	returns = { name = "value",	type = "integer" }
 }

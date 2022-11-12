@@ -5,9 +5,9 @@ return {
 		name = "params",
 		type = "table",
 		tableParams = {
-			{ name = "effect", type = "number", description = "The effect ID to get the name of." },
-			{ name = "attribute", type = "number", optional = true, description = "The attribute ID to use, if applicable." },
-			{ name = "skill", type = "number", optional = true, description = "The skill ID to use, if applicable." },
+			{ name = "effect", type = "integer", description = "The effect ID to get the name of. Maps to values in [`tes3.effect`](https://mwse.github.io/MWSE/references/magic-effects/) table." },
+			{ name = "attribute", type = "integer", optional = true, description = "The attribute ID to use, if applicable. Maps to values in [`tes3.attribute`](https://mwse.github.io/MWSE/references/attributes/) table." },
+			{ name = "skill", type = "integer", optional = true, description = "The skill ID to use, if applicable. Maps to values in [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) table." },
 		},
 	}},
 	returns = {

@@ -1901,7 +1901,7 @@ local value = tes3.getGlobal(id)
 
 **Returns**:
 
-* `value` (number)
+* `value` (integer)
 
 ***
 
@@ -2098,7 +2098,7 @@ local level = tes3.getLockLevel({ reference = ... })
 
 ### `tes3.getMagicEffect`
 
-Fetches the core game Magic Effect object for a given ID.
+Fetches the core game Magic Effect object for a given ID. Can return custom magic effects added with `tes3.addMagicEffect`.
 
 ```lua
 local magicEffect = tes3.getMagicEffect(id)
@@ -2106,11 +2106,11 @@ local magicEffect = tes3.getMagicEffect(id)
 
 **Parameters**:
 
-* `id` (number)
+* `id` (integer): Maps to values in [`tes3.effect`](https://mwse.github.io/MWSE/references/magic-effects/) table.
 
 **Returns**:
 
-* `magicEffect` ([tes3magicEffect](../../types/tes3magicEffect))
+* `magicEffect` ([tes3magicEffect](../../types/tes3magicEffect), nil)
 
 ***
 
@@ -2125,9 +2125,9 @@ local complexName = tes3.getMagicEffectName({ effect = ..., attribute = ..., ski
 **Parameters**:
 
 * `params` (table)
-	* `effect` (number): The effect ID to get the name of.
-	* `attribute` (number): *Optional*. The attribute ID to use, if applicable.
-	* `skill` (number): *Optional*. The skill ID to use, if applicable.
+	* `effect` (integer): The effect ID to get the name of. Maps to values in [`tes3.effect`](https://mwse.github.io/MWSE/references/magic-effects/) table.
+	* `attribute` (integer): *Optional*. The attribute ID to use, if applicable. Maps to values in [`tes3.attribute`](https://mwse.github.io/MWSE/references/attributes/) table.
+	* `skill` (integer): *Optional*. The skill ID to use, if applicable. Maps to values in [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) table.
 
 **Returns**:
 

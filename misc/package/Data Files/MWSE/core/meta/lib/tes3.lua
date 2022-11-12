@@ -1098,7 +1098,7 @@ function tes3.getFileSource(path) end
 
 --- Retrieves the value of a global value, or nil if the global could not be found.
 --- @param id string No description yet available.
---- @return number value No description yet available.
+--- @return integer value No description yet available.
 function tes3.getGlobal(id) end
 
 --- Gets the input configuration for a given keybind.
@@ -1195,27 +1195,27 @@ function tes3.getLockLevel(params) end
 --- @class tes3.getLockLevel.params
 --- @field reference tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|string No description yet available.
 
---- Fetches the core game Magic Effect object for a given ID.
---- @param id number No description yet available.
---- @return tes3magicEffect magicEffect No description yet available.
+--- Fetches the core game Magic Effect object for a given ID. Can return custom magic effects added with `tes3.addMagicEffect`.
+--- @param id integer Maps to values in [`tes3.effect`](https://mwse.github.io/MWSE/references/magic-effects/) table.
+--- @return tes3magicEffect|nil magicEffect No description yet available.
 function tes3.getMagicEffect(id) end
 
 --- Returns the complex name of a magic effect, taking into account attribute or skill values.
 --- @param params tes3.getMagicEffectName.params This table accepts the following values:
 --- 
---- `effect`: number — The effect ID to get the name of.
+--- `effect`: integer — The effect ID to get the name of. Maps to values in [`tes3.effect`](https://mwse.github.io/MWSE/references/magic-effects/) table.
 --- 
---- `attribute`: number? — *Optional*. The attribute ID to use, if applicable.
+--- `attribute`: integer? — *Optional*. The attribute ID to use, if applicable. Maps to values in [`tes3.attribute`](https://mwse.github.io/MWSE/references/attributes/) table.
 --- 
---- `skill`: number? — *Optional*. The skill ID to use, if applicable.
+--- `skill`: integer? — *Optional*. The skill ID to use, if applicable. Maps to values in [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) table.
 --- @return string complexName No description yet available.
 function tes3.getMagicEffectName(params) end
 
 ---Table parameter definitions for `tes3.getMagicEffectName`.
 --- @class tes3.getMagicEffectName.params
---- @field effect number The effect ID to get the name of.
---- @field attribute number? *Optional*. The attribute ID to use, if applicable.
---- @field skill number? *Optional*. The skill ID to use, if applicable.
+--- @field effect integer The effect ID to get the name of. Maps to values in [`tes3.effect`](https://mwse.github.io/MWSE/references/magic-effects/) table.
+--- @field attribute integer? *Optional*. The attribute ID to use, if applicable. Maps to values in [`tes3.attribute`](https://mwse.github.io/MWSE/references/attributes/) table.
+--- @field skill integer? *Optional*. The skill ID to use, if applicable. Maps to values in [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) table.
 
 --- Fetches an instance of the magic source of a given serial number.
 --- @param params tes3.getMagicSourceInstanceBySerial.params This table accepts the following values:
