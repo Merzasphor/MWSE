@@ -1093,7 +1093,8 @@ function tes3.getFileExists(path) end
 
 --- Determines if a file exists on the filesystem or inside of a bsa. The returned string will be "file" or "bsa".
 --- @param path string No description yet available.
---- @return string exists No description yet available.
+--- @return string? exists A string representing the file source. This can be either `file` or `bsa`.
+--- @return string? path If the file exists, this is a path to the file. If the file is from a BSA, it is a path inside the BSA.
 function tes3.getFileSource(path) end
 
 --- Retrieves the value of a global value, or nil if the global could not be found.

@@ -1874,7 +1874,7 @@ local exists = tes3.getFileExists(path)
 Determines if a file exists on the filesystem or inside of a bsa. The returned string will be "file" or "bsa".
 
 ```lua
-local exists = tes3.getFileSource(path)
+local exists, path = tes3.getFileSource(path)
 ```
 
 **Parameters**:
@@ -1883,7 +1883,8 @@ local exists = tes3.getFileSource(path)
 
 **Returns**:
 
-* `exists` (string)
+* `exists` (string?): A string representing the file source. This can be either `file` or `bsa`.
+* `path` (string?): If the file exists, this is a path to the file. If the file is from a BSA, it is a path inside the BSA.
 
 ***
 

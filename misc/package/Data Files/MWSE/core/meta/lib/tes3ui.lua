@@ -122,7 +122,7 @@ function tes3ui.findHelpLayerMenu(id) end
 
 --- Locates a top-level menu through its id.
 --- @param id string|number The ID of the menu to locate.
---- @return tes3uiElement result No description yet available.
+--- @return tes3uiElement? result No description yet available.
 function tes3ui.findMenu(id) end
 
 --- Forces the game to update the inventory tile GUI elements. Unlike tes3ui.updateInventoryTiles, this will force-resync the player's inventory to the GUI, rather than updating what is already in the GUI system.

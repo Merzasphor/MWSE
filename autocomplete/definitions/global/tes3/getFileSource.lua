@@ -4,6 +4,8 @@ return {
 	arguments = {
 		{ name = "path", type = "string" }
 	},
-	returns = "exists",
-	valuetype = "string",
+	returns = {
+		{ name = "exists", type = "string?", description = "A string representing the file source. This can be either `file` or `bsa`." },
+		{ name = "path", type = "string?", description = "If the file exists, this is a path to the file. If the file is from a BSA, it is a path inside the BSA." },
+	},
 }

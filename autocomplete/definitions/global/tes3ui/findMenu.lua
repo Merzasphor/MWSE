@@ -4,5 +4,5 @@ return {
 	arguments = {
 		{ name = "id", type = "string|number", description = "The ID of the menu to locate." },
 	},
-	valuetype = "tes3uiElement",
+	valuetype = "tes3uiElement?",
 }
