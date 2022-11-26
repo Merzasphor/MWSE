@@ -14,7 +14,9 @@
 --- @field factions tes3faction[] *Read-only*. A collection of all faction objects.
 --- @field globals tes3iterator *Read-only*. A collection of all global variable objects.
 --- @field isSavingOrLoading boolean *Read-only*. True when in the process of saving or loading the game.
---- @field magicEffects table<number, tes3magicEffect> *Read-only*. A table of references to all magic effects. This is a dictionary, as the effect list may have gaps.
+--- @field lastLoadedFile tes3gameFile *Read-only*. The last loaded savegame file.
+--- @field magicEffects table<integer, tes3magicEffect> *Read-only*. A table of references to all magic effects. This is a dictionary, as the effect list may have gaps.
+--- @field mapTexture niSourceTexture Access to the World map texture.
 --- @field objects tes3activator[]|tes3alchemy[]|tes3apparatus[]|tes3armor[]|tes3bodyPart[]|tes3book[]|tes3clothing[]|tes3container[]|tes3containerInstance[]|tes3creature[]|tes3creatureInstance[]|tes3door[]|tes3enchantment[]|tes3ingredient[]|tes3leveledCreature[]|tes3leveledItem[]|tes3light[]|tes3lockpick[]|tes3misc[]|tes3npc[]|tes3npcInstance[]|tes3probe[]|tes3reference[]|tes3repairTool[]|tes3spell[]|tes3static[]|tes3weapon[] *Read-only*. A collection of all other game objects.
 --- @field races tes3race[] *Read-only*. A collection of all race objects.
 --- @field regions tes3region[] *Read-only*. A collection of all region objects.
@@ -38,6 +40,12 @@ function tes3nonDynamicData:deleteObject(object) end
 --- Draws a map marker box for an exterior cell onto the world map.
 --- @param cell tes3cell No description yet available.
 function tes3nonDynamicData:drawCellMapMarker(cell) end
+
+--- **Deprecated. An alias for `tes3nonDynamicData.findDialogue`.** Locates a dialogue for a given ID.
+--- @deprecated
+--- @param id string No description yet available.
+--- @return tes3dialogue result No description yet available.
+function tes3nonDynamicData:findDialogInfo(id) end
 
 --- Locates a dialogue for a given ID.
 --- @param id string No description yet available.

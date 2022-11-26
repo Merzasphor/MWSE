@@ -21,13 +21,13 @@
 --- @field animationAttackState number The actor's animation state. Maps to values in [`tes3.animationState`](https://mwse.github.io/MWSE/references/animation-states/) namespace.
 --- @field attackSwing number When attacking, this value represents how much the weapon has been pulled back. The value ranges from [0.0 - 1.0].
 --- @field currentAnimationGroup number Actor's current animation group. Maps to values in [`tes3.animationGroup`](https://mwse.github.io/MWSE/references/animation-groups/) namespace.
---- @field hitTarget tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer The actor's attack target. The target will be saved in `hitTarget` field until a new attack is made.
+--- @field hitTarget tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|nil The actor's attack target. The target will be saved in `hitTarget` field until a new attack is made. Missing an attack will clear `hitTarget` field.
 --- @field lastBarterHoursPassed number No description yet available.
 --- @field nockedProjectile tes3mobileProjectile|tes3mobileSpellProjectile The currently nocked projectile the associated actor is using. It is available while charging a projectile attack, before releasing the projectile. This can be modified, but can only be set to nil, which will remove the projectile without consuming ammo.
 --- @field physicalAttackType number A number from the [`tes3.physicalAttackType`](https://mwse.github.io/MWSE/references/physical-attack-types/) enumeration identifying the physical attack type. Can be `tes3.physicalAttackType.slash`, `.chop`, `.thrust`, `.projectile`, `.creature1`, `.creature2`, or `.creature3.`
 --- @field physicalDamage number When attacking, this is the value of the weapon damage that was rolled. This value takes into account the actor's strength, attack swing and weapon condition, but it doesn't include difficulty nor target's armor. This value is updated on an attack. After the attack this value will still contain the damage rolled. It will be refreshed on a new attack.
 --- @field stolenFrom tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3enchantment|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3reference|tes3repairTool|tes3spell|tes3static|tes3weapon No description yet available.
---- @field target tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer The actor's attack target.
+--- @field target tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|nil The actor's attack target, stored until the actor attacks successfully again. In contrast to `hitTarget`, `target` property isn't cleared on missed attack.
 --- @field walkDestination tes3vector3 If moving to a location, this is the position to be walked to.
 tes3actionData = {}
 

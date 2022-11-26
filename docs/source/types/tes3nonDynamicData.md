@@ -89,13 +89,33 @@ A child container from [`tes3dataHandler`](https://mwse.github.io/MWSE/types/tes
 
 ***
 
+### `lastLoadedFile`
+
+*Read-only*. The last loaded savegame file.
+
+**Returns**:
+
+* `result` ([tes3gameFile](../../types/tes3gameFile))
+
+***
+
 ### `magicEffects`
 
 *Read-only*. A table of references to all magic effects. This is a dictionary, as the effect list may have gaps.
 
 **Returns**:
 
-* `result` (table&lt;number, [tes3magicEffect](../../types/tes3magicEffect)&gt;)
+* `result` (table&lt;integer, [tes3magicEffect](../../types/tes3magicEffect)&gt;)
+
+***
+
+### `mapTexture`
+
+Access to the World map texture.
+
+**Returns**:
+
+* `result` ([niSourceTexture](../../types/niSourceTexture))
 
 ***
 

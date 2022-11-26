@@ -62,11 +62,11 @@ Actor's current animation group. Maps to values in [`tes3.animationGroup`](https
 
 ### `hitTarget`
 
-The actor's attack target. The target will be saved in `hitTarget` field until a new attack is made.
+The actor's attack target. The target will be saved in `hitTarget` field until a new attack is made. Missing an attack will clear `hitTarget` field.
 
 **Returns**:
 
-* `result` ([tes3mobileActor](../../types/tes3mobileActor))
+* `result` ([tes3mobileActor](../../types/tes3mobileActor), nil)
 
 ***
 
@@ -122,11 +122,11 @@ No description yet available.
 
 ### `target`
 
-The actor's attack target.
+The actor's attack target, stored until the actor attacks successfully again. In contrast to `hitTarget`, `target` property isn't cleared on missed attack.
 
 **Returns**:
 
-* `result` ([tes3mobileActor](../../types/tes3mobileActor))
+* `result` ([tes3mobileActor](../../types/tes3mobileActor), nil)
 
 ***
 

@@ -15,13 +15,13 @@ The total number of items in the stack.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
 ### `object`
 
-The core game object that the stack represents.
+*Read-only*. The core game object that the stack represents.
 
 **Returns**:
 

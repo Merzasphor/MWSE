@@ -125,7 +125,7 @@ Represents a loaded ESM, ESP, or ESS file.
 
 **Returns**:
 
-* `result` (number[])
+* `result` (string[])
 
 ***
 

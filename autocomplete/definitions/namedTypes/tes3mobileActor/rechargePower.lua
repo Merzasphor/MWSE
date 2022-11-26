@@ -4,5 +4,5 @@ return {
 	arguments = {
 		{ name = "power", type = "tes3spell", description = "The spell object for the power." }
 	},
-	valuetype = "number",
+	valuetype = "boolean",
 }

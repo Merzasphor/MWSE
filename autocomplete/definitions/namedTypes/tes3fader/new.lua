@@ -6,4 +6,9 @@ return {
 		{ name = "unknownBool", type = "boolean", optional = true, default = true },
 	},
 	returns = {{ name = "fader", type = "tes3fader" }},
+	examples = {
+		["..\\..\\..\\events\\standard\\fadersCreated\\faderExample"] = {
+			title = "Creating a new fader",
+		}
+	}
 }

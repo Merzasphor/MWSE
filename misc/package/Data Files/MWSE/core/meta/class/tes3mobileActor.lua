@@ -90,10 +90,10 @@
 --- @field nextActionWeight number *Read-only*. No description yet available.
 --- @field paralyze number Direct access to the actor's paralyze effect attribute.
 --- @field personality tes3statistic|tes3statisticSkill *Read-only*. Direct access to the actor's personality attribute statistic.
---- @field readiedAmmo tes3equipmentStack The currently equipped ammo.
---- @field readiedAmmoCount number The number of ammo equipped for the readied ammo.
---- @field readiedShield tes3equipmentStack The currently equipped shield.
---- @field readiedWeapon tes3equipmentStack The currently equipped weapon.
+--- @field readiedAmmo tes3equipmentStack|nil The currently equipped ammo, if any.
+--- @field readiedAmmoCount integer The number of ammo equipped for the readied ammo.
+--- @field readiedShield tes3equipmentStack|nil The currently equipped shield, if any.
+--- @field readiedWeapon tes3equipmentStack|nil The currently equipped weapon, if any.
 --- @field resistBlightDisease number Direct access to the actor's blight disease resistance effect attribute.
 --- @field resistCommonDisease number Direct access to the actor's common disease resistance effect attribute.
 --- @field resistCorprus number Direct access to the actor's corprus disease resistance effect attribute.
@@ -338,7 +338,7 @@ function tes3mobileActor:kill() end
 
 --- Makes a power immediately available for casting again.
 --- @param power tes3spell The spell object for the power.
---- @return number result No description yet available.
+--- @return boolean result No description yet available.
 function tes3mobileActor:rechargePower(power) end
 
 --- Sets the timestamp a recharging power was used. Powers recharge 24 hours after this timestamp.

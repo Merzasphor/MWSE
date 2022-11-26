@@ -7,8 +7,8 @@ function metatable:openURL()
 		tes3.messageBox({
 			message = self.confirmText or mwse.mcm.i18n("Open web browser?"),
 			buttons = {
-				tes3.findGMST(tes3.gmst.sYes).value,
-				tes3.findGMST(tes3.gmst.sNo).value,
+				tes3.findGMST(tes3.gmst.sYes).value --[[@as string]],
+				tes3.findGMST(tes3.gmst.sNo).value --[[@as string]],
 			},
 			callback = function(btnCallbackData)
 				if btnCallbackData.button == 0 then
@@ -23,7 +23,7 @@ end
 
 ---@param e tes3uiEventData
 local function onHyperlinkClicked(e)
-	local widget = e.source.widget --- @type tes3uiHyperlink
+	local widget = e.source.widget ---@cast widget tes3uiHyperlink
 	widget:openURL()
 end
 

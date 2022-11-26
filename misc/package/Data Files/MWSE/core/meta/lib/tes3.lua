@@ -1798,6 +1798,13 @@ function tes3.pushKey(keyCode) end
 function tes3.random(seed) end
 
 --- Performs a ray test and returns various information related to the result(s). If `findAll` is set, the result will be a table of results, otherwise only the first result is returned.
+--- 
+--- !!! tip Improving performance of rayTest
+--- 		1. Keep maximum size of objects reasonable, as well as triangle counts
+--- 		2. Whenever possible set a maxDistance in your rayTest calls
+--- 		3. Keep a cached table of ignored objects that you pass to rayTest
+--- 		4. Whenever possible call ray test on only a subset of the game's scene graph. It can be `worldPickRoot` for interactable objects, `worldLandscapeRoot`, or `worldObjectRoot` for other static, non-interactable objects. You could even pass a smaller subset of the scene graph with a different `NiNode` you aquired yourself. If your mod's logic only needs specific things you can narrow it down for big performance improvement.
+--- 
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3/#tes3raytest).
 --- @param params tes3.rayTest.params This table accepts the following values:

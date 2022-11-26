@@ -939,11 +939,11 @@ Access to the root mobile object movement flags from the previous frame, represe
 
 ### `readiedAmmo`
 
-The currently equipped ammo.
+The currently equipped ammo, if any.
 
 **Returns**:
 
-* `result` ([tes3equipmentStack](../../types/tes3equipmentStack))
+* `result` ([tes3equipmentStack](../../types/tes3equipmentStack), nil)
 
 ***
 
@@ -953,27 +953,27 @@ The number of ammo equipped for the readied ammo.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
 ### `readiedShield`
 
-The currently equipped shield.
+The currently equipped shield, if any.
 
 **Returns**:
 
-* `result` ([tes3equipmentStack](../../types/tes3equipmentStack))
+* `result` ([tes3equipmentStack](../../types/tes3equipmentStack), nil)
 
 ***
 
 ### `readiedWeapon`
 
-The currently equipped weapon.
+The currently equipped weapon, if any.
 
 **Returns**:
 
-* `result` ([tes3equipmentStack](../../types/tes3equipmentStack))
+* `result` ([tes3equipmentStack](../../types/tes3equipmentStack), nil)
 
 ***
 
@@ -1705,7 +1705,7 @@ local result = myObject:rechargePower(power)
 
 **Returns**:
 
-* `result` (number)
+* `result` (boolean)
 
 ***
 
