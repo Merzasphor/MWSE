@@ -176,9 +176,7 @@ function tes3.addJournalEntry(params) end
 --- 
 --- `canCastTouch`: boolean? — *Default*: `true`. A flag which controls whether this effect can be used with cast on touch range.
 --- 
---- `casterLinked`: boolean? — *Default*: `true`. Access to the base flag that determines if this effect must end if caster is dead, or not an NPC/creature. Not allowed in container or door trap spells.
---- --- 
---- --- Note that this property is hidden in the Construction Set.
+--- `casterLinked`: boolean? — *Default*: `true`. Access to the base flag that determines if this effect must end if caster is dead, or not an NPC/creature. Not allowed in container or door trap spells. Note that this property is hidden in the Construction Set.
 --- 
 --- `hasContinuousVFX`: boolean? — *Default*: `true`. A flag which controls whether the effect's visual is continuously played during the whole duration of the effect.
 --- 
@@ -271,9 +269,7 @@ function tes3.addMagicEffect(params) end
 --- @field canCastSelf boolean? *Default*: `true`. A flag which controls whether this effect can be used with cast on self range.
 --- @field canCastTarget boolean? *Default*: `true`. A flag which controls whether this effect can be used with cast on target range.
 --- @field canCastTouch boolean? *Default*: `true`. A flag which controls whether this effect can be used with cast on touch range.
---- @field casterLinked boolean? *Default*: `true`. Access to the base flag that determines if this effect must end if caster is dead, or not an NPC/creature. Not allowed in container or door trap spells.
---- 
---- Note that this property is hidden in the Construction Set.
+--- @field casterLinked boolean? *Default*: `true`. Access to the base flag that determines if this effect must end if caster is dead, or not an NPC/creature. Not allowed in container or door trap spells. Note that this property is hidden in the Construction Set.
 --- @field hasContinuousVFX boolean? *Default*: `true`. A flag which controls whether the effect's visual is continuously played during the whole duration of the effect.
 --- @field hasNoDuration boolean? *Default*: `true`. A flag which controls whether this effect doesn't have duration.
 --- @field hasNoMagnitude boolean? *Default*: `true`. A flag which controls whether this effect doesn't have magnitude.
