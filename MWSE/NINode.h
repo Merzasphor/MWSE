@@ -31,6 +31,7 @@ namespace NI {
 
 		void attachEffect(DynamicEffect* effect);
 		void detachEffect(DynamicEffect* effect);
+		void detachAllEffects();
 		Pointer<DynamicEffect> getEffect(int type);
 
 		void attachChild_lua(AVObject* child, sol::optional<bool> useFirstAvailable);

@@ -377,6 +377,16 @@ local boundingBox = myObject:createBoundingBox()
 
 ***
 
+### `detachAllEffects`
+
+Detaches all dynamic effect from the effect list of the node.
+
+```lua
+myObject:detachAllEffects()
+```
+
+***
+
 ### `detachAllProperties`
 
 Detaches all the properties on the object and returns them in the table.

@@ -14,10 +14,11 @@ namespace mwse::lua {
 
 		// Basic function binding.
 		usertypeDefinition["attachChild"] = &NI::Node::attachChild_lua;
+		usertypeDefinition["attachEffect"] = &NI::Node::attachEffect;
 		usertypeDefinition["createBoundingBox"] = &NI::Node::createBoundingBox_lua;
+		usertypeDefinition["detachAllEffects"] = &NI::Node::detachAllEffects;
 		usertypeDefinition["detachChild"] = &NI::Node::detachChildHandled;
 		usertypeDefinition["detachChildAt"] = &NI::Node::detachChildAt_lua;
-		usertypeDefinition["attachEffect"] = &NI::Node::attachEffect;
 		usertypeDefinition["detachEffect"] = &NI::Node::detachEffect;
 		usertypeDefinition["getEffect"] = &NI::Node::getEffect;
 	}

@@ -56,6 +56,11 @@ namespace NI {
 		NI_Node_DetachEffect(this, effect);
 	}
 
+	const auto NI_Node_DetachAllEffects = reinterpret_cast<void(__thiscall*)(Node*)>(0x6C92C0);
+	void Node::detachAllEffects() {
+		NI_Node_DetachAllEffects(this);
+	}
+
 	Pointer<DynamicEffect> Node::getEffect(int type) {
 		auto effectNode = &effectList;
 		while (effectNode) {
