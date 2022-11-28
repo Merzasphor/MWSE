@@ -30,6 +30,7 @@
 #include "NISourceTexture.h"
 #include "NISpotLight.h"
 #include "NISwitchNode.h"
+#include "NITextureEffect.h"
 #include "NITimeController.h"
 #include "NITriShape.h"
 
@@ -269,6 +270,9 @@ namespace NI {
 				break;
 			case RTTIStaticPtr::TES3ObjectExtraData:
 				ref = sol::make_object_userdata(L, Pointer(static_cast<Tes3ExtraData*>(this)));
+				break;
+			case RTTIStaticPtr::NiTextureEffect:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<TextureEffect*>(this)));
 				break;
 			case RTTIStaticPtr::NiTexturingProperty:
 				ref = sol::make_object_userdata(L, Pointer(static_cast<TexturingProperty*>(this)));
