@@ -409,6 +409,7 @@ namespace TES3 {
 		}
 		else {
 			mwse::log::getLog() << "[MWSE] WARNING: An unknown object type was identified with a virtual table address of 0x" << std::hex << (unsigned int)vTable.base << ". Report this to MWSE developers." << std::endl;
+			mwse::lua::logStackTrace();
 		}
 
 		return ref;

@@ -296,6 +296,7 @@ namespace TES3 {
 		}
 		else {
 			mwse::log::getLog() << "[MWSE] WARNING: An unknown mobile type was identified with a virtual table address of 0x" << std::hex << (unsigned int)vTable.mobileObject << ". Report this to MWSE developers." << std::endl;
+			mwse::lua::logStackTrace();
 		}
 
 		mobileObjectCacheMutex.unlock();
