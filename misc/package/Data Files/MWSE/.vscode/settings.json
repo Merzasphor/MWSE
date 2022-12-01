@@ -1,34 +1,34 @@
 {
-    // Configure lua runtime.
-    "Lua.runtime.version": "LuaJIT",
-    "Lua.runtime.special" : {
-        "include" : "require",
-        "dofile" : "require"
-    },
-    "Lua.runtime.path":[
-        "core/?.lua",
-        "core/?/init.lua",
-        "lib/?.lua",
-        "lib/?/init.lua",
-        "mods/?.lua",
-        "mods/?/init.lua",
-        "lua/?.lua",
-        "lua/?/init.lua"
-    ],
+	// Configure lua runtime.
+	"Lua.runtime.version": "LuaJIT",
+	"Lua.runtime.special": {
+		"include": "require",
+		"dofile": "require"
+	},
+	"Lua.runtime.path": [
+		"core/?.lua",
+		"core/?/init.lua",
+		"lib/?.lua",
+		"lib/?/init.lua",
+		"mods/?.lua",
+		"mods/?/init.lua",
+		"lua/?.lua",
+		"lua/?/init.lua"
+	],
 
-    // We are too powerful for default settings.
-    "Lua.workspace.maxPreload": 10000,
-    "Lua.workspace.preloadFileSize": 1000,
+	// We are too powerful for default settings.
+	"Lua.workspace.maxPreload": 10000,
+	"Lua.workspace.preloadFileSize": 1000,
 
-    // Ignore problematic files.
-    "Lua.workspace.ignoreDir": [
-        "./core/lib/*",
+	// Ignore problematic files.
+	"Lua.workspace.ignoreDir": [
+		"./core/lib/*",
 		"./core/mcm/*",
-        "./core/mwse/*",
-        "./core/mwse_init.lua"
-    ],
+		"./core/mwse/*",
+		"./core/mwse_init.lua"
+	],
 
-    // Ignore any potential 3rd party checks. We provide our definitions in core/meta
-    "Lua.workspace.checkThirdParty": false,
-    "Lua.completion.autoRequire": false
+	// Ignore any potential 3rd party checks. We provide our definitions in core/meta
+	"Lua.workspace.checkThirdParty": false,
+	"Lua.completion.autoRequire": false
 }
