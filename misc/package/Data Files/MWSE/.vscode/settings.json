@@ -22,10 +22,10 @@
 
     // Ignore problematic files.
     "Lua.workspace.ignoreDir": [
-        "./core/tes3/*",
+        "./core/lib/*",
+		"./core/mcm/*",
         "./core/mwse/*",
-        "./core/mwse_init.lua",
-        "./core/event.lua"
+        "./core/mwse_init.lua"
     ],
 
     // Ignore any potential 3rd party checks. We provide our definitions in core/meta
