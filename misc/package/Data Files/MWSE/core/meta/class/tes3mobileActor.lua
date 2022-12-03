@@ -31,15 +31,15 @@
 --- @field canJumpMidair boolean *Read-only*. If `true`, the actor is currently able to jump midair. This is equal to checking if the actor is not dead, knocked down, knocked out, paralyzed, swimming or flying. For more information on midair jumping see [`tes3mobileActor:doJump()`](https://mwse.github.io/MWSE/types/tes3mobileActor/#dojump).
 --- @field cell tes3cell *Read-only*. Fetches the cell that the actor is in.
 --- @field chameleon number Direct access to the actor's chameleon effect attribute.
---- @field collidingReference tes3reference *Read-only*. The reference that the mobile has collided with this frame.
+--- @field collidingReference tes3reference|nil *Read-only*. The reference that the mobile has collided with this frame. Doesn't include actors and terrain.
 --- @field combatSession tes3combatSession|nil *Read-only*. Combat session data. This exists while the actor is in combat to provide memory for AI combat decisions. Doesn't exist on the player's mobile.
 --- @field corpseHourstamp number This is the time measured in hours from the beginning of the game when the actor died. Returns a UNIX-style timestamp based on in-world simulation time since the start of the era. For living actors this field has value a of `0`.
---- @field currentEnchantedItem tes3equipmentStack *Read-only*. The currently equipped enchanted item that the actor will use.
+--- @field currentEnchantedItem tes3equipmentStack|nil *Read-only*. The currently equipped enchanted item that the actor will use.
 --- @field currentSpell tes3spell *Read-only*. The currently equipped spell that the actor will use.
 --- @field effectAttributes number[] *Read-only*. Access to a table of 24 numbers for the actor's effect attributes. In order those are: `attackBonus`, `sanctuary`, `resistMagicka`, `resistFire`, `resistFrost`, `resistShock`, `resistCommonDisease`, `resistBlightDisease`, `resistCorprus`, `resistPoison`, `resistParalysis`, `chameleon`, `resistNormalWeapons`, `waterBreathing`, `waterWalking`, `swiftSwim`, `jump`, `levitate`, `shield`, `sound`, `silence`, `blind`, `paralyze`, and `invisibility`. Each of those can be accessed individually. For example, `tes3mobileActor.chameleon`.
 --- @field encumbrance tes3statistic|tes3statisticSkill *Read-only*. Access to the actor's encumbrance statistic.
 --- @field endurance tes3statistic|tes3statisticSkill *Read-only*. Direct access to the actor's endurance attribute statistic.
---- @field facing number *Read-only*. The facing of the actor, in radians.
+--- @field facing number *Read-only*. The facing of the actor, in radians. It corresponds to the `mobile.reference.orientation.z`. Facing of 0 corresponds to the in game North, facing of PI corresponds to the game South. It's in clockwise direction.
 --- @field fatigue tes3statistic|tes3statisticSkill *Read-only*. Access to the actor's fatigue statistic.
 --- @field fight number The actor's fight AI value.
 --- @field flee number The actor's flee AI value.
@@ -271,19 +271,19 @@ function tes3mobileActor:equipMagic(params) end
 --- @field equipItem boolean? *Default*: `false`. Only valid if an item has been assigned to `source`. If `true`, the item assigned to `source` will be equipped. Requires the actor to have the item in their inventory. If `false`, `itemData` must not be nil.
 --- @field updateGUI boolean? *Default*: `true`. Only valid if this actor is the player. If `false`, the player GUI will not be updated to reflect the change to equipped magic.
 
---- Fetches a filtered list of the active magic effects on the actor. Returns a table with [`tes3activeMagicEffect`](https://mwse.github.io/MWSE/types/tes3activeMagicEffect/) items.
+--- Fetches a filtered list of the active magic effects on the actor.
 --- @param params tes3mobileActor.getActiveMagicEffects.params? This table accepts the following values:
 --- 
---- `effect`: number? — *Optional*. The magic effect ID to search for.
+--- `effect`: integer? — *Optional*. The magic effect ID to search for, from [`tes3.effect`](https://mwse.github.io/MWSE/references/magic-effects/) table.
 --- 
---- `serial`: number? — *Optional*. The magic instance serial to search for.
+--- `serial`: integer? — *Optional*. The magic instance serial to search for.
 --- @return tes3activeMagicEffect[] result No description yet available.
 function tes3mobileActor:getActiveMagicEffects(params) end
 
 ---Table parameter definitions for `tes3mobileActor.getActiveMagicEffects`.
 --- @class tes3mobileActor.getActiveMagicEffects.params
---- @field effect number? *Optional*. The magic effect ID to search for.
---- @field serial number? *Optional*. The magic instance serial to search for.
+--- @field effect integer? *Optional*. The magic effect ID to search for, from [`tes3.effect`](https://mwse.github.io/MWSE/references/magic-effects/) table.
+--- @field serial integer? *Optional*. The magic instance serial to search for.
 
 --- *Read-only*. Gets the weight of the boots equipped on the actor, or 0 if no boots are equipped.
 --- @return number result No description yet available.
@@ -308,17 +308,21 @@ function tes3mobileActor:getSkillStatistic(skillId) end
 --- @return number result No description yet available.
 function tes3mobileActor:getSkillValue(skillId) end
 
---- No description yet available.
---- @return number result No description yet available.
-function tes3mobileActor:getViewToActor() end
+--- Returns the angle between provided actor and the front side of the actor on whom the method was called. The returned angle is in degress in range [-180, 180], where 0 degrees is directly in front of the actor, the negative values are on the actor's left side, and positive values on the actor's right.
+--- @param mobile tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer The target actor to calculate the facing angle.
+--- @return number angle In range of [-180, 180] in degrees.
+function tes3mobileActor:getViewToActor(mobile) end
 
---- No description yet available.
---- @return number result No description yet available.
-function tes3mobileActor:getViewToPoint() end
+--- Returns the angle between provided point in space and the front side of the actor on whom the method was called. The returned angle is in degress in range [-180, 180], where 0 degrees is directly in front of the actor, the negative values are on the actor's left side, and positive values on the actor's right.
+--- @param point tes3vector3 The target point to calculate the facing angle.
+--- @return number angle In range of [-180, 180] in degrees.
+function tes3mobileActor:getViewToPoint(point) end
 
---- No description yet available.
---- @return number result No description yet available.
-function tes3mobileActor:getViewToPointWithFacing() end
+--- Returns the angle between provided point in space and the actor's current position with provided facing (which effectively overrides the actor's facing used in other getViewTo methods). The returned angle is in degress in range [-180, 180], where 0 degrees is directly in front of the provided facing angle with the origin in actor's position.
+--- @param facing number The facing angle in radians. The values should be in [0, PI] interval.
+--- @param point tes3vector3 The target point to calculate the facing angle.
+--- @return number angle In range of [-180, 180] in degrees.
+function tes3mobileActor:getViewToPointWithFacing(facing, point) end
 
 --- Fetches the weapon speed of the actor's currently equipped weapon, or `1.0` if no weapon is equipped.
 --- @return number result No description yet available.
