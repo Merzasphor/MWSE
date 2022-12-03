@@ -17,4 +17,4 @@ local function onDamaged(e)
 	end
 end
 
-event.register("damaged", onDamaged)
+event.register(tes3.event.damaged, onDamaged)

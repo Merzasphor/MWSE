@@ -2090,11 +2090,11 @@ local result = myObject:applyDamage({ damage = ..., applyArmor = ..., resistAttr
 
 * `params` (table)
 	* `damage` (number): The amount of damage to apply.
-	* `applyArmor` (boolean): *Optional*. If armor should mitigate the incoming damage. If the player is the target, armor experience will be gained.
+	* `applyArmor` (boolean): *Default*: `false`. If armor should mitigate the incoming damage. If the player is the target, armor experience will be gained.
 	* `resistAttribute` (number): *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
-	* `applyDifficulty` (boolean): *Optional*. If the game difficulty modifier should be applied. Must be used with the `playerAttack` argument to apply the correct modifier.
+	* `applyDifficulty` (boolean): *Default*: `false`. If the game difficulty modifier should be applied. Must be used with the `playerAttack` argument to apply the correct modifier.
 	* `playerAttack` (boolean): *Optional*. If the attack came from the player. Used for difficulty calculation.
-	* `doNotChangeHealth` (boolean): *Optional*. If all armor effects except the health change should be applied. These include hit sounds, armor condition damage, and player experience gain from being hit.
+	* `doNotChangeHealth` (boolean): *Default*: `false`. If all armor effects except the health change should be applied. These include hit sounds, armor condition damage, and player experience gain from being hit.
 
 **Returns**:
 
@@ -2122,29 +2122,6 @@ local result = myObject:applyFatigueDamage(fatigueDamage, swing, alwaysPlayHitVo
 
 ***
 
-### `applyHealthDamage`
-
-**Deprecated, please use [`applyDamage()`](https://mwse.github.io/MWSE/types/tes3mobileActor/#applydamage) instead.**
-
-Damages the actor.
-
-```lua
-local result = myObject:applyHealthDamage(damage, isPlayerAttack, scaleWithDifficulty, doNotChangeHealth)
-```
-
-**Parameters**:
-
-* `damage` (number): The amount of damage to apply.
-* `isPlayerAttack` (boolean): Used to calculate difficulty scaling.
-* `scaleWithDifficulty` (boolean): Apply difficulty scaling to the damage.
-* `doNotChangeHealth` (boolean): Do all the audiovisual effects of damage without the health change.
-
-**Returns**:
-
-* `result` (boolean)
-
-***
-
 ### `applyJumpFatigueCost`
 
 Reduces the actor's current fatigue by the amount a regular jump would currently cost.
@@ -2167,7 +2144,7 @@ local result = myObject:calcEffectiveDamage({ damage = ..., applyArmor = ..., re
 
 * `params` (table)
 	* `damage` (number): The amount of damage to apply.
-	* `applyArmor` (boolean): *Optional*. If armor should mitigate the incoming damage.
+	* `applyArmor` (boolean): *Default*: `false`. If armor should mitigate the incoming damage.
 	* `resistAttribute` (number): *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
 
 **Returns**:

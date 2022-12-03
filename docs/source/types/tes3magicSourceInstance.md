@@ -362,7 +362,7 @@ myObject:playVisualEffect({ effectIndex = ..., position = ..., visual = ..., sca
 		end
 	end
 	
-	event.register("damaged", onDamaged)
+	event.register(tes3.event.damaged, onDamaged)
 
 	```
 

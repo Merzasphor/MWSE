@@ -202,7 +202,7 @@ True if this object is an editor marker for a gameplay location. These include t
 
 ### `isSilver`
 
-If true, the weapon has a silver material flag.
+If true, the weapon has a silver material flag. Silver weapons deal double damage to the Undead and Werewolf creatures.
 
 **Returns**:
 
@@ -332,7 +332,7 @@ The weapon's relative reach. A value of `1.0` is the standard reach. It is multi
 
 ### `scale`
 
-The object's scale.
+The object's scale. The value range is (0, 10).
 
 **Returns**:
 
@@ -584,11 +584,11 @@ local result = myObject:getMaterialFlag(flagBit)
 
 **Parameters**:
 
-* `flagBit` (number)
+* `flagBit` (integer): `0` corresponds to the `ignoresNormalWeaponResistance` field, `1` corresponds to the `isSilver`.
 
 **Returns**:
 
-* `result` (number)
+* `result` (boolean)
 
 ***
 
@@ -602,7 +602,7 @@ myObject:setMaterialFlag(flagBit, value)
 
 **Parameters**:
 
-* `flagBit` (number)
+* `flagBit` (integer): `0` corresponds to the `ignoresNormalWeaponResistance` field, `1` corresponds to the `isSilver`.
 * `value` (boolean)
 
 ***

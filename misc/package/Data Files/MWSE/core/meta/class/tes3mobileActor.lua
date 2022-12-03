@@ -131,26 +131,26 @@ tes3mobileActor = {}
 --- 
 --- `damage`: number — The amount of damage to apply.
 --- 
---- `applyArmor`: boolean? — *Optional*. If armor should mitigate the incoming damage. If the player is the target, armor experience will be gained.
+--- `applyArmor`: boolean? — *Default*: `false`. If armor should mitigate the incoming damage. If the player is the target, armor experience will be gained.
 --- 
 --- `resistAttribute`: number? — *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
 --- 
---- `applyDifficulty`: boolean? — *Optional*. If the game difficulty modifier should be applied. Must be used with the `playerAttack` argument to apply the correct modifier.
+--- `applyDifficulty`: boolean? — *Default*: `false`. If the game difficulty modifier should be applied. Must be used with the `playerAttack` argument to apply the correct modifier.
 --- 
 --- `playerAttack`: boolean? — *Optional*. If the attack came from the player. Used for difficulty calculation.
 --- 
---- `doNotChangeHealth`: boolean? — *Optional*. If all armor effects except the health change should be applied. These include hit sounds, armor condition damage, and player experience gain from being hit.
+--- `doNotChangeHealth`: boolean? — *Default*: `false`. If all armor effects except the health change should be applied. These include hit sounds, armor condition damage, and player experience gain from being hit.
 --- @return number result No description yet available.
 function tes3mobileActor:applyDamage(params) end
 
 ---Table parameter definitions for `tes3mobileActor.applyDamage`.
 --- @class tes3mobileActor.applyDamage.params
 --- @field damage number The amount of damage to apply.
---- @field applyArmor boolean? *Optional*. If armor should mitigate the incoming damage. If the player is the target, armor experience will be gained.
+--- @field applyArmor boolean? *Default*: `false`. If armor should mitigate the incoming damage. If the player is the target, armor experience will be gained.
 --- @field resistAttribute number? *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
---- @field applyDifficulty boolean? *Optional*. If the game difficulty modifier should be applied. Must be used with the `playerAttack` argument to apply the correct modifier.
+--- @field applyDifficulty boolean? *Default*: `false`. If the game difficulty modifier should be applied. Must be used with the `playerAttack` argument to apply the correct modifier.
 --- @field playerAttack boolean? *Optional*. If the attack came from the player. Used for difficulty calculation.
---- @field doNotChangeHealth boolean? *Optional*. If all armor effects except the health change should be applied. These include hit sounds, armor condition damage, and player experience gain from being hit.
+--- @field doNotChangeHealth boolean? *Default*: `false`. If all armor effects except the health change should be applied. These include hit sounds, armor condition damage, and player experience gain from being hit.
 
 --- Damages the actor's fatigue, with accompanying reaction from the reciever. Invokes the [`damageHandToHand`](https://mwse.github.io/MWSE/events/damageHandToHand/) and [`damagedHandToHand`](https://mwse.github.io/MWSE/events/damagedHandToHand/) events, with `tes3.damageSource.script` source. Returns the actual fatigue damage done.
 --- @param fatigueDamage number The amount of fatigue damage to apply.
@@ -162,6 +162,7 @@ function tes3mobileActor:applyFatigueDamage(fatigueDamage, swing, alwaysPlayHitV
 --- **Deprecated, please use [`applyDamage()`](https://mwse.github.io/MWSE/types/tes3mobileActor/#applydamage) instead.**
 --- 
 --- Damages the actor.
+--- @deprecated
 --- @param damage number The amount of damage to apply.
 --- @param isPlayerAttack boolean Used to calculate difficulty scaling.
 --- @param scaleWithDifficulty boolean Apply difficulty scaling to the damage.
@@ -177,7 +178,7 @@ function tes3mobileActor:applyJumpFatigueCost() end
 --- 
 --- `damage`: number — The amount of damage to apply.
 --- 
---- `applyArmor`: boolean? — *Optional*. If armor should mitigate the incoming damage.
+--- `applyArmor`: boolean? — *Default*: `false`. If armor should mitigate the incoming damage.
 --- 
 --- `resistAttribute`: number? — *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
 --- @return number result No description yet available.
@@ -186,7 +187,7 @@ function tes3mobileActor:calcEffectiveDamage(params) end
 ---Table parameter definitions for `tes3mobileActor.calcEffectiveDamage`.
 --- @class tes3mobileActor.calcEffectiveDamage.params
 --- @field damage number The amount of damage to apply.
---- @field applyArmor boolean? *Optional*. If armor should mitigate the incoming damage.
+--- @field applyArmor boolean? *Default*: `false`. If armor should mitigate the incoming damage.
 --- @field resistAttribute number? *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
 
 --- Calculates the starting velocity of a jump.

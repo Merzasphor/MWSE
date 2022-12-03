@@ -61,7 +61,7 @@ tes3reference = {}
 function tes3reference:activate(reference) end
 
 --- Unsets a bit in the reference's action data attachment
---- @param flagIndex number The action flag to clear. Maps to values in [`tes3.actionFlag`](https://mwse.github.io/MWSE/references/action-flags/) namespace.
+--- @param flagIndex integer The action flag to clear. Maps to values in [`tes3.actionFlag`](https://mwse.github.io/MWSE/references/action-flags/) namespace.
 function tes3reference:clearActionFlag(flagIndex) end
 
 --- Clones a reference for a base actor into a reference to an instance of that actor. For example, this will force a container to resolve its leveled items and have its own unique inventory.
@@ -109,8 +109,8 @@ function tes3reference:getOrCreateAttachedDynamicLight(light, phase) end
 --- @return boolean result No description yet available.
 function tes3reference:onCloseInventory() end
 
---- Sets a bit in the reference's action data attachment
---- @param flagIndex number The action flag to clear.
+--- Sets a bit in the reference's action data attachment.
+--- @param flagIndex integer The action flag to clear. Maps to values in [`tes3.actionFlag`](https://mwse.github.io/MWSE/references/action-flags/) namespace.
 function tes3reference:setActionFlag(flagIndex) end
 
 --- Sets the dynamic lighting state of the reference using the global data handler.
@@ -118,11 +118,11 @@ function tes3reference:setDynamicLighting() end
 
 --- Sets if this reference has active collision. This is preferable to changing the `hasNoCollision` property, if you are manipulating multiple objects at once and do not want to constantly recalculate collision groups.
 --- @param hasNoCollision boolean If `true`, the reference no longer has collision.
---- @param updateCollisions boolean If `true`, collision groups for the active cells are recalculated.
+--- @param updateCollisions boolean? *Default*: `true`. If `true`, collision groups for the active cells are recalculated.
 function tes3reference:setNoCollisionFlag(hasNoCollision, updateCollisions) end
 
 --- Returns the flag's value in the reference's action data attachment.
---- @param flagIndex number The action flag to test. Maps to values in [`tes3.actionFlag`](https://mwse.github.io/MWSE/references/action-flags/) namespace.
+--- @param flagIndex integer The action flag to test. Maps to values in [`tes3.actionFlag`](https://mwse.github.io/MWSE/references/action-flags/) namespace.
 --- @return boolean result No description yet available.
 function tes3reference:testActionFlag(flagIndex) end
 

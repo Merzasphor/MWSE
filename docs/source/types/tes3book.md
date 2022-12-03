@@ -192,7 +192,7 @@ The previous object in parent collection's list.
 
 ### `scale`
 
-The object's scale.
+The object's scale. The value range is (0, 10).
 
 **Returns**:
 
@@ -232,11 +232,11 @@ The script that runs on the object.
 
 ### `skill`
 
-The skill learned from the book, or `-1` if the book doesn't have one, or has already been read.
+The skill learned from the book (from [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) table), or `-1` if the book doesn't have one, or has already been read.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 

@@ -1,6 +1,6 @@
 return {
 	type = "value",
-	description = [[An array of textures used for the enchanted item effect.]],
+	description = [[An array of textures used for the enchanted item effect, 32 elements long.]],
 	readOnly = true,
-	valuetype = "tes3iterator",
+	valuetype = "niSourceTexture[]",
 }

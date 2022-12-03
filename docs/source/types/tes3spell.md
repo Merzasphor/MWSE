@@ -253,7 +253,7 @@ The previous object in parent collection's list.
 
 ### `scale`
 
-The object's scale.
+The object's scale. The value range is (0, 10).
 
 **Returns**:
 
@@ -348,7 +348,7 @@ local result = myObject:calculateCastChance({ checkMagicka = ..., caster = ... }
 **Parameters**:
 
 * `params` (table)
-	* `checkMagicka` (boolean): *Optional*. Determines if the caster's magicka should be taken into account during the calculation.
+	* `checkMagicka` (boolean): *Default*: `true`. Determines if the caster's magicka should be taken into account during the calculation.
 	* `caster` ([tes3reference](../../types/tes3reference), [tes3mobileActor](../../types/tes3mobileActor)): The caster to perform the calculation against.
 
 **Returns**:
@@ -388,13 +388,13 @@ local result = myObject:getActiveEffectCount()
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
 ### `getFirstIndexOfEffect`
 
-Gets the first index of an effect ID in the spell effect table.
+Gets the first index of an effect ID in the spell effect table. Returns `-1` if provided effect doesn't exist in the spell
 
 ```lua
 local result = myObject:getFirstIndexOfEffect(effectId)
@@ -402,11 +402,11 @@ local result = myObject:getFirstIndexOfEffect(effectId)
 
 **Parameters**:
 
-* `effectId` (number): The ID of a `tes3effect` object to look for.
+* `effectId` (number): A value from [`tes3.effect`](https://mwse.github.io/MWSE/references/magic-effects/) table.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -442,7 +442,7 @@ local schoolID = myObject:getLeastProficientSchool(actor)
 
 **Returns**:
 
-* `schoolID` (number, nil): The least proficient school ID, or `nil` if the spell has no valid effects.
+* `schoolID` (number, nil): The least proficient school ID (from [`tes3.magicSchool`](https://mwse.github.io/MWSE/references/magic-schools/) table), or `nil` if the spell has no valid effects.
 
 ***
 

@@ -231,11 +231,11 @@ The sound played when an actor is losing health by drowning.
 
 ### `enchantedItemEffectTextures`
 
-*Read-only*. An array of textures used for the enchanted item effect.
+*Read-only*. An array of textures used for the enchanted item effect, 32 elements long.
 
 **Returns**:
 
-* `result` ([tes3iterator](../../types/tes3iterator))
+* `result` ([niSourceTexture](../../types/niSourceTexture)[])
 
 ***
 

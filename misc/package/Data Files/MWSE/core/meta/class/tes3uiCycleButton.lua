@@ -22,7 +22,7 @@ function tes3uiCycleButton:addOption(option) end
 function tes3uiCycleButton:getIndexForValue(value) end
 
 --- Gets the text element to use.
---- @return number index The found index matching the value.
+--- @return tes3uiElement element The `tes3uiElement` containing the button's text.
 function tes3uiCycleButton:getTextElement() end
 
 --- Cycles the button to the next option.

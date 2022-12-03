@@ -442,7 +442,7 @@ The previous object in parent collection's list.
 
 ### `scale`
 
-The object's scale.
+The object's scale. The value range is (0, 10).
 
 **Returns**:
 
@@ -630,7 +630,7 @@ myObject:clearActionFlag(flagIndex)
 
 **Parameters**:
 
-* `flagIndex` (number): The action flag to clear. Maps to values in [`tes3.actionFlag`](https://mwse.github.io/MWSE/references/action-flags/) namespace.
+* `flagIndex` (integer): The action flag to clear. Maps to values in [`tes3.actionFlag`](https://mwse.github.io/MWSE/references/action-flags/) namespace.
 
 ***
 
@@ -781,7 +781,7 @@ local result = myObject:onCloseInventory()
 
 ### `setActionFlag`
 
-Sets a bit in the reference's action data attachment
+Sets a bit in the reference's action data attachment.
 
 ```lua
 myObject:setActionFlag(flagIndex)
@@ -789,7 +789,7 @@ myObject:setActionFlag(flagIndex)
 
 **Parameters**:
 
-* `flagIndex` (number): The action flag to clear.
+* `flagIndex` (integer): The action flag to clear. Maps to values in [`tes3.actionFlag`](https://mwse.github.io/MWSE/references/action-flags/) namespace.
 
 ***
 
@@ -814,7 +814,7 @@ myObject:setNoCollisionFlag(hasNoCollision, updateCollisions)
 **Parameters**:
 
 * `hasNoCollision` (boolean): If `true`, the reference no longer has collision.
-* `updateCollisions` (boolean): If `true`, collision groups for the active cells are recalculated.
+* `updateCollisions` (boolean): *Default*: `true`. If `true`, collision groups for the active cells are recalculated.
 
 ***
 
@@ -828,7 +828,7 @@ local result = myObject:testActionFlag(flagIndex)
 
 **Parameters**:
 
-* `flagIndex` (number): The action flag to test. Maps to values in [`tes3.actionFlag`](https://mwse.github.io/MWSE/references/action-flags/) namespace.
+* `flagIndex` (integer): The action flag to test. Maps to values in [`tes3.actionFlag`](https://mwse.github.io/MWSE/references/action-flags/) namespace.
 
 **Returns**:
 

@@ -1,5 +1,6 @@
 return {
 	type = "method",
+	deprecated = true,
 	description = [[**Deprecated, please use [`applyDamage()`](https://mwse.github.io/MWSE/types/tes3mobileActor/#applydamage) instead.**
 
 Damages the actor.]],

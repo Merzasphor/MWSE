@@ -192,7 +192,7 @@ The quality of the object, with how much of a bonus it has.
 
 ### `scale`
 
-The object's scale.
+The object's scale. The value range is (0, 10).
 
 **Returns**:
 
