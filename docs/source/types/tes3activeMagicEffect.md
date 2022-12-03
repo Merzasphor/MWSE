@@ -11,11 +11,11 @@ An active magic effect.
 
 ### `attributeId`
 
-*Read-only*. The attribute ID (note that this may be the skill ID if the effect affects skills).
+*Read-only*. The attribute ID (note that this may be the skill ID if the effect affects skills, since `attributeId` and `skillId` properties are set to the same value by the engine). Maps to values from [`tes3.attribute`](https://mwse.github.io/MWSE/references/attributes/) table.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -31,11 +31,11 @@ An active magic effect.
 
 ### `effectId`
 
-*Read-only*. The magic effect ID.
+*Read-only*. The magic effect ID. Maps to values from [`tes3.effect`](https://mwse.github.io/MWSE/references/magic-effects/) table.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -45,7 +45,7 @@ An active magic effect.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -165,17 +165,17 @@ An active magic effect.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
 ### `skillId`
 
-*Read-only*. The skill ID (note that this may be the attribute ID if the effect affects attributes).
+*Read-only*. The skill ID (note that this may be the attribute ID if the effect affects attributes, since `attributeId` and `skillId` properties are set to the same value by the engine). Maps to values in [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) table.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
