@@ -23,7 +23,7 @@ Constant to represent a timer that has completed.
 
 ### `timer.game`
 
-Constant to represent timers that run based on in-world time. Duration measured in game-scale hours.
+Constant to represent timers that run based on in-world time. Their clock is measured in game-scale hours.
 
 ***
 
@@ -35,13 +35,13 @@ Constant to represent a timer that is paused.
 
 ### `timer.real`
 
-Constant to represent timers that run in real-time.
+Constant to represent timers that run in real-time. Their time is measured in seconds.
 
 ***
 
 ### `timer.simulate`
 
-Constant to represent timers that run when the game isn't paused. It matches the `simulate` event's timing. If the game is simulating, simulate events and simulate timers progress. Duration is measured in seconds.
+Constant to represent timers that run when the game isn't paused - the game's menus are closed. It matches the `simulate` event's timing. If the game is simulating, simulate events and simulate timers progress. Duration is measured in seconds.
 
 ***
 
@@ -58,7 +58,7 @@ local timer = timer.delayOneFrame(callback, type)
 **Parameters**:
 
 * `callback` (function): The callback function that will execute when the timer expires.
-* `type` (number): *Default*: ``timer.simulate``. Type of the timer. This value can be `timer.simulate`, `timer.game` or `timer.real`.
+* `type` (integer): *Default*: ``timer.simulate``. Type of the timer. This value can be `timer.simulate`, `timer.game` or `timer.real`.
 
 **Returns**:
 
@@ -79,14 +79,34 @@ timer.register(name, fn)
 * `name` (string): Name of the registered timer.
 * `fn` (function): A callback function for the timer.
 
-??? example "Example: Show a Message After 1 Day"
+??? example "Example: Persistent timers tutorial with `.data` usage"
 
 	The timer registered in the example is registered and persistent. That renders starting the timer on every loaded event unnecessary. Its state is saved, and it continues where it stopped after loading a save.
 
 	```lua
 	
-	local function showMessage()
-		tes3.messageBox("One day later...")
+	---@class timerCallbackData
+	---@field timer mwseTimer Access to our timer
+	
+	---@param e timerCallbackData
+	local function showMessage(e)
+		local timer = e.timer
+		local data = timer.data
+		local currentTimestamp = tes3.getSimulationTimestamp()
+	
+		-- We are sure that the timer.data ~= nil since we
+		-- created that table in timer.start function.
+		-- So, lets disable the warnings for a bit.
+		---@diagnostic disable:need-check-nil
+		tes3.messageBox(data.message:format(
+			data.startTimestamp,
+			data.lastIterationTimestamp,
+			currentTimestamp
+		))
+		---@diagnostic enable:need-check-nil
+	
+		-- Save this to the data table on the timer
+		data.lastIterationTimestamp = currentTimestamp
 	end
 	
 	timer.register("testExample:OneDayTimer", showMessage)
@@ -94,9 +114,20 @@ timer.register(name, fn)
 	timer.start({
 		type = timer.game,
 		persist = true,
-		iterations = 1,
+		iterations = -1,
 		duration = 24,
-		callback = "testExample:OneDayTimer" -- Notice that the callback isn't a function, but a custom timer.
+		-- Notice that the callback isn't a function, but
+		-- a string passed to the timer.register function
+		callback = "testExample:OneDayTimer",
+		data = {
+			startTimestamp = tes3.getSimulationTimestamp(),
+			lastIterationTimestamp = tes3.getSimulationTimestamp(),
+			message = [[One day later...
+	timer's starting timestamp %s
+	the timestamp of last iteration %s
+	current timestamp %s
+	]]
+		}
 	})
 
 	```
@@ -114,12 +145,12 @@ local timer = timer.start({ type = ..., duration = ..., callback = ..., iteratio
 **Parameters**:
 
 * `params` (table)
-	* `type` (number): *Default*: ``timer.simulate``. Type of the timer. This value can be `timer.simulate`, `timer.game` or `timer.real`.
+	* `type` (integer): *Default*: ``timer.simulate``. Type of the timer. This value can be `timer.simulate`, `timer.game` or `timer.real`.
 	* `duration` (number): Duration of the timer. The method of time passing depends on the timer type.
-	* `callback` (function): The callback function that will execute when the timer expires.
-	* `iterations` (number): *Default*: `1`. The number of iterations to run. Use `-1` for infinite looping.
+	* `callback` (function, string): The callback function that will execute when the timer expires. If starting a registered timer, this needs to be the `name` string passed to `timer.register`.
+	* `iterations` (integer): *Default*: `1`. The number of iterations to run. Use `-1` for infinite looping.
 	* `persist` (boolean): *Default*: `true`. Registering a timer with persist flag set to `true` will serialize the callback string in the save to persist between sessions. Only a registered timer will persist between sessions. See `timer.register()`.
-	* `data` (table): *Optional*. Data to be attached to the timer. If this is a persistent timer, the data must be json-serializable, matching the same limitations as data stored on references.
+	* `data` (table, nil): *Default*: `nil`. Data to be attached to the timer. If this is a persistent timer, the data must be json-serializable, matching the same limitations as data stored on references.
 
 **Returns**:
 

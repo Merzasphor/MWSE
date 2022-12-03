@@ -8,15 +8,15 @@
 --- @class timerlib
 --- @field active any Constant to represent a timer that is actively running.
 --- @field expired any Constant to represent a timer that has completed.
---- @field game any Constant to represent timers that run based on in-world time. Duration measured in game-scale hours.
+--- @field game any Constant to represent timers that run based on in-world time. Their clock is measured in game-scale hours.
 --- @field paused any Constant to represent a timer that is paused.
---- @field real any Constant to represent timers that run in real-time.
---- @field simulate any Constant to represent timers that run when the game isn't paused. It matches the `simulate` event's timing. If the game is simulating, simulate events and simulate timers progress. Duration is measured in seconds.
+--- @field real any Constant to represent timers that run in real-time. Their time is measured in seconds.
+--- @field simulate any Constant to represent timers that run when the game isn't paused - the game's menus are closed. It matches the `simulate` event's timing. If the game is simulating, simulate events and simulate timers progress. Duration is measured in seconds.
 timer = {}
 
 --- Creates a timer that will finish the next frame. It defaults to the next simulation frame.
 --- @param callback function The callback function that will execute when the timer expires.
---- @param type number? *Default*: ``timer.simulate``. Type of the timer. This value can be `timer.simulate`, `timer.game` or `timer.real`.
+--- @param type integer? *Default*: ``timer.simulate``. Type of the timer. This value can be `timer.simulate`, `timer.game` or `timer.real`.
 --- @return mwseTimer timer No description yet available.
 function timer.delayOneFrame(callback, type) end
 
@@ -32,26 +32,26 @@ function timer.register(name, fn) end
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/timer/#timerstart).
 --- @param params timer.start.params This table accepts the following values:
 --- 
---- `type`: number? — *Default*: ``timer.simulate``. Type of the timer. This value can be `timer.simulate`, `timer.game` or `timer.real`.
+--- `type`: integer? — *Default*: ``timer.simulate``. Type of the timer. This value can be `timer.simulate`, `timer.game` or `timer.real`.
 --- 
 --- `duration`: number — Duration of the timer. The method of time passing depends on the timer type.
 --- 
---- `callback`: function — The callback function that will execute when the timer expires.
+--- `callback`: function|string — The callback function that will execute when the timer expires. If starting a registered timer, this needs to be the `name` string passed to `timer.register`.
 --- 
---- `iterations`: number? — *Default*: `1`. The number of iterations to run. Use `-1` for infinite looping.
+--- `iterations`: integer? — *Default*: `1`. The number of iterations to run. Use `-1` for infinite looping.
 --- 
 --- `persist`: boolean? — *Default*: `true`. Registering a timer with persist flag set to `true` will serialize the callback string in the save to persist between sessions. Only a registered timer will persist between sessions. See `timer.register()`.
 --- 
---- `data`: table? — *Optional*. Data to be attached to the timer. If this is a persistent timer, the data must be json-serializable, matching the same limitations as data stored on references.
+--- `data`: table|nil — *Default*: `nil`. Data to be attached to the timer. If this is a persistent timer, the data must be json-serializable, matching the same limitations as data stored on references.
 --- @return mwseTimer timer No description yet available.
 function timer.start(params) end
 
 ---Table parameter definitions for `timer.start`.
 --- @class timer.start.params
---- @field type number? *Default*: ``timer.simulate``. Type of the timer. This value can be `timer.simulate`, `timer.game` or `timer.real`.
+--- @field type integer? *Default*: ``timer.simulate``. Type of the timer. This value can be `timer.simulate`, `timer.game` or `timer.real`.
 --- @field duration number Duration of the timer. The method of time passing depends on the timer type.
---- @field callback function The callback function that will execute when the timer expires.
---- @field iterations number? *Default*: `1`. The number of iterations to run. Use `-1` for infinite looping.
+--- @field callback function|string The callback function that will execute when the timer expires. If starting a registered timer, this needs to be the `name` string passed to `timer.register`.
+--- @field iterations integer? *Default*: `1`. The number of iterations to run. Use `-1` for infinite looping.
 --- @field persist boolean? *Default*: `true`. Registering a timer with persist flag set to `true` will serialize the callback string in the save to persist between sessions. Only a registered timer will persist between sessions. See `timer.register()`.
---- @field data table? *Optional*. Data to be attached to the timer. If this is a persistent timer, the data must be json-serializable, matching the same limitations as data stored on references.
+--- @field data table|nil *Default*: `nil`. Data to be attached to the timer. If this is a persistent timer, the data must be json-serializable, matching the same limitations as data stored on references.
 

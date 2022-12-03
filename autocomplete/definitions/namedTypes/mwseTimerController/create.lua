@@ -5,13 +5,12 @@ return {
 		name = "params",
 		type = "table",
 		tableParams = {
-			{ name = "type", type = "number" },
 			{ name = "duration", type = "number" },
-			{ name = "callback", type = "function" },
-			{ name = "iterations", type = "number", optional = true },
-			{ name = "data", type = "table|nil" },
+			{ name = "callback", type = "function|string" },
+			{ name = "iterations", type = "integer", optional = true, default = 1 },
+			{ name = "persists", type = "boolean", optional = true, default = true },
+			{ name = "data", type = "table|nil", optional = true, default = "nil" },
 		}
 	}},
-	returns = "timer",
-	valuetype = "mwseTimer",
+	returns = { name = "timer", type = "mwseTimer" }
 }

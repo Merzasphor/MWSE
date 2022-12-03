@@ -7,7 +7,7 @@ return {
 	},
 	examples = {
 		["dayLater"] = {
-			title = "Show a Message After 1 Day",
+			title = "Persistent timers tutorial with `.data` usage",
 			description = "The timer registered in the example is registered and persistent. That renders starting the timer on every loaded event unnecessary. Its state is saved, and it continues where it stopped after loading a save.",
 		},
 	},
