@@ -223,6 +223,10 @@ namespace NI {
 		Vector3() : x(0.0f), y(0.0f), z(0.0f) {}
 		Vector3(float _x, float _y, float _z) : x(_x), y(_y), z(_z) {}
 
+		Vector3 operator+(const Vector3& vec3) const {
+			return Vector3(x + vec3.x, y + vec3.y, z + vec3.z);
+		}
+
 		Vector3 operator-(const Vector3& vec3) const {
 			return Vector3(x - vec3.x, y - vec3.y, z - vec3.z);
 		}
@@ -294,7 +298,7 @@ namespace NI {
 			return reinterpret_cast<Matrix33*>(0x6D7BDC);
 		}
 
-		Matrix33 fromEulerXYZ(float x, float y, float z) {
+		static Matrix33 fromEulerXYZ(float x, float y, float z) {
 			float cx = cos(x);
 			float sx = sin(x);
 			float cy = cos(y);
@@ -562,8 +566,8 @@ NI::Matrix33* __fastcall PatchMatrixRotationOrder3(TES3::Reference* reference, D
 struct TranslationData {
 	enum class RotationAxis : unsigned int {
 		X = 1,
-		Y = 2,
-		Z = 3,
+		Z = 2,
+		Y = 3,
 	};
 	struct Target {
 		TES3::Reference* reference; // 0x0
@@ -593,7 +597,8 @@ void fmodZeroTo2pi(float& value) {
 
 const auto TES3_CS_OriginalRotationLogic = reinterpret_cast<bool(__cdecl*)(void*, TranslationData::Target*, int, TranslationData::RotationAxis)>(0x4652D0);
 bool __cdecl Patch_ReplaceRotationLogic(void* unknown1, TranslationData::Target* firstTarget, int relativeMouseDelta, TranslationData::RotationAxis rotationAxis) {
-	if ((GetKeyState(VK_SHIFT) & 0x8000) == 0) {
+	// Allow holding ALT modifier to do vanilla behavior.
+	if ((GetKeyState(VK_MENU) & 0x8000) != 0) {
 		return TES3_CS_OriginalRotationLogic(unknown1, firstTarget, relativeMouseDelta, rotationAxis);
 	}
 
@@ -603,48 +608,51 @@ bool __cdecl Patch_ReplaceRotationLogic(void* unknown1, TranslationData::Target*
 
 	auto data = MemAccess<TranslationData*>::Get(0x6CE968);
 
-	auto& maybeCurrentRotationValues = *reinterpret_cast<NI::Vector3*>(0x6CF760);
 	auto rotationSpeed = MemAccess<float>::Get(0x6CE9B0);
 	auto rotationFlags = MemAccess<BYTE>::Get(0x6CE9A4);
 
+	float x = 0.0f;
+	float y = 0.0f;
+	float z = 0.0f;
+	
 	switch (rotationAxis) {
 	case TranslationData::RotationAxis::X:
-		maybeCurrentRotationValues.x += float(relativeMouseDelta) * rotationSpeed * 0.1f;
+		x += relativeMouseDelta * rotationSpeed * 0.1f;
 		break;
 	case TranslationData::RotationAxis::Y:
-		maybeCurrentRotationValues.y += float(relativeMouseDelta) * rotationSpeed * 0.1f;
+		y += relativeMouseDelta * rotationSpeed * 0.1f;
 		break;
 	case TranslationData::RotationAxis::Z:
-		maybeCurrentRotationValues.z += float(relativeMouseDelta) * rotationSpeed * 0.1f;
+		z += relativeMouseDelta * rotationSpeed * 0.1f;
 		break;
 	}
 
-	fmodZeroTo2pi(maybeCurrentRotationValues.x);
-	fmodZeroTo2pi(maybeCurrentRotationValues.y);
-	fmodZeroTo2pi(maybeCurrentRotationValues.z);
-
-	auto rotationValues = MemAccess<NI::Vector3>::Get(0x6CF4A8);
-
 	bool isSnapping = (rotationFlags & 2) != 0;
-	const auto snapAngleInRadians = MemAccess<int>::Get(0x6CE9AC) * float(M_DEGREES_TO_RADIANS);
 	if (isSnapping) {
-		// TODO: Snap.
+		const auto snapAngleInRadians = MemAccess<int>::Get(0x6CE9AC) * float(M_DEGREES_TO_RADIANS);
+		if (snapAngleInRadians != 0.0f) {
+			x = std::roundf(x / snapAngleInRadians) * snapAngleInRadians;
+			y = std::roundf(y / snapAngleInRadians) * snapAngleInRadians;
+			z = std::roundf(z / snapAngleInRadians) * snapAngleInRadians;
+		}
 	}
 
-	NI::Matrix33 result;
-	result.toIdentity();
+	fmodZeroTo2pi(x);
+	fmodZeroTo2pi(y);
+	fmodZeroTo2pi(z);
 
-	NI::Matrix33 temp;
-	temp.toRotationX(rotationValues.x);
-	result.multiplyValue(&temp);
-	temp.toRotationY(rotationValues.y);
-	result.multiplyValue(&temp);
-	temp.toRotationZ(rotationValues.z);
-	result.multiplyValue(&temp);
+	// Seems to crash when performing an undo if you don't set this vector.
+	auto& undoRotation = *reinterpret_cast<NI::Vector3*>(0x6CF760);
+	undoRotation.x = x;
+	undoRotation.y = y;
+	undoRotation.z = z;
 
-	if (data->numberOfTargets > 1 && isSnapping && result.m0.x == 0.0f && result.m1.y == 0.0f && result.m2.z == 0.0f) {
+	// Due to snapping these may have been set to 0, in which case no need to do anything else.
+	if (x == 0.0f && y == 0.0f && z == 0.0f) {
 		return 0;
 	}
+
+	auto userRotation = NI::Matrix33::fromEulerXYZ(x, y, z);
 
 	for (auto target = data->firstTarget; target; target = target->next) {
 		auto reference = target->reference;
@@ -652,76 +660,46 @@ bool __cdecl Patch_ReplaceRotationLogic(void* unknown1, TranslationData::Target*
 		reinterpret_cast<void(__thiscall*)(TES3::Reference*)>(0x4026E4)(reference);
 		reinterpret_cast<void(__thiscall*)(TES3::BaseObject*, bool)>(0x4019E7)(reference->baseObject, true);
 
-		float x = 0.0f, y = 0.0f, z = 0.0f;
-
-		bool onlyAllowRotationOnZ = false;
-		switch (reference->baseObject->objectType) {
-		case TES3::ObjectType::Creature:
-		case TES3::ObjectType::LeveledCreature:
-		case TES3::ObjectType::NPC:
-			onlyAllowRotationOnZ = true;
-			break;
-		case TES3::ObjectType::Static:
-			if (reference->baseObject == MemAccess<TES3::BaseObject*>::Get(0x6D566C)) {
-				onlyAllowRotationOnZ = true;
-			}
-			break;
-		}
-
-		if (data->numberOfTargets > 1 && isSnapping) {
-			if (onlyAllowRotationOnZ) {
-				if (rotationAxis == TranslationData::RotationAxis::Z) {
-					z += rotationValues.z;
+		// Disallow XY rotations on actors and northmarkers.
+		auto doRotations = true;
+		if (rotationAxis != TranslationData::RotationAxis::Z) {
+			switch (reference->baseObject->objectType) {
+			case TES3::ObjectType::Creature:
+			case TES3::ObjectType::LeveledCreature:
+			case TES3::ObjectType::NPC:
+				doRotations = false;
+				break;
+			case TES3::ObjectType::Static:
+				if (reference->baseObject == MemAccess<TES3::BaseObject*>::Get(0x6D566C)) {
+					doRotations = false;
+					break;
 				}
 			}
-			else {
-				x += rotationValues.x;
-				y += rotationValues.y;
-				z += rotationValues.z;
-			}
-		}
-		else {
-			switch (rotationAxis) {
-			case TranslationData::RotationAxis::X:
-				x += relativeMouseDelta * rotationSpeed * 0.1f;
-				break;
-			case TranslationData::RotationAxis::Y:
-				z += relativeMouseDelta * rotationSpeed * 0.1f; // wtf swapped
-				break;
-			case TranslationData::RotationAxis::Z:
-				y += relativeMouseDelta * rotationSpeed * 0.1f; // wtf swapped
-				break;
-			}
 		}
 
-		if (data->numberOfTargets == 1 && isSnapping) {
-			// TODO: Snapping.
+		if (doRotations) {
+			NI::Matrix33* oldRotation = reference->sceneNode->localRotation;
+			NI::Matrix33 newRotation = userRotation.multiplyValue(oldRotation);
+
+			reference->yetAnotherOrientation = newRotation.toEulerXYZ();
+			fmodZeroTo2pi(reference->yetAnotherOrientation.x);
+			fmodZeroTo2pi(reference->yetAnotherOrientation.y);
+			fmodZeroTo2pi(reference->yetAnotherOrientation.z);
+			reference->orientationNonAttached = reference->yetAnotherOrientation;
+
+			// ??
+			// auto matrix = reinterpret_cast<NI::Matrix33 * (__thiscall*)(TES3::Reference*, NI::Matrix33*, bool)>(0x4028B0)(reference, &newRotation, false);
+			reinterpret_cast<void(__thiscall*)(NI::Matrix33**, NI::Matrix33*)>(0x5E1970)(&reference->sceneNode->localRotation, &newRotation);
 		}
 
-		NI::Vector3 o = reference->yetAnotherOrientation;
-		NI::Matrix33 a = temp.fromEulerXYZ(x, y, z);
-		NI::Matrix33 b = temp.fromEulerXYZ(o.x, o.y, o.z);
-		reference->yetAnotherOrientation = a.multiplyValue(&b).toEulerXYZ();
-
-		fmodZeroTo2pi(reference->yetAnotherOrientation.x);
-		fmodZeroTo2pi(reference->yetAnotherOrientation.y);
-		fmodZeroTo2pi(reference->yetAnotherOrientation.z);
-
-		reference->orientationNonAttached = reference->yetAnotherOrientation;
-
-		NI::Matrix33 finalRotationMatrix;
-		auto matrix = reinterpret_cast<NI::Matrix33*(__thiscall*)(TES3::Reference*, NI::Matrix33*, bool)>(0x4028B0)(reference, &finalRotationMatrix, false);
-		reinterpret_cast<void(__thiscall*)(NI::Matrix33**, NI::Matrix33*)>(0x5E1970)(&reference->sceneNode->localRotation, &finalRotationMatrix);
-
+		// Rotate positions.
 		if (data->numberOfTargets > 1) {
-			auto deltaPos = reference->position - data->position;
-			auto idk = result.multiplyValue(&deltaPos);
-			reference->position.x = data->position.x + idk.x;
-			reference->position.y = data->position.x + idk.y;
-			reference->position.z = data->position.x + idk.z;
+			auto p = reference->position - data->position;
+			reference->position = userRotation.multiplyValue(&p) + data->position;
 			reference->sceneNode->localTranslate = reference->position;
 		}
 
+		// ?? (sceneNode->update()?)
 		reinterpret_cast<void(__thiscall*)(NI::AVObject*, int, int, int)>(0x5DAFB0)(reference->sceneNode, 0, 1, 1);
 	}
 
