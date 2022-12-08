@@ -272,6 +272,51 @@ namespace NI {
 		static Matrix33* getIdentityMatrix() {
 			return reinterpret_cast<Matrix33*>(0x6D7BDC);
 		}
+
+		Matrix33 fromEulerXYZ(float x, float y, float z) {
+			float cx = cos(x);
+			float sx = sin(x);
+			float cy = cos(y);
+			float sy = sin(y);
+			float cz = cos(z);
+			float sz = sin(z);
+
+			Matrix33 m;
+			m.m0.x = cy * cz;
+			m.m0.y = cy * sz;
+			m.m0.z = -sy;
+			m.m1.x = sx * sy * cz - cx * sz;
+			m.m1.y = sx * sy * sz + cx * cz;
+			m.m1.z = sx * cy;
+			m.m2.x = cx * sy * cz + sx * sz;
+			m.m2.y = cx * sy * sz - sx * cz;
+			m.m2.z = cx * cy;
+
+			return m;
+		}
+
+		Vector3 toEulerXYZ() {
+			float x = 0.0;
+			float y = 0.0;
+			float z = 0.0;
+
+			y = asin(-this->m0.z);
+			if (cos(y) != 0) {
+				x = atan2(this->m1.z, this->m2.z);
+				z = atan2(this->m0.y, this->m0.x);
+			}
+			else {
+				x = atan2(this->m2.x, this->m2.y);
+				z = 0;
+			};
+
+			NI::Vector3 out;
+			out.x = x;
+			out.y = y;
+			out.z = z;
+
+			return out;
+		}
 	};
 
 	struct Matrix44 {
@@ -585,30 +630,33 @@ bool __cdecl Patch_ReplaceRotationLogic(void* unknown1, TranslationData::Target*
 		if (data->numberOfTargets > 1 && isSnapping) {
 			if (onlyAllowRotationOnZ) {
 				if (rotationAxis == TranslationData::RotationAxis::Z) {
-					reference->yetAnotherOrientation.z += rotationValues.z;
+					z += rotationValues.z;
 				}
 			}
 			else {
-				reference->yetAnotherOrientation.x += rotationValues.x;
-				reference->yetAnotherOrientation.y += rotationValues.y;
-				reference->yetAnotherOrientation.z += rotationValues.z;
+				x += rotationValues.x;
+				y += rotationValues.y;
+				z += rotationValues.z;
 			}
 		}
 		else {
 			switch (rotationAxis) {
 			case TranslationData::RotationAxis::X:
-				reference->yetAnotherOrientation.x += relativeMouseDelta * rotationSpeed * 0.1f;
+				x += relativeMouseDelta * rotationSpeed * 0.1f;
 				break;
 			case TranslationData::RotationAxis::Y:
-				reference->yetAnotherOrientation.y += relativeMouseDelta * rotationSpeed * 0.1f;
-
+				z += relativeMouseDelta * rotationSpeed * 0.1f; // wtf swapped
 				break;
 			case TranslationData::RotationAxis::Z:
-				reference->yetAnotherOrientation.z += relativeMouseDelta * rotationSpeed * 0.1f;
-
+				y += relativeMouseDelta * rotationSpeed * 0.1f; // wtf swapped
 				break;
 			}
 		}
+
+		NI::Vector3 o = reference->yetAnotherOrientation;
+		NI::Matrix33 a = temp.fromEulerXYZ(x, y, z);
+		NI::Matrix33 b = temp.fromEulerXYZ(o.x, o.y, o.z);
+		reference->yetAnotherOrientation = a.multiplyValue(&b).toEulerXYZ();
 
 		fmodZeroTo2pi(reference->yetAnotherOrientation.x);
 		fmodZeroTo2pi(reference->yetAnotherOrientation.y);
