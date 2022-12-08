@@ -221,6 +221,11 @@ namespace NI {
 		float x, y, z;
 
 		Vector3() : x(0.0f), y(0.0f), z(0.0f) {}
+		Vector3(float _x, float _y, float _z) : x(_x), y(_y), z(_z) {}
+
+		Vector3 operator-(const Vector3& vec3) const {
+			return Vector3(x - vec3.x, y - vec3.y, z - vec3.z);
+		}
 
 		friend std::ostream& operator<<(std::ostream& str, const Vector3& vector) {
 			str << "(" << vector.x << "," << vector.y << "," << vector.z << ")";
@@ -235,13 +240,29 @@ namespace NI {
 	struct Matrix33 {
 		Vector3 m0, m1, m2;
 
-		static constexpr auto _multiplyValue = reinterpret_cast<Matrix33*(__thiscall*)(Matrix33*, Matrix33*, Matrix33*)>(0x5E2060);
+		friend std::ostream& operator<<(std::ostream& str, const Matrix33& matrix) {
+			str << "[" << matrix.m0 << "," << matrix.m1 << "," << matrix.m2 << "]";
+			return str;
+		}
+
+		static constexpr auto _multiplyValueMatrix = reinterpret_cast<Matrix33*(__thiscall*)(Matrix33*, Matrix33*, Matrix33*)>(0x5E2060);
 		Matrix33* multiplyValue(Matrix33* out_result, Matrix33* value) {
-			return _multiplyValue(this, out_result, value);
+			return _multiplyValueMatrix(this, out_result, value);
 		}
 
 		Matrix33 multiplyValue(Matrix33* value) {
 			Matrix33 result;
+			multiplyValue(&result, value);
+			return result;
+		}
+
+		static constexpr auto _multiplyValueVec3 = reinterpret_cast<Vector3 * (__thiscall*)(Matrix33*, Vector3*, Vector3*)>(0x5E21F0);
+		Vector3* multiplyValue(Vector3* out_result, Vector3* value) {
+			return _multiplyValueVec3(this, out_result, value);
+		}
+
+		Vector3 multiplyValue(Vector3* value) {
+			Vector3 result;
 			multiplyValue(&result, value);
 			return result;
 		}
@@ -528,6 +549,7 @@ namespace TES3 {
 		NI::Vector3 orientationNonAttached; //0x2C
 		NI::Vector3 anotherOrientation; //0x38
 		NI::Vector3 yetAnotherOrientation; //0x44
+		NI::Vector3 position; // 0x50
 	};
 }
 
@@ -555,10 +577,12 @@ struct TranslationData {
 };
 
 constexpr auto M_PI = 3.14159265358979323846; // pi
+constexpr auto M_PIf = float(M_PI); // pi
 constexpr auto M_2PI = 2.0 * M_PI; // 2pi
+constexpr auto M_2PIf = float(M_2PI);
+constexpr auto M_DEGREES_TO_RADIANS = M_PI / 180.0;
 
 void fmodZeroTo2pi(float& value) {
-	constexpr auto M_2PIf = float(M_2PI);
 	while (value > M_2PIf) {
 		value -= M_2PIf;
 	}
@@ -567,7 +591,12 @@ void fmodZeroTo2pi(float& value) {
 	}
 }
 
+const auto TES3_CS_OriginalRotationLogic = reinterpret_cast<bool(__cdecl*)(void*, TranslationData::Target*, int, TranslationData::RotationAxis)>(0x4652D0);
 bool __cdecl Patch_ReplaceRotationLogic(void* unknown1, TranslationData::Target* firstTarget, int relativeMouseDelta, TranslationData::RotationAxis rotationAxis) {
+	if ((GetKeyState(VK_SHIFT) & 0x8000) == 0) {
+		return TES3_CS_OriginalRotationLogic(unknown1, firstTarget, relativeMouseDelta, rotationAxis);
+	}
+
 	if (relativeMouseDelta == 0) {
 		return false;
 	}
@@ -597,8 +626,9 @@ bool __cdecl Patch_ReplaceRotationLogic(void* unknown1, TranslationData::Target*
 	auto rotationValues = MemAccess<NI::Vector3>::Get(0x6CF4A8);
 
 	bool isSnapping = (rotationFlags & 2) != 0;
-	if ((rotationFlags & 2) != 0) {
-		// TODO: Add in snapping.
+	const auto snapAngleInRadians = MemAccess<int>::Get(0x6CE9AC) * float(M_DEGREES_TO_RADIANS);
+	if (isSnapping) {
+		// TODO: Snap.
 	}
 
 	NI::Matrix33 result;
@@ -625,7 +655,18 @@ bool __cdecl Patch_ReplaceRotationLogic(void* unknown1, TranslationData::Target*
 		float x = 0.0f, y = 0.0f, z = 0.0f;
 
 		bool onlyAllowRotationOnZ = false;
-		// TODO: Lock that shit down based on type.
+		switch (reference->baseObject->objectType) {
+		case TES3::ObjectType::Creature:
+		case TES3::ObjectType::LeveledCreature:
+		case TES3::ObjectType::NPC:
+			onlyAllowRotationOnZ = true;
+			break;
+		case TES3::ObjectType::Static:
+			if (reference->baseObject == MemAccess<TES3::BaseObject*>::Get(0x6D566C)) {
+				onlyAllowRotationOnZ = true;
+			}
+			break;
+		}
 
 		if (data->numberOfTargets > 1 && isSnapping) {
 			if (onlyAllowRotationOnZ) {
@@ -653,6 +694,10 @@ bool __cdecl Patch_ReplaceRotationLogic(void* unknown1, TranslationData::Target*
 			}
 		}
 
+		if (data->numberOfTargets == 1 && isSnapping) {
+			// TODO: Snapping.
+		}
+
 		NI::Vector3 o = reference->yetAnotherOrientation;
 		NI::Matrix33 a = temp.fromEulerXYZ(x, y, z);
 		NI::Matrix33 b = temp.fromEulerXYZ(o.x, o.y, o.z);
@@ -664,16 +709,17 @@ bool __cdecl Patch_ReplaceRotationLogic(void* unknown1, TranslationData::Target*
 
 		reference->orientationNonAttached = reference->yetAnotherOrientation;
 
-		if (data->numberOfTargets == 1 && isSnapping) {
-			// TODO: Snap the things.
-		}
-
 		NI::Matrix33 finalRotationMatrix;
 		auto matrix = reinterpret_cast<NI::Matrix33*(__thiscall*)(TES3::Reference*, NI::Matrix33*, bool)>(0x4028B0)(reference, &finalRotationMatrix, false);
 		reinterpret_cast<void(__thiscall*)(NI::Matrix33**, NI::Matrix33*)>(0x5E1970)(&reference->sceneNode->localRotation, &finalRotationMatrix);
 
 		if (data->numberOfTargets > 1) {
-			// TODO
+			auto deltaPos = reference->position - data->position;
+			auto idk = result.multiplyValue(&deltaPos);
+			reference->position.x = data->position.x + idk.x;
+			reference->position.y = data->position.x + idk.y;
+			reference->position.z = data->position.x + idk.z;
+			reference->sceneNode->localTranslate = reference->position;
 		}
 
 		reinterpret_cast<void(__thiscall*)(NI::AVObject*, int, int, int)>(0x5DAFB0)(reference->sceneNode, 0, 1, 1);
