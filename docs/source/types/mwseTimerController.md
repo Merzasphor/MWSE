@@ -5,13 +5,13 @@
 
 # mwseTimerController
 
-A Timer Controller is a class used to sort and trigger callbacks based on an arbitrary timekeeping mechanic.
+A Timer Controller is a class used to sort and trigger callbacks based on an arbitrary timekeeping mechanic. By default there are three Timer Controllers for each type of timers: `timer.simulate`, `timer.game` or `timer.real`.
 
 ## Properties
 
 ### `clock`
 
-The current clock time for this timer controller.
+The current clock time for this timer controller. Timer Controller, responsible for `timer.game` type of timers, has clock equal to the game's simuation timestamp. Timer Controllers, responsible for `timer.real`, and `timer.simulate`, types of timers have their initial clock set to `0` on a new game, and their clock's progressions is equal to `deltaTime`. Timer Controller's, responsible for `timer.simulate` timers, clock only advances when the menu mode is off.
 
 **Returns**:
 
@@ -26,17 +26,17 @@ The current clock time for this timer controller.
 Creates a timer for the given Timer Controller.
 
 ```lua
-local timer = myObject:create({ type = ..., duration = ..., callback = ..., iterations = ..., data = ... })
+local timer = myObject:create({ duration = ..., callback = ..., iterations = ..., persists = ..., data = ... })
 ```
 
 **Parameters**:
 
 * `params` (table)
-	* `type` (number)
 	* `duration` (number)
-	* `callback` (function)
-	* `iterations` (number): *Optional*.
-	* `data` (table, nil)
+	* `callback` (function, string)
+	* `iterations` (integer): *Default*: `1`.
+	* `persists` (boolean): *Default*: `true`.
+	* `data` (table, nil): *Default*: `nil`.
 
 **Returns**:
 

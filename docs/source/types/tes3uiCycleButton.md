@@ -99,12 +99,12 @@ local index = myObject:getIndexForValue(value)
 Gets the text element to use.
 
 ```lua
-local index = myObject:getTextElement()
+local element = myObject:getTextElement()
 ```
 
 **Returns**:
 
-* `index` (number): The found index matching the value.
+* `element` ([tes3uiElement](../../types/tes3uiElement)): The `tes3uiElement` containing the button's text.
 
 ***
 

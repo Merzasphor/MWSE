@@ -10,7 +10,7 @@
 --- @class tes3actor : tes3physicalObject, tes3object, tes3baseObject
 --- @field actorFlags number *Read-only*. A number representing the actor flags. Truly a bit field.
 --- @field barterGold number Friendly access to actor's barter gold amount.
---- @field blood number Friendly access to actor's blood type.
+--- @field blood integer Friendly access to actor's blood type, in [0, 7] range. The available blood types are defined in the Morrowind.ini file, and assigned to the actor via the Construction Set.
 --- @field cloneCount number *Read-only*. The number of clones that exist of this actor.
 --- @field equipment tes3equipmentStack[] *Read-only*. The items currently equipped to the actor.
 --- @field inventory tes3inventory *Read-only*. The items currently carried by the actor.

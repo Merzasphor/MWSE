@@ -19,7 +19,7 @@
 --- @field isOneHanded boolean *Read-only*. If true, the weapon is a one-handed weapon.
 --- @field isProjectile boolean *Read-only*. If true, the weapon is a projectile.
 --- @field isRanged boolean *Read-only*. If true, the weapon is a ranged weapon.
---- @field isSilver boolean If true, the weapon has a silver material flag.
+--- @field isSilver boolean If true, the weapon has a silver material flag. Silver weapons deal double damage to the Undead and Werewolf creatures.
 --- @field isTwoHanded boolean *Read-only*. If true, the weapon is a two-handed melee weapon.
 --- @field maxCondition number The object's maximum condition.
 --- @field mesh string The path to the object's mesh.
@@ -57,12 +57,12 @@ function tes3weapon:createCopy(params) end
 --- @field sourceless boolean? *Default*: `false`. If true, the object will be made sourceless, and will not be serialized to the save game. If the object is copied outside of a save game, the object will **always** be sourceless.
 
 --- Access to the material flag bitfield. Known material flags can be accessed via other weapon properties.
---- @param flagBit number No description yet available.
---- @return number result No description yet available.
+--- @param flagBit integer `0` corresponds to the `ignoresNormalWeaponResistance` field, `1` corresponds to the `isSilver`.
+--- @return boolean result No description yet available.
 function tes3weapon:getMaterialFlag(flagBit) end
 
 --- Access to the material flag bitfield. Known material flags can be accessed via other weapon properties.
---- @param flagBit number No description yet available.
+--- @param flagBit integer `0` corresponds to the `ignoresNormalWeaponResistance` field, `1` corresponds to the `isSilver`.
 --- @param value boolean No description yet available.
 function tes3weapon:setMaterialFlag(flagBit, value) end
 

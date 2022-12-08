@@ -4,9 +4,9 @@
 --- @meta
 --- @diagnostic disable:undefined-doc-name
 
---- A Timer Controller is a class used to sort and trigger callbacks based on an arbitrary timekeeping mechanic.
+--- A Timer Controller is a class used to sort and trigger callbacks based on an arbitrary timekeeping mechanic. By default there are three Timer Controllers for each type of timers: `timer.simulate`, `timer.game` or `timer.real`.
 --- @class mwseTimerController
---- @field clock number The current clock time for this timer controller.
+--- @field clock number The current clock time for this timer controller. Timer Controller, responsible for `timer.game` type of timers, has clock equal to the game's simuation timestamp. Timer Controllers, responsible for `timer.real`, and `timer.simulate`, types of timers have their initial clock set to `0` on a new game, and their clock's progressions is equal to `deltaTime`. Timer Controller's, responsible for `timer.simulate` timers, clock only advances when the menu mode is off.
 mwseTimerController = {}
 
 --- Creates a new Timer Controller. Its initial clock is zero, unless a start time is provided.
@@ -17,23 +17,23 @@ function mwseTimerController.new(startTime) end
 --- Creates a timer for the given Timer Controller.
 --- @param params mwseTimerController.create.params This table accepts the following values:
 --- 
---- `type`: number — No description yet available.
---- 
 --- `duration`: number — No description yet available.
 --- 
---- `callback`: function — No description yet available.
+--- `callback`: function|string — No description yet available.
 --- 
---- `iterations`: number? — *Optional*. No description yet available.
+--- `iterations`: integer? — *Default*: `1`. No description yet available.
 --- 
---- `data`: table|nil — No description yet available.
+--- `persists`: boolean? — *Default*: `true`. No description yet available.
+--- 
+--- `data`: table|nil — *Default*: `nil`. No description yet available.
 --- @return mwseTimer timer No description yet available.
 function mwseTimerController:create(params) end
 
 ---Table parameter definitions for `mwseTimerController.create`.
 --- @class mwseTimerController.create.params
---- @field type number No description yet available.
 --- @field duration number No description yet available.
---- @field callback function No description yet available.
---- @field iterations number? *Optional*. No description yet available.
---- @field data table|nil No description yet available.
+--- @field callback function|string No description yet available.
+--- @field iterations integer? *Default*: `1`. No description yet available.
+--- @field persists boolean? *Default*: `true`. No description yet available.
+--- @field data table|nil *Default*: `nil`. No description yet available.
 

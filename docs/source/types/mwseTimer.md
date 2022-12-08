@@ -11,11 +11,11 @@ A Timer is a class used to keep track of callback that should be invoked at a la
 
 ### `callback`
 
-*Read-only*. The callback that will be invoked when the timer elapses.
+*Read-only*. The callback that will be invoked at the end of each iteration.
 
 **Returns**:
 
-* `result` (function)
+* `result` (function, string)
 
 ***
 
@@ -31,7 +31,7 @@ Arbitrary json-serializable data stored in the timer. This defaults to `nil`, bu
 
 ### `duration`
 
-*Read-only*. The amount of time left on the timer.
+*Read-only*. The duration of single iteration of the timer in seconds for timers of `timer.real` and `timer.simulate` types. It's in hours for `timer.game` timers.
 
 **Returns**:
 
@@ -45,7 +45,7 @@ Arbitrary json-serializable data stored in the timer. This defaults to `nil`, bu
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -55,13 +55,13 @@ Arbitrary json-serializable data stored in the timer. This defaults to `nil`, bu
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
 ### `timeLeft`
 
-*Read-only*. The amount of time left before this timer will complete.
+*Read-only*. The amount of time left before the current iteration of the timer will complete. Reset to `duration` value at the end of each iteration.
 
 **Returns**:
 
@@ -71,7 +71,7 @@ Arbitrary json-serializable data stored in the timer. This defaults to `nil`, bu
 
 ### `timing`
 
-*Read-only*. When this timer ends, or the time remaining if the timer is paused.
+*Read-only*. This is the time in the owning `mwseTimerController`'s clock when the current iteration of the timer ends. It's updated for each iteration. For paused timers its equal to the number of seconds/hours left for the current iteration.
 
 **Returns**:
 
@@ -86,8 +86,12 @@ Arbitrary json-serializable data stored in the timer. This defaults to `nil`, bu
 Cancels the timer.
 
 ```lua
-myObject:cancel()
+local canceled = myObject:cancel()
 ```
+
+**Returns**:
+
+* `canceled` (boolean)
 
 ***
 
@@ -96,14 +100,18 @@ myObject:cancel()
 Pauses the timer.
 
 ```lua
-myObject:pause()
+local paused = myObject:pause()
 ```
+
+**Returns**:
+
+* `paused` (boolean)
 
 ***
 
 ### `reset`
 
-Resets the timer completion time, as if it elapsed. Only works if the timer is active.
+Resets the timer completion time and iterations count.
 
 ```lua
 myObject:reset()
@@ -116,8 +124,12 @@ myObject:reset()
 Resumes a paused timer.
 
 ```lua
-myObject:resume()
+local resumed = myObject:resume()
 ```
+
+**Returns**:
+
+* `resumed` (boolean)
 
 ***
 

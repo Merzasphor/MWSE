@@ -1,6 +1,6 @@
 return {
 	type = "value",
-	description = [[The callback that will be invoked when the timer elapses.]],
+	description = [[The callback that will be invoked at the end of each iteration.]],
 	readOnly = true,
-	valuetype = "function",
+	valuetype = "function|string",
 }

@@ -337,11 +337,11 @@ Direct access to the actor's chameleon effect attribute.
 
 ### `collidingReference`
 
-*Read-only*. The reference that the mobile has collided with this frame.
+*Read-only*. The reference that the mobile has collided with this frame. Doesn't include actors and terrain.
 
 **Returns**:
 
-* `result` ([tes3reference](../../types/tes3reference))
+* `result` ([tes3reference](../../types/tes3reference), nil)
 
 ***
 
@@ -381,7 +381,7 @@ This is the time measured in hours from the beginning of the game when the actor
 
 **Returns**:
 
-* `result` ([tes3equipmentStack](../../types/tes3equipmentStack))
+* `result` ([tes3equipmentStack](../../types/tes3equipmentStack), nil)
 
 ***
 
@@ -447,7 +447,7 @@ This is the time measured in hours from the beginning of the game when the actor
 
 ### `facing`
 
-*Read-only*. The facing of the actor, in radians.
+*Read-only*. The facing of the actor, in radians. It corresponds to the `mobile.reference.orientation.z`. Facing of 0 corresponds to the in game North, facing of PI corresponds to the game South. It's in clockwise direction.
 
 **Returns**:
 
@@ -1701,11 +1701,11 @@ local result = myObject:applyDamage({ damage = ..., applyArmor = ..., resistAttr
 
 * `params` (table)
 	* `damage` (number): The amount of damage to apply.
-	* `applyArmor` (boolean): *Optional*. If armor should mitigate the incoming damage. If the player is the target, armor experience will be gained.
+	* `applyArmor` (boolean): *Default*: `false`. If armor should mitigate the incoming damage. If the player is the target, armor experience will be gained.
 	* `resistAttribute` (number): *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
-	* `applyDifficulty` (boolean): *Optional*. If the game difficulty modifier should be applied. Must be used with the `playerAttack` argument to apply the correct modifier.
+	* `applyDifficulty` (boolean): *Default*: `false`. If the game difficulty modifier should be applied. Must be used with the `playerAttack` argument to apply the correct modifier.
 	* `playerAttack` (boolean): *Optional*. If the attack came from the player. Used for difficulty calculation.
-	* `doNotChangeHealth` (boolean): *Optional*. If all armor effects except the health change should be applied. These include hit sounds, armor condition damage, and player experience gain from being hit.
+	* `doNotChangeHealth` (boolean): *Default*: `false`. If all armor effects except the health change should be applied. These include hit sounds, armor condition damage, and player experience gain from being hit.
 
 **Returns**:
 
@@ -1733,29 +1733,6 @@ local result = myObject:applyFatigueDamage(fatigueDamage, swing, alwaysPlayHitVo
 
 ***
 
-### `applyHealthDamage`
-
-**Deprecated, please use [`applyDamage()`](https://mwse.github.io/MWSE/types/tes3mobileActor/#applydamage) instead.**
-
-Damages the actor.
-
-```lua
-local result = myObject:applyHealthDamage(damage, isPlayerAttack, scaleWithDifficulty, doNotChangeHealth)
-```
-
-**Parameters**:
-
-* `damage` (number): The amount of damage to apply.
-* `isPlayerAttack` (boolean): Used to calculate difficulty scaling.
-* `scaleWithDifficulty` (boolean): Apply difficulty scaling to the damage.
-* `doNotChangeHealth` (boolean): Do all the audiovisual effects of damage without the health change.
-
-**Returns**:
-
-* `result` (boolean)
-
-***
-
 ### `applyJumpFatigueCost`
 
 Reduces the actor's current fatigue by the amount a regular jump would currently cost.
@@ -1778,7 +1755,7 @@ local result = myObject:calcEffectiveDamage({ damage = ..., applyArmor = ..., re
 
 * `params` (table)
 	* `damage` (number): The amount of damage to apply.
-	* `applyArmor` (boolean): *Optional*. If armor should mitigate the incoming damage.
+	* `applyArmor` (boolean): *Default*: `false`. If armor should mitigate the incoming damage.
 	* `resistAttribute` (number): *Optional*. The resistance attribute that is applied to the damage. It can reduce damage or exploit weakness. Uses values from [`tes3.effectAttribute`](https://mwse.github.io/MWSE/references/effect-attributes/) namespace.
 
 **Returns**:
@@ -1879,7 +1856,7 @@ local result = myObject:equipMagic({ source = ..., itemData = ..., equipItem = .
 
 ### `getActiveMagicEffects`
 
-Fetches a filtered list of the active magic effects on the actor. Returns a table with [`tes3activeMagicEffect`](https://mwse.github.io/MWSE/types/tes3activeMagicEffect/) items.
+Fetches a filtered list of the active magic effects on the actor.
 
 ```lua
 local result = myObject:getActiveMagicEffects({ effect = ..., serial = ... })
@@ -1888,8 +1865,8 @@ local result = myObject:getActiveMagicEffects({ effect = ..., serial = ... })
 **Parameters**:
 
 * `params` (table): *Optional*.
-	* `effect` (number): *Optional*. The magic effect ID to search for.
-	* `serial` (number): *Optional*. The magic instance serial to search for.
+	* `effect` (integer): *Optional*. The magic effect ID to search for, from [`tes3.effect`](https://mwse.github.io/MWSE/references/magic-effects/) table.
+	* `serial` (integer): *Optional*. The magic instance serial to search for.
 
 **Returns**:
 
@@ -1981,43 +1958,56 @@ local result = myObject:getSkillValue(skillId)
 
 ### `getViewToActor`
 
-No description yet available.
+Returns the angle between provided actor and the front side of the actor on whom the method was called. The returned angle is in degress in range [-180, 180], where 0 degrees is directly in front of the actor, the negative values are on the actor's left side, and positive values on the actor's right.
 
 ```lua
-local result = myObject:getViewToActor()
+local angle = myObject:getViewToActor(mobile)
 ```
+
+**Parameters**:
+
+* `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): The target actor to calculate the facing angle.
 
 **Returns**:
 
-* `result` (number)
+* `angle` (number): In range of [-180, 180] in degrees.
 
 ***
 
 ### `getViewToPoint`
 
-No description yet available.
+Returns the angle between provided point in space and the front side of the actor on whom the method was called. The returned angle is in degress in range [-180, 180], where 0 degrees is directly in front of the actor, the negative values are on the actor's left side, and positive values on the actor's right.
 
 ```lua
-local result = myObject:getViewToPoint()
+local angle = myObject:getViewToPoint(point)
 ```
+
+**Parameters**:
+
+* `point` ([tes3vector3](../../types/tes3vector3)): The target point to calculate the facing angle.
 
 **Returns**:
 
-* `result` (number)
+* `angle` (number): In range of [-180, 180] in degrees.
 
 ***
 
 ### `getViewToPointWithFacing`
 
-No description yet available.
+Returns the angle between provided point in space and the actor's current position with provided facing (which effectively overrides the actor's facing used in other getViewTo methods). The returned angle is in degress in range [-180, 180], where 0 degrees is directly in front of the provided facing angle with the origin in actor's position.
 
 ```lua
-local result = myObject:getViewToPointWithFacing()
+local angle = myObject:getViewToPointWithFacing(facing, point)
 ```
+
+**Parameters**:
+
+* `facing` (number): The facing angle in radians. The values should be in [0, PI] interval.
+* `point` ([tes3vector3](../../types/tes3vector3)): The target point to calculate the facing angle.
 
 **Returns**:
 
-* `result` (number)
+* `angle` (number): In range of [-180, 180] in degrees.
 
 ***
 

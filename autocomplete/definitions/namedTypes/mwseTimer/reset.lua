@@ -1,4 +1,5 @@
 return {
 	type = "method",
-	description = [[Resets the timer completion time, as if it elapsed. Only works if the timer is active.]],
+	description = [[Resets the timer completion time and iterations count.]],
+	returntype = "boolean"
 }

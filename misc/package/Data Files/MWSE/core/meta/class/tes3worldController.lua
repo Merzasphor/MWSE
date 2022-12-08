@@ -28,7 +28,7 @@
 --- @field drownSound tes3sound The sound played when an actor is losing health by drowning.
 --- @field enchantedItemEffect niTextureEffect *Read-only*. The animated texture effect that is applied onto equipped enchanted items.
 --- @field enchantedItemEffectCreated boolean *Read-only*. If the enchantedItemEffect is available.
---- @field enchantedItemEffectTextures tes3iterator *Read-only*. An array of textures used for the enchanted item effect.
+--- @field enchantedItemEffectTextures niSourceTexture[] *Read-only*. An array of textures used for the enchanted item effect, 32 elements long.
 --- @field flagLevitationDisabled boolean If levitation is disabled.
 --- @field flagTeleportingDisabled boolean If teleporting is disabled.
 --- @field globalScripts tes3globalScript[] *Read-only*. A list of active global scripts.

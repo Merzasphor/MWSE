@@ -28,7 +28,7 @@ function tes3spell.create(id, name) end
 --- Calculates the chance that a caster can cast a given spell.
 --- @param params tes3spell.calculateCastChance.params This table accepts the following values:
 --- 
---- `checkMagicka`: boolean? — *Optional*. Determines if the caster's magicka should be taken into account during the calculation.
+--- `checkMagicka`: boolean? — *Default*: `true`. Determines if the caster's magicka should be taken into account during the calculation.
 --- 
 --- `caster`: tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer — The caster to perform the calculation against.
 --- @return number result No description yet available.
@@ -36,7 +36,7 @@ function tes3spell:calculateCastChance(params) end
 
 ---Table parameter definitions for `tes3spell.calculateCastChance`.
 --- @class tes3spell.calculateCastChance.params
---- @field checkMagicka boolean? *Optional*. Determines if the caster's magicka should be taken into account during the calculation.
+--- @field checkMagicka boolean? *Default*: `true`. Determines if the caster's magicka should be taken into account during the calculation.
 --- @field caster tes3reference|tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer The caster to perform the calculation against.
 
 --- Creates a copy of this object.
@@ -57,12 +57,12 @@ function tes3spell:createCopy(params) end
 --- @field sourceless boolean? *Default*: `false`. If true, the object will be made sourceless, and will not be serialized to the save game. If the object is copied outside of a save game, the object will **always** be sourceless.
 
 --- Gets the number of active effects in the spell effect table.
---- @return number result No description yet available.
+--- @return integer result No description yet available.
 function tes3spell:getActiveEffectCount() end
 
---- Gets the first index of an effect ID in the spell effect table.
---- @param effectId number The ID of a `tes3effect` object to look for.
---- @return number result No description yet available.
+--- Gets the first index of an effect ID in the spell effect table. Returns `-1` if provided effect doesn't exist in the spell
+--- @param effectId number A value from [`tes3.effect`](https://mwse.github.io/MWSE/references/magic-effects/) table.
+--- @return integer result No description yet available.
 function tes3spell:getFirstIndexOfEffect(effectId) end
 
 --- Returns the effect of the spell that a given actor is least proficient with.
@@ -72,6 +72,6 @@ function tes3spell:getLeastProficientEffect(actor) end
 
 --- Returns the school of the least proficient effect on the spell, for a given actor.
 --- @param actor tes3mobileActor|tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3reference|tes3npc|tes3npcInstance The actor to calculate for. A mobile actor is preferred, as passing only a `tes3npc` will not use up to date skill information.
---- @return number|nil schoolID The least proficient school ID, or `nil` if the spell has no valid effects.
+--- @return number|nil schoolID The least proficient school ID (from [`tes3.magicSchool`](https://mwse.github.io/MWSE/references/magic-schools/) table), or `nil` if the spell has no valid effects.
 function tes3spell:getLeastProficientSchool(actor) end
 

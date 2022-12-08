@@ -100,11 +100,11 @@ The blocked state of the object.
 
 ### `blood`
 
-Friendly access to actor's blood type.
+Friendly access to actor's blood type, in [0, 7] range. The available blood types are defined in the Morrowind.ini file, and assigned to the actor via the Construction Set.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -460,7 +460,7 @@ The actor's reputation.
 
 ### `scale`
 
-The object's scale.
+The object's scale. The value range is (0, 10).
 
 **Returns**:
 

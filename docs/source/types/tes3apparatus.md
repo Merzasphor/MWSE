@@ -182,7 +182,7 @@ The quality of the apparatus.
 
 ### `scale`
 
-The object's scale.
+The object's scale. The value range is (0, 10).
 
 **Returns**:
 
