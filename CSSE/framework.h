@@ -42,3 +42,4 @@
 #undef far
 #undef near
 #undef PlaySound
+#undef max

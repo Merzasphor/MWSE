@@ -1,6 +1,8 @@
 // dllmain.cpp : Defines the entry point for the DLL application.
 
 #include "TES3IteratedList.h"
+#include "NILinkedList.h"
+#include "NITArray.h"
 
 static std::ofstream logstream;
 static unsigned int patchCount = 0;
@@ -353,7 +355,7 @@ namespace NI {
 			NiMaterialProperty = 0xFFFFFFFF, // TODO: Resolve
 			NiMorphData = 0xFFFFFFFF, // TODO: Resolve
 			NiMorpherController = 0xFFFFFFFF, // TODO: Resolve
-			NiNode = 0xFFFFFFFF, // TODO: Resolve
+			NiNode = 0x6D7260,
 			NiObject = 0xFFFFFFFF, // TODO: Resolve
 			NiObjectNET = 0xFFFFFFFF, // TODO: Resolve
 			NiPalette = 0xFFFFFFFF, // TODO: Resolve
@@ -391,7 +393,7 @@ namespace NI {
 			NiSphericalCollider = 0xFFFFFFFF, // TODO: Resolve
 			NiSpotLight = 0xFFFFFFFF, // TODO: Resolve
 			NiStencilProperty = 0xFFFFFFFF, // TODO: Resolve
-			NiStringExtraData = 0x6D77D4, // TODO: Resolve
+			NiStringExtraData = 0x6D77D4,
 			NiSwitchNode = 0xFFFFFFFF, // TODO: Resolve
 			NiTextKeyExtraData = 0xFFFFFFFF, // TODO: Resolve
 			NiTexture = 0xFFFFFFFF, // TODO: Resolve
@@ -503,13 +505,6 @@ namespace NI {
 		}
 	};
 
-	template <typename T>
-	struct LinkedList {
-		T* data;
-		LinkedList<T>* next;
-	};
-	static_assert(sizeof(LinkedList<void>) == 0x8, "NI::LinkedList failed size validation");
-
 	struct AVObject : ObjectNET {
 		struct VirtualTable : Object::VirtualTable {
 			void(__thiscall* updateControllers)(AVObject*, float); // 0x2C
@@ -564,7 +559,14 @@ namespace NI {
 			return static_cast<AVObject::VirtualTable*>(vtbl)->getObjectByName(this, name);
 		}
 	};
+	static_assert(sizeof(AVObject) == 0x90, "NI::AVObject failed size validation");
 	static_assert(sizeof(AVObject::VirtualTable) == 0x94, "NI::AVObject's vtable failed size validation");
+
+	struct Node : AVObject {
+		TArray<AVObject*> children; // 0x90
+		LinkedList<void*> effectList; // 0xA8
+	};
+	static_assert(sizeof(Node) == 0xB0, "NI::Node failed size validation");
 
 	struct Frustum {
 		float left; // 0x0
@@ -573,16 +575,6 @@ namespace NI {
 		float bottom; // 0xC
 		float near; // 0x10
 		float far; // 0x14
-	};
-
-	template <typename T>
-	struct TArray {
-		void* vtbl;
-		T* storage; // 0x4
-		size_t storageCount; // 0x8 // # of slots in the array.
-		size_t endIndex; // 0xC // First empty slot in the array.
-		size_t filledCount; // 0x10 // Number of filled slots.
-		size_t growByCount; // 0x14 // Number of slots to increase storage by.
 	};
 
 	struct Camera : AVObject {
@@ -984,6 +976,21 @@ bool __cdecl Patch_ReplaceRotationLogic(void* unknown1, TES3::TranslationData::T
 
 static std::unordered_map<TES3::Object*, bool> validEditorMarkers;
 
+void SetCullOnTriEditorMarkers(NI::AVObject* object, bool cull) {
+	if (object->isInstanceOfType(NI::RTTIStaticPtr::NiNode)) {
+		for (auto& child : static_cast<NI::Node*>(object)->children) {
+			if (child) {
+				SetCullOnTriEditorMarkers(child, cull);
+			}
+		}
+	}
+	else if (object->name) {
+		if (_strnicmp(object->name, "Tri EditorMarker", 12) == 0) {
+			object->setAppCulled(cull);
+		}
+	}
+}
+
 const auto TES3_Object_IsMarker = reinterpret_cast<bool(__thiscall*)(TES3::BaseObject*)>(0x549B20);
 void __fastcall PatchEditorMarkers(TES3::Reference* reference, bool cull) {
 	if (reference->sceneNode == nullptr) {
@@ -994,6 +1001,8 @@ void __fastcall PatchEditorMarkers(TES3::Reference* reference, bool cull) {
 		reference->sceneNode->setAppCulled(cull);
 	}
 	else if (reference->sceneNode->hasStringDataWithValue("MRK")) {
+		SetCullOnTriEditorMarkers(reference->sceneNode, cull);
+
 		auto editorMarker = reference->sceneNode->getObjectByName("EditorMarker");
 		if (editorMarker) {
 			editorMarker->setAppCulled(cull);

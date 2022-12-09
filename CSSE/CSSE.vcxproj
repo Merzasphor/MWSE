@@ -164,6 +164,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
+    <ClInclude Include="NILinkedList.h" />
+    <ClInclude Include="NITArray.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="TES3IteratedList.h" />
   </ItemGroup>
