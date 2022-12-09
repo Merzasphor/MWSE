@@ -21,6 +21,24 @@ void genNOP(DWORD Address) {
 	MemAccess<unsigned char>::Set(Address, 0x90);
 }
 
+void genCallUnprotected(DWORD address, DWORD to, DWORD size = 0x5) {
+	// Unprotect memory.
+	DWORD oldProtect;
+	VirtualProtect((DWORD*)address, size, PAGE_READWRITE, &oldProtect);
+
+	// Create our call.
+	MemAccess<unsigned char>::Set(address, 0xE8);
+	MemAccess<DWORD>::Set(address + 1, to - address - 0x5);
+
+	// NOP out the rest of the block.
+	for (DWORD i = address + 5; i < address + size; ++i) {
+		genNOP(i);
+	}
+
+	// Protect memory again.
+	VirtualProtect((DWORD*)address, size, oldProtect, &oldProtect);
+}
+
 bool genCallEnforced(DWORD address, DWORD previousTo, DWORD to, DWORD size = 0x5) {
 	// Make sure we're doing a call.
 	BYTE instruction = *reinterpret_cast<BYTE*>(address);
@@ -119,6 +137,22 @@ bool writeDoubleWordEnforced(DWORD address, DWORD previousValue, DWORD value) {
 	VirtualProtect((DWORD*)address, sizeof(DWORD), oldProtect, &oldProtect);
 
 	return true;
+}
+
+void writeBytesUnprotected(DWORD address, const BYTE* value, size_t count) {
+	DWORD oldProtect;
+	VirtualProtect((DWORD*)address, count, PAGE_READWRITE, &oldProtect);
+	memmove_s((void*)address, count, value, count);
+	VirtualProtect((DWORD*)address, count, oldProtect, &oldProtect);
+}
+
+// WARNING: If passing a function address, always use a non-static function or it will crash.
+void writePatchCodeUnprotected(DWORD address, const BYTE* patch, DWORD size) {
+#ifdef _DEBUG
+	// Read incremental linker trampoline to find real patch
+	patch += 5 + *reinterpret_cast<const ptrdiff_t*>(patch + 1);
+#endif
+	writeBytesUnprotected(address, patch, size);
 }
 
 namespace NI {
@@ -264,13 +298,140 @@ namespace NI {
 
 	struct RTTI {
 		const char* name; // 0x0
-		RTTI* parent; // 0x4
+		RTTI* baseRTTI; // 0x4
 	};
+
+
+	namespace RTTIStaticPtr {
+		enum RTTIStaticPtr : uintptr_t {
+			AvoidNode = 0xFFFFFFFF, // TODO: Resolve
+			BrickNiExtraData = 0xFFFFFFFF, // TODO: Resolve
+			BSMirroredNode = 0xFFFFFFFF, // TODO: Resolve
+			NiAccumulator = 0xFFFFFFFF, // TODO: Resolve
+			NiAlphaAccumulator = 0xFFFFFFFF, // TODO: Resolve
+			NiAlphaController = 0xFFFFFFFF, // TODO: Resolve
+			NiAlphaProperty = 0xFFFFFFFF, // TODO: Resolve
+			NiAmbientLight = 0xFFFFFFFF, // TODO: Resolve
+			NiAutoNormalParticles = 0xFFFFFFFF, // TODO: Resolve
+			NiAutoNormalParticlesData = 0xFFFFFFFF, // TODO: Resolve
+			NiAVObject = 0xFFFFFFFF, // TODO: Resolve
+			NiBillboardNode = 0xFFFFFFFF, // TODO: Resolve
+			NiBltSource = 0xFFFFFFFF, // TODO: Resolve
+			NiBSAnimationManager = 0xFFFFFFFF, // TODO: Resolve
+			NiBSAnimationNode = 0xFFFFFFFF, // TODO: Resolve
+			NiBSPArrayController = 0xFFFFFFFF, // TODO: Resolve
+			NiBSParticleNode = 0xFFFFFFFF, // TODO: Resolve
+			NiBSPNode = 0xFFFFFFFF, // TODO: Resolve
+			NiCamera = 0xFFFFFFFF, // TODO: Resolve
+			NiClusterAccumulator = 0xFFFFFFFF, // TODO: Resolve
+			NiCollisionSwitch = 0xFFFFFFFF, // TODO: Resolve
+			NiColorData = 0xFFFFFFFF, // TODO: Resolve
+			NiDirectionalLight = 0xFFFFFFFF, // TODO: Resolve
+			NiDitherProperty = 0xFFFFFFFF, // TODO: Resolve
+			NiDX8Renderer = 0xFFFFFFFF, // TODO: Resolve
+			NiDynamicEffect = 0xFFFFFFFF, // TODO: Resolve
+			NiExtraData = 0xFFFFFFFF, // TODO: Resolve
+			NiFlipController = 0xFFFFFFFF, // TODO: Resolve
+			NiFloatController = 0xFFFFFFFF, // TODO: Resolve
+			NiFloatData = 0xFFFFFFFF, // TODO: Resolve
+			NiFltAnimationNode = 0xFFFFFFFF, // TODO: Resolve
+			NiFogProperty = 0xFFFFFFFF, // TODO: Resolve
+			NiGeometry = 0xFFFFFFFF, // TODO: Resolve
+			NiGeometryData = 0xFFFFFFFF, // TODO: Resolve
+			NiGeomMorpherController = 0xFFFFFFFF, // TODO: Resolve
+			NiGravity = 0xFFFFFFFF, // TODO: Resolve
+			NiKeyframeController = 0xFFFFFFFF, // TODO: Resolve
+			NiKeyframeData = 0xFFFFFFFF, // TODO: Resolve
+			NiKeyframeManager = 0xFFFFFFFF, // TODO: Resolve
+			NiLight = 0xFFFFFFFF, // TODO: Resolve
+			NiLightColorController = 0xFFFFFFFF, // TODO: Resolve
+			NiLines = 0xFFFFFFFF, // TODO: Resolve
+			NiLinesData = 0xFFFFFFFF, // TODO: Resolve
+			NiLODNode = 0xFFFFFFFF, // TODO: Resolve
+			NiLookAtController = 0xFFFFFFFF, // TODO: Resolve
+			NiMaterialColorController = 0xFFFFFFFF, // TODO: Resolve
+			NiMaterialProperty = 0xFFFFFFFF, // TODO: Resolve
+			NiMorphData = 0xFFFFFFFF, // TODO: Resolve
+			NiMorpherController = 0xFFFFFFFF, // TODO: Resolve
+			NiNode = 0xFFFFFFFF, // TODO: Resolve
+			NiObject = 0xFFFFFFFF, // TODO: Resolve
+			NiObjectNET = 0xFFFFFFFF, // TODO: Resolve
+			NiPalette = 0xFFFFFFFF, // TODO: Resolve
+			NiParticleBomb = 0xFFFFFFFF, // TODO: Resolve
+			NiParticleCollider = 0xFFFFFFFF, // TODO: Resolve
+			NiParticleColorModifier = 0xFFFFFFFF, // TODO: Resolve
+			NiParticleGrowFade = 0xFFFFFFFF, // TODO: Resolve
+			NiParticleModifier = 0xFFFFFFFF, // TODO: Resolve
+			NiParticleRotation = 0xFFFFFFFF, // TODO: Resolve
+			NiParticles = 0xFFFFFFFF, // TODO: Resolve
+			NiParticlesData = 0xFFFFFFFF, // TODO: Resolve
+			NiParticleSystemController = 0xFFFFFFFF, // TODO: Resolve
+			NiPathController = 0xFFFFFFFF, // TODO: Resolve
+			NiPixelData = 0xFFFFFFFF, // TODO: Resolve
+			NiPlanarCollider = 0xFFFFFFFF, // TODO: Resolve
+			NiPointLight = 0xFFFFFFFF, // TODO: Resolve
+			NiPosData = 0xFFFFFFFF, // TODO: Resolve
+			NiProperty = 0xFFFFFFFF, // TODO: Resolve
+			NiRenderedCubeMap = 0xFFFFFFFF, // TODO: Resolve
+			NiRenderedTexture = 0xFFFFFFFF, // TODO: Resolve
+			NiRenderer = 0xFFFFFFFF, // TODO: Resolve
+			NiRendererSpecificProperty = 0xFFFFFFFF, // TODO: Resolve
+			NiRollController = 0xFFFFFFFF, // TODO: Resolve
+			NiRotatingParticles = 0xFFFFFFFF, // TODO: Resolve
+			NiRotatingParticlesData = 0xFFFFFFFF, // TODO: Resolve
+			NiScreenPolygon = 0xFFFFFFFF, // TODO: Resolve
+			NiSequenceStreamHelper = 0xFFFFFFFF, // TODO: Resolve
+			NiShadeProperty = 0xFFFFFFFF, // TODO: Resolve
+			NiSkinData = 0xFFFFFFFF, // TODO: Resolve
+			NiSkinInstance = 0xFFFFFFFF, // TODO: Resolve
+			NiSkinPartition = 0xFFFFFFFF, // TODO: Resolve
+			NiSortAdjustNode = 0xFFFFFFFF, // TODO: Resolve
+			NiSourceTexture = 0xFFFFFFFF, // TODO: Resolve
+			NiSpecularProperty = 0xFFFFFFFF, // TODO: Resolve
+			NiSphericalCollider = 0xFFFFFFFF, // TODO: Resolve
+			NiSpotLight = 0xFFFFFFFF, // TODO: Resolve
+			NiStencilProperty = 0xFFFFFFFF, // TODO: Resolve
+			NiStringExtraData = 0x6D77D4, // TODO: Resolve
+			NiSwitchNode = 0xFFFFFFFF, // TODO: Resolve
+			NiTextKeyExtraData = 0xFFFFFFFF, // TODO: Resolve
+			NiTexture = 0xFFFFFFFF, // TODO: Resolve
+			NiTextureEffect = 0xFFFFFFFF, // TODO: Resolve
+			NiTexturingProperty = 0xFFFFFFFF, // TODO: Resolve
+			NiTimeController = 0xFFFFFFFF, // TODO: Resolve
+			NiTriBasedGeom = 0xFFFFFFFF, // TODO: Resolve
+			NiTriBasedGeomData = 0xFFFFFFFF, // TODO: Resolve
+			NiTriShape = 0xFFFFFFFF, // TODO: Resolve
+			NiTriShapeData = 0xFFFFFFFF, // TODO: Resolve
+			NiTriShapeDynamicData = 0xFFFFFFFF, // TODO: Resolve
+			NiTriStrips = 0xFFFFFFFF, // TODO: Resolve
+			NiTriStripsData = 0xFFFFFFFF, // TODO: Resolve
+			NiUVController = 0xFFFFFFFF, // TODO: Resolve
+			NiUVData = 0xFFFFFFFF, // TODO: Resolve
+			NiVertexColorProperty = 0xFFFFFFFF, // TODO: Resolve
+			NiVertWeightsExtraData = 0xFFFFFFFF, // TODO: Resolve
+			NiVisController = 0xFFFFFFFF, // TODO: Resolve
+			NiVisData = 0xFFFFFFFF, // TODO: Resolve
+			NiWireframeProperty = 0xFFFFFFFF, // TODO: Resolve
+			NiZBufferProperty = 0xFFFFFFFF, // TODO: Resolve
+			OffscreenSceneGraph_MasterPropertyAccumulator = 0xFFFFFFFF, // TODO: Resolve
+			RootCollisionNode = 0xFFFFFFFF, // TODO: Resolve
+			TES3ObjectExtraData = 0xFFFFFFFF, // TODO: Resolve
+		};
+	}
 
 	struct Object {
 		struct VirtualTable {
 			void(__thiscall* destructor)(Object*, int); // 0x0
 			RTTI* (__thiscall* getRTTI)(const Object*); // 0x4
+			Object* (__thiscall* createClone)(Object*); // 0x8
+			void(__thiscall* loadBinary)(Object*, void*); // 0xC
+			void(__thiscall* linkObject)(Object*, void*); // 0x10
+			bool(__thiscall* registerStreamables)(Object*, void*); // 0x14
+			void(__thiscall* saveBinary)(Object*, void*); // 0x18
+			bool(__thiscall* isEqual)(const Object*, const Object*); // 0x1C
+			void(__thiscall* addViewerStrings)(Object*, void*); // 0x20
+			void(__thiscall* processClone)(Object*); // 0x24
+			void(__thiscall* createRendererData)(Object*); // 0x28
 		};
 		VirtualTable* vtbl; // 0x0
 		unsigned int refCount; // 0x4
@@ -278,12 +439,68 @@ namespace NI {
 		RTTI* getRTTI() const {
 			return vtbl->getRTTI(this);
 		}
+
+		bool isOfType(const RTTI* type) const {
+			return vtbl->getRTTI(this) == type;
+		}
+
+		bool isOfType(uintptr_t rtti) const {
+			return isOfType(reinterpret_cast<RTTI*>(rtti));
+		}
+
+		bool isInstanceOfType(const RTTI* type) const {
+			for (const RTTI* rtti = vtbl->getRTTI(this); rtti; rtti = rtti->baseRTTI) {
+				if (rtti == type) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		bool isInstanceOfType(uintptr_t rtti) const {
+			return isInstanceOfType(reinterpret_cast<RTTI*>(rtti));
+		}
 	};
+	static_assert(sizeof(Object::VirtualTable) == 0x2C, "NI::Object's vtable failed size validation");
+
+	struct ExtraData : Object {
+		size_t genericDataLength; // 0x8
+		void* genericData; // 0xC // Only loaded if NiExtraData isn't subclassed.
+		ExtraData* next; // 0x10
+
+	};
+	static_assert(sizeof(ExtraData) == 0x14, "NI::TextKey failed size validation");
+
+	struct StringExtraData : ExtraData {
+		char* string; // 0x14
+	};
+	static_assert(sizeof(StringExtraData) == 0x18, "NI::StringExtraData failed size validation");
 
 	struct ObjectNET : Object {
 		char* name; // 0x8
-		void* extraData; // 0xC
+		ExtraData* extraData; // 0xC
 		void* controllers; // 0x10
+
+		bool hasStringDataWithValue(const char* value) const {
+			if (!value) {
+				return false;
+			}
+
+			const auto keylen = strnlen_s(value, 128);
+
+			auto extra = extraData;
+			while (extra) {
+				const auto stringData = static_cast<NI::StringExtraData*>(extra);
+				if (extra->isInstanceOfType(NI::RTTIStaticPtr::NiStringExtraData) && stringData->string) {
+					if (_strnicmp(value, stringData->string, keylen) == 0) {
+						return true;
+					}
+				}
+				extra = extra->next;
+			}
+			return false;
+		}
 	};
 
 	template <typename T>
@@ -294,6 +511,34 @@ namespace NI {
 	static_assert(sizeof(LinkedList<void>) == 0x8, "NI::LinkedList failed size validation");
 
 	struct AVObject : ObjectNET {
+		struct VirtualTable : Object::VirtualTable {
+			void(__thiscall* updateControllers)(AVObject*, float); // 0x2C
+			void(__thiscall* applyTransform)(AVObject*, Matrix33*, Vector3*, bool); // 0x30
+			void* (__thiscall* getWorldBound)(AVObject*); // 0x34
+			void(__thiscall* createWorldVertices)(AVObject*); // 0x38
+			void(__thiscall* updateWorldVertices)(AVObject*); // 0x3C
+			void(__thiscall* destroyWorldVertices)(AVObject*); // 0x40
+			void(__thiscall* createWorldNormals)(AVObject*); // 0x44
+			void(__thiscall* updateWorldNormals)(AVObject*); // 0x48
+			void(__thiscall* destroyWorldNormals)(AVObject*); // 0x4C
+			void(__thiscall* setAppCulled)(AVObject*, bool); // 0x50
+			bool(__thiscall* getAppCulled)(AVObject*); // 0x54
+			void(__thiscall* setPropagationMode)(AVObject*, int); // 0x58
+			AVObject* (__thiscall* getObjectByName)(AVObject*, const char*); // 0x5C
+			void(__thiscall* updateDownwardPass)(AVObject*, float, bool, bool); // 0x60
+			bool(__thiscall* isVisualObject)(AVObject*); // 0x64
+			void(__thiscall* updatePropertiesDownward)(AVObject*, void*); // 0x68
+			void(__thiscall* updateEffectsDownward)(AVObject*, void*); // 0x6C
+			void* (__thiscall* getPropertyState)(AVObject*, void**); // 0x70
+			void* (__thiscall* getEffectsState)(AVObject*, void**); // 0x74
+			void(__thiscall* display)(AVObject*, void*); // 0x78
+			void(__thiscall* updateCollisionData)(AVObject*); // 0x7C
+			bool(__thiscall* testCollisions)(AVObject*, float, void*, void*); // 0x80
+			int(__thiscall* findCollisions)(AVObject*, float, void*, void*); // 0x84
+			bool(__thiscall* findIntersections)(AVObject*, Vector3*, Vector3*, void*); // 0x88
+			void(__thiscall* updateWorldData)(AVObject*); // 0x8C
+			void(__thiscall* updateWorldBound)(AVObject*); // 0x90
+		};
 		unsigned short flags; // 0x14
 		short pad_16;
 		Node* parentNode; // 0x18
@@ -309,7 +554,17 @@ namespace NI {
 		int(__cdecl* collideCallback)(void*); // 0x80
 		void* collideCallbackUserData; // 0x84
 		LinkedList<void> propertyNode; // 0x88
+
+		void setAppCulled(bool culled) {
+			static_cast<AVObject::VirtualTable*>(vtbl)->setAppCulled(this, culled);
+		}
+
+		AVObject* getObjectByName(const char* name) {
+			const auto getObjByName = static_cast<AVObject::VirtualTable*>(vtbl)->getObjectByName;
+			return static_cast<AVObject::VirtualTable*>(vtbl)->getObjectByName(this, name);
+		}
 	};
+	static_assert(sizeof(AVObject::VirtualTable) == 0x94, "NI::AVObject's vtable failed size validation");
 
 	struct Frustum {
 		float left; // 0x0
@@ -428,12 +683,36 @@ namespace TES3 {
 	};
 
 	struct BaseObject {
-		void* vtbl; // 0x0
+		struct VirtualTable {
+			void(__thiscall* destructor)(BaseObject*, signed char); // 0x0
+			int(__thiscall* loadObjectSpecific)(BaseObject*, GameFile*); // 0x4
+			int(__thiscall* saveRecordSpecific)(BaseObject*, GameFile*); // 0x8
+			int(__thiscall* loadObject)(BaseObject*, GameFile*); // 0xC
+			int(__thiscall* saveObject)(BaseObject*, GameFile*); // 0x10
+			void(__thiscall* setObjectModified)(BaseObject*, bool); // 0x14
+			int(__thiscall* setObjectFlag40)(BaseObject*, unsigned char); // 0x18
+			void* unknown_0x1C;
+			const char* (__thiscall* getObjectID)(const BaseObject*); // 0x20
+		};
+		VirtualTable* vtbl; // 0x0
 		ObjectType::ObjectType objectType; // 0x4
 		unsigned int flags; // 0x8
 		GameFile* sourceFile; // 0xC
+
+		const char* getObjectID() const {
+			return vtbl->getObjectID(this);
+		}
 	};
 	static_assert(sizeof(BaseObject) == 0x10, "TES3::BaseObject failed size validation");
+
+	struct Object : BaseObject {
+		NI::AVObject* sceneNode; // 0x10
+		int unknown_0x14;
+		int unknown_0x18;
+		int unknown_0x1C;
+		int unknown_0x20;
+		int unknown_0x24;
+	};
 
 	struct DialogueInfo : BaseObject {
 		struct LoadLinkNode {
@@ -475,13 +754,7 @@ namespace TES3 {
 		NI::Vector3 position;
 	};
 
-	struct Reference : BaseObject {
-		NI::AVObject* sceneNode; // 0x10
-		int unknown_0x14;
-		int unknown_0x18;
-		int unknown_0x1C;
-		int unknown_0x20;
-		int unknown_0x24;
+	struct Reference : Object {
 		BaseObject* baseObject; // 0x28
 		NI::Vector3 orientationNonAttached; //0x2C
 		NI::Vector3 anotherOrientation; //0x38
@@ -709,6 +982,33 @@ bool __cdecl Patch_ReplaceRotationLogic(void* unknown1, TES3::TranslationData::T
 	return true;
 }
 
+static std::unordered_map<TES3::Object*, bool> validEditorMarkers;
+
+const auto TES3_Object_IsMarker = reinterpret_cast<bool(__thiscall*)(TES3::BaseObject*)>(0x549B20);
+void __fastcall PatchEditorMarkers(TES3::Reference* reference, bool cull) {
+	if (reference->sceneNode == nullptr) {
+		return;
+	}
+
+	if (TES3_Object_IsMarker(reference->baseObject)) {
+		reference->sceneNode->setAppCulled(cull);
+	}
+	else if (reference->sceneNode->hasStringDataWithValue("MRK")) {
+		auto editorMarker = reference->sceneNode->getObjectByName("EditorMarker");
+		if (editorMarker) {
+			editorMarker->setAppCulled(cull);
+		}
+	}
+}
+
+
+__declspec(naked) void PatchEditorMarkers_Setup() {
+	__asm {
+		mov edx, [esp + 0x18 + 0x4]
+	}
+}
+constexpr auto PatchEditorMarkers_Setup_Size = 0x4u;
+
 void installPatches() {
 	// Get the vanilla masters so we suppress errors from them.
 	genCallEnforced(0x50194E, 0x4041C4, reinterpret_cast<DWORD>(Patch_FindVanillaMasters));
@@ -721,6 +1021,10 @@ void installPatches() {
 
 	// Patch: Use world rotation values.
 	genJumpEnforced(0x403D41, 0x4652D0, reinterpret_cast<DWORD>(Patch_ReplaceRotationLogic));
+
+	// Patch: Custom marker toggling code.
+	writePatchCodeUnprotected(0x49E932, (BYTE*)PatchEditorMarkers_Setup, PatchEditorMarkers_Setup_Size);
+	genCallUnprotected(0x49E932 + PatchEditorMarkers_Setup_Size, reinterpret_cast<DWORD>(PatchEditorMarkers), 0x49E94D - 0x49E932 - PatchEditorMarkers_Setup_Size);
 
 	// Patch: Throttle UI status updates.
 	genCallEnforced(0x4BCBBC, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
