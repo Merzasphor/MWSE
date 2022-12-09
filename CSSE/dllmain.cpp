@@ -99,118 +99,26 @@ bool genJumpEnforced(DWORD address, DWORD previousTo, DWORD to, DWORD size = 0x5
 	return true;
 }
 
-namespace TES3 {
-	namespace ObjectType {
-		enum ObjectType {
-			Invalid = 0,
-			Activator = 'ITCA',
-			Alchemy = 'HCLA',
-			Ammo = 'OMMA',
-			AnimationGroup = 'GINA',
-			Apparatus = 'APPA',
-			Armor = 'OMRA',
-			Birthsign = 'NGSB',
-			Bodypart = 'YDOB',
-			Book = 'KOOB',
-			Cell = 'LLEC',
-			Class = 'SALC',
-			Clothing = 'TOLC',
-			Container = 'TNOC',
-			Creature = 'AERC',
-			CreatureClone = 'CERC',
-			Dialogue = 'LAID',
-			DialogueInfo = 'OFNI',
-			Door = 'ROOD',
-			Enchantment = 'HCNE',
-			Faction = 'TCAF',
-			GameSetting = 'TSMG',
-			Global = 'BOLG',
-			Ingredient = 'RGNI',
-			Land = 'DNAL',
-			LandTexture = 'XETL',
-			LeveledCreature = 'CVEL',
-			LeveledItem = 'IVEL',
-			Light = 'HGIL',
-			Lockpick = 'KCOL',
-			MagicEffect = 'FEGM',
-			MagicSourceInstance = 'LLPS',
-			Misc = 'CSIM',
-			MobileCreature = 'RCAM',
-			MobileNPC = 'HCAM',
-			MobileObject = 'TCAM',
-			MobilePlayer = 'PCAM',
-			MobileProjectile = 'JRPM',
-			MobileSpellProjectile = 'PSPM',
-			NPC = '_CPN',
-			NPCClone = 'CCPN',
-			PathGrid = 'DRGP',
-			Probe = 'BORP',
-			Quest = 'SEUQ',
-			Race = 'ECAR',
-			Reference = 'RFER',
-			Region = 'NGER',
-			Repair = 'APER',
-			Script = 'TPCS',
-			Skill = 'LIKS',
-			Sound = 'NUOS',
-			SoundGenerator = 'GDNS',
-			Spell = 'LEPS',
-			Static = 'TATS',
-			TES3 = '3SET',
-			Weapon = 'PAEW',
-		};
+bool writeDoubleWordEnforced(DWORD address, DWORD previousValue, DWORD value) {
+	DWORD currentValue = *reinterpret_cast<DWORD*>(address);
+	if (currentValue != previousValue) {
+#ifdef _DEBUG
+		logstream << "[MemoryUtil] Skipping write double word at 0x" << std::hex << address << ". Expected previous value of 0x" << previousValue << ", found 0x" << currentValue << "." << std::endl;
+#endif
+		return false;
 	}
 
-	struct GameFile {
-		unsigned int unknown_0x0;
-		unsigned int unknown_0x4;
-		unsigned int unknown_0x8;
-		char fileName[260];
-		char filePath[260];
-	};
+	// Unprotect memory.
+	DWORD oldProtect;
+	VirtualProtect((DWORD*)address, sizeof(DWORD), PAGE_READWRITE, &oldProtect);
 
-	struct BaseObject {
-		void* vtbl; // 0x0
-		ObjectType::ObjectType objectType; // 0x4
-		unsigned int flags; // 0x8
-		GameFile* sourceFile; // 0xC
-	};
-	static_assert(sizeof(BaseObject) == 0x10, "TES3::BaseObject failed size validation");
+	// Overwrite our single byte.
+	MemAccess<DWORD>::Set(address, value);
 
-	struct DialogueInfo : BaseObject {
-		struct LoadLinkNode {
-			const char* name; // 0x0
-			const char* previous; // 0x4
-			const char* next; // 0x8
-		};
-		LoadLinkNode* loadLinkNodes; // 0x10
-		int unknown_0x14;
-		int unknown_0x18;
-		unsigned char npcRank; // 0x1C
-		unsigned char npcSex; // 0x1D
-		unsigned char pcRank; // 0x1E
-		unsigned char unknown_0x1F;
-		char unknown_0x20[60];
-		int unknown_0x5C[18];
-	};
-	static_assert(sizeof(DialogueInfo) == 0xA4, "TES3::DialogueInfo failed size validation");
+	// Protect memory again.
+	VirtualProtect((DWORD*)address, sizeof(DWORD), oldProtect, &oldProtect);
 
-	struct Dialogue : BaseObject {
-		const char* id; // 0x10
-		unsigned char type; // 0x14
-		IteratedList<DialogueInfo*> topics; // 0x18
-	};
-	static_assert(sizeof(Dialogue) == 0x2C, "TES3::Dialogue failed size validation");
-
-	struct RecordHandler {
-		int activeModCount; // 0x0
-		int unknown_0x4[13];
-		IteratedList<Dialogue*>* dialogues; // 0x38
-		int unknown_0x3C[10975];
-		GameFile* activeGameFiles[256]; // 0xABB8
-		// ...
-	};
-	static_assert(offsetof(RecordHandler, activeGameFiles) == 0xABB8, "TES3::RecordHandler failed offset validation");
+	return true;
 }
 
 namespace NI {
@@ -249,7 +157,7 @@ namespace NI {
 			return str;
 		}
 
-		static constexpr auto _multiplyValueMatrix = reinterpret_cast<Matrix33*(__thiscall*)(Matrix33*, Matrix33*, Matrix33*)>(0x5E2060);
+		static constexpr auto _multiplyValueMatrix = reinterpret_cast<Matrix33 * (__thiscall*)(Matrix33*, Matrix33*, Matrix33*)>(0x5E2060);
 		Matrix33* multiplyValue(Matrix33* out_result, Matrix33* value) {
 			return _multiplyValueMatrix(this, out_result, value);
 		}
@@ -449,6 +357,156 @@ namespace NI {
 	static_assert(sizeof(Camera) == 0x1E0, "NI::Camera failed size validation");
 }
 
+namespace TES3 {
+	namespace ObjectType {
+		enum ObjectType {
+			Invalid = 0,
+			Activator = 'ITCA',
+			Alchemy = 'HCLA',
+			Ammo = 'OMMA',
+			AnimationGroup = 'GINA',
+			Apparatus = 'APPA',
+			Armor = 'OMRA',
+			Birthsign = 'NGSB',
+			Bodypart = 'YDOB',
+			Book = 'KOOB',
+			Cell = 'LLEC',
+			Class = 'SALC',
+			Clothing = 'TOLC',
+			Container = 'TNOC',
+			Creature = 'AERC',
+			CreatureClone = 'CERC',
+			Dialogue = 'LAID',
+			DialogueInfo = 'OFNI',
+			Door = 'ROOD',
+			Enchantment = 'HCNE',
+			Faction = 'TCAF',
+			GameSetting = 'TSMG',
+			Global = 'BOLG',
+			Ingredient = 'RGNI',
+			Land = 'DNAL',
+			LandTexture = 'XETL',
+			LeveledCreature = 'CVEL',
+			LeveledItem = 'IVEL',
+			Light = 'HGIL',
+			Lockpick = 'KCOL',
+			MagicEffect = 'FEGM',
+			MagicSourceInstance = 'LLPS',
+			Misc = 'CSIM',
+			MobileCreature = 'RCAM',
+			MobileNPC = 'HCAM',
+			MobileObject = 'TCAM',
+			MobilePlayer = 'PCAM',
+			MobileProjectile = 'JRPM',
+			MobileSpellProjectile = 'PSPM',
+			NPC = '_CPN',
+			NPCClone = 'CCPN',
+			PathGrid = 'DRGP',
+			Probe = 'BORP',
+			Quest = 'SEUQ',
+			Race = 'ECAR',
+			Reference = 'RFER',
+			Region = 'NGER',
+			Repair = 'APER',
+			Script = 'TPCS',
+			Skill = 'LIKS',
+			Sound = 'NUOS',
+			SoundGenerator = 'GDNS',
+			Spell = 'LEPS',
+			Static = 'TATS',
+			TES3 = '3SET',
+			Weapon = 'PAEW',
+		};
+	}
+
+	struct GameFile {
+		unsigned int unknown_0x0;
+		unsigned int unknown_0x4;
+		unsigned int unknown_0x8;
+		char fileName[260];
+		char filePath[260];
+	};
+
+	struct BaseObject {
+		void* vtbl; // 0x0
+		ObjectType::ObjectType objectType; // 0x4
+		unsigned int flags; // 0x8
+		GameFile* sourceFile; // 0xC
+	};
+	static_assert(sizeof(BaseObject) == 0x10, "TES3::BaseObject failed size validation");
+
+	struct DialogueInfo : BaseObject {
+		struct LoadLinkNode {
+			const char* name; // 0x0
+			const char* previous; // 0x4
+			const char* next; // 0x8
+		};
+		LoadLinkNode* loadLinkNodes; // 0x10
+		int unknown_0x14;
+		int unknown_0x18;
+		unsigned char npcRank; // 0x1C
+		unsigned char npcSex; // 0x1D
+		unsigned char pcRank; // 0x1E
+		unsigned char unknown_0x1F;
+		char unknown_0x20[60];
+		int unknown_0x5C[18];
+	};
+	static_assert(sizeof(DialogueInfo) == 0xA4, "TES3::DialogueInfo failed size validation");
+
+	struct Dialogue : BaseObject {
+		const char* id; // 0x10
+		unsigned char type; // 0x14
+		IteratedList<DialogueInfo*> topics; // 0x18
+	};
+	static_assert(sizeof(Dialogue) == 0x2C, "TES3::Dialogue failed size validation");
+
+	struct RecordHandler {
+		int activeModCount; // 0x0
+		int unknown_0x4[13];
+		IteratedList<Dialogue*>* dialogues; // 0x38
+		int unknown_0x3C[10975];
+		GameFile* activeGameFiles[256]; // 0xABB8
+		// ...
+	};
+	static_assert(offsetof(RecordHandler, activeGameFiles) == 0xABB8, "TES3::RecordHandler failed offset validation");
+
+	struct ReferenceTransformationAttachment {
+		NI::Vector3 orientation;
+		NI::Vector3 position;
+	};
+
+	struct Reference : BaseObject {
+		NI::AVObject* sceneNode; // 0x10
+		int unknown_0x14;
+		int unknown_0x18;
+		int unknown_0x1C;
+		int unknown_0x20;
+		int unknown_0x24;
+		BaseObject* baseObject; // 0x28
+		NI::Vector3 orientationNonAttached; //0x2C
+		NI::Vector3 anotherOrientation; //0x38
+		NI::Vector3 yetAnotherOrientation; //0x44
+		NI::Vector3 position; // 0x50
+	};
+
+	struct TranslationData {
+		enum class RotationAxis : unsigned int {
+			X = 1,
+			Z = 2,
+			Y = 3,
+		};
+		struct Target {
+			TES3::Reference* reference; // 0x0
+			Target* previous; // 0x4
+			Target* next; // 0x8
+		};
+		Target* firstTarget; // 0x0
+		unsigned int numberOfTargets; // 0x4
+		NI::Vector3 position; // 0x8
+		void* unknown_0x14;
+	};
+}
+
 static TES3::GameFile* master_Morrowind = nullptr;
 static TES3::GameFile* master_Tribunal = nullptr;
 static TES3::GameFile* master_Bloodmoon = nullptr;
@@ -516,69 +574,6 @@ void __cdecl PatchThrottleMessageUpdate(WPARAM type, LPARAM lParam) {
 	}
 	TES3CS_UpdateStatusMessage(type, lParam);
 }
-
-void __fastcall PatchWorldRotationValues1(NI::AVObject* node, DWORD _EDX_, NI::Matrix33* newRotation) {
-	int x = 4;
-}
-
-void __fastcall PatchWorldRotationValues2(NI::Matrix33** to, DWORD _EDX_, NI::Matrix33* from) {
-	static_assert(offsetof(NI::AVObject, localRotation) == 0x2C);
-	auto node = reinterpret_cast<NI::AVObject*>(reinterpret_cast<BYTE*>(to) - offsetof(NI::AVObject, localRotation));
-	//node->worldTransform.rotation = *from;
-}
-
-NI::Matrix33* __fastcall PatchMatrixRotationOrder1(NI::Matrix33* from, DWORD _EDX_, NI::Matrix33* out_result, NI::Matrix33* to) {
-	return to->multiplyValue(out_result, from);
-}
-
-const auto TES3_CS_Reference_updateRotation = reinterpret_cast<NI::Matrix33 * (__thiscall*)(TES3::BaseObject*, NI::Matrix33*, bool)>(0x4028B0);
-NI::Matrix33* __fastcall PatchMatrixRotationOrder2(TES3::BaseObject* reference, DWORD _EDX_, NI::Matrix33* out_result, bool useGlobalAxis) {
-	return TES3_CS_Reference_updateRotation(reference, out_result, true);
-}
-
-namespace TES3 {
-	struct ReferenceTransformationAttachment {
-		NI::Vector3 orientation;
-		NI::Vector3 position;
-	};
-
-	struct Reference : BaseObject {
-		NI::AVObject* sceneNode; // 0x10
-		int unknown_0x14;
-		int unknown_0x18;
-		int unknown_0x1C;
-		int unknown_0x20;
-		int unknown_0x24;
-		BaseObject* baseObject; // 0x28
-		NI::Vector3 orientationNonAttached; //0x2C
-		NI::Vector3 anotherOrientation; //0x38
-		NI::Vector3 yetAnotherOrientation; //0x44
-		NI::Vector3 position; // 0x50
-	};
-}
-
-const auto TES3_CS_Reference_getAttachmentTransformation = reinterpret_cast<TES3::ReferenceTransformationAttachment * (__thiscall*)(TES3::Reference*)>(0x40470F);
-NI::Matrix33* __fastcall PatchMatrixRotationOrder3(TES3::Reference* reference, DWORD _EDX_, NI::Matrix33* out_result, bool useGlobalAxis) {
-	logstream << "A: " << reference->orientationNonAttached << "; B: " << reference->anotherOrientation << "; C: " << reference->yetAnotherOrientation << std::endl;
-	return TES3_CS_Reference_updateRotation(reference, out_result, true);
-}
-
-struct TranslationData {
-	enum class RotationAxis : unsigned int {
-		X = 1,
-		Z = 2,
-		Y = 3,
-	};
-	struct Target {
-		TES3::Reference* reference; // 0x0
-		Target* previous; // 0x4
-		Target* next; // 0x8
-	};
-	Target* firstTarget; // 0x0
-	unsigned int numberOfTargets; // 0x4
-	NI::Vector3 position; // 0x8
-	void* unknown_0x14;
-};
 
 constexpr auto M_PI = 3.14159265358979323846; // pi
 constexpr auto M_PIf = float(M_PI); // pi
