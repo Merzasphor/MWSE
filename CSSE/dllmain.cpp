@@ -590,10 +590,14 @@ void fmodZeroTo2pi(float& value) {
 	}
 }
 
-const auto TES3_CS_OriginalRotationLogic = reinterpret_cast<bool(__cdecl*)(void*, TranslationData::Target*, int, TranslationData::RotationAxis)>(0x4652D0);
-bool __cdecl Patch_ReplaceRotationLogic(void* unknown1, TranslationData::Target* firstTarget, int relativeMouseDelta, TranslationData::RotationAxis rotationAxis) {
+inline bool isKeyDown(int key) {
+	return (GetKeyState(key) & 0x8000) != 0;
+}
+
+const auto TES3_CS_OriginalRotationLogic = reinterpret_cast<bool(__cdecl*)(void*, TES3::TranslationData::Target*, int, TES3::TranslationData::RotationAxis)>(0x4652D0);
+bool __cdecl Patch_ReplaceRotationLogic(void* unknown1, TES3::TranslationData::Target* firstTarget, int relativeMouseDelta, TES3::TranslationData::RotationAxis rotationAxis) {
 	// Allow holding ALT modifier to do vanilla behavior.
-	if ((GetKeyState(VK_MENU) & 0x8000) != 0) {
+	if (isKeyDown(VK_MENU)) {
 		return TES3_CS_OriginalRotationLogic(unknown1, firstTarget, relativeMouseDelta, rotationAxis);
 	}
 
@@ -601,7 +605,7 @@ bool __cdecl Patch_ReplaceRotationLogic(void* unknown1, TranslationData::Target*
 		return false;
 	}
 
-	auto data = MemAccess<TranslationData*>::Get(0x6CE968);
+	auto data = MemAccess<TES3::TranslationData*>::Get(0x6CE968);
 
 	auto rotationSpeed = MemAccess<float>::Get(0x6CE9B0);
 	auto rotationFlags = MemAccess<BYTE>::Get(0x6CE9A4);
@@ -610,14 +614,18 @@ bool __cdecl Patch_ReplaceRotationLogic(void* unknown1, TranslationData::Target*
 	float y = 0.0f;
 	float z = 0.0f;
 	
+	if (!isKeyDown('X') && !isKeyDown('Y')) {
+		rotationAxis = TES3::TranslationData::RotationAxis::Z;
+	}
+
 	switch (rotationAxis) {
-	case TranslationData::RotationAxis::X:
+	case TES3::TranslationData::RotationAxis::X:
 		x += relativeMouseDelta * rotationSpeed * 0.1f;
 		break;
-	case TranslationData::RotationAxis::Y:
+	case TES3::TranslationData::RotationAxis::Y:
 		y += relativeMouseDelta * rotationSpeed * 0.1f;
 		break;
-	case TranslationData::RotationAxis::Z:
+	case TES3::TranslationData::RotationAxis::Z:
 		z += relativeMouseDelta * rotationSpeed * 0.1f;
 		break;
 	}
@@ -657,7 +665,7 @@ bool __cdecl Patch_ReplaceRotationLogic(void* unknown1, TranslationData::Target*
 
 		// Disallow XY rotations on actors and northmarkers.
 		auto doRotations = true;
-		if (rotationAxis != TranslationData::RotationAxis::Z) {
+		if (rotationAxis != TES3::TranslationData::RotationAxis::Z) {
 			switch (reference->baseObject->objectType) {
 			case TES3::ObjectType::Creature:
 			case TES3::ObjectType::LeveledCreature:
