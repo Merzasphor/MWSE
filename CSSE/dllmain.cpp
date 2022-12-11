@@ -939,6 +939,10 @@ void installPatches() {
 	// Patch: Don't save default GMSTs that haven't been modified.
 	mwse::memory::genJumpEnforced(0x4042B4, 0x4F9BE0, reinterpret_cast<DWORD>(PatchPreventGMSTPollution));
 
+	// Patch: When hiding objects (Shift+C) in terrain editing mode (H), do not hide the terrain editing circle.
+	mwse::memory::writeDoubleWordEnforced(0x45F39C + 0x2, 0x12C, 0x134);
+	mwse::memory::writeDoubleWordEnforced(0x45F166 + 0x2, 0x12C, 0x134);
+
 	// Patch: Throttle UI status updates.
 	mwse::memory::genCallEnforced(0x4BCBBC, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
 	mwse::memory::genCallEnforced(0x4BD489, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
