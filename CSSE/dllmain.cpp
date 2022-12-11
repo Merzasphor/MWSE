@@ -892,7 +892,7 @@ __declspec(naked) void PatchEditorMarkers_Setup() {
 constexpr auto PatchEditorMarkers_Setup_Size = 0x4u;
 
 const auto TES3_GameSetting_SaveGameSetting = reinterpret_cast<bool(__thiscall*)(TES3::GameSetting*, TES3::GameFile*)>(0x4F9BE0);
-bool __fastcall saveGameSetting(TES3::GameSetting* gameSetting, DWORD _EDX_, TES3::GameFile* file) {
+bool __fastcall PatchPreventGMSTPollution(TES3::GameSetting* gameSetting, DWORD _EDX_, TES3::GameFile* file) {
 	if ((gameSetting->flags & 0x2) == 0) {
 		return false;
 	}
@@ -937,7 +937,7 @@ void installPatches() {
 	mwse::memory::genCallUnprotected(0x49E932 + PatchEditorMarkers_Setup_Size, reinterpret_cast<DWORD>(PatchEditorMarkers), 0x49E94D - 0x49E932 - PatchEditorMarkers_Setup_Size);
 
 	// Patch: Don't save default GMSTs that haven't been modified.
-	mwse::memory::genJumpEnforced(0x4042B4, 0x4F9BE0, reinterpret_cast<DWORD>(saveGameSetting));
+	mwse::memory::genJumpEnforced(0x4042B4, 0x4F9BE0, reinterpret_cast<DWORD>(PatchPreventGMSTPollution));
 
 	// Patch: Throttle UI status updates.
 	mwse::memory::genCallEnforced(0x4BCBBC, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
