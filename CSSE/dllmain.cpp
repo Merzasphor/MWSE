@@ -835,7 +835,7 @@ void SetCullOnTriEditorMarkers(NI::AVObject* object, bool cull) {
 		}
 	}
 	else if (object->name) {
-		if (_strnicmp(object->name, "Tri EditorMarker", 12) == 0) {
+		if (_strnicmp(object->name, "Tri EditorMarker", 16) == 0) {
 			object->setAppCulled(cull);
 		}
 	}
