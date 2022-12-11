@@ -581,6 +581,30 @@ namespace TES3 {
 	};
 	static_assert(sizeof(Dialogue) == 0x2C, "TES3::Dialogue failed size validation");
 
+	struct GameSetting : BaseObject {
+		struct Initializer {
+			enum class ValueType : unsigned int {
+				Integer,
+				Float,
+				String,
+			};
+			const char* name; // 0x0
+			const char* defaultStringValue; // 0x4
+			int defaultIntValue; // 0x8
+			float defaultFloatValue; // 0xC
+			ValueType valueType;
+		};
+		union {
+			int asInt;
+			float asFloat;
+			const char* asString;
+		} value; // 0x10
+		int index; // 0x14
+
+		static constexpr auto initializers = reinterpret_cast<Initializer*>(0x6A8128);
+	};
+	static_assert(sizeof(GameSetting) == 0x18, "TES3::GameSetting failed size validation");
+
 	struct RecordHandler {
 		int activeModCount; // 0x0
 		int unknown_0x4[13];
@@ -867,6 +891,34 @@ __declspec(naked) void PatchEditorMarkers_Setup() {
 }
 constexpr auto PatchEditorMarkers_Setup_Size = 0x4u;
 
+const auto TES3_GameSetting_SaveGameSetting = reinterpret_cast<bool(__thiscall*)(TES3::GameSetting*, TES3::GameFile*)>(0x4F9BE0);
+bool __fastcall saveGameSetting(TES3::GameSetting* gameSetting, DWORD _EDX_, TES3::GameFile* file) {
+	if ((gameSetting->flags & 0x2) == 0) {
+		return false;
+	}
+
+#if _DEBUG
+	auto& initializationData = TES3::GameSetting::initializers[gameSetting->index];
+	logstream << "Saving GMST: " << initializationData.name << "; flags: " << gameSetting->flags << "; value: ";
+	switch (tolower(initializationData.name[0])) {
+	case 'i':
+		logstream << gameSetting->value.asInt;
+		break;
+	case 'f':
+		logstream << gameSetting->value.asFloat;
+		break;
+	case 's':
+		logstream << gameSetting->value.asString;
+		break;
+	default:
+		logstream << "N/A";
+	}
+	logstream << std::endl;
+#endif
+
+	return TES3_GameSetting_SaveGameSetting(gameSetting, file);
+}
+
 void installPatches() {
 	// Get the vanilla masters so we suppress errors from them.
 	mwse::memory::genCallEnforced(0x50194E, 0x4041C4, reinterpret_cast<DWORD>(Patch_FindVanillaMasters));
@@ -883,6 +935,9 @@ void installPatches() {
 	// Patch: Custom marker toggling code.
 	mwse::memory::writePatchCodeUnprotected(0x49E932, (BYTE*)PatchEditorMarkers_Setup, PatchEditorMarkers_Setup_Size);
 	mwse::memory::genCallUnprotected(0x49E932 + PatchEditorMarkers_Setup_Size, reinterpret_cast<DWORD>(PatchEditorMarkers), 0x49E94D - 0x49E932 - PatchEditorMarkers_Setup_Size);
+
+	// Patch: Don't save default GMSTs that haven't been modified.
+	mwse::memory::genJumpEnforced(0x4042B4, 0x4F9BE0, reinterpret_cast<DWORD>(saveGameSetting));
 
 	// Patch: Throttle UI status updates.
 	mwse::memory::genCallEnforced(0x4BCBBC, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
