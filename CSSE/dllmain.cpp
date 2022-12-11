@@ -4,158 +4,9 @@
 #include "NILinkedList.h"
 #include "NITArray.h"
 
+#include "MemoryUtil.h"
+
 static std::ofstream logstream;
-static unsigned int patchCount = 0;
-
-template <class T>
-class MemAccess {
-public:
-	static inline T Get(uintptr_t address) {
-		return *reinterpret_cast<T*>(address);
-	}
-
-	static inline void Set(uintptr_t address, T value) {
-		*reinterpret_cast<T*>(address) = value;
-	}
-};
-
-void genNOP(DWORD Address) {
-	MemAccess<unsigned char>::Set(Address, 0x90);
-}
-
-void genCallUnprotected(DWORD address, DWORD to, DWORD size = 0x5) {
-	// Unprotect memory.
-	DWORD oldProtect;
-	VirtualProtect((DWORD*)address, size, PAGE_READWRITE, &oldProtect);
-
-	// Create our call.
-	MemAccess<unsigned char>::Set(address, 0xE8);
-	MemAccess<DWORD>::Set(address + 1, to - address - 0x5);
-
-	// NOP out the rest of the block.
-	for (DWORD i = address + 5; i < address + size; ++i) {
-		genNOP(i);
-	}
-
-	// Protect memory again.
-	VirtualProtect((DWORD*)address, size, oldProtect, &oldProtect);
-}
-
-bool genCallEnforced(DWORD address, DWORD previousTo, DWORD to, DWORD size = 0x5) {
-	// Make sure we're doing a call.
-	BYTE instruction = *reinterpret_cast<BYTE*>(address);
-	if (instruction != 0xE8) {
-#if _DEBUG
-		logstream << "[MemoryUtil] Skipping call generation at 0x" << std::hex << address << ". Expected 0xe8, found instruction: 0x" << (int)instruction << "." << std::endl;
-#endif
-		return false;
-	}
-
-	// Read previous call address to make sure it's what we are expecting.
-	DWORD currentCallAddress = *reinterpret_cast<DWORD*>(address + 1) + address + 0x5;
-	if (currentCallAddress != previousTo) {
-#if _DEBUG
-		logstream << "[MemoryUtil] Skipping call generation at 0x" << std::hex << address << ". Expected previous call to 0x" << previousTo << ", found 0x" << currentCallAddress << "." << std::endl;
-#endif
-		return false;
-	}
-
-	// Unprotect memory.
-	DWORD oldProtect;
-	VirtualProtect((DWORD*)address, size, PAGE_READWRITE, &oldProtect);
-
-	// Create our call.
-	MemAccess<unsigned char>::Set(address, 0xE8);
-	MemAccess<DWORD>::Set(address + 1, to - address - 0x5);
-
-	// NOP out the rest of the block.
-	for (DWORD i = address + 5; i < address + size; ++i) {
-		genNOP(i);
-	}
-
-	// Protect memory again.
-	VirtualProtect((DWORD*)address, size, oldProtect, &oldProtect);
-
-	++patchCount;
-	return true;
-}
-
-bool genJumpEnforced(DWORD address, DWORD previousTo, DWORD to, DWORD size = 0x5) {
-	// Make sure we're doing a jump.
-	BYTE instruction = *reinterpret_cast<BYTE*>(address);
-	if (instruction != 0xE9) {
-#if _DEBUG
-		logstream << "[MemoryUtil] Skipping jump generation at 0x" << std::hex << address << ". Expected 0xe9, found instruction: 0x" << (int)instruction << "." << std::endl;
-#endif
-		return false;
-	}
-
-	// Read previous jump address to make sure it's what we are expecting.
-	DWORD currentCallAddress = *reinterpret_cast<DWORD*>(address + 1) + address + 0x5;
-	if (currentCallAddress != previousTo) {
-#if _DEBUG
-		logstream << "[MemoryUtil] Skipping jump generation at 0x" << std::hex << address << ". Expected previous jump to 0x" << previousTo << ", found 0x" << currentCallAddress << "." << std::endl;
-#endif
-		return false;
-	}
-
-	// Unprotect memory.
-	DWORD oldProtect;
-	VirtualProtect((DWORD*)address, size, PAGE_READWRITE, &oldProtect);
-
-	// Create our jump.
-	MemAccess<unsigned char>::Set(address, 0xE9);
-	MemAccess<DWORD>::Set(address + 1, to - address - 0x5);
-
-	// NOP out the rest of the block.
-	for (DWORD i = address + 5; i < address + size; ++i) {
-		genNOP(i);
-	}
-
-	// Protect memory again.
-	VirtualProtect((DWORD*)address, size, oldProtect, &oldProtect);
-
-	++patchCount;
-	return true;
-}
-
-bool writeDoubleWordEnforced(DWORD address, DWORD previousValue, DWORD value) {
-	DWORD currentValue = *reinterpret_cast<DWORD*>(address);
-	if (currentValue != previousValue) {
-#ifdef _DEBUG
-		logstream << "[MemoryUtil] Skipping write double word at 0x" << std::hex << address << ". Expected previous value of 0x" << previousValue << ", found 0x" << currentValue << "." << std::endl;
-#endif
-		return false;
-	}
-
-	// Unprotect memory.
-	DWORD oldProtect;
-	VirtualProtect((DWORD*)address, sizeof(DWORD), PAGE_READWRITE, &oldProtect);
-
-	// Overwrite our single byte.
-	MemAccess<DWORD>::Set(address, value);
-
-	// Protect memory again.
-	VirtualProtect((DWORD*)address, sizeof(DWORD), oldProtect, &oldProtect);
-
-	return true;
-}
-
-void writeBytesUnprotected(DWORD address, const BYTE* value, size_t count) {
-	DWORD oldProtect;
-	VirtualProtect((DWORD*)address, count, PAGE_READWRITE, &oldProtect);
-	memmove_s((void*)address, count, value, count);
-	VirtualProtect((DWORD*)address, count, oldProtect, &oldProtect);
-}
-
-// WARNING: If passing a function address, always use a non-static function or it will crash.
-void writePatchCodeUnprotected(DWORD address, const BYTE* patch, DWORD size) {
-#ifdef _DEBUG
-	// Read incremental linker trampoline to find real patch
-	patch += 5 + *reinterpret_cast<const ptrdiff_t*>(patch + 1);
-#endif
-	writeBytesUnprotected(address, patch, size);
-}
 
 namespace NI {
 	struct Node;
@@ -302,7 +153,6 @@ namespace NI {
 		const char* name; // 0x0
 		RTTI* baseRTTI; // 0x4
 	};
-
 
 	namespace RTTIStaticPtr {
 		enum RTTIStaticPtr : uintptr_t {
@@ -803,19 +653,19 @@ void __fastcall Patch_FindVanillaMasters(TES3::RecordHandler* recordHandler) {
 
 const auto TES3_Dialogue_resolveLinks = reinterpret_cast<void(__thiscall*)(TES3::Dialogue*, void*)>(0x4F30C0);
 void __fastcall Patch_SuppressDialogueInfoResolveIssues(TES3::Dialogue* dialogue, DWORD _EDX_, void* recordHandler) {
-	const auto cachedValue = MemAccess<bool>::Get(0x6D0B6E);
-	MemAccess<bool>::Set(0x6D0B6E, true);
+	const auto cachedValue = mwse::memory::MemAccess<bool>::Get(0x6D0B6E);
+	mwse::memory::MemAccess<bool>::Set(0x6D0B6E, true);
 	TES3_Dialogue_resolveLinks(dialogue, recordHandler);
-	MemAccess<bool>::Set(0x6D0B6E, cachedValue);
+	mwse::memory::MemAccess<bool>::Set(0x6D0B6E, cachedValue);
 }
 
 const auto ShowDuplicateReferenceWarning = reinterpret_cast<bool(__cdecl*)(const char*, int)>(0x40123A);
 bool __cdecl PatchSuppressDuplicateReferenceRemovedWarningForVanillaMasters(const char* message, int referenceCount) {
 	if (referenceCount == 1 && master_Tribunal && master_Bloodmoon) {
-		const auto cachedValue = MemAccess<bool>::Get(0x6D0B6E);
-		MemAccess<bool>::Set(0x6D0B6E, true);
+		const auto cachedValue = mwse::memory::MemAccess<bool>::Get(0x6D0B6E);
+		mwse::memory::MemAccess<bool>::Set(0x6D0B6E, true);
 		auto result = ShowDuplicateReferenceWarning(message, referenceCount);
-		MemAccess<bool>::Set(0x6D0B6E, cachedValue);
+		mwse::memory::MemAccess<bool>::Set(0x6D0B6E, cachedValue);
 		return result;
 	}
 	else {
@@ -870,10 +720,10 @@ bool __cdecl Patch_ReplaceRotationLogic(void* unknown1, TES3::TranslationData::T
 		return false;
 	}
 
-	auto data = MemAccess<TES3::TranslationData*>::Get(0x6CE968);
+	auto data = mwse::memory::MemAccess<TES3::TranslationData*>::Get(0x6CE968);
 
-	auto rotationSpeed = MemAccess<float>::Get(0x6CE9B0);
-	auto rotationFlags = MemAccess<BYTE>::Get(0x6CE9A4);
+	auto rotationSpeed = mwse::memory::MemAccess<float>::Get(0x6CE9B0);
+	auto rotationFlags = mwse::memory::MemAccess<BYTE>::Get(0x6CE9A4);
 
 	float x = 0.0f;
 	float y = 0.0f;
@@ -897,7 +747,7 @@ bool __cdecl Patch_ReplaceRotationLogic(void* unknown1, TES3::TranslationData::T
 
 	bool isSnapping = (rotationFlags & 2) != 0;
 	if (isSnapping) {
-		const auto snapAngleInRadians = MemAccess<int>::Get(0x6CE9AC) * float(M_DEGREES_TO_RADIANS);
+		const auto snapAngleInRadians = mwse::memory::MemAccess<int>::Get(0x6CE9AC) * float(M_DEGREES_TO_RADIANS);
 		if (snapAngleInRadians != 0.0f) {
 			x = std::roundf(x / snapAngleInRadians) * snapAngleInRadians;
 			y = std::roundf(y / snapAngleInRadians) * snapAngleInRadians;
@@ -938,7 +788,7 @@ bool __cdecl Patch_ReplaceRotationLogic(void* unknown1, TES3::TranslationData::T
 				doRotations = false;
 				break;
 			case TES3::ObjectType::Static:
-				if (reference->baseObject == MemAccess<TES3::BaseObject*>::Get(0x6D566C)) {
+				if (reference->baseObject == mwse::memory::MemAccess<TES3::BaseObject*>::Get(0x6D566C)) {
 					doRotations = false;
 					break;
 				}
@@ -1010,7 +860,6 @@ void __fastcall PatchEditorMarkers(TES3::Reference* reference, bool cull) {
 	}
 }
 
-
 __declspec(naked) void PatchEditorMarkers_Setup() {
 	__asm {
 		mov edx, [esp + 0x18 + 0x4]
@@ -1020,173 +869,173 @@ constexpr auto PatchEditorMarkers_Setup_Size = 0x4u;
 
 void installPatches() {
 	// Get the vanilla masters so we suppress errors from them.
-	genCallEnforced(0x50194E, 0x4041C4, reinterpret_cast<DWORD>(Patch_FindVanillaMasters));
+	mwse::memory::genCallEnforced(0x50194E, 0x4041C4, reinterpret_cast<DWORD>(Patch_FindVanillaMasters));
 
 	// Patch: Suppress "[Following/Previous] string is different for topic" warning popups for vanilla masters.
-	genJumpEnforced(0x4023BA, 0x4F30C0, reinterpret_cast<DWORD>(Patch_SuppressDialogueInfoResolveIssues));
+	mwse::memory::genJumpEnforced(0x4023BA, 0x4F30C0, reinterpret_cast<DWORD>(Patch_SuppressDialogueInfoResolveIssues));
 
 	// Patch: Suppress "1 duplicate references were removed" warning popups for vanilla masters.
-	genCallEnforced(0x50A9ED, 0x40123A, reinterpret_cast<DWORD>(PatchSuppressDuplicateReferenceRemovedWarningForVanillaMasters));
+	mwse::memory::genCallEnforced(0x50A9ED, 0x40123A, reinterpret_cast<DWORD>(PatchSuppressDuplicateReferenceRemovedWarningForVanillaMasters));
 
 	// Patch: Use world rotation values.
-	genJumpEnforced(0x403D41, 0x4652D0, reinterpret_cast<DWORD>(Patch_ReplaceRotationLogic));
+	mwse::memory::genJumpEnforced(0x403D41, 0x4652D0, reinterpret_cast<DWORD>(Patch_ReplaceRotationLogic));
 
 	// Patch: Custom marker toggling code.
-	writePatchCodeUnprotected(0x49E932, (BYTE*)PatchEditorMarkers_Setup, PatchEditorMarkers_Setup_Size);
-	genCallUnprotected(0x49E932 + PatchEditorMarkers_Setup_Size, reinterpret_cast<DWORD>(PatchEditorMarkers), 0x49E94D - 0x49E932 - PatchEditorMarkers_Setup_Size);
+	mwse::memory::writePatchCodeUnprotected(0x49E932, (BYTE*)PatchEditorMarkers_Setup, PatchEditorMarkers_Setup_Size);
+	mwse::memory::genCallUnprotected(0x49E932 + PatchEditorMarkers_Setup_Size, reinterpret_cast<DWORD>(PatchEditorMarkers), 0x49E94D - 0x49E932 - PatchEditorMarkers_Setup_Size);
 
 	// Patch: Throttle UI status updates.
-	genCallEnforced(0x4BCBBC, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4BD489, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4BD503, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4C0C84, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4C0F39, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4C0FB3, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4C1DFF, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4C3C1D, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4C9AE9, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4C9B63, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4C41C3, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4C72D7, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4C77B9, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4C2319, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4C2393, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4C4149, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4C7833, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4C9607, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4CB4B1, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4CB809, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4CB883, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4CCD54, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4CD0F3, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4CD079, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4CE0F7, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4CE4F3, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4CE479, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4CF733, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4CFB49, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4CFBC3, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4D0DB7, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4D3C09, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4D3C83, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4D7ED9, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4D27A3, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4D83CD, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4D1119, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4D1193, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4D2313, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4D2729, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4D3893, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4D8353, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4DAA82, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4DAE03, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4DAE7F, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4DCF81, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4DD6D3, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4DD659, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4DFF8B, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4E2BB1, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4E2F89, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4E03F3, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4E5B7F, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4E9ABA, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4E61A8, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4E84F8, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4E0379, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4E3003, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4E6223, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4F0FC2, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4F0FFB, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4F3E52, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4F3FDB, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4F4124, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4FA2D8, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4FA83E, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4FA490, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x44B8E2, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x44B940, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x44BBD6, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x44BC0C, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x44BFBE, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x44BFCA, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x45C8BE, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x45C8D0, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x45C9ED, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x45C962, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x45CA7E, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x45CA48, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x45CA54, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x45CA60, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x45CACE, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x45CADA, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x45CAE6, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x46B56A, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x46B59F, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x46BF8F, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x46C3CC, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x46C5C6, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x46C9A1, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x46C768, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x46CBA1, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x46CCB1, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x46E6CD, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x49FE06, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x49FE44, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x50A597, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x50F5E1, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x52F8B8, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x53A727, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x53AA8E, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x53AB07, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x53AFF0, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x53B3B9, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x53B432, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x54D9D9, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x54D39A, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x54DA53, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x501A6B, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x501AA6, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x501AEC, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x501B7C, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x501BDB, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x501F7E, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x502E50, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x503DEC, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x504DE8, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x505C32, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x505E58, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x551DF5, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4096D8, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4098AC, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x4098D4, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x5043D0, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x5300D3, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x5527BF, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x5535DE, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x40969E, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x40978D, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x50187A, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x50255C, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x55284A, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x55354A, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x409805, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x409848, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x412391, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x412848, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x412889, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x467150, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x501944, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x502705, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x502953, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x503363, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x503425, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x503761, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x504221, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x524537, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x524919, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x524993, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x530059, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
-	genCallEnforced(0x552821, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4BCBBC, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4BD489, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4BD503, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4C0C84, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4C0F39, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4C0FB3, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4C1DFF, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4C3C1D, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4C9AE9, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4C9B63, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4C41C3, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4C72D7, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4C77B9, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4C2319, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4C2393, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4C4149, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4C7833, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4C9607, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4CB4B1, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4CB809, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4CB883, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4CCD54, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4CD0F3, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4CD079, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4CE0F7, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4CE4F3, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4CE479, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4CF733, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4CFB49, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4CFBC3, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4D0DB7, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4D3C09, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4D3C83, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4D7ED9, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4D27A3, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4D83CD, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4D1119, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4D1193, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4D2313, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4D2729, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4D3893, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4D8353, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4DAA82, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4DAE03, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4DAE7F, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4DCF81, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4DD6D3, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4DD659, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4DFF8B, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4E2BB1, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4E2F89, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4E03F3, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4E5B7F, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4E9ABA, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4E61A8, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4E84F8, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4E0379, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4E3003, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4E6223, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4F0FC2, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4F0FFB, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4F3E52, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4F3FDB, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4F4124, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4FA2D8, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4FA83E, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4FA490, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x44B8E2, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x44B940, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x44BBD6, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x44BC0C, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x44BFBE, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x44BFCA, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x45C8BE, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x45C8D0, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x45C9ED, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x45C962, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x45CA7E, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x45CA48, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x45CA54, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x45CA60, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x45CACE, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x45CADA, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x45CAE6, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x46B56A, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x46B59F, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x46BF8F, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x46C3CC, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x46C5C6, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x46C9A1, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x46C768, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x46CBA1, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x46CCB1, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x46E6CD, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x49FE06, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x49FE44, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x50A597, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x50F5E1, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x52F8B8, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x53A727, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x53AA8E, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x53AB07, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x53AFF0, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x53B3B9, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x53B432, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x54D9D9, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x54D39A, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x54DA53, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x501A6B, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x501AA6, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x501AEC, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x501B7C, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x501BDB, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x501F7E, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x502E50, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x503DEC, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x504DE8, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x505C32, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x505E58, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x551DF5, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4096D8, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4098AC, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x4098D4, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x5043D0, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x5300D3, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x5527BF, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x5535DE, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x40969E, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x40978D, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x50187A, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x50255C, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x55284A, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x55354A, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x409805, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x409848, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x412391, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x412848, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x412889, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x467150, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x501944, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x502705, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x502953, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x503363, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x503425, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x503761, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x504221, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x524537, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x524919, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x524993, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x530059, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+	mwse::memory::genCallEnforced(0x552821, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
 }
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved) {
@@ -1194,7 +1043,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReser
     case DLL_PROCESS_ATTACH:
 		logstream.open("csse.log");
 		installPatches();
-		logstream << "CSSE initialization complete. Installed " << patchCount << " patches." << std::endl;
+		logstream << "CSSE initialization complete." << std::endl;
 		break;
     }
     return TRUE;
