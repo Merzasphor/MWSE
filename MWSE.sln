@@ -18,6 +18,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MWSE-Tests", "MWSE-Tests\MW
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CSSE", "CSSE\CSSE.vcxproj", "{43673527-012F-4460-B245-96BCD3C1FF89}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SharedSE", "SharedSE\SharedSE.vcxitems", "{AABD3611-7360-404E-996C-26462E50A8A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -54,5 +56,9 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3079D20E-0739-4F0C-9134-0686AF0EB20E}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		SharedSE\SharedSE.vcxitems*{43673527-012f-4460-b245-96bcd3c1ff89}*SharedItemsImports = 4
+		SharedSE\SharedSE.vcxitems*{aabd3611-7360-404e-996c-26462e50a8a5}*SharedItemsImports = 9
 	EndGlobalSection
 EndGlobal
