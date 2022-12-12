@@ -37,6 +37,7 @@
 #include <psapi.h>
 #include <dbghelp.h>
 #include <d3d.h>
+#include <commctrl.h>
 
 // Undefine anything we don't care about otherwise.
 #undef far
