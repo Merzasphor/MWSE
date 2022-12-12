@@ -1,5 +1,14 @@
 # Construction Set Extender
 
+## Installation
+
+Currently, the Construction Set Extender is only available from the #mwse channel in the [Morrowind Modding Community](https://discord.me/page/mwmods) discord. Check the latest pinned CSSE post there.
+
+Once you have downloaded the .7z file, extract it to the Morrowind installation directory (to be in the same folder as TES Construction Set.exe).
+
+CSSE requires [MGE XE](https://www.nexusmods.com/morrowind/mods/41102?) v0.14.3 (released July 29, 2022) or later to be automatically loaded into the Construction Set.
+
+
 ## Features
 
 ### General
