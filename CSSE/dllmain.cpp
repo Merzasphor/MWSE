@@ -1139,19 +1139,6 @@ void CALLBACK PatchObjectWindowDialogProc_BeforeSize(HWND hDlg, UINT msg, WPARAM
 	SetWindowPos(objectWindowSearchControl, NULL, tabContentRect.right - 500, tabContentRect.bottom + 4, 500, 24, SWP_DRAWFRAME);
 }
 
-static WNDPROC ExistingEditDialogProc = NULL;
-
-LRESULT CALLBACK SearchBoxDialogProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	return FALSE;
-	// Allow CTRL+A.
-	if (msg == WM_CHAR && wParam == 1) {
-		SendMessage(hWnd, EM_SETSEL, 0, -1);
-		return TRUE;
-	}
-
-	return CallWindowProcA(ExistingEditDialogProc, hWnd, msg, wParam, lParam);
-}
-
 void CALLBACK PatchObjectWindowDialogProc_AfterCreate(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	auto filterEdit = GetDlgItem(hWnd, objectWindowSearchEditId);
 	if (filterEdit) {
@@ -1170,10 +1157,6 @@ void CALLBACK PatchObjectWindowDialogProc_AfterCreate(HWND hWnd, UINT msg, WPARA
 	}
 
 	Edit_LimitText(objectWindowSearchControl, 31);
-
-	if (!(ExistingEditDialogProc = (WNDPROC)SetWindowLong(objectWindowSearchControl, GWL_WNDPROC, (LONG)&SearchBoxDialogProc))) {
-		int x = 4;
-	}
 }
 
 static std::string currentSearchText;
@@ -1240,10 +1223,10 @@ LRESULT CALLBACK PatchObjectWindowDialogProc(HWND hWnd, UINT msg, WPARAM wParam,
 			if (LOWORD(wParam) == objectWindowSearchEditId) {
 				// Get current search text. The buffer is fine as 32 because we set a character limit of 31.
 				char buffer[32] = {};
-				GetWindowTextA(objectWindowSearchControl, buffer, 32);
+				auto length = GetWindowTextA(objectWindowSearchControl, buffer, 32);
 
 				// Transform the search text to lowercase and clear stray characters.
-				std::string newText(buffer, strnlen_s(buffer, 32));
+				std::string newText(buffer, length);
 				std::transform(newText.begin(), newText.end(), newText.begin(), [](unsigned char c) { return std::tolower(c); });
 
 				if (newText.compare(currentSearchText) != 0) {
