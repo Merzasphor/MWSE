@@ -1095,6 +1095,175 @@ void __cdecl PatchSpeedUpCellViewDialog(HWND hWnd) {
 	SendMessageA(hWnd, WM_SETREDRAW, TRUE, NULL);
 }
 
+constexpr UINT objectWindowSearchLabelId = 142;
+constexpr UINT objectWindowSearchEditId = 143;
+constexpr UINT objectWindowSearchTargetId = 144;
+static HWND objectWindowSearchControl = NULL;
+
+void __stdcall PatchObjectWindowDialogProc_BeforeSize(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam) {
+	// Update view menu.
+	auto mainWindow = GetMenu(mwse::memory::MemAccess<HWND>::Get(0x6CE934));
+	if (wParam) {
+		if (wParam == SIZE_MINIMIZED) {
+			CheckMenuItem(mainWindow, 40199u, MF_BYCOMMAND);
+		}
+	}
+	else {
+		CheckMenuItem(mainWindow, 40199u, MF_CHECKED);
+	}
+
+	auto tabControl = GetDlgItem(hDlg, 1042);
+	auto objectListView = GetDlgItem(hDlg, 1041);
+	auto searchLabel = GetDlgItem(hDlg, objectWindowSearchLabelId);
+	auto searchEdit = GetDlgItem(hDlg, objectWindowSearchEditId);
+
+	// Update globals.
+	mwse::memory::MemAccess<HWND>::Set(0x6CF08C, tabControl);
+	mwse::memory::MemAccess<HWND>::Set(0x6CEFD0, objectListView);
+	objectWindowSearchControl = searchEdit;
+
+	const auto mainWidth = LOWORD(lParam);
+	const auto mainHeight = HIWORD(lParam);
+
+	// Make room for our new search bar.
+	MoveWindow(tabControl, 0, 0, mainWidth, mainHeight, TRUE);
+
+	// Update list view area.
+	RECT tabContentRect = {};
+	SetRect(&tabContentRect, 0, 0, mainWidth, mainHeight - 30);
+	SendMessageA(tabControl, TCM_ADJUSTRECT, 0, (LPARAM)&tabContentRect);
+	MoveWindow(objectListView, tabContentRect.left, tabContentRect.top, tabContentRect.right - tabContentRect.left, tabContentRect.bottom - tabContentRect.top, TRUE);
+
+	// Update the search bar placement.
+	SetWindowPos(searchLabel, NULL, tabContentRect.right - 500 - 58, tabContentRect.bottom + 7, 54, 22, 0);
+	SetWindowPos(objectWindowSearchControl, NULL, tabContentRect.right - 500, tabContentRect.bottom + 4, 500, 24, SWP_DRAWFRAME);
+}
+
+BOOL __stdcall SearchBoxDialogProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam) {
+	return FALSE;
+}
+
+void __stdcall PatchObjectWindowDialogProc_AfterCreate(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam) {
+	auto filterEdit = GetDlgItem(hDlg, objectWindowSearchEditId);
+	if (filterEdit) {
+		objectWindowSearchControl = filterEdit;
+		return;
+	}
+
+	auto hInstance = (HINSTANCE)GetWindowLongPtr(hDlg, GWLP_HINSTANCE);
+
+	CreateWindowExA(WS_EX_RIGHT, "STATIC", "Filter:", WS_CHILD | WS_VISIBLE | SS_RIGHT | SS_NOPREFIX, 0, 0, 0, 0, hDlg, (HMENU)objectWindowSearchLabelId, hInstance, NULL);
+
+	objectWindowSearchControl = CreateWindowExA(WS_EX_CLIENTEDGE, "EDIT", "", WS_CHILD | WS_VISIBLE, 0, 0, 0, 0, hDlg, (HMENU)objectWindowSearchEditId, hInstance, NULL);
+	if (objectWindowSearchControl == NULL) {
+		logstream << "ERROR: Could not create search control!" << std::endl;
+		return;
+	}
+
+	Edit_LimitText(objectWindowSearchControl, 31);
+
+	auto tabControl = GetDlgItem(hDlg, 1042);
+}
+
+static std::string currentSearchText;
+
+const auto CS_AddObjectToWindow = reinterpret_cast<bool(__stdcall*)(LPARAM, TES3::Object*)>(0x43C260);
+bool __stdcall FilterObjectWindow(LPARAM a1, TES3::Object* object) {
+	if (currentSearchText.empty()) {
+		return CS_AddObjectToWindow(a1, object);
+	}
+
+	std::string objectId = object->getObjectID();
+	std::transform(objectId.begin(), objectId.end(), objectId.begin(), [](unsigned char c) { return std::tolower(c); });
+
+	if (objectId.find(currentSearchText) != std::string::npos) {
+		return CS_AddObjectToWindow(a1, object);
+	}
+
+	return false;
+}
+
+const auto CS_PatchObjectWindowDialogProc = reinterpret_cast<INT_PTR(__stdcall*)(HWND, UINT, WPARAM, LPARAM)>(0x451320);
+INT_PTR __stdcall PatchObjectWindowDialogProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam) {
+	// Handle pre-patches.
+	switch (msg) {
+	case WM_DESTROY:
+		objectWindowSearchControl = NULL;
+		break;
+	case WM_SIZE:
+		PatchObjectWindowDialogProc_BeforeSize(hDlg, msg, wParam, lParam);
+		return FALSE;
+	case WM_NOTIFY:
+		{
+			const auto hdr = (NMHDR*)lParam;
+			switch (wParam) {
+			case 1041:
+			{
+				switch (hdr->code) {
+				case LVN_KEYDOWN:
+				{
+					const auto keydownHDR = (LV_KEYDOWN*)hdr;
+					if (keydownHDR->wVKey == 'F' && isKeyDown(VK_CONTROL)) {
+						SetFocus(objectWindowSearchControl);
+					}
+				}
+				break;
+				}
+			}
+			break;
+			case 1042:
+			{
+				switch (hdr->code) {
+				case TCN_SELCHANGING:
+					SetWindowTextA(objectWindowSearchControl, "");
+					break;
+				}
+			}
+			break;
+			}
+		}
+		break;
+	case WM_COMMAND:
+		switch (HIWORD(wParam)) {
+		case EN_CHANGE:
+			if (LOWORD(wParam) == objectWindowSearchEditId) {
+				// Get current search text. The buffer is fine as 32 because we set a character limit of 31.
+				char buffer[32] = {};
+				GetWindowTextA(objectWindowSearchControl, buffer, 32);
+
+				// Transform the search text to lowercase and clear stray characters.
+				std::string newText(buffer, strnlen_s(buffer, 32));
+				std::transform(newText.begin(), newText.end(), newText.begin(), [](unsigned char c) { return std::tolower(c); });
+
+				if (newText.compare(currentSearchText) != 0) {
+					currentSearchText = newText;
+
+					// Fire a refresh function. But disable drawing throughout so we don't get ugly flashes.
+					const auto listView = mwse::memory::MemAccess<HWND>::Get(0x6CEFD0);
+					SendMessageA(listView, WM_SETREDRAW, FALSE, NULL);
+					SendMessageA(hDlg, 1043, 0, 0);
+					SendMessageA(listView, WM_SETREDRAW, TRUE, NULL);
+					RedrawWindow(listView, NULL, NULL, RDW_INVALIDATE);
+				}
+			}
+			break;
+		}
+		break;
+	}
+
+	// Call original function.
+	auto result = CS_PatchObjectWindowDialogProc(hDlg, msg, wParam, lParam);
+
+	// Handle post-patches.
+	switch (msg) {
+	case WM_INITDIALOG:
+		PatchObjectWindowDialogProc_AfterCreate(hDlg, msg, wParam, lParam);
+		break;
+	}
+
+	return result;
+}
+
 void installPatches() {
 	// Get the vanilla masters so we suppress errors from them.
 	mwse::memory::genCallEnforced(0x50194E, 0x4041C4, reinterpret_cast<DWORD>(Patch_FindVanillaMasters));
@@ -1131,6 +1300,12 @@ void installPatches() {
 
 	// Patch: Optimize displaying of cell view window.
 	mwse::memory::genJumpEnforced(0x4037C4, 0x40E250, reinterpret_cast<DWORD>(PatchSpeedUpCellViewDialog));
+
+	// Patch: Extend Object Window message handling.
+	mwse::memory::genJumpEnforced(0x402FD1, 0x451320, reinterpret_cast<DWORD>(PatchObjectWindowDialogProc));
+
+	// Patch: Allow filtering of object window.
+	mwse::memory::genJumpEnforced(0x401F0F, 0x43C260, reinterpret_cast<DWORD>(FilterObjectWindow));
 
 	// Patch: Throttle UI status updates.
 	mwse::memory::genCallEnforced(0x4BCBBC, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));

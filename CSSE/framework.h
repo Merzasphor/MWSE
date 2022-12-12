@@ -38,6 +38,7 @@
 #include <dbghelp.h>
 #include <d3d.h>
 #include <commctrl.h>
+#include <Windowsx.h>
 
 // Undefine anything we don't care about otherwise.
 #undef far
