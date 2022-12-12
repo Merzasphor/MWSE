@@ -1062,6 +1062,39 @@ void __fastcall PatchFixMaterialPropertyColors(NI::LinkedList<NI::Property*>* pr
 	NI_PropertyList_Append(properties, prop);
 }
 
+const auto TES3_IteratedList_Begin = reinterpret_cast<TES3::IteratedList<TES3::Object*>::Node * (__thiscall*)(TES3::IteratedList<TES3::Object*>*)>(0x401E29);
+TES3::IteratedList<TES3::Object*>::Node* __fastcall PatchSpeedUpObjectWindow_PauseRedraws(TES3::IteratedList<TES3::Object*>* list) {
+	auto result = TES3_IteratedList_Begin(list);
+
+	if (result) {
+		const auto listView = mwse::memory::MemAccess<HWND>::Get(0x6CEFD0);
+		SendMessageA(listView, WM_SETREDRAW, FALSE, NULL);
+	}
+	
+	return result;
+}
+
+const auto TES3_IteratedList_Next = reinterpret_cast<TES3::IteratedList<TES3::Object*>::Node * (__thiscall*)(TES3::IteratedList<TES3::Object*>*)>(0x403D8C);
+TES3::IteratedList<TES3::Object*>::Node* __fastcall PatchSpeedUpObjectWindow_ResumeRedraws(TES3::IteratedList<TES3::Object*>* list) {
+	auto result = TES3_IteratedList_Next(list);
+
+	if (result == nullptr) {
+		const auto listView = mwse::memory::MemAccess<HWND>::Get(0x6CEFD0);
+		SendMessageA(listView, WM_SETREDRAW, TRUE, NULL);
+	}
+
+	return result;
+}
+
+void __cdecl PatchSpeedUpCellViewDialog(HWND hWnd) {
+	SendMessageA(hWnd, WM_SETREDRAW, FALSE, NULL);
+
+	const auto originalFunction = reinterpret_cast<void(__cdecl*)(HWND)>(0x40E250);
+	originalFunction(hWnd);
+
+	SendMessageA(hWnd, WM_SETREDRAW, TRUE, NULL);
+}
+
 void installPatches() {
 	// Get the vanilla masters so we suppress errors from them.
 	mwse::memory::genCallEnforced(0x50194E, 0x4041C4, reinterpret_cast<DWORD>(Patch_FindVanillaMasters));
@@ -1091,6 +1124,13 @@ void installPatches() {
 	//mwse::memory::genCallEnforced(0x45F626, 0x4015A0, reinterpret_cast<DWORD>(PatchRemoveVertexColorProperty)); // Remove the vertex color property from the circle.
 	//mwse::memory::genCallEnforced(0x45F5A1, 0x4015A0, reinterpret_cast<DWORD>(PatchRemoveVertexColorProperty)); // Remove the alpha property from the circle.
 #endif
+
+	// Patch: Optimize displaying of objects dialog tabs.
+	mwse::memory::genCallEnforced(0x43C1B4, 0x401E29, reinterpret_cast<DWORD>(PatchSpeedUpObjectWindow_PauseRedraws));
+	mwse::memory::genCallEnforced(0x43C1CC, 0x403D8C, reinterpret_cast<DWORD>(PatchSpeedUpObjectWindow_ResumeRedraws));
+
+	// Patch: Optimize displaying of cell view window.
+	mwse::memory::genJumpEnforced(0x4037C4, 0x40E250, reinterpret_cast<DWORD>(PatchSpeedUpCellViewDialog));
 
 	// Patch: Throttle UI status updates.
 	mwse::memory::genCallEnforced(0x4BCBBC, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
