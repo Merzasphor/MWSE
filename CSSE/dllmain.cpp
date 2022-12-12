@@ -1043,6 +1043,25 @@ bool __fastcall PatchPreventGMSTPollution(TES3::GameSetting* gameSetting, DWORD 
 	return TES3_GameSetting_SaveGameSetting(gameSetting, file);
 }
 
+const auto NI_PropertyList_Append = reinterpret_cast<void(__thiscall*)(NI::LinkedList<NI::Property*>*, NI::Property*)>(0x4015A0);
+void __fastcall PatchRemoveVertexColorProperty(NI::LinkedList<NI::Property*>* properties, DWORD _EDX_, NI::Property* prop) {
+	prop->refCount--;
+
+	// Add an empty texturing property.
+	auto texturingProperty = new NI::TexturingProperty();
+	texturingProperty->refCount++;
+	NI_PropertyList_Append(properties, new NI::TexturingProperty());
+}
+
+void __fastcall PatchFixMaterialPropertyColors(NI::LinkedList<NI::Property*>* properties, DWORD _EDX_, NI::MaterialProperty* prop) {
+	const auto color = NI::Color(1.0f, 0.0f, 0.0f);
+	prop->ambient = color;
+	prop->diffuse = color;
+	prop->specular = color;
+	prop->emissive = color;
+	NI_PropertyList_Append(properties, prop);
+}
+
 void installPatches() {
 	// Get the vanilla masters so we suppress errors from them.
 	mwse::memory::genCallEnforced(0x50194E, 0x4041C4, reinterpret_cast<DWORD>(Patch_FindVanillaMasters));
@@ -1064,8 +1083,14 @@ void installPatches() {
 	mwse::memory::genJumpEnforced(0x4042B4, 0x4F9BE0, reinterpret_cast<DWORD>(PatchPreventGMSTPollution));
 
 	// Patch: When hiding objects (Shift+C) in terrain editing mode (H), do not hide the terrain editing circle.
-	mwse::memory::writeDoubleWordEnforced(0x45F39C + 0x2, 0x12C, 0x134);
+#if false
 	mwse::memory::writeDoubleWordEnforced(0x45F166 + 0x2, 0x12C, 0x134);
+	mwse::memory::writeDoubleWordEnforced(0x45F39C + 0x2, 0x12C, 0x134);
+	mwse::memory::writeDoubleWordEnforced(0x45F719 + 0x2, 0x12C, 0x134);
+	//mwse::memory::genCallEnforced(0x45F4ED, 0x4015A0, reinterpret_cast<DWORD>(PatchFixMaterialPropertyColors)); // Fix colors on the rest of the circle.
+	//mwse::memory::genCallEnforced(0x45F626, 0x4015A0, reinterpret_cast<DWORD>(PatchRemoveVertexColorProperty)); // Remove the vertex color property from the circle.
+	//mwse::memory::genCallEnforced(0x45F5A1, 0x4015A0, reinterpret_cast<DWORD>(PatchRemoveVertexColorProperty)); // Remove the alpha property from the circle.
+#endif
 
 	// Patch: Throttle UI status updates.
 	mwse::memory::genCallEnforced(0x4BCBBC, 0x404881, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
