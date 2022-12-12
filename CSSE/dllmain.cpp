@@ -1100,7 +1100,7 @@ constexpr UINT objectWindowSearchEditId = 143;
 constexpr UINT objectWindowSearchTargetId = 144;
 static HWND objectWindowSearchControl = NULL;
 
-void __stdcall PatchObjectWindowDialogProc_BeforeSize(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam) {
+void CALLBACK PatchObjectWindowDialogProc_BeforeSize(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam) {
 	// Update view menu.
 	auto mainWindow = GetMenu(mwse::memory::MemAccess<HWND>::Get(0x6CE934));
 	if (wParam) {
@@ -1139,22 +1139,22 @@ void __stdcall PatchObjectWindowDialogProc_BeforeSize(HWND hDlg, UINT msg, WPARA
 	SetWindowPos(objectWindowSearchControl, NULL, tabContentRect.right - 500, tabContentRect.bottom + 4, 500, 24, SWP_DRAWFRAME);
 }
 
-BOOL __stdcall SearchBoxDialogProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam) {
+LRESULT CALLBACK SearchBoxDialogProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	return FALSE;
 }
 
-void __stdcall PatchObjectWindowDialogProc_AfterCreate(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam) {
-	auto filterEdit = GetDlgItem(hDlg, objectWindowSearchEditId);
+void CALLBACK PatchObjectWindowDialogProc_AfterCreate(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+	auto filterEdit = GetDlgItem(hWnd, objectWindowSearchEditId);
 	if (filterEdit) {
 		objectWindowSearchControl = filterEdit;
 		return;
 	}
 
-	auto hInstance = (HINSTANCE)GetWindowLongPtr(hDlg, GWLP_HINSTANCE);
+	auto hInstance = (HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE);
 
-	CreateWindowExA(WS_EX_RIGHT, "STATIC", "Filter:", WS_CHILD | WS_VISIBLE | SS_RIGHT | SS_NOPREFIX, 0, 0, 0, 0, hDlg, (HMENU)objectWindowSearchLabelId, hInstance, NULL);
+	CreateWindowExA(WS_EX_RIGHT, "STATIC", "Filter:", WS_CHILD | WS_VISIBLE | SS_RIGHT | SS_NOPREFIX, 0, 0, 0, 0, hWnd, (HMENU)objectWindowSearchLabelId, hInstance, NULL);
 
-	objectWindowSearchControl = CreateWindowExA(WS_EX_CLIENTEDGE, "EDIT", "", WS_CHILD | WS_VISIBLE, 0, 0, 0, 0, hDlg, (HMENU)objectWindowSearchEditId, hInstance, NULL);
+	objectWindowSearchControl = CreateWindowExA(WS_EX_CLIENTEDGE, "EDIT", "", WS_CHILD | WS_VISIBLE, 0, 0, 0, 0, hWnd, (HMENU)objectWindowSearchEditId, hInstance, NULL);
 	if (objectWindowSearchControl == NULL) {
 		logstream << "ERROR: Could not create search control!" << std::endl;
 		return;
@@ -1168,7 +1168,7 @@ void __stdcall PatchObjectWindowDialogProc_AfterCreate(HWND hDlg, UINT msg, WPAR
 static std::string currentSearchText;
 
 const auto CS_AddObjectToWindow = reinterpret_cast<bool(__stdcall*)(LPARAM, TES3::Object*)>(0x43C260);
-bool __stdcall FilterObjectWindow(LPARAM a1, TES3::Object* object) {
+bool CALLBACK FilterObjectWindow(LPARAM a1, TES3::Object* object) {
 	if (currentSearchText.empty()) {
 		return CS_AddObjectToWindow(a1, object);
 	}
@@ -1184,14 +1184,14 @@ bool __stdcall FilterObjectWindow(LPARAM a1, TES3::Object* object) {
 }
 
 const auto CS_PatchObjectWindowDialogProc = reinterpret_cast<INT_PTR(__stdcall*)(HWND, UINT, WPARAM, LPARAM)>(0x451320);
-INT_PTR __stdcall PatchObjectWindowDialogProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam) {
+LRESULT CALLBACK PatchObjectWindowDialogProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	// Handle pre-patches.
 	switch (msg) {
 	case WM_DESTROY:
 		objectWindowSearchControl = NULL;
 		break;
 	case WM_SIZE:
-		PatchObjectWindowDialogProc_BeforeSize(hDlg, msg, wParam, lParam);
+		PatchObjectWindowDialogProc_BeforeSize(hWnd, msg, wParam, lParam);
 		return FALSE;
 	case WM_NOTIFY:
 		{
@@ -1241,7 +1241,7 @@ INT_PTR __stdcall PatchObjectWindowDialogProc(HWND hDlg, UINT msg, WPARAM wParam
 					// Fire a refresh function. But disable drawing throughout so we don't get ugly flashes.
 					const auto listView = mwse::memory::MemAccess<HWND>::Get(0x6CEFD0);
 					SendMessageA(listView, WM_SETREDRAW, FALSE, NULL);
-					SendMessageA(hDlg, 1043, 0, 0);
+					SendMessageA(hWnd, 1043, 0, 0);
 					SendMessageA(listView, WM_SETREDRAW, TRUE, NULL);
 					RedrawWindow(listView, NULL, NULL, RDW_INVALIDATE);
 				}
@@ -1252,12 +1252,12 @@ INT_PTR __stdcall PatchObjectWindowDialogProc(HWND hDlg, UINT msg, WPARAM wParam
 	}
 
 	// Call original function.
-	auto result = CS_PatchObjectWindowDialogProc(hDlg, msg, wParam, lParam);
+	auto result = CS_PatchObjectWindowDialogProc(hWnd, msg, wParam, lParam);
 
 	// Handle post-patches.
 	switch (msg) {
 	case WM_INITDIALOG:
-		PatchObjectWindowDialogProc_AfterCreate(hDlg, msg, wParam, lParam);
+		PatchObjectWindowDialogProc_AfterCreate(hWnd, msg, wParam, lParam);
 		break;
 	}
 
