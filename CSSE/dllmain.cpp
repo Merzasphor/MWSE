@@ -288,6 +288,11 @@ namespace NI {
 		VirtualTable* vtbl; // 0x0
 		unsigned int refCount; // 0x4
 
+		static void* operator new(size_t size) {
+			const auto _new = reinterpret_cast<void* (__cdecl*)(size_t)>(0x6209F0);
+			return _new(size);
+		}
+
 		RTTI* getRTTI() const {
 			return vtbl->getRTTI(this);
 		}
@@ -417,6 +422,112 @@ namespace NI {
 		LinkedList<void*> effectList; // 0xA8
 	};
 	static_assert(sizeof(Node) == 0xB0, "NI::Node failed size validation");
+
+	struct Property : ObjectNET {
+		unsigned short propertyFlags; // 0x14
+	};
+	static_assert(sizeof(Property) == 0x18, "NI::Property failed size validation");
+
+	struct Color {
+		float r, g, b;
+
+		Color() : r(0.0f), g(0.0f), b(0.0f) {}
+		Color(float _r, float _g, float _b) : r(_r), g(_g), b(_b) {}
+	};
+
+	struct MaterialProperty : Property {
+		int index;
+		Color ambient;
+		Color diffuse;
+		Color specular;
+		Color emissive;
+		float shininess;
+		float alpha;
+		unsigned int revisionId;
+	};
+	static_assert(sizeof(MaterialProperty) == 0x58, "NI::MaterialProperty failed size validation");
+
+	struct TexturingProperty : Property {
+		enum struct ClampMode {
+			CLAMP_S_CLAMP_T,
+			CLAMP_S_WRAP_T,
+			WRAP_S_CLAMP_T,
+			WRAP_S_WRAP_T
+		};
+		enum struct FilterMode {
+			NEAREST,
+			BILERP,
+			TRILERP,
+			NEAREST_MIPNEAREST,
+			NEAREST_MIPLERP,
+			BILERP_MIPNEAREST
+		};
+		enum struct ApplyMode {
+			REPLACE,
+			DECAL,
+			MODULATE
+		};
+		enum struct MapType : unsigned int {
+			BASE,
+			DARK,
+			DETAIL,
+			GLOSS,
+			GLOW,
+			BUMP,
+			DECAL_1,
+			DECAL_2,
+			DECAL_3,
+			DECAL_4,
+			DECAL_5,
+			DECAL_6,
+			DECAL_7,
+			DECAL_8,
+
+			DECAL_FIRST = DECAL_1,
+			DECAL_LAST = DECAL_8,
+
+			MAP_FIRST = BASE,
+			MAP_LAST = DECAL_LAST,
+
+			INVALID = UINT32_MAX,
+		};
+		static constexpr auto MAX_MAP_COUNT = 8u;
+		static constexpr auto MAX_DECAL_COUNT = (unsigned int)MapType::DECAL_LAST - (unsigned int)MapType::DECAL_FIRST + 1u;
+
+		struct Map {
+			struct VirtualTable {
+				void(__thiscall* destructor)(Map*, bool); // 0x0
+				void(__thiscall* loadBinary)(Map*, void*); // 0x4
+				void(__thiscall* saveBinary)(Map*, void*); // 0x8
+			};
+
+			VirtualTable* vTable; // 0x0
+			void* texture; // 0x4
+			ClampMode clampMode; // 0x8
+			FilterMode filterMode; // 0xC
+			unsigned int texCoordSet; // 0x10
+
+			static void* operator new(size_t size);
+			static void operator delete(void* block);
+		};
+		struct BumpMap : Map {
+			float lumaScale;
+			float lumaOffset;
+			float bumpMat[2][2];
+		};
+
+		ApplyMode applyMode; // 0x18
+		int maps[6]; // 0x1C
+		int unknown_34; // 0x34
+
+		TexturingProperty() {
+			const auto NI_TexturingProperty_ctor = reinterpret_cast<NI::TexturingProperty* (__thiscall*)(NI::TexturingProperty*)>(0x5D2F10);
+			NI_TexturingProperty_ctor(this);
+		}
+	};
+	static_assert(sizeof(TexturingProperty) == 0x38, "NI::TexturingProperty failed size validation");
+	static_assert(sizeof(TexturingProperty::Map) == 0x14, "NI::TexturingProperty::Map failed size validation");
+	static_assert(sizeof(TexturingProperty::BumpMap) == 0x2C, "NI::TexturingProperty::BumpMap failed size validation");
 
 	struct Frustum {
 		float left; // 0x0
@@ -604,6 +715,19 @@ namespace TES3 {
 		static constexpr auto initializers = reinterpret_cast<Initializer*>(0x6A8128);
 	};
 	static_assert(sizeof(GameSetting) == 0x18, "TES3::GameSetting failed size validation");
+
+	struct PhysicalObject : Object {
+		NI::Vector3 unknown_0x28;
+		NI::Vector3 unknown_0x34;
+		int unknown_0x40;
+		const char* objectID; // 0x44
+	};
+	static_assert(sizeof(PhysicalObject) == 0x48, "TES3::PhysicalObject failed size validation");
+
+	struct Static : PhysicalObject {
+		const char* unknown_0x48;
+	};
+	static_assert(sizeof(Static) == 0x4C, "TES3::Static failed size validation");
 
 	struct RecordHandler {
 		int activeModCount; // 0x0
