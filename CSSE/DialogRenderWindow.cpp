@@ -9,6 +9,7 @@
 #include "CSReference.h"
 
 namespace se::cs::dialog::render_window {
+	using namespace se::windows;
 
 	//
 	// Patch: Use world rotation values unless ALT is held.
@@ -41,7 +42,7 @@ namespace se::cs::dialog::render_window {
 	const auto TES3_CS_OriginalRotationLogic = reinterpret_cast<bool(__cdecl*)(void*, TranslationData::Target*, int, TranslationData::RotationAxis)>(0x4652D0);
 	bool __cdecl Patch_ReplaceRotationLogic(void* unknown1, TranslationData::Target* firstTarget, int relativeMouseDelta, TranslationData::RotationAxis rotationAxis) {
 		// Allow holding ALT modifier to do vanilla behavior.
-		if (se::windows::isKeyDown(VK_MENU)) {
+		if (isKeyDown(VK_MENU)) {
 			return TES3_CS_OriginalRotationLogic(unknown1, firstTarget, relativeMouseDelta, rotationAxis);
 		}
 
@@ -58,7 +59,7 @@ namespace se::cs::dialog::render_window {
 		float y = 0.0f;
 		float z = 0.0f;
 
-		if (!se::windows::isKeyDown('X') && !se::windows::isKeyDown('Y')) {
+		if (!isKeyDown('X') && !isKeyDown('Y')) {
 			rotationAxis = TranslationData::RotationAxis::Z;
 		}
 
@@ -199,6 +200,34 @@ namespace se::cs::dialog::render_window {
 	constexpr auto PatchEditorMarkers_Setup_Size = 0x4u;
 
 	//
+	// Patch: When hiding objects (Shift+C) in terrain editing mode (H), do not hide the terrain editing circle.
+	//
+
+	void __fastcall PatchAddBlankTexturingProperty(NI::LinkedList<NI::Property*>* properties, DWORD _EDX_, NI::Property* prop) {
+		const auto avObject = reinterpret_cast<NI::AVObject*>(reinterpret_cast<BYTE*>(properties) - offsetof(NI::AVObject, propertyNode));
+		
+		// Add existing property.
+		avObject->attachProperty(prop);
+
+		// Add an empty texturing property.
+		auto texturingProp = new NI::TexturingProperty();
+		avObject->attachProperty(texturingProp);
+
+		int x = 4;
+	}
+
+	void __fastcall PatchFixMaterialPropertyColors(NI::LinkedList<NI::Property*>* properties, DWORD _EDX_, NI::MaterialProperty* prop) {
+		const auto color = NI::Color(1.0f, 0.0f, 0.0f);
+		prop->ambient = color;
+		prop->diffuse = color;
+		prop->specular = color;
+		prop->emissive = color;
+
+		const auto avObject = reinterpret_cast<NI::AVObject*>(reinterpret_cast<BYTE*>(properties) - offsetof(NI::AVObject, propertyNode));
+		avObject->attachProperty(prop);
+	}
+
+	//
 	//
 	//
 
@@ -211,5 +240,12 @@ namespace se::cs::dialog::render_window {
 		// Patch: Custom marker toggling code.
 		writePatchCodeUnprotected(0x49E932, (BYTE*)PatchEditorMarkers_Setup, PatchEditorMarkers_Setup_Size);
 		genCallUnprotected(0x49E932 + PatchEditorMarkers_Setup_Size, reinterpret_cast<DWORD>(PatchEditorMarkers), 0x49E94D - 0x49E932 - PatchEditorMarkers_Setup_Size);
+
+		// Patch: When hiding objects (Shift+C) in terrain editing mode (H), do not hide the terrain editing circle.
+		writeDoubleWordEnforced(0x45F166 + 0x2, 0x12C, 0x134);
+		writeDoubleWordEnforced(0x45F39C + 0x2, 0x12C, 0x134);
+		writeDoubleWordEnforced(0x45F719 + 0x2, 0x12C, 0x134);
+		genCallEnforced(0x45F4ED, 0x4015A0, reinterpret_cast<DWORD>(PatchFixMaterialPropertyColors));
+		genCallEnforced(0x45F626, 0x4015A0, reinterpret_cast<DWORD>(PatchAddBlankTexturingProperty));
 	}
 }

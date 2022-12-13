@@ -117,25 +117,6 @@ bool __fastcall PatchPreventGMSTPollution(GameSetting* gameSetting, DWORD _EDX_,
 	return TES3_GameSetting_SaveGameSetting(gameSetting, file);
 }
 
-const auto NI_PropertyList_Append = reinterpret_cast<void(__thiscall*)(NI::LinkedList<NI::Property*>*, NI::Property*)>(0x4015A0);
-void __fastcall PatchRemoveVertexColorProperty(NI::LinkedList<NI::Property*>* properties, DWORD _EDX_, NI::Property* prop) {
-	prop->refCount--;
-
-	// Add an empty texturing property.
-	auto texturingProperty = new NI::TexturingProperty();
-	texturingProperty->refCount++;
-	NI_PropertyList_Append(properties, new NI::TexturingProperty());
-}
-
-void __fastcall PatchFixMaterialPropertyColors(NI::LinkedList<NI::Property*>* properties, DWORD _EDX_, NI::MaterialProperty* prop) {
-	const auto color = NI::Color(1.0f, 0.0f, 0.0f);
-	prop->ambient = color;
-	prop->diffuse = color;
-	prop->specular = color;
-	prop->emissive = color;
-	NI_PropertyList_Append(properties, prop);
-}
-
 void __cdecl PatchSpeedUpCellViewDialog(HWND hWnd) {
 	SendMessageA(hWnd, WM_SETREDRAW, FALSE, NULL);
 
@@ -159,16 +140,6 @@ void installPatches() {
 
 	// Patch: Don't save default GMSTs that haven't been modified.
 	genJumpEnforced(0x4042B4, 0x4F9BE0, reinterpret_cast<DWORD>(PatchPreventGMSTPollution));
-
-	// Patch: When hiding objects (Shift+C) in terrain editing mode (H), do not hide the terrain editing circle.
-#if false
-	writeDoubleWordEnforced(0x45F166 + 0x2, 0x12C, 0x134);
-	writeDoubleWordEnforced(0x45F39C + 0x2, 0x12C, 0x134);
-	writeDoubleWordEnforced(0x45F719 + 0x2, 0x12C, 0x134);
-	//genCallEnforced(0x45F4ED, 0x4015A0, reinterpret_cast<DWORD>(PatchFixMaterialPropertyColors)); // Fix colors on the rest of the circle.
-	//genCallEnforced(0x45F626, 0x4015A0, reinterpret_cast<DWORD>(PatchRemoveVertexColorProperty)); // Remove the vertex color property from the circle.
-	//genCallEnforced(0x45F5A1, 0x4015A0, reinterpret_cast<DWORD>(PatchRemoveVertexColorProperty)); // Remove the alpha property from the circle.
-#endif
 
 	// Patch: Optimize displaying of cell view window.
 	genJumpEnforced(0x4037C4, 0x40E250, reinterpret_cast<DWORD>(PatchSpeedUpCellViewDialog));
