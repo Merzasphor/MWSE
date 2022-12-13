@@ -10,18 +10,12 @@ namespace se::math {
 	constexpr double M_PI_2 = M_PI / 2; // pi/2
 	constexpr double M_PI_2f = float(M_PI_2);
 
-	template <typename T>
-	constexpr T radiansToDegrees(T radians) {
-		if constexpr (std::is_arithmetic_v<T>) {
-			return T(radians * 180.0 / M_PI);
-		}
+	inline float radiansToDegrees(float radians) {
+		return float(radians * 180.0 / M_PI);
 	}
 
-	template <typename T>
-	constexpr T degreesToRadians(T degrees) {
-		if constexpr (std::is_arithmetic_v<T>) {
-			return T(degrees * M_PI / 180.0);
-		}
+	inline float degreesToRadians(float degrees) {
+		return float(degrees * M_PI / 180.0);
 	}
 
 	void standardizeAngleRadians(float& value);
