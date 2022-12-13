@@ -1,5 +1,7 @@
 #pragma once
 
+#include "MemoryUtil.h"
+
 namespace NI {
 	template <typename T>
 	class TArray {
@@ -116,10 +118,8 @@ namespace NI {
 		size_type filledCount; // 0x10 // Number of filled slots.
 		size_type growByCount; // 0x14 // Number of slots to increase storage by.
 
-#if !defined(MWSE_NO_CUSTOM_ALLOC) || MWSE_NO_CUSTOM_ALLOC == 0
-		static void* operator new(size_type size) { return reinterpret_cast<void* (__cdecl*)(size_type)>(0x727692)(size); }
-		static void operator delete(void* block) { reinterpret_cast<void(__cdecl*)(void*)>(0x727530)(block); }
-#endif
+		static void* operator new(size_type size) { return se::memory::_new(size); }
+		static void operator delete(void* block) { se::memory::_delete(block); }
 
 		TArray(size_type size = 1) {
 			storageCount = size;
@@ -127,7 +127,7 @@ namespace NI {
 			endIndex = 0;
 			filledCount = 0;
 #if !defined(MWSE_NO_CUSTOM_ALLOC) || MWSE_NO_CUSTOM_ALLOC == 0
-			storage = reinterpret_cast<T * (__cdecl*)(size_type)>(0x727692)(size * 4);
+			storage = se::memory::_new<T>(4);
 #else
 			storage = new T[size];
 #endif
@@ -140,7 +140,7 @@ namespace NI {
 
 		virtual ~TArray() {
 #if !defined(MWSE_NO_CUSTOM_ALLOC) || MWSE_NO_CUSTOM_ALLOC == 0
-			reinterpret_cast<void(__cdecl*)(void*)>(0x727530)(storage);
+			se::memory::_delete(storage);
 #else
 			delete[] storage;
 #endif
@@ -313,7 +313,7 @@ namespace NI {
 				endIndex = size;
 			}
 #if !defined(MWSE_NO_CUSTOM_ALLOC) || MWSE_NO_CUSTOM_ALLOC == 0
-			auto newStorage = reinterpret_cast<T * (__cdecl*)(size_t)>(0x727692)(size * 4);
+			auto newStorage = se::memory::_new<T>(size);
 			memset(newStorage, 0, size * 4);
 #else
 			auto newStorage = new T[size];
@@ -322,7 +322,7 @@ namespace NI {
 				newStorage[i] = storage[i];
 			}
 #if !defined(MWSE_NO_CUSTOM_ALLOC) || MWSE_NO_CUSTOM_ALLOC == 0
-			reinterpret_cast<void(__cdecl*)(void*)>(0x727530)(storage);
+			se::memory::_delete(storage);
 #else
 			delete[] storage;
 #endif
