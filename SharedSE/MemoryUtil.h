@@ -148,4 +148,10 @@ namespace se::memory {
 
 	// Code to determine what function an address calls.
 	DWORD getCallAddress(DWORD address);
+
+	// Map from a pointer to a child element to the main structure.
+	template <typename T>
+	T* getMainStructureFromOffset(void* childPtr, DWORD offset) {
+		return reinterpret_cast<T*>(reinterpret_cast<BYTE*>(childPtr) - offset);
+	}
 }

@@ -204,7 +204,7 @@ namespace se::cs::dialog::render_window {
 	//
 
 	void __fastcall PatchAddBlankTexturingProperty(NI::LinkedList<NI::Property*>* properties, DWORD _EDX_, NI::Property* prop) {
-		const auto avObject = reinterpret_cast<NI::AVObject*>(reinterpret_cast<BYTE*>(properties) - offsetof(NI::AVObject, propertyNode));
+		const auto avObject = memory::getMainStructureFromOffset<NI::AVObject>(properties, offsetof(NI::AVObject, propertyNode));
 		
 		// Add existing property.
 		avObject->attachProperty(prop);
@@ -223,7 +223,7 @@ namespace se::cs::dialog::render_window {
 		prop->specular = color;
 		prop->emissive = color;
 
-		const auto avObject = reinterpret_cast<NI::AVObject*>(reinterpret_cast<BYTE*>(properties) - offsetof(NI::AVObject, propertyNode));
+		const auto avObject = memory::getMainStructureFromOffset<NI::AVObject>(properties, offsetof(NI::AVObject, propertyNode));
 		avObject->attachProperty(prop);
 	}
 
