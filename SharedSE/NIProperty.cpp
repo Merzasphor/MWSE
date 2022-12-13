@@ -252,6 +252,28 @@ namespace NI {
 		bumpMat[1][1] = 0.5f;
 	}
 
+	TexturingProperty::TexturingProperty() {
+#if defined(SE_NI_TEXTURINGPROPERTY_FNADDR_CTOR) && SE_NI_TEXTURINGPROPERTY_FNADDR_CTOR > 0
+		// Cleanup crust from automatic construction.
+		se::memory::_delete(maps.storage);
+		memset(this, 0, sizeof(TexturingProperty));
+
+		const auto NI_TexturingProperty_ctor = reinterpret_cast<TexturingProperty*(__thiscall*)(TexturingProperty*)>(SE_NI_TEXTURINGPROPERTY_FNADDR_CTOR);
+		NI_TexturingProperty_ctor(this);
+#else
+		throw not_implemented_exception();
+#endif
+	}
+
+	TexturingProperty::~TexturingProperty() {
+#if defined(SE_NI_TEXTURINGPROPERTY_FNADDR_DTOR) && SE_NI_TEXTURINGPROPERTY_FNADDR_DTOR > 0
+		const auto NI_TexturingProperty_dtor = reinterpret_cast<TexturingProperty * (__thiscall*)(TexturingProperty*)>(SE_NI_TEXTURINGPROPERTY_FNADDR_DTOR);
+		NI_TexturingProperty_dtor(this);
+#else
+		throw not_implemented_exception();
+#endif
+	}
+
 	TexturingProperty::Map* TexturingProperty::getBaseMap() {
 		return maps[size_t(MapType::BASE)];
 	}

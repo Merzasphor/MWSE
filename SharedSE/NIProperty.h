@@ -225,6 +225,10 @@ namespace NI {
 		TArray<Map*> maps; // 0x1C
 		int unknown_34; // 0x34
 
+
+		TexturingProperty();
+		~TexturingProperty();
+
 		Map* getBaseMap();
 		void setBaseMap(std::optional<Map*> map);
 		Map* getDarkMap();
