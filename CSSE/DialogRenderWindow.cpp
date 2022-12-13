@@ -224,6 +224,7 @@ namespace se::cs::dialog::render_window {
 					orientation.x = std::roundf(orientation.x / snapAngle) * snapAngle;
 					orientation.y = std::roundf(orientation.y / snapAngle) * snapAngle;
 					orientation.z = std::roundf(orientation.z / snapAngle) * snapAngle;
+					newRotation.fromEulerXYZ(orientation.x, orientation.y, orientation.z);
 				}
 				se::math::standardizeAngleRadians(orientation.x);
 				se::math::standardizeAngleRadians(orientation.y);
