@@ -81,8 +81,8 @@ namespace se::cs::dialog::object_window {
 			CheckMenuItem(mainWindow, 40199u, MF_CHECKED);
 		}
 
-		auto tabControl = GetDlgItem(hDlg, 1042);
-		auto objectListView = GetDlgItem(hDlg, 1041);
+		auto tabControl = GetDlgItem(hDlg, CONTROL_ID_TABS);
+		auto objectListView = GetDlgItem(hDlg, CONTROL_ID_LIST_VIEW);
 		auto searchLabel = GetDlgItem(hDlg, CONTROL_ID_FILTER_LABEL);
 		auto searchEdit = GetDlgItem(hDlg, CONTROL_ID_FILTER_EDIT);
 

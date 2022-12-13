@@ -7,9 +7,6 @@
     <Filter Include="Source Files">
       <UniqueIdentifier>{56c1a799-bf78-4e92-8b9a-d125db59e88f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Containers">
-      <UniqueIdentifier>{be73ea46-bb09-4644-a5de-919d3f2c96f9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\NI">
       <UniqueIdentifier>{9a3e55ca-d584-49f6-a06e-ecdef86caae5}</UniqueIdentifier>
     </Filter>
@@ -22,16 +19,19 @@
     <Filter Include="Source Files\Util">
       <UniqueIdentifier>{06671b74-d404-460c-88aa-99ff1cc2e739}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\NI\Containers">
+      <UniqueIdentifier>{be73ea46-bb09-4644-a5de-919d3f2c96f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)NIIteratedList.h">
-      <Filter>Header Files\Containers</Filter>
+      <Filter>Header Files\NI\Containers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)NILinkedList.h">
-      <Filter>Header Files\Containers</Filter>
+      <Filter>Header Files\NI\Containers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)NITArray.h">
-      <Filter>Header Files\Containers</Filter>
+      <Filter>Header Files\NI\Containers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)NIVector3.h">
       <Filter>Header Files\NI</Filter>
@@ -88,7 +88,7 @@
       <Filter>Header Files\NI</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)NIHashMap.h">
-      <Filter>Header Files\Containers</Filter>
+      <Filter>Header Files\NI\Containers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)NIAVObject.h">
       <Filter>Header Files\NI</Filter>
@@ -109,6 +109,24 @@
       <Filter>Header Files\NI</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)NIPixelFormat.h">
+      <Filter>Header Files\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)NIPick.h">
+      <Filter>Header Files\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)NIVector2.h">
+      <Filter>Header Files\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)NICamera.h">
+      <Filter>Header Files\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)NIRenderer.h">
+      <Filter>Header Files\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)NIRect.h">
+      <Filter>Header Files\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)NIPlane.h">
       <Filter>Header Files\NI</Filter>
     </ClInclude>
   </ItemGroup>
@@ -168,6 +186,12 @@
       <Filter>Source Files\NI</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)NIDynamicEffect.cpp">
+      <Filter>Source Files\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)NIPick.cpp">
+      <Filter>Source Files\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)NICamera.cpp">
       <Filter>Source Files\NI</Filter>
     </ClCompile>
   </ItemGroup>

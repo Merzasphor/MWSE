@@ -80,5 +80,5 @@ namespace NI {
 		static constexpr auto IdentityMatrix = reinterpret_cast<Matrix33*>(0x0);
 
 	};
-	static_assert(sizeof(Matrix33) == 0x24, "TES3::Matrix33 failed size validation");
+	static_assert(sizeof(Matrix33) == 0x24, "NI::Matrix33 failed size validation");
 }

@@ -4,8 +4,11 @@
 #include "MemoryUtil.h"
 #include "WindowsUtil.h"
 
+#include "NICamera.h"
 #include "NINode.h"
+#include "NIPick.h"
 
+#include "CSLandTexture.h"
 #include "CSReference.h"
 
 namespace se::cs::dialog::render_window {
@@ -38,6 +41,94 @@ namespace se::cs::dialog::render_window {
 		NI::Vector3 position; // 0x8
 		void* unknown_0x14;
 	};
+
+	struct NetImmerseInstance {
+		struct VirtualTable {
+			void* dtor; // 0x0
+			void* setRegistryKey; // 0x4
+			void* setWindowWidth; // 0x8
+			void* setWindowHeight; // 0xC
+			void* setBitDepth; // 0x10
+			void* setBackBuffers; // 0x14
+			void* setMultisampleEnable; // 0x18
+			void* setMultisamples; // 0x1C
+			void* setFullScreen; // 0x20
+			void(__thiscall* setPixelShaderEnabled)(NetImmerseInstance*, bool); // 0x24
+			void* setStencil; // 0x28
+			void* setMipmap; // 0x2C
+			void* setMipmapSkipLevel; // 0x30
+			void* setHardwareTL; // 0x34
+			void* setMultipass; // 0x38
+			void* setVertexProcessing; // 0x3C
+			void* setSwapEffect; // 0x40
+			void* setRefreshRate; // 0x44
+			void* setPresentInterval; // 0x48
+			void* setAdapterID; // 0x4C
+			void(__thiscall* setGamma)(NetImmerseInstance*, float); // 0x50
+			void* readSettings; // 0x54
+			void* writeSettings; // 0x58
+			void* createRenderer; // 0x5C
+			void* createRendererFromSettings; // 0x60
+		};
+		VirtualTable* vTable; // 0x0
+		const char* ownerString; // 0x4
+		int windowWidth; // 0x8
+		int windowHeight; // 0xC
+		int screenDepth; // 0x10
+		int backBuffers; // 0x14
+		int multiSamples; // 0x18
+		bool fullscreen; // 0x1C
+		bool stencil; // 0x1D
+		bool mipmap; // 0x1E
+		bool hardware; // 0x1F
+		bool pixelShader; // 0x20
+		bool multiPass; // 0x21
+		bool screenShotsEnabled; // 0x22
+		int vertexProcessing; // 0x24
+		int swapEffect; // 0x28
+		int refreshRate; // 0x2C
+		int adapter; // 0x30
+		int mipmapSkipLevel; // 0x34
+		int presentationInterval; // 0x38
+		float gamma; // 0x3C
+		NI::Vector3 unknown_0x40;
+		NI::Node* node; // 0x4C
+		NI::Renderer* renderer; // 0x50
+		int unknown_0x54;
+		HWND parentWindow; // 0x58
+		int unknown_0x5C;
+		int unknown_0x60;
+	};
+	static_assert(sizeof(NetImmerseInstance) == 0x64, "CS::NetImmerseInstance failed size validation");
+	static_assert(sizeof(NetImmerseInstance::VirtualTable) == 0x64, "CS::NetImmerseInstance's virtual table failed size validation");
+
+	struct RenderController {
+		NetImmerseInstance* niInstance; // 0x0
+		NI::Node* node; // 0x4
+		NI::Camera* camera; // 0x8
+
+		static auto get() {
+			return *reinterpret_cast<RenderController**>(0x6CF77C);
+		}
+	};
+	static_assert(sizeof(RenderController) == 0xC, "CS::RenderController failed size validation");
+
+	struct SceneGraphController {
+		NI::Node* sceneRoot;
+		NI::Node* objectRoot;
+		NI::Node* landscapeRoot;
+		NI::ZBufferProperty* zBufferProperty;
+		NI::Property* wireframeProperty;
+		int unknown_0x14;
+		int unknown_0x18;
+		int unknown_0x1C;
+		int unknown_0x20;
+
+		static auto get() {
+			return *reinterpret_cast<SceneGraphController**>(0x6CEB78);
+		}
+	};
+	static_assert(sizeof(SceneGraphController) == 0x24, "CS::SceneGraphController failed size validation");
 
 	const auto TES3_CS_OriginalRotationLogic = reinterpret_cast<bool(__cdecl*)(void*, TranslationData::Target*, int, TranslationData::RotationAxis)>(0x4652D0);
 	bool __cdecl Patch_ReplaceRotationLogic(void* unknown1, TranslationData::Target* firstTarget, int relativeMouseDelta, TranslationData::RotationAxis rotationAxis) {
@@ -228,6 +319,100 @@ namespace se::cs::dialog::render_window {
 	}
 
 	//
+	// Patch: Extend Render Window message handling.
+	//
+
+	static WORD lastRenderWindowPosX = 0;
+	static WORD lastRenderWindowPosY = 0;
+
+	constexpr auto landscapeEditWindowId = 203;
+
+	void PickLandscapeTexture(HWND hWnd) {
+		auto editorWindow = memory::MemAccess<HWND>::Get(0x6CE95C);
+		if (!editorWindow) {
+			return;
+		}
+
+		auto rendererPicker = reinterpret_cast<NI::Pick*>(0x6CF528);
+		auto rendererController = RenderController::get();
+		auto sceneGraphController = SceneGraphController::get();
+
+		// Cache picker settings we care about.
+		const auto previousRoot = rendererPicker->root;
+
+		// Make changes to the pick that we need to.
+		rendererPicker->root = sceneGraphController->landscapeRoot;
+
+		NI::Vector3 origin;
+		NI::Vector3 direction;
+		if (rendererController->camera->windowPointToRay(lastRenderWindowPosX, lastRenderWindowPosY, origin, direction)) {
+			direction.normalize();
+
+			if (rendererPicker->pickObjects(&origin, &direction)) {
+				auto firstResult = rendererPicker->results.at(0);
+				if (firstResult->object) {
+					auto texturingProperty = firstResult->object->getTexturingProperty();
+					if (texturingProperty) {
+						auto baseMap = texturingProperty->getBaseMap();
+						if (baseMap && baseMap->texture) {
+							LVITEMA queryData = {};
+							queryData.mask = LVIF_PARAM;
+							auto textureList = GetDlgItem(editorWindow, 1492);
+							int textureCount = ListView_GetItemCount(textureList);
+							for (int row = 0; row < textureCount; ++row) {
+								queryData.iItem = row;
+								if (ListView_GetItem(textureList, &queryData)) {
+									auto landTexture = reinterpret_cast<LandTexture*>(queryData.lParam);
+									if (landTexture) {
+										if (landTexture->texture == baseMap->texture) {
+											ListView_SetItemState(textureList, row, LVIS_SELECTED, LVIS_SELECTED);
+											break;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+
+		// Restore pick settings.
+		rendererPicker->clearResults();
+		rendererPicker->root = previousRoot;
+	}
+
+	inline void PatchDialogProc_OnKeyDown(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+		switch (wParam) {
+		case 'P':
+			PickLandscapeTexture(hWnd);
+			break;
+		}
+	}
+
+	LRESULT CALLBACK PatchDialogProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+		switch (msg) {
+		case WM_MOUSEMOVE:
+			lastRenderWindowPosX = LOWORD(lParam);
+			lastRenderWindowPosY = HIWORD(lParam);
+			break;
+		}
+
+		// Call original function.
+		const auto CS_RenderWindowDialogProc = reinterpret_cast<WNDPROC>(0x45A3F0);
+		auto result = CS_RenderWindowDialogProc(hWnd, msg, wParam, lParam);
+
+		switch (msg) {
+		case WM_KEYDOWN:
+			PatchDialogProc_OnKeyDown(hWnd, msg, wParam, lParam);
+			break;
+		}
+
+		return result;
+	}
+
+	//
 	//
 	//
 
@@ -247,5 +432,8 @@ namespace se::cs::dialog::render_window {
 		writeDoubleWordEnforced(0x45F719 + 0x2, 0x12C, 0x134);
 		genCallEnforced(0x45F4ED, 0x4015A0, reinterpret_cast<DWORD>(PatchFixMaterialPropertyColors));
 		genCallEnforced(0x45F626, 0x4015A0, reinterpret_cast<DWORD>(PatchAddBlankTexturingProperty));
+
+		// Patch: Extend Render Window message handling.
+		genJumpEnforced(0x4020EF, 0x45A3F0, reinterpret_cast<DWORD>(PatchDialogProc));
 	}
 }

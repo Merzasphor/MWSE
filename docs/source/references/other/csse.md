@@ -28,6 +28,7 @@ CSSE requires [MGE XE](https://www.nexusmods.com/morrowind/mods/41102?) v0.14.3 
 * Reference rotation is now performed on the world axis, rather than the local axis. To rotate on the local axis as it worked in vanilla, hold the alt key.
 * Extended editor marker support. Toggling markers (M) will now also toggle markers supported by the game executable. This allows custom markers to be toggled by tagging them with a MRK string and adding a EditorMarker node, or by defining objects whose name begins with or matches "Tri EditorMarker".
 * The landscape editing disc is no longer hidden when hiding objects (Shift+C).
+* While landscape editing is enabled, and the render window selected, you can use the P key to sample the texture at the cursor's position. This will select the matching texture under the cursor automatically in the landscape editing menu.
 
 ### Cell View
 

@@ -19,6 +19,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)MemoryUtil.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIAVObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIBinaryStream.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NICamera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIColor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIDefines.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIDynamicEffect.h" />
@@ -29,16 +30,21 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)NINode.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIObjectNET.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NIPick.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIPixelFormat.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NIPlane.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIPointer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIProperty.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIQuaternion.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NIRect.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NIRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIRTTI.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIStream.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NITArray.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NITexture.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NITimeController.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NITransform.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NIVector2.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIVector3.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)StringUtil.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIIteratedList.h" />
@@ -49,6 +55,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)MemoryUtil.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NIAVObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NIBinaryStream.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)NICamera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NIColor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NIDynamicEffect.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NIExtraData.cpp" />
@@ -56,6 +63,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)NINode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NIObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NIObjectNET.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)NIPick.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NIProperty.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NIQuaternion.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NIRTTI.cpp" />
