@@ -176,9 +176,9 @@ namespace se::cs::dialog::render_window {
 		}
 
 		if (isSnapping) {
-			cumulativeRot.x = min(cumulativeRot.x, snapAngle);
-			cumulativeRot.y = min(cumulativeRot.y, snapAngle);
-			cumulativeRot.z = min(cumulativeRot.z, snapAngle);
+			cumulativeRot.x = std::roundf(cumulativeRot.x / snapAngle) * snapAngle;
+			cumulativeRot.y = std::roundf(cumulativeRot.y / snapAngle) * snapAngle;
+			cumulativeRot.z = std::roundf(cumulativeRot.z / snapAngle) * snapAngle;
 		}
 
 		// Save rotation before clearing.
