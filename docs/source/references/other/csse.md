@@ -8,6 +8,7 @@ Once you have downloaded the .7z file, extract it to the Morrowind installation 
 
 CSSE requires [MGE XE](https://www.nexusmods.com/morrowind/mods/41102?) v0.14.3 (released July 29, 2022) or later to be automatically loaded into the Construction Set.
 
+If you are using [Construction Set Better UI](https://www.nexusmods.com/morrowind/mods/50311), CSSE will not automatically load. To get CSSE to work with Better UI, you will need to rename the Better UI executable to "TES Construction Set" and replace the existing vanilla CS file. Be sure to back the original up first!
 
 ## Features
 
