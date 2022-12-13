@@ -13,6 +13,27 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Extenders">
+      <UniqueIdentifier>{7e124ac6-7f25-474a-ba56-fcaf44439ada}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Extenders\Dialog">
+      <UniqueIdentifier>{3f188b73-08d2-41c8-b8eb-ce4d275520c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Extenders">
+      <UniqueIdentifier>{c3107347-89e3-459b-8d01-ab3d671d747a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Extenders\Dialog">
+      <UniqueIdentifier>{005593a0-f7ef-47c2-be0d-1b5af6f39a66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\CS">
+      <UniqueIdentifier>{8ac1bb95-78a6-4416-a960-195bd71970bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CS">
+      <UniqueIdentifier>{a3c311dc-8df9-4ea2-b9cd-44866c827ffa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\NI">
+      <UniqueIdentifier>{496e3544-4bf7-4e56-805c-1a0a9be077ee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -21,12 +42,39 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DialogObjectWindow.h">
+      <Filter>Header Files\Extenders\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="CSBaseObject.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSDefines.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="LogUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NIRTTIDefines.h">
+      <Filter>Header Files\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="NIConfig.h">
+      <Filter>Header Files\NI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogObjectWindow.cpp">
+      <Filter>Source Files\Extenders\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="CSBaseObject.cpp">
+      <Filter>Source Files\CS</Filter>
+    </ClCompile>
+    <ClCompile Include="LogUtil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

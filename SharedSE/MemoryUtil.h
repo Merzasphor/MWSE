@@ -1,6 +1,50 @@
 #pragma once
 
-namespace mwse::memory {
+namespace se::memory {
+	//
+	// Memory (de)allocation functions.
+	//
+	// Morrowind is compiled as a release build, and so typical new/delete/malloc/realloc/free
+	// calls will not pass debug checks. Anything that comes from or is passed to Morrowind that
+	// might be later freed needs to use these functions.
+	//
+
+#if defined(SE_MEMORY_FNADDR_NEW) && SE_MEMORY_FNADDR_NEW > 0
+	template <typename T>
+	inline constexpr T* _new(size_t count = 1) {
+		return reinterpret_cast<T * (__cdecl*)(size_t)>(SE_MEMORY_FNADDR_NEW)(sizeof(T) * count);
+	}
+
+	void* _new(size_t size);
+#endif
+
+#if defined(SE_MEMORY_FNADDR_DELETE) && SE_MEMORY_FNADDR_DELETE > 0
+	template <typename T>
+	inline constexpr void _delete(T* address) {
+		const auto __delete = reinterpret_cast<void(__cdecl*)(T*)>(SE_MEMORY_FNADDR_DELETE);
+		__delete(address);
+	}
+#endif
+
+#if defined(SE_MEMORY_FNADDR_DELETE) && SE_MEMORY_FNADDR_DELETE > 0
+	void* realloc(void* address, size_t size);
+#endif
+
+#if defined(SE_MEMORY_FNADDR_DELETE) && SE_MEMORY_FNADDR_DELETE > 0
+	void* malloc(size_t size);
+
+	template <typename T>
+	inline constexpr T* malloc(size_t count = 1) {
+		T* ret = reinterpret_cast<T*>(malloc(sizeof(T) * count));
+		memset(ret, 0, sizeof(T));
+		return ret;
+	}
+#endif
+
+#if defined(SE_MEMORY_FNADDR_DELETE) && SE_MEMORY_FNADDR_DELETE > 0
+	void free(void* address);
+#endif
+
 	// Container for registers, flags, and other information to help with the
 	// native to MWSE code bridge.
 	struct HookContext {

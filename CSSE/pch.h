@@ -10,4 +10,12 @@
 // add headers that you want to pre-compile here
 #include "framework.h"
 
+// SharedSE defines.
+#define SE_IS_CS TRUE
+#define SE_MEMORY_FNADDR_NEW 0x6209F0
+#define SE_MEMORY_FNADDR_DELETE 0x620948
+#define SE_MEMORY_FNADDR_MALLOC 0x0
+#define SE_MEMORY_FNADDR_FREE 0x0
+#define SE_MEMORY_FNADDR_REALLOC 0x0
+
 #endif //PCH_H

@@ -1,6 +1,8 @@
 #pragma once
 
-namespace TES3 {
+#include "MemoryUtil.h"
+
+namespace NI {
 	template <typename T>
 	class IteratedList {
 	public:
@@ -10,10 +12,8 @@ namespace TES3 {
 			Node* next;
 			T data;
 
-#if !defined(MWSE_NO_CUSTOM_ALLOC) || MWSE_NO_CUSTOM_ALLOC == 0
-			static void* operator new(size_t size) { return reinterpret_cast<void* (__cdecl*)(size_t)>(0x727692)(size); }
-			static void operator delete(void* block) { reinterpret_cast<void(__cdecl*)(void*)>(0x727530)(block); }
-#endif
+			static void* operator new(size_t size) { return se::memory::_new(size); }
+			static void operator delete(void* block) { return se::memory::_delete(block); }
 
 			Node(const Node&) = delete;
 
@@ -307,13 +307,13 @@ namespace TES3 {
 		}
 
 	};
-	static_assert(sizeof(IteratedList<void*>) == 0x14, "TES3::IteratedList failed size validation");
-	static_assert(offsetof(IteratedList<void*>, count) == 0x4, "TES3::IteratedList::count failed offset validation");
-	static_assert(offsetof(IteratedList<void*>, head) == 0x8, "TES3::IteratedList::head failed offset validation");
-	static_assert(offsetof(IteratedList<void*>, tail) == 0xC, "TES3::IteratedList::tail failed offset validation");
-	static_assert(offsetof(IteratedList<void*>, current) == 0x10, "TES3::IteratedList::current failed offset validation");
-	static_assert(sizeof(IteratedList<void*>::Node) == 0xC, "TES3::IteratedList::Node failed size validation");
-	static_assert(offsetof(IteratedList<void*>::Node, previous) == 0x0, "TES3::IteratedList::Node::previous failed offset validation");
-	static_assert(offsetof(IteratedList<void*>::Node, next) == 0x4, "TES3::IteratedList::Node::next failed offset validation");
-	static_assert(offsetof(IteratedList<void*>::Node, data) == 0x8, "TES3::IteratedList::Node::data failed offset validation");
+	static_assert(sizeof(IteratedList<void*>) == 0x14, "NI::IteratedList failed size validation");
+	static_assert(offsetof(IteratedList<void*>, count) == 0x4, "NI::IteratedList::count failed offset validation");
+	static_assert(offsetof(IteratedList<void*>, head) == 0x8, "NI::IteratedList::head failed offset validation");
+	static_assert(offsetof(IteratedList<void*>, tail) == 0xC, "NI::IteratedList::tail failed offset validation");
+	static_assert(offsetof(IteratedList<void*>, current) == 0x10, "NI::IteratedList::current failed offset validation");
+	static_assert(sizeof(IteratedList<void*>::Node) == 0xC, "NI::IteratedList::Node failed size validation");
+	static_assert(offsetof(IteratedList<void*>::Node, previous) == 0x0, "NI::IteratedList::Node::previous failed offset validation");
+	static_assert(offsetof(IteratedList<void*>::Node, next) == 0x4, "NI::IteratedList::Node::next failed offset validation");
+	static_assert(offsetof(IteratedList<void*>::Node, data) == 0x8, "NI::IteratedList::Node::data failed offset validation");
 }

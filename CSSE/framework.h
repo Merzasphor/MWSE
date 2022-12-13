@@ -24,6 +24,7 @@
 #include <unordered_set>
 #include <vector>
 #include <future>
+#include <optional>
 
 // Required C includes.
 #include <cmath>
@@ -39,6 +40,20 @@
 #include <d3d.h>
 #include <commctrl.h>
 #include <Windowsx.h>
+
+// 3rd party library: span-lite
+// URL: https://github.com/martinmoene/span-lite
+#include <nonstd/span.hpp>
+
+// DirectInput/Sound requirements.
+#define DIRECTINPUT_VERSION 0x0800
+#include <control.h>
+#include <strmif.h>
+#include <dinput.h>
+#include <dsound.h>
+
+// Core lua binding library.
+//#include <sol/sol.hpp>
 
 // Undefine anything we don't care about otherwise.
 #undef far
