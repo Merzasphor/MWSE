@@ -103,11 +103,11 @@ namespace NI {
 	}
 
 	Vector3 Matrix33::operator*(const Vector3& vector) {
-#if defined(SE_NI_MATRIX33_FNADDR_MULVECTOR) && SE_NI_MATRIX33_FNADDR_MULVECTOR > 0
-		const auto NI_Matrix33_multiplyVector = reinterpret_cast<Vector3 * (__thiscall*)(Matrix33*, Vector3*, const Vector3*)>(SE_NI_MATRIX33_FNADDR_MULVECTOR);
+#if defined(SE_NI_MATRIX33_FNADDR_MULTIPLYVECTOR) && SE_NI_MATRIX33_FNADDR_MULTIPLYVECTOR > 0
+		const auto NI_Matrix33_multiplyVector = reinterpret_cast<Vector3 * (__thiscall*)(Matrix33*, Vector3*, const Vector3*)>(SE_NI_MATRIX33_FNADDR_MULTIPLYVECTOR);
 
-		Matrix33 result;
-		NI_Matrix33_multiplyMatrix(this, &result, &matrix);
+		Vector3 result;
+		NI_Matrix33_multiplyVector(this, &result, &vector);
 		return result;
 #else
 		throw not_implemented_exception();
@@ -115,7 +115,9 @@ namespace NI {
 	}
 
 	Matrix33 Matrix33::operator*(float scalar) {
-#if defined(SE_NI_MATRIX33_FNADDR_MULSCALAR) && SE_NI_MATRIX33_FNADDR_MULSCALAR > 0
+#if defined(SE_NI_MATRIX33_FNADDR_MULTIPLYSCALAR) && SE_NI_MATRIX33_FNADDR_MULTIPLYSCALAR > 0
+		const auto NI_Matrix33_multiplyScalar = reinterpret_cast<Matrix33 * (__thiscall*)(Matrix33*, Matrix33*, float)>(SE_NI_MATRIX33_FNADDR_MULTIPLYSCALAR);
+
 		Matrix33 result;
 		NI_Matrix33_multiplyScalar(this, &result, scalar);
 		return result;
