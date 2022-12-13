@@ -154,41 +154,41 @@ namespace se::cs::dialog::render_window {
 		switch (rotationAxis) {
 		case TranslationData::RotationAxis::X:
 			cumulativeRot.x += relativeMouseDelta * rotationSpeed * 0.1f;
-			se::math::standardizeAngleRadians(cumulativeRot.x);
 			break;
 		case TranslationData::RotationAxis::Y:
 			cumulativeRot.y += relativeMouseDelta * rotationSpeed * 0.1f;
-			se::math::standardizeAngleRadians(cumulativeRot.y);
 			break;
 		case TranslationData::RotationAxis::Z:
 			cumulativeRot.z += relativeMouseDelta * rotationSpeed * 0.1f;
-			se::math::standardizeAngleRadians(cumulativeRot.z);
 			break;
 		}
-		
+
 		auto snapAngleDegrees = se::memory::MemAccess<int>::Get(0x6CE9AC);
 		auto snapAngle = se::math::degreesToRadians((float)snapAngleDegrees);
 		bool isSnapping = ((rotationFlags & 2) != 0) && (snapAngle != 0.0f);
 
-		auto clip = isSnapping ? snapAngle : 0.0f;
-		if (cumulativeRot.x <= clip && cumulativeRot.y <= clip && cumulativeRot.z <= clip) {
+		NI::Vector3 orientation = cumulativeRot;
+		if (isSnapping) {
+			orientation.x = std::roundf(orientation.x / snapAngle) * snapAngle;
+			orientation.y = std::roundf(orientation.y / snapAngle) * snapAngle;
+			orientation.z = std::roundf(orientation.z / snapAngle) * snapAngle;
+		}
+
+		// Due to snapping these may have been set to 0, in which case no need to do anything else.
+		if (orientation.x == 0.0f
+			&& orientation.y == 0.0f
+			&& orientation.z == 0.0f)
+		{
 			return 0;
 		}
-
-		if (isSnapping) {
-			cumulativeRot.x = std::roundf(cumulativeRot.x / snapAngle) * snapAngle;
-			cumulativeRot.y = std::roundf(cumulativeRot.y / snapAngle) * snapAngle;
-			cumulativeRot.z = std::roundf(cumulativeRot.z / snapAngle) * snapAngle;
-		}
-
-		// Save rotation before clearing.
-		NI::Matrix33 userRotation;
-		userRotation.fromEulerXYZ(cumulativeRot.x, cumulativeRot.y, cumulativeRot.z);
 
 		// Restart accumulating process.
 		cumulativeRot.x = 0;
 		cumulativeRot.y = 0;
 		cumulativeRot.z = 0;
+
+		NI::Matrix33 userRotation;
+		userRotation.fromEulerXYZ(orientation.x, orientation.y, orientation.z);
 
 		for (auto target = data->firstTarget; target; target = target->next) {
 			auto reference = target->reference;
