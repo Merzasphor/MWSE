@@ -146,53 +146,49 @@ namespace se::cs::dialog::render_window {
 		auto rotationSpeed = se::memory::MemAccess<float>::Get(0x6CE9B0);
 		auto rotationFlags = se::memory::MemAccess<BYTE>::Get(0x6CE9A4);
 
-		float x = 0.0f;
-		float y = 0.0f;
-		float z = 0.0f;
-
 		if (!isKeyDown('X') && !isKeyDown('Y')) {
 			rotationAxis = TranslationData::RotationAxis::Z;
 		}
 
+		auto& cumulativeRot = *reinterpret_cast<NI::Vector3*>(0x6CF760);
 		switch (rotationAxis) {
 		case TranslationData::RotationAxis::X:
-			x += relativeMouseDelta * rotationSpeed * 0.1f;
+			cumulativeRot.x += relativeMouseDelta * rotationSpeed * 0.1f;
+			se::math::standardizeAngleRadians(cumulativeRot.x);
 			break;
 		case TranslationData::RotationAxis::Y:
-			y += relativeMouseDelta * rotationSpeed * 0.1f;
+			cumulativeRot.y += relativeMouseDelta * rotationSpeed * 0.1f;
+			se::math::standardizeAngleRadians(cumulativeRot.y);
 			break;
 		case TranslationData::RotationAxis::Z:
-			z += relativeMouseDelta * rotationSpeed * 0.1f;
+			cumulativeRot.z += relativeMouseDelta * rotationSpeed * 0.1f;
+			se::math::standardizeAngleRadians(cumulativeRot.z);
 			break;
 		}
+		
+		auto snapAngleDegrees = se::memory::MemAccess<int>::Get(0x6CE9AC);
+		auto snapAngle = se::math::degreesToRadians((float)snapAngleDegrees);
+		bool isSnapping = ((rotationFlags & 2) != 0) && (snapAngle != 0.0f);
 
-		bool isSnapping = (rotationFlags & 2) != 0;
-		if (isSnapping) {
-			const auto snapAngleInRadians = se::math::degreesToRadians(se::memory::MemAccess<int>::Get(0x6CE9AC));
-			if (snapAngleInRadians != 0.0f) {
-				x = std::roundf(x / snapAngleInRadians) * snapAngleInRadians;
-				y = std::roundf(y / snapAngleInRadians) * snapAngleInRadians;
-				z = std::roundf(z / snapAngleInRadians) * snapAngleInRadians;
-			}
-		}
-
-		se::math::standardizeAngleRadians(x);
-		se::math::standardizeAngleRadians(y);
-		se::math::standardizeAngleRadians(z);
-
-		// Seems to crash when performing an undo if you don't set this vector.
-		auto& undoRotation = *reinterpret_cast<NI::Vector3*>(0x6CF760);
-		undoRotation.x = x;
-		undoRotation.y = y;
-		undoRotation.z = z;
-
-		// Due to snapping these may have been set to 0, in which case no need to do anything else.
-		if (x == 0.0f && y == 0.0f && z == 0.0f) {
+		auto clip = isSnapping ? snapAngle : 0.0f;
+		if (cumulativeRot.x <= clip && cumulativeRot.y <= clip && cumulativeRot.z <= clip) {
 			return 0;
 		}
 
+		if (isSnapping) {
+			cumulativeRot.x = min(cumulativeRot.x, snapAngle);
+			cumulativeRot.y = min(cumulativeRot.y, snapAngle);
+			cumulativeRot.z = min(cumulativeRot.z, snapAngle);
+		}
+
+		// Save rotation before clearing.
 		NI::Matrix33 userRotation;
-		userRotation.fromEulerXYZ(x, y, z);
+		userRotation.fromEulerXYZ(cumulativeRot.x, cumulativeRot.y, cumulativeRot.z);
+
+		// Restart accumulating process.
+		cumulativeRot.x = 0;
+		cumulativeRot.y = 0;
+		cumulativeRot.z = 0;
 
 		for (auto target = data->firstTarget; target; target = target->next) {
 			auto reference = target->reference;
@@ -221,12 +217,20 @@ namespace se::cs::dialog::render_window {
 				auto& oldRotation = *reference->sceneNode->localRotation;
 				auto newRotation = userRotation * oldRotation;
 
-				newRotation.toEulerXYZ(&reference->yetAnotherOrientation);
-				se::math::standardizeAngleRadians(reference->yetAnotherOrientation.x);
-				se::math::standardizeAngleRadians(reference->yetAnotherOrientation.y);
-				se::math::standardizeAngleRadians(reference->yetAnotherOrientation.z);
-				reference->orientationNonAttached = reference->yetAnotherOrientation;
+				NI::Vector3 orientation;
+				newRotation.toEulerXYZ(&orientation);
 
+				if (isSnapping) {
+					orientation.x = std::roundf(orientation.x / snapAngle) * snapAngle;
+					orientation.y = std::roundf(orientation.y / snapAngle) * snapAngle;
+					orientation.z = std::roundf(orientation.z / snapAngle) * snapAngle;
+				}
+				se::math::standardizeAngleRadians(orientation.x);
+				se::math::standardizeAngleRadians(orientation.y);
+				se::math::standardizeAngleRadians(orientation.z);
+
+				reference->yetAnotherOrientation = orientation;
+				reference->orientationNonAttached = orientation;
 				reference->sceneNode->setLocalRotationMatrix(&newRotation);
 			}
 
