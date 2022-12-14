@@ -79,6 +79,7 @@ namespace se::cs {
 	struct BaseObject {
 		union {
 			BaseObject_VirtualTable* baseObject;
+			Object_VirtualTable* object;
 		} vtbl; // 0x0
 		ObjectType::ObjectType objectType; // 0x4
 		unsigned int flags; // 0x8
@@ -86,6 +87,8 @@ namespace se::cs {
 
 		const char* getObjectID() const;
 		void setModified(bool modified);
+
+		void setFlag80(bool set);
 	};
 	static_assert(sizeof(BaseObject) == 0x10, "TES3::BaseObject failed size validation");
 	static_assert(sizeof(BaseObject_VirtualTable) == 0x24, "TES3::BaseObject_VirtualTable failed size validation");

@@ -6,4 +6,7 @@ namespace se::cs {
 	struct DialogueInfo;
 	struct Object;
 	struct GameFile;
+
+	struct BaseObject_VirtualTable;
+	struct Object_VirtualTable;
 }

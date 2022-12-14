@@ -276,6 +276,29 @@ namespace se::cs::dialog::render_window {
 	}
 
 	//
+	// Patch: Improve multi-reference scaling.
+	//
+
+	void __cdecl Patch_ReplaceScalingLogic(RenderController* renderController, TranslationData::Target* firstTarget, int scaler) {
+		const auto scaleDelta = scaler * 0.01f;
+
+		for (auto target = firstTarget; target; target = target->next) {
+			auto reference = target->reference;
+
+			auto previousScale = reference->getScale();
+			reference->setScale(previousScale + scaleDelta);
+
+			if (reference->getScale() != previousScale) {
+				reference->setFlag80(true);
+
+				const auto Reference_omgThereIsAnAttachment7 = reinterpret_cast<void(__thiscall*)(Reference*)>(0x4026E4);
+				Reference_omgThereIsAnAttachment7(reference);
+			}
+
+		}
+	}
+
+	//
 	// Patch: Allow custom markers to be toggled.
 	//
 
@@ -453,6 +476,9 @@ namespace se::cs::dialog::render_window {
 
 		// Patch: Use world rotation values.
 		genJumpEnforced(0x403D41, 0x4652D0, reinterpret_cast<DWORD>(Patch_ReplaceRotationLogic));
+
+		// Patch: Improve multi-reference scaling.
+		genCallEnforced(0x45EE3A, 0x404949, reinterpret_cast<DWORD>(Patch_ReplaceScalingLogic));
 
 		// Patch: Custom marker toggling code.
 		writePatchCodeUnprotected(0x49E932, (BYTE*)PatchEditorMarkers_Setup, PatchEditorMarkers_Setup_Size);
