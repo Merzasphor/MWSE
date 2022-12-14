@@ -48,6 +48,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)NIVector3.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)StringUtil.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIIteratedList.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)LinkedObjectsList.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)WindowsUtil.h" />
   </ItemGroup>
   <ItemGroup>

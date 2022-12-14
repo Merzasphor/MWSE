@@ -34,6 +34,12 @@
     <Filter Include="Header Files\NI">
       <UniqueIdentifier>{496e3544-4bf7-4e56-805c-1a0a9be077ee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Util">
+      <UniqueIdentifier>{091f2149-c7ea-4a8b-9b9d-67f366f92981}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Util">
+      <UniqueIdentifier>{07b8f8d7-cba4-44ce-9258-c20e53857d15}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -51,14 +57,50 @@
     <ClInclude Include="CSDefines.h">
       <Filter>Header Files\CS</Filter>
     </ClInclude>
-    <ClInclude Include="LogUtil.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="NIRTTIDefines.h">
       <Filter>Header Files\NI</Filter>
     </ClInclude>
     <ClInclude Include="NIConfig.h">
       <Filter>Header Files\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="CSDialogue.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSDialogueInfo.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSGameFile.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSGameSetting.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSLandTexture.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSObject.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSPhysicalObject.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSRecordHandler.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSReference.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSStatic.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="DialogDialogueWindow.h">
+      <Filter>Header Files\Extenders\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="DialogRenderWindow.h">
+      <Filter>Header Files\Extenders\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="LogUtil.h">
+      <Filter>Header Files\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -74,8 +116,14 @@
     <ClCompile Include="CSBaseObject.cpp">
       <Filter>Source Files\CS</Filter>
     </ClCompile>
+    <ClCompile Include="DialogDialogueWindow.cpp">
+      <Filter>Source Files\Extenders\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogRenderWindow.cpp">
+      <Filter>Source Files\Extenders\Dialog</Filter>
+    </ClCompile>
     <ClCompile Include="LogUtil.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Util</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

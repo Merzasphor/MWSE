@@ -22,6 +22,9 @@
     <Filter Include="Header Files\NI\Containers">
       <UniqueIdentifier>{be73ea46-bb09-4644-a5de-919d3f2c96f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Collections">
+      <UniqueIdentifier>{6a7ca75a-f3f1-4bc3-afea-9cce16439533}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)NIIteratedList.h">
@@ -128,6 +131,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)NIPlane.h">
       <Filter>Header Files\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)LinkedObjectsList.h">
+      <Filter>Header Files\Collections</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

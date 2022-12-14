@@ -175,7 +175,7 @@ namespace se::cs::dialog::object_window {
 			SendMessageA(listView, WM_SETREDRAW, FALSE, NULL);
 			SendMessageA(hWnd, 1043, 0, 0);
 			SendMessageA(listView, WM_SETREDRAW, TRUE, NULL);
-			RedrawWindow(listView, NULL, NULL, RDW_INVALIDATE);
+			RedrawWindow(listView, NULL, NULL, RDW_ERASE | RDW_FRAME | RDW_INVALIDATE | RDW_ALLCHILDREN);
 		}
 	}
 

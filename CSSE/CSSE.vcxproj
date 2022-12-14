@@ -108,6 +108,7 @@
     <ClInclude Include="CSRecordHandler.h" />
     <ClInclude Include="CSReference.h" />
     <ClInclude Include="CSStatic.h" />
+    <ClInclude Include="DialogDialogueWindow.h" />
     <ClInclude Include="DialogObjectWindow.h" />
     <ClInclude Include="DialogRenderWindow.h" />
     <ClInclude Include="framework.h" />
@@ -119,6 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CSBaseObject.cpp" />
+    <ClCompile Include="DialogDialogueWindow.cpp" />
     <ClCompile Include="DialogObjectWindow.cpp" />
     <ClCompile Include="DialogRenderWindow.cpp" />
     <ClCompile Include="dllmain.cpp" />

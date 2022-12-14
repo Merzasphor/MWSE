@@ -24,6 +24,10 @@ If you are using [Construction Set Better UI](https://www.nexusmods.com/morrowin
 * Significantly improved UI responsiveness.
 * Added a footer to the window, with a new filter input. This input can be focused by using CTRL+F while the Object Window is active. This can be used to filter objects by a matching object ID fragment.
 
+### Dialogue Window
+
+* Optimized UI initialization. With TR, average dialogue load time decreased by about 60%. Displaying INFO details is a minimum twice as fast (which is still really slow for any INFO that has certain conditions).
+
 ### Render Window
 
 * Reference rotation is now performed on the world axis, rather than the local axis. To rotate on the local axis as it worked in vanilla, hold the alt key.

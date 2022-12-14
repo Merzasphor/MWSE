@@ -14,6 +14,7 @@
 #include "CSGameSetting.h"
 #include "CSRecordHandler.h"
 
+#include "DialogDialogueWindow.h"
 #include "DialogObjectWindow.h"
 #include "DialogRenderWindow.h"
 
@@ -148,6 +149,7 @@ void installPatches() {
 	genJumpEnforced(0x404881, 0x46E680, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
 
 	// Install sectioned window patches.
+	se::cs::dialog::dialogue_window::installPatches();
 	se::cs::dialog::object_window::installPatches();
 	se::cs::dialog::render_window::installPatches();
 }
