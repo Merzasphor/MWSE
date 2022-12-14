@@ -283,19 +283,28 @@ namespace se::cs::dialog::render_window {
 	void __cdecl Patch_ReplaceScalingLogic(RenderController* renderController, TranslationData::Target* firstTarget, int scaler) {
 		const auto scaleDelta = scaler * 0.01f;
 
+		auto center = memory::MemAccess<TranslationData*>::Get(0x6CE968)->position;
+
 		for (auto target = firstTarget; target; target = target->next) {
 			auto reference = target->reference;
 
-			auto previousScale = reference->getScale();
-			reference->setScale(previousScale + scaleDelta);
+			auto oldScale = reference->getScale();
+			reference->setScale(oldScale + scaleDelta);
 
-			if (reference->getScale() != previousScale) {
+			auto newScale = reference->getScale();
+			if (newScale != oldScale) {
 				reference->setFlag80(true);
+
+				auto offset = reference->position - center;
+				auto multiplier = newScale / oldScale;
+
+				reference->position = center + offset * multiplier;
+				reference->sceneNode->localTranslate = reference->position;
+				reference->sceneNode->update(0.0f, true, true);
 
 				const auto Reference_omgThereIsAnAttachment7 = reinterpret_cast<void(__thiscall*)(Reference*)>(0x4026E4);
 				Reference_omgThereIsAnAttachment7(reference);
 			}
-
 		}
 	}
 
