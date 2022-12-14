@@ -1,5 +1,6 @@
 #include "DialogRenderWindow.h"
 
+#include "LogUtil.h"
 #include "MathUtil.h"
 #include "MemoryUtil.h"
 #include "WindowsUtil.h"
@@ -432,16 +433,103 @@ namespace se::cs::dialog::render_window {
 			}
 		}
 
+		// Restore pick settings.
+		rendererPicker->clearResults();
+		rendererPicker->root = previousRoot;
+	}
+
+	// TODO: Move this to NI::Vector3
+	NI::Matrix33 rotationDifference(NI::Vector3& vec1, NI::Vector3& vec2) {
+		auto result = NI::Matrix33(1, 0, 0, 0, 1, 0, 0, 0, 1);
+
+		auto axis = vec1.crossProduct(&vec2);
+		auto norm = axis.length();
+
+		if (norm >= 1e-5) {
+			axis = axis * (1 / norm);
+			auto angle = asin(norm);
+			if (vec1.dotProduct(&vec2) < 0) {
+				angle = math::M_PI - angle;
+			}
+			result.toRotation(-angle, axis.x, axis.y, axis.z);
+		}
+
+		return result;
+	}
+
+	void AlignToSurface(HWND hWnd) {
+		auto data = memory::MemAccess<TranslationData*>::Get(0x6CE968);
+		if (data->numberOfTargets != 1) {
+			return;
+		}
+
+		auto rendererPicker = reinterpret_cast<NI::Pick*>(0x6CF528);
+		auto rendererController = RenderController::get();
+		auto sceneGraphController = SceneGraphController::get();
+
+		// Cache picker settings we care about.
+		const auto& previousRoot = rendererPicker->root;
+		const auto previousReturnNormal = rendererPicker->returnNormal;
+
+		// Make changes to the pick that we need to.
+		rendererPicker->root = sceneGraphController->sceneRoot;
+		rendererPicker->returnNormal = true;
+
+		auto reference = data->firstTarget->reference;
+		reference->sceneNode->setAppCulled(true);
+
+		NI::Vector3 origin;
+		NI::Vector3 direction;
+		if (rendererController->camera->windowPointToRay(lastRenderWindowPosX, lastRenderWindowPosY, origin, direction)) {
+			direction.normalize();
+
+			if (rendererPicker->pickObjects(&origin, &direction)) {
+				auto firstResult = rendererPicker->results.at(0);
+				if (firstResult) {	
+					// set rotation
+					auto UP = NI::Vector3(0, 0, 1);
+					auto rotation = rotationDifference(UP, firstResult->normal);
+					reference->sceneNode->setLocalRotationMatrix(&rotation);
+
+					// set position
+					auto object = (PhysicalObject*)reference->baseObject;
+					auto offset = firstResult->normal * abs(object->boundingBoxMin.z);
+
+					reference->position = firstResult->intersection + offset;
+					reference->sceneNode->localTranslate = reference->position;
+
+					// set orientation
+					NI::Vector3 orientation;
+					rotation.toEulerXYZ(&orientation);
+
+					math::standardizeAngleRadians(orientation.x);
+					math::standardizeAngleRadians(orientation.y);
+					math::standardizeAngleRadians(orientation.z);
+
+					reference->yetAnotherOrientation = orientation;
+					reference->orientationNonAttached = orientation;
+
+					// update scene graph
+					reference->sceneNode->update(0.0f, true, true);
+				}
+			}
+		}
+
+		reference->sceneNode->setAppCulled(false);
 
 		// Restore pick settings.
 		rendererPicker->clearResults();
 		rendererPicker->root = previousRoot;
+		rendererPicker->returnNormal = previousReturnNormal;
 	}
 
 	inline void PatchDialogProc_OnKeyDown(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		switch (wParam) {
 		case 'P':
 			PickLandscapeTexture(hWnd);
+			break;
+		case 'K':
+			AlignToSurface(hWnd);
 			break;
 		}
 	}

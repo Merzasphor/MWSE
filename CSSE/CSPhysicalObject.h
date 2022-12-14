@@ -6,8 +6,8 @@
 
 namespace se::cs {
 	struct PhysicalObject : Object {
-		NI::Vector3 unknown_0x28;
-		NI::Vector3 unknown_0x34;
+		NI::Vector3 boundingBoxMin;
+		NI::Vector3 boundingBoxMax;
 		int unknown_0x40;
 		const char* objectID; // 0x44
 	};
