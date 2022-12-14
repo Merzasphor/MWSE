@@ -12,7 +12,7 @@
 #include "CSReference.h"
 
 namespace se::cs::dialog::render_window {
-	using namespace se::windows;
+	using namespace windows;
 
 	//
 	// Patch: Use world rotation values unless ALT is held.
@@ -141,10 +141,10 @@ namespace se::cs::dialog::render_window {
 			return false;
 		}
 
-		auto data = se::memory::MemAccess<TranslationData*>::Get(0x6CE968);
+		auto data = memory::MemAccess<TranslationData*>::Get(0x6CE968);
 
-		auto rotationSpeed = se::memory::MemAccess<float>::Get(0x6CE9B0);
-		auto rotationFlags = se::memory::MemAccess<BYTE>::Get(0x6CE9A4);
+		auto rotationSpeed = memory::MemAccess<float>::Get(0x6CE9B0);
+		auto rotationFlags = memory::MemAccess<BYTE>::Get(0x6CE9A4);
 
 		if (!isKeyDown('X') && !isKeyDown('Y')) {
 			rotationAxis = TranslationData::RotationAxis::Z;
@@ -163,8 +163,8 @@ namespace se::cs::dialog::render_window {
 			break;
 		}
 
-		auto snapAngleDegrees = se::memory::MemAccess<int>::Get(0x6CE9AC);
-		auto snapAngle = se::math::degreesToRadians((float)snapAngleDegrees);
+		auto snapAngleDegrees = memory::MemAccess<int>::Get(0x6CE9AC);
+		auto snapAngle = math::degreesToRadians((float)snapAngleDegrees);
 		bool isSnapping = ((rotationFlags & 2) != 0) && (snapAngle != 0.0f);
 
 		NI::Vector3 orientation = cumulativeRot;
@@ -194,7 +194,7 @@ namespace se::cs::dialog::render_window {
 			auto reference = target->reference;
 
 			reinterpret_cast<void(__thiscall*)(Reference*)>(0x4026E4)(reference);
-			reinterpret_cast<void(__thiscall*)(se::cs::BaseObject*, bool)>(0x4019E7)(reference->baseObject, true);
+			reinterpret_cast<void(__thiscall*)(BaseObject*, bool)>(0x4019E7)(reference->baseObject, true);
 
 			// Disallow XY rotations on actors and northmarkers.
 			auto doRotations = true;
@@ -206,7 +206,7 @@ namespace se::cs::dialog::render_window {
 					doRotations = false;
 					break;
 				case ObjectType::Static:
-					if (reference->baseObject == se::memory::MemAccess<se::cs::BaseObject*>::Get(0x6D566C)) {
+					if (reference->baseObject == memory::MemAccess<BaseObject*>::Get(0x6D566C)) {
 						doRotations = false;
 						break;
 					}
@@ -226,9 +226,9 @@ namespace se::cs::dialog::render_window {
 					orientation.z = std::roundf(orientation.z / snapAngle) * snapAngle;
 					newRotation.fromEulerXYZ(orientation.x, orientation.y, orientation.z);
 				}
-				se::math::standardizeAngleRadians(orientation.x);
-				se::math::standardizeAngleRadians(orientation.y);
-				se::math::standardizeAngleRadians(orientation.z);
+				math::standardizeAngleRadians(orientation.x);
+				math::standardizeAngleRadians(orientation.y);
+				math::standardizeAngleRadians(orientation.z);
 
 				reference->yetAnotherOrientation = orientation;
 				reference->orientationNonAttached = orientation;
@@ -269,7 +269,7 @@ namespace se::cs::dialog::render_window {
 		}
 	}
 
-	const auto TES3_Object_IsMarker = reinterpret_cast<bool(__thiscall*)(se::cs::BaseObject*)>(0x549B20);
+	const auto TES3_Object_IsMarker = reinterpret_cast<bool(__thiscall*)(BaseObject*)>(0x549B20);
 	void __fastcall PatchEditorMarkers(Reference* reference, bool cull) {
 		if (reference->sceneNode == nullptr) {
 			return;
