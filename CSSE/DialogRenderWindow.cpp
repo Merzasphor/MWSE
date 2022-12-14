@@ -130,6 +130,30 @@ namespace se::cs::dialog::render_window {
 	};
 	static_assert(sizeof(SceneGraphController) == 0x24, "CS::SceneGraphController failed size validation");
 
+	// TODO: Remove this when NI::Matrix33::transpose() is fixed.
+	NI::Vector3 toEulerXYZ(NI::Matrix33* m) {
+		float x = 0.0;
+		float y = 0.0;
+		float z = 0.0;
+
+		y = asin(-m->m0.z);
+		if (cos(y) != 0) {
+			x = atan2(m->m1.z, m->m2.z);
+			z = atan2(m->m0.y, m->m0.x);
+		}
+		else {
+			x = atan2(m->m2.x, m->m2.y);
+			z = 0;
+		};
+
+		NI::Vector3 out;
+		out.x = x;
+		out.y = y;
+		out.z = z;
+
+		return out;
+	}
+
 	const auto TES3_CS_OriginalRotationLogic = reinterpret_cast<bool(__cdecl*)(void*, TranslationData::Target*, int, TranslationData::RotationAxis)>(0x4652D0);
 	bool __cdecl Patch_ReplaceRotationLogic(void* unknown1, TranslationData::Target* firstTarget, int relativeMouseDelta, TranslationData::RotationAxis rotationAxis) {
 		// Allow holding ALT modifier to do vanilla behavior.
@@ -217,19 +241,23 @@ namespace se::cs::dialog::render_window {
 				auto& oldRotation = *reference->sceneNode->localRotation;
 				auto newRotation = userRotation * oldRotation;
 
-				NI::Vector3 orientation;
-				newRotation.toEulerXYZ(&orientation);
+				NI::Vector3 orientation = toEulerXYZ(&newRotation);
 
-				if (isSnapping) {
+				if (isSnapping && (target == data->firstTarget)) {
 					orientation.x = std::roundf(orientation.x / snapAngle) * snapAngle;
 					orientation.y = std::roundf(orientation.y / snapAngle) * snapAngle;
 					orientation.z = std::roundf(orientation.z / snapAngle) * snapAngle;
+					
+					// Ensure the matrix is also snapped.
 					newRotation.fromEulerXYZ(orientation.x, orientation.y, orientation.z);
+
+					// Update user rotation so subsequent targets use the snapped rotation.
+					userRotation = oldRotation.transpose() * newRotation;
 				}
+
 				math::standardizeAngleRadians(orientation.x);
 				math::standardizeAngleRadians(orientation.y);
 				math::standardizeAngleRadians(orientation.z);
-
 				reference->yetAnotherOrientation = orientation;
 				reference->orientationNonAttached = orientation;
 				reference->sceneNode->setLocalRotationMatrix(&newRotation);
