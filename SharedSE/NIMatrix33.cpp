@@ -231,7 +231,11 @@ namespace NI {
 		NI_Matrix33_transpose(this, &result);
 		return result;
 #else
-		throw not_implemented_exception();
+		Matrix33 result = *this;
+		std::swap(result.m0.y, result.m1.x);
+		std::swap(result.m0.z, result.m2.x);
+		std::swap(result.m1.z, result.m2.y);
+		return result;
 #endif
 	}
 
