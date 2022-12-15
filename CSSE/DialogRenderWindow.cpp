@@ -146,6 +146,7 @@ namespace se::cs::dialog::render_window {
 				return false;
 			}
 		}
+		return true;
 	}
 
 	const auto TES3_CS_OriginalRotationLogic = reinterpret_cast<bool(__cdecl*)(void*, TranslationData::Target*, int, TranslationData::RotationAxis)>(0x4652D0);
