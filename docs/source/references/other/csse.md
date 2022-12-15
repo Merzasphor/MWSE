@@ -58,6 +58,7 @@ If you are using [Construction Set Better UI](https://www.nexusmods.com/morrowin
 * Extended editor marker support. Toggling markers (M) will now also toggle markers supported by the game executable. This allows custom markers to be toggled by tagging them with a MRK string and adding a EditorMarker node, or by defining objects whose name begins with or matches "Tri EditorMarker".
 
 The following changes to the rendering window apply when landscape editing:
+
 * The terrain editing disc is no longer hidden when hiding objects (Shift+C).
 * You can use the P key to sample the texture at the cursor's position. This will select the matching texture under the cursor automatically in the landscape editing menu.
 
