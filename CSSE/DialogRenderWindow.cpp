@@ -364,7 +364,7 @@ namespace se::cs::dialog::render_window {
 					reference->setFlag80(true);
 					sub_0x4026E4(reference);
 
-					// set position
+					// Set position.
 					auto object = (PhysicalObject*)reference->baseObject;
 					auto offset = firstResult->normal * abs(object->boundingBoxMin.z);
 
@@ -372,15 +372,17 @@ namespace se::cs::dialog::render_window {
 					reference->unknown_0x10 = reference->position;
 					reference->sceneNode->localTranslate = reference->position;
 
+					// Set rotation.
 					if (canRotateObject(reference->baseObject)) {
-						// set rotation
-						auto UP = NI::Vector3(0, 0, 1);
-						auto rotation = rotationDifference(UP, firstResult->normal);
-						reference->sceneNode->setLocalRotationMatrix(&rotation);
-
-						// set orientation
-						NI::Vector3 orientation;
+						auto orientation = NI::Vector3(0, 0, 1);
+						
+						NI::Matrix33 rotation;
+						rotation.toRotationDifference(orientation, firstResult->normal);
 						rotation.toEulerXYZ(&orientation);
+
+						// Restore the original Z orientation.
+						orientation.z = reference->yetAnotherOrientation.z;
+						rotation.fromEulerXYZ(orientation.x, orientation.y, orientation.z);
 
 						math::standardizeAngleRadians(orientation.x);
 						math::standardizeAngleRadians(orientation.y);
@@ -388,9 +390,10 @@ namespace se::cs::dialog::render_window {
 
 						reference->yetAnotherOrientation = orientation;
 						reference->orientationNonAttached = orientation;
-					}
 
-					// update scene graph
+						reference->sceneNode->setLocalRotationMatrix(&rotation);
+					}
+					
 					reference->sceneNode->update(0.0f, true, true);
 
 					// Lazy function definitions.
