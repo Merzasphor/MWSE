@@ -357,7 +357,7 @@ namespace se::cs::dialog::render_window {
 					reference->updateBaseObjectAndAttachment7();
 
 					// Set position.
-					auto object = (PhysicalObject*)reference->baseObject;
+					auto object = reference->baseObject;
 					auto offset = firstResult->normal * abs(object->boundingBoxMin.z);
 
 					reference->position = firstResult->intersection + offset;
@@ -365,7 +365,7 @@ namespace se::cs::dialog::render_window {
 					reference->sceneNode->localTranslate = reference->position;
 
 					// Set rotation.
-					if (reference->baseObject->canRotateOnAllAxes()) {
+					if (object->canRotateOnAllAxes()) {
 						auto orientation = NI::Vector3(0, 0, 1);
 						
 						NI::Matrix33 rotation;
@@ -388,12 +388,11 @@ namespace se::cs::dialog::render_window {
 					
 					reference->sceneNode->update(0.0f, true, true);
 
-					// Do some stuff that the old position code does.
-					bool something = false;
+					// Update lighting data.
 					auto dataHandler = DataHandler::get();
 					auto attachedLightData = reference->getLightAttachment();
-					if (reference->baseObject->objectType == ObjectType::Light && attachedLightData) {
-						auto baseObjectLight = static_cast<Light*>(reference->baseObject);
+					if (object->objectType == ObjectType::Light && attachedLightData) {
+						auto baseObjectLight = static_cast<Light*>(object);
 						if (dataHandler->lightingController) {
 							attachedLightData->light->detachAllAffectedNodes();
 							baseObjectLight->updateLightingData(attachedLightData->light, dataHandler->lightingController);
