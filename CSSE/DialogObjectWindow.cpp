@@ -104,8 +104,9 @@ namespace se::cs::dialog::object_window {
 		MoveWindow(objectListView, tabContentRect.left, tabContentRect.top, tabContentRect.right - tabContentRect.left, tabContentRect.bottom - tabContentRect.top, TRUE);
 
 		// Update the search bar placement.
-		SetWindowPos(searchLabel, NULL, tabContentRect.right - 500 - 58, tabContentRect.bottom + 7, 54, 22, 0);
-		SetWindowPos(objectWindowSearchControl, NULL, tabContentRect.right - 500, tabContentRect.bottom + 4, 500, 24, SWP_DRAWFRAME);
+		auto width = std::min<int>(tabContentRect.right - tabContentRect.left, 500);
+		SetWindowPos(searchLabel, NULL, tabContentRect.right - width - 58, tabContentRect.bottom + 7, 54, 22, 0);
+		SetWindowPos(objectWindowSearchControl, NULL, tabContentRect.right - width, tabContentRect.bottom + 4, width, 24, SWP_DRAWFRAME);
 	}
 
 	void CALLBACK PatchDialogProc_AfterCreate(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
