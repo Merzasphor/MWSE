@@ -374,11 +374,6 @@ namespace se::cs::dialog::render_window {
 					reference->setFlag80(true);
 					sub_0x4026E4(reference);
 
-					// set rotation
-					auto UP = NI::Vector3(0, 0, 1);
-					auto rotation = rotationDifference(UP, firstResult->normal);
-					reference->sceneNode->setLocalRotationMatrix(&rotation);
-
 					// set position
 					auto object = (PhysicalObject*)reference->baseObject;
 					auto offset = firstResult->normal * abs(object->boundingBoxMin.z);
@@ -387,16 +382,23 @@ namespace se::cs::dialog::render_window {
 					reference->unknown_0x10 = reference->position;
 					reference->sceneNode->localTranslate = reference->position;
 
-					// set orientation
-					NI::Vector3 orientation;
-					rotation.toEulerXYZ(&orientation);
+					if (canRotateObject(reference->baseObject)) {
+						// set rotation
+						auto UP = NI::Vector3(0, 0, 1);
+						auto rotation = rotationDifference(UP, firstResult->normal);
+						reference->sceneNode->setLocalRotationMatrix(&rotation);
 
-					math::standardizeAngleRadians(orientation.x);
-					math::standardizeAngleRadians(orientation.y);
-					math::standardizeAngleRadians(orientation.z);
+						// set orientation
+						NI::Vector3 orientation;
+						rotation.toEulerXYZ(&orientation);
 
-					reference->yetAnotherOrientation = orientation;
-					reference->orientationNonAttached = orientation;
+						math::standardizeAngleRadians(orientation.x);
+						math::standardizeAngleRadians(orientation.y);
+						math::standardizeAngleRadians(orientation.z);
+
+						reference->yetAnotherOrientation = orientation;
+						reference->orientationNonAttached = orientation;
+					}
 
 					// update scene graph
 					reference->sceneNode->update(0.0f, true, true);
