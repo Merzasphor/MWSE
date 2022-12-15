@@ -130,16 +130,21 @@
     <ClCompile Include="CSDataHandler.cpp" />
     <ClCompile Include="CSLight.cpp" />
     <ClCompile Include="CSPhysicalObject.cpp" />
+    <ClCompile Include="CSSE.cpp" />
+    <ClCompile Include="DialogCellWindow.cpp" />
     <ClCompile Include="DialogDialogueWindow.cpp" />
     <ClCompile Include="DialogObjectWindow.cpp" />
     <ClCompile Include="DialogRenderWindow.cpp" />
-    <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="LogUtil.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="CSReference.cpp" />
+    <ClCompile Include="WindowMain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CSSE.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
