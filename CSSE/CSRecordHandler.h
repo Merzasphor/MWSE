@@ -12,7 +12,7 @@ namespace se::cs {
 		int unknown_0x4;
 		LinkedObjectList<Object>* allObjects; // 0x8
 		int unknown_0xC;
-		int unknown_0x10;
+		ModelLoader* modelLoader; // 0x10
 		int unknown_0x14;
 		int unknown_0x18;
 		int unknown_0x1C;

@@ -10,6 +10,7 @@ namespace se::cs {
 	struct GameSetting;
 	struct LandTexture;
 	struct Light;
+	struct ModelLoader;
 	struct Object;
 	struct PhysicalObject;
 	struct RecordHandler;
