@@ -13,6 +13,9 @@ namespace se::cs::dialog::object_window {
 	using namespace memory;
 	using namespace windows;
 
+	using ghWndMainWindow = memory::ExternalGlobal<HWND, 0x6CE934>;
+	using ghWndTabControl = memory::ExternalGlobal<HWND, 0x6CF08C>;
+	using ghWndObjectList = memory::ExternalGlobal<HWND, 0x6CEFD0>;
 	static HWND objectWindowSearchControl = NULL;
 
 	//
@@ -24,7 +27,7 @@ namespace se::cs::dialog::object_window {
 		auto result = NI_IteratedList_Begin(list);
 
 		if (result) {
-			const auto listView = se::memory::MemAccess<HWND>::Get(0x6CEFD0);
+			const auto listView = ghWndObjectList::get();
 			SendMessageA(listView, WM_SETREDRAW, FALSE, NULL);
 		}
 
@@ -36,7 +39,7 @@ namespace se::cs::dialog::object_window {
 		auto result = NI_IteratedList_Next(list);
 
 		if (result == nullptr) {
-			const auto listView = se::memory::MemAccess<HWND>::Get(0x6CEFD0);
+			const auto listView = ghWndObjectList::get();
 			SendMessageA(listView, WM_SETREDRAW, TRUE, NULL);
 		}
 
@@ -71,7 +74,7 @@ namespace se::cs::dialog::object_window {
 
 	void CALLBACK PatchDialogProc_BeforeSize(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam) {
 		// Update view menu.
-		auto mainWindow = GetMenu(se::memory::MemAccess<HWND>::Get(0x6CE934));
+		auto mainWindow = GetMenu(ghWndMainWindow::get());
 		if (wParam) {
 			if (wParam == SIZE_MINIMIZED) {
 				CheckMenuItem(mainWindow, 40199u, MF_BYCOMMAND);
@@ -87,8 +90,8 @@ namespace se::cs::dialog::object_window {
 		auto searchEdit = GetDlgItem(hDlg, CONTROL_ID_FILTER_EDIT);
 
 		// Update globals.
-		se::memory::MemAccess<HWND>::Set(0x6CF08C, tabControl);
-		se::memory::MemAccess<HWND>::Set(0x6CEFD0, objectListView);
+		ghWndTabControl::set(tabControl);
+		ghWndObjectList::set(objectListView);
 		objectWindowSearchControl = searchEdit;
 
 		const auto mainWidth = LOWORD(lParam);
@@ -172,7 +175,7 @@ namespace se::cs::dialog::object_window {
 			currentSearchText = std::move(newText);
 
 			// Fire a refresh function. But disable drawing throughout so we don't get ugly flashes.
-			const auto listView = se::memory::MemAccess<HWND>::Get(0x6CEFD0);
+			const auto listView = ghWndObjectList::get();
 			SendMessageA(listView, WM_SETREDRAW, FALSE, NULL);
 			SendMessageA(hWnd, 1043, 0, 0);
 			SendMessageA(listView, WM_SETREDRAW, TRUE, NULL);

@@ -60,3 +60,4 @@
 #undef near
 #undef PlaySound
 #undef max
+#undef min

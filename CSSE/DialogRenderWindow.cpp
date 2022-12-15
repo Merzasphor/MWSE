@@ -611,15 +611,17 @@ namespace se::cs::dialog::render_window {
 
 		MENUITEMINFO menuItem = {};
 		menuItem.cbSize = sizeof(MENUITEMINFO);
-		menuItem.fMask = MIIM_STRING | MIIM_ID | MIIM_STATE;
-		menuItem.fType = MFT_STRING;
 
 		menuItem.wID = HIDE_SELECTION;
+		menuItem.fMask = MIIM_STRING | MIIM_ID | MIIM_STATE;
+		menuItem.fType = MFT_STRING;
 		menuItem.fState = (translationData->numberOfTargets > 0) ? MFS_ENABLED : MFS_DISABLED;
 		menuItem.dwTypeData = (LPWSTR)L"&Hide Selection";
 		InsertMenuItem(menu, 0, TRUE, &menuItem);
 
 		menuItem.wID = RESTORE_HIDDEN_REFERENCES;
+		menuItem.fMask = MIIM_STRING | MIIM_ID | MIIM_STATE;
+		menuItem.fType = MFT_STRING;
 		menuItem.fState = MFS_ENABLED;
 		menuItem.dwTypeData = (LPWSTR)L"&Restore Hidden References";
 		InsertMenuItem(menu, 1, TRUE, &menuItem);
