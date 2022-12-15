@@ -478,8 +478,6 @@ namespace se::cs::dialog::render_window {
 		// Add an empty texturing property.
 		auto texturingProp = new NI::TexturingProperty();
 		avObject->attachProperty(texturingProp);
-
-		int x = 4;
 	}
 
 	void __fastcall PatchFixMaterialPropertyColors(NI::LinkedList<NI::Property*>* properties, DWORD _EDX_, NI::MaterialProperty* prop) {
@@ -556,10 +554,108 @@ namespace se::cs::dialog::render_window {
 		rendererPicker->root = previousRoot;
 	}
 
+	void hideSelectedReferences() {
+		auto translationData = TranslationData::get();
+		
+		for (auto target = translationData->firstTarget; target; target = target->next) {
+			auto node = target->reference->sceneNode;
+			if (node) {
+				node->addExtraData(new NI::StringExtraData("xHID"));
+				node->setAppCulled(true);
+				node->update();
+			}
+		}
+
+		const auto thing = reinterpret_cast<void(__thiscall*)(TranslationData*, bool)>(0x403391);
+		thing(translationData, true);
+	}
+
+	void unhideNode(NI::Node* node) {
+		auto hideFlag = node->getStringDataWithValue("xHID");
+		if (hideFlag) {
+			node->removeExtraData(hideFlag);
+			node->setAppCulled(false);
+			node->update();
+		}
+
+		for (auto& child : node->children) {
+			if (child && child->isInstanceOfType(NI::RTTIStaticPtr::NiNode)) {
+				unhideNode(static_cast<NI::Node*>(child.get()));
+			}
+		}
+	}
+
+	void unhideAllReferences() {
+		unhideNode(SceneGraphController::get()->objectRoot);
+	}
+
+	void showContextAwareActionMenu(HWND hWndRenderWindow) {
+		auto menu = CreatePopupMenu();
+		if (menu == NULL) {
+			return;
+		}
+
+		auto translationData = TranslationData::get();
+
+		enum ContextMenuId {
+			RESERVED_ERROR,
+			HIDE_SELECTION,
+			RESTORE_HIDDEN_REFERENCES,
+		};
+
+		/*
+		* Reserved hotkeys:
+		*	H: Hide Selection
+		*	R: Restore Hidden References
+		*/
+
+		MENUITEMINFO menuItem = {};
+		menuItem.cbSize = sizeof(MENUITEMINFO);
+		menuItem.fMask = MIIM_STRING | MIIM_ID | MIIM_STATE;
+		menuItem.fType = MFT_STRING;
+
+		menuItem.wID = HIDE_SELECTION;
+		menuItem.fState = (translationData->numberOfTargets > 0) ? MFS_ENABLED : MFS_DISABLED;
+		menuItem.dwTypeData = (LPWSTR)L"&Hide Selection";
+		InsertMenuItem(menu, 0, TRUE, &menuItem);
+
+		menuItem.wID = RESTORE_HIDDEN_REFERENCES;
+		menuItem.fState = MFS_ENABLED;
+		menuItem.dwTypeData = (LPWSTR)L"&Restore Hidden References";
+		InsertMenuItem(menu, 1, TRUE, &menuItem);
+
+		POINT p;
+		GetCursorPos(&p);
+
+		// Due to where this message is, prevent annoying beep sound when the tracking of the menu consumes shit.
+		MSG msg;
+		PeekMessage(&msg, NULL, WM_CHAR, WM_CHAR, PM_REMOVE);
+
+		auto result = TrackPopupMenuEx(menu, TPM_LEFTALIGN | TPM_TOPALIGN | TPM_RETURNCMD | TPM_LEFTBUTTON | TPM_NOANIMATION | TPM_VERTICAL, p.x, p.y, hWndRenderWindow, NULL);
+		
+		switch (result) {
+		case HIDE_SELECTION:
+			hideSelectedReferences();
+			break;
+		case RESTORE_HIDDEN_REFERENCES:
+			unhideAllReferences();
+			break;
+		default:
+			log::stream << "Unknown context menu ID " << result << " used!" << std::endl;
+		}
+
+		// We also stole paint stuff, so repaint.
+		SendMessage(hWndRenderWindow, WM_PAINT, 0, 0);
+		PatchDialogProc_preventMainHandler = true;
+	}
+
 	inline void PatchDialogProc_OnKeyDown(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		switch (wParam) {
 		case 'P':
 			PickLandscapeTexture(hWnd);
+			break;
+		case 'Q':
+			showContextAwareActionMenu(hWnd);
 			break;
 		}
 	}
