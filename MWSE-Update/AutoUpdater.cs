@@ -39,11 +39,11 @@ namespace MWSE
 		/// <returns>
 		/// True if the process could be found, otherwise false.
 		/// </returns>
-		static bool IsMorrowindRunning()
+		static bool AreGameExecutablesRunning()
 		{
 			foreach (Process process in Process.GetProcesses())
 			{
-				if (process.ProcessName.Contains("Morrowind"))
+				if (process.ProcessName.Contains("Morrowind") || process.ProcessName.Contains("TES Construction Set"))
 				{
 					return true;
 				}
@@ -114,10 +114,10 @@ namespace MWSE
 			}
 
 			// Check to see if Morrowind is running; wait for it to close.
-			if (IsMorrowindRunning())
+			if (AreGameExecutablesRunning())
 			{
-				Console.WriteLine("Waiting for Morrowind to close...");
-				while (IsMorrowindRunning())
+				Console.WriteLine("Waiting for Morrowind and the Construction Set to close...");
+				while (AreGameExecutablesRunning())
 				{
 					Thread.Sleep(1000);
 				}
