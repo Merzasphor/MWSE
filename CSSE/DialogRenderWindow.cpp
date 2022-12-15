@@ -273,6 +273,7 @@ namespace se::cs::dialog::render_window {
 			if (data->numberOfTargets > 1) {
 				auto p = reference->position - data->position;
 				reference->position = (userRotation * p) + data->position;
+				reference->unknown_0x10 = reference->position;
 				reference->sceneNode->localTranslate = reference->position;
 			}
 
