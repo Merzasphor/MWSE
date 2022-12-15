@@ -288,17 +288,18 @@ namespace se::cs::dialog::render_window {
 		for (auto target = firstTarget; target; target = target->next) {
 			auto reference = target->reference;
 
-			auto oldScale = reference->getScale();
+			const auto oldScale = reference->getScale();
 			reference->setScale(oldScale + scaleDelta);
 
-			auto newScale = reference->getScale();
+			const auto newScale = reference->getScale();
 			if (newScale != oldScale) {
 				reference->setFlag80(true);
 
-				auto offset = reference->position - center;
-				auto multiplier = newScale / oldScale;
+				const auto offset = reference->position - center;
+				const auto multiplier = newScale / oldScale;
 
 				reference->position = center + offset * multiplier;
+				reference->unknown_0x10 = reference->position;
 				reference->sceneNode->localTranslate = reference->position;
 				reference->sceneNode->update(0.0f, true, true);
 
