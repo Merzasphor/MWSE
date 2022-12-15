@@ -11,9 +11,13 @@
 
 #include "CSLandTexture.h"
 #include "CSReference.h"
+#include "CSRecordHandler.h"
 
 namespace se::cs::dialog::render_window {
 	using namespace windows;
+
+	static WORD lastRenderWindowPosX = 0;
+	static WORD lastRenderWindowPosY = 0;
 
 	//
 	// Patch: Use world rotation values unless ALT is held.
@@ -283,7 +287,7 @@ namespace se::cs::dialog::render_window {
 	void __cdecl Patch_ReplaceScalingLogic(RenderController* renderController, TranslationData::Target* firstTarget, int scaler) {
 		const auto scaleDelta = scaler * 0.01f;
 
-		auto center = memory::MemAccess<TranslationData*>::Get(0x6CE968)->position;
+		const auto center = memory::MemAccess<TranslationData*>::Get(0x6CE968)->position;
 
 		for (auto target = firstTarget; target; target = target->next) {
 			auto reference = target->reference;
@@ -307,6 +311,134 @@ namespace se::cs::dialog::render_window {
 				Reference_omgThereIsAnAttachment7(reference);
 			}
 		}
+	}
+
+	//
+	// Patch: Allow alt-dragging objects to snap to surfaces.
+	//
+
+	// TODO: Move this to NI::Vector3
+	NI::Matrix33 rotationDifference(NI::Vector3& vec1, NI::Vector3& vec2) {
+		auto result = NI::Matrix33(1, 0, 0, 0, 1, 0, 0, 0, 1);
+
+		auto axis = vec1.crossProduct(&vec2);
+		auto norm = axis.length();
+
+		if (norm >= 1e-5) {
+			axis = axis * (1 / norm);
+			auto angle = asin(norm);
+			if (vec1.dotProduct(&vec2) < 0) {
+				angle = math::M_PI - angle;
+			}
+			result.toRotation(-angle, axis.x, axis.y, axis.z);
+		}
+
+		return result;
+	}
+
+	int __cdecl Patch_ReplaceDragMovementLogic(RenderController* renderController, TranslationData::Target* firstTarget, int dx, int dy, bool lockX, bool lockY, bool lockZ) {
+		// We only care if we are holding the alt key and only have one object selected.
+		auto data = memory::MemAccess<TranslationData*>::Get(0x6CE968);
+		if (data->numberOfTargets != 1 || !isKeyDown(VK_MENU)) {
+			const auto DefaultDragMovementFunction = reinterpret_cast<int(__cdecl*)(RenderController*, TranslationData::Target*, int, int, bool, bool, bool)>(0x401F4B);
+			return DefaultDragMovementFunction(renderController, firstTarget, dx, dy, lockX, lockY, lockZ);
+		}
+
+		auto rendererPicker = reinterpret_cast<NI::Pick*>(0x6CF528);
+		auto rendererController = RenderController::get();
+		auto sceneGraphController = SceneGraphController::get();
+
+		// Cache picker settings we care about.
+		const auto& previousRoot = rendererPicker->root;
+		const auto previousReturnNormal = rendererPicker->returnNormal;
+
+		// Make changes to the pick that we need to.
+		rendererPicker->root = sceneGraphController->sceneRoot;
+		rendererPicker->returnNormal = true;
+
+		auto reference = data->firstTarget->reference;
+		reference->sceneNode->setAppCulled(true);
+
+		NI::Vector3 origin;
+		NI::Vector3 direction;
+		if (rendererController->camera->windowPointToRay(lastRenderWindowPosX, lastRenderWindowPosY, origin, direction)) {
+			direction.normalize();
+
+			if (rendererPicker->pickObjects(&origin, &direction)) {
+				auto firstResult = rendererPicker->results.at(0);
+				if (firstResult) {
+					const auto sub_0x4026E4 = reinterpret_cast<void(__thiscall*)(Reference*)>(0x4026E4);
+					reference->setModified(true);
+					reference->setFlag80(true);
+					sub_0x4026E4(reference);
+
+					// set rotation
+					auto UP = NI::Vector3(0, 0, 1);
+					auto rotation = rotationDifference(UP, firstResult->normal);
+					reference->sceneNode->setLocalRotationMatrix(&rotation);
+
+					// set position
+					auto object = (PhysicalObject*)reference->baseObject;
+					auto offset = firstResult->normal * abs(object->boundingBoxMin.z);
+
+					reference->position = firstResult->intersection + offset;
+					reference->unknown_0x10 = reference->position;
+					reference->sceneNode->localTranslate = reference->position;
+
+					// set orientation
+					NI::Vector3 orientation;
+					rotation.toEulerXYZ(&orientation);
+
+					math::standardizeAngleRadians(orientation.x);
+					math::standardizeAngleRadians(orientation.y);
+					math::standardizeAngleRadians(orientation.z);
+
+					reference->yetAnotherOrientation = orientation;
+					reference->orientationNonAttached = orientation;
+
+					// update scene graph
+					reference->sceneNode->update(0.0f, true, true);
+
+					// Lazy function definitions.
+					struct ReferenceAttachment2Data { BaseObject* object; };
+					const auto Reference_getAttachment2Data = reinterpret_cast<ReferenceAttachment2Data *(__thiscall*)(const Reference*)>(0x4043EA);
+					const auto sub_0x402824 = reinterpret_cast<void(__thiscall*)(BaseObject*)>(0x402824);
+					const auto sub_0x403567 = reinterpret_cast<void(__thiscall*)(BaseObject*, void*, int)>(0x403567);
+					const auto sub_0x403A99 = reinterpret_cast<void(__thiscall*)(DataHandler*, Reference*)>(0x403A99);
+					const auto sub_0x401F5A = reinterpret_cast<void(__thiscall*)(DataHandler*)>(0x401F5A);
+
+					// Do some stuff that the old position code does.
+					bool something = false;
+					auto dataHandler = DataHandler::get();
+					auto attachment2data = Reference_getAttachment2Data(reference);
+					if (reference->baseObject->objectType == ObjectType::Light && attachment2data) {
+						if (dataHandler->attachment2related) {
+							sub_0x402824(attachment2data->object);
+							sub_0x403567(attachment2data->object, dataHandler->attachment2related, 0);
+						}
+						else {
+							something = true;
+						}
+					}
+					else if (!something) {
+						sub_0x403A99(dataHandler, reference);
+					}
+
+					if (something) {
+						sub_0x401F5A(dataHandler);
+					}
+				}
+			}
+		}
+
+		reference->sceneNode->setAppCulled(false);
+
+		// Restore pick settings.
+		rendererPicker->clearResults();
+		rendererPicker->root = previousRoot;
+		rendererPicker->returnNormal = previousReturnNormal;
+
+		return 1;
 	}
 
 	//
@@ -388,8 +520,7 @@ namespace se::cs::dialog::render_window {
 	// Patch: Extend Render Window message handling.
 	//
 
-	static WORD lastRenderWindowPosX = 0;
-	static WORD lastRenderWindowPosY = 0;
+	static bool PatchDialogProc_preventMainHandler = false;
 
 	constexpr auto landscapeEditWindowId = 203;
 
@@ -448,108 +579,26 @@ namespace se::cs::dialog::render_window {
 		rendererPicker->root = previousRoot;
 	}
 
-	// TODO: Move this to NI::Vector3
-	NI::Matrix33 rotationDifference(NI::Vector3& vec1, NI::Vector3& vec2) {
-		auto result = NI::Matrix33(1, 0, 0, 0, 1, 0, 0, 0, 1);
-
-		auto axis = vec1.crossProduct(&vec2);
-		auto norm = axis.length();
-
-		if (norm >= 1e-5) {
-			axis = axis * (1 / norm);
-			auto angle = asin(norm);
-			if (vec1.dotProduct(&vec2) < 0) {
-				angle = math::M_PI - angle;
-			}
-			result.toRotation(-angle, axis.x, axis.y, axis.z);
-		}
-
-		return result;
-	}
-
-	void AlignToSurface(HWND hWnd) {
-		auto data = memory::MemAccess<TranslationData*>::Get(0x6CE968);
-		if (data->numberOfTargets != 1) {
-			return;
-		}
-
-		auto rendererPicker = reinterpret_cast<NI::Pick*>(0x6CF528);
-		auto rendererController = RenderController::get();
-		auto sceneGraphController = SceneGraphController::get();
-
-		// Cache picker settings we care about.
-		const auto& previousRoot = rendererPicker->root;
-		const auto previousReturnNormal = rendererPicker->returnNormal;
-
-		// Make changes to the pick that we need to.
-		rendererPicker->root = sceneGraphController->sceneRoot;
-		rendererPicker->returnNormal = true;
-
-		auto reference = data->firstTarget->reference;
-		reference->sceneNode->setAppCulled(true);
-
-		NI::Vector3 origin;
-		NI::Vector3 direction;
-		if (rendererController->camera->windowPointToRay(lastRenderWindowPosX, lastRenderWindowPosY, origin, direction)) {
-			direction.normalize();
-
-			if (rendererPicker->pickObjects(&origin, &direction)) {
-				auto firstResult = rendererPicker->results.at(0);
-				if (firstResult) {	
-					// set rotation
-					auto UP = NI::Vector3(0, 0, 1);
-					auto rotation = rotationDifference(UP, firstResult->normal);
-					reference->sceneNode->setLocalRotationMatrix(&rotation);
-
-					// set position
-					auto object = (PhysicalObject*)reference->baseObject;
-					auto offset = firstResult->normal * abs(object->boundingBoxMin.z);
-
-					reference->position = firstResult->intersection + offset;
-					reference->sceneNode->localTranslate = reference->position;
-
-					// set orientation
-					NI::Vector3 orientation;
-					rotation.toEulerXYZ(&orientation);
-
-					math::standardizeAngleRadians(orientation.x);
-					math::standardizeAngleRadians(orientation.y);
-					math::standardizeAngleRadians(orientation.z);
-
-					reference->yetAnotherOrientation = orientation;
-					reference->orientationNonAttached = orientation;
-
-					// update scene graph
-					reference->sceneNode->update(0.0f, true, true);
-				}
-			}
-		}
-
-		reference->sceneNode->setAppCulled(false);
-
-		// Restore pick settings.
-		rendererPicker->clearResults();
-		rendererPicker->root = previousRoot;
-		rendererPicker->returnNormal = previousReturnNormal;
-	}
-
 	inline void PatchDialogProc_OnKeyDown(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		switch (wParam) {
 		case 'P':
 			PickLandscapeTexture(hWnd);
 			break;
-		case 'K':
-			AlignToSurface(hWnd);
-			break;
 		}
 	}
 
 	LRESULT CALLBACK PatchDialogProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+		PatchDialogProc_preventMainHandler = false;
+
 		switch (msg) {
 		case WM_MOUSEMOVE:
 			lastRenderWindowPosX = LOWORD(lParam);
 			lastRenderWindowPosY = HIWORD(lParam);
 			break;
+		}
+
+		if (PatchDialogProc_preventMainHandler) {
+			return TRUE;
 		}
 
 		// Call original function.
@@ -577,6 +626,9 @@ namespace se::cs::dialog::render_window {
 
 		// Patch: Improve multi-reference scaling.
 		genCallEnforced(0x45EE3A, 0x404949, reinterpret_cast<DWORD>(Patch_ReplaceScalingLogic));
+
+		// Patch: Improve drag-move logic.
+		genCallEnforced(0x45EE85, 0x401F4B, reinterpret_cast<DWORD>(Patch_ReplaceDragMovementLogic));
 
 		// Patch: Custom marker toggling code.
 		writePatchCodeUnprotected(0x49E932, (BYTE*)PatchEditorMarkers_Setup, PatchEditorMarkers_Setup_Size);
