@@ -43,6 +43,7 @@ namespace NI {
 		void toRotationY(float y);
 		void toRotationZ(float z);
 		void toRotation(float angle, float x, float y, float z);
+		bool toRotationDifference(Vector3 a, Vector3 b);
 
 		//
 		// Other related helper functions.

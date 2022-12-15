@@ -328,25 +328,6 @@ namespace se::cs::dialog::render_window {
 	// Patch: Allow alt-dragging objects to snap to surfaces.
 	//
 
-	// TODO: Move this to NI::Vector3
-	NI::Matrix33 rotationDifference(NI::Vector3& vec1, NI::Vector3& vec2) {
-		auto result = NI::Matrix33(1, 0, 0, 0, 1, 0, 0, 0, 1);
-
-		auto axis = vec1.crossProduct(&vec2);
-		auto norm = axis.length();
-
-		if (norm >= 1e-5) {
-			axis = axis * (1 / norm);
-			auto angle = asin(norm);
-			if (vec1.dotProduct(&vec2) < 0) {
-				angle = math::M_PI - angle;
-			}
-			result.toRotation(-angle, axis.x, axis.y, axis.z);
-		}
-
-		return result;
-	}
-
 	int __cdecl Patch_ReplaceDragMovementLogic(RenderController* renderController, TranslationData::Target* firstTarget, int dx, int dy, bool lockX, bool lockY, bool lockZ) {
 		// We only care if we are holding the alt key and only have one object selected.
 		auto data = memory::MemAccess<TranslationData*>::Get(0x6CE968);

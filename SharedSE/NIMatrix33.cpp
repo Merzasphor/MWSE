@@ -213,6 +213,24 @@ namespace NI {
 #endif
 	}
 
+	bool Matrix33::toRotationDifference(Vector3 a, Vector3 b) {
+		auto axis = a.crossProduct(&b);
+		auto norm = axis.length();
+		if (norm <= 1e-5) {
+			this->toIdentity();
+			return false;
+		}
+		else {
+			axis = axis / norm;
+			auto angle = asin(norm);
+			if (a.dotProduct(&b) < 0) {
+				angle = M_PI - angle;
+			}
+			this->toRotation(-angle, axis.x, axis.y, axis.z);
+			return true;
+		}
+	}
+
 	void Matrix33::fromEulerXYZ(float x, float y, float z) {
 #if defined(SE_NI_MATRIX33_FNADDR_FROMEULERXYZ) && SE_NI_MATRIX33_FNADDR_FROMEULERXYZ > 0
 		const auto NI_Matrix33_fromEulerXYZ = reinterpret_cast<void(__thiscall*)(Matrix33*, float, float, float)>(SE_NI_MATRIX33_FNADDR_FROMEULERXYZ);
