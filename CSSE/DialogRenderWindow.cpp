@@ -287,9 +287,16 @@ namespace se::cs::dialog::render_window {
 	//
 
 	void __cdecl Patch_ReplaceScalingLogic(RenderController* renderController, TranslationData::Target* firstTarget, int scaler) {
+		auto translationData = memory::MemAccess<TranslationData*>::Get(0x6CE968);
+		if (!isKeyDown(VK_MENU) || translationData->numberOfTargets == 1) {
+			const auto VanillaScalingHandler = reinterpret_cast<void(__cdecl*)(RenderController*, TranslationData::Target*, int)>(0x404949);
+			VanillaScalingHandler(renderController, firstTarget, scaler);
+			return;
+		}
+
 		const auto scaleDelta = scaler * 0.01f;
 
-		const auto center = memory::MemAccess<TranslationData*>::Get(0x6CE968)->position;
+		const auto& center = translationData->position;
 
 		for (auto target = firstTarget; target; target = target->next) {
 			auto reference = target->reference;
