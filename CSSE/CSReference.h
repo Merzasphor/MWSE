@@ -5,7 +5,7 @@
 namespace se::cs {
 	struct Reference : Object {
 		struct ReferenceData {
-			BaseObject* baseObject; // 0x0
+			PhysicalObject* baseObject; // 0x0
 			NI::Vector3 orientationNonAttached; // 0x4
 			NI::Vector3 unknown_0x10; // Position-related.
 			NI::Vector3 yetAnotherOrientation; // 0x1C
@@ -15,7 +15,7 @@ namespace se::cs {
 		union {
 			ReferenceData referenceData; // 0x28
 			struct {
-				BaseObject* baseObject; // 0x28
+				PhysicalObject* baseObject; // 0x28
 				NI::Vector3 orientationNonAttached; //0x2C
 				NI::Vector3 unknown_0x10; // 0x38
 				NI::Vector3 yetAnotherOrientation; // 0x44

@@ -135,6 +135,19 @@ namespace se::cs::dialog::render_window {
 	};
 	static_assert(sizeof(SceneGraphController) == 0x24, "CS::SceneGraphController failed size validation");
 
+	bool canRotateObject(BaseObject* object) {
+		switch (object->objectType) {
+		case ObjectType::Creature:
+		case ObjectType::LeveledCreature:
+		case ObjectType::NPC:
+			return false;
+		case ObjectType::Static:
+			if (object == memory::MemAccess<BaseObject*>::Get(0x6D566C)) {
+				return false;
+			}
+		}
+	}
+
 	const auto TES3_CS_OriginalRotationLogic = reinterpret_cast<bool(__cdecl*)(void*, TranslationData::Target*, int, TranslationData::RotationAxis)>(0x4652D0);
 	bool __cdecl Patch_ReplaceRotationLogic(void* unknown1, TranslationData::Target* firstTarget, int relativeMouseDelta, TranslationData::RotationAxis rotationAxis) {
 		// Allow holding ALT modifier to do vanilla behavior.
@@ -203,19 +216,8 @@ namespace se::cs::dialog::render_window {
 
 			// Disallow XY rotations on actors and northmarkers.
 			auto doRotations = true;
-			if (rotationAxis != TranslationData::RotationAxis::Z) {
-				switch (reference->baseObject->objectType) {
-				case ObjectType::Creature:
-				case ObjectType::LeveledCreature:
-				case ObjectType::NPC:
-					doRotations = false;
-					break;
-				case ObjectType::Static:
-					if (reference->baseObject == memory::MemAccess<BaseObject*>::Get(0x6D566C)) {
-						doRotations = false;
-						break;
-					}
-				}
+			if (rotationAxis != TranslationData::RotationAxis::Z && !canRotateObject(reference->baseObject)) {
+				doRotations = false;
 			}
 
 			if (doRotations) {
@@ -400,10 +402,10 @@ namespace se::cs::dialog::render_window {
 					reference->sceneNode->update(0.0f, true, true);
 
 					// Lazy function definitions.
-					struct ReferenceAttachment2Data { BaseObject* object; };
+					struct ReferenceAttachment2Data { void* object; };
 					const auto Reference_getAttachment2Data = reinterpret_cast<ReferenceAttachment2Data *(__thiscall*)(const Reference*)>(0x4043EA);
-					const auto sub_0x402824 = reinterpret_cast<void(__thiscall*)(BaseObject*)>(0x402824);
-					const auto sub_0x403567 = reinterpret_cast<void(__thiscall*)(BaseObject*, void*, int)>(0x403567);
+					const auto sub_0x402824 = reinterpret_cast<void(__cdecl*)(void*)>(0x402824);
+					const auto sub_0x403567 = reinterpret_cast<void(__thiscall*)(PhysicalObject*, void*, void*, int)>(0x403567);
 					const auto sub_0x403A99 = reinterpret_cast<void(__thiscall*)(DataHandler*, Reference*)>(0x403A99);
 					const auto sub_0x401F5A = reinterpret_cast<void(__thiscall*)(DataHandler*)>(0x401F5A);
 
@@ -414,7 +416,7 @@ namespace se::cs::dialog::render_window {
 					if (reference->baseObject->objectType == ObjectType::Light && attachment2data) {
 						if (dataHandler->attachment2related) {
 							sub_0x402824(attachment2data->object);
-							sub_0x403567(attachment2data->object, dataHandler->attachment2related, 0);
+							sub_0x403567(reference->baseObject, attachment2data->object, dataHandler->attachment2related, 0);
 						}
 						else {
 							something = true;
