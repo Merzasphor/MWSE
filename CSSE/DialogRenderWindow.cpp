@@ -5,6 +5,7 @@
 #include "MemoryUtil.h"
 #include "WindowsUtil.h"
 
+#include "NIBound.h"
 #include "NICamera.h"
 #include "NILight.h"
 #include "NINode.h"
@@ -48,8 +49,7 @@ namespace se::cs::dialog::render_window {
 		};
 		Target* firstTarget; // 0x0
 		unsigned int numberOfTargets; // 0x4
-		NI::Vector3 position; // 0x8
-		void* unknown_0x14;
+		NI::Bound bound; // 0x8
 
 		static inline auto get() {
 			return memory::ExternalGlobal<TranslationData*, 0x6CE968>::get();
@@ -266,8 +266,8 @@ namespace se::cs::dialog::render_window {
 
 			// Rotate positions.
 			if (data->numberOfTargets > 1) {
-				auto p = reference->position - data->position;
-				reference->position = (userRotation * p) + data->position;
+				auto p = reference->position - data->bound.center;
+				reference->position = (userRotation * p) + data->bound.center;
 				reference->unknown_0x10 = reference->position;
 				reference->sceneNode->localTranslate = reference->position;
 			}
@@ -292,7 +292,7 @@ namespace se::cs::dialog::render_window {
 
 		const auto scaleDelta = scaler * 0.01f;
 
-		const auto& center = translationData->position;
+		const auto& center = translationData->bound.center;
 
 		for (auto target = firstTarget; target; target = target->next) {
 			auto reference = target->reference;

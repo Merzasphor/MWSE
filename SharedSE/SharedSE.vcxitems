@@ -19,6 +19,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)MemoryUtil.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIAVObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIBinaryStream.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NIBound.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NICamera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIColor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIDefines.h" />
