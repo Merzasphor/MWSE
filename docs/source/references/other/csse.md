@@ -31,6 +31,8 @@ If you are using [Construction Set Better UI](https://www.nexusmods.com/morrowin
 ### Render Window
 
 * Reference rotation is now performed on the world axis, rather than the local axis. To rotate on the local axis as it worked in vanilla, hold the alt key.
+* References can be group-scaled. By holding the alt key when scaling, all selected references will scale together and reposition accordingly.
+* References can be moved onto surfaces. By holding the alt key when drag-moving a reference, it will rotate and snap onto the surface under the cursor.
 * Extended editor marker support. Toggling markers (M) will now also toggle markers supported by the game executable. This allows custom markers to be toggled by tagging them with a MRK string and adding a EditorMarker node, or by defining objects whose name begins with or matches "Tri EditorMarker".
 
 The following changes to the rendering window apply when landscape editing:
