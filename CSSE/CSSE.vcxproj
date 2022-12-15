@@ -108,6 +108,7 @@
     <ClInclude Include="CSGameSetting.h" />
     <ClInclude Include="CSLandTexture.h" />
     <ClInclude Include="CSLight.h" />
+    <ClInclude Include="CSModelLoader.h" />
     <ClInclude Include="CSObject.h" />
     <ClInclude Include="CSPhysicalObject.h" />
     <ClInclude Include="CSRecordHandler.h" />
@@ -129,6 +130,7 @@
     <ClCompile Include="CSBaseObject.cpp" />
     <ClCompile Include="CSDataHandler.cpp" />
     <ClCompile Include="CSLight.cpp" />
+    <ClCompile Include="CSModelLoader.cpp" />
     <ClCompile Include="CSPhysicalObject.cpp" />
     <ClCompile Include="CSSE.cpp" />
     <ClCompile Include="DialogCellWindow.cpp" />
