@@ -75,48 +75,6 @@ namespace se::cs {
 		void* unknown_0x12C;
 		void* unknown_0x130;
 		void* unknown_0x134;
-		void* unknown_0x138;
-		void* unknown_0x13C;
-		void* unknown_0x140;
-		void* unknown_0x144;
-		void* unknown_0x148;
-		void* unknown_0x14C;
-		void* unknown_0x150;
-		void* unknown_0x154;
-		void* unknown_0x158;
-		void* unknown_0x15C;
-		void* unknown_0x160;
-		void* unknown_0x164;
-		void* unknown_0x168;
-		void* unknown_0x16C;
-		void* unknown_0x170;
-		void* unknown_0x174;
-		void* unknown_0x178;
-		void* unknown_0x17C;
-		void* unknown_0x180;
-		void* unknown_0x184;
-		void* unknown_0x188;
-		void* unknown_0x18C;
-		void* unknown_0x190;
-		void* unknown_0x194;
-		void* unknown_0x198;
-		void* unknown_0x19C;
-		void* unknown_0x1A0;
-		void* unknown_0x1A4;
-		void* unknown_0x1A8;
-		void* unknown_0x1AC;
-		void* unknown_0x1B0;
-		void* unknown_0x1B4;
-		void* unknown_0x1B8;
-		void* unknown_0x1BC;
-		void* unknown_0x1C0;
-		void* unknown_0x1C4;
-		void* unknown_0x1C8;
-		void* unknown_0x1CC;
-		void* unknown_0x1D0;
-		void* unknown_0x1D4;
-		void* unknown_0x1D8;
-		void* unknown_0x1DC;
 	};
 
 	struct Object : BaseObject {
@@ -140,5 +98,5 @@ namespace se::cs {
 		}
 	};
 	static_assert(sizeof(Object) == 0x28, "CS::Object failed size validation");
-	static_assert(sizeof(Object_VirtualTable) == 0x1E0, "CS::Object's virtual table failed size validation");
+	static_assert(sizeof(Object_VirtualTable) == 0x138, "CS::Object's virtual table failed size validation");
 }

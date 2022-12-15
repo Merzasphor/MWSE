@@ -102,6 +102,21 @@
     <ClInclude Include="LogUtil.h">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
+    <ClInclude Include="DialogCellWindow.h">
+      <Filter>Header Files\Extenders\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowMain.h">
+      <Filter>Header Files\Extenders</Filter>
+    </ClInclude>
+    <ClInclude Include="CSLight.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSAnimatedObject.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSDataHandler.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -124,6 +139,18 @@
     </ClCompile>
     <ClCompile Include="LogUtil.cpp">
       <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="CSPhysicalObject.cpp">
+      <Filter>Source Files\CS</Filter>
+    </ClCompile>
+    <ClCompile Include="CSReference.cpp">
+      <Filter>Source Files\CS</Filter>
+    </ClCompile>
+    <ClCompile Include="CSLight.cpp">
+      <Filter>Source Files\CS</Filter>
+    </ClCompile>
+    <ClCompile Include="CSDataHandler.cpp">
+      <Filter>Source Files\CS</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

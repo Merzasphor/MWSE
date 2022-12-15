@@ -99,17 +99,21 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CSAnimatedObject.h" />
+    <ClInclude Include="CSDataHandler.h" />
     <ClInclude Include="CSDefines.h" />
     <ClInclude Include="CSDialogue.h" />
     <ClInclude Include="CSDialogueInfo.h" />
     <ClInclude Include="CSGameFile.h" />
     <ClInclude Include="CSGameSetting.h" />
     <ClInclude Include="CSLandTexture.h" />
+    <ClInclude Include="CSLight.h" />
     <ClInclude Include="CSObject.h" />
     <ClInclude Include="CSPhysicalObject.h" />
     <ClInclude Include="CSRecordHandler.h" />
     <ClInclude Include="CSReference.h" />
     <ClInclude Include="CSStatic.h" />
+    <ClInclude Include="DialogCellWindow.h" />
     <ClInclude Include="DialogDialogueWindow.h" />
     <ClInclude Include="DialogObjectWindow.h" />
     <ClInclude Include="DialogRenderWindow.h" />
@@ -119,9 +123,13 @@
     <ClInclude Include="NIConfig.h" />
     <ClInclude Include="NIRTTIDefines.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="WindowMain.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CSBaseObject.cpp" />
+    <ClCompile Include="CSDataHandler.cpp" />
+    <ClCompile Include="CSLight.cpp" />
+    <ClCompile Include="CSPhysicalObject.cpp" />
     <ClCompile Include="DialogDialogueWindow.cpp" />
     <ClCompile Include="DialogObjectWindow.cpp" />
     <ClCompile Include="DialogRenderWindow.cpp" />
@@ -131,6 +139,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="CSReference.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

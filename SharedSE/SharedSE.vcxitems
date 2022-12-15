@@ -25,6 +25,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)NIDynamicEffect.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIExtraData.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIHashMap.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NILight.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NILinkedList.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIMatrix33.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NINode.h" />

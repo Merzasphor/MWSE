@@ -25,15 +25,16 @@ namespace NI {
 
 		void attachAffectedNode(Node* node);
 		void detachAffectedNode(Node* node);
-
+		void detachAllAffectedNodes();
 	};
 	static_assert(sizeof(DynamicEffect) == 0xA8, "NI::DynamicEffect failed size validation");
-
 
 	struct DynamicEffect_vTable : AVObject_vTable {
 		int(__thiscall* getType)(DynamicEffect*); // 0x94
 	};
 	static_assert(sizeof(DynamicEffect_vTable) == 0x98, "NI::DynamicEffect's vtable failed size validation");
+
+	void __cdecl ClearDynamicEffectNodes(DynamicEffect* effect);
 }
 
 #if defined(SE_USE_LUA) && SE_USE_LUA == 1

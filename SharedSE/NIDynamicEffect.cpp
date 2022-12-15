@@ -38,6 +38,19 @@ namespace NI {
 		throw not_implemented_exception();
 #endif
 	}
+
+	void DynamicEffect::detachAllAffectedNodes() {
+		ClearDynamicEffectNodes(this);
+	}
+
+	void __cdecl ClearDynamicEffectNodes(DynamicEffect* effect) {
+#if defined(SE_NI_FNADDR_CLEARDYNAMICEFFECTNODES) && SE_NI_FNADDR_CLEARDYNAMICEFFECTNODES > 0
+		const auto NI_ClearDynamicEffectNodes = reinterpret_cast<void(__cdecl*)(DynamicEffect*)>(SE_NI_FNADDR_CLEARDYNAMICEFFECTNODES);
+		NI_ClearDynamicEffectNodes(effect);
+#else
+		throw not_implemented_exception();
+#endif
+	}
 }
 
 #if defined(SE_USE_LUA) && SE_USE_LUA == 1

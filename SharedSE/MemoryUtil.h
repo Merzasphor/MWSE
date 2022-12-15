@@ -69,14 +69,41 @@ namespace se::memory {
 		DWORD callbackAddress;
 	};
 
+	/// <summary>
+	/// General helper function that serves as a typed wrapper around reinterpret_cast. It supports simple getting and setting.
+	/// </summary>
+	/// <typeparam name="T">The type to get/set.</typeparam>
 	template <typename T>
 	class MemAccess {
 	public:
-		static inline T Get(uintptr_t address) {
+		MemAccess() = delete;
+		~MemAccess() = delete;
+
+		static inline T& Get(uintptr_t address) {
 			return *reinterpret_cast<T*>(address);
 		}
 
 		static inline void Set(uintptr_t address, T value) {
+			*reinterpret_cast<T*>(address) = value;
+		}
+	};
+
+	/// <summary>
+	/// As MemAccess, but with a constant address. Useful to define globals in the base executable that will never change location.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <typeparam name="address"></typeparam>
+	template <typename T, DWORD address>
+	class ExternalGlobal {
+	public:
+		ExternalGlobal() = delete;
+		~ExternalGlobal() = delete;
+
+		static inline T& get() {
+			return *reinterpret_cast<T*>(address);
+		}
+
+		static inline void set(T value) {
 			*reinterpret_cast<T*>(address) = value;
 		}
 	};

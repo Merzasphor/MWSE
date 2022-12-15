@@ -6,12 +6,17 @@
 #include "WindowsUtil.h"
 
 #include "NICamera.h"
+#include "NILight.h"
 #include "NINode.h"
 #include "NIPick.h"
 
+#include "CSDataHandler.h"
 #include "CSLandTexture.h"
+#include "CSLight.h"
 #include "CSReference.h"
 #include "CSRecordHandler.h"
+
+#include "CSStatic.h"
 
 namespace se::cs::dialog::render_window {
 	using namespace windows;
@@ -22,12 +27,12 @@ namespace se::cs::dialog::render_window {
 	//
 	// Patch: Use world rotation values unless ALT is held.
 	//
-	
-	// TODO: Move to real definition file.
-	struct ReferenceTransformationAttachment {
-		NI::Vector3 orientation;
-		NI::Vector3 position;
-	};
+
+	using gObjectMove = memory::ExternalGlobal<float, 0x6CE9B0>;
+	using gSnapAngleInDegrees = memory::ExternalGlobal<int, 0x6CE9AC>;
+	using gRotationFlags = memory::ExternalGlobal<BYTE, 0x6CE9A4>;
+	using gCumulativeRotationValues = memory::ExternalGlobal<NI::Vector3, 0x6CF760>;
+	using gRenderWindowPick = memory::ExternalGlobal<NI::Pick, 0x6CF528>;
 
 	// TODO: Move to real definition file.
 	struct TranslationData {
@@ -45,6 +50,10 @@ namespace se::cs::dialog::render_window {
 		unsigned int numberOfTargets; // 0x4
 		NI::Vector3 position; // 0x8
 		void* unknown_0x14;
+
+		static inline auto get() {
+			return memory::ExternalGlobal<TranslationData*, 0x6CE968>::get();
+		}
 	};
 
 	struct NetImmerseInstance {
@@ -112,8 +121,8 @@ namespace se::cs::dialog::render_window {
 		NI::Node* node; // 0x4
 		NI::Camera* camera; // 0x8
 
-		static auto get() {
-			return *reinterpret_cast<RenderController**>(0x6CF77C);
+		static inline auto get() {
+			return memory::ExternalGlobal<RenderController*, 0x6CF77C>::get();
 		}
 	};
 	static_assert(sizeof(RenderController) == 0xC, "CS::RenderController failed size validation");
@@ -129,25 +138,11 @@ namespace se::cs::dialog::render_window {
 		int unknown_0x1C;
 		int unknown_0x20;
 
-		static auto get() {
-			return *reinterpret_cast<SceneGraphController**>(0x6CEB78);
+		static inline auto get() {
+			return memory::ExternalGlobal<SceneGraphController*, 0x6CEB78>::get();
 		}
 	};
 	static_assert(sizeof(SceneGraphController) == 0x24, "CS::SceneGraphController failed size validation");
-
-	bool canRotateObject(BaseObject* object) {
-		switch (object->objectType) {
-		case ObjectType::Creature:
-		case ObjectType::LeveledCreature:
-		case ObjectType::NPC:
-			return false;
-		case ObjectType::Static:
-			if (object == memory::MemAccess<BaseObject*>::Get(0x6D566C)) {
-				return false;
-			}
-		}
-		return true;
-	}
 
 	const auto TES3_CS_OriginalRotationLogic = reinterpret_cast<bool(__cdecl*)(void*, TranslationData::Target*, int, TranslationData::RotationAxis)>(0x4652D0);
 	bool __cdecl Patch_ReplaceRotationLogic(void* unknown1, TranslationData::Target* firstTarget, int relativeMouseDelta, TranslationData::RotationAxis rotationAxis) {
@@ -160,16 +155,16 @@ namespace se::cs::dialog::render_window {
 			return false;
 		}
 
-		auto data = memory::MemAccess<TranslationData*>::Get(0x6CE968);
+		auto data = TranslationData::get();
 
-		auto rotationSpeed = memory::MemAccess<float>::Get(0x6CE9B0);
-		auto rotationFlags = memory::MemAccess<BYTE>::Get(0x6CE9A4);
+		const auto rotationSpeed = gObjectMove::get();
+		const auto rotationFlags = gRotationFlags::get();
 
 		if (!isKeyDown('X') && !isKeyDown('Y')) {
 			rotationAxis = TranslationData::RotationAxis::Z;
 		}
 
-		auto& cumulativeRot = *reinterpret_cast<NI::Vector3*>(0x6CF760);
+		auto& cumulativeRot = gCumulativeRotationValues::get();
 		switch (rotationAxis) {
 		case TranslationData::RotationAxis::X:
 			cumulativeRot.x += relativeMouseDelta * rotationSpeed * 0.1f;
@@ -182,9 +177,8 @@ namespace se::cs::dialog::render_window {
 			break;
 		}
 
-		auto snapAngleDegrees = memory::MemAccess<int>::Get(0x6CE9AC);
-		auto snapAngle = math::degreesToRadians((float)snapAngleDegrees);
-		bool isSnapping = ((rotationFlags & 2) != 0) && (snapAngle != 0.0f);
+		const auto snapAngle = math::degreesToRadians(gSnapAngleInDegrees::get());
+		const bool isSnapping = ((rotationFlags & 2) != 0) && (snapAngle != 0.0f);
 
 		NI::Vector3 orientation = cumulativeRot;
 		if (isSnapping) {
@@ -212,12 +206,12 @@ namespace se::cs::dialog::render_window {
 		for (auto target = data->firstTarget; target; target = target->next) {
 			auto reference = target->reference;
 
-			reinterpret_cast<void(__thiscall*)(Reference*)>(0x4026E4)(reference);
-			reinterpret_cast<void(__thiscall*)(BaseObject*, bool)>(0x4019E7)(reference->baseObject, true);
+			reference->updateBaseObjectAndAttachment7();
+			reference->baseObject->setFlag80(true);
 
 			// Disallow XY rotations on actors and northmarkers.
 			auto doRotations = true;
-			if (rotationAxis != TranslationData::RotationAxis::Z && !canRotateObject(reference->baseObject)) {
+			if (rotationAxis != TranslationData::RotationAxis::Z && !reference->baseObject->canRotateOnAllAxes()) {
 				doRotations = false;
 			}
 
@@ -289,7 +283,7 @@ namespace se::cs::dialog::render_window {
 	//
 
 	void __cdecl Patch_ReplaceScalingLogic(RenderController* renderController, TranslationData::Target* firstTarget, int scaler) {
-		auto translationData = memory::MemAccess<TranslationData*>::Get(0x6CE968);
+		auto translationData = TranslationData::get();
 		if (!isKeyDown(VK_MENU) || translationData->numberOfTargets == 1) {
 			const auto VanillaScalingHandler = reinterpret_cast<void(__cdecl*)(RenderController*, TranslationData::Target*, int)>(0x404949);
 			VanillaScalingHandler(renderController, firstTarget, scaler);
@@ -318,8 +312,7 @@ namespace se::cs::dialog::render_window {
 				reference->sceneNode->localTranslate = reference->position;
 				reference->sceneNode->update(0.0f, true, true);
 
-				const auto Reference_omgThereIsAnAttachment7 = reinterpret_cast<void(__thiscall*)(Reference*)>(0x4026E4);
-				Reference_omgThereIsAnAttachment7(reference);
+				reference->updateBaseObjectAndAttachment7();
 			}
 		}
 	}
@@ -336,7 +329,7 @@ namespace se::cs::dialog::render_window {
 			return DefaultDragMovementFunction(renderController, firstTarget, dx, dy, lockX, lockY, lockZ);
 		}
 
-		auto rendererPicker = reinterpret_cast<NI::Pick*>(0x6CF528);
+		auto rendererPicker = &gRenderWindowPick::get();
 		auto rendererController = RenderController::get();
 		auto sceneGraphController = SceneGraphController::get();
 
@@ -359,10 +352,9 @@ namespace se::cs::dialog::render_window {
 			if (rendererPicker->pickObjects(&origin, &direction)) {
 				auto firstResult = rendererPicker->results.at(0);
 				if (firstResult) {
-					const auto sub_0x4026E4 = reinterpret_cast<void(__thiscall*)(Reference*)>(0x4026E4);
 					reference->setModified(true);
 					reference->setFlag80(true);
-					sub_0x4026E4(reference);
+					reference->updateBaseObjectAndAttachment7();
 
 					// Set position.
 					auto object = (PhysicalObject*)reference->baseObject;
@@ -373,7 +365,7 @@ namespace se::cs::dialog::render_window {
 					reference->sceneNode->localTranslate = reference->position;
 
 					// Set rotation.
-					if (canRotateObject(reference->baseObject)) {
+					if (reference->baseObject->canRotateOnAllAxes()) {
 						auto orientation = NI::Vector3(0, 0, 1);
 						
 						NI::Matrix33 rotation;
@@ -396,33 +388,22 @@ namespace se::cs::dialog::render_window {
 					
 					reference->sceneNode->update(0.0f, true, true);
 
-					// Lazy function definitions.
-					struct ReferenceAttachment2Data { void* object; };
-					const auto Reference_getAttachment2Data = reinterpret_cast<ReferenceAttachment2Data *(__thiscall*)(const Reference*)>(0x4043EA);
-					const auto sub_0x402824 = reinterpret_cast<void(__cdecl*)(void*)>(0x402824);
-					const auto sub_0x403567 = reinterpret_cast<void(__thiscall*)(PhysicalObject*, void*, void*, int)>(0x403567);
-					const auto sub_0x403A99 = reinterpret_cast<void(__thiscall*)(DataHandler*, Reference*)>(0x403A99);
-					const auto sub_0x401F5A = reinterpret_cast<void(__thiscall*)(DataHandler*)>(0x401F5A);
-
 					// Do some stuff that the old position code does.
 					bool something = false;
 					auto dataHandler = DataHandler::get();
-					auto attachment2data = Reference_getAttachment2Data(reference);
-					if (reference->baseObject->objectType == ObjectType::Light && attachment2data) {
-						if (dataHandler->attachment2related) {
-							sub_0x402824(attachment2data->object);
-							sub_0x403567(reference->baseObject, attachment2data->object, dataHandler->attachment2related, 0);
+					auto attachedLightData = reference->getLightAttachment();
+					if (reference->baseObject->objectType == ObjectType::Light && attachedLightData) {
+						auto baseObjectLight = static_cast<Light*>(reference->baseObject);
+						if (dataHandler->lightingController) {
+							attachedLightData->light->detachAllAffectedNodes();
+							baseObjectLight->updateLightingData(attachedLightData->light, dataHandler->lightingController);
 						}
 						else {
-							something = true;
+							dataHandler->updateAllLights();
 						}
 					}
-					else if (!something) {
-						sub_0x403A99(dataHandler, reference);
-					}
-
-					if (something) {
-						sub_0x401F5A(dataHandler);
+					else {
+						dataHandler->maybeUpdateLightForReference(reference);
 					}
 				}
 			}
