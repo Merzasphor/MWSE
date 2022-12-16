@@ -15,6 +15,7 @@ namespace se::cs {
 	struct PhysicalObject;
 	struct RecordHandler;
 	struct Reference;
+	struct Script;
 	struct Static;
 
 	struct BaseObject_VirtualTable;

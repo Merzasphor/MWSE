@@ -113,6 +113,7 @@
     <ClInclude Include="CSPhysicalObject.h" />
     <ClInclude Include="CSRecordHandler.h" />
     <ClInclude Include="CSReference.h" />
+    <ClInclude Include="CSScript.h" />
     <ClInclude Include="CSStatic.h" />
     <ClInclude Include="DialogCellWindow.h" />
     <ClInclude Include="DialogDialogueWindow.h" />
@@ -133,6 +134,7 @@
     <ClCompile Include="CSLight.cpp" />
     <ClCompile Include="CSModelLoader.cpp" />
     <ClCompile Include="CSPhysicalObject.cpp" />
+    <ClCompile Include="CSScript.cpp" />
     <ClCompile Include="CSSE.cpp" />
     <ClCompile Include="DialogCellWindow.cpp" />
     <ClCompile Include="DialogDialogueWindow.cpp" />

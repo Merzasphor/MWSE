@@ -17,7 +17,7 @@ namespace se::cs {
 		int unknown_0x1C;
 		int unknown_0x20;
 		int unknown_0x24;
-		int unknown_0x28;
+		NI::IteratedList<Script*>* scripts; // 0x28
 		int unknown_0x2C;
 		int unknown_0x30;
 		int unknown_0x34;

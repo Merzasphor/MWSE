@@ -2,10 +2,12 @@
 
 #include "MemoryUtil.h"
 
-#include "CSObject.h"
-#include "CSRecordHandler.h"
+#include "CSDataHandler.h"
 #include "CSDialogue.h"
 #include "CSDialogueInfo.h"
+#include "CSObject.h"
+#include "CSRecordHandler.h"
+#include "CSScript.h"
 
 #include "LogUtil.h"
 #include "StringUtil.h"
@@ -53,6 +55,61 @@ namespace se::cs::dialog::dialogue_window {
 	// Patch: Optimize displaying of INFO info.
 	//
 
+	static std::unordered_set<std::string> allRelevantLocals;
+
+	void populateCollectionsForInfo(const DialogueInfo* info) {
+		// Clear existing data.
+		allRelevantLocals.clear();
+
+		for (auto script : *DataHandler::get()->recordHandler->scripts) {
+			for (auto i = 0; i < script->header.numShorts; ++i) {
+				auto name = script->getShortVarName(i);
+				if (name) {
+					allRelevantLocals.insert(name);
+				}
+			}
+			for (auto i = 0; i < script->header.numLongs; ++i) {
+				auto name = script->getLongVarName(i);
+				if (name) {
+					allRelevantLocals.insert(name);
+				}
+			}
+			for (auto i = 0; i < script->header.numFloats; ++i) {
+				auto name = script->getFloatVarName(i);
+				if (name) {
+					allRelevantLocals.insert(name);
+				}
+			}
+		}
+	}
+
+	int __fastcall PatchOptimizePopulatingLocalVariableNames(HWND hWnd, int nIDDlgItem) {
+		for (const auto& local : allRelevantLocals) {
+			auto index = SendDlgItemMessageA(hWnd, nIDDlgItem, CB_ADDSTRING, 0, (LPARAM)local.c_str());
+			SendDlgItemMessageA(hWnd, nIDDlgItem, CB_SETITEMDATA, index, 108);
+		}
+
+		// TODO: Handle GetTextExtentPoint32A
+
+		return 0;
+	}
+
+	__declspec(naked) void PatchOptimizePopulatingLocalVariableNames_Setup() {
+		__asm {
+			mov ecx, ebp					// Size: 0x2
+			mov edx, ebx					// Size: 0x2
+			nop								// Size: 0x5
+			nop
+			nop
+			nop
+			nop
+			cmp eax, [esp + 0x24 - 0x14]	// Size: 0x4
+			jle $+0xA						// Size: 0x6
+			mov [esp + 0x24 - 0x14], eax	// Size: 0x4
+		}
+	}
+	constexpr auto PatchOptimizePopulatingLocalVariableNames_Setup_Size = 0x17u;
+
 	static DialogueInfo* lastShownDialogueInfo = nullptr;
 
 	void __fastcall PatchOptimizeDialogueInfoDisplaying(DialogueInfo* info, DWORD _edx_, HWND hWnd) {
@@ -92,6 +149,9 @@ namespace se::cs::dialog::dialogue_window {
 			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_FUNCTION6_VARIABLE_COMBO), WM_SETREDRAW, FALSE, NULL);
 			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_FUNCTION6_CONDITION_COMBO), WM_SETREDRAW, FALSE, NULL);
 			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_FUNCTION6_VALUE_EDIT), WM_SETREDRAW, FALSE, NULL);
+
+			// Gather what data we need to populate lists.
+			populateCollectionsForInfo(info);
 		}
 
 		const auto CS_DialogueInfo_displayToEditor = reinterpret_cast<void(__thiscall*)(DialogueInfo*, HWND)>(0x4F1070);
@@ -209,6 +269,11 @@ namespace se::cs::dialog::dialogue_window {
 		}
 		
 		// Patch: Optimize displaying of INFO info.
+		if constexpr (ENABLE_ALL_OPTIMIZATIONS) {
+			genNOPUnprotected(0x4E7D5A, 0x4E7F59 - 0x4E7D5A);
+			writePatchCodeUnprotected(0x4E7D5A, (BYTE*)PatchOptimizePopulatingLocalVariableNames_Setup, PatchOptimizePopulatingLocalVariableNames_Setup_Size);
+			genCallUnprotected(0x4E7D5A + 0x4, reinterpret_cast<DWORD>(PatchOptimizePopulatingLocalVariableNames));
+		}
 		genJumpEnforced(0x4040BB, 0x4F1070, reinterpret_cast<DWORD>(PatchOptimizeDialogueInfoDisplaying));
 
 		// Patch: Extend Render Window message handling.
