@@ -684,6 +684,7 @@ namespace se::cs::dialog::render_window {
 		* Reserved hotkeys:
 		*	H: Hide Selection
 		*	R: Restore Hidden References
+		*	S: Set Snapping Axis
 		*/
 
 		MENUITEMINFO menuItem = {};
@@ -749,7 +750,7 @@ namespace se::cs::dialog::render_window {
 		menuItem.fType = MFT_STRING;
 		menuItem.fState = hasReferencesSelected ? MFS_ENABLED : MFS_DISABLED;
 		menuItem.hSubMenu = subMenuSnappingAxis.hSubMenu;
-		menuItem.dwTypeData = (LPWSTR)L"Set Snapping Axis";
+		menuItem.dwTypeData = (LPWSTR)L"Set &Snapping Axis";
 		InsertMenuItemW(menu, ++index, TRUE, &menuItem);
 
 		menuItem.wID = RESERVED_NO_CALLBACK;
