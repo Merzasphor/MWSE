@@ -38,7 +38,7 @@ If you are using [Construction Set Better UI](https://www.nexusmods.com/morrowin
 
 * General optimizations to UI rendering. Status updates are throttled to only update once every 20ms, which drastically improves load times.
 * The following warnings will no longer or only conditionally create popup windows, but will still be written to Warnings.txt:
-	* "Following string is different for topic" and "Previous string is different for topic" are suppressed to Warnings.txt entirely.
+	* "Following string is different for topic" and "Previous string is different for topic" are suppressed entirely.
 	* The "1 duplicate references were removed" from loading Tribunal and Bloodmoon will no longer make a popup. If this is not the vanilla duplicate reference, or if there is more than one duplicate reference, a popup will still be shown.
 
 ### Object Window
