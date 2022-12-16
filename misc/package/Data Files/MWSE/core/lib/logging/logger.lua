@@ -1,20 +1,28 @@
 local ansicolors = require("logging.colors")
 
+---@alias MWSELoggerLogLevels
+---|  "TRACE"
+---|  "DEBUG"
+---|> "INFO" # The dafault log level
+---|  "WARN"
+---|  "ERROR"
+---|  "NONE"
+
 ---@class MWSELoggerInputData
 ---@field name string Name of mod, also counts as unique id of logger
----@field outputFile string Optional. If set, logs will be sent to a file of this name
----@field logLevel string Set the log level. Options are: TRACE, DEBUG, INFO, WARN and ERROR
+---@field outputFile string? Optional. If set, logs will be sent to a file of this name
+---@field logLevel MWSELoggerLogLevels? Set the log level. Options are: TRACE, DEBUG, INFO, WARN, ERROR and NONE
 
 ---@class MWSELogger
 ---@field name string Name of mod, also counts as unique id of logger
----@field doLog function Check log level to determine if log should be written out
+---@field doLog fun(self: MWSELogger, logLevel: MWSELoggerLogLevels): boolean Check log level to determine if log should be written out
 ---@field info fun(self: MWSELogger, message: string, ...) Log info message
 ---@field debug fun(self: MWSELogger, message: string, ...) Log debug message
 ---@field trace fun(self: MWSELogger, message: string, ...) Log trace message
 ---@field warn fun(self: MWSELogger, message: string, ...) Log warn message
 ---@field error fun(self: MWSELogger, message: string, ...) Log error message
----@field setLogLevel function Set the log level. Options are: TRACE, DEBUG, INFO, WARN and ERROR
----@field setOutputFile function Set the output file. If set, logs will be sent to a file of this name
+---@field setLogLevel fun(self: MWSELogger, newLogLevel: MWSELoggerLogLevels) Set the log level. Options are: TRACE, DEBUG, INFO, WARN, ERROR and NONE
+---@field setOutputFile fun(self: MWSELogger, outputFile: string) Set the output file. If set, logs will be sent to a file of this name
 
 --[[
 	A logger class that can be registered by multiple mods.
@@ -40,7 +48,7 @@ local logLevels = {
 }
 
 --- Check log level to determine if log should be written out
----@param logLevel string Log level to check against
+---@param logLevel MWSELoggerLogLevels Log level to check against
 function Logger:doLog(logLevel)
 	local currentLogLevel = self.logLevel or defaults.logLevel
 	return logLevels[currentLogLevel].level <= logLevels[logLevel].level
@@ -71,6 +79,7 @@ end
 
 --- Get a registered logger by name
 ---@param name string Name of logger to get
+---@return MWSELogger|false logger
 function Logger.getLogger(name)
 	local logger = registeredLoggers[name]
 	if logger then
@@ -81,7 +90,7 @@ function Logger.getLogger(name)
 end
 
 --- Set the log level for a logger
----@param newLogLevel string Log level to set. Available options are: TRACE, DEBUG, INFO, WARN and ERROR
+---@param newLogLevel MWSELoggerLogLevels Log level to set. Available options are: TRACE, DEBUG, INFO, WARN, ERROR and NONE
 function Logger:setLogLevel(newLogLevel)
 	local errMsg = "[%s ERROR] Logger:setLogLevel() - Not a valid log level (valid log levels: TRACE, DEBUG, INFO, WARN, ERROR, NONE)"
 	assert(logLevels[newLogLevel], string.format(errMsg, self.name))
@@ -105,7 +114,7 @@ local function addColor(message, color)
 end
 
 --- Formats and colors the log message, and writes it to the configured log file. This is typically not called directly.
----@param logLevel string
+---@param logLevel MWSELoggerLogLevels
 ---@param color string
 ---@param message string
 ---@vararg any
