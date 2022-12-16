@@ -12,6 +12,7 @@
 #include "DialogDialogueWindow.h"
 #include "DialogObjectWindow.h"
 #include "DialogRenderWindow.h"
+#include "DialogSearchAndReplaceWindow.h"
 
 #include "MemoryUtil.h"
 
@@ -99,6 +100,7 @@ namespace se::cs {
 		dialog::dialogue_window::installPatches();
 		dialog::object_window::installPatches();
 		dialog::render_window::installPatches();
+		dialog::search_and_replace_window::installPatches();
 	}
 
 	void attachToProcess(HMODULE hModule) {

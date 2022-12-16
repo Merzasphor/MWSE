@@ -6,7 +6,6 @@
 #include "LinkedObjectsList.h"
 
 namespace se::cs {
-
 	struct RecordHandler {
 		int activeModCount; // 0x0
 		int unknown_0x4;

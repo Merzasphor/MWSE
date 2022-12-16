@@ -120,6 +120,9 @@
     <ClInclude Include="CSModelLoader.h">
       <Filter>Header Files\CS</Filter>
     </ClInclude>
+    <ClInclude Include="DialogSearchAndReplaceWindow.h">
+      <Filter>Header Files\Extenders\Dialog</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -163,6 +166,9 @@
     </ClCompile>
     <ClCompile Include="CSModelLoader.cpp">
       <Filter>Source Files\CS</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogSearchAndReplaceWindow.cpp">
+      <Filter>Source Files\Extenders\Dialog</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
