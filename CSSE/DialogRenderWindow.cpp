@@ -702,45 +702,45 @@ namespace se::cs::dialog::render_window {
 			menuItem.fMask = MIIM_FTYPE | MIIM_CHECKMARKS | MIIM_STRING | MIIM_ID;
 			menuItem.fType = MFT_STRING | MFT_RADIOCHECK;
 			menuItem.fState = (snappingAxis == SnappingAxis::POSITIVE_X) ? MFS_CHECKED : MFS_UNCHECKED;
-			menuItem.dwTypeData = (LPWSTR)L"+&X";
+			menuItem.dwTypeData = (LPSTR)"+&X";
 			menuItem.hbmpChecked = NULL;
 			menuItem.hbmpUnchecked = NULL;
-			InsertMenuItemW(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
+			InsertMenuItemA(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
 
 			menuItem.wID = SET_SNAPPING_AXIS_NEGATIVE_X;
 			menuItem.fMask = MIIM_FTYPE | MIIM_CHECKMARKS | MIIM_STRING | MIIM_ID;
 			menuItem.fType = MFT_STRING | MFT_RADIOCHECK;
 			menuItem.fState = (snappingAxis == SnappingAxis::NEGATIVE_X) ? MFS_CHECKED : MFS_UNCHECKED;
-			menuItem.dwTypeData = (LPWSTR)L"-X";
-			InsertMenuItemW(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
+			menuItem.dwTypeData = (LPSTR)"-X";
+			InsertMenuItemA(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
 
 			menuItem.wID = SET_SNAPPING_AXIS_POSITIVE_Y;
 			menuItem.fMask = MIIM_FTYPE | MIIM_CHECKMARKS | MIIM_STRING | MIIM_ID;
 			menuItem.fType = MFT_STRING | MFT_RADIOCHECK;
 			menuItem.fState = (snappingAxis == SnappingAxis::POSITIVE_Y) ? MFS_CHECKED : MFS_UNCHECKED;
-			menuItem.dwTypeData = (LPWSTR)L"+&Y";
-			InsertMenuItemW(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
+			menuItem.dwTypeData = (LPSTR)"+&Y";
+			InsertMenuItemA(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
 
 			menuItem.wID = SET_SNAPPING_AXIS_NEGATIVE_Y;
 			menuItem.fMask = MIIM_FTYPE | MIIM_CHECKMARKS | MIIM_STRING | MIIM_ID;
 			menuItem.fType = MFT_STRING | MFT_RADIOCHECK;
 			menuItem.fState = (snappingAxis == SnappingAxis::NEGATIVE_Y) ? MFS_CHECKED : MFS_UNCHECKED;
-			menuItem.dwTypeData = (LPWSTR)L"-Y";
-			InsertMenuItemW(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
+			menuItem.dwTypeData = (LPSTR)"-Y";
+			InsertMenuItemA(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
 
 			menuItem.wID = SET_SNAPPING_AXIS_POSITIVE_Z;
 			menuItem.fMask = MIIM_FTYPE | MIIM_CHECKMARKS | MIIM_STRING | MIIM_ID;
 			menuItem.fType = MFT_STRING | MFT_RADIOCHECK;
 			menuItem.fState = (snappingAxis == SnappingAxis::POSITIVE_Z) ? MFS_CHECKED : MFS_UNCHECKED;
-			menuItem.dwTypeData = (LPWSTR)L"+&Z";
-			InsertMenuItemW(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
+			menuItem.dwTypeData = (LPSTR)"+&Z";
+			InsertMenuItemA(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
 
 			menuItem.wID = SET_SNAPPING_AXIS_NEGATIVE_Z;
 			menuItem.fMask = MIIM_FTYPE | MIIM_CHECKMARKS | MIIM_STRING | MIIM_ID;
 			menuItem.fType = MFT_STRING | MFT_RADIOCHECK;
 			menuItem.fState = (snappingAxis == SnappingAxis::NEGATIVE_Z) ? MFS_CHECKED : MFS_UNCHECKED;
-			menuItem.dwTypeData = (LPWSTR)L"-Z";
-			InsertMenuItemW(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
+			menuItem.dwTypeData = (LPSTR)"-Z";
+			InsertMenuItemA(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
 
 			CheckMenuRadioItem(subMenuSnappingAxis.hSubMenu, 0, 5, (UINT)snappingAxis, MF_BYPOSITION);
 		}
@@ -750,27 +750,27 @@ namespace se::cs::dialog::render_window {
 		menuItem.fType = MFT_STRING;
 		menuItem.fState = hasReferencesSelected ? MFS_ENABLED : MFS_DISABLED;
 		menuItem.hSubMenu = subMenuSnappingAxis.hSubMenu;
-		menuItem.dwTypeData = (LPWSTR)L"Set &Snapping Axis";
-		InsertMenuItemW(menu, ++index, TRUE, &menuItem);
+		menuItem.dwTypeData = (LPSTR)"Set &Snapping Axis";
+		InsertMenuItemA(menu, ++index, TRUE, &menuItem);
 
 		menuItem.wID = RESERVED_NO_CALLBACK;
 		menuItem.fMask = MIIM_FTYPE | MIIM_ID;
 		menuItem.fType = MFT_SEPARATOR;
-		InsertMenuItemW(menu, ++index, TRUE, &menuItem);
+		InsertMenuItemA(menu, ++index, TRUE, &menuItem);
 
 		menuItem.wID = HIDE_SELECTION;
 		menuItem.fMask = MIIM_FTYPE | MIIM_STRING | MIIM_ID | MIIM_STATE;
 		menuItem.fType = MFT_STRING;
 		menuItem.fState = hasReferencesSelected ? MFS_ENABLED : MFS_DISABLED;
-		menuItem.dwTypeData = (LPWSTR)L"&Hide Selection";
-		InsertMenuItemW(menu, ++index, TRUE, &menuItem);
+		menuItem.dwTypeData = (LPSTR)"&Hide Selection";
+		InsertMenuItemA(menu, ++index, TRUE, &menuItem);
 
 		menuItem.wID = RESTORE_HIDDEN_REFERENCES;
 		menuItem.fMask = MIIM_FTYPE | MIIM_STRING | MIIM_ID | MIIM_STATE;
 		menuItem.fType = MFT_STRING;
 		menuItem.fState = MFS_ENABLED;
-		menuItem.dwTypeData = (LPWSTR)L"&Restore Hidden References";
-		InsertMenuItemW(menu, ++index, TRUE, &menuItem);
+		menuItem.dwTypeData = (LPSTR)"&Restore Hidden References";
+		InsertMenuItemA(menu, ++index, TRUE, &menuItem);
 
 		POINT p;
 		GetCursorPos(&p);
