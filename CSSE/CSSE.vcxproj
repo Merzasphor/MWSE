@@ -118,6 +118,7 @@
     <ClInclude Include="DialogDialogueWindow.h" />
     <ClInclude Include="DialogObjectWindow.h" />
     <ClInclude Include="DialogRenderWindow.h" />
+    <ClInclude Include="DialogSearchAndReplaceWindow.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="CSBaseObject.h" />
     <ClInclude Include="LogUtil.h" />
@@ -137,6 +138,7 @@
     <ClCompile Include="DialogDialogueWindow.cpp" />
     <ClCompile Include="DialogObjectWindow.cpp" />
     <ClCompile Include="DialogRenderWindow.cpp" />
+    <ClCompile Include="DialogSearchAndReplaceWindow.cpp" />
     <ClCompile Include="LogUtil.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
