@@ -321,6 +321,17 @@ namespace se::cs::dialog::render_window {
 	// Patch: Allow alt-dragging objects to snap to surfaces.
 	//
 
+	enum class SnappingAxis {
+		POSITIVE_X,
+		NEGATIVE_X,
+		POSITIVE_Y,
+		NEGATIVE_Y,
+		POSITIVE_Z,
+		NEGATIVE_Z,
+	};
+
+	SnappingAxis snappingAxis = SnappingAxis::POSITIVE_Z;
+
 	int __cdecl Patch_ReplaceDragMovementLogic(RenderController* renderController, TranslationData::Target* firstTarget, int dx, int dy, bool lockX, bool lockY, bool lockZ) {
 		// We only care if we are holding the alt key and only have one object selected.
 		auto data = memory::MemAccess<TranslationData*>::Get(0x6CE968);
@@ -328,6 +339,8 @@ namespace se::cs::dialog::render_window {
 			const auto DefaultDragMovementFunction = reinterpret_cast<int(__cdecl*)(RenderController*, TranslationData::Target*, int, int, bool, bool, bool)>(0x401F4B);
 			return DefaultDragMovementFunction(renderController, firstTarget, dx, dy, lockX, lockY, lockZ);
 		}
+
+		using namespace math;
 
 		auto rendererPicker = &gRenderWindowPick::get();
 		auto rendererController = RenderController::get();
@@ -358,7 +371,27 @@ namespace se::cs::dialog::render_window {
 
 					// Set position.
 					auto object = reference->baseObject;
-					auto offset = firstResult->normal * abs(object->boundingBoxMin.z);
+					NI::Vector3 offset;
+					switch (snappingAxis) {
+					case SnappingAxis::POSITIVE_X:
+						offset = firstResult->normal * abs(object->boundingBoxMin.x);;
+						break;
+					case SnappingAxis::NEGATIVE_X:
+						offset = firstResult->normal * abs(object->boundingBoxMax.x);;
+						break;
+					case SnappingAxis::POSITIVE_Y:
+						offset = firstResult->normal * abs(object->boundingBoxMin.y);;
+						break;
+					case SnappingAxis::NEGATIVE_Y:
+						offset = firstResult->normal * abs(object->boundingBoxMax.y);;
+						break;
+					case SnappingAxis::POSITIVE_Z:
+						offset = firstResult->normal * abs(object->boundingBoxMin.z);;
+						break;
+					case SnappingAxis::NEGATIVE_Z:
+						offset = firstResult->normal * abs(object->boundingBoxMax.z);;
+						break;
+					}
 
 					reference->position = firstResult->intersection + offset;
 					reference->unknown_0x10 = reference->position;
@@ -366,15 +399,51 @@ namespace se::cs::dialog::render_window {
 
 					// Set rotation.
 					if (object->canRotateOnAllAxes()) {
-						auto orientation = NI::Vector3(0, 0, 1);
+						NI::Vector3 orientation;
+						switch (snappingAxis) {
+						case SnappingAxis::POSITIVE_X:
+						case SnappingAxis::NEGATIVE_X:
+							orientation.x = 1.0f;
+							break;
+						case SnappingAxis::POSITIVE_Y:
+						case SnappingAxis::NEGATIVE_Y:
+							orientation.y = 1.0f;
+							break;
+						case SnappingAxis::POSITIVE_Z:
+						case SnappingAxis::NEGATIVE_Z:
+							orientation.z = 1.0f;
+							break;
+						}
 						
 						NI::Matrix33 rotation;
 						rotation.toRotationDifference(orientation, firstResult->normal);
-						rotation.toEulerXYZ(&orientation);
 
-						// Restore the original Z orientation.
-						orientation.z = reference->yetAnotherOrientation.z;
-						rotation.fromEulerXYZ(orientation.x, orientation.y, orientation.z);
+						// Flip axis if it's negative snapping.
+						switch (snappingAxis) {
+						case SnappingAxis::NEGATIVE_X:
+						case SnappingAxis::NEGATIVE_Y:
+						case SnappingAxis::NEGATIVE_Z:
+							rotation = rotation.invert();
+							break;
+						}
+
+						// Restore the original base orientation.
+						switch (snappingAxis) {
+						case SnappingAxis::POSITIVE_X:
+						case SnappingAxis::NEGATIVE_X:
+							orientation.x = reference->yetAnotherOrientation.x;
+							break;
+						case SnappingAxis::POSITIVE_Y:
+						case SnappingAxis::NEGATIVE_Y:
+							orientation.y = reference->yetAnotherOrientation.y;
+							break;
+						case SnappingAxis::POSITIVE_Z:
+						case SnappingAxis::NEGATIVE_Z:
+							orientation.z = reference->yetAnotherOrientation.z;
+							break;
+						}
+
+						rotation.toEulerXYZ(&orientation);
 
 						math::standardizeAngleRadians(orientation.x);
 						math::standardizeAngleRadians(orientation.y);
@@ -596,11 +665,19 @@ namespace se::cs::dialog::render_window {
 		}
 
 		auto translationData = TranslationData::get();
+		const bool hasReferencesSelected = translationData->numberOfTargets > 0;
 
 		enum ContextMenuId {
 			RESERVED_ERROR,
+			RESERVED_NO_CALLBACK,
 			HIDE_SELECTION,
 			RESTORE_HIDDEN_REFERENCES,
+			SET_SNAPPING_AXIS_POSITIVE_X,
+			SET_SNAPPING_AXIS_NEGATIVE_X,
+			SET_SNAPPING_AXIS_POSITIVE_Y,
+			SET_SNAPPING_AXIS_NEGATIVE_Y,
+			SET_SNAPPING_AXIS_POSITIVE_Z,
+			SET_SNAPPING_AXIS_NEGATIVE_Z,
 		};
 
 		/*
@@ -611,20 +688,88 @@ namespace se::cs::dialog::render_window {
 
 		MENUITEMINFO menuItem = {};
 		menuItem.cbSize = sizeof(MENUITEMINFO);
+		unsigned int index = 0;
+
+		MENUITEMINFO subMenuSnappingAxis = {};
+		subMenuSnappingAxis.cbSize = sizeof(MENUITEMINFO);
+		subMenuSnappingAxis.hSubMenu = CreateMenu();
+
+		{
+			unsigned int subIndex = 0;
+
+			menuItem.wID = SET_SNAPPING_AXIS_POSITIVE_X;
+			menuItem.fMask = MIIM_FTYPE | MIIM_CHECKMARKS | MIIM_STRING | MIIM_ID;
+			menuItem.fType = MFT_STRING | MFT_RADIOCHECK;
+			menuItem.fState = (snappingAxis == SnappingAxis::POSITIVE_X) ? MFS_CHECKED : MFS_UNCHECKED;
+			menuItem.dwTypeData = (LPWSTR)L"+&X";
+			menuItem.hbmpChecked = NULL;
+			menuItem.hbmpUnchecked = NULL;
+			InsertMenuItemW(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
+
+			menuItem.wID = SET_SNAPPING_AXIS_NEGATIVE_X;
+			menuItem.fMask = MIIM_FTYPE | MIIM_CHECKMARKS | MIIM_STRING | MIIM_ID;
+			menuItem.fType = MFT_STRING | MFT_RADIOCHECK;
+			menuItem.fState = (snappingAxis == SnappingAxis::NEGATIVE_X) ? MFS_CHECKED : MFS_UNCHECKED;
+			menuItem.dwTypeData = (LPWSTR)L"-X";
+			InsertMenuItemW(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
+
+			menuItem.wID = SET_SNAPPING_AXIS_POSITIVE_Y;
+			menuItem.fMask = MIIM_FTYPE | MIIM_CHECKMARKS | MIIM_STRING | MIIM_ID;
+			menuItem.fType = MFT_STRING | MFT_RADIOCHECK;
+			menuItem.fState = (snappingAxis == SnappingAxis::POSITIVE_Y) ? MFS_CHECKED : MFS_UNCHECKED;
+			menuItem.dwTypeData = (LPWSTR)L"+&Y";
+			InsertMenuItemW(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
+
+			menuItem.wID = SET_SNAPPING_AXIS_NEGATIVE_Y;
+			menuItem.fMask = MIIM_FTYPE | MIIM_CHECKMARKS | MIIM_STRING | MIIM_ID;
+			menuItem.fType = MFT_STRING | MFT_RADIOCHECK;
+			menuItem.fState = (snappingAxis == SnappingAxis::NEGATIVE_Y) ? MFS_CHECKED : MFS_UNCHECKED;
+			menuItem.dwTypeData = (LPWSTR)L"-Y";
+			InsertMenuItemW(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
+
+			menuItem.wID = SET_SNAPPING_AXIS_POSITIVE_Z;
+			menuItem.fMask = MIIM_FTYPE | MIIM_CHECKMARKS | MIIM_STRING | MIIM_ID;
+			menuItem.fType = MFT_STRING | MFT_RADIOCHECK;
+			menuItem.fState = (snappingAxis == SnappingAxis::POSITIVE_Z) ? MFS_CHECKED : MFS_UNCHECKED;
+			menuItem.dwTypeData = (LPWSTR)L"+&Z";
+			InsertMenuItemW(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
+
+			menuItem.wID = SET_SNAPPING_AXIS_NEGATIVE_Z;
+			menuItem.fMask = MIIM_FTYPE | MIIM_CHECKMARKS | MIIM_STRING | MIIM_ID;
+			menuItem.fType = MFT_STRING | MFT_RADIOCHECK;
+			menuItem.fState = (snappingAxis == SnappingAxis::NEGATIVE_Z) ? MFS_CHECKED : MFS_UNCHECKED;
+			menuItem.dwTypeData = (LPWSTR)L"-Z";
+			InsertMenuItemW(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
+
+			CheckMenuRadioItem(subMenuSnappingAxis.hSubMenu, 0, 5, (UINT)snappingAxis, MF_BYPOSITION);
+		}
+
+		menuItem.wID = RESERVED_NO_CALLBACK;
+		menuItem.fMask = MIIM_SUBMENU | MIIM_TYPE;
+		menuItem.fType = MFT_STRING;
+		menuItem.fState = hasReferencesSelected ? MFS_ENABLED : MFS_DISABLED;
+		menuItem.hSubMenu = subMenuSnappingAxis.hSubMenu;
+		menuItem.dwTypeData = (LPWSTR)L"Set Snapping Axis";
+		InsertMenuItemW(menu, ++index, TRUE, &menuItem);
+
+		menuItem.wID = RESERVED_NO_CALLBACK;
+		menuItem.fMask = MIIM_FTYPE | MIIM_ID;
+		menuItem.fType = MFT_SEPARATOR;
+		InsertMenuItemW(menu, ++index, TRUE, &menuItem);
 
 		menuItem.wID = HIDE_SELECTION;
-		menuItem.fMask = MIIM_STRING | MIIM_ID | MIIM_STATE;
+		menuItem.fMask = MIIM_FTYPE | MIIM_STRING | MIIM_ID | MIIM_STATE;
 		menuItem.fType = MFT_STRING;
-		menuItem.fState = (translationData->numberOfTargets > 0) ? MFS_ENABLED : MFS_DISABLED;
+		menuItem.fState = hasReferencesSelected ? MFS_ENABLED : MFS_DISABLED;
 		menuItem.dwTypeData = (LPWSTR)L"&Hide Selection";
-		InsertMenuItem(menu, 0, TRUE, &menuItem);
+		InsertMenuItemW(menu, ++index, TRUE, &menuItem);
 
 		menuItem.wID = RESTORE_HIDDEN_REFERENCES;
-		menuItem.fMask = MIIM_STRING | MIIM_ID | MIIM_STATE;
+		menuItem.fMask = MIIM_FTYPE | MIIM_STRING | MIIM_ID | MIIM_STATE;
 		menuItem.fType = MFT_STRING;
 		menuItem.fState = MFS_ENABLED;
 		menuItem.dwTypeData = (LPWSTR)L"&Restore Hidden References";
-		InsertMenuItem(menu, 1, TRUE, &menuItem);
+		InsertMenuItemW(menu, ++index, TRUE, &menuItem);
 
 		POINT p;
 		GetCursorPos(&p);
@@ -636,15 +781,40 @@ namespace se::cs::dialog::render_window {
 		auto result = TrackPopupMenuEx(menu, TPM_LEFTALIGN | TPM_TOPALIGN | TPM_RETURNCMD | TPM_LEFTBUTTON | TPM_NOANIMATION | TPM_VERTICAL, p.x, p.y, hWndRenderWindow, NULL);
 		
 		switch (result) {
+		case RESERVED_ERROR:
+			log::stream << "Unknown error " << GetLastError() << " encountered when displaying render window context menu!" << std::endl;
+			break;
 		case HIDE_SELECTION:
 			hideSelectedReferences();
 			break;
 		case RESTORE_HIDDEN_REFERENCES:
 			unhideAllReferences();
 			break;
+		case SET_SNAPPING_AXIS_POSITIVE_X:
+			snappingAxis = SnappingAxis::POSITIVE_X;
+			break;
+		case SET_SNAPPING_AXIS_NEGATIVE_X:
+			snappingAxis = SnappingAxis::NEGATIVE_X;
+			break;
+		case SET_SNAPPING_AXIS_POSITIVE_Y:
+			snappingAxis = SnappingAxis::POSITIVE_Y;
+			break;
+		case SET_SNAPPING_AXIS_NEGATIVE_Y:
+			snappingAxis = SnappingAxis::NEGATIVE_Y;
+			break;
+		case SET_SNAPPING_AXIS_POSITIVE_Z:
+			snappingAxis = SnappingAxis::POSITIVE_Z;
+			break;
+		case SET_SNAPPING_AXIS_NEGATIVE_Z:
+			snappingAxis = SnappingAxis::NEGATIVE_Z;
+			break;
 		default:
-			log::stream << "Unknown context menu ID " << result << " used!" << std::endl;
+			log::stream << "Unknown render window context menu ID " << result << " used!" << std::endl;
 		}
+
+		// Cleanup our menus.
+		DestroyMenu(menu);
+		DestroyMenu(subMenuSnappingAxis.hSubMenu);
 
 		// We also stole paint stuff, so repaint.
 		SendMessage(hWndRenderWindow, WM_PAINT, 0, 0);
