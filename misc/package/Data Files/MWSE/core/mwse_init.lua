@@ -1,3 +1,5 @@
+---@diagnostic disable
+
 -- First, look for objects in the core folder. DLL files may also exist in the root folder.
 package.path = ".\\Data Files\\MWSE\\core\\?.lua;.\\Data Files\\MWSE\\core\\?\\init.lua;"
 package.cpath = "?.dll;.\\Data Files\\MWSE\\core\\?.dll;"
@@ -41,7 +43,7 @@ function require(name)
 
 	local msg = {}
 	local loader, param
-	for _, searcher in ipairs(package.searchers) do ---@diagnostic disable-line
+	for _, searcher in ipairs(package.searchers) do
 		loader, param = searcher(name)
 		if type(loader) == "function" then break end
 		if type(loader) == "string" then
@@ -86,7 +88,7 @@ function include(name)
 
 	local msg = {}
 	local loader, param
-	for _, searcher in ipairs(package.searchers) do ---@diagnostic disable-line
+	for _, searcher in ipairs(package.searchers) do
 		loader, param = searcher(name)
 		if type(loader) == "function" then break end
 		if type(loader) == "string" then
@@ -192,7 +194,6 @@ local function convertUTF8Table(t, language)
 	for k, v in pairs(t) do
 		local vType = type(v)
 		if (vType == "string") then
-			--- @diagnostic disable-next-line:undefined-field
 			t[k] = mwse.iconv(language, v)
 		elseif (vType == "table") then
 			convertUTF8Table(v, language)
@@ -567,7 +568,6 @@ function string.multifind(s, patterns, index, plain)
 	for _, pattern in ipairs(patterns) do
 		local r = { string.find(s, pattern, index, plain) }
 		if (#r > 0) then
-			---@diagnostic disable-next-line:deprecated
 			return pattern, unpack(r)
 		end
 	end
@@ -830,19 +830,16 @@ end
 -- Helper function: Sets a config value while obfuscating the userdata binding.
 function mwse.setConfig(key, value)
 	return pcall(function()
-		--- @diagnostic disable-next-line:undefined-global
 		mwseConfig[key] = value
 	end)
 end
 
 -- Helper function: Gets a config value while obfuscating the userdata binding.
 function mwse.getConfig(key)
-	--- @diagnostic disable-next-line:undefined-global
 	return mwseConfig[key]
 end
 
 -- Load user config values.
---- @diagnostic disable-next-line:undefined-global
 local userConfig = mwse.loadConfig("MWSE", mwseConfig.getDefaults())
 for k, v in pairs(userConfig) do
 	if (not mwse.setConfig(k, v)) then

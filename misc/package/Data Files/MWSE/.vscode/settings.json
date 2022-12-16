@@ -22,10 +22,15 @@
 
 	// Ignore problematic files.
 	"Lua.workspace.ignoreDir": [
-		"./core/lib/*",
+		"./core/lib/i18n/*",
+		"./core/lib/ssl/*",
+		"./core/lib/dkjson.lua",
+		"./core/lib/event.lua",
+		"./core/lib/re.lua",
+		"./core/lib/ssl.lua",
+		"./core/lib/vscode-debuggee.lua",
 		"./core/mcm/*",
-		"./core/mwse/*",
-		"./core/mwse_init.lua"
+		"./core/mwse/*"
 	],
 
 	// Ignore any potential 3rd party checks. We provide our definitions in core/meta

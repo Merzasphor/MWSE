@@ -197,6 +197,7 @@ end
 
 -- Checks to see if a lua mod is active.
 function tes3.isLuaModActive(key)
+	---@diagnostic disable-next-line: undefined-field
 	return mwse.activeLuaMods[key:gsub("[/\\]", "."):lower()] == true
 end
 
