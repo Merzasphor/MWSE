@@ -48,17 +48,18 @@ If you are using [Construction Set Better UI](https://www.nexusmods.com/morrowin
 
 ### Dialogue Window
 
-* Optimized UI initialization. With TR, average dialogue load time decreased by about 60%. Displaying INFO details is a minimum twice as fast (which is still really slow for any INFO that has certain conditions).
+* Optimized UI. Changing between INFOs should be nearly instantaneous. Initial dialogue load time reduced by 60%.
 
 ### Render Window
 
 * Reference rotation is now performed on the world axis, rather than the local axis. To rotate on the local axis as it worked in vanilla, hold the alt key.
 * References can be group-scaled. By holding the alt key when scaling, all selected references will scale together and reposition accordingly.
-* References can be moved onto surfaces. By holding the alt key when drag-moving a reference, it will rotate and snap onto the surface under the cursor.
+* References can be moved onto surfaces. By holding the alt key when drag-moving a reference, it will rotate and snap onto the surface under the cursor. The context menu (Q) can be used to set the axis to snap to.
 * Extended editor marker support. Toggling markers (M) will now also toggle markers supported by the game executable. This allows custom markers to be toggled by tagging them with a MRK string and adding a EditorMarker node, or by defining objects whose name begins with or matches "Tri EditorMarker".
 * A new context menu is available, using the Q key. From it you can access some new features:
 	* Hide selected references, culling them from the scene so you can work behind them.
 	* Restore hidden references, restoring to view any references hidden with the hide selection option.
+	* Set the snap axis when alt-drag-moving references.
 
 The following changes to the rendering window apply when landscape editing:
 
