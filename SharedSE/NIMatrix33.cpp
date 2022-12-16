@@ -213,11 +213,11 @@ namespace NI {
 #endif
 	}
 
-	bool Matrix33::toRotationDifference(Vector3 a, Vector3 b) {
+	bool Matrix33::toRotationDifference(const Vector3& a, const Vector3& b) {
 		auto axis = a.crossProduct(&b);
 		auto norm = axis.length();
 		if (norm <= 1e-5) {
-			this->toIdentity();
+			toIdentity();
 			return false;
 		}
 		else {
@@ -226,7 +226,7 @@ namespace NI {
 			if (a.dotProduct(&b) < 0) {
 				angle = M_PI - angle;
 			}
-			this->toRotation(-angle, axis.x, axis.y, axis.z);
+			toRotation(-angle, axis.x, axis.y, axis.z);
 			return true;
 		}
 	}
