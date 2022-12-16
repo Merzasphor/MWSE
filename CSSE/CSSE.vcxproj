@@ -100,6 +100,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CSAnimatedObject.h" />
+    <ClInclude Include="CSCell.h" />
     <ClInclude Include="CSDataHandler.h" />
     <ClInclude Include="CSDefines.h" />
     <ClInclude Include="CSDialogue.h" />
@@ -134,6 +135,7 @@
     <ClCompile Include="CSLight.cpp" />
     <ClCompile Include="CSModelLoader.cpp" />
     <ClCompile Include="CSPhysicalObject.cpp" />
+    <ClCompile Include="CSRecordHandler.cpp" />
     <ClCompile Include="CSScript.cpp" />
     <ClCompile Include="CSSE.cpp" />
     <ClCompile Include="DialogCellWindow.cpp" />

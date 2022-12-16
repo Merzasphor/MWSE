@@ -2,6 +2,7 @@
 
 #include "MemoryUtil.h"
 
+#include "CSCell.h"
 #include "CSDataHandler.h"
 #include "CSDialogue.h"
 #include "CSDialogueInfo.h"
@@ -55,41 +56,64 @@ namespace se::cs::dialog::dialogue_window {
 	// Patch: Optimize displaying of INFO info.
 	//
 
-	static std::unordered_set<std::string> allRelevantLocals;
+	static std::unordered_map<std::string, int> allRelevantLocals;
+	static std::unordered_map<std::string, Cell*> allCells;
 
-	void populateCollectionsForInfo(const DialogueInfo* info) {
+	void populateCollections() {
 		// Clear existing data.
 		allRelevantLocals.clear();
+		allCells.clear();
 
-		for (auto script : *DataHandler::get()->recordHandler->scripts) {
+		auto recordHandler = DataHandler::get()->recordHandler;
+
+		// Gather all local variable names.
+		for (auto script : *recordHandler->scripts) {
 			for (auto i = 0; i < script->header.numShorts; ++i) {
-				auto name = script->getShortVarName(i);
-				if (name) {
-					allRelevantLocals.insert(name);
+				auto rawId = script->getShortVarName(i);
+				if (rawId) {
+					std::string name = rawId;
+					if (!name.empty() && allRelevantLocals.find(name) == allRelevantLocals.end()) {
+						allRelevantLocals.insert({ std::move(name), 115 });
+					}
 				}
 			}
 			for (auto i = 0; i < script->header.numLongs; ++i) {
-				auto name = script->getLongVarName(i);
-				if (name) {
-					allRelevantLocals.insert(name);
+				auto rawId = script->getLongVarName(i);
+				if (rawId) {
+					std::string name = rawId;
+					if (!name.empty() && allRelevantLocals.find(name) == allRelevantLocals.end()) {
+						allRelevantLocals.insert({ std::move(name), 108 });
+					}
 				}
 			}
 			for (auto i = 0; i < script->header.numFloats; ++i) {
-				auto name = script->getFloatVarName(i);
-				if (name) {
-					allRelevantLocals.insert(name);
+				auto rawId = script->getFloatVarName(i);
+				if (rawId) {
+					std::string name = rawId;
+					if (!name.empty() && allRelevantLocals.find(name) == allRelevantLocals.end()) {
+						allRelevantLocals.insert({ std::move(name), 102 });
+					}
 				}
+			}
+		}
+
+		// Gather all cell IDs.
+		for (auto i = 0; i < recordHandler->getCellCount(); ++i) {
+			auto cell = recordHandler->getCellByIndex(i);
+			if (cell) {
+				allCells.insert({ cell->getObjectID(), cell });
 			}
 		}
 	}
 
 	int __fastcall PatchOptimizePopulatingLocalVariableNames(HWND hWnd, int nIDDlgItem) {
-		for (const auto& local : allRelevantLocals) {
-			auto index = SendDlgItemMessageA(hWnd, nIDDlgItem, CB_ADDSTRING, 0, (LPARAM)local.c_str());
-			SendDlgItemMessageA(hWnd, nIDDlgItem, CB_SETITEMDATA, index, 108);
+		for (const auto& [name, itemData] : allRelevantLocals) {
+			auto index = SendDlgItemMessageA(hWnd, nIDDlgItem, CB_ADDSTRING, 0, (LPARAM)name.c_str());
+			SendDlgItemMessageA(hWnd, nIDDlgItem, CB_SETITEMDATA, index, itemData);
 		}
 
 		// TODO: Handle GetTextExtentPoint32A
+		// The return value in the assembly patch below will extend the point.
 
 		return 0;
 	}
@@ -109,6 +133,28 @@ namespace se::cs::dialog::dialogue_window {
 		}
 	}
 	constexpr auto PatchOptimizePopulatingLocalVariableNames_Setup_Size = 0x17u;
+	
+	void __fastcall PatchOptimizePopulatingCellVariableNames(HWND hWnd, int nIDDlgItem) {
+		for (const auto& [id, cell] : allCells) {
+			auto index = SendDlgItemMessageA(hWnd, nIDDlgItem, CB_ADDSTRING, 0, (LPARAM)cell->getObjectID());
+			SendDlgItemMessageA(hWnd, nIDDlgItem, CB_SETITEMDATA, index, (LPARAM)cell);
+		}
+	}
+
+	constexpr auto PatchOptimizePopulatingCellVariableNames_ReturnAddr = 0x4E8222;
+	__declspec(naked) void PatchOptimizePopulatingCellVariableNames_Setup() {
+		__asm {
+			mov ecx, ebp											// Size: 0x2
+			mov edx, ebx											// Size: 0x2
+			nop														// Size: 0x5
+			nop
+			nop
+			nop
+			nop
+			jmp PatchOptimizePopulatingCellVariableNames_ReturnAddr	// Size: 0x6
+		}
+	}
+	constexpr auto PatchOptimizePopulatingCellVariableNames_Setup_Size = 0xFu;
 
 	static DialogueInfo* lastShownDialogueInfo = nullptr;
 
@@ -149,9 +195,6 @@ namespace se::cs::dialog::dialogue_window {
 			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_FUNCTION6_VARIABLE_COMBO), WM_SETREDRAW, FALSE, NULL);
 			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_FUNCTION6_CONDITION_COMBO), WM_SETREDRAW, FALSE, NULL);
 			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_FUNCTION6_VALUE_EDIT), WM_SETREDRAW, FALSE, NULL);
-
-			// Gather what data we need to populate lists.
-			populateCollectionsForInfo(info);
 		}
 
 		const auto CS_DialogueInfo_displayToEditor = reinterpret_cast<void(__thiscall*)(DialogueInfo*, HWND)>(0x4F1070);
@@ -215,6 +258,9 @@ namespace se::cs::dialog::dialogue_window {
 			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_CELL_COMBO), WM_SETREDRAW, FALSE, NULL);
 			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_PCFACTION_COMBO), WM_SETREDRAW, FALSE, NULL);
 			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_PCRANK_COMBO), WM_SETREDRAW, FALSE, NULL);
+
+			// Gather what data we need to populate lists.
+			populateCollections();
 		}
 	}
 
@@ -270,9 +316,15 @@ namespace se::cs::dialog::dialogue_window {
 		
 		// Patch: Optimize displaying of INFO info.
 		if constexpr (ENABLE_ALL_OPTIMIZATIONS) {
+			// Optimize populating local lists.
 			genNOPUnprotected(0x4E7D5A, 0x4E7F59 - 0x4E7D5A);
 			writePatchCodeUnprotected(0x4E7D5A, (BYTE*)PatchOptimizePopulatingLocalVariableNames_Setup, PatchOptimizePopulatingLocalVariableNames_Setup_Size);
 			genCallUnprotected(0x4E7D5A + 0x4, reinterpret_cast<DWORD>(PatchOptimizePopulatingLocalVariableNames));
+
+			// Optimize populating ID lists.
+			genNOPUnprotected(0x4E8209, 0x4E828A - 0x4E8209);
+			writePatchCodeUnprotected(0x4E8209, (BYTE*)PatchOptimizePopulatingCellVariableNames_Setup, PatchOptimizePopulatingCellVariableNames_Setup_Size);
+			genCallUnprotected(0x4E8209 + 0x4, reinterpret_cast<DWORD>(PatchOptimizePopulatingCellVariableNames));
 		}
 		genJumpEnforced(0x4040BB, 0x4F1070, reinterpret_cast<DWORD>(PatchOptimizeDialogueInfoDisplaying));
 

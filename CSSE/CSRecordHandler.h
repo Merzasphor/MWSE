@@ -25,6 +25,9 @@ namespace se::cs {
 		int unknown_0x3C[10975];
 		GameFile* activeGameFiles[256]; // 0xABB8
 		// ...
+
+		size_t getCellCount() const;
+		Cell* getCellByIndex(size_t index) const;
 	};
 	static_assert(offsetof(RecordHandler, activeGameFiles) == 0xABB8, "TES3::RecordHandler failed offset validation");
 }
