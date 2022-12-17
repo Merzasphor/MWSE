@@ -17,12 +17,15 @@
 
 #include "MemoryUtil.h"
 
+#include "Settings.h"
+
 namespace se::cs {
 	using namespace memory;
 
 	constexpr auto LOG_SUPPRESSED_WARNINGS = false;
 
 	HMODULE hInstanceCSSE = NULL;
+
 	GameFile* master_Morrowind = nullptr;
 	GameFile* master_Tribunal = nullptr;
 	GameFile* master_Bloodmoon = nullptr;
@@ -112,6 +115,8 @@ namespace se::cs {
 	void attachToProcess(HMODULE hModule) {
 		hInstanceCSSE = hModule;
 
+		settings.load();
+
 		// Open our log file.
 		log::stream.open("csse.log");
 
@@ -121,12 +126,20 @@ namespace se::cs {
 		// Report successful initialization.
 		log::stream << "CSSE initialization complete." << std::endl;
 	}
+
+	void detachFromProcess() {
+		settings.save();
+		log::stream << "CSSE detached from CS process." << std::endl;
+	}
 }
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved) {
 	switch (ul_reason_for_call) {
 	case DLL_PROCESS_ATTACH:
 		se::cs::attachToProcess(hModule);
+		break;
+	case DLL_PROCESS_DETACH:
+		se::cs::detachFromProcess();
 		break;
 	}
 	return TRUE;

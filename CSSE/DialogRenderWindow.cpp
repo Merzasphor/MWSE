@@ -14,10 +14,11 @@
 #include "CSDataHandler.h"
 #include "CSLandTexture.h"
 #include "CSLight.h"
-#include "CSReference.h"
 #include "CSRecordHandler.h"
-
+#include "CSReference.h"
 #include "CSStatic.h"
+
+#include "Settings.h"
 
 namespace se::cs::dialog::render_window {
 	using namespace windows;
@@ -147,7 +148,12 @@ namespace se::cs::dialog::render_window {
 	const auto TES3_CS_OriginalRotationLogic = reinterpret_cast<bool(__cdecl*)(void*, TranslationData::Target*, int, TranslationData::RotationAxis)>(0x4652D0);
 	bool __cdecl Patch_ReplaceRotationLogic(void* unknown1, TranslationData::Target* firstTarget, int relativeMouseDelta, TranslationData::RotationAxis rotationAxis) {
 		// Allow holding ALT modifier to do vanilla behavior.
+		bool useWorldAxisRotation = settings.render_window.use_world_axis_rotations_by_default;
 		if (isKeyDown(VK_MENU)) {
+			useWorldAxisRotation = !useWorldAxisRotation;
+		}
+
+		if (!useWorldAxisRotation) {
 			return TES3_CS_OriginalRotationLogic(unknown1, firstTarget, relativeMouseDelta, rotationAxis);
 		}
 
