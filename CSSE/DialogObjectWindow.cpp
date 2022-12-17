@@ -72,6 +72,8 @@ namespace se::cs::dialog::object_window {
 	// Patch: Extend Object Window message handling.
 	//
 
+	bool blockNormalExecution = false;
+
 	void CALLBACK PatchDialogProc_BeforeSize(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam) {
 		// Update view menu.
 		auto mainWindow = GetMenu(ghWndMainWindow::get());
@@ -141,6 +143,11 @@ namespace se::cs::dialog::object_window {
 				SetFocus(objectWindowSearchControl);
 			}
 		}
+		else if (hdr->code == LVN_MARQUEEBEGIN) {
+			// I've tried subclassing, blocking this notification, changing styles, and so much else.
+			// Somehow, this is the only thing that has worked...
+			Sleep(20);
+		}
 	}
 
 	inline void OnNotifyFromMainTabControl(HWND hWnd, UINT msg, WPARAM id, LPARAM lParam) {
@@ -198,7 +205,7 @@ namespace se::cs::dialog::object_window {
 	}
 
 	LRESULT CALLBACK PatchDialogProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-		bool blockNormalExecution = false;
+		blockNormalExecution = false;
 
 		// Handle pre-patches.
 		switch (msg) {
