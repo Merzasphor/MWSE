@@ -23,6 +23,7 @@ tes3spell = {}
 --- @deprecated
 --- @param id string The new object's ID. Must be unique.
 --- @param name string? *Optional*. The new object's name.
+--- @return tes3spell newObject No description yet available.
 function tes3spell.create(id, name) end
 
 --- Calculates the chance that a caster can cast a given spell.

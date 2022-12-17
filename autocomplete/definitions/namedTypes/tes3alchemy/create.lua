@@ -8,7 +8,7 @@ return {
 		tableParams = {
 			{ name = "id", type = "string", description = "The new object's ID. Must be unique." },
 			{ name = "name", type = "string", default = "\"Potion\"", description = "The new item's name." },
-			{ name = "script", type = "tes3script", optional = true, description = "A script to attach to the object." },
+			{ name = "script", type = "tes3script|string", optional = true, description = "A script to attach to the object." },
 			{ name = "mesh", type = "string", default = "\"m\\Misc_Potion_Bargain_01.nif\"", description = "The mesh to use for the object." },
 			{ name = "icon", type = "string", default = "\"m\\Tx_potion_bargain_01.nif\"", description = "The icon to use for the object." },
 			{ name = "objectFlags", type = "number", default = 8, description = "The object flags initially set. Force set as modified." },
@@ -18,4 +18,7 @@ return {
 			{ name = "effects", type = "table", description = "A table of effects described, providing values for id, skill, attribute, range, radius, duration, min, and/or max." },
 		},
 	}},
+	returns = {
+		{ name = "newObject", type = "tes3alchemy" },
+	}
 }

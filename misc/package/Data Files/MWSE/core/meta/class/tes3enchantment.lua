@@ -28,6 +28,7 @@ tes3enchantment = {}
 --- `flags`: number? — *Optional*. The new enchantment flags.
 --- 
 --- `objectFlags`: number? — *Default*: `0`. The object flags initially set. Force set as modified.
+--- @return tes3enchantment newObject No description yet available.
 function tes3enchantment.create(params) end
 
 ---Table parameter definitions for `tes3enchantment.create`.

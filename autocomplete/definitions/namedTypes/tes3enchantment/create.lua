@@ -14,4 +14,7 @@ return {
 			{ name = "objectFlags", type = "number", default = 0, description = "The object flags initially set. Force set as modified." }
 		},
 	}},
+	returns = {
+		{ name = "newObject", type = "tes3enchantment" },
+	}
 }

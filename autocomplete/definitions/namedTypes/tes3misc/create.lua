@@ -16,4 +16,7 @@ return {
 			{ name = "flags ", type = "number", default = 0, description = "The object flags initially set." }
 		},
 	}},
+	returns = {
+		{ name = "newObject", type = "tes3misc" },
+	}
 }

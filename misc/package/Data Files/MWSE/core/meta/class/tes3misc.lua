@@ -38,6 +38,7 @@ tes3misc = {}
 --- `value `: string? — *Default*: `0`. The value of the object.
 --- 
 --- `flags `: number? — *Default*: `0`. The object flags initially set.
+--- @return tes3misc newObject No description yet available.
 function tes3misc.create(params) end
 
 ---Table parameter definitions for `tes3misc.create`.

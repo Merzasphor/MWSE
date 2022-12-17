@@ -35,7 +35,7 @@ How long the effect should last.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -55,7 +55,7 @@ The maximum magnitude of the effect.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -65,7 +65,7 @@ The minimum magnitude of the effect.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -85,7 +85,7 @@ The radius of the effect.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -95,7 +95,7 @@ Determines if the effect is self, touch, or target ranged. Maps to [`tes3.effect
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 

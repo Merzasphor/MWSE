@@ -5,5 +5,8 @@ return {
 	arguments = {
 		{ name = "id", type = "string", optional = false, description = "The new object's ID. Must be unique." },
 		{ name = "name", type = "string", optional = true, description = "The new object's name." },
+	},
+	returns = {
+		{ name = "newObject", type = "tes3spell" },
 	}
 }

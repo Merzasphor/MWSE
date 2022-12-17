@@ -20,6 +20,7 @@ tes3static = {}
 --- `mesh`: string? — *Default*: ``. The mesh to use for the object.
 --- 
 --- `objectFlags`: number? — *Default*: `0`. The object flags initially set. Force set as modified.
+--- @return tes3static newObject No description yet available.
 function tes3static.create(params) end
 
 ---Table parameter definitions for `tes3static.create`.

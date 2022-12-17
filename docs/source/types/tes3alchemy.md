@@ -307,7 +307,7 @@ The value of the object. For this object type, its maximum value is 65535. Large
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 

@@ -24,6 +24,7 @@ tes3activator = {}
 --- `mesh`: string? — *Default*: ``. The mesh to use for the object.
 --- 
 --- `objectFlags`: number? — *Default*: `0`. The object flags initially set. Force set as modified.
+--- @return tes3activator newObject No description yet available.
 function tes3activator.create(params) end
 
 ---Table parameter definitions for `tes3activator.create`.
