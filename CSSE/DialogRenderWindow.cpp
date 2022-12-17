@@ -383,24 +383,25 @@ namespace se::cs::dialog::render_window {
 
 					// Set position.
 					NI::Vector3 offset;
+					const auto scale = reference->getScale();
 					switch (refSnappingAxis) {
 					case SnappingAxis::POSITIVE_X:
-						offset = firstResult->normal * abs(object->boundingBoxMin.x);;
+						offset = firstResult->normal * abs(object->boundingBoxMin.x) * scale;
 						break;
 					case SnappingAxis::NEGATIVE_X:
-						offset = firstResult->normal * abs(object->boundingBoxMax.x);;
+						offset = firstResult->normal * abs(object->boundingBoxMax.x) * scale;
 						break;
 					case SnappingAxis::POSITIVE_Y:
-						offset = firstResult->normal * abs(object->boundingBoxMin.y);;
+						offset = firstResult->normal * abs(object->boundingBoxMin.y) * scale;
 						break;
 					case SnappingAxis::NEGATIVE_Y:
-						offset = firstResult->normal * abs(object->boundingBoxMax.y);;
+						offset = firstResult->normal * abs(object->boundingBoxMax.y) * scale;
 						break;
 					case SnappingAxis::POSITIVE_Z:
-						offset = firstResult->normal * abs(object->boundingBoxMin.z);;
+						offset = firstResult->normal * abs(object->boundingBoxMin.z) * scale;
 						break;
 					case SnappingAxis::NEGATIVE_Z:
-						offset = firstResult->normal * abs(object->boundingBoxMax.z);;
+						offset = firstResult->normal * abs(object->boundingBoxMax.z) * scale;
 						break;
 					}
 
