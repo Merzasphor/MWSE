@@ -266,7 +266,10 @@ namespace se::cs::dialog::render_window {
 
 				reference->yetAnotherOrientation = orientation;
 				reference->orientationNonAttached = orientation;
-				reference->sceneNode->setLocalRotationMatrix(&newRotation);
+
+				NI::Matrix33 referenceHandledRotations;
+				reference->updateRotationMatrixForRaceAndSex(referenceHandledRotations);
+				reference->sceneNode->setLocalRotationMatrix(&referenceHandledRotations);
 			}
 
 			// Rotate positions.

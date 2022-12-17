@@ -69,6 +69,8 @@ namespace se::cs {
 		void updateBaseObjectAndAttachment7() const;
 
 		Reference* getAttachment7() const;
+
+		void updateRotationMatrixForRaceAndSex(NI::Matrix33& matrix, bool unknown = false) const;
 	};
 	static_assert(sizeof(Reference) == 0x78, "TES3::Reference failed size validation");
 }
