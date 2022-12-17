@@ -219,7 +219,6 @@ namespace se::cs::dialog::render_window {
 				auto& oldRotation = *reference->sceneNode->localRotation;
 				auto newRotation = userRotation * oldRotation;
 
-				// newRotation.toEulerXYZ(&orientation);
 				// Slightly modified toEulerXYZ that does not do factorization.
 				{
 					orientation.y = asin(-newRotation.m0.z);
@@ -365,14 +364,20 @@ namespace se::cs::dialog::render_window {
 			if (rendererPicker->pickObjects(&origin, &direction)) {
 				auto firstResult = rendererPicker->results.at(0);
 				if (firstResult) {
+					auto object = reference->baseObject;
+
+					auto refSnappingAxis = snappingAxis;
+					if (object->canRotateOnAllAxes()) {
+						refSnappingAxis = SnappingAxis::POSITIVE_Z;
+					}
+
 					reference->setModified(true);
 					reference->setFlag80(true);
 					reference->updateBaseObjectAndAttachment7();
 
 					// Set position.
-					auto object = reference->baseObject;
 					NI::Vector3 offset;
-					switch (snappingAxis) {
+					switch (refSnappingAxis) {
 					case SnappingAxis::POSITIVE_X:
 						offset = firstResult->normal * abs(object->boundingBoxMin.x);;
 						break;
@@ -400,7 +405,7 @@ namespace se::cs::dialog::render_window {
 					// Set rotation.
 					if (object->canRotateOnAllAxes()) {
 						NI::Vector3 orientation;
-						switch (snappingAxis) {
+						switch (refSnappingAxis) {
 						case SnappingAxis::POSITIVE_X:
 						case SnappingAxis::NEGATIVE_X:
 							orientation.x = 1.0f;
@@ -419,7 +424,7 @@ namespace se::cs::dialog::render_window {
 						rotation.toRotationDifference(orientation, firstResult->normal);
 
 						// Flip axis if it's negative snapping.
-						switch (snappingAxis) {
+						switch (refSnappingAxis) {
 						case SnappingAxis::NEGATIVE_X:
 						case SnappingAxis::NEGATIVE_Y:
 						case SnappingAxis::NEGATIVE_Z:
@@ -428,7 +433,7 @@ namespace se::cs::dialog::render_window {
 						}
 
 						// Restore the original base orientation.
-						switch (snappingAxis) {
+						switch (refSnappingAxis) {
 						case SnappingAxis::POSITIVE_X:
 						case SnappingAxis::NEGATIVE_X:
 							orientation.x = reference->yetAnotherOrientation.x;
