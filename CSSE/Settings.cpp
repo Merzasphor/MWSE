@@ -10,15 +10,17 @@ namespace se::cs {
 	}
 
 	toml::value Settings_t::RenderWindowSettings::into_toml() const {
-		return toml::value({
-			{ "use_world_axis_rotations_by_default", use_world_axis_rotations_by_default },
-			});
+		return toml::value(
+			{
+				{ "use_world_axis_rotations_by_default", use_world_axis_rotations_by_default },
+			}
+		);
 	}
 
 	void Settings_t::load() {
 		if (std::filesystem::exists("csse.toml")) {
 			const auto data = toml::parse("csse.toml");
-			render_window = toml::find_or(data, "render_window", render_window);
+			from_toml(data);
 		}
 	}
 
@@ -35,8 +37,10 @@ namespace se::cs {
 	}
 
 	toml::value Settings_t::into_toml() const {
-		return toml::value({
-			{ "render_window", render_window },
-			});
+		return toml::value(
+			{
+				{ "render_window", render_window },
+			}
+		);
 	}
 }
