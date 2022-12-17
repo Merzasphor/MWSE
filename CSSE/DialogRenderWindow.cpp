@@ -373,7 +373,7 @@ namespace se::cs::dialog::render_window {
 					auto object = reference->baseObject;
 
 					auto refSnappingAxis = snappingAxis;
-					if (object->canRotateOnAllAxes()) {
+					if (!object->canRotateOnAllAxes()) {
 						refSnappingAxis = SnappingAxis::POSITIVE_Z;
 					}
 
