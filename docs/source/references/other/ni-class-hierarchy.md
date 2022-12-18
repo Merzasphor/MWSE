@@ -14,15 +14,15 @@ The types are arranged into functional groupings. Within each grouping, indentat
 
 ---
 
-## niMain
+### niMain
 
-### Basic Foundation Types
+#### Basic Foundation Types
  - niColor
  - niColorA
  - niPackedColor
  - niRTTI
 
-### Basic Math and Geometry Classes
+#### Basic Math and Geometry Classes
  - <span style = "color:Turquoise">niBound</span>
  - tes3boundingBox
  - tes3matrix33
@@ -31,14 +31,14 @@ The types are arranged into functional groupings. Within each grouping, indentat
  - niQuaternion
  - tes3transform
 
-### Templated Container Classes
+#### Templated Container Classes
  - niTArray - not exposed as a type but can be iterated as a standard Lua array.
  - niLinkedList
 	- niDynamicEffectLinkedList
 	- niNodeLinkedList
 	- niPropertyLinkedList
 
-### Animation Classes
+#### Animation Classes
  - niObject
 	- niTimeController
 	- niObjectNET
@@ -49,7 +49,7 @@ The types are arranged into functional groupings. Within each grouping, indentat
 					- <span  style = "color:YellowGreen">niBSParticleNode</span>
 		- <span  style = "color:YellowGreen">niSequenceStreamHelper</span>
 
-### Texturing Classes
+#### Texturing Classes
 - niObject
 	- <span  style = "color:YellowGreen">niBltSource</span>
 	- niObjectNET
@@ -61,13 +61,13 @@ The types are arranged into functional groupings. Within each grouping, indentat
 	- niPixelData
 - <span style = "color:Turquoise">niPixelFormat</span>
 
-### Object Depth Sorting Classes
+#### Object Depth Sorting Classes
 - niObject
 	- <span  style = "color:YellowGreen">niAccumulator</span>
 		- <span  style = "color:YellowGreen">niClusterAccumulator</span>
 			- <span  style = "color:YellowGreen">niAlphaAccumulator</span>
 
-### Geometry Data Classes
+#### Geometry Data Classes
 - niObject
 	- niGeometryData
 		- <span style = "color:Turquoise">niLinesData</span>
@@ -79,7 +79,7 @@ The types are arranged into functional groupings. Within each grouping, indentat
 				- <span  style = "color:YellowGreen">niTriShapeDynamicData</span>
 			- <span  style = "color:YellowGreen">niTriStripsData</span>
 
-### Geometry Rendering Classes
+#### Geometry Rendering Classes
 - niObject
 	- niObjectNET
 		- niAVObject
@@ -99,7 +99,7 @@ The types are arranged into functional groupings. Within each grouping, indentat
 	- niSkinPartition
 	- niSkinPartitionPartition
 
-### Scene Graph Organization Classes
+#### Scene Graph Organization Classes
 - niObject
 	- niExtraData
 		- <span  style = "color:YellowGreen">BrickNiExtraData</span>
@@ -118,7 +118,7 @@ The types are arranged into functional groupings. Within each grouping, indentat
 					- <span  style = "color:YellowGreen">niFltAnimationNode</span>
 					- <span  style = "color:YellowGreen">niLODNode</span>
 
-### Lightning and Effects Classes
+#### Lightning and Effects Classes
 - niObject
 	- niObjectNET
 		- niAVObject
@@ -130,7 +130,7 @@ The types are arranged into functional groupings. Within each grouping, indentat
 						- niSpotLight
 				- niTextureEffect
 
-### Rendering and Property Classes
+#### Rendering and Property Classes
 - niObject
 	- niObjectNET
 		- niAVObject
@@ -153,9 +153,9 @@ The types are arranged into functional groupings. Within each grouping, indentat
 
 ---
 
-## niParticle
+### niParticle
 
-### Particle System Classes
+#### Particle System Classes
 - niObject
 	- <span  style = "color:YellowGreen">niEmitterModifier</span>
 	- niParticleModifier
@@ -173,9 +173,9 @@ The types are arranged into functional groupings. Within each grouping, indentat
 
 ---
 
-## niCollision
+### niCollision
 
-### Collision Classes
+#### Collision Classes
 - niCollisionGroup
 - niCollisionGroupRecord
 - niObject
@@ -189,9 +189,9 @@ The types are arranged into functional groupings. Within each grouping, indentat
 
 ---
 
-## niAnimation
+### niAnimation
 
-### Animation Classes
+#### Animation Classes
 - niObject
 	- niColorData
 	- niExtraData - this type is not related to animation by itself.
@@ -234,12 +234,10 @@ The types are arranged into functional groupings. Within each grouping, indentat
 		- niEulerRotKey
 - niTextKey
 
-# Diagrammatic representation
+## Diagrammatic representation
 
 ```mermaid
 graph LR
-
-
     A(niObject) --> B(niAccumulator);
         B --> BA(niClusterAccumulator);
             BA --> BAA(niAlphaAccumulator);
@@ -365,11 +363,174 @@ graph LR
     A --> W(niUVData);
     A --> X(niVisData);
 
+    %% Default style
+    classDef default color: #fafafa, fill:#434659, stroke:#e6e6e6, stroke-width:2px;
+
     %% Turquoise
-    classDef notExposed fill: #40E0D0, stroke: #333, stroke-width: 2px;
+    classDef notExposed color:#000, fill: #40E0D0, stroke: #333, stroke-width: 2px;
     class DA,EAC,EACA,EACC,EDA,G,HA,HD,HK,Q,R,W notExposed;
 
     %% YellowGreen
-    classDef notResearched fill: #ADFF2F, stroke: #333, stroke-width: 2px;
+    classDef notResearched color:#000, fill: #ADFF2F, stroke: #333, stroke-width: 2px;
     class B,BA,BAA,CA,CE,DBA,DCAA,DCB,EACCB,EADA,EADB,EADD,EADE,EADG,EADH,EADHA,EADIA,EADIB,EBB,EBE,EBF,EBG,EBK,EC,EDAA,GA,HB,HBA,HBB,HE,HG,HH,HHA,HIA,HJ,HL,I,K,L,N,O,X notResearched;
+```
+
+```mermaid
+graph LR
+	A(niObject) --> B(niAccumulator);
+		B --> BA(niClusterAccumulator);
+			BA --> BAA(niAlphaAccumulator);
+
+	A --> C(niExtraData);
+		C --> CA(BrickNiExtraData);
+		C --> CB(TES3ObjectExtraData);
+		C --> CC(niStringExtraData);
+		C --> CD(niTextKeyExtraData);
+		C --> CE(niVertWeightsExtraData);
+
+	A --> D(niGeometryData);
+		D --> DA(niLinesData);
+		D --> DB(niParticlesData);
+			DB --> DBA(niAutoNormalParticlesData);
+			DB --> DBB(niRotatingParticlesData);
+		D --> DC(niTriBasedGeomData);
+			DC --> DCA(niTriShapeData);
+				DCA --> DCAA(niTriShapeDynamicData);
+			DC --> DCB(niTriStripsData);
+
+	A --> E(niObjectNET);
+
+	subgraph Scroll down for more info
+		E --> EA(niAVObject);
+	end
+
+		E --> EB(niProperty);
+			EB --> EBA(niAlphaProperty);
+			EB --> EBB(niDitherProperty);
+			EB --> EBC(niFogProperty);
+			EB --> EBD(niMaterialProperty);
+			EB --> EBE(niRendererSpecificProperty);
+			EB --> EBF(niShadeProperty);
+			EB --> EBG(niSpecularProperty);
+			EB --> EBH(niStencilProperty);
+			EB --> EBI(niTexturingProperty);
+			EB --> EBJ(niVertexColorProperty);
+			EB --> EBK(niWireframeProperty);
+			EB --> EBL(niZBufferProperty);
+
+		E --> EC(niSequenceStreamHelper);
+
+		E --> ED(niTexture);
+			ED --> EDA(niRenderedTexture);
+				EDA --> EDAA(niRenderedCubeMap);
+			ED --> EDB(niSourceTexture);
+
+	A --> F(niParticleModifier);
+		F --> FA(niGravity);
+		F --> FB(niParticleBomb);
+		F --> FC(niParticleCollider);
+			FC --> FCA(niPlanarCollider);
+			FC --> FCB(niSphericalCollider);
+		F --> FD(niParticleColorModifier);
+		F --> FE(niParticleGrowFade);
+		F --> FF(niParticleRotation);
+
+	A --> G(niRenderer);
+		G --> GA(niDX8Renderer);
+
+	A --> H(niTimeController);
+		H --> HA(niFlipController);
+		H --> HB(niFloatController);
+			HB --> HBA(niAlphaController);
+			HB --> HBB(niRollController);
+		H --> HC(niKeyframeController);
+		H --> HD(niKeyframeManager);
+		H --> HE(niLightColorController);
+		H --> HF(niLookAtController);
+		H --> HG(niMaterialColorController);
+		H --> HH(niMorpherController);
+			HH --> HHA(niGeomMorpherController);
+		H --> HI(niParticleSystemController);
+			HI --> HIA(niBSPArrayController);
+		H --> HJ(niPathController);
+		H --> HK(niUVController);
+		H --> HL(niVisController);
+
+	A --> I(niBltSource);
+	A --> J(niColorData);
+	A --> K(niEmitterModifier);
+	A --> L(niFloatData);
+	A --> M(niKeyframeData);
+	A --> N(niMorphData);
+	A --> O(niPalette);
+	A --> P(niPixelData);
+	A --> Q(niPosData);
+	A --> R(niScreenPolygon);
+	A --> S(niSequence);
+	A --> T(niSkinData);
+	A --> U(niSkinInstance);
+	A --> V(niSkinPartition);
+	A --> W(niUVData);
+	A --> X(niVisData);
+
+	%% Default style
+	classDef default color: #fafafa, fill:#434659, stroke:#e6e6e6, stroke-width:2px;
+
+	%% Turquoise
+	classDef notExposed color:#000, fill: #40E0D0, stroke: #333, stroke-width: 2px;
+	class DA,EAC,EACA,EACC,EDA,G,HA,HD,HK,Q,R,W notExposed;
+
+	%% YellowGreen
+	classDef notResearched color:#000, fill: #ADFF2F, stroke: #333, stroke-width: 2px;
+	class B,BA,BAA,CA,CE,DBA,DCAA,DCB,EACCB,EADA,EADB,EADD,EADE,EADG,EADH,EADHA,EADIA,EADIB,EBB,EBE,EBF,EBG,EBK,EC,EDAA,GA,HB,HBA,HBB,HE,HG,HH,HHA,HIA,HJ,HL,I,K,L,N,O,X notResearched;
+```
+
+## The actual
+
+```mermaid
+graph LR
+    EA(niAVObject);
+	EA --> EAA(niCamera);
+
+	EA --> EAB(niDynamicEffect);
+		EAB --> EABA(niTextureEffect);
+		EAB --> EABB(niLight);
+			EABB --> EABBA(niAmbientLight);
+			EABB --> EABBB(niDirectionalLight);
+			EABB --> EABBC(niPointLight);
+				EABBC --> EABBCA(niSpotLight);
+
+	EA --> EAC(niGeometry);
+		EAC --> EACA(niLines);
+		EAC --> EACB(niParticles);
+			EACB --> EACBA(niAutoNormalParticles);
+			EACB --> EACBB(niRotatingParticles);
+		EAC --> EACC(niTriBasedGeometry);
+			EACC --> EACCA(niTriShape);
+			EACC --> EACCB(niTriStrips);
+
+	EA --> EAD(niNode);
+		EAD --> EADA(AvoidNode);
+		EAD --> EADB(RootCollisionNode);
+		EAD --> EADC(niBillboardNode);
+		EAD --> EADD(niBSAnimationManager);
+		EAD --> EADE(niBSPNode);
+		EAD --> EADF(niCollisionSwitch);
+		EAD --> EADG(niSortAdjustNode);
+		EAD --> EADH(niBSAnimationNode);
+			EADH --> EADHA(niBSParticleNode);
+		EAD --> EADI(niSwitchNode);
+			EADI --> EADIA(niFltAnimationNode);
+			EADI --> EADIB(niLODNode);
+
+	%% Default style
+	classDef default color: #fafafa, fill:#434659, stroke:#e6e6e6, stroke-width:2px;
+
+	%% Turquoise
+	classDef notExposed color:#000, fill: #40E0D0, stroke: #333, stroke-width: 2px;
+	class DA,EAC,EACA,EACC,EDA,G,HA,HD,HK,Q,R,W notExposed;
+
+	%% YellowGreen
+	classDef notResearched color:#000, fill: #ADFF2F, stroke: #333, stroke-width: 2px;
+	class B,BA,BAA,CA,CE,DBA,DCAA,DCB,EACCB,EADA,EADB,EADD,EADE,EADG,EADH,EADHA,EADIA,EADIB,EBB,EBE,EBF,EBG,EBK,EC,EDAA,GA,HB,HBA,HBB,HE,HG,HH,HHA,HIA,HJ,HL,I,K,L,N,O,X notResearched;
 ```
