@@ -11,8 +11,8 @@ namespace se::cs {
 		void* unknown_0x2C;
 		void* unknown_0x30;
 		void* unknown_0x34;
-		void* unknown_0x38;
-		void* unknown_0x3C;
+		char* (__thiscall* getName)(const BaseObject*); // 0x38
+		char* (__thiscall* getIconPath)(const BaseObject*); // 0x3C
 		void* unknown_0x40;
 		void* unknown_0x44;
 		void* unknown_0x48;
@@ -84,6 +84,10 @@ namespace se::cs {
 		Object* previousInCollection; // 0x1C
 		Object* nextInCollection; // 0x20
 		int unknown_0x24;
+
+		const char* getName() const {
+			return vtbl.object->getName(this);
+		}
 
 		bool isMarker() const {
 			return vtbl.object->isMarker(this);

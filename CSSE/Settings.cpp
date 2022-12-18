@@ -4,6 +4,10 @@
 
 namespace se::cs {
 	Settings_t settings;
+	
+	//
+	// Render Window
+	//
 
 	void Settings_t::RenderWindowSettings::from_toml(const toml::value& v) {
 		use_world_axis_rotations_by_default = toml::find_or(v, "use_world_axis_rotations_by_default", use_world_axis_rotations_by_default);
@@ -16,6 +20,30 @@ namespace se::cs {
 			}
 		);
 	}
+
+	//
+	// Object Window
+	//
+
+	void Settings_t::ObjectWindowSettings::from_toml(const toml::value& v) {
+		clear_on_tab_switch = toml::find_or(v, "clear_on_tab_switch", clear_on_tab_switch);
+		filter_by_id = toml::find_or(v, "filter_by_id", filter_by_id);
+		filter_by_name = toml::find_or(v, "filter_by_name", filter_by_name);
+	}
+
+	toml::value Settings_t::ObjectWindowSettings::into_toml() const {
+		return toml::value(
+			{
+				{ "clear_on_tab_switch", clear_on_tab_switch },
+				{ "filter_by_id", filter_by_id },
+				{ "filter_by_name", filter_by_name },
+			}
+		);
+	}
+
+	//
+	// QuickStart
+	//
 
 	void Settings_t::QuickstartSettings::from_toml(const toml::value& v) {
 		enabled = toml::find_or(v, "enabled", enabled);
@@ -56,6 +84,7 @@ namespace se::cs {
 
 	void Settings_t::from_toml(const toml::value& v) {
 		render_window = toml::find_or(v, "render_window", render_window);
+		object_window = toml::find_or(v, "object_window", object_window);
 		quickstart = toml::find_or(v, "quickstart", quickstart);
 	}
 
@@ -63,6 +92,7 @@ namespace se::cs {
 		return toml::value(
 			{
 				{ "title", "Construction Set Extender" },
+				{ "object_window", object_window },
 				{ "render_window", render_window },
 				{ "quickstart", quickstart },
 			}
