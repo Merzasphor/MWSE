@@ -11,13 +11,16 @@
 #include "NINode.h"
 #include "NIPick.h"
 
+#include "CSCell.h"
 #include "CSDataHandler.h"
+#include "CSGameFile.h"
 #include "CSLandTexture.h"
 #include "CSLight.h"
-#include "CSReference.h"
 #include "CSRecordHandler.h"
-
+#include "CSReference.h"
 #include "CSStatic.h"
+
+#include "Settings.h"
 
 namespace se::cs::dialog::render_window {
 	using namespace windows;
@@ -34,6 +37,7 @@ namespace se::cs::dialog::render_window {
 	using gRotationFlags = memory::ExternalGlobal<BYTE, 0x6CE9A4>;
 	using gCumulativeRotationValues = memory::ExternalGlobal<NI::Vector3, 0x6CF760>;
 	using gRenderWindowPick = memory::ExternalGlobal<NI::Pick, 0x6CF528>;
+	using gCurrentCell = memory::ExternalGlobal<Cell*, 0x6CF7B8>;
 
 	// TODO: Move to real definition file.
 	struct TranslationData {
@@ -116,17 +120,6 @@ namespace se::cs::dialog::render_window {
 	static_assert(sizeof(NetImmerseInstance) == 0x64, "CS::NetImmerseInstance failed size validation");
 	static_assert(sizeof(NetImmerseInstance::VirtualTable) == 0x64, "CS::NetImmerseInstance's virtual table failed size validation");
 
-	struct RenderController {
-		NetImmerseInstance* niInstance; // 0x0
-		NI::Node* node; // 0x4
-		NI::Camera* camera; // 0x8
-
-		static inline auto get() {
-			return memory::ExternalGlobal<RenderController*, 0x6CF77C>::get();
-		}
-	};
-	static_assert(sizeof(RenderController) == 0xC, "CS::RenderController failed size validation");
-
 	struct SceneGraphController {
 		NI::Node* sceneRoot;
 		NI::Node* objectRoot;
@@ -147,7 +140,12 @@ namespace se::cs::dialog::render_window {
 	const auto TES3_CS_OriginalRotationLogic = reinterpret_cast<bool(__cdecl*)(void*, TranslationData::Target*, int, TranslationData::RotationAxis)>(0x4652D0);
 	bool __cdecl Patch_ReplaceRotationLogic(void* unknown1, TranslationData::Target* firstTarget, int relativeMouseDelta, TranslationData::RotationAxis rotationAxis) {
 		// Allow holding ALT modifier to do vanilla behavior.
+		bool useWorldAxisRotation = settings.render_window.use_world_axis_rotations_by_default;
 		if (isKeyDown(VK_MENU)) {
+			useWorldAxisRotation = !useWorldAxisRotation;
+		}
+
+		if (!useWorldAxisRotation) {
 			return TES3_CS_OriginalRotationLogic(unknown1, firstTarget, relativeMouseDelta, rotationAxis);
 		}
 
@@ -219,7 +217,6 @@ namespace se::cs::dialog::render_window {
 				auto& oldRotation = *reference->sceneNode->localRotation;
 				auto newRotation = userRotation * oldRotation;
 
-				// newRotation.toEulerXYZ(&orientation);
 				// Slightly modified toEulerXYZ that does not do factorization.
 				{
 					orientation.y = asin(-newRotation.m0.z);
@@ -261,7 +258,10 @@ namespace se::cs::dialog::render_window {
 
 				reference->yetAnotherOrientation = orientation;
 				reference->orientationNonAttached = orientation;
-				reference->sceneNode->setLocalRotationMatrix(&newRotation);
+
+				NI::Matrix33 referenceHandledRotations;
+				reference->updateRotationMatrixForRaceAndSex(referenceHandledRotations);
+				reference->sceneNode->setLocalRotationMatrix(&referenceHandledRotations);
 			}
 
 			// Rotate positions.
@@ -365,31 +365,38 @@ namespace se::cs::dialog::render_window {
 			if (rendererPicker->pickObjects(&origin, &direction)) {
 				auto firstResult = rendererPicker->results.at(0);
 				if (firstResult) {
+					auto object = reference->baseObject;
+
+					auto refSnappingAxis = snappingAxis;
+					if (!object->canRotateOnAllAxes()) {
+						refSnappingAxis = SnappingAxis::POSITIVE_Z;
+					}
+
 					reference->setModified(true);
 					reference->setFlag80(true);
 					reference->updateBaseObjectAndAttachment7();
 
 					// Set position.
-					auto object = reference->baseObject;
 					NI::Vector3 offset;
-					switch (snappingAxis) {
+					const auto scale = reference->getScale();
+					switch (refSnappingAxis) {
 					case SnappingAxis::POSITIVE_X:
-						offset = firstResult->normal * abs(object->boundingBoxMin.x);;
+						offset = firstResult->normal * abs(object->boundingBoxMin.x) * scale;
 						break;
 					case SnappingAxis::NEGATIVE_X:
-						offset = firstResult->normal * abs(object->boundingBoxMax.x);;
+						offset = firstResult->normal * abs(object->boundingBoxMax.x) * scale;
 						break;
 					case SnappingAxis::POSITIVE_Y:
-						offset = firstResult->normal * abs(object->boundingBoxMin.y);;
+						offset = firstResult->normal * abs(object->boundingBoxMin.y) * scale;
 						break;
 					case SnappingAxis::NEGATIVE_Y:
-						offset = firstResult->normal * abs(object->boundingBoxMax.y);;
+						offset = firstResult->normal * abs(object->boundingBoxMax.y) * scale;
 						break;
 					case SnappingAxis::POSITIVE_Z:
-						offset = firstResult->normal * abs(object->boundingBoxMin.z);;
+						offset = firstResult->normal * abs(object->boundingBoxMin.z) * scale;
 						break;
 					case SnappingAxis::NEGATIVE_Z:
-						offset = firstResult->normal * abs(object->boundingBoxMax.z);;
+						offset = firstResult->normal * abs(object->boundingBoxMax.z) * scale;
 						break;
 					}
 
@@ -400,7 +407,7 @@ namespace se::cs::dialog::render_window {
 					// Set rotation.
 					if (object->canRotateOnAllAxes()) {
 						NI::Vector3 orientation;
-						switch (snappingAxis) {
+						switch (refSnappingAxis) {
 						case SnappingAxis::POSITIVE_X:
 						case SnappingAxis::NEGATIVE_X:
 							orientation.x = 1.0f;
@@ -419,7 +426,7 @@ namespace se::cs::dialog::render_window {
 						rotation.toRotationDifference(orientation, firstResult->normal);
 
 						// Flip axis if it's negative snapping.
-						switch (snappingAxis) {
+						switch (refSnappingAxis) {
 						case SnappingAxis::NEGATIVE_X:
 						case SnappingAxis::NEGATIVE_Y:
 						case SnappingAxis::NEGATIVE_Z:
@@ -428,7 +435,7 @@ namespace se::cs::dialog::render_window {
 						}
 
 						// Restore the original base orientation.
-						switch (snappingAxis) {
+						switch (refSnappingAxis) {
 						case SnappingAxis::POSITIVE_X:
 						case SnappingAxis::NEGATIVE_X:
 							orientation.x = reference->yetAnotherOrientation.x;
@@ -462,9 +469,9 @@ namespace se::cs::dialog::render_window {
 					auto attachedLightData = reference->getLightAttachment();
 					if (object->objectType == ObjectType::Light && attachedLightData) {
 						auto baseObjectLight = static_cast<Light*>(object);
-						if (dataHandler->lightingController) {
+						if (dataHandler->currentInteriorCell) {
 							attachedLightData->light->detachAllAffectedNodes();
-							baseObjectLight->updateLightingData(attachedLightData->light, dataHandler->lightingController);
+							baseObjectLight->updateLightingData(attachedLightData->light, dataHandler->currentInteriorCell);
 						}
 						else {
 							dataHandler->updateAllLights();
@@ -568,10 +575,15 @@ namespace se::cs::dialog::render_window {
 
 	constexpr auto landscapeEditWindowId = 203;
 
-	void PickLandscapeTexture(HWND hWnd) {
+	bool PickLandscapeTexture(HWND hWnd) {
 		auto editorWindow = memory::MemAccess<HWND>::Get(0x6CE95C);
 		if (!editorWindow) {
-			return;
+			return false;
+		}
+
+		// Make sure that we're not in color mode.
+		if (IsDlgButtonChecked(editorWindow, 1008)) {
+			return false;
 		}
 
 		auto rendererPicker = reinterpret_cast<NI::Pick*>(0x6CF528);
@@ -607,6 +619,7 @@ namespace se::cs::dialog::render_window {
 									if (landTexture) {
 										if (landTexture->texture == baseMap->texture) {
 											ListView_SetItemState(textureList, row, LVIS_SELECTED, LVIS_SELECTED);
+											ListView_EnsureVisible(textureList, row, TRUE);
 											break;
 										}
 									}
@@ -621,6 +634,8 @@ namespace se::cs::dialog::render_window {
 		// Restore pick settings.
 		rendererPicker->clearResults();
 		rendererPicker->root = previousRoot;
+
+		return true;
 	}
 
 	void hideSelectedReferences() {
@@ -658,12 +673,70 @@ namespace se::cs::dialog::render_window {
 		unhideNode(SceneGraphController::get()->objectRoot);
 	}
 
+	void saveRenderStateToQuickStart() {
+		auto renderController = RenderController::get();
+		auto dataHandler = DataHandler::get();
+		auto recordHandler = dataHandler->recordHandler;
+		auto& quickstart = settings.quickstart;
+
+		// Store camera position.
+		quickstart.position[0] = renderController->camera->worldTransform.translation.x;
+		quickstart.position[1] = renderController->camera->worldTransform.translation.y;
+		quickstart.position[2] = renderController->camera->worldTransform.translation.z;
+
+		// Store camera orientation as euler angle.
+		NI::Vector3 orientationVector;
+		renderController->node->getLocalRotationMatrix()->toEulerXYZ(&orientationVector);
+		quickstart.orientation[0] = orientationVector.x;
+		quickstart.orientation[1] = orientationVector.y;
+		quickstart.orientation[2] = orientationVector.z;
+
+		// If we're in an interior, store the cell ID.
+		auto currentCell = gCurrentCell::get();
+		if (currentCell == dataHandler->currentInteriorCell) {
+			quickstart.cell = gCurrentCell::get()->getObjectID();
+		}
+		else {
+			quickstart.cell.clear();
+		}
+
+		// Store the active game file list.
+		quickstart.data_files.clear();
+		for (auto i = 0; i < recordHandler->activeModCount; ++i) {
+			quickstart.data_files.push_back(recordHandler->activeGameFiles[i]->fileName);
+		}
+		
+		// Also store the current file set as active.
+		if (recordHandler->activeFile) {
+			quickstart.active_file = recordHandler->activeFile->fileName;
+		}
+
+		quickstart.enabled = true;
+
+		settings.save();
+	}
+
+	void clearRenderStateFromQuickStart() {
+		auto renderController = RenderController::get();
+		auto& quickstart = settings.quickstart;
+
+		quickstart.enabled = false;
+		quickstart.data_files.clear();
+		quickstart.active_file.clear();
+		quickstart.cell.clear();
+		quickstart.position = { 0.0f, 0.0f, 0.0f };
+		quickstart.orientation = { 0.0f, 0.0f, 0.0f };
+
+		settings.save();
+	}
+
 	void showContextAwareActionMenu(HWND hWndRenderWindow) {
 		auto menu = CreatePopupMenu();
 		if (menu == NULL) {
 			return;
 		}
 
+		auto recordHandler = DataHandler::get()->recordHandler;
 		auto translationData = TranslationData::get();
 		const bool hasReferencesSelected = translationData->numberOfTargets > 0;
 
@@ -678,6 +751,8 @@ namespace se::cs::dialog::render_window {
 			SET_SNAPPING_AXIS_NEGATIVE_Y,
 			SET_SNAPPING_AXIS_POSITIVE_Z,
 			SET_SNAPPING_AXIS_NEGATIVE_Z,
+			SAVE_STATE_TO_QUICKSTART,
+			CLEAR_STATE_FROM_QUICKSTART,
 		};
 
 		/*
@@ -702,45 +777,45 @@ namespace se::cs::dialog::render_window {
 			menuItem.fMask = MIIM_FTYPE | MIIM_CHECKMARKS | MIIM_STRING | MIIM_ID;
 			menuItem.fType = MFT_STRING | MFT_RADIOCHECK;
 			menuItem.fState = (snappingAxis == SnappingAxis::POSITIVE_X) ? MFS_CHECKED : MFS_UNCHECKED;
-			menuItem.dwTypeData = (LPWSTR)L"+&X";
+			menuItem.dwTypeData = (LPSTR)"+&X";
 			menuItem.hbmpChecked = NULL;
 			menuItem.hbmpUnchecked = NULL;
-			InsertMenuItemW(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
+			InsertMenuItemA(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
 
 			menuItem.wID = SET_SNAPPING_AXIS_NEGATIVE_X;
 			menuItem.fMask = MIIM_FTYPE | MIIM_CHECKMARKS | MIIM_STRING | MIIM_ID;
 			menuItem.fType = MFT_STRING | MFT_RADIOCHECK;
 			menuItem.fState = (snappingAxis == SnappingAxis::NEGATIVE_X) ? MFS_CHECKED : MFS_UNCHECKED;
-			menuItem.dwTypeData = (LPWSTR)L"-X";
-			InsertMenuItemW(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
+			menuItem.dwTypeData = (LPSTR)"-X";
+			InsertMenuItemA(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
 
 			menuItem.wID = SET_SNAPPING_AXIS_POSITIVE_Y;
 			menuItem.fMask = MIIM_FTYPE | MIIM_CHECKMARKS | MIIM_STRING | MIIM_ID;
 			menuItem.fType = MFT_STRING | MFT_RADIOCHECK;
 			menuItem.fState = (snappingAxis == SnappingAxis::POSITIVE_Y) ? MFS_CHECKED : MFS_UNCHECKED;
-			menuItem.dwTypeData = (LPWSTR)L"+&Y";
-			InsertMenuItemW(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
+			menuItem.dwTypeData = (LPSTR)"+&Y";
+			InsertMenuItemA(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
 
 			menuItem.wID = SET_SNAPPING_AXIS_NEGATIVE_Y;
 			menuItem.fMask = MIIM_FTYPE | MIIM_CHECKMARKS | MIIM_STRING | MIIM_ID;
 			menuItem.fType = MFT_STRING | MFT_RADIOCHECK;
 			menuItem.fState = (snappingAxis == SnappingAxis::NEGATIVE_Y) ? MFS_CHECKED : MFS_UNCHECKED;
-			menuItem.dwTypeData = (LPWSTR)L"-Y";
-			InsertMenuItemW(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
+			menuItem.dwTypeData = (LPSTR)"-Y";
+			InsertMenuItemA(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
 
 			menuItem.wID = SET_SNAPPING_AXIS_POSITIVE_Z;
 			menuItem.fMask = MIIM_FTYPE | MIIM_CHECKMARKS | MIIM_STRING | MIIM_ID;
 			menuItem.fType = MFT_STRING | MFT_RADIOCHECK;
 			menuItem.fState = (snappingAxis == SnappingAxis::POSITIVE_Z) ? MFS_CHECKED : MFS_UNCHECKED;
-			menuItem.dwTypeData = (LPWSTR)L"+&Z";
-			InsertMenuItemW(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
+			menuItem.dwTypeData = (LPSTR)"+&Z";
+			InsertMenuItemA(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
 
 			menuItem.wID = SET_SNAPPING_AXIS_NEGATIVE_Z;
 			menuItem.fMask = MIIM_FTYPE | MIIM_CHECKMARKS | MIIM_STRING | MIIM_ID;
 			menuItem.fType = MFT_STRING | MFT_RADIOCHECK;
 			menuItem.fState = (snappingAxis == SnappingAxis::NEGATIVE_Z) ? MFS_CHECKED : MFS_UNCHECKED;
-			menuItem.dwTypeData = (LPWSTR)L"-Z";
-			InsertMenuItemW(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
+			menuItem.dwTypeData = (LPSTR)"-Z";
+			InsertMenuItemA(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
 
 			CheckMenuRadioItem(subMenuSnappingAxis.hSubMenu, 0, 5, (UINT)snappingAxis, MF_BYPOSITION);
 		}
@@ -750,27 +825,46 @@ namespace se::cs::dialog::render_window {
 		menuItem.fType = MFT_STRING;
 		menuItem.fState = hasReferencesSelected ? MFS_ENABLED : MFS_DISABLED;
 		menuItem.hSubMenu = subMenuSnappingAxis.hSubMenu;
-		menuItem.dwTypeData = (LPWSTR)L"Set &Snapping Axis";
-		InsertMenuItemW(menu, ++index, TRUE, &menuItem);
+		menuItem.dwTypeData = (LPSTR)"Set &Snapping Axis";
+		InsertMenuItemA(menu, ++index, TRUE, &menuItem);
 
 		menuItem.wID = RESERVED_NO_CALLBACK;
 		menuItem.fMask = MIIM_FTYPE | MIIM_ID;
 		menuItem.fType = MFT_SEPARATOR;
-		InsertMenuItemW(menu, ++index, TRUE, &menuItem);
+		InsertMenuItemA(menu, ++index, TRUE, &menuItem);
 
 		menuItem.wID = HIDE_SELECTION;
 		menuItem.fMask = MIIM_FTYPE | MIIM_STRING | MIIM_ID | MIIM_STATE;
 		menuItem.fType = MFT_STRING;
 		menuItem.fState = hasReferencesSelected ? MFS_ENABLED : MFS_DISABLED;
-		menuItem.dwTypeData = (LPWSTR)L"&Hide Selection";
-		InsertMenuItemW(menu, ++index, TRUE, &menuItem);
+		menuItem.dwTypeData = (LPSTR)"&Hide Selection";
+		InsertMenuItemA(menu, ++index, TRUE, &menuItem);
 
 		menuItem.wID = RESTORE_HIDDEN_REFERENCES;
 		menuItem.fMask = MIIM_FTYPE | MIIM_STRING | MIIM_ID | MIIM_STATE;
 		menuItem.fType = MFT_STRING;
 		menuItem.fState = MFS_ENABLED;
-		menuItem.dwTypeData = (LPWSTR)L"&Restore Hidden References";
-		InsertMenuItemW(menu, ++index, TRUE, &menuItem);
+		menuItem.dwTypeData = (LPSTR)"&Restore Hidden References";
+		InsertMenuItemA(menu, ++index, TRUE, &menuItem);
+
+		menuItem.wID = RESERVED_NO_CALLBACK;
+		menuItem.fMask = MIIM_FTYPE | MIIM_ID;
+		menuItem.fType = MFT_SEPARATOR;
+		InsertMenuItemA(menu, ++index, TRUE, &menuItem);
+
+		menuItem.wID = SAVE_STATE_TO_QUICKSTART;
+		menuItem.fMask = MIIM_FTYPE | MIIM_STRING | MIIM_ID | MIIM_STATE;
+		menuItem.fType = MFT_STRING;
+		menuItem.fState = (recordHandler->activeModCount > 0) ? MFS_ENABLED : MFS_DISABLED;
+		menuItem.dwTypeData = (LPSTR)"Save State to QuickStart";
+		InsertMenuItemA(menu, ++index, TRUE, &menuItem);
+
+		menuItem.wID = CLEAR_STATE_FROM_QUICKSTART;
+		menuItem.fMask = MIIM_FTYPE | MIIM_STRING | MIIM_ID | MIIM_STATE;
+		menuItem.fType = MFT_STRING;
+		menuItem.fState = settings.quickstart.enabled ? MFS_ENABLED : MFS_DISABLED;
+		menuItem.dwTypeData = (LPSTR)"Clear QuickStart";
+		InsertMenuItemA(menu, ++index, TRUE, &menuItem);
 
 		POINT p;
 		GetCursorPos(&p);
@@ -783,7 +877,6 @@ namespace se::cs::dialog::render_window {
 		
 		switch (result) {
 		case RESERVED_ERROR:
-			log::stream << "Unknown error " << GetLastError() << " encountered when displaying render window context menu!" << std::endl;
 			break;
 		case HIDE_SELECTION:
 			hideSelectedReferences();
@@ -809,6 +902,12 @@ namespace se::cs::dialog::render_window {
 		case SET_SNAPPING_AXIS_NEGATIVE_Z:
 			snappingAxis = SnappingAxis::NEGATIVE_Z;
 			break;
+		case SAVE_STATE_TO_QUICKSTART:
+			saveRenderStateToQuickStart();
+			break;
+		case CLEAR_STATE_FROM_QUICKSTART:
+			clearRenderStateFromQuickStart();
+			break;
 		default:
 			log::stream << "Unknown render window context menu ID " << result << " used!" << std::endl;
 		}
@@ -822,11 +921,17 @@ namespace se::cs::dialog::render_window {
 		PatchDialogProc_preventMainHandler = true;
 	}
 
+	inline void PatchDialogProc_OnRMouseButtonDown(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+		constexpr auto comboPickLandscapeTexture = MK_CONTROL | MK_RBUTTON;
+		if ((wParam & comboPickLandscapeTexture) == comboPickLandscapeTexture) {
+			if (PickLandscapeTexture(hWnd)) {
+				PatchDialogProc_preventMainHandler = true;
+			}
+		}
+	}
+
 	inline void PatchDialogProc_OnKeyDown(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		switch (wParam) {
-		case 'P':
-			PickLandscapeTexture(hWnd);
-			break;
 		case 'Q':
 			showContextAwareActionMenu(hWnd);
 			break;
@@ -840,6 +945,9 @@ namespace se::cs::dialog::render_window {
 		case WM_MOUSEMOVE:
 			lastRenderWindowPosX = LOWORD(lParam);
 			lastRenderWindowPosY = HIWORD(lParam);
+			break;
+		case WM_RBUTTONDOWN:
+			PatchDialogProc_OnRMouseButtonDown(hWnd, msg, wParam, lParam);
 			break;
 		}
 

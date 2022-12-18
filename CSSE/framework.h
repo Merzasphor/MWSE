@@ -45,6 +45,9 @@
 // URL: https://github.com/martinmoene/span-lite
 #include <nonstd/span.hpp>
 
+// 3rd party library: toml11
+#include <toml.hpp>
+
 // DirectInput/Sound requirements.
 #define DIRECTINPUT_VERSION 0x0800
 #include <control.h>

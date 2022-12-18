@@ -2,6 +2,7 @@
 
 #include "LogUtil.h"
 
+#include "CSDialogueInfo.h"
 #include "CSGameFile.h"
 #include "CSGameSetting.h"
 #include "CSRecordHandler.h"
@@ -16,10 +17,15 @@
 
 #include "MemoryUtil.h"
 
+#include "Settings.h"
+
 namespace se::cs {
 	using namespace memory;
 
+	constexpr auto LOG_SUPPRESSED_WARNINGS = false;
+
 	HMODULE hInstanceCSSE = NULL;
+
 	GameFile* master_Morrowind = nullptr;
 	GameFile* master_Tribunal = nullptr;
 	GameFile* master_Bloodmoon = nullptr;
@@ -58,12 +64,12 @@ namespace se::cs {
 			return TES3_GameSetting_SaveGameSetting(gameSetting, file);
 		}
 
-		const auto TES3_Dialogue_resolveLinks = reinterpret_cast<void(__thiscall*)(Dialogue*, void*)>(0x4F30C0);
-		void __fastcall suppressDialogueInfoResolveIssues(Dialogue* dialogue, DWORD _EDX_, void* recordHandler) {
-			const auto cachedValue = se::memory::MemAccess<bool>::Get(0x6D0B6E);
-			se::memory::MemAccess<bool>::Set(0x6D0B6E, true);
-			TES3_Dialogue_resolveLinks(dialogue, recordHandler);
-			se::memory::MemAccess<bool>::Set(0x6D0B6E, cachedValue);
+		void __cdecl suppressDialogueInfoResolveIssues(const char* format, const char* topicId, const char* infoId, const char* text) {
+			if constexpr (LOG_SUPPRESSED_WARNINGS) {
+				char buffer[1024];
+				sprintf_s(buffer, format, topicId, infoId, text);
+				log::stream << "Suppressing warning: " << buffer << std::endl;
+			}
 		}
 
 		const auto ShowDuplicateReferenceWarning = reinterpret_cast<bool(__cdecl*)(const char*, int)>(0x40123A);
@@ -88,8 +94,11 @@ namespace se::cs {
 		// Patch: Prevent GMST pollution.
 		genJumpEnforced(0x4042B4, 0x4F9BE0, reinterpret_cast<DWORD>(patch::preventGMSTPollution));
 
-		// Patch: Suppress "[Following/Previous] string is different for topic" warning popups for vanilla masters.
-		genJumpEnforced(0x4023BA, 0x4F30C0, reinterpret_cast<DWORD>(patch::suppressDialogueInfoResolveIssues));
+		// Patch: Suppress "[Following/Previous] string is different for topic" warnings. They're pointless.
+		genCallEnforced(0x4F3186, 0x40123A, reinterpret_cast<DWORD>(patch::suppressDialogueInfoResolveIssues));
+		genCallEnforced(0x4F31AA, 0x40123A, reinterpret_cast<DWORD>(patch::suppressDialogueInfoResolveIssues));
+		genCallEnforced(0x4F3236, 0x40123A, reinterpret_cast<DWORD>(patch::suppressDialogueInfoResolveIssues));
+		genCallEnforced(0x4F325A, 0x40123A, reinterpret_cast<DWORD>(patch::suppressDialogueInfoResolveIssues));
 
 		// Patch: Suppress "1 duplicate references were removed" warning popups for vanilla masters.
 		genCallEnforced(0x50A9ED, 0x40123A, reinterpret_cast<DWORD>(patch::suppressDuplicateReferenceRemovedWarningForVanillaMasters));
@@ -106,6 +115,8 @@ namespace se::cs {
 	void attachToProcess(HMODULE hModule) {
 		hInstanceCSSE = hModule;
 
+		settings.load();
+
 		// Open our log file.
 		log::stream.open("csse.log");
 
@@ -115,12 +126,20 @@ namespace se::cs {
 		// Report successful initialization.
 		log::stream << "CSSE initialization complete." << std::endl;
 	}
+
+	void detachFromProcess() {
+		settings.save();
+		log::stream << "CSSE detached from CS process." << std::endl;
+	}
 }
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved) {
 	switch (ul_reason_for_call) {
 	case DLL_PROCESS_ATTACH:
 		se::cs::attachToProcess(hModule);
+		break;
+	case DLL_PROCESS_DETACH:
+		se::cs::detachFromProcess();
 		break;
 	}
 	return TRUE;

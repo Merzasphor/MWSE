@@ -3,6 +3,7 @@
 namespace se::cs {
 	struct AnimatedObject;
 	struct BaseObject;
+	struct Cell;
 	struct DataHandler;
 	struct Dialogue;
 	struct DialogueInfo;
@@ -15,6 +16,7 @@ namespace se::cs {
 	struct PhysicalObject;
 	struct RecordHandler;
 	struct Reference;
+	struct Script;
 	struct Static;
 
 	struct BaseObject_VirtualTable;

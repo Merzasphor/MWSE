@@ -72,6 +72,8 @@ namespace se::cs::dialog::object_window {
 	// Patch: Extend Object Window message handling.
 	//
 
+	bool blockNormalExecution = false;
+
 	void CALLBACK PatchDialogProc_BeforeSize(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam) {
 		// Update view menu.
 		auto mainWindow = GetMenu(ghWndMainWindow::get());
@@ -110,6 +112,7 @@ namespace se::cs::dialog::object_window {
 		auto width = std::min<int>(tabContentRect.right - tabContentRect.left, 500);
 		SetWindowPos(searchLabel, NULL, tabContentRect.right - width - 58, tabContentRect.bottom + 7, 54, 22, 0);
 		SetWindowPos(objectWindowSearchControl, NULL, tabContentRect.right - width, tabContentRect.bottom + 4, width, 24, SWP_DRAWFRAME);
+		RedrawWindow(objectWindowSearchControl, NULL, NULL, RDW_ERASE | RDW_FRAME | RDW_INVALIDATE | RDW_ALLCHILDREN);
 	}
 
 	void CALLBACK PatchDialogProc_AfterCreate(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
@@ -140,6 +143,11 @@ namespace se::cs::dialog::object_window {
 			if (keydownHDR->wVKey == 'F' && isKeyDown(VK_CONTROL)) {
 				SetFocus(objectWindowSearchControl);
 			}
+		}
+		else if (hdr->code == LVN_MARQUEEBEGIN) {
+			// I've tried subclassing, blocking this notification, changing styles, and so much else.
+			// Somehow, this is the only thing that has worked...
+			Sleep(20);
 		}
 	}
 
@@ -198,7 +206,7 @@ namespace se::cs::dialog::object_window {
 	}
 
 	LRESULT CALLBACK PatchDialogProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-		bool blockNormalExecution = false;
+		blockNormalExecution = false;
 
 		// Handle pre-patches.
 		switch (msg) {
