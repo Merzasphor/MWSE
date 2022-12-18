@@ -1236,11 +1236,11 @@ The amount of ammo for the ranged weapon that that was last equipped.
 
 ### `levelUpProgress`
 
-The progress the player has made towards leveling up.
+The progress the player has made towards leveling up. Equal to the total amount of Minor and Major skill increases during the current level. This value can be larger than 10.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -1662,7 +1662,7 @@ How many hours are left while resting.
 
 **Returns**:
 
-* `result` (number)
+* `result` (integer)
 
 ***
 
@@ -1759,6 +1759,9 @@ Direct access to the actor's silence effect attribute.
 ### `skillProgress`
 
 *Read-only*. Array-style table access to skill progress for each of the 27 skills.
+
+!!! attention
+	The first index in the array is 1, but skill indices in tes3.skill table start from 0.
 
 **Returns**:
 
@@ -2245,7 +2248,7 @@ local result = myObject:equipMagic({ source = ..., itemData = ..., equipItem = .
 
 ### `exerciseSkill`
 
-Exercises a skill, providing experience in it.
+Exercises a skill, providing experience in it. Invokes `exerciseSkill` event.
 
 ```lua
 myObject:exerciseSkill(skill, progress)
@@ -2253,7 +2256,7 @@ myObject:exerciseSkill(skill, progress)
 
 **Parameters**:
 
-* `skill` (number): The skill index to give experience to.
+* `skill` (integer): The skill index to give experience to. Maps to values from [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) table.
 * `progress` (number): The amount of experience to grant.
 
 ***
@@ -2326,7 +2329,7 @@ local timestamp = myObject:getPowerUseTimestamp(power)
 
 ### `getSkillProgressRequirement`
 
-Returns the total progress needed to progress the skill to the next level.
+Returns the total progress needed to progress the skill to the next level. The actual amount of progress needed is the floor of the value returned by this function.
 
 ```lua
 local progressNeeded = myObject:getSkillProgressRequirement(skill)
@@ -2334,7 +2337,7 @@ local progressNeeded = myObject:getSkillProgressRequirement(skill)
 
 **Parameters**:
 
-* `skill` (number): The skill index to check.
+* `skill` (integer): The skill index to check. Maps to values from [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) table.
 
 **Returns**:
 
@@ -2503,7 +2506,7 @@ myObject:progressSkillLevelIfRequirementsMet(skill)
 
 **Parameters**:
 
-* `skill` (number): The skill index to check for leveling.
+* `skill` (integer): The skill index to check for leveling. Maps to values from [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) table.
 
 ***
 
@@ -2517,11 +2520,11 @@ local newLevel = myObject:progressSkillToNextLevel(skill)
 
 **Parameters**:
 
-* `skill` (number): The skill index to increase.
+* `skill` (integer): The skill index to increase. Maps to values from [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) table.
 
 **Returns**:
 
-* `newLevel` (number)
+* `newLevel` (integer)
 
 ***
 

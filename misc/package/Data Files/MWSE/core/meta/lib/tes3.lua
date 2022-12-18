@@ -2305,18 +2305,18 @@ function tes3.setLockLevel(params) end
 --- This function sets the player's mark location to the one specified.
 --- @param params tes3.setMarkLocation.params This table accepts the following values:
 --- 
---- `position`: tes3vector3 — Coordinates of the mark's position.
+--- `position`: tes3vector3|number[] — Coordinates of the mark's position.
 --- 
---- `rotation`: number? — *Default*: `Player's current rotation.`. This argument controls which direction the player's mark location will be facing.
+--- `rotation`: number? — *Default*: `tes3.player.orientation.z`. This argument controls which direction the player's mark location will be facing.
 --- 
---- `cell`: tes3cell? — *Optional*. A cell in which the mark should be placed.
+--- `cell`: tes3cell? — *Optional*. A cell in which the mark should be placed. This argument is unnecessary when setting the Mark's location to an exterior cell.
 function tes3.setMarkLocation(params) end
 
 ---Table parameter definitions for `tes3.setMarkLocation`.
 --- @class tes3.setMarkLocation.params
---- @field position tes3vector3 Coordinates of the mark's position.
---- @field rotation number? *Default*: `Player's current rotation.`. This argument controls which direction the player's mark location will be facing.
---- @field cell tes3cell? *Optional*. A cell in which the mark should be placed.
+--- @field position tes3vector3|number[] Coordinates of the mark's position.
+--- @field rotation number? *Default*: `tes3.player.orientation.z`. This argument controls which direction the player's mark location will be facing.
+--- @field cell tes3cell? *Optional*. A cell in which the mark should be placed. This argument is unnecessary when setting the Mark's location to an exterior cell.
 
 --- This function sets the owner of a reference.
 --- @param params tes3.setOwner.params This table accepts the following values:

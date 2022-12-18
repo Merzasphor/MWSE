@@ -165,8 +165,8 @@ tes3ui.createResponseText({ text = ..., type = ..., index = ... })
 
 * `params` (table)
 	* `text` (string): The text to display.
-	* `type` (number): *Optional*. The type for the response. Defaults to `choice` responses.
-	* `index` (number): *Optional*. The answer index for the response. Only used for `choice` responses.
+	* `type` (integer): *Default*: `2`. The type for the response. Defaults to `choice` responses. If set to `1`, a title will be made. Value of `0` corresponds to the main text, and value of `2` corresponds to red clickable choice text.
+	* `index` (integer): *Optional*. The answer index for the response. Only used for `choice` responses.
 
 ***
 

@@ -3923,9 +3923,9 @@ tes3.setMarkLocation({ position = ..., rotation = ..., cell = ... })
 **Parameters**:
 
 * `params` (table)
-	* `position` ([tes3vector3](../../types/tes3vector3)): Coordinates of the mark's position.
-	* `rotation` (number): *Default*: `Player's current rotation.`. This argument controls which direction the player's mark location will be facing.
-	* `cell` ([tes3cell](../../types/tes3cell)): *Optional*. A cell in which the mark should be placed.
+	* `position` ([tes3vector3](../../types/tes3vector3), number[]): Coordinates of the mark's position.
+	* `rotation` (number): *Default*: `tes3.player.orientation.z`. This argument controls which direction the player's mark location will be facing.
+	* `cell` ([tes3cell](../../types/tes3cell)): *Optional*. A cell in which the mark should be placed. This argument is unnecessary when setting the Mark's location to an exterior cell.
 
 ***
 

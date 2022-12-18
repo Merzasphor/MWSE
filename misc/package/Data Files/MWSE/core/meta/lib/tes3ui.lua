@@ -80,16 +80,16 @@ function tes3ui.createMenu(params) end
 --- 
 --- `text`: string — The text to display.
 --- 
---- `type`: number? — *Optional*. The type for the response. Defaults to `choice` responses.
+--- `type`: integer? — *Default*: `2`. The type for the response. Defaults to `choice` responses. If set to `1`, a title will be made. Value of `0` corresponds to the main text, and value of `2` corresponds to red clickable choice text.
 --- 
---- `index`: number? — *Optional*. The answer index for the response. Only used for `choice` responses.
+--- `index`: integer? — *Optional*. The answer index for the response. Only used for `choice` responses.
 function tes3ui.createResponseText(params) end
 
 ---Table parameter definitions for `tes3ui.createResponseText`.
 --- @class tes3ui.createResponseText.params
 --- @field text string The text to display.
---- @field type number? *Optional*. The type for the response. Defaults to `choice` responses.
---- @field index number? *Optional*. The answer index for the response. Only used for `choice` responses.
+--- @field type integer? *Default*: `2`. The type for the response. Defaults to `choice` responses. If set to `1`, a title will be made. Value of `0` corresponds to the main text, and value of `2` corresponds to red clickable choice text.
+--- @field index integer? *Optional*. The answer index for the response. Only used for `choice` responses.
 
 --- Creates a tooltip menu, which can be an empty menu, an item tooltip, or a spell tooltip. This should be called from within a tooltip event callback. These automatically follow the mouse cursor, and are also destroyed automatically when the mouse leaves the originating element. Creating an item tooltip will invoke the uiObjectTooltip event.
 ---

@@ -23,6 +23,6 @@ event.register(tes3.event.skillRaised, skillRaisedCallback)
 ## Event Data
 
 * `level` (number): *Read-only*. The new level of the skill.
-* `skill` (number): *Read-only*. The skill that gained a new level experience.
-* `source` (string): The source of the skill raise. Maps to values in [`tes3.skillRaiseSource`](https://mwse.github.io/MWSE/references/skill-raise-sources/) enumeration.
+* `skill` (integer): *Read-only*. The skill that gained a new level experience. Maps to values from [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) table.
+* `source` (string): *Read-only*. The source of the skill raise. Maps to values in [`tes3.skillRaiseSource`](https://mwse.github.io/MWSE/references/skill-raise-sources/) enumeration.
 

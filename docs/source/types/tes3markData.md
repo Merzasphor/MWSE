@@ -31,7 +31,7 @@ The position to recall to.
 
 ### `rotation`
 
-The rotation to use when recalling.
+The rotation to use when recalling. It's the Euler rotation around the Z axis in Radians.
 
 **Returns**:
 

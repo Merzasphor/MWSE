@@ -39,8 +39,8 @@ tes3combatSession = {}
 --- @param equipmentStack tes3equipmentStack An item to equip.
 function tes3combatSession:changeEquipment(equipmentStack) end
 
---- Selects the alchemy item with the greatest value, for a given effect ID and loads it into the `selectedAlchemy` property.
---- @param id number No description yet available.
+--- Selects the alchemy item with the greatest value, for a given effect ID and loads it into the `selectedItem` property.
+--- @param id integer No description yet available.
 --- @return number result No description yet available.
 function tes3combatSession:selectAlchemyWithEffect(id) end
 

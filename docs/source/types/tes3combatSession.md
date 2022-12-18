@@ -162,7 +162,7 @@ myObject:changeEquipment(equipmentStack)
 
 ### `selectAlchemyWithEffect`
 
-Selects the alchemy item with the greatest value, for a given effect ID and loads it into the `selectedAlchemy` property.
+Selects the alchemy item with the greatest value, for a given effect ID and loads it into the `selectedItem` property.
 
 ```lua
 local result = myObject:selectAlchemyWithEffect(id)
@@ -170,7 +170,7 @@ local result = myObject:selectAlchemyWithEffect(id)
 
 **Parameters**:
 
-* `id` (number)
+* `id` (integer)
 
 **Returns**:
 

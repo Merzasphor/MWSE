@@ -8,5 +8,5 @@
 --- @class skillRaisedEventData
 --- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.
 --- @field level number *Read-only*. The new level of the skill.
---- @field skill number *Read-only*. The skill that gained a new level experience.
---- @field source string The source of the skill raise. Maps to values in [`tes3.skillRaiseSource`](https://mwse.github.io/MWSE/references/skill-raise-sources/) enumeration.
+--- @field skill integer *Read-only*. The skill that gained a new level experience. Maps to values from [`tes3.skill`](https://mwse.github.io/MWSE/references/skills/) table.
+--- @field source string *Read-only*. The source of the skill raise. Maps to values in [`tes3.skillRaiseSource`](https://mwse.github.io/MWSE/references/skill-raise-sources/) enumeration.

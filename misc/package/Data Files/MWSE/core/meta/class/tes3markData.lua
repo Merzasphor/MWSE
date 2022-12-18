@@ -8,6 +8,6 @@
 --- @class tes3markData
 --- @field cell tes3cell *Read-only*. The cell to recall to.
 --- @field position tes3vector3 The position to recall to.
---- @field rotation number The rotation to use when recalling.
+--- @field rotation number The rotation to use when recalling. It's the Euler rotation around the Z axis in Radians.
 tes3markData = {}
 
