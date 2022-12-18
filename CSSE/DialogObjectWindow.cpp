@@ -7,7 +7,9 @@
 
 #include "NIIteratedList.h"
 
-#include "CSBaseObject.h"
+#include "CSObject.h"
+
+#include "Settings.h"
 
 namespace se::cs::dialog::object_window {
 	using namespace memory;
@@ -53,16 +55,27 @@ namespace se::cs::dialog::object_window {
 	static std::string currentSearchText;
 
 	const auto CS_AddObjectToWindow = reinterpret_cast<bool(__stdcall*)(LPARAM, BaseObject*)>(0x43C260);
-	bool CALLBACK PatchFilterObjectWindow(LPARAM a1, BaseObject* object) {
+	bool CALLBACK PatchFilterObjectWindow(LPARAM a1, Object* object) {
 		if (currentSearchText.empty()) {
 			return CS_AddObjectToWindow(a1, object);
 		}
 
-		std::string objectId = object->getObjectID();
-		string::to_lower(objectId);
+		if (settings.object_window.filter_by_id) {
+			std::string objectId = object->getObjectID();
+			string::to_lower(objectId);
 
-		if (objectId.find(currentSearchText) != std::string::npos) {
-			return CS_AddObjectToWindow(a1, object);
+			if (objectId.find(currentSearchText) != std::string::npos) {
+				return CS_AddObjectToWindow(a1, object);
+			}
+		}
+
+		if (settings.object_window.filter_by_name) {
+			std::string name = object->getName();
+			string::to_lower(name);
+
+			if (name.find(currentSearchText) != std::string::npos) {
+				return CS_AddObjectToWindow(a1, object);
+			}
 		}
 
 		return false;
@@ -154,7 +167,7 @@ namespace se::cs::dialog::object_window {
 	inline void OnNotifyFromMainTabControl(HWND hWnd, UINT msg, WPARAM id, LPARAM lParam) {
 		const auto hdr = (NMHDR*)lParam;
 
-		if (hdr->code == TCN_SELCHANGING) {
+		if (hdr->code == TCN_SELCHANGING && settings.object_window.clear_on_tab_switch) {
 			SetWindowTextA(objectWindowSearchControl, "");
 		}
 	}
@@ -225,7 +238,7 @@ namespace se::cs::dialog::object_window {
 		}
 
 		if (blockNormalExecution) {
-			return TRUE;
+			return DefWindowProcA(hWnd, msg, wParam, lParam);
 		}
 
 		// Call original function.

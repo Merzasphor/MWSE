@@ -9,6 +9,15 @@ namespace se::cs {
 			toml::value into_toml() const;
 		} render_window;
 
+		struct ObjectWindowSettings {
+			bool clear_on_tab_switch = true;
+			bool filter_by_id = true;
+			bool filter_by_name = true;
+
+			void from_toml(const toml::value& v);
+			toml::value into_toml() const;
+		} object_window;
+
 		struct QuickstartSettings {
 			bool enabled = true;
 			std::vector<std::string> data_files = {};
