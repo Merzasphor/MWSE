@@ -575,10 +575,15 @@ namespace se::cs::dialog::render_window {
 
 	constexpr auto landscapeEditWindowId = 203;
 
-	void PickLandscapeTexture(HWND hWnd) {
+	bool PickLandscapeTexture(HWND hWnd) {
 		auto editorWindow = memory::MemAccess<HWND>::Get(0x6CE95C);
 		if (!editorWindow) {
-			return;
+			return false;
+		}
+
+		// Make sure that we're not in color mode.
+		if (IsDlgButtonChecked(editorWindow, 1008)) {
+			return false;
 		}
 
 		auto rendererPicker = reinterpret_cast<NI::Pick*>(0x6CF528);
@@ -614,6 +619,7 @@ namespace se::cs::dialog::render_window {
 									if (landTexture) {
 										if (landTexture->texture == baseMap->texture) {
 											ListView_SetItemState(textureList, row, LVIS_SELECTED, LVIS_SELECTED);
+											ListView_EnsureVisible(textureList, row, TRUE);
 											break;
 										}
 									}
@@ -628,6 +634,8 @@ namespace se::cs::dialog::render_window {
 		// Restore pick settings.
 		rendererPicker->clearResults();
 		rendererPicker->root = previousRoot;
+
+		return true;
 	}
 
 	void hideSelectedReferences() {
@@ -913,11 +921,17 @@ namespace se::cs::dialog::render_window {
 		PatchDialogProc_preventMainHandler = true;
 	}
 
+	inline void PatchDialogProc_OnRMouseButtonDown(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+		constexpr auto comboPickLandscapeTexture = MK_CONTROL | MK_RBUTTON;
+		if ((wParam & comboPickLandscapeTexture) == comboPickLandscapeTexture) {
+			if (PickLandscapeTexture(hWnd)) {
+				PatchDialogProc_preventMainHandler = true;
+			}
+		}
+	}
+
 	inline void PatchDialogProc_OnKeyDown(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		switch (wParam) {
-		case 'P':
-			PickLandscapeTexture(hWnd);
-			break;
 		case 'Q':
 			showContextAwareActionMenu(hWnd);
 			break;
@@ -931,6 +945,9 @@ namespace se::cs::dialog::render_window {
 		case WM_MOUSEMOVE:
 			lastRenderWindowPosX = LOWORD(lParam);
 			lastRenderWindowPosY = HIWORD(lParam);
+			break;
+		case WM_RBUTTONDOWN:
+			PatchDialogProc_OnRMouseButtonDown(hWnd, msg, wParam, lParam);
 			break;
 		}
 

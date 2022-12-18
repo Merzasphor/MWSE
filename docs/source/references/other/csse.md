@@ -68,7 +68,7 @@ If you are using [Construction Set Better UI](https://www.nexusmods.com/morrowin
 The following changes to the rendering window apply when landscape editing:
 
 * The terrain editing disc is no longer hidden when hiding objects (Shift+C).
-* You can use the P key to sample the texture at the cursor's position. This will select the matching texture under the cursor automatically in the landscape editing menu.
+* You can use control+right mouse button to sample the texture at the cursor's position. This will select the matching texture under the cursor automatically in the landscape editing menu.
 
 ### Search & Replace Window
 
