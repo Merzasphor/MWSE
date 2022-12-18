@@ -12,9 +12,11 @@ local ansicolors = require("logging.colors")
 ---@field name string Name of mod, also counts as unique id of logger
 ---@field outputFile string? Optional. If set, logs will be sent to a file of this name
 ---@field logLevel MWSELoggerLogLevels? Set the log level. Options are: TRACE, DEBUG, INFO, WARN, ERROR and NONE
+---@field logToConsole boolean? Default: `false`. If set to `true`, all the logged messages will also be logged to console
 
 ---@class MWSELogger
 ---@field name string Name of mod, also counts as unique id of logger
+---@field logToConsole boolean If `true`, all the logged messages will also be logged to console
 ---@field doLog fun(self: MWSELogger, logLevel: MWSELoggerLogLevels): boolean Check log level to determine if log should be written out
 ---@field info fun(self: MWSELogger, message: string, ...) Log info message
 ---@field debug fun(self: MWSELogger, message: string, ...) Log debug message
@@ -56,6 +58,14 @@ end
 
 --- Creates a new instance of a logger.
 ---@param data MWSELoggerInputData
+---
+--- `name`: string — Name of mod, also counts as unique id of logger
+---
+--- `outputFile`: string? *Optional*. If set, logs will be sent to a file of this name
+---
+--- `logLevel`: MWSELoggerLogLevels? Set the log level. Options are: TRACE, DEBUG, INFO, WARN, ERROR and NONE
+---
+--- `logToConsole` boolean? Default: `false`. If set to `true`, all the messages will be logged to console
 ---@return MWSELogger
 function Logger.new(data)
 	local newLogger = table.copy(data) ---@class MWSELogger
@@ -122,8 +132,12 @@ function Logger:write(logLevel, color, message, ...)
 	local output = string.format("[%s: %s] %s", self.name, logLevel, tostring(message):format(...))
 
 	-- Add log colors if enabled
-	if mwse.getConfig("EnableLogColors") then
+	if mwse.getConfig("EnableLogColors") then ---@diagnostic disable-line: undefined-field
 		output = addColor(output, color)
+	end
+
+	if self.logToConsole then
+		tes3ui.log(output)
 	end
 
 	-- Prints to custom file if defined
