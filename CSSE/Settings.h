@@ -9,6 +9,18 @@ namespace se::cs {
 			toml::value into_toml() const;
 		} render_window;
 
+		struct QuickstartSettings {
+			bool enabled = true;
+			std::vector<std::string> data_files = {};
+			std::string active_file;
+			std::string cell = {};
+			std::array<float, 3> position = { 0.0f, 0.0f, 0.0f };
+			std::array<float, 3> orientation = { 0.0f, 0.0f, 0.0f };
+
+			void from_toml(const toml::value& v);
+			toml::value into_toml() const;
+		} quickstart;
+
 		void load();
 		void save();
 

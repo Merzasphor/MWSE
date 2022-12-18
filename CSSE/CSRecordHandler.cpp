@@ -10,4 +10,9 @@ namespace se::cs {
 		const auto RecordHandler_getCellByIndex = reinterpret_cast<Cell*(__thiscall*)(const RecordHandler*, size_t)>(0x401230);
 		return RecordHandler_getCellByIndex(this, index);
 	}
+
+	Cell* RecordHandler::getCellByID(const char* id) const {
+		const auto RecordHandler_getCellByID = reinterpret_cast<Cell * (__thiscall*)(const RecordHandler*, const char*)>(0x403B66);
+		return RecordHandler_getCellByID(this, id);
+	}
 }

@@ -88,7 +88,7 @@ namespace se::cs {
 		int unknown_140;
 		int unknown_144;
 		int unknown_148;
-		void* lightingController; // 0x14C
+		Cell* currentInteriorCell; // 0x14C
 		void* interiorCellBuffer; // 0x150
 		void* exteriorCellBuffer; // 0x154
 		int unknown_158;

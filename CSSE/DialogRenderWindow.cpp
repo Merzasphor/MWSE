@@ -11,7 +11,9 @@
 #include "NINode.h"
 #include "NIPick.h"
 
+#include "CSCell.h"
 #include "CSDataHandler.h"
+#include "CSGameFile.h"
 #include "CSLandTexture.h"
 #include "CSLight.h"
 #include "CSRecordHandler.h"
@@ -35,6 +37,7 @@ namespace se::cs::dialog::render_window {
 	using gRotationFlags = memory::ExternalGlobal<BYTE, 0x6CE9A4>;
 	using gCumulativeRotationValues = memory::ExternalGlobal<NI::Vector3, 0x6CF760>;
 	using gRenderWindowPick = memory::ExternalGlobal<NI::Pick, 0x6CF528>;
+	using gCurrentCell = memory::ExternalGlobal<Cell*, 0x6CF7B8>;
 
 	// TODO: Move to real definition file.
 	struct TranslationData {
@@ -116,17 +119,6 @@ namespace se::cs::dialog::render_window {
 	};
 	static_assert(sizeof(NetImmerseInstance) == 0x64, "CS::NetImmerseInstance failed size validation");
 	static_assert(sizeof(NetImmerseInstance::VirtualTable) == 0x64, "CS::NetImmerseInstance's virtual table failed size validation");
-
-	struct RenderController {
-		NetImmerseInstance* niInstance; // 0x0
-		NI::Node* node; // 0x4
-		NI::Camera* camera; // 0x8
-
-		static inline auto get() {
-			return memory::ExternalGlobal<RenderController*, 0x6CF77C>::get();
-		}
-	};
-	static_assert(sizeof(RenderController) == 0xC, "CS::RenderController failed size validation");
 
 	struct SceneGraphController {
 		NI::Node* sceneRoot;
@@ -477,9 +469,9 @@ namespace se::cs::dialog::render_window {
 					auto attachedLightData = reference->getLightAttachment();
 					if (object->objectType == ObjectType::Light && attachedLightData) {
 						auto baseObjectLight = static_cast<Light*>(object);
-						if (dataHandler->lightingController) {
+						if (dataHandler->currentInteriorCell) {
 							attachedLightData->light->detachAllAffectedNodes();
-							baseObjectLight->updateLightingData(attachedLightData->light, dataHandler->lightingController);
+							baseObjectLight->updateLightingData(attachedLightData->light, dataHandler->currentInteriorCell);
 						}
 						else {
 							dataHandler->updateAllLights();
@@ -673,12 +665,70 @@ namespace se::cs::dialog::render_window {
 		unhideNode(SceneGraphController::get()->objectRoot);
 	}
 
+	void saveRenderStateToQuickStart() {
+		auto renderController = RenderController::get();
+		auto dataHandler = DataHandler::get();
+		auto recordHandler = dataHandler->recordHandler;
+		auto& quickstart = settings.quickstart;
+
+		// Store camera position.
+		quickstart.position[0] = renderController->camera->worldTransform.translation.x;
+		quickstart.position[1] = renderController->camera->worldTransform.translation.y;
+		quickstart.position[2] = renderController->camera->worldTransform.translation.z;
+
+		// Store camera orientation as euler angle.
+		NI::Vector3 orientationVector;
+		renderController->node->getLocalRotationMatrix()->toEulerXYZ(&orientationVector);
+		quickstart.orientation[0] = orientationVector.x;
+		quickstart.orientation[1] = orientationVector.y;
+		quickstart.orientation[2] = orientationVector.z;
+
+		// If we're in an interior, store the cell ID.
+		auto currentCell = gCurrentCell::get();
+		if (currentCell == dataHandler->currentInteriorCell) {
+			quickstart.cell = gCurrentCell::get()->getObjectID();
+		}
+		else {
+			quickstart.cell.clear();
+		}
+
+		// Store the active game file list.
+		quickstart.data_files.clear();
+		for (auto i = 0; i < recordHandler->activeModCount; ++i) {
+			quickstart.data_files.push_back(recordHandler->activeGameFiles[i]->fileName);
+		}
+		
+		// Also store the current file set as active.
+		if (recordHandler->activeFile) {
+			quickstart.active_file = recordHandler->activeFile->fileName;
+		}
+
+		quickstart.enabled = true;
+
+		settings.save();
+	}
+
+	void clearRenderStateFromQuickStart() {
+		auto renderController = RenderController::get();
+		auto& quickstart = settings.quickstart;
+
+		quickstart.enabled = false;
+		quickstart.data_files.clear();
+		quickstart.active_file.clear();
+		quickstart.cell.clear();
+		quickstart.position = { 0.0f, 0.0f, 0.0f };
+		quickstart.orientation = { 0.0f, 0.0f, 0.0f };
+
+		settings.save();
+	}
+
 	void showContextAwareActionMenu(HWND hWndRenderWindow) {
 		auto menu = CreatePopupMenu();
 		if (menu == NULL) {
 			return;
 		}
 
+		auto recordHandler = DataHandler::get()->recordHandler;
 		auto translationData = TranslationData::get();
 		const bool hasReferencesSelected = translationData->numberOfTargets > 0;
 
@@ -693,6 +743,8 @@ namespace se::cs::dialog::render_window {
 			SET_SNAPPING_AXIS_NEGATIVE_Y,
 			SET_SNAPPING_AXIS_POSITIVE_Z,
 			SET_SNAPPING_AXIS_NEGATIVE_Z,
+			SAVE_STATE_TO_QUICKSTART,
+			CLEAR_STATE_FROM_QUICKSTART,
 		};
 
 		/*
@@ -787,6 +839,25 @@ namespace se::cs::dialog::render_window {
 		menuItem.dwTypeData = (LPSTR)"&Restore Hidden References";
 		InsertMenuItemA(menu, ++index, TRUE, &menuItem);
 
+		menuItem.wID = RESERVED_NO_CALLBACK;
+		menuItem.fMask = MIIM_FTYPE | MIIM_ID;
+		menuItem.fType = MFT_SEPARATOR;
+		InsertMenuItemA(menu, ++index, TRUE, &menuItem);
+
+		menuItem.wID = SAVE_STATE_TO_QUICKSTART;
+		menuItem.fMask = MIIM_FTYPE | MIIM_STRING | MIIM_ID | MIIM_STATE;
+		menuItem.fType = MFT_STRING;
+		menuItem.fState = (recordHandler->activeModCount > 0) ? MFS_ENABLED : MFS_DISABLED;
+		menuItem.dwTypeData = (LPSTR)"Save State to QuickStart";
+		InsertMenuItemA(menu, ++index, TRUE, &menuItem);
+
+		menuItem.wID = CLEAR_STATE_FROM_QUICKSTART;
+		menuItem.fMask = MIIM_FTYPE | MIIM_STRING | MIIM_ID | MIIM_STATE;
+		menuItem.fType = MFT_STRING;
+		menuItem.fState = settings.quickstart.enabled ? MFS_ENABLED : MFS_DISABLED;
+		menuItem.dwTypeData = (LPSTR)"Clear QuickStart";
+		InsertMenuItemA(menu, ++index, TRUE, &menuItem);
+
 		POINT p;
 		GetCursorPos(&p);
 
@@ -798,7 +869,6 @@ namespace se::cs::dialog::render_window {
 		
 		switch (result) {
 		case RESERVED_ERROR:
-			log::stream << "Unknown error " << GetLastError() << " encountered when displaying render window context menu!" << std::endl;
 			break;
 		case HIDE_SELECTION:
 			hideSelectedReferences();
@@ -823,6 +893,12 @@ namespace se::cs::dialog::render_window {
 			break;
 		case SET_SNAPPING_AXIS_NEGATIVE_Z:
 			snappingAxis = SnappingAxis::NEGATIVE_Z;
+			break;
+		case SAVE_STATE_TO_QUICKSTART:
+			saveRenderStateToQuickStart();
+			break;
+		case CLEAR_STATE_FROM_QUICKSTART:
+			clearRenderStateFromQuickStart();
 			break;
 		default:
 			log::stream << "Unknown render window context menu ID " << result << " used!" << std::endl;

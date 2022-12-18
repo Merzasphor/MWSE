@@ -19,7 +19,7 @@ namespace se::cs {
 		Substruct5C unknown_0x5C;
 		int unknown_0x74;
 
-		void updateLightingData(NI::Light* light, void* lightingController, bool flag = false);
+		void updateLightingData(NI::Light* light, Cell* cell, bool flag = false);
 	};
 	static_assert(sizeof(Light) == 0x78, "Light failed size validation");
 }

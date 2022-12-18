@@ -119,6 +119,7 @@
     <ClInclude Include="CSScript.h" />
     <ClInclude Include="CSStatic.h" />
     <ClInclude Include="DialogCellWindow.h" />
+    <ClInclude Include="DialogDataFilesWindow.h" />
     <ClInclude Include="DialogDialogueWindow.h" />
     <ClInclude Include="DialogObjectWindow.h" />
     <ClInclude Include="DialogRenderWindow.h" />
@@ -135,6 +136,7 @@
   <ItemGroup>
     <ClCompile Include="CSBaseObject.cpp" />
     <ClCompile Include="CSDataHandler.cpp" />
+    <ClCompile Include="CSGameFile.cpp" />
     <ClCompile Include="CSLight.cpp" />
     <ClCompile Include="CSModelLoader.cpp" />
     <ClCompile Include="CSPhysicalObject.cpp" />
@@ -142,6 +144,7 @@
     <ClCompile Include="CSScript.cpp" />
     <ClCompile Include="CSSE.cpp" />
     <ClCompile Include="DialogCellWindow.cpp" />
+    <ClCompile Include="DialogDataFilesWindow.cpp" />
     <ClCompile Include="DialogDialogueWindow.cpp" />
     <ClCompile Include="DialogObjectWindow.cpp" />
     <ClCompile Include="DialogRenderWindow.cpp" />
