@@ -64,34 +64,45 @@ namespace se::cs::dialog::dialogue_window {
 		allRelevantLocals.clear();
 		allCells.clear();
 
+		std::unordered_set<std::string> caseInsensitiveIDs;
+
 		auto recordHandler = DataHandler::get()->recordHandler;
 
 		// Gather all local variable names.
 		for (auto script : *recordHandler->scripts) {
 			for (auto i = 0; i < script->header.numShorts; ++i) {
 				auto rawId = script->getShortVarName(i);
-				if (rawId) {
-					std::string name = rawId;
-					if (!name.empty() && allRelevantLocals.find(name) == allRelevantLocals.end()) {
-						allRelevantLocals.insert({ std::move(name), 115 });
+				if (rawId && rawId[0] != '\0') {
+					std::string lowerId = rawId;
+					string::to_lower(lowerId);
+
+					if (caseInsensitiveIDs.find(lowerId) == caseInsensitiveIDs.end()) {
+						allRelevantLocals.insert({ rawId, 115 });
+						caseInsensitiveIDs.insert(lowerId);
 					}
 				}
 			}
 			for (auto i = 0; i < script->header.numLongs; ++i) {
 				auto rawId = script->getLongVarName(i);
-				if (rawId) {
-					std::string name = rawId;
-					if (!name.empty() && allRelevantLocals.find(name) == allRelevantLocals.end()) {
-						allRelevantLocals.insert({ std::move(name), 108 });
+				if (rawId && rawId[0] != '\0') {
+					std::string lowerId = rawId;
+					string::to_lower(lowerId);
+
+					if (caseInsensitiveIDs.find(lowerId) == caseInsensitiveIDs.end()) {
+						allRelevantLocals.insert({ rawId, 108 });
+						caseInsensitiveIDs.insert(lowerId);
 					}
 				}
 			}
 			for (auto i = 0; i < script->header.numFloats; ++i) {
 				auto rawId = script->getFloatVarName(i);
-				if (rawId) {
-					std::string name = rawId;
-					if (!name.empty() && allRelevantLocals.find(name) == allRelevantLocals.end()) {
-						allRelevantLocals.insert({ std::move(name), 102 });
+				if (rawId && rawId[0] != '\0') {
+					std::string lowerId = rawId;
+					string::to_lower(lowerId);
+
+					if (caseInsensitiveIDs.find(lowerId) == caseInsensitiveIDs.end()) {
+						allRelevantLocals.insert({ rawId, 102 });
+						caseInsensitiveIDs.insert(lowerId);
 					}
 				}
 			}
