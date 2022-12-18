@@ -46,6 +46,10 @@ For a list of all the available features supported by our documentation see Mate
 
 The following admonition classes are available: `abstract`, `attention`, `bug`, `caution`, `check`, `cite`, `danger`, `done`, `error`, `example`, `fail`, `failure`, `faq`, `help`, `hint`, `important`, `info`, `missing`, `note`, `question`, `quote`, `success`, `summary`, `tip`, `tldr`, `todo`, `warning`.
 
+### Diagrams
+
+You can write diagrams using Mermaid.js annotation. Mermaid syntax is covered in detail in its [documentation](https://mermaid-js.github.io/mermaid/#/flowchart). For quick editing, you can write your concept online [here](https://mermaid-js.github.io/mermaid-live-editor/). For an example of such a diagram you can look at [The hierarchy of NetImmerse Classes](source/references/other/ni-class-hierarchy.md).
+
 ### Key Combinations
 
 To annotate key combinations with style you can use the syntax provided by markdown. A key or combination of key presses is surrounded by `++` with each key press separated with a single `+`. An example: `++ctrl+x++`. For more info see the related extension's [documentation](https://facelessuser.github.io/pymdown-extensions/extensions/keys/).
