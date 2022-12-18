@@ -112,6 +112,7 @@ namespace se::cs::dialog::object_window {
 		auto width = std::min<int>(tabContentRect.right - tabContentRect.left, 500);
 		SetWindowPos(searchLabel, NULL, tabContentRect.right - width - 58, tabContentRect.bottom + 7, 54, 22, 0);
 		SetWindowPos(objectWindowSearchControl, NULL, tabContentRect.right - width, tabContentRect.bottom + 4, width, 24, SWP_DRAWFRAME);
+		RedrawWindow(objectWindowSearchControl, NULL, NULL, RDW_ERASE | RDW_FRAME | RDW_INVALIDATE | RDW_ALLCHILDREN);
 	}
 
 	void CALLBACK PatchDialogProc_AfterCreate(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
