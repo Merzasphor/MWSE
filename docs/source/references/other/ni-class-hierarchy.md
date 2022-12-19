@@ -237,145 +237,18 @@ The types are arranged into functional groupings. Within each grouping, indentat
 ## Diagrammatic representation
 
 ```mermaid
-graph LR
-    A(niObject) --> B(niAccumulator);
-        B --> BA(niClusterAccumulator);
-            BA --> BAA(niAlphaAccumulator);
-
-    A --> C(niExtraData);
-        C --> CA(BrickNiExtraData);
-        C --> CB(TES3ObjectExtraData);
-        C --> CC(niStringExtraData);
-        C --> CD(niTextKeyExtraData);
-        C --> CE(niVertWeightsExtraData);
-
-    A --> D(niGeometryData);
-        D --> DA(niLinesData);
-        D --> DB(niParticlesData);
-            DB --> DBA(niAutoNormalParticlesData);
-            DB --> DBB(niRotatingParticlesData);
-        D --> DC(niTriBasedGeomData);
-            DC --> DCA(niTriShapeData);
-                DCA --> DCAA(niTriShapeDynamicData);
-            DC --> DCB(niTriStripsData);
-
-    A --> E(niObjectNET);
-        E --> EA(niAVObject);
-            EA --> EAA(niCamera);
-
-            EA --> EAB(niDynamicEffect);
-                EAB --> EABA(niTextureEffect);
-                EAB --> EABB(niLight);
-                    EABB --> EABBA(niAmbientLight);
-                    EABB --> EABBB(niDirectionalLight);
-                    EABB --> EABBC(niPointLight);
-                        EABBC --> EABBCA(niSpotLight);
-
-            EA --> EAC(niGeometry);
-                EAC --> EACA(niLines);
-                EAC --> EACB(niParticles);
-                    EACB --> EACBA(niAutoNormalParticles);
-                    EACB --> EACBB(niRotatingParticles);
-                EAC --> EACC(niTriBasedGeometry);
-                    EACC --> EACCA(niTriShape);
-                    EACC --> EACCB(niTriStrips);
-
-            EA --> EAD(niNode);
-                EAD --> EADA(AvoidNode);
-                EAD --> EADB(RootCollisionNode);
-                EAD --> EADC(niBillboardNode);
-                EAD --> EADD(niBSAnimationManager);
-                EAD --> EADE(niBSPNode);
-                EAD --> EADF(niCollisionSwitch);
-                EAD --> EADG(niSortAdjustNode);
-                EAD --> EADH(niBSAnimationNode);
-                    EADH --> EADHA(niBSParticleNode);
-                EAD --> EADI(niSwitchNode);
-                    EADI --> EADIA(niFltAnimationNode);
-                    EADI --> EADIB(niLODNode);
-
-        E --> EB(niProperty);
-            EB --> EBA(niAlphaProperty);
-            EB --> EBB(niDitherProperty);
-            EB --> EBC(niFogProperty);
-            EB --> EBD(niMaterialProperty);
-            EB --> EBE(niRendererSpecificProperty);
-            EB --> EBF(niShadeProperty);
-            EB --> EBG(niSpecularProperty);
-            EB --> EBH(niStencilProperty);
-            EB --> EBI(niTexturingProperty);
-            EB --> EBJ(niVertexColorProperty);
-            EB --> EBK(niWireframeProperty);
-            EB --> EBL(niZBufferProperty);
-
-        E --> EC(niSequenceStreamHelper);
-
-        E --> ED(niTexture);
-            ED --> EDA(niRenderedTexture);
-                EDA --> EDAA(niRenderedCubeMap);
-            ED --> EDB(niSourceTexture);
-
-    A --> F(niParticleModifier);
-        F --> FA(niGravity);
-        F --> FB(niParticleBomb);
-        F --> FC(niParticleCollider);
-            FC --> FCA(niPlanarCollider);
-            FC --> FCB(niSphericalCollider);
-        F --> FD(niParticleColorModifier);
-        F --> FE(niParticleGrowFade);
-        F --> FF(niParticleRotation);
-
-    A --> G(niRenderer);
-        G --> GA(niDX8Renderer);
-
-    A --> H(niTimeController);
-        H --> HA(niFlipController);
-        H --> HB(niFloatController);
-            HB --> HBA(niAlphaController);
-            HB --> HBB(niRollController);
-        H --> HC(niKeyframeController);
-        H --> HD(niKeyframeManager);
-        H --> HE(niLightColorController);
-        H --> HF(niLookAtController);
-        H --> HG(niMaterialColorController);
-        H --> HH(niMorpherController);
-            HH --> HHA(niGeomMorpherController);
-        H --> HI(niParticleSystemController);
-            HI --> HIA(niBSPArrayController);
-        H --> HJ(niPathController);
-        H --> HK(niUVController);
-        H --> HL(niVisController);
-
-    A --> I(niBltSource);
-    A --> J(niColorData);
-    A --> K(niEmitterModifier);
-    A --> L(niFloatData);
-    A --> M(niKeyframeData);
-    A --> N(niMorphData);
-    A --> O(niPalette);
-    A --> P(niPixelData);
-    A --> Q(niPosData);
-    A --> R(niScreenPolygon);
-    A --> S(niSequence);
-    A --> T(niSkinData);
-    A --> U(niSkinInstance);
-    A --> V(niSkinPartition);
-    A --> W(niUVData);
-    A --> X(niVisData);
-
-    %% Default style
-    classDef default color: #fafafa, fill:#434659, stroke:#e6e6e6, stroke-width:2px;
-
-    %% Turquoise
-    classDef notExposed color:#000, fill: #40E0D0, stroke: #333, stroke-width: 2px;
-    class DA,EAC,EACA,EACC,EDA,G,HA,HD,HK,Q,R,W notExposed;
-
-    %% YellowGreen
-    classDef notResearched color:#000, fill: #ADFF2F, stroke: #333, stroke-width: 2px;
-    class B,BA,BAA,CA,CE,DBA,DCAA,DCB,EACCB,EADA,EADB,EADD,EADE,EADG,EADH,EADHA,EADIA,EADIB,EBB,EBE,EBF,EBG,EBK,EC,EDAA,GA,HB,HBA,HBB,HE,HG,HH,HHA,HIA,HJ,HL,I,K,L,N,O,X notResearched;
-```
-
-```mermaid
+%%{
+    init: {
+        'er': {
+            'diagramPadding': 5,
+            'entityPadding': 5
+        },
+        'flowchart': {
+            'diagramPadding': 2,
+            'curve': 'monotoneX'
+        }
+    }
+}%%
 graph LR
 	A(niObject) --> B(niAccumulator);
 		B --> BA(niClusterAccumulator);
@@ -478,16 +351,26 @@ graph LR
 
 	%% Turquoise
 	classDef notExposed color:#000, fill: #40E0D0, stroke: #333, stroke-width: 2px;
-	class DA,EAC,EACA,EACC,EDA,G,HA,HD,HK,Q,R,W notExposed;
+	class DA,EDA,G,HA,HD,HK,Q,R,W notExposed;
 
 	%% YellowGreen
 	classDef notResearched color:#000, fill: #ADFF2F, stroke: #333, stroke-width: 2px;
-	class B,BA,BAA,CA,CE,DBA,DCAA,DCB,EACCB,EADA,EADB,EADD,EADE,EADG,EADH,EADHA,EADIA,EADIB,EBB,EBE,EBF,EBG,EBK,EC,EDAA,GA,HB,HBA,HBB,HE,HG,HH,HHA,HIA,HJ,HL,I,K,L,N,O,X notResearched;
+	class B,BA,BAA,CA,CE,DBA,DCAA,DCB,EBB,EBE,EBF,EBG,EBK,EC,EDAA,GA,HB,HBA,HBB,HE,HG,HH,HHA,HIA,HJ,HL,I,K,L,N,O,X notResearched;
 ```
 
-## The actual
-
 ```mermaid
+%%{
+    init: {
+        'er': {
+            'diagramPadding': 5,
+            'entityPadding': 5
+        },
+        'flowchart': {
+            'diagramPadding': 2,
+            'curve': 'monotoneX'
+        }
+    }
+}%%
 graph LR
     EA(niAVObject);
 	EA --> EAA(niCamera);
@@ -528,9 +411,9 @@ graph LR
 
 	%% Turquoise
 	classDef notExposed color:#000, fill: #40E0D0, stroke: #333, stroke-width: 2px;
-	class DA,EAC,EACA,EACC,EDA,G,HA,HD,HK,Q,R,W notExposed;
+	class EAC,EACA,EACC notExposed;
 
 	%% YellowGreen
 	classDef notResearched color:#000, fill: #ADFF2F, stroke: #333, stroke-width: 2px;
-	class B,BA,BAA,CA,CE,DBA,DCAA,DCB,EACCB,EADA,EADB,EADD,EADE,EADG,EADH,EADHA,EADIA,EADIB,EBB,EBE,EBF,EBG,EBK,EC,EDAA,GA,HB,HBA,HBB,HE,HG,HH,HHA,HIA,HJ,HL,I,K,L,N,O,X notResearched;
+	class EACCB,EADA,EADB,EADD,EADE,EADG,EADH,EADHA,EADIA,EADIB notResearched;
 ```
