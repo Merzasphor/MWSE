@@ -1,6 +1,6 @@
 
 --- This is a generic iterator function that is used
--- to loop over all the items in an inventory
+--- to loop over all the items in an inventory
 ---@param ref tes3reference
 ---@return fun(): tes3item, integer, tes3itemData|nil
 local function iterItems(ref)

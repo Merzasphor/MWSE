@@ -24,7 +24,7 @@ event.register(tes3.event.bodyPartsUpdated, bodyPartsUpdatedCallback)
 
 ## Examples
 
-!!! example "Example: In this example all the scene graph nodes that make up left arm are culled. That will effectively make all the left arms in the game dissapear."
+!!! example "Example: In this example all the scene graph nodes that make up left arm are culled. That will effectively make all the left arms in the game disappear."
 
 	```lua
 	local leftArmParts = {
