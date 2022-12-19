@@ -9,6 +9,7 @@ hide:
 	These values are available in Lua by their index in the `tes3.palette` table. For example, `tes3.palette.answerColor` has a value of `"answer_color"`.
 
 ![Palette colors](https://raw.githubusercontent.com/MWSE/MWSE/master/docs/source/assets/images/ui%20palletes.png)
+
 *Above: All the palette colors in-game with default settings. Note that some entries are entirely black. In order of appearance, those are backgroundColor, blackColor, and journalTopicColor.*
 
 Index                            | Value
