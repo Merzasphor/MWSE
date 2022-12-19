@@ -48,6 +48,20 @@ The vertical scroll offset in pixels.
 
 * `result` (number)
 
+??? example "Example: An example of updating the position of a scroll pane widget."
+
+	```lua
+	--Updating position of scroll panes:
+	---@type tes3uiElement
+	local scrollpane -- Created somewhere before
+	
+	scrollpane.widget.positionY = 30
+	
+	-- This will update the position of the scrollpane
+	scrollpane:getTopLevelMenu():updateLayout()
+
+	```
+
 ***
 
 ### `scrollbarVisible`

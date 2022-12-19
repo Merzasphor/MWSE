@@ -14,4 +14,9 @@ return {
 			description = "The reference for the actor whose body parts were updated.",
 		},
 	},
+	examples = {
+		["ripLefties"] = {
+			title = "In this example all the scene graph nodes that make up left arm are culled. That will effectively make all the left arms in the game dissapear.",
+		}
+	}
 }

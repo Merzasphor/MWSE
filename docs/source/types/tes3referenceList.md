@@ -49,3 +49,82 @@ A collection for references, holding a cell and a linked list of references cont
 
 ***
 
+??? example "Example: Converting reference list to array style table"
+
+	An example is given of a general function that can be used to convert a tes3referenceList to simple array which can be looped over with standard ipairs().
+
+	```lua
+	
+	-- This function loops over the references inside the
+	-- tes3referenceList and adds them to an array-style table
+	---@param list tes3referenceList
+	---@return tes3reference[]
+	local function referenceListToTable(list)
+		local result = {}
+		local i = 1
+		if list.size == 0 then
+			return {}
+		end
+		local ref = list.head
+	
+		while ref.nextNode do
+			result[i] = ref
+			i = i + 1
+			ref = ref.nextNode
+		end
+	
+		-- Add the last reference
+		result[i] = ref
+	
+		return result
+	end
+	
+	-- Usage:
+	local list = tes3.player.cell.actors
+	
+	-- The references is now a simple array style table
+	-- that can be looped over with regular ipairs()
+	local references = referenceListToTable(list)
+	
+	for i, ref in ipairs(references) do
+		-- Do something with the reference
+		tes3ui.log(ref.id)
+	end
+
+	```
+
+??? example "Example: Generic iterator function"
+
+	In this more involved example, we used the corouting API from the Lua standard library to construct a generic iterator function. The iterReferenceList() function can then be used directly inside a for loop.
+
+	```lua
+	
+	--- This is a generic iterator function used
+	--- to loop over a tes3referenceList
+	---@param list tes3referenceList
+	---@return fun(): tes3reference
+	local function iterReferenceList(list)
+		local function iterator()
+			local ref = list.head
+	
+			if list.size ~= 0 then
+				coroutine.yield(ref)
+			end
+	
+			while ref.nextNode do
+				ref = ref.nextNode
+				coroutine.yield(ref)
+			end
+		end
+		return coroutine.wrap(iterator)
+	end
+	
+	-- Usage:
+	local list = tes3.player.cell.actors
+	for ref in iterReferenceList(list) do
+		-- Do something with the reference
+		tes3ui.log(ref.id)
+	end
+
+	```
+

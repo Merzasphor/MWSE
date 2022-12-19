@@ -7,6 +7,9 @@
 
 A complex container that holds a relationship between an item, and zero or more associated item datas.
 
+Item stack represents all copies of an item with the same id. Some of those may have itemData and some may not. E.g. you might have two lockpicks and one of them has fewer uses remaining.
+So `itemStack.variables` is a list of different itemData for each thing in the stack, not a single itemData.
+
 ## Properties
 
 ### `count`
@@ -38,4 +41,48 @@ A collection of variables that are associated with the stack's object, or nil if
 * `result` ([tes3itemData](../../types/tes3itemData)[])
 
 ***
+
+??? example "Example: In the iterItems() function we can see that the an item stack can consist of items with itemData and items without it"
+
+	```lua
+	
+	--- This is a generic iterator function that is used
+	-- to loop over all the items in an inventory
+	---@param ref tes3reference
+	---@return fun(): tes3item, integer, tes3itemData|nil
+	local function iterItems(ref)
+		local function iterator()
+			for _, stack in pairs(ref.object.inventory) do
+				---@cast stack tes3itemStack
+				local item = stack.object
+	
+				-- Account for restocking items,
+				-- since their count is negative
+				local count = math.abs(stack.count)
+	
+				-- first yield stacks with custom data
+				if stack.variables then
+					for _, data in pairs(stack.variables) do
+						if data then
+							coroutine.yield(item, data.count, data)
+							count = count - data.count
+						end
+					end
+				end
+				-- then yield all the remaining copies
+				if count > 0 then
+					coroutine.yield(item, count)
+				end
+			end
+		end
+		return coroutine.wrap(iterator)
+	end
+	
+	for item, count, itemData in iterItems(tes3.player) do
+		debug.log(item)
+		debug.log(count)
+		debug.log(itemData)
+	end
+
+	```
 

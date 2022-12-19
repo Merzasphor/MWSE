@@ -22,3 +22,39 @@ event.register(tes3.event.bodyPartsUpdated, bodyPartsUpdatedCallback)
 * `mobile` ([tes3mobileActor](../../types/tes3mobileActor)): *Read-only*. The mobile actor whose body parts were updated.
 * `reference` ([tes3reference](../../types/tes3reference)): *Read-only*. The reference for the actor whose body parts were updated.
 
+## Examples
+
+!!! example "Example: In this example all the scene graph nodes that make up left arm are culled. That will effectively make all the left arms in the game dissapear."
+
+	```lua
+	local leftArmParts = {
+		tes3.activeBodyPart.leftForearm,
+		tes3.activeBodyPart.leftHand,
+		tes3.activeBodyPart.leftUpperArm,
+		tes3.activeBodyPart.leftWrist,
+		tes3.activeBodyPart.shield
+	}
+	
+	---@param e bodyPartsUpdatedEventData
+	local function ripLefties(e)
+		local bpm = e.reference.bodyPartManager
+		if (not bpm) then return end
+	
+		-- Hide all left arm nodes.
+		for _, part in ipairs(leftArmParts) do
+	
+			-- We want to hide the body parts in all the three
+			-- layers that make up the character's body.
+			for _, layer in pairs(tes3.activeBodyPartLayer) do
+				local activePart = bpm:getActiveBodyPart(layer, part)
+				if (activePart and activePart.node) then
+					activePart.node.appCulled = true
+				end
+			end
+		end
+	end
+	
+	event.register(tes3.event.bodyPartsUpdated, ripLefties)
+
+	```
+

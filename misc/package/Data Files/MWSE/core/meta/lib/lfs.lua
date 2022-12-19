@@ -102,6 +102,8 @@ function lfs.touch(path, accessTime, modifiedTime) end
 function lfs.unlock(filehandle, mode, start, length) end
 
 --- An iterator that visits all files in a directory tree.
+---
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/lfs/#lfswalkdir).
 --- @param path string The root path of the directory tree.
 --- @return iterator result No description yet available.
 function lfs.walkdir(path) end
