@@ -15,13 +15,17 @@ event.register(tes3.event.uiEvent, uiEventCallback)
 ```
 
 !!! tip
+	This event can be filtered based on the **`source.id`** event data.
+
+!!! tip
 	An event can be claimed by setting `e.claim` to `true`, or by returning `false` from the callback. Claiming the event prevents any lower priority callbacks from being called.
 
 ## Event Data
 
-* `block` ([tes3uiElement](../../types/tes3uiElement)): *Read-only*. The UI element that is firing this event.
+* `block` ([tes3uiElement](../../types/tes3uiElement)): *Read-only*. *Deprecated, please use `source` instead*. The UI element that is firing this event.
 * `parent` ([tes3uiElement](../../types/tes3uiElement)): *Read-only*. The calling element's parent.
 * `property` (number): *Read-only*. The property identifier that is being triggered.
+* `source` ([tes3uiElement](../../types/tes3uiElement)): *Read-only*. The UI element that is firing this event.
 * `var1` (number): *Read-only*. One of two undefined variables related to the event.
 * `var2` (number): *Read-only*. One of two undefined variables related to the event.
 

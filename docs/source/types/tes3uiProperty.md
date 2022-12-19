@@ -15,7 +15,7 @@ UI property's unique ID.
 
 **Returns**:
 
-* `result` (string)
+* `result` (integer)
 
 ***
 
@@ -35,7 +35,7 @@ UI property's unique ID.
 
 **Returns**:
 
-* `result` (number, property)
+* `result` (integer)
 
 ***
 
@@ -45,7 +45,7 @@ UI property's unique ID.
 
 **Returns**:
 
-* `result` (number, boolean, property)
+* `result` (integer, number, boolean, [tes3uiProperty](../../types/tes3uiProperty), nil)
 
 ***
 

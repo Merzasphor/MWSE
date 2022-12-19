@@ -2,12 +2,6 @@ return {
 	type = "event",
 	description = "uiPreEvent is triggered through various UI events. This includes scrolling through panes, clicking buttons, selecting icons, or a host of other UI-related activities. This event fires before uiEvent, and has the additional advantage of being able to be blocked.",
 	eventData = {
-		["block"] = {
-			type = "tes3uiElement",
-			readOnly = true,
-			deprecated = true,
-			description = "The UI element that is firing this event.",
-		},
 		["parent"] = {
 			type = "tes3uiElement",
 			readOnly = true,
@@ -34,5 +28,6 @@ return {
 			description = "One of two undefined variables related to the event.",
 		},
 	},
+	filter = "source.id",
 	blockable = true,
 }

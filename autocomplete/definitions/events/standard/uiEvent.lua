@@ -5,6 +5,11 @@ return {
 		["block"] = {
 			type = "tes3uiElement",
 			readOnly = true,
+			description = "*Deprecated, please use `source` instead*. The UI element that is firing this event.",
+		},
+		["source"] = {
+			type = "tes3uiElement",
+			readOnly = true,
 			description = "The UI element that is firing this event.",
 		},
 		["parent"] = {
@@ -28,4 +33,5 @@ return {
 			description = "One of two undefined variables related to the event.",
 		},
 	},
+	filter = "source.id",
 }

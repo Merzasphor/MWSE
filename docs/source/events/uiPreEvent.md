@@ -15,6 +15,9 @@ event.register(tes3.event.uiPreEvent, uiPreEventCallback)
 ```
 
 !!! tip
+	This event can be filtered based on the **`source.id`** event data.
+
+!!! tip
 	This event supports blocking by setting `e.block` to `true` or returning `false`. Blocking the event prevents vanilla behavior from happening. For example, blocking an `equip` event prevents the item from being equipped.
 
 !!! tip
@@ -22,7 +25,6 @@ event.register(tes3.event.uiPreEvent, uiPreEventCallback)
 
 ## Event Data
 
-* `block` ([tes3uiElement](../../types/tes3uiElement)): *Read-only*. The UI element that is firing this event.
 * `parent` ([tes3uiElement](../../types/tes3uiElement)): *Read-only*. The calling element's parent.
 * `property` (number): *Read-only*. The property identifier that is being triggered.
 * `source` ([tes3uiElement](../../types/tes3uiElement)): *Read-only*. The UI element that is firing this event.
