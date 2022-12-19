@@ -229,8 +229,6 @@ local function build(package)
 
 	-- Mark the file as a meta file.
 	file:write("--- @meta\n")
-	-- Removes warnings for missing definitions
-	file:write("--- @diagnostic disable:undefined-doc-name\n\n")
 
 	-- Write description.
 	if (package.type == "lib") then
