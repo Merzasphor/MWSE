@@ -1095,7 +1095,7 @@ myObject:forwardEvent(id)
 
 **Parameters**:
 
-* `id` (tes3uiEvent): The original UI event.
+* `id` ([tes3uiEventData](../../types/tes3uiEventData)): The original UI event.
 
 ***
 
@@ -1210,7 +1210,7 @@ local value = myObject:getPropertyInt(property)
 Properties are extra variables attached to an element. Morrowind uses these to bind variables to the UI, and they can be useful for element class-specific properties. This function gets a property as an object value, defaulting to `nil` if the property was not set. This function can be dangerous to use, and can lead to crashes if not properly understood.
 
 ```lua
-local value = myObject:getPropertyObject(property, typeCast)
+local object = myObject:getPropertyObject(property, typeCast)
 ```
 
 **Parameters**:
@@ -1220,7 +1220,7 @@ local value = myObject:getPropertyObject(property, typeCast)
 
 **Returns**:
 
-* `value` (number): The value of the property, defaulting to `nil` if the property was not set.
+* `object` (any): The value of the property, defaulting to `nil` if the property was not set.
 
 ***
 
@@ -1545,7 +1545,7 @@ myObject:setPropertyObject(property, value)
 **Parameters**:
 
 * `property` (number, string): The property to get.
-* `value` (object): The value to set.
+* `value` (any): The value to set.
 
 ***
 
@@ -1588,7 +1588,7 @@ myObject:triggerEvent(eventID)
 
 **Parameters**:
 
-* `eventID` (tes3uiEvent, string): The event, or event ID.
+* `eventID` ([tes3uiEventData](../../types/tes3uiEventData), string): The event, or event ID.
 
 ***
 

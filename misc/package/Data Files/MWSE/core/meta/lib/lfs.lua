@@ -105,6 +105,6 @@ function lfs.unlock(filehandle, mode, start, length) end
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/lfs/#lfswalkdir).
 --- @param path string The root path of the directory tree.
---- @return iterator result No description yet available.
+--- @return fun(): string, string, string iterator No description yet available.
 function lfs.walkdir(path) end
 

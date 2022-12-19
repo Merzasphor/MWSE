@@ -457,7 +457,7 @@ function tes3uiElement:destroyChildren() end
 function tes3uiElement:findChild(id) end
 
 --- Forwards an event to the original Morrowind event handler, using this element as a source. This may be optionally called at any point in a callback. Note that handler may or may not destroy the event widget or the menu, so you should know how it behaves before accessing any elements after a callback. 
---- @param id tes3uiEvent The original UI event.
+--- @param id tes3uiEventData The original UI event.
 function tes3uiElement:forwardEvent(id) end
 
 --- Returns the descendant element that creation functions used on this element will place children into, or the calling element if there is no specific descendant for children.
@@ -494,7 +494,7 @@ function tes3uiElement:getPropertyInt(property) end
 --- Properties are extra variables attached to an element. Morrowind uses these to bind variables to the UI, and they can be useful for element class-specific properties. This function gets a property as an object value, defaulting to `nil` if the property was not set. This function can be dangerous to use, and can lead to crashes if not properly understood.
 --- @param property number|string The property to get.
 --- @param typeCast string|nil *Default*: `"tes3baseObject"`. The casting of the property to get.
---- @return number value The value of the property, defaulting to `nil` if the property was not set.
+--- @return any object The value of the property, defaulting to `nil` if the property was not set.
 function tes3uiElement:getPropertyObject(property, typeCast) end
 
 --- Properties are extra variables attached to an element. Morrowind uses these to bind variables to the UI, and they can be useful for element class-specific properties. This function gets a property whose value is, itself, a property, defaulting to `0` if the property was not set.
@@ -671,7 +671,7 @@ function tes3uiElement:setPropertyInt(property, value) end
 
 --- Sets a property value with `prop` as the property key. Properties are named variables attached to an element. Gets a property value with `propName` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties.
 --- @param property number|string The property to get.
---- @param value object The value to set.
+--- @param value any The value to set.
 function tes3uiElement:setPropertyObject(property, value) end
 
 --- Properties are named variables attached to an element. Sets a property value with `property` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties. This function sets a property whose value is, itself, a property.
@@ -684,7 +684,7 @@ function tes3uiElement:setPropertyProperty(property, value) end
 function tes3uiElement:sortChildren(sortFunction) end
 
 --- Triggers a UI event on an element, either using supplied event data, or by constructing new event data using `eventName`. `eventName` is the same as used in `register`.
---- @param eventID tes3uiEvent|string The event, or event ID.
+--- @param eventID tes3uiEventData|string The event, or event ID.
 function tes3uiElement:triggerEvent(eventID) end
 
 --- Unregisters an `event` handler.

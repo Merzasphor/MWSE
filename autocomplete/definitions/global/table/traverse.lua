@@ -7,7 +7,10 @@ Each "node" is an object with a children table of other "nodes", each of which m
 		{ name = "t", type = "table", description = "A table to transverse." },
 		{ name = "k", type = "string", optional = "true", default = "children", description = "The subtable key." },
 	},
-	valuetype = "iterator",
+	returns = {
+		name = "iterator",
+		type = "fun(): any",
+	},
 	examples = {
 		["tableTransverse"] = {
 			title = "Iterate over all scene nodes attached to player.",

@@ -33,7 +33,7 @@ local result = re.compile(s, defs)
 
 **Returns**:
 
-* `result` (pattern)
+* `result` ([pattern](../../types/pattern))
 
 ***
 

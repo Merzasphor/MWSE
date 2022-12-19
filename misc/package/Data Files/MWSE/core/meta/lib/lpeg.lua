@@ -39,26 +39,26 @@ function lpeg.C(p) end
 function lpeg.Carg(n) end
 
 --- Create a back capture.
---- 	
---- This pattern matches the empty string and produces the values produced by the most recent group 
+--- 
+--- This pattern matches the empty string and produces the values produced by the most recent group
 --- capture named name (where name can be any Lua value).
 --- 
 --- Most recent means the last complete outermost group capture with the given name. A Complete capture
---- means that the entire pattern corresponding to the capture has matched. An Outermost capture means 
+--- means that the entire pattern corresponding to the capture has matched. An Outermost capture means
 --- that the capture is not inside another complete capture.
 --- 
---- In the same way that LPeg does not specify when it evaluates captures, it does not specify whether 
+--- In the same way that LPeg does not specify when it evaluates captures, it does not specify whether
 --- it reuses values previously produced by the group or re-evaluates them.
---- @param name value The group capture to produce.
+--- @param name any The group capture to produce.
 --- @return pattern result No description yet available.
 function lpeg.Cb(name) end
 
 --- Create a constant capture.
---- 	
+--- 
 --- This pattern matches the empty string and produces all given values as its captured values.
---- @param unknown values? *Optional*. The values to produce.
+--- @param ... any? *Optional*. The values to produce.
 --- @return pattern result No description yet available.
-function lpeg.Cc(unknown) end
+function lpeg.Cc(...) end
 
 --- Create a fold capture.
 --- 	
@@ -78,15 +78,15 @@ function lpeg.Cc(unknown) end
 function lpeg.Cf(p, f) end
 
 --- Create a group capture.
---- 	
+--- 
 --- It groups all values returned by pattern p into a single capture. The group may be anonymous (if no
 --- name is given) or named with the given name (which can be any non-nil Lua value).
 --- 
---- An anonymous group serves to join values from several captures into a single capture. A named 
---- group has a different behavior. In most situations, a named group returns no values at all. Its 
+--- An anonymous group serves to join values from several captures into a single capture. A named
+--- group has a different behavior. In most situations, a named group returns no values at all. Its
 --- values are only relevant for a following back capture or when used inside a table capture.
 --- @param p pattern The pattern to capture with.
---- @param name value? *Optional*. The name of the group.
+--- @param name any? *Optional*. The name of the group.
 --- @return pattern result No description yet available.
 function lpeg.Cg(p, name) end
 
@@ -150,48 +150,48 @@ function lpeg.Ct(p) end
 function lpeg.locale(t) end
 
 --- Attempt to match the given pattern against the subject string.
---- 	
+--- 
 --- If the match succeeds, return the index in the subject of the first character after the match, or
 --- the captured values (if the pattern captured any value).
 --- 
---- An optional numeric argument init makes the match start at that position in the subject string. As 
+--- An optional numeric argument init makes the match start at that position in the subject string. As
 --- usual in Lua libraries, a negative value counts from the end.
 --- 
---- Unlike typical pattern-matching functions, match works only in anchored mode; that is, it tries to 
---- match the pattern with a prefix of the given subject string (at position init), not with an 
+--- Unlike typical pattern-matching functions, match works only in anchored mode; that is, it tries to
+--- match the pattern with a prefix of the given subject string (at position init), not with an
 --- arbitrary substring of the subject. So, if we want to find a pattern anywhere in a string, we must
---- either write a loop in Lua or write a pattern that matches anywhere. This second approach is easy 
+--- either write a loop in Lua or write a pattern that matches anywhere. This second approach is easy
 --- and quite efficient; see examples in the full documentation for details.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/lpeg/#lpegmatch).
 --- @param p pattern The pattern to match.
 --- @param subject string The string to match against.
 --- @param init number? *Optional*. Start the match at this position in subject.
---- @return values result No description yet available.
+--- @return any result No description yet available.
 function lpeg.match(p, subject, init) end
 
 --- Converts the given value into a proper lpeg pattern.
---- 	
+--- 
 --- If the argument is a pattern, it is returned unmodified.
 --- 
 --- If the argument is a string, it is translated to a pattern that matches the string literally.
 --- 
---- If the argument is a non-negative number n, the result is a pattern that matches exactly n 
+--- If the argument is a non-negative number n, the result is a pattern that matches exactly n
 --- characters.
 --- 
 --- If the argument is a negative number -n, the result is a pattern that succeeds only if the input
 --- string has less than n characters left: lpeg.P(-n) is equivalent to -lpeg.P(n). See the unary minus
 --- operation in the full documentation for details.
 --- 
---- If the argument is a boolean, the result is a pattern that always succeeds or always fails 
+--- If the argument is a boolean, the result is a pattern that always succeeds or always fails
 --- (according to the boolean value), without consuming any input.
 --- 
---- If the argument is a table, it is interpreted as a grammar. See Grammars in the full documentation 
+--- If the argument is a table, it is interpreted as a grammar. See Grammars in the full documentation
 --- for details.
 --- 
---- If the argument is a function, returns a pattern equivalent to a match-time capture over the empty 
+--- If the argument is a function, returns a pattern equivalent to a match-time capture over the empty
 --- string.
---- @param value multiple The value to convert to a pattern.
+--- @param value pattern|string|number|boolean|table|function The value to convert to a pattern.
 --- @return pattern result No description yet available.
 function lpeg.P(value) end
 
@@ -227,8 +227,8 @@ function lpeg.S(s) end
 function lpeg.setmaxstack(max) end
 
 --- If the given value is a pattern, return the string "pattern". Otherwise return nil.
---- @param value value The item to evaulate.
---- @return string result No description yet available.
+--- @param value any The item to evaulate.
+--- @return "pattern"|nil result No description yet available.
 function lpeg.type(value) end
 
 --- Create a non-terminal (a variable) for a grammar.

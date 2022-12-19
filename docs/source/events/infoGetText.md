@@ -23,7 +23,7 @@ event.register(tes3.event.infoGetText, infoGetTextCallback)
 ## Event Data
 
 * `info` ([tes3dialogueInfo](../../types/tes3dialogueInfo)): *Read-only*. The dialogue info object.
-* `loadOriginalText` (method): Loads the original text for the info from the game files, bypassing this event.
+* `loadOriginalText` (fun(self: infoGetTextEventData): string): Loads the original text for the info from the game files, bypassing this event.
 * `text` (string): The text to return. This can be modified. Does not contain the original text. If not set, the original text will be used instead.
 
 ## Examples

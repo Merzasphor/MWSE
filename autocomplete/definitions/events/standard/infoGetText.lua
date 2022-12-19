@@ -13,7 +13,7 @@ return {
 			description = "The dialogue info object.",
 		},
 		["loadOriginalText"] = {
-			type = "method",
+			type = "fun(self: infoGetTextEventData): string",
 			description = "Loads the original text for the info from the game files, bypassing this event.",
 		},
 	},

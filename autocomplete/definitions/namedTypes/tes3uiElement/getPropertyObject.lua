@@ -6,6 +6,6 @@ return {
 		{ name = "typeCast", optional = true, default = "\"tes3baseObject\"", type = "string|nil", description = "The casting of the property to get." },
 	},
 	returns = {
-		{ name = "value", type = "number", description = "The value of the property, defaulting to `nil` if the property was not set." },
+		{ name = "object", type = "any", description = "The value of the property, defaulting to `nil` if the property was not set." },
 	},
 }

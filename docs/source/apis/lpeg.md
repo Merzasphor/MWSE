@@ -29,11 +29,11 @@ local result = lpeg.B(p)
 
 **Parameters**:
 
-* `p` (pattern): The input pattern.
+* `p` ([pattern](../../types/pattern)): The input pattern.
 
 **Returns**:
 
-* `result` (pattern)
+* `result` ([pattern](../../types/pattern))
 
 ***
 
@@ -49,11 +49,11 @@ local result = lpeg.C(p)
 
 **Parameters**:
 
-* `p` (pattern): The pattern to capture against.
+* `p` ([pattern](../../types/pattern)): The pattern to capture against.
 
 **Returns**:
 
-* `result` (pattern)
+* `result` ([pattern](../../types/pattern))
 
 ***
 
@@ -74,22 +74,22 @@ local result = lpeg.Carg(n)
 
 **Returns**:
 
-* `result` (pattern)
+* `result` ([pattern](../../types/pattern))
 
 ***
 
 ### `lpeg.Cb`
 
 Create a back capture.
-	
-This pattern matches the empty string and produces the values produced by the most recent group 
+
+This pattern matches the empty string and produces the values produced by the most recent group
 capture named name (where name can be any Lua value).
 
 Most recent means the last complete outermost group capture with the given name. A Complete capture
-means that the entire pattern corresponding to the capture has matched. An Outermost capture means 
+means that the entire pattern corresponding to the capture has matched. An Outermost capture means
 that the capture is not inside another complete capture.
 
-In the same way that LPeg does not specify when it evaluates captures, it does not specify whether 
+In the same way that LPeg does not specify when it evaluates captures, it does not specify whether
 it reuses values previously produced by the group or re-evaluates them.
 
 ```lua
@@ -98,31 +98,31 @@ local result = lpeg.Cb(name)
 
 **Parameters**:
 
-* `name` (value): The group capture to produce.
+* `name` (any): The group capture to produce.
 
 **Returns**:
 
-* `result` (pattern)
+* `result` ([pattern](../../types/pattern))
 
 ***
 
 ### `lpeg.Cc`
 
 Create a constant capture.
-	
+
 This pattern matches the empty string and produces all given values as its captured values.
 
 ```lua
-local result = lpeg.Cc(unknown)
+local result = lpeg.Cc(...)
 ```
 
 **Parameters**:
 
-* `unnamed` (values): *Optional*. The values to produce.
+* `...` (any): *Optional*. The values to produce.
 
 **Returns**:
 
-* `result` (pattern)
+* `result` ([pattern](../../types/pattern))
 
 ***
 
@@ -147,24 +147,24 @@ local result = lpeg.Cf(p, f)
 
 **Parameters**:
 
-* `p` (pattern): The pattern to fold with f.
+* `p` ([pattern](../../types/pattern)): The pattern to fold with f.
 * `f` (function): The function to use to fold p.
 
 **Returns**:
 
-* `result` (pattern)
+* `result` ([pattern](../../types/pattern))
 
 ***
 
 ### `lpeg.Cg`
 
 Create a group capture.
-	
+
 It groups all values returned by pattern p into a single capture. The group may be anonymous (if no
 name is given) or named with the given name (which can be any non-nil Lua value).
 
-An anonymous group serves to join values from several captures into a single capture. A named 
-group has a different behavior. In most situations, a named group returns no values at all. Its 
+An anonymous group serves to join values from several captures into a single capture. A named
+group has a different behavior. In most situations, a named group returns no values at all. Its
 values are only relevant for a following back capture or when used inside a table capture.
 
 ```lua
@@ -173,12 +173,12 @@ local result = lpeg.Cg(p, name)
 
 **Parameters**:
 
-* `p` (pattern): The pattern to capture with.
-* `name` (value): *Optional*. The name of the group.
+* `p` ([pattern](../../types/pattern)): The pattern to capture with.
+* `name` (any): *Optional*. The name of the group.
 
 **Returns**:
 
-* `result` (pattern)
+* `result` ([pattern](../../types/pattern))
 
 ***
 
@@ -207,12 +207,12 @@ local result = lpeg.Cmt(p, f)
 
 **Parameters**:
 
-* `p` (pattern): The pattern to capture with.
+* `p` ([pattern](../../types/pattern)): The pattern to capture with.
 * `f` (function): The function to call to evaluate matches.
 
 **Returns**:
 
-* `result` (pattern)
+* `result` ([pattern](../../types/pattern))
 
 ***
 
@@ -229,7 +229,7 @@ local result = lpeg.Cp()
 
 **Returns**:
 
-* `result` (pattern)
+* `result` ([pattern](../../types/pattern))
 
 ***
 
@@ -247,11 +247,11 @@ local result = lpeg.Cs(p)
 
 **Parameters**:
 
-* `p` (pattern): The pattern to capture with.
+* `p` ([pattern](../../types/pattern)): The pattern to capture with.
 
 **Returns**:
 
-* `result` (pattern)
+* `result` ([pattern](../../types/pattern))
 
 ***
 
@@ -270,11 +270,11 @@ local result = lpeg.Ct(p)
 
 **Parameters**:
 
-* `p` (pattern): The pattern to capture with.
+* `p` ([pattern](../../types/pattern)): The pattern to capture with.
 
 **Returns**:
 
-* `result` (pattern)
+* `result` ([pattern](../../types/pattern))
 
 ***
 
@@ -306,17 +306,17 @@ local result = lpeg.locale(t)
 ### `lpeg.match`
 
 Attempt to match the given pattern against the subject string.
-	
+
 If the match succeeds, return the index in the subject of the first character after the match, or
 the captured values (if the pattern captured any value).
 
-An optional numeric argument init makes the match start at that position in the subject string. As 
+An optional numeric argument init makes the match start at that position in the subject string. As
 usual in Lua libraries, a negative value counts from the end.
 
-Unlike typical pattern-matching functions, match works only in anchored mode; that is, it tries to 
-match the pattern with a prefix of the given subject string (at position init), not with an 
+Unlike typical pattern-matching functions, match works only in anchored mode; that is, it tries to
+match the pattern with a prefix of the given subject string (at position init), not with an
 arbitrary substring of the subject. So, if we want to find a pattern anywhere in a string, we must
-either write a loop in Lua or write a pattern that matches anywhere. This second approach is easy 
+either write a loop in Lua or write a pattern that matches anywhere. This second approach is easy
 and quite efficient; see examples in the full documentation for details.
 
 ```lua
@@ -325,13 +325,13 @@ local result = lpeg.match(p, subject, init)
 
 **Parameters**:
 
-* `p` (pattern): The pattern to match.
+* `p` ([pattern](../../types/pattern)): The pattern to match.
 * `subject` (string): The string to match against.
 * `init` (number): *Optional*. Start the match at this position in subject.
 
 **Returns**:
 
-* `result` (values)
+* `result` (any)
 
 ??? example "Example: Simple Match"
 
@@ -360,25 +360,25 @@ local result = lpeg.match(p, subject, init)
 ### `lpeg.P`
 
 Converts the given value into a proper lpeg pattern.
-	
+
 If the argument is a pattern, it is returned unmodified.
 
 If the argument is a string, it is translated to a pattern that matches the string literally.
 
-If the argument is a non-negative number n, the result is a pattern that matches exactly n 
+If the argument is a non-negative number n, the result is a pattern that matches exactly n
 characters.
 
 If the argument is a negative number -n, the result is a pattern that succeeds only if the input
 string has less than n characters left: lpeg.P(-n) is equivalent to -lpeg.P(n). See the unary minus
 operation in the full documentation for details.
 
-If the argument is a boolean, the result is a pattern that always succeeds or always fails 
+If the argument is a boolean, the result is a pattern that always succeeds or always fails
 (according to the boolean value), without consuming any input.
 
-If the argument is a table, it is interpreted as a grammar. See Grammars in the full documentation 
+If the argument is a table, it is interpreted as a grammar. See Grammars in the full documentation
 for details.
 
-If the argument is a function, returns a pattern equivalent to a match-time capture over the empty 
+If the argument is a function, returns a pattern equivalent to a match-time capture over the empty
 string.
 
 ```lua
@@ -387,11 +387,11 @@ local result = lpeg.P(value)
 
 **Parameters**:
 
-* `value` (multiple): The value to convert to a pattern.
+* `value` ([pattern](../../types/pattern), string, number, boolean, table, function): The value to convert to a pattern.
 
 **Returns**:
 
-* `result` (pattern)
+* `result` ([pattern](../../types/pattern))
 
 ***
 
@@ -409,11 +409,11 @@ local result = lpeg.R(p)
 
 **Parameters**:
 
-* `p` (pattern): The input pattern.
+* `p` ([pattern](../../types/pattern)): The input pattern.
 
 **Returns**:
 
-* `result` (pattern)
+* `result` ([pattern](../../types/pattern))
 
 ??? example "Example: Simple Match"
 
@@ -459,7 +459,7 @@ local result = lpeg.S(s)
 
 **Returns**:
 
-* `result` (pattern)
+* `result` ([pattern](../../types/pattern))
 
 ***
 
@@ -492,11 +492,11 @@ local result = lpeg.type(value)
 
 **Parameters**:
 
-* `value` (value): The item to evaulate.
+* `value` (any): The item to evaulate.
 
 **Returns**:
 
-* `result` (string)
+* `result` ([pattern](../../types/pattern), nil)
 
 ***
 
@@ -517,7 +517,7 @@ local result = lpeg.V(v)
 
 **Returns**:
 
-* `result` (pattern)
+* `result` ([pattern](../../types/pattern))
 
 ***
 

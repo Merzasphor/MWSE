@@ -12,7 +12,7 @@ return {
 			description = "If set, the book's text will be overwritten with this value. It needs to follow book text conventions as in the Construction Set. In essence, it uses HTML syntax. Important: every book needs to end with a `<BR>` statement to be displayed properly. For more details, please read the page on [book conventions](https://mwse.github.io/MWSE/references/other/books/).",
 		},
 		["loadOriginalText"] = {
-			type = "method",
+			type = "fun(self: bookGetTextEventData): string",
 			description = "Loads the original text for the book from the game files, bypassing this event.",
 		},
 	},

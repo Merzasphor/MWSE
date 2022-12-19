@@ -283,7 +283,7 @@ local success, error = lfs.unlock(filehandle, mode, start, length)
 An iterator that visits all files in a directory tree.
 
 ```lua
-local result = lfs.walkdir(path)
+local iterator = lfs.walkdir(path)
 ```
 
 **Parameters**:
@@ -292,7 +292,7 @@ local result = lfs.walkdir(path)
 
 **Returns**:
 
-* `result` (iterator)
+* `iterator` (fun(): string, string, string)
 
 ??? example "Example: Logging all the files present in Data files\meshes\ folder"
 

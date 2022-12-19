@@ -15,7 +15,7 @@ Allows control of MGE shader features.
 
 **Returns**:
 
-* `result` (strings)
+* `result` (string)
 
 ***
 

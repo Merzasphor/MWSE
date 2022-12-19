@@ -6,7 +6,7 @@
 
 --- Allows control of MGE shader features.
 --- @class mgeShadersConfig
---- @field debug strings *Read-only*. Gathers a string listing all shaders.
+--- @field debug string *Read-only*. Gathers a string listing all shaders.
 --- @field hdrReactionSpeed number The HDR exposure reaction speed, in seconds.
 --- @field list mgeShaderHandle[] *Read-only*. Loads a list of all shaders. This is not a constant-held collection, and each shader handle is initialized anew each time this function is called. Cache this value when you are sure that shaders are not added or removed.
 mgeShadersConfig = {}

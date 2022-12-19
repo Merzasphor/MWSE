@@ -15,7 +15,7 @@ function Slider:updateValueLabel()
 	local labelText = ""
 
 	if self.elements.slider then
-		newValue = self.elements.slider.widget.current + self.min ---@diagnostic disable-line
+		newValue = tostring(self.elements.slider.widget.current + self.min)
 	end
 
 	if string.find(self.label, "%s", 1, true) then

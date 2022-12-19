@@ -2946,7 +2946,7 @@ local iterationFunction = tes3.loopTArray(tarray)
 
 **Parameters**:
 
-* `tarray` (tes3tarray)
+* `tarray` ([tes3tarray](../../types/tes3tarray))
 
 **Returns**:
 
