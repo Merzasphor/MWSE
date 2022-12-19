@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- One of the movement events, **calcSwimSpeed** is used when calculating the movement speed while in water when running.
 --- 
 --- The movement event flow is described below:

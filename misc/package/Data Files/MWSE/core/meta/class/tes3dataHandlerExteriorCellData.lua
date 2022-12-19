@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A structure the data handler uses to track loaded exterior cell data.
 --- @class tes3dataHandlerExteriorCellData
 --- @field cell tes3cell *Read-only*. The exterior cell.

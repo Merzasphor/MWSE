@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A container class that maps a body part id to its male and female body parts.
 --- @class tes3wearablePart
 --- @field female tes3bodyPart The body part object used for female actors.

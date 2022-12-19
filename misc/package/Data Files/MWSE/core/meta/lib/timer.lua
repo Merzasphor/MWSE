@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- The timer library provides helper functions for creating delayed executors.
 --- @class timerlib
 --- @field active any Constant to represent a timer that is actively running.

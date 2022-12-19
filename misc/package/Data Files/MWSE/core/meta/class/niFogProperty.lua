@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A rendering property that controls the appearance of fogging, also known as haze.
 --- @class niFogProperty : niProperty, niObjectNET, niObject
 --- @field color integer[] *Read-only*. The RGBA fog color value in range [0, 255].

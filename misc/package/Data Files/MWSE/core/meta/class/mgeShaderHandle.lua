@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A loaded MGE shader.
 --- @class mgeShaderHandle
 --- @field enabled boolean The enabled state of the shader.

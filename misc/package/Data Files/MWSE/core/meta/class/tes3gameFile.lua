@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- Represents a loaded ESM, ESP, or ESS file.
 --- @class tes3gameFile
 --- @field author string *Read-only*. The file's author.

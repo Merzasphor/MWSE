@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- This event is triggered when the character generation process at the start of the game has been finished. In an unmodded version of Morrowind, this event would trigger after leaving the 'Census and Excise Office' in 'Seyda Neen'.
 --- @class charGenFinishedEventData
 --- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.

@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- The mwse string library provides functions for interacting with mwscript string storage.
 --- @class mwse.stringlib
 mwse.string = {}

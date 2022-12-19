@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A leveled creature game object.
 --- @class tes3leveledCreature : tes3physicalObject, tes3object, tes3baseObject
 --- @field calculateFromAllLevels boolean If `true`, the leveled list is picked from the entire level range, instead of just the highest.

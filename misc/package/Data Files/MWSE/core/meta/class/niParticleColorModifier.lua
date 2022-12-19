@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- This modifer alters the color of each particle as it ages.
 --- @class niParticleColorModifier : niParticleModifier, niObject
 --- @field colorData niColorData The parameters for this modifier.

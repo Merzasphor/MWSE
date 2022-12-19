@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- The base-most object from which almost all NetImmerse structures are derived from.
 --- @class niObject
 --- @field refCount number *Read-only*. The number of references that exist for this object. When this value reaches zero, the object will be deleted.

@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A structure that contains weather information for the snow weather type.
 --- @class tes3weatherSnow : tes3weather
 --- @field maxParticles number The weather's maximum particles.

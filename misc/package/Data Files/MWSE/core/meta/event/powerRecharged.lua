@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- This event triggers when a power is recharged, and may be used again. In Morrowind, powers are a type of spells which may be cast once per day and don't cost any magicka.
 --- @class powerRechargedEventData
 --- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.

@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- An NPC object that has been cloned. Typically represents an NPC that has been instanced in the world.
 --- @class tes3npcInstance : tes3actor, tes3physicalObject, tes3object, tes3baseObject
 --- @field aiConfig tes3aiConfig *Read-only*. A substructure off of actors that contains information on the current AI configuration.

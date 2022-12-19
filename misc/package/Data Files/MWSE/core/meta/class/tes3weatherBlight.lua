@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A structure that contains weather information for the blightstorm weather type.
 --- @class tes3weatherBlight : tes3weather
 --- @field blightDiseaseChance number The weather's blight chance value.

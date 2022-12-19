@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A class that represents a set of preferences for texture formats. These preferences dictate levels of pixel accuracy.
 --- @class niFormatPrefs
 --- @field alphaLayout integer The Alpha format. Maps to values in [`ni.textureFormatPrefsAlphaFormat`](https://mwse.github.io/MWSE/references/ni/texture-format-preference-alpha-formats/) table.

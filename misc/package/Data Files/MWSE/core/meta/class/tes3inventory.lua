@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- An inventory composes of an iterator, and flags caching the state of the inventory.
 --- @class tes3inventory
 --- @field flags number *Read-only*. Raw bit-based flags.

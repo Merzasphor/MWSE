@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- Class used in the picking intersection system within the game engine. Using a ray, the engine performs picking operations on a scene graph or any subtree. Given a ray and a subtree, the subtree is traversed and matching nodes are added to an array.
 --- @class niPick
 --- @field coordinateType integer The coordinate type for the object. Maps to values in [`ni.pickCoordinateType`](https://mwse.github.io/MWSE/references/ni/pick-coordinate-types/) table.

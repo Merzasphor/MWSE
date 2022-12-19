@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- This event is triggered after an NPC's disposition is calculated. This is done frequently. The disposition value can be changed to alter the resulting value. The disposition should be consistent between calls.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/events/disposition).

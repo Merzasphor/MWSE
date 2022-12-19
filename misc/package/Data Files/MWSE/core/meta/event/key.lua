@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- The key event fires when a key up or key down input is detected. It is preferred that the keyDown and keyUp events are used instead.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/events/key).

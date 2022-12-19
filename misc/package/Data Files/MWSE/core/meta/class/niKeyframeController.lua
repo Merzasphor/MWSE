@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- The controller responsible for animating transforms, using position, rotation, and scale keys.
 --- @class niKeyframeController : niTimeController, niObject
 --- @field data niKeyframeData *Read-only*. The keyframe data used by the controller.

@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- An animation key for tension-, continuity-, and bias-derived positioning.
 --- @class niTCBPosKey : niPosKey, niAnimationKey
 --- @field bias number The bias value for the TCB position animation key.

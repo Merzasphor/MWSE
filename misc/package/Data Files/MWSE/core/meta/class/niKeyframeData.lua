@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A collection of position, rotation, and scale keys used on NiKeyframeControllers.
 --- @class niKeyframeData : niObject
 --- @field positionKeyCount number *Read-only*. The number of position keys available.

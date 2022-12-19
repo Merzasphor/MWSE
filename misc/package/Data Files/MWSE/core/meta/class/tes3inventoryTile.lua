@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- An inventory tile, connecting an item, its data, and various related UI elements.
 --- @class tes3inventoryTile
 --- @field count number *Read-only*. The number of items that the tile represents.

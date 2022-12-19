@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A UI widget is a special interface to an element that offers functionality in a more friendly way.
 --- 
 --- Some core widget interfaces offered by MWSE include:

@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A core game object used for storing camera objects.
 --- @class tes3worldControllerRenderCamera
 --- @field cameraData tes3worldControllerRenderCameraData *Read-only*. The additional data of the camera.

@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- This class contains all the information needed to deform vertices by a single bone.
 --- @class niSkinDataBoneData
 --- @field bounds niBound This bounding volume is used internally by the skinning system to calculate bounding volumes for skinned objects without actually having to calculate the positions of the vertices in the skinned object.

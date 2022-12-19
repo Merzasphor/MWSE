@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- The **equipmentReevaluated** event fires after an actor has gone through its items and determined if anything in its inventory is better than what it currently has equipped. This event can be used to force equip new, custom equipment slots if needed.
 --- @class equipmentReevaluatedEventData
 --- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.

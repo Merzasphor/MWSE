@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A structure containing properties specific to hyperlinks.
 --- @class tes3uiHyperlink : tes3uiWidget
 --- @field confirm boolean If true, a confirmation prompt will be shown before any URLs are opened.

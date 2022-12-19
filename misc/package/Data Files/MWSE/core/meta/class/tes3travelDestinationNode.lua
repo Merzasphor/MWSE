@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- An attachment-capable structure to manage a travel destination. This is either exposed as a destination attachment for a door or as part of a list of possible travel services in an actor's AI configuration.
 --- @class tes3travelDestinationNode
 --- @field cell tes3cell The destination cell.

@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- Contains instance-dependent skinning data for a `NiTriShape` object.
 --- @class niSkinInstance : niObject
 --- @field bones niAmbientLight[]|niBillboardNode[]|niCamera[]|niCollisionSwitch[]|niDirectionalLight[]|niNode[]|niParticles[]|niPointLight[]|niRotatingParticles[]|niSpotLight[]|niSwitchNode[]|niTextureEffect[]|niTriShape[] *Read-only*. The bone influences for this skin instance.

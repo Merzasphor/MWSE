@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- Skinning data for a submesh, optimized for hardware skinning.
 --- @class niSkinPartitionPartition
 --- @field bones integer[] *Read-only*. The list of bone indices (that influence this partition) from the bones array in the parent `niSkinInstance` node.

@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- Represents a point light source in a scene. Point lights have a specific location in space and a distance attenuation function. Point lights project light in all directions from their position. They can be moved by changing the translation of the light.
 --- @class niPointLight : niLight, niDynamicEffect, niAVObject, niObjectNET, niObject
 --- @field constantAttenuation number The constant attenuation factor.

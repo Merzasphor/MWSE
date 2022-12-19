@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- This event triggers when a magic effect has been resisted by an actor, including magic effects from sources like spells, enchantments and potions. This event can trigger multiple times per source, once for each resisted effect.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/events/spellResisted).

@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A nested class of NiPick that stores the results of previous picking operations for use by the game engine.
 --- @class niPickRecord
 --- @field color niPackedColor The vertex color at the point of intersection. The color is valid only when `returnColor = true`.

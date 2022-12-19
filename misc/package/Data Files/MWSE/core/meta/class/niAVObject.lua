@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- The typical base type for most NetImmerse scene graph objects.
 --- @class niAVObject : niObjectNET, niObject
 --- @field alphaProperty niAlphaProperty|nil Convenient access to this object's alpha property. Setting this value to be nil will erase the property, while setting it to a valid alpha property will set (or replace) it.

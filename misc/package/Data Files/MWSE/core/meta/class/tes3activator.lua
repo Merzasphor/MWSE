@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- An activator game object.
 --- @class tes3activator : tes3physicalObject, tes3object, tes3baseObject
 --- @field mesh string The path to the object's mesh.

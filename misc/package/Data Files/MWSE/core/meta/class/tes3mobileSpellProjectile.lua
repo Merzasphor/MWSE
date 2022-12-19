@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A mobile object for a spell projectile.
 --- @class tes3mobileSpellProjectile : tes3mobileProjectile, tes3mobileObject
 --- @field rotationSpeed number The angular speed that the projectile rotates around its local Y axis.

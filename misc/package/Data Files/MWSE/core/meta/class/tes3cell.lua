@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- An exterior or interior game area.
 --- @class tes3cell : tes3baseObject
 --- @field activators tes3referenceList *Read-only*. One of the three reference collections for a cell.

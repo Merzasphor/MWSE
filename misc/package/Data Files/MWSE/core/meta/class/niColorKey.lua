@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A key with timing, and color in niColorData, which are found in niParticleColorModifiers.
 --- @class niColorKey : niAnimationKey
 --- @field color niPackedColor The color for this key.

@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- The mge library accesses MGE XE functionality, including control over shaders. Many older functions have been deprecated.
 --- @class mgelib
 --- @field camera mgeCameraConfig Allows control of MGE camera features.

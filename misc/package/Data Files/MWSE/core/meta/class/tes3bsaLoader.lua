@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A class responsible for handling the loading of BSA files.
 --- @class tes3bsaLoader
 --- @field archives tes3archive[] *Read-only*. An array-style table of archive files.

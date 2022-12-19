@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- This library is an interface to the standard C math library. This library has been further extended by MWSE. The functions implemented by MWSE are listed here. It provides all its functions inside the table math.
 --- @class mathlib
 --- @field epsilon number The *machine* epsilon available for double-precision numbers. This is the difference between 1.0 and the next representable value using lua numbers.

@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- The damageHandToHand event triggers before an actor takes fatigue damage from hand-to-hand combat. It does not trigger on health damage, but the `damage` event will. The `fatigueDamage` value can be modified, or can be prevented completely by blocking the event. The player as attacker will gain hand-to-hand experience only if `fatigueDamage` is greater than zero.
 --- @class damageHandToHandEventData
 --- @field block boolean If set to `true`, vanilla logic will be suppressed. Returning `false` will set this to `true`.

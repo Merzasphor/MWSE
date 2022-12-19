@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A structure containing properties specific to sliders.
 --- @class tes3uiSlider : tes3uiWidget
 --- @field current number The current value. The position of the slider handle is determined by dividing `current` by `max`.

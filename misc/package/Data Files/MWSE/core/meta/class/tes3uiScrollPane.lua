@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A structure containing properties specific to scroll panes.
 --- @class tes3uiScrollPane : tes3uiWidget
 --- @field contentPane tes3uiElement *Read-only*. The content element of this pane.

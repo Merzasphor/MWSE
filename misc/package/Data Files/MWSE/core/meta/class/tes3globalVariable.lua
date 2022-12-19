@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A global variable game object.
 --- @class tes3globalVariable : tes3baseObject
 --- @field value number The value of the variable. Unlike GMSTs, globals are always numbers.

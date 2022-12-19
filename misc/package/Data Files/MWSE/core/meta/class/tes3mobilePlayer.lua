@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A mobile object for a the player.
 --- @class tes3mobilePlayer : tes3mobileNPC, tes3mobileActor, tes3mobileObject
 --- @field alwaysRun boolean Toggle flag for if the player should always run.

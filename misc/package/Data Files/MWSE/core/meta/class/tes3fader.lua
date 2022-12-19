@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- An object that applies a graphical effect on the screen, such as screen glare or damage coloring. For an example of how to set up a custom fader, see [fadersCreated](https://mwse.github.io/MWSE/events/fadersCreated/) event.
 --- @class tes3fader
 --- @field active boolean The activation state for the fader. Setting this effectively calls activate/deactivate.

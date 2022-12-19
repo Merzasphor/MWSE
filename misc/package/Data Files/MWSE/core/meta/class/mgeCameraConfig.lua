@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- Allows control of MGE camera features.
 --- @class mgeCameraConfig
 --- @field fov number Horizontal FOV, in degrees.

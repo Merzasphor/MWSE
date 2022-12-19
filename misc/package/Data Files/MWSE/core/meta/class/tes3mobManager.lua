@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- The manager responsible for mobile objects and collision.
 --- @class tes3mobManager
 --- @field gravity tes3vector3 The gravity applied to all actors. Has a default value of `{0.0, 0.0, -627.2}`.

@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A core game object used for storing additional data for camera objects.
 --- @class tes3worldControllerRenderCameraData
 --- @field camera niCamera The camera scene node.

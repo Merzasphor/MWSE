@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- Abstract base class for particle system modifiers. It affects every particle in a particle system.
 --- @class niParticleModifier : niObject
 --- @field controller niParticleSystemController Access to the generic time controller for particle systems.

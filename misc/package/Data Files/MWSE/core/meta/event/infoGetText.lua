@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- This event fires when a dialogue info object text is retrieved. That can be when starting a conversation with an NPC, a service was refused to the player, NPC's responses to player persuading them and if the subtitles are enabled, getting the text for the subtitle will also trigger `infoGetText` event.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/events/infoGetText).

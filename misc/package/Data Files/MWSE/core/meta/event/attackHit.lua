@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- This event is invoked whenever an actor makes an attack with their fists or a weapon, or a creature makes any attack. It occurs at the moment a melee attack would hit, at the end of a melee weapon strike. For projectile attacks, it is when an arrow is about to detach from its bow. A target is not required to be present for this event.
 --- 
 --- Lockpicks and probes do not invoke this event.

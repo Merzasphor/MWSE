@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- The mwse library provides methods for interacting with MWSE itself, rather than direct TES3 objects.
 --- @class mwselib
 --- @field buildDate number A numerical representation of the date that version of MWSE currently being used was built on.

@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A structure that defines information for an effect and its associated variables, typically found on spells, alchemy, and enchantments.
 --- @class tes3effect
 --- @field attribute integer|nil The attribute associated with this effect, or `nil` if no attribute is used. Maps to values from [`tes3.attribute`](https://mwse.github.io/MWSE/references/attributes/) table.

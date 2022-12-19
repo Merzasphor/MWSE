@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A structure that contains region information.
 --- @class tes3region : tes3baseObject
 --- @field name string The region's name. It must be a string less than 32 characters long.

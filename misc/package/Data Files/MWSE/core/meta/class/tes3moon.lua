@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A structure that keeps track of information related two the game's two moons.
 --- 
 --- Moon move in an arc shape along the sky. The arc's start is at in-game North and ends in the South. The arc's plane can be rotated from North-South axis, by `axisOffset` property. If moons overlap, Secunda is always rendered in front of Masser, so the Masser is covered by Secunda.

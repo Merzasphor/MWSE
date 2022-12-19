@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- Data for a recharging item. Not necessarily an item owned by the player.
 --- @class tes3rechargingItem
 --- @field enchantment tes3enchantment *Read-only*. The enchantment of the recharging item.

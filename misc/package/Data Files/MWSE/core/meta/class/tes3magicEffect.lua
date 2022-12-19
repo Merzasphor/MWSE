@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A core magic effect definition.
 --- @class tes3magicEffect
 --- @field allowEnchanting boolean Access to the flag that determines if this effect can be used in enchanting.

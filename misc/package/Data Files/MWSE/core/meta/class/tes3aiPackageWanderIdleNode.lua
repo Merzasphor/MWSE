@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- An AI Wander package idle node game object. Contains information on the chance that the actor will wander at that idle node.
 --- @class tes3aiPackageWanderIdleNode
 --- @field chance number A chance that the actor will play corresponding idle animation while standing when parent tes3aiPackageWander is active.

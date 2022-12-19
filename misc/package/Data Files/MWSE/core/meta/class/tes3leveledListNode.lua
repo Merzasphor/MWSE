@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A simple collection that maps an object in a leveled list to a level required for that object to spawn.
 --- @class tes3leveledListNode
 --- @field levelRequired number The minimum level the player must meet before the node can be used.

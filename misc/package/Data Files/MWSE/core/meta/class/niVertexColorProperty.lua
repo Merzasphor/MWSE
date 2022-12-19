@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A rendering property that allows the application to control the method used to compute colors for each vertex in a geometry object. This class enables effects such as static pre-lighting, dynamic lighting, etc.
 --- @class niVertexColorProperty : niProperty, niObjectNET, niObject
 --- @field lighting integer Describes how vertex colors influence lighting. Maps to values in [`ni.lightingMode`](https://mwse.github.io/MWSE/references/ni/lighting-modes/) table.

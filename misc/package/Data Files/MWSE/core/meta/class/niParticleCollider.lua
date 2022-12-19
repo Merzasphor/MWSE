@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- This modifier provides framework for collision testing. The classes derived from this one: niSphericalCollider, and niPlanarCollider, test for collisions. Each frame a niParticleSystemController traverses its list of niParticlesColliders to determine if any collisions happened.
 --- @class niParticleCollider : niParticleModifier, niObject
 --- @field collisionPoint tes3vector3 

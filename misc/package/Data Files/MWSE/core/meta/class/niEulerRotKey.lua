@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- An animation key for euler rotations.
 --- @class niEulerRotKey : niRotKey, niAnimationKey
 --- @field keyOrder integer[] *Read-only*. An array of 3 values that define the ordering used for the contained keys. Maps to values in [`ni.eulerRotKeyOrder`](https://mwse.github.io/MWSE/references/ni/euler-rotation-key-orders/) table.

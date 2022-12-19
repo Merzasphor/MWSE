@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A core lockpick object.
 --- @class tes3probe : tes3item, tes3physicalObject, tes3object, tes3baseObject
 --- @field icon string The path to the object's icon.

@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- Contains color information of a font.
 --- @class tes3uiFontColor
 --- @field b number Blue color value, in range [0.0, 1.0].

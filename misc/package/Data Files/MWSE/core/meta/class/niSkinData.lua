@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- Contains skinning data that may be shared by multiple `NiSkinInstance` objects.
 --- @class niSkinData : niObject
 --- @field boneData niSkinDataBoneData[] *Read-only*. An array of objects containing one entry for each bone that influences vertices in the skinned mesh. The order of the entries in the `boneData` array corresponds to the order of the bones in the bone array in the `niSkinInstance` objects that point to this `niSkinData`. Each object in this array contains all the data needed to deform vertices by a single bone.

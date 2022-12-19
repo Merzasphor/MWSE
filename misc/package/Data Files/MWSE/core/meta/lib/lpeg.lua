@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- Provides pattern-matching based on Parsing Expression Grammars (PEGs).
 --- 	
 --- The documentation provided here is only meant to be a quick reference. Please review the complete

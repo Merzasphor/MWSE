@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- The damaged event triggers after an actor has been damaged.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/events/damaged).

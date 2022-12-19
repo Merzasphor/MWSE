@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A simple trio of floating-point numbers.
 --- @class tes3vector3
 --- @operator add(tes3vector3): tes3vector3

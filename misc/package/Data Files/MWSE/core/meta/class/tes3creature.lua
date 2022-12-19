@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A creature object that has not been cloned. Typically represents the raw information edited in the construction set.
 --- @class tes3creature : tes3actor, tes3physicalObject, tes3object, tes3baseObject
 --- @field aiConfig tes3aiConfig *Read-only*. A substructure off of actors that contains information on the current AI configuration.

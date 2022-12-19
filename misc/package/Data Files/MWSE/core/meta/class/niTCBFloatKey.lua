@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- An animation key for tension-, continuity-, and bias-derived values.
 --- @class niTCBFloatKey : niFloatKey, niAnimationKey
 --- @field bias number The bias value for the TCB scale animation key.

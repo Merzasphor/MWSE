@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A parent-level dialogue, such as a topic, voice, greeting, persuasion response, or journal.
 --- @class tes3dialogue : tes3baseObject
 --- @field info tes3dialogueInfo[] *Read-only*. A collection of individual entries in the dialogue.

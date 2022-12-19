@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A handle to a command excuted using `os.execute` configured to run asynchronously.
 --- @class mwseLuaExecutor
 --- @field command string The command originally passed to `os.execute`.

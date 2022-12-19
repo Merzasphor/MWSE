@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- Object that represent a camera. Position and orientation is determined by parent properties. This enables the cameras to be attached to scene graph objects and follow them automatically, as they move.
 --- @class niCamera : niAVObject, niObjectNET, niObject
 --- @field cullingPlanes tes3vector4[] The culling planes of the camera: near, far, left, right, top, and bottom.

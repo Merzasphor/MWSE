@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A mobile object for a physical projectile.
 --- @class tes3mobileProjectile : tes3mobileObject
 --- @field animTime number The time index for the projectile model's animation controllers.

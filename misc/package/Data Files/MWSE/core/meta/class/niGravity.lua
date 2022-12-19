@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- This modifer applies force, constant over time, to particles in the parent niParticleSystemController.
 --- @class niGravity : niParticleModifier, niObject
 --- @field decay number This value impacts how fast gravitational force attenuates with the distance from the source. A value of `0` causes no decay.

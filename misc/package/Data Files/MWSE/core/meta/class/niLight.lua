@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- Base class that represents light sources in a scene graph. This includes the ambient, diffuse, and specular colors of a light, as well as its intensity.
 --- @class niLight : niDynamicEffect, niAVObject, niObjectNET, niObject
 --- @field ambient niColor The ambient light color.

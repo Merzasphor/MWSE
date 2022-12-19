@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A GMST game object.
 --- @class tes3gameSetting : tes3baseObject
 --- @field defaultValue number|string *Read-only*. The default value of the GMST, if no master defines the value.

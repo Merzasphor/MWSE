@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A Timer Controller is a class used to sort and trigger callbacks based on an arbitrary timekeeping mechanic. By default there are three Timer Controllers for each type of timers: `timer.simulate`, `timer.game` or `timer.real`.
 --- @class mwseTimerController
 --- @field clock number The current clock time for this timer controller. Timer Controller, responsible for `timer.game` type of timers, has clock equal to the game's simuation timestamp. Timer Controllers, responsible for `timer.real`, and `timer.simulate`, types of timers have their initial clock set to `0` on a new game, and their clock's progressions is equal to `deltaTime`. Timer Controller's, responsible for `timer.simulate` timers, clock only advances when the menu mode is off.

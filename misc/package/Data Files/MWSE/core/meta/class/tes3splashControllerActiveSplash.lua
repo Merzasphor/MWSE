@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- An object representing an active splash, such as a blood particle.
 --- @class tes3splashControllerActiveSplash
 --- @field age number The splash's current age, measured in seconds.

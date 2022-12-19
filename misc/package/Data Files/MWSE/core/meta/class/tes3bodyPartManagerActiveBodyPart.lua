@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A game object which holds information about an active body part, it's associated item and scene node.
 --- @class tes3bodyPartManagerActiveBodyPart
 --- @field bodyPart tes3bodyPart Access to the body part object.

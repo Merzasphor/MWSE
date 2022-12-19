@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A child for a given dialogue. Whereas a dialogue may be a conversation topic, a `tes3dialogueInfo` would be an individual response.
 --- @class tes3dialogueInfo : tes3baseObject
 --- @field actor tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3npc|tes3npcInstance *Read-only*. The speaker's actor that the info is filtered for.

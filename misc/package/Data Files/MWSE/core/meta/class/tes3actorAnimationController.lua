@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- Works in conjuction with mobile AI to perform idle, movement, and attack animations. Holds data on the status of the current and next desired animation states for the different body sections that can be animated.
 --- @class tes3actorAnimationController
 --- @field alphaProperty niAlphaProperty The alpha property applied to the actor. Controls the opacity/opaqueness of the actor.

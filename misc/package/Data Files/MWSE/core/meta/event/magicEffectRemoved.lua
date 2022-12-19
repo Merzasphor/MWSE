@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- This event triggers when a magic effect has been removed from an actor. This includes magic effects that have been resisted or are part of abilities like racial passives and diseases.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/events/magicEffectRemoved).

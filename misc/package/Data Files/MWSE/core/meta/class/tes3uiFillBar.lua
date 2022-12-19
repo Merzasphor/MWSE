@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A structure containing properties specific to fillbars.
 --- @class tes3uiFillBar : tes3uiWidget
 --- @field current number The current value. The size of the filled portion is determined by dividing `current` by `max`.

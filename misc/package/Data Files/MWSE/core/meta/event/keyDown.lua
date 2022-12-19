@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- The key event fires when a key is pressed.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/events/keyDown).

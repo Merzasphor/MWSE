@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A Timer is a class used to keep track of callback that should be invoked at a later time.
 --- @class mwseTimer
 --- @field callback function|string *Read-only*. The callback that will be invoked at the end of each iteration.

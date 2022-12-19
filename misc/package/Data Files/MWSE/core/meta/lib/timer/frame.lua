@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- Convenience access to frame timer functions. This is the same as passing `type = timer.real` to any of the functions from timer API.
 --- @class timer.framelib
 timer.frame = {}

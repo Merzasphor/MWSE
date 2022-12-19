@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- This library provides generic functions for table manipulation. It provides all its functions inside the table table.
 --- @class tablelib
 table = {}

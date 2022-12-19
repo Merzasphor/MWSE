@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A simple extra data that contains a string.
 --- @class niStringExtraData : niExtraData, niObject
 --- @field string string The string kept on the niStringExtraData.

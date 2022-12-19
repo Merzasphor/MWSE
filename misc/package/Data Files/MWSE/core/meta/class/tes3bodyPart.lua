@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A body part game object.
 --- @class tes3bodyPart : tes3physicalObject, tes3object, tes3baseObject
 --- @field female boolean A flag that marks this body part as used for female actors.

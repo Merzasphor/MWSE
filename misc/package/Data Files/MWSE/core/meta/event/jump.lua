@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- This event is called when an actor tries to jump. The `velocity` and `applyFatigueCost` can be modified.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/events/jump).

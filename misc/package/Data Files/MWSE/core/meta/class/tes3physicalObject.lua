@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- Almost anything that can be represented in the Construction Set is based on this structure.
 --- @class tes3physicalObject : tes3object, tes3baseObject
 --- @field boundingBox tes3boundingBox The bounding box for the object.

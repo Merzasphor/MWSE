@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A structure that holds (sometimes redundant) information on a soul gem.
 --- @class tes3soulGemData
 --- @field capacity number *Read-only*. The capacity of the soul gem.

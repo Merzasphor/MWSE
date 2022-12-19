@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- Contains the geometry data for an `NiTriShape` object.
 --- @class niTriShapeData : niTriBasedGeometryData, niGeometryData, niObject
 --- @field triangles niTriangle[] The access to the triangles of the object. The length of the array is equal to the number of active triangles.

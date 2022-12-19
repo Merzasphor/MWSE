@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A raw DirectInput mouse state.
 --- @class tes3directInputMouseState
 --- @field buttons number[] *Read-only*. The array-style access to 8 buttons states available on the mouse. Not all may be used.

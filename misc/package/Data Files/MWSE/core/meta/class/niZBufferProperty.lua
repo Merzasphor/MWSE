@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A rendering property that allows the application to set the test and write modes of the renderer's Z-buffer and to set the comparison function used for the Z-buffer test.
 --- @class niZBufferProperty : niProperty, niObjectNET, niObject
 --- @field testFunction integer The Z-buffer test function used. Maps to values in [`ni.zBufferPropertyTestFunction`](https://mwse.github.io/MWSE/references/ni/z-buffer-property-test-functions/) table.

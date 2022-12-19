@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- This modifer applies acceleration to particles in the parent niParticleSystemController.
 --- @class niParticleBomb : niParticleModifier, niObject
 --- @field decay number The niParticleBomb modifers with `decayType` linear and exponential have their strength attenuated with distance. No attenuation occurs within the `.decay` distance of the niParticelBomb's position.

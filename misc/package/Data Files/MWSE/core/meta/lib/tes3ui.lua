@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- The tes3ui library provides access to manipulating the game's GUI.
 --- @class tes3uilib
 tes3ui = {}

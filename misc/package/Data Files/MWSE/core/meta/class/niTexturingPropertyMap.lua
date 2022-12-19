@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A combination of a texture, a filter mode, a clamping mode, and an index to a set of texture coordinates.
 --- @class niTexturingPropertyMap
 --- @field clampMode integer The clamp mode for the Map. Maps to values in [`ni.texturingPropertyClampMode`](https://mwse.github.io/MWSE/references/ni/texturing-property-clamp-modes/) table.

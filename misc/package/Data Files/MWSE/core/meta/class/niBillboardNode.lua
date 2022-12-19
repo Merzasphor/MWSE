@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- This node adjusts its render-time orientation so that the local z axis will face the camera. It supports multiple modes: camera parallel, or rotation around the local Y axis.
 --- @class niBillboardNode : niNode, niAVObject, niObjectNET, niObject
 --- @field mode integer The orientation mode. Maps to values in [`ni.billboardMode`](https://mwse.github.io/MWSE/references/ni/billboard-modes/) table.

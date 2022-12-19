@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A sound generator object created in the TES3 CS
 --- @class tes3soundGenerator : tes3baseObject
 --- @field sound tes3sound *Read-only*. Sound object tied to this sound generator.

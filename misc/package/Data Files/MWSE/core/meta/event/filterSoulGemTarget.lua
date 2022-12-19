@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- This event fires when a soul gem target is filtered
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/events/filterSoulGemTarget).

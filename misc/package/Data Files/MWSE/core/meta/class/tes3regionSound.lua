@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A structure that contains region sound information.
 --- @class tes3regionSound
 --- @field chance integer The chance the region sound will be used. Must be an integer between `0` and `100`.

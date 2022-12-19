@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A managed visual effect, attached to position, reference, or arbitrary node. These can be created through script with [`tes3.createVisualEffect`](https://mwse.github.io/MWSE/apis/tes3/#tes3createvisualeffect) and destroyed with [`tes3.removeVisualEffect`](https://mwse.github.io/MWSE/apis/tes3/#tes3removevisualeffect).
 --- @class tes3vfx
 --- @field age number The VFX's current age, in seconds.

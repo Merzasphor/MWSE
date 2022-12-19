@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- Represents an individual instance of a magic effect being applied to a reference.
 --- @class tes3magicEffectInstance
 --- @field createdData tes3equipmentStack *Read-only*. The bound or summoned data associated with the instance, for summoned creatures or items. The stack's object will be a reference in the case of summoned creatures.

@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A complex container that holds a relationship between an item, and zero or more associated item datas.
 --- 
 --- Item stack represents all copies of an item with the same id. Some of those may have itemData and some may not. E.g. you might have two lockpicks and one of them has fewer uses remaining.

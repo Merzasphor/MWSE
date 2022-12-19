@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A skill object.
 --- @class tes3skill : tes3baseObject
 --- @field actions number[] *Read-only*. A table with 4 values. The amount of experience an action (use of skill) awards.

@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- Allows control of MGE shader features.
 --- @class mgeShadersConfig
 --- @field debug string *Read-only*. Gathers a string listing all shaders.

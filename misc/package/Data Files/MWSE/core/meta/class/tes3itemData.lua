@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A set of variables that differentiates one item from another.
 --- @class tes3itemData
 --- @field charge number The charge of the item. Provides incorrect values on misc items, which instead have a soul actor.

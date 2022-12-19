@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- Loaded data from a BSA file.
 --- @class tes3archive
 --- @field fileCount number *Read-only*. The number of file entries in the BSA.

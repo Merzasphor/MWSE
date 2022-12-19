@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A structure containing properties specific to text inputs.
 --- @class tes3uiTextInput : tes3uiWidget
 --- @field eraseOnFirstKey boolean? *Default*: `true`. If `true`, clears the initial value if the first keypress is not an edit action.

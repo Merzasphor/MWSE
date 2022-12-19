@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A sound object created in the TES3 CS.
 --- @class tes3sound : tes3baseObject
 --- @field filename string *Read-only*. Path to the sound file.

@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- Allows control of MGE distant land features.
 --- @class mgeDistantLandRenderConfig
 --- @field aboveWaterFogEnd number The above water fog end distance, in cells.

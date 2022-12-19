@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- An armor game object.
 --- @class tes3armor : tes3item, tes3physicalObject, tes3object, tes3baseObject
 --- @field armorRating number The armor's defensive rating.

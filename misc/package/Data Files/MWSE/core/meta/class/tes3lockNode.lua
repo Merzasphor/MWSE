@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- An attachment-capable structure that maintains lock and trap data.
 --- @class tes3lockNode
 --- @field key tes3misc The key that will open this door.

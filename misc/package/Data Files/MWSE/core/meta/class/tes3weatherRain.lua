@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A structure that contains weather information for the rain weather type.
 --- @class tes3weatherRain : tes3weather
 --- @field maxParticles number The weather's maximum particles.

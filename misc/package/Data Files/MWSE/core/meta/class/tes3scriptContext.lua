@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A script context object, which allows variables to be get/set using the variable name.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/types/tes3scriptContext).

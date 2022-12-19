@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- 
 --- @class tes3processManager
 --- @field aiDistance number A value which controls how far the game AI is processed, measured in game distance units. Corresponds to AI Distance slider in Options menu.

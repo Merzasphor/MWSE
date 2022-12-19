@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- An object that represents a RGB color. The values are in [0.0, 1.0] range.
 --- @class niColor
 --- @operator add(niColor): niColor

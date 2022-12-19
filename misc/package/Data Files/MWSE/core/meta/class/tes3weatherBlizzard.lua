@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A structure that contains weather information for the blizzard weather type.
 --- @class tes3weatherBlizzard : tes3weather
 --- @field threshold number The weather's threshold value.

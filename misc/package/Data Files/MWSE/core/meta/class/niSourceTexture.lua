@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A texture that represent both static and dynamic content, as NiSourceTexture data objects can have their pixel data modified on the fly to implement dynamic texture behavior.
 --- @class niSourceTexture : niTexture, niObjectNET, niObject
 --- @field fileName string *Read-only*. The platform-independent version of the filename from which the image was created, or nil if the image was created from pixel data.

@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- An object that has a name, extra data, and controllers.
 --- @class niObjectNET : niObject
 --- @field controller niKeyframeController|niLookAtController|niParticleSystemController *Read-only*. The first controller available on the object.

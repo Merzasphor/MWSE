@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A structure that keeps track of combat session data.
 --- @class tes3combatSession
 --- @field alchemyPriority number No description yet available.

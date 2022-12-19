@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- The damage event triggers before an actor is damaged. The damage value can be modified, or the damage can be prevented completely by blocking the event.
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/events/damage).

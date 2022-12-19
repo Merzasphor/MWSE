@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- Allows control of MGE render features.
 --- @class mgeRenderFeatures
 --- @field atmosphericScattering boolean No description yet available.

@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A core came structure responsible for managing the input around menu elements.
 --- @class tes3uiMenuInputController
 --- @field lastInputTime number The amount of seconds that have passed since the last time the input was updated.

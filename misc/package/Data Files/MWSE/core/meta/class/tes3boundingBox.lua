@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A pair of vectors marking a bounding box.
 --- @class tes3boundingBox
 --- @field max tes3vector3 The maximum bound of the box.

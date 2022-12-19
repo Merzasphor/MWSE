@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- Almost anything that can be represented in the Construction Set is based on this structure.
 --- @class tes3object : tes3baseObject
 --- @field isLocationMarker boolean True if this object is an editor marker for a gameplay location. These include travel, intervention, prison, door, and interior north markers. Markers are invisible in-game.

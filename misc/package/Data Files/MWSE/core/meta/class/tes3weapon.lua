@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A weapon game object.
 --- @class tes3weapon : tes3item, tes3physicalObject, tes3object, tes3baseObject
 --- @field chopMax number Chop damage inflicted at maximum weapon swing.

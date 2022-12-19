@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A rotation matrix, translation vector, and scale that marks an object's transformation.
 --- @class tes3transform
 --- @field rotation tes3matrix33 The transform's rotation matrix.

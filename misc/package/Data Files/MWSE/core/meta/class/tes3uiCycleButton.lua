@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A structure containing properties specific to cycle buttons.
 --- @class tes3uiCycleButton : tes3uiWidget
 --- @field index number The current index of the widget. If this is set, the text will be updated accordingly.

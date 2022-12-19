@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A spell game object.
 --- @class tes3spell : tes3object, tes3baseObject
 --- @field alwaysSucceeds boolean A flag that determines if casting the spell will always succeed.

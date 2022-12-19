@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A controller for audio. It holds data on the status of the current and next music tracks, volume settings and other related facilities. All the volumes are expressed in range [0, 1].
 --- @class tes3audioController
 --- @field currentMusicFilePath string File path of the currently playing music track. The path can not be longer than 260 characters.

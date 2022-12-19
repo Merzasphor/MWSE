@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- An abstract base class from which all the animation controllers inherit. It has all the functionality needed to control the timing and update animations.
 --- @class niTimeController : niObject
 --- @field active boolean If the controller is active. When inactive, the target does not get updated and animation timing does not advance.

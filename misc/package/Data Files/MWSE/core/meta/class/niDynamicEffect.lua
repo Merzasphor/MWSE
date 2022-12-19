@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- Base class for dynamic effects such as NiLights or projected textures effects.
 --- @class niDynamicEffect : niAVObject, niObjectNET, niObject
 --- @field affectedNodes niNodeLinkedList The list of nodes that a given dynamic effect will affect.

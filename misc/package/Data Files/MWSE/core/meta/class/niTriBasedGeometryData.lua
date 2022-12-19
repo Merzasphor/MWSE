@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- Contains the actual geometry data for a `NiTriBasedGeometry` object.
 --- @class niTriBasedGeometryData : niGeometryData, niObject
 --- @field activeTriangleCount number The active triangle count of the object.

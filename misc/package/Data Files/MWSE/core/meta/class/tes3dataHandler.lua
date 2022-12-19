@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A core game object used for storing both active and non-dynamic gameplay data.
 --- @class tes3dataHandler
 --- @field backgroundThread number *Read-only*. A Windows handle to the background processing thread.

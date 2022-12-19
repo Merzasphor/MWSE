@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- This event is called when a mobile object is activated. This includes NPCs, creatures and projectiles, but not the player. This may be the first time that a given reference has an associated mobile object attached to it. Typically this happens when a projectile gets fired, a creature gets summoned or when the player transitions from one cell to another, causing actors in newly loaded cells to get activated.
 --- @class mobileActivatedEventData
 --- @field claim boolean If set to `true`, any lower-priority event callbacks will be skipped. Returning `false` will set this to `true`.

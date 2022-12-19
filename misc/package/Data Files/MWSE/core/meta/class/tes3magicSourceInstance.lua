@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A game structure that keeps track of a magic source on an object.
 --- @class tes3magicSourceInstance : tes3baseObject
 --- @field castChanceOverride number No description yet available.

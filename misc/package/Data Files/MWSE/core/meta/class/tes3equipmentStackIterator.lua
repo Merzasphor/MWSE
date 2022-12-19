@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A collection that can be iterated over. Contains items in a simple linked list, and stores its head/tail.
 --- @class tes3equipmentStackIterator
 --- @field count integer Returns the amount of items in the iterator.

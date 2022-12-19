@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A game object which contains information on actor's current and assigned AI packages.
 --- @class tes3aiPlanner
 --- @field currentPackageIndex number *Read-only*. Access to index of currently active AI package in packages table.

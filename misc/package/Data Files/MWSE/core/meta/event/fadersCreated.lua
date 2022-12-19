@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- This event fires once the game starts creating faders. This event is used to create a new fader using [`tes3fader.new()`](https://mwse.github.io/MWSE/types/tes3fader/#new).
 ---
 --- [Examples available in online documentation](https://mwse.github.io/MWSE/events/fadersCreated).

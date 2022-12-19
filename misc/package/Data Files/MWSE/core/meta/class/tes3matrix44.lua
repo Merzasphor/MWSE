@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A 4 by 4 matrix. You can perform following arithmetic with this type: `==`.
 --- @class tes3matrix44
 --- @operator add(tes3matrix44): tes3matrix44

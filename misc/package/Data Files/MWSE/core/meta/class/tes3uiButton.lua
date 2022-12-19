@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A structure containing properties specific to buttons.
 --- @class tes3uiButton : tes3uiWidget
 --- @field idle niColor The RGB color of the button's text when `state` is set to `normal`.	An array of 3 floats with values ranging from `0.0` to `1.0`.

@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- Provides support for interacting with json data through an extended dkjson module.
 --- @class jsonlib
 --- @field null number You can use this value for setting explicit null values.

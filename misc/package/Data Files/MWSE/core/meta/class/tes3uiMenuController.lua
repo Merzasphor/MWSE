@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- The controller responsible for the menu system.
 --- @class tes3uiMenuController
 --- @field fogOfWarDisabled boolean A flag that controls whether the local map menu renders fog of war.

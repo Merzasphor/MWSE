@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A mobile object for a creature, NPC, or the player.
 --- @class tes3mobileActor : tes3mobileObject
 --- @field actionBeforeCombat tes3actionData *Read-only*. Action data stored before the actor entered combat.

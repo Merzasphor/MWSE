@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- An AI Escort package game object. The actor with this package will escort the target actor to a certain destination.
 --- @class tes3aiPackageEscort : tes3aiPackage
 --- @field destination tes3vector3 The destination coordinates of this escort AI package.

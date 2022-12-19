@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- The NiColorData class provides a shareable wrapper for color animation data. Usually found in niParticleColorModifiers.
 --- @class niColorData : niObject
 --- @field keyCount integer The number of keys in this niColorData.

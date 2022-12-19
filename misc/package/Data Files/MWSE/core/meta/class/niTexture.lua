@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- Represents all texture objects that are created from a file or a block of in-memory pixel data.
 --- @class niTexture : niObjectNET, niObject
 --- @field formatPrefs niFormatPrefs The `NiFormatPrefs` of the texture.

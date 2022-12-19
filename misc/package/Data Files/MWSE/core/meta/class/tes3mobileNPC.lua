@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A mobile object for an NPC.
 --- @class tes3mobileNPC : tes3mobileActor, tes3mobileObject
 --- @field acrobatics tes3statisticSkill *Read-only*. Direct access to the NPC's acrobatics skill statistic.

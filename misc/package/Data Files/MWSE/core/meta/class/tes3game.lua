@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A core game object used for storing game settings.
 --- @class tes3game
 --- @field activationAmbientLight niAmbientLight *Read-only*. An ambiental light inside the `worldObjectRoot`.

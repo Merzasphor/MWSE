@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A list of spells. Used by actors, birthsigns, and races.
 --- @class tes3spellList
 --- @field iterator tes3spell[] *Read-only*. Deprecated. Use `for index, spell in pairs(spellList)` to iterate over spells.

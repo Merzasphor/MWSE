@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A substructure for a race, storing a base attribute value for male and female actors.
 --- @class tes3raceBaseAttribute
 --- @field female number The base attribute for female actors.

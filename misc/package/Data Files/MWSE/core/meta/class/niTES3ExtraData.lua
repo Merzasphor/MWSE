@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- A simple extra data that stores a `tes3reference` object.
 --- @class niTES3ExtraData : niExtraData, niObject
 --- @field reference tes3reference The reference stored on this extra data.

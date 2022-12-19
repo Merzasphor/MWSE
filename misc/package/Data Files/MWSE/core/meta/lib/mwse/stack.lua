@@ -2,8 +2,6 @@
 -- More information: https://github.com/MWSE/MWSE/tree/master/docs
 
 --- @meta
---- @diagnostic disable:undefined-doc-name
-
 --- The stack library provides functions to interact with the mwse mwscript stack, for dealing with custom mwscript extensions.
 --- @class mwse.stacklib
 mwse.stack = {}
