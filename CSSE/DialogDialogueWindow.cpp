@@ -53,6 +53,42 @@ namespace se::cs::dialog::dialogue_window {
 	}
 
 	//
+	// Patch: Ensure variable combo boxes always have a dropdown of sufficient width.
+	//
+
+	LONG PatchEnsureVariableComboBoxListWidth__LongestField = 0;
+	HDC PatchEnsureVariableComboBoxListWidth__hDC = NULL;
+
+	HDC CALLBACK PatchEnsureVariableComboBoxListWidth_GetCachedHDC(HWND hWnd) {
+		PatchEnsureVariableComboBoxListWidth__hDC = GetDC(hWnd);
+		return PatchEnsureVariableComboBoxListWidth__hDC;
+	}
+
+	LRESULT CALLBACK PatchEnsureVariableComboBoxListWidth_SendDlgItemMessageAWrapper(HWND hDlg, int nIDDlgItem, UINT msg, WPARAM wParam, LPARAM lParam) {
+		SIZE textExtentSize = {};
+
+		switch (msg) {
+		case CB_RESETCONTENT:
+			PatchEnsureVariableComboBoxListWidth__LongestField = 0;
+			break;
+		case CB_ADDSTRING:
+			if (GetTextExtentPoint32A(PatchEnsureVariableComboBoxListWidth__hDC, (const char*)lParam, strlen((const char*)lParam), &textExtentSize)) {
+				if (textExtentSize.cx > PatchEnsureVariableComboBoxListWidth__LongestField) {
+					PatchEnsureVariableComboBoxListWidth__LongestField = textExtentSize.cx;
+				}
+			}
+			break;
+		case CB_SETDROPPEDWIDTH:
+			wParam = PatchEnsureVariableComboBoxListWidth__LongestField;
+			break;
+		}
+
+		return SendDlgItemMessageA(hDlg, nIDDlgItem, msg, wParam, lParam);
+	}
+
+	static DWORD PatchEnsureVariableComboBoxListWidth_SendDlgItemMessageAWrapper_ExternPointer = (DWORD)PatchEnsureVariableComboBoxListWidth_SendDlgItemMessageAWrapper;
+
+	//
 	// Patch: Optimize displaying of INFO info.
 	//
 
@@ -109,7 +145,7 @@ namespace se::cs::dialog::dialogue_window {
 		}
 
 		// Gather all cell IDs.
-		for (auto i = 0; i < recordHandler->getCellCount(); ++i) {
+		for (auto i = 0u; i < recordHandler->getCellCount(); ++i) {
 			auto cell = recordHandler->getCellByIndex(i);
 			if (cell) {
 				allCells.insert({ cell->getObjectID(), cell });
@@ -117,16 +153,11 @@ namespace se::cs::dialog::dialogue_window {
 		}
 	}
 
-	int __fastcall PatchOptimizePopulatingLocalVariableNames(HWND hWnd, int nIDDlgItem) {
+	void __fastcall PatchOptimizePopulatingLocalVariableNames(HWND hWnd, int nIDDlgItem) {
 		for (const auto& [name, itemData] : allRelevantLocals) {
-			auto index = SendDlgItemMessageA(hWnd, nIDDlgItem, CB_ADDSTRING, 0, (LPARAM)name.c_str());
+			auto index = PatchEnsureVariableComboBoxListWidth_SendDlgItemMessageAWrapper(hWnd, nIDDlgItem, CB_ADDSTRING, 0, (LPARAM)name.c_str());
 			SendDlgItemMessageA(hWnd, nIDDlgItem, CB_SETITEMDATA, index, itemData);
 		}
-
-		// TODO: Handle GetTextExtentPoint32A
-		// The return value in the assembly patch below will extend the point.
-
-		return 0;
 	}
 
 	__declspec(naked) void PatchOptimizePopulatingLocalVariableNames_Setup() {
@@ -138,12 +169,10 @@ namespace se::cs::dialog::dialogue_window {
 			nop
 			nop
 			nop
-			cmp eax, [esp + 0x24 - 0x14]	// Size: 0x4
-			jle $+0xA						// Size: 0x6
-			mov [esp + 0x24 - 0x14], eax	// Size: 0x4
 		}
 	}
-	constexpr auto PatchOptimizePopulatingLocalVariableNames_Setup_Size = 0x17u;
+	constexpr auto PatchOptimizePopulatingLocalVariableNames_Setup_CallOffset = 0x2 + 0x2;
+	constexpr auto PatchOptimizePopulatingLocalVariableNames_Setup_Size = 0x5 + PatchOptimizePopulatingLocalVariableNames_Setup_CallOffset;
 	
 	void __fastcall PatchOptimizePopulatingCellVariableNames(HWND hWnd, int nIDDlgItem) {
 		for (const auto& [id, cell] : allCells) {
@@ -324,13 +353,17 @@ namespace se::cs::dialog::dialogue_window {
 			genNOPUnprotected(0x4EC686, 0x4EC68D - 0x4EC686);
 			genCallUnprotected(0x4EC69A, reinterpret_cast<DWORD>(PatchOptimizeCellInsertion), 0x4EC6C5 - 0x4EC69A);
 		}
+
+		// Patch: Ensure variable combo box lists can always fit content.
+		genCallUnprotected(0x4E7C14, reinterpret_cast<DWORD>(PatchEnsureVariableComboBoxListWidth_GetCachedHDC), 0x6);
+		writeDoubleWordEnforced(0x4E7C28 + 0x2, 0x6D9DB0, reinterpret_cast<DWORD>(&PatchEnsureVariableComboBoxListWidth_SendDlgItemMessageAWrapper_ExternPointer));
 		
 		// Patch: Optimize displaying of INFO info.
 		if constexpr (ENABLE_ALL_OPTIMIZATIONS) {
 			// Optimize populating local lists.
 			genNOPUnprotected(0x4E7D5A, 0x4E7F59 - 0x4E7D5A);
 			writePatchCodeUnprotected(0x4E7D5A, (BYTE*)PatchOptimizePopulatingLocalVariableNames_Setup, PatchOptimizePopulatingLocalVariableNames_Setup_Size);
-			genCallUnprotected(0x4E7D5A + 0x4, reinterpret_cast<DWORD>(PatchOptimizePopulatingLocalVariableNames));
+			genCallUnprotected(0x4E7D5A + PatchOptimizePopulatingLocalVariableNames_Setup_CallOffset, reinterpret_cast<DWORD>(PatchOptimizePopulatingLocalVariableNames));
 
 			// Optimize populating ID lists.
 			genNOPUnprotected(0x4E8209, 0x4E828A - 0x4E8209);

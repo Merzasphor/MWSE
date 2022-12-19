@@ -123,6 +123,18 @@
     <ClInclude Include="DialogSearchAndReplaceWindow.h">
       <Filter>Header Files\Extenders\Dialog</Filter>
     </ClInclude>
+    <ClInclude Include="Settings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DialogDataFilesWindow.h">
+      <Filter>Header Files\Extenders\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="CSScript.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSCell.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -169,6 +181,21 @@
     </ClCompile>
     <ClCompile Include="DialogSearchAndReplaceWindow.cpp">
       <Filter>Source Files\Extenders\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="Settings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogDataFilesWindow.cpp">
+      <Filter>Source Files\Extenders\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="CSRecordHandler.cpp">
+      <Filter>Source Files\CS</Filter>
+    </ClCompile>
+    <ClCompile Include="CSGameFile.cpp">
+      <Filter>Source Files\CS</Filter>
+    </ClCompile>
+    <ClCompile Include="CSScript.cpp">
+      <Filter>Source Files\CS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

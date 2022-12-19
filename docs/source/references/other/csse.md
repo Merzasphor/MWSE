@@ -52,6 +52,7 @@ If you are using [Construction Set Better UI](https://www.nexusmods.com/morrowin
 ### Dialogue Window
 
 * Optimized UI. Changing between INFOs should be nearly instantaneous. Initial dialogue load time reduced by 60%.
+* Condition variable lists will now always be wide enough to fit the convents. Journals, locals, and items will no longer have their IDs cut off.
 
 ### Render Window
 
