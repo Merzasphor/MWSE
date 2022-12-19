@@ -20,20 +20,18 @@
 	"Lua.workspace.maxPreload": 10000,
 	"Lua.workspace.preloadFileSize": 1000,
 
-	// Ignore problematic files.
+	// Ignore MWSE's files.
 	"Lua.workspace.ignoreDir": [
-		"./core/lib/i18n/*",
-		"./core/lib/ssl/*",
-		"./core/lib/dkjson.lua",
-		"./core/lib/event.lua",
-		"./core/lib/re.lua",
-		"./core/lib/ssl.lua",
-		"./core/lib/vscode-debuggee.lua",
-		"./core/mcm/*",
-		"./core/mwse/*"
+		"./core/*"
 	],
+	// Now explicitly include them as library files.
+	"Lua.workspace.library": [
+		"./core/"
+	],
+	// Disable diagnostic warnings for library files unless opened.
+	"Lua.diagnostics.libraryFiles": "Opened",
 
-	// Ignore any potential 3rd party checks. We provide our definitions in core/meta
+	// Ignore any potential 3rd party checks. We provide our definitions in core/meta.
 	"Lua.workspace.checkThirdParty": false,
 	"Lua.completion.autoRequire": false
 }

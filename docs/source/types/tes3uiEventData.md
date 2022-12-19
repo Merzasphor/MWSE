@@ -9,6 +9,26 @@ Contains information from a standard UI callback. This is the parameter passed t
 
 ## Properties
 
+### `data0`
+
+*Read-only*. Event-specific raw data values. For mouse events, these are the screen X and Y coordinates of the pointer. For keyboard events, data0 is the scan code.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
+### `data1`
+
+*Read-only*. Event-specific raw data values. For mouse events, these are the screen X and Y coordinates of the pointer. For keyboard events, data0 is the scan code.
+
+**Returns**:
+
+* `result` (number)
+
+***
+
 ### `forwardSource`
 
 *Read-only*. No description yet available.

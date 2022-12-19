@@ -1,5 +1,3 @@
----@diagnostic disable
-
 -- First, look for objects in the core folder. DLL files may also exist in the root folder.
 package.path = ".\\Data Files\\MWSE\\core\\?.lua;.\\Data Files\\MWSE\\core\\?\\init.lua;"
 package.cpath = "?.dll;.\\Data Files\\MWSE\\core\\?.dll;"

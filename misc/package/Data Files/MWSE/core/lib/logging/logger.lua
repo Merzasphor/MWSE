@@ -132,7 +132,7 @@ function Logger:write(logLevel, color, message, ...)
 	local output = string.format("[%s: %s] %s", self.name, logLevel, tostring(message):format(...))
 
 	-- Add log colors if enabled
-	if mwse.getConfig("EnableLogColors") then ---@diagnostic disable-line: undefined-field
+	if mwse.getConfig("EnableLogColors") then
 		output = addColor(output, color)
 	end
 

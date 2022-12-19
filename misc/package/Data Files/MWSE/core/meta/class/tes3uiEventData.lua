@@ -6,6 +6,8 @@
 
 --- Contains information from a standard UI callback. This is the parameter passed to callbacks when using `:register`, `:registerBefore`, or `:registerAfter`.
 --- @class tes3uiEventData
+--- @field data0 number *Read-only*. Event-specific raw data values. For mouse events, these are the screen X and Y coordinates of the pointer. For keyboard events, data0 is the scan code.
+--- @field data1 number *Read-only*. Event-specific raw data values. For mouse events, these are the screen X and Y coordinates of the pointer. For keyboard events, data0 is the scan code.
 --- @field forwardSource tes3uiElement *Read-only*. No description yet available.
 --- @field id number *Read-only*. The ID of the event that is being triggered.
 --- @field relativeX number|nil *Read-only*. For mouse-related events, this is the relative horizontal position for the current element.
