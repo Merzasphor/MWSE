@@ -141,6 +141,10 @@ function tes3ui.getInventorySelectType() end
 function tes3ui.getMenuOnTop() end
 
 --- Gets a standard palette color. Returns an array containing the RGB color values, in the range [0.0, 1.0].
+--- 
+--- ![Palette colors](https://github.com/MWSE/MWSE/tree/master/docs/source/assets/images/ui palletes.png){ loading = lazy }
+--- *Above: All the palette colors in-game with default settings. Note that some entries are entirely black. In order of appearance, those are backgroundColor, blackColor, and journalTopicColor.*
+--- 
 --- @param name string The name of the palette color. Maps to values in [`tes3.palette`](https://mwse.github.io/MWSE/references/palettes/) enumeration.
 --- @return number[] palette An array containing the RGB color values, in the range [0.0, 1.0].
 function tes3ui.getPalette(name) end
