@@ -13,6 +13,8 @@
 --- @field cell tes3cell *Read-only*. The cell that the reference is currently in.
 --- @field context tes3scriptContext *Read-only*. Access to the script context for this reference and its associated script.
 --- @field data table A generic lua table that data can be written to, and synced to/from the save. All information stored must be valid for serialization to json. For item references, this is the same table as on the `tes3itemData` structure. To store data that doesn't get serialized to/from the save, use `tempData`.
+--- 
+--- There is a guide available [here](https://mwse.github.io/MWSE/guides/storing-data/) on using this table.
 --- @field destination tes3travelDestinationNode|nil *Read-only*. Returns the travel destination node for this reference, or `nil`. This can be used to determine where a given door links to.
 --- @field facing number Convenient access to the z-component of the reference's orientation. Setting the facing sets the reference as modified.
 --- @field forwardDirection tes3vector3 *Read-only*. The normalized forward or Y direction vector of the reference.
@@ -51,6 +53,8 @@
 --- @field targetFormId number No description yet available.
 --- @field targetModId number No description yet available.
 --- @field tempData table As with the `data` field, a generic lua table that data can be written to. No information in this table will persist into saves. For item references, this is the same table as on the `tes3itemData` structure.
+--- 
+--- There is a guide available [here](https://mwse.github.io/MWSE/guides/storing-data/) on using this table.
 --- @field upDirection tes3vector3 *Read-only*. The normalized up or Z direction vector of the reference.
 tes3reference = {}
 
