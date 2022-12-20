@@ -144,6 +144,8 @@ function tes3ui.getMenuOnTop() end
 --- 
 --- *Above: All the palette colors in-game with default settings. Note that some entries are entirely black. In order of appearance, those are backgroundColor, blackColor, and journalTopicColor.*
 --- 
+---
+--- [Examples available in online documentation](https://mwse.github.io/MWSE/apis/tes3ui/#tes3uigetpalette).
 --- @param name string The name of the palette color. Maps to values in [`tes3.palette`](https://mwse.github.io/MWSE/references/palettes/) enumeration.
 --- @return number[] palette An array containing the RGB color values, in the range [0.0, 1.0].
 function tes3ui.getPalette(name) end
