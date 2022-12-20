@@ -517,13 +517,12 @@ namespace se::cs::dialog::render_window {
 		}
 	}
 
-	const auto TES3_Object_IsMarker = reinterpret_cast<bool(__thiscall*)(BaseObject*)>(0x549B20);
 	void __fastcall PatchEditorMarkers(Reference* reference, bool cull) {
 		if (reference->sceneNode == nullptr) {
 			return;
 		}
 
-		if (TES3_Object_IsMarker(reference->baseObject)) {
+		if (reference->isMarker()) {
 			reference->sceneNode->setAppCulled(cull);
 		}
 		else if (reference->sceneNode->hasStringDataWithValue("MRK")) {
@@ -991,6 +990,8 @@ namespace se::cs::dialog::render_window {
 		genCallEnforced(0x45EE85, 0x401F4B, reinterpret_cast<DWORD>(Patch_ReplaceDragMovementLogic));
 
 		// Patch: Custom marker toggling code.
+		writePatchCodeUnprotected(0x49E8CE, (BYTE*)PatchEditorMarkers_Setup, PatchEditorMarkers_Setup_Size);
+		genCallUnprotected(0x49E8CE + PatchEditorMarkers_Setup_Size, reinterpret_cast<DWORD>(PatchEditorMarkers), 0x49E8E9 - 0x49E8CE - PatchEditorMarkers_Setup_Size);
 		writePatchCodeUnprotected(0x49E932, (BYTE*)PatchEditorMarkers_Setup, PatchEditorMarkers_Setup_Size);
 		genCallUnprotected(0x49E932 + PatchEditorMarkers_Setup_Size, reinterpret_cast<DWORD>(PatchEditorMarkers), 0x49E94D - 0x49E932 - PatchEditorMarkers_Setup_Size);
 
