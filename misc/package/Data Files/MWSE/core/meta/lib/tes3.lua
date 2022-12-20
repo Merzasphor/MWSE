@@ -1499,15 +1499,15 @@ function tes3.isLuaModActive(key) end
 function tes3.isModActive(filename) end
 
 --- This function returns a function that iterates over a tes3iterator object. This is useful for for loops.
---- 		
+--- 
 --- Note that tes3iterator objects support iteration with `pairs()` function.
 --- @param iterator tes3iterator No description yet available.
---- @return function function No description yet available.
+--- @return fun(): tes3object iterator No description yet available.
 function tes3.iterate(iterator) end
 
 --- Iteration function used for looping over game options.
---- @param filter number|number[]|nil Maps to [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) constants.
---- @return tes3activator|tes3alchemy|tes3apparatus|tes3armor|tes3bodyPart|tes3book|tes3clothing|tes3container|tes3containerInstance|tes3creature|tes3creatureInstance|tes3door|tes3enchantment|tes3ingredient|tes3leveledCreature|tes3leveledItem|tes3light|tes3lockpick|tes3misc|tes3npc|tes3npcInstance|tes3probe|tes3reference|tes3repairTool|tes3spell|tes3static|tes3weapon object No description yet available.
+--- @param filter integer|integer[]|nil *Optional*. Maps to [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) constants.
+--- @return fun(): tes3object objectIterator No description yet available.
 function tes3.iterateObjects(filter) end
 
 --- Loads an animation and uses it to override existing animations on an actor. Animation groups present in the file will replace the actor's animation groups. The actor's model must be already loaded into memory to have its animations modified. The overridden animations only persist until the actor is unloaded.
@@ -1559,7 +1559,7 @@ function tes3.lock(params) end
 
 --- This function returns a function that iterates over a tes3tarray object. This is useful for for loops.
 --- @param tarray tes3tarray No description yet available.
---- @return function iterationFunction No description yet available.
+--- @return fun(): tes3object iterationFunction No description yet available.
 function tes3.loopTArray(tarray) end
 
 --- Returns a safe handle for the object. To get the object use `:getObject()`. To check if it still exists use `:valid()`.

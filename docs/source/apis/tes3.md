@@ -2809,11 +2809,11 @@ local result = tes3.isModActive(filename)
 ### `tes3.iterate`
 
 This function returns a function that iterates over a tes3iterator object. This is useful for for loops.
-		
+
 Note that tes3iterator objects support iteration with `pairs()` function.
 
 ```lua
-local function = tes3.iterate(iterator)
+local iterator = tes3.iterate(iterator)
 ```
 
 **Parameters**:
@@ -2822,7 +2822,7 @@ local function = tes3.iterate(iterator)
 
 **Returns**:
 
-* `function` (function)
+* `iterator` (fun(): tes3object)
 
 ***
 
@@ -2831,16 +2831,16 @@ local function = tes3.iterate(iterator)
 Iteration function used for looping over game options.
 
 ```lua
-local object = tes3.iterateObjects(filter)
+local objectIterator = tes3.iterateObjects(filter)
 ```
 
 **Parameters**:
 
-* `filter` (number, number[], nil): Maps to [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) constants.
+* `filter` (integer, integer[]): *Optional*. Maps to [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) constants.
 
 **Returns**:
 
-* `object` ([tes3object](../../types/tes3object))
+* `objectIterator` (fun(): tes3object)
 
 ***
 
@@ -2950,7 +2950,7 @@ local iterationFunction = tes3.loopTArray(tarray)
 
 **Returns**:
 
-* `iterationFunction` (function)
+* `iterationFunction` (fun(): tes3object)
 
 ***
 
