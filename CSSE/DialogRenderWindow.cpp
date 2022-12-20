@@ -436,6 +436,8 @@ namespace se::cs::dialog::render_window {
 							break;
 						}
 
+						rotation.toEulerXYZ(&orientation);
+
 						// Restore the original base orientation.
 						switch (refSnappingAxis) {
 						case SnappingAxis::POSITIVE_X:
@@ -451,8 +453,6 @@ namespace se::cs::dialog::render_window {
 							orientation.z = reference->yetAnotherOrientation.z;
 							break;
 						}
-
-						rotation.toEulerXYZ(&orientation);
 
 						math::standardizeAngleRadians(orientation.x);
 						math::standardizeAngleRadians(orientation.y);
