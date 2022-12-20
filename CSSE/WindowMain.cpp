@@ -15,7 +15,6 @@
 #include "DialogRenderWindow.h"
 
 namespace se::cs::window::main {
-	using namespace se::memory;
 
 	//
 	// Patch: Throttle UI status updates.
@@ -158,6 +157,9 @@ namespace se::cs::window::main {
 	}
 
 	void installPatches() {
+		using memory::genJumpEnforced;
+		using memory::genCallEnforced;
+
 		// Patch: Throttle UI status updates.
 		genJumpEnforced(0x404881, 0x46E680, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
 

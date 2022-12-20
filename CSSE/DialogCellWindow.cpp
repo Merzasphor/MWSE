@@ -4,8 +4,6 @@
 #include "LogUtil.h"
 
 namespace se::cs::dialog::cell_window {
-	using namespace se::memory;
-
 	void __cdecl PatchSpeedUpCellViewDialog(HWND hWnd) {
 		SendMessageA(hWnd, WM_SETREDRAW, FALSE, NULL);
 
@@ -42,6 +40,8 @@ namespace se::cs::dialog::cell_window {
 	}
 
 	void installPatches() {
+		using memory::genJumpEnforced;
+
 		// Patch: Optimize displaying of cell view window.
 		genJumpEnforced(0x4037C4, 0x40E250, reinterpret_cast<DWORD>(PatchSpeedUpCellViewDialog));
 

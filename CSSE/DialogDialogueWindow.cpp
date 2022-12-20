@@ -14,8 +14,6 @@
 #include "StringUtil.h"
 
 namespace se::cs::dialog::dialogue_window {
-	using namespace se::memory;
-
 	constexpr auto ENABLE_ALL_OPTIMIZATIONS = true;
 	constexpr auto LOG_PERFORMANCE_RESULTS = false;
 
@@ -348,6 +346,13 @@ namespace se::cs::dialog::dialogue_window {
 	}
 
 	void installPatches() {
+		using memory::genNOPUnprotected;
+		using memory::genJumpEnforced;
+		using memory::genJumpUnprotected;
+		using memory::genCallUnprotected;
+		using memory::writeDoubleWordEnforced;
+		using memory::writePatchCodeUnprotected;
+
 		// Patch: Optimize insertion of cell names.
 		if constexpr (ENABLE_ALL_OPTIMIZATIONS) {
 			genNOPUnprotected(0x4EC686, 0x4EC68D - 0x4EC686);

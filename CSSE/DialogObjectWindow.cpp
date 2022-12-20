@@ -12,12 +12,11 @@
 #include "Settings.h"
 
 namespace se::cs::dialog::object_window {
-	using namespace memory;
-	using namespace windows;
+	using memory::ExternalGlobal;
 
-	using ghWndMainWindow = memory::ExternalGlobal<HWND, 0x6CE934>;
-	using ghWndTabControl = memory::ExternalGlobal<HWND, 0x6CF08C>;
-	using ghWndObjectList = memory::ExternalGlobal<HWND, 0x6CEFD0>;
+	using ghWndMainWindow = ExternalGlobal<HWND, 0x6CE934>;
+	using ghWndTabControl = ExternalGlobal<HWND, 0x6CF08C>;
+	using ghWndObjectList = ExternalGlobal<HWND, 0x6CEFD0>;
 	static HWND objectWindowSearchControl = NULL;
 
 	//
@@ -149,6 +148,8 @@ namespace se::cs::dialog::object_window {
 	}
 
 	inline void OnNotifyFromMainListView(HWND hWnd, UINT msg, WPARAM id, LPARAM lParam) {
+		using windows::isKeyDown;
+
 		const auto hdr = (NMHDR*)lParam;
 
 		if (hdr->code == LVN_KEYDOWN) {
@@ -260,6 +261,9 @@ namespace se::cs::dialog::object_window {
 	//
 
 	void installPatches() {
+		using memory::genCallEnforced;
+		using memory::genJumpEnforced;
+
 		// Patch: Optimize displaying of objects dialog tabs.
 		genCallEnforced(0x43C1B4, 0x401E29, reinterpret_cast<DWORD>(PatchSpeedUpObjectWindow_PauseRedraws));
 		genCallEnforced(0x43C1CC, 0x403D8C, reinterpret_cast<DWORD>(PatchSpeedUpObjectWindow_ResumeRedraws));

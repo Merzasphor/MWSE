@@ -4,8 +4,6 @@
 #include "MathUtil.h"
 
 namespace NI {
-	using namespace se::math;
-
 	Matrix33::Matrix33() : m0(), m1(), m2() {
 
 	}
@@ -214,6 +212,8 @@ namespace NI {
 	}
 
 	bool Matrix33::toRotationDifference(const Vector3& a, const Vector3& b) {
+		using se::math::M_PIf;
+
 		auto axis = a.crossProduct(&b);
 		auto norm = axis.length();
 		if (norm <= 1e-5) {
@@ -224,7 +224,7 @@ namespace NI {
 			axis = axis / norm;
 			auto angle = asin(norm);
 			if (a.dotProduct(&b) < 0) {
-				angle = M_PI - angle;
+				angle = M_PIf - angle;
 			}
 			toRotation(-angle, axis.x, axis.y, axis.z);
 			return true;
@@ -324,12 +324,14 @@ namespace NI {
 	}
 
 	bool Matrix33::toEulerZYX(float* x, float* y, float* z) const {
+		using se::math::M_PI_2f;
+
 		*x = 0;
 		*y = asin(m2.x);
 		*z = 0;
 
-		if (*y < M_PI_2) {
-			if (*y > -M_PI_2) {
+		if (*y < M_PI_2f) {
+			if (*y > -M_PI_2f) {
 				*z = -atan2(m1.x, m0.x);
 				*x = -atan2(m2.y, m2.z);
 				return true;

@@ -23,8 +23,6 @@
 #include "Settings.h"
 
 namespace se::cs::dialog::render_window {
-	using namespace windows;
-
 	static WORD lastRenderWindowPosX = 0;
 	static WORD lastRenderWindowPosY = 0;
 
@@ -139,6 +137,8 @@ namespace se::cs::dialog::render_window {
 
 	const auto TES3_CS_OriginalRotationLogic = reinterpret_cast<bool(__cdecl*)(void*, TranslationData::Target*, int, TranslationData::RotationAxis)>(0x4652D0);
 	bool __cdecl Patch_ReplaceRotationLogic(void* unknown1, TranslationData::Target* firstTarget, int relativeMouseDelta, TranslationData::RotationAxis rotationAxis) {
+		using windows::isKeyDown;
+
 		// Allow holding ALT modifier to do vanilla behavior.
 		bool useWorldAxisRotation = settings.render_window.use_world_axis_rotations_by_default;
 		if (isKeyDown(VK_MENU)) {
@@ -175,7 +175,7 @@ namespace se::cs::dialog::render_window {
 			break;
 		}
 
-		const auto snapAngle = math::degreesToRadians(gSnapAngleInDegrees::get());
+		const auto snapAngle = math::degreesToRadians((float)gSnapAngleInDegrees::get());
 		const bool isSnapping = ((rotationFlags & 2) != 0) && (snapAngle != 0.0f);
 
 		NI::Vector3 orientation = cumulativeRot;
@@ -283,6 +283,8 @@ namespace se::cs::dialog::render_window {
 	//
 
 	void __cdecl Patch_ReplaceScalingLogic(RenderController* renderController, TranslationData::Target* firstTarget, int scaler) {
+		using windows::isKeyDown;
+
 		auto translationData = TranslationData::get();
 		if (!isKeyDown(VK_MENU) || translationData->numberOfTargets == 1) {
 			const auto VanillaScalingHandler = reinterpret_cast<void(__cdecl*)(RenderController*, TranslationData::Target*, int)>(0x404949);
@@ -333,14 +335,14 @@ namespace se::cs::dialog::render_window {
 	SnappingAxis snappingAxis = SnappingAxis::POSITIVE_Z;
 
 	int __cdecl Patch_ReplaceDragMovementLogic(RenderController* renderController, TranslationData::Target* firstTarget, int dx, int dy, bool lockX, bool lockY, bool lockZ) {
+		using windows::isKeyDown;
+
 		// We only care if we are holding the alt key and only have one object selected.
 		auto data = memory::MemAccess<TranslationData*>::Get(0x6CE968);
 		if (data->numberOfTargets != 1 || !isKeyDown(VK_MENU)) {
 			const auto DefaultDragMovementFunction = reinterpret_cast<int(__cdecl*)(RenderController*, TranslationData::Target*, int, int, bool, bool, bool)>(0x401F4B);
 			return DefaultDragMovementFunction(renderController, firstTarget, dx, dy, lockX, lockY, lockZ);
 		}
-
-		using namespace math;
 
 		auto rendererPicker = &gRenderWindowPick::get();
 		auto rendererController = RenderController::get();
@@ -973,7 +975,11 @@ namespace se::cs::dialog::render_window {
 	//
 
 	void installPatches() {
-		using namespace memory;
+		using memory::genJumpEnforced;
+		using memory::genCallEnforced;
+		using memory::genCallUnprotected;
+		using memory::writePatchCodeUnprotected;
+		using memory::writeDoubleWordEnforced;
 
 		// Patch: Use world rotation values.
 		genJumpEnforced(0x403D41, 0x4652D0, reinterpret_cast<DWORD>(Patch_ReplaceRotationLogic));

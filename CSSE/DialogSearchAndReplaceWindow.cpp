@@ -4,8 +4,6 @@
 #include "LogUtil.h"
 
 namespace se::cs::dialog::search_and_replace_window {
-	using namespace memory;
-
 	constexpr auto ENABLE_ALL_OPTIMIZATIONS = true;
 	constexpr auto LOG_PERFORMANCE_RESULTS = false;
 
@@ -63,6 +61,8 @@ namespace se::cs::dialog::search_and_replace_window {
 	}
 
 	void installPatches() {
+		using memory::genJumpEnforced;
+
 		// Patch: Extend Object Window message handling.
 		genJumpEnforced(0x4024D7, 0x438CE0, reinterpret_cast<DWORD>(PatchDialogProc));
 	}

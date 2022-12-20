@@ -20,8 +20,6 @@
 #include "Settings.h"
 
 namespace se::cs {
-	using namespace memory;
-
 	constexpr auto LOG_SUPPRESSED_WARNINGS = false;
 
 	HMODULE hInstanceCSSE = NULL;
@@ -88,6 +86,9 @@ namespace se::cs {
 	}
 
 	void installPatches() {
+		using memory::genCallEnforced;
+		using memory::genJumpEnforced;
+
 		// Get the vanilla masters so we suppress errors from them.
 		genCallEnforced(0x50194E, 0x4041C4, reinterpret_cast<DWORD>(patch::findVanillaMasters));
 
