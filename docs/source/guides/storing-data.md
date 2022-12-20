@@ -1,6 +1,6 @@
 # Storing Data
 
-MWSE offers various ways to store data persistently. Be at across save sessions for the same character or even persistently across different player characters. To store data that is meant to persist between different characters, you can used provided [json API](https://mwse.github.io/MWSE/apis/json/). It provides a set of functions needed to save Lua's values to json files and load the data to Lua's tables. This process is called serialization. One requirement is that the value can be serialized. Even functions used to work with configuration files `mwse.saveConfig` and `mwse.loadConfig` are implemented with json API.
+MWSE offers various ways to store data persistently. Be at across save sessions for the same character or even persistently across different player characters. To store data that is meant to persist between different characters, you can use provided [json API](https://mwse.github.io/MWSE/apis/json/). It provides a set of functions needed to save Lua's values to json files and load the data to Lua's tables. This process is called serialization. One requirement is that the value can be serialized. Even functions used to work with configuration files `mwse.saveConfig` and `mwse.loadConfig` are implemented with json API.
 
 
 ## Serialization
@@ -27,7 +27,7 @@ Besides saving your data to files, you can save your data to some of the MWSE's 
 !!! note
 	Both `data` and `tempData` tables can only be used to store *serializible* data.
 
-Data stored in `data` table on a certain object will persist between savegame sessions, while data stored in `tempData` table will be cleared on game reload. There are some peculiarities when working with these tables - each of the table fields needs to be declared one by one.
+Data stored in the `data` table on a certain object will persist between savegame sessions, while data stored in `tempData` table will be cleared on game reload. There are some peculiarities when working with these tables - each of the table fields needs to be declared one by one.
 
 
 !!! example "Example: creating a table inside `data` table on the player's reference"
@@ -57,7 +57,7 @@ Data stored in `data` table on a certain object will persist between savegame se
 	myData.var2 = 32
 	```
 
-The field `data` on the player's reference could be perfect way to store some mod-related player's statistics. For example, a mod implementing karma system could save the player's current karma level inside that table, so that it can persist between save sessions. On the other hand, the data that mod's user would want to persist between whichever character the player or savegame is played would should be saved to a configuration file insted. For instance, keybindings for new abilities are a good candidate for that.
+The field `data` on the player's reference could be the perfect way to store some mod-related player statistics. For example, a mod implementing a karma system could save the player's current karma level inside that table, so that it can persist between save sessions. On the other hand, the data that the mod's user would want to persist between whichever character the player or savegame is played would be saved to a configuration file instead. For instance, keybindings for new abilities are a good candidate for that.
 
 ### Usage of data table
 
@@ -128,7 +128,7 @@ local function getData()
 	return tes3.player.data.myMod
 end
 
---- This function will handle update the player's Current
+--- This function will handle updating the player's Current
 --- karma level, and handle if it passes over -100 or 100
 ---@param delta integer
 local function modKarma(delta)
@@ -184,7 +184,7 @@ local function onCellChange(e)
 			-- award some karma points
 			modKarma(50)
 
-			-- Lets save that to the list of visited shrine in
+			-- Let's save that to the list of visited shrines in
 			-- a table on tes3.player.data, so it can persist
 			-- between savegames.
 			data.shrinesVisited[cellId] = true
