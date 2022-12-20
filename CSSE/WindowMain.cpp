@@ -39,11 +39,60 @@ namespace se::cs::window::main {
 	}
 
 	//
+	// Patch: Enable QuickStart cell loading.
+	//
+
+	bool isQuickStarting = false;
+
+	bool __cdecl PatchEnableQuickStartCellLoading(bool a1) {
+		const auto existingFunction = reinterpret_cast<bool(__cdecl*)(bool)>(0x4033FF);
+		auto result = existingFunction(a1);
+
+		if (!isQuickStarting) {
+			return result;
+		}
+
+		// Load position from settings. We need to shift down by 16,384 units because of the weird offset in the function.
+		const auto& qsPos = settings.quickstart.position;
+		NI::Vector3 position(qsPos[0], qsPos[1], qsPos[2]);
+		position.z -= 16384.0f;
+
+		auto dataHandler = DataHandler::get();
+		auto renderController = dialog::render_window::RenderController::get();
+
+		// Check to see if we're loading an interior cell.
+		const auto& cellID = settings.quickstart.cell;
+		if (!cellID.empty()) {
+			auto cell = dataHandler->recordHandler->getCellByID(cellID.c_str());
+			if (cell == nullptr) {
+				return result;
+			}
+
+			const auto setToLoadCell = reinterpret_cast<bool(__thiscall*)(DataHandler*, Cell*, NI::Vector3*)>(0x4A1370);
+			setToLoadCell(dataHandler, cell, &position);
+		}
+
+		// Actually perform the loading.
+		const auto loadCell = reinterpret_cast<bool(__cdecl*)(NI::Vector3*, Reference*)>(0x469B40);
+		loadCell(&position, nullptr);
+
+		// Setup orientation.
+		const auto& qsRot = settings.quickstart.orientation;
+		NI::Matrix33 rotationMatrix;
+		rotationMatrix.fromEulerXYZ(qsRot[0], qsRot[1], qsRot[2]);
+		renderController->node->setLocalRotationMatrix(&rotationMatrix);
+		renderController->node->update();
+
+		isQuickStarting = false;
+
+		return result;
+	}
+
+	//
 	// Patch: Extend window messages.
 	//
 
 	bool blockNormalExecution = false;
-	bool isQuickStarting = false;
 
 	void onFinishInitialization(LPARAM& lParam) {
 		// Skip any QuickStart usage if we were given a file to load.
@@ -82,45 +131,6 @@ namespace se::cs::window::main {
 		isQuickStarting = true;
 	}
 
-	void loadQuickStartCell() {
-		if (!isQuickStarting) {
-			return;
-		}
-
-		// Load position from settings. We need to shift down by 16,384 units because of the weird offset in the function.
-		const auto& qsPos = settings.quickstart.position;
-		NI::Vector3 position(qsPos[0], qsPos[1], qsPos[2]);
-		position.z -= 16384.0f;
-
-		auto dataHandler = DataHandler::get();
-		auto renderController = dialog::render_window::RenderController::get();
-
-		// Check to see if we're loading an interior cell.
-		const auto& cellID = settings.quickstart.cell;
-		if (!cellID.empty()) {
-			auto cell = dataHandler->recordHandler->getCellByID(cellID.c_str());
-			if (cell == nullptr) {
-				return;
-			}
-
-			const auto setToLoadCell = reinterpret_cast<bool(__thiscall*)(DataHandler*, Cell*, NI::Vector3*)>(0x4A1370);
-			setToLoadCell(dataHandler, cell, &position);
-		}
-
-		// Actually perform the loading.
-		const auto loadCell = reinterpret_cast<bool(__cdecl*)(NI::Vector3*, Reference*)>(0x469B40);
-		loadCell(&position, nullptr);
-
-		// Setup orientation.
-		const auto& qsRot = settings.quickstart.orientation;
-		NI::Matrix33 rotationMatrix;
-		rotationMatrix.fromEulerXYZ(qsRot[0], qsRot[1], qsRot[2]);
-		renderController->node->setLocalRotationMatrix(&rotationMatrix);
-		renderController->node->update();
-
-		isQuickStarting = false;
-	}
-
 	LRESULT CALLBACK PatchDialogProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		blockNormalExecution = false;
 
@@ -141,9 +151,7 @@ namespace se::cs::window::main {
 
 		// Handle post-patches.
 		switch (msg) {
-		case 0xC0DE:
-			loadQuickStartCell();
-			break;
+
 		}
 
 		return result;
@@ -152,6 +160,9 @@ namespace se::cs::window::main {
 	void installPatches() {
 		// Patch: Throttle UI status updates.
 		genJumpEnforced(0x404881, 0x46E680, reinterpret_cast<DWORD>(PatchThrottleMessageUpdate));
+
+		// Patch: Enable QuickStart cell loading.
+		genCallEnforced(0x447B78, 0x4033FF, reinterpret_cast<DWORD>(PatchEnableQuickStartCellLoading));
 
 		// Patch: Extend window messages.
 		genJumpEnforced(0x401EF1, 0x444590, reinterpret_cast<DWORD>(PatchDialogProc));
