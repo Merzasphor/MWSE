@@ -588,23 +588,23 @@ namespace se::cs::dialog::render_window {
 			return false;
 		}
 
-		auto rendererPicker = reinterpret_cast<NI::Pick*>(0x6CF528);
+		auto& rendererPicker = gRenderWindowPick::get();
 		auto rendererController = RenderController::get();
 		auto sceneGraphController = SceneGraphController::get();
 
 		// Cache picker settings we care about.
-		const auto previousRoot = rendererPicker->root;
+		const auto previousRoot = rendererPicker.root;
 
 		// Make changes to the pick that we need to.
-		rendererPicker->root = sceneGraphController->landscapeRoot;
+		rendererPicker.root = sceneGraphController->landscapeRoot;
 
 		NI::Vector3 origin;
 		NI::Vector3 direction;
 		if (rendererController->camera->windowPointToRay(lastRenderWindowPosX, lastRenderWindowPosY, origin, direction)) {
 			direction.normalize();
 
-			if (rendererPicker->pickObjects(&origin, &direction)) {
-				auto firstResult = rendererPicker->results.at(0);
+			if (rendererPicker.pickObjects(&origin, &direction)) {
+				auto firstResult = rendererPicker.results.at(0);
 				if (firstResult->object) {
 					auto texturingProperty = firstResult->object->getTexturingProperty();
 					if (texturingProperty) {
@@ -634,8 +634,8 @@ namespace se::cs::dialog::render_window {
 		}
 
 		// Restore pick settings.
-		rendererPicker->clearResults();
-		rendererPicker->root = previousRoot;
+		rendererPicker.clearResults();
+		rendererPicker.root = previousRoot;
 
 		return true;
 	}

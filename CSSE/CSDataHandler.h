@@ -3,6 +3,8 @@
 #include "CSDefines.h"
 #include "NIDefines.h"
 
+#include "MemoryUtil.h"
+
 namespace se::cs {
 	struct DataHandler {
 		RecordHandler* recordHandler;
@@ -11648,7 +11650,7 @@ namespace se::cs {
 		void updateAllLights();
 
 		static DataHandler* get() {
-			return *reinterpret_cast<DataHandler**>(0x6CE8F0);
+			return memory::ExternalGlobal<DataHandler*, 0x6CE8F0>::get();
 		}
 	};
 }

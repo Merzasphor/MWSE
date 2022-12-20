@@ -54,12 +54,12 @@ namespace se::cs::dialog::dialogue_window {
 	// Patch: Ensure variable combo boxes always have a dropdown of sufficient width.
 	//
 
-	LONG PatchEnsureVariableComboBoxListWidth__LongestField = 0;
-	HDC PatchEnsureVariableComboBoxListWidth__hDC = NULL;
+	LONG PatchEnsureVariableComboBoxListWidth_LongestField = 0;
+	HDC PatchEnsureVariableComboBoxListWidth_hDC = NULL;
 
 	HDC CALLBACK PatchEnsureVariableComboBoxListWidth_GetCachedHDC(HWND hWnd) {
-		PatchEnsureVariableComboBoxListWidth__hDC = GetDC(hWnd);
-		return PatchEnsureVariableComboBoxListWidth__hDC;
+		PatchEnsureVariableComboBoxListWidth_hDC = GetDC(hWnd);
+		return PatchEnsureVariableComboBoxListWidth_hDC;
 	}
 
 	LRESULT CALLBACK PatchEnsureVariableComboBoxListWidth_SendDlgItemMessageAWrapper(HWND hDlg, int nIDDlgItem, UINT msg, WPARAM wParam, LPARAM lParam) {
@@ -67,17 +67,17 @@ namespace se::cs::dialog::dialogue_window {
 
 		switch (msg) {
 		case CB_RESETCONTENT:
-			PatchEnsureVariableComboBoxListWidth__LongestField = 0;
+			PatchEnsureVariableComboBoxListWidth_LongestField = 0;
 			break;
 		case CB_ADDSTRING:
-			if (GetTextExtentPoint32A(PatchEnsureVariableComboBoxListWidth__hDC, (const char*)lParam, strlen((const char*)lParam), &textExtentSize)) {
-				if (textExtentSize.cx > PatchEnsureVariableComboBoxListWidth__LongestField) {
-					PatchEnsureVariableComboBoxListWidth__LongestField = textExtentSize.cx;
+			if (GetTextExtentPoint32A(PatchEnsureVariableComboBoxListWidth_hDC, (const char*)lParam, strlen((const char*)lParam), &textExtentSize)) {
+				if (textExtentSize.cx > PatchEnsureVariableComboBoxListWidth_LongestField) {
+					PatchEnsureVariableComboBoxListWidth_LongestField = textExtentSize.cx;
 				}
 			}
 			break;
 		case CB_SETDROPPEDWIDTH:
-			wParam = PatchEnsureVariableComboBoxListWidth__LongestField;
+			wParam = PatchEnsureVariableComboBoxListWidth_LongestField;
 			break;
 		}
 
@@ -209,30 +209,31 @@ namespace se::cs::dialog::dialogue_window {
 		}
 
 		if constexpr (ENABLE_ALL_OPTIMIZATIONS) {
-			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_FUNCTION1_TYPE_COMBO), WM_SETREDRAW, FALSE, NULL);
-			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_FUNCTION1_VARIABLE_COMBO), WM_SETREDRAW, FALSE, NULL);
-			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_FUNCTION1_CONDITION_COMBO), WM_SETREDRAW, FALSE, NULL);
-			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_FUNCTION1_VALUE_EDIT), WM_SETREDRAW, FALSE, NULL);
-			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_FUNCTION2_TYPE_COMBO), WM_SETREDRAW, FALSE, NULL);
-			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_FUNCTION2_VARIABLE_COMBO), WM_SETREDRAW, FALSE, NULL);
-			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_FUNCTION2_CONDITION_COMBO), WM_SETREDRAW, FALSE, NULL);
-			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_FUNCTION2_VALUE_EDIT), WM_SETREDRAW, FALSE, NULL);
-			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_FUNCTION3_TYPE_COMBO), WM_SETREDRAW, FALSE, NULL);
-			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_FUNCTION3_VARIABLE_COMBO), WM_SETREDRAW, FALSE, NULL);
-			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_FUNCTION3_CONDITION_COMBO), WM_SETREDRAW, FALSE, NULL);
-			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_FUNCTION3_VALUE_EDIT), WM_SETREDRAW, FALSE, NULL);
-			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_FUNCTION4_TYPE_COMBO), WM_SETREDRAW, FALSE, NULL);
-			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_FUNCTION4_VARIABLE_COMBO), WM_SETREDRAW, FALSE, NULL);
-			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_FUNCTION4_CONDITION_COMBO), WM_SETREDRAW, FALSE, NULL);
-			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_FUNCTION4_VALUE_EDIT), WM_SETREDRAW, FALSE, NULL);
-			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_FUNCTION5_TYPE_COMBO), WM_SETREDRAW, FALSE, NULL);
-			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_FUNCTION5_VARIABLE_COMBO), WM_SETREDRAW, FALSE, NULL);
-			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_FUNCTION5_CONDITION_COMBO), WM_SETREDRAW, FALSE, NULL);
-			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_FUNCTION5_VALUE_EDIT), WM_SETREDRAW, FALSE, NULL);
-			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_FUNCTION6_TYPE_COMBO), WM_SETREDRAW, FALSE, NULL);
-			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_FUNCTION6_VARIABLE_COMBO), WM_SETREDRAW, FALSE, NULL);
-			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_FUNCTION6_CONDITION_COMBO), WM_SETREDRAW, FALSE, NULL);
-			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_FUNCTION6_VALUE_EDIT), WM_SETREDRAW, FALSE, NULL);
+			SendDlgItemMessageA(hWnd, CONTROL_ID_CONDITION_FUNCTION1_TYPE_COMBO, WM_SETREDRAW, FALSE, NULL);
+			SendDlgItemMessageA(hWnd, CONTROL_ID_CONDITION_FUNCTION1_TYPE_COMBO, WM_SETREDRAW, FALSE, NULL);
+			SendDlgItemMessageA(hWnd, CONTROL_ID_CONDITION_FUNCTION1_VARIABLE_COMBO, WM_SETREDRAW, FALSE, NULL);
+			SendDlgItemMessageA(hWnd, CONTROL_ID_CONDITION_FUNCTION1_CONDITION_COMBO, WM_SETREDRAW, FALSE, NULL);
+			SendDlgItemMessageA(hWnd, CONTROL_ID_CONDITION_FUNCTION1_VALUE_EDIT, WM_SETREDRAW, FALSE, NULL);
+			SendDlgItemMessageA(hWnd, CONTROL_ID_CONDITION_FUNCTION2_TYPE_COMBO, WM_SETREDRAW, FALSE, NULL);
+			SendDlgItemMessageA(hWnd, CONTROL_ID_CONDITION_FUNCTION2_VARIABLE_COMBO, WM_SETREDRAW, FALSE, NULL);
+			SendDlgItemMessageA(hWnd, CONTROL_ID_CONDITION_FUNCTION2_CONDITION_COMBO, WM_SETREDRAW, FALSE, NULL);
+			SendDlgItemMessageA(hWnd, CONTROL_ID_CONDITION_FUNCTION2_VALUE_EDIT, WM_SETREDRAW, FALSE, NULL);
+			SendDlgItemMessageA(hWnd, CONTROL_ID_CONDITION_FUNCTION3_TYPE_COMBO, WM_SETREDRAW, FALSE, NULL);
+			SendDlgItemMessageA(hWnd, CONTROL_ID_CONDITION_FUNCTION3_VARIABLE_COMBO, WM_SETREDRAW, FALSE, NULL);
+			SendDlgItemMessageA(hWnd, CONTROL_ID_CONDITION_FUNCTION3_CONDITION_COMBO, WM_SETREDRAW, FALSE, NULL);
+			SendDlgItemMessageA(hWnd, CONTROL_ID_CONDITION_FUNCTION3_VALUE_EDIT, WM_SETREDRAW, FALSE, NULL);
+			SendDlgItemMessageA(hWnd, CONTROL_ID_CONDITION_FUNCTION4_TYPE_COMBO, WM_SETREDRAW, FALSE, NULL);
+			SendDlgItemMessageA(hWnd, CONTROL_ID_CONDITION_FUNCTION4_VARIABLE_COMBO, WM_SETREDRAW, FALSE, NULL);
+			SendDlgItemMessageA(hWnd, CONTROL_ID_CONDITION_FUNCTION4_CONDITION_COMBO, WM_SETREDRAW, FALSE, NULL);
+			SendDlgItemMessageA(hWnd, CONTROL_ID_CONDITION_FUNCTION4_VALUE_EDIT, WM_SETREDRAW, FALSE, NULL);
+			SendDlgItemMessageA(hWnd, CONTROL_ID_CONDITION_FUNCTION5_TYPE_COMBO, WM_SETREDRAW, FALSE, NULL);
+			SendDlgItemMessageA(hWnd, CONTROL_ID_CONDITION_FUNCTION5_VARIABLE_COMBO, WM_SETREDRAW, FALSE, NULL);
+			SendDlgItemMessageA(hWnd, CONTROL_ID_CONDITION_FUNCTION5_CONDITION_COMBO, WM_SETREDRAW, FALSE, NULL);
+			SendDlgItemMessageA(hWnd, CONTROL_ID_CONDITION_FUNCTION5_VALUE_EDIT, WM_SETREDRAW, FALSE, NULL);
+			SendDlgItemMessageA(hWnd, CONTROL_ID_CONDITION_FUNCTION6_TYPE_COMBO, WM_SETREDRAW, FALSE, NULL);
+			SendDlgItemMessageA(hWnd, CONTROL_ID_CONDITION_FUNCTION6_VARIABLE_COMBO, WM_SETREDRAW, FALSE, NULL);
+			SendDlgItemMessageA(hWnd, CONTROL_ID_CONDITION_FUNCTION6_CONDITION_COMBO, WM_SETREDRAW, FALSE, NULL);
+			SendDlgItemMessageA(hWnd, CONTROL_ID_CONDITION_FUNCTION6_VALUE_EDIT, WM_SETREDRAW, FALSE, NULL);
 		}
 
 		const auto CS_DialogueInfo_displayToEditor = reinterpret_cast<void(__thiscall*)(DialogueInfo*, HWND)>(0x4F1070);
