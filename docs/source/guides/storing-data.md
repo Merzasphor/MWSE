@@ -6,6 +6,7 @@ MWSE offers various ways to store data persistently. Be at across save sessions 
 ## Serialization
 
 Serializible values are Lua's primitive types:
+
  - `boolean`
  - `number`
  - `string`
@@ -16,6 +17,7 @@ You can't serialize MWSE classes such as `tes3reference`, `tes3mobilePlayer`, et
 ## Persistent Storage for the Same Player Character
 
 Besides saving your data to files, you can save your data to some of the MWSE's classes that have a `data` or `tempData` property. Those are:
+
 - `tes3combatSession.data`
 - `tes3itemData.data`
 - `tes3reference.data`
