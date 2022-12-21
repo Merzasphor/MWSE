@@ -11,9 +11,9 @@ namespace se::cs {
 			int skillId; // 0xC
 			int enchantPoints; // 0x10
 		};
-		const char* unknown_0x48;
+		const char* name; // 0x48
 		Script* script; // 0x4C
-		const char* unknown_0x50;
+		const char* model; // 0x50
 		const char* icon; // 0x54
 		BookData bookData; // 0x58
 		Object* enchantment; // 0x6C
