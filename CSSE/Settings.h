@@ -13,6 +13,7 @@ namespace se::cs {
 			bool clear_on_tab_switch = true;
 			bool filter_by_id = true;
 			bool filter_by_name = true;
+			bool filter_by_book_text = true;
 
 			void from_toml(const toml::value& v);
 			toml::value into_toml() const;

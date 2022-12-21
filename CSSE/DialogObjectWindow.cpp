@@ -7,7 +7,7 @@
 
 #include "NIIteratedList.h"
 
-#include "CSObject.h"
+#include "CSBook.h"
 
 #include "Settings.h"
 
@@ -60,19 +60,20 @@ namespace se::cs::dialog::object_window {
 		}
 
 		if (settings.object_window.filter_by_id) {
-			std::string objectId = object->getObjectID();
-			string::to_lower(objectId);
-
-			if (objectId.find(currentSearchText) != std::string::npos) {
+			if (string::cicontains(object->getObjectID(), currentSearchText)) {
 				return CS_AddObjectToWindow(a1, object);
 			}
 		}
 
 		if (settings.object_window.filter_by_name) {
-			std::string name = object->getName();
-			string::to_lower(name);
+			if (string::cicontains(object->getName(), currentSearchText)) {
+				return CS_AddObjectToWindow(a1, object);
+			}
+		}
 
-			if (name.find(currentSearchText) != std::string::npos) {
+		if (settings.object_window.filter_by_book_text && object->objectType == ObjectType::Book) {
+			auto asBook = static_cast<Book*>(object);
+			if (asBook->text && string::cicontains(asBook->text, currentSearchText)) {
 				return CS_AddObjectToWindow(a1, object);
 			}
 		}

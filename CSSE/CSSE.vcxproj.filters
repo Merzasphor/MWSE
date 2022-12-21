@@ -135,6 +135,9 @@
     <ClInclude Include="CSCell.h">
       <Filter>Header Files\CS</Filter>
     </ClInclude>
+    <ClInclude Include="CSBook.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

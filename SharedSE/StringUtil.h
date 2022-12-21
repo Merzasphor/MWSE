@@ -18,11 +18,13 @@ namespace se::string {
 	// Returns true if a == b, case insensitive, only compares maxCount characters.
 	bool niequal(std::string_view a, std::string_view b, size_t maxCount);
 
-	bool replace(std::string& str, const std::string_view from, const std::string_view to);
-
 	//
 	// Other string utility functions.
 	//
+
+	bool cicontains(std::string_view haystack, std::string_view needle);
+
+	bool replace(std::string& str, const std::string_view from, const std::string_view to);
 
 	inline void ltrim(std::string& s) {
 		s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int ch) { return !std::isspace(ch); }));

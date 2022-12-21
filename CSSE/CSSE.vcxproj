@@ -102,6 +102,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CSAnimatedObject.h" />
+    <ClInclude Include="CSBook.h" />
     <ClInclude Include="CSCell.h" />
     <ClInclude Include="CSDataHandler.h" />
     <ClInclude Include="CSDefines.h" />

@@ -3,6 +3,7 @@
 namespace se::cs {
 	struct AnimatedObject;
 	struct BaseObject;
+	struct Book;
 	struct Cell;
 	struct DataHandler;
 	struct Dialogue;

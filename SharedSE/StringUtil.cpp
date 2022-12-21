@@ -2,7 +2,7 @@
 
 namespace se::string {
 	bool ciequal(char a, char b) {
-		return tolower(a) == tolower(b);
+		return std::tolower(a) == std::tolower(b);
 	}
 
 	bool equal(std::string_view a, std::string_view b) {
@@ -16,6 +16,18 @@ namespace se::string {
 	bool niequal(std::string_view a, std::string_view b, size_t maxCount) {
 		if (a.size() < maxCount || b.size() < maxCount) return false;
 		return std::equal(a.begin(), a.begin() + maxCount, b.begin(), b.begin() + maxCount, ciequal);
+	}
+
+	bool cicontains(std::string_view haystack, std::string_view needle) {
+		if (needle.empty()) {
+			return true;
+		}
+
+		if (haystack.size() < needle.size()) {
+			return false;
+		}
+
+		return std::search(haystack.begin(), haystack.end(), needle.begin(), needle.end(), string::ciequal) != haystack.end();
 	}
 
 	bool replace(std::string& str, const std::string_view from, const std::string_view to) {

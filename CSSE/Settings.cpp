@@ -29,6 +29,7 @@ namespace se::cs {
 		clear_on_tab_switch = toml::find_or(v, "clear_on_tab_switch", clear_on_tab_switch);
 		filter_by_id = toml::find_or(v, "filter_by_id", filter_by_id);
 		filter_by_name = toml::find_or(v, "filter_by_name", filter_by_name);
+		filter_by_book_text = toml::find_or(v, "filter_by_book_text", filter_by_book_text);
 	}
 
 	toml::value Settings_t::ObjectWindowSettings::into_toml() const {
@@ -37,6 +38,7 @@ namespace se::cs {
 				{ "clear_on_tab_switch", clear_on_tab_switch },
 				{ "filter_by_id", filter_by_id },
 				{ "filter_by_name", filter_by_name },
+				{ "filter_by_book_text", filter_by_book_text },
 			}
 		);
 	}
