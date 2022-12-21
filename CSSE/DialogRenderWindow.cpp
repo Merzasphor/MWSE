@@ -784,42 +784,42 @@ namespace se::cs::dialog::render_window {
 			menuItem.dwTypeData = (LPSTR)"+&X";
 			menuItem.hbmpChecked = NULL;
 			menuItem.hbmpUnchecked = NULL;
-			InsertMenuItemA(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
+			InsertMenuItemA(subMenuSnappingAxis.hSubMenu, subIndex++, TRUE, &menuItem);
 
 			menuItem.wID = SET_SNAPPING_AXIS_NEGATIVE_X;
 			menuItem.fMask = MIIM_FTYPE | MIIM_CHECKMARKS | MIIM_STRING | MIIM_ID;
 			menuItem.fType = MFT_STRING | MFT_RADIOCHECK;
 			menuItem.fState = (snappingAxis == SnappingAxis::NEGATIVE_X) ? MFS_CHECKED : MFS_UNCHECKED;
 			menuItem.dwTypeData = (LPSTR)"-X";
-			InsertMenuItemA(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
+			InsertMenuItemA(subMenuSnappingAxis.hSubMenu, subIndex++, TRUE, &menuItem);
 
 			menuItem.wID = SET_SNAPPING_AXIS_POSITIVE_Y;
 			menuItem.fMask = MIIM_FTYPE | MIIM_CHECKMARKS | MIIM_STRING | MIIM_ID;
 			menuItem.fType = MFT_STRING | MFT_RADIOCHECK;
 			menuItem.fState = (snappingAxis == SnappingAxis::POSITIVE_Y) ? MFS_CHECKED : MFS_UNCHECKED;
 			menuItem.dwTypeData = (LPSTR)"+&Y";
-			InsertMenuItemA(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
+			InsertMenuItemA(subMenuSnappingAxis.hSubMenu, subIndex++, TRUE, &menuItem);
 
 			menuItem.wID = SET_SNAPPING_AXIS_NEGATIVE_Y;
 			menuItem.fMask = MIIM_FTYPE | MIIM_CHECKMARKS | MIIM_STRING | MIIM_ID;
 			menuItem.fType = MFT_STRING | MFT_RADIOCHECK;
 			menuItem.fState = (snappingAxis == SnappingAxis::NEGATIVE_Y) ? MFS_CHECKED : MFS_UNCHECKED;
 			menuItem.dwTypeData = (LPSTR)"-Y";
-			InsertMenuItemA(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
+			InsertMenuItemA(subMenuSnappingAxis.hSubMenu, subIndex++, TRUE, &menuItem);
 
 			menuItem.wID = SET_SNAPPING_AXIS_POSITIVE_Z;
 			menuItem.fMask = MIIM_FTYPE | MIIM_CHECKMARKS | MIIM_STRING | MIIM_ID;
 			menuItem.fType = MFT_STRING | MFT_RADIOCHECK;
 			menuItem.fState = (snappingAxis == SnappingAxis::POSITIVE_Z) ? MFS_CHECKED : MFS_UNCHECKED;
 			menuItem.dwTypeData = (LPSTR)"+&Z";
-			InsertMenuItemA(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
+			InsertMenuItemA(subMenuSnappingAxis.hSubMenu, subIndex++, TRUE, &menuItem);
 
 			menuItem.wID = SET_SNAPPING_AXIS_NEGATIVE_Z;
 			menuItem.fMask = MIIM_FTYPE | MIIM_CHECKMARKS | MIIM_STRING | MIIM_ID;
 			menuItem.fType = MFT_STRING | MFT_RADIOCHECK;
 			menuItem.fState = (snappingAxis == SnappingAxis::NEGATIVE_Z) ? MFS_CHECKED : MFS_UNCHECKED;
 			menuItem.dwTypeData = (LPSTR)"-Z";
-			InsertMenuItemA(subMenuSnappingAxis.hSubMenu, ++subIndex, TRUE, &menuItem);
+			InsertMenuItemA(subMenuSnappingAxis.hSubMenu, subIndex++, TRUE, &menuItem);
 
 			CheckMenuRadioItem(subMenuSnappingAxis.hSubMenu, 0, 5, (UINT)snappingAxis, MF_BYPOSITION);
 		}
@@ -830,53 +830,53 @@ namespace se::cs::dialog::render_window {
 		menuItem.fState = hasReferencesSelected ? MFS_ENABLED : MFS_DISABLED;
 		menuItem.hSubMenu = subMenuSnappingAxis.hSubMenu;
 		menuItem.dwTypeData = (LPSTR)"Set &Snapping Axis";
-		InsertMenuItemA(menu, ++index, TRUE, &menuItem);
+		InsertMenuItemA(menu, index++, TRUE, &menuItem);
 
 		menuItem.wID = USE_WORLD_AXIS_ROTATION;
 		menuItem.fMask = MIIM_FTYPE | MIIM_CHECKMARKS | MIIM_STRING | MIIM_ID;
 		menuItem.fType = MFT_STRING;
 		menuItem.fState = (settings.render_window.use_world_axis_rotations_by_default) ? MFS_CHECKED : MFS_UNCHECKED;
 		menuItem.dwTypeData = (LPSTR)"Use &World Rotation Axis";
-		InsertMenuItemA(menu, ++index, TRUE, &menuItem);
-		CheckMenuItem(menu, index - 1, MF_BYPOSITION | ((settings.render_window.use_world_axis_rotations_by_default) ? MFS_CHECKED : MFS_UNCHECKED));
+		InsertMenuItemA(menu, index++, TRUE, &menuItem);
+		CheckMenuItem(menu, USE_WORLD_AXIS_ROTATION, (settings.render_window.use_world_axis_rotations_by_default) ? MFS_CHECKED : MFS_UNCHECKED);
 
 		menuItem.wID = RESERVED_NO_CALLBACK;
 		menuItem.fMask = MIIM_FTYPE | MIIM_ID;
 		menuItem.fType = MFT_SEPARATOR;
-		InsertMenuItemA(menu, ++index, TRUE, &menuItem);
+		InsertMenuItemA(menu, index++, TRUE, &menuItem);
 
 		menuItem.wID = HIDE_SELECTION;
 		menuItem.fMask = MIIM_FTYPE | MIIM_STRING | MIIM_ID | MIIM_STATE;
 		menuItem.fType = MFT_STRING;
 		menuItem.fState = hasReferencesSelected ? MFS_ENABLED : MFS_DISABLED;
 		menuItem.dwTypeData = (LPSTR)"&Hide Selection";
-		InsertMenuItemA(menu, ++index, TRUE, &menuItem);
+		InsertMenuItemA(menu, index++, TRUE, &menuItem);
 
 		menuItem.wID = RESTORE_HIDDEN_REFERENCES;
 		menuItem.fMask = MIIM_FTYPE | MIIM_STRING | MIIM_ID | MIIM_STATE;
 		menuItem.fType = MFT_STRING;
 		menuItem.fState = MFS_ENABLED;
 		menuItem.dwTypeData = (LPSTR)"&Restore Hidden References";
-		InsertMenuItemA(menu, ++index, TRUE, &menuItem);
+		InsertMenuItemA(menu, index++, TRUE, &menuItem);
 
 		menuItem.wID = RESERVED_NO_CALLBACK;
 		menuItem.fMask = MIIM_FTYPE | MIIM_ID;
 		menuItem.fType = MFT_SEPARATOR;
-		InsertMenuItemA(menu, ++index, TRUE, &menuItem);
+		InsertMenuItemA(menu, index++, TRUE, &menuItem);
 
 		menuItem.wID = SAVE_STATE_TO_QUICKSTART;
 		menuItem.fMask = MIIM_FTYPE | MIIM_STRING | MIIM_ID | MIIM_STATE;
 		menuItem.fType = MFT_STRING;
 		menuItem.fState = (recordHandler->activeModCount > 0) ? MFS_ENABLED : MFS_DISABLED;
 		menuItem.dwTypeData = (LPSTR)"Save State to QuickStart";
-		InsertMenuItemA(menu, ++index, TRUE, &menuItem);
+		InsertMenuItemA(menu, index++, TRUE, &menuItem);
 
 		menuItem.wID = CLEAR_STATE_FROM_QUICKSTART;
 		menuItem.fMask = MIIM_FTYPE | MIIM_STRING | MIIM_ID | MIIM_STATE;
 		menuItem.fType = MFT_STRING;
 		menuItem.fState = settings.quickstart.enabled ? MFS_ENABLED : MFS_DISABLED;
 		menuItem.dwTypeData = (LPSTR)"Clear QuickStart";
-		InsertMenuItemA(menu, ++index, TRUE, &menuItem);
+		InsertMenuItemA(menu, index++, TRUE, &menuItem);
 
 		POINT p;
 		GetCursorPos(&p);
@@ -916,6 +916,7 @@ namespace se::cs::dialog::render_window {
 			break;
 		case USE_WORLD_AXIS_ROTATION:
 			settings.render_window.use_world_axis_rotations_by_default = !settings.render_window.use_world_axis_rotations_by_default;
+			settings.save();
 			break;
 		case SAVE_STATE_TO_QUICKSTART:
 			saveRenderStateToQuickStart();
