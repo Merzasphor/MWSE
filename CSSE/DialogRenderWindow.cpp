@@ -336,6 +336,7 @@ namespace se::cs::dialog::render_window {
 
 	int __cdecl Patch_ReplaceDragMovementLogic(RenderController* renderController, TranslationData::Target* firstTarget, int dx, int dy, bool lockX, bool lockY, bool lockZ) {
 		using windows::isKeyDown;
+		using se::math::M_PIf;
 
 		// We only care if we are holding the alt key and only have one object selected.
 		auto data = memory::MemAccess<TranslationData*>::Get(0x6CE968);
@@ -423,37 +424,37 @@ namespace se::cs::dialog::render_window {
 							orientation.z = 1.0f;
 							break;
 						}
-						
+
 						NI::Matrix33 rotation;
 						rotation.toRotationDifference(orientation, firstResult->normal);
 
 						// Flip axis if it's negative snapping.
+						NI::Matrix33 flipMatrix;
 						switch (refSnappingAxis) {
 						case SnappingAxis::NEGATIVE_X:
-						case SnappingAxis::NEGATIVE_Y:
-						case SnappingAxis::NEGATIVE_Z:
-							rotation = rotation.invert();
+							flipMatrix.toRotationY(M_PIf);
 							break;
+						case SnappingAxis::NEGATIVE_Y:
+							flipMatrix.toRotationZ(M_PIf);
+							break;
+						case SnappingAxis::NEGATIVE_Z:
+							flipMatrix.toRotationX(M_PIf);
+							break;
+						default:
+							flipMatrix.toIdentity();
 						}
-
+						rotation = rotation * flipMatrix;
 						rotation.toEulerXYZ(&orientation);
 
-						// Restore the original base orientation.
+						// Restore the original Z orientation.
 						switch (refSnappingAxis) {
-						case SnappingAxis::POSITIVE_X:
-						case SnappingAxis::NEGATIVE_X:
-							orientation.x = reference->yetAnotherOrientation.x;
-							break;
-						case SnappingAxis::POSITIVE_Y:
-						case SnappingAxis::NEGATIVE_Y:
-							orientation.y = reference->yetAnotherOrientation.y;
-							break;
 						case SnappingAxis::POSITIVE_Z:
 						case SnappingAxis::NEGATIVE_Z:
 							orientation.z = reference->yetAnotherOrientation.z;
+							rotation.fromEulerXYZ(orientation.x, orientation.y, orientation.z);
 							break;
 						}
-
+						
 						math::standardizeAngleRadians(orientation.x);
 						math::standardizeAngleRadians(orientation.y);
 						math::standardizeAngleRadians(orientation.z);

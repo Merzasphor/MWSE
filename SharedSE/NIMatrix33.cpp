@@ -185,7 +185,7 @@ namespace NI {
 #if defined(SE_NI_MATRIX33_FNADDR_TOROTATIONY) && SE_NI_MATRIX33_FNADDR_TOROTATIONY > 0
 		const auto NI_Matrix33_toRotationY = reinterpret_cast<void(__thiscall*)(Matrix33*, float)>(SE_NI_MATRIX33_FNADDR_TOROTATIONY);
 
-		/ NI_Matrix33_toRotationY(this, value);
+		NI_Matrix33_toRotationY(this, value);
 #else
 		throw not_implemented_exception();
 #endif
@@ -291,7 +291,7 @@ namespace NI {
 #if defined(SE_NI_MATRIX33_FNADDR_REORTHOGONALIZE) && SE_NI_MATRIX33_FNADDR_REORTHOGONALIZE > 0
 		const auto NI_Matrix33_reorthogonalize = reinterpret_cast<bool(__thiscall*)(Matrix33*)>(SE_NI_MATRIX33_FNADDR_REORTHOGONALIZE);
 
-		return NI_Matrix33_reorthogonalize(this, out_matrix);
+		return NI_Matrix33_reorthogonalize(this);
 #else
 		throw not_implemented_exception();
 #endif
