@@ -144,6 +144,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)BasicLinkedList.h">
       <Filter>Header Files\Collections</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)NIBoundingBox.h">
+      <Filter>Header Files\NI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)NIVector3.cpp">

@@ -2,12 +2,11 @@
 
 #include "CSObject.h"
 
-#include "NIVector3.h"
+#include "NIBoundingBox.h"
 
 namespace se::cs {
 	struct PhysicalObject : Object {
-		NI::Vector3 boundingBoxMin;
-		NI::Vector3 boundingBoxMax;
+		NI::BoundingBox boundingBox;
 		int unknown_0x40;
 		const char* objectID; // 0x44
 
