@@ -10,9 +10,13 @@ namespace se::cs {
 		} render_window;
 
 		struct ObjectWindowSettings {
-			bool clear_on_tab_switch = true;
+			bool clear_filter_on_tab_switch = true;
 			bool filter_by_id = true;
 			bool filter_by_name = true;
+			bool filter_by_icon_path = true;
+			bool filter_by_model_path = true;
+			bool filter_by_enchantment_id = true;
+			bool filter_by_script_id = true;
 			bool filter_by_book_text = true;
 
 			void from_toml(const toml::value& v);

@@ -8,6 +8,7 @@
 #include "NIIteratedList.h"
 
 #include "CSBook.h"
+#include "CSScript.h"
 
 #include "Settings.h"
 
@@ -53,32 +54,72 @@ namespace se::cs::dialog::object_window {
 
 	static std::string currentSearchText;
 
-	const auto CS_AddObjectToWindow = reinterpret_cast<bool(__stdcall*)(LPARAM, BaseObject*)>(0x43C260);
-	bool CALLBACK PatchFilterObjectWindow(LPARAM a1, Object* object) {
+	bool PatchFilterObjectWindow_ObjectMatchesSearchText(const Object* object) {
+		// If we have no search text, always allow.
 		if (currentSearchText.empty()) {
-			return CS_AddObjectToWindow(a1, object);
+			return true;
 		}
 
+		// Allow filtering by object ID.
 		if (settings.object_window.filter_by_id) {
 			if (string::cicontains(object->getObjectID(), currentSearchText)) {
-				return CS_AddObjectToWindow(a1, object);
+				return true;
 			}
 		}
 
+		// Allow filtering by object name.
 		if (settings.object_window.filter_by_name) {
 			if (string::cicontains(object->getName(), currentSearchText)) {
-				return CS_AddObjectToWindow(a1, object);
+				return true;
 			}
 		}
 
+		// Allow filtering by model path.
+		if (settings.object_window.filter_by_model_path) {
+			if (string::cicontains(object->getModel(), currentSearchText)) {
+				return true;
+			}
+		}
+
+		// Allow filtering by icon path.
+		if (settings.object_window.filter_by_icon_path) {
+			if (string::cicontains(object->getIcon(), currentSearchText)) {
+				return true;
+			}
+		}
+
+		// Allow filtering by enchantment id.
+		if (settings.object_window.filter_by_enchantment_id) {
+			auto enchantment = object->getEnchantment();
+			if (enchantment && string::cicontains(enchantment->getObjectID(), currentSearchText)) {
+				return true;
+			}
+		}
+
+		// Allow filtering by script id.
+		if (settings.object_window.filter_by_script_id) {
+			auto script = object->getScript();
+			if (script && string::cicontains(script->getObjectID(), currentSearchText)) {
+				return true;
+			}
+		}
+
+		// Allow filtering by book text.
 		if (settings.object_window.filter_by_book_text && object->objectType == ObjectType::Book) {
-			auto asBook = static_cast<Book*>(object);
+			auto asBook = static_cast<const Book*>(object);
 			if (asBook->text && string::cicontains(asBook->text, currentSearchText)) {
-				return CS_AddObjectToWindow(a1, object);
+				return true;
 			}
 		}
 
 		return false;
+	}
+
+	void CALLBACK PatchFilterObjectWindow(LPARAM index, const Object* object) {
+		if (PatchFilterObjectWindow_ObjectMatchesSearchText(object)) {
+			const auto CS_AddObjectToWindow = reinterpret_cast<void(__stdcall*)(LPARAM, const BaseObject*)>(0x43C260);
+			CS_AddObjectToWindow(index, object);
+		}
 	}
 
 	//
@@ -169,7 +210,7 @@ namespace se::cs::dialog::object_window {
 	inline void OnNotifyFromMainTabControl(HWND hWnd, UINT msg, WPARAM id, LPARAM lParam) {
 		const auto hdr = (NMHDR*)lParam;
 
-		if (hdr->code == TCN_SELCHANGING && settings.object_window.clear_on_tab_switch) {
+		if (hdr->code == TCN_SELCHANGING && settings.object_window.clear_filter_on_tab_switch) {
 			SetWindowTextA(objectWindowSearchControl, "");
 		}
 	}

@@ -18,7 +18,7 @@ namespace se::string {
 		return std::equal(a.begin(), a.begin() + maxCount, b.begin(), b.begin() + maxCount, ciequal);
 	}
 
-	bool cicontains(std::string_view haystack, std::string_view needle) {
+	bool cicontains(const std::string_view& haystack, const std::string_view& needle) {
 		if (needle.empty()) {
 			return true;
 		}

@@ -22,7 +22,7 @@ namespace se::string {
 	// Other string utility functions.
 	//
 
-	bool cicontains(std::string_view haystack, std::string_view needle);
+	bool cicontains(const std::string_view& haystack, const std::string_view& needle);
 
 	bool replace(std::string& str, const std::string_view from, const std::string_view to);
 

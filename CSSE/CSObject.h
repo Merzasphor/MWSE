@@ -15,8 +15,8 @@ namespace se::cs {
 		char* (__thiscall* getIconPath)(const BaseObject*); // 0x3C
 		void* unknown_0x40;
 		void* unknown_0x44;
-		void* unknown_0x48;
-		void* unknown_0x4C;
+		char* (__thiscall* getModelPath)(const BaseObject*); // 0x48
+		Script* (__thiscall* getScript)(const BaseObject*); // 0x4C
 		void* unknown_0x50;
 		void* unknown_0x54;
 		void* unknown_0x58;
@@ -49,7 +49,7 @@ namespace se::cs {
 		void* unknown_0xC4;
 		void* unknown_0xC8;
 		void* unknown_0xCC;
-		void* unknown_0xD0;
+		Object* (__thiscall* getEnchantment)(const BaseObject*); // 0xD0
 		void* unknown_0xD4;
 		void* unknown_0xD8;
 		void* unknown_0xDC;
@@ -85,19 +85,35 @@ namespace se::cs {
 		Object* nextInCollection; // 0x20
 		int unknown_0x24;
 
-		const char* getName() const {
+		inline const char* getName() const {
 			return vtbl.object->getName(this);
 		}
 
-		bool isMarker() const {
+		inline bool isMarker() const {
 			return vtbl.object->isMarker(this);
 		}
 
-		float getScale() const {
+		inline char* getIcon() const {
+			return vtbl.object->getIconPath(this);
+		}
+
+		inline char* getModel() const {
+			return vtbl.object->getModelPath(this);
+		}
+
+		inline Object* getEnchantment() const {
+			return vtbl.object->getEnchantment(this);
+		}
+
+		inline Script* getScript() const {
+			return vtbl.object->getScript(this);
+		}
+
+		inline float getScale() const {
 			return vtbl.object->getScale(this);
 		}
 
-		void setScale(float scale, bool something = true) {
+		inline void setScale(float scale, bool something = true) {
 			vtbl.object->setScale(this, scale, something);
 		}
 	};

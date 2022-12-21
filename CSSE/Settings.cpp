@@ -26,18 +26,29 @@ namespace se::cs {
 	//
 
 	void Settings_t::ObjectWindowSettings::from_toml(const toml::value& v) {
-		clear_on_tab_switch = toml::find_or(v, "clear_on_tab_switch", clear_on_tab_switch);
+		// Backwards compatibility.
+		clear_filter_on_tab_switch = toml::find_or(v, "clear_on_tab_switch", clear_filter_on_tab_switch);
+
+		clear_filter_on_tab_switch = toml::find_or(v, "clear_filter_on_tab_switch", clear_filter_on_tab_switch);
 		filter_by_id = toml::find_or(v, "filter_by_id", filter_by_id);
 		filter_by_name = toml::find_or(v, "filter_by_name", filter_by_name);
+		filter_by_icon_path = toml::find_or(v, "filter_by_icon_path", filter_by_icon_path);
+		filter_by_model_path = toml::find_or(v, "filter_by_model_path", filter_by_model_path);
+		filter_by_enchantment_id = toml::find_or(v, "filter_by_enchantment_id", filter_by_enchantment_id);
+		filter_by_script_id = toml::find_or(v, "filter_by_script_id", filter_by_script_id);
 		filter_by_book_text = toml::find_or(v, "filter_by_book_text", filter_by_book_text);
 	}
 
 	toml::value Settings_t::ObjectWindowSettings::into_toml() const {
 		return toml::value(
 			{
-				{ "clear_on_tab_switch", clear_on_tab_switch },
+				{ "clear_filter_on_tab_switch", clear_filter_on_tab_switch },
 				{ "filter_by_id", filter_by_id },
 				{ "filter_by_name", filter_by_name },
+				{ "filter_by_icon_path", filter_by_icon_path },
+				{ "filter_by_model_path", filter_by_model_path },
+				{ "filter_by_enchantment_id", filter_by_enchantment_id },
+				{ "filter_by_script_id", filter_by_script_id },
 				{ "filter_by_book_text", filter_by_book_text },
 			}
 		);
