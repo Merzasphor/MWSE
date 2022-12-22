@@ -616,9 +616,15 @@ namespace se::cs::dialog::object_window {
 			}
 			else if (lplvcd->nmcd.dwDrawStage == CDDS_ITEMPREPAINT) {
 				auto object = (BaseObject*)lplvcd->nmcd.lItemlParam;
-				if (object && object->getModified()) {
-					lplvcd->clrTextBk = RGB(235, 255, 235);
-					SetWindowLongA(hWnd, DWLP_MSGRESULT, CDRF_NEWFONT);
+				if (object) {
+					if (object->flags & 0x20) {
+						lplvcd->clrTextBk = RGB(255, 235, 235);
+						SetWindowLongA(hWnd, DWLP_MSGRESULT, CDRF_NEWFONT);
+					}
+					else if (object->getModified()) {
+						lplvcd->clrTextBk = RGB(235, 255, 235);
+						SetWindowLongA(hWnd, DWLP_MSGRESULT, CDRF_NEWFONT);
+					}
 				}
 			}
 			forcedReturnType = TRUE;
