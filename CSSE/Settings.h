@@ -43,5 +43,4 @@ namespace se::cs {
 	};
 
 	extern Settings_t settings;
-
 }

@@ -86,6 +86,10 @@ namespace se::cs {
 		GameFile* sourceFile; // 0xC
 
 		const char* getObjectID() const;
+
+		inline bool getModified() const {
+			return (flags & 0x2);
+		}
 		void setModified(bool modified);
 
 		void setFlag80(bool set);

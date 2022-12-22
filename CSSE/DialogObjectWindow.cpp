@@ -126,7 +126,7 @@ namespace se::cs::dialog::object_window {
 	// Patch: Extend Object Window message handling.
 	//
 
-	bool blockNormalExecution = false;
+	std::optional<LRESULT> forcedReturnType = {};
 
 	void CALLBACK PatchDialogProc_BeforeSize(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam) {
 		// Update view menu.
@@ -170,23 +170,20 @@ namespace se::cs::dialog::object_window {
 	}
 
 	void CALLBACK PatchDialogProc_AfterCreate(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-		auto filterEdit = GetDlgItem(hWnd, CONTROL_ID_FILTER_EDIT);
-		if (filterEdit) {
-			objectWindowSearchControl = filterEdit;
-			return;
-		}
+		auto hInstance = (HINSTANCE)GetWindowLongA(hWnd, GWLP_HINSTANCE);
 
-		auto hInstance = (HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE);
-
-		CreateWindowExA(WS_EX_RIGHT, "STATIC", "Filter:", WS_CHILD | WS_VISIBLE | SS_RIGHT | SS_NOPREFIX, 0, 0, 0, 0, hWnd, (HMENU)CONTROL_ID_FILTER_LABEL, hInstance, NULL);
-
-		objectWindowSearchControl = CreateWindowExA(WS_EX_CLIENTEDGE, "EDIT", "", WS_CHILD | WS_VISIBLE, 0, 0, 0, 0, hWnd, (HMENU)CONTROL_ID_FILTER_EDIT, hInstance, NULL);
+		// Ensure our custom filter box is added.
+		auto objectWindowSearchControl = GetDlgItem(hWnd, CONTROL_ID_FILTER_EDIT);
 		if (objectWindowSearchControl == NULL) {
-			log::stream << "ERROR: Could not create search control!" << std::endl;
-			return;
+			CreateWindowExA(WS_EX_RIGHT, "STATIC", "Filter:", WS_CHILD | WS_VISIBLE | SS_RIGHT | SS_NOPREFIX, 0, 0, 0, 0, hWnd, (HMENU)CONTROL_ID_FILTER_LABEL, hInstance, NULL);
+			objectWindowSearchControl = CreateWindowExA(WS_EX_CLIENTEDGE, "EDIT", "", WS_CHILD | WS_VISIBLE, 0, 0, 0, 0, hWnd, (HMENU)CONTROL_ID_FILTER_EDIT, hInstance, NULL);
+			if (objectWindowSearchControl) {
+				Edit_LimitText(objectWindowSearchControl, 31);
+			}
+			else {
+				log::stream << "ERROR: Could not create search control!" << std::endl;
+			}
 		}
-
-		Edit_LimitText(objectWindowSearchControl, 31);
 	}
 
 	inline void OnNotifyFromMainListView(HWND hWnd, UINT msg, WPARAM id, LPARAM lParam) {
@@ -201,9 +198,24 @@ namespace se::cs::dialog::object_window {
 			}
 		}
 		else if (hdr->code == LVN_MARQUEEBEGIN) {
-			// I've tried subclassing, blocking this notification, changing styles, and so much else.
+			// I've tried DWLP_MSGRESULT, subclassing, blocking this notification, changing styles, and so much else.
 			// Somehow, this is the only thing that has worked...
 			Sleep(20);
+			forcedReturnType = TRUE;
+		}
+		else if (hdr->code == NM_CUSTOMDRAW) {
+			LPNMLVCUSTOMDRAW lplvcd = (LPNMLVCUSTOMDRAW)lParam;
+			if (lplvcd->nmcd.dwDrawStage == CDDS_PREPAINT) {
+				SetWindowLongA(hWnd, DWLP_MSGRESULT, CDRF_NOTIFYITEMDRAW);
+			}
+			else if (lplvcd->nmcd.dwDrawStage == CDDS_ITEMPREPAINT) {
+				auto object = (BaseObject*)lplvcd->nmcd.lItemlParam;
+				if (object && object->getModified()) {
+					lplvcd->clrTextBk = RGB(235, 255, 235);
+					SetWindowLongA(hWnd, DWLP_MSGRESULT, CDRF_NEWFONT);
+				}
+			}
+			forcedReturnType = TRUE;
 		}
 	}
 
@@ -262,7 +274,7 @@ namespace se::cs::dialog::object_window {
 	}
 
 	LRESULT CALLBACK PatchDialogProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-		blockNormalExecution = false;
+		forcedReturnType = {};
 
 		// Handle pre-patches.
 		switch (msg) {
@@ -280,8 +292,8 @@ namespace se::cs::dialog::object_window {
 			break;
 		}
 
-		if (blockNormalExecution) {
-			return DefWindowProcA(hWnd, msg, wParam, lParam);
+		if (forcedReturnType) {
+			return forcedReturnType.value();
 		}
 
 		// Call original function.
