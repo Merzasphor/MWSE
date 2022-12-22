@@ -203,7 +203,7 @@ namespace se::cs::dialog::object_window {
 			Sleep(20);
 			forcedReturnType = TRUE;
 		}
-		else if (hdr->code == NM_CUSTOMDRAW) {
+		else if (hdr->code == NM_CUSTOMDRAW && settings.object_window.highlight_modified_items) {
 			LPNMLVCUSTOMDRAW lplvcd = (LPNMLVCUSTOMDRAW)lParam;
 			if (lplvcd->nmcd.dwDrawStage == CDDS_PREPAINT) {
 				SetWindowLongA(hWnd, DWLP_MSGRESULT, CDRF_NOTIFYITEMDRAW);
