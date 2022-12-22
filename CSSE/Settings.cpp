@@ -80,6 +80,10 @@ namespace se::cs {
 		);
 	}
 
+	//
+	//
+	//
+
 	void Settings_t::load() {
 		if (std::filesystem::exists("csse.toml")) {
 			const auto data = toml::parse("csse.toml");
@@ -92,7 +96,7 @@ namespace se::cs {
 		outFile.open("csse.toml");
 
 		const toml::value data = settings;
-		outFile << std::setw(80) << std::setprecision(8) << data << std::endl;
+		outFile << std::setw(80) << std::setprecision(8) << data;
 	}
 
 	void Settings_t::from_toml(const toml::value& v) {
