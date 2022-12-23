@@ -156,9 +156,13 @@ Toggle flag for if the player should always run.
 
 !!! note "Armour mitigation calculation:"
 	x = damage / (damage + target.armorRating)
+
 	damage *= max(fCombatArmorMinMult, x)
+
 	if damage < 1 then
+
 		damage = 1
+
 	end
 
 
