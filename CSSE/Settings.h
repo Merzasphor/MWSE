@@ -18,6 +18,7 @@ namespace se::cs {
 			bool filter_by_enchantment_id = true;
 			bool filter_by_script_id = true;
 			bool filter_by_book_text = true;
+			bool highlight_modified_items = true;
 
 			void from_toml(const toml::value& v);
 			toml::value into_toml() const;
@@ -43,5 +44,4 @@ namespace se::cs {
 	};
 
 	extern Settings_t settings;
-
 }

@@ -20,6 +20,331 @@ namespace se::cs::dialog::object_window {
 	using ghWndObjectList = ExternalGlobal<HWND, 0x6CEFD0>;
 	static HWND objectWindowSearchControl = NULL;
 
+	struct ObjectWindowTabData {
+		ObjectType::ObjectType objectType; // 0x0
+		unsigned int columnCount; // 0x4
+		unsigned int topIndex; // 0x8
+		NI::IteratedList<BaseObject*>* containedObjects; // 0xC
+	};
+
+	namespace Tab {
+		enum Tab_t {
+			Activator,
+			Apparatus,
+			Armor,
+			BodyPart,
+			Book,
+			Clothing,
+			Container,
+			Door,
+			Ingredient,
+			Light,
+			Lockpick,
+			MiscItem,
+			Probe,
+			RepairItem,
+			Static,
+			Weapon,
+			NPC,
+			Creature,
+			LeveledCreature,
+			Spellmaking,
+			Enchanting,
+			Alchemy,
+			LeveledItem,
+
+			COUNT,
+		};
+	}
+
+	namespace ListColumns {
+		namespace Activator {
+			enum Column_t {
+				ID, Count, Name, Script, Model, Persistent, Blocked,
+				Modified,
+
+				COUNT,
+				COUNT_VANILLA = Modified,
+			};
+		}
+		namespace Apparatus {
+			enum Column_t {
+				ID, Count, Type, Name, Script, Weight, Value, Quality, Inventory, Model, Persistent, Blocked,
+				Modified,
+
+				COUNT,
+				COUNT_VANILLA = Modified,
+			};
+		}
+		namespace Armor {
+			enum Column_t {
+				ID, Count, Type, Name, Script, Weight, WeightClass, Value, Health, Enchanting, Enchantment, Rating, Inventory, Model, Persistent, Blocked,
+				Modified,
+
+				COUNT,
+				COUNT_VANILLA = Modified,
+			};
+		}
+		namespace BodyPart {
+			enum Column_t {
+				ID, Count, Type, Race, Part, Female, Playable, Model, Blocked,
+				Modified,
+
+				COUNT,
+				COUNT_VANILLA = Modified,
+			};
+		}
+		namespace Book {
+			enum Column_t {
+				ID, Count, Name, Script, Weight, Value, Scroll, Teaches, Enchanting, Enchantment, Inventory, Model, Persistent, Blocked,
+				Modified,
+
+				COUNT,
+				COUNT_VANILLA = Modified,
+			};
+		}
+		namespace Clothing {
+			enum Column_t {
+				ID, Count, Type, Name, Script, Weight, Value, Enchanting, Enchantment, Inventory, Model, Persistent, Blocked,
+				Modified,
+
+				COUNT,
+				COUNT_VANILLA = Modified,
+			};
+		}
+		namespace Container {
+			enum Column_t {
+				ID, Count, Name, Script, Weight, Organic, Respawns, ItemList, Model, Persistent, Blocked,
+				Modified,
+
+				COUNT,
+				COUNT_VANILLA = Modified,
+			};
+		}
+		namespace Door {
+			enum Column_t {
+				ID, Count, Name, Script, Model, Persistent, Blocked,
+				Modified,
+
+				COUNT,
+				COUNT_VANILLA = Modified,
+			};
+		}
+		namespace Ingredient {
+			enum Column_t {
+				ID, Count, Name, Script, Weight, Value, Effect1, Effect2, Effect3, Effect4, Inventory, Model, Persistent, Blocked,
+				Modified,
+
+				COUNT,
+				COUNT_VANILLA = Modified,
+			};
+		}
+		namespace Light {
+			enum Column_t {
+				ID, Count, Name, Script, Sound, Weight, Value, Time, Radius, Inventory, Model, Persistent, Blocked,
+				Modified,
+
+				COUNT,
+				COUNT_VANILLA = Modified,
+			};
+		}
+		namespace Lockpick {
+			enum Column_t {
+				ID, Count, Name, Script, Weight, Value, Uses, Quality, Inventory, Model, Persistent, Blocked,
+				Modified,
+
+				COUNT,
+				COUNT_VANILLA = Modified,
+			};
+		}
+		namespace MiscItem {
+			enum Column_t {
+				ID, Count, Name, Script, Weight, Value, Inventory, Model, Persistent, Blocked,
+				Modified,
+
+				COUNT,
+				COUNT_VANILLA = Modified,
+			};
+		}
+		namespace Probe {
+			enum Column_t {
+				ID, Count, Name, Script, Weight, Value, Uses, Quality, Inventory, Model, Persistent, Blocked,
+				Modified,
+
+				COUNT,
+				COUNT_VANILLA = Modified,
+			};
+		}
+		namespace RepairItem {
+			enum Column_t {
+				ID, Count, Name, Script, Weight, Value, Uses, Quality, Inventory, Model, Persistent, Blocked,
+				Modified,
+
+				COUNT,
+				COUNT_VANILLA = Modified,
+			};
+		}
+		namespace Static {
+			enum Column_t {
+				ID, Count, Model, Persistent, Blocked,
+				Modified,
+
+				COUNT,
+				COUNT_VANILLA = Modified,
+			};
+		}
+		namespace Weapon {
+			enum Column_t {
+				ID, Count, Type, Name, Script, Weight, Health, Value, Enchanting, Enchantment, Speed, Reach, ChopMin, ChopMax, SlashMin, SlashMax, ThrustMin, ThrustMax, Inventory, IgnoreResist, Silver, Model, Persistent, Blocked,
+				Modified,
+
+				COUNT,
+				COUNT_VANILLA = Modified,
+			};
+		}
+		namespace NPC {
+			enum Column_t {
+				ID, Count, Name, Script, Level, Race, Female, Class, Faction, Rank, AutoCalc, Essential, REspawns, Animation, Persistent, Blocked,
+				Modified,
+
+				COUNT,
+				COUNT_VANILLA = Modified,
+			};
+		}
+		namespace Creature {
+			enum Column_t {
+				ID, Count, Name, Type, Script, Sound, Level, Essential, Respawns, MovementType, Weapon, Biped, Model, Persistent, Blocked,
+				Modified,
+
+				COUNT,
+				COUNT_VANILLA = Modified,
+			};
+		}
+		namespace LeveledCreature {
+			enum Column_t {
+				ID, Count, AllLTEPC, CreatureList, Blocked,
+				Modified,
+
+				COUNT,
+				COUNT_VANILLA = Modified,
+			};
+		}
+		namespace Spellmaking {
+			enum Column_t {
+				ID, Count, Name, Type, Cost, AutoCalc, PCStart, Blocked,
+				Modified,
+
+				COUNT,
+				COUNT_VANILLA = Modified,
+			};
+		}
+		namespace Enchanting {
+			enum Column_t {
+				ID, Count, Charge, Type, Cost, AutoCalc, Blocked,
+				Modified,
+
+				COUNT,
+				COUNT_VANILLA = Modified,
+			};
+		}
+		namespace Alchemy {
+			enum Column_t {
+				ID, Count, Name, Script, Weight, Cost, AutoCalc, Inventory, Model, Persistent, Blocked,
+				Modified,
+
+				COUNT,
+				COUNT_VANILLA = Modified,
+			};
+		}
+		namespace LeveledItem {
+			enum Column_t {
+				ID, Count, AllLTEPC, ItemList, Blocked,
+				Modified,
+
+				COUNT,
+				COUNT_VANILLA = Modified,
+			};
+		}
+	}
+
+	namespace ColumnNames {
+		enum ColumnNames_t : BYTE {
+			ID,
+			COUNT,
+			MODEL,
+			NAME,
+			RACE,
+			CLASS,
+			FACTION,
+			SCRIPT,
+			CELL,
+			RANK,
+			TYPE,
+			WEIGHT,
+			VALUE,
+			HEALTH,
+			QUALITY,
+			INVENTORY,
+			ENCHANTMENT,
+			RATING,
+			SPEED,
+			BLOCK,
+			REACH,
+			CHOPMIN,
+			CHOPMAX,
+			SLASHMIN,
+			SLASHMAX,
+			THRUSTMIN,
+			THRUSTMAX,
+			IGNORESRESIST,
+			PART,
+			FEMALE,
+			SCROLL,
+			TEACHES,
+			LEVEL,
+			KEY,
+			TRAP,
+			EFFECT1,
+			EFFECT2,
+			EFFECT3,
+			EFFECT4,
+			TIME,
+			RADIUS,
+			USES,
+			COST,
+			ITEMNAME,
+			ANIMATION,
+			CREATURELIST,
+			ITEMLIST,
+			ENCHANTING,
+			PLAYABLE,
+			CHARGE,
+			WEIGHTCLASS,
+			AUTOCALC,
+			ORGANIC,
+			ESSENTIAL,
+			RESPAWNS,
+			MOVEMENTTYPE,
+			WEAPONSHIELD,
+			BIPEDANIM,
+			ALLPC,
+			PERSISTS,
+			PCSTARTSPELL,
+			BLOCKED,
+			SOUND,
+			SILVERWEAPON,
+			MODIFIED,
+
+			COLUMN_COUNT,
+			COLUMN_COUNT_VANILLA = SILVERWEAPON + 1,
+		};
+	}
+	static_assert(sizeof(ColumnNames::COLUMN_COUNT) == sizeof(BYTE), "Unsupported column count. Requires further replacement of cmp operators.");
+
+	const char* columnNames[ColumnNames::COLUMN_COUNT] = {};
+
+	WORD columnWidths[ColumnNames::COLUMN_COUNT] = {};
+
 	//
 	// Patch: Optimize displaying of objects dialog tabs.
 	//
@@ -46,6 +371,87 @@ namespace se::cs::dialog::object_window {
 		}
 
 		return result;
+	}
+
+	//
+	// Patch: Add modified column.
+	//
+
+	void __fastcall PatchAddModifiedColumn(ObjectWindowTabData* controller, DWORD _EDX_, HWND hWnd, LPSTR text, int cx, int fmt, UINT mask) {
+		const auto AddColumn = reinterpret_cast<void(__thiscall*)(ObjectWindowTabData*, HWND, LPSTR, int, int, UINT)>(0x442700);
+		AddColumn(controller, hWnd, text, cx, fmt, mask);
+
+		constexpr auto modified = "Modified";
+		AddColumn(controller, hWnd, (LPSTR)modified, cx, fmt, mask);
+	}
+
+	int __stdcall PatchAddModifiedColumn_Sorter(BaseObject* lParam1, BaseObject* lParam2, int lParamSort) {
+		auto sortColumn = static_cast<ColumnNames::ColumnNames_t>(lParamSort >> 1);
+		if (sortColumn < ColumnNames::COLUMN_COUNT_VANILLA) {
+			const auto DefaultSorter = reinterpret_cast<int(__stdcall*)(BaseObject*, BaseObject*, int)>(0x43ED10);
+			return DefaultSorter(lParam1, lParam2, lParamSort);
+		}
+
+		bool sortOrderAsc = lParamSort & 1;
+
+		switch (sortColumn) {
+		case ColumnNames::MODIFIED:
+			if (lParam1->getModified() != lParam2->getModified()) {
+				if (sortOrderAsc) {
+					return lParam1->getModified() ? 1 : -1;
+				}
+				else {
+					return lParam1->getModified() ? -1 : 1;
+				}
+			}
+		}
+
+		return 0;
+	}
+
+	int getModifiedColumn(ObjectWindowTabData* tabData) {
+		switch (tabData->objectType) {
+		case ObjectType::Activator: return ListColumns::Activator::Modified;
+		case ObjectType::Alchemy: return ListColumns::Alchemy::Modified;
+		case ObjectType::Apparatus: return ListColumns::Apparatus::Modified;
+		case ObjectType::Armor: return ListColumns::Armor::Modified;
+		case ObjectType::Bodypart: return ListColumns::BodyPart::Modified;
+		case ObjectType::Book: return ListColumns::Book::Modified;
+		case ObjectType::Clothing: return ListColumns::Clothing::Modified;
+		case ObjectType::Container: return ListColumns::Container::Modified;
+		case ObjectType::Creature: return ListColumns::Creature::Modified;
+		case ObjectType::Door: return ListColumns::Door::Modified;
+		case ObjectType::Enchantment: return ListColumns::Enchanting::Modified;
+		case ObjectType::Ingredient: return ListColumns::Ingredient::Modified;
+		case ObjectType::LeveledCreature: return ListColumns::LeveledCreature::Modified;
+		case ObjectType::LeveledItem: return ListColumns::LeveledItem::Modified;
+		case ObjectType::Light: return ListColumns::Light::Modified;
+		case ObjectType::Lockpick: return ListColumns::Lockpick::Modified;
+		case ObjectType::Misc: return ListColumns::MiscItem::Modified;
+		case ObjectType::NPC: return ListColumns::NPC::Modified;
+		case ObjectType::Probe: return ListColumns::Probe::Modified;
+		case ObjectType::Repair: return ListColumns::RepairItem::Modified;
+		case ObjectType::Spell: return ListColumns::Spellmaking::Modified;
+		case ObjectType::Static: return ListColumns::Static::Modified;
+		case ObjectType::Weapon: return ListColumns::Weapon::Modified;
+		}
+		return -1;
+	}
+
+	const auto DefaultDisplayHandler = reinterpret_cast<void(__thiscall*)(ObjectWindowTabData*, LPNMLVDISPINFOA)>(0x43C330);
+	void __fastcall PatchAddModifiedColumn_GetDisplayInfo(ObjectWindowTabData* tabData, DWORD _EDX_, LPNMLVDISPINFOA displayInfo) {
+		if ((displayInfo->item.mask & LVIF_TEXT) == 0) {
+			DefaultDisplayHandler(tabData, displayInfo);
+			return;
+		}
+
+		if (displayInfo->item.iSubItem == getModifiedColumn(tabData)) {
+			auto object = reinterpret_cast<BaseObject*>(displayInfo->item.lParam);
+			sprintf_s(displayInfo->item.pszText, displayInfo->item.cchTextMax, "%s", object->getModified() ? "yes" : "no");
+			return;
+		}
+
+		DefaultDisplayHandler(tabData, displayInfo);
 	}
 
 	//
@@ -126,7 +532,7 @@ namespace se::cs::dialog::object_window {
 	// Patch: Extend Object Window message handling.
 	//
 
-	bool blockNormalExecution = false;
+	std::optional<LRESULT> forcedReturnType = {};
 
 	void CALLBACK PatchDialogProc_BeforeSize(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam) {
 		// Update view menu.
@@ -170,23 +576,20 @@ namespace se::cs::dialog::object_window {
 	}
 
 	void CALLBACK PatchDialogProc_AfterCreate(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-		auto filterEdit = GetDlgItem(hWnd, CONTROL_ID_FILTER_EDIT);
-		if (filterEdit) {
-			objectWindowSearchControl = filterEdit;
-			return;
-		}
+		auto hInstance = (HINSTANCE)GetWindowLongA(hWnd, GWLP_HINSTANCE);
 
-		auto hInstance = (HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE);
-
-		CreateWindowExA(WS_EX_RIGHT, "STATIC", "Filter:", WS_CHILD | WS_VISIBLE | SS_RIGHT | SS_NOPREFIX, 0, 0, 0, 0, hWnd, (HMENU)CONTROL_ID_FILTER_LABEL, hInstance, NULL);
-
-		objectWindowSearchControl = CreateWindowExA(WS_EX_CLIENTEDGE, "EDIT", "", WS_CHILD | WS_VISIBLE, 0, 0, 0, 0, hWnd, (HMENU)CONTROL_ID_FILTER_EDIT, hInstance, NULL);
+		// Ensure our custom filter box is added.
+		auto objectWindowSearchControl = GetDlgItem(hWnd, CONTROL_ID_FILTER_EDIT);
 		if (objectWindowSearchControl == NULL) {
-			log::stream << "ERROR: Could not create search control!" << std::endl;
-			return;
+			CreateWindowExA(WS_EX_RIGHT, "STATIC", "Filter:", WS_CHILD | WS_VISIBLE | SS_RIGHT | SS_NOPREFIX, 0, 0, 0, 0, hWnd, (HMENU)CONTROL_ID_FILTER_LABEL, hInstance, NULL);
+			objectWindowSearchControl = CreateWindowExA(WS_EX_CLIENTEDGE, "EDIT", "", WS_CHILD | WS_VISIBLE, 0, 0, 0, 0, hWnd, (HMENU)CONTROL_ID_FILTER_EDIT, hInstance, NULL);
+			if (objectWindowSearchControl) {
+				Edit_LimitText(objectWindowSearchControl, 31);
+			}
+			else {
+				log::stream << "ERROR: Could not create search control!" << std::endl;
+			}
 		}
-
-		Edit_LimitText(objectWindowSearchControl, 31);
 	}
 
 	inline void OnNotifyFromMainListView(HWND hWnd, UINT msg, WPARAM id, LPARAM lParam) {
@@ -201,9 +604,30 @@ namespace se::cs::dialog::object_window {
 			}
 		}
 		else if (hdr->code == LVN_MARQUEEBEGIN) {
-			// I've tried subclassing, blocking this notification, changing styles, and so much else.
+			// I've tried DWLP_MSGRESULT, subclassing, blocking this notification, changing styles, and so much else.
 			// Somehow, this is the only thing that has worked...
 			Sleep(20);
+			forcedReturnType = TRUE;
+		}
+		else if (hdr->code == NM_CUSTOMDRAW && settings.object_window.highlight_modified_items) {
+			LPNMLVCUSTOMDRAW lplvcd = (LPNMLVCUSTOMDRAW)lParam;
+			if (lplvcd->nmcd.dwDrawStage == CDDS_PREPAINT) {
+				SetWindowLongA(hWnd, DWLP_MSGRESULT, CDRF_NOTIFYITEMDRAW);
+			}
+			else if (lplvcd->nmcd.dwDrawStage == CDDS_ITEMPREPAINT) {
+				auto object = (BaseObject*)lplvcd->nmcd.lItemlParam;
+				if (object) {
+					if (object->flags & 0x20) {
+						lplvcd->clrTextBk = RGB(255, 235, 235);
+						SetWindowLongA(hWnd, DWLP_MSGRESULT, CDRF_NEWFONT);
+					}
+					else if (object->getModified()) {
+						lplvcd->clrTextBk = RGB(235, 255, 235);
+						SetWindowLongA(hWnd, DWLP_MSGRESULT, CDRF_NEWFONT);
+					}
+				}
+			}
+			forcedReturnType = TRUE;
 		}
 	}
 
@@ -262,7 +686,7 @@ namespace se::cs::dialog::object_window {
 	}
 
 	LRESULT CALLBACK PatchDialogProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-		blockNormalExecution = false;
+		forcedReturnType = {};
 
 		// Handle pre-patches.
 		switch (msg) {
@@ -280,8 +704,8 @@ namespace se::cs::dialog::object_window {
 			break;
 		}
 
-		if (blockNormalExecution) {
-			return DefWindowProcA(hWnd, msg, wParam, lParam);
+		if (forcedReturnType) {
+			return forcedReturnType.value();
 		}
 
 		// Call original function.
@@ -305,10 +729,50 @@ namespace se::cs::dialog::object_window {
 	void installPatches() {
 		using memory::genCallEnforced;
 		using memory::genJumpEnforced;
+		using memory::writeDoubleWordEnforced;
+		using memory::writeValueEnforced;
 
 		// Patch: Optimize displaying of objects dialog tabs.
 		genCallEnforced(0x43C1B4, 0x401E29, reinterpret_cast<DWORD>(PatchSpeedUpObjectWindow_PauseRedraws));
 		genCallEnforced(0x43C1CC, 0x403D8C, reinterpret_cast<DWORD>(PatchSpeedUpObjectWindow_ResumeRedraws));
+
+		// Patch: Add modified column.
+		{
+			constexpr DWORD existingNamesAddress = 0x6944B0;
+			constexpr DWORD existingWidthsAddress = 0x694430;
+
+			// Copy over vanilla column values.
+			memcpy_s(columnNames, sizeof(columnNames), (void*)existingNamesAddress, sizeof(const char*) * ColumnNames::COLUMN_COUNT_VANILLA);
+			memcpy_s(columnWidths, sizeof(columnWidths), (void*)existingWidthsAddress, sizeof(WORD) * ColumnNames::COLUMN_COUNT_VANILLA);
+
+			// Add new column data values.
+			columnNames[ColumnNames::MODIFIED] = "Modified";
+			columnWidths[ColumnNames::MODIFIED] = 45;
+
+			// Replace references to the vanilla column name list with references to our new one.
+			writeDoubleWordEnforced(0x4427CD + 0x1, existingNamesAddress, DWORD(&columnNames));
+			writeDoubleWordEnforced(0x451AFD + 0x1, existingNamesAddress, DWORD(&columnNames));
+
+			// Fixup after-data checks.
+			const DWORD addressAfterList = DWORD(&columnNames) + sizeof(columnNames);
+			writeDoubleWordEnforced(0x442809 + 0x2, 0x6945B0, addressAfterList);
+			writeDoubleWordEnforced(0x451B3C + 0x2, 0x6945B0, addressAfterList);
+
+			// Fixup writing of column widths.
+			writeDoubleWordEnforced(0x442818 + 0x4, existingWidthsAddress, DWORD(&columnWidths));
+
+			// Fixup looping based on vanilla column count.
+			writeValueEnforced(0x451B46 + 0x2, ColumnNames::COLUMN_COUNT_VANILLA, ColumnNames::COLUMN_COUNT);
+
+			// Add the column when building the list.
+			genCallEnforced(0x4411E1, 0x403D4B, reinterpret_cast<DWORD>(PatchAddModifiedColumn));
+
+			// Add a custom sort handler.
+			genJumpEnforced(0x403AF8, 0x43ED10, reinterpret_cast<DWORD>(PatchAddModifiedColumn_Sorter));
+
+			// Extend the info display for the list.
+			genCallEnforced(0x451A83, 0x402B3A, reinterpret_cast<DWORD>(PatchAddModifiedColumn_GetDisplayInfo));
+		}
 
 		// Patch: Extend Object Window message handling.
 		genJumpEnforced(0x402FD1, 0x451320, reinterpret_cast<DWORD>(PatchDialogProc));
