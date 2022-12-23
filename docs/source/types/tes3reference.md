@@ -82,10 +82,9 @@ The blocked state of the object.
 
 ??? example "Example: Checking reference's script variables"
 
-	Companions usually have a mwscript script with variable named `companion` set to 1. This can be used to determine if a reference is player's companion or not.
+	Companions usually have a mwscript script with variable named `companion` set to 1. This can be used to determine if a reference is player's companion or not. Note that companion share functionality was added to Morrowind in Tribunal expansion. In vanilla game it is used by Tribunal companions. Also, companion mods usually use this feature. But note that all the followers (during certain parts of their quests) from base Morrowind don't have companion share.
 
 	```lua
-	
 	--- This function returns `true` if the reference
 	--- has a variable companion set to 1 in its script.
 	---@param reference tes3reference
@@ -95,8 +94,60 @@ The blocked state of the object.
 		-- This shows that we can read any variable inside
 		-- `tes3scriptContext` objects as if it was normal Lua table
 		-- (`reference.context` is of `tes3scriptContext` type)
-	    local companion = reference.context["companion"]
-	    return companion and companion == 1
+		local companion = reference.context["companion"]
+		return (companion and
+				companion == 1 or
+				false
+		)
+	end
+
+	```
+
+??? example "Example: Checking if an actor is a follower"
+
+	In this example we provide a way to check if a certain actor is currently player's follower. This function can also be useful besides the one from previous example, since not all of the followers have companion share enabled.
+
+	```lua
+	--- This function returns `true` if a given mobile has
+	--- follow ai package with player as its target
+	---@param mobile tes3mobileNPC|tes3mobileCreature
+	---@return boolean isFollower
+	local function isFollower(mobile)
+		local planner = mobile.aiPlanner
+		if not planner then
+			return false
+		end
+	
+		local package = planner:getActivePackage()
+		if not package then
+			return false
+		end
+		if package.type == tes3.aiPackage.follow then
+			local target = package.targetActor
+	
+			if target.objectType == tes3.objectType.mobilePlayer then
+				return true
+			end
+		end
+		return false
+	end
+	
+	--- With the above function we can build a function that
+	--- creates a table with all of the player's followers
+	---@return tes3reference[] followerList
+	local function getFollowers()
+		local followers = {}
+		local i = 1
+	
+		for _, mobile in pairs(tes3.mobilePlayer.friendlyActors) do
+			---@cast mobile tes3mobileNPC|tes3mobileCreature
+			if isFollower(mobile) then
+				followers[i] = mobile.reference
+				i = i + 1
+			end
+		end
+	
+		return followers
 	end
 
 	```
@@ -267,11 +318,11 @@ Gets or sets the attached `itemData` for this reference. If set to `nil`, the it
 
 ### `lockNode`
 
-*Read-only*. Quick access to the reference's lock node, if any.
+*Read-only*. Quick access to the reference's lock node, if any. Doors or containers that aren't locked nor trapped have this property set to `nil`.
 
 **Returns**:
 
-* `result` ([tes3lockNode](../../types/tes3lockNode))
+* `result` ([tes3lockNode](../../types/tes3lockNode), nil)
 
 ***
 

@@ -45,7 +45,6 @@ Each entry has following fields:
 	Companions usually have a mwscript script with variable named `companion` set to 1. This can be used to determine if a reference is player's companion or not.
 
 	```lua
-	
 	--- This function returns `true` if the reference
 	--- has a variable companion set to 1 in its script.
 	---@param reference tes3reference
@@ -55,8 +54,11 @@ Each entry has following fields:
 		-- This shows that we can read any variable inside
 		-- `tes3scriptContext` objects as if it was normal Lua table
 		-- (`reference.context` is of `tes3scriptContext` type)
-	    local companion = reference.context["companion"]
-	    return companion and companion == 1
+		local companion = reference.context["companion"]
+		return (companion and
+				companion == 1 or
+				false
+		)
 	end
 
 	```

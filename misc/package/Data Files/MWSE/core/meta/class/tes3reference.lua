@@ -26,7 +26,7 @@
 --- @field itemData tes3itemData Gets or sets the attached `itemData` for this reference. If set to `nil`, the item data will be unhooked but not deleted.
 --- @field leveledBaseReference tes3reference|nil *Read-only*. If this reference is a leveled spawn, this is the leveled creature spawn reference. If this reference wasn't the result of a leveled spawn, the value is `nil`.
 --- @field light niPointLight|niSpotLight *Read-only*. Direct access to the scene graph light, if a dynamic light is set.
---- @field lockNode tes3lockNode *Read-only*. Quick access to the reference's lock node, if any.
+--- @field lockNode tes3lockNode|nil *Read-only*. Quick access to the reference's lock node, if any. Doors or containers that aren't locked nor trapped have this property set to `nil`.
 --- @field mesh string The path to the object's mesh.
 --- @field mobile tes3mobileCreature|tes3mobileNPC|tes3mobilePlayer|tes3mobilePlayer|tes3mobileProjectile|tes3mobileSpellProjectile|tes3mobileSpellProjectile|nil *Read-only*. Access to the attached mobile object, if applicable.
 --- @field nextNode tes3reference *Read-only*. The next reference in the parent reference list.

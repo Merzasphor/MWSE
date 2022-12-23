@@ -104,10 +104,13 @@ The actor's alarm AI value.
 
 *Read-only*. The actor's current armour rating, taking equipment condition into account. Armour mitigation can be automatically applied to damage by using the `applyDamage` function.
 
-Armour mitigation calculation:
-x = damage / (damage + target.armorRating)
-damage *= max(fCombatArmorMinMult, x)
-if damage < 1 then damage = 1 end
+!!! note "Armour mitigation calculation:"
+	x = damage / (damage + target.armorRating)
+	damage *= max(fCombatArmorMinMult, x)
+	if damage < 1 then
+		damage = 1
+	end
+
 
 **Returns**:
 
@@ -1858,7 +1861,7 @@ myObject:stopCombat(force)
 
 **Parameters**:
 
-* `force` (boolean): If `false`, the function won't stop combat if the actor has other valid hostile targets.
+* `force` (boolean): *Default*: `false`. If `false`, the function won't stop combat if the actor has other valid hostile targets.
 
 ***
 

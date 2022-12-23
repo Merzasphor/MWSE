@@ -19,7 +19,7 @@ return {
 			description = "The reference.",
 		},
 		["source"] = {
-			type = "number",
+			type = "integer",
 			readOnly = true,
 			description = "The source.",
 		},
@@ -30,7 +30,6 @@ return {
 		},
 		["passes"] = {
 			type = "boolean",
-			readOnly = true,
 			description = "Indicates if the filter passes.",
 		},
 	},

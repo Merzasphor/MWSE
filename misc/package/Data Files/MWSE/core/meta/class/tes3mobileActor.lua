@@ -15,10 +15,13 @@
 --- @field animationController tes3actorAnimationController|tes3playerAnimationController *Read-only*. No description yet available.
 --- @field armorRating number *Read-only*. The actor's current armour rating, taking equipment condition into account. Armour mitigation can be automatically applied to damage by using the `applyDamage` function.
 --- 
---- Armour mitigation calculation:
---- x = damage / (damage + target.armorRating)
---- damage *= max(fCombatArmorMinMult, x)
---- if damage < 1 then damage = 1 end
+--- !!! note "Armour mitigation calculation:"
+--- 	x = damage / (damage + target.armorRating)
+--- 	damage *= max(fCombatArmorMinMult, x)
+--- 	if damage < 1 then
+--- 		damage = 1
+--- 	end
+--- 
 --- @field attackBonus number Direct access to the actor's attack bonus effect attribute.
 --- @field attacked boolean *Read-only*. Friendly access to the actor's flag that controls if the actor has been attacked.
 --- @field attributes tes3statistic[]|tes3statisticSkill[] *Read-only*. Access to a table of 8 [`tes3statistic`](https://mwse.github.io/MWSE/types/tes3statistic/) objects for the actor's attributes.
@@ -357,7 +360,7 @@ function tes3mobileActor:startCombat(target) end
 function tes3mobileActor:startDialogue() end
 
 --- Ends combat for the actor.
---- @param force boolean If `false`, the function won't stop combat if the actor has other valid hostile targets.
+--- @param force boolean? *Default*: `false`. If `false`, the function won't stop combat if the actor has other valid hostile targets.
 function tes3mobileActor:stopCombat(force) end
 
 --- Unequips one or more items from the actor.
