@@ -274,6 +274,17 @@ namespace se::cs::dialog::dialogue_window {
 		}
 	}
 
+	Dialogue* __cdecl PatchOptimizeTopicListRefresh(HWND hWnd, BaseObject* a, BaseObject* filterObject, Dialogue* filterDialogue) {
+		SendDlgItemMessageA(hWnd, CONTROL_ID_TOPIC_LIST, WM_SETREDRAW, FALSE, NULL);
+
+		const auto CS_TopicListRefresh = reinterpret_cast<Dialogue*(__cdecl*)(HWND, BaseObject*, BaseObject*, Dialogue*)>(0x4E70E0);
+		auto dialogue = CS_TopicListRefresh(hWnd, a, filterObject, filterDialogue);
+
+		SendDlgItemMessageA(hWnd, CONTROL_ID_TOPIC_LIST, WM_SETREDRAW, TRUE, NULL);
+
+		return dialogue;
+	}
+
 	//
 	// Patch: Extend Render Window message handling.
 	//
@@ -375,8 +386,13 @@ namespace se::cs::dialog::dialogue_window {
 			genNOPUnprotected(0x4E8209, 0x4E828A - 0x4E8209);
 			writePatchCodeUnprotected(0x4E8209, (BYTE*)PatchOptimizePopulatingCellVariableNames_Setup, PatchOptimizePopulatingCellVariableNames_Setup_Size);
 			genCallUnprotected(0x4E8209 + 0x4, reinterpret_cast<DWORD>(PatchOptimizePopulatingCellVariableNames));
+
+			// Optimize the display of the info itself.
+			genJumpEnforced(0x4040BB, 0x4F1070, reinterpret_cast<DWORD>(PatchOptimizeDialogueInfoDisplaying));
+
+			// Optimize the refresh of the topic list.
+			genJumpEnforced(0x4031A7, 0x4E70E0, reinterpret_cast<DWORD>(PatchOptimizeTopicListRefresh));
 		}
-		genJumpEnforced(0x4040BB, 0x4F1070, reinterpret_cast<DWORD>(PatchOptimizeDialogueInfoDisplaying));
 
 		// Patch: Extend Render Window message handling.
 		genJumpEnforced(0x401334, 0x4EAEA0, reinterpret_cast<DWORD>(PatchDialogProc));
