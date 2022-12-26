@@ -16,6 +16,7 @@
 #include "DialogSearchAndReplaceWindow.h"
 
 #include "MemoryUtil.h"
+#include "StringUtil.h"
 
 #include "Settings.h"
 
@@ -40,13 +41,13 @@ namespace se::cs {
 		void __fastcall findVanillaMasters(RecordHandler* recordHandler) {
 			for (auto i = 0; i < recordHandler->activeModCount; ++i) {
 				const auto gameFile = recordHandler->activeGameFiles[i];
-				if (master_Morrowind == nullptr && _strnicmp(gameFile->fileName, "Morrowind.esm", 260) == 0) {
+				if (master_Morrowind == nullptr && string::iequal(gameFile->fileName, "Morrowind.esm")) {
 					master_Morrowind = gameFile;
 				}
-				else if (master_Tribunal == nullptr && _strnicmp(gameFile->fileName, "Tribunal.esm", 260) == 0) {
+				else if (master_Tribunal == nullptr && string::iequal(gameFile->fileName, "Tribunal.esm")) {
 					master_Tribunal = gameFile;
 				}
-				else if (master_Bloodmoon == nullptr && _strnicmp(gameFile->fileName, "Bloodmoon.esm", 260) == 0) {
+				else if (master_Bloodmoon == nullptr && string::iequal(gameFile->fileName, "Bloodmoon.esm")) {
 					master_Bloodmoon = gameFile;
 				}
 			}
@@ -56,7 +57,7 @@ namespace se::cs {
 
 		const auto TES3_GameSetting_SaveGameSetting = reinterpret_cast<bool(__thiscall*)(GameSetting*, GameFile*)>(0x4F9BE0);
 		bool __fastcall preventGMSTPollution(GameSetting* gameSetting, DWORD _EDX_, GameFile* file) {
-			if ((gameSetting->flags & 0x2) == 0) {
+			if (!gameSetting->getModified()) {
 				return false;
 			}
 
