@@ -21,6 +21,7 @@
 
 namespace se::cs {
 	constexpr auto LOG_SUPPRESSED_WARNINGS = false;
+	constexpr auto LOG_NI_MESSAGES = false;
 
 	HMODULE hInstanceCSSE = NULL;
 
@@ -83,11 +84,46 @@ namespace se::cs {
 				return ShowDuplicateReferenceWarning(message, referenceCount);
 			}
 		}
+
+		void __cdecl restoreNiLogMessage(const char* fmt, ...) {
+			// Get the calling address.
+			byte** asmEBP;
+			__asm { mov asmEBP, ebp };
+			DWORD callingAddress = DWORD(asmEBP[1] - 0x5);
+
+			va_list args;
+			va_start(args, fmt);
+
+			char buffer[2048] = {};
+			vsprintf_s(buffer, fmt, args);
+
+			va_end(args);
+
+			log::stream << "[NiLog:0x" << std::hex << callingAddress << std::dec << "] " << buffer;
+		}
+
+		void __cdecl restoreNiLogMessageWithNewline(const char* fmt, ...) {
+			// Get the calling address.
+			byte** asmEBP;
+			__asm { mov asmEBP, ebp };
+			DWORD callingAddress = DWORD(asmEBP[1] - 0x5);
+
+			va_list args;
+			va_start(args, fmt);
+
+			char buffer[2048] = {};
+			vsprintf_s(buffer, fmt, args);
+
+			va_end(args);
+
+			log::stream << "[NiLog:0x" << std::hex << callingAddress << std::dec << "] " << buffer << std::endl;
+		}
 	}
 
 	void installPatches() {
 		using memory::genCallEnforced;
 		using memory::genJumpEnforced;
+		using memory::genJumpUnprotected;
 
 		// Get the vanilla masters so we suppress errors from them.
 		genCallEnforced(0x50194E, 0x4041C4, reinterpret_cast<DWORD>(patch::findVanillaMasters));
@@ -103,6 +139,13 @@ namespace se::cs {
 
 		// Patch: Suppress "1 duplicate references were removed" warning popups for vanilla masters.
 		genCallEnforced(0x50A9ED, 0x40123A, reinterpret_cast<DWORD>(patch::suppressDuplicateReferenceRemovedWarningForVanillaMasters));
+
+		// Restore debug logs.
+		if constexpr (LOG_NI_MESSAGES) {
+			genJumpUnprotected(0x593110, reinterpret_cast<DWORD>(patch::restoreNiLogMessage));
+			genJumpUnprotected(0x593120, reinterpret_cast<DWORD>(patch::restoreNiLogMessage));
+			genJumpUnprotected(0x593130, reinterpret_cast<DWORD>(patch::restoreNiLogMessageWithNewline));
+		}
 
 		// Install all our sectioned patches.
 		window::main::installPatches();
