@@ -501,8 +501,6 @@ namespace se::cs::dialog::render_window {
 	// Patch: Allow custom markers to be toggled.
 	//
 
-	static std::unordered_map<Object*, bool> validEditorMarkers;
-
 	void SetCullOnTriEditorMarkers(NI::AVObject* object, bool cull) {
 		if (object->isInstanceOfType(NI::RTTIStaticPtr::NiNode)) {
 			for (auto& child : static_cast<NI::Node*>(object)->children) {
