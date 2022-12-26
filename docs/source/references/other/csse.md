@@ -4,6 +4,8 @@ The Construction Set Extender, also known as CSSE, is a project that aims to imp
 
 To request a feature, visit the [Construction Set Extender Development issue](https://github.com/MWSE/MWSE/issues/397) on GitHub. Support for the project can be found in the #mwse channel in the [Morrowind Modding Community](https://discord.me/page/mwmods).
 
+For a list of recent changes, [visit the CSSE project folder commit history](https://github.com/MWSE/MWSE/commits/master/CSSE).
+
 ## Requirements
 
 CSSE requires [MGE XE](https://www.nexusmods.com/morrowind/mods/41102?) v0.14.3 (released July 29, 2022) or later in order to be automatically loaded into the Construction Set.
@@ -46,8 +48,11 @@ If you are using [Construction Set Better UI](https://www.nexusmods.com/morrowin
 ### Object Window
 
 * Significantly improved UI responsiveness.
-* Added a footer to the window, with a new filter input. This input can be focused by using CTRL+F while the Object Window is active. This can be used to filter objects by a matching object ID fragment.
+* Added a footer to the window, with a new filter input. This input can be focused by using CTRL+F while the Object Window is active. This can be used to filter objects by a matching id, name, icon, model, enchantment, script, or book text fragments.
 * Fixed issue where box selection in the object window would cause the mouse to snap to the edge of the screen.
+* Modified objects are highlighted with a light green background.
+* Deleted objects are highlighted with a light red background.
+* A new column is available to sort on for the object modified state.
 
 ### Dialogue Window
 
@@ -61,9 +66,10 @@ If you are using [Construction Set Better UI](https://www.nexusmods.com/morrowin
 * References can be moved onto surfaces. By holding the alt key when drag-moving a reference, it will rotate and snap onto the surface under the cursor. The context menu (Q) can be used to set the axis to snap to.
 * Extended editor marker support. Toggling markers (M) will now also toggle markers supported by the game executable. This allows custom markers to be toggled by tagging them with a MRK string and adding a EditorMarker node, or by defining objects whose name begins with or matches "Tri EditorMarker".
 * A new context menu is available, using the Q key. From it you can access some new features:
+	* Set the snap axis when alt-drag-moving references.
+	* Toggle between world axis or local axis rotations by default.
 	* Hide selected references, culling them from the scene so you can work behind them.
 	* Restore hidden references, restoring to view any references hidden with the hide selection option.
-	* Set the snap axis when alt-drag-moving references.
 	* Set or clear the QuickStart data from the current render window perspective.
 
 The following changes to the rendering window apply when landscape editing:
