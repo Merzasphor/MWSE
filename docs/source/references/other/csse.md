@@ -44,6 +44,7 @@ If you are using [Construction Set Better UI](https://www.nexusmods.com/morrowin
 	* The "1 duplicate references were removed" from loading Tribunal and Bloodmoon will no longer make a popup. If this is not the vanilla duplicate reference, or if there is more than one duplicate reference, a popup will still be shown.
 * Fixed GMST pollution bug caused when not loading Tribunal and Bloodmoon.
 * A QuickStart feature. In the render window, use the context menu (Q) to save the currently loaded plugins, the active plugin, current cell, camera position, camera orientation. Whenever the CS is loaded with no other plugin loading, it will automatically load all the saved plugins, and load the cell with the viewport saved. This can be cleared or disabled.
+* The CS will no longer adopt a working directory externally. This means that when opening esm/esp files from the Data Files folder from double clicking it, the Morrowind.ini file and all other configs/logs will correctly load from the root Morrowind folder.
 
 ### Object Window
 
