@@ -17,6 +17,7 @@
 
 #include "MemoryUtil.h"
 #include "StringUtil.h"
+#include "WindowsUtil.h"
 
 #include "Settings.h"
 
@@ -160,6 +161,10 @@ namespace se::cs {
 	void attachToProcess(HMODULE hModule) {
 		hInstanceCSSE = hModule;
 
+		// Always force the current path to the root directory.
+		std::filesystem::current_path(windows::getModulePath(hModule).parent_path());
+
+		// Load settings.
 		settings.load();
 
 		// Open our log file.
