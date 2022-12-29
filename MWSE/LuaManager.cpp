@@ -610,7 +610,7 @@ namespace mwse::lua {
 #define HookRunScript_TargetReference 0x7CEBECu
 	static_assert(TES3_SCRIPTTARGETREF_IMAGE == HookRunScript_TargetReference, "Script reference address failed validation for hook. constexpr cannot be used in assembly reliably.");
 	static __declspec(naked) void HookRunScript() {
-		_asm
+		__asm
 		{
 			// Save all registers.
 			pushad
@@ -623,7 +623,7 @@ namespace mwse::lua {
 			popad
 
 			// Overwritten code.
-			mov ecx, dword ptr ds : [HookRunScript_TargetReference]
+			mov ecx, dword ptr ds:[HookRunScript_TargetReference]
 
 			// Resume normal execution.
 			jmp callbackRunScript
@@ -1007,7 +1007,7 @@ namespace mwse::lua {
 
 	static DWORD callbackUIEvent = TES3_HOOK_UI_EVENT_RETURN;
 	static __declspec(naked) void HookUIEvent() {
-		_asm
+		__asm
 		{
 			push edi
 			call OnUIEvent
@@ -1145,7 +1145,7 @@ namespace mwse::lua {
 	}
 
 	static __declspec(naked) float OnApplyFatigueDamageFromAttack_Wrapper() {
-		_asm {
+		__asm {
 			mov edx, esi
 			jmp OnApplyFatigueDamageFromAttack
 		}
@@ -1168,7 +1168,7 @@ namespace mwse::lua {
 	}
 
 	static __declspec(naked) bool OnApplyDamageFromMagicShield_Wrapper() {
-		_asm {
+		__asm {
 			mov edx, ebx
 			jmp OnApplyDamageFromMagicShield
 		}
@@ -1483,7 +1483,7 @@ namespace mwse::lua {
 
 	static DWORD postMagicCastSuccess = TES3_HOOK_MAGIC_CAST_SUCCESS_RETURN;
 	static __declspec(naked) void HookMagicCastSuccess() {
-		_asm
+		__asm
 		{
 			// Save all registers.
 			pushad
@@ -1498,7 +1498,7 @@ namespace mwse::lua {
 			popad
 
 			// Overwritten code.
-			mov dword ptr[esi + 0xB4], 1
+			mov dword ptr [esi + 0xB4], 1
 
 			// Resume normal execution.
 			jmp postMagicCastSuccess
@@ -1517,7 +1517,7 @@ namespace mwse::lua {
 
 	static DWORD postSpellCastFailure = TES3_HOOK_SPELL_CAST_FAILURE_RETURN;
 	static __declspec(naked) void HookSpellCastFailure() {
-		_asm
+		__asm
 		{
 			// Save all registers.
 			pushad
@@ -1532,7 +1532,7 @@ namespace mwse::lua {
 			popad
 
 			// Overwritten code.
-			mov dword ptr[esi + 0xB4], 7
+			mov dword ptr [esi + 0xB4], 7
 
 			// Resume normal execution.
 			jmp postSpellCastFailure
@@ -1846,8 +1846,8 @@ namespace mwse::lua {
 	static bool ActivationTargetChanged_invalidated = false;
 
 	static __declspec(naked) void HookPreFindActivationTarget() {
-		_asm {
-			mov		eax, ds: [0x7C6CDC]  // global_TES3_Game
+		__asm {
+			mov		eax, ds:[0x7C6CDC]  // global_TES3_Game
 			mov		eax, [eax + 0xE8]	// game->playerTarget
 			mov		ActivationTargetChanged_preActivationTarget, eax
 			mov		ActivationTargetChanged_invalidated, 0
@@ -1858,7 +1858,7 @@ namespace mwse::lua {
 	static __declspec(naked) void HookPostActivate() {
 		// On ref activation, clear remembered reference to avoid using a stale pointer to a possibly destroyed reference.
 		// The invalidation flag is required to identify change when the current target also becomes nullptr.
-		_asm {
+		__asm {
 			xor		edx, edx
 			mov		ActivationTargetChanged_preActivationTarget, edx
 			mov		ActivationTargetChanged_invalidated, 1
@@ -1895,7 +1895,7 @@ namespace mwse::lua {
 	__declspec(naked) void patchWeatherRegionCheck() {
 		__asm {
 			mov ecx, [esi + 0x58]	// ecx = WorldController->weatherController
-			mov[ecx + 0x1D0], eax  // weatherController->lastActiveRegion = eax
+			mov [ecx + 0x1D0], eax  // weatherController->lastActiveRegion = eax
 			nop
 		}
 	}
@@ -3532,7 +3532,11 @@ namespace mwse::lua {
 
 	// Override the effect id, but only if this is a custom effect with a valid summon or bound item.
 	short __stdcall PatchMagicSaveLoad_UpdateId(const TES3::EquipmentStack* const stack, short id) {
-		if (id > TES3::EffectID::LastEffect && stack->object) {
+		// The original code's switch statement only covers magic effect IDs up to 96.
+		// However, there are more vanilla summon effects with higher effect IDs, as well our custom effects.
+		const short overrideSavingMagicEffectsFromID = 96;
+
+		if (id > overrideSavingMagicEffectsFromID && stack->object) {
 			if (stack->object->objectType == TES3::ObjectType::Armor || stack->object->objectType == TES3::ObjectType::Weapon) {
 				id = TES3::EffectID::BoundDagger;
 			}
@@ -3549,10 +3553,10 @@ namespace mwse::lua {
 	// so that the game will select the appropriate branch of the switch. This will allow the game to properly serialize the bound item or 
 	// summon associated with this effect.
 	static __declspec(naked) short PatchMagicSaveLoad() {
-		_asm {
+		__asm {
 			// Restore overwritten code. Read the id from the appropriate effect and place it in eax.
-			mov ecx, dword ptr[esp + 0x20]
-			movsx eax, word ptr[eax + ecx]
+			mov ecx, dword ptr [esp + 0x20]
+			movsx eax, word ptr [eax + ecx]
 
 			// short id
 			push eax
@@ -3813,13 +3817,13 @@ namespace mwse::lua {
 
 	__declspec(naked) void patchEnchantItemChargeRequired_onCast() {
 		__asm {
-			push esi					// magicSourceInstance
+			push esi							// magicSourceInstance
 			push ecx
-			fstp[esp]					// Charge required
-			push[esi + 0xA0]				// Casting enchantment
-			push edi					// Casting mobileActor
+			fstp [esp]							// Charge required
+			push [esi + 0xA0]					// Casting enchantment
+			push edi							// Casting mobileActor
 			call onEnchantItemChargeRequired	// Replace with call generation
-			fstp[ebp - 0x18]				// Store updated charge required
+			fstp [ebp - 0x18]					// Store updated charge required
 		}
 	}
 	const size_t patchEnchantItemChargeRequired_onCast_size = 0x14;
@@ -3831,28 +3835,28 @@ namespace mwse::lua {
 	__declspec(naked) void patchGetEntityLightRadius() {
 		__asm {
 			push ebx
-			mov ebx, [esi + 0x28]			// ebx = esi->Reference.baseEntity
+			mov ebx, [esi + 0x28]		// ebx = esi->Reference.baseEntity
 
 			mov eax, [eax]				// eax = eax->RefrAttachment_Light.sgLight
-			cmp dword ptr[ebx + 4], 0x4847494C		// tag == 'LIGH'
+			cmp dword ptr [ebx + 4], 0x4847494C		// tag == 'LIGH'
 			jnz non_light
-			mov ecx, [ebx + 0x64]			// ecx = ebx->EntityLight.radius
+			mov ecx, [ebx + 0x64]		// ecx = ebx->EntityLight.radius
 			jmp done
 
-			non_light :
-			fld dword ptr[eax + 0xC4]	// Load radius from eax->NiLight.specular
-				push ecx
-				fistp dword ptr[esp]
-				pop ecx						// Radius converted to integer
+		non_light:
+			fld dword ptr [eax + 0xC4]	// Load radius from eax->NiLight.specular
+			push ecx
+			fistp dword ptr [esp]
+			pop ecx						// Radius converted to integer
 
-				done :
-			mov edx, [esp + 0x10]			// edx = <reference argument>
-				nop
-				push 1
-				push 1
-				push ecx
-				push edx
-				push eax
+		done:
+			mov edx, [esp + 0x10]		// edx = <reference argument>
+			nop
+			push 1
+			push 1
+			push ecx
+			push edx
+			push eax
 		}
 	}
 	const size_t patchGetEntityLightRadius_size = 0x2B;
@@ -3865,7 +3869,7 @@ namespace mwse::lua {
 	__declspec(naked) void patchActorAnimInit() {
 		__asm {
 			// Initialize members ActorAnimData+0x98..0x9B in one op. Patch uses ActorAnimData+0x9B for new state.
-			mov dword ptr[esi + 0x98], 0xFF00FFFF
+			mov dword ptr [esi + 0x98], 0xFF00FFFF
 			nop
 			nop
 		}
@@ -3876,11 +3880,12 @@ namespace mwse::lua {
 	__declspec(naked) bool CheckTogglePOV() {
 		__asm {
 			xor al, al
-			cmp[esi + 0x9B], 0xFF // esi->PlayerAnimData.patchedOverrideState == 0xFF
+			cmp [esi + 0x9B], 0xFF			// esi->PlayerAnimData.patchedOverrideState == 0xFF
 			jnz done
 
-			mov al, byte ptr[esi + 0xE9] // al = esi->PlayerAnimData.togglePOV
-			done:
+			mov al, byte ptr [esi + 0xE9]	// al = esi->PlayerAnimData.togglePOV
+
+		done:
 			ret
 		}
 	}

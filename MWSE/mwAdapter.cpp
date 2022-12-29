@@ -82,7 +82,7 @@ namespace mwse::mwAdapter {
 	// Hook scaffolding for HookGetNextInstructionIndirect().
 	static const DWORD getNextInstructionReturnAddress = 0x500561u;
 	static __declspec(naked) void HookGetNextInstructionDirect() {
-		_asm {
+		__asm {
 			// Save eax.
 			mov context.eax, eax
 
@@ -103,7 +103,7 @@ namespace mwse::mwAdapter {
 			// Overwritten code. This is adjusted slightly.
 			//! TODO: Why was this changed?
 			mov eax, 0x7CEC08
-			mov[eax], esi
+			mov [eax], esi
 
 			// Actually use our hook.
 			call HookGetNextInstructionIndirect
@@ -127,7 +127,7 @@ namespace mwse::mwAdapter {
 
 	// Hook scaffolding for HookRunFunctionIndirect().
 	static __declspec(naked) void HookRunFunctionDirect() {
-		_asm {
+		__asm {
 			// Save eax.
 			mov context.eax, eax
 
@@ -166,7 +166,7 @@ namespace mwse::mwAdapter {
 
 			// We use the stack from original runFunction, adjust to compensate.
 			// Store FPU FP0 in [esp+0C], and pop it off the stack.
-			fstp[esp + 0x0C]
+			fstp [esp + 0x0C]
 
 			// Overwritten code from our hook that we need to duplicate.
 			add edx, 0x0FFFFF000
