@@ -161,14 +161,14 @@ namespace se::cs {
 	void attachToProcess(HMODULE hModule) {
 		hInstanceCSSE = hModule;
 
+		// Open our log file.
+		log::stream.open(windows::getModulePath(hInstanceCSSE).parent_path() / "csse.log");
+
 		// Always force the current path to the root directory.
 		std::filesystem::current_path(windows::getModulePath(hModule).parent_path());
 
 		// Load settings.
 		settings.load();
-
-		// Open our log file.
-		log::stream.open("csse.log");
 
 		// Install TES Construction Set executable patches.
 		installPatches();
