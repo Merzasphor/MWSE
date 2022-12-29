@@ -124,6 +124,7 @@ namespace se::cs {
 
 	void installPatches() {
 		using memory::genCallEnforced;
+		using memory::genNOPUnprotected;
 		using memory::genJumpEnforced;
 		using memory::genJumpUnprotected;
 
@@ -149,6 +150,9 @@ namespace se::cs {
 			genJumpUnprotected(0x593130, reinterpret_cast<DWORD>(patch::restoreNiLogMessageWithNewline));
 		}
 
+		// Patch: Prevent directory changing when passing a file to the CS.
+		genNOPUnprotected(0x443E25, 0x443E30 - 0x443E25);
+
 		// Install all our sectioned patches.
 		window::main::installPatches();
 		dialog::cell_window::installPatches();
@@ -158,6 +162,29 @@ namespace se::cs {
 		dialog::search_and_replace_window::installPatches();
 	}
 
+	void updateCurrentDirectory() {
+		using namespace std::filesystem;
+		using namespace windows;
+
+		// Get the path of CSSE.dll.
+		auto csseDllPath = getModulePath(hInstanceCSSE);
+		if (csseDllPath.empty()) {
+			log::stream << "WARNING: Could not resolve CSSE DLL directory." << std::endl;
+			return;
+		}
+
+		// See if we even need to change paths.
+		auto oldPath = current_path();
+		auto installPath = csseDllPath.parent_path();
+		if (oldPath == installPath) {
+			return;
+		}
+
+		// Update and log path change.
+		current_path(installPath);
+		log::stream << "Changed working directory from " << oldPath << " to " << installPath << std::endl;
+	}
+
 	void attachToProcess(HMODULE hModule) {
 		hInstanceCSSE = hModule;
 
@@ -165,7 +192,7 @@ namespace se::cs {
 		log::stream.open(windows::getModulePath(hInstanceCSSE).parent_path() / "csse.log");
 
 		// Always force the current path to the root directory.
-		std::filesystem::current_path(windows::getModulePath(hModule).parent_path());
+		updateCurrentDirectory();
 
 		// Load settings.
 		settings.load();
