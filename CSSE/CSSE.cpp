@@ -127,6 +127,7 @@ namespace se::cs {
 		using memory::genNOPUnprotected;
 		using memory::genJumpEnforced;
 		using memory::genJumpUnprotected;
+		using memory::writeDoubleWordUnprotected;
 
 		// Get the vanilla masters so we suppress errors from them.
 		genCallEnforced(0x50194E, 0x4041C4, reinterpret_cast<DWORD>(patch::findVanillaMasters));
@@ -152,6 +153,9 @@ namespace se::cs {
 
 		// Patch: Prevent directory changing when passing a file to the CS.
 		genNOPUnprotected(0x443E25, 0x443E30 - 0x443E25);
+
+		// Patch: Speed up MO2 load times.
+		writeDoubleWordUnprotected(0x6D9C20, reinterpret_cast<DWORD>(&_stat32));
 
 		// Install all our sectioned patches.
 		window::main::installPatches();
