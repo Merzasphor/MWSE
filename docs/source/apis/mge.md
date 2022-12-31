@@ -147,6 +147,22 @@ mge.saveConfig()
 
 ***
 
+### `mge.saveScreenshot`
+
+Saves a screenshot.
+
+```lua
+mge.saveScreenshot({ path = ..., captureWithUI = ... })
+```
+
+**Parameters**:
+
+* `params` (table): *Optional*.
+	* `path` (string)
+	* `captureWithUI` (boolean): *Default*: `false`. If set to `true`, the screenshot will include the user interface.
+
+***
+
 ### `mge.setLightingMode`
 
 Sets the lighting mode used by MGE XE. The values passed can be used from the `mge.lightingMode.*` constants.

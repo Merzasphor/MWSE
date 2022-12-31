@@ -100,6 +100,19 @@ function mge.reloadDistantLand() end
 --- Saves the MGE config file. This is primarily an internal function and shouldn't be called casually.
 function mge.saveConfig() end
 
+--- Saves a screenshot.
+--- @param params mge.saveScreenshot.params? This table accepts the following values:
+--- 
+--- `path`: string — No description yet available.
+--- 
+--- `captureWithUI`: boolean? — *Default*: `false`. If set to `true`, the screenshot will include the user interface.
+function mge.saveScreenshot(params) end
+
+---Table parameter definitions for `mge.saveScreenshot`.
+--- @class mge.saveScreenshot.params
+--- @field path string No description yet available.
+--- @field captureWithUI boolean? *Default*: `false`. If set to `true`, the screenshot will include the user interface.
+
 --- Sets the lighting mode used by MGE XE. The values passed can be used from the `mge.lightingMode.*` constants.
 --- @param mode number Maps from the `mge.lightingMode.*` constants.
 function mge.setLightingMode(mode) end

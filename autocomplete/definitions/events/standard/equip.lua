@@ -11,7 +11,7 @@ The item must not be removed from the inventory during this event, as the item a
 			description = "The reference to the mobile actor that is equipping the item.",
 		},
 		item = {
-			type = "tes3baseObject",
+			type = "tes3item",
 			readOnly = true,
 			description = "The object being equipped.",
 		},

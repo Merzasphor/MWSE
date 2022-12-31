@@ -44,11 +44,19 @@ For a list of all the available features supported by our documentation see Mate
 
 ### Admonitions
 
-The following admonition classes are available: `abstract`, `attention`, `bug`, `caution`, `check`, `cite`, `danger`, `done`, `error`, `example`, `fail`, `failure`, `faq`, `help`, `hint`, `important`, `info`, `missing`, `note`, `question`, `quote`, `success`, `summary`, `tip`, `tldr`, `todo`, `warning`.
+The following admonition classes are available: `abstract`, `attention`, `bug`, `caution`, `check`, `cite`, `danger`, `done`, `error`, `example`, `fail`, `failure`, `faq`, `help`, `hint`, `important`, `info`, `missing`, `note`, `question`, `quote`, `success`, `summary`, `tip`, `tldr`, `todo`, `warning`. An adominition starts with three exclamation characters followed by adominition class and an optional title in double quotes. The body of the adominition needs to be indented. If you want to insert a new line in the rendered adominition you need to leave a one line empty. For more info see the official [documentation](https://squidfunk.github.io/mkdocs-material/reference/admonitions/). An example:
+
+```markdown
+!!! tip "This text will override the adominition title"
+	This is the text of the adominition. The default title if none provided is the name of the adominition class (tip in this example).
+
+	This will be on the line after on the rendered page.
+	This will be on the same line as the line before this one on the renderd page.
+```
 
 ### Diagrams
 
-You can write diagrams using Mermaid.js annotation. Mermaid syntax is covered in detail in its [documentation](https://mermaid-js.github.io/mermaid/#/flowchart). For quick editing, you can write your concept online [here](https://mermaid-js.github.io/mermaid-live-editor/). For an example of such a diagram you can look at [The hierarchy of NetImmerse Classes](source/references/other/ni-class-hierarchy.md).
+You can write diagrams using Mermaid.js annotation. Mermaid syntax is covered in detail in its [documentation](https://mermaid.js.org/syntax/flowchart.html). For quick editing, you can write your concept online [here](https://mermaid-js.github.io/mermaid-live-editor/). For an example of such a diagram you can look at [The hierarchy of NetImmerse Classes](source/references/other/ni-class-hierarchy.md#diagrammatic-representation).
 
 ### Key Combinations
 

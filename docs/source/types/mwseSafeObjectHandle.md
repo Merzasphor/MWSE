@@ -19,7 +19,7 @@ local result = myObject:getObject()
 
 **Returns**:
 
-* `result` ([tes3object](../../types/tes3object))
+* `result` ([tes3reference](../../types/tes3reference))
 
 ***
 
@@ -51,7 +51,7 @@ myObject:valid()
 	local function myFunction()
 		-- Before using the reference, we need to check that it's still valid.
 		-- References get unloaded on cell changes etc.
-		if refHandle:valid() then
+		if refHandle and refHandle:valid() then
 			-- Now we can safely do something with our stored reference.
 			local reference = refHandle:getObject()
 	
