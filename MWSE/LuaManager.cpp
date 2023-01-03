@@ -3532,11 +3532,12 @@ namespace mwse::lua {
 
 	// Override the effect id, but only if this is a custom effect with a valid summon or bound item.
 	short __stdcall PatchMagicSaveLoad_UpdateId(const TES3::EquipmentStack* const stack, short id) {
-		// The original code's switch statement only covers magic effect IDs up to 96.
+		// The original code's switch statement only covers magic effect IDs up to Vampirism (0x85).
 		// However, there are more vanilla summon effects with higher effect IDs, as well our custom effects.
-		const short overrideSavingMagicEffectsFromID = 96;
+		// Corprus and vampirism must be excluded, because they may use integers in the created data field.
+		const short overrideSavingMagicEffectsFromID = TES3::EffectID::SummonCenturionSphere;
 
-		if (id > overrideSavingMagicEffectsFromID && stack->object) {
+		if (id >= overrideSavingMagicEffectsFromID && stack->object) {
 			if (stack->object->objectType == TES3::ObjectType::Armor || stack->object->objectType == TES3::ObjectType::Weapon) {
 				id = TES3::EffectID::BoundDagger;
 			}
