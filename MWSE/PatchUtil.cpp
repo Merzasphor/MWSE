@@ -1042,6 +1042,24 @@ namespace mwse::patch {
 		}
 	}
 
+	const char* GetThreadName(DWORD threadId) {
+		const auto dataHandler = TES3::DataHandler::get();
+		if (dataHandler) {
+			if (threadId == dataHandler->mainThreadID) {
+				return "Main";
+			}
+			else if (threadId == dataHandler->backgroundThreadID) {
+				return "Background";
+			}
+		}
+
+		return "Unknown";
+	}
+
+	const char* GetThreadName() {
+		return GetThreadName(GetCurrentThreadId());
+	}
+
 	template <typename T>
 	void safePrintObjectToLog(const char* title, const T* object) {
 		if (object) {
@@ -1091,8 +1109,13 @@ namespace mwse::patch {
 		}
 
 		// Show if we failed to load a mesh.
-		if (TES3::DataHandler::currentlyLoadingMesh) {
-			log::getLog() << "Currently loading mesh: " << TES3::DataHandler::currentlyLoadingMesh << std::endl;
+		if (!TES3::DataHandler::currentlyLoadingMeshes.empty()) {
+			TES3::DataHandler::currentlyLoadingMeshesMutex.lock();
+			const auto worldController = TES3::WorldController::get();
+			for (const auto& itt : TES3::DataHandler::currentlyLoadingMeshes) {
+				log::getLog() << "Currently loading mesh: " << itt.second << "; Thread: " << GetThreadName(itt.first) << std::endl;
+			}
+			TES3::DataHandler::currentlyLoadingMeshesMutex.unlock();
 		}
 
 		// Open the file.

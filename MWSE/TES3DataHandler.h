@@ -383,7 +383,8 @@ namespace TES3 {
 		// Debug values.
 		//
 
-		static const char* currentlyLoadingMesh;
+		static std::unordered_map<DWORD, std::string_view> currentlyLoadingMeshes;
+		static std::recursive_mutex currentlyLoadingMeshesMutex;
 
 	};
 	static_assert(sizeof(DataHandler) == 0xB558, "TES3::DataHandler failed size validation");
