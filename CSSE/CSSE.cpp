@@ -120,6 +120,19 @@ namespace se::cs {
 
 			log::stream << "[NiLog:0x" << std::hex << callingAddress << std::dec << "] " << buffer << std::endl;
 		}
+
+		void __fastcall forceLoadFlagsOnActiveMods(RecordHandler* recordHandler) {
+			for (auto i = 0; i < recordHandler->activeModCount; ++i) {
+				auto file = recordHandler->activeGameFiles[i];
+				if (file->masters == nullptr) {
+					const auto cs_GameFile_CreateMasterArray = reinterpret_cast<bool(__thiscall*)(GameFile*, BasicLinkedList<GameFile*>*, bool)>(0x401D7F);
+					cs_GameFile_CreateMasterArray(file, recordHandler->availableDataFiles, true);
+				}
+			}
+
+			const auto overwrittenFunction = reinterpret_cast<void(__thiscall*)(RecordHandler*)>(0x4016F4);
+			overwrittenFunction(recordHandler);
+		}
 	}
 
 	void installPatches() {
@@ -156,6 +169,9 @@ namespace se::cs {
 
 		// Patch: Speed up MO2 load times.
 		writeDoubleWordUnprotected(0x6D9C20, reinterpret_cast<DWORD>(&_stat32));
+
+		// Patch: Ensure master array is initialized for loading plugins.
+		genCallEnforced(0x501884, 0x4016F4, reinterpret_cast<DWORD>(patch::forceLoadFlagsOnActiveMods));
 
 		// Install all our sectioned patches.
 		window::main::installPatches();
