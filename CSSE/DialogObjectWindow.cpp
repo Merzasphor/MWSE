@@ -10,6 +10,8 @@
 #include "CSBook.h"
 #include "CSScript.h"
 
+#include "EditBasicExtended.h"
+
 #include "Settings.h"
 
 namespace se::cs::dialog::object_window {
@@ -597,6 +599,7 @@ namespace se::cs::dialog::object_window {
 			CreateWindowExA(WS_EX_RIGHT, "STATIC", "Filter:", WS_CHILD | WS_VISIBLE | SS_RIGHT | SS_NOPREFIX, 0, 0, 0, 0, hWnd, (HMENU)CONTROL_ID_FILTER_LABEL, hInstance, NULL);
 			objectWindowSearchControl = CreateWindowExA(WS_EX_CLIENTEDGE, "EDIT", "", WS_CHILD | WS_VISIBLE, 0, 0, 0, 0, hWnd, (HMENU)CONTROL_ID_FILTER_EDIT, hInstance, NULL);
 			if (objectWindowSearchControl) {
+				SetWindowSubclass(objectWindowSearchControl, ui_subclass::edit::BasicExtendedProc, NULL, NULL);
 				Edit_LimitText(objectWindowSearchControl, 31);
 			}
 			else {

@@ -127,6 +127,7 @@
     <ClInclude Include="DialogObjectWindow.h" />
     <ClInclude Include="DialogRenderWindow.h" />
     <ClInclude Include="DialogSearchAndReplaceWindow.h" />
+    <ClInclude Include="EditBasicExtended.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="CSBaseObject.h" />
     <ClInclude Include="LogUtil.h" />
@@ -137,6 +138,7 @@
     <ClInclude Include="WindowMain.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="EditBasicExtended.cpp" />
     <ClCompile Include="CSBaseObject.cpp" />
     <ClCompile Include="CSDataHandler.cpp" />
     <ClCompile Include="CSGameFile.cpp" />
