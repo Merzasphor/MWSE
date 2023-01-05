@@ -679,24 +679,35 @@ namespace se::cs::dialog::render_window {
 		auto recordHandler = dataHandler->recordHandler;
 		auto& quickstart = settings.quickstart;
 
-		// Store camera position.
-		quickstart.position[0] = renderController->camera->worldTransform.translation.x;
-		quickstart.position[1] = renderController->camera->worldTransform.translation.y;
-		quickstart.position[2] = renderController->camera->worldTransform.translation.z;
-
-		// Store camera orientation as euler angle.
-		NI::Vector3 orientationVector;
-		renderController->node->getLocalRotationMatrix()->toEulerXYZ(&orientationVector);
-		quickstart.orientation[0] = orientationVector.x;
-		quickstart.orientation[1] = orientationVector.y;
-		quickstart.orientation[2] = orientationVector.z;
-
-		// If we're in an interior, store the cell ID.
+		// Only store some data if we have a current cell.
 		auto currentCell = gCurrentCell::get();
-		if (currentCell == dataHandler->currentInteriorCell) {
-			quickstart.cell = gCurrentCell::get()->getObjectID();
+		if (currentCell) {
+			quickstart.load_cell = true;
+
+			// Store camera position.
+			quickstart.position[0] = renderController->camera->worldTransform.translation.x;
+			quickstart.position[1] = renderController->camera->worldTransform.translation.y;
+			quickstart.position[2] = renderController->camera->worldTransform.translation.z;
+
+			// Store camera orientation as euler angle.
+			NI::Vector3 orientationVector;
+			renderController->node->getLocalRotationMatrix()->toEulerXYZ(&orientationVector);
+			quickstart.orientation[0] = orientationVector.x;
+			quickstart.orientation[1] = orientationVector.y;
+			quickstart.orientation[2] = orientationVector.z;
+
+			// If we're in an interior, store the cell ID.
+			if (currentCell == dataHandler->currentInteriorCell) {
+				quickstart.cell = gCurrentCell::get()->getObjectID();
+			}
+			else {
+				quickstart.cell.clear();
+			}
 		}
 		else {
+			quickstart.load_cell = false;
+			quickstart.position = { 0.0f, 0.0f, 0.0f };
+			quickstart.orientation = { 0.0f, 0.0f, 0.0f };
 			quickstart.cell.clear();
 		}
 

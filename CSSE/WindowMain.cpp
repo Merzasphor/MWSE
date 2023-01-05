@@ -51,36 +51,39 @@ namespace se::cs::window::main {
 			return result;
 		}
 
-		// Load position from settings. We need to shift down by 16,384 units because of the weird offset in the function.
-		const auto& qsPos = settings.quickstart.position;
-		NI::Vector3 position(qsPos[0], qsPos[1], qsPos[2]);
-		position.z -= 16384.0f;
-
 		auto dataHandler = DataHandler::get();
 		auto renderController = dialog::render_window::RenderController::get();
 
-		// Check to see if we're loading an interior cell.
-		const auto& cellID = settings.quickstart.cell;
-		if (!cellID.empty()) {
-			auto cell = dataHandler->recordHandler->getCellByID(cellID.c_str());
-			if (cell == nullptr) {
-				return result;
+		// Check to see if we're loading a cell.
+		if (settings.quickstart.load_cell) {
+			// Load position from settings. We need to shift down by 16,384 units because of the weird offset in the function.
+			const auto& qsPos = settings.quickstart.position;
+			NI::Vector3 position(qsPos[0], qsPos[1], qsPos[2]);
+			position.z -= 16384.0f;
+
+			// Setup a specific interior cell if needed.
+			const auto& cellID = settings.quickstart.cell;
+			if (!cellID.empty()) {
+				auto cell = dataHandler->recordHandler->getCellByID(cellID.c_str());
+				if (cell == nullptr) {
+					return result;
+				}
+
+				const auto setToLoadCell = reinterpret_cast<bool(__thiscall*)(DataHandler*, Cell*, NI::Vector3*)>(0x4A1370);
+				setToLoadCell(dataHandler, cell, &position);
 			}
 
-			const auto setToLoadCell = reinterpret_cast<bool(__thiscall*)(DataHandler*, Cell*, NI::Vector3*)>(0x4A1370);
-			setToLoadCell(dataHandler, cell, &position);
+			// Actually do our load.
+			const auto loadCell = reinterpret_cast<bool(__cdecl*)(NI::Vector3*, Reference*)>(0x469B40);
+			loadCell(&position, nullptr);
+
+			// Setup camera.
+			const auto& qsRot = settings.quickstart.orientation;
+			NI::Matrix33 rotationMatrix;
+			rotationMatrix.fromEulerXYZ(qsRot[0], qsRot[1], qsRot[2]);
+			renderController->node->setLocalRotationMatrix(&rotationMatrix);
+			renderController->node->update();
 		}
-
-		// Actually perform the loading.
-		const auto loadCell = reinterpret_cast<bool(__cdecl*)(NI::Vector3*, Reference*)>(0x469B40);
-		loadCell(&position, nullptr);
-
-		// Setup orientation.
-		const auto& qsRot = settings.quickstart.orientation;
-		NI::Matrix33 rotationMatrix;
-		rotationMatrix.fromEulerXYZ(qsRot[0], qsRot[1], qsRot[2]);
-		renderController->node->setLocalRotationMatrix(&rotationMatrix);
-		renderController->node->update();
 
 		isQuickStarting = false;
 

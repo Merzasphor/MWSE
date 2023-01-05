@@ -28,6 +28,7 @@ namespace se::cs {
 
 		struct QuickstartSettings {
 			bool enabled = true;
+			bool load_cell = true;
 			std::vector<std::string> data_files = {};
 			std::string active_file;
 			std::string cell = {};

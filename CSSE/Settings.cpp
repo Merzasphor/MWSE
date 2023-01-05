@@ -66,6 +66,7 @@ namespace se::cs {
 
 	void Settings_t::QuickstartSettings::from_toml(const toml::value& v) {
 		enabled = toml::find_or(v, "enabled", enabled);
+		load_cell = toml::find_or(v, "load_cell", load_cell);
 		data_files = toml::find_or(v, "data_files", data_files);
 		active_file = toml::find_or(v, "active_file", active_file);
 		cell = toml::find_or(v, "cell", cell);
@@ -77,6 +78,7 @@ namespace se::cs {
 		return toml::value(
 			{
 				{ "enabled", enabled },
+				{ "load_cell", load_cell },
 				{ "data_files", data_files },
 				{ "active_file", active_file },
 				{ "cell", cell },
