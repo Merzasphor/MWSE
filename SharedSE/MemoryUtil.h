@@ -26,11 +26,11 @@ namespace se::memory {
 	}
 #endif
 
-#if defined(SE_MEMORY_FNADDR_DELETE) && SE_MEMORY_FNADDR_DELETE > 0
+#if defined(SE_MEMORY_FNADDR_REALLOC) && SE_MEMORY_FNADDR_REALLOC > 0
 	void* realloc(void* address, size_t size);
 #endif
 
-#if defined(SE_MEMORY_FNADDR_DELETE) && SE_MEMORY_FNADDR_DELETE > 0
+#if defined(SE_MEMORY_FNADDR_MALLOC) && SE_MEMORY_FNADDR_MALLOC > 0
 	void* malloc(size_t size);
 
 	template <typename T>
@@ -41,7 +41,7 @@ namespace se::memory {
 	}
 #endif
 
-#if defined(SE_MEMORY_FNADDR_DELETE) && SE_MEMORY_FNADDR_DELETE > 0
+#if defined(SE_MEMORY_FNADDR_FREE) && SE_MEMORY_FNADDR_FREE > 0
 	void free(void* address);
 #endif
 
