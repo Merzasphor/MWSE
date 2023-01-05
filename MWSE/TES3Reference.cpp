@@ -35,6 +35,7 @@
 #include "TES3MobileProjectile.h"
 #include "TES3MobManager.h"
 #include "TES3NPC.h"
+#include "TES3PlayerAnimationController.h"
 #include "TES3WorldController.h"
 #include "TES3VFXManager.h"
 
@@ -250,7 +251,9 @@ namespace TES3 {
 	}
 
 
-	const auto TES3_MobilePlayer_sub566500 = reinterpret_cast<void(__thiscall*)(MobilePlayer*)>(0x566500);
+	const auto TES3_MobilePlayer_setupCameras = reinterpret_cast<void(__thiscall*)(MobilePlayer*)>(0x566500);
+	const auto TES3_MobilePlayer_update1stPersonTransform = reinterpret_cast<void(__thiscall*)(MobilePlayer*)>(0x5684E0);
+	const auto TES3_PlayerAnimationController_updateCameraPosition = reinterpret_cast<void(__thiscall*)(PlayerAnimationController*)>(0x542E60);
 
 	void Reference::setModelPath(const char* path, bool temporary) {
 		auto baseObject = static_cast<TES3::Object*>(getBaseObject());
@@ -307,6 +310,7 @@ namespace TES3 {
 		if (mobile != nullptr) {
 			if (mobile->actorType == TES3::MobileActorType::Player) {
 				auto firstPersonRef = macp->firstPersonReference;
+				auto savedArmCameraPosition = worldController->armCamera.cameraRoot.get()->localTranslate;
 
 				if (firstPersonRef->sceneNode) {
 					if (this == firstPersonRef && path != nullptr) {
@@ -338,7 +342,18 @@ namespace TES3 {
 
 				macp->aiPlanner->assignMobileActor(macp);
 				worldController->mobManager->addPlayerAsCollider();
-				TES3_MobilePlayer_sub566500(macp);
+
+				// Fix cameras after scenegraph branch has been replaced.
+				TES3_MobilePlayer_setupCameras(macp);
+
+				if (!macp->is3rdPerson()) {
+					// The first person camera position additionally needs to be restored after setup,
+					// because in menu mode, the logic for positioning the camera fails to execute.
+					auto animController = macp->animationController.asPlayer;
+					animController->firstPersonHeadCameraNode->worldTransform.translation = savedArmCameraPosition;
+					TES3_MobilePlayer_update1stPersonTransform(macp);
+					TES3_PlayerAnimationController_updateCameraPosition(animController);
+				}
 			}
 			else {
 				mobile->vTable.mobileObject->enterLeaveSimulation(mobile, true);
