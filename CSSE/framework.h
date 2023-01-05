@@ -25,6 +25,7 @@
 #include <vector>
 #include <future>
 #include <optional>
+#include <regex>
 
 // Required C includes.
 #include <cmath>

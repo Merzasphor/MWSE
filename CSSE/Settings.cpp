@@ -38,6 +38,8 @@ namespace se::cs {
 		filter_by_script_id = toml::find_or(v, "filter_by_script_id", filter_by_script_id);
 		filter_by_book_text = toml::find_or(v, "filter_by_book_text", filter_by_book_text);
 		highlight_modified_items = toml::find_or(v, "highlight_modified_items", highlight_modified_items);
+		case_sensitive = toml::find_or(v, "case_sensitive", case_sensitive);
+		use_regex = toml::find_or(v, "use_regex", use_regex);
 	}
 
 	toml::value Settings_t::ObjectWindowSettings::into_toml() const {
@@ -52,6 +54,8 @@ namespace se::cs {
 				{ "filter_by_script_id", filter_by_script_id },
 				{ "filter_by_book_text", filter_by_book_text },
 				{ "highlight_modified_items", highlight_modified_items },
+				{ "case_sensitive", case_sensitive },
+				{ "use_regex", use_regex },
 			}
 		);
 	}

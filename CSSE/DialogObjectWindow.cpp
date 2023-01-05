@@ -459,6 +459,19 @@ namespace se::cs::dialog::object_window {
 	//
 
 	static std::string currentSearchText;
+	static std::optional<std::regex> currentSearchRegex;
+
+	bool matchDispatcher(const std::string_view& haystack) {
+		if (currentSearchRegex) {
+			return std::regex_search(haystack.data(), currentSearchRegex.value());
+		}
+		else if (settings.object_window.case_sensitive) {
+			return string::contains(haystack, currentSearchText);
+		}
+		else {
+			return string::cicontains(haystack, currentSearchText);
+		}
+	}
 
 	bool PatchFilterObjectWindow_ObjectMatchesSearchText(const Object* object) {
 		// If we have no search text, always allow.
@@ -468,28 +481,28 @@ namespace se::cs::dialog::object_window {
 
 		// Allow filtering by object ID.
 		if (settings.object_window.filter_by_id) {
-			if (string::cicontains(object->getObjectID(), currentSearchText)) {
+			if (matchDispatcher(object->getObjectID())) {
 				return true;
 			}
 		}
 
 		// Allow filtering by object name.
 		if (settings.object_window.filter_by_name) {
-			if (string::cicontains(object->getName(), currentSearchText)) {
+			if (matchDispatcher(object->getName())) {
 				return true;
 			}
 		}
 
 		// Allow filtering by model path.
 		if (settings.object_window.filter_by_model_path) {
-			if (string::cicontains(object->getModel(), currentSearchText)) {
+			if (matchDispatcher(object->getModel())) {
 				return true;
 			}
 		}
 
 		// Allow filtering by icon path.
 		if (settings.object_window.filter_by_icon_path) {
-			if (string::cicontains(object->getIcon(), currentSearchText)) {
+			if (matchDispatcher(object->getIcon())) {
 				return true;
 			}
 		}
@@ -497,7 +510,7 @@ namespace se::cs::dialog::object_window {
 		// Allow filtering by enchantment id.
 		if (settings.object_window.filter_by_enchantment_id) {
 			auto enchantment = object->getEnchantment();
-			if (enchantment && string::cicontains(enchantment->getObjectID(), currentSearchText)) {
+			if (enchantment && matchDispatcher(enchantment->getObjectID())) {
 				return true;
 			}
 		}
@@ -505,7 +518,7 @@ namespace se::cs::dialog::object_window {
 		// Allow filtering by script id.
 		if (settings.object_window.filter_by_script_id) {
 			auto script = object->getScript();
-			if (script && string::cicontains(script->getObjectID(), currentSearchText)) {
+			if (script && matchDispatcher(script->getObjectID())) {
 				return true;
 			}
 		}
@@ -513,7 +526,7 @@ namespace se::cs::dialog::object_window {
 		// Allow filtering by book text.
 		if (settings.object_window.filter_by_book_text && object->objectType == ObjectType::Book) {
 			auto asBook = static_cast<const Book*>(object);
-			if (asBook->text && string::cicontains(asBook->text, currentSearchText)) {
+			if (asBook->text && matchDispatcher(asBook->text)) {
 				return true;
 			}
 		}
@@ -661,6 +674,27 @@ namespace se::cs::dialog::object_window {
 
 		if (!string::equal(currentSearchText, newText)) {
 			currentSearchText = std::move(newText);
+
+			// Regex crunching can be slow, so only do it once.
+			if (settings.object_window.use_regex) {
+				auto flags = std::regex_constants::extended | std::regex_constants::optimize | std::regex_constants::nosubs;
+				if (!settings.object_window.case_sensitive) {
+					flags |= std::regex_constants::icase;
+				}
+
+				try {
+					currentSearchRegex = std::regex(currentSearchText, flags);
+				}
+				catch (const std::regex_error& e) {
+					log::stream << "Regex error when searching object window: " << e.what() << std::endl;
+					currentSearchRegex = {};
+
+					// TODO: Paint the background of the search input red or something.
+				}
+			}
+			else {
+				currentSearchRegex = {};
+			}
 
 			// Fire a refresh function. But disable drawing throughout so we don't get ugly flashes.
 			const auto listView = ghWndObjectList::get();

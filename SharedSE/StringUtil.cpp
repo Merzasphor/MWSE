@@ -27,7 +27,19 @@ namespace se::string {
 			return false;
 		}
 
-		return std::search(haystack.begin(), haystack.end(), needle.begin(), needle.end(), string::ciequal) != haystack.end();
+		return std::search(haystack.begin(), haystack.end(), needle.begin(), needle.end(), ciequal) != haystack.end();
+	}
+
+	bool contains(const std::string_view& haystack, const std::string_view& needle) {
+		if (needle.empty()) {
+			return true;
+		}
+
+		if (haystack.size() < needle.size()) {
+			return false;
+		}
+
+		return std::search(haystack.begin(), haystack.end(), needle.begin(), needle.end()) != haystack.end();
 	}
 
 	bool replace(std::string& str, const std::string_view from, const std::string_view to) {
