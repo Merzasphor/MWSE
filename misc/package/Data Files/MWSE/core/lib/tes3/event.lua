@@ -125,6 +125,7 @@ return {
 	["referenceActivated"] = "referenceActivated",
 	["referenceDeactivated"] = "referenceDeactivated",
 	["referenceSceneNodeCreated"] = "referenceSceneNodeCreated",
+	["repair"] = "repair",
 	["restInterrupt"] = "restInterrupt",
 	["save"] = "save",
 	["saved"] = "saved",

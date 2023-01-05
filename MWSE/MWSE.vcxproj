@@ -29,6 +29,7 @@
     <ClInclude Include="LuaKeyframesLoadEvent.h" />
     <ClInclude Include="LuaMagicEffectRemovedEvent.h" />
     <ClInclude Include="LuaMeshLoadEvent.h" />
+    <ClInclude Include="LuaRepairEvent.h" />
     <ClInclude Include="LuaSpellResistedEvent.h" />
     <ClInclude Include="LuaVFXCreatedEvent.h" />
     <ClInclude Include="MathUtil.h" />
@@ -637,6 +638,7 @@
     <ClCompile Include="LuaReferenceActivatedEvent.cpp" />
     <ClCompile Include="LuaReferenceDeactivatedEvent.cpp" />
     <ClCompile Include="LuaReferenceSceneNodeCreatedEvent.cpp" />
+    <ClCompile Include="LuaRepairEvent.cpp" />
     <ClCompile Include="LuaRestInterruptEvent.cpp" />
     <ClCompile Include="LuaSavedGameEvent.cpp" />
     <ClCompile Include="LuaSaveGameEvent.cpp" />

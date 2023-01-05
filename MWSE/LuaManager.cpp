@@ -247,6 +247,7 @@
 #include "LuaPreventRestEvent.h"
 #include "LuaProjectileExpireEvent.h"
 #include "LuaReferenceActivatedEvent.h"
+#include "LuaRepairEvent.h"
 #include "LuaRestInterruptEvent.h"
 #include "LuaSimulateEvent.h"
 #include "LuaSkillRaisedEvent.h"
@@ -3910,6 +3911,69 @@ namespace mwse::lua {
 	}
 
 	//
+	// Event: Repair
+	//
+
+	static TES3::UI::Element* AttemptRepair_LastTarget = nullptr;
+
+	const auto TES3_OnClickRepairOrRecharge = reinterpret_cast<bool(__cdecl*)(TES3::UI::Element*, TES3::UI::Property, int, int, TES3::UI::Element*)>(0x60E260);
+	bool __cdecl OnClickRepairOrRecharge(TES3::UI::Element* source, TES3::UI::Property prop, int dataA, int dataB, TES3::UI::Element* target) {
+		AttemptRepair_LastTarget = target;
+		return TES3_OnClickRepairOrRecharge(source, prop, dataA, dataB, target);
+	}
+
+	int __cdecl AttemptRepair() {
+		auto repairMenu = TES3::UI::findMenu("MenuRepair");
+		if (!repairMenu) {
+			return 0;
+		}
+
+		// Get the tool data that is used to do the repair.
+		auto tool = reinterpret_cast<TES3::RepairTool*>(repairMenu->getProperty(TES3::UI::PropertyType::Pointer, TES3::UI::registerProperty("MenuRepair_Object")).ptrValue);
+		auto toolData = reinterpret_cast<TES3::ItemData*>(repairMenu->getProperty(TES3::UI::PropertyType::Pointer, TES3::UI::registerProperty("MenuRepair_extra")).ptrValue);
+
+		// Get the item and its data that is being repaired.
+		const auto listNumber = AttemptRepair_LastTarget->getProperty(TES3::UI::PropertyType::Integer, TES3::UI::registerProperty("MenuRepair_ListNumber")).integerValue;
+		auto clickedStack = reinterpret_cast<TES3::ItemStack*>(AttemptRepair_LastTarget->getProperty(TES3::UI::PropertyType::Pointer, TES3::UI::registerProperty("MenuRepair_Object")).ptrValue);
+		auto item = static_cast<TES3::Item*>(clickedStack->object);
+		auto itemData = clickedStack->variables->at(listNumber);
+
+		// Calculate the chance of the repair.
+		const auto macp = TES3::WorldController::get()->getMobilePlayer();
+		const auto skillTerm = macp->getSkillValue(TES3::SkillID::Armorer);
+		const auto luckTerm = macp->getAttributeLuck()->getCurrent() * 0.1f;
+		const auto strengthTerm = macp->getAttributeStrength()->getCurrent() * 0.1f;
+		const auto fatigueTerm = macp->getFatigueTerm();
+		auto chance = fatigueTerm * (skillTerm + strengthTerm + luckTerm);
+		const auto roll = tes3::rand() % 100;
+
+		// Calculate the repair amount.
+		const auto fRepairAmountMult = TES3::DataHandler::get()->nonDynamicData->GMSTs[TES3::GMST::fRepairAmountMult]->value.asFloat;
+		int repairAmount = tool ? tool->getQuality() * fRepairAmountMult * roll : 1;
+		if (repairAmount < 1) {
+			repairAmount = 1;
+		}
+
+		// Allow changing the repair chance/amount.
+		if (event::RepairEvent::getEventEnabled()) {
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table result = stateHandle.triggerEvent(new event::RepairEvent(macp, item, itemData, tool, toolData, chance, repairAmount));
+			if (result.valid()) {
+				chance = result.get_or("chance", chance);
+				repairAmount = result.get_or("repairAmount", repairAmount);
+			}
+		}
+
+		// If it was a failure, return -1.
+		if (roll >= chance) {
+			return -1;
+		}
+
+		return std::max(repairAmount, 1);
+	}
+
+	//
 	//
 	//
 
@@ -5425,6 +5489,11 @@ namespace mwse::lua {
 		genCallEnforced(0x4D5DCD, 0x4DA330, *reinterpret_cast<DWORD*>(&TES3_NPCInstance_getDisposition));
 		genCallEnforced(0x5077EA, 0x4DA330, *reinterpret_cast<DWORD*>(&TES3_NPCInstance_getDisposition));
 		genCallEnforced(0x54DC88, 0x4DA330, *reinterpret_cast<DWORD*>(&TES3_NPCInstance_getDisposition));
+
+		// Event: Repair
+		genCallEnforced(0x59A3AE, 0x60E260, reinterpret_cast<DWORD>(OnClickRepairOrRecharge));
+		genPushEnforced(0x60DAF6, reinterpret_cast<DWORD>(OnClickRepairOrRecharge));
+		genCallEnforced(0x60E37C, 0x60ECD0, reinterpret_cast<DWORD>(AttemptRepair));
 
 		// UI framework hooks
 		TES3::UI::hook();

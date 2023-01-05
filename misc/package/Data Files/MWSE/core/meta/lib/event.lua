@@ -131,6 +131,7 @@
 --- @field register fun(eventId: '"referenceActivated"', callback: fun(e: referenceActivatedEventData): boolean?, options: table?)
 --- @field register fun(eventId: '"referenceDeactivated"', callback: fun(e: referenceDeactivatedEventData): boolean?, options: table?)
 --- @field register fun(eventId: '"referenceSceneNodeCreated"', callback: fun(e: referenceSceneNodeCreatedEventData): boolean?, options: table?)
+--- @field register fun(eventId: '"repair"', callback: fun(e: repairEventData): boolean?, options: table?)
 --- @field register fun(eventId: '"restInterrupt"', callback: fun(e: restInterruptEventData): boolean?, options: table?)
 --- @field register fun(eventId: '"save"', callback: fun(e: saveEventData): boolean?, options: table?)
 --- @field register fun(eventId: '"saved"', callback: fun(e: savedEventData): boolean?, options: table?)
