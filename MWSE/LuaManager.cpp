@@ -3929,12 +3929,12 @@ namespace mwse::lua {
 		}
 
 		// Get the tool data that is used to do the repair.
-		auto tool = reinterpret_cast<TES3::RepairTool*>(repairMenu->getProperty(TES3::UI::PropertyType::Pointer, TES3::UI::registerProperty("MenuRepair_Object")).ptrValue);
-		auto toolData = reinterpret_cast<TES3::ItemData*>(repairMenu->getProperty(TES3::UI::PropertyType::Pointer, TES3::UI::registerProperty("MenuRepair_extra")).ptrValue);
+		auto tool = repairMenu->getPropertyPointer<TES3::RepairTool>("MenuRepair_Object");
+		auto toolData = repairMenu->getPropertyPointer<TES3::ItemData>("MenuRepair_extra");
 
 		// Get the item and its data that is being repaired.
 		const auto listNumber = AttemptRepair_LastTarget->getProperty(TES3::UI::PropertyType::Integer, TES3::UI::registerProperty("MenuRepair_ListNumber")).integerValue;
-		auto clickedStack = reinterpret_cast<TES3::ItemStack*>(AttemptRepair_LastTarget->getProperty(TES3::UI::PropertyType::Pointer, TES3::UI::registerProperty("MenuRepair_Object")).ptrValue);
+		auto clickedStack = AttemptRepair_LastTarget->getPropertyPointer<TES3::ItemStack>("MenuRepair_Object");
 		auto item = static_cast<TES3::Item*>(clickedStack->object);
 		auto itemData = clickedStack->variables->at(listNumber);
 
