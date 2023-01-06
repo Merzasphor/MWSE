@@ -72,7 +72,7 @@ namespace se::cs {
 		int(__thiscall* saveObject)(BaseObject*, GameFile*); // 0x10
 		void(__thiscall* setObjectModified)(BaseObject*, bool); // 0x14
 		int(__thiscall* setObjectFlag40)(BaseObject*, bool); // 0x18
-		void* unknown_0x1C;
+		int(__thiscall* getCount)(const BaseObject*); // 0x1C
 		const char* (__thiscall* getObjectID)(const BaseObject*); // 0x20
 	};
 
@@ -87,10 +87,11 @@ namespace se::cs {
 
 		const char* getObjectID() const;
 
-		inline bool getModified() const {
-			return (flags & 0x2);
-		}
+		bool getModified() const;
 		void setModified(bool modified);
+		bool getDeleted() const;
+		bool getPersists() const;
+		bool getBlocked() const;
 
 		void setFlag80(bool set);
 	};

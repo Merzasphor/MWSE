@@ -11,12 +11,12 @@ namespace se::cs {
 		void* unknown_0x2C;
 		void* unknown_0x30;
 		void* unknown_0x34;
-		char* (__thiscall* getName)(const BaseObject*); // 0x38
-		char* (__thiscall* getIconPath)(const BaseObject*); // 0x3C
+		char* (__thiscall* getName)(const Object*); // 0x38
+		char* (__thiscall* getIconPath)(const Object*); // 0x3C
 		void* unknown_0x40;
 		void* unknown_0x44;
-		char* (__thiscall* getModelPath)(const BaseObject*); // 0x48
-		Script* (__thiscall* getScript)(const BaseObject*); // 0x4C
+		char* (__thiscall* getModelPath)(const Object*); // 0x48
+		Script* (__thiscall* getScript)(const Object*); // 0x4C
 		void* unknown_0x50;
 		void* unknown_0x54;
 		void* unknown_0x58;
@@ -35,9 +35,9 @@ namespace se::cs {
 		void* unknown_0x8C;
 		void* unknown_0x90;
 		void* unknown_0x94;
-		void* unknown_0x98;
-		void* unknown_0x9C;
-		void* unknown_0xA0;
+		const char* (__thiscall* getTypeName)(const Object*); // 0x98
+		float (__thiscall* getWeight)(const Object*); // 0x9C
+		int (__thiscall* getValue)(const Object*); // 0xA0
 		void* unknown_0xA4;
 		void* unknown_0xA8;
 		void* unknown_0xAC;
@@ -49,13 +49,13 @@ namespace se::cs {
 		void* unknown_0xC4;
 		void* unknown_0xC8;
 		void* unknown_0xCC;
-		Object* (__thiscall* getEnchantment)(const BaseObject*); // 0xD0
+		Object* (__thiscall* getEnchantment)(const Object*); // 0xD0
 		void* unknown_0xD4;
 		void* unknown_0xD8;
 		void* unknown_0xDC;
 		void* unknown_0xE0;
 		void* unknown_0xE4;
-		void* unknown_0xE8;
+		bool (__thiscall* getAutoCalc)(const Object*); // 0xE8
 		void* unknown_0xEC;
 		void* unknown_0xF0;
 		void* unknown_0xF4;
@@ -115,6 +115,26 @@ namespace se::cs {
 
 		inline void setScale(float scale, bool something = true) {
 			vtbl.object->setScale(this, scale, something);
+		}
+
+		inline int getCount() const {
+			return vtbl.object->getCount(this);
+		}
+
+		inline const char* getTypeName() const {
+			return vtbl.object->getTypeName(this);
+		}
+
+		inline bool getAutoCalc() const {
+			return vtbl.object->getAutoCalc(this);
+		}
+
+		inline float getWeight() const {
+			return vtbl.object->getWeight(this);
+		}
+
+		inline int getValue() const {
+			return vtbl.object->getValue(this);
 		}
 	};
 	static_assert(sizeof(Object) == 0x28, "CS::Object failed size validation");

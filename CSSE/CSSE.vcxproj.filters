@@ -13,18 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Extenders">
-      <UniqueIdentifier>{7e124ac6-7f25-474a-ba56-fcaf44439ada}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Extenders\Dialog">
-      <UniqueIdentifier>{3f188b73-08d2-41c8-b8eb-ce4d275520c6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Extenders">
-      <UniqueIdentifier>{c3107347-89e3-459b-8d01-ab3d671d747a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Extenders\Dialog">
-      <UniqueIdentifier>{005593a0-f7ef-47c2-be0d-1b5af6f39a66}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\CS">
       <UniqueIdentifier>{8ac1bb95-78a6-4416-a960-195bd71970bc}</UniqueIdentifier>
     </Filter>
@@ -40,11 +28,29 @@
     <Filter Include="Source Files\Util">
       <UniqueIdentifier>{07b8f8d7-cba4-44ce-9258-c20e53857d15}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Extenders\Classes">
+    <Filter Include="Header Files\UI">
+      <UniqueIdentifier>{7e124ac6-7f25-474a-ba56-fcaf44439ada}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\UI\Dialog">
+      <UniqueIdentifier>{3f188b73-08d2-41c8-b8eb-ce4d275520c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\UI\Classes">
+      <UniqueIdentifier>{55d26094-df7c-4c07-80a9-2bf8bc2154fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UI">
+      <UniqueIdentifier>{c3107347-89e3-459b-8d01-ab3d671d747a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UI\Dialog">
+      <UniqueIdentifier>{005593a0-f7ef-47c2-be0d-1b5af6f39a66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UI\Classes">
       <UniqueIdentifier>{a45cab09-92be-4384-b1ab-65c4bf53ea2d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Extenders\Classes">
-      <UniqueIdentifier>{55d26094-df7c-4c07-80a9-2bf8bc2154fd}</UniqueIdentifier>
+    <Filter Include="Header Files\UI\Controllers">
+      <UniqueIdentifier>{426eea90-9e20-4293-9b7c-97ceb28b4a42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UI\Controllers">
+      <UniqueIdentifier>{431d0355-2c3b-4033-b5f0-40de48c704f4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -55,7 +61,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DialogObjectWindow.h">
-      <Filter>Header Files\Extenders\Dialog</Filter>
+      <Filter>Header Files\UI\Dialog</Filter>
     </ClInclude>
     <ClInclude Include="CSBaseObject.h">
       <Filter>Header Files\CS</Filter>
@@ -100,19 +106,19 @@
       <Filter>Header Files\CS</Filter>
     </ClInclude>
     <ClInclude Include="DialogDialogueWindow.h">
-      <Filter>Header Files\Extenders\Dialog</Filter>
+      <Filter>Header Files\UI\Dialog</Filter>
     </ClInclude>
     <ClInclude Include="DialogRenderWindow.h">
-      <Filter>Header Files\Extenders\Dialog</Filter>
+      <Filter>Header Files\UI\Dialog</Filter>
     </ClInclude>
     <ClInclude Include="LogUtil.h">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
     <ClInclude Include="DialogCellWindow.h">
-      <Filter>Header Files\Extenders\Dialog</Filter>
+      <Filter>Header Files\UI\Dialog</Filter>
     </ClInclude>
     <ClInclude Include="WindowMain.h">
-      <Filter>Header Files\Extenders</Filter>
+      <Filter>Header Files\UI</Filter>
     </ClInclude>
     <ClInclude Include="CSLight.h">
       <Filter>Header Files\CS</Filter>
@@ -127,13 +133,13 @@
       <Filter>Header Files\CS</Filter>
     </ClInclude>
     <ClInclude Include="DialogSearchAndReplaceWindow.h">
-      <Filter>Header Files\Extenders\Dialog</Filter>
+      <Filter>Header Files\UI\Dialog</Filter>
     </ClInclude>
     <ClInclude Include="Settings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DialogDataFilesWindow.h">
-      <Filter>Header Files\Extenders\Dialog</Filter>
+      <Filter>Header Files\UI\Dialog</Filter>
     </ClInclude>
     <ClInclude Include="CSScript.h">
       <Filter>Header Files\CS</Filter>
@@ -145,7 +151,52 @@
       <Filter>Header Files\CS</Filter>
     </ClInclude>
     <ClInclude Include="EditBasicExtended.h">
-      <Filter>Header Files\Extenders\Classes</Filter>
+      <Filter>Header Files\UI\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectWindowTabData.h">
+      <Filter>Header Files\UI\Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="CSLeveledCreature.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSLeveledItem.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSActor.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSCreature.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSEnchantment.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSWeapon.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSSpell.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSEffect.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSApparatus.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSLockpick.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSProbe.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSRepairTool.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSArmor.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSWearablePart.h">
+      <Filter>Header Files\CS</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -153,16 +204,16 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DialogObjectWindow.cpp">
-      <Filter>Source Files\Extenders\Dialog</Filter>
+      <Filter>Source Files\UI\Dialog</Filter>
     </ClCompile>
     <ClCompile Include="CSBaseObject.cpp">
       <Filter>Source Files\CS</Filter>
     </ClCompile>
     <ClCompile Include="DialogDialogueWindow.cpp">
-      <Filter>Source Files\Extenders\Dialog</Filter>
+      <Filter>Source Files\UI\Dialog</Filter>
     </ClCompile>
     <ClCompile Include="DialogRenderWindow.cpp">
-      <Filter>Source Files\Extenders\Dialog</Filter>
+      <Filter>Source Files\UI\Dialog</Filter>
     </ClCompile>
     <ClCompile Include="LogUtil.cpp">
       <Filter>Source Files\Util</Filter>
@@ -183,22 +234,22 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DialogCellWindow.cpp">
-      <Filter>Source Files\Extenders\Dialog</Filter>
+      <Filter>Source Files\UI\Dialog</Filter>
     </ClCompile>
     <ClCompile Include="WindowMain.cpp">
-      <Filter>Source Files\Extenders</Filter>
+      <Filter>Source Files\UI</Filter>
     </ClCompile>
     <ClCompile Include="CSModelLoader.cpp">
       <Filter>Source Files\CS</Filter>
     </ClCompile>
     <ClCompile Include="DialogSearchAndReplaceWindow.cpp">
-      <Filter>Source Files\Extenders\Dialog</Filter>
+      <Filter>Source Files\UI\Dialog</Filter>
     </ClCompile>
     <ClCompile Include="Settings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DialogDataFilesWindow.cpp">
-      <Filter>Source Files\Extenders\Dialog</Filter>
+      <Filter>Source Files\UI\Dialog</Filter>
     </ClCompile>
     <ClCompile Include="CSRecordHandler.cpp">
       <Filter>Source Files\CS</Filter>
@@ -210,7 +261,19 @@
       <Filter>Source Files\CS</Filter>
     </ClCompile>
     <ClCompile Include="EditBasicExtended.cpp">
-      <Filter>Source Files\Extenders\Classes</Filter>
+      <Filter>Source Files\UI\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectWindowTabData.cpp">
+      <Filter>Source Files\UI\Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="CSLeveledCreature.cpp">
+      <Filter>Source Files\CS</Filter>
+    </ClCompile>
+    <ClCompile Include="CSLeveledItem.cpp">
+      <Filter>Source Files\CS</Filter>
+    </ClCompile>
+    <ClCompile Include="CSArmor.cpp">
+      <Filter>Source Files\CS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

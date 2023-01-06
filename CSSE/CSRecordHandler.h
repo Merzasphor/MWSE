@@ -92,6 +92,9 @@ namespace se::cs {
 		size_t getCellCount() const;
 		Cell* getCellByIndex(size_t index) const;
 		Cell* getCellByID(const char* id) const;
+
+		const char* getBaseAnimation(int sex, bool firstPerson = false) const;
+		bool isBaseAnimation(const char* animation) const;
 	};
 	static_assert(sizeof(RecordHandler) == 0xB0F8, "RecordHandler failed size validation");
 }

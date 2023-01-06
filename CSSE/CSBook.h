@@ -19,5 +19,5 @@ namespace se::cs {
 		Object* enchantment; // 0x6C
 		char* text; // 0x70
 	};
-	static_assert(sizeof(Book) == 0x74, "Light failed size validation");
+	static_assert(sizeof(Book) == 0x74, "Book failed size validation");
 }

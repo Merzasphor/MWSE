@@ -5,8 +5,24 @@ namespace se::cs {
 		return vtbl.baseObject->getObjectID(this);
 	}
 
+	bool BaseObject::getModified() const {
+		return (flags & 0x2);
+	}
+
 	void BaseObject::setModified(bool modified) {
 		vtbl.baseObject->setObjectModified(this, modified);
+	}
+
+	bool BaseObject::getDeleted() const {
+		return (flags & 0x20);
+	}
+
+	bool BaseObject::getPersists() const {
+		return (flags & 0x400);
+	}
+
+	bool BaseObject::getBlocked() const {
+		return (flags & 0x2000);
 	}
 
 	void BaseObject::setFlag80(bool set) {

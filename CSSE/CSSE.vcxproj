@@ -103,24 +103,38 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CSActor.h" />
     <ClInclude Include="CSAnimatedObject.h" />
+    <ClInclude Include="CSApparatus.h" />
+    <ClInclude Include="CSArmor.h" />
     <ClInclude Include="CSBook.h" />
     <ClInclude Include="CSCell.h" />
+    <ClInclude Include="CSCreature.h" />
     <ClInclude Include="CSDataHandler.h" />
     <ClInclude Include="CSDefines.h" />
     <ClInclude Include="CSDialogue.h" />
     <ClInclude Include="CSDialogueInfo.h" />
+    <ClInclude Include="CSEffect.h" />
+    <ClInclude Include="CSEnchantment.h" />
     <ClInclude Include="CSGameFile.h" />
     <ClInclude Include="CSGameSetting.h" />
     <ClInclude Include="CSLandTexture.h" />
+    <ClInclude Include="CSLeveledCreature.h" />
+    <ClInclude Include="CSLeveledItem.h" />
     <ClInclude Include="CSLight.h" />
+    <ClInclude Include="CSLockpick.h" />
     <ClInclude Include="CSModelLoader.h" />
     <ClInclude Include="CSObject.h" />
     <ClInclude Include="CSPhysicalObject.h" />
+    <ClInclude Include="CSProbe.h" />
     <ClInclude Include="CSRecordHandler.h" />
     <ClInclude Include="CSReference.h" />
+    <ClInclude Include="CSRepairTool.h" />
     <ClInclude Include="CSScript.h" />
+    <ClInclude Include="CSSpell.h" />
     <ClInclude Include="CSStatic.h" />
+    <ClInclude Include="CSWeapon.h" />
+    <ClInclude Include="CSWearablePart.h" />
     <ClInclude Include="DialogCellWindow.h" />
     <ClInclude Include="DialogDataFilesWindow.h" />
     <ClInclude Include="DialogDialogueWindow.h" />
@@ -133,11 +147,15 @@
     <ClInclude Include="LogUtil.h" />
     <ClInclude Include="NIConfig.h" />
     <ClInclude Include="NIRTTIDefines.h" />
+    <ClInclude Include="ObjectWindowTabData.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="WindowMain.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CSArmor.cpp" />
+    <ClCompile Include="CSLeveledCreature.cpp" />
+    <ClCompile Include="CSLeveledItem.cpp" />
     <ClCompile Include="EditBasicExtended.cpp" />
     <ClCompile Include="CSBaseObject.cpp" />
     <ClCompile Include="CSDataHandler.cpp" />
@@ -155,6 +173,7 @@
     <ClCompile Include="DialogRenderWindow.cpp" />
     <ClCompile Include="DialogSearchAndReplaceWindow.cpp" />
     <ClCompile Include="LogUtil.cpp" />
+    <ClCompile Include="ObjectWindowTabData.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
