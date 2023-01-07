@@ -147,7 +147,6 @@
     <ClInclude Include="LogUtil.h" />
     <ClInclude Include="NIConfig.h" />
     <ClInclude Include="NIRTTIDefines.h" />
-    <ClInclude Include="ObjectWindowTabData.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="WindowMain.h" />
@@ -173,7 +172,6 @@
     <ClCompile Include="DialogRenderWindow.cpp" />
     <ClCompile Include="DialogSearchAndReplaceWindow.cpp" />
     <ClCompile Include="LogUtil.cpp" />
-    <ClCompile Include="ObjectWindowTabData.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
