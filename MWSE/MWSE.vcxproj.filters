@@ -1677,6 +1677,9 @@
     <ClInclude Include="LuaRepairEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
+    <ClInclude Include="NiRendererLua.h">
+      <Filter>Header Files\Lua\Bindings\NI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -3652,6 +3655,9 @@
     </ClCompile>
     <ClCompile Include="LuaRepairEvent.cpp">
       <Filter>Source Files\Lua\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="NIRendererLua.cpp">
+      <Filter>Source Files\Lua\Bindings\NI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

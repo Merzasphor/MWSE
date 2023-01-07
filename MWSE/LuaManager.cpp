@@ -169,6 +169,7 @@
 #include "NIPixelDataLua.h"
 #include "NIPropertyLua.h"
 #include "NIQuaternionLua.h"
+#include "NIRendererLua.h"
 #include "NISkinInstanceLua.h"
 #include "NISourceTextureLua.h"
 #include "NISwitchNodeLua.h"
@@ -543,6 +544,7 @@ namespace mwse::lua {
 		bindNIPixelData();
 		bindNIProperties();
 		bindNIQuaternion();
+		bindNIRenderer();
 		bindNISkinInstance();
 		bindNISourceTexture();
 		bindNISwitchNode();
