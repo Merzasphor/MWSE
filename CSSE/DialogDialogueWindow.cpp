@@ -194,18 +194,10 @@ namespace se::cs::dialog::dialogue_window {
 	}
 	constexpr auto PatchOptimizePopulatingCellVariableNames_Setup_Size = 0xFu;
 
-	static DialogueInfo* lastShownDialogueInfo = nullptr;
-
 	void __fastcall PatchOptimizeDialogueInfoDisplaying(DialogueInfo* info, DWORD _edx_, HWND hWnd) {
 		std::chrono::high_resolution_clock::time_point initializationTimer;
 		if constexpr (LOG_PERFORMANCE_RESULTS) {
 			initializationTimer = std::chrono::high_resolution_clock::now();
-		}
-
-		if (info == lastShownDialogueInfo) {
-			if constexpr (ENABLE_ALL_OPTIMIZATIONS) {
-				return;
-			}
 		}
 
 		if constexpr (ENABLE_ALL_OPTIMIZATIONS) {
@@ -238,7 +230,6 @@ namespace se::cs::dialog::dialogue_window {
 
 		const auto CS_DialogueInfo_displayToEditor = reinterpret_cast<void(__thiscall*)(DialogueInfo*, HWND)>(0x4F1070);
 		CS_DialogueInfo_displayToEditor(info, hWnd);
-		lastShownDialogueInfo = info;
 
 		if constexpr (ENABLE_ALL_OPTIMIZATIONS) {
 			resumeRenderingAndRepaint(hWnd, CONTROL_ID_CONDITION_FUNCTION1_TYPE_COMBO);
