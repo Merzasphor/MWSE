@@ -3120,8 +3120,9 @@ namespace mwse::lua {
 			return 0;
 		}
 
-		// MCP value change.
-		return int(pow(baseValue, 3) / 1000 + baseValue * 2);
+		// MCP value change. Uses floating point to avoid risk of overflow.
+		double v = baseValue;
+		return int(0.0001 * (v * v * v) + 2 * v);
 	}
 
 	__declspec(naked) void PatchGetSoulValueForTooltip_NoMCPLoader() {
