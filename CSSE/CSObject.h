@@ -17,16 +17,16 @@ namespace se::cs {
 		void* unknown_0x44;
 		char* (__thiscall* getModelPath)(const Object*); // 0x48
 		Script* (__thiscall* getScript)(const Object*); // 0x4C
-		void* unknown_0x50;
-		void* unknown_0x54;
-		void* unknown_0x58;
-		void* unknown_0x5C;
+		Sound* (__thiscall* getSound)(const Object*); // 0x50
+		const char* (__thiscall* getRaceName)(const Object*); // 0x54
+		const char* (__thiscall* getClassName)(const Object*); // 0x58
+		const char* (__thiscall* getFactionName)(const Object*); // 0x5C
 		void* unknown_0x60;
 		void* unknown_0x64;
-		void* unknown_0x68;
-		void* unknown_0x6C;
+		Faction*(__thiscall* getFaction)(const Object*); // 0x68
+		bool(__thiscall* getIsFemale)(const Object*); // 0x6C
 		void* unknown_0x70;
-		void* unknown_0x74;
+		int(__thiscall* getLevel)(const Object*); // 0x74
 		void* unknown_0x78;
 		void* unknown_0x7C;
 		void* unknown_0x80;
@@ -44,7 +44,7 @@ namespace se::cs {
 		void* unknown_0xB0;
 		void* unknown_0xB4;
 		void* unknown_0xB8;
-		void* unknown_0xBC;
+		bool(__thiscall* getIsEssential)(const Object*); // 0xBC
 		void* unknown_0xC0;
 		void* unknown_0xC4;
 		void* unknown_0xC8;
@@ -123,6 +123,38 @@ namespace se::cs {
 
 		inline const char* getTypeName() const {
 			return vtbl.object->getTypeName(this);
+		}
+
+		inline Sound* getSound() const {
+			return vtbl.object->getSound(this);
+		}
+
+		inline const char* getRaceName() const {
+			return vtbl.object->getRaceName(this);
+		}
+
+		inline const char* getClassName() const {
+			return vtbl.object->getClassName(this);
+		}
+
+		inline const char* getFactionName() const {
+			return vtbl.object->getFactionName(this);
+		}
+
+		inline Faction* getFaction() const {
+			return vtbl.object->getFaction(this);
+		}
+
+		inline bool getIsFemale() const {
+			return vtbl.object->getIsFemale(this);
+		}
+
+		inline bool getIsEssential() const {
+			return vtbl.object->getIsEssential(this);
+		}
+
+		inline int getLevel() const {
+			return vtbl.object->getLevel(this);
 		}
 
 		inline bool getAutoCalc() const {

@@ -50,7 +50,7 @@ namespace se::cs {
 		ArmorSlot::ArmorSlot slot; // 0xAC
 		float weight; // 0xB0
 		int value; // 0xB4
-		int health; // 0xB8
+		int maxCondition; // 0xB8
 		int enchantPoints; // 0xBC
 		int armorRating; // 0xC0
 		Enchantment* enchantment; // 0xC4

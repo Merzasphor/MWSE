@@ -1,5 +1,7 @@
 #include "CSRecordHandler.h"
 
+#include "CSGameSetting.h"
+
 #include "StringUtil.h"
 
 namespace se::cs {
@@ -45,5 +47,39 @@ namespace se::cs {
 		}
 
 		return false;
+	}
+
+	GameSetting* RecordHandler::getGameSettingForSkill(int id) const {
+		if (id == -1) {
+			return nullptr;
+		}
+
+		const auto gConvertSkillToGMST = reinterpret_cast<int*>(0x6A7D58);
+		const auto skillGMST = gConvertSkillToGMST[id];
+		return gameSettingsHandler->gameSettings[skillGMST];
+	}
+
+	GameSetting* RecordHandler::getGameSettingForEffect(int id) const {
+		if (id == -1) {
+			return nullptr;
+		}
+
+		const auto gConvertEffectToGMST = reinterpret_cast<int*>(0x6A7E74);
+		const auto effectGMST = gConvertEffectToGMST[id];
+		return gameSettingsHandler->gameSettings[effectGMST];
+	}
+
+	void RecordHandler::getNameForEffect(char* buffer, size_t bufferSize, int effect, int attribute, int skill) const {
+		if (effect == -1) {
+			*buffer = '\0';
+			return;
+		}
+
+		const auto gConvertEffectToGMST = reinterpret_cast<int*>(0x6A7E74);
+		const auto effectGMST = gConvertEffectToGMST[effect];
+		const auto gmst = gameSettingsHandler->gameSettings[effectGMST];
+
+		// TODO: Make this actually show the correct attribute/skill stuff.
+		sprintf_s(buffer, bufferSize, "%s", gmst->value.asString);
 	}
 }

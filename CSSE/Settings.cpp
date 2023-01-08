@@ -25,10 +25,23 @@ namespace se::cs {
 	// Object Window
 	//
 
+	void Settings_t::ObjectWindowSettings::ColumnSettings::from_toml(const toml::value& v) {
+		width = toml::find_or(v, "width", width);
+	}
+
+	toml::value Settings_t::ObjectWindowSettings::ColumnSettings::into_toml() const {
+		return toml::value(
+			{
+				{ "width", width },
+			}
+		);
+	}
+
 	void Settings_t::ObjectWindowSettings::from_toml(const toml::value& v) {
 		// Backwards compatibility.
 		clear_filter_on_tab_switch = toml::find_or(v, "clear_on_tab_switch", clear_filter_on_tab_switch);
 
+		// Search settings
 		clear_filter_on_tab_switch = toml::find_or(v, "clear_filter_on_tab_switch", clear_filter_on_tab_switch);
 		filter_by_id = toml::find_or(v, "filter_by_id", filter_by_id);
 		filter_by_name = toml::find_or(v, "filter_by_name", filter_by_name);
@@ -40,11 +53,15 @@ namespace se::cs {
 		highlight_modified_items = toml::find_or(v, "highlight_modified_items", highlight_modified_items);
 		case_sensitive = toml::find_or(v, "case_sensitive", case_sensitive);
 		use_regex = toml::find_or(v, "use_regex", use_regex);
+
+		// Column settings
+
 	}
 
 	toml::value Settings_t::ObjectWindowSettings::into_toml() const {
 		return toml::value(
 			{
+				// Search settings
 				{ "clear_filter_on_tab_switch", clear_filter_on_tab_switch },
 				{ "filter_by_id", filter_by_id },
 				{ "filter_by_name", filter_by_name },
@@ -56,6 +73,9 @@ namespace se::cs {
 				{ "highlight_modified_items", highlight_modified_items },
 				{ "case_sensitive", case_sensitive },
 				{ "use_regex", use_regex },
+
+				// Column settings
+
 			}
 		);
 	}

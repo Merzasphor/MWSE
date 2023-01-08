@@ -40,6 +40,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)NIPointer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIProperty.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIQuaternion.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NIRange.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIRect.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIRTTI.h" />

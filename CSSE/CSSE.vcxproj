@@ -104,11 +104,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CSActor.h" />
+    <ClInclude Include="CSAIConfig.h" />
     <ClInclude Include="CSAnimatedObject.h" />
     <ClInclude Include="CSApparatus.h" />
     <ClInclude Include="CSArmor.h" />
+    <ClInclude Include="CSBodyPart.h" />
     <ClInclude Include="CSBook.h" />
     <ClInclude Include="CSCell.h" />
+    <ClInclude Include="CSClothing.h" />
+    <ClInclude Include="CSContainer.h" />
     <ClInclude Include="CSCreature.h" />
     <ClInclude Include="CSDataHandler.h" />
     <ClInclude Include="CSDefines.h" />
@@ -116,14 +120,17 @@
     <ClInclude Include="CSDialogueInfo.h" />
     <ClInclude Include="CSEffect.h" />
     <ClInclude Include="CSEnchantment.h" />
+    <ClInclude Include="CSFaction.h" />
     <ClInclude Include="CSGameFile.h" />
     <ClInclude Include="CSGameSetting.h" />
+    <ClInclude Include="CSIngredient.h" />
     <ClInclude Include="CSLandTexture.h" />
     <ClInclude Include="CSLeveledCreature.h" />
     <ClInclude Include="CSLeveledItem.h" />
     <ClInclude Include="CSLight.h" />
     <ClInclude Include="CSLockpick.h" />
     <ClInclude Include="CSModelLoader.h" />
+    <ClInclude Include="CSNPC.h" />
     <ClInclude Include="CSObject.h" />
     <ClInclude Include="CSPhysicalObject.h" />
     <ClInclude Include="CSProbe.h" />
@@ -131,7 +138,10 @@
     <ClInclude Include="CSReference.h" />
     <ClInclude Include="CSRepairTool.h" />
     <ClInclude Include="CSScript.h" />
+    <ClInclude Include="CSSkill.h" />
+    <ClInclude Include="CSSound.h" />
     <ClInclude Include="CSSpell.h" />
+    <ClInclude Include="CSSpellList.h" />
     <ClInclude Include="CSStatic.h" />
     <ClInclude Include="CSWeapon.h" />
     <ClInclude Include="CSWearablePart.h" />
@@ -153,8 +163,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CSArmor.cpp" />
+    <ClCompile Include="CSBodyPart.cpp" />
+    <ClCompile Include="CSBook.cpp" />
+    <ClCompile Include="CSContainer.cpp" />
+    <ClCompile Include="CSCreature.cpp" />
+    <ClCompile Include="CSIngredient.cpp" />
     <ClCompile Include="CSLeveledCreature.cpp" />
     <ClCompile Include="CSLeveledItem.cpp" />
+    <ClCompile Include="CSNPC.cpp" />
+    <ClCompile Include="CSWeapon.cpp" />
     <ClCompile Include="EditBasicExtended.cpp" />
     <ClCompile Include="CSBaseObject.cpp" />
     <ClCompile Include="CSDataHandler.cpp" />

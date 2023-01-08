@@ -80,6 +80,7 @@ namespace se::cs {
 		union {
 			BaseObject_VirtualTable* baseObject;
 			Object_VirtualTable* object;
+			Actor_VirtualTable* actor;
 		} vtbl; // 0x0
 		ObjectType::ObjectType objectType; // 0x4
 		unsigned int flags; // 0x8

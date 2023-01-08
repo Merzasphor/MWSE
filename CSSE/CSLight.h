@@ -4,20 +4,17 @@
 
 namespace se::cs {
 	struct Light : AnimatedObject {
-		struct Substruct5C {
-			int unknown_0x0;
-			int unknown_0x4;
-			int unknown_0x8;
-			int unknown_0xC;
-			int unknown_0x10;
-			int unknown_0x14;
-		};
-		int unknown_0x4C;
-		int unknown_0x50;
-		int unknown_0x54;
-		int unknown_0x58;
-		Substruct5C unknown_0x5C;
-		int unknown_0x74;
+		char* name; // 0x4C
+		Script* script; // 0x50
+		char* model; // 0x54
+		char* icon; // 0x58
+		float weight; // 0x60
+		int value; // 0x64
+		int time; // 0x68
+		int radius; // 0x6C
+		byte color[4]; // 0x70
+		unsigned int flags; // 0x74
+		Sound* sound; // 0x78
 
 		void updateLightingData(NI::Light* light, Cell* cell, bool flag = false);
 	};
