@@ -43,7 +43,6 @@ namespace se::cs::dialog::object_window {
 		void display(LPNMLVDISPINFOA displayInfo, const char* string) const;
 		void display(LPNMLVDISPINFOA displayInfo, const NI::IteratedList<ItemStack*>& items) const;
 		void display(LPNMLVDISPINFOA displayInfo, const NI::IteratedList<LeveledList::Node*>* list) const;
-		void display(LPNMLVDISPINFOA displayInfo, int effect, int attribute, int skill) const;
 
 		int sort(bool a, bool b, bool sortOrderAsc) const;
 		int sort(int a, int b, bool sortOrderAsc) const;
@@ -214,7 +213,6 @@ namespace se::cs::dialog::object_window {
 		static TabColumnWeaponThrustMin tabColumnWeaponThrustMin;
 		static TabColumnWeight tabColumnWeight;
 		static TabColumnWeightClass tabColumnWeightClass;
-
 
 		TabController(ObjectType::ObjectType objectType);
 

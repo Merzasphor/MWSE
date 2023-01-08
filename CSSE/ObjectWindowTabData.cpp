@@ -132,10 +132,6 @@ namespace se::cs::dialog::object_window {
 		}
 	}
 
-	void TabColumn::display(LPNMLVDISPINFOA displayInfo, int effect, int attribute, int skill) const {
-
-	}
-
 	int TabColumn::sort(bool a, bool b, bool sortOrderAsc) const {
 		if (a == b) {
 			return 0;
