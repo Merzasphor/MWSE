@@ -46,6 +46,7 @@
     <ClInclude Include="NIPosData.h" />
     <ClInclude Include="NIQuaternion.h" />
     <ClInclude Include="NIQuaternionLua.h" />
+    <ClInclude Include="NiRenderedTextureLua.h" />
     <ClInclude Include="NiRendererLua.h" />
     <ClInclude Include="NIScreenPolygon.h" />
     <ClInclude Include="TES3AnimationDataLua.h" />
@@ -707,6 +708,7 @@
     <ClCompile Include="NIQuaternion.cpp" />
     <ClCompile Include="NIQuaternionLua.cpp" />
     <ClCompile Include="NIRenderedTexture.cpp" />
+    <ClCompile Include="NiRenderedTextureLua.cpp" />
     <ClCompile Include="NIRenderer.cpp" />
     <ClCompile Include="NIRendererLua.cpp" />
     <ClCompile Include="NISkinInstance.cpp" />

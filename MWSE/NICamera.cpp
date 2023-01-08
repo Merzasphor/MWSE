@@ -25,6 +25,11 @@ namespace NI {
 		NI_Camera_click(this, something);
 	}
 
+	const auto NI_Camera_swapBuffers = reinterpret_cast<void(__thiscall*)(Camera*)>(0x6CC780);
+	void Camera::swapBuffers() {
+		NI_Camera_swapBuffers(this);
+	}
+
 	void Camera::click_lua(sol::optional<bool> something) {
 		click(something.value_or(false));
 	}

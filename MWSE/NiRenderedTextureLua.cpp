@@ -1,27 +1,26 @@
-#include "NIRendererLua.h"
+#include "NIRenderedTextureLua.h"
 #include "NIObjectLua.h"
 
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
-#include "NIRenderer.h"
+#include "NIRenderedTexture.h"
 
 namespace mwse::lua {
-	void bindNIRenderer() {
+	void bindNIRenderedTexture() {
 		// Get our lua state.
 		auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 		auto& state = stateHandle.state;
 
 		// Start our usertype.
-		auto usertypeDefinition = state.new_usertype<NI::Renderer>("niRenderer");
+		auto usertypeDefinition = state.new_usertype<NI::RenderedTexture>("niRenderedTexture");
 		usertypeDefinition["new"] = sol::no_constructor;
 
 		// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
-		usertypeDefinition[sol::base_classes] = sol::bases<NI::Object>();
+		usertypeDefinition[sol::base_classes] = sol::bases<NI::Texture, NI::ObjectNET, NI::Object>();
 		setUserdataForNIObject(usertypeDefinition);
 
 		// Basic function binding.
-		usertypeDefinition["takeScreenshot"] = &NI::Renderer::takeScreenshot;
-		usertypeDefinition["setRenderTarget"] = &NI::Renderer::setRenderTarget;
+		usertypeDefinition["create"] = &NI::RenderedTexture::create;
 	}
 }
