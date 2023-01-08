@@ -5,8 +5,13 @@
 #include "NIColor.h"
 #include "NINode.h"
 #include "NIIteratedList.h"
+#include "LinkedObjectsList.h"
 
 namespace se::cs {
+	struct ReferenceList : LinkedObjectList<Reference> {
+		Cell* cell; // 0xC
+	};
+
 	struct Cell : BaseObject {
 		const char* name; // 0x10
 		NI::Pointer<NI::Node> pickObjectsRoot; // 0x14
@@ -26,14 +31,8 @@ namespace se::cs {
 			};
 		}; // 0x1C
 		NI::Pointer<NI::Node> staticObjectsRoot; // 0x2C
-		int unknown_0x30;
-		int unknown_0x34;
-		int unknown_0x38;
-		int unknown_0x3C;
-		int unknown_0x40;
-		int unknown_0x44;
-		int unknown_0x48;
-		int unknown_0x4C;
+		ReferenceList unknown_0x30;
+		ReferenceList unknown_0x40;
 		NI::IteratedList<void*>* movedReferences; // 0x50
 		int unknown_0x54;
 		BaseObject* unknown_0x58;
