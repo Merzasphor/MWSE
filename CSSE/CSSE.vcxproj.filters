@@ -46,6 +46,12 @@
     <Filter Include="Source Files\UI\Classes">
       <UniqueIdentifier>{a45cab09-92be-4384-b1ab-65c4bf53ea2d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\UI\Controllers">
+      <UniqueIdentifier>{426eea90-9e20-4293-9b7c-97ceb28b4a42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UI\Controllers">
+      <UniqueIdentifier>{431d0355-2c3b-4033-b5f0-40de48c704f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -147,6 +153,9 @@
     <ClInclude Include="EditBasicExtended.h">
       <Filter>Header Files\UI\Classes</Filter>
     </ClInclude>
+    <ClInclude Include="ObjectWindowTabData.h">
+      <Filter>Header Files\UI\Controllers</Filter>
+    </ClInclude>
     <ClInclude Include="CSLeveledCreature.h">
       <Filter>Header Files\CS</Filter>
     </ClInclude>
@@ -189,6 +198,39 @@
     <ClInclude Include="CSWearablePart.h">
       <Filter>Header Files\CS</Filter>
     </ClInclude>
+    <ClInclude Include="CSLeveledList.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSAIConfig.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSBodyPart.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSClothing.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSContainer.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSFaction.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSIngredient.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSNPC.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSSkill.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSSound.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CSSpellList.h">
+      <Filter>Header Files\CS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -221,9 +263,6 @@
     <ClCompile Include="CSDataHandler.cpp">
       <Filter>Source Files\CS</Filter>
     </ClCompile>
-    <ClCompile Include="CSSE.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DialogCellWindow.cpp">
       <Filter>Source Files\UI\Dialog</Filter>
     </ClCompile>
@@ -254,6 +293,9 @@
     <ClCompile Include="EditBasicExtended.cpp">
       <Filter>Source Files\UI\Classes</Filter>
     </ClCompile>
+    <ClCompile Include="ObjectWindowTabData.cpp">
+      <Filter>Source Files\UI\Controllers</Filter>
+    </ClCompile>
     <ClCompile Include="CSLeveledCreature.cpp">
       <Filter>Source Files\CS</Filter>
     </ClCompile>
@@ -263,10 +305,37 @@
     <ClCompile Include="CSArmor.cpp">
       <Filter>Source Files\CS</Filter>
     </ClCompile>
+    <ClCompile Include="CSBodyPart.cpp">
+      <Filter>Source Files\CS</Filter>
+    </ClCompile>
+    <ClCompile Include="CSBook.cpp">
+      <Filter>Source Files\CS</Filter>
+    </ClCompile>
+    <ClCompile Include="CSContainer.cpp">
+      <Filter>Source Files\CS</Filter>
+    </ClCompile>
+    <ClCompile Include="CSCreature.cpp">
+      <Filter>Source Files\CS</Filter>
+    </ClCompile>
+    <ClCompile Include="CSIngredient.cpp">
+      <Filter>Source Files\CS</Filter>
+    </ClCompile>
+    <ClCompile Include="CSNPC.cpp">
+      <Filter>Source Files\CS</Filter>
+    </ClCompile>
+    <ClCompile Include="CSSE.cpp">
+      <Filter>Source Files\CS</Filter>
+    </ClCompile>
+    <ClCompile Include="CSWeapon.cpp">
+      <Filter>Source Files\CS</Filter>
+    </ClCompile>
+    <ClCompile Include="CSSpell.cpp">
+      <Filter>Source Files\CS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="CSSE.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\CS</Filter>
     </None>
   </ItemGroup>
 </Project>

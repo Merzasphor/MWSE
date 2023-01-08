@@ -182,6 +182,7 @@ namespace NI {
 		~IteratedList() { clear(); }
 
 		reference operator[](size_type index) const { return *(begin() + index); }
+		reference at(size_type index) const { return *(begin() + index); }
 
 		reference front() { return head->data; }
 		const_reference front() const { return head->data; }

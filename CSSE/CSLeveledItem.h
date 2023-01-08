@@ -1,12 +1,12 @@
 #pragma once
 
-#include "CSPhysicalObject.h"
+#include "CSLeveledList.h"
 
 #include "NIIteratedList.h"
 
 namespace se::cs {
-	struct LeveledItem : PhysicalObject {
-		NI::IteratedList<void*>* list; // 0x48
+	struct LeveledItem : LeveledList {
+		NI::IteratedList<Node*>* list; // 0x48
 		size_t listSize; // 0x4C
 		BYTE leveledFlags; // 0x50
 
