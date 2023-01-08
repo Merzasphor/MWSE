@@ -46,7 +46,7 @@ namespace NI {
 		//
 
 		void clear(Renderer::ClearFlags flags = Renderer::ClearFlags::ALL);
-
+		void swapBuffers();
 		void click(bool something = false);
 		void click_lua(sol::optional<bool> something = false);
 
