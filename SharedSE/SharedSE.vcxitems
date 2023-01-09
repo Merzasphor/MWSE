@@ -23,10 +23,13 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)NIBound.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIBoundingBox.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NICamera.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NICollisionSwitch.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIColor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIDefines.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIDynamicEffect.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIExtraData.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NIGeometry.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NIGeometryData.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIHashMap.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NILight.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NILinkedList.h" />
@@ -61,10 +64,13 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)MemoryUtil.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NIAVObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NIBinaryStream.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)NIBoundingBox.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NICamera.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)NICollisionSwitch.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NIColor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NIDynamicEffect.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NIExtraData.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)NIGeometryData.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NIMatrix33.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NINode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NIObject.cpp" />

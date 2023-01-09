@@ -11,6 +11,8 @@ namespace se::cs {
 		const char* objectID; // 0x44
 
 		bool canRotateOnAllAxes() const;
+
+		void calculateBounds();
 	};
 	static_assert(sizeof(PhysicalObject) == 0x48, "TES3::PhysicalObject failed size validation");
 }

@@ -1,5 +1,8 @@
 #include "NIAVObject.h"
 
+#include "NICollisionSwitch.h"
+#include "NIGeometry.h"
+#include "NIGeometryData.h"
 #include "NIProperty.h"
 
 #include "ExceptionUtil.h"
@@ -216,6 +219,49 @@ namespace NI {
 		detachPropertyByType(PropertyType::ZBuffer);
 		if (prop) {
 			attachProperty(prop.value());
+		}
+	}
+
+	void AVObject::calculateBounds(BoundingBox& bounds) const {
+		// Ignore collision-disabled subgraphs.
+		if (isInstanceOfType(RTTIStaticPtr::NiCollisionSwitch)) {
+			const auto asCollisionSwitch = static_cast<const CollisionSwitch*>(this);
+			if (asCollisionSwitch->getCollisionActive()) {
+				return;
+			}
+		}
+
+		// Recurse until we get to a leaf node.
+		if (isInstanceOfType(RTTIStaticPtr::NiNode)) {
+			const auto asNode = static_cast<const Node*>(this);
+			for (const auto& child : asNode->children) {
+				if (child) {
+					child->calculateBounds(bounds);
+				}
+			}
+			return;
+		}
+
+		// Only care about geometry leaf nodes.
+		if (!isInstanceOfType(RTTIStaticPtr::NiGeometry)) {
+			return;
+		}
+
+		// Ignore particles.
+		if (isInstanceOfType(RTTIStaticPtr::NiParticlesData)) {
+			return;
+		}
+
+		// Actually look at the vertices.
+		auto vertices = static_cast<const Geometry*>(this)->modelData->getVertices();
+		for (const auto& vertex : vertices) {
+			auto v = (*parentNode->localRotation * parentNode->localScale * vertex) + parentNode->localTranslate;
+			bounds.min.x = std::min(bounds.min.x, v.x);
+			bounds.min.y = std::min(bounds.min.y, v.y);
+			bounds.min.z = std::min(bounds.min.z, v.z);
+			bounds.max.x = std::max(bounds.max.x, v.x);
+			bounds.max.y = std::max(bounds.max.y, v.y);
+			bounds.max.z = std::max(bounds.max.z, v.z);
 		}
 	}
 
