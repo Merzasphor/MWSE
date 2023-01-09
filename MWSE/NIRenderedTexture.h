@@ -7,7 +7,7 @@ namespace NI {
 		unsigned int width; // 0x2C
 		unsigned int height; // 0x30
 
-		static RenderedTexture* create(unsigned int width, unsigned int height, Renderer* renderer);
+		static RenderedTexture* create(unsigned int width, unsigned int height);
 
 		//
 		// Custom methods

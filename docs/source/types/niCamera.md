@@ -380,6 +380,20 @@ myObject:attachProperty(property)
 
 ***
 
+### `clear`
+
+This method clears the current render target of the camera's renderer. Uses flag values from [`ni.cameraClearFlags`](https://mwse.github.io/MWSE/references/ni/camera-clear-flags/).
+
+```lua
+myObject:clear(flags)
+```
+
+**Parameters**:
+
+* `flags` (number): *Default*: `ni.cameraClearFlags.all`.
+
+***
+
 ### `clearTransforms`
 
 Resets the object's local transform.

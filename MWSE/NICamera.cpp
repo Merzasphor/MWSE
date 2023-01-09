@@ -20,6 +20,10 @@ namespace NI {
 		NI_Camera_clear(this, flags);
 	}
 
+	void Camera::clear_lua(sol::optional<int> flags) {
+		clear(Renderer::ClearFlags(flags.value_or(Renderer::ClearFlags::ALL)));
+	}
+
 	const auto NI_Camera_click = reinterpret_cast<void (__thiscall*)(Camera*, bool)>(0x6CC7B0);
 	void Camera::click(bool something) {
 		NI_Camera_click(this, something);
