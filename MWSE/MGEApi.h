@@ -211,8 +211,8 @@ namespace mge {
 	struct MGEAPIv2 : public MGEAPIv1 {
 		virtual void saveScreenshot(const char* path, bool captureWithUI);
 
-		virtual void weatherScatteringFarGet(float* farSky);
-		virtual void weatherScatteringFarSet(float farSky[3]);
+		virtual void weatherScatteringSkylightGet(float* skylight);
+		virtual void weatherScatteringSkylightSet(float skylight[3]);
 	};
 
 	inline MGEAPIv1* api = nullptr;

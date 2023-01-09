@@ -168,8 +168,8 @@ namespace mwse::lua {
 			usertypeDefinition["setWind"] = &WeatherConfig::setWind;
 
 			if (mge::apiVersion >= 2) {
-				usertypeDefinition["getFarScattering"] = &WeatherConfig::getFarScattering;
-				usertypeDefinition["setFarScattering"] = &WeatherConfig::setFarScattering;
+				usertypeDefinition["getSkylightScattering"] = &WeatherConfig::getSkylightScattering;
+				usertypeDefinition["setSkylightScattering"] = &WeatherConfig::setSkylightScattering;
 			}
 		}
 		lua_mge["weather"] = mge::lua::WeatherConfig();

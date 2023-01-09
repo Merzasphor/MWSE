@@ -250,26 +250,26 @@ namespace mge::lua {
 		}
 	}
 
-	sol::table WeatherConfig::getFarScattering(sol::this_state ts) {
-		float far_scatter[4];
-		static_cast<MGEAPIv2*>(api)->weatherScatteringFarGet(far_scatter);
+	sol::table WeatherConfig::getSkylightScattering(sol::this_state ts) {
+		float skylight_scatter[4];
+		static_cast<MGEAPIv2*>(api)->weatherScatteringSkylightGet(skylight_scatter);
 
 		sol::state_view state = ts;
-		sol::table far = state.create_table_with(1, far_scatter[0], 2, far_scatter[1], 3, far_scatter[2]);
-		sol::table scattering = state.create_table_with("far", far, "mix", far_scatter[3]);
+		sol::table far = state.create_table_with(1, skylight_scatter[0], 2, skylight_scatter[1], 3, skylight_scatter[2]);
+		sol::table scattering = state.create_table_with("skylight", far, "mix", skylight_scatter[3]);
 		return scattering;
 	}
 
-	void WeatherConfig::setFarScattering(sol::optional<sol::table> params) {
-		auto far_scatter = mwse::lua::getOptionalParamVector3(params, "far");
-		auto far_mix = mwse::lua::getOptionalParam<float>(params, "mix", 0.44f);
+	void WeatherConfig::setSkylightScattering(sol::optional<sol::table> params) {
+		auto skylight_scatter = mwse::lua::getOptionalParamVector3(params, "skylight");
+		auto skylight_mix = mwse::lua::getOptionalParam<float>(params, "mix", 0.44f);
 
-		if (far_scatter) {
-			TES3::Vector4 v(far_scatter.value().x, far_scatter.value().y, far_scatter.value().z, far_mix);
-			static_cast<MGEAPIv2*>(api)->weatherScatteringFarSet(&v.x);
+		if (skylight_scatter) {
+			TES3::Vector4 v(skylight_scatter.value().x, skylight_scatter.value().y, skylight_scatter.value().z, skylight_mix);
+			static_cast<MGEAPIv2*>(api)->weatherScatteringSkylightSet(&v.x);
 		}
 		else {
-			throw std::invalid_argument("far must be a 3-vector.");
+			throw std::invalid_argument("skylight must be a 3-vector.");
 		}
 	}
 
