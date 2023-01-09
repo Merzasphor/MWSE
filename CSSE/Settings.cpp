@@ -59,6 +59,7 @@ namespace se::cs {
 		column_actor_essential = toml::find_or(v, "column_actor_essential", column_actor_essential);
 		column_actor_faction = toml::find_or(v, "column_actor_faction", column_actor_faction);
 		column_actor_faction_rank = toml::find_or(v, "column_actor_faction_rank", column_actor_faction_rank);
+		column_actor_item_list = toml::find_or(v, "column_actor_item_list", column_actor_item_list);
 		column_actor_level = toml::find_or(v, "column_actor_level", column_actor_level);
 		column_actor_respawns = toml::find_or(v, "column_actor_respawns", column_actor_respawns);
 		column_all_lte_pc = toml::find_or(v, "column_all_lte_pc", column_all_lte_pc);
@@ -81,8 +82,8 @@ namespace se::cs {
 		column_health = toml::find_or(v, "column_health", column_health);
 		column_id = toml::find_or(v, "column_id", column_id);
 		column_inventory = toml::find_or(v, "column_inventory", column_inventory);
-		column_item_list = toml::find_or(v, "column_item_list", column_item_list);
 		column_leveled_creature_list = toml::find_or(v, "column_leveled_creature_list", column_leveled_creature_list);
+		column_leveled_item_list = toml::find_or(v, "column_leveled_item_list", column_leveled_item_list);
 		column_light_radius = toml::find_or(v, "column_light_radius", column_light_radius);
 		column_light_time = toml::find_or(v, "column_light_time", column_light_time);
 		column_model = toml::find_or(v, "column_model", column_model);
@@ -137,6 +138,7 @@ namespace se::cs {
 				{ "column_actor_essential", column_actor_essential },
 				{ "column_actor_faction", column_actor_faction },
 				{ "column_actor_faction_rank", column_actor_faction_rank },
+				{ "column_actor_item_list", column_actor_item_list },
 				{ "column_actor_level", column_actor_level },
 				{ "column_actor_respawns", column_actor_respawns },
 				{ "column_all_lte_pc", column_all_lte_pc },
@@ -159,8 +161,8 @@ namespace se::cs {
 				{ "column_health", column_health },
 				{ "column_id", column_id },
 				{ "column_inventory", column_inventory },
-				{ "column_item_list", column_item_list },
 				{ "column_leveled_creature_list", column_leveled_creature_list },
+				{ "column_leveled_item_list", column_leveled_item_list },
 				{ "column_light_radius", column_light_radius },
 				{ "column_light_time", column_light_time },
 				{ "column_model", column_model },

@@ -38,6 +38,7 @@ namespace se::cs {
 			ColumnSettings column_actor_essential = { ColumnSettings::DEFAULT_SIZE_BOOL };
 			ColumnSettings column_actor_faction = { ColumnSettings::DEFAULT_SIZE_ID };
 			ColumnSettings column_actor_faction_rank = { ColumnSettings::DEFAULT_SIZE_ID };
+			ColumnSettings column_actor_item_list = { ColumnSettings::DEFAULT_SIZE_ID };
 			ColumnSettings column_actor_level = { ColumnSettings::DEFAULT_SIZE_SHORT };
 			ColumnSettings column_actor_respawns = { ColumnSettings::DEFAULT_SIZE_BOOL };
 			ColumnSettings column_all_lte_pc = { ColumnSettings::DEFAULT_SIZE_BOOL };
@@ -60,8 +61,8 @@ namespace se::cs {
 			ColumnSettings column_health = { ColumnSettings::DEFAULT_SIZE_SHORT };
 			ColumnSettings column_id = { ColumnSettings::DEFAULT_SIZE_ID };
 			ColumnSettings column_inventory = { ColumnSettings::DEFAULT_SIZE_ID };
-			ColumnSettings column_item_list = { ColumnSettings::DEFAULT_SIZE_ID };
 			ColumnSettings column_leveled_creature_list = { ColumnSettings::DEFAULT_SIZE_ID };
+			ColumnSettings column_leveled_item_list = { ColumnSettings::DEFAULT_SIZE_ID };
 			ColumnSettings column_light_radius = { ColumnSettings::DEFAULT_SIZE_SHORT };
 			ColumnSettings column_light_time = { ColumnSettings::DEFAULT_SIZE_SHORT };
 			ColumnSettings column_model = { ColumnSettings::DEFAULT_SIZE_ID };

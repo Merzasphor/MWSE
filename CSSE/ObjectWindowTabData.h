@@ -68,6 +68,7 @@ namespace se::cs::dialog::object_window {
 	DEFINE_COLUMN(ActorEssential);
 	DEFINE_COLUMN(ActorFaction);
 	DEFINE_COLUMN(ActorFactionRank);
+	DEFINE_COLUMN(ActorInventory);
 	DEFINE_COLUMN(ActorLevel);
 	DEFINE_COLUMN(ActorRespawns);
 	DEFINE_COLUMN(AllLTEPC);
@@ -91,7 +92,7 @@ namespace se::cs::dialog::object_window {
 	DEFINE_COLUMN(Health);
 	DEFINE_COLUMN(ID);
 	DEFINE_COLUMN(Inventory);
-	DEFINE_COLUMN(ItemList);
+	DEFINE_COLUMN(LeveledItemList);
 	DEFINE_COLUMN(LightRadius);
 	DEFINE_COLUMN(LightTime);
 	DEFINE_COLUMN(Model);
@@ -155,6 +156,7 @@ namespace se::cs::dialog::object_window {
 		static TabColumnActorEssential tabColumnActorEssential;
 		static TabColumnActorFaction tabColumnActorFaction;
 		static TabColumnActorFactionRank tabColumnActorFactionRank;
+		static TabColumnActorInventory tabColumnActorInventory;
 		static TabColumnActorLevel tabColumnActorLevel;
 		static TabColumnActorRespawns tabColumnActorRespawns;
 		static TabColumnAllLTEPC tabColumnAllLTEPC;
@@ -182,7 +184,7 @@ namespace se::cs::dialog::object_window {
 		static TabColumnHealth tabColumnHealth;
 		static TabColumnID tabColumnID;
 		static TabColumnInventory tabColumnInventory;
-		static TabColumnItemList tabColumnItemList;
+		static TabColumnLeveledItemList tabColumnLeveledItemList;
 		static TabColumnLightRadius tabColumnLightRadius;
 		static TabColumnLightTime tabColumnLightTime;
 		static TabColumnModel tabColumnModel;

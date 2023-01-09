@@ -326,6 +326,39 @@ namespace se::cs::dialog::object_window {
 	}
 
 	//
+	// Column: Actor Inventory
+	//
+
+	TabColumnActorInventory::TabColumnActorInventory() : TabColumn("Item List") {
+
+	}
+
+	bool TabColumnActorInventory::supportsObjectType(ObjectType::ObjectType objectType) const {
+		switch (objectType) {
+		case ObjectType::Creature:
+		case ObjectType::Container:
+		case ObjectType::NPC:
+			return true;
+		}
+		return false;
+	}
+
+	void TabColumnActorInventory::getDisplayInfo(LPNMLVDISPINFOA displayInfo) const {
+		const auto object = static_cast<const Actor*>(getObjectFromDisplayInfo(displayInfo));
+		display(displayInfo, object->inventory.items);
+	}
+
+	int TabColumnActorInventory::sortObject(const Object* lParam1, const Object* lParam2, bool sortOrderAsc) const {
+		const auto& a = static_cast<const Actor*>(lParam1);
+		const auto& b = static_cast<const Actor*>(lParam2);
+		return sort(a->inventory.items, b->inventory.items, sortOrderAsc);
+	}
+
+	TabColumn::ColumnSettings& TabColumnActorInventory::getSettings() const {
+		return settings.object_window.column_actor_item_list;
+	}
+
+	//
 	// Column: Actor Level
 	//
 
@@ -550,33 +583,6 @@ namespace se::cs::dialog::object_window {
 
 	TabColumn::ColumnSettings& TabColumnCreatureIsBipedal::getSettings() const {
 		return settings.object_window.column_creature_bipedal;
-	}
-
-	//
-	// Column: Creature List
-	//
-
-	TabColumnCreatureList::TabColumnCreatureList() : TabColumn("Creature List") {
-
-	}
-
-	bool TabColumnCreatureList::supportsObjectType(ObjectType::ObjectType objectType) const {
-		return objectType == ObjectType::LeveledCreature;
-	}
-
-	void TabColumnCreatureList::getDisplayInfo(LPNMLVDISPINFOA displayInfo) const {
-		const auto object = static_cast<const LeveledCreature*>(getObjectFromDisplayInfo(displayInfo));
-		display(displayInfo, object->list);
-	}
-
-	int TabColumnCreatureList::sortObject(const Object* lParam1, const Object* lParam2, bool sortOrderAsc) const {
-		const auto& a = static_cast<const LeveledCreature*>(lParam1);
-		const auto& b = static_cast<const LeveledCreature*>(lParam2);
-		return sort(a->list, b->list, sortOrderAsc);
-	}
-
-	TabColumn::ColumnSettings& TabColumnCreatureList::getSettings() const {
-		return settings.object_window.column_leveled_creature_list;
 	}
 
 	//
@@ -1114,30 +1120,57 @@ namespace se::cs::dialog::object_window {
 	}
 
 	//
-	// Column: Item List
+	// Column: Leveled Creature List
 	//
 
-	TabColumnItemList::TabColumnItemList() : TabColumn("Item List") {
+	TabColumnCreatureList::TabColumnCreatureList() : TabColumn("Creature List") {
 
 	}
 
-	bool TabColumnItemList::supportsObjectType(ObjectType::ObjectType objectType) const {
-		return objectType == ObjectType::Container;
+	bool TabColumnCreatureList::supportsObjectType(ObjectType::ObjectType objectType) const {
+		return objectType == ObjectType::LeveledCreature;
 	}
 
-	void TabColumnItemList::getDisplayInfo(LPNMLVDISPINFOA displayInfo) const {
-		const auto object = static_cast<const Container*>(getObjectFromDisplayInfo(displayInfo));
-		display(displayInfo, object->inventory.items);
+	void TabColumnCreatureList::getDisplayInfo(LPNMLVDISPINFOA displayInfo) const {
+		const auto object = static_cast<const LeveledCreature*>(getObjectFromDisplayInfo(displayInfo));
+		display(displayInfo, object->list);
 	}
 
-	int TabColumnItemList::sortObject(const Object* lParam1, const Object* lParam2, bool sortOrderAsc) const {
-		const auto& a = static_cast<const Container*>(lParam1);
-		const auto& b = static_cast<const Container*>(lParam2);
-		return sort(a->inventory.items, b->inventory.items, sortOrderAsc);
+	int TabColumnCreatureList::sortObject(const Object* lParam1, const Object* lParam2, bool sortOrderAsc) const {
+		const auto& a = static_cast<const LeveledCreature*>(lParam1);
+		const auto& b = static_cast<const LeveledCreature*>(lParam2);
+		return sort(a->list, b->list, sortOrderAsc);
 	}
 
-	TabColumn::ColumnSettings& TabColumnItemList::getSettings() const {
-		return settings.object_window.column_item_list;
+	TabColumn::ColumnSettings& TabColumnCreatureList::getSettings() const {
+		return settings.object_window.column_leveled_creature_list;
+	}
+
+	//
+	// Column: Leveled Item List
+	//
+
+	TabColumnLeveledItemList::TabColumnLeveledItemList() : TabColumn("Item List") {
+
+	}
+
+	bool TabColumnLeveledItemList::supportsObjectType(ObjectType::ObjectType objectType) const {
+		return objectType == ObjectType::LeveledItem;
+	}
+
+	void TabColumnLeveledItemList::getDisplayInfo(LPNMLVDISPINFOA displayInfo) const {
+		const auto object = static_cast<const LeveledItem*>(getObjectFromDisplayInfo(displayInfo));
+		display(displayInfo, object->list);
+	}
+
+	int TabColumnLeveledItemList::sortObject(const Object* lParam1, const Object* lParam2, bool sortOrderAsc) const {
+		const auto& a = static_cast<const LeveledItem*>(lParam1);
+		const auto& b = static_cast<const LeveledItem*>(lParam2);
+		return sort(a->list, b->list, sortOrderAsc);
+	}
+
+	TabColumn::ColumnSettings& TabColumnLeveledItemList::getSettings() const {
+		return settings.object_window.column_leveled_item_list;
 	}
 
 	//
@@ -2072,6 +2105,7 @@ namespace se::cs::dialog::object_window {
 	TabColumnActorEssential TabController::tabColumnActorEssential;
 	TabColumnActorFaction TabController::tabColumnActorFaction;
 	TabColumnActorFactionRank TabController::tabColumnActorFactionRank;
+	TabColumnActorInventory TabController::tabColumnActorInventory;
 	TabColumnActorLevel TabController::tabColumnActorLevel;
 	TabColumnActorRespawns TabController::tabColumnActorRespawns;
 	TabColumnAllLTEPC TabController::tabColumnAllLTEPC;
@@ -2099,7 +2133,7 @@ namespace se::cs::dialog::object_window {
 	TabColumnHealth TabController::tabColumnHealth;
 	TabColumnID TabController::tabColumnID;
 	TabColumnInventory TabController::tabColumnInventory;
-	TabColumnItemList TabController::tabColumnItemList;
+	TabColumnLeveledItemList TabController::tabColumnLeveledItemList;
 	TabColumnLightRadius TabController::tabColumnLightRadius;
 	TabColumnLightTime TabController::tabColumnLightTime;
 	TabColumnModel TabController::tabColumnModel;
@@ -2212,7 +2246,7 @@ namespace se::cs::dialog::object_window {
 			tabColumnWeight.addToController(this, hWnd);
 			tabColumnOrganic.addToController(this, hWnd);
 			tabColumnActorRespawns.addToController(this, hWnd);
-			tabColumnItemList.addToController(this, hWnd);
+			tabColumnActorInventory.addToController(this, hWnd);
 			tabColumnModel.addToController(this, hWnd);
 			tabColumnPersists.addToController(this, hWnd);
 			break;
@@ -2374,7 +2408,7 @@ namespace se::cs::dialog::object_window {
 			break;
 		case ObjectType::LeveledItem:
 			tabColumnAllLTEPC.addToController(this, hWnd);
-			tabColumnCreatureList.addToController(this, hWnd);
+			tabColumnLeveledItemList.addToController(this, hWnd);
 			break;
 		}
 
