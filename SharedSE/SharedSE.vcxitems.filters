@@ -233,5 +233,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)NIGeometryData.cpp">
       <Filter>Source Files\NI</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)NITransform.cpp">
+      <Filter>Source Files\NI</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -101,6 +101,8 @@ namespace NI {
 		std::shared_ptr<TES3::BoundingBox> createBoundingBox_lua() const;
 #endif
 
+		Transform getLocalTransform() const;
+
 		void clearTransforms();
 
 		Pointer<Property> getProperty(PropertyType type) const;
@@ -118,8 +120,6 @@ namespace NI {
 		void setVertexColorProperty(std::optional<VertexColorProperty*> prop);
 		Pointer<ZBufferProperty> getZBufferProperty() const;
 		void setZBufferProperty(std::optional<ZBufferProperty*> prop);
-
-		void calculateBounds(BoundingBox& bounds) const;
 
 #if defined(SE_USE_LUA) && SE_USE_LUA == 1
 		void update_lua(sol::optional<sol::table> args);

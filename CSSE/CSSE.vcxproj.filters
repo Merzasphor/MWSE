@@ -323,14 +323,14 @@
     <ClCompile Include="CSNPC.cpp">
       <Filter>Source Files\CS</Filter>
     </ClCompile>
-    <ClCompile Include="CSSE.cpp">
-      <Filter>Source Files\CS</Filter>
-    </ClCompile>
     <ClCompile Include="CSWeapon.cpp">
       <Filter>Source Files\CS</Filter>
     </ClCompile>
     <ClCompile Include="CSSpell.cpp">
       <Filter>Source Files\CS</Filter>
+    </ClCompile>
+    <ClCompile Include="CSSE.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

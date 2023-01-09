@@ -43,7 +43,7 @@ namespace NI {
 #endif
 	}
 
-	bool Matrix33::operator==(const Matrix33& matrix) {
+	bool Matrix33::operator==(const Matrix33& matrix) const {
 #if defined(SE_NI_MATRIX33_FNADDR_TESTEQUAL) && SE_NI_MATRIX33_FNADDR_TESTEQUAL > 0
 		const auto NI_Matrix33_testEqual = reinterpret_cast<bool(__thiscall*)(Matrix33*, const Matrix33*)>(SE_NI_MATRIX33_FNADDR_TESTEQUAL);
 		return NI_Matrix33_testEqual(this, &matrix);
@@ -52,7 +52,7 @@ namespace NI {
 #endif
 	}
 
-	bool Matrix33::operator!=(const Matrix33& matrix) {
+	bool Matrix33::operator!=(const Matrix33& matrix) const {
 		return m0.x != matrix.m0.x
 			|| m0.y != matrix.m0.y
 			|| m0.z != matrix.m0.z
@@ -64,9 +64,9 @@ namespace NI {
 			|| m2.z != matrix.m2.z;
 	}
 
-	Matrix33 Matrix33::operator+(const Matrix33& matrix) {
+	Matrix33 Matrix33::operator+(const Matrix33& matrix) const {
 #if defined(SE_NI_MATRIX33_FNADDR_ADDMATRIX) && SE_NI_MATRIX33_FNADDR_ADDMATRIX > 0
-		const auto NI_Matrix33_addMatrix = reinterpret_cast<Matrix33 * (__thiscall*)(Matrix33*, Matrix33*, const Matrix33*)>(SE_NI_MATRIX33_FNADDR_ADDMATRIX);
+		const auto NI_Matrix33_addMatrix = reinterpret_cast<Matrix33 * (__thiscall*)(const Matrix33*, Matrix33*, const Matrix33*)>(SE_NI_MATRIX33_FNADDR_ADDMATRIX);
 
 		Matrix33 result;
 		NI_Matrix33_addMatrix(this, &result, &matrix);
@@ -76,9 +76,9 @@ namespace NI {
 #endif
 	}
 
-	Matrix33 Matrix33::operator-(const Matrix33& matrix) {
+	Matrix33 Matrix33::operator-(const Matrix33& matrix) const {
 #if defined(SE_NI_MATRIX33_FNADDR_SUBTRACTMATRIX) && SE_NI_MATRIX33_FNADDR_SUBTRACTMATRIX > 0
-		const auto NI_Matrix33_subtractMatrix = reinterpret_cast<Matrix33 * (__thiscall*)(Matrix33*, Matrix33*, const Matrix33*)>(SE_NI_MATRIX33_FNADDR_SUBTRACTMATRIX);
+		const auto NI_Matrix33_subtractMatrix = reinterpret_cast<Matrix33 * (__thiscall*)(const Matrix33*, Matrix33*, const Matrix33*)>(SE_NI_MATRIX33_FNADDR_SUBTRACTMATRIX);
 
 		Matrix33 result;
 		NI_Matrix33_subtractMatrix(this, &result, &matrix);
@@ -88,9 +88,9 @@ namespace NI {
 #endif
 	}
 
-	Matrix33 Matrix33::operator*(const Matrix33& matrix) {
+	Matrix33 Matrix33::operator*(const Matrix33& matrix) const {
 #if defined(SE_NI_MATRIX33_FNADDR_MULTIPLYMATRIX) && SE_NI_MATRIX33_FNADDR_MULTIPLYMATRIX > 0
-		const auto NI_Matrix33_multiplyMatrix = reinterpret_cast<Matrix33 * (__thiscall*)(Matrix33*, Matrix33*, const Matrix33*)>(SE_NI_MATRIX33_FNADDR_MULTIPLYMATRIX);
+		const auto NI_Matrix33_multiplyMatrix = reinterpret_cast<Matrix33 * (__thiscall*)(const Matrix33*, Matrix33*, const Matrix33*)>(SE_NI_MATRIX33_FNADDR_MULTIPLYMATRIX);
 
 		Matrix33 result;
 		NI_Matrix33_multiplyMatrix(this, &result, &matrix);
@@ -100,9 +100,9 @@ namespace NI {
 #endif
 	}
 
-	Vector3 Matrix33::operator*(const Vector3& vector) {
+	Vector3 Matrix33::operator*(const Vector3& vector) const {
 #if defined(SE_NI_MATRIX33_FNADDR_MULTIPLYVECTOR) && SE_NI_MATRIX33_FNADDR_MULTIPLYVECTOR > 0
-		const auto NI_Matrix33_multiplyVector = reinterpret_cast<Vector3 * (__thiscall*)(Matrix33*, Vector3*, const Vector3*)>(SE_NI_MATRIX33_FNADDR_MULTIPLYVECTOR);
+		const auto NI_Matrix33_multiplyVector = reinterpret_cast<Vector3 * (__thiscall*)(const Matrix33*, Vector3*, const Vector3*)>(SE_NI_MATRIX33_FNADDR_MULTIPLYVECTOR);
 
 		Vector3 result;
 		NI_Matrix33_multiplyVector(this, &result, &vector);
@@ -112,9 +112,9 @@ namespace NI {
 #endif
 	}
 
-	Matrix33 Matrix33::operator*(float scalar) {
+	Matrix33 Matrix33::operator*(float scalar) const {
 #if defined(SE_NI_MATRIX33_FNADDR_MULTIPLYSCALAR) && SE_NI_MATRIX33_FNADDR_MULTIPLYSCALAR > 0
-		const auto NI_Matrix33_multiplyScalar = reinterpret_cast<Matrix33 * (__thiscall*)(Matrix33*, Matrix33*, float)>(SE_NI_MATRIX33_FNADDR_MULTIPLYSCALAR);
+		const auto NI_Matrix33_multiplyScalar = reinterpret_cast<Matrix33 * (__thiscall*)(const Matrix33*, Matrix33*, float)>(SE_NI_MATRIX33_FNADDR_MULTIPLYSCALAR);
 
 		Matrix33 result;
 		NI_Matrix33_multiplyScalar(this, &result, scalar);
