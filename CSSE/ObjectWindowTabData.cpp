@@ -116,7 +116,7 @@ namespace se::cs::dialog::object_window {
 		bool first = true;
 		for (const auto& itt : *list) {
 			const std::string_view sv = itt->object->getObjectID();
-			if (bytesRemaining <= sv.length() + 5) {
+			if (bytesRemaining <= sv.length() + 8) {
 				strcat_s(buffer, bufferSize, ", ...");
 				break;
 			}
@@ -125,9 +125,10 @@ namespace se::cs::dialog::object_window {
 				strcat_s(buffer, bufferSize, ", ");
 				bytesRemaining -= 2;
 			}
-			strcat_s(buffer, bufferSize, sv.data());
 
+			strcat_s(buffer, bufferSize, sv.data());
 			bytesRemaining -= sv.length();
+
 			first = false;
 		}
 	}
@@ -1137,8 +1138,8 @@ namespace se::cs::dialog::object_window {
 	}
 
 	int TabColumnCreatureList::sortObject(const Object* lParam1, const Object* lParam2, bool sortOrderAsc) const {
-		const auto& a = static_cast<const LeveledCreature*>(lParam1);
-		const auto& b = static_cast<const LeveledCreature*>(lParam2);
+		const auto a = static_cast<const LeveledCreature*>(lParam1);
+		const auto b = static_cast<const LeveledCreature*>(lParam2);
 		return sort(a->list, b->list, sortOrderAsc);
 	}
 
@@ -1164,8 +1165,8 @@ namespace se::cs::dialog::object_window {
 	}
 
 	int TabColumnLeveledItemList::sortObject(const Object* lParam1, const Object* lParam2, bool sortOrderAsc) const {
-		const auto& a = static_cast<const LeveledItem*>(lParam1);
-		const auto& b = static_cast<const LeveledItem*>(lParam2);
+		const auto a = static_cast<const LeveledItem*>(lParam1);
+		const auto b = static_cast<const LeveledItem*>(lParam2);
 		return sort(a->list, b->list, sortOrderAsc);
 	}
 
