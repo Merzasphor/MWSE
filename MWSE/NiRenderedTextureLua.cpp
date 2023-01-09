@@ -22,5 +22,6 @@ namespace mwse::lua {
 
 		// Basic function binding.
 		usertypeDefinition["create"] = &NI::RenderedTexture::create;
+		usertypeDefinition["readback"] = &NI::RenderedTexture::readback;
 	}
 }

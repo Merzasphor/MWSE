@@ -8,6 +8,12 @@ namespace NI {
 		unsigned int height; // 0x30
 
 		static RenderedTexture* create(unsigned int width, unsigned int height, Renderer* renderer);
+
+		//
+		// Custom methods
+		//
+
+		bool readback(NI::PixelData* pixelData);
 	};
 	static_assert(sizeof(RenderedTexture) == 0x34, "NI::RenderedTexture failed size validation");
 }

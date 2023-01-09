@@ -1683,6 +1683,9 @@
     <ClInclude Include="NiRenderedTextureLua.h">
       <Filter>Header Files\Lua\Bindings\NI</Filter>
     </ClInclude>
+    <ClInclude Include="NIDX8TextureData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -3664,6 +3667,9 @@
     </ClCompile>
     <ClCompile Include="NiRenderedTextureLua.cpp">
       <Filter>Source Files\Lua\Bindings\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="NIDX8TextureData.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

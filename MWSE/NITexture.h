@@ -40,8 +40,16 @@ namespace NI {
 		};
 		static_assert(sizeof(Texture::FormatPrefs) == 0xC, "NI::Texture::FormatPrefs failed size validation");
 
+		struct RendererData {
+			void* vTable;
+			Texture* texture;
+			int unknown_0x8;
+			int unknown_0xC;
+		};
+		static_assert(sizeof(Texture::RendererData) == 0x10, "NI::Texture::RendererData failed size validation");
+
 		FormatPrefs formatPrefs; // 0x14;
-		void * renderData; // 0x20
+		RendererData* rendererData; // 0x20
 		Texture * previousTexture; // 0x24
 		Texture * nextTexture; // 0x28
 

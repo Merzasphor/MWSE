@@ -43,6 +43,7 @@
     <ClInclude Include="NIColorData.h" />
     <ClInclude Include="NIColorKey.h" />
     <ClInclude Include="NICopyTransformController.h" />
+    <ClInclude Include="NIDX8TextureData.h" />
     <ClInclude Include="NIPosData.h" />
     <ClInclude Include="NIQuaternion.h" />
     <ClInclude Include="NIQuaternionLua.h" />
@@ -688,6 +689,7 @@
     <ClCompile Include="NIColorData.cpp" />
     <ClCompile Include="NICopyTransformController.cpp" />
     <ClCompile Include="NIDirectionalLight.cpp" />
+    <ClCompile Include="NIDX8TextureData.cpp" />
     <ClCompile Include="NIDynamicEffectLua.cpp" />
     <ClCompile Include="NIExtraData.cpp" />
     <ClCompile Include="NIExtraDataLua.cpp" />
