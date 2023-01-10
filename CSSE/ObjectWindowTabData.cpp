@@ -88,7 +88,7 @@ namespace se::cs::dialog::object_window {
 		bool first = true;
 		for (const auto& itt : items) {
 			const std::string_view sv = itt->object->getObjectID();
-			if (bytesRemaining <= sv.length() + 5) {
+			if (bytesRemaining <= sv.length() + 8) {
 				strcat_s(buffer, bufferSize, ", ...");
 				break;
 			}
@@ -97,8 +97,8 @@ namespace se::cs::dialog::object_window {
 				strcat_s(buffer, bufferSize, ", ");
 				bytesRemaining -= 2;
 			}
-			strcat_s(buffer, bufferSize, sv.data());
 
+			strcat_s(buffer, bufferSize, sv.data());
 			bytesRemaining -= sv.length();
 			first = false;
 		}
@@ -128,7 +128,6 @@ namespace se::cs::dialog::object_window {
 
 			strcat_s(buffer, bufferSize, sv.data());
 			bytesRemaining -= sv.length();
-
 			first = false;
 		}
 	}
