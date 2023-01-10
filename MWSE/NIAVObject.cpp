@@ -55,8 +55,8 @@ namespace NI {
 		return localRotation;
 	}
 
-	void AVObject::setLocalRotationMatrix(TES3::Matrix33 * matrix) {
-		reinterpret_cast<void(__thiscall *)(AVObject*, TES3::Matrix33*)>(0x50E020)(this, matrix);
+	void AVObject::setLocalRotationMatrix(const TES3::Matrix33 * matrix) {
+		reinterpret_cast<void(__thiscall *)(AVObject*, const TES3::Matrix33*)>(0x50E020)(this, matrix);
 	}
 
 	const auto NI_PropertyList_addHead = reinterpret_cast<void(__thiscall*)(PropertyLinkedList*, Pointer<Property>)>(0x405840);
@@ -100,6 +100,27 @@ namespace NI {
 		localTranslate.y = 0.0f;
 		localTranslate.z = 0.0f;
 		setLocalRotationMatrix(reinterpret_cast<TES3::Matrix33*>(0x7DE664));
+	}
+
+	void AVObject::copyTransforms(const AVObject* source) {
+		setLocalRotationMatrix(source->getLocalRotationMatrix());
+		localTranslate = source->localTranslate;
+		localScale = source->localScale;
+	}
+
+	void AVObject::copyTransforms(const Transform* source) {
+		setLocalRotationMatrix(&source->rotation);
+		localTranslate = source->translation;
+		localScale = source->scale;
+	}
+
+	void AVObject::copyTransforms_lua(const sol::stack_object source) {
+		if (source.is<AVObject*>()) {
+			copyTransforms(source.as<AVObject*>());
+		}
+		else if (source.is<Transform*>()) {
+			copyTransforms(source.as<Transform*>());
+		}
 	}
 
 	Pointer<Property> AVObject::getProperty(PropertyType type) const {

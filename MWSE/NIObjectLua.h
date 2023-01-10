@@ -79,6 +79,7 @@ namespace mwse::lua {
 		// Basic function binding.
 		usertypeDefinition["attachProperty"] = &NI::AVObject::attachProperty;
 		usertypeDefinition["clearTransforms"] = &NI::AVObject::clearTransforms;
+		usertypeDefinition["copyTransforms"] = &NI::AVObject::copyTransforms_lua;
 		usertypeDefinition["propagatePositionChange"] = &NI::AVObject::update_lua;
 		usertypeDefinition["updateEffects"] = &NI::AVObject::updateEffects;
 		usertypeDefinition["updateProperties"] = &NI::AVObject::updateProperties;

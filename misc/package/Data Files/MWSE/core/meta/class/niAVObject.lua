@@ -31,6 +31,10 @@ function niAVObject:attachProperty(property) end
 --- Resets the object's local transform.
 function niAVObject:clearTransforms() end
 
+--- Update object's local transform by copying from another source.
+--- @param source niAmbientLight|niBillboardNode|niCamera|niCollisionSwitch|niDirectionalLight|niNode|niParticles|niPointLight|niRotatingParticles|niSpotLight|niSwitchNode|niTextureEffect|niTriShape|tes3transform No description yet available.
+function niAVObject:copyTransforms(source) end
+
 --- Detaches all the properties on the object and returns them in the table.
 --- @return niAlphaProperty[]|niFogProperty[]|niMaterialProperty[]|niStencilProperty[]|niTexturingProperty[]|niVertexColorProperty[]|niZBufferProperty[] result No description yet available.
 function niAVObject:detachAllProperties() end

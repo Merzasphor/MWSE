@@ -363,6 +363,20 @@ local result = myObject:clone()
 
 ***
 
+### `copyTransforms`
+
+Update object's local transform by copying from another source.
+
+```lua
+myObject:copyTransforms(source)
+```
+
+**Parameters**:
+
+* `source` ([niAVObject](../../types/niAVObject), [tes3transform](../../types/tes3transform))
+
+***
+
 ### `createBoundingBox`
 
 Calculates and creates a bounding box for the object. The existing bounding box, if any, will not be used, a fresh one will always be calculated.

@@ -305,6 +305,20 @@ local result = myObject:clone()
 
 ***
 
+### `copyTransforms`
+
+Update object's local transform by copying from another source.
+
+```lua
+myObject:copyTransforms(source)
+```
+
+**Parameters**:
+
+* `source` ([niAVObject](../../types/niAVObject), [tes3transform](../../types/tes3transform))
+
+***
+
 ### `detachAllProperties`
 
 Detaches all the properties on the object and returns them in the table.

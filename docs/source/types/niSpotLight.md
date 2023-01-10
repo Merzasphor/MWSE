@@ -450,6 +450,20 @@ local result = myObject:clone()
 
 ***
 
+### `copyTransforms`
+
+Update object's local transform by copying from another source.
+
+```lua
+myObject:copyTransforms(source)
+```
+
+**Parameters**:
+
+* `source` ([niAVObject](../../types/niAVObject), [tes3transform](../../types/tes3transform))
+
+***
+
 ### `detachAffectedNode`
 
 Removes a node from the dynamic effect's affected nodes list. The node's `:updateEffects()` function should be called afterwards to recognize the change.
