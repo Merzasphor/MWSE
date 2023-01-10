@@ -672,17 +672,12 @@ namespace mwse::lua {
 		return std::move(effect->getComplexName(attribute, skill));
 	}
 
-	// This function currently calls out to MGE, which should be changed at some point.
-	TES3::Vector3 getCameraVector() {
-		mwscript::RunOriginalOpCode(nullptr, nullptr, OpCode::MGEGetEyeVec);
-
-		// Get the results from the MWSE stack.
-		Stack& stack = Stack::getInstance();
-		float x = stack.popFloat();
-		float y = stack.popFloat();
-		float z = stack.popFloat();
-
-		return TES3::Vector3(x, y, z);
+	sol::optional<TES3::Vector3> getCameraVector() {
+		auto worldController = TES3::WorldController::get();
+		if (worldController) {
+			return worldController->worldCamera.cameraData.camera->worldDirection;
+		}
+		return sol::optional<TES3::Vector3>();
 	}
 
 	sol::optional<TES3::Vector3> getCameraPosition() {
