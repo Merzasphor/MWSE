@@ -43,14 +43,18 @@ If you are using [Construction Set Better UI](https://www.nexusmods.com/morrowin
 	* "Following string is different for topic" and "Previous string is different for topic" are suppressed entirely.
 	* The "1 duplicate references were removed" from loading Tribunal and Bloodmoon will no longer make a popup. If this is not the vanilla duplicate reference, or if there is more than one duplicate reference, a popup will still be shown.
 * Fixed GMST pollution bug caused when not loading Tribunal and Bloodmoon.
-* A QuickStart feature. In the render window, use the context menu (Q) to save the currently loaded plugins, the active plugin, current cell, camera position, camera orientation. Whenever the CS is loaded with no other plugin loading, it will automatically load all the saved plugins, and load the cell with the viewport saved. This can be cleared or disabled.
+* A QuickStart feature. In the render window, use the context menu (Q) to save the currently loaded plugins, the active plugin, current cell, camera position, camera orientation. Whenever the CS is loaded with no other plugin loading, it will automatically load all the saved plugins, and load the cell with the viewport saved. This can be cleared or disabled. This can be done with no active loaded cell if you do not want to automatically load a cell on startup.
 * The CS will no longer adopt a working directory externally. This means that when opening esm/esp files from the Data Files folder from double clicking it, the Morrowind.ini file and all other configs/logs will correctly load from the root Morrowind folder.
+* Loading an active file without manually loading its masters will no longer lead to a potential crash.
 * Opening the Construction Set through Mod Organizer 2 is no longer slowed by the number of active MO2 mod folders.
 
 ### Object Window
 
 * Significantly improved UI responsiveness.
 * Added a footer to the window, with a new filter input. This input can be focused by using CTRL+F while the Object Window is active. This can be used to filter objects by a matching id, name, icon, model, enchantment, script, or book text fragments.
+	* Regex search options and case-sensitive search options can be enabled in the config file.
+* The data rendering and behavior has been completely rewritten. Strings and alignment is more consistent. New columns can be added.
+	* A new modified column is displayed, showing if the object is modified. This can be sorted on.
 * Fixed issue where box selection in the object window would cause the mouse to snap to the edge of the screen.
 * Modified objects are highlighted with a light green background.
 * Deleted objects are highlighted with a light red background.
@@ -64,6 +68,7 @@ If you are using [Construction Set Better UI](https://www.nexusmods.com/morrowin
 ### Render Window
 
 * Reference rotation is now performed on the world axis, rather than the local axis. To rotate on the local axis as it worked in vanilla, hold the alt key.
+* Dropping a reference (using the F key) is more reliable and accurate.
 * References can be group-scaled. By holding the alt key when scaling, all selected references will scale together and reposition accordingly.
 * References can be moved onto surfaces. By holding the alt key when drag-moving a reference, it will rotate and snap onto the surface under the cursor. The context menu (Q) can be used to set the axis to snap to.
 * Extended editor marker support. Toggling markers (M) will now also toggle markers supported by the game executable. This allows custom markers to be toggled by tagging them with a MRK string and adding a EditorMarker node, or by defining objects whose name begins with or matches "Tri EditorMarker".
