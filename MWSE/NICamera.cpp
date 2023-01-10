@@ -52,6 +52,12 @@ namespace NI {
 		return NI_Camera_worldPointToScreenPoint(this, point, out_screenX, out_screenY);
 	}
 
+	// bool LookAtWorldPoint(const NiPoint3& kWorldPt, const NiPoint3& kWorldUp)
+	const auto NI_Camera_LookAtWorldPoint = reinterpret_cast<bool(__thiscall*)(Camera*, const TES3::Vector3*, const TES3::Vector3*)>(0x6CD5D0);
+	bool Camera::LookAtWorldPoint(const TES3::Vector3* worldPoint, const TES3::Vector3* worldUp) {
+		return NI_Camera_LookAtWorldPoint(this, worldPoint, worldUp);
+	}
+
 	sol::optional<std::tuple<TES3::Vector3, TES3::Vector3>> Camera::windowPointToRay_lua(sol::stack_object luaPoint) {
 		TES3::Vector2 point;
 		if (!mwse::lua::setVectorFromLua(point, luaPoint)) {

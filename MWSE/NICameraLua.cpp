@@ -37,5 +37,6 @@ namespace mwse::lua {
 		usertypeDefinition["swapBuffers"] = &NI::Camera::swapBuffers;
 		usertypeDefinition["windowPointToRay"] = &NI::Camera::windowPointToRay_lua;
 		usertypeDefinition["worldPointToScreenPoint"] = &NI::Camera::worldPointToScreenPoint_lua;
+		usertypeDefinition["lookAtWorldPoint"] = &NI::Camera::LookAtWorldPoint;
 	}
 }
