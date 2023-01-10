@@ -275,6 +275,12 @@ namespace TES3 {
 		z = -z;
 	}
 
+	Vector3 Vector3::negateCopy() {
+		auto copy = this->copy();
+		copy.negate();
+		return copy;
+	}
+
 	bool Vector3::normalize() {
 		float len = length();
 		if (len > 0.0f) {

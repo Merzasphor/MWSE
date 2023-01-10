@@ -86,6 +86,7 @@ namespace TES3 {
 		float angle(const Vector3*) const;
 		float length() const;
 		void negate();
+		Vector3 negateCopy();
 		bool normalize();
 		Vector3 normalized() const;
 		Vector3 interpolate(const Vector3&, const float) const;

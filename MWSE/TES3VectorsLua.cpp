@@ -64,6 +64,7 @@ namespace mwse::lua {
 			// Operator overloading.
 			usertypeDefinition[sol::meta_function::addition] = &TES3::Vector3::operator+;
 			usertypeDefinition[sol::meta_function::subtraction] = &TES3::Vector3::operator-;
+			usertypeDefinition[sol::meta_function::unary_minus] = &TES3::Vector3::negateCopy;
 			usertypeDefinition[sol::meta_function::multiplication] = sol::overload(
 				sol::resolve<TES3::Vector3(const TES3::Vector3&) const>(&TES3::Vector3::operator*),
 				sol::resolve<TES3::Vector3(const float) const>(&TES3::Vector3::operator*)
