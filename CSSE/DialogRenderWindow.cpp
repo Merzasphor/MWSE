@@ -392,7 +392,7 @@ namespace se::cs::dialog::render_window {
 		
 		reference->sceneNode->setAppCulled(true);
 		
-		pick->root = DataHandler::get()->editorObjectRoot;
+		pick->root = SceneGraphController::get()->sceneRoot;
 		if (pick->pickObjects(&position, &direction)) {
 			auto firstResult = pick->results.at(0);
 			if (firstResult) {
