@@ -379,6 +379,8 @@ namespace se::cs::dialog::render_window {
 			return false;
 		}
 
+		const NI::Vector3 direction = { 0.0f, 0.0f, -1.0f };
+
 		bool updated = false;
 
 		auto lowestVertex = reference->sceneNode->worldBoundOrigin.copy();
@@ -386,35 +388,50 @@ namespace se::cs::dialog::render_window {
 		auto offset = reference->position.z - lowestVertex.z;
 
 		reference->sceneNode->setAppCulled(true);
-		
+
+		// Drop to nearest surface.
 		pick->root = SceneGraphController::get()->sceneRoot;
-		NI::Vector3 direction = { 0.0f, 0.0f, -1.0f };
 		if (pick->pickObjects(&lowestVertex, &direction)) {
-			auto firstResult = pick->getFirstUnskinnedResult();
-			if (firstResult) {
-				auto object = reference->baseObject;
+			auto record = pick->getFirstUnskinnedResult();
+			if (record && record->intersection.z < lowestVertex.z) {
+				lowestVertex.z = record->intersection.z;
+				updated = true;
+			}
+		}
+		pick->clearResults();
 
-				reference->setModified(true);
-				reference->setFlag80(true);
-				reference->updateBaseObjectAndAttachment7();
+		// Clamp to above landscape.
+		auto landscapeRoot = SceneGraphController::get()->landscapeRoot;
+		if (!landscapeRoot->getAppCulled()) {
+			auto position = lowestVertex.copy();
+			position.z = landscapeRoot->worldBoundRadius;
 
-				auto z = firstResult->intersection.z + offset;
-				if (z < reference->position.z) {
-					reference->position.z = firstResult->intersection.z + offset;
-					reference->unknown_0x10 = reference->position;
-					reference->sceneNode->localTranslate = reference->position;
-
-					reference->sceneNode->update(0.0f, true, true);
-
+			pick->root = landscapeRoot;
+			if (pick->pickObjects(&position, &direction)) {
+				auto record = pick->getFirstUnskinnedResult();
+				if (record && record->intersection.z > lowestVertex.z) {
+					lowestVertex.z = record->intersection.z;
 					updated = true;
 				}
 			}
+			pick->clearResults();
 		}
 
 		reference->sceneNode->setAppCulled(false);
 
-		// Restore pick settings.
-		pick->clearResults();
+		if (updated) {
+			auto object = reference->baseObject;
+
+			reference->setModified(true);
+			reference->setFlag80(true);
+			reference->updateBaseObjectAndAttachment7();
+
+			reference->position.z = lowestVertex.z + offset;
+			reference->unknown_0x10 = reference->position;
+			reference->sceneNode->localTranslate = reference->position;
+
+			reference->sceneNode->update(0.0f, true, true);
+		}
 
 		return updated;
 	}
