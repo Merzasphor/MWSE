@@ -390,6 +390,8 @@ namespace se::cs::dialog::render_window {
 		reference->sceneNode->setAppCulled(true);
 
 		// Drop to nearest surface.
+		const auto previousPickType = pick->pickType;
+		pick->pickType = NI::PickType::FIND_ALL;
 		pick->root = SceneGraphController::get()->sceneRoot;
 		if (pick->pickObjects(&lowestVertex, &direction)) {
 			auto record = pick->getFirstUnskinnedResult();
@@ -433,6 +435,10 @@ namespace se::cs::dialog::render_window {
 			reference->sceneNode->update(0.0f, true, true);
 		}
 
+		// Restore pick settings.
+		pick->clearResults();
+		pick->pickType = previousPickType;
+
 		return updated;
 	}
 
@@ -469,10 +475,12 @@ namespace se::cs::dialog::render_window {
 		// Cache picker settings we care about.
 		const auto& previousRoot = rendererPicker->root;
 		const auto previousReturnNormal = rendererPicker->returnNormal;
+		const auto previousPickType = rendererPicker->pickType;
 
 		// Make changes to the pick that we need to.
 		rendererPicker->root = sceneGraphController->sceneRoot;
 		rendererPicker->returnNormal = true;
+		rendererPicker->pickType = NI::PickType::FIND_ALL;
 
 		auto reference = data->firstTarget->reference;
 		reference->sceneNode->setAppCulled(true);
@@ -610,6 +618,7 @@ namespace se::cs::dialog::render_window {
 		rendererPicker->clearResults();
 		rendererPicker->root = previousRoot;
 		rendererPicker->returnNormal = previousReturnNormal;
+		rendererPicker->pickType = previousPickType;
 
 		return 1;
 	}
@@ -709,9 +718,11 @@ namespace se::cs::dialog::render_window {
 
 		// Cache picker settings we care about.
 		const auto previousRoot = rendererPicker.root;
+		const auto previousPickType = rendererPicker.pickType;
 
 		// Make changes to the pick that we need to.
 		rendererPicker.root = sceneGraphController->landscapeRoot;
+		rendererPicker.pickType = NI::PickType::FIND_ALL;
 
 		NI::Vector3 origin;
 		NI::Vector3 direction;
@@ -751,6 +762,7 @@ namespace se::cs::dialog::render_window {
 		// Restore pick settings.
 		rendererPicker.clearResults();
 		rendererPicker.root = previousRoot;
+		rendererPicker.pickType = previousPickType;
 
 		return true;
 	}
