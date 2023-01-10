@@ -385,16 +385,11 @@ namespace se::cs::dialog::render_window {
  		calculateLowestVertex(reference->sceneNode, lowestVertex);
 		auto offset = reference->position.z - lowestVertex.z;
 
-		// Slightly offset the raycast position so we don't pass through the floor on subsequent uses.
-		NI::Vector3 direction = { 0.0f, 0.0f, -1.0f };
-		NI::Vector3 position = lowestVertex.copy();
-		position.z += 8;
-		
 		reference->sceneNode->setAppCulled(true);
 		
 		pick->root = SceneGraphController::get()->sceneRoot;
-		if (pick->pickObjects(&position, &direction)) {
-			auto firstResult = pick->results.at(0);
+		NI::Vector3 direction = { 0.0f, 0.0f, -1.0f };
+		if (pick->pickObjects(&lowestVertex, &direction)) {
 			if (firstResult) {
 				auto object = reference->baseObject;
 
