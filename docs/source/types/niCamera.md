@@ -640,6 +640,21 @@ local result = myObject:isOfType(type)
 
 ***
 
+### `lookAtWorldPoint`
+
+Update the camera's local rotation so that it is looking at the given point, with an up vector as close as possible to the given up vector. Both parameters are assumed to be in world space.
+
+```lua
+myObject:lookAtWorldPoint(point, up)
+```
+
+**Parameters**:
+
+* `point` ([tes3vector3](../../types/tes3vector3))
+* `up` ([tes3vector3](../../types/tes3vector3))
+
+***
+
 ### `prependController`
 
 Add a controller to the object as the first controller.
