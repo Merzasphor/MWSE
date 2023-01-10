@@ -390,6 +390,7 @@ namespace se::cs::dialog::render_window {
 		pick->root = SceneGraphController::get()->sceneRoot;
 		NI::Vector3 direction = { 0.0f, 0.0f, -1.0f };
 		if (pick->pickObjects(&lowestVertex, &direction)) {
+			auto firstResult = pick->getFirstUnskinnedResult();
 			if (firstResult) {
 				auto object = reference->baseObject;
 
@@ -465,7 +466,7 @@ namespace se::cs::dialog::render_window {
 			direction.normalize();
 
 			if (rendererPicker->pickObjects(&origin, &direction)) {
-				auto firstResult = rendererPicker->results.at(0);
+				auto firstResult = rendererPicker->getFirstUnskinnedResult();
 				if (firstResult) {
 					auto object = reference->baseObject;
 
@@ -701,7 +702,7 @@ namespace se::cs::dialog::render_window {
 			direction.normalize();
 
 			if (rendererPicker.pickObjects(&origin, &direction)) {
-				auto firstResult = rendererPicker.results.at(0);
+				auto firstResult = rendererPicker.getFirstUnskinnedResult();
 				if (firstResult->object) {
 					auto texturingProperty = firstResult->object->getTexturingProperty();
 					if (texturingProperty) {

@@ -1,5 +1,7 @@
 #include "NIPick.h"
 
+#include "NIGeometry.h"
+
 #include "ExceptionUtil.h"
 #include "MemoryUtil.h"
 
@@ -42,6 +44,15 @@ namespace NI {
 #else
 		throw not_implemented_exception();
 #endif
+	}
+
+	PickRecord* Pick::getFirstUnskinnedResult() const {
+		for (const auto& result : results) {
+			if (result && result->object && result->object->skinInstance == nullptr) {
+				return result;
+			}
+		}
+		return nullptr;
 	}
 
 	std::reference_wrapper<unsigned short[3]> PickRecord::getVertexIndex() {
