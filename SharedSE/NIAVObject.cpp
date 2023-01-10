@@ -37,6 +37,15 @@ namespace NI {
 		vTable.asAVObject->setAppCulled(this, culled);
 	}
 
+
+	void AVObject::createWorldVertices() {
+		vTable.asAVObject->createWorldVertices(this);
+	}
+
+	void AVObject::updateWorldVertices() {
+		vTable.asAVObject->updateWorldVertices(this);
+	}
+
 	void AVObject::update(float fTime, bool bUpdateControllers, bool bUpdateBounds) {
 #if defined(SE_NI_AVOBJECT_FNADDR_UPDATE) && SE_NI_AVOBJECT_FNADDR_UPDATE > 0
 		const auto NI_PropertyList_update = reinterpret_cast<void(__thiscall*)(AVObject*, float, int, int)>(SE_NI_AVOBJECT_FNADDR_UPDATE);
@@ -240,21 +249,114 @@ namespace NI {
 	}
 #endif
 
-	void __cdecl CalculateBounds(const NI::AVObject* object, NI::Vector3& out_min, NI::Vector3& out_max, const NI::Vector3& translation, const NI::Matrix33& rotation, const float& scale) {
+	void __cdecl CalculateBounds(const AVObject* object, Vector3& out_min, Vector3& out_max, const Vector3& translation, const Matrix33& rotation, const float& scale) {
+		// Ignore collision-disabled subgraphs.
+		if (object->isOfType(RTTIStaticPtr::NiCollisionSwitch)) {
+			const auto asCollisionSwitch = static_cast<const CollisionSwitch*>(object);
+			if (asCollisionSwitch->getCollisionActive()) {
+				return;
+			}
+		}
+
+		// Recurse until we get to a leaf node.
+		if (object->isInstanceOfType(RTTIStaticPtr::NiNode)) {
+			const auto asNode = static_cast<const Node*>(object);
+			for (const auto& child : asNode->children) {
+				if (child) {
+					CalculateBounds(child, out_min, out_max, translation + child->localTranslate, rotation * *child->localRotation, scale * child->localScale);
+				}
+			}
+			return;
+		}
+
+		// Only care about geometry leaf nodes.
+		if (!object->isInstanceOfType(RTTIStaticPtr::NiGeometry)) {
+			return;
+		}
+
+		// Ignore particles.
+		if (object->isInstanceOfType(RTTIStaticPtr::NiParticlesData)) {
+			return;
+		}
+
+		// Actually look at the vertices.
+		const auto vertices = static_cast<const Geometry*>(object)->modelData->getVertices();
+		for (const auto& vertex : vertices) {
+			const auto v = (rotation * scale * vertex) + translation;
+			out_min.x = std::min(out_min.x, v.x);
+			out_min.y = std::min(out_min.y, v.y);
+			out_min.z = std::min(out_min.z, v.z);
+			out_max.x = std::max(out_max.x, v.x);
+			out_max.y = std::max(out_max.y, v.y);
+			out_max.z = std::max(out_max.z, v.z);
+		}
+	}
+
+	float __cdecl GetLowestVertexZ(const AVObject* object) {
+		constexpr auto FLOAT_MAX = std::numeric_limits<float>::max();
+		float lowestZ = FLOAT_MAX;
+
+		// Ignore collision-disabled subgraphs.
+		if (object->isOfType(RTTIStaticPtr::NiCollisionSwitch)) {
+			const auto asCollisionSwitch = static_cast<const CollisionSwitch*>(object);
+			if (asCollisionSwitch->getCollisionActive()) {
+				return lowestZ;
+			}
+		}
+
+		// Recurse until we get to a leaf node.
+		if (object->isInstanceOfType(RTTIStaticPtr::NiNode)) {
+			const auto asNode = static_cast<const Node*>(object);
+			for (const auto& child : asNode->children) {
+				if (child) {
+					const auto childLowestZ = GetLowestVertexZ(child);
+					lowestZ = std::min(lowestZ, childLowestZ);
+				}
+			}
+			return lowestZ;
+		}
+
+		// Only care about geometry leaf nodes.
+		if (!object->isInstanceOfType(RTTIStaticPtr::NiGeometry)) {
+			return lowestZ;
+		}
+
+		// Ignore particles.
+		if (object->isInstanceOfType(RTTIStaticPtr::NiParticles)) {
+			return lowestZ;
+		}
+
+		// Ignore skinned.
+		auto geometry = static_cast<const NI::Geometry*>(object);
+		if (geometry->skinInstance) {
+			return lowestZ;
+		}
+
+		// Figure out the lowest vertex's Z.
+		for (auto i = 0u; i < geometry->modelData->vertexCount; ++i) {
+			lowestZ = std::min(lowestZ, geometry->worldVertices[i].z);
+		}
+
+		return lowestZ;
+	}
+
+	void __cdecl VerifyWorldVertices(const NI::AVObject* object) {
+#if _DEBUG
 		// Ignore collision-disabled subgraphs.
 		if (object->isOfType(NI::RTTIStaticPtr::NiCollisionSwitch)) {
 			const auto asCollisionSwitch = static_cast<const NI::CollisionSwitch*>(object);
 			if (asCollisionSwitch->getCollisionActive()) {
 				return;
 			}
-			}
+		}
 
 		// Recurse until we get to a leaf node.
 		if (object->isInstanceOfType(NI::RTTIStaticPtr::NiNode)) {
+			bool success = false;
 			const auto asNode = static_cast<const NI::Node*>(object);
 			for (const auto& child : asNode->children) {
 				if (child) {
-					CalculateBounds(child, out_min, out_max, translation + child->localTranslate, rotation * *child->localRotation, scale * child->localScale);
+					VerifyWorldVertices(child);
 				}
 			}
 			return;
@@ -266,21 +368,27 @@ namespace NI {
 		}
 
 		// Ignore particles.
-		if (object->isInstanceOfType(NI::RTTIStaticPtr::NiParticlesData)) {
+		if (object->isInstanceOfType(NI::RTTIStaticPtr::NiParticles)) {
 			return;
 		}
 
-		// Actually look at the vertices.
-		const auto vertices = static_cast<const NI::Geometry*>(object)->modelData->getVertices();
-		for (const auto& vertex : vertices) {
-			const auto v = (rotation * scale * vertex) + translation;
-			out_min.x = std::min(out_min.x, v.x);
-			out_min.y = std::min(out_min.y, v.y);
-			out_min.z = std::min(out_min.z, v.z);
-			out_max.x = std::max(out_max.x, v.x);
-			out_max.y = std::max(out_max.y, v.y);
-			out_max.z = std::max(out_max.z, v.z);
+		// Ignore skinned.
+		auto geometry = static_cast<const NI::Geometry*>(object);
+		if (geometry->skinInstance) {
+			return;
 		}
+
+		// Verify the vertices.
+		const auto transform = object->worldTransform;
+		const auto vertices = static_cast<const NI::Geometry*>(object)->modelData->getVertices();
+		for (auto i = 0u; i < geometry->modelData->vertexCount; ++i) {
+			const auto calculated = (transform.rotation * transform.scale * geometry->modelData->vertex[i]) + transform.translation;
+			if (geometry->worldVertices[i] != calculated) {
+				const auto rtti = geometry->getRunTimeTypeInformation();
+				throw std::exception("Vertex does not calculate to the same value!");
+			}
+		}
+#endif
 	}
 }
 

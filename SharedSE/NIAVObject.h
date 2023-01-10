@@ -77,6 +77,9 @@ namespace NI {
 		bool getAppCulled();
 		void setAppCulled(bool culled);
 
+		void createWorldVertices();
+		void updateWorldVertices();
+
 		//
 		// Other related this-call functions.
 		//
@@ -128,7 +131,10 @@ namespace NI {
 	};
 	static_assert(sizeof(AVObject) == 0x90, "NI::AVObject failed size validation");
 
-	void __cdecl CalculateBounds(const NI::AVObject* object, NI::Vector3& out_min, NI::Vector3& out_max, const NI::Vector3& translation, const NI::Matrix33& rotation, const float& scale);
+	void __cdecl CalculateBounds(const AVObject* object, Vector3& out_min, Vector3& out_max, const Vector3& translation, const Matrix33& rotation, const float& scale);
+
+	float __cdecl GetLowestVertexZ(const AVObject* object);
+	void __cdecl VerifyWorldVertices(const AVObject* object);
 }
 
 #if defined(SE_USE_LUA) && SE_USE_LUA == 1

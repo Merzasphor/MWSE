@@ -327,119 +327,42 @@ namespace se::cs::dialog::render_window {
 	// Patch: Fix drop-to-surface (F)
 	//
 
-	void calculateLowestVertex(const NI::AVObject* object, NI::Vector3& lowestVertex) {
-		// Ignore collision-disabled subgraphs.
-		if (object->isOfType(NI::RTTIStaticPtr::NiCollisionSwitch)) {
-			const auto asCollisionSwitch = static_cast<const NI::CollisionSwitch*>(object);
-			if (asCollisionSwitch->getCollisionActive()) {
-				return;
-			}
-		}
+	void __cdecl Patch_IgnoreParticlesWhenFindingVerticesNearHeight(const NI::Node* node, float nearToZ) {
+		constexpr auto NEAR_THRESHOLD = 1.0f;
+		const auto gNearVertexArray = *reinterpret_cast<NI::TArray<NI::Vector3*>**>(0x6CF7C4);
 
-		// Recurse until we get to a leaf node.
-		if (object->isInstanceOfType(NI::RTTIStaticPtr::NiNode)) {
-			const auto asNode = static_cast<const NI::Node*>(object);
-			for (const auto& child : asNode->children) {
-				if (child) {
-					calculateLowestVertex(child, lowestVertex);
+		for (const auto& child : node->children) {
+			if (child) {
+				// Calculate for geometry.
+				if (child->isInstanceOfType(NI::RTTIStaticPtr::NiGeometry)) {
+					auto asGeometry = static_cast<const NI::Geometry*>(child.get());
+
+					// Ignore particles.
+					if (asGeometry->isInstanceOfType(NI::RTTIStaticPtr::NiParticles)) {
+						continue;
+					}
+
+					// Ignore skinned.
+					if (asGeometry->skinInstance) {
+						continue;
+					}
+
+					// Add nearby vertices.
+					for (auto i = 0u; i < asGeometry->modelData->vertexCount; ++i) {
+						const auto vertex = &asGeometry->worldVertices[i];
+						if (std::abs(vertex->z - nearToZ) <= NEAR_THRESHOLD) {
+							gNearVertexArray->push_back(vertex);
+						}
+					}
+				}
+
+				// Recursively call for child nodes.
+				if (child->isInstanceOfType(NI::RTTIStaticPtr::NiNode)) {
+					auto asNode = static_cast<const NI::Node*>(child.get());
+					Patch_IgnoreParticlesWhenFindingVerticesNearHeight(asNode, nearToZ);
 				}
 			}
-			return;
 		}
-
-		// Only care about geometry leaf nodes.
-		if (!object->isInstanceOfType(NI::RTTIStaticPtr::NiGeometry)) {
-			return;
-		}
-
-		// Ignore particles.
-		if (object->isInstanceOfType(NI::RTTIStaticPtr::NiParticlesData)) {
-			return;
-		}
-
-		// Ignore skinned.
-		auto geometry = static_cast<const NI::Geometry*>(object);
-		if (geometry->skinInstance) {
-			return;
-		}
-
-		// Get the lowest vertex.
-		const auto transform = object->worldTransform;
-		const auto vertices = static_cast<const NI::Geometry*>(object)->modelData->getVertices();
-		for (const auto& vertex : vertices) {
-			const auto v = (transform.rotation * transform.scale * vertex) + transform.translation;
-			if (v.z < lowestVertex.z) {
-				lowestVertex = v;
-			}
-		}
-	}
-
-	bool __cdecl ReplaceDropToSurfaceLogic(NI::Pick* pick, Reference* reference) {
-		if (!reference->sceneNode || !reference->sceneNode->isInstanceOfType(NI::RTTIStaticPtr::NiNode)) {
-			return false;
-		}
-
-		const NI::Vector3 direction = { 0.0f, 0.0f, -1.0f };
-
-		bool updated = false;
-
-		auto lowestVertex = reference->sceneNode->worldBoundOrigin.copy();
- 		calculateLowestVertex(reference->sceneNode, lowestVertex);
-		auto offset = reference->position.z - lowestVertex.z;
-
-		reference->sceneNode->setAppCulled(true);
-
-		// Drop to nearest surface.
-		const auto previousPickType = pick->pickType;
-		pick->pickType = NI::PickType::FIND_ALL;
-		pick->root = SceneGraphController::get()->sceneRoot;
-		if (pick->pickObjects(&lowestVertex, &direction)) {
-			auto record = pick->getFirstUnskinnedResult();
-			if (record && record->intersection.z < lowestVertex.z) {
-				lowestVertex.z = record->intersection.z;
-				updated = true;
-			}
-		}
-		pick->clearResults();
-
-		// Clamp to above landscape.
-		auto landscapeRoot = SceneGraphController::get()->landscapeRoot;
-		if (!landscapeRoot->getAppCulled()) {
-			auto position = lowestVertex.copy();
-			position.z = landscapeRoot->worldBoundRadius;
-
-			pick->root = landscapeRoot;
-			if (pick->pickObjects(&position, &direction)) {
-				auto record = pick->getFirstUnskinnedResult();
-				if (record && record->intersection.z > lowestVertex.z) {
-					lowestVertex.z = record->intersection.z;
-					updated = true;
-				}
-			}
-			pick->clearResults();
-		}
-
-		reference->sceneNode->setAppCulled(false);
-
-		if (updated) {
-			auto object = reference->baseObject;
-
-			reference->setModified(true);
-			reference->setFlag80(true);
-			reference->updateBaseObjectAndAttachment7();
-
-			reference->position.z = lowestVertex.z + offset;
-			reference->unknown_0x10 = reference->position;
-			reference->sceneNode->localTranslate = reference->position;
-
-			reference->sceneNode->update(0.0f, true, true);
-		}
-
-		// Restore pick settings.
-		pick->clearResults();
-		pick->pickType = previousPickType;
-
-		return updated;
 	}
 
 	//
@@ -1142,8 +1065,9 @@ namespace se::cs::dialog::render_window {
 		// Patch: Improve drag-move logic.
 		genCallEnforced(0x45EE85, 0x401F4B, reinterpret_cast<DWORD>(Patch_ReplaceDragMovementLogic));
 
-		// Patch: Improve drop-to-surface logic.
-		// genJumpEnforced(0x4012CB, 0x466810, reinterpret_cast<DWORD>(ReplaceDropToSurfaceLogic));
+		// Patch: Improve drop-to-surface logic by ignoring particles and skinned geometry.
+		genJumpEnforced(0x403AD5, 0x4664C0, reinterpret_cast<DWORD>(NI::GetLowestVertexZ));
+		genJumpEnforced(0x402CE8, 0x4665F0, reinterpret_cast<DWORD>(Patch_IgnoreParticlesWhenFindingVerticesNearHeight));
 
 		// Patch: Custom marker toggling code.
 		writePatchCodeUnprotected(0x49E8CE, (BYTE*)PatchEditorMarkers_Setup, PatchEditorMarkers_Setup_Size);
