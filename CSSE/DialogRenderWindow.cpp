@@ -5,9 +5,13 @@
 #include "MemoryUtil.h"
 #include "WindowsUtil.h"
 
+#include "NIAVObject.h"
 #include "NIBound.h"
 #include "NICamera.h"
+#include "NICollisionSwitch.h"
+#include "NIGeometry.h"
 #include "NILight.h"
+#include "NIMatrix33.h"
 #include "NINode.h"
 #include "NIPick.h"
 
@@ -317,6 +321,106 @@ namespace se::cs::dialog::render_window {
 				reference->updateBaseObjectAndAttachment7();
 			}
 		}
+	}
+
+	//
+	// Patch: Fix drop-to-surface (F)
+	//
+
+	void calculateLowestVertex(const NI::AVObject* object, NI::Vector3& lowestVertex) {
+		// Ignore collision-disabled subgraphs.
+		if (object->isOfType(NI::RTTIStaticPtr::NiCollisionSwitch)) {
+			const auto asCollisionSwitch = static_cast<const NI::CollisionSwitch*>(object);
+			if (asCollisionSwitch->getCollisionActive()) {
+				return;
+			}
+		}
+
+		// Recurse until we get to a leaf node.
+		if (object->isInstanceOfType(NI::RTTIStaticPtr::NiNode)) {
+			const auto asNode = static_cast<const NI::Node*>(object);
+			for (const auto& child : asNode->children) {
+				if (child) {
+					calculateLowestVertex(child, lowestVertex);
+				}
+			}
+			return;
+		}
+
+		// Only care about geometry leaf nodes.
+		if (!object->isInstanceOfType(NI::RTTIStaticPtr::NiGeometry)) {
+			return;
+		}
+
+		// Ignore particles.
+		if (object->isInstanceOfType(NI::RTTIStaticPtr::NiParticlesData)) {
+			return;
+		}
+
+		// Ignore skinned.
+		auto geometry = static_cast<const NI::Geometry*>(object);
+		if (geometry->skinInstance) {
+			return;
+		}
+
+		// Get the lowest vertex.
+		const auto transform = object->worldTransform;
+		const auto vertices = static_cast<const NI::Geometry*>(object)->modelData->getVertices();
+		for (const auto& vertex : vertices) {
+			const auto v = (transform.rotation * transform.scale * vertex) + transform.translation;
+			if (v.z < lowestVertex.z) {
+				lowestVertex = v;
+			}
+		}
+	}
+
+	bool __cdecl ReplaceDropToSurfaceLogic(NI::Pick* pick, Reference* reference) {
+		if (!reference->sceneNode || !reference->sceneNode->isInstanceOfType(NI::RTTIStaticPtr::NiNode)) {
+			return false;
+		}
+
+		bool updated = false;
+
+		auto lowestVertex = reference->sceneNode->worldBoundOrigin.copy();
+ 		calculateLowestVertex(reference->sceneNode, lowestVertex);
+		auto offset = reference->position.z - lowestVertex.z;
+
+		// Slightly offset the raycast position so we don't pass through the floor on subsequent uses.
+		NI::Vector3 direction = { 0.0f, 0.0f, -1.0f };
+		NI::Vector3 position = lowestVertex.copy();
+		position.z += 8;
+		
+		reference->sceneNode->setAppCulled(true);
+		
+		pick->root = DataHandler::get()->editorObjectRoot;
+		if (pick->pickObjects(&position, &direction)) {
+			auto firstResult = pick->results.at(0);
+			if (firstResult) {
+				auto object = reference->baseObject;
+
+				reference->setModified(true);
+				reference->setFlag80(true);
+				reference->updateBaseObjectAndAttachment7();
+
+				auto z = firstResult->intersection.z + offset;
+				if (z < reference->position.z) {
+					reference->position.z = firstResult->intersection.z + offset;
+					reference->unknown_0x10 = reference->position;
+					reference->sceneNode->localTranslate = reference->position;
+
+					reference->sceneNode->update(0.0f, true, true);
+
+					updated = true;
+				}
+			}
+		}
+
+		reference->sceneNode->setAppCulled(false);
+
+		// Restore pick settings.
+		pick->clearResults();
+
+		return updated;
 	}
 
 	//
@@ -1012,6 +1116,9 @@ namespace se::cs::dialog::render_window {
 
 		// Patch: Improve drag-move logic.
 		genCallEnforced(0x45EE85, 0x401F4B, reinterpret_cast<DWORD>(Patch_ReplaceDragMovementLogic));
+
+		// Patch: Improve drop-to-surface logic.
+		genJumpEnforced(0x4012CB, 0x466810, reinterpret_cast<DWORD>(ReplaceDropToSurfaceLogic));
 
 		// Patch: Custom marker toggling code.
 		writePatchCodeUnprotected(0x49E8CE, (BYTE*)PatchEditorMarkers_Setup, PatchEditorMarkers_Setup_Size);
