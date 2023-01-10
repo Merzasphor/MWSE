@@ -151,10 +151,10 @@ namespace se::cs::dialog::object_window {
 		}
 
 		if (sortOrderAsc) {
-			return a > b;
+			return a > b ? 1 : -1;
 		}
 		else {
-			return a < b;
+			return a < b ? 1 : -1;
 		}
 	}
 
@@ -164,10 +164,10 @@ namespace se::cs::dialog::object_window {
 		}
 
 		if (sortOrderAsc) {
-			return a > b;
+			return a > b ? 1 : -1;
 		}
 		else {
-			return a < b;
+			return a < b ? 1 : -1;
 		}
 	}
 
@@ -177,19 +177,16 @@ namespace se::cs::dialog::object_window {
 		}
 
 		if (sortOrderAsc) {
-			return a > b;
+			return a > b ? 1 : -1;
 		}
 		else {
-			return a < b;
+			return a < b ? 1 : -1;
 		}
 	}
 
 	int TabColumn::sort(const char* a, const char* b, bool sortOrderAsc) const {
 		auto cmp = _stricmp(a, b);
-		if (!sortOrderAsc) {
-			return -cmp;
-		}
-		return cmp;
+		return sortOrderAsc ? cmp : -cmp;
 	}
 
 	int TabColumn::sort(const NI::IteratedList<ItemStack*>& a, const NI::IteratedList<ItemStack*>& b, bool sortOrderAsc) const {
@@ -239,7 +236,7 @@ namespace se::cs::dialog::object_window {
 	}
 
 	int TabColumnActorClass::sortObject(const Object* lParam1, const Object* lParam2, bool sortOrderAsc) const {
-		return sort(lParam1->getClassName(), lParam1->getClassName(), sortOrderAsc);
+		return sort(lParam1->getClassName(), lParam2->getClassName(), sortOrderAsc);
 	}
 
 	TabColumn::ColumnSettings& TabColumnActorClass::getSettings() const {
@@ -291,7 +288,7 @@ namespace se::cs::dialog::object_window {
 	}
 
 	int TabColumnActorFaction::sortObject(const Object* lParam1, const Object* lParam2, bool sortOrderAsc) const {
-		return sort(lParam1->getFactionName(), lParam1->getFactionName(), sortOrderAsc);
+		return sort(lParam1->getFactionName(), lParam2->getFactionName(), sortOrderAsc);
 	}
 
 	TabColumn::ColumnSettings& TabColumnActorFaction::getSettings() const {
@@ -381,7 +378,7 @@ namespace se::cs::dialog::object_window {
 	}
 
 	int TabColumnActorLevel::sortObject(const Object* lParam1, const Object* lParam2, bool sortOrderAsc) const {
-		return sort(lParam1->getLevel(), lParam1->getLevel(), sortOrderAsc);
+		return sort(lParam1->getLevel(), lParam2->getLevel(), sortOrderAsc);
 	}
 
 	TabColumn::ColumnSettings& TabColumnActorLevel::getSettings() const {
