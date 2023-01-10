@@ -9,8 +9,6 @@
 #include "CSRecordHandler.h"
 
 #include "NIAVObject.h"
-#include "NICollisionSwitch.h"
-#include "NIGeometry.h"
 
 #include "WindowMain.h"
 
@@ -138,50 +136,6 @@ namespace se::cs {
 			const auto overwrittenFunction = reinterpret_cast<void(__thiscall*)(RecordHandler*)>(0x4016F4);
 			overwrittenFunction(recordHandler);
 		}
-
-
-		void __cdecl fixCalculateBounds(const NI::AVObject* object, NI::Vector3& out_min, NI::Vector3& out_max, const NI::Vector3& translation, const NI::Matrix33& rotation, const float& scale) {
-			// Ignore collision-disabled subgraphs.
-			if (object->isOfType(NI::RTTIStaticPtr::NiCollisionSwitch)) {
-				const auto asCollisionSwitch = static_cast<const NI::CollisionSwitch*>(object);
-				if (asCollisionSwitch->getCollisionActive()) {
-					return;
-				}
-			}
-
-			// Recurse until we get to a leaf node.
-			if (object->isInstanceOfType(NI::RTTIStaticPtr::NiNode)) {
-				const auto asNode = static_cast<const NI::Node*>(object);
-				for (const auto& child : asNode->children) {
-					if (child) {
-						fixCalculateBounds(child, out_min, out_max, translation + child->localTranslate, rotation * *child->localRotation, scale * child->localScale);
-					}
-				}
-				return;
-			}
-
-			// Only care about geometry leaf nodes.
-			if (!object->isInstanceOfType(NI::RTTIStaticPtr::NiGeometry)) {
-				return;
-			}
-
-			// Ignore particles.
-			if (object->isInstanceOfType(NI::RTTIStaticPtr::NiParticlesData)) {
-				return;
-			}
-
-			// Actually look at the vertices.
-			const auto vertices = static_cast<const NI::Geometry*>(object)->modelData->getVertices();
-			for (const auto& vertex : vertices) {
-				const auto v = (rotation * scale * vertex) + translation;
-				out_min.x = std::min(out_min.x, v.x);
-				out_min.y = std::min(out_min.y, v.y);
-				out_min.z = std::min(out_min.z, v.z);
-				out_max.x = std::max(out_max.x, v.x);
-				out_max.y = std::max(out_max.y, v.y);
-				out_max.z = std::max(out_max.z, v.z);
-			}
-		}
 	}
 
 	void installPatches() {
@@ -223,7 +177,7 @@ namespace se::cs {
 		genCallEnforced(0x501884, 0x4016F4, reinterpret_cast<DWORD>(patch::forceLoadFlagsOnActiveMods));
 
 		// Patch: Fix bound calculation.
-		genJumpEnforced(0x404467, 0x548280, reinterpret_cast<DWORD>(patch::fixCalculateBounds));
+		genJumpEnforced(0x404467, 0x548280, reinterpret_cast<DWORD>(NI::CalculateBounds));
 
 		// Install all our sectioned patches.
 		window::main::installPatches();

@@ -127,6 +127,8 @@ namespace NI {
 
 	};
 	static_assert(sizeof(AVObject) == 0x90, "NI::AVObject failed size validation");
+
+	void __cdecl CalculateBounds(const NI::AVObject* object, NI::Vector3& out_min, NI::Vector3& out_max, const NI::Vector3& translation, const NI::Matrix33& rotation, const float& scale);
 }
 
 #if defined(SE_USE_LUA) && SE_USE_LUA == 1
