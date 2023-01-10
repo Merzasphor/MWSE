@@ -1143,7 +1143,7 @@ namespace se::cs::dialog::render_window {
 		genCallEnforced(0x45EE85, 0x401F4B, reinterpret_cast<DWORD>(Patch_ReplaceDragMovementLogic));
 
 		// Patch: Improve drop-to-surface logic.
-		genJumpEnforced(0x4012CB, 0x466810, reinterpret_cast<DWORD>(ReplaceDropToSurfaceLogic));
+		// genJumpEnforced(0x4012CB, 0x466810, reinterpret_cast<DWORD>(ReplaceDropToSurfaceLogic));
 
 		// Patch: Custom marker toggling code.
 		writePatchCodeUnprotected(0x49E8CE, (BYTE*)PatchEditorMarkers_Setup, PatchEditorMarkers_Setup_Size);
