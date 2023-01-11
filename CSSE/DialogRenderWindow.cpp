@@ -773,6 +773,9 @@ namespace se::cs::dialog::render_window {
 		auto recordHandler = dataHandler->recordHandler;
 		auto& quickstart = settings.quickstart;
 
+		// Restore quickstart state to be empty.
+		settings.quickstart = Settings_t::QuickstartSettings();
+
 		// Only store some data if we have a current cell.
 		auto currentCell = gCurrentCell::get();
 		if (currentCell) {

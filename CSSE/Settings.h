@@ -100,8 +100,8 @@ namespace se::cs {
 		} object_window;
 
 		struct QuickstartSettings {
-			bool enabled = true;
-			bool load_cell = true;
+			bool enabled = false;
+			bool load_cell = false;
 			std::vector<std::string> data_files = {};
 			std::string active_file;
 			std::string cell = {};
