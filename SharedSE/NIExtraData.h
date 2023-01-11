@@ -4,6 +4,8 @@
 
 #if defined(SE_IS_MWSE) && SE_IS_MWSE == 1
 #include "TES3Defines.h"
+#else
+#include "CSDefines.h"
 #endif
 
 namespace NI {
@@ -40,12 +42,14 @@ namespace NI {
 	};
 	static_assert(sizeof(StringExtraData) == 0x18, "NI::TextKey failed size validation");
 
-#if defined(SE_IS_MWSE) && SE_IS_MWSE == 1
 	struct Tes3ExtraData : ExtraData {
+#if defined(SE_IS_MWSE) && SE_IS_MWSE == 1
 		TES3::Reference* reference; // 0x14
+#else
+		se::cs::Reference* reference;
+#endif
 	};
 	static_assert(sizeof(Tes3ExtraData) == 0x18, "NI::Tes3ExtraData failed size validation");
-#endif
 
 	struct TextKey {
 		float time; // 0x0

@@ -47,11 +47,13 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)NIRect.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIRTTI.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NISkinInstance.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIStream.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NITArray.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NITexture.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NITimeController.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NITransform.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NITriangle.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIVector2.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIVector3.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)StringUtil.h" />
@@ -79,6 +81,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)NIProperty.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NIQuaternion.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NIRTTI.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)NISkinInstance.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NIStream.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NITexture.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NITransform.cpp" />

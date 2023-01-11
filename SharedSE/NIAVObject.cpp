@@ -77,9 +77,9 @@ namespace NI {
 		return localRotation;
 	}
 
-	void AVObject::setLocalRotationMatrix(Matrix33* matrix) {
+	void AVObject::setLocalRotationMatrix(const Matrix33* matrix) {
 #if defined(SE_NI_AVOBJECT_FNADDR_SETLOCALROTATIONMATRIX) && SE_NI_AVOBJECT_FNADDR_SETLOCALROTATIONMATRIX > 0
-		const auto NI_PropertyList_setLocalRotationMatrix = reinterpret_cast<void(__thiscall*)(AVObject*, Matrix33*)>(SE_NI_AVOBJECT_FNADDR_SETLOCALROTATIONMATRIX);
+		const auto NI_PropertyList_setLocalRotationMatrix = reinterpret_cast<void(__thiscall*)(AVObject*, const Matrix33*)>(SE_NI_AVOBJECT_FNADDR_SETLOCALROTATIONMATRIX);
 		NI_PropertyList_setLocalRotationMatrix(this, matrix);
 #else
 		throw not_implemented_exception();
@@ -144,6 +144,19 @@ namespace NI {
 		localTranslate.z = 0.0f;
 		setLocalRotationMatrix(Matrix33::IdentityMatrix);
 	}
+
+	void AVObject::copyTransforms(const AVObject* source) {
+		setLocalRotationMatrix(source->getLocalRotationMatrix());
+		localTranslate = source->localTranslate;
+		localScale = source->localScale;
+	}
+
+	void AVObject::copyTransforms(const Transform* source) {
+		setLocalRotationMatrix(&source->rotation);
+		localTranslate = source->translation;
+		localScale = source->scale;
+	}
+
 
 	Pointer<Property> AVObject::getProperty(PropertyType type) const {
 		auto propNode = &propertyNode;

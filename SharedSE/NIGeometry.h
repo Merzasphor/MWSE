@@ -2,6 +2,7 @@
 
 #include "NIAVObject.h"
 #include "NIGeometryData.h"
+#include "NISkinInstance.h"
 
 namespace NI {
 	struct Geometry_vTable : AVObject_vTable {
@@ -14,7 +15,7 @@ namespace NI {
 		void* propertyState; // 0x90
 		void* effectState; // 0x94
 		Pointer<GeometryData> modelData; // 0x98
-		Pointer<Object> skinInstance; // 0x9C
+		Pointer<SkinInstance> skinInstance; // 0x9C
 		Vector3* worldVertices; // 0xA0
 		Vector3* worldNormals; // 0xA4
 		bool bWorldVerticesDirty; // 0xA8

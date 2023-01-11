@@ -1,5 +1,7 @@
 #include "NIObjectNET.h"
 
+#include "NINode.h"
+
 #if defined(SE_IS_MWSE) && SE_IS_MWSE == 1
 #include "TES3Reference.h"
 #endif
@@ -144,6 +146,20 @@ namespace NI {
 
 	TES3::Reference* ObjectNET::getTes3Reference_lua(sol::optional<bool> searchParents) {
 		return getTes3Reference(searchParents.value_or(false));
+	}
+#else
+	se::cs::Reference* ObjectNET::getTes3Reference(bool searchParents) {
+		for (ExtraData* ed = extraData; ed; ed = ed->next) {
+			if (ed->isOfType(RTTIStaticPtr::TES3ObjectExtraData)) {
+				return static_cast<Tes3ExtraData*>(ed)->reference;
+			}
+		}
+
+		if (searchParents && isInstanceOfType(RTTIStaticPtr::NiAVObject) && static_cast<AVObject*>(this)->parentNode) {
+			return static_cast<AVObject*>(this)->parentNode->getTes3Reference(true);
+	}
+
+		return nullptr;
 	}
 #endif
 }

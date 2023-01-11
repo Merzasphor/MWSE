@@ -25,6 +25,7 @@ namespace NI {
 		bool unknown_0x32;
 
 		nonstd::span<Vector3> getVertices() const;
+		void markAsChanged();
 	};
 	static_assert(sizeof(GeometryData) == 0x34, "NI::GeometryData failed size validation");
 }

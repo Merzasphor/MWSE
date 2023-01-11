@@ -88,7 +88,7 @@ namespace NI {
 		void updateEffects();
 		void updateProperties();
 		Matrix33* getLocalRotationMatrix() const;
-		void setLocalRotationMatrix(Matrix33* matrix);
+		void setLocalRotationMatrix(const Matrix33* matrix);
 
 		void attachProperty(Property* property);
 		Pointer<Property> detachPropertyByType(PropertyType type);
@@ -107,6 +107,8 @@ namespace NI {
 		Transform getLocalTransform() const;
 
 		void clearTransforms();
+		void copyTransforms(const AVObject* from);
+		void copyTransforms(const Transform* from);
 
 		Pointer<Property> getProperty(PropertyType type) const;
 		Pointer<AlphaProperty> getAlphaProperty() const;

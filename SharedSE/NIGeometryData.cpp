@@ -7,4 +7,12 @@ namespace NI {
 		}
 		return {};
 	}
+
+	void GeometryData::markAsChanged() {
+		++revisionID;
+		// Avoid revisionID 0, which implies static data
+		if (revisionID == 0) {
+			++revisionID;
+		}
+	}
 }

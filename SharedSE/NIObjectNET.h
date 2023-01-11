@@ -9,6 +9,8 @@
 
 #if defined(SE_IS_MWSE) && SE_IS_MWSE == 1
 #include "TES3Defines.h"
+#else
+#include "CSDefines.h"
 #endif
 
 namespace NI {
@@ -47,6 +49,8 @@ namespace NI {
 #if defined(SE_IS_MWSE) && SE_IS_MWSE == 1
 		TES3::Reference* getTes3Reference(bool searchParents = false);
 		TES3::Reference* getTes3Reference_lua(sol::optional<bool> searchParents = false);
+#else
+		se::cs::Reference* getTes3Reference(bool searchParents = false);
 #endif
 
 		//
