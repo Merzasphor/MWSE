@@ -67,6 +67,7 @@ If you are using [Construction Set Better UI](https://www.nexusmods.com/morrowin
 
 ### Render Window
 
+* Clicking or otherwise interacting with skinned objects, such as NPCs, no longer consumes the mouse. It is now easier to click on objects near actors.
 * Reference rotation is now performed on the world axis, rather than the local axis. To rotate on the local axis as it worked in vanilla, hold the alt key.
 * Dropping a reference (using the F key) is more reliable and accurate.
 * References can be group-scaled. By holding the alt key when scaling, all selected references will scale together and reposition accordingly.

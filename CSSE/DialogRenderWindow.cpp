@@ -123,12 +123,12 @@ namespace se::cs::dialog::render_window {
 	static_assert(sizeof(NetImmerseInstance::VirtualTable) == 0x64, "CS::NetImmerseInstance's virtual table failed size validation");
 
 	struct SceneGraphController {
-		NI::Node* sceneRoot;
-		NI::Node* objectRoot;
-		NI::Node* landscapeRoot;
-		NI::ZBufferProperty* zBufferProperty;
-		NI::Property* wireframeProperty;
-		int unknown_0x14;
+		NI::Node* sceneRoot; // 0x0
+		NI::Node* objectRoot; // 0x4
+		NI::Node* landscapeRoot; // 0x8
+		NI::ZBufferProperty* zBufferProperty; // 0xC
+		NI::Property* wireframeProperty; // 0x10
+		NI::Pick* pick; // 0x14
 		int unknown_0x18;
 		int unknown_0x1C;
 		int unknown_0x20;
@@ -544,6 +544,48 @@ namespace se::cs::dialog::render_window {
 		rendererPicker->pickType = previousPickType;
 
 		return 1;
+	}
+
+	//
+	// Patch: Make clicking things near skinned objects not painful.
+	//
+
+	Reference* __cdecl Patch_FixPickAgainstSkinnedObjects(SceneGraphController* sgController, RenderController* renderController, int screenX, int screenY) {
+		NI::Vector3 origin;
+		NI::Vector3 direction;
+		if (!renderController->camera->windowPointToRay(screenX, screenY, origin, direction)) {
+			return nullptr;
+		}
+
+		const auto& previousPickRoot = sgController->pick->root;
+		const auto previousPickType = sgController->pick->pickType;
+
+		sgController->pick->pickType = NI::PickType::FIND_ALL;
+
+		if (!sgController->pick->pickObjectsWithSkinDeforms(&origin, &direction)) {
+			sgController->pick->pickType = previousPickType;
+			return nullptr;
+		}
+
+		Reference* closestRef = nullptr;
+		auto closestDistance = std::numeric_limits<float>::max();
+		
+		for (auto& result : sgController->pick->results) {
+			if (result == nullptr) {
+				continue;
+			}
+
+			if (result->distance < closestDistance) {
+				closestRef = result->object->getTes3Reference(true);
+				closestDistance = result->distance;
+			}
+		}
+
+		// Restore picker to the initial state.
+		sgController->pick->root = previousPickRoot;
+		sgController->pick->pickType = previousPickType;
+
+		return closestRef;
 	}
 
 	//
@@ -1068,6 +1110,9 @@ namespace se::cs::dialog::render_window {
 		// Patch: Improve drop-to-surface logic by ignoring particles and skinned geometry.
 		genJumpEnforced(0x403AD5, 0x4664C0, reinterpret_cast<DWORD>(NI::GetLowestVertexZ));
 		genJumpEnforced(0x402CE8, 0x4665F0, reinterpret_cast<DWORD>(Patch_IgnoreParticlesWhenFindingVerticesNearHeight));
+
+		// Patch: Make clicking things near skinned objects not painful.
+		genJumpEnforced(0x404980, 0x463F30, reinterpret_cast<DWORD>(Patch_FixPickAgainstSkinnedObjects));
 
 		// Patch: Custom marker toggling code.
 		writePatchCodeUnprotected(0x49E8CE, (BYTE*)PatchEditorMarkers_Setup, PatchEditorMarkers_Setup_Size);
