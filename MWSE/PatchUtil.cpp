@@ -642,6 +642,18 @@ namespace mwse::patch {
 	const size_t PatchLoadActiveMagicEffect_size = 0x32;
 
 	//
+	// Patch: Fix crash in NPC flee logic when trying to pick a random node from a pathgrid with 0 nodes.
+	// 
+
+	TES3::PathGrid* __fastcall PatchCellGetPathGridWithNodes(TES3::Cell* cell) {
+		auto pathGrid = cell->pathGrid;
+		if (pathGrid && pathGrid->pointCount == 0) {
+			return nullptr;
+		}
+		return pathGrid;
+	}
+
+	//
 	// Install all the patches.
 	//
 
@@ -922,6 +934,9 @@ namespace mwse::patch {
 
 		// Patch: Set ActiveMagicEffect.isIllegalSummon correctly on loading a savegame.
 		writePatchCodeUnprotected(0x454826, (BYTE*)&PatchLoadActiveMagicEffect, PatchLoadActiveMagicEffect_size);
+
+		// Patch: Fix crash in NPC flee logic when trying to pick a random node from a pathgrid with 0 nodes.
+		genCallEnforced(0x549E76, 0x4E2850, reinterpret_cast<DWORD>(PatchCellGetPathGridWithNodes));
 	}
 
 	void installPostLuaPatches() {

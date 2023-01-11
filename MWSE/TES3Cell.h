@@ -51,7 +51,7 @@ namespace TES3 {
 		char unknown_0x17;
 		Cell* parentCell; // 0x18
 		short granularity; // 0x1C
-		short pointCount; // 0x1E
+		unsigned short pointCount; // 0x1E
 		IteratedList<Node*> nodes; // 0x20
 		unsigned int fileOffset; // 0x34
 		char unknown_0x38;
@@ -130,7 +130,7 @@ namespace TES3 {
 		GameFile * lastModifyingFile;
 		MappingVisuals * mappingVisuals;
 		IteratedList<MapNote*> * mapNotes; // 0x88
-		void * pathGrid; // 0x8C
+		PathGrid * pathGrid; // 0x8C
 		union {
 			float waterLevel;
 			Region * region;
