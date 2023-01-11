@@ -841,9 +841,9 @@ namespace mwse::patch {
 #endif
 
 		// Patch: Fix crash when trying to draw cell markers that don't fit on the map.
-		auto NonDynamicData_drawCellMapMarker = &TES3::NonDynamicData::drawCellMapMarker;
-		genCallEnforced(0x4C840F, 0x4C8540, *reinterpret_cast<DWORD*>(&NonDynamicData_drawCellMapMarker));
-		genCallEnforced(0x4C8520, 0x4C8540, *reinterpret_cast<DWORD*>(&NonDynamicData_drawCellMapMarker));
+		// Compatible with MCP map expansion.
+		writeValueEnforced<DWORD>(0x4C85BC + 2, 0x200, 0x1F7);
+		writeValueEnforced<DWORD>(0x4C85CC + 1, 0x200, 0x1F7);
 
 		// Patch: Optimize ShowMap (and FillMap) mwscript command.
 		auto NonDynamicData_showLocationOnMap = &TES3::NonDynamicData::showLocationOnMap;

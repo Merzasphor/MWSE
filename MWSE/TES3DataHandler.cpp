@@ -420,11 +420,7 @@ namespace TES3 {
 
 	const auto TES3_NonDynamicData_drawCellMapMarker = reinterpret_cast<void(__thiscall*)(TES3::NonDynamicData*, TES3::Cell*, int)>(0x4C8540);
 	void NonDynamicData::drawCellMapMarker(Cell* cell, int unused) {
-		// Fix crash when trying to render cells too far out.
-		if (cell->getGridY() < -27) {
-			return;
-		}
-
+		// Vanilla crash is patched in PatchUtil.cpp
 		TES3_NonDynamicData_drawCellMapMarker(this, cell, unused);
 	}
 
