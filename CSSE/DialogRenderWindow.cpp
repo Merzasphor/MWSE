@@ -607,6 +607,19 @@ namespace se::cs::dialog::render_window {
 	}
 
 	//
+	// Fix camera positioning around objects with too high of a bound radius.
+	//
+
+	NI::Node* __fastcall Patch_LimitCameraOrbitRadius(Reference* reference) {
+		// Force an update call. This fixes world bounds...
+		auto node = reference->sceneNode;
+		node->update();
+
+		// Overwritten code.
+		return node;
+	}
+
+	//
 	// Patch: Allow custom markers to be toggled.
 	//
 
@@ -1061,7 +1074,7 @@ namespace se::cs::dialog::render_window {
 		PatchDialogProc_preventMainHandler = true;
 	}
 
-	inline void PatchDialogProc_OnRMouseButtonDown(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+	void PatchDialogProc_OnRMouseButtonDown(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		constexpr auto comboPickLandscapeTexture = MK_CONTROL | MK_RBUTTON;
 		if ((wParam & comboPickLandscapeTexture) == comboPickLandscapeTexture) {
 			if (PickLandscapeTexture(hWnd)) {
@@ -1070,7 +1083,7 @@ namespace se::cs::dialog::render_window {
 		}
 	}
 
-	inline void PatchDialogProc_OnKeyDown(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+	void PatchDialogProc_OnKeyDown(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		switch (wParam) {
 		case 'Q':
 			showContextAwareActionMenu(hWnd);
@@ -1137,6 +1150,9 @@ namespace se::cs::dialog::render_window {
 
 		// Patch: Allow custom FOV.
 		genJumpEnforced(0x4028FB, 0x40BE60, reinterpret_cast<DWORD>(Patch_AllowCustomFOV));
+
+		// Patch: Fix camera positioning around objects with too high of a bound radius.
+		genCallEnforced(0x45FCB8, 0x4015BE, reinterpret_cast<DWORD>(Patch_LimitCameraOrbitRadius));
 
 		// Patch: Custom marker toggling code.
 		writePatchCodeUnprotected(0x49E8CE, (BYTE*)PatchEditorMarkers_Setup, PatchEditorMarkers_Setup_Size);

@@ -79,6 +79,7 @@ namespace NI {
 
 		void createWorldVertices();
 		void updateWorldVertices();
+		void updateWorldBound();
 
 		//
 		// Other related this-call functions.

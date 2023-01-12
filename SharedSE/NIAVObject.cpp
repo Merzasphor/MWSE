@@ -46,6 +46,10 @@ namespace NI {
 		vTable.asAVObject->updateWorldVertices(this);
 	}
 
+	void AVObject::updateWorldBound() {
+		vTable.asAVObject->updateWorldBound(this);
+	}
+
 	void AVObject::update(float fTime, bool bUpdateControllers, bool bUpdateBounds) {
 #if defined(SE_NI_AVOBJECT_FNADDR_UPDATE) && SE_NI_AVOBJECT_FNADDR_UPDATE > 0
 		const auto NI_PropertyList_update = reinterpret_cast<void(__thiscall*)(AVObject*, float, int, int)>(SE_NI_AVOBJECT_FNADDR_UPDATE);
