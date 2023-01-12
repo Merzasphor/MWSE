@@ -40,7 +40,12 @@ namespace NI {
 			memcpy_s(_triangleList, sizeof(unsigned short) * triangleListLength, triangleList, sizeof(unsigned short) * triangleListLength);
 		}
 
-		return create(vertexCount, _vertices, _normals, _colors, _textureCoords, triangleCount, _triangleList);
+		auto result = create(vertexCount, _vertices, _normals, _colors, _textureCoords, triangleCount, _triangleList);
+
+		result->bounds = bounds;
+
+		return result;
+
 	}
 
 	nonstd::span<Triangle> TriShapeData::getTriangles() {
