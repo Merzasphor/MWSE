@@ -247,7 +247,13 @@ namespace TES3 {
 		TES3::Vector3 translation;
 		float scale;
 
+		Transform operator*(const Transform& transform);
+
+		Transform();
+		Transform(const Matrix33& rotation, const Vector3& translation, const float scale);
+
 		Transform copy() const;
+		void toIdentity();
 	};
 	static_assert(sizeof(Transform) == 0x34, "TES3::Transform failed size validation");
 }

@@ -242,7 +242,10 @@ namespace mwse::lua {
 		{
 			// Start our usertype.
 			auto usertypeDefinition = state.new_usertype<TES3::Transform>("tes3transform");
-			usertypeDefinition["new"] = sol::no_constructor;
+			usertypeDefinition["new"] = sol::constructors<
+				TES3::Transform(),
+				TES3::Transform(const TES3::Matrix33& rotation, const TES3::Vector3& translation, const float scale)
+			>();
 
 			// Basic property bindings.
 			usertypeDefinition["rotation"] = sol::readonly_property(&TES3::Transform::rotation);
@@ -251,6 +254,7 @@ namespace mwse::lua {
 
 			// Basic function binding.
 			usertypeDefinition["copy"] = &TES3::Transform::copy;
+			usertypeDefinition["toIdentity"] = &TES3::Transform::toIdentity;
 		}
 	}
 }

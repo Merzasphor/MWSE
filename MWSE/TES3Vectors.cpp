@@ -817,9 +817,36 @@ namespace TES3 {
 	// Transform
 	//
 
+	Transform Transform::operator*(const Transform& transform)
+	{
+		return {
+			rotation * transform.rotation,
+			translation + transform.translation,
+			scale * transform.scale
+		};
+	}
+
+	Transform::Transform() {
+		this->toIdentity();
+	}
+
+	Transform::Transform(const Matrix33& rotation, const Vector3& translation, const float scale) :
+		rotation(rotation),
+		translation(translation),
+		scale(scale)
+	{
+	}
+
 	Transform Transform::copy() const {
 		return *this;
 	}
 
+	void Transform::toIdentity() {
+		rotation.toIdentity();
+		translation.x = 0.0f;
+		translation.y = 0.0f;
+		translation.z = 0.0f;
+		scale = 1.0f;
+	}
 }
 
