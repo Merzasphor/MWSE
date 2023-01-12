@@ -220,8 +220,9 @@ namespace se::cs {
 		// Always force the current path to the root directory.
 		updateCurrentDirectory();
 
-		// Load settings.
+		// Load settings. Immediately save after so we can see new options if needed.
 		settings.load();
+		settings.save();
 
 		// Install TES Construction Set executable patches.
 		installPatches();
