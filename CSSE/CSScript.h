@@ -24,7 +24,7 @@ namespace se::cs {
 		const char** longVarNames; // 0x48
 		const char** floatVarNames; // 0x4C
 		const char* variableNames; // 0x50
-		int unknown_0x54;
+		const char* text; // 0x54
 		void* bytecode; // 0x58
 		LocalData defaultLocalData; // 0x5C
 
