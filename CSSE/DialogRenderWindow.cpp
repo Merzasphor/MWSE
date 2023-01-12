@@ -112,7 +112,7 @@ namespace se::cs::dialog::render_window {
 		int presentationInterval; // 0x38
 		float gamma; // 0x3C
 		NI::Vector3 unknown_0x40;
-		NI::Node* node; // 0x4C
+		NI::Pointer<NI::Node> node; // 0x4C
 		NI::Renderer* renderer; // 0x50
 		int unknown_0x54;
 		HWND parentWindow; // 0x58
@@ -586,6 +586,24 @@ namespace se::cs::dialog::render_window {
 		sgController->pick->pickType = previousPickType;
 
 		return closestRef;
+	}
+
+	//
+	// Patch: Allow custom FOV.
+	//
+
+	bool __fastcall Patch_AllowCustomFOV(NetImmerseInstance* self, DWORD _EDX_, NI::Camera* camera, int width, int height, float renderDistance) {
+		auto& frustum = camera->viewFrustum;
+		frustum.setFOV(settings.render_window.fov, float(height) / float(width));
+		frustum.near = std::clamp(renderDistance / 10000.0f, 0.1f, 12.0f);
+		frustum.far = renderDistance;
+
+		camera->port = { 0.0f, 1.0f, 1.0f, 0.0f };
+
+		camera->scene = self->node;
+		camera->update();
+
+		return true;
 	}
 
 	//
@@ -1116,6 +1134,9 @@ namespace se::cs::dialog::render_window {
 
 		// Patch: Make clicking things near skinned objects not painful.
 		genJumpEnforced(0x404980, 0x463F30, reinterpret_cast<DWORD>(Patch_FixPickAgainstSkinnedObjects));
+
+		// Patch: Allow custom FOV.
+		genJumpEnforced(0x4028FB, 0x40BE60, reinterpret_cast<DWORD>(Patch_AllowCustomFOV));
 
 		// Patch: Custom marker toggling code.
 		writePatchCodeUnprotected(0x49E8CE, (BYTE*)PatchEditorMarkers_Setup, PatchEditorMarkers_Setup_Size);

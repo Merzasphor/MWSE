@@ -10,12 +10,14 @@ namespace se::cs {
 	//
 
 	void Settings_t::RenderWindowSettings::from_toml(const toml::value& v) {
+		fov = toml::find_or(v, "fov", fov);
 		use_world_axis_rotations_by_default = toml::find_or(v, "use_world_axis_rotations_by_default", use_world_axis_rotations_by_default);
 	}
 
 	toml::value Settings_t::RenderWindowSettings::into_toml() const {
 		return toml::value(
 			{
+				{ "fov", fov },
 				{ "use_world_axis_rotations_by_default", use_world_axis_rotations_by_default },
 			}
 		);

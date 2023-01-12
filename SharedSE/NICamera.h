@@ -12,6 +12,8 @@ namespace NI {
 		float bottom; // 0xC
 		float near; // 0x10
 		float far; // 0x14
+
+		bool setFOV(float fovDegrees, float aspect);
 	};
 	static_assert(sizeof(Frustum) == 0x18, "NI::Frustum failed size validation");
 

@@ -1,8 +1,22 @@
 #include "NICamera.h"
 
 #include "ExceptionUtil.h"
+#include "MathUtil.h"
 
 namespace NI {
+	bool Frustum::setFOV(float fovDegrees, float aspect) {
+		const auto fovRadians = se::math::degreesToRadians(fovDegrees);
+		const auto fovTan = std::tan(fovRadians / 2.0f);
+		const auto fovTanAspect = fovTan * aspect;
+
+		left = -fovTan;
+		right = fovTan;
+		top = fovTanAspect;
+		bottom = -fovTanAspect;
+
+		return true;
+	}
+
 	Camera::Camera() {
 #if defined(SE_NI_CAMERA_FNADDR_CTOR) && SE_NI_CAMERA_FNADDR_CTOR > 0
 		// Cleanup automatic cruft.
