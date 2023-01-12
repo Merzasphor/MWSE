@@ -1,6 +1,7 @@
 #include "NIPick.h"
 
-#include "NIGeometry.h"
+#include "NITriShape.h"
+#include "NITriShapeData.h"
 
 #include "ExceptionUtil.h"
 #include "MemoryUtil.h"
@@ -37,11 +38,15 @@ namespace NI {
 #endif
 	}
 
+	struct SavedGeometryState {
+		Pointer<TriShape> geometry;
+		Pointer<TriShapeData> data;
+		Pointer<SkinInstance> skinInstance;
+	};
+
 	bool Pick::pickObjectsWithSkinDeforms(const Vector3* origin, const Vector3* direction, bool append, float maxDistance) {
 		// Data to restore skinned objects to their original state.
-		std::unordered_map<Geometry*, Pointer<SkinInstance>> replacedSkinInstances;
-		std::unordered_map<Geometry*, std::vector<Vector3>> replacedVertices;
-		std::unordered_map<Geometry*, std::vector<Vector3>> replacedNormals;
+		std::vector<SavedGeometryState> savedGeometryStates;
 
 		// Perform our first test.
 		if (!pickObjects(origin, direction, append, maxDistance)) {
@@ -58,38 +63,39 @@ namespace NI {
 			}
 
 			// Skip if we're not affecting tri-based geometry.
-			const auto geometry = result->object;
-			if (!geometry->isInstanceOfType(RTTIStaticPtr::NiTriBasedGeom)) {
+			if (!result->object->isInstanceOfType(RTTIStaticPtr::NiTriShape)) {
+#if _DEBUG
+				if (result->object->skinInstance) {
+					throw std::exception("Unaccounted for type of skinned object!");
+				}
+#endif
 				continue;
 			}
+
+			const auto geometry = static_cast<TriShape*>(result->object);
 
 			// If the geometry is skinned we apply the skin deform and set the redo flag.
 			// This way the redo raycast (and future raycasts) can handle the object correctly.
 			if (geometry->skinInstance) {
 				needsRedo = true;
 
-				// temporary copy vertices/normals
-				const auto& data = geometry->modelData;
-				const auto count = data->vertexCount;
-				const auto vertices = data->vertex;
-				const auto normals = data->normal;
+				// Create our backup data.
+				savedGeometryStates.push_back({});
+				auto& backup = savedGeometryStates.back();
+				backup.geometry = geometry;
 
-				// Backup vertices.
-				auto& srcVertices = replacedVertices[geometry];
-				srcVertices.reserve(count);
-				srcVertices.insert(srcVertices.end(), &vertices[0], &vertices[count]);
+				// Clone the data.
+				backup.data = geometry->getModelData();
+				auto data = backup.data->copyData(true, false, false);
+				data->bounds = backup.data->bounds;
+				geometry->setModelData(data);
 
-				// Backup normals.
-				auto& srcNormals = replacedNormals[geometry];
-				srcNormals.reserve(count);
-				srcNormals.insert(srcNormals.end(), &normals[0], &normals[count]);
-
-				// Apply the skin deform
-				geometry->skinInstance->deform(srcVertices.data(), srcNormals.data(), data->vertexCount, data->vertex, data->normal);
+				// Apply the skin deform to the new copy.
+				geometry->skinInstance->deform(backup.data->vertex, backup.data->normal, data->vertexCount, data->vertex, data->normal);
 				data->markAsChanged();
 
-				// Remove the skin instance, but back it up in our restore data.
-				replacedSkinInstances[geometry] = geometry->skinInstance;
+				// Backup and clear skin instance.
+				backup.skinInstance = geometry->skinInstance;
 				geometry->skinInstance = nullptr;
 
 				geometry->update();
@@ -104,19 +110,10 @@ namespace NI {
 		}
 
 		// Restore existing geomtry data.
-		for (auto& [geometry, skinInstance] : replacedSkinInstances) {
-			const auto& data = geometry->modelData;
-
-			auto& srcVertices = replacedVertices[geometry];
-			memcpy_s(data->vertex, sizeof(Vector3) * data->vertexCount, srcVertices.data(), sizeof(Vector3) * srcVertices.size());
-
-			auto& srcNormals = replacedNormals[geometry];
-			memcpy_s(data->normal, sizeof(Vector3) * data->vertexCount, srcNormals.data(), sizeof(Vector3) * srcNormals.size());
-
-			geometry->skinInstance = skinInstance;
-
-			data->markAsChanged();
-			geometry->update();
+		for (const auto& state : savedGeometryStates) {
+			state.geometry->setModelData(state.data);
+			state.geometry->skinInstance = state.skinInstance;
+			state.geometry->update();
 		}
 
 		return true;
