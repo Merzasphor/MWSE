@@ -2,6 +2,8 @@
 
 #include "CSDefines.h"
 
+#include "MemoryUtil.h"
+
 namespace se::cs::dialog::dialogue_window {
 	constexpr UINT DIALOG_ID = 151;
 
@@ -56,6 +58,9 @@ namespace se::cs::dialog::dialogue_window {
 	constexpr UINT CONTROL_ID_SHARED_BY_LIST = 1021;
 	constexpr UINT CONTROL_ID_UPDATE_SHARED_BY_BUTTON = 1645;
 
+	// Global variables
+	using ghWnd = memory::ExternalGlobal<HWND, 0x6CE9A0>;
+
 	struct DialogueWindowData {
 		int unknown_0x0;
 		int unknown_0x4;
@@ -72,6 +77,10 @@ namespace se::cs::dialog::dialogue_window {
 		bool unknown_0x30;
 	};
 	static_assert(sizeof(DialogueWindowData) == 0x34, "DialogueWindowData failed size validation");
+
+	HWND createOrFocus(Actor* filter = nullptr);
+
+	bool focusDialogue(Dialogue* dialogue, DialogueInfo* info = nullptr);
 
 	void installPatches();
 }

@@ -1,5 +1,9 @@
 #pragma once
 
+#include "CSDefines.h"
+
+#include "MemoryUtil.h"
+
 namespace se::cs::dialog::object_window {
 	constexpr UINT DIALOG_ID = 122;
 
@@ -10,6 +14,8 @@ namespace se::cs::dialog::object_window {
 	// Custom IDs.
 	constexpr UINT CONTROL_ID_FILTER_LABEL = 2000;
 	constexpr UINT CONTROL_ID_FILTER_EDIT = 2001;
+
+	int getTabForObjectType(ObjectType::ObjectType objectType);
 
 	void installPatches();
 }

@@ -17,6 +17,7 @@
 #include "DialogObjectWindow.h"
 #include "DialogRenderWindow.h"
 #include "DialogSearchAndReplaceWindow.h"
+#include "DialogTextSearch.h"
 
 #include "MemoryUtil.h"
 #include "StringUtil.h"
@@ -186,6 +187,7 @@ namespace se::cs {
 		dialog::object_window::installPatches();
 		dialog::render_window::installPatches();
 		dialog::search_and_replace_window::installPatches();
+		dialog::text_search_window::installPatches();
 	}
 
 	void updateCurrentDirectory() {

@@ -14,6 +14,8 @@
 
 #include "ObjectWindowTabData.h"
 
+#include "WindowMain.h"
+
 #include "Settings.h"
 
 namespace se::cs::dialog::object_window {
@@ -21,7 +23,6 @@ namespace se::cs::dialog::object_window {
 
 	constexpr auto REPLACE_TAB_COLUMN_LOGIC = true;
 
-	using ghWndMainWindow = ExternalGlobal<HWND, 0x6CE934>;
 	using ghWndTabControl = ExternalGlobal<HWND, 0x6CF08C>;
 	using ghWndObjectList = ExternalGlobal<HWND, 0x6CEFD0>;
 	static HWND objectWindowSearchControl = NULL;
@@ -245,7 +246,7 @@ namespace se::cs::dialog::object_window {
 
 	void CALLBACK PatchDialogProc_BeforeSize(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam) {
 		// Update view menu.
-		auto mainWindow = GetMenu(ghWndMainWindow::get());
+		auto mainWindow = GetMenu(window::main::ghWnd::get());
 		if (wParam) {
 			if (wParam == SIZE_MINIMIZED) {
 				CheckMenuItem(mainWindow, 40199u, MF_BYCOMMAND);
@@ -489,6 +490,16 @@ namespace se::cs::dialog::object_window {
 		}
 
 		return result;
+	}
+
+	int getTabForObjectType(ObjectType::ObjectType objectType) {
+		const auto objectTypesForTab = (ObjectType::ObjectType*)0x6A3CC4;
+		for (auto i = 0u; i < Tab::COUNT; ++i) {
+			if (objectTypesForTab[i] == objectType) {
+				return i;
+			}
+		}
+		return -1;
 	}
 	
 	//

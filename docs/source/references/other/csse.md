@@ -89,6 +89,10 @@ The following changes to the rendering window apply when landscape editing:
 
 * Optimized performance of initial display by 80% (e.g. 1.9 seconds instead of 9.7 seconds).
 
+### Text Search Window
+
+* Elements may now be double clicked to open the relevant edit window. The right context will be shown, if applicable. For example, a faction will be automatically selected, or a particular INFO record will be displayed.
+
 ### Cell View
 
 * Significantly improved UI responsiveness.

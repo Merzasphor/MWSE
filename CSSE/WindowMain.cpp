@@ -2,19 +2,195 @@
 
 #include "LogUtil.h"
 #include "MemoryUtil.h"
+#include "WinUIUtil.h"
 
 #include "Settings.h"
 
+#include "CSBaseObject.h"
 #include "CSDataHandler.h"
 #include "CSGameFile.h"
+#include "CSGameSetting.h"
 #include "CSRecordHandler.h"
+#include "CSScript.h"
 
 #include "NICamera.h"
 #include "NIVector3.h"
 
 #include "DialogRenderWindow.h"
+#include "DialogObjectWindow.h"
 
 namespace se::cs::window::main {
+
+	struct ObjectEditLParam {
+		ObjectType::ObjectType objectType; // 0x0
+		BaseObject* object; // 0x4
+		int unknown_0x8;
+		int unknown_0xC;
+	};
+
+	HWND showComboBasedEditWindow(const BaseObject* object, HWND hWnd, LPCSTR lpTemplateName, DLGPROC dlgProc, int comboBoxId) {
+		// Create new window if needed.
+		if (hWnd == NULL) {
+			hWnd = CreateDialogParamA(hInstance::get(), lpTemplateName, ghWnd::get(), dlgProc, 0);
+			if (hWnd == NULL) {
+				return NULL;
+			}
+		}
+		// Show existing window.
+		else if (GetActiveWindow() != hWnd) {
+			SetActiveWindow(hWnd);
+		}
+
+		// Select the searched for object.
+		const auto hDlgCombo = GetDlgItem(hWnd, comboBoxId);
+		const auto count = ComboBox_GetCount(hDlgCombo);
+		for (auto i = 0; i < count; ++i) {
+			const auto birthsign = (BaseObject*)ComboBox_GetItemData(hDlgCombo, i);
+			if (birthsign == object) {
+				winui::ComboBox_SetCurSelEx(hDlgCombo, i);
+				break;
+			}
+		}
+
+		return hWnd;
+	}
+
+	HWND showBirthsignEditWindow(BaseObject* object) {
+		using ghWndDialogBirthsigns = memory::ExternalGlobal<HWND, 0x6CE9A0>;
+		return showComboBasedEditWindow(object, ghWndDialogBirthsigns::get(), (LPCSTR)0xDF, (DLGPROC)0x402EA5, 1028);
+	}
+
+	HWND showClassEditWindow(BaseObject* object) {
+		using ghWndDialogClasses = memory::ExternalGlobal<HWND, 0x6CE97C>;
+		return showComboBasedEditWindow(object, ghWndDialogClasses::get(), (LPCSTR)0xA0, (DLGPROC)0x402036, 1158);
+	}
+
+	HWND showFactionEditWindow(BaseObject* object) {
+		return showComboBasedEditWindow(object, NULL, (LPCSTR)0x9D, (DLGPROC)0x4034E5, 1168);
+	}
+
+	HWND showRaceEditWindow(BaseObject* object) {
+		using ghWndDialogRaces = memory::ExternalGlobal<HWND, 0x6CE978>;
+		return showComboBasedEditWindow(object, ghWndDialogRaces::get(), (LPCSTR)0x9F, (DLGPROC)0x403BFC, 1083);
+	}
+
+	struct ScriptWindowUserData {
+		int unknown_0x0;
+		int unknown_0x4;
+		int unknown_0x8;
+		int unknown_0xC;
+		int unknown_0x10;
+		int unknown_0x14;
+		int unknown_0x18;
+		int unknown_0x1C;
+		Script* script;
+		Script* toOpenScript;
+		bool unknown_0x28;
+		bool unknown_0x29;
+		HMENU hMenu; // 0x2C
+		HWND hRichTextEdit; // 0x30
+		HWND hStatusWindow; // 0x34
+		HWND hToolbar; // 0x38
+		HWND hCallingDialog; // 0x38
+		int lineFromChar;
+		int lineCount;
+		bool blockProcEvents;
+	};
+	static_assert(sizeof(ScriptWindowUserData) == 0x4C, "ScriptWindowUserData failed size validation");
+
+	HWND showScriptEditWindow(BaseObject* object) {
+		auto hWnd = CreateDialogParamA(hInstance::get(), (LPCSTR)0xBC, ghWnd::get(), (DLGPROC)0x4015F5, 0);
+		auto userData = (ScriptWindowUserData*)GetWindowLongA(hWnd, GWL_USERDATA);
+
+		// Set the current script.
+		auto script = static_cast<Script*>(object);
+		userData->script = script;
+
+		// Load the text.
+		SetWindowTextA(userData->hRichTextEdit, script->text);
+
+		// Set the window title.
+		char buffer[64] = {};
+		if (script->getModified()) {
+			sprintf_s(buffer, "Script Edit - [%s *]", script->getObjectID());
+		}
+		else {
+			sprintf_s(buffer, "Script Edit - [%s]", script->getObjectID());
+		}
+		SetWindowTextA(hWnd, buffer);
+
+		if (script->getDeleted()) {
+			ShowWindow(userData->hRichTextEdit, 5);
+			EnableWindow(userData->hRichTextEdit, FALSE);
+		}
+		else {
+			EnableWindow(userData->hRichTextEdit, TRUE);
+		}
+
+		SendMessageA(userData->hRichTextEdit, EM_SETMODIFY, 0, 0);
+		userData->unknown_0x29 = false;
+
+		return hWnd;
+	}
+
+	HWND showDefaultObjectEditWindow(BaseObject* object) {
+		ObjectEditLParam lParam = {};
+		lParam.objectType = object->objectType;
+		lParam.object = object;
+
+		DLGPROC proc = (DLGPROC)0x402F9A;
+		switch (object->objectType) {
+		case ObjectType::Alchemy:
+			proc = (DLGPROC)0x4035BC;
+			break;
+		case ObjectType::Creature:
+			proc = (DLGPROC)0x40132F;
+			break;
+		case ObjectType::Enchantment:
+			proc = (DLGPROC)0x404912;
+			break;
+		case ObjectType::LeveledCreature:
+			proc = (DLGPROC)0x402C3E;
+			break;
+		case ObjectType::LeveledItem:
+			proc = (DLGPROC)0x401D66;
+			break;
+		case ObjectType::NPC:
+			proc = (DLGPROC)0x40313E;
+			break;
+		case ObjectType::Spell:
+			proc = (DLGPROC)0x401299;
+			break;
+		}
+
+		auto tab = dialog::object_window::getTabForObjectType(object->objectType);
+		if (tab == -1) {
+			return NULL;
+		}
+
+		const auto objectWinTypeForTab = (LPCSTR*)0x69460C;
+
+		return CreateDialogParamA(hInstance::get(), objectWinTypeForTab[tab], ghWnd::get(), proc, LPARAM(&lParam));
+	}
+
+	HWND showObjectEditWindow(BaseObject* object) {
+		switch (object->objectType) {
+		case ObjectType::Birthsign:
+			return showBirthsignEditWindow(object);
+		case ObjectType::Class:
+			return showClassEditWindow(object);
+		case ObjectType::Faction:
+			return showFactionEditWindow(object);
+		case ObjectType::GameSetting:
+			return NULL;
+		case ObjectType::Race:
+			return showRaceEditWindow(object);
+		case ObjectType::Script:
+			return showScriptEditWindow(object);
+		default:
+			return showDefaultObjectEditWindow(object);
+		}
+	}
 
 	//
 	// Patch: Throttle UI status updates.
@@ -150,11 +326,6 @@ namespace se::cs::window::main {
 		// Call original function.
 		const auto CS_MainWindowDialogProc = reinterpret_cast<WNDPROC>(0x444590);
 		auto result = CS_MainWindowDialogProc(hWnd, msg, wParam, lParam);
-
-		// Handle post-patches.
-		switch (msg) {
-
-		}
 
 		return result;
 	}

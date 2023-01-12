@@ -32,6 +32,8 @@ namespace se::cs {
 		BaseObject* filterCell; // 0x98
 		BaseObject* filterPlayerFaction; // 0x9C
 		const char* soundId; // 0xA0
+
+		Dialogue* getDialogue() const;
 	};
 	static_assert(sizeof(DialogueInfo) == 0xA4, "TES3::DialogueInfo failed size validation");
 	static_assert(sizeof(DialogueInfo::LoadLinkNode) == 0xC, "TES3::DialogueInfo::LoadLinkNode failed size validation");

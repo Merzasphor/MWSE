@@ -1,7 +1,5 @@
 #include "DialogDialogueWindow.h"
 
-#include "MemoryUtil.h"
-
 #include "CSCell.h"
 #include "CSDataHandler.h"
 #include "CSDialogue.h"
@@ -12,10 +10,46 @@
 
 #include "LogUtil.h"
 #include "StringUtil.h"
+#include "WinUIUtil.h"
+
+#include "WindowMain.h"
 
 namespace se::cs::dialog::dialogue_window {
 	constexpr auto ENABLE_ALL_OPTIMIZATIONS = true;
 	constexpr auto LOG_PERFORMANCE_RESULTS = false;
+
+	HWND createOrFocus(Actor* filter) {
+		auto hWnd = ghWnd::get();
+		if (hWnd) {
+			SetFocus(hWnd);
+			return hWnd;
+		}
+
+		return CreateDialogParamA(window::main::hInstance::get(), (LPSTR)DIALOG_ID, window::main::ghWnd::get(), (DLGPROC)0x401334, (LPARAM)filter);
+	}
+
+	bool focusDialogue(Dialogue* dialogue, DialogueInfo* info) {
+		using namespace se::cs::winui;
+
+		const auto hWnd = ghWnd::get();
+		if (hWnd == NULL) {
+			return false;
+		}
+
+		const auto hDlgTopicList = GetDlgItem(hWnd, CONTROL_ID_TOPIC_LIST);
+		if (!ListView_SelectByParam(hDlgTopicList, (LPARAM)dialogue)) {
+			return false;
+		}
+
+		if (info) {
+			const auto hDlgInfoList = GetDlgItem(hWnd, CONTROL_ID_INFO_LIST);
+			if (!ListView_SelectByParam(hDlgInfoList, (LPARAM)info)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
 
 	void addDialogStyle(HWND hWnd, DWORD style) {
 		SetWindowLongA(hWnd, GWL_STYLE, GetWindowLongA(hWnd, GWL_STYLE) | style);

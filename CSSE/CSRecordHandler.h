@@ -18,9 +18,9 @@ namespace se::cs {
 
 	struct RecordHandler {
 		struct GameSettingsContainer {
-			int unknown_0x0;
-			int unknown_0x4;
-			int unknown_0x8;
+			HWND hFilteredSettingsList;
+			HWND hSettingsTabs;
+			int currentTabLParam;
 			int unknown_0xC;
 			GameSetting* gameSettings[1520]; // 0x10
 			int unknown_0x17D0;

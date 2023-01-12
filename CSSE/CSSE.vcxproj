@@ -152,6 +152,7 @@
     <ClInclude Include="DialogObjectWindow.h" />
     <ClInclude Include="DialogRenderWindow.h" />
     <ClInclude Include="DialogSearchAndReplaceWindow.h" />
+    <ClInclude Include="DialogTextSearch.h" />
     <ClInclude Include="EditBasicExtended.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="CSBaseObject.h" />
@@ -162,6 +163,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="WindowMain.h" />
+    <ClInclude Include="WinUIUtil.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CSArmor.cpp" />
@@ -169,12 +171,14 @@
     <ClCompile Include="CSBook.cpp" />
     <ClCompile Include="CSContainer.cpp" />
     <ClCompile Include="CSCreature.cpp" />
+    <ClCompile Include="CSDialogueInfo.cpp" />
     <ClCompile Include="CSIngredient.cpp" />
     <ClCompile Include="CSLeveledCreature.cpp" />
     <ClCompile Include="CSLeveledItem.cpp" />
     <ClCompile Include="CSNPC.cpp" />
     <ClCompile Include="CSSpell.cpp" />
     <ClCompile Include="CSWeapon.cpp" />
+    <ClCompile Include="DialogTextSearch.cpp" />
     <ClCompile Include="EditBasicExtended.cpp" />
     <ClCompile Include="CSBaseObject.cpp" />
     <ClCompile Include="CSDataHandler.cpp" />
@@ -200,6 +204,7 @@
     <ClCompile Include="CSReference.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="WindowMain.cpp" />
+    <ClCompile Include="WinUIUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CSSE.h" />
