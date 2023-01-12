@@ -54,6 +54,10 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)NITimeController.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NITransform.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NITriangle.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NITriBasedGeometry.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NITriBasedGeometryData.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NITriShape.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NITriShapeData.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIVector2.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NIVector3.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)StringUtil.h" />
@@ -85,6 +89,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)NIStream.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NITexture.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NITransform.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)NITriShape.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)NITriShapeData.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NIVector3.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)StringUtil.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)WindowsUtil.cpp" />

@@ -24,6 +24,16 @@ namespace NI {
 		unsigned short revisionID; // 0x30
 		bool unknown_0x32;
 
+		//
+		// vTable wrappers.
+		//
+
+		unsigned short getActiveVertexCount() const;
+
+		//
+		// Custom functions.
+		//
+
 		nonstd::span<Vector3> getVertices() const;
 		void markAsChanged();
 	};

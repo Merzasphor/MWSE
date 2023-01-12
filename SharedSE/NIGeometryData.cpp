@@ -1,6 +1,10 @@
 #include "NIGeometryData.h"
 
 namespace NI {
+	unsigned short GeometryData::getActiveVertexCount() const {
+		return vTable.asGeometryData->getActiveVertexCount(this);
+	}
+
 	nonstd::span<Vector3> GeometryData::getVertices() const {
 		if (vertex) {
 			return nonstd::span(vertex, vertexCount);

@@ -165,6 +165,18 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)NITriangle.h">
       <Filter>Header Files\NI</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)NITriBasedGeometry.h">
+      <Filter>Header Files\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)NITriBasedGeometryData.h">
+      <Filter>Header Files\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)NITriShape.h">
+      <Filter>Header Files\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)NITriShapeData.h">
+      <Filter>Header Files\NI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)NIVector3.cpp">
@@ -243,6 +255,12 @@
       <Filter>Source Files\NI</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)NICollisionSwitch.cpp">
+      <Filter>Source Files\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)NITriShapeData.cpp">
+      <Filter>Source Files\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)NITriShape.cpp">
       <Filter>Source Files\NI</Filter>
     </ClCompile>
   </ItemGroup>

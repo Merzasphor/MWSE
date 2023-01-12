@@ -24,6 +24,10 @@ namespace NI {
 		inline GeometryData* getModelData() {
 			return modelData;
 		}
+
+		inline void setModelData(GeometryData* data) {
+			vTable.asGeometry->setModelData(this, data);
+		}
 	};
 	static_assert(sizeof(Geometry) == 0xAC, "NI::Geometry failed size validation");
 }
