@@ -58,7 +58,6 @@ If you are using [Construction Set Better UI](https://www.nexusmods.com/morrowin
 * Fixed issue where box selection in the object window would cause the mouse to snap to the edge of the screen.
 * Modified objects are highlighted with a light green background.
 * Deleted objects are highlighted with a light red background.
-* A new column is available to sort on for the object modified state.
 
 ### Dialogue Window
 
