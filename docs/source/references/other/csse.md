@@ -78,7 +78,7 @@ If you are using [Construction Set Better UI](https://www.nexusmods.com/morrowin
 	* Hide selected references, culling them from the scene so you can work behind them.
 	* Restore hidden references, restoring to view any references hidden with the hide selection option.
 	* Set or clear the QuickStart data from the current render window perspective.
-* The field of view can be overwritten in the config file.
+* The field of view (FOV) and antialiasing (multisamples) can be overwritten in the config file.
 
 The following changes to the rendering window apply when landscape editing:
 

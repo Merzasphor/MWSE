@@ -11,6 +11,7 @@ namespace se::cs {
 
 	void Settings_t::RenderWindowSettings::from_toml(const toml::value& v) {
 		fov = toml::find_or(v, "fov", fov);
+		multisamples = toml::find_or(v, "multisamples", multisamples);
 		use_world_axis_rotations_by_default = toml::find_or(v, "use_world_axis_rotations_by_default", use_world_axis_rotations_by_default);
 	}
 
@@ -18,6 +19,7 @@ namespace se::cs {
 		return toml::value(
 			{
 				{ "fov", fov },
+				{ "multisamples", multisamples },
 				{ "use_world_axis_rotations_by_default", use_world_axis_rotations_by_default },
 			}
 		);

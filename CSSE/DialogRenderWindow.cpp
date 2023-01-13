@@ -607,6 +607,17 @@ namespace se::cs::dialog::render_window {
 	}
 
 	//
+	// Patch: Allow antialiasing in the render window
+	//
+
+	byte __fastcall Patch_AllowCustomMultisamples(void* self, DWORD _edx_, unsigned int a2, unsigned int a3, char a4, int multiSamples, int a6, unsigned int a7, unsigned int a8, int a9, unsigned int a10, int a11) {
+		multiSamples = settings.render_window.multisamples;
+
+		auto fn = reinterpret_cast<byte(__thiscall*)(void*, unsigned int, unsigned int, char, int, int, unsigned int, unsigned int, int, unsigned int, int)>(0x58ECC0);
+		return fn(self, a2, a3, a4, multiSamples, a6, a7, a8, a9, a10, a11);
+	}
+
+	//
 	// Fix camera positioning around objects with too high of a bound radius.
 	//
 
@@ -1150,6 +1161,9 @@ namespace se::cs::dialog::render_window {
 
 		// Patch: Allow custom FOV.
 		genJumpEnforced(0x4028FB, 0x40BE60, reinterpret_cast<DWORD>(Patch_AllowCustomFOV));
+
+		genCallEnforced(0x58DCFD, 0x58ECC0, reinterpret_cast<DWORD>(Patch_AllowCustomMultisamples));
+		genCallEnforced(0x58EC30, 0x58ECC0, reinterpret_cast<DWORD>(Patch_AllowCustomMultisamples));
 
 		// Patch: Fix camera positioning around objects with too high of a bound radius.
 		genCallEnforced(0x45FCB8, 0x4015BE, reinterpret_cast<DWORD>(Patch_LimitCameraOrbitRadius));
