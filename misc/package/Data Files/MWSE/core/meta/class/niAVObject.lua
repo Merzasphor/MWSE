@@ -54,6 +54,10 @@ function niAVObject:getObjectByName(name) end
 --- @return niAlphaProperty|niFogProperty|niMaterialProperty|niStencilProperty|niTexturingProperty|niVertexColorProperty|niZBufferProperty result No description yet available.
 function niAVObject:getProperty(type) end
 
+--- Convenience method for checking the object's appCulled flag.
+--- @param searchParents boolean? *Default*: `false`. Check if the object is indirectly appCulled by a parent object.
+function niAVObject:isAppCulled(searchParents) end
+
 --- Alias for `update()` method. Updates the world transforms of this node and its children, which makes changes visible for rendering. Use after changing any local rotation, translation, scale, bounds or after attaching and detaching nodes.
 --- 
 --- !!! tip

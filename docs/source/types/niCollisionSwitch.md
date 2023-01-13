@@ -627,6 +627,20 @@ local result = myObject:hasStringDataWith(value)
 
 ***
 
+### `isAppCulled`
+
+Convenience method for checking the object's appCulled flag.
+
+```lua
+myObject:isAppCulled(searchParents)
+```
+
+**Parameters**:
+
+* `searchParents` (boolean): *Default*: `false`. Check if the object is indirectly appCulled by a parent object.
+
+***
+
 ### `isInstanceOfType`
 
 Determines if the object is of a given type, or of a type derived from the given type. Types can be found in the [`ni.type`](https://mwse.github.io/MWSE/references/ni/types/) table.

@@ -1,4 +1,5 @@
 #include "NIAVObject.h"
+#include "NINode.h"
 
 #include "NIProperty.h"
 
@@ -37,6 +38,20 @@ namespace NI {
 
 	void AVObject::setAppCulled(bool culled) {
 		vTable.asAVObject->setAppCulled(this, culled);
+	}
+
+	bool AVObject::isAppCulled(bool searchParents) {
+		if (getAppCulled()) {
+			return true;
+		}
+		if (searchParents && parentNode) {
+			return parentNode->isAppCulled();
+		}
+		return false;
+	}
+
+	bool AVObject::isAppCulled_lua(sol::optional<bool> searchParents) {
+		return isAppCulled(searchParents.value_or(false));
 	}
 
 	void AVObject::update(float fTime, bool bUpdateControllers, bool bUpdateBounds) {

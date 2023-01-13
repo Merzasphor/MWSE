@@ -98,6 +98,7 @@ namespace mwse::lua {
 
 		// Friendly access to flags.
 		usertypeDefinition["appCulled"] = sol::property(&NI::AVObject::getAppCulled, &NI::AVObject::setAppCulled);
+		usertypeDefinition["isAppCulled"] = &NI::AVObject::isAppCulled_lua;
 
 		// Friendly access to properties.
 		usertypeDefinition["alphaProperty"] = sol::property(&NI::AVObject::getAlphaProperty, &NI::AVObject::setAlphaProperty);
