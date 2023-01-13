@@ -46,6 +46,12 @@ namespace NI {
 		return returnedChild;
 	}
 
+	void Node::detachAllChildren() {
+		for (auto i = 0u; i < children.size(); ++i) {
+			detachChildAtHandled(i);
+		}
+	}
+
 	const auto NI_Node_AttachEffect = reinterpret_cast<void(__thiscall*)(Node*, DynamicEffect*)>(0x6C91E0);
 	void Node::attachEffect(DynamicEffect * effect ) {
 		NI_Node_AttachEffect(this, effect);

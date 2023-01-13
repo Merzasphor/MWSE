@@ -28,6 +28,7 @@ namespace NI {
 
 		Pointer<AVObject> detachChildHandled(AVObject* child);
 		Pointer<AVObject> detachChildAtHandled(size_t index);
+		void detachAllChildren();
 
 		void attachEffect(DynamicEffect* effect);
 		void detachEffect(DynamicEffect* effect);

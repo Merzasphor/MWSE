@@ -25,6 +25,9 @@ function niNode:attachEffect(effect) end
 --- @return tes3boundingBox boundingBox The newly created bounding box.
 function niNode:createBoundingBox() end
 
+--- Detaches all children from the children list of the node.
+function niNode:detachAllChildren() end
+
 --- Detaches all dynamic effect from the effect list of the node.
 function niNode:detachAllEffects() end
 

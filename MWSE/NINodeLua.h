@@ -16,6 +16,7 @@ namespace mwse::lua {
 		usertypeDefinition["attachChild"] = &NI::Node::attachChild_lua;
 		usertypeDefinition["attachEffect"] = &NI::Node::attachEffect;
 		usertypeDefinition["createBoundingBox"] = &NI::Node::createBoundingBox_lua;
+		usertypeDefinition["detachAllChildren"] = &NI::Node::detachAllChildren;
 		usertypeDefinition["detachAllEffects"] = &NI::Node::detachAllEffects;
 		usertypeDefinition["detachChild"] = &NI::Node::detachChildHandled;
 		usertypeDefinition["detachChildAt"] = &NI::Node::detachChildAt_lua;
