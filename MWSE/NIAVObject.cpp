@@ -40,18 +40,11 @@ namespace NI {
 		vTable.asAVObject->setAppCulled(this, culled);
 	}
 
-	bool AVObject::isAppCulled(bool searchParents) {
+	bool AVObject::isAppCulled() {
 		if (getAppCulled()) {
 			return true;
 		}
-		if (searchParents && parentNode) {
-			return parentNode->isAppCulled();
-		}
-		return false;
-	}
-
-	bool AVObject::isAppCulled_lua(sol::optional<bool> searchParents) {
-		return isAppCulled(searchParents.value_or(false));
+		return parentNode ? parentNode->isAppCulled() : false;
 	}
 
 	void AVObject::update(float fTime, bool bUpdateControllers, bool bUpdateBounds) {

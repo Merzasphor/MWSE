@@ -629,15 +629,11 @@ local result = myObject:hasStringDataWith(value)
 
 ### `isAppCulled`
 
-Convenience method for checking the object's appCulled flag.
+Recursively checks if either the object or any of its parents are appCulled.
 
 ```lua
-myObject:isAppCulled(searchParents)
+myObject:isAppCulled()
 ```
-
-**Parameters**:
-
-* `searchParents` (boolean): *Default*: `false`. Check if the object is indirectly appCulled by a parent object.
 
 ***
 

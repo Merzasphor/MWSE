@@ -75,8 +75,7 @@ namespace NI {
 		bool getAppCulled();
 		void setAppCulled(bool culled);
 
-		bool isAppCulled(bool searchParents = false);
-		bool isAppCulled_lua(sol::optional<bool> searchParents);
+		bool isAppCulled();
 
 		//
 		// Other related this-call functions.
