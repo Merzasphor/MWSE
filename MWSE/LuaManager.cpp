@@ -1274,7 +1274,7 @@ namespace mwse::lua {
 
 	//
 	// Alchemy brewing potion strength and skill check event.
-	// 
+	//
 
 	TES3::Item* getAlchemyMenuObject(DWORD parentIdAddress) {
 		using namespace TES3::UI;
@@ -2957,7 +2957,7 @@ namespace mwse::lua {
 	const size_t patchJump_size = 0xC;
 
 	//
-	// Event: Filters created. 
+	// Event: Filters created.
 	//
 
 	const auto TES3_WorldController_CreateFilters = reinterpret_cast<void(__thiscall*)(TES3::WorldController*)>(0x411400);
@@ -3245,7 +3245,7 @@ namespace mwse::lua {
 		// Get the associated tile and fire off the update event.
 		TriggerItemTileUpdatedEventForElement(element, 0x7D308C);
 	}
-	
+
 	void __fastcall OnMenuBarterInventoryTileChildPropertySet(TES3::UI::Element* element, DWORD _UNUSED_, TES3::UI::Property property, TES3::UI::PropertyValue value, TES3::UI::PropertyType type) {
 		// Overwritten code.
 		element->setProperty(property, value, type);
@@ -3557,7 +3557,7 @@ namespace mwse::lua {
 	static DWORD postPatchMagicSaveLoad = TES3_PATCH_MAGIC_SAVE_LOAD_RETURN;
 
 	// Intercept the effect id. If it's a custom effect and there's a summon or bound item, change it to an appropriate vanilla effect,
-	// so that the game will select the appropriate branch of the switch. This will allow the game to properly serialize the bound item or 
+	// so that the game will select the appropriate branch of the switch. This will allow the game to properly serialize the bound item or
 	// summon associated with this effect.
 	static __declspec(naked) short PatchMagicSaveLoad() {
 		__asm {
@@ -3870,7 +3870,7 @@ namespace mwse::lua {
 
 	//
 	// Patch: Play animation while retaining player control.
-	// 
+	//
 
 	// Patches ActorAnimData::ctor.
 	__declspec(naked) void patchActorAnimInit() {
@@ -5177,7 +5177,7 @@ namespace mwse::lua {
 		genCallEnforced(0x4D9F7C, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForObject));
 		genCallEnforced(0x4D9FBC, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForObject));
 
-		// Fix BPM constructor to always have a reference. 
+		// Fix BPM constructor to always have a reference.
 		auto bodyPartManagerConstructor = &TES3::BodyPartManager::ctor;
 		genCallEnforced(0x4D8235, 0x472580, *reinterpret_cast<DWORD*>(&bodyPartManagerConstructor));
 		genCallEnforced(0x4D8248, 0x472580, *reinterpret_cast<DWORD*>(&bodyPartManagerConstructor));
