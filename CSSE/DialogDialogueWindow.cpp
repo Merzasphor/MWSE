@@ -379,6 +379,10 @@ namespace se::cs::dialog::dialogue_window {
 		auto hDlgResultEdit = GetDlgItem(hWnd, CONTROL_ID_CURRENT_RESULT_EDIT);
 		auto hDlgTopicList = GetDlgItem(hWnd, CONTROL_ID_TOPIC_LIST);
 
+		// Enable advanced controls on elements.
+		SetWindowSubclass(hDlgCurrentEdit, ui_subclass::edit::BasicExtendedProc, NULL, NULL);
+		SetWindowSubclass(hDlgResultEdit, ui_subclass::edit::BasicExtendedProc, NULL, NULL);
+
 		// Give IDs to controls that don't normally have one.
 		SetWindowIdByValue(hWnd, "Filter for", CONTROL_ID_FILTER_FOR_STATIC);
 		SetWindowIdByValue(hWnd, "Speaker Condition", CONTROL_ID_SPEAKER_CONDITION_BUTTON);
