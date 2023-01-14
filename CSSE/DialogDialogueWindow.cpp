@@ -780,14 +780,6 @@ namespace se::cs::dialog::dialogue_window {
 		return result;
 	}
 
-	/*
-	* Desired Features:
-	*	x Resizable
-	*	- Improve simulate/filter options
-	*	- Add character limit indicator.
-	*	x Allow Ctrl+A
-	*/
-
 	void installPatches() {
 		using memory::genNOPUnprotected;
 		using memory::genJumpEnforced;

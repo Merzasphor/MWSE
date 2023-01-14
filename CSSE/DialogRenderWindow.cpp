@@ -1162,6 +1162,7 @@ namespace se::cs::dialog::render_window {
 		// Patch: Allow custom FOV.
 		genJumpEnforced(0x4028FB, 0x40BE60, reinterpret_cast<DWORD>(Patch_AllowCustomFOV));
 
+		// Patch: Allow custom multisamples.
 		genCallEnforced(0x58DCFD, 0x58ECC0, reinterpret_cast<DWORD>(Patch_AllowCustomMultisamples));
 		genCallEnforced(0x58EC30, 0x58ECC0, reinterpret_cast<DWORD>(Patch_AllowCustomMultisamples));
 
