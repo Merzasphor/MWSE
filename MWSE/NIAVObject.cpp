@@ -1,6 +1,6 @@
 #include "NIAVObject.h"
+#include "NIDefines.h"
 #include "NINode.h"
-
 #include "NIProperty.h"
 
 #include "MemoryUtil.h"
@@ -116,7 +116,7 @@ namespace NI {
 		localScale = source->localScale;
 	}
 
-	void AVObject::copyTransforms(const Transform* source) {
+	void AVObject::copyTransforms(const TES3::Transform* source) {
 		setLocalRotationMatrix(&source->rotation);
 		localTranslate = source->translation;
 		localScale = source->scale;
@@ -126,8 +126,11 @@ namespace NI {
 		if (source.is<AVObject*>()) {
 			copyTransforms(source.as<AVObject*>());
 		}
-		else if (source.is<Transform*>()) {
-			copyTransforms(source.as<Transform*>());
+		else if (source.is<TES3::Transform*>()) {
+			copyTransforms(source.as<TES3::Transform*>());
+		}
+		else {
+			throw std::invalid_argument("Invalid 'source' parameter provided");
 		}
 	}
 

@@ -99,7 +99,7 @@ namespace NI {
 
 		void clearTransforms();
 		void copyTransforms(const AVObject* from);
-		void copyTransforms(const Transform* from);
+		void copyTransforms(const TES3::Transform* from);
 		void copyTransforms_lua(const sol::stack_object from);
 
 		Pointer<Property> getProperty(PropertyType type) const;
