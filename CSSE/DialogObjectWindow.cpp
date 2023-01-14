@@ -275,7 +275,7 @@ namespace se::cs::dialog::object_window {
 		// Update list view area.
 		RECT tabContentRect = {};
 		SetRect(&tabContentRect, 0, 0, mainWidth, mainHeight - 30);
-		SendMessageA(tabControl, TCM_ADJUSTRECT, 0, (LPARAM)&tabContentRect);
+		SendMessageA(tabControl, TCM_ADJUSTRECT, FALSE, (LPARAM)&tabContentRect);
 		MoveWindow(objectListView, tabContentRect.left, tabContentRect.top, tabContentRect.right - tabContentRect.left, tabContentRect.bottom - tabContentRect.top, TRUE);
 
 		// Update the search bar placement.

@@ -3,6 +3,24 @@
 namespace se::cs::winui {
 
 	//
+	// Generic extensions
+	//
+
+	HWND GetControlByText(HWND hParent, const std::string_view& text, bool ignoreResultsWithIDs);
+	bool SetWindowIdByValue(HWND hParent, const std::string_view text, int newID);
+
+	inline LONG GetRectWidth(const RECT* rect) {
+		return rect->right - rect->left;
+	}
+
+	inline LONG GetRectHeight(const RECT* rect) {
+		return rect->bottom - rect->top;
+	}
+
+	void CenterWindow(HWND hWnd);
+	void ResizeAndCenterWindow(HWND hWnd, int width, int height);
+
+	//
 	// ComboBox
 	//
 
@@ -25,6 +43,9 @@ namespace se::cs::winui {
 	//
 	// TabView
 	//
+
+	// Returns the window coordinates that are contained by the tab control.
+	void TabCtrl_GetInteriorRect(HWND hWnd, RECT* out_rect);
 
 	// Sets the current selection index as TabCtrl_SetCurSel, with additional messaging.
 	// This can be blocked if the changing notification returns TRUE.

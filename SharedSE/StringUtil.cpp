@@ -6,10 +6,16 @@ namespace se::string {
 	}
 
 	bool equal(std::string_view a, std::string_view b) {
+		if (a.length() != b.length()) {
+			return false;
+		}
 		return std::equal(a.begin(), a.end(), b.begin(), b.end());
 	}
 
 	bool iequal(std::string_view a, std::string_view b) {
+		if (a.length() != b.length()) {
+			return false;
+		}
 		return std::equal(a.begin(), a.end(), b.begin(), b.end(), ciequal);
 	}
 

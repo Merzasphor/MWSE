@@ -1,6 +1,76 @@
 #include "WinUIUtil.h"
 
+#include "StringUtil.h"
+
 namespace se::cs::winui {
+
+	struct GetControlByTextParam {
+		HWND result = NULL;
+		bool filterHasID = true;
+		std::string_view text = "";
+	};
+
+	BOOL CALLBACK GetControlByTextEnumChildProc(HWND hChild, LPARAM lParam) {
+		auto param = (GetControlByTextParam*)lParam;
+
+		// Ignore elements that already have an ID.
+		if (param->filterHasID && GetWindowLongA(hChild, GWLP_ID) != -1) {
+			return TRUE;
+		}
+
+		// Perform comparison.
+		char buffer[128] = {};
+		auto length = GetWindowTextA(hChild, buffer, sizeof(buffer));
+		if (string::equal(buffer, param->text)) {
+			param->result = hChild;
+			return FALSE;
+		}
+
+		return TRUE;
+	}
+
+	HWND GetControlByText(HWND hParent, const std::string_view& text, bool ignoreResultsWithIDs) {
+		// Make sure our buffer in GetControlByTextEnumChildProc is big enough.
+		if (text.length() > 127) {
+			throw std::invalid_argument("Buffer length insufficient to perform operation.");
+		}
+
+		GetControlByTextParam param;
+		param.filterHasID = ignoreResultsWithIDs;
+		param.text = text;
+
+		EnumChildWindows(hParent, GetControlByTextEnumChildProc, (LPARAM)&param);
+		return param.result;
+	}
+
+	bool SetWindowIdByValue(HWND hParent, const std::string_view text, int newID) {
+		auto hWnd = GetControlByText(hParent, text, true);
+		if (hWnd == NULL) {
+			return false;
+		}
+
+		SetWindowLongA(hWnd, GWLP_ID, newID);
+		return true;
+	}
+
+	void CenterWindow(HWND hWnd) {
+		RECT windowRect = {};
+		GetWindowRect(hWnd, &windowRect);
+
+		const auto screenX = GetSystemMetrics(SM_CXSCREEN);
+		const auto screenY = GetSystemMetrics(SM_CYSCREEN);
+
+		const auto width = GetRectWidth(&windowRect);
+		const auto height = GetRectHeight(&windowRect);
+
+		MoveWindow(hWnd, (screenX - width) / 2, (screenY - height) / 2, width, height, FALSE);
+	}
+
+	void ResizeAndCenterWindow(HWND hWnd, int width, int height) {
+		const auto screenX = GetSystemMetrics(SM_CXSCREEN);
+		const auto screenY = GetSystemMetrics(SM_CYSCREEN);
+		MoveWindow(hWnd, (screenX - width) / 2, (screenY - height) / 2, width, height, FALSE);
+	}
 
 	//
 	// ComboBox
@@ -50,6 +120,24 @@ namespace se::cs::winui {
 	//
 	// TabView
 	//
+
+	void TabCtrl_GetInteriorRect(HWND hWnd, RECT* r) {
+		// Perform base adjustments.
+		GetClientRect(hWnd, r);
+		TabCtrl_AdjustRect(hWnd, FALSE, r);
+
+		// Get the offset of the control.
+		RECT windowRect = {};
+		GetWindowRect(hWnd, &windowRect);
+
+		// Perform relative to parent adjustments.
+		POINT pt = { windowRect.left, windowRect.top };
+		ScreenToClient(GetParent(hWnd), &pt);
+		r->left += pt.x;
+		r->right += pt.x;
+		r->top += pt.y;
+		r->bottom += pt.y;
+	}
 
 	void TabCtrl_SetCurSelEx(HWND hWnd, int index) {
 		auto hParent = GetAncestor(hWnd, GA_PARENT);

@@ -12,6 +12,8 @@
 #include "StringUtil.h"
 #include "WinUIUtil.h"
 
+#include "EditBasicExtended.h"
+
 #include "WindowMain.h"
 
 namespace se::cs::dialog::dialogue_window {
@@ -316,13 +318,15 @@ namespace se::cs::dialog::dialogue_window {
 
 	auto initializationTimer = std::chrono::high_resolution_clock::now();
 
-	inline void PatchDialogProc_BeforeInitialize(HWND hWnd) {
+	void PatchDialogProc_BeforeInitialize(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+		// Begin measure of initialization time.
 		if constexpr (LOG_PERFORMANCE_RESULTS) {
 			initializationTimer = std::chrono::high_resolution_clock::now();
 		}
 
+		// Disable redraw.
 		if constexpr (ENABLE_ALL_OPTIMIZATIONS) {
-			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_UPDATE_FILTER_FOR_COMBO), WM_SETREDRAW, FALSE, NULL);
+			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_FILTER_FOR_COMBO), WM_SETREDRAW, FALSE, NULL);
 			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_TOPIC_LIST), WM_SETREDRAW, FALSE, NULL);
 			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_INFO_LIST), WM_SETREDRAW, FALSE, NULL);
 			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_ID_COMBO), WM_SETREDRAW, FALSE, NULL);
@@ -331,17 +335,31 @@ namespace se::cs::dialog::dialogue_window {
 			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_FACTION_COMBO), WM_SETREDRAW, FALSE, NULL);
 			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_RANK_COMBO), WM_SETREDRAW, FALSE, NULL);
 			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_CELL_COMBO), WM_SETREDRAW, FALSE, NULL);
-			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_PCFACTION_COMBO), WM_SETREDRAW, FALSE, NULL);
-			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_PCRANK_COMBO), WM_SETREDRAW, FALSE, NULL);
+			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_PC_FACTION_COMBO), WM_SETREDRAW, FALSE, NULL);
+			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_PC_RANK_COMBO), WM_SETREDRAW, FALSE, NULL);
 
 			// Gather what data we need to populate lists.
 			populateCollections();
 		}
 	}
 
-	inline void PatchDialogProc_AfterInitialize(HWND hWnd) {
+	LRESULT PatchDialogProc_GetMinMaxInfo(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+		auto info = (LPMINMAXINFO)lParam;
+		info->ptMinTrackSize.x = 1113;
+		info->ptMinTrackSize.y = 700;
+
+		return 0;
+	}
+
+	void PatchDialogProc_AfterInitialize(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+		using se::cs::winui::GetRectHeight;
+		using se::cs::winui::GetRectWidth;
+		using se::cs::winui::ResizeAndCenterWindow;
+		using se::cs::winui::SetWindowIdByValue;
+
+		// Reenable redraw.
 		if constexpr (ENABLE_ALL_OPTIMIZATIONS) {
-			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_UPDATE_FILTER_FOR_COMBO), WM_SETREDRAW, TRUE, NULL);
+			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_FILTER_FOR_COMBO), WM_SETREDRAW, TRUE, NULL);
 			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_TOPIC_LIST), WM_SETREDRAW, TRUE, NULL);
 			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_INFO_LIST), WM_SETREDRAW, TRUE, NULL);
 			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_ID_COMBO), WM_SETREDRAW, TRUE, NULL);
@@ -350,23 +368,394 @@ namespace se::cs::dialog::dialogue_window {
 			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_FACTION_COMBO), WM_SETREDRAW, TRUE, NULL);
 			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_RANK_COMBO), WM_SETREDRAW, TRUE, NULL);
 			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_CELL_COMBO), WM_SETREDRAW, TRUE, NULL);
-			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_PCFACTION_COMBO), WM_SETREDRAW, TRUE, NULL);
-			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_PCRANK_COMBO), WM_SETREDRAW, TRUE, NULL);
+			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_PC_FACTION_COMBO), WM_SETREDRAW, TRUE, NULL);
+			SendMessageA(GetDlgItem(hWnd, CONTROL_ID_CONDITION_PC_RANK_COMBO), WM_SETREDRAW, TRUE, NULL);
 
 			insertedCells.clear();
 		}
 
+		// Gather dialogs that we want to edit.
+		auto hDlgCurrentEdit = GetDlgItem(hWnd, CONTROL_ID_CURRENT_TEXT_EDIT);
+		auto hDlgResultEdit = GetDlgItem(hWnd, CONTROL_ID_CURRENT_RESULT_EDIT);
+		auto hDlgTopicList = GetDlgItem(hWnd, CONTROL_ID_TOPIC_LIST);
+
+		// Give IDs to controls that don't normally have one.
+		SetWindowIdByValue(hWnd, "Filter for", CONTROL_ID_FILTER_FOR_STATIC);
+		SetWindowIdByValue(hWnd, "Speaker Condition", CONTROL_ID_SPEAKER_CONDITION_BUTTON);
+		SetWindowIdByValue(hWnd, "ID", CONTROL_ID_CONDITION_ID_STATIC);
+		SetWindowIdByValue(hWnd, "Race", CONTROL_ID_CONDITION_RACE_STATIC);
+		SetWindowIdByValue(hWnd, "Cell", CONTROL_ID_CONDITION_CELL_STATIC);
+		SetWindowIdByValue(hWnd, "Faction", CONTROL_ID_CONDITION_FACTION_STATIC);
+		SetWindowIdByValue(hWnd, "Rank", CONTROL_ID_CONDITION_RANK_STATIC);
+		SetWindowIdByValue(hWnd, "Class", CONTROL_ID_CONDITION_CLASS_STATIC);
+		SetWindowIdByValue(hWnd, "PC Faction", CONTROL_ID_CONDITION_PC_FACTION_STATIC);
+		SetWindowIdByValue(hWnd, "PC Rank", CONTROL_ID_CONDITION_PC_RANK_STATIC);
+		SetWindowIdByValue(hWnd, "Function/Variable", CONTROL_ID_CONDITION_FUNCTION_VARIABLE_STATIC);
+		SetWindowIdByValue(hWnd, "Result", CONTROL_ID_CURRENT_RESULT_STATIC);
+		SetWindowIdByValue(hWnd, "Shared By", CONTROL_ID_SHARED_BY_STATIC);
+
+		// Unhide quest stuff to mark them as disabled.
+		auto hDlgJournalQuestNameCheckButton = GetDlgItem(hWnd, CONTROL_ID_CONDITION_JOURNAL_QUEST_NAME_CHECKBOX);
+		ShowWindow(hDlgJournalQuestNameCheckButton, TRUE);
+		EnableWindow(hDlgJournalQuestNameCheckButton, FALSE);
+		auto hDlgJournalQuestFinishedCheckButton = GetDlgItem(hWnd, CONTROL_ID_CONDITION_JOURNAL_FINISHED_CHECKBOX);
+		ShowWindow(hDlgJournalQuestFinishedCheckButton, TRUE);
+		EnableWindow(hDlgJournalQuestFinishedCheckButton, FALSE);
+		auto hDlgJournalQuestRestartCheckButton = GetDlgItem(hWnd, CONTROL_ID_CONDITION_JOURNAL_RESTART_CHECKBOX);
+		ShowWindow(hDlgJournalQuestRestartCheckButton, TRUE);
+		EnableWindow(hDlgJournalQuestRestartCheckButton, FALSE);
+
+		// Make it so the window can be maximized and generally resized.
+		auto windowStyle = GetWindowLongA(hWnd, GWL_STYLE);
+		windowStyle &= ~DS_MODALFRAME;
+		windowStyle |= WS_SIZEBOX | WS_MAXIMIZEBOX;
+		SetWindowLongA(hWnd, GWL_STYLE, windowStyle);
+
+		// Enforce minimum size.
+		constexpr auto MIN_WIDTH = 1113;
+		constexpr auto MIN_HEIGHT = 720;
+		RECT windowRect = {};
+		GetClientRect(hWnd, &windowRect);
+		if (GetRectWidth(&windowRect) < MIN_WIDTH || GetRectHeight(&windowRect) < MIN_HEIGHT) {
+			ResizeAndCenterWindow(hWnd, MIN_WIDTH, MIN_HEIGHT);
+		}
+
+		// Finish measure of initialization time.
 		if constexpr (LOG_PERFORMANCE_RESULTS) {
 			auto timeToInitialize = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - initializationTimer);
 			log::stream << "Total dialogue window initialization time: " << timeToInitialize.count() << "ms" << std::endl;
 		}
 	}
 
+	void PatchDialogProc_AfterNotify_TabControl_SelectionChanged(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+		auto userData = (DialogueWindowData*)GetWindowLongA(hWnd, GWL_USERDATA);
+
+		auto hDlgConditionSexStatic = GetDlgItem(hWnd, CONTROL_ID_CONDITION_SEX_STATIC);
+		auto hDlgConditionSexCombo = GetDlgItem(hWnd, CONTROL_ID_CONDITION_SEX_COMBO);
+		auto hDlgJournalQuestNameCheckButton = GetDlgItem(hWnd, CONTROL_ID_CONDITION_JOURNAL_QUEST_NAME_CHECKBOX);
+		auto hDlgJournalQuestFinishedCheckButton = GetDlgItem(hWnd, CONTROL_ID_CONDITION_JOURNAL_FINISHED_CHECKBOX);
+		auto hDlgJournalQuestRestartCheckButton = GetDlgItem(hWnd, CONTROL_ID_CONDITION_JOURNAL_RESTART_CHECKBOX);
+
+		// Restore visibility of the sex condition.
+		if (userData->currentTypeTab == 4) {
+			ShowWindow(hDlgConditionSexStatic, TRUE);
+
+			ShowWindow(hDlgConditionSexCombo, TRUE);
+			EnableWindow(hDlgConditionSexCombo, FALSE);
+		}
+		else {
+			ShowWindow(hDlgJournalQuestNameCheckButton, TRUE);
+			EnableWindow(hDlgJournalQuestNameCheckButton, FALSE);
+			ShowWindow(hDlgJournalQuestFinishedCheckButton, TRUE);
+			EnableWindow(hDlgJournalQuestFinishedCheckButton, FALSE);
+			ShowWindow(hDlgJournalQuestRestartCheckButton, TRUE);
+			EnableWindow(hDlgJournalQuestRestartCheckButton, FALSE);
+		}
+	}
+
+	void PatchDialogProc_AfterNotify(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+		const auto param = (LPNMHDR)lParam;
+
+		switch (param->code) {
+		case TCN_SELCHANGE:
+			PatchDialogProc_AfterNotify_TabControl_SelectionChanged(hWnd, msg, wParam, lParam);
+			break;
+		}
+	}
+
+	namespace ResizeConstants {
+		constexpr auto BASIC_PADDING = 2;
+		constexpr auto BIG_PADDING = 6;
+		constexpr auto WINDOW_EDGE_PADDING = 10;
+		constexpr auto LEFT_SECTION_WIDTH = 250;
+		constexpr auto BOTTOM_RIGHT_SECTION_WIDTH = 150;
+		constexpr auto BOTTOM_SECTION_HEIGHT = 500;
+		constexpr auto BIG_BUTTON_HEIGHT = 26;
+		constexpr auto STATIC_HEIGHT = 13;
+		constexpr auto JOURNAL_CHECKBUTTON_WIDTH = 100;
+		constexpr auto JOURNAL_CHECKBUTTON_HEIGHT = STATIC_HEIGHT;
+		constexpr auto COMBO_HEIGHT = 21;
+		constexpr auto EDIT_HEIGHT = COMBO_HEIGHT;
+		constexpr auto STATIC_COMBO_OFFSET = (COMBO_HEIGHT - STATIC_HEIGHT) / 2;
+
+		constexpr auto SPEAKER_CONDITION_PADDING_TOP = 17;
+		constexpr auto SPEAKER_CONDITION_PADDING_BOTTOM = 4;
+		constexpr auto SPEAKER_CONDITION_HEIGHT = COMBO_HEIGHT * 9 + BASIC_PADDING * 8 + SPEAKER_CONDITION_PADDING_TOP + SPEAKER_CONDITION_PADDING_BOTTOM;
+		constexpr auto TOP_INFO_TEXT_HEIGHT = (BOTTOM_SECTION_HEIGHT - SPEAKER_CONDITION_HEIGHT) / 2 - BASIC_PADDING;
+		constexpr auto BOTTOM_RESULT_HEIGHT = BOTTOM_SECTION_HEIGHT - TOP_INFO_TEXT_HEIGHT - SPEAKER_CONDITION_HEIGHT - BASIC_PADDING * 2;
+
+		// TODO: Calculate these instead of hardcoding
+		constexpr auto TOTAL_MIN_WIDTH = 1113;
+		constexpr auto TOTAL_MIN_HEIGHT = 720;
+
+		constexpr auto CONDITION_STATIC_WIDTH = 55;
+		constexpr auto CONDITION_COMBO_WIDTH = 200;
+
+		constexpr auto FUNCTION_TYPE_WIDTH = 100;
+		constexpr auto FUNCTION_CONDITION_WIDTH = 200;
+		constexpr auto FUNCTION_COMPARISON_WIDTH = 40;
+		constexpr auto FUNCTION_VALUE_WIDTH = 50;
+		constexpr auto FUNCTION_TOTAL_WIDTH = FUNCTION_TYPE_WIDTH + FUNCTION_CONDITION_WIDTH + FUNCTION_COMPARISON_WIDTH + FUNCTION_VALUE_WIDTH + BASIC_PADDING * 3;
+
+		constexpr auto DISPOSITION_INDEX_WIDTH = FUNCTION_VALUE_WIDTH;
+	}
+
+	void ResizeLabeledStatic(HWND hParent, int iDlgStatic, int iDlgCombo, int x, int& y) {
+		using namespace ResizeConstants;
+
+		auto hDlgStatic = GetDlgItem(hParent, iDlgStatic);
+		MoveWindow(hDlgStatic, x, y + STATIC_COMBO_OFFSET, CONDITION_STATIC_WIDTH, STATIC_HEIGHT, FALSE);
+
+		auto hDlgCombo = GetDlgItem(hParent, iDlgCombo);
+		MoveWindow(hDlgCombo, x + CONDITION_STATIC_WIDTH + BASIC_PADDING, y, CONDITION_COMBO_WIDTH, COMBO_HEIGHT, FALSE);
+
+		y += COMBO_HEIGHT + BASIC_PADDING;
+	}
+
+	void ResizeFunctionCondition(HWND hParent, int iDlgType, int iDlgCondition, int iDlgComparison, int iDlgValue, int x, int& y) {
+		using namespace ResizeConstants;
+
+		auto hDlgType = GetDlgItem(hParent, iDlgType);
+		MoveWindow(hDlgType, x, y, FUNCTION_TYPE_WIDTH, COMBO_HEIGHT, FALSE);
+		x += FUNCTION_TYPE_WIDTH + BASIC_PADDING;
+
+		auto hDlgCondition = GetDlgItem(hParent, iDlgCondition);
+		MoveWindow(hDlgCondition, x, y, FUNCTION_CONDITION_WIDTH, COMBO_HEIGHT, FALSE);
+		x += FUNCTION_CONDITION_WIDTH + BASIC_PADDING;
+
+		auto hDlgComparison = GetDlgItem(hParent, iDlgComparison);
+		MoveWindow(hDlgComparison, x, y, FUNCTION_COMPARISON_WIDTH, COMBO_HEIGHT, FALSE);
+		x += FUNCTION_COMPARISON_WIDTH + BASIC_PADDING;
+
+		auto hDlgValue = GetDlgItem(hParent, iDlgValue);
+		MoveWindow(hDlgValue, x, y, FUNCTION_VALUE_WIDTH, EDIT_HEIGHT, FALSE);
+
+		y += COMBO_HEIGHT + BASIC_PADDING;
+	}
+
+#define ResizeFunctionConditionHelper(hParent, i, x, y) ResizeFunctionCondition(hParent, CONTROL_ID_CONDITION_FUNCTION##i##_TYPE_COMBO, CONTROL_ID_CONDITION_FUNCTION##i##_VARIABLE_COMBO, CONTROL_ID_CONDITION_FUNCTION##i##_CONDITION_COMBO, CONTROL_ID_CONDITION_FUNCTION##i##_VALUE_EDIT, x, y);
+
+	LRESULT PatchDialogProc_BeforeSize(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+		using namespace ResizeConstants;
+		using winui::GetRectHeight;
+		using winui::GetRectWidth;
+		using winui::TabCtrl_GetInteriorRect;
+
+		const auto windowWidth = LOWORD(lParam);
+		const auto windowHeight = HIWORD(lParam);
+		
+		RECT tempRect = {};
+
+		// Left section.
+		{
+			const auto currentX = WINDOW_EDGE_PADDING;
+			auto currentY = WINDOW_EDGE_PADDING;
+
+			constexpr auto FILTER_FOR_AREA_SIZE = STATIC_HEIGHT + COMBO_HEIGHT + BASIC_PADDING;
+
+			// Dialogue type tabs
+			const auto topicsAreaSize = windowHeight - FILTER_FOR_AREA_SIZE - BASIC_PADDING * 2 - WINDOW_EDGE_PADDING * 2;
+			auto hDlgTopicTabs = GetDlgItem(hWnd, CONTROL_ID_TOPIC_TABS);
+			MoveWindow(hDlgTopicTabs, currentX, currentY, LEFT_SECTION_WIDTH, topicsAreaSize, FALSE);
+
+			// Dialogue topics list
+			auto hDlgTopicList = GetDlgItem(hWnd, CONTROL_ID_TOPIC_LIST);
+			TabCtrl_GetInteriorRect(hDlgTopicTabs, &tempRect);
+			MoveWindow(hDlgTopicList, tempRect.left, tempRect.top, GetRectWidth(&tempRect), GetRectHeight(&tempRect), FALSE);
+			ListView_SetColumnWidth(hDlgTopicList, 0, GetRectWidth(&tempRect) - GetSystemMetrics(SM_CXVSCROLL) - BASIC_PADDING*2);
+			currentY += topicsAreaSize + BASIC_PADDING * 2;
+
+			// Filter For static
+			auto hDlgFilterForStatic = GetDlgItem(hWnd, CONTROL_ID_FILTER_FOR_STATIC);
+			MoveWindow(hDlgFilterForStatic, currentX, currentY, LEFT_SECTION_WIDTH, STATIC_HEIGHT, FALSE);
+			currentY += STATIC_HEIGHT + BASIC_PADDING;
+
+			// Filter For combo
+			auto hDlgFilterForCombo = GetDlgItem(hWnd, CONTROL_ID_FILTER_FOR_COMBO);
+			MoveWindow(hDlgFilterForCombo, currentX, currentY, LEFT_SECTION_WIDTH, COMBO_HEIGHT, FALSE);
+		}
+
+		// INFO list section
+		{
+			int currentX = WINDOW_EDGE_PADDING + LEFT_SECTION_WIDTH + BIG_PADDING;
+			int currentY = WINDOW_EDGE_PADDING;
+
+			const auto infoListWidth = windowWidth - LEFT_SECTION_WIDTH - BIG_PADDING - WINDOW_EDGE_PADDING * 2;
+
+			auto hDlgInfoStatic = GetDlgItem(hWnd, CONTROL_ID_INFO_STATIC);
+			MoveWindow(hDlgInfoStatic, currentX, currentY, infoListWidth, STATIC_HEIGHT, FALSE);
+			currentY += STATIC_HEIGHT + BASIC_PADDING;
+
+			auto hDlgInfoList = GetDlgItem(hWnd, CONTROL_ID_INFO_LIST);
+			MoveWindow(hDlgInfoList, currentX, currentY, infoListWidth, windowHeight - currentY - BOTTOM_SECTION_HEIGHT - WINDOW_EDGE_PADDING - BASIC_PADDING, FALSE);
+		}
+
+		// INFO details section
+		{
+			// Calculate fixed sizes.
+			const auto BOTTOM_MIDDLE_WIDTH = windowWidth - LEFT_SECTION_WIDTH - BOTTOM_RIGHT_SECTION_WIDTH - BIG_PADDING * 2 - WINDOW_EDGE_PADDING * 2;
+
+			// Temp values.
+			auto currentX = WINDOW_EDGE_PADDING + LEFT_SECTION_WIDTH + BIG_PADDING;
+			auto currentY = windowHeight - BOTTOM_SECTION_HEIGHT - WINDOW_EDGE_PADDING;
+
+			// Info text edit
+			auto hDlgCurrentTextEdit = GetDlgItem(hWnd, CONTROL_ID_CURRENT_TEXT_EDIT);
+			MoveWindow(hDlgCurrentTextEdit, currentX, currentY, BOTTOM_MIDDLE_WIDTH, TOP_INFO_TEXT_HEIGHT, FALSE);
+			currentY += TOP_INFO_TEXT_HEIGHT + BASIC_PADDING;
+
+			// Speaker Condition button (area)
+			auto hDlgSpeakerConditionButton = GetDlgItem(hWnd, CONTROL_ID_SPEAKER_CONDITION_BUTTON);
+			MoveWindow(hDlgSpeakerConditionButton, currentX, currentY, BOTTOM_MIDDLE_WIDTH, SPEAKER_CONDITION_HEIGHT, FALSE);
+
+			// Individual conditions.
+			const auto leftOfConditions = currentX;
+			const auto topOfConditions = currentY;
+			{
+				currentX += BASIC_PADDING;
+				currentY += SPEAKER_CONDITION_PADDING_TOP;
+
+				// Left drop downs
+				ResizeLabeledStatic(hWnd, CONTROL_ID_CONDITION_ID_STATIC, CONTROL_ID_CONDITION_ID_COMBO, currentX, currentY);
+				ResizeLabeledStatic(hWnd, CONTROL_ID_CONDITION_RACE_STATIC, CONTROL_ID_CONDITION_RACE_COMBO, currentX, currentY);
+				ResizeLabeledStatic(hWnd, CONTROL_ID_CONDITION_SEX_STATIC, CONTROL_ID_CONDITION_SEX_COMBO, currentX, currentY);
+				ResizeLabeledStatic(hWnd, CONTROL_ID_CONDITION_CLASS_STATIC, CONTROL_ID_CONDITION_CLASS_COMBO, currentX, currentY);
+				ResizeLabeledStatic(hWnd, CONTROL_ID_CONDITION_FACTION_STATIC, CONTROL_ID_CONDITION_FACTION_COMBO, currentX, currentY);
+				ResizeLabeledStatic(hWnd, CONTROL_ID_CONDITION_RANK_STATIC, CONTROL_ID_CONDITION_RANK_COMBO, currentX, currentY);
+				ResizeLabeledStatic(hWnd, CONTROL_ID_CONDITION_CELL_STATIC, CONTROL_ID_CONDITION_CELL_COMBO, currentX, currentY);
+				ResizeLabeledStatic(hWnd, CONTROL_ID_CONDITION_PC_FACTION_STATIC, CONTROL_ID_CONDITION_PC_FACTION_COMBO, currentX, currentY);
+				ResizeLabeledStatic(hWnd, CONTROL_ID_CONDITION_PC_RANK_STATIC, CONTROL_ID_CONDITION_PC_RANK_COMBO, currentX, currentY);
+
+				// Disposition
+				currentY = topOfConditions + SPEAKER_CONDITION_HEIGHT - SPEAKER_CONDITION_PADDING_BOTTOM - COMBO_HEIGHT * 6 - STATIC_HEIGHT - BASIC_PADDING * 6;
+
+				// Right conditions
+				currentX += CONDITION_STATIC_WIDTH + BASIC_PADDING + CONDITION_COMBO_WIDTH + BIG_PADDING;
+				currentY = topOfConditions + SPEAKER_CONDITION_HEIGHT - SPEAKER_CONDITION_PADDING_BOTTOM - COMBO_HEIGHT * 6 - STATIC_HEIGHT - BASIC_PADDING * 6;
+
+				// Function/Variable static
+				auto hDlgFunctionVariableStatic = GetDlgItem(hWnd, CONTROL_ID_CONDITION_FUNCTION_VARIABLE_STATIC);
+				MoveWindow(hDlgFunctionVariableStatic, currentX, currentY, 100, STATIC_HEIGHT, FALSE);
+				currentY += STATIC_HEIGHT + BASIC_PADDING;
+
+				// Functions
+				const auto leftOfFunctions = currentX;
+				const auto topOfFunctions = currentY;
+				ResizeFunctionConditionHelper(hWnd, 1, currentX, currentY);
+				ResizeFunctionConditionHelper(hWnd, 2, currentX, currentY);
+				ResizeFunctionConditionHelper(hWnd, 3, currentX, currentY);
+				ResizeFunctionConditionHelper(hWnd, 4, currentX, currentY);
+				ResizeFunctionConditionHelper(hWnd, 5, currentX, currentY);
+				ResizeFunctionConditionHelper(hWnd, 6, currentX, currentY);
+
+				// Disposition static
+				constexpr auto DISPOSITION_JOURNAL_STATIC_WIDTH = 26;
+				currentX = leftOfFunctions + FUNCTION_TYPE_WIDTH + FUNCTION_CONDITION_WIDTH + FUNCTION_COMPARISON_WIDTH + BASIC_PADDING * 2 - DISPOSITION_JOURNAL_STATIC_WIDTH;
+				currentY = topOfFunctions - COMBO_HEIGHT - BASIC_PADDING;
+				auto hDlgDispositionJournalStatic = GetDlgItem(hWnd, CONTROL_ID_CONDITION_DISPOSITION_OR_JOURNAL_STATIC);
+				MoveWindow(hDlgDispositionJournalStatic, currentX, currentY + STATIC_COMBO_OFFSET, DISPOSITION_JOURNAL_STATIC_WIDTH, STATIC_HEIGHT, FALSE);
+				currentX += DISPOSITION_JOURNAL_STATIC_WIDTH + BASIC_PADDING;
+
+				// Disposition edit
+				auto hDlgDispositionJournalEdit = GetDlgItem(hWnd, CONTROL_ID_CONDITION_DISPOSITION_OR_JOURNAL_EDIT);
+				MoveWindow(hDlgDispositionJournalEdit, currentX, currentY, DISPOSITION_INDEX_WIDTH, EDIT_HEIGHT, FALSE);
+
+				// Quest Name check button
+				currentX = leftOfConditions + BIG_PADDING + CONDITION_STATIC_WIDTH + BASIC_PADDING + CONDITION_COMBO_WIDTH + BIG_PADDING;
+				currentY = topOfConditions + SPEAKER_CONDITION_PADDING_TOP;
+				auto hDlgJournalQuestNameCheckButton = GetDlgItem(hWnd, CONTROL_ID_CONDITION_JOURNAL_QUEST_NAME_CHECKBOX);
+				MoveWindow(hDlgJournalQuestNameCheckButton, currentX, currentY, JOURNAL_CHECKBUTTON_WIDTH, JOURNAL_CHECKBUTTON_HEIGHT, FALSE);
+				currentY += JOURNAL_CHECKBUTTON_HEIGHT + BASIC_PADDING;
+
+				// Quest Finished check button
+				auto hDlgJournalQuestFinishedCheckButton = GetDlgItem(hWnd, CONTROL_ID_CONDITION_JOURNAL_FINISHED_CHECKBOX);
+				MoveWindow(hDlgJournalQuestFinishedCheckButton, currentX, currentY, JOURNAL_CHECKBUTTON_WIDTH, JOURNAL_CHECKBUTTON_HEIGHT, FALSE);
+				currentY += JOURNAL_CHECKBUTTON_HEIGHT + BASIC_PADDING;
+
+				// Quest Restart check button
+				auto hDlgJournalQuestRestartCheckButton = GetDlgItem(hWnd, CONTROL_ID_CONDITION_JOURNAL_RESTART_CHECKBOX);
+				MoveWindow(hDlgJournalQuestRestartCheckButton, currentX, currentY, JOURNAL_CHECKBUTTON_WIDTH, JOURNAL_CHECKBUTTON_HEIGHT, FALSE);
+			}
+			currentX = leftOfConditions;
+			currentY = topOfConditions + SPEAKER_CONDITION_HEIGHT + BASIC_PADDING;
+
+			// Result static
+			auto hDlgCurrentResultStatic = GetDlgItem(hWnd, CONTROL_ID_CURRENT_RESULT_STATIC);
+			MoveWindow(hDlgCurrentResultStatic, currentX, currentY, BOTTOM_MIDDLE_WIDTH, STATIC_HEIGHT, FALSE);
+			currentY += STATIC_HEIGHT + BASIC_PADDING;
+
+			// Result edit
+			auto hDlgCurrentResultEdit = GetDlgItem(hWnd, CONTROL_ID_CURRENT_RESULT_EDIT);
+			MoveWindow(hDlgCurrentResultEdit, currentX, currentY, BOTTOM_MIDDLE_WIDTH, BOTTOM_RESULT_HEIGHT - STATIC_HEIGHT - BASIC_PADDING, FALSE);
+		}
+		
+		// Bottom right section.
+		{
+			constexpr auto EXTRA_PADDING_ABOVE_OK_BUTTON = 16;
+			const auto currentX = windowWidth - BOTTOM_RIGHT_SECTION_WIDTH - WINDOW_EDGE_PADDING;
+			auto currentY = windowHeight - BOTTOM_SECTION_HEIGHT - WINDOW_EDGE_PADDING;
+
+			// Shared By static
+			auto hDlgSharedByStatic = GetDlgItem(hWnd, CONTROL_ID_SHARED_BY_STATIC);
+			MoveWindow(hDlgSharedByStatic, currentX, currentY, BOTTOM_RIGHT_SECTION_WIDTH - 2, STATIC_HEIGHT, FALSE);
+			currentY += STATIC_HEIGHT + BASIC_PADDING;
+
+			// Shared By list
+			constexpr auto SHARED_BY_LIST_HEIGHT = BOTTOM_SECTION_HEIGHT - BIG_BUTTON_HEIGHT * 6 - STATIC_HEIGHT - BASIC_PADDING * 7 - EXTRA_PADDING_ABOVE_OK_BUTTON;
+			auto hDlgSharedByList = GetDlgItem(hWnd, CONTROL_ID_SHARED_BY_LIST);
+			MoveWindow(hDlgSharedByList, currentX, currentY, BOTTOM_RIGHT_SECTION_WIDTH, SHARED_BY_LIST_HEIGHT, FALSE);
+			currentY += SHARED_BY_LIST_HEIGHT + BASIC_PADDING;
+
+			// Update Shared By button
+			auto hDlgUpdateSharedByButton = GetDlgItem(hWnd, CONTROL_ID_UPDATE_SHARED_BY_BUTTON);
+			MoveWindow(hDlgUpdateSharedByButton, currentX, currentY, BOTTOM_RIGHT_SECTION_WIDTH, BIG_BUTTON_HEIGHT, FALSE);
+			currentY += BIG_BUTTON_HEIGHT + BASIC_PADDING;
+
+			// Journal Preview button
+			auto hDlgJournalPreviewButton = GetDlgItem(hWnd, CONTROL_ID_JOURNAL_PREVIEW_BUTTON);
+			MoveWindow(hDlgJournalPreviewButton, currentX, currentY, BOTTOM_RIGHT_SECTION_WIDTH, BIG_BUTTON_HEIGHT, FALSE);
+			currentY += BIG_BUTTON_HEIGHT + BASIC_PADDING;
+
+			// Update Hyperlink button
+			constexpr auto UPDATE_ALL_HYPERLINKS_BUTTON_WIDTH = 30;
+			constexpr auto UPDATE_HYPERLINK_BUTTON_WIDTH = BOTTOM_RIGHT_SECTION_WIDTH - UPDATE_ALL_HYPERLINKS_BUTTON_WIDTH - 2;
+			auto hDlgUpdateHyperlinkButton = GetDlgItem(hWnd, CONTROL_ID_UPDATE_HYPERLINKS_BUTTON);
+			MoveWindow(hDlgUpdateHyperlinkButton, currentX, currentY, UPDATE_HYPERLINK_BUTTON_WIDTH, BIG_BUTTON_HEIGHT, FALSE);
+
+			// Update All Hyperlinks button
+			auto updateAllHyperlinksX = currentX + UPDATE_HYPERLINK_BUTTON_WIDTH + BASIC_PADDING;
+			auto hDlgUpdateAllHyperlinksButton = GetDlgItem(hWnd, CONTROL_ID_UPDATE_ALL_HYPERLINKS_BUTTON);
+			MoveWindow(hDlgUpdateAllHyperlinksButton, updateAllHyperlinksX, currentY, UPDATE_ALL_HYPERLINKS_BUTTON_WIDTH, BIG_BUTTON_HEIGHT, FALSE);
+			currentY += BIG_BUTTON_HEIGHT + BASIC_PADDING;
+
+			// Error Check Results button
+			auto hDlgErrorCheckResultsButton = GetDlgItem(hWnd, CONTROL_ID_ERROR_CHECK_RESULTS_BUTTON);
+			MoveWindow(hDlgErrorCheckResultsButton, currentX, currentY, BOTTOM_RIGHT_SECTION_WIDTH, BIG_BUTTON_HEIGHT, FALSE);
+			currentY += BIG_BUTTON_HEIGHT + BASIC_PADDING;
+
+			// Error Check Results button
+			auto hDlgSoundFilenameButton = GetDlgItem(hWnd, CONTROL_ID_SOUND_FILENAME_BUTTON);
+			MoveWindow(hDlgSoundFilenameButton, currentX, currentY, BOTTOM_RIGHT_SECTION_WIDTH, BIG_BUTTON_HEIGHT, FALSE);
+			currentY += BIG_BUTTON_HEIGHT + BASIC_PADDING;
+
+			// OK button
+			auto hDlgOkButton = GetDlgItem(hWnd, CONTROL_ID_OK_BUTTON);
+			MoveWindow(hDlgOkButton, currentX, windowHeight - BIG_BUTTON_HEIGHT - WINDOW_EDGE_PADDING, BOTTOM_RIGHT_SECTION_WIDTH, BIG_BUTTON_HEIGHT, FALSE);
+		}
+
+		// Force redraw. Embrace the flicker.
+		RedrawWindow(hWnd, NULL, NULL, RDW_ERASE | RDW_FRAME | RDW_INVALIDATE | RDW_ALLCHILDREN);
+
+		return TRUE;
+	}
+
 	LRESULT CALLBACK PatchDialogProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		switch (msg) {
 		case WM_INITDIALOG:
-			PatchDialogProc_BeforeInitialize(hWnd);
+			PatchDialogProc_BeforeInitialize(hWnd, msg, wParam, lParam);
 			break;
+		case WM_SIZE:
+			return PatchDialogProc_BeforeSize(hWnd, msg, wParam, lParam);
 		}
 
 		// Call original function.
@@ -374,13 +763,26 @@ namespace se::cs::dialog::dialogue_window {
 		auto result = CS_RenderWindowDialogProc(hWnd, msg, wParam, lParam);
 
 		switch (msg) {
+		case WM_GETMINMAXINFO:
+			return PatchDialogProc_GetMinMaxInfo(hWnd, msg, wParam, lParam);
 		case WM_INITDIALOG:
-			PatchDialogProc_AfterInitialize(hWnd);
+			PatchDialogProc_AfterInitialize(hWnd, msg, wParam, lParam);
+			break;
+		case WM_NOTIFY:
+			PatchDialogProc_AfterNotify(hWnd, msg, wParam, lParam);
 			break;
 		}
 
 		return result;
 	}
+
+	/*
+	* Desired Features:
+	*	x Resizable
+	*	- Improve simulate/filter options
+	*	- Add character limit indicator.
+	*	x Allow Ctrl+A
+	*/
 
 	void installPatches() {
 		using memory::genNOPUnprotected;
