@@ -420,8 +420,14 @@ namespace se::cs::dialog::dialogue_window {
 		constexpr auto MIN_HEIGHT = 720;
 		RECT windowRect = {};
 		GetClientRect(hWnd, &windowRect);
-		if (GetRectWidth(&windowRect) < MIN_WIDTH || GetRectHeight(&windowRect) < MIN_HEIGHT) {
+		auto windowWidth = GetRectWidth(&windowRect);
+		auto windowHeight = GetRectHeight(&windowRect);
+		if (windowWidth < MIN_WIDTH || windowHeight < MIN_HEIGHT) {
 			ResizeAndCenterWindow(hWnd, MIN_WIDTH, MIN_HEIGHT);
+		}
+		else {
+			// Force a resize anyway to put elements in the right position.
+			SendMessageA(hWnd, WM_SIZE, SIZE_RESTORED, MAKELPARAM(windowWidth, windowHeight));
 		}
 
 		// Finish measure of initialization time.

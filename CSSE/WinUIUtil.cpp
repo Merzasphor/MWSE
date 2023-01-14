@@ -4,6 +4,11 @@
 
 namespace se::cs::winui {
 
+	bool GetIsValidID(int iDlgId) {
+		// NOTE: Better Construction Set UI will incorrectly set some IDs to 0xFFFF instead of 0xFFFFFFFF.
+		return iDlgId != -1 && iDlgId != 0xFFFF;
+	}
+
 	struct GetControlByTextParam {
 		HWND result = NULL;
 		bool filterHasID = true;
@@ -14,7 +19,7 @@ namespace se::cs::winui {
 		auto param = (GetControlByTextParam*)lParam;
 
 		// Ignore elements that already have an ID.
-		if (param->filterHasID && GetWindowLongA(hChild, GWLP_ID) != -1) {
+		if (param->filterHasID && GetIsValidID(GetWindowLongA(hChild, GWLP_ID))) {
 			return TRUE;
 		}
 

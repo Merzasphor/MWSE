@@ -6,6 +6,8 @@ namespace se::cs::winui {
 	// Generic extensions
 	//
 
+	bool GetIsValidID(int iDlgId);
+
 	HWND GetControlByText(HWND hParent, const std::string_view& text, bool ignoreResultsWithIDs);
 	bool SetWindowIdByValue(HWND hParent, const std::string_view text, int newID);
 
