@@ -3954,7 +3954,7 @@ namespace mwse::lua {
 
 		// Calculate the repair amount.
 		const auto fRepairAmountMult = TES3::DataHandler::get()->nonDynamicData->GMSTs[TES3::GMST::fRepairAmountMult]->value.asFloat;
-		int repairAmount = tool ? tool->getQuality() * fRepairAmountMult * roll : 1;
+		auto repairAmount = int(tool ? tool->getQuality() * fRepairAmountMult * roll : 1.0f);
 		if (repairAmount < 1) {
 			repairAmount = 1;
 		}
