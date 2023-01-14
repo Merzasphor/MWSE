@@ -858,17 +858,20 @@ namespace mwse::lua {
 		rayTestCache->returnTexture = getOptionalParam<bool>(params, "returnTexture", false);
 
 		// Default root nodes to ignore.
-		std::vector<NI::AVObject*> ignoreRestoreList;
 		if (rayTestIgnoreRoots.empty()) {
-			auto weather = TES3::WorldController::get()->weatherController;
-			auto& world = TES3::Game::get()->worldRoot;
+			// Initialize rayTestIgnoreRoots on first use.
+			auto worldController = TES3::WorldController::get();
+			auto weather = worldController->weatherController;
+
 			rayTestIgnoreRoots.push_back(weather->sgRainRoot);
 			rayTestIgnoreRoots.push_back(weather->sgSnowRoot);
 			rayTestIgnoreRoots.push_back(weather->sgStormRoot);
-			rayTestIgnoreRoots.push_back(world->getObjectByName("WorldProjectileRoot"));
-			rayTestIgnoreRoots.push_back(world->getObjectByName("WorldSpellRoot"));
-			rayTestIgnoreRoots.push_back(world->getObjectByName("WorldVFXRoot"));
+			rayTestIgnoreRoots.push_back(worldController->mobManager->projectileManager->worldProjectileRoot);
+			rayTestIgnoreRoots.push_back(worldController->magicInstanceController->worldSpellRoot);
+			rayTestIgnoreRoots.push_back(worldController->vfxManager->worldVFXRoot);
 		}
+
+		std::vector<NI::AVObject*> ignoreRestoreList;
 		for (const auto node : rayTestIgnoreRoots) {
 			if (!node->getAppCulled()) {
 				node->setAppCulled(true);
