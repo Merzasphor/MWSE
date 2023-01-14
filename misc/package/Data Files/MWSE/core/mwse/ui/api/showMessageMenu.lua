@@ -65,11 +65,17 @@ local function callbackWithParamCallback(e)
 	local buttonData = e.source:getLuaData("buttonData") --- @type tes3ui.showMessageMenu.params.button
 	if (buttonData.callback) then
 		local menuData = callbackGetMenuData(e)
-		buttonData.callback(menuData.callbackParams)
-	end
 
-	-- Always close the menu after.
-	callbackCloseMenu(e)
+		-- Close message menu before the callback, so that the callback may open a message menu without conflicts.
+		-- tes3.messageBox will try to re-use an existing MenuMessage menu, but that is not compatible with this implementation.
+		-- Specifically, tes3.messageBox can crash without child ids MenuMessage_image, MenuMessage_brick_frame, MenuMessage_button_layout.
+		callbackCloseMenu(e)
+
+		buttonData.callback(menuData.callbackParams)
+	else
+		-- Always close the menu after.
+		callbackCloseMenu(e)
+	end
 end
 
 --- @param e tes3uiEventData
