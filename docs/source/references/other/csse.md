@@ -63,6 +63,11 @@ If you are using [Construction Set Better UI](https://www.nexusmods.com/morrowin
 
 * Optimized UI. Changing between INFOs should be nearly instantaneous. Initial dialogue load time reduced by 60%.
 * Condition variable lists will now always be wide enough to fit the convents. Journals, locals, and items will no longer have their IDs cut off.
+* The window can now be resized and maximized.
+* Layout changes:
+	* The sex condition is now under the race condition, instead of above the function/variable list. It is not hidden (but is disabled) when viewing journal dialogues.
+	* The journal conditions (name/finished/restart) are shown but disabled for other dialogue types.
+	* The general UI has minor other position layout changes.
 
 ### Render Window
 
