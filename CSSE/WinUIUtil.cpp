@@ -77,6 +77,14 @@ namespace se::cs::winui {
 		MoveWindow(hWnd, (screenX - width) / 2, (screenY - height) / 2, width, height, FALSE);
 	}
 
+	void AddStyles(HWND hWnd, LONG lStyle) {
+		SetWindowLongA(hWnd, GWL_STYLE, GetWindowLongA(hWnd, GWL_STYLE) | lStyle);
+	}
+
+	void RemoveStyles(HWND hWnd, LONG lStyle) {
+		SetWindowLongA(hWnd, GWL_STYLE, GetWindowLongA(hWnd, GWL_STYLE) & ~lStyle);
+	}
+
 	//
 	// ComboBox
 	//

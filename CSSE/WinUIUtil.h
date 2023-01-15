@@ -22,6 +22,9 @@ namespace se::cs::winui {
 	void CenterWindow(HWND hWnd);
 	void ResizeAndCenterWindow(HWND hWnd, int width, int height);
 
+	void AddStyles(HWND hWnd, LONG lStyle);
+	void RemoveStyles(HWND hWnd, LONG lStyle);
+
 	//
 	// ComboBox
 	//

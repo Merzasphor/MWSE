@@ -53,14 +53,6 @@ namespace se::cs::dialog::dialogue_window {
 		return true;
 	}
 
-	void addDialogStyle(HWND hWnd, DWORD style) {
-		SetWindowLongA(hWnd, GWL_STYLE, GetWindowLongA(hWnd, GWL_STYLE) | style);
-	}
-
-	void removeDialogStyle(HWND hWnd, DWORD style) {
-		SetWindowLongA(hWnd, GWL_STYLE, GetWindowLongA(hWnd, GWL_STYLE) & ~style);
-	}
-
 	void resumeRenderingAndRepaint(HWND parent, DWORD childId) {
 		auto child = GetDlgItem(parent, childId);
 		SendMessageA(child, WM_SETREDRAW, TRUE, NULL);
