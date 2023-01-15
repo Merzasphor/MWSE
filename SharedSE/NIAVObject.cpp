@@ -29,7 +29,7 @@ namespace NI {
 		return vTable.asAVObject->getObjectByName(this, name);
 	}
 
-	bool AVObject::getAppCulled() {
+	bool AVObject::getAppCulled() const {
 		return vTable.asAVObject->getAppCulled(this);
 	}
 
@@ -313,6 +313,11 @@ namespace NI {
 		constexpr auto FLOAT_MAX = std::numeric_limits<float>::max();
 		float lowestZ = FLOAT_MAX;
 
+		// Ignore culled nodes.
+		if (object->getAppCulled()) {
+			return lowestZ;
+		}
+
 		// Ignore collision-disabled subgraphs.
 		if (object->isOfType(RTTIStaticPtr::NiCollisionSwitch)) {
 			const auto asCollisionSwitch = static_cast<const CollisionSwitch*>(object);
@@ -380,7 +385,7 @@ namespace NI {
 		}
 
 		// Only care about geometry leaf nodes.
-		if (!object->isInstanceOfType(NI::RTTIStaticPtr::NiGeometry)) {
+		if (!object->isInstanceOfType(NI::RTTIStaticPtr::NiTriBasedGeom)) {
 			return;
 		}
 

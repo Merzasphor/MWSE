@@ -334,7 +334,7 @@ namespace se::cs::dialog::render_window {
 		for (const auto& child : node->children) {
 			if (child) {
 				// Calculate for geometry.
-				if (child->isInstanceOfType(NI::RTTIStaticPtr::NiGeometry)) {
+				if (child->isInstanceOfType(NI::RTTIStaticPtr::NiTriBasedGeom)) {
 					auto asGeometry = static_cast<const NI::Geometry*>(child.get());
 
 					// Ignore particles.
