@@ -77,6 +77,14 @@ namespace se::cs::winui {
 		MoveWindow(hWnd, (screenX - width) / 2, (screenY - height) / 2, width, height, FALSE);
 	}
 
+	LONG GetStyle(HWND hWnd) {
+		return GetWindowLongA(hWnd, GWL_STYLE);
+	}
+
+	void SetStyle(HWND hWnd, LONG lStyle) {
+		SetWindowLongA(hWnd, GWL_STYLE, lStyle);
+	}
+
 	void AddStyles(HWND hWnd, LONG lStyle) {
 		SetWindowLongA(hWnd, GWL_STYLE, GetWindowLongA(hWnd, GWL_STYLE) | lStyle);
 	}

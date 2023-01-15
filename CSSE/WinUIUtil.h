@@ -22,6 +22,8 @@ namespace se::cs::winui {
 	void CenterWindow(HWND hWnd);
 	void ResizeAndCenterWindow(HWND hWnd, int width, int height);
 
+	LONG GetStyle(HWND hWnd);
+	void SetStyle(HWND hWnd, LONG lStyle);
 	void AddStyles(HWND hWnd, LONG lStyle);
 	void RemoveStyles(HWND hWnd, LONG lStyle);
 
