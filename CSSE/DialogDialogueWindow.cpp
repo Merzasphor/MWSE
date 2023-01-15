@@ -311,6 +311,9 @@ namespace se::cs::dialog::dialogue_window {
 	auto initializationTimer = std::chrono::high_resolution_clock::now();
 
 	void PatchDialogProc_BeforeInitialize(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+		using winui::GetStyle;
+		using winui::SetStyle;
+
 		// Begin measure of initialization time.
 		if constexpr (LOG_PERFORMANCE_RESULTS) {
 			initializationTimer = std::chrono::high_resolution_clock::now();
@@ -344,8 +347,10 @@ namespace se::cs::dialog::dialogue_window {
 	}
 
 	void PatchDialogProc_AfterInitialize(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+		using se::cs::winui::AddStyles;
 		using se::cs::winui::GetRectHeight;
 		using se::cs::winui::GetRectWidth;
+		using se::cs::winui::RemoveStyles;
 		using se::cs::winui::ResizeAndCenterWindow;
 		using se::cs::winui::SetWindowIdByValue;
 
@@ -402,10 +407,8 @@ namespace se::cs::dialog::dialogue_window {
 		EnableWindow(hDlgJournalQuestRestartCheckButton, FALSE);
 
 		// Make it so the window can be maximized and generally resized.
-		auto windowStyle = GetWindowLongA(hWnd, GWL_STYLE);
-		windowStyle &= ~DS_MODALFRAME;
-		windowStyle |= WS_SIZEBOX | WS_MAXIMIZEBOX;
-		SetWindowLongA(hWnd, GWL_STYLE, windowStyle);
+		RemoveStyles(hWnd, DS_MODALFRAME);
+		AddStyles(hWnd, WS_SIZEBOX | WS_MAXIMIZEBOX);
 
 		// Enforce minimum size.
 		constexpr auto MIN_WIDTH = 1113;
@@ -477,7 +480,7 @@ namespace se::cs::dialog::dialogue_window {
 		constexpr auto JOURNAL_CHECKBUTTON_WIDTH = 100;
 		constexpr auto JOURNAL_CHECKBUTTON_HEIGHT = STATIC_HEIGHT;
 		constexpr auto COMBO_HEIGHT = 21;
-		constexpr auto EDIT_HEIGHT = COMBO_HEIGHT;
+		constexpr auto EDIT_HEIGHT = 17;
 		constexpr auto STATIC_COMBO_OFFSET = (COMBO_HEIGHT - STATIC_HEIGHT) / 2;
 
 		constexpr auto SPEAKER_CONDITION_PADDING_TOP = 17;
@@ -485,10 +488,6 @@ namespace se::cs::dialog::dialogue_window {
 		constexpr auto SPEAKER_CONDITION_HEIGHT = COMBO_HEIGHT * 9 + BASIC_PADDING * 8 + SPEAKER_CONDITION_PADDING_TOP + SPEAKER_CONDITION_PADDING_BOTTOM;
 		constexpr auto TOP_INFO_TEXT_HEIGHT = (BOTTOM_SECTION_HEIGHT - SPEAKER_CONDITION_HEIGHT) / 2 - BASIC_PADDING;
 		constexpr auto BOTTOM_RESULT_HEIGHT = BOTTOM_SECTION_HEIGHT - TOP_INFO_TEXT_HEIGHT - SPEAKER_CONDITION_HEIGHT - BASIC_PADDING * 2;
-
-		// TODO: Calculate these instead of hardcoding
-		constexpr auto TOTAL_MIN_WIDTH = 1113;
-		constexpr auto TOTAL_MIN_HEIGHT = 720;
 
 		constexpr auto CONDITION_STATIC_WIDTH = 55;
 		constexpr auto CONDITION_COMBO_WIDTH = 200;
@@ -500,6 +499,10 @@ namespace se::cs::dialog::dialogue_window {
 		constexpr auto FUNCTION_TOTAL_WIDTH = FUNCTION_TYPE_WIDTH + FUNCTION_CONDITION_WIDTH + FUNCTION_COMPARISON_WIDTH + FUNCTION_VALUE_WIDTH + BASIC_PADDING * 3;
 
 		constexpr auto DISPOSITION_INDEX_WIDTH = FUNCTION_VALUE_WIDTH;
+
+		constexpr auto BOTTOM_SECTION_MIN_WIDTH = CONDITION_STATIC_WIDTH + CONDITION_COMBO_WIDTH + BIG_PADDING + FUNCTION_TOTAL_WIDTH + BASIC_PADDING * 4;
+		constexpr auto TOTAL_MIN_WIDTH = LEFT_SECTION_WIDTH + BOTTOM_SECTION_MIN_WIDTH + BOTTOM_RIGHT_SECTION_WIDTH + BIG_PADDING * 2 + WINDOW_EDGE_PADDING * 2;
+		constexpr auto TOTAL_MIN_HEIGHT = 720;
 	}
 
 	void ResizeLabeledStatic(HWND hParent, int iDlgStatic, int iDlgCombo, int x, int& y) {
@@ -530,7 +533,7 @@ namespace se::cs::dialog::dialogue_window {
 		x += FUNCTION_COMPARISON_WIDTH + BASIC_PADDING;
 
 		auto hDlgValue = GetDlgItem(hParent, iDlgValue);
-		MoveWindow(hDlgValue, x, y, FUNCTION_VALUE_WIDTH, EDIT_HEIGHT, FALSE);
+		MoveWindow(hDlgValue, x, y, FUNCTION_VALUE_WIDTH, COMBO_HEIGHT, FALSE);
 
 		y += COMBO_HEIGHT + BASIC_PADDING;
 	}
@@ -660,7 +663,7 @@ namespace se::cs::dialog::dialogue_window {
 
 				// Disposition edit
 				auto hDlgDispositionJournalEdit = GetDlgItem(hWnd, CONTROL_ID_CONDITION_DISPOSITION_OR_JOURNAL_EDIT);
-				MoveWindow(hDlgDispositionJournalEdit, currentX, currentY, DISPOSITION_INDEX_WIDTH, EDIT_HEIGHT, FALSE);
+				MoveWindow(hDlgDispositionJournalEdit, currentX, currentY, DISPOSITION_INDEX_WIDTH, COMBO_HEIGHT, FALSE);
 
 				// Quest Name check button
 				currentX = leftOfConditions + BIG_PADDING + CONDITION_STATIC_WIDTH + BASIC_PADDING + CONDITION_COMBO_WIDTH + BIG_PADDING;
