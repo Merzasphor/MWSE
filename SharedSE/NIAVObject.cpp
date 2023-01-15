@@ -339,17 +339,12 @@ namespace NI {
 		}
 
 		// Only care about geometry leaf nodes.
-		if (!object->isInstanceOfType(RTTIStaticPtr::NiGeometry)) {
+		if (!object->isInstanceOfType(RTTIStaticPtr::NiTriBasedGeom)) {
 			return lowestZ;
 		}
 
 		// Ignore particles.
 		if (object->isInstanceOfType(RTTIStaticPtr::NiParticles)) {
-			return lowestZ;
-		}
-
-		// Ignore lines.
-		if (object->isInstanceOfType(RTTIStaticPtr::NiLines)) {
 			return lowestZ;
 		}
 
