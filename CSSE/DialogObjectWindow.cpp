@@ -4,6 +4,7 @@
 #include "MemoryUtil.h"
 #include "StringUtil.h"
 #include "WindowsUtil.h"
+#include "WinUIUtil.h"
 
 #include "NIIteratedList.h"
 
@@ -245,6 +246,10 @@ namespace se::cs::dialog::object_window {
 	std::optional<LRESULT> forcedReturnType = {};
 
 	void CALLBACK PatchDialogProc_BeforeSize(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam) {
+		using winui::GetRectHeight;
+		using winui::GetRectWidth;
+		using winui::TabCtrl_GetInteriorRect;
+
 		// Update view menu.
 		auto mainWindow = GetMenu(window::main::ghWnd::get());
 		if (wParam) {
@@ -269,19 +274,24 @@ namespace se::cs::dialog::object_window {
 		const auto mainWidth = LOWORD(lParam);
 		const auto mainHeight = HIWORD(lParam);
 
+		constexpr auto BASIC_PADDING = 2;
+		constexpr auto STATIC_HEIGHT = 13;
+		constexpr auto EDIT_HEIGHT = 17;
+		constexpr auto STATIC_COMBO_OFFSET = (EDIT_HEIGHT - STATIC_HEIGHT) / 2;
+
 		// Make room for our new search bar.
-		MoveWindow(tabControl, 0, 0, mainWidth, mainHeight, TRUE);
+		MoveWindow(tabControl, 0, 0, mainWidth, mainHeight - EDIT_HEIGHT - BASIC_PADDING * 2, TRUE);
 
 		// Update list view area.
 		RECT tabContentRect = {};
-		SetRect(&tabContentRect, 0, 0, mainWidth, mainHeight - 30);
-		SendMessageA(tabControl, TCM_ADJUSTRECT, FALSE, (LPARAM)&tabContentRect);
-		MoveWindow(objectListView, tabContentRect.left, tabContentRect.top, tabContentRect.right - tabContentRect.left, tabContentRect.bottom - tabContentRect.top, TRUE);
+		TabCtrl_GetInteriorRect(tabControl, &tabContentRect);
+		MoveWindow(objectListView, tabContentRect.left, tabContentRect.top, GetRectWidth(&tabContentRect), GetRectHeight(&tabContentRect), TRUE);
 
 		// Update the search bar placement.
-		auto width = std::min<int>(tabContentRect.right - tabContentRect.left, 500);
-		SetWindowPos(searchLabel, NULL, tabContentRect.right - width - 58, tabContentRect.bottom + 7, 54, 22, 0);
-		SetWindowPos(objectWindowSearchControl, NULL, tabContentRect.right - width, tabContentRect.bottom + 4, width, 24, SWP_DRAWFRAME);
+		int currentY = mainHeight - EDIT_HEIGHT - BASIC_PADDING;
+		auto searchEditWidth = std::min<int>(mainWidth - BASIC_PADDING * 2, 300);
+		MoveWindow(searchLabel, mainWidth - BASIC_PADDING - searchEditWidth - 54 - BASIC_PADDING, currentY + STATIC_COMBO_OFFSET, 54, STATIC_HEIGHT, TRUE);
+		MoveWindow(objectWindowSearchControl, mainWidth - BASIC_PADDING - searchEditWidth, currentY, searchEditWidth, EDIT_HEIGHT, FALSE);
 		RedrawWindow(objectWindowSearchControl, NULL, NULL, RDW_ERASE | RDW_FRAME | RDW_INVALIDATE | RDW_ALLCHILDREN);
 	}
 
@@ -289,13 +299,18 @@ namespace se::cs::dialog::object_window {
 		auto hInstance = (HINSTANCE)GetWindowLongA(hWnd, GWLP_HINSTANCE);
 
 		// Ensure our custom filter box is added.
-		auto objectWindowSearchControl = GetDlgItem(hWnd, CONTROL_ID_FILTER_EDIT);
+		auto hDlgFilterEdit = GetDlgItem(hWnd, CONTROL_ID_FILTER_EDIT);
 		if (objectWindowSearchControl == NULL) {
-			CreateWindowExA(WS_EX_RIGHT, "STATIC", "Filter:", WS_CHILD | WS_VISIBLE | SS_RIGHT | SS_NOPREFIX, 0, 0, 0, 0, hWnd, (HMENU)CONTROL_ID_FILTER_LABEL, hInstance, NULL);
-			objectWindowSearchControl = CreateWindowExA(WS_EX_CLIENTEDGE, "EDIT", "", WS_CHILD | WS_VISIBLE, 0, 0, 0, 0, hWnd, (HMENU)CONTROL_ID_FILTER_EDIT, hInstance, NULL);
-			if (objectWindowSearchControl) {
-				SetWindowSubclass(objectWindowSearchControl, ui_subclass::edit::BasicExtendedProc, NULL, NULL);
-				Edit_LimitText(objectWindowSearchControl, 31);
+
+			auto hDlgFilterStatic = CreateWindowExA(NULL, "STATIC", "Filter:", SS_RIGHT | WS_CHILD | WS_VISIBLE | WS_GROUP, 0, 0, 0, 0, hWnd, (HMENU)CONTROL_ID_FILTER_LABEL, hInstance, NULL);
+			hDlgFilterEdit = CreateWindowExA(NULL, "EDIT", "", ES_LEFT | ES_AUTOHSCROLL | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 0, 0, 0, 0, hWnd, (HMENU)CONTROL_ID_FILTER_EDIT, hInstance, NULL);
+			if (hDlgFilterEdit) {
+				SetWindowSubclass(hDlgFilterEdit, ui_subclass::edit::BasicExtendedProc, NULL, NULL);
+				Edit_LimitText(hDlgFilterEdit, 31);
+
+				auto font = SendMessageA(hWnd, WM_GETFONT, FALSE, FALSE);
+				SendMessageA(hDlgFilterStatic, WM_SETFONT, font, MAKELPARAM(TRUE, FALSE));
+				SendMessageA(hDlgFilterEdit, WM_SETFONT, font, MAKELPARAM(TRUE, FALSE));
 			}
 			else {
 				log::stream << "ERROR: Could not create search control!" << std::endl;
