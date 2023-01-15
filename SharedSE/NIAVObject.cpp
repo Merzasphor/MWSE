@@ -348,6 +348,11 @@ namespace NI {
 			return lowestZ;
 		}
 
+		// Ignore lines.
+		if (object->isInstanceOfType(RTTIStaticPtr::NiLines)) {
+			return lowestZ;
+		}
+
 		// Ignore skinned.
 		auto geometry = static_cast<const NI::Geometry*>(object);
 		if (geometry->skinInstance) {
