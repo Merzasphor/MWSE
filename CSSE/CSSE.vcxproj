@@ -168,7 +168,7 @@ if defined APPVEYOR_BUILD_NUMBER (echo #define APPVEYOR_BUILD_NUMBER %APPVEYOR_B
     <ClInclude Include="DialogObjectWindow.h" />
     <ClInclude Include="DialogRenderWindow.h" />
     <ClInclude Include="DialogSearchAndReplaceWindow.h" />
-    <ClInclude Include="DialogTextSearch.h" />
+    <ClInclude Include="DialogTextSearchWindow.h" />
     <ClInclude Include="EditBasicExtended.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="CSBaseObject.h" />
@@ -194,7 +194,7 @@ if defined APPVEYOR_BUILD_NUMBER (echo #define APPVEYOR_BUILD_NUMBER %APPVEYOR_B
     <ClCompile Include="CSNPC.cpp" />
     <ClCompile Include="CSSpell.cpp" />
     <ClCompile Include="CSWeapon.cpp" />
-    <ClCompile Include="DialogTextSearch.cpp" />
+    <ClCompile Include="DialogTextSearchWindow.cpp" />
     <ClCompile Include="EditBasicExtended.cpp" />
     <ClCompile Include="CSBaseObject.cpp" />
     <ClCompile Include="CSDataHandler.cpp" />

@@ -24,9 +24,8 @@ namespace se::cs::winui {
 		}
 
 		// Perform comparison.
-		char buffer[128] = {};
-		auto length = GetWindowTextA(hChild, buffer, sizeof(buffer));
-		if (string::equal(buffer, param->text)) {
+		const auto text = GetWindowTextA(hChild);
+		if (string::equal(text, param->text)) {
 			param->result = hChild;
 			return FALSE;
 		}
@@ -58,6 +57,17 @@ namespace se::cs::winui {
 		return true;
 	}
 
+	bool GetWindowSize(HWND hWnd, SIZE& size) {
+		RECT windowRect;
+		if (!GetWindowRect(hWnd, &windowRect)) {
+			return false;
+		}
+
+		size.cx = GetRectWidth(windowRect);
+		size.cy = GetRectHeight(windowRect);
+		return true;
+	}
+
 	void CenterWindow(HWND hWnd) {
 		RECT windowRect = {};
 		GetWindowRect(hWnd, &windowRect);
@@ -77,6 +87,15 @@ namespace se::cs::winui {
 		MoveWindow(hWnd, (screenX - width) / 2, (screenY - height) / 2, width, height, FALSE);
 	}
 
+	bool MoveWindow(HWND hWnd, int x, int y, bool repaint) {
+		RECT windowRect;
+		if (!GetWindowRect(hWnd, &windowRect)) {
+			return false;
+		}
+
+		return MoveWindow(hWnd, x, y, GetRectWidth(windowRect), GetRectHeight(windowRect), repaint ? TRUE : FALSE);
+	}
+
 	LONG GetStyle(HWND hWnd) {
 		return GetWindowLongA(hWnd, GWL_STYLE);
 	}
@@ -91,6 +110,13 @@ namespace se::cs::winui {
 
 	void RemoveStyles(HWND hWnd, LONG lStyle) {
 		SetWindowLongA(hWnd, GWL_STYLE, GetWindowLongA(hWnd, GWL_STYLE) & ~lStyle);
+	}
+
+	std::string GetWindowTextA(HWND hWnd) {
+		std::string text;
+		text.resize(GetWindowTextLengthA(hWnd));
+		GetWindowTextA(hWnd, text.data(), text.capacity());
+		return std::move(text);
 	}
 
 	//
@@ -133,6 +159,25 @@ namespace se::cs::winui {
 
 		if (ensureVisible) {
 			ListView_EnsureVisible(hWnd, index, FALSE);
+		}
+
+		return true;
+	}
+
+	//
+	// Static
+	//
+
+	bool Static_GetDesiredSize(HWND hWnd, SIZE& size) {
+		size = {};
+
+		// Get the static's text.
+		const auto text = GetWindowTextA(hWnd);
+
+		// Get actual size.
+		auto hDC = GetDC(hWnd);
+		if (!GetTextExtentPoint32(hDC, text.data(), text.length(), &size)) {
+			return false;
 		}
 
 		return true;

@@ -231,11 +231,11 @@
     <ClInclude Include="CSSpellList.h">
       <Filter>Header Files\CS</Filter>
     </ClInclude>
-    <ClInclude Include="DialogTextSearch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="WinUIUtil.h">
       <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="DialogTextSearchWindow.h">
+      <Filter>Header Files\UI\Dialog</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -338,14 +338,14 @@
     <ClCompile Include="CSSE.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CSDialogueInfo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DialogTextSearch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="WinUIUtil.cpp">
       <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogTextSearchWindow.cpp">
+      <Filter>Source Files\UI\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="CSDialogueInfo.cpp">
+      <Filter>Source Files\CS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

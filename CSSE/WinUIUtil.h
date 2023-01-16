@@ -15,17 +15,30 @@ namespace se::cs::winui {
 		return rect->right - rect->left;
 	}
 
+	inline LONG GetRectWidth(const RECT& rect) {
+		return GetRectWidth(&rect);
+	}
+
 	inline LONG GetRectHeight(const RECT* rect) {
 		return rect->bottom - rect->top;
 	}
 
+	inline LONG GetRectHeight(const RECT& rect) {
+		return GetRectHeight(&rect);
+	}
+
+	bool GetWindowSize(HWND hWnd, SIZE& size);
+
 	void CenterWindow(HWND hWnd);
 	void ResizeAndCenterWindow(HWND hWnd, int width, int height);
+	bool MoveWindow(HWND hWnd, int x, int y, bool repaint = false);
 
 	LONG GetStyle(HWND hWnd);
 	void SetStyle(HWND hWnd, LONG lStyle);
 	void AddStyles(HWND hWnd, LONG lStyle);
 	void RemoveStyles(HWND hWnd, LONG lStyle);
+
+	std::string GetWindowTextA(HWND hWnd);
 
 	//
 	// ComboBox
@@ -46,6 +59,12 @@ namespace se::cs::winui {
 
 	// Selects a row by a given LPARAM, and optionally ensures it is visible.
 	bool ListView_SelectByParam(HWND hWnd, LPARAM lParam, bool ensureVisible = true);
+
+	//
+	// Static
+	//
+
+	bool Static_GetDesiredSize(HWND hWnd, SIZE& size);
 
 	//
 	// TabView

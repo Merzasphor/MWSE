@@ -17,7 +17,7 @@
 #include "DialogObjectWindow.h"
 #include "DialogRenderWindow.h"
 #include "DialogSearchAndReplaceWindow.h"
-#include "DialogTextSearch.h"
+#include "DialogTextSearchWindow.h"
 
 #include "MemoryUtil.h"
 #include "StringUtil.h"

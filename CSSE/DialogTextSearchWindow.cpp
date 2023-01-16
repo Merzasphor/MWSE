@@ -1,4 +1,4 @@
-#include "DialogTextSearch.h"
+#include "DialogTextSearchWindow.h"
 
 #include "CSDialogue.h"
 #include "CSDialogueInfo.h"
