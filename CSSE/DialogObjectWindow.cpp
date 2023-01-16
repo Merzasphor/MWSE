@@ -416,12 +416,12 @@ namespace se::cs::dialog::object_window {
 	}
 
 	inline void OnFilterEditChanged(HWND hWnd) {
-		// Get current search text. The buffer is fine as 32 because we set a character limit of 31.
-		char buffer[32] = {};
-		auto length = GetWindowTextA(objectWindowSearchControl, buffer, 32);
+		using namespace se::cs::winui;
+
+		// Get current search text.
+		auto newText = GetWindowTextA(objectWindowSearchControl);
 
 		// Transform the search text to lowercase and clear stray characters.
-		std::string newText(buffer, length);
 		string::to_lower(newText);
 
 		if (!string::equal(currentSearchText, newText)) {
