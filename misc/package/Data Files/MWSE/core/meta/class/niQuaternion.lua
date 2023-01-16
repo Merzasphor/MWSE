@@ -5,6 +5,7 @@
 --- A rotation in quaternion representation.
 --- @class niQuaternion
 --- @operator mul(niQuaternion): niQuaternion
+--- @operator unm: niQuaternion
 --- @field w number The W component of the quaternion.
 --- @field x number The X component of the quaternion.
 --- @field y number The Y component of the quaternion.
@@ -23,6 +24,15 @@ function niQuaternion.new(w, x, y, z) end
 --- @return niQuaternion result No description yet available.
 function niQuaternion:copy() end
 
+--- Calculates the dot product between this quaternion and another.
+--- @param other niQuaternion The other quaternion.
+--- @return number result The dot product result.
+function niQuaternion:dot(other) end
+
+--- Calculates the exponential e^q.
+--- @return number result The result.
+function niQuaternion:exp() end
+
 --- Fill the quaternion by converting an angle-axis rotation. The angle must be within the interval [0, PI] and the axis must be unit length.
 --- @param angle number No description yet available.
 --- @param axis tes3vector3 No description yet available.
@@ -36,9 +46,27 @@ function niQuaternion:fromRotation(matrix) end
 --- @return niQuaternion result No description yet available.
 function niQuaternion:invert() end
 
---- Calculates the spherical linear interpolate between this quaternion and another.
+--- Calculates the logarithm log(q).
+--- @return number result The result.
+function niQuaternion:log() end
+
+--- Normalizes the quaternion to unit length in-place. Returns true if result is unit length, false if the quaternion magnitude is very near to zero and cannot be normalized.
+--- @return boolean isNormalized If the quaternion was successfully normalized.
+function niQuaternion:normalize() end
+
+--- Returns a normalized copy of this quaternion. The quaternion will be all zero if the quaternion magnitude is very near to zero and cannot be normalized.
+--- @return niQuaternion result The normalized quaternion.
+function niQuaternion:normalized() end
+
+--- Calculates a spherical linear interpolation between this quaternion and another, limited to a maximum rotation angle.
 --- @param target niQuaternion The quaternion to interpolate towards.
---- @param transition number The interpolation value. Must be between `0.0` (closer to this quaternion) and `1.0` (closer to the other quaternion).
+--- @param rotationLimit number The interpolation result will be limited to this maximum angle from the initial quaternion. Angle in radians.
+--- @return niQuaternion result The calculated result.
+function niQuaternion:rotateTowards(target, rotationLimit) end
+
+--- Calculates a spherical linear interpolation between this quaternion and another.
+--- @param target niQuaternion The quaternion to interpolate towards.
+--- @param transition number The interpolation parameter. Must be between `0.0` (closer to this quaternion) and `1.0` (closer to the other quaternion).
 --- @return niQuaternion result The calculated result.
 function niQuaternion:slerp(target, transition) end
 

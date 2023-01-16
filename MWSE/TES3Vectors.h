@@ -61,6 +61,7 @@ namespace TES3 {
 		bool operator!=(const Vector3& vector) const;
 		Vector3 operator+(const Vector3&) const;
 		Vector3 operator-(const Vector3&) const;
+		Vector3 operator-() const;
 		Vector3 operator*(const Vector3&) const;
 		Vector3 operator*(const float) const;
 		Vector3 operator/(const float) const;
@@ -86,7 +87,6 @@ namespace TES3 {
 		float angle(const Vector3*) const;
 		float length() const;
 		void negate();
-		Vector3 negateCopy();
 		bool normalize();
 		Vector3 normalized() const;
 		Vector3 interpolate(const Vector3&, const float) const;

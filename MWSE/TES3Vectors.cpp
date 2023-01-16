@@ -192,6 +192,10 @@ namespace TES3 {
 		return Vector3(x - vec3.x, y - vec3.y, z - vec3.z);
 	}
 
+	Vector3 Vector3::operator-() const {
+		return Vector3(-x, -y, -z);
+	};
+
 	Vector3 Vector3::operator*(const Vector3& vec3) const {
 		return Vector3(x * vec3.x, y * vec3.y, z * vec3.z);
 	}
@@ -273,12 +277,6 @@ namespace TES3 {
 		x = -x;
 		y = -y;
 		z = -z;
-	}
-
-	Vector3 Vector3::negateCopy() {
-		auto copy = this->copy();
-		copy.negate();
-		return copy;
 	}
 
 	bool Vector3::normalize() {
