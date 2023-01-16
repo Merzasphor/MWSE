@@ -65,6 +65,38 @@ local result = myObject:copy()
 
 ***
 
+### `dot`
+
+Calculates the dot product between this quaternion and another.
+
+```lua
+local result = myObject:dot(other)
+```
+
+**Parameters**:
+
+* `other` ([niQuaternion](../../types/niQuaternion)): The other quaternion.
+
+**Returns**:
+
+* `result` (number): The dot product result.
+
+***
+
+### `exp`
+
+Calculates the exponential e^q.
+
+```lua
+local result = myObject:exp()
+```
+
+**Returns**:
+
+* `result` (number): The result.
+
+***
+
 ### `fromAngleAxis`
 
 Fill the quaternion by converting an angle-axis rotation. The angle must be within the interval [0, PI] and the axis must be unit length.
@@ -108,9 +140,70 @@ local result = myObject:invert()
 
 ***
 
+### `log`
+
+Calculates the logarithm log(q).
+
+```lua
+local result = myObject:log()
+```
+
+**Returns**:
+
+* `result` (number): The result.
+
+***
+
+### `normalize`
+
+Normalizes the quaternion to unit length in-place. Returns true if result is unit length, false if the quaternion magnitude is very near to zero and cannot be normalized.
+
+```lua
+local isNormalized = myObject:normalize()
+```
+
+**Returns**:
+
+* `isNormalized` (boolean): If the quaternion was successfully normalized.
+
+***
+
+### `normalized`
+
+Returns a normalized copy of this quaternion. The quaternion will be all zero if the quaternion magnitude is very near to zero and cannot be normalized.
+
+```lua
+local result = myObject:normalized()
+```
+
+**Returns**:
+
+* `result` ([niQuaternion](../../types/niQuaternion)): The normalized quaternion.
+
+***
+
+### `rotateTowards`
+
+Calculates a spherical linear interpolation between this quaternion and another, limited to a maximum rotation angle.
+
+```lua
+local result = myObject:rotateTowards(target, rotationLimit)
+```
+
+**Parameters**:
+
+* `target` ([niQuaternion](../../types/niQuaternion)): The quaternion to interpolate towards.
+* `rotationLimit` (number): The interpolation result will be limited to this maximum angle from the initial quaternion. Angle in radians.
+
+**Returns**:
+
+* `result` ([niQuaternion](../../types/niQuaternion)): The calculated result.
+
+***
+
 ### `slerp`
 
-Calculates the spherical linear interpolate between this quaternion and another.
+Calculates a spherical linear interpolation between this quaternion and another.
 
 ```lua
 local result = myObject:slerp(target, transition)
@@ -119,7 +212,7 @@ local result = myObject:slerp(target, transition)
 **Parameters**:
 
 * `target` ([niQuaternion](../../types/niQuaternion)): The quaternion to interpolate towards.
-* `transition` (number): The interpolation value. Must be between `0.0` (closer to this quaternion) and `1.0` (closer to the other quaternion).
+* `transition` (number): The interpolation parameter. Must be between `0.0` (closer to this quaternion) and `1.0` (closer to the other quaternion).
 
 **Returns**:
 
@@ -186,6 +279,14 @@ local quaternion = niQuaternion.new(w, x, y, z)
 | Left operand type | Right operand type | Result type | Description |
 | ----------------- | ------------------ | ----------- | ----------- |
 | [niQuaternion](../../types/niQuaternion) | [niQuaternion](../../types/niQuaternion) | [niQuaternion](../../types/niQuaternion) | Multiplies two quaternions. The end effect is that the resulting rotation quaternion is equal to the rotation of both quaternions. |
+
+***
+
+### nil
+
+| Result type | Description |
+| ----------- | ----------- |
+| [niQuaternion](../../types/niQuaternion) | Unary negation. |
 
 ***
 

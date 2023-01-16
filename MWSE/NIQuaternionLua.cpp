@@ -19,9 +19,8 @@ void mwse::lua::bindNIQuaternion() {
 		// Operator overloading.
 		usertypeDefinition[sol::meta_function::to_string] = &NI::Quaternion::toString;
 		usertypeDefinition["__tojson"] = &NI::Quaternion::toJson;
-		usertypeDefinition[sol::meta_function::multiplication] = sol::overload(
-			sol::resolve<NI::Quaternion(const NI::Quaternion&) const>(&NI::Quaternion::operator*)
-		);
+		usertypeDefinition[sol::meta_function::multiplication] = sol::resolve<NI::Quaternion(const NI::Quaternion&) const>(&NI::Quaternion::operator*);
+		usertypeDefinition[sol::meta_function::unary_minus] = sol::resolve<NI::Quaternion() const>(&NI::Quaternion::operator-);
 
 		// Basic property binding.
 		usertypeDefinition["w"] = &NI::Quaternion::w;
@@ -30,12 +29,18 @@ void mwse::lua::bindNIQuaternion() {
 		usertypeDefinition["z"] = &NI::Quaternion::z;
 
 		// Basic function binding.
-		usertypeDefinition["fromRotation"] = &NI::Quaternion::fromRotation;
-		usertypeDefinition["toRotation"] = &NI::Quaternion::toRotation;
-		usertypeDefinition["fromAngleAxis"] = &NI::Quaternion::fromAngleAxis;
-		usertypeDefinition["toAngleAxis"] = &NI::Quaternion::toAngleAxis;
-		usertypeDefinition["invert"] = &NI::Quaternion::invert;
-		usertypeDefinition["slerp"] = &NI::Quaternion::slerp;
 		usertypeDefinition["copy"] = &NI::Quaternion::copy;
+		usertypeDefinition["dot"] = &NI::Quaternion::dot;
+		usertypeDefinition["exp"] = &NI::Quaternion::exp;
+		usertypeDefinition["fromAngleAxis"] = &NI::Quaternion::fromAngleAxis;
+		usertypeDefinition["fromRotation"] = &NI::Quaternion::fromRotation;
+		usertypeDefinition["invert"] = &NI::Quaternion::invert;
+		usertypeDefinition["log"] = &NI::Quaternion::log;
+		usertypeDefinition["normalize"] = &NI::Quaternion::normalize;
+		usertypeDefinition["normalized"] = &NI::Quaternion::normalized;
+		usertypeDefinition["rotateTowards"] = &NI::Quaternion::rotateTowards;
+		usertypeDefinition["slerp"] = &NI::Quaternion::slerp;
+		usertypeDefinition["toAngleAxis"] = &NI::Quaternion::toAngleAxis;
+		usertypeDefinition["toRotation"] = &NI::Quaternion::toRotation;
 	}
 }
