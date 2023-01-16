@@ -2,7 +2,7 @@
 
 namespace se::cs {
 	NI::Node* ModelLoader::loadNIF(const char* path) {
-		const auto ModelLoader_loadNIF = reinterpret_cast<NI::Node*(__thiscall*)(ModelLoader*, const char*)>(0x545E00);
+		const auto ModelLoader_loadNIF = reinterpret_cast<NI::Node*(__thiscall*)(ModelLoader*, const char*)>(0x403477);
 		return ModelLoader_loadNIF(this, path);
 	}
 }
