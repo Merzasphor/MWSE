@@ -194,7 +194,7 @@ A vector that shows the size of the bounding box in X and Y directions. `boundSi
 
 ### `canAct`
 
-*Read-only*. If `true`, the actor is able to freely execute actions like attacking or casting magic. This is equal to checking if the actor is not dead, knocked down, knocked out, paralyzed, drawing/sheathing their weapon, attacking, casting magic or using a lockpick or probe.
+*Read-only*. If `true`, the actor is able to freely execute actions like attacking or casting magic. This is equal to checking if the actor is not dead, knocked down, knocked out, hit stunned, paralyzed, drawing/sheathing their weapon, attacking, casting magic or using a lockpick or probe.
 
 **Returns**:
 
@@ -215,6 +215,16 @@ A vector that shows the size of the bounding box in X and Y directions. `boundSi
 ### `canJumpMidair`
 
 *Read-only*. If `true`, the actor is currently able to jump midair. This is equal to checking if the actor is not dead, knocked down, knocked out, paralyzed, swimming or flying. For more information on midair jumping see [`tes3mobileActor:doJump()`](https://mwse.github.io/MWSE/types/tes3mobileActor/#dojump).
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
+### `canMove`
+
+*Read-only*. If `true`, the actor is able to freely move along the ground or in the air. This does not include jumping (see `canJump`). This is equal to checking if the actor is not dead, knocked down, knocked out, hit stunned, or paralyzed.
 
 **Returns**:
 
@@ -605,6 +615,16 @@ Direct access to the actor's current movement flags, showing if the actor is fal
 ### `isFlying`
 
 Direct access to the actor's current movement flags, showing if the actor is flying.
+
+**Returns**:
+
+* `result` (boolean)
+
+***
+
+### `isHitStunned`
+
+*Read-only*. If `true`, the actor is affected by hit stun. This prevents the actor from initiating an attack, but not continuing and finishing an attack. It also prevents movement except for jumping.
 
 **Returns**:
 

@@ -672,12 +672,33 @@ namespace TES3 {
 		return getEffectAttributeParalyze() > 0;
 	}
 
+	bool MobileActor::isHitStunned() const {
+		if (animationController.asActor) {
+			auto animData = animationController.asActor->animationData;
+			if (animData) {
+				// Check for hit stun animations.
+				const unsigned char hit1 = 19, swimHit3 = 26;
+				auto bodyAnimGroup = animData->currentAnimGroup[0];
+				return bodyAnimGroup >= hit1 && bodyAnimGroup <= swimHit3;
+			}
+		}
+		return false;
+	}
+
 	bool MobileActor::canAct() const {
 		return !isDead() &&
 			isNotKnockedDownOrOut() &&
 			!isAttackingOrCasting() &&
 			!isParalyzed() &&
+			!isHitStunned() &&
 			!isReadyingWeapon();
+	}
+
+	bool MobileActor::canMove() const {
+		return !isDead() &&
+			isNotKnockedDownOrOut() &&
+			!isParalyzed() &&
+			!isHitStunned();
 	}
 
 	bool MobileActor::canJump(bool allowMidairJumping) const {

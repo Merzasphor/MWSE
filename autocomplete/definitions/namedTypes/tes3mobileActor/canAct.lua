@@ -1,6 +1,6 @@
 return {
 	type = "value",
-	description = [[If `true`, the actor is able to freely execute actions like attacking or casting magic. This is equal to checking if the actor is not dead, knocked down, knocked out, paralyzed, drawing/sheathing their weapon, attacking, casting magic or using a lockpick or probe.]],
+	description = [[If `true`, the actor is able to freely execute actions like attacking or casting magic. This is equal to checking if the actor is not dead, knocked down, knocked out, hit stunned, paralyzed, drawing/sheathing their weapon, attacking, casting magic or using a lockpick or probe.]],
 	readOnly = true,
 	valuetype = "boolean",
 }

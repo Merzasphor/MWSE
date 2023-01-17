@@ -31,9 +31,10 @@
 --- @field attributes tes3statistic[]|tes3statisticSkill[] *Read-only*. Access to a table of 8 [`tes3statistic`](https://mwse.github.io/MWSE/types/tes3statistic/) objects for the actor's attributes.
 --- @field barterGold number The current amount of gold that the actor has access to for bartering.
 --- @field blind number Direct access to the actor's blind effect attribute.
---- @field canAct boolean *Read-only*. If `true`, the actor is able to freely execute actions like attacking or casting magic. This is equal to checking if the actor is not dead, knocked down, knocked out, paralyzed, drawing/sheathing their weapon, attacking, casting magic or using a lockpick or probe.
+--- @field canAct boolean *Read-only*. If `true`, the actor is able to freely execute actions like attacking or casting magic. This is equal to checking if the actor is not dead, knocked down, knocked out, hit stunned, paralyzed, drawing/sheathing their weapon, attacking, casting magic or using a lockpick or probe.
 --- @field canJump boolean *Read-only*. If `true`, the actor is currently able to jump. This is equal to checking if the actor is not dead, knocked down, knocked out, paralyzed, jumping, falling, swimming or flying.
 --- @field canJumpMidair boolean *Read-only*. If `true`, the actor is currently able to jump midair. This is equal to checking if the actor is not dead, knocked down, knocked out, paralyzed, swimming or flying. For more information on midair jumping see [`tes3mobileActor:doJump()`](https://mwse.github.io/MWSE/types/tes3mobileActor/#dojump).
+--- @field canMove boolean *Read-only*. If `true`, the actor is able to freely move along the ground or in the air. This does not include jumping (see `canJump`). This is equal to checking if the actor is not dead, knocked down, knocked out, hit stunned, or paralyzed.
 --- @field cell tes3cell *Read-only*. Fetches the cell that the actor is in.
 --- @field chameleon number Direct access to the actor's chameleon effect attribute.
 --- @field collidingReference tes3reference|nil *Read-only*. The reference that the mobile has collided with this frame. Doesn't include actors and terrain.
@@ -66,6 +67,7 @@
 --- @field isDiseased boolean *Read-only*. True if the actor is has a disease effect. This counts normal, blight, and corprus effects.
 --- @field isFalling boolean Direct access to the actor's current movement flags, showing if the actor is falling. This is when the actor is falling without having jumped, e.g. if they walked off a ledge.
 --- @field isFlying boolean Direct access to the actor's current movement flags, showing if the actor is flying.
+--- @field isHitStunned boolean *Read-only*. If `true`, the actor is affected by hit stun. This prevents the actor from initiating an attack, but not continuing and finishing an attack. It also prevents movement except for jumping.
 --- @field isJumping boolean Direct access to the actor's current movement flags, showing if the actor is jumping.
 --- @field isKnockedDown boolean *Read-only*. If `true`, the actor is knocked down. An actor can be knocked down after being attacked or falling.
 --- @field isKnockedOut boolean *Read-only*. If `true`, the actor is knocked out. An actor can be knocked out if their fatigue has been reduced below zero.
