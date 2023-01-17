@@ -15,13 +15,6 @@
 #include "TES3Skill.h"
 #include "TES3PlayerAnimationController.h"
 
-constexpr auto TES3_MobilePlayer_exerciseSkill = 0x56A5D0;
-constexpr auto TES3_MobilePlayer_getGoldHeld = 0x52B450;
-constexpr auto TES3_MobilePlayer_onDeath = 0x56A120;
-constexpr auto TES3_MobilePlayer_getBounty = 0x5688B0;
-constexpr auto TES3_MobilePlayer_setBounty = 0x5688D0;
-constexpr auto TES3_MobilePlayer_modBounty = 0x5688F0;
-
 namespace TES3 {
 	const auto TES3_BountyData_getValue = reinterpret_cast<int(__thiscall*)(BountyData*, StdString*)>(0x55D220);
 	int BountyData::getValue(StdString* crimeType) {
@@ -33,6 +26,7 @@ namespace TES3 {
 		TES3_BountyData_setValue(this, crimeType, value);
 	}
 
+	const auto TES3_MobilePlayer_exerciseSkill = reinterpret_cast<void(__thiscall*)(MobilePlayer*, int, float)>(0x56A5D0);
 	void MobilePlayer::exerciseSkill(int skillId, float progress) {
 		// Invoke our exercise skill event and allow skill blocking.
 		if (mwse::lua::event::SkillExerciseEvent::getEventEnabled()) {
@@ -53,7 +47,7 @@ namespace TES3 {
 			}
 		}
 
-		reinterpret_cast<void(__thiscall *)(MobilePlayer*, int, float)>(TES3_MobilePlayer_exerciseSkill)(this, skillId, progress);
+		TES3_MobilePlayer_exerciseSkill(this, skillId, progress);
 	}
 
 	const auto TES3_MobilePlayer_getSkillProgressRequirement = reinterpret_cast<float(__thiscall*)(const MobilePlayer*, int)>(0x56A520);
@@ -66,8 +60,9 @@ namespace TES3 {
 		TES3_MobilePlayer_progressSkillLevelIfRequirementsMet(this, skillId);
 	}
 
+	const auto TES3_MobilePlayer_onDeath = reinterpret_cast<void(__thiscall*)(MobileActor*)>(0x56A120);
 	void MobilePlayer::onDeath() {
-		reinterpret_cast<void(__thiscall *)(MobileActor*)>(TES3_MobilePlayer_onDeath)(this);
+		TES3_MobilePlayer_onDeath(this);
 
 		// Trigger death event.
 		if (mwse::lua::event::DeathEvent::getEventEnabled()) {
@@ -75,8 +70,9 @@ namespace TES3 {
 		}
 	}
 
+	const auto TES3_MobilePlayer_getGoldHeld = reinterpret_cast<int(__thiscall*)(MobilePlayer*)>(0x52B450);
 	int MobilePlayer::getGold() {
-		return reinterpret_cast<int(__thiscall *)(MobilePlayer*)>(TES3_MobilePlayer_getGoldHeld)(this);
+		return TES3_MobilePlayer_getGoldHeld(this);
 	}
 
 	const auto TES3_MobilePlayer_wakeUp = reinterpret_cast<void(__thiscall*)(MobilePlayer*)>(0x56BBB0);
@@ -84,16 +80,19 @@ namespace TES3 {
 		TES3_MobilePlayer_wakeUp(this);
 	}
 
+	const auto TES3_MobilePlayer_getBounty = reinterpret_cast<int(__thiscall*)(MobilePlayer*)>(0x5688B0);
 	int MobilePlayer::getBounty() {
-		return reinterpret_cast<int(__thiscall *)(MobilePlayer*)>(TES3_MobilePlayer_getBounty)(this);
+		return TES3_MobilePlayer_getBounty(this);
 	}
 
+	const auto TES3_MobilePlayer_setBounty = reinterpret_cast<void(__thiscall*)(MobilePlayer*, int)>(0x5688D0);
 	void MobilePlayer::setBounty(int value) {
-		reinterpret_cast<void(__thiscall *)(MobilePlayer*, int)>(TES3_MobilePlayer_setBounty)(this, value);
+		TES3_MobilePlayer_setBounty(this, value);
 	}
 
+	const auto TES3_MobilePlayer_modBounty = reinterpret_cast<void(__thiscall*)(MobilePlayer*, int)>(0x5688F0);
 	void MobilePlayer::modBounty(int delta) {
-		reinterpret_cast<void(__thiscall *)(MobilePlayer*, int)>(TES3_MobilePlayer_modBounty)(this, delta);
+		TES3_MobilePlayer_modBounty(this, delta);
 	}
 
 	bool MobilePlayer::is3rdPerson() {
