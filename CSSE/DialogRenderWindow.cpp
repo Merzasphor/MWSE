@@ -122,28 +122,29 @@ namespace se::cs::dialog::render_window {
 		NI::Pointer<NI::Node> sceneRoot; // 0x0
 		NI::Pointer<NI::Node> objectRoot; // 0x4
 		NI::Pointer<NI::Node> landscapeRoot; // 0x8
-		NI::ZBufferProperty* zBufferProperty; // 0xC
-		NI::Property* wireframeProperty; // 0x10
-		NI::Pick* pick; // 0x14
-		int unknown_0x18;
-		int unknown_0x1C;
-		int unknown_0x20;
+		NI::Pointer<NI::ZBufferProperty> zBufferProperty; // 0xC
+		NI::Pointer<NI::Property> wireframeProperty; // 0x10
+		NI::Pick* primaryPick; // 0x14
+		NI::Pick* secondaryPick; // 0x18
+		NI::Pointer<NI::Light> directionalLight; // 0x1C
+		NI::Pointer<NI::FogProperty> fog; // 0x20
 	};
 	static_assert(sizeof(SceneGraphControllerVanilla) == 0x24, "CS::SceneGraphController failed size validation");
 
 	struct SceneGraphController : SceneGraphControllerVanilla {
 		NI::Pointer<NI::Node> widgetRoot; // 0x24
 
-		static bool __cdecl ctor(SceneGraphController* controller) {
+		static bool __cdecl initialize(SceneGraphController* controller) {
+			// Zero out the structure again to handle newly added fields.
 			memset(controller, sizeof(SceneGraphController), 0);
 
 			// Call existing function.
-			const auto SceneGraphController_Ctor = reinterpret_cast<bool(__cdecl*)(SceneGraphController*)>(0x449930);
-			if (!SceneGraphController_Ctor(controller)) {
+			const auto SceneGraphController_initialize = reinterpret_cast<bool(__cdecl*)(SceneGraphController*)>(0x449930);
+			if (!SceneGraphController_initialize(controller)) {
 				return false;
 			}
 
-			// Create marker root.
+			// Create widget root.
 			controller->widgetRoot = new NI::Node();
 			controller->widgetRoot->setName("Editor widgetRoot");
 			controller->sceneRoot->attachChild(controller->widgetRoot);
@@ -580,20 +581,20 @@ namespace se::cs::dialog::render_window {
 			return nullptr;
 		}
 
-		const auto& previousPickRoot = sgController->pick->root;
-		const auto previousPickType = sgController->pick->pickType;
+		const auto& previousPickRoot = sgController->primaryPick->root;
+		const auto previousPickType = sgController->primaryPick->pickType;
 
-		sgController->pick->pickType = NI::PickType::FIND_ALL;
+		sgController->primaryPick->pickType = NI::PickType::FIND_ALL;
 
-		if (!sgController->pick->pickObjectsWithSkinDeforms(&origin, &direction)) {
-			sgController->pick->pickType = previousPickType;
+		if (!sgController->primaryPick->pickObjectsWithSkinDeforms(&origin, &direction)) {
+			sgController->primaryPick->pickType = previousPickType;
 			return nullptr;
 		}
 
 		Reference* closestRef = nullptr;
 		auto closestDistance = std::numeric_limits<float>::max();
 		
-		for (auto& result : sgController->pick->results) {
+		for (auto& result : sgController->primaryPick->results) {
 			if (result == nullptr) {
 				continue;
 			}
@@ -605,8 +606,8 @@ namespace se::cs::dialog::render_window {
 		}
 
 		// Restore picker to the initial state.
-		sgController->pick->root = previousPickRoot;
-		sgController->pick->pickType = previousPickType;
+		sgController->primaryPick->root = previousPickRoot;
+		sgController->primaryPick->pickType = previousPickType;
 
 		return closestRef;
 	}
@@ -1169,7 +1170,7 @@ namespace se::cs::dialog::render_window {
 
 		// Patch: Extend SceneGraphController structure.
 		genPushEnforced(0x4473FD, (BYTE)sizeof(SceneGraphController));
-		genJumpEnforced(0x403855, 0x449930, reinterpret_cast<DWORD>(SceneGraphController::ctor));
+		genJumpEnforced(0x403855, 0x449930, reinterpret_cast<DWORD>(SceneGraphController::initialize));
 
 		// Patch: Use world rotation values.
 		genJumpEnforced(0x403D41, 0x4652D0, reinterpret_cast<DWORD>(Patch_ReplaceRotationLogic));
