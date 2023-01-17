@@ -30,10 +30,6 @@ namespace se::cs::dialog::render_window {
 	static WORD lastRenderWindowPosX = 0;
 	static WORD lastRenderWindowPosY = 0;
 
-	//
-	// Patch: Use world rotation values unless ALT is held.
-	//
-
 	using gObjectMove = memory::ExternalGlobal<float, 0x6CE9B0>;
 	using gSnapAngleInDegrees = memory::ExternalGlobal<int, 0x6CE9AC>;
 	using gRotationFlags = memory::ExternalGlobal<BYTE, 0x6CE9A4>;
@@ -122,22 +118,49 @@ namespace se::cs::dialog::render_window {
 	static_assert(sizeof(NetImmerseInstance) == 0x64, "CS::NetImmerseInstance failed size validation");
 	static_assert(sizeof(NetImmerseInstance::VirtualTable) == 0x64, "CS::NetImmerseInstance's virtual table failed size validation");
 
-	struct SceneGraphController {
-		NI::Node* sceneRoot; // 0x0
-		NI::Node* objectRoot; // 0x4
-		NI::Node* landscapeRoot; // 0x8
+	struct SceneGraphControllerVanilla {
+		NI::Pointer<NI::Node> sceneRoot; // 0x0
+		NI::Pointer<NI::Node> objectRoot; // 0x4
+		NI::Pointer<NI::Node> landscapeRoot; // 0x8
 		NI::ZBufferProperty* zBufferProperty; // 0xC
 		NI::Property* wireframeProperty; // 0x10
 		NI::Pick* pick; // 0x14
 		int unknown_0x18;
 		int unknown_0x1C;
 		int unknown_0x20;
+	};
+	static_assert(sizeof(SceneGraphControllerVanilla) == 0x24, "CS::SceneGraphController failed size validation");
+
+	struct SceneGraphController : SceneGraphControllerVanilla {
+		NI::Pointer<NI::Node> widgetRoot; // 0x24
+
+		static bool __cdecl ctor(SceneGraphController* controller) {
+			memset(controller, sizeof(SceneGraphController), 0);
+
+			// Call existing function.
+			const auto SceneGraphController_Ctor = reinterpret_cast<bool(__cdecl*)(SceneGraphController*)>(0x449930);
+			if (!SceneGraphController_Ctor(controller)) {
+				return false;
+			}
+
+			// Create marker root.
+			controller->widgetRoot = new NI::Node();
+			controller->widgetRoot->setName("Editor widgetRoot");
+			controller->sceneRoot->attachChild(controller->widgetRoot);
+
+			return true;
+		}
 
 		static inline auto get() {
 			return memory::ExternalGlobal<SceneGraphController*, 0x6CEB78>::get();
 		}
 	};
-	static_assert(sizeof(SceneGraphController) == 0x24, "CS::SceneGraphController failed size validation");
+
+
+
+	//
+	// Patch: Use world rotation values unless ALT is held.
+	//
 
 	const auto TES3_CS_OriginalRotationLogic = reinterpret_cast<bool(__cdecl*)(void*, TranslationData::Target*, int, TranslationData::RotationAxis)>(0x4652D0);
 	bool __cdecl Patch_ReplaceRotationLogic(void* unknown1, TranslationData::Target* firstTarget, int relativeMouseDelta, TranslationData::RotationAxis rotationAxis) {
@@ -1137,11 +1160,16 @@ namespace se::cs::dialog::render_window {
 	//
 
 	void installPatches() {
-		using memory::genJumpEnforced;
 		using memory::genCallEnforced;
 		using memory::genCallUnprotected;
-		using memory::writePatchCodeUnprotected;
+		using memory::genJumpEnforced;
+		using memory::genPushEnforced;
 		using memory::writeDoubleWordEnforced;
+		using memory::writePatchCodeUnprotected;
+
+		// Patch: Extend SceneGraphController structure.
+		genPushEnforced(0x4473FD, (BYTE)sizeof(SceneGraphController));
+		genJumpEnforced(0x403855, 0x449930, reinterpret_cast<DWORD>(SceneGraphController::ctor));
 
 		// Patch: Use world rotation values.
 		genJumpEnforced(0x403D41, 0x4652D0, reinterpret_cast<DWORD>(Patch_ReplaceRotationLogic));
