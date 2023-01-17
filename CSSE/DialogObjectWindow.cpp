@@ -505,7 +505,7 @@ namespace se::cs::dialog::object_window {
 			break;
 		}
 
-		return result;
+		return forcedReturnType.value_or(result);
 	}
 
 	int getTabForObjectType(ObjectType::ObjectType objectType) {
