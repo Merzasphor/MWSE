@@ -124,8 +124,8 @@ namespace se::cs::dialog::render_window {
 		NI::Pointer<NI::Node> landscapeRoot; // 0x8
 		NI::Pointer<NI::ZBufferProperty> zBufferProperty; // 0xC
 		NI::Pointer<NI::Property> wireframeProperty; // 0x10
-		NI::Pick* primaryPick; // 0x14
-		NI::Pick* secondaryPick; // 0x18
+		NI::Pick* objectPick; // 0x14
+		NI::Pick* landscapePick; // 0x18
 		NI::Pointer<NI::Light> directionalLight; // 0x1C
 		NI::Pointer<NI::FogProperty> fog; // 0x20
 	};
@@ -581,20 +581,19 @@ namespace se::cs::dialog::render_window {
 			return nullptr;
 		}
 
-		const auto& previousPickRoot = sgController->primaryPick->root;
-		const auto previousPickType = sgController->primaryPick->pickType;
+		const auto previousPickType = sgController->objectPick->pickType;
 
-		sgController->primaryPick->pickType = NI::PickType::FIND_ALL;
+		sgController->objectPick->pickType = NI::PickType::FIND_ALL;
 
-		if (!sgController->primaryPick->pickObjectsWithSkinDeforms(&origin, &direction)) {
-			sgController->primaryPick->pickType = previousPickType;
+		if (!sgController->objectPick->pickObjectsWithSkinDeforms(&origin, &direction)) {
+			sgController->objectPick->pickType = previousPickType;
 			return nullptr;
 		}
 
 		Reference* closestRef = nullptr;
 		auto closestDistance = std::numeric_limits<float>::max();
 		
-		for (auto& result : sgController->primaryPick->results) {
+		for (auto& result : sgController->objectPick->results) {
 			if (result == nullptr) {
 				continue;
 			}
@@ -606,8 +605,7 @@ namespace se::cs::dialog::render_window {
 		}
 
 		// Restore picker to the initial state.
-		sgController->primaryPick->root = previousPickRoot;
-		sgController->primaryPick->pickType = previousPickType;
+		sgController->objectPick->pickType = previousPickType;
 
 		return closestRef;
 	}
