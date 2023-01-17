@@ -4,6 +4,22 @@
 
 namespace se::cs {
 	Settings_t settings;
+
+	//
+	// Dialogue Window
+	//
+
+	void Settings_t::DialogueWindowSettings::from_toml(const toml::value& v) {
+		highlight_modified_items = toml::find_or(v, "highlight_modified_items", highlight_modified_items);
+	}
+
+	toml::value Settings_t::DialogueWindowSettings::into_toml() const {
+		return toml::value(
+			{
+				{ "highlight_modified_items", highlight_modified_items },
+			}
+		);
+	}
 	
 	//
 	// Render Window
@@ -250,15 +266,17 @@ namespace se::cs {
 	}
 
 	void Settings_t::from_toml(const toml::value& v) {
-		render_window = toml::find_or(v, "render_window", render_window);
+		dialogue_window = toml::find_or(v, "dialogue_window", dialogue_window);
 		object_window = toml::find_or(v, "object_window", object_window);
 		quickstart = toml::find_or(v, "quickstart", quickstart);
+		render_window = toml::find_or(v, "render_window", render_window);
 	}
 
 	toml::value Settings_t::into_toml() const {
 		return toml::value(
 			{
 				{ "title", "Construction Set Extender" },
+				{ "dialogue_window", dialogue_window },
 				{ "object_window", object_window },
 				{ "render_window", render_window },
 				{ "quickstart", quickstart },

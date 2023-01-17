@@ -12,6 +12,8 @@
 #include "StringUtil.h"
 #include "WinUIUtil.h"
 
+#include "Settings.h"
+
 #include "EditBasicExtended.h"
 
 #include "WindowMain.h"
@@ -308,6 +310,8 @@ namespace se::cs::dialog::dialogue_window {
 	// Patch: Extend Render Window message handling.
 	//
 
+	std::optional<LRESULT> forcedReturnType = {};
+
 	auto initializationTimer = std::chrono::high_resolution_clock::now();
 
 	void PatchDialogProc_BeforeInitialize(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
@@ -338,12 +342,12 @@ namespace se::cs::dialog::dialogue_window {
 		}
 	}
 
-	LRESULT PatchDialogProc_GetMinMaxInfo(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+	void PatchDialogProc_GetMinMaxInfo(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		auto info = (LPMINMAXINFO)lParam;
 		info->ptMinTrackSize.x = 1113;
 		info->ptMinTrackSize.y = 700;
 
-		return 0;
+		forcedReturnType = 0;
 	}
 
 	void PatchDialogProc_AfterInitialize(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
@@ -432,6 +436,31 @@ namespace se::cs::dialog::dialogue_window {
 		}
 	}
 
+	void PatchDialogProc_AfterNotify_CustomDraw(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+		LPNMLVCUSTOMDRAW lplvcd = (LPNMLVCUSTOMDRAW)lParam;
+
+		const auto idFrom = lplvcd->nmcd.hdr.idFrom;
+		if (settings.dialogue_window.highlight_modified_items && idFrom == CONTROL_ID_TOPIC_LIST || idFrom == CONTROL_ID_INFO_LIST) {
+			if (lplvcd->nmcd.dwDrawStage == CDDS_PREPAINT) {
+				SetWindowLongA(hWnd, DWLP_MSGRESULT, CDRF_NOTIFYITEMDRAW);
+			}
+			else if (lplvcd->nmcd.dwDrawStage == CDDS_ITEMPREPAINT) {
+				auto object = (BaseObject*)lplvcd->nmcd.lItemlParam;
+				if (object) {
+					if (object->getDeleted()) {
+						lplvcd->clrTextBk = RGB(255, 235, 235);
+						SetWindowLongA(hWnd, DWLP_MSGRESULT, CDRF_NEWFONT);
+					}
+					else if (object->getModified()) {
+						lplvcd->clrTextBk = RGB(235, 255, 235);
+						SetWindowLongA(hWnd, DWLP_MSGRESULT, CDRF_NEWFONT);
+					}
+				}
+			}
+			forcedReturnType = TRUE;
+		}
+	}
+
 	void PatchDialogProc_AfterNotify_TabControl_SelectionChanged(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		auto userData = (DialogueWindowData*)GetWindowLongA(hWnd, GWL_USERDATA);
 
@@ -462,6 +491,9 @@ namespace se::cs::dialog::dialogue_window {
 		const auto param = (LPNMHDR)lParam;
 
 		switch (param->code) {
+		case NM_CUSTOMDRAW:
+			PatchDialogProc_AfterNotify_CustomDraw(hWnd, msg, wParam, lParam);
+			break;
 		case TCN_SELCHANGE:
 			PatchDialogProc_AfterNotify_TabControl_SelectionChanged(hWnd, msg, wParam, lParam);
 			break;
@@ -540,7 +572,7 @@ namespace se::cs::dialog::dialogue_window {
 
 #define ResizeFunctionConditionHelper(hParent, i, x, y) ResizeFunctionCondition(hParent, CONTROL_ID_CONDITION_FUNCTION##i##_TYPE_COMBO, CONTROL_ID_CONDITION_FUNCTION##i##_VARIABLE_COMBO, CONTROL_ID_CONDITION_FUNCTION##i##_CONDITION_COMBO, CONTROL_ID_CONDITION_FUNCTION##i##_VALUE_EDIT, x, y);
 
-	LRESULT PatchDialogProc_BeforeSize(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+	void PatchDialogProc_BeforeSize(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		using namespace ResizeConstants;
 		using winui::GetRectHeight;
 		using winui::GetRectWidth;
@@ -751,25 +783,33 @@ namespace se::cs::dialog::dialogue_window {
 		// Force redraw. Embrace the flicker.
 		RedrawWindow(hWnd, NULL, NULL, RDW_ERASE | RDW_FRAME | RDW_INVALIDATE | RDW_ALLCHILDREN);
 
-		return TRUE;
+		forcedReturnType = TRUE;
 	}
 
 	LRESULT CALLBACK PatchDialogProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+		forcedReturnType = {};
+
 		switch (msg) {
 		case WM_INITDIALOG:
 			PatchDialogProc_BeforeInitialize(hWnd, msg, wParam, lParam);
 			break;
 		case WM_SIZE:
-			return PatchDialogProc_BeforeSize(hWnd, msg, wParam, lParam);
+			PatchDialogProc_BeforeSize(hWnd, msg, wParam, lParam);
+			break;
+		}
+
+		if (forcedReturnType) {
+			return forcedReturnType.value();
 		}
 
 		// Call original function.
 		const auto CS_RenderWindowDialogProc = reinterpret_cast<WNDPROC>(0x4EAEA0);
-		auto result = CS_RenderWindowDialogProc(hWnd, msg, wParam, lParam);
+		const auto vanillaResult = CS_RenderWindowDialogProc(hWnd, msg, wParam, lParam);
 
 		switch (msg) {
 		case WM_GETMINMAXINFO:
-			return PatchDialogProc_GetMinMaxInfo(hWnd, msg, wParam, lParam);
+			PatchDialogProc_GetMinMaxInfo(hWnd, msg, wParam, lParam);
+			break;
 		case WM_INITDIALOG:
 			PatchDialogProc_AfterInitialize(hWnd, msg, wParam, lParam);
 			break;
@@ -778,7 +818,7 @@ namespace se::cs::dialog::dialogue_window {
 			break;
 		}
 
-		return result;
+		return forcedReturnType.value_or(vanillaResult);
 	}
 
 	void installPatches() {

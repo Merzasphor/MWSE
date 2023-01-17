@@ -11,6 +11,13 @@ namespace se::cs {
 			toml::value into_toml() const;
 		} render_window;
 
+		struct DialogueWindowSettings {
+			bool highlight_modified_items = true;
+
+			void from_toml(const toml::value& v);
+			toml::value into_toml() const;
+		} dialogue_window;
+
 		struct ObjectWindowSettings {
 			struct ColumnSettings {
 				static constexpr auto DEFAULT_SIZE_ID = 100u;
