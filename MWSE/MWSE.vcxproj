@@ -18,6 +18,7 @@
     <ClInclude Include="LuaAttackHitEvent.h" />
     <ClInclude Include="LuaCalcBlockChanceEvent.h" />
     <ClInclude Include="LuaCalcEnchantmentPriceEvent.h" />
+    <ClInclude Include="LuaCameraControlEvent.h" />
     <ClInclude Include="LuaConsoleReferenceChangedEvent.h" />
     <ClInclude Include="LuaDialogueEnvironmentCreatedEvent.h" />
     <ClInclude Include="LuaDispositionEvent.h" />
@@ -546,6 +547,7 @@
     <ClCompile Include="LuaCalcSunDamageScalarEvent.cpp" />
     <ClCompile Include="LuaCalcTrainingPriceEvent.cpp" />
     <ClCompile Include="LuaCalcTravelPriceEvent.cpp" />
+    <ClCompile Include="LuaCameraControlEvent.cpp" />
     <ClCompile Include="LuaCellActivatedEvent.cpp" />
     <ClCompile Include="LuaCellChangedEvent.cpp" />
     <ClCompile Include="LuaCellDeactivatedEvent.cpp" />

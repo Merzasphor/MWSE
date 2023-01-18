@@ -20,8 +20,17 @@ namespace TES3 {
 		NI::Camera * vanityCamera; // 0xFC
 		Matrix33 shadowCameraMatrix; // 0x100
 
+		static TES3::Transform previousCameraTransform;
+		static TES3::Transform previousArmCameraTransform;
+
 		PlayerAnimationController() = delete;
 		~PlayerAnimationController() = delete;
+
+		//
+		// vTable overrides
+		//
+
+		void syncRotation();
 
 		//
 		// Custom functions

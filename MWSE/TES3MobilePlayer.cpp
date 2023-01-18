@@ -5,15 +5,18 @@
 
 #include "TES3UIManager.h"
 
+#include "LuaCameraControlEvent.h"
 #include "LuaDeathEvent.h"
 #include "LuaSkillExerciseEvent.h"
 
 #include "Log.h"
 
 #include "TES3NPC.h"
-#include "TES3Race.h"
-#include "TES3Skill.h"
 #include "TES3PlayerAnimationController.h"
+#include "TES3Race.h"
+#include "TES3Reference.h"
+#include "TES3Skill.h"
+#include "TES3WorldController.h"
 
 namespace TES3 {
 	const auto TES3_BountyData_getValue = reinterpret_cast<int(__thiscall*)(BountyData*, StdString*)>(0x55D220);
@@ -126,6 +129,56 @@ namespace TES3 {
 	const auto TES3_MobilePlayer_setVanityState = reinterpret_cast<void(__thiscall*)(MobilePlayer*, int)>(0x567960);
 	void MobilePlayer::setVanityState(int state) {
 		TES3_MobilePlayer_setVanityState(this, state);
+	}
+
+	const auto TES3_MobilePlayer_updateScenegraph = reinterpret_cast<void(__thiscall*)(MobilePlayer*)>(0x5679E0);
+	void MobilePlayer::updateSceneGraph() {
+		auto worldController = WorldController::get();
+		auto cameraRootNode = worldController->worldCamera.cameraRoot;
+		auto armCameraRootNode = worldController->armCamera.cameraRoot;
+
+		// Call the original function.
+		TES3_MobilePlayer_updateScenegraph(this);
+
+		// Fire off our event.
+		if (mwse::lua::event::CameraControlEvent::getEventEnabled()) {
+			Transform cameraTransform = cameraRootNode->getTransforms();
+			Transform armCameraTransform = armCameraRootNode->getTransforms();
+			Transform prevCameraTransform = PlayerAnimationController::previousCameraTransform;
+			Transform prevArmCameraTransform = PlayerAnimationController::previousArmCameraTransform;
+
+			// Copy current transform over previous if the camera teleported a significant distance.
+			// This minimizes glitches on cell changes and other teleport situations.
+			const float distanceLimit = 1024.0f;
+			float distanceMoved = prevCameraTransform.translation.distance(&cameraTransform.translation);
+			if (distanceMoved > distanceLimit) {
+				prevCameraTransform = cameraTransform;
+				prevArmCameraTransform = armCameraTransform;
+			}
+
+			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::object eventResult = stateHandle.triggerEvent(
+				new mwse::lua::event::CameraControlEvent(
+					animationController.asPlayer,
+					prevCameraTransform, prevArmCameraTransform,
+					cameraTransform, armCameraTransform
+				)
+			);
+
+			if (eventResult.valid()) {
+				sol::table eventData = eventResult;
+				cameraTransform = eventData["cameraTransform"];
+				armCameraTransform = eventData["armCameraTransform"];
+
+				// Copy transforms in the same way as PlayerAnimationController::syncRotation and updateCameraTransforms.
+				cameraRootNode->copyTransforms(&cameraTransform);
+				worldController->shadowCamera.cameraRoot->copyTransforms(&cameraTransform);
+				armCameraRootNode->localTranslate = armCameraTransform.translation;
+				if (isNotKnockedDownOrOut()) {
+					armCameraRootNode->setLocalRotationMatrix(&armCameraTransform.rotation);
+				}
+			}
+		}
 	}
 
 	const auto TES3_MobilePlayer_addTopic = reinterpret_cast<void(__thiscall*)(MobilePlayer*, Dialogue*)>(0x56A470);

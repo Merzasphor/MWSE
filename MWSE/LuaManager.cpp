@@ -5149,6 +5149,12 @@ namespace mwse::lua {
 		overrideVirtualTableEnforced(TES3::VirtualTableAddress::ContainerBase, offsetof(TES3::ActorVirtualTable, onCloseInventory), 0x58D230, *reinterpret_cast<DWORD*>(&actorOnCloseInventory));
 		overrideVirtualTableEnforced(TES3::VirtualTableAddress::ContainerInstance, offsetof(TES3::ActorVirtualTable, onCloseInventory), 0x4A4460, *reinterpret_cast<DWORD*>(&containerOnCloseInventory));
 
+		// Event: Camera control.
+		auto mobilePlayerUpdateScenegraph = &TES3::MobilePlayer::updateSceneGraph;
+		auto playerAnimControllerSyncRotation = &TES3::PlayerAnimationController::syncRotation;
+		overrideVirtualTableEnforced(TES3::VirtualTableAddress::MobilePlayer, 0x1C, 0x5679E0, *reinterpret_cast<DWORD*>(&mobilePlayerUpdateScenegraph));
+		overrideVirtualTableEnforced(TES3::VirtualTableAddress::PlayerAnimController, 0xC, 0x5438F0, *reinterpret_cast<DWORD*>(&playerAnimControllerSyncRotation));
+
 		// Allow overriding of guard status.
 		auto npcBaseIsGuard = &TES3::NPCBase::isGuard;
 		overrideVirtualTableEnforced(TES3::VirtualTableAddress::NPCBase, offsetof(TES3::ActorVirtualTable, isGuard), 0x04DA5E0, *reinterpret_cast<DWORD*>(&npcBaseIsGuard));

@@ -120,6 +120,8 @@ namespace TES3 {
 		// Custom functions.
 		//
 
+		void updateSceneGraph();
+
 		int progressSkillToNextLevel(int skillId);
 
 		void setMovementFlagSneaking(bool value);

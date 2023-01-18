@@ -33,6 +33,7 @@
 #include "LuaCalcSunDamageScalarEvent.h"
 #include "LuaCalcTrainingPriceEvent.h"
 #include "LuaCalcTravelPriceEvent.h"
+#include "LuaCameraControlEvent.h"
 #include "LuaCellActivatedEvent.h"
 #include "LuaCellChangedEvent.h"
 #include "LuaCellDeactivatedEvent.h"
@@ -195,6 +196,7 @@ namespace mwse::lua::event {
 		usertypeDefinition["calcTrainingPrice"] = sol::property(&CalculateTrainingPriceEvent::getEventEnabled, &CalculateTrainingPriceEvent::setEventEnabled);
 		usertypeDefinition["calcTravelPrice"] = sol::property(&CalculateTravelPriceEvent::getEventEnabled, &CalculateTravelPriceEvent::setEventEnabled);
 		usertypeDefinition["calcWalkSpeed"] = sol::property(&CalculateMovementSpeed::getEventEnabled, &CalculateMovementSpeed::setEventEnabled);
+		usertypeDefinition["cameraControl"] = sol::property(&CameraControlEvent::getEventEnabled, &CameraControlEvent::setEventEnabled);
 		usertypeDefinition["cellActivated"] = sol::property(&CellActivatedEvent::getEventEnabled, &CellActivatedEvent::setEventEnabled);
 		usertypeDefinition["cellChanged"] = sol::property(&CellChangedEvent::getEventEnabled, &CellChangedEvent::setEventEnabled);
 		usertypeDefinition["cellDeactivated"] = sol::property(&CellDeactivatedEvent::getEventEnabled, &CellDeactivatedEvent::setEventEnabled);

@@ -1686,6 +1686,9 @@
     <ClInclude Include="NIDX8TextureData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LuaCameraControlEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -3670,6 +3673,9 @@
     </ClCompile>
     <ClCompile Include="NIDX8TextureData.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaCameraControlEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
