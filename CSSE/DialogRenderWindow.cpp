@@ -1167,6 +1167,7 @@ namespace se::cs::dialog::render_window {
 		using memory::writePatchCodeUnprotected;
 
 		// Patch: Extend SceneGraphController structure.
+		static_assert(sizeof(SceneGraphController) < INT8_MAX);
 		genPushEnforced(0x4473FD, (BYTE)sizeof(SceneGraphController));
 		genJumpEnforced(0x403855, 0x449930, reinterpret_cast<DWORD>(SceneGraphController::initialize));
 
