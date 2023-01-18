@@ -134,6 +134,14 @@ namespace NI {
 		}
 	}
 
+	TES3::Transform AVObject::getTransforms() const {
+		TES3::Transform t;
+		t.rotation = *localRotation;
+		t.translation = localTranslate;
+		t.scale = localScale;
+		return t;
+	}
+
 	Pointer<Property> AVObject::getProperty(PropertyType type) const {
 		auto propNode = &propertyNode;
 		while (propNode && propNode->data) {

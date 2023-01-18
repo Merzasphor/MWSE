@@ -248,9 +248,9 @@ namespace mwse::lua {
 			>();
 
 			// Basic property bindings.
-			usertypeDefinition["rotation"] = sol::readonly_property(&TES3::Transform::rotation);
-			usertypeDefinition["translation"] = sol::readonly_property(&TES3::Transform::translation);
-			usertypeDefinition["scale"] = sol::readonly_property(&TES3::Transform::scale);
+			usertypeDefinition["rotation"] = &TES3::Transform::rotation;
+			usertypeDefinition["translation"] = &TES3::Transform::translation;
+			usertypeDefinition["scale"] = &TES3::Transform::scale;
 
 			// Basic function binding.
 			usertypeDefinition["copy"] = &TES3::Transform::copy;
