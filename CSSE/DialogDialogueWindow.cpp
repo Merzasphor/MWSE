@@ -307,6 +307,26 @@ namespace se::cs::dialog::dialogue_window {
 	}
 
 	//
+	// Patch: Allow filtering of topic list.
+	//
+
+	static bool modeShowModifiedOnly = false;
+
+	bool PatchFilterTopicList(const Dialogue* topic) {
+		if (modeShowModifiedOnly && !topic->getModified()) {
+			return false;
+		}
+		return true;
+	}
+
+	void __cdecl PatchTopicListAddItem(HWND hDlg, const Dialogue* topic) {
+		if (PatchFilterTopicList(topic)) {
+			const auto CS_AddTopicToList = reinterpret_cast<void(__cdecl*)(HWND, const Dialogue*)>(0x4E7050);
+			CS_AddTopicToList(hDlg, topic);
+		}
+	}
+
+	//
 	// Patch: Extend Render Window message handling.
 	//
 
@@ -410,6 +430,13 @@ namespace se::cs::dialog::dialogue_window {
 		ShowWindow(hDlgJournalQuestRestartCheckButton, TRUE);
 		EnableWindow(hDlgJournalQuestRestartCheckButton, FALSE);
 
+		// Add custom controls.
+		auto hInstance = (HINSTANCE)GetWindowLongA(hWnd, GWLP_HINSTANCE);
+		auto font = SendMessageA(hWnd, WM_GETFONT, FALSE, FALSE);
+
+		auto hDlgShowModifiedOnly = CreateWindowExA(NULL, WC_BUTTON, "Show modified only", BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_CHILD | WS_VISIBLE | WS_GROUP, 0, 0, 0, 0, hWnd, (HMENU)CONTROL_ID_SHOW_MODIFIED_ONLY_BUTTON, hInstance, NULL);
+		SendMessageA(hDlgShowModifiedOnly, WM_SETFONT, font, MAKELPARAM(TRUE, FALSE));
+
 		// Make it so the window can be maximized and generally resized.
 		RemoveStyles(hWnd, DS_MODALFRAME);
 		AddStyles(hWnd, WS_SIZEBOX | WS_MAXIMIZEBOX);
@@ -447,6 +474,7 @@ namespace se::cs::dialog::dialogue_window {
 			else if (lplvcd->nmcd.dwDrawStage == CDDS_ITEMPREPAINT) {
 				auto object = (BaseObject*)lplvcd->nmcd.lItemlParam;
 				if (object) {
+					// Background color highlighting.
 					if (object->getDeleted()) {
 						lplvcd->clrTextBk = RGB(255, 235, 235);
 						SetWindowLongA(hWnd, DWLP_MSGRESULT, CDRF_NEWFONT);
@@ -588,7 +616,7 @@ namespace se::cs::dialog::dialogue_window {
 			const auto currentX = WINDOW_EDGE_PADDING;
 			auto currentY = WINDOW_EDGE_PADDING;
 
-			constexpr auto FILTER_FOR_AREA_SIZE = STATIC_HEIGHT + COMBO_HEIGHT + BASIC_PADDING;
+			constexpr auto FILTER_FOR_AREA_SIZE = STATIC_HEIGHT + COMBO_HEIGHT * 2 + BASIC_PADDING * 2;
 
 			// Dialogue type tabs
 			const auto topicsAreaSize = windowHeight - FILTER_FOR_AREA_SIZE - BASIC_PADDING * 2 - WINDOW_EDGE_PADDING * 2;
@@ -610,6 +638,11 @@ namespace se::cs::dialog::dialogue_window {
 			// Filter For combo
 			auto hDlgFilterForCombo = GetDlgItem(hWnd, CONTROL_ID_FILTER_FOR_COMBO);
 			MoveWindow(hDlgFilterForCombo, currentX, currentY, LEFT_SECTION_WIDTH, COMBO_HEIGHT, FALSE);
+			currentY += COMBO_HEIGHT + BASIC_PADDING;
+
+			// Show modified only button
+			auto hShowModifiedButton = GetDlgItem(hWnd, CONTROL_ID_SHOW_MODIFIED_ONLY_BUTTON);
+			MoveWindow(hShowModifiedButton, currentX, currentY, LEFT_SECTION_WIDTH, COMBO_HEIGHT, FALSE);
 		}
 
 		// INFO list section
@@ -786,6 +819,25 @@ namespace se::cs::dialog::dialogue_window {
 		forcedReturnType = TRUE;
 	}
 
+	void PatchDialogProc_BeforeCommand(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+		const auto command = HIWORD(wParam);
+		const auto id = LOWORD(wParam);
+		switch (command) {
+		case BN_CLICKED:
+			switch (id) {
+			case CONTROL_ID_SHOW_MODIFIED_ONLY_BUTTON:
+				modeShowModifiedOnly = SendDlgItemMessage(hWnd, id, BM_GETCHECK, 0, 0);
+
+				// Invoke update logic by simulating the combo box selection changing.
+				// There may be a better way.
+				auto hFilterCombo = GetDlgItem(hWnd, CONTROL_ID_FILTER_FOR_COMBO);
+				SendMessage(hWnd, WM_COMMAND, MAKEWPARAM(CONTROL_ID_FILTER_FOR_COMBO, CBN_SELCHANGE), (LPARAM)hFilterCombo);
+				break;
+			}
+			break;
+		}
+	}
+
 	LRESULT CALLBACK PatchDialogProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		forcedReturnType = {};
 
@@ -795,6 +847,9 @@ namespace se::cs::dialog::dialogue_window {
 			break;
 		case WM_SIZE:
 			PatchDialogProc_BeforeSize(hWnd, msg, wParam, lParam);
+			break;
+		case WM_COMMAND:
+			PatchDialogProc_BeforeCommand(hWnd, msg, wParam, lParam);
 			break;
 		}
 
@@ -825,6 +880,7 @@ namespace se::cs::dialog::dialogue_window {
 		using memory::genNOPUnprotected;
 		using memory::genJumpEnforced;
 		using memory::genJumpUnprotected;
+		using memory::genCallEnforced;
 		using memory::genCallUnprotected;
 		using memory::writeDoubleWordEnforced;
 		using memory::writePatchCodeUnprotected;
@@ -857,6 +913,9 @@ namespace se::cs::dialog::dialogue_window {
 			// Optimize the refresh of the topic list.
 			genJumpEnforced(0x4031A7, 0x4E70E0, reinterpret_cast<DWORD>(PatchOptimizeTopicListRefresh));
 		}
+
+		// Patch: Allow filtering of topic list.
+		genCallEnforced(0x4E7143, 0x404160, reinterpret_cast<DWORD>(PatchTopicListAddItem));
 
 		// Patch: Extend Render Window message handling.
 		genJumpEnforced(0x401334, 0x4EAEA0, reinterpret_cast<DWORD>(PatchDialogProc));
