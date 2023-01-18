@@ -158,6 +158,7 @@ namespace se::cs::dialog::object_window {
 
 	static std::string currentSearchText;
 	static std::optional<std::regex> currentSearchRegex;
+	static bool modeShowModifiedOnly = false;
 
 	bool matchDispatcher(const std::string_view& haystack) {
 		if (currentSearchRegex) {
@@ -172,6 +173,10 @@ namespace se::cs::dialog::object_window {
 	}
 
 	bool PatchFilterObjectWindow_ObjectMatchesSearchText(const Object* object) {
+		if (modeShowModifiedOnly && !object->getModified()) {
+			return false;
+		}
+
 		// If we have no search text, always allow.
 		if (currentSearchText.empty()) {
 			return true;
@@ -263,6 +268,7 @@ namespace se::cs::dialog::object_window {
 
 		auto tabControl = GetDlgItem(hDlg, CONTROL_ID_TABS);
 		auto objectListView = GetDlgItem(hDlg, CONTROL_ID_LIST_VIEW);
+		auto showModifiedButton = GetDlgItem(hDlg, CONTROL_ID_SHOW_MODIFIED_ONLY_BUTTON);
 		auto searchLabel = GetDlgItem(hDlg, CONTROL_ID_FILTER_LABEL);
 		auto searchEdit = GetDlgItem(hDlg, CONTROL_ID_FILTER_EDIT);
 
@@ -290,6 +296,7 @@ namespace se::cs::dialog::object_window {
 		// Update the search bar placement.
 		int currentY = mainHeight - EDIT_HEIGHT - BASIC_PADDING;
 		auto searchEditWidth = std::min<int>(mainWidth - BASIC_PADDING * 2, 300);
+		MoveWindow(showModifiedButton, BASIC_PADDING, currentY, 160, EDIT_HEIGHT, TRUE);
 		MoveWindow(searchLabel, mainWidth - BASIC_PADDING - searchEditWidth - 54 - BASIC_PADDING, currentY + STATIC_COMBO_OFFSET, 54, STATIC_HEIGHT, TRUE);
 		MoveWindow(objectWindowSearchControl, mainWidth - BASIC_PADDING - searchEditWidth, currentY, searchEditWidth, EDIT_HEIGHT, FALSE);
 
@@ -303,13 +310,15 @@ namespace se::cs::dialog::object_window {
 		auto hDlgFilterEdit = GetDlgItem(hWnd, CONTROL_ID_FILTER_EDIT);
 		if (objectWindowSearchControl == NULL) {
 
-			auto hDlgFilterStatic = CreateWindowExA(NULL, "STATIC", "Filter:", SS_RIGHT | WS_CHILD | WS_VISIBLE | WS_GROUP, 0, 0, 0, 0, hWnd, (HMENU)CONTROL_ID_FILTER_LABEL, hInstance, NULL);
-			hDlgFilterEdit = CreateWindowExA(NULL, "EDIT", "", ES_LEFT | ES_AUTOHSCROLL | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 0, 0, 0, 0, hWnd, (HMENU)CONTROL_ID_FILTER_EDIT, hInstance, NULL);
+			auto hDlgShowModifiedOnly = CreateWindowExA(NULL, WC_BUTTON, "Show modified only", BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_CHILD | WS_VISIBLE | WS_GROUP, 0, 0, 0, 0, hWnd, (HMENU)CONTROL_ID_SHOW_MODIFIED_ONLY_BUTTON, hInstance, NULL);
+			auto hDlgFilterStatic = CreateWindowExA(NULL, WC_STATIC, "Filter:", SS_RIGHT | WS_CHILD | WS_VISIBLE | WS_GROUP, 0, 0, 0, 0, hWnd, (HMENU)CONTROL_ID_FILTER_LABEL, hInstance, NULL);
+			hDlgFilterEdit = CreateWindowExA(NULL, WC_EDIT, "", ES_LEFT | ES_AUTOHSCROLL | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 0, 0, 0, 0, hWnd, (HMENU)CONTROL_ID_FILTER_EDIT, hInstance, NULL);
 			if (hDlgFilterEdit) {
 				SetWindowSubclass(hDlgFilterEdit, ui_subclass::edit::BasicExtendedProc, NULL, NULL);
 				Edit_LimitText(hDlgFilterEdit, 31);
 
 				auto font = SendMessageA(hWnd, WM_GETFONT, FALSE, FALSE);
+				SendMessageA(hDlgShowModifiedOnly, WM_SETFONT, font, MAKELPARAM(TRUE, FALSE));
 				SendMessageA(hDlgFilterStatic, WM_SETFONT, font, MAKELPARAM(TRUE, FALSE));
 				SendMessageA(hDlgFilterEdit, WM_SETFONT, font, MAKELPARAM(TRUE, FALSE));
 			}
@@ -344,6 +353,7 @@ namespace se::cs::dialog::object_window {
 			else if (lplvcd->nmcd.dwDrawStage == CDDS_ITEMPREPAINT) {
 				auto object = (BaseObject*)lplvcd->nmcd.lItemlParam;
 				if (object) {
+					// Background color highlighting.
 					if (object->getDeleted()) {
 						lplvcd->clrTextBk = RGB(255, 235, 235);
 						SetWindowLongA(hWnd, DWLP_MSGRESULT, CDRF_NEWFONT);
@@ -415,6 +425,15 @@ namespace se::cs::dialog::object_window {
 		}
 	}
 
+	void RefreshListView(HWND hWnd) {
+		// Fire a refresh function. But disable drawing throughout so we don't get ugly flashes.
+		const auto listView = ghWndObjectList::get();
+		SendMessageA(listView, WM_SETREDRAW, FALSE, NULL);
+		SendMessageA(hWnd, 0x413, 0, 0);
+		SendMessageA(listView, WM_SETREDRAW, TRUE, NULL);
+		RedrawWindow(listView, NULL, NULL, RDW_ERASE | RDW_FRAME | RDW_INVALIDATE | RDW_ALLCHILDREN);
+	}
+
 	inline void OnFilterEditChanged(HWND hWnd) {
 		using namespace se::cs::winui;
 
@@ -448,19 +467,22 @@ namespace se::cs::dialog::object_window {
 				currentSearchRegex = {};
 			}
 
-			// Fire a refresh function. But disable drawing throughout so we don't get ugly flashes.
-			const auto listView = ghWndObjectList::get();
-			SendMessageA(listView, WM_SETREDRAW, FALSE, NULL);
-			SendMessageA(hWnd, 1043, 0, 0);
-			SendMessageA(listView, WM_SETREDRAW, TRUE, NULL);
-			RedrawWindow(listView, NULL, NULL, RDW_ERASE | RDW_FRAME | RDW_INVALIDATE | RDW_ALLCHILDREN);
+			RefreshListView(hWnd);
 		}
 	}
 
-	inline void PatchDialogProc_BeforeCommand(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+	void PatchDialogProc_BeforeCommand(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		const auto command = HIWORD(wParam);
 		const auto id = LOWORD(wParam);
 		switch (command) {
+		case BN_CLICKED:
+			switch (id) {
+			case CONTROL_ID_SHOW_MODIFIED_ONLY_BUTTON:
+				modeShowModifiedOnly = SendDlgItemMessage(hWnd, id, BM_GETCHECK, 0, 0);
+				RefreshListView(hWnd);
+				break;
+			}
+			break;
 		case EN_CHANGE:
 			switch (id) {
 			case CONTROL_ID_FILTER_EDIT:
