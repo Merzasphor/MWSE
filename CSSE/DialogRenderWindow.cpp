@@ -136,7 +136,7 @@ namespace se::cs::dialog::render_window {
 
 		static bool __cdecl initialize(SceneGraphController* controller) {
 			// Zero out the structure again to handle newly added fields.
-			memset(controller, sizeof(SceneGraphController), 0);
+			memset(controller, 0, sizeof(SceneGraphController));
 
 			// Call existing function.
 			const auto SceneGraphController_initialize = reinterpret_cast<bool(__cdecl*)(SceneGraphController*)>(0x449930);
