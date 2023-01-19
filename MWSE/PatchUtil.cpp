@@ -647,7 +647,7 @@ namespace mwse::patch {
 
 	TES3::PathGrid* __fastcall PatchCellGetPathGridWithNodes(TES3::Cell* cell) {
 		auto pathGrid = cell->pathGrid;
-		if (pathGrid && pathGrid->pointCount == 0) {
+		if (pathGrid && pathGrid->nodeCount == 0) {
 			return nullptr;
 		}
 		return pathGrid;
