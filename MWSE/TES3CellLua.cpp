@@ -100,6 +100,7 @@ namespace mwse::lua {
 			usertypeDefinition["actors"] = sol::readonly_property(&TES3::Cell::actors);
 			usertypeDefinition["activators"] = sol::readonly_property(&TES3::Cell::persistentRefs);
 			usertypeDefinition["cellFlags"] = &TES3::Cell::cellFlags;
+			usertypeDefinition["pathGrid"] = sol::readonly_property(&TES3::Cell::pathGrid);
 			usertypeDefinition["statics"] = sol::readonly_property(&TES3::Cell::temporaryRefs);
 
 			// Functions exposed as properties.
@@ -126,6 +127,34 @@ namespace mwse::lua {
 			// Basic function binding.
 			usertypeDefinition["isPointInCell"] = &TES3::Cell::isPointInCell;
 			usertypeDefinition["iterateReferences"] = iterateReferences;
+		}
+
+		// Binding for TES3::PathGrid	
+		{
+			// Start our usertype.
+			auto usertypeDefinition = state.new_usertype<TES3::PathGrid>("tes3pathGrid");
+			usertypeDefinition["new"] = sol::no_constructor;
+
+			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+			usertypeDefinition[sol::base_classes] = sol::bases<TES3::BaseObject>();
+			setUserdataForTES3BaseObject(usertypeDefinition);
+
+			// Basic property binding.
+			usertypeDefinition["granularity"] = sol::readonly_property(&TES3::PathGrid::granularity);
+			usertypeDefinition["isLoaded"] = sol::readonly_property(&TES3::PathGrid::isLoaded);
+			usertypeDefinition["nodeCount"] = sol::readonly_property(&TES3::PathGrid::nodeCount);
+			usertypeDefinition["nodes"] = sol::readonly_property(&TES3::PathGrid::nodes);
+			usertypeDefinition["parentCell"] = sol::readonly_property(&TES3::PathGrid::parentCell);
+		}
+
+		// Binding for TES3::PathGrid::Node
+		{
+			// Start our usertype.
+			auto usertypeDefinition = state.new_usertype<TES3::PathGrid::Node>("tes3pathGridNode");
+			usertypeDefinition["new"] = sol::no_constructor;
+
+			// Functions exposed as properties.
+			usertypeDefinition["position"] = sol::readonly_property(&TES3::PathGrid::Node::getPosition);
 		}
 	}
 }

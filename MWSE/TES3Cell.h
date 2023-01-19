@@ -32,9 +32,9 @@ namespace TES3 {
 
 	struct PathGrid : BaseObject {
 		struct Node {
-			int x;
-			int y;
-			int z;
+			int relativeX;
+			int relativeY;
+			int relativeZ;
 			IteratedList<Node*>* connectedNodes; // 0xC
 			PathGrid* parentGrid; // 0x10
 			int index; // 0x14
@@ -42,6 +42,8 @@ namespace TES3 {
 
 			Node() = delete;
 			~Node() = delete;
+
+			Vector3 getPosition() const;
 		};
 
 		NI::Pointer<NI::Node> sceneNode; // 0x10
@@ -51,10 +53,10 @@ namespace TES3 {
 		char unknown_0x17;
 		Cell* parentCell; // 0x18
 		short granularity; // 0x1C
-		unsigned short pointCount; // 0x1E
+		unsigned short nodeCount; // 0x1E
 		IteratedList<Node*> nodes; // 0x20
 		unsigned int fileOffset; // 0x34
-		char unknown_0x38;
+		bool isLoaded;
 
 		PathGrid() = delete;
 		~PathGrid() = delete;

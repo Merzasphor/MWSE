@@ -288,6 +288,14 @@ namespace TES3 {
 	int Cell::toGridCoord(float x) {
 		return int(x) >> 13;
 	}
+
+	Vector3 PathGrid::Node::getPosition() const {
+		// Convert local position to world position.
+		const auto cell = parentGrid->parentCell;
+		const int cellX = 8192 * cell->getGridX(), cellY = 8192 * cell->getGridY();
+
+		return { float(cellX + relativeX), float(cellY + relativeY), float(relativeZ) };
+	}
 }
 
 MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_TES3(TES3::Cell)
