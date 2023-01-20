@@ -110,7 +110,7 @@ namespace TES3 {
 		union {
 			struct {
 				NI::PackedColor regionMapColor; // 0x0
-				void * landscape; // 0x4
+				Land * landscape; // 0x4
 				int gridX; // 0x8
 				int gridY; // 0xC
 			} exterior;
@@ -178,7 +178,8 @@ namespace TES3 {
 		std::optional<float> getWaterLevel() const;
 		void setWaterLevel(float);
 
-		Region * getRegion() const;
+		Land* getLandscape() const;
+		Region* getRegion() const;
 
 		NI::PackedColor* getAmbientColor();
 		NI::PackedColor* getFogColor();

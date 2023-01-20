@@ -114,6 +114,8 @@
 #include "TES3IngredientLua.h"
 #include "TES3InputControllerLua.h"
 #include "TES3InventoryLua.h"
+#include "TES3LandLua.h"
+#include "TES3LandTextureLua.h"
 #include "TES3LeveledListLua.h"
 #include "TES3LightLua.h"
 #include "TES3LockpickLua.h"
@@ -487,6 +489,8 @@ namespace mwse::lua {
 		bindTES3Ingredient();
 		bindTES3InputController();
 		bindTES3Inventory();
+		bindTES3Land();
+		bindTES3LandTexture();
 		bindTES3LeveledList();
 		bindTES3Light();
 		bindTES3Lockpick();

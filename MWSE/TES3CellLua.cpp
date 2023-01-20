@@ -4,6 +4,7 @@
 #include "TES3ObjectLua.h"
 
 #include "TES3Cell.h"
+#include "TES3Land.h"
 #include "TES3Region.h"
 
 #include "NIColor.h"
@@ -116,6 +117,7 @@ namespace mwse::lua {
 			usertypeDefinition["hasMapMarker"] = sol::readonly_property(&TES3::Cell::getHasCellMarker);
 			usertypeDefinition["isInterior"] = sol::property(&TES3::Cell::getIsInterior, &TES3::Cell::setIsInterior);
 			usertypeDefinition["isOrBehavesAsExterior"] = sol::readonly_property(&TES3::Cell::getIsOrBehavesAsExterior);
+			usertypeDefinition["landscape"] = sol::readonly_property(&TES3::Cell::getLandscape);
 			usertypeDefinition["name"] = sol::property(&TES3::Cell::getName, &TES3::Cell::setName);
 			usertypeDefinition["pickObjectsRoot"] = sol::readonly_property(&TES3::Cell::pickObjectsRoot);
 			usertypeDefinition["region"] = sol::readonly_property(&TES3::Cell::getRegion);

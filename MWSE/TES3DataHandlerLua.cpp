@@ -12,6 +12,7 @@
 #include "TES3Faction.h"
 #include "TES3GameFile.h"
 #include "TES3GlobalVariable.h"
+#include "TES3LandTexture.h"
 #include "TES3MagicEffectController.h"
 #include "TES3Reference.h"
 #include "TES3Script.h"
@@ -50,6 +51,7 @@ namespace mwse::lua {
 			usertypeDefinition["factions"] = sol::readonly_property(&TES3::NonDynamicData::factions);
 			usertypeDefinition["globals"] = sol::readonly_property(&TES3::NonDynamicData::globals);
 			usertypeDefinition["isSavingOrLoading"] = sol::readonly_property(&TES3::NonDynamicData::isSavingOrLoading);
+			usertypeDefinition["landTextures"] = sol::readonly_property(&TES3::NonDynamicData::landTextures);
 			usertypeDefinition["lastLoadedFile"] = sol::readonly_property(&TES3::NonDynamicData::unknown_0x08);
 			usertypeDefinition["mapTexture"] = &TES3::NonDynamicData::mapTexture;
 			usertypeDefinition["objects"] = sol::readonly_property(&TES3::NonDynamicData::list);

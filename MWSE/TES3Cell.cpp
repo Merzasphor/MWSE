@@ -123,7 +123,16 @@ namespace TES3 {
 		}
 	}
 
-	Region * Cell::getRegion() const {
+	Land* Cell::getLandscape() const {
+		if (!getIsInterior()) {
+			return variantData.exterior.landscape;
+		}
+		else {
+			return nullptr;
+		}
+	}
+
+	Region* Cell::getRegion() const {
 		if (getIsOrBehavesAsExterior()) {
 			return waterLevelOrRegion.region;
 		}
