@@ -23,6 +23,7 @@ local ansicolors = require("logging.colors")
 ---@field trace fun(self: MWSELogger, message: string, ...) Log trace message
 ---@field warn fun(self: MWSELogger, message: string, ...) Log warn message
 ---@field error fun(self: MWSELogger, message: string, ...) Log error message
+---@field assert fun(self: MWSELogger, condition: boolean, message: string, ...) Assert a condition and log an error if it fails
 ---@field setLogLevel fun(self: MWSELogger, newLogLevel: MWSELoggerLogLevels) Set the log level. Options are: TRACE, DEBUG, INFO, WARN, ERROR and NONE
 ---@field setOutputFile fun(self: MWSELogger, outputFile: string) Set the output file. If set, logs will be sent to a file of this name
 
@@ -160,6 +161,17 @@ for logLevel, levelConfig in pairs(logLevels) do
 		if self:doLog(logLevel) then
 			self:write(logLevel, levelConfig.color, message, ...)
 		end
+	end
+end
+
+--- Assert a condition and log an error if it fails
+---@param condition boolean Condition to assert
+---@param message string Message to log if condition fails
+---@vararg any
+function Logger:assert(condition, message, ...)
+	if not condition then
+		self:error(message)
+		assert(condition, message)
 	end
 end
 
