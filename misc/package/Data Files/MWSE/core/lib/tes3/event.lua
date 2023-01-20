@@ -34,6 +34,7 @@ return {
 	["calcTrainingPrice"] = "calcTrainingPrice",
 	["calcTravelPrice"] = "calcTravelPrice",
 	["calcWalkSpeed"] = "calcWalkSpeed",
+	["cameraControl"] = "cameraControl",
 	["cellActivated"] = "cellActivated",
 	["cellChanged"] = "cellChanged",
 	["cellDeactivated"] = "cellDeactivated",

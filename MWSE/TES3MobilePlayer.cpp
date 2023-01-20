@@ -131,6 +131,9 @@ namespace TES3 {
 		TES3_MobilePlayer_setVanityState(this, state);
 	}
 
+	static Vector3 lastPlayerPosition;
+	static int cameraResetFrames = 0;
+
 	const auto TES3_MobilePlayer_updateScenegraph = reinterpret_cast<void(__thiscall*)(MobilePlayer*)>(0x5679E0);
 	void MobilePlayer::updateSceneGraph() {
 		auto worldController = WorldController::get();
@@ -140,22 +143,29 @@ namespace TES3 {
 		// Call the original function.
 		TES3_MobilePlayer_updateScenegraph(this);
 
-		// Fire off our event.
 		if (mwse::lua::event::CameraControlEvent::getEventEnabled()) {
 			Transform cameraTransform = cameraRootNode->getTransforms();
 			Transform armCameraTransform = armCameraRootNode->getTransforms();
 			Transform prevCameraTransform = PlayerAnimationController::previousCameraTransform;
 			Transform prevArmCameraTransform = PlayerAnimationController::previousArmCameraTransform;
 
-			// Copy current transform over previous if the camera teleported a significant distance.
+			// Copy current transform over previous if the player teleported a significant distance.
 			// This minimizes glitches on cell changes and other teleport situations.
 			const float distanceLimit = 1024.0f;
-			float distanceMoved = prevCameraTransform.translation.distance(&cameraTransform.translation);
+			float distanceMoved = lastPlayerPosition.distance(&reference->position);
+			lastPlayerPosition = reference->position;
+
 			if (distanceMoved > distanceLimit) {
+				// Multiple reset frames are needed for player ground clamping physics to resolve.
+				cameraResetFrames = 3;
+			}
+			if (cameraResetFrames > 0) {
 				prevCameraTransform = cameraTransform;
 				prevArmCameraTransform = armCameraTransform;
+				--cameraResetFrames;
 			}
 
+			// Fire off our event.
 			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::object eventResult = stateHandle.triggerEvent(
 				new mwse::lua::event::CameraControlEvent(
