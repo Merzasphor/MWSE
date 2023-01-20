@@ -12,7 +12,7 @@ namespace NI {
 		NI_GeometryData_loadBinary(this, stream);
 
 		// Fixed flag loading logic.
-		flags = mwse::tes3::_new<bool>(vertexCount);
-		stream->inStream->read(flags, vertexCount);
+		lineSegmentFlags = mwse::tes3::_new<bool>(vertexCount);
+		stream->inStream->read(lineSegmentFlags, vertexCount);
 	}
 }

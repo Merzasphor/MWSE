@@ -4,7 +4,7 @@
 
 namespace NI {
 	struct LinesData : GeometryData {
-		bool* flags; // 0x34
+		bool* lineSegmentFlags; // 0x34
 
 		//
 		// Custom functions.
