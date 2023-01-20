@@ -52,6 +52,9 @@
     <Filter Include="Source Files\UI\Controllers">
       <UniqueIdentifier>{431d0355-2c3b-4033-b5f0-40de48c704f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\NI">
+      <UniqueIdentifier>{f9bdffe1-0d39-45c0-9896-032b172b4e5b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -237,6 +240,9 @@
     <ClInclude Include="DialogTextSearchWindow.h">
       <Filter>Header Files\UI\Dialog</Filter>
     </ClInclude>
+    <ClInclude Include="NILinesData.h">
+      <Filter>Header Files\NI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -346,6 +352,9 @@
     </ClCompile>
     <ClCompile Include="CSDialogueInfo.cpp">
       <Filter>Source Files\CS</Filter>
+    </ClCompile>
+    <ClCompile Include="NILinesData.cpp">
+      <Filter>Source Files\NI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

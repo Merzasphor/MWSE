@@ -174,6 +174,7 @@ if defined APPVEYOR_BUILD_NUMBER (echo #define APPVEYOR_BUILD_NUMBER %APPVEYOR_B
     <ClInclude Include="CSBaseObject.h" />
     <ClInclude Include="LogUtil.h" />
     <ClInclude Include="NIConfig.h" />
+    <ClInclude Include="NILinesData.h" />
     <ClInclude Include="NIRTTIDefines.h" />
     <ClInclude Include="ObjectWindowTabData.h" />
     <ClInclude Include="pch.h" />
@@ -212,6 +213,7 @@ if defined APPVEYOR_BUILD_NUMBER (echo #define APPVEYOR_BUILD_NUMBER %APPVEYOR_B
     <ClCompile Include="DialogRenderWindow.cpp" />
     <ClCompile Include="DialogSearchAndReplaceWindow.cpp" />
     <ClCompile Include="LogUtil.cpp" />
+    <ClCompile Include="NILinesData.cpp" />
     <ClCompile Include="ObjectWindowTabData.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

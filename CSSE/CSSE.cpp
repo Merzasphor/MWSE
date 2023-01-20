@@ -9,6 +9,7 @@
 #include "CSRecordHandler.h"
 
 #include "NIAVObject.h"
+#include "NILinesData.h"
 
 #include "WindowMain.h"
 
@@ -290,6 +291,7 @@ namespace se::cs {
 		using memory::genJumpEnforced;
 		using memory::genJumpUnprotected;
 		using memory::writeDoubleWordUnprotected;
+		using memory::overrideVirtualTableEnforced;
 
 		// Patch: Collect crash dumps.
 #ifndef _DEBUG
@@ -329,6 +331,10 @@ namespace se::cs {
 
 		// Patch: Fix bound calculation.
 		genJumpEnforced(0x404467, 0x548280, reinterpret_cast<DWORD>(NI::CalculateBounds));
+
+		// Patch: Fix NiLinesData binary loading.
+		auto NiLinesData_loadBinary = &NI::LinesData::loadBinary;
+		overrideVirtualTableEnforced(0x67A220, 0xC, 0x5CAEF0, *reinterpret_cast<DWORD*>(&NiLinesData_loadBinary));
 
 		// Install all our sectioned patches.
 		window::main::installPatches();
