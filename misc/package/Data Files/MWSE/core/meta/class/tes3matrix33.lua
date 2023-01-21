@@ -50,6 +50,18 @@ function tes3matrix33:fromEulerZYX(z, y, x) end
 --- @param quaternion niQuaternion No description yet available.
 function tes3matrix33:fromQuaternion(quaternion) end
 
+--- Returns a copy of the forward vector component. This is the second column of the matrix.
+--- @return tes3vector3 result No description yet available.
+function tes3matrix33:getForwardVector() end
+
+--- Returns a copy of the right vector component. This is the first column of the matrix.
+--- @return tes3vector3 result No description yet available.
+function tes3matrix33:getRightVector() end
+
+--- Returns a copy of the up vector component. This is the third column of the matrix.
+--- @return tes3vector3 result No description yet available.
+function tes3matrix33:getUpVector() end
+
 --- Inverts the matrix.
 --- @return tes3matrix33 matrix No description yet available.
 --- @return boolean valid No description yet available.

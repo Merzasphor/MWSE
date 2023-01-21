@@ -101,6 +101,48 @@ myObject:fromQuaternion(quaternion)
 
 ***
 
+### `getForwardVector`
+
+Returns a copy of the forward vector component. This is the second column of the matrix.
+
+```lua
+local result = myObject:getForwardVector()
+```
+
+**Returns**:
+
+* `result` ([tes3vector3](../../types/tes3vector3))
+
+***
+
+### `getRightVector`
+
+Returns a copy of the right vector component. This is the first column of the matrix.
+
+```lua
+local result = myObject:getRightVector()
+```
+
+**Returns**:
+
+* `result` ([tes3vector3](../../types/tes3vector3))
+
+***
+
+### `getUpVector`
+
+Returns a copy of the up vector component. This is the third column of the matrix.
+
+```lua
+local result = myObject:getUpVector()
+```
+
+**Returns**:
+
+* `result` ([tes3vector3](../../types/tes3vector3))
+
+***
+
 ### `invert`
 
 Inverts the matrix.

@@ -202,6 +202,9 @@ namespace mwse::lua {
 			usertypeDefinition["toEulerXYZ"] = &TES3::Matrix33::toEulerXYZ_lua;
 			usertypeDefinition["toEulerZYX"] = &TES3::Matrix33::toEulerZYX_lua;
 			usertypeDefinition["toQuaternion"] = &TES3::Matrix33::toQuaternion;
+			usertypeDefinition["getForwardVector"] = &TES3::Matrix33::getForwardVector;
+			usertypeDefinition["getRightVector"] = &TES3::Matrix33::getRightVector;
+			usertypeDefinition["getUpVector"] = &TES3::Matrix33::getUpVector;
 		}
 
 		// Binding for TES3::Matrix44.

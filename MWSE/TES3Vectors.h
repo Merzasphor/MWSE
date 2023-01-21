@@ -181,6 +181,10 @@ namespace TES3 {
 		void fromQuaternion(const NI::Quaternion* q);
 		NI::Quaternion toQuaternion();
 
+		Vector3 getForwardVector();
+		Vector3 getRightVector();
+		Vector3 getUpVector();
+
 		bool reorthogonalize();
 
 	};

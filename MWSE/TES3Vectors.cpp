@@ -621,6 +621,18 @@ namespace TES3 {
 		return result;
 	}
 
+	Vector3 Matrix33::getForwardVector() {
+		return Vector3(m0.y, m1.y, m2.y);
+	}
+
+	Vector3 Matrix33::getRightVector() {
+		return Vector3(m0.x, m1.x, m2.x);
+	}
+
+	Vector3 Matrix33::getUpVector() {
+		return Vector3(m0.z, m1.z, m2.z);
+	}
+
 	//
 	// Matrix44
 	//
