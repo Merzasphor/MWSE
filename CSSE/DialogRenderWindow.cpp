@@ -581,12 +581,7 @@ namespace se::cs::dialog::render_window {
 			return nullptr;
 		}
 
-		const auto previousPickType = sgController->objectPick->pickType;
-
-		sgController->objectPick->pickType = NI::PickType::FIND_ALL;
-
 		if (!sgController->objectPick->pickObjectsWithSkinDeforms(&origin, &direction)) {
-			sgController->objectPick->pickType = previousPickType;
 			return nullptr;
 		}
 
@@ -603,9 +598,6 @@ namespace se::cs::dialog::render_window {
 				closestDistance = result->distance;
 			}
 		}
-
-		// Restore picker to the initial state.
-		sgController->objectPick->pickType = previousPickType;
 
 		return closestRef;
 	}

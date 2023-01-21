@@ -48,8 +48,12 @@ namespace NI {
 		// Data to restore skinned objects to their original state.
 		std::vector<SavedGeometryState> savedGeometryStates;
 
+		const auto previousPickType = pickType;
+		pickType = NI::PickType::FIND_ALL;
+
 		// Perform our first test.
 		if (!pickObjects(origin, direction, append, maxDistance)) {
+			pickType = previousPickType;
 			return false;
 		}
 
@@ -66,6 +70,7 @@ namespace NI {
 			if (!result->object->isInstanceOfType(RTTIStaticPtr::NiTriShape)) {
 #if _DEBUG
 				if (result->object->skinInstance) {
+					pickType = previousPickType;
 					throw std::exception("Unaccounted for type of skinned object!");
 				}
 #endif
@@ -104,9 +109,11 @@ namespace NI {
 
 		// Perform another raytest if necessary.
 		// TODO: To optimize this further, perform a second pick in another root with only the skinned geometry, and update the existing distances.
+		auto result = true;
 		if (needsRedo) {
+			pickType = previousPickType;
 			clearResults();
-			pickObjects(origin, direction, append, maxDistance);
+			result = pickObjects(origin, direction, append, maxDistance);
 		}
 
 		// Restore existing geomtry data.
@@ -116,7 +123,8 @@ namespace NI {
 			state.geometry->update();
 		}
 
-		return true;
+		pickType = previousPickType;
+		return result;
 	}
 
 	void Pick::clearResults() {
