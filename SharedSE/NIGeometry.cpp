@@ -1,6 +1,13 @@
 #include "NIGeometry.h"
 
 namespace NI {
+	GeometryData* Geometry::getModelData() const {
+		return modelData;
+	}
+
+	void Geometry::setModelData(GeometryData* data) {
+		vTable.asGeometry->setModelData(this, data);
+	}
 
 	void Geometry::updateDeforms() {
 		updateDeforms(worldVertices, worldNormals);
@@ -11,8 +18,16 @@ namespace NI {
 			return;
 		}
 
+		if (worldVertices == nullptr) {
+			createWorldVertices();
+		}
+
 		skinInstance->deform(modelData->vertex, modelData->normal, modelData->getActiveVertexCount(), out_vertices, out_normals);
-		TransformVertices(out_vertices, modelData->getActiveVertexCount(), out_vertices, &worldTransform);
+		TransformVertices(out_vertices, modelData->getActiveVertexCount(), &worldTransform);
+	}
+
+	void __cdecl TransformVertices(Vector3* vertices, unsigned short vertexCount, const Transform* transform) {
+		TransformVertices(vertices, vertexCount, vertices, transform);
 	}
 
 	void __cdecl TransformVertices(Vector3* out_vertices, unsigned short vertexCount, const Vector3* in_vertices, const Transform* transform) {

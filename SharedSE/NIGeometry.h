@@ -21,18 +21,14 @@ namespace NI {
 		bool bWorldVerticesDirty; // 0xA8
 		bool bWorldNormalsDirty; // 0xA9
 
-		inline GeometryData* getModelData() {
-			return modelData;
-		}
-
-		inline void setModelData(GeometryData* data) {
-			vTable.asGeometry->setModelData(this, data);
-		}
+		GeometryData* getModelData() const;
+		void setModelData(GeometryData* data);
 
 		void updateDeforms();
 		void updateDeforms(Vector3* out_vertices, Vector3* out_normals);
 	};
 	static_assert(sizeof(Geometry) == 0xAC, "NI::Geometry failed size validation");
 
+	void __cdecl TransformVertices(Vector3* vertices, unsigned short vertexCount, const Transform* transform);
 	void __cdecl TransformVertices(Vector3* out_vertices, unsigned short vertexCount, const Vector3* in_vertices, const Transform* transform);
 }
