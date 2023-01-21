@@ -17,6 +17,27 @@ namespace se::cs::dialog::object_window {
 	// Abstract column interface
 	//
 
+	class TabColumnParam {
+	public:
+		operator WPARAM() const;
+
+		bool getSortAsc() const;
+		void setSortAsc(bool asc);
+		void toggleSortOrder();
+
+		WPARAM getSortColumn() const;
+		void setSortColumn(WPARAM column);
+
+		WPARAM& getData();
+
+		static TabColumnParam* get();
+		static TabColumnParam& get(byte tab);
+
+	private:
+		WPARAM data;
+	};
+	static_assert(sizeof(TabColumnParam) == sizeof(WPARAM), "");
+
 	class TabColumn {
 	public:
 		const char* m_Title;

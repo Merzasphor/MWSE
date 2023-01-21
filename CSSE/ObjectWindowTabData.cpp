@@ -29,6 +29,61 @@
 #include "StringUtil.h"
 
 namespace se::cs::dialog::object_window {
+
+	//
+	// TabColumnParam
+	//
+
+	TabColumnParam::operator WPARAM() const {
+		return data;
+	}
+
+	bool TabColumnParam::getSortAsc() const {
+		return (data & 1u) == 1u;
+	}
+
+	void TabColumnParam::setSortAsc(bool asc) {
+		if (asc) {
+			data |= 1u;
+		}
+		else {
+			data &= ~1u;
+		}
+	}
+
+	void TabColumnParam::toggleSortOrder() {
+		data ^= 1u;
+	}
+
+	WPARAM TabColumnParam::getSortColumn() const {
+		return data >> 1u;
+	}
+
+	void TabColumnParam::setSortColumn(WPARAM column) {
+		const auto sortAsc = getSortAsc();
+
+		data = column << 1u;
+
+		setSortAsc(sortAsc);
+	}
+
+	WPARAM& TabColumnParam::getData() {
+		return data;
+	}
+
+	TabColumnParam* TabColumnParam::get() {
+		return reinterpret_cast<TabColumnParam*>(0x6CEEA0);
+	}
+
+	TabColumnParam& TabColumnParam::get(byte tab) {
+		const auto params = get();
+		return params[tab];
+	}
+
+	//
+	// TabColumn
+	//
+
 	TabColumn::TabColumn(const char* title, int fmt) {
 		m_Title = title;
 		m_Format = fmt;

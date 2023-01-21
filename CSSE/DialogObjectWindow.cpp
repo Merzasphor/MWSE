@@ -29,8 +29,6 @@ namespace se::cs::dialog::object_window {
 	static HWND objectWindowSearchControl = NULL;
 
 	using gCurrentTab = ExternalGlobal<int, 0x6CEFFC>;
-	using gCurrentSortFlags = ExternalGlobal<DWORD, 0x6CEFC4>;
-	auto gSortWParams = reinterpret_cast<WPARAM*>(0x6CEEA0);
 	auto gTabControllers = reinterpret_cast<TabController**>(0x6CEF38);
 
 	namespace Tab {
@@ -389,17 +387,16 @@ namespace se::cs::dialog::object_window {
 
 			// Set sort flags.
 			const auto& currentTab = gCurrentTab::get();
-			auto& sortFlags = gCurrentSortFlags::get();
 			auto controller = gTabControllers[currentTab];
 			auto columnIndex = controller->getColumnIndexByTitle(lvColumnData.pszText);
-			auto& param = gSortWParams[currentTab];
-			if ((param >> 1) == columnIndex) {
-				sortFlags ^= 1u;
+			auto& param = TabColumnParam::get(currentTab);
+			if (param.getSortColumn() == columnIndex) {
+				param.toggleSortOrder();
 			}
 			else {
-				sortFlags = 1u;
+				param.setSortAsc(true);
 			}
-			param = (columnIndex << 1) + sortFlags;
+			param.setSortColumn(columnIndex);
 
 			// Actually dispatch the search.
 			ListView_SortItems(listView, PatchColumnLogic_Sort, param);
