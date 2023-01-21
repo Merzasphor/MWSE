@@ -1,7 +1,7 @@
 #include "NIAVObject.h"
 
 #include "NICollisionSwitch.h"
-#include "NIGeometry.h"
+#include "NITriBasedGeometry.h"
 
 #include "ExceptionUtil.h"
 #include "MemoryUtil.h"
@@ -44,6 +44,41 @@ namespace NI {
 
 	void AVObject::updateWorldVertices() {
 		vTable.asAVObject->updateWorldVertices(this);
+	}
+
+	void AVObject::createWorldNormals() {
+		vTable.asAVObject->createWorldNormals(this);
+	}
+
+	void AVObject::updateWorldNormals() {
+		vTable.asAVObject->updateWorldNormals(this);
+	}
+
+	void AVObject::updateWorldDeforms() {
+		// Recurse until we get to a leaf node.
+		if (isInstanceOfType(RTTIStaticPtr::NiNode)) {
+			const auto asNode = static_cast<Node*>(this);
+			for (const auto& child : asNode->children) {
+				if (child) {
+					child->updateWorldDeforms();
+				}
+			}
+			return;
+		}
+
+		// Only care about geometry.
+		if (!isInstanceOfType(RTTIStaticPtr::NiGeometry)) {
+			return;
+		}
+
+		// Skip anything without a skin instance.
+		auto geometry = static_cast<NI::Geometry*>(this);
+		if (!geometry->skinInstance) {
+			return;
+		}
+
+		// Actually update the skin instance.
+		geometry->updateDeforms();
 	}
 
 	void AVObject::updateWorldBound() {
@@ -139,6 +174,55 @@ namespace NI {
 
 	Transform AVObject::getLocalTransform() const {
 		return { *localRotation, localTranslate, localScale };
+	}
+
+	float AVObject::getLowestVertexZ() const {
+		constexpr auto FLOAT_MAX = std::numeric_limits<float>::max();
+
+		// Ignore culled nodes.
+		if (getAppCulled()) {
+			return FLOAT_MAX;
+		}
+
+		// Ignore collision-disabled subgraphs.
+		if (isOfType(RTTIStaticPtr::NiCollisionSwitch)) {
+			const auto asCollisionSwitch = static_cast<const CollisionSwitch*>(this);
+			if (asCollisionSwitch->getCollisionActive()) {
+				return FLOAT_MAX;
+			}
+		}
+
+		// Recurse until we get to a leaf node.
+		if (isInstanceOfType(RTTIStaticPtr::NiNode)) {
+			const auto asNode = static_cast<const Node*>(this);
+			auto lowestChildZ = FLOAT_MAX;
+			for (const auto& child : asNode->children) {
+				if (child) {
+					const auto childLowestZ = child->getLowestVertexZ();
+					lowestChildZ = std::min(lowestChildZ, childLowestZ);
+				}
+			}
+			return lowestChildZ;
+		}
+
+		// Only care about geometry leaf nodes.
+		if (!isInstanceOfType(RTTIStaticPtr::NiTriBasedGeom)) {
+			return FLOAT_MAX;
+		}
+
+		// Ignore particles.
+		if (isInstanceOfType(RTTIStaticPtr::NiParticles)) {
+			return FLOAT_MAX;
+		}
+
+		// Figure out the lowest vertex's Z.
+		auto geometry = static_cast<const NI::TriBasedGeometry*>(this);
+		auto lowestZ = FLOAT_MAX;
+		for (auto i = 0u; i < geometry->modelData->vertexCount; ++i) {
+			lowestZ = std::min(lowestZ, geometry->worldVertices[i].z);
+		}
+
+		return lowestZ;
 	}
 
 	void AVObject::clearTransforms() {
@@ -307,59 +391,6 @@ namespace NI {
 			out_max.y = std::max(out_max.y, v.y);
 			out_max.z = std::max(out_max.z, v.z);
 		}
-	}
-
-	float __cdecl GetLowestVertexZ(const AVObject* object) {
-		constexpr auto FLOAT_MAX = std::numeric_limits<float>::max();
-		float lowestZ = FLOAT_MAX;
-
-		// Ignore culled nodes.
-		if (object->getAppCulled()) {
-			return lowestZ;
-		}
-
-		// Ignore collision-disabled subgraphs.
-		if (object->isOfType(RTTIStaticPtr::NiCollisionSwitch)) {
-			const auto asCollisionSwitch = static_cast<const CollisionSwitch*>(object);
-			if (asCollisionSwitch->getCollisionActive()) {
-				return lowestZ;
-			}
-		}
-
-		// Recurse until we get to a leaf node.
-		if (object->isInstanceOfType(RTTIStaticPtr::NiNode)) {
-			const auto asNode = static_cast<const Node*>(object);
-			for (const auto& child : asNode->children) {
-				if (child) {
-					const auto childLowestZ = GetLowestVertexZ(child);
-					lowestZ = std::min(lowestZ, childLowestZ);
-				}
-			}
-			return lowestZ;
-		}
-
-		// Only care about geometry leaf nodes.
-		if (!object->isInstanceOfType(RTTIStaticPtr::NiTriBasedGeom)) {
-			return lowestZ;
-		}
-
-		// Ignore particles.
-		if (object->isInstanceOfType(RTTIStaticPtr::NiParticles)) {
-			return lowestZ;
-		}
-
-		// Ignore skinned.
-		auto geometry = static_cast<const NI::Geometry*>(object);
-		if (geometry->skinInstance) {
-			return lowestZ;
-		}
-
-		// Figure out the lowest vertex's Z.
-		for (auto i = 0u; i < geometry->modelData->vertexCount; ++i) {
-			lowestZ = std::min(lowestZ, geometry->worldVertices[i].z);
-		}
-
-		return lowestZ;
 	}
 
 	void __cdecl VerifyWorldVertices(const NI::AVObject* object) {

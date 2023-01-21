@@ -351,7 +351,15 @@ namespace se::cs::dialog::render_window {
 	// Patch: Fix drop-to-surface (F)
 	//
 
-	void __cdecl Patch_IgnoreParticlesWhenFindingVerticesNearHeight(const NI::Node* node, float nearToZ) {
+	float __cdecl Patch_FixDropToSurface_GetLowestZ(NI::Node* node) {
+		// Force update deforms.
+		node->updateWorldDeforms();
+
+		// Overwritten code.
+		return node->getLowestVertexZ();
+	}
+
+	void __cdecl Patch_FixDropToSurface_GetLowVertices(const NI::Node* node, float nearToZ) {
 		constexpr auto NEAR_THRESHOLD = 1.0f;
 		const auto gNearVertexArray = *reinterpret_cast<NI::TArray<NI::Vector3*>**>(0x6CF7C4);
 
@@ -366,11 +374,6 @@ namespace se::cs::dialog::render_window {
 						continue;
 					}
 
-					// Ignore skinned.
-					if (asGeometry->skinInstance) {
-						continue;
-					}
-
 					// Add nearby vertices.
 					for (auto i = 0u; i < asGeometry->modelData->vertexCount; ++i) {
 						const auto vertex = &asGeometry->worldVertices[i];
@@ -378,15 +381,23 @@ namespace se::cs::dialog::render_window {
 							gNearVertexArray->push_back(vertex);
 						}
 					}
+
+					continue;
 				}
 
 				// Recursively call for child nodes.
 				if (child->isInstanceOfType(NI::RTTIStaticPtr::NiNode)) {
 					auto asNode = static_cast<const NI::Node*>(child.get());
-					Patch_IgnoreParticlesWhenFindingVerticesNearHeight(asNode, nearToZ);
+					Patch_FixDropToSurface_GetLowVertices(asNode, nearToZ);
+					continue;
 				}
 			}
 		}
+	}
+
+	bool __fastcall Patch_FixDropToSurface_PickObjects(NI::Pick* pick, DWORD _EDX_, NI::Vector3* origin, NI::Vector3* direction, bool append, float maxDistance) {
+		// Perform pick with skin deforms instead.
+		return pick->pickObjectsWithSkinDeforms(origin, direction, append, maxDistance);
 	}
 
 	//
@@ -1173,8 +1184,9 @@ namespace se::cs::dialog::render_window {
 		genCallEnforced(0x45EE85, 0x401F4B, reinterpret_cast<DWORD>(Patch_ReplaceDragMovementLogic));
 
 		// Patch: Improve drop-to-surface logic by ignoring particles and skinned geometry.
-		genJumpEnforced(0x403AD5, 0x4664C0, reinterpret_cast<DWORD>(NI::GetLowestVertexZ));
-		genJumpEnforced(0x402CE8, 0x4665F0, reinterpret_cast<DWORD>(Patch_IgnoreParticlesWhenFindingVerticesNearHeight));
+		genCallEnforced(0x46687F, 0x403AD5, reinterpret_cast<DWORD>(Patch_FixDropToSurface_GetLowestZ));
+		genJumpEnforced(0x402CE8, 0x4665F0, reinterpret_cast<DWORD>(Patch_FixDropToSurface_GetLowVertices));
+		genCallEnforced(0x46697E, 0x5B35B0, reinterpret_cast<DWORD>(Patch_FixDropToSurface_PickObjects));
 
 		// Patch: Make clicking things near skinned objects not painful.
 		genJumpEnforced(0x404980, 0x463F30, reinterpret_cast<DWORD>(Patch_FixPickAgainstSkinnedObjects));

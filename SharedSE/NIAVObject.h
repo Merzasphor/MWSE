@@ -79,6 +79,9 @@ namespace NI {
 
 		void createWorldVertices();
 		void updateWorldVertices();
+		void createWorldNormals();
+		void updateWorldNormals();
+		void updateWorldDeforms();
 		void updateWorldBound();
 
 		//
@@ -106,6 +109,7 @@ namespace NI {
 #endif
 
 		Transform getLocalTransform() const;
+		float getLowestVertexZ() const;
 
 		void clearTransforms();
 		void copyTransforms(const AVObject* from);
@@ -136,7 +140,6 @@ namespace NI {
 
 	void __cdecl CalculateBounds(const AVObject* object, Vector3& out_min, Vector3& out_max, const Vector3& translation, const Matrix33& rotation, const float& scale);
 
-	float __cdecl GetLowestVertexZ(const AVObject* object);
 	void __cdecl VerifyWorldVertices(const AVObject* object);
 }
 
