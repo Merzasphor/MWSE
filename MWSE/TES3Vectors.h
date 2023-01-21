@@ -247,10 +247,14 @@ namespace TES3 {
 		TES3::Vector3 translation;
 		float scale;
 
-		Transform operator*(const Transform& transform);
-
 		Transform();
 		Transform(const Matrix33& rotation, const Vector3& translation, const float scale);
+
+		Transform operator*(const Transform& transform);
+		Vector3 operator*(const Vector3& transform);
+
+		bool invert(Transform* out) const;
+		std::tuple<Transform, bool> invert() const;
 
 		Transform copy() const;
 		void toIdentity();

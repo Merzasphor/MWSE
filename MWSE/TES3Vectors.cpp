@@ -815,15 +815,6 @@ namespace TES3 {
 	// Transform
 	//
 
-	Transform Transform::operator*(const Transform& transform)
-	{
-		return {
-			rotation * transform.rotation,
-			translation + transform.translation,
-			scale * transform.scale
-		};
-	}
-
 	Transform::Transform() {
 		this->toIdentity();
 	}
@@ -833,6 +824,37 @@ namespace TES3 {
 		translation(translation),
 		scale(scale)
 	{
+	}
+
+	Transform Transform::operator*(const Transform& transform) {
+		return {
+			rotation * transform.rotation,
+			rotation * transform.translation * scale + translation,
+			scale * transform.scale
+		};
+	}
+
+	Vector3 Transform::operator*(const Vector3& vector) {
+		return rotation * vector * scale + translation;
+	}
+
+	bool Transform::invert(Transform* out) const {
+		if (scale == 0.0f) {
+			return false;
+		}
+		bool success = rotation.invert(&out->rotation);
+		if (!success) {
+			return false;
+		}
+		out->scale = 1.0f / scale;
+		out->translation = -(out->rotation * translation * out->scale);
+		return true;
+	}
+
+	std::tuple<Transform, bool> Transform::invert() const {
+		auto transform = Transform();
+		bool valid = invert(&transform);
+		return std::make_tuple(transform, valid);
 	}
 
 	Transform Transform::copy() const {

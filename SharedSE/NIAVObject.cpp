@@ -435,7 +435,7 @@ namespace NI {
 		const auto transform = object->worldTransform;
 		const auto vertices = static_cast<const NI::Geometry*>(object)->modelData->getVertices();
 		for (auto i = 0u; i < geometry->modelData->vertexCount; ++i) {
-			const auto calculated = (transform.rotation * transform.scale * geometry->modelData->vertex[i]) + transform.translation;
+			const auto calculated = transform * geometry->modelData->vertex[i];
 			if (geometry->worldVertices[i] != calculated) {
 				const auto rtti = geometry->getRunTimeTypeInformation();
 				throw std::exception("Vertex does not calculate to the same value!");
