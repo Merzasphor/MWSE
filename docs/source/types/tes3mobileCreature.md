@@ -1563,7 +1563,7 @@ local itemEquipped = myObject:equip({ item = ..., itemData = ..., addItem = ...,
 
 * `params` (table)
 	* `item` ([tes3item](../../types/tes3item), string): The item to equip.
-	* `itemData` ([tes3itemData](../../types/tes3itemData)): *Optional*. The item data of the specific item to equip.
+	* `itemData` ([tes3itemData](../../types/tes3itemData)): *Optional*. The item data of the specific item to equip, if a specific item is required.
 	* `addItem` (boolean): *Default*: `false`. If `true`, the item will be added to the actor's inventory if needed.
 	* `selectBestCondition` (boolean): *Default*: `false`. If `true`, the item in the inventory with the best condition and best charge will be selected.
 	* `selectWorstCondition` (boolean): *Default*: `false`. If `true`, the item in the inventory with the worst condition and worst charge will be selected. Can be useful for selecting tools.
@@ -1894,13 +1894,14 @@ myObject:stopCombat(force)
 Unequips one or more items from the actor.
 
 ```lua
-local itemUnequipped = myObject:unequip({ item = ..., type = ..., armorSlot = ..., clothingSlot = ... })
+local itemUnequipped = myObject:unequip({ item = ..., itemData = ..., type = ..., armorSlot = ..., clothingSlot = ... })
 ```
 
 **Parameters**:
 
 * `params` (table)
 	* `item` ([tes3item](../../types/tes3item), string): *Optional*. The item to unequip.
+	* `itemData` ([tes3itemData](../../types/tes3itemData)): *Optional*. The item data of the specific item to unequip, if a specific item is required.
 	* `type` (number): *Optional*. The item type to unequip. Only used if no other parameter is provided. Only values pertaining to equipment from [`tes3.objectType`](https://mwse.github.io/MWSE/references/object-types/) can be passed here.
 	* `armorSlot` (number): *Optional*. The armor slot to unequip. Maps to values in [`tes3.armorSlot`](https://mwse.github.io/MWSE/references/armor-slots/) namespace.
 	* `clothingSlot` (number): *Optional*. The clothing slot to unequip. Maps to values in [`tes3.clothingSlot`](https://mwse.github.io/MWSE/references/clothing-slots/) namespace

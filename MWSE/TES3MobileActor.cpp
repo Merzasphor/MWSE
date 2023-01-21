@@ -1111,7 +1111,13 @@ namespace TES3 {
 
 		if (item) {
 			// Match by item.
-			s = actor->getEquippedItem(item);
+			auto itemData = getOptionalParam<ItemData*>(args, "itemData", nullptr);
+			if (itemData) {
+				s = actor->getEquippedItemExact(item, itemData);
+			}
+			else {
+				s = actor->getEquippedItem(item);
+			}
 		}
 		else if (armourSlot != -1) {
 			// Match by slot.
