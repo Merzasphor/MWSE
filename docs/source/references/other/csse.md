@@ -47,12 +47,14 @@ If you are using [Construction Set Better UI](https://www.nexusmods.com/morrowin
 * The CS will no longer adopt a working directory externally. This means that when opening esm/esp files from the Data Files folder from double clicking it, the Morrowind.ini file and all other configs/logs will correctly load from the root Morrowind folder.
 * Loading an active file without manually loading its masters will no longer lead to a potential crash.
 * Opening the Construction Set through Mod Organizer 2 is no longer slowed by the number of active MO2 mod folders.
+* The NetImmerse NiLinesData structure loads correctly.
 
 ### Object Window
 
 * Significantly improved UI responsiveness.
 * Added a footer to the window, with a new filter input. This input can be focused by using CTRL+F while the Object Window is active. This can be used to filter objects by a matching id, name, icon, model, enchantment, script, or book text fragments.
 	* Regex search options and case-sensitive search options can be enabled in the config file.
+* The footer also supports a toggle button to only show modified objects.
 * The data rendering and behavior has been completely rewritten. Strings and alignment is more consistent. New columns can be added.
 	* A new modified column is displayed, showing if the object is modified. This can be sorted on.
 * Fixed issue where box selection in the object window would cause the mouse to snap to the edge of the screen.
@@ -63,17 +65,20 @@ If you are using [Construction Set Better UI](https://www.nexusmods.com/morrowin
 
 * Optimized UI. Changing between INFOs should be nearly instantaneous. Initial dialogue load time reduced by 60%.
 * Condition variable lists will now always be wide enough to fit the convents. Journals, locals, and items will no longer have their IDs cut off.
+* Modified topics/INFOs are highlighted green. Deleted topics/INFOs are highlighted red.
+* The window can be filtered to only show modified data.
 * The window can now be resized and maximized.
 * Layout changes:
 	* The sex condition is now under the race condition, instead of above the function/variable list. It is not hidden (but is disabled) when viewing journal dialogues.
 	* The journal conditions (name/finished/restart) are shown but disabled for other dialogue types.
 	* The general UI has minor other position layout changes.
+* Select all control (Ctrl+A) now functions in the edit boxes.
 
 ### Render Window
 
 * Clicking or otherwise interacting with skinned objects, such as NPCs, no longer consumes the mouse. It is now easier to click on objects near actors.
 * Reference rotation is now performed on the world axis, rather than the local axis. To rotate on the local axis as it worked in vanilla, hold the alt key.
-* Dropping a reference (using the F key) is more reliable and accurate.
+* Dropping a reference (using the F key) is more reliable and accurate. It works on skinned references as well.
 * References can be group-scaled. By holding the alt key when scaling, all selected references will scale together and reposition accordingly.
 * References can be moved onto surfaces. By holding the alt key when drag-moving a reference, it will rotate and snap onto the surface under the cursor. The context menu (Q) can be used to set the axis to snap to.
 * Extended editor marker support. Toggling markers (M) will now also toggle markers supported by the game executable. This allows custom markers to be toggled by tagging them with a MRK string and adding a EditorMarker node, or by defining objects whose name begins with or matches "Tri EditorMarker".
@@ -84,6 +89,7 @@ If you are using [Construction Set Better UI](https://www.nexusmods.com/morrowin
 	* Restore hidden references, restoring to view any references hidden with the hide selection option.
 	* Set or clear the QuickStart data from the current render window perspective.
 * The field of view (FOV) and antialiasing (multisamples) can be overwritten in the config file.
+* Fixed an issue with bound calculations. Any bound-related functions, such as focusing the camera (C or T keys) on a light will never send the camera into the stratosphere.
 
 The following changes to the rendering window apply when landscape editing:
 
