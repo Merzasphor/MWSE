@@ -20,6 +20,7 @@
 ---@field cancelText string
 ---@field header string|function The optional header displayed above the message. Can also be a function that returns a string.
 ---@field message string|function **Required** The message at the top of the messagebox. Can also be a function that returns a string.
+---@field customBlock fun(parent) A custom element to be displayed below the header
 ---@field page number
 ---@field pageSize number
 
@@ -33,6 +34,7 @@ local uiids = {
 	menu = tes3ui.registerID("MenuMessage"),
 	header = tes3ui.registerID("MenuMessage_Header"),
 	message = tes3ui.registerID("MenuMessage_Message"),
+    customBlock = tes3ui.registerID("MenuMessage_CustomBlock"),
 	buttonBlock = tes3ui.registerID("MenuMessage_ButtonBlock"),
 	button = tes3ui.registerID("MenuMessage_Button"),
 	navigationBlock = tes3ui.registerID("MenuMessage_NavigationBlock"),
@@ -216,6 +218,16 @@ recreateMenu = function(menu)
 		})
 		label.color = tes3ui.getPalette("header_color")
 	end
+
+    -- Add custom element
+    if (messageData.customBlock) then
+        --create outer block to put custom element in
+        local customBlock = contentElement:createBlock()
+        customBlock.flowDirection = "top_to_bottom"
+        customBlock.autoHeight = true
+        customBlock.autoWidth = true
+        messageData.customBlock(customBlock)
+    end
 
 	-- Add main message text.
 	if (messageData.message) then
